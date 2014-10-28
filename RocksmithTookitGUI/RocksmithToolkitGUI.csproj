@@ -107,11 +107,6 @@
     <Compile Include="CDLC2Tab\SongInfoForm.Designer.cs">
       <DependentUpon>SongInfoForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="DLCManager\DataAccess.cs" />
-    <Compile Include="DLCManager\DLCManager.cs">
-      <SubType>usercontrol</SubType>
-    </Compile>
-    <Compile Include="DLCManager\DLCManager.Designer.cs" />
     <Compile Include="UpdateForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -241,7 +236,6 @@
     <EmbeddedResource Include="CDLC2Tab\SongInfoForm.resx">
       <DependentUpon>SongInfoForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DLCManager\DLCManager.resx" />
     <EmbeddedResource Include="DLCPackageCreator\ToneImportForm.resx">
       <DependentUpon>ToneImportForm.cs</DependentUpon>
     </EmbeddedResource>

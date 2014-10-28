@@ -221,20 +221,20 @@
             // 
             this.chbx_Additional_Manipualtions.FormattingEnabled = true;
             this.chbx_Additional_Manipualtions.Items.AddRange(new object[] {
-            "1. Add Increment to all songs",
-            "2. Add Increment to all songs(&Separately per artist)",
-            "3. Make all DLC IDs unique(&save)",
-            "4. Add DD (4 Levels)",
-            "5. Remove DD",
-            "6. Remove DD only for Bass Guitar",
-            "7. Remove the 4sec of the Preview song",
+            "1. When Packing Add Increment to all songs Title",
+            "2. When Packing Add Increment to all songs Title per artist",
+            "3. When Packing Make all DLC IDs unique(&save)",
+            "<4. Add DD (4 Levels)>",
+            "<5. Remove DD>",
+            "<6. Remove DD only for Bass Guitar>",
+            "<7. Remove the 4sec of the Preview song>",
             "8. Don\'t repack Broken songs",
             "9. Pack to cross-platform Compatible Filenames",
-            "10. Generate random 30sec Preview",
-            "11. Use shortnames in the Filename for Artist&Album",
-            "12. Repack Originals",
-            "13. Repack PC",
-            "14. Import all as Alternates",
+            "<10. Generate random 30sec Preview>",
+            "<11. Use shortnames in the Filename for Artist&Album>",
+            "<12. Repack Originals>",
+            "<13. Repack PC>",
+            "14. Import all Duplicates as Alternates",
             "15. Import any Custom as Alternate if an Original exists",
             "16. Move Original Imported files to temp/0_old"});
             this.chbx_Additional_Manipualtions.Location = new System.Drawing.Point(240, 88);
@@ -955,6 +955,7 @@
             this.btn_DecompressAll.TabIndex = 261;
             this.btn_DecompressAll.Text = "Open Main DB";
             this.btn_DecompressAll.UseVisualStyleBackColor = false;
+            this.btn_DecompressAll.Click += new System.EventHandler(this.btn_DecompressAll_Click);
             // 
             // lbl_RocksmithDLCPath
             // 

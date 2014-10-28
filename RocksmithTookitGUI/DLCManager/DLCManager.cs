@@ -128,6 +128,7 @@ namespace RocksmithToolkitGUI.DLCManager
         public DLCManager()
         {
             InitializeComponent();
+            Set_DEBUG();
         }
 
         private void btn_SteamDLCFolder_Click(object sender, EventArgs e)
@@ -206,49 +207,85 @@ namespace RocksmithToolkitGUI.DLCManager
         private void cbx_Activ_Title_CheckedChanged(object sender, EventArgs e)
         {
             if (cbx_Activ_Title.Checked == false)
+            {
                 txt_Title.Enabled = false;
+                cbx_Title.Enabled = false;
+            }
             else
+            {
                 txt_Title.Enabled = true;
+                cbx_Title.Enabled = true;
+            }
         }
 
         private void cbx_Activ_Title_Sort_CheckedChanged(object sender, EventArgs e)
         {
             if (cbx_Activ_Title_Sort.Checked == false)
+            {
                 txt_Title_Sort.Enabled = false;
+                cbx_Title_Sort.Enabled = false;
+            }
             else
+            {
                 txt_Title_Sort.Enabled = true;
+                cbx_Title_Sort.Enabled = true;
+            }
         }
 
         private void cbx_Activ_Artist_CheckedChanged(object sender, EventArgs e)
         {
             if (cbx_Activ_Artist.Checked == false)
+            {
                 txt_Artist.Enabled = false;
+                cbx_Artist.Enabled = false;
+            }
             else
+            {
                 txt_Artist.Enabled = true;
-        }
+                cbx_Artist.Enabled = true;
+            }
+            }
 
         private void cbx_Activ_Artist_Sort_CheckedChanged(object sender, EventArgs e)
         {
             if (cbx_Activ_Artist_Sort.Checked == false)
+            {
                 txt_Artist_Sort.Enabled = false;
+                cbx_Artist_Sort.Enabled = false;
+            }
             else
+            {
                 txt_Artist_Sort.Enabled = true;
-        }
+                cbx_Artist_Sort.Enabled = true;
+            }
+            }
 
         private void cbx_Activ_Album_CheckedChanged(object sender, EventArgs e)
         {
             if (cbx_Activ_Album.Checked == false)
+            {
                 txt_Album.Enabled = false;
+                cbx_Album.Enabled = false;
+            }
             else
+            {
                 txt_Album.Enabled = true;
-        }
+                cbx_Album.Enabled = true;
+            }
+            }
 
         private void cbx_Activ_File_Name_CheckedChanged(object sender, EventArgs e)
         {
             if (cbx_Activ_File_Name.Checked == false)
+            {
                 txt_File_Name.Enabled = false;
+                cbx_File_Name.Enabled = false;
+            }
             else
+            {
                 txt_File_Name.Enabled = true;
+                cbx_File_Name.Enabled = true;
+            }
         }
 
         private void btn_Preview_Title_Click(object sender, EventArgs e)
@@ -1170,7 +1207,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                 command.Parameters.AddWithValue("@param12", info.SongInfo.Artist);
                                 command.Parameters.AddWithValue("@param13", info.SongInfo.ArtistSort);
                                 command.Parameters.AddWithValue("@param14", info.SongInfo.SongYear);
-                                command.Parameters.AddWithValue("@param15", ((info.PackageVersion == null) ? "1" : info.PackageVersion));
+                                command.Parameters.AddWithValue("@param15", ((info.PackageVersion == "") ? "1" : info.PackageVersion));
                                 command.Parameters.AddWithValue("@param16", info.SongInfo.AverageTempo);
                                 command.Parameters.AddWithValue("@param17", info.Volume);
                                 command.Parameters.AddWithValue("@param18", info.PreviewVolume);
@@ -1186,19 +1223,19 @@ namespace RocksmithToolkitGUI.DLCManager
                                 command.Parameters.AddWithValue("@param28", ((Combo != "") ? Combo : "No"));
                                 command.Parameters.AddWithValue("@param29", ((Vocals != "") ? Vocals : "No"));
                                 command.Parameters.AddWithValue("@param30", "sect1on");
-                                command.Parameters.AddWithValue("@param31", ((info.AlbumArtPath != null) ? "Yes" : "No"));
-                                command.Parameters.AddWithValue("@param32", ((info.OggPreviewPath != null) ? "Yes" : "No"));
+                                command.Parameters.AddWithValue("@param31", ((info.AlbumArtPath != "") ? "Yes" : "No"));
+                                command.Parameters.AddWithValue("@param32", ((info.OggPreviewPath != "") ? "Yes" : "No"));
                                 command.Parameters.AddWithValue("@param33", Tones_Custom);
                                 command.Parameters.AddWithValue("@param34", DD);
                                 command.Parameters.AddWithValue("@param35", ((info.PackageVersion != "" && tkversion != "") ? "Yes" : "No"));
                                 command.Parameters.AddWithValue("@param36", ((author != "" && tkversion != "") ? "Yes" : "No"));
                                 command.Parameters.AddWithValue("@param37", Tunings);
                                 command.Parameters.AddWithValue("@param38", PluckedType);
-                                command.Parameters.AddWithValue("@param39", ((info.PackageVersion == null) ? "ORIG" : "CDLC"));
+                                command.Parameters.AddWithValue("@param39", ((info.PackageVersion == "") ? "ORIG" : "CDLC"));
                                 command.Parameters.AddWithValue("@param40", info.SignatureType);
                                 command.Parameters.AddWithValue("@param41", ((author != "") ? author : (tkversion != "" ? "Custom Song Creator" : "")));
                                 command.Parameters.AddWithValue("@param42", tkversion);
-                                command.Parameters.AddWithValue("@param43", ((info.PackageVersion == null) ? "Yes" : "No"));
+                                command.Parameters.AddWithValue("@param43", ((info.PackageVersion == "") ? "Yes" : "No"));
                                 command.Parameters.AddWithValue("@param44", ((alt == "") ? "No" : "Yes"));
                                 command.Parameters.AddWithValue("@param45", alt);
                                 command.Parameters.AddWithValue("@param46", art_hash);
@@ -1306,7 +1343,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                 command.Parameters.AddWithValue("@param12", info.SongInfo.Artist);
                                 command.Parameters.AddWithValue("@param13", info.SongInfo.ArtistSort);
                                 command.Parameters.AddWithValue("@param14", info.SongInfo.SongYear);
-                                command.Parameters.AddWithValue("@param15", ((info.PackageVersion == null) ? "1" : info.PackageVersion));
+                                command.Parameters.AddWithValue("@param15", ((info.PackageVersion == "") ? "1" : info.PackageVersion));
                                 command.Parameters.AddWithValue("@param16", info.SongInfo.AverageTempo);
                                 command.Parameters.AddWithValue("@param17", info.Volume);
                                 command.Parameters.AddWithValue("@param18", info.PreviewVolume);
@@ -1322,25 +1359,24 @@ namespace RocksmithToolkitGUI.DLCManager
                                 command.Parameters.AddWithValue("@param28", ((Combo != "") ? Combo : "No"));
                                 command.Parameters.AddWithValue("@param29", ((Vocals != "") ? Vocals : "No"));
                                 command.Parameters.AddWithValue("@param30", "sect1on");
-                                command.Parameters.AddWithValue("@param31", ((info.AlbumArtPath != null) ? "Yes" : "No"));
-                                command.Parameters.AddWithValue("@param32", ((info.OggPreviewPath != null) ? "Yes" : "No"));
+                                command.Parameters.AddWithValue("@param31", ((info.AlbumArtPath != "") ? "Yes" : "No"));
+                                command.Parameters.AddWithValue("@param32", ((info.OggPreviewPath != "") ? "Yes" : "No"));
                                 command.Parameters.AddWithValue("@param33", Tones_Custom);
                                 command.Parameters.AddWithValue("@param34", DD);
                                 command.Parameters.AddWithValue("@param35", ((info.PackageVersion != "" && tkversion != "") ? "Yes" : "No"));
                                 command.Parameters.AddWithValue("@param36", ((author != "" && tkversion != "") ? "Yes" : "No"));
                                 command.Parameters.AddWithValue("@param37", Tunings);
                                 command.Parameters.AddWithValue("@param38", PluckedType);
-                                command.Parameters.AddWithValue("@param39", ((info.PackageVersion == null) ? "ORIG" : "CDLC"));
+                                command.Parameters.AddWithValue("@param39", ((info.PackageVersion == "") ? "ORIG" : "CDLC"));
                                 command.Parameters.AddWithValue("@param40", info.SignatureType);
                                 command.Parameters.AddWithValue("@param41", ((author != "") ? author : (tkversion != "" ? "Custom Song Creator" : "")));
                                 command.Parameters.AddWithValue("@param42", tkversion);
-                                command.Parameters.AddWithValue("@param43", ((info.PackageVersion == null) ? "Yes" : "No"));
+                                command.Parameters.AddWithValue("@param43", ((info.PackageVersion == "") ? "Yes" : "No"));
                                 command.Parameters.AddWithValue("@param44", ((alt == "") ? "No" : "Yes"));
                                 command.Parameters.AddWithValue("@param45", alt);
                                 command.Parameters.AddWithValue("@param46", art_hash);
                                 command.Parameters.AddWithValue("@param47", audio_hash);
                                 command.Parameters.AddWithValue("@param48", audioPreview_hash);
-
                                 //EXECUTE SQL/INSERT
                                 try
                                 {
@@ -1412,7 +1448,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                             if (arg.SongFile.File == "")
                                                 arg.SongFile.File = norm_path + "\\Toolkit\\" + (mss.Substring(poss)).Replace(".xml", ".json");
                                             else arg.SongFile.File = arg.SongFile.File.Replace("0_import", "");
-                                            rtxt_StatisticsOnReadDLCs.Text = "Arrangements renamed..." + "\n" + rtxt_StatisticsOnReadDLCs.Text;//+ arg.SongXml.File+ arg.SongFile.File +
+                                            rtxt_StatisticsOnReadDLCs.Text = "..Arrangements renamed..."+n + rtxt_StatisticsOnReadDLCs.Text;//+ arg.SongXml.File+ arg.SongFile.File +
                                         }
 
                                         command.CommandText = "INSERT INTO Arrangements(";
@@ -1822,7 +1858,8 @@ namespace RocksmithToolkitGUI.DLCManager
             //rtxt_StatisticsOnReadDLCs = chbx_Additional_Manipualtions.SelectedValue + "\n" + rtxt_StatisticsOnReadDLCs;
             //rtxt_StatisticsOnReadDLCs.Text = "dashes: " + art_hash + " - " + audio_hash + " - " + audioPreview_hash + "\n" + rtxt_StatisticsOnReadDLCs.Text;
             //rtxt_StatisticsOnReadDLCs.Text = "dasheD: " + filed.art_Hash + " - " + filed.audio_Hash + " - " + filed.audioPreview_Hash + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-            if (chbx_Additional_Manipualtions.GetItemChecked(13))//"14. Import all as Alternates"
+            if (chbx_Additional_Manipualtions.GetItemChecked(13) || (chbx_Additional_Manipualtions.GetItemChecked(14) && (tkversion == "" || (tkversion != "" && filed.Is_Original =="Yes"))))
+                //"14. Import all as Alternates" 15. Import any Custom as Alternate if an Original exists
                 return "Alternate";
             else
             {
@@ -1834,7 +1871,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 text += ((tkversion == filed.ToolkitVersion) ? "" : ("\n5/14+ Toolkit version: " + tkversion + " -> " + filed.ToolkitVersion));
                 text += ((author == filed.Author) ? "" : ("\n6/14+ Author: " + author + " -> " + filed.Author));
                 text += ((tunnings == filed.Tunning) ? "" : ("\n7/14+ Tunning: " + tunnings + " -> " + filed.Tunning));
-                text += ((tkversion == filed.Version) ? "" : ("\n8/14+ Version: " + datas.PackageVersion + " -> " + filed.Version));
+                text += ((datas.PackageVersion == filed.Version) ? "" : ("\n8/14+ Version: " + datas.PackageVersion + " -> " + filed.Version));
                 text += ((datas.Name == filed.DLC_Name) ? "" : ("\n9/14+ DLC ID: " + datas.Name + " -> " + filed.DLC_Name));
                 text += ((DD == filed.Has_DD) ? "" : ("\n10/14+ DD: " + DD + " -> " + filed.Has_DD));
                 //text += "\nOriginal Is Alternate: " + filed.Is_Alternate + (filed.Is_Alternate == "Yes" ? " v. " + filed.Alternate_Version_No : "");
@@ -2060,7 +2097,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 //11. Use shortnames in the Filename for Artist&Album //take only the capital letter/leters after a space
                 //12. Repack Originals
                 //13. Repack PC
-                //14. Import all Conflicted Songs as Alternates
+                //14. Import all Duplicates as Alternates
                 //15. Import any Custom as Alternate if an Original exists
                 //16. Move Original Imported files to temp/0_old
 
@@ -2239,6 +2276,13 @@ namespace RocksmithToolkitGUI.DLCManager
         private void cbx_File_Name_SelectedIndexChanged(object sender, EventArgs e)
         {
             txt_File_Name.Text += cbx_File_Name.Items[cbx_File_Name.SelectedIndex].ToString();
+        }
+
+        private void btn_DecompressAll_Click(object sender, EventArgs e)
+        {
+            //Show Intro database window
+            MainDB frm = new MainDB();
+            frm.Show();
         }
     }
 }

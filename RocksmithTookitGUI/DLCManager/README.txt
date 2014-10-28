@@ -1,22 +1,35 @@
 ﻿App Description: MASS Manipulation of Rocksmith DLC Library 
-            e.g. 1. in Rocksmith in the Library, each songs Album, to contain a personal rating, if it has DD, instr avail
+            e.g. 1. in Rocksmith in the Library, each songs Album, to contain a personal rating, if it has DD, instr. avail
             e.g. 2. in Rocksmith in the Library, each song to be sorted by Album(Year) and Track No
 
-Version: v0.1.8 (40% done)
+
+
+DLC Library Manager v0.1.8 beta
+Main Features:
+- Gather all DLCs metadata into 1 Access DB
+	- Manage Duplicates
+	- Edit Individual metadata
+- Modify meta data per each Rocksmith song: e.g. Album Field <Broken><Year> - <Album> - r<Rating> - <Avail. Instr.> - <DD> - <Tuning>
+- Repack
+
+Known Issues:
+- Re-Pack is broken momentarely
+- Edit of Arragements and Tones DB can only be done from Access for the moment
+
 Version History(release date):
 	0.1(12.08.2014) prototype, 
 	0.1.4(22.08.2014) populating the Read Folder - File.DB,
 	0.1.4.1(12.09.2014) fixed a solution folder issue when a folder includes another folder breaking the BUILD;
 	0.1.5(12.10.2014) Read + change + Rebuild
 	wip: 0.1.6(27.10.2014) (99%) Manage Import of Duplicates (upgrade to Access 2013 DB) 
-	wip: 0.1.7(30.10.2014) (20%) FORK from/on git
-	wip: 0.1.8(12.11.2014) (40%) New features: add/remove: DD, preview
-	tbr: 0.1.9(15.11.2014) (0%) Add lastconversion date and if importing a original over a alternate the alternate flag should be set no the Alternate
+	wip: 0.1.7(30.10.2014) (99%) FORK from/on git
+	wip: 0.1.8(12.11.2014) (40%) New features: add/remove: DD, preview; lasconversiondata
+	tbr: 0.1.9(15.11.2014) (0%) If importing an original over a alternate the alternate flag should be set no the Alternate
 	tbr: 0.2.1 move import DB to Main.DB?
 	tbr: 0.2.2 ?move Access code to project? or from hardcoded to viewes
 	tbr: 0.2.3(12.12.2014) (0%) save settings in Toolkit config
 	tbr: 0.2.4(03.03.2015) (30%) use parameterized SQL everywhere (&/ integrate template DB into project or a SQL DB)
-	tbr: 0.3 Redesign stats
+	tbr: 0.3 Redesign stats &Duplciates screen as an independednt form not a yes no cancel alert window
 	wip: 0.4(21.12.2014) (10%) Redesign MainDB+Edit Screen
 
 

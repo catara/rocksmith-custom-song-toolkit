@@ -16,6 +16,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         //bcapi
         public string DB_Path = "";
+
         public void Populate(ref DataGridView DataGridView, ref BindingSource bs) //, ref BindingSource bsPositions, ref BindingSource bsBadges
         {
             DataSet ds = new DataSet();
@@ -30,7 +31,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 //da = new OleDbDataAdapter("SELECT Identifier, Badge FROM Badge", cn);
                 //da.Fill(ds, "Badge");
             }
-
+            //MessageBox.Show("test");
             DataGridViewTextBoxColumn ID = new DataGridViewTextBoxColumn { DataPropertyName = "ID", HeaderText = "ID" };
             DataGridViewTextBoxColumn Song_Title = new DataGridViewTextBoxColumn { DataPropertyName = "Song_Title", HeaderText = "Song_Title" };
             DataGridViewTextBoxColumn Song_Title_Sort = new DataGridViewTextBoxColumn { DataPropertyName = "Song_Title_Sort", HeaderText = "Song_Title_Sort" };

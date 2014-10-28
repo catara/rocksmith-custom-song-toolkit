@@ -158,6 +158,7 @@ namespace RocksmithToolkitGUI
             tabControl1.TabPages.Remove(GeneralConfigTab);
         }
 
+        //bcapi
         private void dLCLibraryManagerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ShowDLCManager();

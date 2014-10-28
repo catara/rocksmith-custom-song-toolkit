@@ -43,6 +43,7 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.configurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dLCLibraryManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.dlcPackageCreatorTab = new System.Windows.Forms.TabPage();
             this.dlcPackageCreatorControl = new RocksmithToolkitGUI.DLCPackageCreator.DLCPackageCreator();
@@ -64,8 +65,10 @@
             this.ziggyConverterControl = new RocksmithToolkitGUI.ZiggyProEditorConverter.ConvertInput();
             this.GeneralConfigTab = new System.Windows.Forms.TabPage();
             this.generalConfigControl = new RocksmithToolkitGUI.Config.GeneralConfig();
+            this.DLCManagerTab = new System.Windows.Forms.TabPage();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.updateButton = new System.Windows.Forms.Button();
+            this.dlcManager1 = new RocksmithToolkitGUI.DLCManager.DLCManager();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.dlcPackageCreatorTab.SuspendLayout();
@@ -78,6 +81,7 @@
             this.cdlcConverterTab.SuspendLayout();
             this.zigProConverterTab.SuspendLayout();
             this.GeneralConfigTab.SuspendLayout();
+            this.DLCManagerTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -90,7 +94,8 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.aboutToolStripMenuItem,
-            this.configurationToolStripMenuItem});
+            this.configurationToolStripMenuItem,
+            this.dLCLibraryManagerToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
@@ -151,6 +156,13 @@
             this.configurationToolStripMenuItem.Text = "Configuration";
             this.configurationToolStripMenuItem.Click += new System.EventHandler(this.configurationToolStripMenuItem_Click);
             // 
+            // dLCLibraryManagerToolStripMenuItem
+            // 
+            this.dLCLibraryManagerToolStripMenuItem.Name = "dLCLibraryManagerToolStripMenuItem";
+            this.dLCLibraryManagerToolStripMenuItem.Size = new System.Drawing.Size(130, 20);
+            this.dLCLibraryManagerToolStripMenuItem.Text = "DLC Library Manager";
+            this.dLCLibraryManagerToolStripMenuItem.Click += new System.EventHandler(this.dLCLibraryManagerToolStripMenuItem_Click);
+            // 
             // tabControl1
             // 
             this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -166,6 +178,7 @@
             this.tabControl1.Controls.Add(this.cdlcConverterTab);
             this.tabControl1.Controls.Add(this.zigProConverterTab);
             this.tabControl1.Controls.Add(this.GeneralConfigTab);
+            this.tabControl1.Controls.Add(this.DLCManagerTab);
             this.tabControl1.Location = new System.Drawing.Point(17, 100);
             this.tabControl1.Margin = new System.Windows.Forms.Padding(8);
             this.tabControl1.MinimumSize = new System.Drawing.Size(550, 590);
@@ -249,7 +262,9 @@
             this.dlcConverterControl.MinimumSize = new System.Drawing.Size(400, 236);
             this.dlcConverterControl.Name = "dlcConverterControl";
             this.dlcConverterControl.Size = new System.Drawing.Size(419, 270);
+            this.dlcConverterControl.SourcePlatform = null;
             this.dlcConverterControl.TabIndex = 2;
+            this.dlcConverterControl.TargetPlatform = null;
             // 
             // DDCTab
             // 
@@ -395,6 +410,17 @@
             this.generalConfigControl.Size = new System.Drawing.Size(186, 68);
             this.generalConfigControl.TabIndex = 7;
             // 
+            // DLCManagerTab
+            // 
+            this.DLCManagerTab.Controls.Add(this.dlcManager1);
+            this.DLCManagerTab.Location = new System.Drawing.Point(4, 22);
+            this.DLCManagerTab.Name = "DLCManagerTab";
+            this.DLCManagerTab.Padding = new System.Windows.Forms.Padding(3);
+            this.DLCManagerTab.Size = new System.Drawing.Size(542, 564);
+            this.DLCManagerTab.TabIndex = 11;
+            this.DLCManagerTab.Text = "Manage DLCs";
+            this.DLCManagerTab.UseVisualStyleBackColor = true;
+            // 
             // pictureBox1
             // 
             this.pictureBox1.Anchor = System.Windows.Forms.AnchorStyles.Top;
@@ -420,6 +446,13 @@
             this.updateButton.UseVisualStyleBackColor = true;
             this.updateButton.Visible = false;
             this.updateButton.Click += new System.EventHandler(this.updateButton_Click);
+            // 
+            // dlcManager1
+            // 
+            this.dlcManager1.Location = new System.Drawing.Point(-4, 0);
+            this.dlcManager1.Name = "dlcManager1";
+            this.dlcManager1.Size = new System.Drawing.Size(613, 794);
+            this.dlcManager1.TabIndex = 0;
             // 
             // MainForm
             // 
@@ -452,6 +485,7 @@
             this.cdlcConverterTab.ResumeLayout(false);
             this.zigProConverterTab.ResumeLayout(false);
             this.GeneralConfigTab.ResumeLayout(false);
+            this.DLCManagerTab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -492,6 +526,9 @@
         private Config.GeneralConfig generalConfigControl;
         private System.Windows.Forms.TabPage cdlcConverterTab;
         private CDLC2Tab.CDLC2Tab cdlC2Tab1;
+        private System.Windows.Forms.ToolStripMenuItem dLCLibraryManagerToolStripMenuItem;
+        private System.Windows.Forms.TabPage DLCManagerTab;
+        private DLCManager.DLCManager dlcManager1;
     }
 }
 

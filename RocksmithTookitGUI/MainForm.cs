@@ -157,5 +157,24 @@ namespace RocksmithToolkitGUI
             InitializeComponent();
             tabControl1.TabPages.Remove(GeneralConfigTab);
         }
+
+        private void dLCLibraryManagerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowDLCManager();
+        }
+
+        private void ShowDLCManager()
+        {
+            //manageToolStripMenuItem.Enabled = false;
+            //bcapi (temp)Renaming this Fork
+            this.Text = String.Format("bcapi's v0.1.8 Custom Song Creator Toolkit (v{0} beta)", ToolkitVersion.version);
+
+            // Remove all tabs
+            tabControl1.TabPages.Clear();
+
+            // Add config
+            if (!tabControl1.TabPages.Contains(DLCManagerTab))
+                tabControl1.TabPages.Add(DLCManagerTab);
+        }
     }
 }

@@ -1,37 +1,35 @@
-<<<<<<< HEAD
-Enter file contents hereVersion: v0.1.6 (90% done)
-Version History:
-	0.1 prototype,
-	0.1.4 populating the Read Folder - File.DB,
-	0.1.4.1 fixed a solution folder issue when a folder includes another folder breaking the BUILD;
-	0.1.5 Read + change + Rebuild
-	wip: 0.1.6 Manage Import of Duplicates (upgrade to Access 2013 DB) 
-	tbr: 0.1.7-> FORK on git
-	tbr: 0.1.8 New features: DD, preview
-=======
 App Description: MASS Manipulation of Rocksmith DLC Library 
-            e.g. 1. in Rocksmith in the Library each songs Album to contain a personal rating, if it has DD, instr avail
-            e.g. 2. each song to be sorted by Album and track no
+            e.g. 1. in Rocksmith in the Library, each songs Album, to contain a personal rating, if it has DD, instr. avail
+            e.g. 2. in Rocksmith in the Library, each song to be sorted by Album(Year) and Track No
 
-Version: v0.1.8 (10% done)
+
+
+DLC Library Manager v0.1.8 beta
+Main Features
+- RGather all DLCs metadata into 1 Access DB
+	- Manage Duplicates
+- Modify meta data per each Rocksmith song: e.g. Album Field <Broken><Year> - <Album> - r<Rating> - <Avail. Instr.> - <DD> - <Tuning>
+-Repack
+Known Issues: Re-Pack is broken momentarely
+
 Version History(release date):
 	0.1(12.08.2014) prototype, 
 	0.1.4(22.08.2014) populating the Read Folder - File.DB,
 	0.1.4.1(12.09.2014) fixed a solution folder issue when a folder includes another folder breaking the BUILD;
 	0.1.5(12.10.2014) Read + change + Rebuild
-	wip: 0.1.6(18.10.2014) (90%) Manage Import of Duplicates (upgrade to Access 2013 DB) 
-	wip: 0.1.7(30.10.2014) (10%) FORK from/on git
+	wip: 0.1.6(27.10.2014) (99%) Manage Import of Duplicates (upgrade to Access 2013 DB) 
+	wip: 0.1.7(30.10.2014) (99%) FORK from/on git
 	wip: 0.1.8(12.11.2014) (40%) New features: add/remove: DD, preview
->>>>>>> origin/master
+	tbr: 0.1.9(15.11.2014) (0%) Add lastconversion date and if importing a original over a alternate the alternate flag should be set no the Alternate
 	tbr: 0.2.1 move import DB to Main.DB?
 	tbr: 0.2.2 ?move Access code to project? or from hardcoded to viewes
-	tbr: 0.2.3 save settings in Toolkit config
-	tbr: 0.2.4 use parameterized SQL everywhere (&/ integrate template DB into project or a SQL DB)
+	tbr: 0.2.3(12.12.2014) (0%) save settings in Toolkit config
+	tbr: 0.2.4(03.03.2015) (30%) use parameterized SQL everywhere (&/ integrate template DB into project or a SQL DB)
 	tbr: 0.3 Redesign stats
-	tbr: 0.4 Redesign MainDB+Edit Screen
+	wip: 0.4(21.12.2014) (10%) Redesign MainDB+Edit Screen
 
 
-Date: 15.10.2014
+Date: 28.10.2014
 Document Name: Rocksmith DLC Management tool README
 				(fork of rocksmith-custom-song-toolkit)
 Document purpose: To describe the functionailities and the way to change, the NEW tab that enable MASS Manipulation of Rocksmith DLC Library
@@ -46,11 +44,16 @@ _ future release
 IDE-Setup <old>
 1. Download Git Client and Visual Studio 2013 Desktop Edition
 2. Update Visual Studio, SQL, download HELP, and FORM-Controls-Object reference
-3. Create a new Tab and a new Menu Item
-4. Comment/fix regression Git issues
-5. Add New User Control &paste/create yr own assets(buttons..textboxes&logic)
+3.0 Create a new Folder DLCManager
+3.1 Add a new Item README.txt
+3.1 Create a new Tab and a new Menu Item
+3.2. Add User Control
+3.3. Add New User Control &paste/create yr own assets(buttons..textboxes&logic)
+3.4. Rebuild and then 3.4. Add the tab to the MainFormControl from the Toolbox DLCManager object
+3.5. Comment/fix regression Git issues
 6. --Add new libraries (include)
 7. --Add controls to activate User Controls
+8. Add Interop.Excel REference (Tools-AddReference-Extensions-Microsoft.Office.Interop.Excel)
 
 Main Features:
 +1. Ability to Generate a Database with all DLC

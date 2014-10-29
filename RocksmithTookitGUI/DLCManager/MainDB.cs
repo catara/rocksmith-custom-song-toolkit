@@ -82,7 +82,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var DB_Path = "C:\\Users\\8bcapitanoiu\\Desktop\\GitHub\\tmp" + "\\Files.accdb"; //DLCManager.txt_DBFolder.Text
+            var DB_Path = "C:\\Temp\\GitHub\\tmp" + "\\Files.accdb"; //DLCManager.txt_DBFolder.Text
             try
             {
                 Process process = Process.Start("msaccess.exe " + DB_Path + "");
@@ -124,7 +124,7 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_APP_ID.Text = DataGridView1.Rows[i].Cells[17].Value.ToString();
             txt_Description.Text = DataGridView1.Rows[i].Cells[52].Value.ToString();
 
-            if (DataGridView1.Rows[i].Cells[37].Value.ToString()=="Yes") chbx_Lead.Checked = true;
+            if (DataGridView1.Rows[i].Cells[37].Value.ToString() == "Yes") chbx_Lead.Checked = true;
             if (DataGridView1.Rows[i].Cells[39].Value.ToString() == "Yes") chbx_Combo.Checked = true;
             if (DataGridView1.Rows[i].Cells[38].Value.ToString() == "Yes") chbx_Rhythm.Checked = true;
             if (DataGridView1.Rows[i].Cells[35].Value.ToString() == "Yes") chbx_Bass.Checked = true;

@@ -29,9 +29,16 @@
         private void InitializeComponent()
         {
             this.Panel1 = new System.Windows.Forms.Panel();
+            this.button8 = new System.Windows.Forms.Button();
+            this.chbx_Rhythm = new System.Windows.Forms.CheckBox();
+            this.chbx_Combo = new System.Windows.Forms.CheckBox();
+            this.chbx_Bass = new System.Windows.Forms.CheckBox();
+            this.chbx_Lead = new System.Windows.Forms.CheckBox();
+            this.chbx_Selected = new System.Windows.Forms.CheckBox();
             this.button7 = new System.Windows.Forms.Button();
             this.chbx_Preview = new System.Windows.Forms.CheckBox();
             this.button6 = new System.Windows.Forms.Button();
+            this.txt_Description = new System.Windows.Forms.RichTextBox();
             this.chbx_Broken = new System.Windows.Forms.CheckBox();
             this.button5 = new System.Windows.Forms.Button();
             this.chbx_Sections = new System.Windows.Forms.CheckBox();
@@ -46,12 +53,6 @@
             this.btn_Arrangements = new System.Windows.Forms.Button();
             this.CheckBox1 = new System.Windows.Forms.CheckBox();
             this.DataGridView1 = new System.Windows.Forms.DataGridView();
-            this.chbx_Selected = new System.Windows.Forms.CheckBox();
-            this.chbx_Lead = new System.Windows.Forms.CheckBox();
-            this.chbx_Bass = new System.Windows.Forms.CheckBox();
-            this.chbx_Combo = new System.Windows.Forms.CheckBox();
-            this.chbx_Rhythm = new System.Windows.Forms.CheckBox();
-            this.txt_Description = new System.Windows.Forms.RichTextBox();
             this.txt_APP_ID = new RocksmithToolkitGUI.CueTextBox();
             this.txt_DLC_ID = new RocksmithToolkitGUI.CueTextBox();
             this.txt_Tuning = new RocksmithToolkitGUI.CueTextBox();
@@ -64,7 +65,6 @@
             this.txt_Title = new RocksmithToolkitGUI.CueTextBox();
             this.txt_Artist_Sort = new RocksmithToolkitGUI.CueTextBox();
             this.txt_Artist = new RocksmithToolkitGUI.CueTextBox();
-            this.button8 = new System.Windows.Forms.Button();
             this.Panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -112,6 +112,71 @@
             this.Panel1.Size = new System.Drawing.Size(1106, 114);
             this.Panel1.TabIndex = 3;
             // 
+            // button8
+            // 
+            this.button8.Enabled = false;
+            this.button8.Location = new System.Drawing.Point(874, 82);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(84, 26);
+            this.button8.TabIndex = 81;
+            this.button8.Text = "Save";
+            this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
+            // 
+            // chbx_Rhythm
+            // 
+            this.chbx_Rhythm.AutoSize = true;
+            this.chbx_Rhythm.Enabled = false;
+            this.chbx_Rhythm.Location = new System.Drawing.Point(606, 74);
+            this.chbx_Rhythm.Name = "chbx_Rhythm";
+            this.chbx_Rhythm.Size = new System.Drawing.Size(62, 17);
+            this.chbx_Rhythm.TabIndex = 77;
+            this.chbx_Rhythm.Text = "Rhythm";
+            this.chbx_Rhythm.UseVisualStyleBackColor = true;
+            // 
+            // chbx_Combo
+            // 
+            this.chbx_Combo.AutoSize = true;
+            this.chbx_Combo.Enabled = false;
+            this.chbx_Combo.Location = new System.Drawing.Point(553, 74);
+            this.chbx_Combo.Name = "chbx_Combo";
+            this.chbx_Combo.Size = new System.Drawing.Size(59, 17);
+            this.chbx_Combo.TabIndex = 76;
+            this.chbx_Combo.Text = "Combo";
+            this.chbx_Combo.UseVisualStyleBackColor = true;
+            // 
+            // chbx_Bass
+            // 
+            this.chbx_Bass.AutoSize = true;
+            this.chbx_Bass.Enabled = false;
+            this.chbx_Bass.Location = new System.Drawing.Point(499, 91);
+            this.chbx_Bass.Name = "chbx_Bass";
+            this.chbx_Bass.Size = new System.Drawing.Size(49, 17);
+            this.chbx_Bass.TabIndex = 75;
+            this.chbx_Bass.Text = "Bass";
+            this.chbx_Bass.UseVisualStyleBackColor = true;
+            // 
+            // chbx_Lead
+            // 
+            this.chbx_Lead.AutoSize = true;
+            this.chbx_Lead.Enabled = false;
+            this.chbx_Lead.Location = new System.Drawing.Point(499, 74);
+            this.chbx_Lead.Name = "chbx_Lead";
+            this.chbx_Lead.Size = new System.Drawing.Size(50, 17);
+            this.chbx_Lead.TabIndex = 74;
+            this.chbx_Lead.Text = "Lead";
+            this.chbx_Lead.UseVisualStyleBackColor = true;
+            // 
+            // chbx_Selected
+            // 
+            this.chbx_Selected.AutoSize = true;
+            this.chbx_Selected.Location = new System.Drawing.Point(727, 15);
+            this.chbx_Selected.Name = "chbx_Selected";
+            this.chbx_Selected.Size = new System.Drawing.Size(68, 17);
+            this.chbx_Selected.TabIndex = 64;
+            this.chbx_Selected.Text = "Selected";
+            this.chbx_Selected.UseVisualStyleBackColor = true;
+            // 
             // button7
             // 
             this.button7.Enabled = false;
@@ -143,10 +208,17 @@
             this.button6.Text = "Reset";
             this.button6.UseVisualStyleBackColor = true;
             // 
+            // txt_Description
+            // 
+            this.txt_Description.Location = new System.Drawing.Point(802, 9);
+            this.txt_Description.Name = "txt_Description";
+            this.txt_Description.Size = new System.Drawing.Size(156, 69);
+            this.txt_Description.TabIndex = 54;
+            this.txt_Description.Text = "Description";
+            // 
             // chbx_Broken
             // 
             this.chbx_Broken.AutoSize = true;
-            this.chbx_Broken.Enabled = false;
             this.chbx_Broken.Location = new System.Drawing.Point(727, 31);
             this.chbx_Broken.Name = "chbx_Broken";
             this.chbx_Broken.Size = new System.Drawing.Size(60, 17);
@@ -189,7 +261,7 @@
             // 
             this.chbx_DD.AutoSize = true;
             this.chbx_DD.Enabled = false;
-            this.chbx_DD.Location = new System.Drawing.Point(599, 47);
+            this.chbx_DD.Location = new System.Drawing.Point(553, 54);
             this.chbx_DD.Name = "chbx_DD";
             this.chbx_DD.Size = new System.Drawing.Size(42, 17);
             this.chbx_DD.TabIndex = 45;
@@ -200,7 +272,7 @@
             // 
             this.chbx_Original.AutoSize = true;
             this.chbx_Original.Enabled = false;
-            this.chbx_Original.Location = new System.Drawing.Point(599, 31);
+            this.chbx_Original.Location = new System.Drawing.Point(606, 53);
             this.chbx_Original.Name = "chbx_Original";
             this.chbx_Original.Size = new System.Drawing.Size(61, 17);
             this.chbx_Original.TabIndex = 44;
@@ -289,68 +361,6 @@
             this.DataGridView1.TabIndex = 2;
             this.DataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick_1);
             // 
-            // chbx_Selected
-            // 
-            this.chbx_Selected.AutoSize = true;
-            this.chbx_Selected.Location = new System.Drawing.Point(734, 8);
-            this.chbx_Selected.Name = "chbx_Selected";
-            this.chbx_Selected.Size = new System.Drawing.Size(68, 17);
-            this.chbx_Selected.TabIndex = 64;
-            this.chbx_Selected.Text = "Selected";
-            this.chbx_Selected.UseVisualStyleBackColor = true;
-            // 
-            // chbx_Lead
-            // 
-            this.chbx_Lead.AutoSize = true;
-            this.chbx_Lead.Enabled = false;
-            this.chbx_Lead.Location = new System.Drawing.Point(499, 74);
-            this.chbx_Lead.Name = "chbx_Lead";
-            this.chbx_Lead.Size = new System.Drawing.Size(50, 17);
-            this.chbx_Lead.TabIndex = 74;
-            this.chbx_Lead.Text = "Lead";
-            this.chbx_Lead.UseVisualStyleBackColor = true;
-            // 
-            // chbx_Bass
-            // 
-            this.chbx_Bass.AutoSize = true;
-            this.chbx_Bass.Enabled = false;
-            this.chbx_Bass.Location = new System.Drawing.Point(499, 91);
-            this.chbx_Bass.Name = "chbx_Bass";
-            this.chbx_Bass.Size = new System.Drawing.Size(49, 17);
-            this.chbx_Bass.TabIndex = 75;
-            this.chbx_Bass.Text = "Bass";
-            this.chbx_Bass.UseVisualStyleBackColor = true;
-            // 
-            // chbx_Combo
-            // 
-            this.chbx_Combo.AutoSize = true;
-            this.chbx_Combo.Enabled = false;
-            this.chbx_Combo.Location = new System.Drawing.Point(553, 74);
-            this.chbx_Combo.Name = "chbx_Combo";
-            this.chbx_Combo.Size = new System.Drawing.Size(59, 17);
-            this.chbx_Combo.TabIndex = 76;
-            this.chbx_Combo.Text = "Combo";
-            this.chbx_Combo.UseVisualStyleBackColor = true;
-            // 
-            // chbx_Rhythm
-            // 
-            this.chbx_Rhythm.AutoSize = true;
-            this.chbx_Rhythm.Enabled = false;
-            this.chbx_Rhythm.Location = new System.Drawing.Point(606, 74);
-            this.chbx_Rhythm.Name = "chbx_Rhythm";
-            this.chbx_Rhythm.Size = new System.Drawing.Size(62, 17);
-            this.chbx_Rhythm.TabIndex = 77;
-            this.chbx_Rhythm.Text = "Rhythm";
-            this.chbx_Rhythm.UseVisualStyleBackColor = true;
-            // 
-            // txt_Description
-            // 
-            this.txt_Description.Location = new System.Drawing.Point(802, 9);
-            this.txt_Description.Name = "txt_Description";
-            this.txt_Description.Size = new System.Drawing.Size(156, 69);
-            this.txt_Description.TabIndex = 54;
-            this.txt_Description.Text = "Description";
-            // 
             // txt_APP_ID
             // 
             this.txt_APP_ID.Cue = "App ID";
@@ -376,9 +386,9 @@
             this.txt_Tuning.Cue = "Tuning";
             this.txt_Tuning.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_Tuning.ForeColor = System.Drawing.Color.Gray;
-            this.txt_Tuning.Location = new System.Drawing.Point(647, 3);
+            this.txt_Tuning.Location = new System.Drawing.Point(614, 3);
             this.txt_Tuning.Name = "txt_Tuning";
-            this.txt_Tuning.Size = new System.Drawing.Size(81, 20);
+            this.txt_Tuning.Size = new System.Drawing.Size(91, 20);
             this.txt_Tuning.TabIndex = 78;
             // 
             // txt_Version
@@ -388,7 +398,7 @@
             this.txt_Version.ForeColor = System.Drawing.Color.Gray;
             this.txt_Version.Location = new System.Drawing.Point(499, 49);
             this.txt_Version.Name = "txt_Version";
-            this.txt_Version.Size = new System.Drawing.Size(91, 20);
+            this.txt_Version.Size = new System.Drawing.Size(42, 20);
             this.txt_Version.TabIndex = 73;
             // 
             // txt_Author
@@ -398,7 +408,7 @@
             this.txt_Author.ForeColor = System.Drawing.Color.Gray;
             this.txt_Author.Location = new System.Drawing.Point(499, 28);
             this.txt_Author.Name = "txt_Author";
-            this.txt_Author.Size = new System.Drawing.Size(91, 20);
+            this.txt_Author.Size = new System.Drawing.Size(156, 20);
             this.txt_Author.TabIndex = 72;
             // 
             // txt_Rating
@@ -406,7 +416,7 @@
             this.txt_Rating.Cue = "Rating";
             this.txt_Rating.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_Rating.ForeColor = System.Drawing.Color.Gray;
-            this.txt_Rating.Location = new System.Drawing.Point(596, 3);
+            this.txt_Rating.Location = new System.Drawing.Point(563, 3);
             this.txt_Rating.Name = "txt_Rating";
             this.txt_Rating.Size = new System.Drawing.Size(45, 20);
             this.txt_Rating.TabIndex = 71;
@@ -418,7 +428,7 @@
             this.txt_Track_No.ForeColor = System.Drawing.Color.Gray;
             this.txt_Track_No.Location = new System.Drawing.Point(499, 3);
             this.txt_Track_No.Name = "txt_Track_No";
-            this.txt_Track_No.Size = new System.Drawing.Size(91, 20);
+            this.txt_Track_No.Size = new System.Drawing.Size(58, 20);
             this.txt_Track_No.TabIndex = 70;
             // 
             // txt_Album
@@ -470,17 +480,6 @@
             this.txt_Artist.Name = "txt_Artist";
             this.txt_Artist.Size = new System.Drawing.Size(286, 20);
             this.txt_Artist.TabIndex = 65;
-            // 
-            // button8
-            // 
-            this.button8.Enabled = false;
-            this.button8.Location = new System.Drawing.Point(874, 82);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(84, 26);
-            this.button8.TabIndex = 81;
-            this.button8.Text = "Save";
-            this.button8.UseVisualStyleBackColor = true;
-            this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
             // MainDB
             // 

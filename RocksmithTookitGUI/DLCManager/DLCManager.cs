@@ -2128,12 +2128,10 @@ namespace RocksmithToolkitGUI.DLCManager
                             das.Fill(dis, "Main");
                         }
                     }
-                //if (chbx_Additional_Manipualtions.SelectedValue == "Make all Titles Unique")
-                //    data.SongInfo.SongDisplayName = i + data.SongInfo.SongDisplayName;
 
                 //Fix the _preview_preview issue
                 var ms = data.OggPath; var audiopath = ""; var audioprevpath = "";
-                MessageBox.Show("One or more");
+                //MessageBox.Show("One or more");
                 try
                 {
                     var sourceAudioFiles = Directory.GetFiles(norm_path, "*.wem", SearchOption.AllDirectories);
@@ -2161,7 +2159,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     MessageBox.Show("One or more fields are missing information.", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                MessageBox.Show("test2.1");
+                //MessageBox.Show("test2.1");
 
                 //if (GameVersion.RS2014 == GameVersion.RS2012)
                 //{
@@ -2185,24 +2183,10 @@ namespace RocksmithToolkitGUI.DLCManager
                 if (file.Is_Alternate == "Yes") FN += "a." + file.Alternate_Version_No + file.Author;
 
                 rtxt_StatisticsOnReadDLCs.Text = "fn: " + FN + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                //if (chbx_Additional_Manipualtions.GetItemChecked(1)) rtxt_StatisticsOnReadDLCs.Text = "1" + rtxt_StatisticsOnReadDLCs.Text;
-                //if (chbx_Additional_Manipualtions.GetItemChecked(1)) rtxt_StatisticsOnReadDLCs.Text = "2" + rtxt_StatisticsOnReadDLCs.Text;
-                //if (chbx_Additional_Manipualtions.GetItemChecked(3)) rtxt_StatisticsOnReadDLCs.Text = "3" + rtxt_StatisticsOnReadDLCs.Text;
-                //if (chbx_Additional_Manipualtions.GetItemChecked(4)) rtxt_StatisticsOnReadDLCs.Text = "4" + rtxt_StatisticsOnReadDLCs.Text;
-                //if (chbx_Additional_Manipualtions.GetItemChecked(5)) rtxt_StatisticsOnReadDLCs.Text = "5" + rtxt_StatisticsOnReadDLCs.Text;
-                //if (chbx_Additional_Manipualtions.GetItemChecked(6)) rtxt_StatisticsOnReadDLCs.Text = "6" + rtxt_StatisticsOnReadDLCs.Text;
-                //if (chbx_Additional_Manipualtions.GetItemChecked(7)) rtxt_StatisticsOnReadDLCs.Text = "7" + rtxt_StatisticsOnReadDLCs.Text;
-                //if (chbx_Additional_Manipualtions.GetItemChecked(8)) rtxt_StatisticsOnReadDLCs.Text = "8" + rtxt_StatisticsOnReadDLCs.Text;
-                //if (chbx_Additional_Manipualtions.GetItemChecked(9)) rtxt_StatisticsOnReadDLCs.Text = "9" + rtxt_StatisticsOnReadDLCs.Text;
-                //if (chbx_Additional_Manipualtions.GetItemChecked(10)) rtxt_StatisticsOnReadDLCs.Text = "10" + rtxt_StatisticsOnReadDLCs.Text;
-                //if (chbx_Additional_Manipualtions.GetItemChecked(11)) rtxt_StatisticsOnReadDLCs.Text = "11" + rtxt_StatisticsOnReadDLCs.Text;
-                //if (chbx_Additional_Manipualtions.GetItemChecked(12)) rtxt_StatisticsOnReadDLCs.Text = "12" + rtxt_StatisticsOnReadDLCs.Text;
                 if (chbx_Additional_Manipualtions.GetItemChecked(8))
                 {
-                    //rtxt_StatisticsOnReadDLCs.Text = "removed spaces and dots" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                     FN = FN.Replace(".", "_");
                     FN = FN.Replace(" ", "_");
-                    //rtxt_StatisticsOnReadDLCs.Text = "removed spaces and dots" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                 }
 
                 var dlcSavePath = txt_TempPath.Text + "\\" + FN;

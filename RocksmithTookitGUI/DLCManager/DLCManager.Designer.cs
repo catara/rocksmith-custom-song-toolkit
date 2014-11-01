@@ -908,9 +908,9 @@
             this.lbl_StatisticsOnReadDLCs.Location = new System.Drawing.Point(5, 500);
             this.lbl_StatisticsOnReadDLCs.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_StatisticsOnReadDLCs.Name = "lbl_StatisticsOnReadDLCs";
-            this.lbl_StatisticsOnReadDLCs.Size = new System.Drawing.Size(52, 13);
+            this.lbl_StatisticsOnReadDLCs.Size = new System.Drawing.Size(86, 13);
             this.lbl_StatisticsOnReadDLCs.TabIndex = 265;
-            this.lbl_StatisticsOnReadDLCs.Text = "Statistics:";
+            this.lbl_StatisticsOnReadDLCs.Text = "Progress Details:";
             // 
             // rtxt_StatisticsOnReadDLCs
             // 

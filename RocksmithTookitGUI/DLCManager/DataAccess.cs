@@ -16,16 +16,17 @@ namespace RocksmithToolkitGUI.DLCManager
 
         //bcapi
         public string DB_Path = "";
+        public DataSet dssx = new DataSet();
 
         public void Populate(ref DataGridView DataGridView, ref BindingSource bs) //, ref BindingSource bsPositions, ref BindingSource bsBadges
         {
-            DataSet ds = new DataSet();
+            
 
             DB_Path = "../../../../tmp\\Files.accdb;";
             using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
             {
                 OleDbDataAdapter da = new OleDbDataAdapter("SELECT * FROM Main ORDER BY Artist, Album_Year, Album, Song_Title;", cn);
-                da.Fill(ds, "Main");
+                da.Fill(dssx, "Main");
                 //da = new OleDbDataAdapter("SELECT Identifier,ContactPosition FROM PositionType;", cn);
                 //da.Fill(ds, "PositionType");
                 //da = new OleDbDataAdapter("SELECT Identifier, Badge FROM Badge", cn);
@@ -227,9 +228,9 @@ namespace RocksmithToolkitGUI.DLCManager
             }
             );
 
-            ds.Tables["Main"].AcceptChanges();
+            dssx.Tables["Main"].AcceptChanges();
 
-            bs.DataSource = ds.Tables["Main"];
+            bs.DataSource = dssx.Tables["Main"];
             DataGridView.DataSource = bs;
             //DataGridView.ExpandColumns();
         }

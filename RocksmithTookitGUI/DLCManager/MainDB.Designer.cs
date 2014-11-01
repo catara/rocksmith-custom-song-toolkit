@@ -114,7 +114,6 @@
             // 
             // button8
             // 
-            this.button8.Enabled = false;
             this.button8.Location = new System.Drawing.Point(874, 82);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(84, 26);
@@ -271,7 +270,6 @@
             // chbx_Original
             // 
             this.chbx_Original.AutoSize = true;
-            this.chbx_Original.Enabled = false;
             this.chbx_Original.Location = new System.Drawing.Point(606, 53);
             this.chbx_Original.Name = "chbx_Original";
             this.chbx_Original.Size = new System.Drawing.Size(61, 17);

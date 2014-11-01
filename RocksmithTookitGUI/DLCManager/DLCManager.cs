@@ -179,9 +179,9 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             if (chbx_DebugB.Checked)
             {
-                txt_RocksmithDLCPath.Text = "../../../../tmp";
-                txt_DBFolder.Text = "../../../../tmp";
-                txt_TempPath.Text = "../../../../tmp\\0";
+                txt_RocksmithDLCPath.Text = "C:\\GitHub\\tmp";
+                txt_DBFolder.Text = "C:\\GitHub\\tmp";
+                txt_TempPath.Text = "C:\\GitHub\\tmp\\0";
                 //txt_RocksmithDLCPath.Text = "Z:\\TOSHIBA EXT\\Steam\\SteamApps\\common\\Rocksmith2014\\dlc";
                 //txt_TempPath.Text = "Z:\\TOSHIBA EXT\\Steam\\SteamApps\\common\\Rocksmith2014\\dlc\\0";
                 //txt_TempPath.Text = "tmp\\0\\0_import";
@@ -428,7 +428,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     }
                 }
             }
-            rtxt_StatisticsOnReadDLCs.Text = "returning " + i + " char " + fulltxt + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+            //rtxt_StatisticsOnReadDLCs.Text = "returning " + i + " char " + fulltxt + "\n" + rtxt_StatisticsOnReadDLCs.Text;
             return fulltxt;
         }
 
@@ -687,10 +687,11 @@ namespace RocksmithToolkitGUI.DLCManager
             Set_DEBUG(); //Default value when in dEV/Debug mode, if needed
 
             var Temp_Path_Import = txt_TempPath.Text + "\\0_import";
+            var old_Path_Import = txt_TempPath.Text + "\\0_old";
             string pathDLC = txt_RocksmithDLCPath.Text;
-            if (Directory.Exists(txt_TempPath.Text) != true || Directory.Exists(Temp_Path_Import) != true || (Directory.Exists(pathDLC)) != true)
+            if (Directory.Exists(txt_TempPath.Text) != true || Directory.Exists(Temp_Path_Import) != true || Directory.Exists(pathDLC) != true || Directory.Exists(old_Path_Import) != true)
             {
-                MessageBox.Show(String.Format("One of multiple folder missing " + txt_TempPath.Text + ", " + Temp_Path_Import + ", " + pathDLC, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error));
+                MessageBox.Show(String.Format("One of multiple folder missing " + txt_TempPath.Text + ", " + Temp_Path_Import + ", " + pathDLC+ ", "+ old_Path_Import, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error));
                 return;
             }
 
@@ -1767,11 +1768,11 @@ namespace RocksmithToolkitGUI.DLCManager
                                     //Move imported psarc into the old folder
                                     //var destin_path = txt_RocksmithDLCPath.Text + "\\" + ds.Tables[0].Rows[i].ItemArray[2].ToString();
                                     //txt_TempPath.Text + "\\" + ((info.PackageVersion == null) ? "Original" : "CDLC") + "_" + info.SongInfo.Artist + "_" + info.SongInfo.SongYear + "_" + info.SongInfo.Album + "_" + info.SongInfo.SongDisplayName;
-                                    rtxt_StatisticsOnReadDLCs.Text = "done" + "..." + rtxt_StatisticsOnReadDLCs.Text;
+                                    rtxt_StatisticsOnReadDLCs.Text = "predone" + "..." + rtxt_StatisticsOnReadDLCs.Text;
                                     try
                                     {
-                                        File.Copy(txt_TempPath.Text + "\\\0\\" + original_FileName, import_path + "\\" + original_FileName);
-                                        rtxt_StatisticsOnReadDLCs.Text = "File Moved" + "..." + rtxt_StatisticsOnReadDLCs.Text;
+                                        File.Copy(txt_RocksmithDLCPath.Text + "\\" + original_FileName, old_Path_Import + "\\" + original_FileName);
+                                        //rtxt_StatisticsOnReadDLCs.Text = "File Moved" + "..." + rtxt_StatisticsOnReadDLCs.Text;
                                     }
                                     catch (System.IO.FileNotFoundException ee)
                                     {
@@ -2022,9 +2023,9 @@ namespace RocksmithToolkitGUI.DLCManager
             //var j = 0;
             foreach (var file in files)
             {
-
                 if (i == norows)
                     break;
+                rtxt_StatisticsOnReadDLCs.Text = "...Pack" + i + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                 // UNPACK
                 //var unpackedDir = Packer.Unpack(FullPath, Temp_Path_Import, true, true, false);
                 var packagePlatform = file.Folder_Name.GetPlatform();
@@ -2070,7 +2071,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 };
 
                 var norm_path = txt_TempPath.Text + "\\" + ((data.PackageVersion == null) ? "ORIG" : "CDLC") + "_" + data.SongInfo.Artist + "_" + data.SongInfo.SongYear + "_" + data.SongInfo.Album + "_" + data.SongInfo.SongDisplayName;
-
+                rtxt_StatisticsOnReadDLCs.Text = "...manipul" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                 //manipulating the info
                 if (cbx_Activ_Title.Checked)
                     data.SongInfo.SongDisplayName = Manipulate_strings(txt_Title.Text, i);
@@ -2132,9 +2133,11 @@ namespace RocksmithToolkitGUI.DLCManager
                 //Fix the _preview_preview issue
                 var ms = data.OggPath; var audiopath = ""; var audioprevpath = "";
                 //MessageBox.Show("One or more");
+                rtxt_StatisticsOnReadDLCs.Text = "maybe fixing .." + rtxt_StatisticsOnReadDLCs.Text;
                 try
                 {
                     var sourceAudioFiles = Directory.GetFiles(norm_path, "*.wem", SearchOption.AllDirectories);
+
                     //var targetAudioFiles = new List<string>();
                     foreach (var fil in sourceAudioFiles)
                     {
@@ -2182,7 +2185,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
                 if (file.Is_Alternate == "Yes") FN += "a." + file.Alternate_Version_No + file.Author;
 
-                rtxt_StatisticsOnReadDLCs.Text = "fn: " + FN + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                //rtxt_StatisticsOnReadDLCs.Text = "fn: " + FN + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                 if (chbx_Additional_Manipualtions.GetItemChecked(8))
                 {
                     FN = FN.Replace(".", "_");
@@ -2191,7 +2194,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
                 var dlcSavePath = txt_TempPath.Text + "\\" + FN;
                 //dlcSavePath += ".pscarc";
-                rtxt_StatisticsOnReadDLCs.Text = "after man:" + dlcSavePath + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                //rtxt_StatisticsOnReadDLCs.Text = "after man:" + dlcSavePath + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                 //rtxt_StatisticsOnReadDLCs.Text ="tosave " + data.SongInfo.SongDisplayName + "\n" + data.SongInfo.SongDisplayNameSort + "\n" + data.SongInfo.Artist + "\n" + data.SongInfo.ArtistSort + "\n" + data.SongInfo.Album + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                 // + "\n"++"\n"++"\n"++"\n"++"\n"++"\n" +;
                 //if (Path.GetFileName(dlcSavePath).Contains(" ") && rbtn_PS3.Checked)
@@ -2203,7 +2206,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 //currentOperationLabel.Visible = true;
                 //dlcGenerateButton.Enabled = false;
                 // bwGenerate.RunWorkerAsync(data);
-                //rtxt_StatisticsOnReadDLCs.Text ="rez : " + dlcSavePath + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                rtxt_StatisticsOnReadDLCs.Text ="rez : " + dlcSavePath + "\n" + rtxt_StatisticsOnReadDLCs.Text;
 
                 //int progress = 0;
                 //bwGenerate.ReportProgress(progress, "Generating PC package");

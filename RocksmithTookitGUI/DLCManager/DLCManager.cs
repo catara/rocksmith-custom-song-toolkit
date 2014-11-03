@@ -20,7 +20,9 @@ using Ookii.Dialogs;
 using System.Net;
 using System.Reflection;
 using System.Security.Cryptography; //For File hash
+using System.Diagnostics;//repack
 
+using RocksmithToolkitLib.Ogg;//pack check
 //For the Export to Excel function
 using System.Data.SqlClient;
 //using Excel = Microsoft.Office.Interop.Excel;
@@ -34,9 +36,39 @@ namespace RocksmithToolkitGUI.DLCManager
         //bcapi
         private const string MESSAGEBOX_CAPTION = "Manage a Library of DLCs";
         private bool loading = false;
-        public BackgroundWorker bwGenerate = new BackgroundWorker(); //bcapi
+        public BackgroundWorker bwRGenerate = new BackgroundWorker(); //bcapi
+        private BackgroundWorker bwConvert = new BackgroundWorker { WorkerReportsProgress = true }; //bcapi1
+        private StringBuilder errorsFound;//bcapi1
+        string dlcSavePath = "";
+        DLCPackageData data;
+
+
         OleDbConnection connection;
         OleDbCommand command;
+        public GameVersion CurrentGameVersion
+        {
+            get
+            {
+                //if (RS2014.Checked)
+                    return GameVersion.RS2014;
+                //else
+                //    return GameVersion.RS2012; //Default
+            }
+            set
+            {
+                //switch (value)
+                //{
+                    //case GameVersion.RS2014:
+                        //RS2014.Checked = true;
+                        //break;
+                    //default:
+                    //    RS2012.Checked = true;
+                    //    break;
+                //}
+            }
+        }
+
+
         public class Files
         {
             public string ID { get; set; }   //	ID
@@ -122,13 +154,25 @@ namespace RocksmithToolkitGUI.DLCManager
             public string AlbumArt_Hash { get; set; }
             public string Audio_Hash { get; set; }
             public string AudioPreview_Hash { get; set; }
+            public string Has_BassDD { get; set; }
         }
         public Files[] files = new Files[10000];
+        //public Files file;
 
         public DLCManager()
         {
             InitializeComponent();
             Set_DEBUG();
+            // Generate package worker
+            rtxt_StatisticsOnReadDLCs.Text = "genz : " + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+            bwRGenerate.DoWork += new DoWorkEventHandler(GeneratePackage);
+           rtxt_StatisticsOnReadDLCs.Text = "genn : " + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+
+            bwRGenerate.ProgressChanged += new ProgressChangedEventHandler(ProgressChanged);
+            rtxt_StatisticsOnReadDLCs.Text = "genc : " + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+            bwRGenerate.RunWorkerCompleted += new RunWorkerCompletedEventHandler(ProcessCompleted);
+            rtxt_StatisticsOnReadDLCs.Text = "gen7 : " + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+            bwRGenerate.WorkerReportsProgress = true;
         }
 
         private void btn_SteamDLCFolder_Click(object sender, EventArgs e)
@@ -343,6 +387,7 @@ namespace RocksmithToolkitGUI.DLCManager
             var readt = false;
             for (i = 0; i <= txt.Length - 1; i++)
             {
+                rtxt_StatisticsOnReadDLCs.Text = i  + rtxt_StatisticsOnReadDLCs.Text;
                 curtext = txt[i].ToString();//.Substring(i,1);
                 if (curtext == "<")
                 {
@@ -428,7 +473,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     }
                 }
             }
-            //rtxt_StatisticsOnReadDLCs.Text = "returning " + i + " char " + fulltxt + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+            rtxt_StatisticsOnReadDLCs.Text = "returning " + i + " char " + fulltxt + "\n" + rtxt_StatisticsOnReadDLCs.Text;
             return fulltxt;
         }
 
@@ -536,6 +581,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         files[i].AlbumArt_Hash = dataRow.ItemArray[80].ToString();
                         files[i].Audio_Hash = dataRow.ItemArray[81].ToString();
                         files[i].AudioPreview_Hash = dataRow.ItemArray[82].ToString();
+                        files[i].Has_BassDD = dataRow.ItemArray[83].ToString();
                         i++;
                     }
                     //Closing Connection
@@ -764,7 +810,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 Console.WriteLine(ee.Message);
                 //continue;
             }
-            rtxt_StatisticsOnReadDLCs.Text = DB_Path + " Cleaned" + rtxt_StatisticsOnReadDLCs.Text;
+            rtxt_StatisticsOnReadDLCs.Text = DB_Path + " Cleaned" + "\n"+rtxt_StatisticsOnReadDLCs.Text;
 
 
             //Populate ImportDB
@@ -2002,12 +2048,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         public void btn_RePack_Click(object sender, EventArgs e)
         {
-            //PACKAGE
-            //Import DLC
-            //Populate DB the AUTOM fields
-            // FILL PACKAGE CREATOR FORM
 
-            //Files[] files = new Files[10000];
             var cmd = "SELECT * FROM Main ";
             if (rbtn_Population_Selected.Checked == true) cmd += "WHERE Selected = \"Yes\"";
             //else if (rbtn_Population_All.Checked) ;
@@ -2025,18 +2066,17 @@ namespace RocksmithToolkitGUI.DLCManager
             {
                 if (i == norows)
                     break;
-                rtxt_StatisticsOnReadDLCs.Text = "...Pack" + i + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                // UNPACK
-                //var unpackedDir = Packer.Unpack(FullPath, Temp_Path_Import, true, true, false);
+                rtxt_StatisticsOnReadDLCs.Text = "...Pack" + i + "\n" + rtxt_StatisticsOnReadDLCs.Text;// UNPACK
+                                                                                                       //var unpackedDir = Packer.Unpack(FullPath, Temp_Path_Import, true, true, false);
                 var packagePlatform = file.Folder_Name.GetPlatform();
                 // REORGANIZE
-                //var structured = ConfigRepository.Instance().GetBoolean("creator_structured");
+                var structured = ConfigRepository.Instance().GetBoolean("creator_structured");
                 //if (structured)
                 //file.Folder_Name = DLCPackageData.DoLikeProject(file.Folder_Name);
                 // LOAD DATA
                 var info = DLCPackageData.LoadFromFolder(file.Folder_Name, packagePlatform);
 
-                var data = new DLCPackageData
+                data = new DLCPackageData
                 {
                     GameVersion = GameVersion.RS2014,
                     Pc = true,
@@ -2075,12 +2115,16 @@ namespace RocksmithToolkitGUI.DLCManager
                 //manipulating the info
                 if (cbx_Activ_Title.Checked)
                     data.SongInfo.SongDisplayName = Manipulate_strings(txt_Title.Text, i);
+                rtxt_StatisticsOnReadDLCs.Text = "...manipul" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                 if (cbx_Activ_Title_Sort.Checked)
                     data.SongInfo.SongDisplayNameSort = Manipulate_strings(txt_Title_Sort.Text, i);
+                rtxt_StatisticsOnReadDLCs.Text = "...manipul" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                 if (cbx_Activ_Artist.Checked)
                     data.SongInfo.Artist = Manipulate_strings(txt_Artist.Text, i);
+                rtxt_StatisticsOnReadDLCs.Text = "...manipul" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                 if (cbx_Activ_Artist_Sort.Checked)
                     data.SongInfo.ArtistSort = Manipulate_strings(txt_Artist_Sort.Text, i);
+                rtxt_StatisticsOnReadDLCs.Text = "...manipul" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                 if (cbx_Activ_Album.Checked)
                     data.SongInfo.Album = Manipulate_strings(txt_Album.Text, i);
 
@@ -2101,7 +2145,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 //14. Import all Duplicates as Alternates
                 //15. Import any Custom as Alternate if an Original exists
                 //16. Move Original Imported files to temp/0_old
-
+                rtxt_StatisticsOnReadDLCs.Text = "...nipul" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                 if (chbx_Additional_Manipualtions.GetItemChecked(0)) //"1. Add Increment to all Titles"
                     data.Name = i + data.Name;
                 artist = "";
@@ -2113,7 +2157,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
                 if (chbx_Additional_Manipualtions.GetItemChecked(7)) //"8. Don't repack Broken songs"
                     if (file.Is_Broken == "Yes") break;
-
+                rtxt_StatisticsOnReadDLCs.Text = "...manipl" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                 if (chbx_Additional_Manipualtions.GetItemChecked(2)) //"3. Make all DLC IDs unique (&save)"
                     if (file.UniqueDLCName != null) data.Name = file.UniqueDLCName;
                     else
@@ -2133,7 +2177,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 //Fix the _preview_preview issue
                 var ms = data.OggPath; var audiopath = ""; var audioprevpath = "";
                 //MessageBox.Show("One or more");
-                rtxt_StatisticsOnReadDLCs.Text = "maybe fixing .." + rtxt_StatisticsOnReadDLCs.Text;
+                rtxt_StatisticsOnReadDLCs.Text = "maybe fixing .." + "\n"+ rtxt_StatisticsOnReadDLCs.Text;
                 try
                 {
                     var sourceAudioFiles = Directory.GetFiles(norm_path, "*.wem", SearchOption.AllDirectories);
@@ -2162,63 +2206,144 @@ namespace RocksmithToolkitGUI.DLCManager
                     MessageBox.Show("One or more fields are missing information.", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                //MessageBox.Show("test2.1");
 
-                //if (GameVersion.RS2014 == GameVersion.RS2012)
-                //{
-                //    try
-                //    {
-                //        OggFile.VerifyHeaders(AudioPath);
-                //    }
-                //    catch (InvalidDataException ex)
-                //    {
-                //        MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                //        return;
-                //    }
-                //}
                 //dlcSavePath = ds.Tables[0].Rows[i].ItemArray[1].ToString() + "\\";// + ((info.PackageVersion == null) ? "Original" : "CDLC") + "-" + info.SongInfo.SongYear +".psarc";
                 //var dlcSavePath = GeneralExtensions.GetShortName("{0}_{1}_v{2}", (((file.Version == null) ? "Original" : "CDLC") + "_" + info.SongInfo.SongDisplayName), (info.SongInfo.SongDisplayName + "_" + info.SongInfo.Album + "_" + info.SongInfo.SongYear), info.PackageVersion, ConfigRepository.Instance().GetBoolean("creator_useacronyms"));
                 var FN = "";
-
+                rtxt_StatisticsOnReadDLCs.Text = "ww"+ "\n" + rtxt_StatisticsOnReadDLCs.Text;
                 if (cbx_Activ_File_Name.Checked) FN = Manipulate_strings(txt_File_Name.Text, i);
                 else FN = GeneralExtensions.GetShortName("{0}-{1}-v{2}", ("def" + ((file.Version == null) ? "ORIG" : "CDLC") + "_" + file.Artist), (file.Album_Year.ToInt32() + "_" + file.Album + "_" + file.Song_Title), file.Version, ConfigRepository.Instance().GetBoolean("creator_useacronyms"));//((data.PackageVersion == null) ? "Original" : "CDLC") + "_" + data.SongInfo.Artist + "_" + data.SongInfo.SongYear + "_" + data.SongInfo.Album + "_" + data.SongInfo.SongDisplayName;
 
                 if (file.Is_Alternate == "Yes") FN += "a." + file.Alternate_Version_No + file.Author;
 
-                //rtxt_StatisticsOnReadDLCs.Text = "fn: " + FN + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                rtxt_StatisticsOnReadDLCs.Text = "fn: " + FN + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                 if (chbx_Additional_Manipualtions.GetItemChecked(8))
                 {
                     FN = FN.Replace(".", "_");
                     FN = FN.Replace(" ", "_");
                 }
 
-                var dlcSavePath = txt_TempPath.Text + "\\" + FN;
-                //dlcSavePath += ".pscarc";
-                //rtxt_StatisticsOnReadDLCs.Text = "after man:" + dlcSavePath + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                //rtxt_StatisticsOnReadDLCs.Text ="tosave " + data.SongInfo.SongDisplayName + "\n" + data.SongInfo.SongDisplayNameSort + "\n" + data.SongInfo.Artist + "\n" + data.SongInfo.ArtistSort + "\n" + data.SongInfo.Album + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                // + "\n"++"\n"++"\n"++"\n"++"\n"++"\n" +;
+                
+                dlcSavePath = txt_TempPath.Text + "\\" + FN;
+                rtxt_StatisticsOnReadDLCs.Text = "rez : " + dlcSavePath + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                if (GameVersion.RS2014 == GameVersion.RS2012)
+                {
+                    try
+                    {
+                        rtxt_StatisticsOnReadDLCs.Text = "audio:" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                        OggFile.VerifyHeaders(data.OggPath);
+                    }
+                    catch (InvalidDataException ex)
+                    {
+                        MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+
+
                 //if (Path.GetFileName(dlcSavePath).Contains(" ") && rbtn_PS3.Checked)
-                //if (!ConfigRepository.Instance().GetBoolean("creator_ps3pkgnamewarn"))
-                //MessageBox.Show("test3");
-                //if (!bwGenerate.IsBusy && data != null)
-                //{
-                //updateProgress.Visible = true;
-                //currentOperationLabel.Visible = true;
-                //dlcGenerateButton.Enabled = false;
-                // bwGenerate.RunWorkerAsync(data);
-                rtxt_StatisticsOnReadDLCs.Text ="rez : " + dlcSavePath + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                //    if (!ConfigRepository.Instance().GetBoolean("creator_ps3pkgnamewarn"))
+                //    {
+                //        MessageBox.Show(String.Format("PS3 package name can't support space character due to encryption limitation. {0} Spaces will be automatic removed for your PS3 package name.", Environment.NewLine), MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //    }
+                //    else
+                //    {
+                //        ConfigRepository.Instance()["creator_ps3pkgnamewarn"] = true.ToString();
+                //    }
+                rtxt_StatisticsOnReadDLCs.Text = "gen r: " + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                if (!bwRGenerate.IsBusy && data != null)
+                {
 
-                //int progress = 0;
-                //bwGenerate.ReportProgress(progress, "Generating PC package");
-                RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate((dlcSavePath), data, new Platform(GamePlatform.Pc, GameVersion.RS2014));
-                //progress += 1;
-                //bwGenerate.ReportProgress(progress);
+                    bwRGenerate.RunWorkerAsync(data);
+                    rtxt_StatisticsOnReadDLCs.Text = "gen6 : " + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                }
 
-                //}
+                data.CleanCache();
                 i++;
                 //TO DO DELETE the ORIGINAL IMPORTED FILES or not
+
             }
 
+        }
+
+        private void GeneratePackage(object sender, DoWorkEventArgs e)
+        {
+             rtxt_StatisticsOnReadDLCs.Text = "genf : " + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+
+            int progress = 0;
+            errorsFound = new StringBuilder();
+
+            var numPlatforms = 0;
+            //if (platformPC.Checked)
+            numPlatforms++;
+            if (rbtn_Mac.Checked)
+                numPlatforms++;
+            if (rbtn_Xbox.Checked)
+                numPlatforms++;
+            if (rbtn_PS3.Checked)
+                numPlatforms++;
+
+            var step = (int)Math.Round(1.0 / numPlatforms * 100, 0);
+
+            //bwGenerate.ReportProgress(progress, "Generating PC package");
+            //RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate((dlcSavePath), data, new Platform(GamePlatform.Pc, GameVersion.RS2014));
+            ////progress += 1;
+            //bwGenerate.ReportProgress(progress);
+            rtxt_StatisticsOnReadDLCs.Text = "gen1 : " + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+
+            try
+            {
+                bwRGenerate.ReportProgress(progress, "Generating PC package");
+                RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate(dlcSavePath, data, new Platform(GamePlatform.Pc, CurrentGameVersion));
+                progress += step;
+                bwRGenerate.ReportProgress(progress);
+            }
+            catch (Exception ex)
+            {
+                errorsFound.AppendLine(String.Format("Error generate PC package: {0}{1}{0}{2}{0}", Environment.NewLine, ex.Message, ex.StackTrace));
+            }
+            rtxt_StatisticsOnReadDLCs.Text = "gen2 : " + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+        }
+
+        private void ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            if (e.ProgressPercentage <= pB_ReadDLCs.Maximum)
+                pB_ReadDLCs.Value = e.ProgressPercentage;
+            else
+                pB_ReadDLCs.Value = pB_ReadDLCs.Maximum;
+
+            ShowCurrentOperation(e.UserState as string);
+        }
+        private void ShowCurrentOperation(string message)
+        {
+            //currentOperationLabel.Text = message;
+            //currentOperationLabel.Refresh();
+        }
+
+        private void ProcessCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            switch (Convert.ToString(e.Result))
+            {
+                case "generate":
+                    var message = "Package was generated.";
+                    if (errorsFound.Length > 0)
+                        message = String.Format("Package was generated with errors! See below: {0}(1}", Environment.NewLine, errorsFound);
+                    message += String.Format("{0}You want to open the folder in which the package was generated?{0}", Environment.NewLine);
+                    if (MessageBox.Show(message, MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                    {
+                        Process.Start(Path.GetDirectoryName(dlcSavePath));
+                    }
+                    break;
+                case "error":
+                    var message2 = String.Format("Package generation failed. See below: {0}{1}{0}", Environment.NewLine, errorsFound);
+                    MessageBox.Show(message2, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Parent.Focus();
+                    break;
+            }
+
+            //dlcGenerateButton.Enabled = true;
+            //updateProgress.Visible = false;
+            //currentOperationLabel.Visible = false;
         }
 
         private void rbtn_Population_Groups_CheckedChanged(object sender, EventArgs e)

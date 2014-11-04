@@ -884,6 +884,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 4.3 If Artist+Album+Title exists check version. If smaller ask if adding as alternate or not, show a list of comparisons factors like DLCName,Sort-s, Has-s, Original FileName
             DataSet ds = new DataSet();
             i = 0;
+            var errr = true;
             try
             {
                 using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
@@ -914,27 +915,42 @@ namespace RocksmithToolkitGUI.DLCManager
                         {
                             //MessageBox.Show(pB_ReadDLCs.Maximum+" test " +i); 
                             //DataTable AccTable = aSet.Tables["Accounts"];
+                            rtxt_StatisticsOnReadDLCs.Text = noOfRec + "/"+i+ "\n" + rtxt_StatisticsOnReadDLCs.Text;
                             var FullPath = ds.Tables[0].Rows[i].ItemArray[0].ToString();
                             if (!FullPath.IsValidPSARC())
                             {
                                 MessageBox.Show(String.Format("File '{0}' isn't valid. File extension was changed to '.invalid'", Path.GetFileName(FullPath)), MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 return;
                             }
+                            errr = true;
+                            var unpackedDir = "";
+                            var packagePlatform = FullPath.GetPlatform();
                             try
                             { 
                             // UNPACK
-                            var unpackedDir = Packer.Unpack(FullPath, Temp_Path_Import, true, true, false);
-                            var packagePlatform = FullPath.GetPlatform();
+                            unpackedDir = Packer.Unpack(FullPath, Temp_Path_Import, true, true, false);
+                            //packagePlatform = FullPath.GetPlatform();
                             // REORGANIZE
                             var structured = ConfigRepository.Instance().GetBoolean("creator_structured");
                             if (structured)
                             {
                                 unpackedDir = DLCPackageData.DoLikeProject(unpackedDir);
                             }
-                            //FIX for adding preview_preview_preview
-                            //if (i == 0) MessageBox.Show("2");
-                            // LOAD DATA
-                            var info = DLCPackageData.LoadFromFolder(unpackedDir, packagePlatform);
+                            }
+                            catch (Exception ex)
+                            {
+                                // MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                // MessageBox.Show("Error decompressing the file!(BACH OFFICIAL DLC CAUSE OF WEIRD CHAR IN FILENAME) " + "-" );
+                                rtxt_StatisticsOnReadDLCs.Text = "problem" + "..." + rtxt_StatisticsOnReadDLCs.Text;
+                                errr = false;
+                            }
+
+                            if (errr)
+                             {
+                                //FIX for adding preview_preview_preview
+                                //if (i == 0) MessageBox.Show("2");
+                                // LOAD DATA
+                                var info = DLCPackageData.LoadFromFolder(unpackedDir, packagePlatform);
                             //if (i == 0) MessageBox.Show("3");
                             rtxt_StatisticsOnReadDLCs.Text = " Song " + (i + 1) + " " + info.SongInfo.Artist + " - " + info.SongInfo.SongDisplayName + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                             pB_ReadDLCs.Increment(1);
@@ -1827,6 +1843,9 @@ namespace RocksmithToolkitGUI.DLCManager
                             }
                             rtxt_StatisticsOnReadDLCs.Text = "done" + "..." + rtxt_StatisticsOnReadDLCs.Text;
                             pB_ReadDLCs.Increment(1);
+                            
+                            }
+
                         }
                     }
                 }

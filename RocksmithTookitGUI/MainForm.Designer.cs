@@ -66,9 +66,9 @@
             this.GeneralConfigTab = new System.Windows.Forms.TabPage();
             this.generalConfigControl = new RocksmithToolkitGUI.Config.GeneralConfig();
             this.DLCManagerTab = new System.Windows.Forms.TabPage();
+            this.dlcManager1 = new RocksmithToolkitGUI.DLCManager.DLCManager();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.updateButton = new System.Windows.Forms.Button();
-            this.dlcManager1 = new RocksmithToolkitGUI.DLCManager.DLCManager();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.dlcPackageCreatorTab.SuspendLayout();
@@ -250,7 +250,7 @@
             this.dlcConverterTab.Margin = new System.Windows.Forms.Padding(2);
             this.dlcConverterTab.Name = "dlcConverterTab";
             this.dlcConverterTab.Padding = new System.Windows.Forms.Padding(2);
-            this.dlcConverterTab.Size = new System.Drawing.Size(192, 74);
+            this.dlcConverterTab.Size = new System.Drawing.Size(542, 564);
             this.dlcConverterTab.TabIndex = 2;
             this.dlcConverterTab.Text = "Converter";
             this.dlcConverterTab.UseVisualStyleBackColor = true;
@@ -265,6 +265,7 @@
             this.dlcConverterControl.SourcePlatform = null;
             this.dlcConverterControl.TabIndex = 2;
             this.dlcConverterControl.TargetPlatform = null;
+            this.dlcConverterControl.Load += new System.EventHandler(this.dlcConverterControl_Load);
             // 
             // DDCTab
             // 
@@ -416,10 +417,18 @@
             this.DLCManagerTab.Location = new System.Drawing.Point(4, 22);
             this.DLCManagerTab.Name = "DLCManagerTab";
             this.DLCManagerTab.Padding = new System.Windows.Forms.Padding(3);
-            this.DLCManagerTab.Size = new System.Drawing.Size(542, 564);
+            this.DLCManagerTab.Size = new System.Drawing.Size(192, 74);
             this.DLCManagerTab.TabIndex = 11;
             this.DLCManagerTab.Text = "Manage DLCs";
             this.DLCManagerTab.UseVisualStyleBackColor = true;
+            // 
+            // dlcManager1
+            // 
+            this.dlcManager1.CurrentGameVersion = RocksmithToolkitLib.GameVersion.RS2014;
+            this.dlcManager1.Location = new System.Drawing.Point(-4, 0);
+            this.dlcManager1.Name = "dlcManager1";
+            this.dlcManager1.Size = new System.Drawing.Size(613, 794);
+            this.dlcManager1.TabIndex = 0;
             // 
             // pictureBox1
             // 
@@ -446,13 +455,6 @@
             this.updateButton.UseVisualStyleBackColor = true;
             this.updateButton.Visible = false;
             this.updateButton.Click += new System.EventHandler(this.updateButton_Click);
-            // 
-            // dlcManager1
-            // 
-            this.dlcManager1.Location = new System.Drawing.Point(-4, 0);
-            this.dlcManager1.Name = "dlcManager1";
-            this.dlcManager1.Size = new System.Drawing.Size(613, 794);
-            this.dlcManager1.TabIndex = 0;
             // 
             // MainForm
             // 

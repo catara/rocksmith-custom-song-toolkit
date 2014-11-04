@@ -177,5 +177,10 @@ namespace RocksmithToolkitGUI
             if (!tabControl1.TabPages.Contains(DLCManagerTab))
                 tabControl1.TabPages.Add(DLCManagerTab);
         }
+
+        private void dlcConverterControl_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

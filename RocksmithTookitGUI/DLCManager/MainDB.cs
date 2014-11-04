@@ -166,7 +166,9 @@ namespace RocksmithToolkitGUI.DLCManager
             if (DataGridView1.Rows[i].Cells[82].Value.ToString() == "Yes") chbx_BassDD.Checked = true;
             else chbx_Beta.Checked = false;
 
+            //ImageSource imageSource = new BitmapImage(new Uri("C:\\Temp\\music_edit.png"));
 
+            picbx_AlbumArtPath.ImageLocation= "C:\\Temp\\music_edit.png";
 
         }
 

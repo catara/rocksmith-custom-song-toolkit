@@ -364,7 +364,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         public string Manipulate_strings(string words, int k)
         {
-
+            rtxt_StatisticsOnReadDLCs.Text = "ff" + rtxt_StatisticsOnReadDLCs.Text;
             //Read from DB
             int norows = 0;
             //1. Get Random Song ID
@@ -375,7 +375,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //2. Read from DB
             cmd = "SELECT * FROM Main WHERE ID = " + files[0].ID;
             norows = SQLAccess(cmd);
-
+            rtxt_StatisticsOnReadDLCs.Text ="f" + rtxt_StatisticsOnReadDLCs.Text;
             // Parse the text char by char
             // If <> makes sense then bring that info
             // If not inbetween <> then just add to the final string
@@ -482,7 +482,7 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             var DB_Path = txt_DBFolder.Text + "\\Files.accdb";
             //Files[] files = new Files[10000];
-
+            rtxt_StatisticsOnReadDLCs.Text = "re" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
             var MaximumSize = 0;
             try
             {
@@ -587,6 +587,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     //Closing Connection
                     dax.Dispose();
                     cnn.Close();
+                    rtxt_StatisticsOnReadDLCs.Text = "r" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                 }
             }
             catch (Exception ex)
@@ -594,6 +595,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 MessageBox.Show("Can not open Main DB connection in SQLAccess ! " + DB_Path + "-" + cmd);
             }
+            rtxt_StatisticsOnReadDLCs.Text = "rning " + "\n" + rtxt_StatisticsOnReadDLCs.Text;
             return MaximumSize;//files[10000];
         }
 
@@ -2066,7 +2068,7 @@ namespace RocksmithToolkitGUI.DLCManager
             {
                 if (i == norows)
                     break;
-                rtxt_StatisticsOnReadDLCs.Text = "...Pack" + i + "\n" + rtxt_StatisticsOnReadDLCs.Text;// UNPACK
+                rtxt_StatisticsOnReadDLCs.Text = "...Pack" + i + file.AudioPath + "\n" + rtxt_StatisticsOnReadDLCs.Text;// UNPACK
                                                                                                        //var unpackedDir = Packer.Unpack(FullPath, Temp_Path_Import, true, true, false);
                 var packagePlatform = file.Folder_Name.GetPlatform();
                 // REORGANIZE
@@ -2145,18 +2147,23 @@ namespace RocksmithToolkitGUI.DLCManager
                 //14. Import all Duplicates as Alternates
                 //15. Import any Custom as Alternate if an Original exists
                 //16. Move Original Imported files to temp/0_old
+
                 rtxt_StatisticsOnReadDLCs.Text = "...nipul" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                 if (chbx_Additional_Manipualtions.GetItemChecked(0)) //"1. Add Increment to all Titles"
                     data.Name = i + data.Name;
+
                 artist = "";
                 if (data.SongInfo.Artist == files[i + 1].Artist) artist = i + " ";
                 else if (i > 0) if (data.SongInfo.Artist == files[i - 1].Artist) artist = i + " ";
+                rtxt_StatisticsOnReadDLCs.Text = "...mpl" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
 
                 if (chbx_Additional_Manipualtions.GetItemChecked(1)) //"2. Add Increment to all songs(&Separately per artist)"
                     data.SongInfo.SongDisplayName = i + artist + data.SongInfo.SongDisplayName;
+                rtxt_StatisticsOnReadDLCs.Text = "...manl" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
 
                 if (chbx_Additional_Manipualtions.GetItemChecked(7)) //"8. Don't repack Broken songs"
                     if (file.Is_Broken == "Yes") break;
+
                 rtxt_StatisticsOnReadDLCs.Text = "...manipl" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                 if (chbx_Additional_Manipualtions.GetItemChecked(2)) //"3. Make all DLC IDs unique (&save)"
                     if (file.UniqueDLCName != null) data.Name = file.UniqueDLCName;
@@ -2258,7 +2265,6 @@ namespace RocksmithToolkitGUI.DLCManager
                     rtxt_StatisticsOnReadDLCs.Text = "gen6 : " + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                 }
 
-                data.CleanCache();
                 i++;
                 //TO DO DELETE the ORIGINAL IMPORTED FILES or not
 
@@ -2266,7 +2272,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         }
 
-        private void GeneratePackage(object sender, DoWorkEventArgs e)
+        public void GeneratePackage(object sender, DoWorkEventArgs e)
         {
              rtxt_StatisticsOnReadDLCs.Text = "genf : " + "\n" + rtxt_StatisticsOnReadDLCs.Text;
 
@@ -2302,11 +2308,13 @@ namespace RocksmithToolkitGUI.DLCManager
             {
                 errorsFound.AppendLine(String.Format("Error generate PC package: {0}{1}{0}{2}{0}", Environment.NewLine, ex.Message, ex.StackTrace));
             }
+            data.CleanCache();
             rtxt_StatisticsOnReadDLCs.Text = "gen2 : " + "\n" + rtxt_StatisticsOnReadDLCs.Text;
         }
 
         private void ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
+            rtxt_StatisticsOnReadDLCs.Text = "process changed" + rtxt_StatisticsOnReadDLCs.Text;
             if (e.ProgressPercentage <= pB_ReadDLCs.Maximum)
                 pB_ReadDLCs.Value = e.ProgressPercentage;
             else
@@ -2316,14 +2324,17 @@ namespace RocksmithToolkitGUI.DLCManager
         }
         private void ShowCurrentOperation(string message)
         {
+            rtxt_StatisticsOnReadDLCs.Text = "current" + rtxt_StatisticsOnReadDLCs.Text;
             //currentOperationLabel.Text = message;
             //currentOperationLabel.Refresh();
         }
 
         private void ProcessCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            rtxt_StatisticsOnReadDLCs.Text = "generate" + rtxt_StatisticsOnReadDLCs.Text;
             switch (Convert.ToString(e.Result))
             {
+                
                 case "generate":
                     var message = "Package was generated.";
                     if (errorsFound.Length > 0)

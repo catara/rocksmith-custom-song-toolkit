@@ -127,6 +127,7 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_AverageTempo.Text = DataGridView1.Rows[i].Cells[7].Value.ToString();
             txt_Volume.Text = DataGridView1.Rows[i].Cells[8].Value.ToString();
             txt_Preview_Volume.Text = DataGridView1.Rows[i].Cells[9].Value.ToString();
+            txt_AlbumArtPath.Text = DataGridView1.Rows[i].Cells[10].Value.ToString();
             txt_Track_No.Text = DataGridView1.Rows[i].Cells[13].Value.ToString();
             txt_Author.Text = DataGridView1.Rows[i].Cells[14].Value.ToString();
             txt_Version.Text = DataGridView1.Rows[i].Cells[15].Value.ToString();            
@@ -138,6 +139,8 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_Group.Text = DataGridView1.Rows[i].Cells[50].Value.ToString();
             txt_Rating.Text = DataGridView1.Rows[i].Cells[51].Value.ToString();
             txt_Description.Text = DataGridView1.Rows[i].Cells[52].Value.ToString();
+            txt_Artist_ShortName.Text = DataGridView1.Rows[i].Cells[85].Value.ToString();
+            txt_Album_ShortName.Text = DataGridView1.Rows[i].Cells[86].Value.ToString();
 
             if (DataGridView1.Rows[i].Cells[26].Value.ToString() == "Yes") chbx_Original.Checked = true;
             else chbx_Original.Checked = false;
@@ -157,18 +160,22 @@ namespace RocksmithToolkitGUI.DLCManager
             else chbx_Rhythm.Checked = false;
             //if (DataGridView1.Rows[i].Cells[41].Value.ToString() == "Yes") chbx_Sections.Checked = true;
             //else chbx_Sections.Checked = false;
+            if (DataGridView1.Rows[i].Cells[42].Value.ToString() == "Yes") chbx_Cover.Checked = true;
+            else chbx_Cover.Checked = false;
             if (DataGridView1.Rows[i].Cells[43].Value.ToString() == "Yes") chbx_Preview.Checked = true;
             else chbx_Preview.Checked = false;
             if (DataGridView1.Rows[i].Cells[45].Value.ToString() == "Yes") chbx_DD.Checked = true;
             else chbx_DD.Checked = false;
             if (DataGridView1.Rows[i].Cells[69].Value.ToString() == "Yes") chbx_Selected.Checked = true;
             else chbx_Selected.Checked = false;
-            if (DataGridView1.Rows[i].Cells[82].Value.ToString() == "Yes") chbx_BassDD.Checked = true;
+            if (DataGridView1.Rows[i].Cells[83].Value.ToString() == "Yes") chbx_BassDD.Checked = true;
+            else chbx_Beta.Checked = false;
+            if (DataGridView1.Rows[i].Cells[84].Value.ToString() == "Yes") chbx_Bonus.Checked = true;
             else chbx_Beta.Checked = false;
 
             //ImageSource imageSource = new BitmapImage(new Uri("C:\\Temp\\music_edit.png"));
 
-            picbx_AlbumArtPath.ImageLocation= "C:\\Temp\\music_edit.png";
+            //picbx_AlbumArtPath.ImageLocation= "C:\\GitHub\\tmp\\music_edit.jpg";
 
         }
 
@@ -188,6 +195,7 @@ namespace RocksmithToolkitGUI.DLCManager
             DataGridView1.Rows[i].Cells[7].Value = txt_AverageTempo.Text;
             DataGridView1.Rows[i].Cells[8].Value = txt_Volume.Text;
             DataGridView1.Rows[i].Cells[9].Value = txt_Preview_Volume.Text;
+            DataGridView1.Rows[i].Cells[10].Value = txt_AlbumArtPath.Text;
             DataGridView1.Rows[i].Cells[13].Value = txt_Track_No.Text;
             DataGridView1.Rows[i].Cells[14].Value = txt_Author.Text;
             DataGridView1.Rows[i].Cells[15].Value = txt_Version.Text;
@@ -199,6 +207,8 @@ namespace RocksmithToolkitGUI.DLCManager
             DataGridView1.Rows[i].Cells[50].Value = txt_Group.Text;
             DataGridView1.Rows[i].Cells[51].Value = txt_Rating.Text;
             DataGridView1.Rows[i].Cells[52].Value = txt_Description.Text;
+            DataGridView1.Rows[i].Cells[85].Value = txt_Artist_ShortName.Text;
+            DataGridView1.Rows[i].Cells[86].Value = txt_Album_ShortName.Text;
             if (chbx_Original.Checked) DataGridView1.Rows[i].Cells[26].Value = "Yes";
             else DataGridView1.Rows[i].Cells[26].Value = "No";
             if (chbx_Beta.Checked) DataGridView1.Rows[i].Cells[28].Value = "Yes";
@@ -217,6 +227,8 @@ namespace RocksmithToolkitGUI.DLCManager
             else DataGridView1.Rows[i].Cells[39].Value = "No";
             if (chbx_Sections.Checked) DataGridView1.Rows[i].Cells[41].Value = "Yes";
             else DataGridView1.Rows[i].Cells[41].Value = "No";
+            if (chbx_Cover.Checked) DataGridView1.Rows[i].Cells[42].Value = "Yes";
+            else DataGridView1.Rows[i].Cells[42].Value = "No";
             if (chbx_Preview.Checked) DataGridView1.Rows[i].Cells[43].Value = "Yes";
             else DataGridView1.Rows[i].Cells[43].Value = "No";
             if (chbx_DD.Checked) DataGridView1.Rows[i].Cells[45].Value = "Yes";
@@ -225,6 +237,8 @@ namespace RocksmithToolkitGUI.DLCManager
             else DataGridView1.Rows[i].Cells[69].Value = "No";
             if (chbx_BassDD.Checked) DataGridView1.Rows[i].Cells[83].Value = "Yes";
             else DataGridView1.Rows[i].Cells[83].Value = "No";
+            if (chbx_Bonus.Checked) DataGridView1.Rows[i].Cells[84].Value = "Yes";
+            else DataGridView1.Rows[i].Cells[84].Value = "No";
 
             var DB_Path = "../../../../tmp\\Files.accdb;";
             var connection = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path); //+ ";Persist Security Info=False"
@@ -246,6 +260,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 command.CommandText += "AverageTempo = @param7, ";
                 command.CommandText += "Volume = @param8, ";
                 command.CommandText += "Preview_Volume = @param9, ";
+                command.CommandText += "AlbumArtPath = @param9, ";
                 command.CommandText += "Track_No = @param13, ";
                 command.CommandText += "Author = @param14, ";
                 command.CommandText += "Version = @param15, ";
@@ -259,6 +274,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 //command.CommandText += "MultiTrack_Version = @param32, ";
                 command.CommandText += "Alternate_Version_No = @param33, ";
                 command.CommandText += "Has_Sections = @param41, ";
+                command.CommandText += "Has_Cover = @param42, ";
                 command.CommandText += "Has_Preview = @param43, ";
                 command.CommandText += "Has_DD = @param45, ";
                 command.CommandText += "Tunning = @param47, ";
@@ -275,7 +291,10 @@ namespace RocksmithToolkitGUI.DLCManager
                 //command.CommandText += "SignatureType = @param74, ";
                 //command.CommandText += "ToolkitVersion = @param75, ";
                 //command.CommandText += "UniqueDLCName = @param79, ";
-                command.CommandText += "Bass_Has_DD = @param83 ";
+                command.CommandText += "Bass_Has_DD = @param83, ";
+                command.CommandText += "Has_Bonus_Arrangement = @param84, ";
+                command.CommandText += "Artist_ShortName = @param85, ";
+                command.CommandText += "Album_ShortName = @param86 ";
                 command.CommandText += "WHERE ID = " + txt_ID.Text;
 
                 command.Parameters.AddWithValue("@param1", DataGridView1.Rows[i].Cells[1].Value.ToString());
@@ -287,6 +306,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 command.Parameters.AddWithValue("@param7", DataGridView1.Rows[i].Cells[7].Value.ToString());
                 command.Parameters.AddWithValue("@param8", DataGridView1.Rows[i].Cells[8].Value.ToString());
                 command.Parameters.AddWithValue("@param9", DataGridView1.Rows[i].Cells[9].Value.ToString());
+                command.Parameters.AddWithValue("@param10", DataGridView1.Rows[i].Cells[10].Value.ToString());
                 command.Parameters.AddWithValue("@param13", DataGridView1.Rows[i].Cells[13].Value.ToString());
                 command.Parameters.AddWithValue("@param14", DataGridView1.Rows[i].Cells[14].Value.ToString());
                 command.Parameters.AddWithValue("@param15", DataGridView1.Rows[i].Cells[15].Value.ToString());
@@ -298,6 +318,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 command.Parameters.AddWithValue("@param31", DataGridView1.Rows[i].Cells[31].Value.ToString());
                 command.Parameters.AddWithValue("@param33", DataGridView1.Rows[i].Cells[33].Value.ToString());
                 command.Parameters.AddWithValue("@param41", DataGridView1.Rows[i].Cells[41].Value.ToString());
+                command.Parameters.AddWithValue("@param42", DataGridView1.Rows[i].Cells[42].Value.ToString());
                 command.Parameters.AddWithValue("@param43", DataGridView1.Rows[i].Cells[43].Value.ToString());
                 command.Parameters.AddWithValue("@param45", DataGridView1.Rows[i].Cells[45].Value.ToString());
                 command.Parameters.AddWithValue("@param47", DataGridView1.Rows[i].Cells[47].Value.ToString());
@@ -308,6 +329,9 @@ namespace RocksmithToolkitGUI.DLCManager
                 command.Parameters.AddWithValue("@param52", DataGridView1.Rows[i].Cells[52].Value.ToString());
                 command.Parameters.AddWithValue("@param69", DataGridView1.Rows[i].Cells[69].Value.ToString());
                 command.Parameters.AddWithValue("@param83", DataGridView1.Rows[i].Cells[83].Value.ToString());
+                command.Parameters.AddWithValue("@param84", DataGridView1.Rows[i].Cells[84].Value.ToString());
+                command.Parameters.AddWithValue("@param85", DataGridView1.Rows[i].Cells[85].Value.ToString());
+                command.Parameters.AddWithValue("@param86", DataGridView1.Rows[i].Cells[86].Value.ToString());
                 try
                 {
                     command.CommandType = CommandType.Text;
@@ -443,7 +467,9 @@ namespace RocksmithToolkitGUI.DLCManager
             DataGridViewTextBoxColumn Audio_Hash = new DataGridViewTextBoxColumn { DataPropertyName = "Audio_Hash", HeaderText = "Audio_Hash " };
             DataGridViewTextBoxColumn audioPreview_Hash = new DataGridViewTextBoxColumn { DataPropertyName = "audioPreview_Hash", HeaderText = "audioPreview_Hash " };
             DataGridViewTextBoxColumn Has_BassDD = new DataGridViewTextBoxColumn { DataPropertyName = "Has_BassDD", HeaderText = "Has_BassDD " };
-
+            DataGridViewTextBoxColumn Has_Bonus_Arrangement = new DataGridViewTextBoxColumn { DataPropertyName = "Has_Bonus_Arrangement", HeaderText = "Has_Bonus_Arrangement " };
+            DataGridViewTextBoxColumn Artist_ShortName = new DataGridViewTextBoxColumn { DataPropertyName = "Artist_ShortName", HeaderText = "Artist_ShortName " };
+            DataGridViewTextBoxColumn Album_ShortName = new DataGridViewTextBoxColumn { DataPropertyName = "Album_ShortName", HeaderText = "Album_ShortName " };
 
 
 
@@ -562,7 +588,10 @@ namespace RocksmithToolkitGUI.DLCManager
                 AlbumArt_Hash,
                 Audio_Hash,
                 audioPreview_Hash,
-                Has_BassDD
+                Has_BassDD,
+                Has_Bonus_Arrangement,
+                Artist_ShortName,
+                Album_ShortName
             }
             );
 
@@ -658,6 +687,9 @@ namespace RocksmithToolkitGUI.DLCManager
             public string AlbumArt_Hash { get; set; }
             public string Audio_Hash { get; set; }
             public string audioPreview_Hash { get; set; }
+            public string Has_Bonus_Arrangement { get; set; }
+            public string Artist_ShortName { get; set; }
+            public string Album_ShortName { get; set; }
             public string Has_BassDD { get; set; }
         }
         public Files[] files = new Files[10000];
@@ -771,6 +803,9 @@ namespace RocksmithToolkitGUI.DLCManager
                         files[i].Audio_Hash = dataRow.ItemArray[81].ToString();
                         files[i].audioPreview_Hash = dataRow.ItemArray[82].ToString();
                         files[i].Has_BassDD = dataRow.ItemArray[83].ToString();
+                        files[i].Has_Bonus_Arrangement = dataRow.ItemArray[84].ToString();
+                        files[i].Artist_ShortName = dataRow.ItemArray[85].ToString();
+                        files[i].Album_ShortName = dataRow.ItemArray[86].ToString();
                         i++;
                     }
                     //Closing Connection

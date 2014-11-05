@@ -4,7 +4,7 @@
 
 
 
-DLC Library Manager v0.1.8 beta
+DLC Library Manager v0.2 (beta version)
 Main Features:
 - Gather all DLCs metadata into 1 Access DB
 	- Manage Duplicates
@@ -21,19 +21,20 @@ Version History(release date):
 	0.1.4(22.08.2014) populating the Read Folder - File.DB,
 	0.1.4.1(12.09.2014) fixed a solution folder issue when a folder includes another folder breaking the BUILD;
 	0.1.5(12.10.2014) Read + change + Rebuild
-	wip: 0.1.6(27.10.2014) (99%) Manage Import of Duplicates (upgrade to Access 2013 DB) 
+	0.1.6(27.10.2014) (100%) Manage Import of Duplicates (upgrade to Access 2013 DB) 
 	wip: 0.1.7(30.10.2014) (99%) FORK from/on git
-	wip: 0.1.8(12.11.2014) (40%) New features: add/remove: DD, preview; lasconversiondata
-	tbr: 0.1.9(15.11.2014) (0%) If importing an original over a alternate the alternate flag should be set no the Alternate
-	tbr: 0.2.1 move import DB to Main.DB?
-	tbr: 0.2.2 ?move Access code to project? or from hardcoded to viewes
-	tbr: 0.2.3(12.12.2014) (0%) save settings in Toolkit config
-	tbr: 0.2.4(03.03.2015) (30%) use parameterized SQL everywhere (&/ integrate template DB into project or a SQL DB)
-	tbr: 0.3 Redesign stats &Duplciates screen as an independednt form not a yes no cancel alert window
-	wip: 0.4(21.12.2014) (10%) Redesign MainDB+Edit Screen
+	wip: 0.2 (15.11.2014) (80%) Import 1000 dlcs, provide screen to edit, repack in any format
+	wip: 0.2.1(16.11.2014) (40%) New features: add/remove: DD, preview; lasconversiondata
+	tbr: 0.2.2(19.11.2014) (0%) If importing an original over a alternate the alternate flag should be set no the Alternate
+	tbr: 0.3.1 move import DB to Main.DB?
+	tbr: 0.3.2 ?move Access code to project? or from hardcoded to viewes
+	tbr: 0.3.3(12.12.2014) (0%) save settings in Toolkit config
+	tbr: 0.3.4(03.03.2015) (30%) use parameterized SQL everywhere (&/ integrate template DB into project or a SQL DB)
+	tbr: 0.4 Redesign stats &Duplciates screen as an independendent form not a yes no cancel alert window
+	wip: 0.5(21.12.2014) (10%) Redesign MainDB+Edit Screen
 
 
-Date: 28.10.2014
+Date: 05.11.2014
 Document Name: Rocksmith DLC Management tool README
 				(fork of rocksmith-custom-song-toolkit)
 Document purpose: To describe the functionailities and the way to change, the NEW tab that enable MASS Manipulation of Rocksmith DLC Library

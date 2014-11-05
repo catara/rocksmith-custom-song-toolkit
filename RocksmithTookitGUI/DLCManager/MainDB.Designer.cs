@@ -29,6 +29,10 @@
         private void InitializeComponent()
         {
             this.Panel1 = new System.Windows.Forms.Panel();
+            this.txt_Artist_ShortName = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_Album_ShortName = new RocksmithToolkitGUI.CueTextBox();
+            this.button14 = new System.Windows.Forms.Button();
+            this.chbx_Bonus = new System.Windows.Forms.CheckBox();
             this.chbx_Save_All = new System.Windows.Forms.CheckBox();
             this.chbx_BassDD = new System.Windows.Forms.CheckBox();
             this.txt_Album_Year = new RocksmithToolkitGUI.CueTextBox();
@@ -84,6 +88,9 @@
             this.btn_Arrangements = new System.Windows.Forms.Button();
             this.CheckBox1 = new System.Windows.Forms.CheckBox();
             this.DataGridView1 = new System.Windows.Forms.DataGridView();
+            this.chbx_Cover = new System.Windows.Forms.CheckBox();
+            this.btn_ChangeCover = new System.Windows.Forms.Button();
+            this.txt_AlbumArtPath = new RocksmithToolkitGUI.CueTextBox();
             this.Panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPath)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridView1)).BeginInit();
@@ -91,6 +98,13 @@
             // 
             // Panel1
             // 
+            this.Panel1.Controls.Add(this.txt_AlbumArtPath);
+            this.Panel1.Controls.Add(this.btn_ChangeCover);
+            this.Panel1.Controls.Add(this.chbx_Cover);
+            this.Panel1.Controls.Add(this.txt_Artist_ShortName);
+            this.Panel1.Controls.Add(this.txt_Album_ShortName);
+            this.Panel1.Controls.Add(this.button14);
+            this.Panel1.Controls.Add(this.chbx_Bonus);
             this.Panel1.Controls.Add(this.chbx_Save_All);
             this.Panel1.Controls.Add(this.chbx_BassDD);
             this.Panel1.Controls.Add(this.txt_Album_Year);
@@ -150,6 +164,46 @@
             this.Panel1.Name = "Panel1";
             this.Panel1.Size = new System.Drawing.Size(1106, 202);
             this.Panel1.TabIndex = 3;
+            // 
+            // txt_Artist_ShortName
+            // 
+            this.txt_Artist_ShortName.Cue = "Short";
+            this.txt_Artist_ShortName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_Artist_ShortName.ForeColor = System.Drawing.Color.Gray;
+            this.txt_Artist_ShortName.Location = new System.Drawing.Point(435, 3);
+            this.txt_Artist_ShortName.Name = "txt_Artist_ShortName";
+            this.txt_Artist_ShortName.Size = new System.Drawing.Size(58, 20);
+            this.txt_Artist_ShortName.TabIndex = 104;
+            // 
+            // txt_Album_ShortName
+            // 
+            this.txt_Album_ShortName.Cue = "Short";
+            this.txt_Album_ShortName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_Album_ShortName.ForeColor = System.Drawing.Color.Gray;
+            this.txt_Album_ShortName.Location = new System.Drawing.Point(368, 92);
+            this.txt_Album_ShortName.Name = "txt_Album_ShortName";
+            this.txt_Album_ShortName.Size = new System.Drawing.Size(58, 20);
+            this.txt_Album_ShortName.TabIndex = 103;
+            // 
+            // button14
+            // 
+            this.button14.Enabled = false;
+            this.button14.Location = new System.Drawing.Point(12, 117);
+            this.button14.Name = "button14";
+            this.button14.Size = new System.Drawing.Size(120, 35);
+            this.button14.TabIndex = 102;
+            this.button14.Text = "Select All";
+            this.button14.UseVisualStyleBackColor = true;
+            // 
+            // chbx_Bonus
+            // 
+            this.chbx_Bonus.AutoSize = true;
+            this.chbx_Bonus.Location = new System.Drawing.Point(669, 57);
+            this.chbx_Bonus.Name = "chbx_Bonus";
+            this.chbx_Bonus.Size = new System.Drawing.Size(56, 17);
+            this.chbx_Bonus.TabIndex = 101;
+            this.chbx_Bonus.Text = "Bonus";
+            this.chbx_Bonus.UseVisualStyleBackColor = true;
             // 
             // chbx_Save_All
             // 
@@ -372,7 +426,7 @@
             // 
             // txt_Tuning
             // 
-            this.txt_Tuning.Cue = "Tuning";
+            this.txt_Tuning.Cue = "Tuning (All)";
             this.txt_Tuning.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_Tuning.ForeColor = System.Drawing.Color.Gray;
             this.txt_Tuning.Location = new System.Drawing.Point(614, 3);
@@ -446,7 +500,7 @@
             // 
             // txt_Rating
             // 
-            this.txt_Rating.Cue = "Rating";
+            this.txt_Rating.Cue = "Rating (All)";
             this.txt_Rating.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_Rating.ForeColor = System.Drawing.Color.Gray;
             this.txt_Rating.Location = new System.Drawing.Point(563, 3);
@@ -471,7 +525,7 @@
             this.txt_Album.ForeColor = System.Drawing.Color.Gray;
             this.txt_Album.Location = new System.Drawing.Point(207, 91);
             this.txt_Album.Name = "txt_Album";
-            this.txt_Album.Size = new System.Drawing.Size(219, 20);
+            this.txt_Album.Size = new System.Drawing.Size(156, 20);
             this.txt_Album.TabIndex = 69;
             // 
             // txt_Title_Sort
@@ -511,7 +565,7 @@
             this.txt_Artist.ForeColor = System.Drawing.Color.Gray;
             this.txt_Artist.Location = new System.Drawing.Point(207, 3);
             this.txt_Artist.Name = "txt_Artist";
-            this.txt_Artist.Size = new System.Drawing.Size(286, 20);
+            this.txt_Artist.Size = new System.Drawing.Size(222, 20);
             this.txt_Artist.TabIndex = 65;
             // 
             // chbx_Selected
@@ -707,6 +761,38 @@
             this.DataGridView1.TabIndex = 2;
             this.DataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick_1);
             // 
+            // chbx_Cover
+            // 
+            this.chbx_Cover.AutoSize = true;
+            this.chbx_Cover.Enabled = false;
+            this.chbx_Cover.Location = new System.Drawing.Point(669, 71);
+            this.chbx_Cover.Name = "chbx_Cover";
+            this.chbx_Cover.Size = new System.Drawing.Size(54, 17);
+            this.chbx_Cover.TabIndex = 105;
+            this.chbx_Cover.Text = "Cover";
+            this.chbx_Cover.UseVisualStyleBackColor = true;
+            // 
+            // btn_ChangeCover
+            // 
+            this.btn_ChangeCover.Enabled = false;
+            this.btn_ChangeCover.Location = new System.Drawing.Point(318, 143);
+            this.btn_ChangeCover.Name = "btn_ChangeCover";
+            this.btn_ChangeCover.Size = new System.Drawing.Size(84, 26);
+            this.btn_ChangeCover.TabIndex = 106;
+            this.btn_ChangeCover.Text = "Change cover";
+            this.btn_ChangeCover.UseVisualStyleBackColor = true;
+            // 
+            // txt_AlbumArtPath
+            // 
+            this.txt_AlbumArtPath.Cue = "Album art Path";
+            this.txt_AlbumArtPath.Enabled = false;
+            this.txt_AlbumArtPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_AlbumArtPath.ForeColor = System.Drawing.Color.Gray;
+            this.txt_AlbumArtPath.Location = new System.Drawing.Point(318, 170);
+            this.txt_AlbumArtPath.Name = "txt_AlbumArtPath";
+            this.txt_AlbumArtPath.Size = new System.Drawing.Size(219, 20);
+            this.txt_AlbumArtPath.TabIndex = 107;
+            // 
             // MainDB
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -783,5 +869,12 @@
         private CueTextBox txt_Album_Year;
         private System.Windows.Forms.CheckBox chbx_BassDD;
         private System.Windows.Forms.CheckBox chbx_Save_All;
+        private System.Windows.Forms.CheckBox chbx_Bonus;
+        private System.Windows.Forms.Button button14;
+        private CueTextBox txt_Artist_ShortName;
+        private CueTextBox txt_Album_ShortName;
+        private System.Windows.Forms.CheckBox chbx_Cover;
+        private System.Windows.Forms.Button btn_ChangeCover;
+        private CueTextBox txt_AlbumArtPath;
     }
 }

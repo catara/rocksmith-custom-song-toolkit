@@ -74,11 +74,6 @@
             this.lbl_Title = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.chbx_CleanDLC = new System.Windows.Forms.CheckBox();
-            this.rbtn_Mac = new System.Windows.Forms.RadioButton();
-            this.pnl_ApplyChanges = new System.Windows.Forms.Panel();
-            this.rbtn_Xbox = new System.Windows.Forms.RadioButton();
-            this.rbtn_PS3 = new System.Windows.Forms.RadioButton();
-            this.rbtn_All = new System.Windows.Forms.RadioButton();
             this.chbx_DebugB = new System.Windows.Forms.CheckBox();
             this.txt_DBFolder = new System.Windows.Forms.TextBox();
             this.btn_DBFolder = new System.Windows.Forms.Button();
@@ -99,12 +94,15 @@
             this.lbl_TempFolders = new System.Windows.Forms.Label();
             this.lbl_PreviewText = new System.Windows.Forms.Label();
             this.grpbx_ApplyChanges = new System.Windows.Forms.GroupBox();
+            this.chbx_XBOX360 = new System.Windows.Forms.CheckBox();
+            this.chbx_Mac = new System.Windows.Forms.CheckBox();
+            this.chbx_PS3 = new System.Windows.Forms.CheckBox();
+            this.chbx_PC = new System.Windows.Forms.CheckBox();
             this.btn_RePack = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainBindingSource)).BeginInit();
             this.groupBox2.SuspendLayout();
-            this.pnl_ApplyChanges.SuspendLayout();
             this.grpbx_ApplyChanges.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -231,9 +229,9 @@
             "8. Don\'t repack Broken songs",
             "9. Pack to cross-platform Compatible Filenames",
             "<10. Generate random 30sec Preview>",
-            "<11. Use shortnames in the Filename for Artist&Album>",
-            "<12. Repack Originals>",
-            "<13. Repack PC>",
+            "<11. Convert Originals>",
+            "<12. Repack PC>",
+            "<13. >",
             "14. Import all Duplicates as Alternates",
             "15. Import any Custom as Alternate if an Original exists",
             "16. Move Original Imported files to temp/0_old"});
@@ -323,7 +321,10 @@
             "<Beta>",
             "<DD>",
             "<Broken>",
-            "<File Name>"});
+            "<File Name>",
+            "<Bonus>",
+            "<Artist Short>",
+            "<Album Short>"});
             this.cbx_Artist_Sort.Location = new System.Drawing.Point(398, 276);
             this.cbx_Artist_Sort.Name = "cbx_Artist_Sort";
             this.cbx_Artist_Sort.Size = new System.Drawing.Size(105, 21);
@@ -494,7 +495,10 @@
             "<Beta>",
             "<DD>",
             "<Broken>",
-            "<File Name>"});
+            "<File Name>",
+            "<Bonus>",
+            "<Artist Short>",
+            "<Album Short>"});
             this.cbx_Artist.Location = new System.Drawing.Point(398, 255);
             this.cbx_Artist.Name = "cbx_Artist";
             this.cbx_Artist.Size = new System.Drawing.Size(105, 21);
@@ -534,7 +538,10 @@
             "<Beta>",
             "<DD>",
             "<Broken>",
-            "<File Name>"});
+            "<File Name>",
+            "<Bonus>",
+            "<Artist Short>",
+            "<Album Short>"});
             this.cbx_Title.Location = new System.Drawing.Point(398, 212);
             this.cbx_Title.Name = "cbx_Title";
             this.cbx_Title.Size = new System.Drawing.Size(105, 21);
@@ -548,7 +555,7 @@
             this.txt_Title.Name = "txt_Title";
             this.txt_Title.Size = new System.Drawing.Size(341, 20);
             this.txt_Title.TabIndex = 298;
-            this.txt_Title.Text = "<Title>";
+            this.txt_Title.Text = "<Title>-<CDLC>-<Avail. Instr.>-<DD>";
             // 
             // label6
             // 
@@ -607,7 +614,10 @@
             "<Beta>",
             "<DD>",
             "<Broken>",
-            "<File Name>"});
+            "<File Name>",
+            "<Bonus>",
+            "<Artist Short>",
+            "<Album Short>"});
             this.cbx_File_Name.Location = new System.Drawing.Point(399, 322);
             this.cbx_File_Name.Name = "cbx_File_Name";
             this.cbx_File_Name.Size = new System.Drawing.Size(104, 21);
@@ -648,7 +658,10 @@
             "<Beta>",
             "<DD>",
             "<Broken>",
-            "<File Name>"});
+            "<File Name>",
+            "<Bonus>",
+            "<Artist Short>",
+            "<Album Short>"});
             this.cbx_Album.Location = new System.Drawing.Point(398, 298);
             this.cbx_Album.Name = "cbx_Album";
             this.cbx_Album.Size = new System.Drawing.Size(105, 21);
@@ -688,7 +701,10 @@
             "<Beta>",
             "<DD>",
             "<Broken>",
-            "<File Name>"});
+            "<File Name>",
+            "<Bonus>",
+            "<Artist Short>",
+            "<Album Short>"});
             this.cbx_Title_Sort.Location = new System.Drawing.Point(398, 234);
             this.cbx_Title_Sort.Name = "cbx_Title_Sort";
             this.cbx_Title_Sort.Size = new System.Drawing.Size(105, 21);
@@ -737,59 +753,6 @@
             this.chbx_CleanDLC.TabIndex = 288;
             this.chbx_CleanDLC.Text = "Clean Folder";
             this.chbx_CleanDLC.UseVisualStyleBackColor = true;
-            // 
-            // rbtn_Mac
-            // 
-            this.rbtn_Mac.AutoSize = true;
-            this.rbtn_Mac.Location = new System.Drawing.Point(112, 3);
-            this.rbtn_Mac.Name = "rbtn_Mac";
-            this.rbtn_Mac.Size = new System.Drawing.Size(46, 17);
-            this.rbtn_Mac.TabIndex = 206;
-            this.rbtn_Mac.Text = "Mac";
-            this.rbtn_Mac.UseVisualStyleBackColor = true;
-            // 
-            // pnl_ApplyChanges
-            // 
-            this.pnl_ApplyChanges.Controls.Add(this.rbtn_Xbox);
-            this.pnl_ApplyChanges.Controls.Add(this.rbtn_Mac);
-            this.pnl_ApplyChanges.Controls.Add(this.rbtn_PS3);
-            this.pnl_ApplyChanges.Controls.Add(this.rbtn_All);
-            this.pnl_ApplyChanges.Location = new System.Drawing.Point(3, 14);
-            this.pnl_ApplyChanges.Name = "pnl_ApplyChanges";
-            this.pnl_ApplyChanges.Size = new System.Drawing.Size(225, 25);
-            this.pnl_ApplyChanges.TabIndex = 204;
-            // 
-            // rbtn_Xbox
-            // 
-            this.rbtn_Xbox.AutoSize = true;
-            this.rbtn_Xbox.Location = new System.Drawing.Point(153, 3);
-            this.rbtn_Xbox.Name = "rbtn_Xbox";
-            this.rbtn_Xbox.Size = new System.Drawing.Size(68, 17);
-            this.rbtn_Xbox.TabIndex = 207;
-            this.rbtn_Xbox.Text = "XBox360";
-            this.rbtn_Xbox.UseVisualStyleBackColor = true;
-            // 
-            // rbtn_PS3
-            // 
-            this.rbtn_PS3.AutoSize = true;
-            this.rbtn_PS3.Checked = true;
-            this.rbtn_PS3.Location = new System.Drawing.Point(69, 3);
-            this.rbtn_PS3.Name = "rbtn_PS3";
-            this.rbtn_PS3.Size = new System.Drawing.Size(45, 17);
-            this.rbtn_PS3.TabIndex = 205;
-            this.rbtn_PS3.TabStop = true;
-            this.rbtn_PS3.Text = "PS3";
-            this.rbtn_PS3.UseVisualStyleBackColor = true;
-            // 
-            // rbtn_All
-            // 
-            this.rbtn_All.AutoSize = true;
-            this.rbtn_All.Location = new System.Drawing.Point(3, 3);
-            this.rbtn_All.Name = "rbtn_All";
-            this.rbtn_All.Size = new System.Drawing.Size(70, 17);
-            this.rbtn_All.TabIndex = 204;
-            this.rbtn_All.Text = "All Others";
-            this.rbtn_All.UseVisualStyleBackColor = true;
             // 
             // chbx_DebugB
             // 
@@ -1004,14 +967,56 @@
             // 
             // grpbx_ApplyChanges
             // 
-            this.grpbx_ApplyChanges.Controls.Add(this.pnl_ApplyChanges);
-            this.grpbx_ApplyChanges.Enabled = false;
+            this.grpbx_ApplyChanges.Controls.Add(this.chbx_XBOX360);
+            this.grpbx_ApplyChanges.Controls.Add(this.chbx_Mac);
+            this.grpbx_ApplyChanges.Controls.Add(this.chbx_PS3);
+            this.grpbx_ApplyChanges.Controls.Add(this.chbx_PC);
             this.grpbx_ApplyChanges.Location = new System.Drawing.Point(8, 84);
             this.grpbx_ApplyChanges.Name = "grpbx_ApplyChanges";
-            this.grpbx_ApplyChanges.Size = new System.Drawing.Size(243, 42);
+            this.grpbx_ApplyChanges.Size = new System.Drawing.Size(206, 42);
             this.grpbx_ApplyChanges.TabIndex = 278;
             this.grpbx_ApplyChanges.TabStop = false;
             this.grpbx_ApplyChanges.Text = "RePack format";
+            // 
+            // chbx_XBOX360
+            // 
+            this.chbx_XBOX360.AutoSize = true;
+            this.chbx_XBOX360.Location = new System.Drawing.Point(132, 19);
+            this.chbx_XBOX360.Name = "chbx_XBOX360";
+            this.chbx_XBOX360.Size = new System.Drawing.Size(73, 17);
+            this.chbx_XBOX360.TabIndex = 4;
+            this.chbx_XBOX360.Text = "XBOX360";
+            this.chbx_XBOX360.UseVisualStyleBackColor = true;
+            // 
+            // chbx_Mac
+            // 
+            this.chbx_Mac.AutoSize = true;
+            this.chbx_Mac.Location = new System.Drawing.Point(86, 19);
+            this.chbx_Mac.Name = "chbx_Mac";
+            this.chbx_Mac.Size = new System.Drawing.Size(47, 17);
+            this.chbx_Mac.TabIndex = 3;
+            this.chbx_Mac.Text = "Mac";
+            this.chbx_Mac.UseVisualStyleBackColor = true;
+            // 
+            // chbx_PS3
+            // 
+            this.chbx_PS3.AutoSize = true;
+            this.chbx_PS3.Location = new System.Drawing.Point(43, 19);
+            this.chbx_PS3.Name = "chbx_PS3";
+            this.chbx_PS3.Size = new System.Drawing.Size(46, 17);
+            this.chbx_PS3.TabIndex = 2;
+            this.chbx_PS3.Text = "PS3";
+            this.chbx_PS3.UseVisualStyleBackColor = true;
+            // 
+            // chbx_PC
+            // 
+            this.chbx_PC.AutoSize = true;
+            this.chbx_PC.Location = new System.Drawing.Point(6, 19);
+            this.chbx_PC.Name = "chbx_PC";
+            this.chbx_PC.Size = new System.Drawing.Size(40, 17);
+            this.chbx_PC.TabIndex = 1;
+            this.chbx_PC.Text = "PC";
+            this.chbx_PC.UseVisualStyleBackColor = true;
             // 
             // btn_RePack
             // 
@@ -1109,9 +1114,8 @@
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainBindingSource)).EndInit();
             this.groupBox2.ResumeLayout(false);
-            this.pnl_ApplyChanges.ResumeLayout(false);
-            this.pnl_ApplyChanges.PerformLayout();
             this.grpbx_ApplyChanges.ResumeLayout(false);
+            this.grpbx_ApplyChanges.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1164,11 +1168,6 @@
         private System.Windows.Forms.Label lbl_Title;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.CheckBox chbx_CleanDLC;
-        private System.Windows.Forms.RadioButton rbtn_Mac;
-        private System.Windows.Forms.Panel pnl_ApplyChanges;
-        private System.Windows.Forms.RadioButton rbtn_Xbox;
-        private System.Windows.Forms.RadioButton rbtn_PS3;
-        private System.Windows.Forms.RadioButton rbtn_All;
         private System.Windows.Forms.CheckBox chbx_DebugB;
         private System.Windows.Forms.TextBox txt_DBFolder;
         private System.Windows.Forms.Button btn_DBFolder;
@@ -1191,5 +1190,9 @@
         private System.Windows.Forms.GroupBox grpbx_ApplyChanges;
         private System.Windows.Forms.Button btn_RePack;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.CheckBox chbx_XBOX360;
+        private System.Windows.Forms.CheckBox chbx_Mac;
+        private System.Windows.Forms.CheckBox chbx_PS3;
+        private System.Windows.Forms.CheckBox chbx_PC;
     }
 }

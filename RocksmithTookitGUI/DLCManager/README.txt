@@ -23,8 +23,9 @@ Version History(release date):
 	0.1.5(12.10.2014) Read + change + Rebuild
 	0.1.6(27.10.2014) (100%) Manage Import of Duplicates (upgrade to Access 2013 DB) 
 	wip: 0.1.7(30.10.2014) (99%) FORK from/on git
-	wip: 0.2 (15.11.2014) (80%) Import 1000 dlcs, provide screen to edit, repack in any format
-	wip: 0.2.1(16.11.2014) (40%) New features: add/remove: DD, preview; lasconversiondata
+	wip: 0.2 (15.11.2014) (99%) Import 1000 dlcs, provide screen to edit, repack in any format
+	wip: 0.2.0.1(06.10.2014) (99%) manage the the/die at import(remove when creating a folder name), manage the errors at import (move broken files in a broken folder), fix the whitestripes 7armies import issue
+	wip: 0.2.1(07.11.2014) (40%) New features: add/remove: DD, preview; lasconversiondata
 	tbr: 0.2.2(19.11.2014) (0%) If importing an original over a alternate the alternate flag should be set no the Alternate
 	tbr: 0.3.1 move import DB to Main.DB?
 	tbr: 0.3.2 ?move Access code to project? or from hardcoded to viewes

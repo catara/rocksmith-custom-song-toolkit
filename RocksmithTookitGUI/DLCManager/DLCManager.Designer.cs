@@ -224,7 +224,7 @@
             "3. When Packing Make all DLC IDs unique(&save)",
             "<4. Add DD (4 Levels)>",
             "<5. Remove DD>",
-            "<6. Remove DD only for Bass Guitar>",
+            "6. Remove DD only for Bass Guitar",
             "<7. Remove the 4sec of the Preview song>",
             "8. Don\'t repack Broken songs",
             "9. Pack to cross-platform Compatible Filenames",
@@ -234,7 +234,15 @@
             "<13. >",
             "14. Import all Duplicates as Alternates",
             "15. Import any Custom as Alternate if an Original exists",
-            "16. Move Original Imported files to temp/0_old"});
+            "16. Move Original Imported files to temp/0_old",
+            "17. Import with Artist/Title same as Artist/Title Sort",
+            "18. Repack with Artist/Title same as Artist/Title Sort",
+            "<19. Import without The/Die at the beginning of Artist/Title Sort>",
+            "<20. Pack without The/Die at the beginning of Artist/Title Sort>",
+            "<21. Import with the The/Die at the end of Artist/Title Sort>",
+            "<22. Pack with The/Die at the end of Artist/Title Sort>",
+            "23. Import with the The/Die only at the end of Artist Sort",
+            "24. Pack with The/Die only at the end of Artist Sort"});
             this.chbx_Additional_Manipualtions.Location = new System.Drawing.Point(240, 88);
             this.chbx_Additional_Manipualtions.Name = "chbx_Additional_Manipualtions";
             this.chbx_Additional_Manipualtions.Size = new System.Drawing.Size(295, 109);
@@ -324,7 +332,11 @@
             "<File Name>",
             "<Bonus>",
             "<Artist Short>",
-            "<Album Short>"});
+            "<Album Short>",
+            "<Author>",
+            "<QAs>",
+            "<lastConversionDateTime>",
+            "<Avail. Tracks>"});
             this.cbx_Artist_Sort.Location = new System.Drawing.Point(398, 276);
             this.cbx_Artist_Sort.Name = "cbx_Artist_Sort";
             this.cbx_Artist_Sort.Size = new System.Drawing.Size(105, 21);
@@ -498,7 +510,11 @@
             "<File Name>",
             "<Bonus>",
             "<Artist Short>",
-            "<Album Short>"});
+            "<Album Short>",
+            "<Author>",
+            "<QAs>",
+            "<lastConversionDateTime>",
+            "<Avail. Tracks>"});
             this.cbx_Artist.Location = new System.Drawing.Point(398, 255);
             this.cbx_Artist.Name = "cbx_Artist";
             this.cbx_Artist.Size = new System.Drawing.Size(105, 21);
@@ -512,7 +528,7 @@
             this.txt_Artist.Name = "txt_Artist";
             this.txt_Artist.Size = new System.Drawing.Size(341, 20);
             this.txt_Artist.TabIndex = 301;
-            this.txt_Artist.Text = "<Artist>";
+            this.txt_Artist.Text = "<Artist>-<CDLC>-<Avail. Tracks>-<DD>-<QAs>";
             // 
             // cbx_Title
             // 
@@ -541,7 +557,11 @@
             "<File Name>",
             "<Bonus>",
             "<Artist Short>",
-            "<Album Short>"});
+            "<Album Short>",
+            "<Author>",
+            "<QAs>",
+            "<lastConversionDateTime>",
+            "<Avail. Tracks>"});
             this.cbx_Title.Location = new System.Drawing.Point(398, 212);
             this.cbx_Title.Name = "cbx_Title";
             this.cbx_Title.Size = new System.Drawing.Size(105, 21);
@@ -555,7 +575,7 @@
             this.txt_Title.Name = "txt_Title";
             this.txt_Title.Size = new System.Drawing.Size(341, 20);
             this.txt_Title.TabIndex = 298;
-            this.txt_Title.Text = "<Title>-<CDLC>-<Avail. Instr.>-<DD>";
+            this.txt_Title.Text = "<Title>";
             // 
             // label6
             // 
@@ -617,7 +637,11 @@
             "<File Name>",
             "<Bonus>",
             "<Artist Short>",
-            "<Album Short>"});
+            "<Album Short>",
+            "<Author>",
+            "<QAs>",
+            "<lastConversionDateTime>",
+            "<Avail. Tracks>"});
             this.cbx_File_Name.Location = new System.Drawing.Point(399, 322);
             this.cbx_File_Name.Name = "cbx_File_Name";
             this.cbx_File_Name.Size = new System.Drawing.Size(104, 21);
@@ -661,7 +685,11 @@
             "<File Name>",
             "<Bonus>",
             "<Artist Short>",
-            "<Album Short>"});
+            "<Album Short>",
+            "<Author>",
+            "<QAs>",
+            "<lastConversionDateTime>",
+            "<Avail. Tracks>"});
             this.cbx_Album.Location = new System.Drawing.Point(398, 298);
             this.cbx_Album.Name = "cbx_Album";
             this.cbx_Album.Size = new System.Drawing.Size(105, 21);
@@ -704,7 +732,11 @@
             "<File Name>",
             "<Bonus>",
             "<Artist Short>",
-            "<Album Short>"});
+            "<Album Short>",
+            "<Author>",
+            "<QAs>",
+            "<lastConversionDateTime>",
+            "<Avail. Tracks>"});
             this.cbx_Title_Sort.Location = new System.Drawing.Point(398, 234);
             this.cbx_Title_Sort.Name = "cbx_Title_Sort";
             this.cbx_Title_Sort.Size = new System.Drawing.Size(105, 21);

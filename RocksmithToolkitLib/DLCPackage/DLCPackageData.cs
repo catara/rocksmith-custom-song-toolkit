@@ -12,6 +12,7 @@ using RocksmithToolkitLib.DLCPackage.AggregateGraph;
 using RocksmithToolkitLib.Sng;
 using RocksmithToolkitLib.Ogg;
 using System.Xml.Serialization;
+using System.Windows.Forms;//bcapi
 
 namespace RocksmithToolkitLib.DLCPackage
 {
@@ -244,24 +245,24 @@ namespace RocksmithToolkitLib.DLCPackage
             var jsonFiles = Directory.GetFiles(unpackedDir, "*.json", SearchOption.AllDirectories);
             var attr = Manifest2014<Attributes2014>.LoadFromFile(jsonFiles[0]).Entries.ToArray()[0].Value.ToArray()[0].Value;
             SongName = attr.FullName.Split('_')[0];
-            
+            //MessageBox.Show(SongName+"-"+ jsonFiles[0]);//bcapi
             //Create dir sruct
             outdir = Path.Combine(Path.GetDirectoryName(unpackedDir), String.Format("{0}_{1}", attr.ArtistName.GetValidSortName(), attr.SongName.GetValidSortName()).Replace(" ","-"));
             eofdir = Path.Combine(outdir, EOF);
             kitdir = Path.Combine(outdir, KIT);
             attr = null; //dispose
-            
+            //MessageBox.Show("2");//bcapi
             // Don't work in same dir
             if (Directory.Exists(outdir)){
                 if(outdir == unpackedDir)
                     return unpackedDir;
                 DirectoryExtension.SafeDelete(outdir);
             }
-
+            //MessageBox.Show("2.2"+ outdir + "-"+eofdir+"-" +kitdir); //bcapi
             Directory.CreateDirectory(outdir);
             Directory.CreateDirectory(eofdir);
             Directory.CreateDirectory(kitdir);
-
+            //MessageBox.Show("3");//bcapi
             string[] xmlFiles = Directory.GetFiles(unpackedDir, "*.xml", SearchOption.AllDirectories);
             foreach (var json in jsonFiles)
             {
@@ -272,9 +273,9 @@ namespace RocksmithToolkitLib.DLCPackage
                 File.Move(json,    Path.Combine(kitdir, Name + ".json"));
                 File.Move(xmlFile, Path.Combine(eofdir, Name + ".xml"));
             }
-
+            //MessageBox.Show("4"); //bcapi
             //Move all art_size.dds to KIT folder
-			var ArtFiles = Directory.GetFiles(unpackedDir, "album_*_*.dds", SearchOption.AllDirectories);
+            var ArtFiles = Directory.GetFiles(unpackedDir, "album_*_*.dds", SearchOption.AllDirectories);
             if (ArtFiles.Any())
 				foreach(var art in ArtFiles)
 					File.Move(art, Path.Combine(kitdir, Path.GetFileName(art)));

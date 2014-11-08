@@ -158,8 +158,8 @@ namespace RocksmithToolkitGUI.DLCManager
             else chbx_Combo.Checked = false;
             if (DataGridView1.Rows[i].Cells[38].Value.ToString() == "Yes") chbx_Rhythm.Checked = true;
             else chbx_Rhythm.Checked = false;
-            //if (DataGridView1.Rows[i].Cells[41].Value.ToString() == "Yes") chbx_Sections.Checked = true;
-            //else chbx_Sections.Checked = false;
+            if (DataGridView1.Rows[i].Cells[41].Value.ToString() == "Yes") chbx_Sections.Checked = true;
+            else chbx_Sections.Checked = false;
             if (DataGridView1.Rows[i].Cells[42].Value.ToString() == "Yes") chbx_Cover.Checked = true;
             else chbx_Cover.Checked = false;
             if (DataGridView1.Rows[i].Cells[43].Value.ToString() == "Yes") chbx_Preview.Checked = true;
@@ -168,14 +168,14 @@ namespace RocksmithToolkitGUI.DLCManager
             else chbx_DD.Checked = false;
             if (DataGridView1.Rows[i].Cells[69].Value.ToString() == "Yes") chbx_Selected.Checked = true;
             else chbx_Selected.Checked = false;
-            if (DataGridView1.Rows[i].Cells[83].Value.ToString() == "Yes") chbx_BassDD.Checked = true;
-            else chbx_Beta.Checked = false;
+            //if (DataGridView1.Rows[i].Cells[83].Value.ToString() == "Yes") chbx_BassDD.Checked = true;
+            //else chbx_BassDD.Checked = false;
             if (DataGridView1.Rows[i].Cells[84].Value.ToString() == "Yes") chbx_Bonus.Checked = true;
             else chbx_Beta.Checked = false;
 
             //ImageSource imageSource = new BitmapImage(new Uri("C:\\Temp\\music_edit.png"));
 
-            //picbx_AlbumArtPath.ImageLocation= "C:\\GitHub\\tmp\\music_edit.jpg";
+            picbx_AlbumArtPath.ImageLocation= txt_AlbumArtPath.Text.Replace(".dds",".png");
 
         }
 
@@ -225,8 +225,8 @@ namespace RocksmithToolkitGUI.DLCManager
             else DataGridView1.Rows[i].Cells[38].Value = "No";
             if (chbx_Combo.Checked) DataGridView1.Rows[i].Cells[39].Value = "Yes";
             else DataGridView1.Rows[i].Cells[39].Value = "No";
-            if (chbx_Sections.Checked) DataGridView1.Rows[i].Cells[41].Value = "Yes";
-            else DataGridView1.Rows[i].Cells[41].Value = "No";
+            //if (chbx_Sections.Checked) DataGridView1.Rows[i].Cells[41].Value = "Yes";
+            //else DataGridView1.Rows[i].Cells[41].Value = "No";
             if (chbx_Cover.Checked) DataGridView1.Rows[i].Cells[42].Value = "Yes";
             else DataGridView1.Rows[i].Cells[42].Value = "No";
             if (chbx_Preview.Checked) DataGridView1.Rows[i].Cells[43].Value = "Yes";
@@ -273,7 +273,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 command.CommandText += "Is_Broken = @param31, ";
                 //command.CommandText += "MultiTrack_Version = @param32, ";
                 command.CommandText += "Alternate_Version_No = @param33, ";
-                command.CommandText += "Has_Sections = @param41, ";
+                //command.CommandText += "Has_Sections = @param41, ";
                 command.CommandText += "Has_Cover = @param42, ";
                 command.CommandText += "Has_Preview = @param43, ";
                 command.CommandText += "Has_DD = @param45, ";
@@ -317,7 +317,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 command.Parameters.AddWithValue("@param29", DataGridView1.Rows[i].Cells[29].Value.ToString());
                 command.Parameters.AddWithValue("@param31", DataGridView1.Rows[i].Cells[31].Value.ToString());
                 command.Parameters.AddWithValue("@param33", DataGridView1.Rows[i].Cells[33].Value.ToString());
-                command.Parameters.AddWithValue("@param41", DataGridView1.Rows[i].Cells[41].Value.ToString());
+                //command.Parameters.AddWithValue("@param41", DataGridView1.Rows[i].Cells[41].Value.ToString());
                 command.Parameters.AddWithValue("@param42", DataGridView1.Rows[i].Cells[42].Value.ToString());
                 command.Parameters.AddWithValue("@param43", DataGridView1.Rows[i].Cells[43].Value.ToString());
                 command.Parameters.AddWithValue("@param45", DataGridView1.Rows[i].Cells[45].Value.ToString());
@@ -822,6 +822,11 @@ namespace RocksmithToolkitGUI.DLCManager
             }
             //rtxt_StatisticsOnReadDLCs.Text += "\n  max rows" + MaximumSize;
             return MaximumSize;//files[10000];
+        }
+
+        private void btn_ChangeCover_Click(object sender, EventArgs e)
+        {
+            //ExternalApps.Png2Dds(IconFile, Path.Combine(tmpWorkDir, "icon.dds"), 512, 512);
         }
     }
 }

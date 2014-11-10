@@ -30,18 +30,25 @@
         {
             this.DataGridView1 = new System.Windows.Forms.DataGridView();
             this.Panel1 = new System.Windows.Forms.Panel();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox8 = new System.Windows.Forms.TextBox();
-            this.textBox11 = new System.Windows.Forms.TextBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.textBox7 = new System.Windows.Forms.TextBox();
+            this.txt_lastConversionDateTime = new RocksmithToolkitGUI.CueTextBox();
+            this.chbx_AmpPedalKey = new System.Windows.Forms.ComboBox();
+            this.chbx_AmpKnobValues = new System.Windows.Forms.ComboBox();
+            this.chbx_AmpCategory = new System.Windows.Forms.ComboBox();
+            this.chbx_AmpType = new System.Windows.Forms.ComboBox();
+            this.chbx_CabinetType = new System.Windows.Forms.ComboBox();
+            this.chbx_CabinetPedalKey = new System.Windows.Forms.ComboBox();
+            this.chbx_CabinetKnobValues = new System.Windows.Forms.ComboBox();
+            this.chbx_CabinetCategory = new System.Windows.Forms.ComboBox();
+            this.txt_Keyy = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_Volume = new RocksmithToolkitGUI.CueTextBox();
+            this.chbx_Custom = new System.Windows.Forms.CheckBox();
+            this.txt_ID = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_CDLC_ID = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_Arrangement_Name = new RocksmithToolkitGUI.CueTextBox();
+            this.chbx_Save_All = new System.Windows.Forms.CheckBox();
             this.button8 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.chbx_Broken = new System.Windows.Forms.CheckBox();
             this.CheckBox1 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridView1)).BeginInit();
             this.Panel1.SuspendLayout();
@@ -58,18 +65,25 @@
             // 
             // Panel1
             // 
-            this.Panel1.Controls.Add(this.textBox4);
-            this.Panel1.Controls.Add(this.textBox3);
-            this.Panel1.Controls.Add(this.textBox2);
-            this.Panel1.Controls.Add(this.textBox1);
-            this.Panel1.Controls.Add(this.textBox8);
-            this.Panel1.Controls.Add(this.textBox11);
-            this.Panel1.Controls.Add(this.checkBox3);
-            this.Panel1.Controls.Add(this.checkBox2);
-            this.Panel1.Controls.Add(this.textBox5);
-            this.Panel1.Controls.Add(this.textBox6);
-            this.Panel1.Controls.Add(this.textBox7);
+            this.Panel1.Controls.Add(this.txt_lastConversionDateTime);
+            this.Panel1.Controls.Add(this.chbx_AmpPedalKey);
+            this.Panel1.Controls.Add(this.chbx_AmpKnobValues);
+            this.Panel1.Controls.Add(this.chbx_AmpCategory);
+            this.Panel1.Controls.Add(this.chbx_AmpType);
+            this.Panel1.Controls.Add(this.chbx_CabinetType);
+            this.Panel1.Controls.Add(this.chbx_CabinetPedalKey);
+            this.Panel1.Controls.Add(this.chbx_CabinetKnobValues);
+            this.Panel1.Controls.Add(this.chbx_CabinetCategory);
+            this.Panel1.Controls.Add(this.txt_Keyy);
+            this.Panel1.Controls.Add(this.txt_Volume);
+            this.Panel1.Controls.Add(this.chbx_Custom);
+            this.Panel1.Controls.Add(this.txt_ID);
+            this.Panel1.Controls.Add(this.txt_CDLC_ID);
+            this.Panel1.Controls.Add(this.txt_Arrangement_Name);
+            this.Panel1.Controls.Add(this.chbx_Save_All);
             this.Panel1.Controls.Add(this.button8);
+            this.Panel1.Controls.Add(this.button3);
+            this.Panel1.Controls.Add(this.chbx_Broken);
             this.Panel1.Controls.Add(this.CheckBox1);
             this.Panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.Panel1.Location = new System.Drawing.Point(0, 155);
@@ -77,118 +91,182 @@
             this.Panel1.Size = new System.Drawing.Size(1174, 114);
             this.Panel1.TabIndex = 41;
             // 
-            // textBox4
+            // txt_lastConversionDateTime
             // 
-            this.textBox4.Enabled = false;
-            this.textBox4.Location = new System.Drawing.Point(207, 80);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(286, 20);
-            this.textBox4.TabIndex = 62;
-            this.textBox4.Text = "Title Sort";
+            this.txt_lastConversionDateTime.Cue = "lastConversionDateTime";
+            this.txt_lastConversionDateTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_lastConversionDateTime.ForeColor = System.Drawing.Color.Gray;
+            this.txt_lastConversionDateTime.Location = new System.Drawing.Point(374, 32);
+            this.txt_lastConversionDateTime.Name = "txt_lastConversionDateTime";
+            this.txt_lastConversionDateTime.Size = new System.Drawing.Size(113, 20);
+            this.txt_lastConversionDateTime.TabIndex = 139;
             // 
-            // textBox3
+            // chbx_AmpPedalKey
             // 
-            this.textBox3.Enabled = false;
-            this.textBox3.Location = new System.Drawing.Point(208, 58);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(286, 20);
-            this.textBox3.TabIndex = 61;
-            this.textBox3.Text = "Title";
+            this.chbx_AmpPedalKey.FormattingEnabled = true;
+            this.chbx_AmpPedalKey.Location = new System.Drawing.Point(527, 87);
+            this.chbx_AmpPedalKey.Name = "chbx_AmpPedalKey";
+            this.chbx_AmpPedalKey.Size = new System.Drawing.Size(121, 21);
+            this.chbx_AmpPedalKey.TabIndex = 138;
             // 
-            // textBox2
+            // chbx_AmpKnobValues
             // 
-            this.textBox2.Enabled = false;
-            this.textBox2.Location = new System.Drawing.Point(208, 39);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(286, 20);
-            this.textBox2.TabIndex = 60;
-            this.textBox2.Text = "Artist Sort";
+            this.chbx_AmpKnobValues.FormattingEnabled = true;
+            this.chbx_AmpKnobValues.Location = new System.Drawing.Point(527, 60);
+            this.chbx_AmpKnobValues.Name = "chbx_AmpKnobValues";
+            this.chbx_AmpKnobValues.Size = new System.Drawing.Size(121, 21);
+            this.chbx_AmpKnobValues.TabIndex = 137;
             // 
-            // textBox1
+            // chbx_AmpCategory
             // 
-            this.textBox1.Enabled = false;
-            this.textBox1.Location = new System.Drawing.Point(208, 18);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(286, 20);
-            this.textBox1.TabIndex = 59;
-            this.textBox1.Text = "Artist";
+            this.chbx_AmpCategory.FormattingEnabled = true;
+            this.chbx_AmpCategory.Location = new System.Drawing.Point(527, 33);
+            this.chbx_AmpCategory.Name = "chbx_AmpCategory";
+            this.chbx_AmpCategory.Size = new System.Drawing.Size(121, 21);
+            this.chbx_AmpCategory.TabIndex = 136;
             // 
-            // textBox8
+            // chbx_AmpType
             // 
-            this.textBox8.Enabled = false;
-            this.textBox8.Location = new System.Drawing.Point(566, 18);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(60, 20);
-            this.textBox8.TabIndex = 55;
-            this.textBox8.Text = "Rating";
+            this.chbx_AmpType.FormattingEnabled = true;
+            this.chbx_AmpType.Location = new System.Drawing.Point(527, 6);
+            this.chbx_AmpType.Name = "chbx_AmpType";
+            this.chbx_AmpType.Size = new System.Drawing.Size(121, 21);
+            this.chbx_AmpType.TabIndex = 135;
             // 
-            // textBox11
+            // chbx_CabinetType
             // 
-            this.textBox11.Enabled = false;
-            this.textBox11.Location = new System.Drawing.Point(500, 18);
-            this.textBox11.Name = "textBox11";
-            this.textBox11.Size = new System.Drawing.Size(60, 20);
-            this.textBox11.TabIndex = 50;
-            this.textBox11.Text = "Track No.";
+            this.chbx_CabinetType.FormattingEnabled = true;
+            this.chbx_CabinetType.Location = new System.Drawing.Point(745, 86);
+            this.chbx_CabinetType.Name = "chbx_CabinetType";
+            this.chbx_CabinetType.Size = new System.Drawing.Size(121, 21);
+            this.chbx_CabinetType.TabIndex = 134;
             // 
-            // checkBox3
+            // chbx_CabinetPedalKey
             // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Enabled = false;
-            this.checkBox3.Location = new System.Drawing.Point(599, 62);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(42, 17);
-            this.checkBox3.TabIndex = 45;
-            this.checkBox3.Text = "DD";
-            this.checkBox3.UseVisualStyleBackColor = true;
+            this.chbx_CabinetPedalKey.FormattingEnabled = true;
+            this.chbx_CabinetPedalKey.Location = new System.Drawing.Point(745, 59);
+            this.chbx_CabinetPedalKey.Name = "chbx_CabinetPedalKey";
+            this.chbx_CabinetPedalKey.Size = new System.Drawing.Size(121, 21);
+            this.chbx_CabinetPedalKey.TabIndex = 133;
             // 
-            // checkBox2
+            // chbx_CabinetKnobValues
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Enabled = false;
-            this.checkBox2.Location = new System.Drawing.Point(599, 46);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(61, 17);
-            this.checkBox2.TabIndex = 44;
-            this.checkBox2.Text = "Original";
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.chbx_CabinetKnobValues.FormattingEnabled = true;
+            this.chbx_CabinetKnobValues.Location = new System.Drawing.Point(745, 32);
+            this.chbx_CabinetKnobValues.Name = "chbx_CabinetKnobValues";
+            this.chbx_CabinetKnobValues.Size = new System.Drawing.Size(121, 21);
+            this.chbx_CabinetKnobValues.TabIndex = 132;
             // 
-            // textBox5
+            // chbx_CabinetCategory
             // 
-            this.textBox5.Enabled = false;
-            this.textBox5.Location = new System.Drawing.Point(499, 84);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(108, 20);
-            this.textBox5.TabIndex = 43;
-            this.textBox5.Text = "Tracks Available";
+            this.chbx_CabinetCategory.FormattingEnabled = true;
+            this.chbx_CabinetCategory.Location = new System.Drawing.Point(745, 5);
+            this.chbx_CabinetCategory.Name = "chbx_CabinetCategory";
+            this.chbx_CabinetCategory.Size = new System.Drawing.Size(121, 21);
+            this.chbx_CabinetCategory.TabIndex = 131;
             // 
-            // textBox6
+            // txt_Keyy
             // 
-            this.textBox6.Enabled = false;
-            this.textBox6.Location = new System.Drawing.Point(499, 62);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(78, 20);
-            this.textBox6.TabIndex = 42;
-            this.textBox6.Text = "Version";
+            this.txt_Keyy.Cue = "Key";
+            this.txt_Keyy.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_Keyy.ForeColor = System.Drawing.Color.Gray;
+            this.txt_Keyy.Location = new System.Drawing.Point(265, 45);
+            this.txt_Keyy.Name = "txt_Keyy";
+            this.txt_Keyy.Size = new System.Drawing.Size(56, 20);
+            this.txt_Keyy.TabIndex = 130;
             // 
-            // textBox7
+            // txt_Volume
             // 
-            this.textBox7.Enabled = false;
-            this.textBox7.Location = new System.Drawing.Point(499, 41);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(91, 20);
-            this.textBox7.TabIndex = 41;
-            this.textBox7.Text = "Author";
+            this.txt_Volume.Cue = "CDLC_ID";
+            this.txt_Volume.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_Volume.ForeColor = System.Drawing.Color.Gray;
+            this.txt_Volume.Location = new System.Drawing.Point(265, 65);
+            this.txt_Volume.Name = "txt_Volume";
+            this.txt_Volume.Size = new System.Drawing.Size(56, 20);
+            this.txt_Volume.TabIndex = 129;
+            // 
+            // chbx_Custom
+            // 
+            this.chbx_Custom.AutoSize = true;
+            this.chbx_Custom.Enabled = false;
+            this.chbx_Custom.Location = new System.Drawing.Point(903, 64);
+            this.chbx_Custom.Name = "chbx_Custom";
+            this.chbx_Custom.Size = new System.Drawing.Size(61, 17);
+            this.chbx_Custom.TabIndex = 128;
+            this.chbx_Custom.Text = "Custom";
+            this.chbx_Custom.UseVisualStyleBackColor = true;
+            // 
+            // txt_ID
+            // 
+            this.txt_ID.Cue = "ID";
+            this.txt_ID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_ID.ForeColor = System.Drawing.Color.Gray;
+            this.txt_ID.Location = new System.Drawing.Point(265, 90);
+            this.txt_ID.Name = "txt_ID";
+            this.txt_ID.Size = new System.Drawing.Size(45, 20);
+            this.txt_ID.TabIndex = 127;
+            // 
+            // txt_CDLC_ID
+            // 
+            this.txt_CDLC_ID.Cue = "CDLC_ID";
+            this.txt_CDLC_ID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_CDLC_ID.ForeColor = System.Drawing.Color.Gray;
+            this.txt_CDLC_ID.Location = new System.Drawing.Point(265, 23);
+            this.txt_CDLC_ID.Name = "txt_CDLC_ID";
+            this.txt_CDLC_ID.Size = new System.Drawing.Size(56, 20);
+            this.txt_CDLC_ID.TabIndex = 126;
+            // 
+            // txt_Arrangement_Name
+            // 
+            this.txt_Arrangement_Name.Cue = "Arrangement Name";
+            this.txt_Arrangement_Name.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_Arrangement_Name.ForeColor = System.Drawing.Color.Gray;
+            this.txt_Arrangement_Name.Location = new System.Drawing.Point(265, 6);
+            this.txt_Arrangement_Name.Name = "txt_Arrangement_Name";
+            this.txt_Arrangement_Name.Size = new System.Drawing.Size(222, 20);
+            this.txt_Arrangement_Name.TabIndex = 125;
+            // 
+            // chbx_Save_All
+            // 
+            this.chbx_Save_All.AutoSize = true;
+            this.chbx_Save_All.Enabled = false;
+            this.chbx_Save_All.Location = new System.Drawing.Point(994, 64);
+            this.chbx_Save_All.Name = "chbx_Save_All";
+            this.chbx_Save_All.Size = new System.Drawing.Size(37, 17);
+            this.chbx_Save_All.TabIndex = 124;
+            this.chbx_Save_All.Text = "All";
+            this.chbx_Save_All.UseVisualStyleBackColor = true;
             // 
             // button8
             // 
-            this.button8.Enabled = false;
-            this.button8.Location = new System.Drawing.Point(12, 18);
+            this.button8.Location = new System.Drawing.Point(994, 33);
             this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(120, 93);
-            this.button8.TabIndex = 37;
-            this.button8.Text = "Open DB in M$ Access";
+            this.button8.Size = new System.Drawing.Size(84, 26);
+            this.button8.TabIndex = 123;
+            this.button8.Text = "Save";
             this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(125, 41);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(120, 35);
+            this.button3.TabIndex = 122;
+            this.button3.Text = "Open DB in M$ Access";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // chbx_Broken
+            // 
+            this.chbx_Broken.AutoSize = true;
+            this.chbx_Broken.Enabled = false;
+            this.chbx_Broken.Location = new System.Drawing.Point(903, 49);
+            this.chbx_Broken.Name = "chbx_Broken";
+            this.chbx_Broken.Size = new System.Drawing.Size(60, 17);
+            this.chbx_Broken.TabIndex = 121;
+            this.chbx_Broken.Text = "Broken";
+            this.chbx_Broken.UseVisualStyleBackColor = true;
             // 
             // CheckBox1
             // 
@@ -211,6 +289,7 @@
             this.Controls.Add(this.DataGridView1);
             this.Name = "TonesDB";
             this.Text = "TonesDB";
+            this.Load += new System.EventHandler(this.TonesDB_Load);
             ((System.ComponentModel.ISupportInitialize)(this.DataGridView1)).EndInit();
             this.Panel1.ResumeLayout(false);
             this.Panel1.PerformLayout();
@@ -222,18 +301,25 @@
 
         internal System.Windows.Forms.DataGridView DataGridView1;
         internal System.Windows.Forms.Panel Panel1;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox8;
-        private System.Windows.Forms.TextBox textBox11;
-        private System.Windows.Forms.CheckBox checkBox3;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.TextBox textBox6;
-        private System.Windows.Forms.TextBox textBox7;
-        private System.Windows.Forms.Button button8;
         internal System.Windows.Forms.CheckBox CheckBox1;
+        private System.Windows.Forms.CheckBox chbx_Save_All;
+        private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.CheckBox chbx_Broken;
+        private CueTextBox txt_Keyy;
+        private CueTextBox txt_Volume;
+        private System.Windows.Forms.CheckBox chbx_Custom;
+        private CueTextBox txt_ID;
+        private CueTextBox txt_CDLC_ID;
+        private CueTextBox txt_Arrangement_Name;
+        private System.Windows.Forms.ComboBox chbx_AmpPedalKey;
+        private System.Windows.Forms.ComboBox chbx_AmpKnobValues;
+        private System.Windows.Forms.ComboBox chbx_AmpCategory;
+        private System.Windows.Forms.ComboBox chbx_AmpType;
+        private System.Windows.Forms.ComboBox chbx_CabinetType;
+        private System.Windows.Forms.ComboBox chbx_CabinetPedalKey;
+        private System.Windows.Forms.ComboBox chbx_CabinetKnobValues;
+        private System.Windows.Forms.ComboBox chbx_CabinetCategory;
+        private CueTextBox txt_lastConversionDateTime;
     }
 }

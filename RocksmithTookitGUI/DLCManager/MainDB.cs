@@ -15,10 +15,12 @@ namespace RocksmithToolkitGUI.DLCManager
 {
     public partial class MainDB : Form
     {
-        public MainDB()
+        public MainDB(string txt_DBFolder)
         {
             InitializeComponent();
             //MessageBox.Show("test0");
+            DB_Path = txt_DBFolder;
+            DB_Path = DB_Path + "\\Files.accdb";
         }
 
         private string Filename = System.IO.Path.Combine(Application.StartupPath, "Text.txt");
@@ -89,7 +91,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var DB_Path = "C:\\Temp\\GitHub\\tmp" + "\\Files.accdb"; //DLCManager.txt_DBFolder.Text
+             //DLCManager.txt_DBFolder.Text
             try
             {
                 Process process = Process.Start("msaccess.exe " + DB_Path + "");
@@ -103,13 +105,13 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btn_Arrangements_Click(object sender, EventArgs e)
         {
-            ArrangementsDB frm = new ArrangementsDB();
+            ArrangementsDB frm = new ArrangementsDB(DB_Path);
             frm.Show();
         }
 
         private void btn_Tones_Click(object sender, EventArgs e)
         {
-            TonesDB frm = new TonesDB();
+            TonesDB frm = new TonesDB(DB_Path);
             frm.Show();
         }
 
@@ -171,7 +173,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //if (DataGridView1.Rows[i].Cells[83].Value.ToString() == "Yes") chbx_BassDD.Checked = true;
             //else chbx_BassDD.Checked = false;
             if (DataGridView1.Rows[i].Cells[84].Value.ToString() == "Yes") chbx_Bonus.Checked = true;
-            else chbx_Beta.Checked = false;
+            else chbx_Bonus.Checked = false;
 
             //ImageSource imageSource = new BitmapImage(new Uri("C:\\Temp\\music_edit.png"));
 
@@ -240,7 +242,7 @@ namespace RocksmithToolkitGUI.DLCManager
             if (chbx_Bonus.Checked) DataGridView1.Rows[i].Cells[84].Value = "Yes";
             else DataGridView1.Rows[i].Cells[84].Value = "No";
 
-            var DB_Path = "../../../../tmp\\Files.accdb;";
+            //var DB_Path = "../../../../tmp\\Files.accdb;";
             var connection = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path); //+ ";Persist Security Info=False"
             var command = connection.CreateCommand();
             //dssx = DataGridView1;
@@ -341,7 +343,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    MessageBox.Show("Can not open Arrangements DB connection in Import ! " + DB_Path + "-" + command.CommandText);
+                    MessageBox.Show("Can not open Main DB connection in Edit Main screen ! " + DB_Path + "-" + command.CommandText);
 
                     throw;
                 }
@@ -372,7 +374,7 @@ namespace RocksmithToolkitGUI.DLCManager
         {
 
 
-            DB_Path = "../../../../tmp\\Files.accdb;";
+            //DB_Path = "../../../../tmp\\Files.accdb;";
             using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
             {
                 OleDbDataAdapter da = new OleDbDataAdapter("SELECT * FROM Main ORDER BY Artist, Album_Year, Album, Song_Title;", cn);

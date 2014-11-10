@@ -100,6 +100,8 @@
             this.chbx_PC = new System.Windows.Forms.CheckBox();
             this.btn_RePack = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
+            this.helpProvider1 = new System.Windows.Forms.HelpProvider();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainBindingSource)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -655,8 +657,8 @@
             this.txt_File_Name.Name = "txt_File_Name";
             this.txt_File_Name.Size = new System.Drawing.Size(329, 20);
             this.txt_File_Name.TabIndex = 293;
-            this.txt_File_Name.Text = "<Beta><Broken><CDLC> - <Artist> - <Year> - <Album><Track No.> - <Title> - <DD> - " +
-    "<Avail. Instr.> - v<Version>";
+            this.txt_File_Name.Text = "<Beta><Broken><CDLC>-<Artist>-<Year>-<Album><Track No.>-<Title>-<DD>-<Avail. Trac" +
+    "ks>-v<Version>";
             // 
             // cbx_Album
             // 
@@ -806,6 +808,8 @@
             this.txt_DBFolder.Name = "txt_DBFolder";
             this.txt_DBFolder.Size = new System.Drawing.Size(182, 20);
             this.txt_DBFolder.TabIndex = 275;
+            this.txt_DBFolder.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.toolTip1.SetToolTip(this.txt_DBFolder, "Requires a Access2014 DB with");
             // 
             // btn_DBFolder
             // 
@@ -849,6 +853,7 @@
             this.txt_RocksmithDLCPath.Name = "txt_RocksmithDLCPath";
             this.txt_RocksmithDLCPath.Size = new System.Drawing.Size(182, 20);
             this.txt_RocksmithDLCPath.TabIndex = 271;
+            this.txt_RocksmithDLCPath.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txt_TempPath
             // 
@@ -857,6 +862,8 @@
             this.txt_TempPath.Name = "txt_TempPath";
             this.txt_TempPath.Size = new System.Drawing.Size(182, 20);
             this.txt_TempPath.TabIndex = 270;
+            this.txt_TempPath.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.toolTip1.SetToolTip(this.txt_TempPath, "Also requires the subfolders 0, 0_old, 0_broken");
             // 
             // chbx_CleanTemp
             // 
@@ -1226,5 +1233,7 @@
         private System.Windows.Forms.CheckBox chbx_Mac;
         private System.Windows.Forms.CheckBox chbx_PS3;
         private System.Windows.Forms.CheckBox chbx_PC;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.HelpProvider helpProvider1;
     }
 }

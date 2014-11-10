@@ -30,9 +30,11 @@ Version History(release date):
 	tbr: 0.3.1 move import DB to Main.DB?
 	tbr: 0.3.2 ?move Access code to project? or from hardcoded to viewes
 	tbr: 0.3.3(12.12.2014) (0%) save settings in Toolkit config
-	tbr: 0.3.4(03.03.2015) (30%) use parameterized SQL everywhere (&/ integrate template DB into project or a SQL DB)
+	tbr: 0.3.4(03.03.2015) (60%) use parameterized SQL everywhere (&/ integrate template DB into project or a SQL DB)
 	tbr: 0.4 Redesign stats &Duplciates screen as an independendent form not a yes no cancel alert window
-	wip: 0.5(21.12.2014) (10%) Redesign MainDB+Edit Screen
+	wip: 0.5(21.12.2014) (70%) Redesign MainDB+Edit Screen
+	tbr: 0.6() () Implement FTP to PS3 (also as a copy to any other location)
+	tbr: 0.7() () implement translation for cleanups (every artist The Black Key = Black Keys)
 
 
 Date: 05.11.2014

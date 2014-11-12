@@ -224,8 +224,8 @@
             "1. When Packing Add Increment to all songs Title",
             "2. When Packing Add Increment to all songs Title per artist",
             "3. When Packing Make all DLC IDs unique(&save)",
-            "<4. Add DD (4 Levels)>",
-            "<5. Remove DD>",
+            "<4. Remove DD>",
+            "<5. Import and remove DD only for Bass>",
             "6. Remove DD only for Bass Guitar",
             "<7. Remove the 4sec of the Preview song>",
             "8. Don\'t repack Broken songs",
@@ -233,7 +233,7 @@
             "<10. Generate random 30sec Preview>",
             "<11. Convert Originals>",
             "<12. Repack PC>",
-            "<13. >",
+            "<13. Add DD (4 Levels)>",
             "14. Import all Duplicates as Alternates",
             "15. Import any Custom as Alternate if an Original exists",
             "16. Move Original Imported files to temp/0_old",
@@ -241,10 +241,14 @@
             "18. Repack with Artist/Title same as Artist/Title Sort",
             "<19. Import without The/Die at the beginning of Artist/Title Sort>",
             "<20. Pack without The/Die at the beginning of Artist/Title Sort>",
-            "<21. Import with the The/Die at the end of Artist/Title Sort>",
-            "<22. Pack with The/Die at the end of Artist/Title Sort>",
+            "21. Import with the The/Die at the end of Artist/Title Sort",
+            "22. Pack with The/Die at the end of Artist/Title Sort",
             "23. Import with the The/Die only at the end of Artist Sort",
-            "24. Pack with The/Die only at the end of Artist Sort"});
+            "24. Pack with The/Die only at the end of Artist Sort",
+            "<25. Use translation tables for naming standardization>",
+            "26. If Original don\'t add QAs(DD;NOs;DLC/ORIG;Tracks;Instr.;etc.)",
+            "<@IMPORT>",
+            "<@Pack>"});
             this.chbx_Additional_Manipualtions.Location = new System.Drawing.Point(240, 88);
             this.chbx_Additional_Manipualtions.Name = "chbx_Additional_Manipualtions";
             this.chbx_Additional_Manipualtions.Size = new System.Drawing.Size(295, 109);
@@ -338,7 +342,8 @@
             "<Author>",
             "<QAs>",
             "<lastConversionDateTime>",
-            "<Avail. Tracks>"});
+            "<Avail. Tracks>",
+            "<Bass_HasDD>"});
             this.cbx_Artist_Sort.Location = new System.Drawing.Point(398, 276);
             this.cbx_Artist_Sort.Name = "cbx_Artist_Sort";
             this.cbx_Artist_Sort.Size = new System.Drawing.Size(105, 21);
@@ -516,7 +521,8 @@
             "<Author>",
             "<QAs>",
             "<lastConversionDateTime>",
-            "<Avail. Tracks>"});
+            "<Avail. Tracks>",
+            "<Bass_HasDD>"});
             this.cbx_Artist.Location = new System.Drawing.Point(398, 255);
             this.cbx_Artist.Name = "cbx_Artist";
             this.cbx_Artist.Size = new System.Drawing.Size(105, 21);
@@ -563,7 +569,8 @@
             "<Author>",
             "<QAs>",
             "<lastConversionDateTime>",
-            "<Avail. Tracks>"});
+            "<Avail. Tracks>",
+            "<Bass_HasDD>"});
             this.cbx_Title.Location = new System.Drawing.Point(398, 212);
             this.cbx_Title.Name = "cbx_Title";
             this.cbx_Title.Size = new System.Drawing.Size(105, 21);
@@ -643,7 +650,8 @@
             "<Author>",
             "<QAs>",
             "<lastConversionDateTime>",
-            "<Avail. Tracks>"});
+            "<Avail. Tracks>",
+            "<Bass_HasDD>"});
             this.cbx_File_Name.Location = new System.Drawing.Point(399, 322);
             this.cbx_File_Name.Name = "cbx_File_Name";
             this.cbx_File_Name.Size = new System.Drawing.Size(104, 21);
@@ -658,7 +666,7 @@
             this.txt_File_Name.Size = new System.Drawing.Size(329, 20);
             this.txt_File_Name.TabIndex = 293;
             this.txt_File_Name.Text = "<Beta><Broken><CDLC>-<Artist>-<Year>-<Album><Track No.>-<Title>-<DD>-<Avail. Trac" +
-    "ks>-v<Version>";
+    "ks>-<QAs>-v<Version>";
             // 
             // cbx_Album
             // 
@@ -691,7 +699,8 @@
             "<Author>",
             "<QAs>",
             "<lastConversionDateTime>",
-            "<Avail. Tracks>"});
+            "<Avail. Tracks>",
+            "<Bass_HasDD>"});
             this.cbx_Album.Location = new System.Drawing.Point(398, 298);
             this.cbx_Album.Name = "cbx_Album";
             this.cbx_Album.Size = new System.Drawing.Size(105, 21);
@@ -738,7 +747,8 @@
             "<Author>",
             "<QAs>",
             "<lastConversionDateTime>",
-            "<Avail. Tracks>"});
+            "<Avail. Tracks>",
+            "<Bass_HasDD>"});
             this.cbx_Title_Sort.Location = new System.Drawing.Point(398, 234);
             this.cbx_Title_Sort.Name = "cbx_Title_Sort";
             this.cbx_Title_Sort.Size = new System.Drawing.Size(105, 21);
@@ -791,8 +801,6 @@
             // chbx_DebugB
             // 
             this.chbx_DebugB.AutoSize = true;
-            this.chbx_DebugB.Checked = true;
-            this.chbx_DebugB.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chbx_DebugB.Location = new System.Drawing.Point(406, 68);
             this.chbx_DebugB.Name = "chbx_DebugB";
             this.chbx_DebugB.Size = new System.Drawing.Size(58, 17);
@@ -808,7 +816,6 @@
             this.txt_DBFolder.Name = "txt_DBFolder";
             this.txt_DBFolder.Size = new System.Drawing.Size(182, 20);
             this.txt_DBFolder.TabIndex = 275;
-            this.txt_DBFolder.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.toolTip1.SetToolTip(this.txt_DBFolder, "Requires a Access2014 DB with");
             // 
             // btn_DBFolder
@@ -853,7 +860,6 @@
             this.txt_RocksmithDLCPath.Name = "txt_RocksmithDLCPath";
             this.txt_RocksmithDLCPath.Size = new System.Drawing.Size(182, 20);
             this.txt_RocksmithDLCPath.TabIndex = 271;
-            this.txt_RocksmithDLCPath.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txt_TempPath
             // 
@@ -862,7 +868,6 @@
             this.txt_TempPath.Name = "txt_TempPath";
             this.txt_TempPath.Size = new System.Drawing.Size(182, 20);
             this.txt_TempPath.TabIndex = 270;
-            this.txt_TempPath.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.toolTip1.SetToolTip(this.txt_TempPath, "Also requires the subfolders 0, 0_old, 0_broken");
             // 
             // chbx_CleanTemp

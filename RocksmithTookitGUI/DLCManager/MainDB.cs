@@ -262,7 +262,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 command.CommandText += "AverageTempo = @param7, ";
                 command.CommandText += "Volume = @param8, ";
                 command.CommandText += "Preview_Volume = @param9, ";
-                command.CommandText += "AlbumArtPath = @param9, ";
+                command.CommandText += "AlbumArtPath = @param10, ";
                 command.CommandText += "Track_No = @param13, ";
                 command.CommandText += "Author = @param14, ";
                 command.CommandText += "Version = @param15, ";
@@ -334,6 +334,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 command.Parameters.AddWithValue("@param84", DataGridView1.Rows[i].Cells[84].Value.ToString());
                 command.Parameters.AddWithValue("@param85", DataGridView1.Rows[i].Cells[85].Value.ToString());
                 command.Parameters.AddWithValue("@param86", DataGridView1.Rows[i].Cells[86].Value.ToString());
+                //MessageBox.Show(command.Parameters.);
                 try
                 {
                     command.CommandType = CommandType.Text;
@@ -344,7 +345,6 @@ namespace RocksmithToolkitGUI.DLCManager
                 {
                     MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     MessageBox.Show("Can not open Main DB connection in Edit Main screen ! " + DB_Path + "-" + command.CommandText);
-
                     throw;
                 }
                 finally
@@ -689,10 +689,10 @@ namespace RocksmithToolkitGUI.DLCManager
             public string AlbumArt_Hash { get; set; }
             public string Audio_Hash { get; set; }
             public string audioPreview_Hash { get; set; }
+            public string Has_BassDD { get; set; }
             public string Has_Bonus_Arrangement { get; set; }
             public string Artist_ShortName { get; set; }
             public string Album_ShortName { get; set; }
-            public string Has_BassDD { get; set; }
         }
         public Files[] files = new Files[10000];
         //Generic procedure to read and parse Main.DB (&others..soon)

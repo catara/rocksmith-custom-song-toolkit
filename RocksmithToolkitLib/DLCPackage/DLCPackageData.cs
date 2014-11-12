@@ -262,7 +262,7 @@ namespace RocksmithToolkitLib.DLCPackage
             Directory.CreateDirectory(outdir);
             Directory.CreateDirectory(eofdir);
             Directory.CreateDirectory(kitdir);
-            MessageBox.Show("3");//bcapi
+            //MessageBox.Show("3");//bcapi
             string[] xmlFiles = Directory.GetFiles(unpackedDir, "*.xml", SearchOption.AllDirectories);
             foreach (var json in jsonFiles)
             {

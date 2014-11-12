@@ -403,6 +403,8 @@ namespace RocksmithToolkitGUI.DLCManager
             var curelem = "";
             var fulltxt = "";
             var readt = false;
+            var oldtxt = "";
+            var last_ = 0;
             for (i = 0; i <= txt.Length - 1; i++)
             {
                 //rtxt_StatisticsOnReadDLCs.Text = i  + rtxt_StatisticsOnReadDLCs.Text;
@@ -417,10 +419,11 @@ namespace RocksmithToolkitGUI.DLCManager
                     curelem += curtext;
                 else fulltxt += curtext;
 
-                bool origQAs = false;
-                if (chbx_Additional_Manipualtions.GetItemChecked(25)) origQAs = true;
-                else origQAs = false;
+                bool origQAs = true;
+                if (chbx_Additional_Manipualtions.GetItemChecked(25)) origQAs = false;
+                //else origQAs = false;
 
+                oldtxt = fulltxt;
                 if (curtext == ">")
                 {
                     readt = false;
@@ -491,7 +494,10 @@ namespace RocksmithToolkitGUI.DLCManager
                             break;
                         case "<Author>":
                             fulltxt += files[k].Author;
-                            break;   
+                            break;
+                        case "<Space>":
+                            fulltxt += " ";
+                            break;
                         default:
                             if (origQAs)
                             {
@@ -507,7 +513,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                             fulltxt += files[k].DLC;
                                             break;
                                         case "<QAs>":
-                                            fulltxt += (((files[k].Has_Cover == "Yes") || (files[k].Has_Preview == "Yes") || (files[k].Has_Vocals == "Yes")) ? "NOs-" : "") + ((files[k].Has_Cover == "Yes") ? "" : "C") + ((files[k].Has_Preview == "Yes") ? "" : "P") + ((files[k].Has_Vocals == "Yes") ? "" : "V"); //+((files[k].Has_Sections == "Yes") ? "" : "S")
+                                            fulltxt += (((files[k].Has_Cover == "Yes") || (files[k].Has_Preview == "Yes") || (files[k].Has_Vocals == "Yes")) ? "" : "NOs-") + ((files[k].Has_Cover == "Yes") ? "" : "C") + ((files[k].Has_Preview == "Yes") ? "" : "P") + ((files[k].Has_Vocals == "Yes") ? "" : "V"); //+((files[k].Has_Sections == "Yes") ? "" : "S")
                                             break;
                                         case "<lastConversionDateTime>":
                                             fulltxt += files[k].Import_Date; //not yet done
@@ -523,7 +529,14 @@ namespace RocksmithToolkitGUI.DLCManager
                               }
                             break;
                     }
-                }
+                    if (oldtxt == fulltxt && last_ > 0)
+                    //{
+                    //    rtxt_StatisticsOnReadDLCs.Text = i + "...\n"+rtxt_StatisticsOnReadDLCs.Text;
+                    //    rtxt_StatisticsOnReadDLCs.Text = last_+"-"+ fulltxt + "...\n" + rtxt_StatisticsOnReadDLCs.Text;
+                        fulltxt = fulltxt.Substring(0, last_);
+                    //}
+                        last_ = fulltxt.Length;
+                    }
             }
             //rtxt_StatisticsOnReadDLCs.Text = "returning " + i + " char " + fulltxt + "\n" + rtxt_StatisticsOnReadDLCs.Text;
             return fulltxt;

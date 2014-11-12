@@ -258,7 +258,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label10.Location = new System.Drawing.Point(484, 199);
+            this.label10.Location = new System.Drawing.Point(491, 199);
             this.label10.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(55, 13);
@@ -343,7 +343,8 @@
             "<QAs>",
             "<lastConversionDateTime>",
             "<Avail. Tracks>",
-            "<Bass_HasDD>"});
+            "<Bass_HasDD>",
+            "<Space>"});
             this.cbx_Artist_Sort.Location = new System.Drawing.Point(398, 276);
             this.cbx_Artist_Sort.Name = "cbx_Artist_Sort";
             this.cbx_Artist_Sort.Size = new System.Drawing.Size(105, 21);
@@ -522,7 +523,8 @@
             "<QAs>",
             "<lastConversionDateTime>",
             "<Avail. Tracks>",
-            "<Bass_HasDD>"});
+            "<Bass_HasDD>",
+            "<Space>"});
             this.cbx_Artist.Location = new System.Drawing.Point(398, 255);
             this.cbx_Artist.Name = "cbx_Artist";
             this.cbx_Artist.Size = new System.Drawing.Size(105, 21);
@@ -570,7 +572,8 @@
             "<QAs>",
             "<lastConversionDateTime>",
             "<Avail. Tracks>",
-            "<Bass_HasDD>"});
+            "<Bass_HasDD>",
+            "<Space>"});
             this.cbx_Title.Location = new System.Drawing.Point(398, 212);
             this.cbx_Title.Name = "cbx_Title";
             this.cbx_Title.Size = new System.Drawing.Size(105, 21);
@@ -651,7 +654,8 @@
             "<QAs>",
             "<lastConversionDateTime>",
             "<Avail. Tracks>",
-            "<Bass_HasDD>"});
+            "<Bass_HasDD>",
+            "<Space>"});
             this.cbx_File_Name.Location = new System.Drawing.Point(399, 322);
             this.cbx_File_Name.Name = "cbx_File_Name";
             this.cbx_File_Name.Size = new System.Drawing.Size(104, 21);
@@ -700,7 +704,8 @@
             "<QAs>",
             "<lastConversionDateTime>",
             "<Avail. Tracks>",
-            "<Bass_HasDD>"});
+            "<Bass_HasDD>",
+            "<Space>"});
             this.cbx_Album.Location = new System.Drawing.Point(398, 298);
             this.cbx_Album.Name = "cbx_Album";
             this.cbx_Album.Size = new System.Drawing.Size(105, 21);
@@ -748,7 +753,8 @@
             "<QAs>",
             "<lastConversionDateTime>",
             "<Avail. Tracks>",
-            "<Bass_HasDD>"});
+            "<Bass_HasDD>",
+            "<Space>"});
             this.cbx_Title_Sort.Location = new System.Drawing.Point(398, 234);
             this.cbx_Title_Sort.Name = "cbx_Title_Sort";
             this.cbx_Title_Sort.Size = new System.Drawing.Size(105, 21);

@@ -205,7 +205,7 @@ namespace RocksmithToolkitGUI.DDC
             startInfo.CreateNoWindow = true;
             startInfo.RedirectStandardOutput = true;
             startInfo.RedirectStandardError = true;
-
+            //MessageBox.Show(startInfo.FileName + "---" + startInfo.WorkingDirectory + "---" + startInfo.FileName + "---" );
             using (var DDC = new Process()) {
                 DDC.StartInfo = startInfo;
                 DDC.Start();

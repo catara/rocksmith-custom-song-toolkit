@@ -102,6 +102,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.helpProvider1 = new System.Windows.Forms.HelpProvider();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.btn_Standardization = new System.Windows.Forms.Button();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainBindingSource)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -245,7 +246,7 @@
             "22. Pack with The/Die at the end of Artist/Title Sort",
             "23. Import with the The/Die only at the end of Artist Sort",
             "24. Pack with The/Die only at the end of Artist Sort",
-            "<25. Use translation tables for naming standardization>",
+            "25. Use translation tables for naming standardization",
             "26. If Original don\'t add QAs(DD;NOs;DLC/ORIG;Tracks;Instr.;etc.)",
             "<@IMPORT>",
             "<@Pack>"});
@@ -538,7 +539,7 @@
             this.txt_Artist.Name = "txt_Artist";
             this.txt_Artist.Size = new System.Drawing.Size(341, 20);
             this.txt_Artist.TabIndex = 301;
-            this.txt_Artist.Text = "<Artist>-<CDLC>-<Avail. Tracks>-<DD>-<QAs>";
+            this.txt_Artist.Text = "<Artist>-<CDLC>-<Avail. Tracks>-<DD>-<QAs>-<Bass_HasDD>";
             // 
             // cbx_Title
             // 
@@ -670,7 +671,7 @@
             this.txt_File_Name.Size = new System.Drawing.Size(329, 20);
             this.txt_File_Name.TabIndex = 293;
             this.txt_File_Name.Text = "<Beta><Broken><CDLC>-<Artist>-<Year>-<Album><Track No.>-<Title>-<DD>-<Avail. Trac" +
-    "ks>-<QAs>-v<Version>";
+    "ks>-<QAs>-v<Version>-<Bass_HasDD>";
             // 
             // cbx_Album
             // 
@@ -807,6 +808,8 @@
             // chbx_DebugB
             // 
             this.chbx_DebugB.AutoSize = true;
+            this.chbx_DebugB.Checked = true;
+            this.chbx_DebugB.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chbx_DebugB.Location = new System.Drawing.Point(406, 68);
             this.chbx_DebugB.Name = "chbx_DebugB";
             this.chbx_DebugB.Size = new System.Drawing.Size(58, 17);
@@ -1051,6 +1054,8 @@
             // chbx_PS3
             // 
             this.chbx_PS3.AutoSize = true;
+            this.chbx_PS3.Checked = true;
+            this.chbx_PS3.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chbx_PS3.Location = new System.Drawing.Point(43, 19);
             this.chbx_PS3.Name = "chbx_PS3";
             this.chbx_PS3.Size = new System.Drawing.Size(46, 17);
@@ -1092,10 +1097,23 @@
             this.label2.TabIndex = 279;
             this.label2.Text = "Will be used store decompressed version of all DLCs and the original version";
             // 
+            // btn_Standardization
+            // 
+            this.btn_Standardization.BackColor = System.Drawing.SystemColors.Control;
+            this.btn_Standardization.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Standardization.Location = new System.Drawing.Point(427, 496);
+            this.btn_Standardization.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_Standardization.Name = "btn_Standardization";
+            this.btn_Standardization.Size = new System.Drawing.Size(106, 21);
+            this.btn_Standardization.TabIndex = 327;
+            this.btn_Standardization.Text = "Standardization";
+            this.btn_Standardization.UseVisualStyleBackColor = false;
+            // 
             // DLCManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btn_Standardization);
             this.Controls.Add(this.cbx_Export);
             this.Controls.Add(this.Export_To);
             this.Controls.Add(this.chbx_Rebuild);
@@ -1246,5 +1264,6 @@
         private System.Windows.Forms.CheckBox chbx_PC;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.HelpProvider helpProvider1;
+        private System.Windows.Forms.Button btn_Standardization;
     }
 }

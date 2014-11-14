@@ -498,6 +498,15 @@ namespace RocksmithToolkitGUI.DLCManager
                         case "<Space>":
                             fulltxt += " ";
                             break;
+                        case "<Avail. Tracks>":
+                            fulltxt += ((files[k].Has_Bass == "Yes") ? "B" : "") + ((files[k].Has_Lead == "Yes") ? "L" : "") + ((files[k].Has_Combo == "Yes") ? "C" : "") + ((files[k].Has_Rhythm == "Yes") ? "R" : "");
+                            break;
+                        case "<Bass_HasDD>":
+                            fulltxt += (files[k].Has_BassDD == "Yes" ? "" : "NoBDD"); //not yet done
+                            break;
+                        case "<Avail. Instr.>":
+                            fulltxt += ((files[k].Has_Bass == "Yes") ? "B" : "") + ((files[k].Has_Guitar == "Yes") ? "G" : "");
+                            break;
                         default:
                             if (origQAs)
                             {
@@ -506,9 +515,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                         case "<DD>":
                                             fulltxt += files[k].Has_DD == "Yes" ? "DD" : "noDD";
                                             break;
-                                        case "<Avail. Instr.>":
-                                            fulltxt += ((files[k].Has_Bass == "Yes") ? "B" : "") + ((files[k].Has_Guitar == "Yes") ? "G" : "");
-                                            break;
+
                                         case "<CDLC>":
                                             fulltxt += files[k].DLC;
                                             break;
@@ -518,12 +525,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                         case "<lastConversionDateTime>":
                                             fulltxt += files[k].Import_Date; //not yet done
                                             break;
-                                        case "<Avail. Tracks>":
-                                            fulltxt += ((files[k].Has_Bass == "Yes") ? "B" : "") + ((files[k].Has_Lead == "Yes") ? "L" : "") + ((files[k].Has_Combo == "Yes") ? "C" : "") + ((files[k].Has_Rhythm == "Yes") ? "R" : "");
-                                            break;
-                                        case "<Bass_HasDD>":
-                                            fulltxt += (files[k].Has_BassDD == "Yes" ? "" : "NoBDD"); //not yet done
-                                            break;
+
                                         default: break;
                                     }
                               }
@@ -2098,7 +2100,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                         }
                                     //Fixing any _preview_preview issue..End
 
-                                    if (chbx_Additional_Manipualtions.GetItemChecked(15)) //16. Move Original Imported files to temp/0_old                               
+                                        if (chbx_Additional_Manipualtions.GetItemChecked(15)) //16. Move Original Imported files to temp/0_old                               
                                     {
                                         //Move imported psarc into the old folder
                                         //var destin_path = txt_RocksmithDLCPath.Text + "\\" + ds.Tables[0].Rows[i].ItemArray[2].ToString();
@@ -2134,10 +2136,11 @@ namespace RocksmithToolkitGUI.DLCManager
                 //continue;
             }
 
-            //Import DLC
-            //Populate DB the AUTOM fields
-            // FILL PACKAGE CREATOR FORM
-
+            //Cleanup
+            if (chbx_Additional_Manipualtions.GetItemChecked(24)) //25. Use translation tables for naming standardization
+            {
+                Translation_And_Correction();
+            }
 
             //Show Intro database window
             MainDB frm = new MainDB(txt_DBFolder.Text);
@@ -2145,6 +2148,47 @@ namespace RocksmithToolkitGUI.DLCManager
 
             //dataGrid.frmMainForm.ActiveForm.Show();
             //MessageBox.Show("f");
+        }
+                                            
+        public void Translation_And_Correction()
+        {
+            var cmd = "SELECT * FROM Standardization WHERE (Artist_Correction IS NOT null) or (Album_Correction IS NOT null) OR (AlbumArt_Correction IS NOT null);";
+            norows = SQLAccess(cmd);
+            rtxt_StatisticsOnReadDLCs.Text = "Standardization" + norows + " " + cmd + "\n\n" + rtxt_StatisticsOnReadDLCs.Text;
+            var cmd2 = "";
+            var cmd1 = "";
+            var i = 0;
+            //var artist = "";*
+            //var cmd = "";
+            //rtxt_StatisticsOnReadDLCs.Text = "Repack backgroundworker.."+ norows +  rtxt_StatisticsOnReadDLCs.Text;
+            foreach (var file in files)
+            {
+                //if file.Tables[0].Rows[0].ItemArray[0].ToString();
+                if (i == norows)
+                    cmd1 = "UPDATE Main SET Artist="+ " Album=";
+                    //cmd1 += " WHERE Artist=" + dus.Tables[0].Rows[0].ItemArray[0].ToString(); + "Album=" + file.Album;
+
+                DataSet ds = new DataSet();
+                var DB_Path = txt_DBFolder.Text + "\\Files.accdb";
+                try
+                {
+                    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                    {
+                        // rtxt_StatisticsOnReadDLCs.Text = "3" + cmd+ "..." + rtxt_StatisticsOnReadDLCs.Text;
+                        OleDbDataAdapter das = new OleDbDataAdapter(cmd, cnn);
+                        das.Fill(ds, "Main");
+                        rtxt_StatisticsOnReadDLCs.Text = "Main DB updated after DIR Moved" + "..." + rtxt_StatisticsOnReadDLCs.Text;
+                    }
+                }
+                catch (System.IO.FileNotFoundException ee)
+                {
+                    // To inform the user and continue is 
+                    // sufficient for this demonstration. 
+                    // Your application may require different behavior.
+                    Console.WriteLine(ee.Message);
+                    //continue;
+                }
+            }
         }
 
         private static string ReadPackageAuthor(string filePath)
@@ -2340,9 +2384,6 @@ namespace RocksmithToolkitGUI.DLCManager
 
         public void btn_RePack_Click(object sender, EventArgs e)
         {
-
-
-
             //if (Path.GetFileName(dlcSavePath).Contains(" ") && rbtn_PS3.Checked)
             //    if (!ConfigRepository.Instance().GetBoolean("creator_ps3pkgnamewarn"))
             //    {
@@ -2403,22 +2444,22 @@ namespace RocksmithToolkitGUI.DLCManager
                 {
                     foreach (var xml in xmlFiles)
                     {
-                        rtxt_StatisticsOnReadDLCs.Text = "...=.." + xml + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                        rtxt_StatisticsOnReadDLCs.Text = "...=.." + xml + "\n\n" + rtxt_StatisticsOnReadDLCs.Text;
                         if (Path.GetFileNameWithoutExtension(xml).ToLower().Contains("bass"))
                         // continue;
                         {
                             var startInfo = new ProcessStartInfo();
 
                             var r = String.Format(" -m \"{0}\"", Path.GetFullPath("ddc\\ddc_dd_remover.xml"));
-                            var c = String.Format(" -m \"{0}\"", Path.GetFullPath("ddc\\ddc_default.xml"));
+                            var c = String.Format(" -c \"{0}\"", Path.GetFullPath("ddc\\ddc_default.xml"));
                             startInfo.FileName = Path.Combine(AppWD, "ddc", "ddc.exe");
-                            startInfo.WorkingDirectory = Path.GetDirectoryName(file.Folder_Name);
+                            startInfo.WorkingDirectory = file.Folder_Name+"\\EOF\\";// Path.GetDirectoryName();
                             startInfo.Arguments = String.Format("\"{0}\" -l {1} -s {2}{3}{4}{5}",
                                                                 Path.GetFileName(xml),
                                                                 40, "N", r, c,
                                                                  " -p Y", " -t N"
                             );
-                            rtxt_StatisticsOnReadDLCs.Text = "..."+startInfo.Arguments + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                            rtxt_StatisticsOnReadDLCs.Text = "working dir: "+ startInfo.WorkingDirectory + "...\n--"+startInfo.FileName+"..." +startInfo.Arguments + "\n\n" + rtxt_StatisticsOnReadDLCs.Text;
                             startInfo.UseShellExecute = false;
                             startInfo.CreateNoWindow = true;
                             startInfo.RedirectStandardOutput = true;
@@ -2433,7 +2474,8 @@ namespace RocksmithToolkitGUI.DLCManager
                                 //consoleOutput += DDC.StandardError.ReadToEnd();
                                 DDC.WaitForExit(1000 * 60 * 15); //wait 15 minutes
                                 rtxt_StatisticsOnReadDLCs.Text = "="+file.Has_BassDD+"...DDR: " + DDC.ExitCode + "----+-" + file.Folder_Name + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                                if (DDC.ExitCode==2)
+                                if (DDC.ExitCode > 0 && file.Is_Original == "No") rtxt_StatisticsOnReadDLCs.Text = "Issues at CDLC Bass DD removal!" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                if (file.Is_Original=="Yes")
                                 {
                                     if (platform.version == RocksmithToolkitLib.GameVersion.RS2014)
                                         rtxt_StatisticsOnReadDLCs.Text = "...Removing from Original" + file.Is_Original+"---"+ xml + "\n" + rtxt_StatisticsOnReadDLCs.Text;
@@ -2443,32 +2485,68 @@ namespace RocksmithToolkitGUI.DLCManager
                                         {
 
                                             string textfile = File.ReadAllText(xml);
-                                            textfile = textfile.Replace("difficulty=\"1\"", "difficulty =\"0\"");
-                                            textfile = textfile.Replace("difficulty=\"2\"", "difficulty =\"0\"");
-                                            textfile = textfile.Replace("difficulty=\"3\"", "difficulty =\"0\"");
-                                            textfile = textfile.Replace("difficulty=\"4\"", "difficulty =\"0\"");
-                                            textfile = textfile.Replace("difficulty=\"5\"", "difficulty =\"0\"");
-                                            textfile = textfile.Replace("difficulty=\"6\"", "difficulty =\"0\"");
-                                            textfile = textfile.Replace("difficulty=\"7\"", "difficulty =\"0\"");
-                                            textfile = textfile.Replace("difficulty=\"8\"", "difficulty =\"0\"");
-                                            textfile = textfile.Replace("difficulty=\"9\"", "difficulty =\"0\"");
-                                            textfile = textfile.Replace("difficulty=\"10\"", "difficulty =\"0\"");
-                                            textfile = textfile.Replace("difficulty=\"11\"", "difficulty =\"0\"");
-                                            textfile = textfile.Replace("difficulty=\"12\"", "difficulty =\"0\"");
-                                            textfile = textfile.Replace("difficulty=\"13\"", "difficulty =\"0\"");
-                                            textfile = textfile.Replace("difficulty=\"14\"", "difficulty =\"0\"");
-                                            textfile = textfile.Replace("difficulty=\"15\"", "difficulty =\"0\"");
-                                            textfile = textfile.Replace("difficulty=\"16\"", "difficulty =\"0\"");
-                                            textfile = textfile.Replace("difficulty=\"17\"", "difficulty =\"0\"");
-                                            textfile = textfile.Replace("difficulty=\"18\"", "difficulty =\"0\"");
-                                            textfile = textfile.Replace("difficulty=\"19\"", "difficulty =\"0\"");
-                                            textfile = textfile.Replace("difficulty=\"20\"", "difficulty =\"0\"");
-                                            textfile = textfile.Replace("difficulty=\"21\"", "difficulty =\"0\"");
-                                            textfile = textfile.Replace("difficulty=\"22\"", "difficulty =\"0\"");
-                                            textfile = textfile.Replace("difficulty=\"23\"", "difficulty =\"0\"");
-                                            textfile = textfile.Replace("difficulty=\"24\"", "difficulty =\"0\"");
-                                            textfile = textfile.Replace("difficulty=\"25\"", "difficulty =\"0\"");
-                                            textfile = textfile.Replace("difficulty=\"26\"", "difficulty =\"0\"");
+                                            //textfile = textfile.Replace("\"MaxPhraseDifficulty\": 1,", "\"MaxPhraseDifficulty\": 0,");
+                                            //textfile = textfile.Replace("\"MaxPhraseDifficulty\": 2,", "\"MaxPhraseDifficulty\": 0,");
+                                            //textfile = textfile.Replace("\"MaxPhraseDifficulty\": 3,", "\"MaxPhraseDifficulty\": 0,");
+                                            //textfile = textfile.Replace("\"MaxPhraseDifficulty\": 4,", "\"MaxPhraseDifficulty\": 0,");
+                                            //textfile = textfile.Replace("\"MaxPhraseDifficulty\": 5,", "\"MaxPhraseDifficulty\": 0,");
+                                            //textfile = textfile.Replace("\"MaxPhraseDifficulty\": 6,", "\"MaxPhraseDifficulty\": 0,");
+                                            //textfile = textfile.Replace("\"MaxPhraseDifficulty\": 7,", "\"MaxPhraseDifficulty\": 0,");
+                                            //textfile = textfile.Replace("\"MaxPhraseDifficulty\": 8,", "\"MaxPhraseDifficulty\": 0,");
+                                            //textfile = textfile.Replace("\"MaxPhraseDifficulty\": 9,", "\"MaxPhraseDifficulty\": 0,");
+                                            //textfile = textfile.Replace("\"MaxPhraseDifficulty\": 10,", "\"MaxPhraseDifficulty\": 0,");
+                                            //textfile = textfile.Replace("\"MaxPhraseDifficulty\": 11,", "\"MaxPhraseDifficulty\": 0,");
+                                            //textfile = textfile.Replace("\"MaxPhraseDifficulty\": 12,", "\"MaxPhraseDifficulty\": 0,");
+                                            //textfile = textfile.Replace("\"MaxPhraseDifficulty\": 13,", "\"MaxPhraseDifficulty\": 0,");
+                                            //textfile = textfile.Replace("\"MaxPhraseDifficulty\": 14,", "\"MaxPhraseDifficulty\": 0,");
+                                            //textfile = textfile.Replace("\"MaxPhraseDifficulty\": 15,", "\"MaxPhraseDifficulty\": 0,");
+                                            //textfile = textfile.Replace("\"MaxPhraseDifficulty\": 16,", "\"MaxPhraseDifficulty\": 0,");
+                                            //textfile = textfile.Replace("\"MaxPhraseDifficulty\": 17,", "\"MaxPhraseDifficulty\": 0,");
+                                            //textfile = textfile.Replace("\"MaxPhraseDifficulty\": 18,", "\"MaxPhraseDifficulty\": 0,");
+                                            //textfile = textfile.Replace("\"MaxPhraseDifficulty\": 19,", "\"MaxPhraseDifficulty\": 0,");
+                                            //textfile = textfile.Replace("\"MaxPhraseDifficulty\": 20,", "\"MaxPhraseDifficulty\": 0,");
+                                            textfile = textfile.Replace("maxDifficulty=\"1\"", "maxDifficulty=\"0\"");
+                                            textfile = textfile.Replace("maxDifficulty=\"2\"", "maxDifficulty=\"0\"");
+                                            textfile = textfile.Replace("maxDifficulty=\"3\"", "maxDifficulty=\"0\"");
+                                            textfile = textfile.Replace("maxDifficulty=\"4\"", "maxDifficulty=\"0\"");
+                                            textfile = textfile.Replace("maxDifficulty=\"5\"", "maxDifficulty=\"0\"");
+                                            textfile = textfile.Replace("maxDifficulty=\"6\"", "maxDifficulty=\"0\"");
+                                            textfile = textfile.Replace("maxDifficulty=\"7\"", "maxDifficulty=\"0\"");
+                                            textfile = textfile.Replace("maxDifficulty=\"8\"", "maxDifficulty=\"0\"");
+                                            textfile = textfile.Replace("maxDifficulty=\"9\"", "maxDifficulty=\"0\"");
+                                            textfile = textfile.Replace("maxDifficulty=\"10\"", "maxDifficulty=\"0\"");
+                                            textfile = textfile.Replace("maxDifficulty=\"11\"", "maxDifficulty=\"0\"");
+                                            textfile = textfile.Replace("maxDifficulty=\"12\"", "maxDifficulty=\"0\"");
+                                            textfile = textfile.Replace("maxDifficulty=\"13\"", "maxDifficulty=\"0\"");
+                                            textfile = textfile.Replace("maxDifficulty=\"14\"", "maxDifficulty=\"0\"");
+                                            textfile = textfile.Replace("maxDifficulty=\"15\"", "maxDifficulty=\"0\"");
+                                            textfile = textfile.Replace("maxDifficulty=\"16\"", "maxDifficulty=\"0\"");
+                                            textfile = textfile.Replace("maxDifficulty=\"17\"", "maxDifficulty=\"0\"");
+                                            textfile = textfile.Replace("maxDifficulty=\"18\"", "maxDifficulty=\"0\"");
+                                            textfile = textfile.Replace("maxDifficulty=\"19\"", "maxDifficulty=\"0\"");
+                                            textfile = textfile.Replace("maxDifficulty=\"20\"", "maxDifficulty=\"0\"");
+
+                                            textfile = textfile.Replace(" difficulty=\"1\"", " difficulty=\"0\"");
+                                            textfile = textfile.Replace(" difficulty=\"2\"", " difficulty=\"0\"");
+                                            textfile = textfile.Replace(" difficulty=\"3\"", " difficulty=\"0\"");
+                                            textfile = textfile.Replace(" difficulty=\"4\"", " difficulty=\"0\"");
+                                            textfile = textfile.Replace(" difficulty=\"5\"", " difficulty=\"0\"");
+                                            textfile = textfile.Replace(" difficulty=\"6\"", " difficulty=\"0\"");
+                                            textfile = textfile.Replace(" difficulty=\"7\"", " difficulty=\"0\"");
+                                            textfile = textfile.Replace(" difficulty=\"8\"", " difficulty=\"0\"");
+                                            textfile = textfile.Replace(" difficulty=\"9\"", " difficulty=\"0\"");
+                                            textfile = textfile.Replace(" difficulty=\"10\"", " difficulty=\"0\"");
+                                            textfile = textfile.Replace(" difficulty=\"11\"", " difficulty=\"0\"");
+                                            textfile = textfile.Replace(" difficulty=\"12\"", " difficulty=\"0\"");
+                                            textfile = textfile.Replace(" difficulty=\"13\"", " difficulty=\"0\"");
+                                            textfile = textfile.Replace(" difficulty=\"14\"", " difficulty=\"0\"");
+                                            textfile = textfile.Replace(" difficulty=\"15\"", " difficulty=\"0\"");
+                                            textfile = textfile.Replace(" difficulty=\"16\"", " difficulty=\"0\"");
+                                            textfile = textfile.Replace(" difficulty=\"17\"", " difficulty=\"0\"");
+                                            textfile = textfile.Replace(" difficulty=\"18\"", " difficulty=\"0\"");
+                                            textfile = textfile.Replace(" difficulty=\"19\"", " difficulty=\"0\"");
+                                            textfile = textfile.Replace(" difficulty=\"20\"", " difficulty=\"0\"");
+
 
                                             File.WriteAllText(xml, textfile);
                                         }
@@ -2767,7 +2845,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 //TO DO DELETE the ORIGINAL IMPORTED FILES or not
                 rtxt_StatisticsOnReadDLCs.Text = "\nRepack bkworkerdone.." + i + rtxt_StatisticsOnReadDLCs.Text;
             }
-            rtxt_StatisticsOnReadDLCs.Text = "\n...bkworkerdone.." + rtxt_StatisticsOnReadDLCs.Text;
+            rtxt_StatisticsOnReadDLCs.Text = "\n...Repack done.." + rtxt_StatisticsOnReadDLCs.Text;
         }
 
         private void ProgressChanged(object sender, ProgressChangedEventArgs e)

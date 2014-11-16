@@ -2516,7 +2516,8 @@ namespace RocksmithToolkitGUI.DLCManager
 
                             using (var DDC = new Process())
                             {
-                               // rtxt_StatisticsOnReadDLCs.Text = "...1" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                // rtxt_StatisticsOnReadDLCs.Text = "...1" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                File.Copy(xml, xml+".old", true);
                                 DDC.StartInfo = startInfo;
                                 DDC.Start();
                                 //consoleOutput = DDC.StandardOutput.ReadToEnd();

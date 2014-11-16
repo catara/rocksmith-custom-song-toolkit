@@ -25,7 +25,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private string Filename = System.IO.Path.Combine(Application.StartupPath, "Text.txt");
 
         private BindingSource Main = new BindingSource();
-        private readonly string MESSAGEBOX_CAPTION;
+        private const string MESSAGEBOX_CAPTION = "ArrangementsDB";
         //private object cbx_Lead;
         //public DataAccess da = new DataAccess();
         //bcapi

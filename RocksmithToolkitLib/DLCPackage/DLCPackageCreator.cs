@@ -103,7 +103,7 @@ namespace RocksmithToolkitLib.DLCPackage
                         Directory.CreateDirectory(PS3_WORKDIR);
                     break;
             }
-
+            //MessageBox.Show(packagePath);
             using (var packPsarcStream = new MemoryStream())
             {
                 switch (platform.version)
@@ -127,11 +127,11 @@ namespace RocksmithToolkitLib.DLCPackage
                     case GameVersion.None:
                         throw new InvalidOperationException("Unexpected game version value");
                 }
-
+               // MessageBox.Show("2");
                 var packageName = Path.GetFileNameWithoutExtension(packagePath).StripPlatformEndName();
 
                 var songFileName = String.Format("{0}{1}", Path.Combine(Path.GetDirectoryName(packagePath), packageName), platform.GetPathName()[2]);
-                                
+                //MessageBox.Show(songFileName+"-+++++++"+ packageName);
                 switch (platform.platform)
                 {
                     case GamePlatform.Pc:
@@ -155,11 +155,13 @@ namespace RocksmithToolkitLib.DLCPackage
                         BuildXBox360Package(songFileName, info, FILES_XBOX, platform.version, dlcType);
                         break;
                     case GamePlatform.PS3:
+                        //MessageBox.Show(platform+"+++"+songFileName);
                         EncryptPS3EdatFiles(songFileName + ".psarc", platform);
+                        //MessageBox.Show("bef ");
                         break;
                 }                
             }
-
+            //MessageBox.Show("bef last");
             FILES_XBOX.Clear();
             FILES_PS3.Clear();
             DeleteTmpFiles(TMPFILES_SNG);
@@ -239,12 +241,15 @@ namespace RocksmithToolkitLib.DLCPackage
             // Due to PS3 encryption limitation - replace spaces in fname with '_'
             if (Path.GetFileName(songFileName).Contains(" "))
                 songFileName = Path.Combine(Path.GetDirectoryName(songFileName), Path.GetFileName(songFileName).Replace(" ", "_"));
-
+            //MessageBox.Show(PS3_WORKDIR);//bcapi
             // Cleaning work dir, beware ther is .psarcthat we need.
             var junkFiles = Directory.EnumerateFiles(PS3_WORKDIR, "*.*").Where(e => !e.EndsWith(".psarc"));
+            //MessageBox.Show(junkFiles.ToString());//bcapi
             foreach (var junk in junkFiles)
+            //{ //MessageBox.Show(junk);//bcapi
                 File.Delete(junk);
-
+            //}
+                //MessageBox.Show("33");//bcapi
             if (platform.version == GameVersion.RS2014)
             {
                 // Have only one file for RS2014 package, so can be rename that the user defined
@@ -259,13 +264,14 @@ namespace RocksmithToolkitLib.DLCPackage
                     File.Move(oldName, FILES_PS3[0]);
                 }
             }
+           // MessageBox.Show("4");//bcapi
             string encryptResult = RijndaelEncryptor.EncryptPS3Edat();
 
             // Delete .psarc files
             foreach (var ps3File in FILES_PS3)
                 if (File.Exists(ps3File))
                     File.Delete(ps3File);
-
+            //MessageBox.Show("r");//bcapi
             // Move directory if RS1 or file in RS2014 to user selected path
             if (platform.version == GameVersion.RS2014)
             {
@@ -282,7 +288,7 @@ namespace RocksmithToolkitLib.DLCPackage
                 if (Directory.Exists(PS3_WORKDIR))
                     DirectoryExtension.Move(PS3_WORKDIR, String.Format("{0}_PS3", songFileName));
             }
-
+            //MessageBox.Show("hwey");//bcapi
             if (encryptResult.IndexOf("No JDK or JRE is intsalled on your machine") > 0)
                 throw new InvalidOperationException("You need install Java SE 7 (x86) or higher on your machine. The Java path should be in PATH Environment Variable:" + Environment.NewLine + Environment.NewLine + encryptResult);
 

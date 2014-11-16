@@ -26,7 +26,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private string Filename = System.IO.Path.Combine(Application.StartupPath, "Text.txt");
 
         private BindingSource Main = new BindingSource();
-        private readonly string MESSAGEBOX_CAPTION;
+        private const string MESSAGEBOX_CAPTION = "MainDB";
         //private object cbx_Lead;
         //public DataAccess da = new DataAccess();
         //bcapi
@@ -170,8 +170,8 @@ namespace RocksmithToolkitGUI.DLCManager
             else chbx_DD.Checked = false;
             if (DataGridView1.Rows[i].Cells[69].Value.ToString() == "Yes") chbx_Selected.Checked = true;
             else chbx_Selected.Checked = false;
-            //if (DataGridView1.Rows[i].Cells[83].Value.ToString() == "Yes") chbx_BassDD.Checked = true;
-            //else chbx_BassDD.Checked = false;
+            if (DataGridView1.Rows[i].Cells[83].Value.ToString() == "Yes") chbx_BassDD.Checked = true;
+            else chbx_BassDD.Checked = false;
             if (DataGridView1.Rows[i].Cells[84].Value.ToString() == "Yes") chbx_Bonus.Checked = true;
             else chbx_Bonus.Checked = false;
 
@@ -468,7 +468,7 @@ namespace RocksmithToolkitGUI.DLCManager
             DataGridViewTextBoxColumn AlbumArt_Hash = new DataGridViewTextBoxColumn { DataPropertyName = "AlbumArt_Hash", HeaderText = "AlbumArt_Hash " };
             DataGridViewTextBoxColumn Audio_Hash = new DataGridViewTextBoxColumn { DataPropertyName = "Audio_Hash", HeaderText = "Audio_Hash " };
             DataGridViewTextBoxColumn audioPreview_Hash = new DataGridViewTextBoxColumn { DataPropertyName = "audioPreview_Hash", HeaderText = "audioPreview_Hash " };
-            DataGridViewTextBoxColumn Has_BassDD = new DataGridViewTextBoxColumn { DataPropertyName = "Has_BassDD", HeaderText = "Has_BassDD " };
+            DataGridViewTextBoxColumn Bass_Has_DD = new DataGridViewTextBoxColumn { DataPropertyName = "Bass_Has_DD", HeaderText = "Bass_Has_DD " };
             DataGridViewTextBoxColumn Has_Bonus_Arrangement = new DataGridViewTextBoxColumn { DataPropertyName = "Has_Bonus_Arrangement", HeaderText = "Has_Bonus_Arrangement " };
             DataGridViewTextBoxColumn Artist_ShortName = new DataGridViewTextBoxColumn { DataPropertyName = "Artist_ShortName", HeaderText = "Artist_ShortName " };
             DataGridViewTextBoxColumn Album_ShortName = new DataGridViewTextBoxColumn { DataPropertyName = "Album_ShortName", HeaderText = "Album_ShortName " };
@@ -590,7 +590,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 AlbumArt_Hash,
                 Audio_Hash,
                 audioPreview_Hash,
-                Has_BassDD,
+                Bass_Has_DD,
                 Has_Bonus_Arrangement,
                 Artist_ShortName,
                 Album_ShortName
@@ -689,7 +689,7 @@ namespace RocksmithToolkitGUI.DLCManager
             public string AlbumArt_Hash { get; set; }
             public string Audio_Hash { get; set; }
             public string audioPreview_Hash { get; set; }
-            public string Has_BassDD { get; set; }
+            public string Bass_Has_DD { get; set; }
             public string Has_Bonus_Arrangement { get; set; }
             public string Artist_ShortName { get; set; }
             public string Album_ShortName { get; set; }
@@ -804,7 +804,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         files[i].AlbumArt_Hash = dataRow.ItemArray[80].ToString();
                         files[i].Audio_Hash = dataRow.ItemArray[81].ToString();
                         files[i].audioPreview_Hash = dataRow.ItemArray[82].ToString();
-                        files[i].Has_BassDD = dataRow.ItemArray[83].ToString();
+                        files[i].Bass_Has_DD = dataRow.ItemArray[83].ToString();
                         files[i].Has_Bonus_Arrangement = dataRow.ItemArray[84].ToString();
                         files[i].Artist_ShortName = dataRow.ItemArray[85].ToString();
                         files[i].Album_ShortName = dataRow.ItemArray[86].ToString();
@@ -829,6 +829,12 @@ namespace RocksmithToolkitGUI.DLCManager
         private void btn_ChangeCover_Click(object sender, EventArgs e)
         {
             //ExternalApps.Png2Dds(IconFile, Path.Combine(tmpWorkDir, "icon.dds"), 512, 512);
+        }
+
+        private void button15_Click(object sender, EventArgs e)
+        {
+            Standardization frm = new Standardization(DB_Path);
+            frm.Show();
         }
     }
 }

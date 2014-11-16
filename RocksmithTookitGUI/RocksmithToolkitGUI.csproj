@@ -142,6 +142,12 @@
     <Compile Include="DLCManager\MainDB.Designer.cs">
       <DependentUpon>MainDB.cs</DependentUpon>
     </Compile>
+    <Compile Include="DLCManager\Standardization.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DLCManager\Standardization.Designer.cs">
+      <DependentUpon>Standardization.cs</DependentUpon>
+    </Compile>
     <Compile Include="DLCManager\TonesDB.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -285,6 +291,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DLCManager\MainDB.resx">
       <DependentUpon>MainDB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DLCManager\Standardization.resx">
+      <DependentUpon>Standardization.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DLCManager\TonesDB.resx">
       <DependentUpon>TonesDB.cs</DependentUpon>

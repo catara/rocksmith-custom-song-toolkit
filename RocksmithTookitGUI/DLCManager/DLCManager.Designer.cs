@@ -1108,6 +1108,7 @@
             this.btn_Standardization.TabIndex = 327;
             this.btn_Standardization.Text = "Standardization";
             this.btn_Standardization.UseVisualStyleBackColor = false;
+            this.btn_Standardization.Click += new System.EventHandler(this.btn_Standardization_Click);
             // 
             // DLCManager
             // 

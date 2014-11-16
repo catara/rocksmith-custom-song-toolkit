@@ -25,11 +25,11 @@ namespace RocksmithToolkitGUI.DLCManager
     private string Filename = System.IO.Path.Combine(Application.StartupPath, "Text.txt");
 
     private BindingSource Main = new BindingSource();
-    private readonly string MESSAGEBOX_CAPTION;
-    //private object cbx_Lead;
-    //public DataAccess da = new DataAccess();
-    //bcapi
-    public string DB_Path = "";
+        private const string MESSAGEBOX_CAPTION = "TonesDB";
+        //private object cbx_Lead;
+        //public DataAccess da = new DataAccess();
+        //bcapi
+        public string DB_Path = "";
     public DataSet dssx = new DataSet();
     //public OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn);
 

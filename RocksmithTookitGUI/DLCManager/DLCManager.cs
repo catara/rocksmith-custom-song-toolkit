@@ -2489,29 +2489,30 @@ namespace RocksmithToolkitGUI.DLCManager
 
                 var xmlFiles = Directory.GetFiles(file.Folder_Name, "*.xml", SearchOption.AllDirectories);
                 var platform = file.Folder_Name.GetPlatform();
-                if (chbx_Additional_Manipualtions.GetItemChecked(5))
+                if (chbx_Additional_Manipualtions.GetItemChecked(5) || chbx_Additional_Manipualtions.GetItemChecked(3) || chbx_Additional_Manipualtions.GetItemChecked(12) || chbx_Additional_Manipualtions.GetItemChecked(26))
                 {
                     foreach (var xml in xmlFiles)
                     {
-                        //rtxt_StatisticsOnReadDLCs.Text = "...=.." + xml + "\n\n" + rtxt_StatisticsOnReadDLCs.Text;
-                        if (Path.GetFileNameWithoutExtension(xml).ToLower().Contains("bass") && file.Has_BassDD=="Yes" && !Path.GetFileNameWithoutExtension(xml).ToLower().Contains(".old"))
-                        // continue;
+                        if (chbx_Additional_Manipualtions.GetItemChecked(5))                          
                         {
-                            //Save a copy
+                            if (chbx_Additional_Manipualtions.GetItemChecked(26) && (Path.GetFileNameWithoutExtension(xml).ToLower().Contains("lead") || Path.GetFileNameWithoutExtension(xml).ToLower().Contains("combo") || Path.GetFileNameWithoutExtension(xml).ToLower().Contains("rthythm"))
+                            && file.Has_Guitar == "Yes" && !Path.GetFileNameWithoutExtension(xml).ToLower().Contains(".old")) 
                             File.Copy(xml, xml + ".old", true);
-
+                            var json = xml.Replace("EOF", "Toolkit").Replace(".xml", ".json");
+                            File.Copy(json, json + ".old", true);
+                            rtxt_StatisticsOnReadDLCs.Text = "...."+Path.GetFileNameWithoutExtension(xml)+"...Removing from Original using DDC tool" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                             var startInfo = new ProcessStartInfo();
 
-                            var r = String.Format(" -m \"{0}\"", Path.GetFullPath("ddc\\ddc_dd_remover.xml"));
-                            var c = String.Format(" -c \"{0}\"", Path.GetFullPath("ddc\\ddc_default.xml"));
+                            var r = String.Format(" -m \"{0}\"", Path.GetFullPath("ddc\\ddc_5_max_levels.xml"));
+                            var c = String.Format(" -c \"{0}\"", Path.GetFullPath("ddc\\ddc_keep_all_levels.xml"));
                             startInfo.FileName = Path.Combine(AppWD, "ddc", "ddc.exe");
                             startInfo.WorkingDirectory = file.Folder_Name+"\\EOF\\";// Path.GetDirectoryName();
                             startInfo.Arguments = String.Format("\"{0}\" -l {1} -s {2}{3}{4}{5}",
                                                                 Path.GetFileName(xml),
-                                                                40, "N", r, c,
+                                                                2, "N", r, c,
                                                                  " -p Y", " -t N"
                             );
-                           rtxt_StatisticsOnReadDLCs.Text = "working dir: "+ startInfo.WorkingDirectory + "...\n--"+startInfo.FileName+"..." +startInfo.Arguments + "\n\n" + rtxt_StatisticsOnReadDLCs.Text;
+                           //rtxt_StatisticsOnReadDLCs.Text = "working dir: "+ startInfo.WorkingDirectory + "...\n--"+startInfo.FileName+"..." +startInfo.Arguments + "\n\n" + rtxt_StatisticsOnReadDLCs.Text;
                             startInfo.UseShellExecute = false;
                             startInfo.CreateNoWindow = true;
                             startInfo.RedirectStandardOutput = true;
@@ -2526,12 +2527,54 @@ namespace RocksmithToolkitGUI.DLCManager
                                 //consoleOutput = DDC.StandardOutput.ReadToEnd();
                                 //consoleOutput += DDC.StandardError.ReadToEnd();
                                 DDC.WaitForExit(1000 * 60 * 15); //wait 15 minutes
-                                rtxt_StatisticsOnReadDLCs.Text = "="+file.Has_BassDD+"...DDR: " + DDC.ExitCode + "----+-" + file.Folder_Name + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                            }
+                        }
+
+                        //rtxt_StatisticsOnReadDLCs.Text = "...=.." + xml + "\n\n" + rtxt_StatisticsOnReadDLCs.Text;
+                        if ((Path.GetFileNameWithoutExtension(xml).ToLower().Contains("bass") && file.Has_BassDD=="Yes" && !Path.GetFileNameWithoutExtension(xml).ToLower().Contains(".old") && chbx_Additional_Manipualtions.GetItemChecked(5))
+                            || ((Path.GetFileNameWithoutExtension(xml).ToLower().Contains("lead") || Path.GetFileNameWithoutExtension(xml).ToLower().Contains("combo") || Path.GetFileNameWithoutExtension(xml).ToLower().Contains("rthythm"))
+                            && file.Has_Guitar=="Yes" && !Path.GetFileNameWithoutExtension(xml).ToLower().Contains(".old") && chbx_Additional_Manipualtions.GetItemChecked(3)))
+                        // continue;
+                        {
+                            if (chbx_Additional_Manipualtions.GetItemChecked(5) && !chbx_Additional_Manipualtions.GetItemChecked(3) && !Path.GetFileNameWithoutExtension(xml).ToLower().Contains("bass")) continue;
+                            //Save a copy
+                            File.Copy(xml, xml + ".old", true);
+                            var json=xml.Replace("EOF","Toolkit").Replace(".xml",".json");
+                            File.Copy(json, json + ".old", true);
+
+                            rtxt_StatisticsOnReadDLCs.Text = "...."+Path.GetFileNameWithoutExtension(xml)+"...Removing from Original using DDC tool" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                            var startInfo = new ProcessStartInfo();
+
+                            var r = String.Format(" -m \"{0}\"", Path.GetFullPath("ddc\\ddc_dd_remover.xml"));
+                            var c = String.Format(" -c \"{0}\"", Path.GetFullPath("ddc\\ddc_default.xml"));
+                            startInfo.FileName = Path.Combine(AppWD, "ddc", "ddc.exe");
+                            startInfo.WorkingDirectory = file.Folder_Name+"\\EOF\\";// Path.GetDirectoryName();
+                            startInfo.Arguments = String.Format("\"{0}\" -l {1} -s {2}{3}{4}{5}",
+                                                                Path.GetFileName(xml),
+                                                                40, "N", r, c,
+                                                                 " -p Y", " -t N"
+                            );
+                           //rtxt_StatisticsOnReadDLCs.Text = "working dir: "+ startInfo.WorkingDirectory + "...\n--"+startInfo.FileName+"..." +startInfo.Arguments + "\n\n" + rtxt_StatisticsOnReadDLCs.Text;
+                            startInfo.UseShellExecute = false;
+                            startInfo.CreateNoWindow = true;
+                            startInfo.RedirectStandardOutput = true;
+                            startInfo.RedirectStandardError = true;
+
+                            using (var DDC = new Process())
+                            {
+                                // rtxt_StatisticsOnReadDLCs.Text = "...1" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+
+                                DDC.StartInfo = startInfo;
+                                DDC.Start();
+                                //consoleOutput = DDC.StandardOutput.ReadToEnd();
+                                //consoleOutput += DDC.StandardError.ReadToEnd();
+                                DDC.WaitForExit(1000 * 60 * 15); //wait 15 minutes
+                                //rtxt_StatisticsOnReadDLCs.Text = "="+file.Has_BassDD+"...DDR: " + DDC.ExitCode + "----+-" + file.Folder_Name + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                 if (DDC.ExitCode > 0 && file.Is_Original == "No") rtxt_StatisticsOnReadDLCs.Text = "Issues at CDLC Bass DD removal!" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                 if (file.Is_Original=="Yes")
                                 {
                                     if (platform.version == RocksmithToolkitLib.GameVersion.RS2014)
-                                        rtxt_StatisticsOnReadDLCs.Text = "...Removing from Original" + file.Is_Original+"---"+ xml + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                        rtxt_StatisticsOnReadDLCs.Text = "...Removing from Original using own logic" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                     {
                                        // xml = Directory.GetFiles(unpackedDir, String.Format("*{0}.json", Path.GetFileNameWithoutExtension(json)), SearchOption.AllDirectories);
                                         if (xml.Length > 0)
@@ -2542,38 +2585,52 @@ namespace RocksmithToolkitGUI.DLCManager
                                             var j = manifestFunctions1.GetMaxDifficulty(xmlContent1);
                                             string textfile = File.ReadAllText(xml);
 
-                                            var m = 0;
-                                            for (m = 0; m < j; m++)
-                                            {
-                                                textfile = textfile.Replace("maxDifficulty=\""+m+"\"", "maxDifficulty=\"0\"");
-                                            }
-
-
+                                            //for each timestamp in the xml file take the highest level entry
                                             var fxml = File.OpenText(xml);
                                             string tecst = "";
                                             string line;
                                             var header = "";
                                             var footer = "";
+                                            //Read and Save Header
                                             while ((line = fxml.ReadLine()) != null)
                                             {
-                                                header = line + "\n";
+                                                header += line + "\n";
                                                 if (line.Contains("<levels>")) break;
                                             }
+                                            //level the maxdiff overall setting in the xml
+                                            var m = 1;
+                                            for (m = 1; m <= j; m++)
+                                            {
+                                                header = header.Replace("maxDifficulty=\"" + m + "\"", "maxDifficulty=\"0\"");
+                                            }
+
+                                            rtxt_StatisticsOnReadDLCs.Text = "head done"+ header.Length + "...\n" + rtxt_StatisticsOnReadDLCs.Text;
                                             //fxml.Close();
 
                                             //fxml = File.OpenText(xml);
-                                            var v = 0;
+                                            var v = 0; //difficulty level in the parsing
                                             var diff = 0;
-                                            float[] time= new float[100];
-                                            string[] notes = new string[100];
+                                            float[] timea= new float[10000]; //keeps the timestamp of each note
+                                            float[] timeb = new float[10000]; //keeps the timestamp of each anchor
+                                            string[] notes = new string[10000]; // keeps the full note details
+                                            string[] anchor = new string[10000]; // keeps the full note details
+                                            int[] lvla = new int[10000]; //keeps the level of the note&timestamp
+                                            int[] lvlb = new int[10000]; //keeps the level of the note&timestamp
+                                            //bool is_header = true; //to know when the header has been read and saved
+                                            //var l = 0; //storage counter in the array
+                                            float ts=0; //timestamp parsed fro the <notes line
+                                            int ea = 0; //top end of the storage array notes
+                                            int eb = 0; //top end of the storage array anchor
+                                            bool UpdateT = false;
                                             while ((line = fxml.ReadLine()) != null)
                                             {
-                                                header = line + "\n";
+                                                //header
+                                                //if (is_header) header = line + "\n";
                                                 if (line.Contains("<level difficulty=\""))
                                                 {
-                                                    line = line.Replace(line, "<level difficulty=\"").TrimStart();
-                                                    line = line.Replace(line, "\">");
-                                                    try { diff = line.ToInt32();} catch { MessageBox.Show("Errors at DD READ removal"); rtxt_StatisticsOnReadDLCs.Text = "Errors at DD READ removal" + "\n" + rtxt_StatisticsOnReadDLCs.Text;}
+                                                    line = line.Replace("<level difficulty=\"","").TrimStart();
+                                                    line = line.Replace("\">","");
+                                                    try { diff = line.ToInt32();} catch { MessageBox.Show("Errors at DD lvl READ removal"); rtxt_StatisticsOnReadDLCs.Text = "Errors at DD READ removal" + "\n" + rtxt_StatisticsOnReadDLCs.Text;}
                                                     if (line != v.ToString())
                                                     {
                                                         MessageBox.Show("Errors at DD removal");
@@ -2581,29 +2638,141 @@ namespace RocksmithToolkitGUI.DLCManager
                                                         break;
                                                     }
                                                     v++;
+                                                  //  is_header = false;
+                                                    //rtxt_StatisticsOnReadDLCs.Text = "level: " + v + "...\n" + rtxt_StatisticsOnReadDLCs.Text;
                                                     continue;
                                                 }
+
+                                                //notes
                                                 if (line.Contains("<note time=\""))
                                                 {
                                                     tecst = (line.Replace("<note time=\"", "")).TrimStart();// ((line.Replace("<note time=\"", "")).TrimStart).IndexOf("\"\"")));
                                                     tecst = tecst.Replace(tecst.Substring(tecst.IndexOf("\"")),"");
-                                                    try { time[v] = tecst.ToInt32(); } catch { MessageBox.Show("Errors at DD time READ removal"); rtxt_StatisticsOnReadDLCs.Text = "Errors at DD time removal" + "\n" + rtxt_StatisticsOnReadDLCs.Text; }
-                                                    for (m = 0; m < j; m++)
+                                                    try { ts = Convert.ToSingle(tecst); } catch { MessageBox.Show("Errors at DD time notes READ removal"); rtxt_StatisticsOnReadDLCs.Text = "Errors at DD time removal" + "\n" + rtxt_StatisticsOnReadDLCs.Text; }
+                                                    //rtxt_StatisticsOnReadDLCs.Text = "timesptamp: " + tecst + "-" + ts + "-" + v + "-" + ea + "...\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                                    UpdateT = false;
+                                                    for (m = 0; m < ea; m++)
                                                     {
-                                                        if (time[v] == time[m])
+                                                        //if (tecst == "12.034") rtxt_StatisticsOnReadDLCs.Text = "time: " + m + "-" + timea[m] + ea + "-" + line + "...\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                                        if (ts == timea[m])
                                                             {
-                                                                if (m > v) notes[v] += "\n"+line;
+                                                                if (v > lvla[m])
+                                                                {
+                                                                    notes[m] = line;
+                                                                    timea[m] = ts;
+                                                                    lvla[m] = v;
+                                                                    UpdateT = true;
+                                                                }
                                                                 break;
                                                             }
+                                                        //else if (time[v]<1) time[v]=
+                                                    }
+                                                    if (!UpdateT) //if TimeStamp has not been found in the storage array then save it
+                                                    {
+                                                        notes[ea] = line;
+                                                        timea[ea] = ts;
+                                                        lvla[ea] = v;
+                                                        ea++;
+                                                    }
+                                                }
+                                                //anchor
+                                                if (line.Contains("<anchor time=\""))
+                                                {
+                                                    tecst = (line.Replace("<anchor time=\"", "")).TrimStart();// ((line.Replace("<note time=\"", "")).TrimStart).IndexOf("\"\"")));
+                                                    tecst = tecst.Replace(tecst.Substring(tecst.IndexOf("\"")), "");
+                                                    try { ts = Convert.ToSingle(tecst); } catch { MessageBox.Show("Errors at DD time anchor READ removal"); rtxt_StatisticsOnReadDLCs.Text = "Errors at DD anchor removal" + "\n" + rtxt_StatisticsOnReadDLCs.Text; }
+                                                    //rtxt_StatisticsOnReadDLCs.Text = "timesptamp: " + tecst + "-" + ts + "-" + v + "-" + ea + "...\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                                    UpdateT = false;
+                                                    for (m = 0; m < eb; m++)
+                                                    {
+                                                        //rtxt_StatisticsOnReadDLCs.Text = "time: " + m+"-"+time[m] + "...\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                                        if (ts == timeb[m])
+                                                        {
+                                                            if (v > lvlb[m])
+                                                            {
+                                                                anchor[m] = line;
+                                                                timeb[m] = ts;
+                                                                lvlb[m] = v;
+                                                                UpdateT = true;
+                                                            }
+                                                            break;
+                                                        }
+                                                        //else if (time[v]<1) time[v]=
+                                                    }
+                                                    if (!UpdateT) //if TimeStamp has not been found in the storage array then save it
+                                                    {
+                                                        anchor[eb] = line;
+                                                        timeb[eb] = ts;
+                                                        lvlb[eb] = v;
+                                                        eb++;
                                                     }
                                                 }
                                                 //if () ;
                                                 //"<note time=\"";
                                                 if (line.Contains("<notes>")) continue;
+                                                //anchor
+
                                              }
 
-                                            footer = "      </anchors>" + "\n" + "      <handShapes />" + "\n" + "     </level>" + "\n" + "   </levels>" + "\n" + "</song>";
+                                            //rtxt_StatisticsOnReadDLCs.Text = "content: " + ea + "-" +eb+"="+ v + "...\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                            //reorder the storage array
+                                            var n=0;
+                                            string no;
+                                            int lv;
+                                            float ti; 
+                                            for (m = 0; m <= ea - 1; m++)
+                                            {
+                                                for (n = m+1; n <= ea; n++)
+                                                {
+                                                    if (timea[m] > timea[n]) //if TimeStamp is bigger reverse the order
+                                                    {
+                                                        no = notes[n];
+                                                        ti = timea[n];
+                                                        lv = lvla[n];
+                                                        notes[n] = notes[m];
+                                                        timea[n] = timea[m];
+                                                        lvla[n] = lvla[m];
+                                                        notes[m] = no;
+                                                        timea[m] = ti;
+                                                        lvla[m] = lv;                                                        
+                                                    }
+                                                }
+                                            }
+                                            //reorder the anchor storage array
+                                            for (m = 0; m <= eb - 1; m++)
+                                            {
+                                                for (n = m + 1; n <= eb; n++)
+                                                {
+                                                    if (timeb[m] > timeb[n]) //if TimeStamp is bigger reverse the order
+                                                    {
+                                                        no = anchor[n];
+                                                        ti = timeb[n];
+                                                        lv = lvlb[n];
+                                                        anchor[n] = anchor[m];
+                                                        timeb[n] = timeb[m];
+                                                        lvlb[n] = lvlb[m];
+                                                        anchor[m] = no;
+                                                        timeb[m] = ti;
+                                                        lvlb[m] = lv;
+                                                    }
+                                                }
+                                            }
+                                            //add level & notes to the footer
+                                            footer += "    <level difficulty=\"0\">" + "\n" + "      <notes>" + "\n";
+                                            for (m = 0; m <= ea; m++)
+                                            {
+                                                footer += notes[m] + "\n";
+                                            }
+                                            footer += "	  </notes>\n      <chords />\n      <anchors>\n";
+                                            //add level & notes to the footer
+                                            for (m = 0; m <= eb; m++)
+                                            {
+                                                footer += anchor[m] + "\n";
+                                            }
+                                            footer += "      </anchors>" + "\n" + "      <handShapes />" + "\n" + "     </level>" + "\n" + "   </levels>" + "\n" + "</song>";
+                                            
                                             fxml.Close();
+                                            File.WriteAllText(xml, header + footer);
 
                                             //textfile = textfile.Replace("<heroLevels>", "");
                                             //textfile = textfile.Replace("<heroLevel difficulty=\"0\" hero=\"1\" />", "");
@@ -2613,10 +2782,12 @@ namespace RocksmithToolkitGUI.DLCManager
                                             //textfile = textfile.Replace("<level difficulty=\""+0+"\">", "<level difficulty = \""+(j+1)+"\">");
                                             //textfile = textfile.Replace("<level difficulty=\""+j+"\">", "<level difficulty=\"0\">");
 
-                                            File.WriteAllText(xml, textfile);
-                                            var json = (xml.Replace("EOF", "Toolkit")).Replace(".xml", ".json");
+                                            
+
+                                            //level the json as well
+                                            //var json = (xml.Replace("EOF", "Toolkit")).Replace(".xml", ".json");
                                             textfile = File.ReadAllText(json);
-                                            var n = 0;
+                                            n = 0;
                                             for (n = 0; n < j; n++)
                                             {
                                                 textfile = textfile.Replace("\"MaxPhraseDifficulty\": " + n + ",", "\"MaxPhraseDifficulty\": 0,");
@@ -2919,6 +3090,29 @@ namespace RocksmithToolkitGUI.DLCManager
                 //rtxt_StatisticsOnReadDLCs.Text = "gen r: " + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                 //TO DO DELETE the ORIGINAL IMPORTED FILES or not
                 rtxt_StatisticsOnReadDLCs.Text = "\nRepack bkworkerdone.." + i + rtxt_StatisticsOnReadDLCs.Text;
+                
+                //Restore the DDremoved copies
+                 xmlFiles = Directory.GetFiles(file.Folder_Name, "*.xml", SearchOption.AllDirectories);
+                 platform = file.Folder_Name.GetPlatform();
+                if (chbx_Additional_Manipualtions.GetItemChecked(5) || chbx_Additional_Manipualtions.GetItemChecked(3))
+                {
+                    foreach (var xml in xmlFiles)
+                    {
+                        //rtxt_StatisticsOnReadDLCs.Text = "...=.." + xml + "\n\n" + rtxt_StatisticsOnReadDLCs.Text;
+                        if ((Path.GetFileNameWithoutExtension(xml).ToLower().Contains("bass") && file.Has_BassDD == "Yes" && Path.GetFileNameWithoutExtension(xml).ToLower().Contains(".old") && chbx_Additional_Manipualtions.GetItemChecked(5))
+                            || (Path.GetFileNameWithoutExtension(xml).ToLower().Contains("lead") && file.Has_Guitar == "Yes" && Path.GetFileNameWithoutExtension(xml).ToLower().Contains(".old") && chbx_Additional_Manipualtions.GetItemChecked(3)))
+                        // continue;
+                        {
+                            if (chbx_Additional_Manipualtions.GetItemChecked(5) && !chbx_Additional_Manipualtions.GetItemChecked(3) && !Path.GetFileNameWithoutExtension(xml).ToLower().Contains("bass")) continue;
+                            //Save a copy
+                            File.Copy(xml, xml + ".woDD", true);
+                            File.Copy(xml, xml.Replace(".old",""), true);
+                            var json = xml.Replace("EOF", "Toolkit").Replace(".xml", ".json");
+                            File.Copy(json, json + ".woDD", true);
+                            File.Copy(json, json.Replace(".old",""), true);
+                        }
+                    }
+                }
             }
             rtxt_StatisticsOnReadDLCs.Text = "\n...Repack done.." + rtxt_StatisticsOnReadDLCs.Text;
         }

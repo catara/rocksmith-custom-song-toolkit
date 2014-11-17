@@ -24,19 +24,20 @@ Version History(release date):
 	0.1.6(27.10.2014) (100%) Manage Import of Duplicates (upgrade to Access 2013 DB) 
 	wip: 0.1.7(30.10.2014) (99%) FORK from/on git
 	wip: 0.2 (15.11.2014) (99%) Import 1000 dlcs, provide screen to edit, repack in any format
-	wip: 0.2.0.1(06.11.2014) (99%) manage the the/die at import(remove when creating a folder name), manage the errors at import (move broken files in a broken folder), fix the whitestripes 7armies import issue
+	wip: 0.2.0.1(06.11.2014) (100%) manage the the/die at import(remove when creating a folder name), manage the errors at import (move broken files in a broken folder), fix the whitestripes 7armies import issue
 	wip: 0.2.0.2 (10.11) (100%) bugfixes and drafts on screen an future features
-	wip: 0.2.0.3 (12.11) (100%) full release (anyone can download and use the tool..no bugs..and all unimplemented featues disabled) DB indipendece/dependence on already provided 1, repack wo bugs, edit screens functional
-	wip: 0.2.1(14.11.2014) (40%) New features: add/remove: DD, preview; lasconversiondata
-	tbr: 0.2.2(19.11.2014) (0%) If importing an original over a alternate the alternate flag should be set no the Alternate
+	wip: 0.2.0.3 (18.11) (90%)implement translation for cleanups (every artist The Black Key = Black Keys)
+	wip: 0.2.1.4 (22.11.2014) (42%) New features: add/remove: DD, preview; lasconversiondata
+	wip: 0.2.0.5 (24.11) (80%) full release (anyone can download and use the tool..no bugs..and all unimplemented featues disabled) DB indipendece/dependence on already provided 1, repack wo bugs, edit screens functional
+	tbr: 0.2.2(31.11.2014) (0%) HTML&Excel exports
+	tbr: 0.2.3(31.11.2014) (0%) If importing an original over a alternate the alternate flag should be set no the Alternate
 	tbr: 0.3.1 move import DB to Main.DB?
 	tbr: 0.3.2 ?move Access code to project? or from hardcoded to viewes
 	tbr: 0.3.3(12.12.2014) (0%) save settings in Toolkit config
 	tbr: 0.3.4(03.03.2015) (60%) use parameterized SQL everywhere (&/ integrate template DB into project or a SQL DB)
 	tbr: 0.4 Redesign stats &Duplciates screen as an independendent form not a yes no cancel alert window
-	wip: 0.5(21.12.2014) (70%) Redesign MainDB+Edit Screen
+	wip: 0.5(21.12.2014) (75%) Redesign MainDB+Edit Screen
 	tbr: 0.6() () Implement FTP to PS3 (also as a copy to any other location)
-	tbr: 0.7() () implement translation for cleanups (every artist The Black Key = Black Keys)
 
 
 Date: 05.11.2014

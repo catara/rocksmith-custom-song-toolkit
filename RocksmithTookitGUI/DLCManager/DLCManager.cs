@@ -2192,7 +2192,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                             
         public void Translation_And_Correction()
         {
-            var cmd2 = "";
+            //var cmd2 = "";
             var cmd1 = "";
             var artpath_c = "";
             var artist_c = "";
@@ -2494,9 +2494,12 @@ namespace RocksmithToolkitGUI.DLCManager
                     foreach (var xml in xmlFiles)
                     {
                         //rtxt_StatisticsOnReadDLCs.Text = "...=.." + xml + "\n\n" + rtxt_StatisticsOnReadDLCs.Text;
-                        if (Path.GetFileNameWithoutExtension(xml).ToLower().Contains("bass") && file.Has_BassDD=="Yes")
+                        if (Path.GetFileNameWithoutExtension(xml).ToLower().Contains("bass") && file.Has_BassDD=="Yes" && !Path.GetFileNameWithoutExtension(xml).ToLower().Contains(".old"))
                         // continue;
                         {
+                            //Save a copy
+                            File.Copy(xml, xml + ".old", true);
+
                             var startInfo = new ProcessStartInfo();
 
                             var r = String.Format(" -m \"{0}\"", Path.GetFullPath("ddc\\ddc_dd_remover.xml"));
@@ -2508,7 +2511,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                                                 40, "N", r, c,
                                                                  " -p Y", " -t N"
                             );
-                            //rtxt_StatisticsOnReadDLCs.Text = "working dir: "+ startInfo.WorkingDirectory + "...\n--"+startInfo.FileName+"..." +startInfo.Arguments + "\n\n" + rtxt_StatisticsOnReadDLCs.Text;
+                           rtxt_StatisticsOnReadDLCs.Text = "working dir: "+ startInfo.WorkingDirectory + "...\n--"+startInfo.FileName+"..." +startInfo.Arguments + "\n\n" + rtxt_StatisticsOnReadDLCs.Text;
                             startInfo.UseShellExecute = false;
                             startInfo.CreateNoWindow = true;
                             startInfo.RedirectStandardOutput = true;
@@ -2517,7 +2520,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             using (var DDC = new Process())
                             {
                                 // rtxt_StatisticsOnReadDLCs.Text = "...1" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                                File.Copy(xml, xml+".old", true);
+
                                 DDC.StartInfo = startInfo;
                                 DDC.Start();
                                 //consoleOutput = DDC.StandardOutput.ReadToEnd();
@@ -2538,77 +2541,88 @@ namespace RocksmithToolkitGUI.DLCManager
                                             var manifestFunctions1 = new ManifestFunctions(platform.version);
                                             var j = manifestFunctions1.GetMaxDifficulty(xmlContent1);
                                             string textfile = File.ReadAllText(xml);
-                                            //textfile = textfile.Replace("\"MaxPhraseDifficulty\": 1,", "\"MaxPhraseDifficulty\": 0,");
-                                            //textfile = textfile.Replace("\"MaxPhraseDifficulty\": 2,", "\"MaxPhraseDifficulty\": 0,");
-                                            //textfile = textfile.Replace("\"MaxPhraseDifficulty\": 3,", "\"MaxPhraseDifficulty\": 0,");
-                                            //textfile = textfile.Replace("\"MaxPhraseDifficulty\": 4,", "\"MaxPhraseDifficulty\": 0,");
-                                            //textfile = textfile.Replace("\"MaxPhraseDifficulty\": 5,", "\"MaxPhraseDifficulty\": 0,");
-                                            //textfile = textfile.Replace("\"MaxPhraseDifficulty\": 6,", "\"MaxPhraseDifficulty\": 0,");
-                                            //textfile = textfile.Replace("\"MaxPhraseDifficulty\": 7,", "\"MaxPhraseDifficulty\": 0,");
-                                            //textfile = textfile.Replace("\"MaxPhraseDifficulty\": 8,", "\"MaxPhraseDifficulty\": 0,");
-                                            //textfile = textfile.Replace("\"MaxPhraseDifficulty\": 9,", "\"MaxPhraseDifficulty\": 0,");
-                                            //textfile = textfile.Replace("\"MaxPhraseDifficulty\": 10,", "\"MaxPhraseDifficulty\": 0,");
-                                            //textfile = textfile.Replace("\"MaxPhraseDifficulty\": 11,", "\"MaxPhraseDifficulty\": 0,");
-                                            //textfile = textfile.Replace("\"MaxPhraseDifficulty\": 12,", "\"MaxPhraseDifficulty\": 0,");
-                                            //textfile = textfile.Replace("\"MaxPhraseDifficulty\": 13,", "\"MaxPhraseDifficulty\": 0,");
-                                            //textfile = textfile.Replace("\"MaxPhraseDifficulty\": 14,", "\"MaxPhraseDifficulty\": 0,");
-                                            //textfile = textfile.Replace("\"MaxPhraseDifficulty\": 15,", "\"MaxPhraseDifficulty\": 0,");
-                                            //textfile = textfile.Replace("\"MaxPhraseDifficulty\": 16,", "\"MaxPhraseDifficulty\": 0,");
-                                            //textfile = textfile.Replace("\"MaxPhraseDifficulty\": 17,", "\"MaxPhraseDifficulty\": 0,");
-                                            //textfile = textfile.Replace("\"MaxPhraseDifficulty\": 18,", "\"MaxPhraseDifficulty\": 0,");
-                                            //textfile = textfile.Replace("\"MaxPhraseDifficulty\": 19,", "\"MaxPhraseDifficulty\": 0,");
-                                            //textfile = textfile.Replace("\"MaxPhraseDifficulty\": 20,", "\"MaxPhraseDifficulty\": 0,");
-                                            textfile = textfile.Replace("maxDifficulty=\"1\"", "maxDifficulty=\"0\"");
-                                            textfile = textfile.Replace("maxDifficulty=\"2\"", "maxDifficulty=\"0\"");
-                                            textfile = textfile.Replace("maxDifficulty=\"3\"", "maxDifficulty=\"0\"");
-                                            textfile = textfile.Replace("maxDifficulty=\"4\"", "maxDifficulty=\"0\"");
-                                            textfile = textfile.Replace("maxDifficulty=\"5\"", "maxDifficulty=\"0\"");
-                                            textfile = textfile.Replace("maxDifficulty=\"6\"", "maxDifficulty=\"0\"");
-                                            textfile = textfile.Replace("maxDifficulty=\"7\"", "maxDifficulty=\"0\"");
-                                            textfile = textfile.Replace("maxDifficulty=\"8\"", "maxDifficulty=\"0\"");
-                                            textfile = textfile.Replace("maxDifficulty=\"9\"", "maxDifficulty=\"0\"");
-                                            textfile = textfile.Replace("maxDifficulty=\"10\"", "maxDifficulty=\"0\"");
-                                            textfile = textfile.Replace("maxDifficulty=\"11\"", "maxDifficulty=\"0\"");
-                                            textfile = textfile.Replace("maxDifficulty=\"12\"", "maxDifficulty=\"0\"");
-                                            textfile = textfile.Replace("maxDifficulty=\"13\"", "maxDifficulty=\"0\"");
-                                            textfile = textfile.Replace("maxDifficulty=\"14\"", "maxDifficulty=\"0\"");
-                                            textfile = textfile.Replace("maxDifficulty=\"15\"", "maxDifficulty=\"0\"");
-                                            textfile = textfile.Replace("maxDifficulty=\"16\"", "maxDifficulty=\"0\"");
-                                            textfile = textfile.Replace("maxDifficulty=\"17\"", "maxDifficulty=\"0\"");
-                                            textfile = textfile.Replace("maxDifficulty=\"18\"", "maxDifficulty=\"0\"");
-                                            textfile = textfile.Replace("maxDifficulty=\"19\"", "maxDifficulty=\"0\"");
-                                            textfile = textfile.Replace("maxDifficulty=\"20\"", "maxDifficulty=\"0\"");
 
-                                            //textfile = textfile.Replace(" difficulty=\"1\"", " difficulty=\"0\"");
-                                            //textfile = textfile.Replace(" difficulty=\"2\"", " difficulty=\"0\"");
-                                            //textfile = textfile.Replace(" difficulty=\"3\"", " difficulty=\"0\"");
-                                            //textfile = textfile.Replace(" difficulty=\"4\"", " difficulty=\"0\"");
-                                            //textfile = textfile.Replace(" difficulty=\"5\"", " difficulty=\"0\"");
-                                            //textfile = textfile.Replace(" difficulty=\"6\"", " difficulty=\"0\"");
-                                            //textfile = textfile.Replace(" difficulty=\"7\"", " difficulty=\"0\"");
-                                            //textfile = textfile.Replace(" difficulty=\"8\"", " difficulty=\"0\"");
-                                            //textfile = textfile.Replace(" difficulty=\"9\"", " difficulty=\"0\"");
-                                            //textfile = textfile.Replace(" difficulty=\"10\"", " difficulty=\"0\"");
-                                            //textfile = textfile.Replace(" difficulty=\"11\"", " difficulty=\"0\"");
-                                            //textfile = textfile.Replace(" difficulty=\"12\"", " difficulty=\"0\"");
-                                            //textfile = textfile.Replace(" difficulty=\"13\"", " difficulty=\"0\"");
-                                            //textfile = textfile.Replace(" difficulty=\"14\"", " difficulty=\"0\"");
-                                            //textfile = textfile.Replace(" difficulty=\"15\"", " difficulty=\"0\"");
-                                            //textfile = textfile.Replace(" difficulty=\"16\"", " difficulty=\"0\"");
-                                            //textfile = textfile.Replace(" difficulty=\"17\"", " difficulty=\"0\"");
-                                            //textfile = textfile.Replace(" difficulty=\"18\"", " difficulty=\"0\"");
-                                            //textfile = textfile.Replace(" difficulty=\"19\"", " difficulty=\"0\"");
-                                            //textfile = textfile.Replace(" difficulty=\"20\"", " difficulty=\"0\"");
+                                            var m = 0;
+                                            for (m = 0; m < j; m++)
+                                            {
+                                                textfile = textfile.Replace("maxDifficulty=\""+m+"\"", "maxDifficulty=\"0\"");
+                                            }
+
+
+                                            var fxml = File.OpenText(xml);
+                                            string tecst = "";
+                                            string line;
+                                            var header = "";
+                                            var footer = "";
+                                            while ((line = fxml.ReadLine()) != null)
+                                            {
+                                                header = line + "\n";
+                                                if (line.Contains("<levels>")) break;
+                                            }
+                                            //fxml.Close();
+
+                                            //fxml = File.OpenText(xml);
+                                            var v = 0;
+                                            var diff = 0;
+                                            float[] time= new float[100];
+                                            string[] notes = new string[100];
+                                            while ((line = fxml.ReadLine()) != null)
+                                            {
+                                                header = line + "\n";
+                                                if (line.Contains("<level difficulty=\""))
+                                                {
+                                                    line = line.Replace(line, "<level difficulty=\"").TrimStart();
+                                                    line = line.Replace(line, "\">");
+                                                    try { diff = line.ToInt32();} catch { MessageBox.Show("Errors at DD READ removal"); rtxt_StatisticsOnReadDLCs.Text = "Errors at DD READ removal" + "\n" + rtxt_StatisticsOnReadDLCs.Text;}
+                                                    if (line != v.ToString())
+                                                    {
+                                                        MessageBox.Show("Errors at DD removal");
+                                                        rtxt_StatisticsOnReadDLCs.Text = "Errors at DD removal" + "\n" + rtxt_StatisticsOnReadDLCs.Text;                                                        
+                                                        break;
+                                                    }
+                                                    v++;
+                                                    continue;
+                                                }
+                                                if (line.Contains("<note time=\""))
+                                                {
+                                                    tecst = (line.Replace("<note time=\"", "")).TrimStart();// ((line.Replace("<note time=\"", "")).TrimStart).IndexOf("\"\"")));
+                                                    tecst = tecst.Replace(tecst.Substring(tecst.IndexOf("\"")),"");
+                                                    try { time[v] = tecst.ToInt32(); } catch { MessageBox.Show("Errors at DD time READ removal"); rtxt_StatisticsOnReadDLCs.Text = "Errors at DD time removal" + "\n" + rtxt_StatisticsOnReadDLCs.Text; }
+                                                    for (m = 0; m < j; m++)
+                                                    {
+                                                        if (time[v] == time[m])
+                                                            {
+                                                                if (m > v) notes[v] += "\n"+line;
+                                                                break;
+                                                            }
+                                                    }
+                                                }
+                                                //if () ;
+                                                //"<note time=\"";
+                                                if (line.Contains("<notes>")) continue;
+                                             }
+
+                                            footer = "      </anchors>" + "\n" + "      <handShapes />" + "\n" + "     </level>" + "\n" + "   </levels>" + "\n" + "</song>";
+                                            fxml.Close();
 
                                             //textfile = textfile.Replace("<heroLevels>", "");
                                             //textfile = textfile.Replace("<heroLevel difficulty=\"0\" hero=\"1\" />", "");
                                             //textfile = textfile.Replace("<heroLevel difficulty=\"0\" hero=\"2\" />", "");
                                             //textfile = textfile.Replace("<heroLevel difficulty=\"0\" hero=\"3\" />", "");
                                             //textfile = textfile.Replace("</heroLevels>", "");
-                                            textfile = textfile.Replace("<level difficulty=\""+0+"\">", "<level difficulty = \""+(j+1)+"\">");
-                                            textfile = textfile.Replace("<level difficulty=\""+j+"\">", "<level difficulty=\"0\">");
-                                            
-                                             File.WriteAllText(xml, textfile);
+                                            //textfile = textfile.Replace("<level difficulty=\""+0+"\">", "<level difficulty = \""+(j+1)+"\">");
+                                            //textfile = textfile.Replace("<level difficulty=\""+j+"\">", "<level difficulty=\"0\">");
+
+                                            File.WriteAllText(xml, textfile);
+                                            var json = (xml.Replace("EOF", "Toolkit")).Replace(".xml", ".json");
+                                            textfile = File.ReadAllText(json);
+                                            var n = 0;
+                                            for (n = 0; n < j; n++)
+                                            {
+                                                textfile = textfile.Replace("\"MaxPhraseDifficulty\": " + n + ",", "\"MaxPhraseDifficulty\": 0,");
+                                            }
+                                            File.WriteAllText(json, textfile);
+
                                         }
                                     }
                                 }

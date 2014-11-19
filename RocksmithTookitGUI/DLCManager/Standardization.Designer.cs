@@ -1,4 +1,7 @@
-﻿namespace RocksmithToolkitGUI.DLCManager
+﻿using System.Collections.Generic;
+using RocksmithToolkitLib.DLCPackage;
+
+namespace RocksmithToolkitGUI.DLCManager
 {
     partial class Standardization
     {
@@ -221,5 +224,47 @@
         private CueTextBox txt_Artist;
         private CueTextBox txt_Album_Correction;
         private CueTextBox txt_AlbumArtPath_Correction;
+        private DLCManager.Files filed;
+        private DLCPackageData datas;
+        private string author;
+        private string tkversion;
+        private string dD;
+        private string bass;
+        private string guitar;
+        private string combo;
+        private string rhythm;
+        private string lead;
+        private string tunnings;
+        private int i;
+        private int norows;
+        private string original_FileName;
+        private string art_hash;
+        private string audio_hash;
+        private string audioPreview_hash;
+        private List<string> alist;
+        private List<string> blist;
+
+        public Standardization(string txt_DBFolder, DLCManager.Files filed, DLCPackageData datas, string author, string tkversion, string dD, string bass, string guitar, string combo, string rhythm, string lead, string tunnings, int i, int norows, string original_FileName, string art_hash, string audio_hash, string audioPreview_hash, List<string> alist, List<string> blist) : this(txt_DBFolder)
+        {
+            this.filed = filed;
+            this.datas = datas;
+            this.author = author;
+            this.tkversion = tkversion;
+            this.dD = dD;
+            this.bass = bass;
+            this.guitar = guitar;
+            this.combo = combo;
+            this.rhythm = rhythm;
+            this.lead = lead;
+            this.tunnings = tunnings;
+            this.i = i;
+            this.norows = norows;
+            this.original_FileName = original_FileName;
+            this.art_hash = art_hash;
+            this.audio_hash = audio_hash;
+            this.audioPreview_hash = audioPreview_hash;
+            this.alist = alist;
+            this.blist = blist;
+        }
     }
 }

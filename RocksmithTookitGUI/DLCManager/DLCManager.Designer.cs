@@ -103,6 +103,7 @@
             this.helpProvider1 = new System.Windows.Forms.HelpProvider();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.btn_Standardization = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainBindingSource)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -234,7 +235,7 @@
             "<10. Generate random 30sec Preview>",
             "<11. Convert Originals>",
             "<12. Repack PC>",
-            "13. Add DD (45 Levels)",
+            "13. Add DD (5 Levels)",
             "14. Import all Duplicates as Alternates",
             "15. Import any Custom as Alternate if an Original exists",
             "16. Move Original Imported files to temp/0_old",
@@ -249,12 +250,16 @@
             "25. Use translation tables for naming standardization",
             "26. If Original don\'t add QAs(NOs;DLC/ORIG;etc.)",
             "27. When packing Add 5 Levels of DD only to Guitar tracks",
+            "<28. Convert and Transfer/FTP>",
+            "29. If Original don\'t add QAs(NOs;DLC/ORIG;etc.) except for File Names",
+            "30. When NOT importing a duplicate Move it to _duplicate",
             "<@IMPORT>",
             "<@Pack>"});
             this.chbx_Additional_Manipualtions.Location = new System.Drawing.Point(240, 88);
             this.chbx_Additional_Manipualtions.Name = "chbx_Additional_Manipualtions";
             this.chbx_Additional_Manipualtions.Size = new System.Drawing.Size(295, 109);
             this.chbx_Additional_Manipualtions.TabIndex = 321;
+            this.chbx_Additional_Manipualtions.SelectedIndexChanged += new System.EventHandler(this.chbx_Additional_Manipualtions_SelectedIndexChanged);
             // 
             // label10
             // 
@@ -1102,7 +1107,7 @@
             // 
             this.btn_Standardization.BackColor = System.Drawing.SystemColors.Control;
             this.btn_Standardization.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Standardization.Location = new System.Drawing.Point(427, 496);
+            this.btn_Standardization.Location = new System.Drawing.Point(378, 500);
             this.btn_Standardization.Margin = new System.Windows.Forms.Padding(2);
             this.btn_Standardization.Name = "btn_Standardization";
             this.btn_Standardization.Size = new System.Drawing.Size(106, 21);
@@ -1111,10 +1116,23 @@
             this.btn_Standardization.UseVisualStyleBackColor = false;
             this.btn_Standardization.Click += new System.EventHandler(this.btn_Standardization_Click);
             // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.SystemColors.Control;
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Location = new System.Drawing.Point(488, 503);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(14, 15);
+            this.button1.TabIndex = 328;
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // DLCManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.btn_Standardization);
             this.Controls.Add(this.cbx_Export);
             this.Controls.Add(this.Export_To);
@@ -1267,5 +1285,6 @@
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.HelpProvider helpProvider1;
         private System.Windows.Forms.Button btn_Standardization;
+        private System.Windows.Forms.Button button1;
     }
 }

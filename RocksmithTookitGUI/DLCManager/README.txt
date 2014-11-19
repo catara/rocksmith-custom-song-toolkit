@@ -4,12 +4,13 @@
 
 
 
-DLC Library Manager v0.2 (beta version)
+DLC Library Manager v0.2.0.3 (beta version)
 Main Features:
 - Gather all DLCs metadata into 1 Access DB
 	- Manage Duplicates
 	- Edit Individual metadata
 - Modify meta data per each Rocksmith song: e.g. Album Field <Broken><Year> - <Album> - r<Rating> - <Avail. Instr.> - <DD> - <Tuning>
+- Mass add/remove DD (inc. Bass only option)
 - Repack
 
 Known Issues:
@@ -18,29 +19,31 @@ Known Issues:
 
 Version History(release date):
 	0.1(12.08.2014) prototype, 
-	0.1.4(22.08.2014) populating the Read Folder - File.DB,
-	0.1.4.1(12.09.2014) fixed a solution folder issue when a folder includes another folder breaking the BUILD;
-	0.1.5(12.10.2014) Read + change + Rebuild
-	0.1.6(27.10.2014) (100%) Manage Import of Duplicates (upgrade to Access 2013 DB) 
-	wip: 0.1.7(30.10.2014) (99%) FORK from/on git
+	0.1.4 (22.08.2014) populating the Read Folder - File.DB,
+	0.1.4.1 (12.09.2014) fixed a solution folder issue when a folder includes another folder breaking the BUILD;
+	0.1.5 (12.10.2014) Read + change + Rebuild
+	0.1.6 (27.10.2014) (100%) Manage Import of Duplicates (upgrade to Access 2013 DB) 
+	wip: 0.1.7 (30.10.2014) (99%) FORK from/on git
 	wip: 0.2 (15.11.2014) (99%) Import 1000 dlcs, provide screen to edit, repack in any format
-	wip: 0.2.0.1(06.11.2014) (100%) manage the the/die at import(remove when creating a folder name), manage the errors at import (move broken files in a broken folder), fix the whitestripes 7armies import issue
+	wip: 0.2.0.1 (06.11.2014) (100%) manage the the/die at import(remove when creating a folder name), manage the errors at import (move broken files in a broken folder), fix the whitestripes 7armies import issue
 	wip: 0.2.0.2 (10.11) (100%) bugfixes and drafts on screen an future features
 	wip: 0.2.0.3 (18.11) (90%)implement translation for cleanups (every artist The Black Key = Black Keys)
-	wip: 0.2.1.4 (22.11.2014) (42%) New features: add/remove: DD, preview; lasconversiondata
-	wip: 0.2.0.5 (24.11) (80%) full release (anyone can download and use the tool..no bugs..and all unimplemented featues disabled) DB indipendece/dependence on already provided 1, repack wo bugs, edit screens functional
-	tbr: 0.2.2(31.11.2014) (0%) HTML&Excel exports
-	tbr: 0.2.3(31.11.2014) (0%) If importing an original over a alternate the alternate flag should be set no the Alternate
+	wip: 0.2.0.4 (20.11.2014) (10%) close bugs on Conversion to Ps3(nin hell) and analyse acuracy on conversion to ps4 (1979,7army..)
+	wip: 0.2.0.5 (22.11.2014) (42%) New features: add/remove: DD, preview; lasconversiondata
+	wip: 0.2.0.6 (24.11) (850%) full release (anyone can download and use the tool..no bugs..and all unimplemented featues disabled) DB independece/dependence on already provided 1, repack wo bugs, edit screens functional
+	tbr: 0.2.2 (31.11.2014) (10%) HTML&Excel exports
+	tbr: 0.2.2.1 (31.11.2014) (0%) Implement a logic to properly read DLCManager renamed DLCs
+	tbr: 0.2.3 (31.11.2014) (0%) If importing an original over a alternate the alternate flag should be set no the Alternate
 	tbr: 0.3.1 move import DB to Main.DB?
 	tbr: 0.3.2 ?move Access code to project? or from hardcoded to viewes
-	tbr: 0.3.3(12.12.2014) (0%) save settings in Toolkit config
-	tbr: 0.3.4(03.03.2015) (60%) use parameterized SQL everywhere (&/ integrate template DB into project or a SQL DB)
-	tbr: 0.4 Redesign stats &Duplciates screen as an independendent form not a yes no cancel alert window
-	wip: 0.5(21.12.2014) (75%) Redesign MainDB+Edit Screen
-	tbr: 0.6() () Implement FTP to PS3 (also as a copy to any other location)
+	tbr: 0.3.3 (12.12.2014) (0%) save settings in Toolkit config
+	tbr: 0.3.4 (03.03.2015) (60%) use parameterized SQL everywhere (&/ integrate template DB into project or a SQL DB)
+	wip: 0.4 (31.11.2014) (80%) Redesign stats & Duplciates screen as an independendent form not a yes no cancel alert window
+	wip: 0.5 (21.12.2014) (75%) Redesign MainDB+Edit Screen
+	tbr: 0.6 () () Implement FTP to PS3 (also as a copy to any other location)
 
 
-Date: 05.11.2014
+Date: 17.11.2014
 Document Name: Rocksmith DLC Management tool README
 				(fork of rocksmith-custom-song-toolkit)
 Document purpose: To describe the functionailities and the way to change, the NEW tab that enable MASS Manipulation of Rocksmith DLC Library
@@ -90,7 +93,7 @@ Main Features:
 		+ Keep&Add Multitrack info
 		+ Keep&Add Grouping info (e.g. custom groups to be packaged out)
 		+ Keep&Add Beta/WIP tag
-			- These songs appear at the top of the sorted list as they will have 0 in front of the name (0Nirvana - Bleach - School v0.1 beta)
+			+ These songs appear at the top of the sorted list as they will have 0 in front of the name (0Nirvana - Bleach - School v0.1 beta)
 	+ File & Song Name standardization
 	Design description:
 		+ UI for Automated and Manual operations
@@ -121,6 +124,6 @@ _5. Future feastures
 			- Initially all DCLS will be manually matched & hardcoded as to the audio file name and the song title
 	- Flag files with no bass, no sections, no lyrics, no preview no DD, riff repeater..
 		- FIX when possible
-	- Show duplicates and solve conflicts
+	+ Show duplicates and solve conflicts
 	-- Audio Preview full track&preview track
-	-- Remove DD (arragement dependent..e.g. only bass)
+	+ Remove DD (arragement dependent..e.g. only bass)

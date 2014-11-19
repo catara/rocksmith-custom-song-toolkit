@@ -128,13 +128,19 @@
     <Compile Include="DLCManager\ArrangementsDB.Designer.cs">
       <DependentUpon>ArrangementsDB.cs</DependentUpon>
     </Compile>
-    <Compile Include="DLCManager\DataAccess.cs" />
-    <Compile Include="DLCManager\DataGridViewExtensions.cs" />
+    <Compile Include="DLCManager\Temp\DataAccess.cs" />
+    <Compile Include="DLCManager\Temp\DataGridViewExtensions.cs" />
     <Compile Include="DLCManager\DLCManager.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="DLCManager\DLCManager.Designer.cs">
       <DependentUpon>DLCManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DLCManager\DuplicatesManagement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DLCManager\DuplicatesManagement.Designer.cs">
+      <DependentUpon>DuplicatesManagement.cs</DependentUpon>
     </Compile>
     <Compile Include="DLCManager\MainDB.cs">
       <SubType>Form</SubType>
@@ -148,10 +154,10 @@
     <Compile Include="DLCManager\Standardization.Designer.cs">
       <DependentUpon>Standardization.cs</DependentUpon>
     </Compile>
-    <Compile Include="DLCManager\Duplicates.cs">
+    <Compile Include="DLCManager\Temp\Duplicates.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DLCManager\Duplicates.Designer.cs">
+    <Compile Include="DLCManager\Temp\Duplicates.Designer.cs">
       <DependentUpon>Duplicates.cs</DependentUpon>
     </Compile>
     <Compile Include="DLCManager\TonesDB.cs">
@@ -295,13 +301,16 @@
     <EmbeddedResource Include="DLCManager\DLCManager.resx">
       <DependentUpon>DLCManager.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DLCManager\DuplicatesManagement.resx">
+      <DependentUpon>DuplicatesManagement.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DLCManager\MainDB.resx">
       <DependentUpon>MainDB.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DLCManager\Standardization.resx">
       <DependentUpon>Standardization.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DLCManager\Duplicates.resx">
+    <EmbeddedResource Include="DLCManager\Temp\Duplicates.resx">
       <DependentUpon>Duplicates.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DLCManager\TonesDB.resx">

@@ -91,10 +91,11 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void button1_Click(object sender, EventArgs e)
         {
-             //DLCManager.txt_DBFolder.Text
+            //DLCManager.txt_DBFolder.Text
+            MessageBox.Show(DB_Path);
             try
             {
-                Process process = Process.Start("msaccess.exe " + DB_Path + "");
+                Process process = Process.Start(@DB_Path);
             }
             catch (Exception ex)
             {

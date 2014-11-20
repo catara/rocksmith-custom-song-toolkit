@@ -13,6 +13,8 @@ using System.Data.OleDb;
 using RocksmithToolkitLib.DLCPackage;
 using RocksmithToolkitGUI;
 using System.IO;
+using System.Security.Cryptography; //For File hash
+using RocksmithToolkitLib.Extensions; //dds
 
 namespace RocksmithToolkitGUI.DLCManager
 {
@@ -28,7 +30,12 @@ namespace RocksmithToolkitGUI.DLCManager
         public string Is_Alternate { get; set; }
         public string Title_Sort { get; set; }
         public string Album { get; set; }
-
+        //public string Is_Original { get; set; }
+        public string AlbumArtPath { get; set; }
+        public string Alternate_No { get; set; }
+        public string Art_Hash { get; set; }
+        public string ArtistSort { get; set; }
+        public string Artist { get; set; }
         //public DuplicatesManagement(string txt_DBFolder, Files filed, DLCPackageData datas, string author, string tkversion, string DD, string Bass, string Guitar, string Combo, string Rhythm, string Lead, string tunnings, int i, int norows, string original_FileName, string art_hash, string audio_hash, string audioPreview_hash, List<string> alist, List<string> blist)
         //{
         //    InitializeComponent();
@@ -66,7 +73,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //MessageBox.Show(DB_Path);
             DB_Path = text;
             //MessageBox.Show(DB_Path);
-            DB_Path = DB_Path + "\\Files.accdb";
+            DB_Path = DB_Path;// + "\\Files.accdb";
         }
 
         private string Filename = System.IO.Path.Combine(Application.StartupPath, "Text.txt");
@@ -96,7 +103,10 @@ namespace RocksmithToolkitGUI.DLCManager
             //MessageBox.Show("test6");
             txt_Artist.Text = filed.Artist;
             txt_Album.Text = filed.Album;
-            lbl_ID.Text = filed.ID;
+            lbl_IDExisting.Text = filed.ID;
+            //lbl_IDNew.Text = filed.ID;
+            txt_AlternateNo.Text = filed.Alternate_Version_No;
+            Art_Hash = filed.AlbumArt_Hash;
 
             if (datas.SongInfo.SongDisplayName != filed.Song_Title) lbl_Title.ForeColor = lbl_Reference.ForeColor;
             txt_TitleNew.Text = datas.SongInfo.SongDisplayName;
@@ -144,8 +154,8 @@ namespace RocksmithToolkitGUI.DLCManager
                 txt_ToolkitExisting.Text = filed.ToolkitVersion;
 
             if (filed.AlbumArt_Hash != art_hash) lbl_AlbumArt.ForeColor = lbl_Reference.ForeColor;
-            datas.AlbumArtPath = datas.AlbumArtPath.Replace("/", "\\");
-            picbx_AlbumArtPathNew.ImageLocation = datas.AlbumArtPath.Replace(".dds", ".png");
+                datas.AlbumArtPath = datas.AlbumArtPath.Replace("/", "\\");
+                picbx_AlbumArtPathNew.ImageLocation = datas.AlbumArtPath.Replace(".dds", ".png");
             //txt_Description.Text= datas.AlbumArtPath.Replace(".dds", ".png");
                 picbx_AlbumArtPathExisting.ImageLocation = filed.AlbumArtPath.Replace(".dds", ".png");
 
@@ -158,8 +168,8 @@ namespace RocksmithToolkitGUI.DLCManager
                 txt_PreviewExisting.Text = (audioPreview_hash.ToString() == "" ? "" : "Yes");
 
             if (((bass == "Yes") ? "B" : "") + ((rhythm == "Yes") ? "R" : "") + ((lead == "Yes") ? "L" : "") + ((combo == "Yes") ? "C" : "") != ((filed.Has_Bass == "Yes") ? "B" : "") + ((filed.Has_Rhythm == "Yes") ? "R" : "") + ((filed.Has_Lead == "Yes") ? "L" : "") + ((filed.Has_Combo == "Yes") ? "L" : "")) lbl_AvailableTracks.ForeColor = lbl_Reference.ForeColor;
-            txt_AvailTracksNew.Text = ((bass == "Yes") ? "B" : "") + ((rhythm == "Yes") ? "R" : "") + ((lead == "Yes") ? "L" : "") + ((combo == "Yes") ? "C" : "");
-            txt_AvailTracksExisting.Text = ((filed.Has_Bass == "Yes") ? "B" : "") + ((filed.Has_Rhythm == "Yes") ? "R" : "") + ((filed.Has_Lead == "Yes") ? "L" : "") + ((filed.Has_Combo == "Yes") ? "L" : "");
+                txt_AvailTracksNew.Text = ((bass == "Yes") ? "B" : "") + ((rhythm == "Yes") ? "R" : "") + ((lead == "Yes") ? "L" : "") + ((combo == "Yes") ? "C" : "");
+                txt_AvailTracksExisting.Text = ((filed.Has_Bass == "Yes") ? "B" : "") + ((filed.Has_Rhythm == "Yes") ? "R" : "") + ((filed.Has_Lead == "Yes") ? "L" : "") + ((filed.Has_Combo == "Yes") ? "L" : "");
 
             //string text = "Same Current -> Existing " + (i + 2) + "/" + (norows + 1) + " " + filed.Artist + "-" + filed.Album + "\n";
             //text += ((datas.SongInfo.SongDisplayName == filed.Song_Title) ? "" : ("\n1/14+ Song Titles: " + datas.SongInfo.SongDisplayName + "->" + filed.Song_Title));
@@ -182,7 +192,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //files hash
             DataSet ds = new DataSet();
             i = 0;
-            //var DB_Path = txt_DBFolder.Text + "\\Files.accdb;";
+            DB_Path = DB_Path + "\\Files.accdb;";
             string jsonHash = "";
             bool diffjson = true;
             string XmlHash = "";
@@ -205,6 +215,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     //as i LEFT JOIN Main as m on m.File_Hash = i.FileHash OR m.Original_File_Hash = i.FileHash WHERE m.ID is NULL;", cnn);
                     //MessageBox.Show("0");
                     daa.Fill(ds, "Arrangements");
+                    daa.Dispose();
                     var noOfRec = 0;
                     //MessageBox.Show("0.1");
                     noOfRec = ds.Tables[0].Rows.Count;//ds.Tables[0].Rows[0].ItemArray[0].ToString();
@@ -466,7 +477,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     DataSet dus = new DataSet();
                     OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
                     dax.Fill(dus, "Main");
-
+                    dax.Dispose();
                     var i = 0;
                     //rtxt_StatisticsOnReadDLCs.Text += "\n  54= " +dus.Tables[0].Rows.Count;
                     MaximumSize = dus.Tables[0].Rows.Count;
@@ -636,27 +647,38 @@ namespace RocksmithToolkitGUI.DLCManager
             Title = txt_TitleNew.Text;
             Comment = txt_Comment.Text;
             Description = txt_Description.Text;
-            Is_Alternate = (chbx_Alternate.Checked ? "Yes" : "No");
+            Is_Alternate = (chbx_IsAlternate.Checked ? "Yes" : "No");
             Title_Sort = txt_TitleSortNew.Text;
             Album = txt_Album.Text;
+            //Is_Original= (chbx_IsOriginal.Checked ? "Yes" : "No");
+            Alternate_No = txt_AlternateNo.Text;
+            AlbumArtPath = rbtn_CoverExisting.Checked ? picbx_AlbumArtPathExisting.ImageLocation.Replace("png","dds") : picbx_AlbumArtPathNew.ImageLocation.Replace("png","dds") ;
+            Art_Hash = rbtn_CoverExisting.Checked ? filed.AlbumArt_Hash : art_hash;
+            ArtistSort= txt_ArtistSortNew.Text;
+            Artist = txt_Artist.Text;
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             var sel = "";
+            var cmd = "";
             try
             {
                 //MessageBox.Show(DB_Path);
                 using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
                 {
-                    sel = "UPDATE Main SET Artist=\"" + txt_Artist.Text + "\", Album=\"" + txt_Album.Text + "\", Song_Title=\"" + txt_TitleExisting.Text;
+                    sel = "UPDATE Main SET Artist=\"" + txt_Artist.Text + "\", Artist_Sort=\"" + txt_ArtistSortExisting.Text + "\", Album=\"" + txt_Album.Text + "\", Song_Title=\"" + txt_TitleExisting.Text;
                     sel += "\", Song_Title_Sort=\"" + txt_TitleSortExisting.Text + "\", Author=\"" + txt_AuthorExisting.Text + "\", Version=\"" + txt_VersionExisting.Text + "\", DLC_Name=\"" + txt_DLCIDExisting.Text;
-                    sel += "\", Description = \"" + txt_TitleSortExisting.Text + "\", Comments = \"" + txt_AuthorExisting.Text + "\", Is_Alternate = \"" + (chbx_Alternate.Checked ? "Yes": "No");
-                    sel += "\" WHERE ID=" + lbl_ID.Text;
-                    txt_Description.Text = sel;
+                    sel += "\", Description = \"" + txt_TitleSortExisting.Text + "\", Comments = \"" + txt_AuthorExisting.Text + "\", Is_Alternate = \"" + (chbx_IsAlternate.Checked ? "Yes": "No");
+                    sel += "\", Alternate_Version_No = \"" + txt_AlternateNo.Text;// + "\"", AlbumArtPath = \"" + (rbtn_CoverNew.Checked ? picbx_AlbumArtPathNew.ImageLocation : picbx_AlbumArtPathExisting.ImageLocation);// + "\", Is_Original = \"" + (chbx_IsOriginal.Checked ? "Yes" : "No");
+                    //sel += "\", AlbumArt_Hash = \"" + (rbtn_CoverNew.Checked ? art_hash : filed.AlbumArt_Hash);
+                    sel += "\" WHERE ID=" + lbl_IDExisting.Text;
+                    //txt_Description.Text = sel;
                     DataSet ddr = new DataSet();
                     OleDbDataAdapter dat = new OleDbDataAdapter(sel, cnn);
+
                     dat.Fill(ddr, "Main");
+                    dat.Dispose();
                 }
             }
             catch (System.IO.FileNotFoundException ee)
@@ -664,6 +686,39 @@ namespace RocksmithToolkitGUI.DLCManager
                 MessageBox.Show(ee.Message + "Can not open Main DB connection ! "+ sel);
                 //MessageBox.Show(ee.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        public string calc_arthash(string ss)
+        {
+            using (FileStream fs = File.OpenRead(ss))
+            {
+                SHA1 sha = new SHA1Managed();
+                art_hash = BitConverter.ToString(sha.ComputeHash(fs));//MessageBox.Show(FileHash+"-"+ss);
+                                                                      //convert to png
+                //ExternalApps.Dds2Png(ss);
+                fs.Close();
+                return art_hash;
+            }
+
+        }
+
+        private void rbtn_CoverNew_CheckedChanged(object sender, EventArgs e)
+        {
+            //art_hash = Art_Hash;
+            //AlbumArtPath = picbx_AlbumArtPathExisting.ImageLocation;
+        }
+
+        private void rbtn_CoverExisting_CheckedChanged(object sender, EventArgs e)
+        {
+            //art_hash = Art_Hash;
+            //AlbumArtPath = picbx_AlbumArtPathExisting.ImageLocation;
+        }
+
+        private void btn_DecompressAll_Click(object sender, EventArgs e)
+        {
+            //txt_Description.Text = DB_Path;
+            MainDB frm = new MainDB(DB_Path.Replace("\\Files.accdb;", ""));
+            frm.Show();
         }
     }
 }

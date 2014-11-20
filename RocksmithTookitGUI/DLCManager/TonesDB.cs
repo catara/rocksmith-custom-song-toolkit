@@ -92,9 +92,9 @@ namespace RocksmithToolkitGUI.DLCManager
     {
         // DB_Path = DB_Path + "\\Files.accdb"; //DLCManager.txt_DBFolder.Text
         try
-        {
-            Process process = Process.Start("msaccess.exe " + DB_Path + "");
-        }
+            {
+                Process process = Process.Start(@DB_Path);
+            }
         catch (Exception ex)
         {
             MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);

@@ -1321,8 +1321,8 @@ namespace RocksmithToolkitGUI.DLCManager
 
                                 //Get Author and Toolkit version
                                 var versionFile = Directory.GetFiles(unpackedDir, "toolkit.version", SearchOption.AllDirectories);
-                                //tkversion = "1";
-                                //author = "";
+                                tkversion = "";
+                                author = "";
                                 if (versionFile.Length > 0)
                                     tkversion = ReadPackageToolkitVersion(versionFile[0]);
 
@@ -1411,11 +1411,11 @@ namespace RocksmithToolkitGUI.DLCManager
                                 sel += "(LCASE(Song_Title) = LCASE(\"" + info.SongInfo.SongDisplayName + "\") ";
                                 sel += "OR LCASE(Song_Title) like \"%" + info.SongInfo.SongDisplayName.ToLower() + "%\" ";
                                 //sel += "OR (\"%LCASE(Song_Title)%\" like LCASE(\"" + info.SongInfo.SongDisplayName + "\") ";
-                                sel += "OR LCASE(Song_Title_Sort) =LCASE(\"" + info.SongInfo.SongDisplayNameSort + "\")) OR LCASE(DLC_Name)=LCASE(\"" + info.Name + "\");";
+                                sel += "OR LCASE(Song_Title_Sort) =LCASE(\"" + info.SongInfo.SongDisplayNameSort + "\")) OR LCASE(DLC_Name)=LCASE(\"" + info.Name + "\") ORDER BY Is_Original;";
                                 //Read from DB
                                 int norows = 0;
                                 norows = SQLAccess(sel);
-                                //rtxt_StatisticsOnReadDLCs.Text = "processing &repackaging for " + norows + " duplicates &" + sel + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                //rtxt_StatisticsOnReadDLCs.Text = "processing &repackaging for " + norows + " duplicates &\n" + sel + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                //MessageBox.Show("Chose: 1.Update\n2. Alternate\n3. Ignore", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);                           
 
                                 var b = 0;
@@ -1423,14 +1423,46 @@ namespace RocksmithToolkitGUI.DLCManager
                                 string j = ""; string k = "";
                                 var IDD = "";
                                 var folder_name = "";
+                                Random random = new Random();
                                 //info.Name = Name;
                                 //info.SongInfo.SongDisplayName =  info.SongInfo.SongDisplayName;
                                 foreach (var file in files)
                                 {
-                                    //rtxt_StatisticsOnReadDLCs.Text = "processing &repackaging for " + norows + " duplicates &" + sel + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                    SongDisplayName = "";
+                                    Name = "";
+                                    //rtxt_StatisticsOnReadDLCs.Text = "\n ------------ " + norows + " ------" +  "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                     if (b == norows) break;
                                     folder_name = file.Folder_Name;
-                                    //rtxt_StatisticsOnReadDLCs.Text =file.Author.ToLower() +"-"+author.ToLower() + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                    rtxt_StatisticsOnReadDLCs.Text =file.Author.ToLower() +"-"+author.ToLower() + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                    //When importing a original when there is already a similar CDLC
+                                    if (author == "" && tkversion == "" && chbx_Additional_Manipualtions.GetItemChecked(15))
+                                    {
+                                        artist = "Insert";
+                                        
+                                        //Generate MAX Alternate NO
+                                        var sel1 = sel.Replace("*", "max(Alternate_Version_No)");
+                                        rtxt_StatisticsOnReadDLCs.Text = sel1 + "-" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                        DataSet ddr = new DataSet();
+                                        OleDbDataAdapter dat = new OleDbDataAdapter(sel1, cnn);
+                                        dat.Fill(ddr, "Main");
+
+                                        //UPDATE the 1(s) not an alternate already
+                                        int max = ddr.Tables[0].Rows[0].ItemArray[0].ToString().ToInt32() + 1 ;
+                                        var sel2 = "Update Main Set Title=Title+\" a." + max +"" + ", TitleSort=TitleSort+\" a."+ max + "\",Is_Alternate=\"Yes\", Alternate_Version_No=(" + max+ " where ID in (" + sel + ") and Is_Alternate=\"No\"";
+                                        rtxt_StatisticsOnReadDLCs.Text = max.ToString()+"-"+sel2 + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                        DataSet dxr = new DataSet();
+                                        OleDbDataAdapter dax = new OleDbDataAdapter(sel2, cnn);
+                                        dax.Fill(dxr, "Main");
+
+                                        //Add also a random DLCName if any of the Alternates has the same DLC Name ssame as the original
+                                        var sel3= "UPDATE Main SET DLC_Name=DLC_Name+\""+ random.Next(0, 100000) + "\" WHERE ID in (" + sel + ") and DLC_Name.ToLower() == \"" + info.Name.ToLower()+"\"";
+                                        rtxt_StatisticsOnReadDLCs.Text =  sel3 + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                        DataSet dxf = new DataSet();
+                                        OleDbDataAdapter dbx = new OleDbDataAdapter(sel3, cnn);
+                                        dbx.Fill(dxf, "Main");
+                                        break;
+                                    }
+
                                     if ((author.ToLower() == file.Author.ToLower() && author != "" && file.Author != "" && file.Author != "Custom Song Creator" && author != "Custom Song Creator") || (file.DLC_Name == info.Name))
                                     {
                                         if (file.DLC_Name.ToLower() == info.Name.ToLower())
@@ -1448,19 +1480,20 @@ namespace RocksmithToolkitGUI.DLCManager
                                     }
                                     else
                                         if (author.ToLower() != file.Author.ToLower() && (author != "" && author != "Custom Song Creator" && file.Author != "Custom Song Creator" && file.Author != ""))
-                                        artist = "Alternate";
-                                    else artist = AssesConflict(file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Tunings, b, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist);
+                                            artist = "Alternate";
+                                        else artist = AssesConflict(file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Tunings, b, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist);
                                     //rtxt_StatisticsOnReadDLCs.Text = "7 "+b + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                     //Exit condition
 
-                                    if (Name != "") info.Name = Name;
-                                    if (SongDisplayName != "") info.SongInfo.SongDisplayName = SongDisplayName;
+
 
                                     if (artist == "Alternate")
                                     {
+                                        if (Name != "") info.Name = Name;
+                                        if (SongDisplayName != "") info.SongInfo.SongDisplayName = SongDisplayName;
+                                        
                                         //rtxt_StatisticsOnReadDLCs.Text = "pr" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                                        artist = "Insert";
-                                        Random random = new Random();
+                                        artist = "Insert";                                        
 
                                         //Get the higgest Alternate Number
                                         sel = "SELECT max(Alternate_Version_No) FROM Main WHERE(LCASE(Artist) =LCASE(\"" + info.SongInfo.Artist + "\") AND LCASE(Album)=LCASE(\"" + info.SongInfo.Album + "\") AND ";
@@ -2363,124 +2396,127 @@ namespace RocksmithToolkitGUI.DLCManager
                 if (frm1.Version != tkversion) tkversion = frm1.Version;
                 rtxt_StatisticsOnReadDLCs.Text = "3" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                 if (frm1.DLCID != Name) Name = frm1.DLCID;
-                //rtxt_StatisticsOnReadDLCs.Text = "4" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                //frm1.BringToFront();
-                //frm1.Focus();
-                //this.Enabled = false;
-                ////Standardization frm = new Standardization(txt_DBFolder.Text);
-                ////frm.Show();
-                ////MessageBox.Show("test", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                //string text = "Same Current -> Existing " + (i + 2) + "/" + (norows + 1) + " " + filed.Artist + "-" + filed.Album + "\n";
-                //text += ((datas.SongInfo.SongDisplayName == filed.Song_Title) ? "" : ("\n1/14+ Song Titles: " + datas.SongInfo.SongDisplayName + "->" + filed.Song_Title));
-                //text += ((datas.SongInfo.SongDisplayNameSort == filed.Song_Title_Sort) ? "" : ("\n2/14+ Song Sort Titles: " + datas.SongInfo.SongDisplayNameSort + "->" + filed.Song_Title_Sort));
-                //text += ((original_FileName == filed.Original_FileName) ? "" : ("\n3/14+ FileNames: " + original_FileName + " - " + filed.Original_FileName));
-                //text += ((((tkversion == "") ? "Yes" : "No") == filed.Is_Original) ? "" : ("\n4/14+ Is Original: " + ((tkversion == "") ? "Yes" : "No") + " -> " + filed.Is_Original));
-                //text += ((tkversion == filed.ToolkitVersion) ? "" : ("\n5/14+ Toolkit version: " + tkversion + " -> " + filed.ToolkitVersion));
-                //text += ("\n6/14+ Author: " + author + " -> " + filed.Author); //((author == filed.Author) ? "" :
-                //text += ((tunnings == filed.Tunning) ? "" : ("\n7/14+ Tunning: " + tunnings + " -> " + filed.Tunning));
-                //text += ((datas.PackageVersion == filed.Version) ? "" : ("\n8/14+ Version: " + datas.PackageVersion + " -> " + filed.Version));
-                //text += ((datas.Name == filed.DLC_Name) ? "" : ("\n9/14+ DLC ID: " + datas.Name + " -> " + filed.DLC_Name));
-                //text += ((DD == filed.Has_DD) ? "" : ("\n10/14+ DD: " + DD + " -> " + filed.Has_DD));
-                ////text += "\nOriginal Is Alternate: " + filed.Is_Alternate + (filed.Is_Alternate == "Yes" ? " v. " + filed.Alternate_Version_No : "");
-                //text += "\n11/14+ Avail. Instr./Tracks: " + ((Bass == "Yes") ? "B" : "") + ((Rhythm == "Yes") ? "R" : "") + ((Lead == "Yes") ? "L" : "") + ((Combo == "Yes") ? "C" : ""); //((Guitar == "Yes") ? "G" : "") + 
-                //text += " -> " + ((filed.Has_Bass == "Yes") ? "B" : "") + ((filed.Has_Rhythm == "Yes") ? "R" : "") + ((filed.Has_Lead == "Yes") ? "L" : "") + ((filed.Has_Combo == "Yes") ? "L" : ""); //+ ((filed.Has_Guitar == "Yes") ? "G" : "")
-                //text += ((filed.AlbumArt_Hash == art_hash) ? "" : "\n12/14+ Diff AlbumArt: Yes");//+ art_hash + "->" + filed.art_Hash
-                //text += ((filed.Audio_Hash == audio_hash) ? "" : "\n13/14+ Diff AudioFile: Yes");// + audio_hash + "->" + filed.audio_Hash 
-                //text += ((filed.AudioPreview_Hash == audioPreview_hash) ? "" : "\n14/14+ Diff Preview File: Yes");//  + audioPreview_hash + "->" + filed.audioPreview_Hash
+          //      Is_Alternate
+          //      Title_Sort
+          //      Album
+                        //rtxt_StatisticsOnReadDLCs.Text = "4" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                        //frm1.BringToFront();
+                        //frm1.Focus();
+                        //this.Enabled = false;
+                        ////Standardization frm = new Standardization(txt_DBFolder.Text);
+                        ////frm.Show();
+                        ////MessageBox.Show("test", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        //string text = "Same Current -> Existing " + (i + 2) + "/" + (norows + 1) + " " + filed.Artist + "-" + filed.Album + "\n";
+                        //text += ((datas.SongInfo.SongDisplayName == filed.Song_Title) ? "" : ("\n1/14+ Song Titles: " + datas.SongInfo.SongDisplayName + "->" + filed.Song_Title));
+                        //text += ((datas.SongInfo.SongDisplayNameSort == filed.Song_Title_Sort) ? "" : ("\n2/14+ Song Sort Titles: " + datas.SongInfo.SongDisplayNameSort + "->" + filed.Song_Title_Sort));
+                        //text += ((original_FileName == filed.Original_FileName) ? "" : ("\n3/14+ FileNames: " + original_FileName + " - " + filed.Original_FileName));
+                        //text += ((((tkversion == "") ? "Yes" : "No") == filed.Is_Original) ? "" : ("\n4/14+ Is Original: " + ((tkversion == "") ? "Yes" : "No") + " -> " + filed.Is_Original));
+                        //text += ((tkversion == filed.ToolkitVersion) ? "" : ("\n5/14+ Toolkit version: " + tkversion + " -> " + filed.ToolkitVersion));
+                        //text += ("\n6/14+ Author: " + author + " -> " + filed.Author); //((author == filed.Author) ? "" :
+                        //text += ((tunnings == filed.Tunning) ? "" : ("\n7/14+ Tunning: " + tunnings + " -> " + filed.Tunning));
+                        //text += ((datas.PackageVersion == filed.Version) ? "" : ("\n8/14+ Version: " + datas.PackageVersion + " -> " + filed.Version));
+                        //text += ((datas.Name == filed.DLC_Name) ? "" : ("\n9/14+ DLC ID: " + datas.Name + " -> " + filed.DLC_Name));
+                        //text += ((DD == filed.Has_DD) ? "" : ("\n10/14+ DD: " + DD + " -> " + filed.Has_DD));
+                        ////text += "\nOriginal Is Alternate: " + filed.Is_Alternate + (filed.Is_Alternate == "Yes" ? " v. " + filed.Alternate_Version_No : "");
+                        //text += "\n11/14+ Avail. Instr./Tracks: " + ((Bass == "Yes") ? "B" : "") + ((Rhythm == "Yes") ? "R" : "") + ((Lead == "Yes") ? "L" : "") + ((Combo == "Yes") ? "C" : ""); //((Guitar == "Yes") ? "G" : "") + 
+                        //text += " -> " + ((filed.Has_Bass == "Yes") ? "B" : "") + ((filed.Has_Rhythm == "Yes") ? "R" : "") + ((filed.Has_Lead == "Yes") ? "L" : "") + ((filed.Has_Combo == "Yes") ? "L" : ""); //+ ((filed.Has_Guitar == "Yes") ? "G" : "")
+                        //text += ((filed.AlbumArt_Hash == art_hash) ? "" : "\n12/14+ Diff AlbumArt: Yes");//+ art_hash + "->" + filed.art_Hash
+                        //text += ((filed.Audio_Hash == audio_hash) ? "" : "\n13/14+ Diff AudioFile: Yes");// + audio_hash + "->" + filed.audio_Hash 
+                        //text += ((filed.AudioPreview_Hash == audioPreview_hash) ? "" : "\n14/14+ Diff Preview File: Yes");//  + audioPreview_hash + "->" + filed.audioPreview_Hash
 
-                ////files hash
-                //DataSet ds = new DataSet();
-                //i = 0;
-                //var DB_Path = txt_DBFolder.Text + "\\Files.accdb;";
-                //string jsonHash = "";
-                //bool diffjson = true;
-                //string XmlHash = "";
-                //var XmlName = "";
-                //var XmlUUID = "";
-                //var XmlFile = "";
-                //var jsonFile = "";
-                //bool diff = true;
-                //int k = 0;
-                //string lastConversionDateTime_cur = "";
-                //string lastConversionDateTime_exist = "";
-                //string lastConverjsonDateTime_cur = "";
-                //string lastConverjsonDateTime_exist = "";
-                ////MessageBox.Show(DB_Path);
-                //try
-                //{
-                //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-                //    {
-                //        OleDbDataAdapter daa = new OleDbDataAdapter("SELECT * FROM Arrangements WHERE CDLC_ID=\"" + filed.ID.ToString() + "\";", cnn);
-                //        //as i LEFT JOIN Main as m on m.File_Hash = i.FileHash OR m.Original_File_Hash = i.FileHash WHERE m.ID is NULL;", cnn);
-                //        //MessageBox.Show("0");
-                //        daa.Fill(ds, "Arrangements");
-                //        var noOfRec = 0;
-                //        //MessageBox.Show("0.1");
-                //        noOfRec = ds.Tables[0].Rows.Count;//ds.Tables[0].Rows[0].ItemArray[0].ToString();
-                //        rtxt_StatisticsOnReadDLCs.Text = noOfRec + "Assesment Arrangement hash file" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                //        //MessageBox.Show("1");
-                //        if (noOfRec > 0)
-                //        {
-                //            //MessageBox.Show("1");
-                //            foreach (var arg in datas.Arrangements)
-                //            {
-                //                diff = true; diffjson = true;
-                //                lastConversionDateTime_cur = "";
-                //                lastConversionDateTime_exist = "";
-                //                for (i = 0; i <= noOfRec - 1; i++)
-                //                {
-                //                    //MessageBox.Show(noOfRec.ToString());
-                //                    //rtxt_StatisticsOnReadDLCs.Text = alist[i]+"-" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                //                    XmlHash = ds.Tables[0].Rows[i].ItemArray[6].ToString(); // XmlHash                                  
-                //                    XmlName = ds.Tables[0].Rows[i].ItemArray[17].ToString() + ds.Tables[0].Rows[i].ItemArray[25].ToString(); //type+routemask+
-                //                    XmlUUID = ds.Tables[0].Rows[i].ItemArray[28].ToString(); //xml.uuid
-                //                    XmlFile = ds.Tables[0].Rows[i].ItemArray[5].ToString(); //xml.filepath
-                //                    jsonFile = ds.Tables[0].Rows[i].ItemArray[4].ToString(); //json.filepath
-                //                    jsonHash = ds.Tables[0].Rows[i].ItemArray[38].ToString(); // XmlHash      
-                //                    arg.SongFile.File = (arg.SongXml.File.Replace(".xml", ".json")).Replace("EOF", "Toolkit");
-                //                    //rtxt_StatisticsOnReadDLCs.Text = "-"+XmlName + "=" + (arg.ArrangementType.ToString() + arg.RouteMask.ToString()) + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                //                    //rtxt_StatisticsOnReadDLCs.Text = "-" + arg.SongXml.File + "=" + XmlFile + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                //                    //rtxt_StatisticsOnReadDLCs.Text = "-" + arg.SongFile.File + "==" + jsonFile + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                //                    if (XmlName == (arg.ArrangementType.ToString() + arg.RouteMask.ToString()) || (XmlUUID == arg.SongXml.UUID.ToString()))
-                //                    // rtxt_StatisticsOnReadDLCs.Text = "-" + XmlHash + "=" + alist[k] + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                //                    {
-                //                        if (XmlHash == alist[k])
-                //                            diff = false;
-                //                        else
-                //                        {
-                //                            lastConversionDateTime_cur = GetTExtFromFile(arg.SongXml.File);
-                //                            lastConversionDateTime_exist = GetTExtFromFile(XmlFile);
-                //                        }
-                //                        if (jsonHash == blist[k])
-                //                            diffjson = false;
-                //                        else
-                //                        {
-                //                            lastConverjsonDateTime_cur = GetTExtFromFile(arg.SongFile.File);
-                //                            lastConverjsonDateTime_exist = GetTExtFromFile(jsonFile);
-                //                        }
-                //                    }
-                //                }
-                //                text += ((diff) ? "\n" + (14 + i) + "/14+Diff XML" + arg.ArrangementType + arg.RouteMask + ": " + lastConversionDateTime_cur + "->" + lastConversionDateTime_exist + ": Yes" : "");//+ art_hash + "->" + filed.art_Hash
-                //                text += ((diffjson) ? "\n" + (15 + i) + "/14+Diff Json" + arg.ArrangementType + arg.RouteMask + ": " + lastConverjsonDateTime_cur + "->" + lastConverjsonDateTime_exist + ": Yes" : "");//+ art_hash + "->" + filed.art_Hash
-                //                k++;
-                //            }
+                        ////files hash
+                        //DataSet ds = new DataSet();
+                        //i = 0;
+                        //var DB_Path = txt_DBFolder.Text + "\\Files.accdb;";
+                        //string jsonHash = "";
+                        //bool diffjson = true;
+                        //string XmlHash = "";
+                        //var XmlName = "";
+                        //var XmlUUID = "";
+                        //var XmlFile = "";
+                        //var jsonFile = "";
+                        //bool diff = true;
+                        //int k = 0;
+                        //string lastConversionDateTime_cur = "";
+                        //string lastConversionDateTime_exist = "";
+                        //string lastConverjsonDateTime_cur = "";
+                        //string lastConverjsonDateTime_exist = "";
+                        ////MessageBox.Show(DB_Path);
+                        //try
+                        //{
+                        //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                        //    {
+                        //        OleDbDataAdapter daa = new OleDbDataAdapter("SELECT * FROM Arrangements WHERE CDLC_ID=\"" + filed.ID.ToString() + "\";", cnn);
+                        //        //as i LEFT JOIN Main as m on m.File_Hash = i.FileHash OR m.Original_File_Hash = i.FileHash WHERE m.ID is NULL;", cnn);
+                        //        //MessageBox.Show("0");
+                        //        daa.Fill(ds, "Arrangements");
+                        //        var noOfRec = 0;
+                        //        //MessageBox.Show("0.1");
+                        //        noOfRec = ds.Tables[0].Rows.Count;//ds.Tables[0].Rows[0].ItemArray[0].ToString();
+                        //        rtxt_StatisticsOnReadDLCs.Text = noOfRec + "Assesment Arrangement hash file" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                        //        //MessageBox.Show("1");
+                        //        if (noOfRec > 0)
+                        //        {
+                        //            //MessageBox.Show("1");
+                        //            foreach (var arg in datas.Arrangements)
+                        //            {
+                        //                diff = true; diffjson = true;
+                        //                lastConversionDateTime_cur = "";
+                        //                lastConversionDateTime_exist = "";
+                        //                for (i = 0; i <= noOfRec - 1; i++)
+                        //                {
+                        //                    //MessageBox.Show(noOfRec.ToString());
+                        //                    //rtxt_StatisticsOnReadDLCs.Text = alist[i]+"-" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                        //                    XmlHash = ds.Tables[0].Rows[i].ItemArray[6].ToString(); // XmlHash                                  
+                        //                    XmlName = ds.Tables[0].Rows[i].ItemArray[17].ToString() + ds.Tables[0].Rows[i].ItemArray[25].ToString(); //type+routemask+
+                        //                    XmlUUID = ds.Tables[0].Rows[i].ItemArray[28].ToString(); //xml.uuid
+                        //                    XmlFile = ds.Tables[0].Rows[i].ItemArray[5].ToString(); //xml.filepath
+                        //                    jsonFile = ds.Tables[0].Rows[i].ItemArray[4].ToString(); //json.filepath
+                        //                    jsonHash = ds.Tables[0].Rows[i].ItemArray[38].ToString(); // XmlHash      
+                        //                    arg.SongFile.File = (arg.SongXml.File.Replace(".xml", ".json")).Replace("EOF", "Toolkit");
+                        //                    //rtxt_StatisticsOnReadDLCs.Text = "-"+XmlName + "=" + (arg.ArrangementType.ToString() + arg.RouteMask.ToString()) + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                        //                    //rtxt_StatisticsOnReadDLCs.Text = "-" + arg.SongXml.File + "=" + XmlFile + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                        //                    //rtxt_StatisticsOnReadDLCs.Text = "-" + arg.SongFile.File + "==" + jsonFile + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                        //                    if (XmlName == (arg.ArrangementType.ToString() + arg.RouteMask.ToString()) || (XmlUUID == arg.SongXml.UUID.ToString()))
+                        //                    // rtxt_StatisticsOnReadDLCs.Text = "-" + XmlHash + "=" + alist[k] + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                        //                    {
+                        //                        if (XmlHash == alist[k])
+                        //                            diff = false;
+                        //                        else
+                        //                        {
+                        //                            lastConversionDateTime_cur = GetTExtFromFile(arg.SongXml.File);
+                        //                            lastConversionDateTime_exist = GetTExtFromFile(XmlFile);
+                        //                        }
+                        //                        if (jsonHash == blist[k])
+                        //                            diffjson = false;
+                        //                        else
+                        //                        {
+                        //                            lastConverjsonDateTime_cur = GetTExtFromFile(arg.SongFile.File);
+                        //                            lastConverjsonDateTime_exist = GetTExtFromFile(jsonFile);
+                        //                        }
+                        //                    }
+                        //                }
+                        //                text += ((diff) ? "\n" + (14 + i) + "/14+Diff XML" + arg.ArrangementType + arg.RouteMask + ": " + lastConversionDateTime_cur + "->" + lastConversionDateTime_exist + ": Yes" : "");//+ art_hash + "->" + filed.art_Hash
+                        //                text += ((diffjson) ? "\n" + (15 + i) + "/14+Diff Json" + arg.ArrangementType + arg.RouteMask + ": " + lastConverjsonDateTime_cur + "->" + lastConverjsonDateTime_exist + ": Yes" : "");//+ art_hash + "->" + filed.art_Hash
+                        //                k++;
+                        //            }
 
-                //        }
-                //    }
-                //}
-                //catch (System.IO.FileNotFoundException ee)                
-                //{
-                //    rtxt_StatisticsOnReadDLCs.Text = "Error at last conversion" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                //    Console.WriteLine(ee.Message);
-                //}
+                        //        }
+                        //    }
+                        //}
+                        //catch (System.IO.FileNotFoundException ee)                
+                        //{
+                        //    rtxt_StatisticsOnReadDLCs.Text = "Error at last conversion" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                        //    Console.WriteLine(ee.Message);
+                        //}
 
-                ////files size//files dates
-                //DialogResult result1 = MessageBox.Show(text + "\n\nChose:\n\n1. Update\n2. Alternate\n3. Ignore", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-                //if (result1 == DialogResult.Yes) return "Update";
-                //else if (result1 == DialogResult.No) return "Alternate";
-                //else return "ignore";//if (result1 == DialogResult.Cancel) 
-                //return "Alternate";
-                rtxt_StatisticsOnReadDLCs.Text = "REturing from child.." + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                        ////files size//files dates
+                        //DialogResult result1 = MessageBox.Show(text + "\n\nChose:\n\n1. Update\n2. Alternate\n3. Ignore", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                        //if (result1 == DialogResult.Yes) return "Update";
+                        //else if (result1 == DialogResult.No) return "Alternate";
+                        //else return "ignore";//if (result1 == DialogResult.Cancel) 
+                        //return "Alternate";
+                        rtxt_StatisticsOnReadDLCs.Text = "REturing from child.." + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                 var tst = "Ignore";
                 if (frm1.Asses!="") tst = frm1.Asses;
                 frm1.Dispose();
@@ -2661,7 +2697,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                 //rtxt_StatisticsOnReadDLCs.Text = "="+file.Has_BassDD+"...DDR: " + DDC.ExitCode + "----+-" + file.Folder_Name + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                 if (DDC.ExitCode > 0 && file.Is_Original == "No") rtxt_StatisticsOnReadDLCs.Text = "Issues at CDLC Bass DD removal!" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                 if (file.Is_Original=="Yes")
-                                {
+                                { //http://code.google.com/p/rocksmith-custom-song-creator/issues/detail?id=60
                                     if (platform.version == RocksmithToolkitLib.GameVersion.RS2014)
                                         rtxt_StatisticsOnReadDLCs.Text = "...Removing from Original using own logic" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                     {

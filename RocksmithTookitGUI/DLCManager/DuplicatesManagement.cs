@@ -25,6 +25,9 @@ namespace RocksmithToolkitGUI.DLCManager
         public string Title { get; set; }
         public string DLCID { get; set; }
         public string Asses { get; set; }
+        public string Is_Alternate { get; set; }
+        public string Title_Sort { get; set; }
+        public string Album { get; set; }
 
         //public DuplicatesManagement(string txt_DBFolder, Files filed, DLCPackageData datas, string author, string tkversion, string DD, string Bass, string Guitar, string Combo, string Rhythm, string Lead, string tunnings, int i, int norows, string original_FileName, string art_hash, string audio_hash, string audioPreview_hash, List<string> alist, List<string> blist)
         //{
@@ -92,6 +95,8 @@ namespace RocksmithToolkitGUI.DLCManager
             Description = "";
             //MessageBox.Show("test6");
             txt_Artist.Text = filed.Artist;
+            txt_Album.Text = filed.Album;
+            lbl_ID.Text = filed.ID;
 
             if (datas.SongInfo.SongDisplayName != filed.Song_Title) lbl_Title.ForeColor = lbl_Reference.ForeColor;
             txt_TitleNew.Text = datas.SongInfo.SongDisplayName;
@@ -456,7 +461,7 @@ namespace RocksmithToolkitGUI.DLCManager
             try
             {
                 //MessageBox.Show(DB_Path);
-                using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + DB_Path))
+                using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
                 {
                     DataSet dus = new DataSet();
                     OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
@@ -631,6 +636,34 @@ namespace RocksmithToolkitGUI.DLCManager
             Title = txt_TitleNew.Text;
             Comment = txt_Comment.Text;
             Description = txt_Description.Text;
+            Is_Alternate = (chbx_Alternate.Checked ? "Yes" : "No");
+            Title_Sort = txt_TitleSortNew.Text;
+            Album = txt_Album.Text;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            var sel = "";
+            try
+            {
+                //MessageBox.Show(DB_Path);
+                using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                {
+                    sel = "UPDATE Main SET Artist=\"" + txt_Artist.Text + "\", Album=\"" + txt_Album.Text + "\", Song_Title=\"" + txt_TitleExisting.Text;
+                    sel += "\", Song_Title_Sort=\"" + txt_TitleSortExisting.Text + "\", Author=\"" + txt_AuthorExisting.Text + "\", Version=\"" + txt_VersionExisting.Text + "\", DLC_Name=\"" + txt_DLCIDExisting.Text;
+                    sel += "\", Description = \"" + txt_TitleSortExisting.Text + "\", Comments = \"" + txt_AuthorExisting.Text + "\", Is_Alternate = \"" + (chbx_Alternate.Checked ? "Yes": "No");
+                    sel += "\" WHERE ID=" + lbl_ID.Text;
+                    txt_Description.Text = sel;
+                    DataSet ddr = new DataSet();
+                    OleDbDataAdapter dat = new OleDbDataAdapter(sel, cnn);
+                    dat.Fill(ddr, "Main");
+                }
+            }
+            catch (System.IO.FileNotFoundException ee)
+            {
+                MessageBox.Show(ee.Message + "Can not open Main DB connection ! "+ sel);
+                //MessageBox.Show(ee.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

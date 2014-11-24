@@ -32,18 +32,18 @@ namespace RocksmithToolkitGUI.DLCManager
         private void InitializeComponent()
         {
             this.DataGridView1 = new System.Windows.Forms.DataGridView();
-            this.txt_AlbumArtPath = new RocksmithToolkitGUI.CueTextBox();
             this.btn_ChangeCover = new System.Windows.Forms.Button();
-            this.txt_ID = new RocksmithToolkitGUI.CueTextBox();
             this.picbx_AlbumArtPath = new System.Windows.Forms.PictureBox();
-            this.txt_Album = new RocksmithToolkitGUI.CueTextBox();
             this.chbx_Save_All = new System.Windows.Forms.CheckBox();
             this.button8 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
+            this.txt_AlbumArtPath_Correction = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_Album_Correction = new RocksmithToolkitGUI.CueTextBox();
             this.txt_Artist_Correction = new RocksmithToolkitGUI.CueTextBox();
             this.txt_Artist = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_Album_Correction = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_AlbumArtPath_Correction = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_AlbumArtPath = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_ID = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_Album = new RocksmithToolkitGUI.CueTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPath)).BeginInit();
             this.SuspendLayout();
@@ -51,69 +51,38 @@ namespace RocksmithToolkitGUI.DLCManager
             // DataGridView1
             // 
             this.DataGridView1.AllowUserToOrderColumns = true;
+            this.DataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllHeaders;
             this.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DataGridView1.Location = new System.Drawing.Point(0, 0);
             this.DataGridView1.Name = "DataGridView1";
-            this.DataGridView1.Size = new System.Drawing.Size(613, 544);
+            this.DataGridView1.RowHeadersWidth = 61;
+            this.DataGridView1.Size = new System.Drawing.Size(878, 544);
             this.DataGridView1.TabIndex = 38;
-            // 
-            // txt_AlbumArtPath
-            // 
-            this.txt_AlbumArtPath.Cue = "Album art Path";
-            this.txt_AlbumArtPath.Enabled = false;
-            this.txt_AlbumArtPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_AlbumArtPath.ForeColor = System.Drawing.Color.Gray;
-            this.txt_AlbumArtPath.Location = new System.Drawing.Point(619, 162);
-            this.txt_AlbumArtPath.Name = "txt_AlbumArtPath";
-            this.txt_AlbumArtPath.Size = new System.Drawing.Size(291, 20);
-            this.txt_AlbumArtPath.TabIndex = 130;
-            this.txt_AlbumArtPath.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // btn_ChangeCover
             // 
             this.btn_ChangeCover.Enabled = false;
-            this.btn_ChangeCover.Location = new System.Drawing.Point(676, 214);
+            this.btn_ChangeCover.Location = new System.Drawing.Point(941, 214);
             this.btn_ChangeCover.Name = "btn_ChangeCover";
             this.btn_ChangeCover.Size = new System.Drawing.Size(84, 26);
             this.btn_ChangeCover.TabIndex = 129;
             this.btn_ChangeCover.Text = "Change cover";
             this.btn_ChangeCover.UseVisualStyleBackColor = true;
             // 
-            // txt_ID
-            // 
-            this.txt_ID.Cue = "ID";
-            this.txt_ID.Enabled = false;
-            this.txt_ID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_ID.ForeColor = System.Drawing.Color.Gray;
-            this.txt_ID.Location = new System.Drawing.Point(619, 7);
-            this.txt_ID.Name = "txt_ID";
-            this.txt_ID.Size = new System.Drawing.Size(45, 20);
-            this.txt_ID.TabIndex = 128;
-            // 
             // picbx_AlbumArtPath
             // 
-            this.picbx_AlbumArtPath.Location = new System.Drawing.Point(766, 214);
+            this.picbx_AlbumArtPath.Location = new System.Drawing.Point(1031, 214);
             this.picbx_AlbumArtPath.Name = "picbx_AlbumArtPath";
             this.picbx_AlbumArtPath.Size = new System.Drawing.Size(138, 112);
             this.picbx_AlbumArtPath.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picbx_AlbumArtPath.TabIndex = 127;
             this.picbx_AlbumArtPath.TabStop = false;
             // 
-            // txt_Album
-            // 
-            this.txt_Album.Cue = "Album";
-            this.txt_Album.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_Album.ForeColor = System.Drawing.Color.Gray;
-            this.txt_Album.Location = new System.Drawing.Point(688, 110);
-            this.txt_Album.Name = "txt_Album";
-            this.txt_Album.Size = new System.Drawing.Size(222, 20);
-            this.txt_Album.TabIndex = 126;
-            // 
             // chbx_Save_All
             // 
             this.chbx_Save_All.AutoSize = true;
             this.chbx_Save_All.Enabled = false;
-            this.chbx_Save_All.Location = new System.Drawing.Point(786, 16);
+            this.chbx_Save_All.Location = new System.Drawing.Point(1051, 16);
             this.chbx_Save_All.Name = "chbx_Save_All";
             this.chbx_Save_All.Size = new System.Drawing.Size(37, 17);
             this.chbx_Save_All.TabIndex = 124;
@@ -122,7 +91,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // button8
             // 
-            this.button8.Location = new System.Drawing.Point(826, 7);
+            this.button8.Location = new System.Drawing.Point(1091, 7);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(84, 26);
             this.button8.TabIndex = 123;
@@ -132,7 +101,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(670, 5);
+            this.button3.Location = new System.Drawing.Point(935, 5);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(110, 35);
             this.button3.TabIndex = 122;
@@ -140,12 +109,33 @@ namespace RocksmithToolkitGUI.DLCManager
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button1_Click);
             // 
+            // txt_AlbumArtPath_Correction
+            // 
+            this.txt_AlbumArtPath_Correction.Cue = "Album art Path Correction";
+            this.txt_AlbumArtPath_Correction.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_AlbumArtPath_Correction.ForeColor = System.Drawing.Color.Gray;
+            this.txt_AlbumArtPath_Correction.Location = new System.Drawing.Point(884, 188);
+            this.txt_AlbumArtPath_Correction.Name = "txt_AlbumArtPath_Correction";
+            this.txt_AlbumArtPath_Correction.Size = new System.Drawing.Size(291, 20);
+            this.txt_AlbumArtPath_Correction.TabIndex = 134;
+            this.txt_AlbumArtPath_Correction.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txt_Album_Correction
+            // 
+            this.txt_Album_Correction.Cue = "Album Correction";
+            this.txt_Album_Correction.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_Album_Correction.ForeColor = System.Drawing.Color.Gray;
+            this.txt_Album_Correction.Location = new System.Drawing.Point(953, 136);
+            this.txt_Album_Correction.Name = "txt_Album_Correction";
+            this.txt_Album_Correction.Size = new System.Drawing.Size(222, 20);
+            this.txt_Album_Correction.TabIndex = 133;
+            // 
             // txt_Artist_Correction
             // 
             this.txt_Artist_Correction.Cue = "Artist  Correction";
             this.txt_Artist_Correction.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_Artist_Correction.ForeColor = System.Drawing.Color.Gray;
-            this.txt_Artist_Correction.Location = new System.Drawing.Point(688, 46);
+            this.txt_Artist_Correction.Location = new System.Drawing.Point(953, 46);
             this.txt_Artist_Correction.Name = "txt_Artist_Correction";
             this.txt_Artist_Correction.Size = new System.Drawing.Size(222, 20);
             this.txt_Artist_Correction.TabIndex = 132;
@@ -155,37 +145,49 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_Artist.Cue = "Artist";
             this.txt_Artist.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_Artist.ForeColor = System.Drawing.Color.Gray;
-            this.txt_Artist.Location = new System.Drawing.Point(688, 84);
+            this.txt_Artist.Location = new System.Drawing.Point(953, 84);
             this.txt_Artist.Name = "txt_Artist";
             this.txt_Artist.Size = new System.Drawing.Size(222, 20);
             this.txt_Artist.TabIndex = 131;
             // 
-            // txt_Album_Correction
+            // txt_AlbumArtPath
             // 
-            this.txt_Album_Correction.Cue = "Album Correction";
-            this.txt_Album_Correction.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_Album_Correction.ForeColor = System.Drawing.Color.Gray;
-            this.txt_Album_Correction.Location = new System.Drawing.Point(688, 136);
-            this.txt_Album_Correction.Name = "txt_Album_Correction";
-            this.txt_Album_Correction.Size = new System.Drawing.Size(222, 20);
-            this.txt_Album_Correction.TabIndex = 133;
+            this.txt_AlbumArtPath.Cue = "Album art Path";
+            this.txt_AlbumArtPath.Enabled = false;
+            this.txt_AlbumArtPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_AlbumArtPath.ForeColor = System.Drawing.Color.Gray;
+            this.txt_AlbumArtPath.Location = new System.Drawing.Point(884, 162);
+            this.txt_AlbumArtPath.Name = "txt_AlbumArtPath";
+            this.txt_AlbumArtPath.Size = new System.Drawing.Size(291, 20);
+            this.txt_AlbumArtPath.TabIndex = 130;
+            this.txt_AlbumArtPath.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // txt_AlbumArtPath_Correction
+            // txt_ID
             // 
-            this.txt_AlbumArtPath_Correction.Cue = "Album art Path Correction";
-            this.txt_AlbumArtPath_Correction.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_AlbumArtPath_Correction.ForeColor = System.Drawing.Color.Gray;
-            this.txt_AlbumArtPath_Correction.Location = new System.Drawing.Point(619, 188);
-            this.txt_AlbumArtPath_Correction.Name = "txt_AlbumArtPath_Correction";
-            this.txt_AlbumArtPath_Correction.Size = new System.Drawing.Size(291, 20);
-            this.txt_AlbumArtPath_Correction.TabIndex = 134;
-            this.txt_AlbumArtPath_Correction.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txt_ID.Cue = "ID";
+            this.txt_ID.Enabled = false;
+            this.txt_ID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_ID.ForeColor = System.Drawing.Color.Gray;
+            this.txt_ID.Location = new System.Drawing.Point(884, 7);
+            this.txt_ID.Name = "txt_ID";
+            this.txt_ID.Size = new System.Drawing.Size(45, 20);
+            this.txt_ID.TabIndex = 128;
+            // 
+            // txt_Album
+            // 
+            this.txt_Album.Cue = "Album";
+            this.txt_Album.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_Album.ForeColor = System.Drawing.Color.Gray;
+            this.txt_Album.Location = new System.Drawing.Point(953, 110);
+            this.txt_Album.Name = "txt_Album";
+            this.txt_Album.Size = new System.Drawing.Size(222, 20);
+            this.txt_Album.TabIndex = 126;
             // 
             // Standardization
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(916, 546);
+            this.ClientSize = new System.Drawing.Size(1187, 548);
             this.Controls.Add(this.txt_AlbumArtPath_Correction);
             this.Controls.Add(this.txt_Album_Correction);
             this.Controls.Add(this.txt_Artist_Correction);

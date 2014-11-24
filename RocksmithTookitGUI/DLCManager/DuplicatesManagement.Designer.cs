@@ -158,6 +158,13 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_ArtistSortNew = new RocksmithToolkitGUI.CueTextBox();
             this.txt_TitleExisting = new RocksmithToolkitGUI.CueTextBox();
             this.txt_TitleNew = new RocksmithToolkitGUI.CueTextBox();
+            this.label27 = new System.Windows.Forms.Label();
+            this.label28 = new System.Windows.Forms.Label();
+            this.label29 = new System.Windows.Forms.Label();
+            this.label30 = new System.Windows.Forms.Label();
+            this.label31 = new System.Windows.Forms.Label();
+            this.label32 = new System.Windows.Forms.Label();
+            this.label33 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPathNew)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPathExisting)).BeginInit();
             this.panel1.SuspendLayout();
@@ -191,7 +198,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(130, 337);
+            this.label15.Location = new System.Drawing.Point(125, 337);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(86, 13);
             this.label15.TabIndex = 275;
@@ -200,7 +207,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(130, 389);
+            this.label14.Location = new System.Drawing.Point(166, 389);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(45, 13);
             this.label14.TabIndex = 274;
@@ -209,7 +216,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(130, 363);
+            this.label13.Location = new System.Drawing.Point(177, 363);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(34, 13);
             this.label13.TabIndex = 273;
@@ -255,7 +262,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.label8.AutoSize = true;
             this.label8.Enabled = false;
-            this.label8.Location = new System.Drawing.Point(79, 528);
+            this.label8.Location = new System.Drawing.Point(82, 528);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(59, 13);
             this.label8.TabIndex = 268;
@@ -661,6 +668,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // rbtn_CoverNew
             // 
             this.rbtn_CoverNew.AutoSize = true;
+            this.rbtn_CoverNew.Checked = true;
             this.rbtn_CoverNew.Location = new System.Drawing.Point(44, 3);
             this.rbtn_CoverNew.Name = "rbtn_CoverNew";
             this.rbtn_CoverNew.Size = new System.Drawing.Size(78, 17);
@@ -714,7 +722,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(81, 160);
+            this.label18.Location = new System.Drawing.Point(158, 161);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(53, 13);
             this.label18.TabIndex = 314;
@@ -723,7 +731,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(147, 311);
+            this.label19.Location = new System.Drawing.Point(142, 311);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(69, 13);
             this.label19.TabIndex = 315;
@@ -842,9 +850,9 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_Album.Cue = "Album";
             this.txt_Album.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_Album.ForeColor = System.Drawing.Color.Gray;
-            this.txt_Album.Location = new System.Drawing.Point(538, 32);
+            this.txt_Album.Location = new System.Drawing.Point(594, 32);
             this.txt_Album.Name = "txt_Album";
-            this.txt_Album.Size = new System.Drawing.Size(222, 20);
+            this.txt_Album.Size = new System.Drawing.Size(166, 20);
             this.txt_Album.TabIndex = 319;
             this.txt_Album.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -857,6 +865,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_VersionExisting.Name = "txt_VersionExisting";
             this.txt_VersionExisting.Size = new System.Drawing.Size(45, 20);
             this.txt_VersionExisting.TabIndex = 282;
+            this.txt_VersionExisting.TextChanged += new System.EventHandler(this.ExistingChanged);
             // 
             // txt_VersionNew
             // 
@@ -879,6 +888,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_FileNameExisting.Name = "txt_FileNameExisting";
             this.txt_FileNameExisting.Size = new System.Drawing.Size(222, 20);
             this.txt_FileNameExisting.TabIndex = 280;
+            this.txt_FileNameExisting.TextChanged += new System.EventHandler(this.ExistingChanged);
             // 
             // txt_FileNameNew
             // 
@@ -897,9 +907,9 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_Artist.Cue = "Artist";
             this.txt_Artist.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_Artist.ForeColor = System.Drawing.Color.Gray;
-            this.txt_Artist.Location = new System.Drawing.Point(538, 12);
+            this.txt_Artist.Location = new System.Drawing.Point(593, 12);
             this.txt_Artist.Name = "txt_Artist";
-            this.txt_Artist.Size = new System.Drawing.Size(222, 20);
+            this.txt_Artist.Size = new System.Drawing.Size(167, 20);
             this.txt_Artist.TabIndex = 278;
             this.txt_Artist.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -1183,22 +1193,22 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.txt_AvailTracksExisting.Cue = "Available Tracks Existing";
             this.txt_AvailTracksExisting.Enabled = false;
-            this.txt_AvailTracksExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_AvailTracksExisting.ForeColor = System.Drawing.Color.Gray;
+            this.txt_AvailTracksExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_AvailTracksExisting.ForeColor = System.Drawing.Color.DarkRed;
             this.txt_AvailTracksExisting.Location = new System.Drawing.Point(284, 334);
             this.txt_AvailTracksExisting.Name = "txt_AvailTracksExisting";
-            this.txt_AvailTracksExisting.Size = new System.Drawing.Size(45, 20);
+            this.txt_AvailTracksExisting.Size = new System.Drawing.Size(45, 21);
             this.txt_AvailTracksExisting.TabIndex = 237;
             // 
             // txt_AvailTracksNew
             // 
             this.txt_AvailTracksNew.Cue = "Available Tracks New";
             this.txt_AvailTracksNew.Enabled = false;
-            this.txt_AvailTracksNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_AvailTracksNew.ForeColor = System.Drawing.Color.Gray;
+            this.txt_AvailTracksNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_AvailTracksNew.ForeColor = System.Drawing.Color.DarkRed;
             this.txt_AvailTracksNew.Location = new System.Drawing.Point(217, 334);
             this.txt_AvailTracksNew.Name = "txt_AvailTracksNew";
-            this.txt_AvailTracksNew.Size = new System.Drawing.Size(43, 20);
+            this.txt_AvailTracksNew.Size = new System.Drawing.Size(43, 21);
             this.txt_AvailTracksNew.TabIndex = 236;
             this.txt_AvailTracksNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -1232,8 +1242,9 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_DLCIDExisting.ForeColor = System.Drawing.Color.Gray;
             this.txt_DLCIDExisting.Location = new System.Drawing.Point(284, 282);
             this.txt_DLCIDExisting.Name = "txt_DLCIDExisting";
-            this.txt_DLCIDExisting.Size = new System.Drawing.Size(222, 20);
+            this.txt_DLCIDExisting.Size = new System.Drawing.Size(116, 20);
             this.txt_DLCIDExisting.TabIndex = 233;
+            this.txt_DLCIDExisting.TextChanged += new System.EventHandler(this.ExistingChanged);
             // 
             // txt_DLCIDNew
             // 
@@ -1278,6 +1289,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_AuthorExisting.Name = "txt_AuthorExisting";
             this.txt_AuthorExisting.Size = new System.Drawing.Size(116, 20);
             this.txt_AuthorExisting.TabIndex = 229;
+            this.txt_AuthorExisting.TextChanged += new System.EventHandler(this.ExistingChanged);
             // 
             // txt_AuthorNew
             // 
@@ -1345,6 +1357,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_TitleSortExisting.Name = "txt_TitleSortExisting";
             this.txt_TitleSortExisting.Size = new System.Drawing.Size(222, 20);
             this.txt_TitleSortExisting.TabIndex = 223;
+            this.txt_TitleSortExisting.TextChanged += new System.EventHandler(this.ExistingChanged);
             // 
             // txt_TitleSortNew
             // 
@@ -1366,6 +1379,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_ArtistSortExisting.Name = "txt_ArtistSortExisting";
             this.txt_ArtistSortExisting.Size = new System.Drawing.Size(222, 20);
             this.txt_ArtistSortExisting.TabIndex = 221;
+            this.txt_ArtistSortExisting.TextChanged += new System.EventHandler(this.ExistingChanged);
             // 
             // txt_ArtistSortNew
             // 
@@ -1387,6 +1401,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_TitleExisting.Name = "txt_TitleExisting";
             this.txt_TitleExisting.Size = new System.Drawing.Size(222, 20);
             this.txt_TitleExisting.TabIndex = 219;
+            this.txt_TitleExisting.TextChanged += new System.EventHandler(this.ExistingChanged);
             // 
             // txt_TitleNew
             // 
@@ -1399,11 +1414,83 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_TitleNew.TabIndex = 217;
             this.txt_TitleNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label27.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label27.Location = new System.Drawing.Point(230, 13);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(89, 18);
+            this.label27.TabIndex = 328;
+            this.label27.Text = "Differences";
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(9, 60);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(27, 13);
+            this.label28.TabIndex = 329;
+            this.label28.Text = "Title";
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Location = new System.Drawing.Point(3, 84);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(33, 13);
+            this.label29.TabIndex = 330;
+            this.label29.Text = "TSort";
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(3, 110);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(33, 13);
+            this.label30.TabIndex = 331;
+            this.label30.Text = "ASort";
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Location = new System.Drawing.Point(15, 135);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(21, 13);
+            this.label31.TabIndex = 332;
+            this.label31.Text = "FN";
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Location = new System.Drawing.Point(560, 15);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(30, 13);
+            this.label32.TabIndex = 333;
+            this.label32.Text = "Artist";
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Location = new System.Drawing.Point(560, 36);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(36, 13);
+            this.label33.TabIndex = 334;
+            this.label33.Text = "Album";
+            // 
             // DuplicatesManagement
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(766, 676);
+            this.Controls.Add(this.label33);
+            this.Controls.Add(this.label32);
+            this.Controls.Add(this.label31);
+            this.Controls.Add(this.label30);
+            this.Controls.Add(this.label29);
+            this.Controls.Add(this.label28);
+            this.Controls.Add(this.label27);
             this.Controls.Add(this.btn_DecompressAll);
             this.Controls.Add(this.label26);
             this.Controls.Add(this.txt_AlternateNo);
@@ -1656,5 +1743,12 @@ namespace RocksmithToolkitGUI.DLCManager
         private CueTextBox txt_AlternateNo;
         private Label label26;
         private Button btn_DecompressAll;
+        private Label label27;
+        private Label label28;
+        private Label label29;
+        private Label label30;
+        private Label label31;
+        private Label label32;
+        private Label label33;
     }
 }

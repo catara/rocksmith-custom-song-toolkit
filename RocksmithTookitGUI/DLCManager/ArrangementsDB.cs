@@ -10,6 +10,8 @@ using System.Windows.Forms;
 //bcapi
 using System.Data.OleDb;
 using System.Diagnostics;
+using RocksmithToolkitGUI;
+using RocksmithToolkitLib.Extensions;
 
 namespace RocksmithToolkitGUI.DLCManager
 {

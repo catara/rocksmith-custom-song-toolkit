@@ -239,7 +239,7 @@
             "13. Add DD (5 Levels)",
             "14. Import all Duplicates as Alternates",
             "15. Import any Custom as Alternate if an Original exists",
-            "16. Move Original Imported files to temp/0_old",
+            "16. Move the Imported files to temp/0_old",
             "17. Import with Artist/Title same as Artist/Title Sort",
             "18. Repack with Artist/Title same as Artist/Title Sort",
             "<19. Import without The/Die at the beginning of Artist/Title Sort>",
@@ -254,7 +254,8 @@
             "<28. Convert and Transfer/FTP>",
             "29. If Original don\'t add QAs(NOs;DLC/ORIG;etc.) except for File Names",
             "30. When NOT importing a duplicate Move it to _duplicate",
-            "<@IMPORT>",
+            "31. When importing delete identical duplicates(same hash/filesize)",
+            "<IMPORT>",
             "<@Pack>"});
             this.chbx_Additional_Manipualtions.Location = new System.Drawing.Point(240, 88);
             this.chbx_Additional_Manipualtions.Name = "chbx_Additional_Manipualtions";
@@ -811,6 +812,7 @@
             this.chbx_CleanDLC.TabIndex = 288;
             this.chbx_CleanDLC.Text = "Clean Folder";
             this.chbx_CleanDLC.UseVisualStyleBackColor = true;
+            this.chbx_CleanDLC.Visible = false;
             // 
             // chbx_DebugB
             // 
@@ -889,8 +891,6 @@
             // chbx_CleanTemp
             // 
             this.chbx_CleanTemp.AutoSize = true;
-            this.chbx_CleanTemp.Checked = true;
-            this.chbx_CleanTemp.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chbx_CleanTemp.Location = new System.Drawing.Point(324, 27);
             this.chbx_CleanTemp.Margin = new System.Windows.Forms.Padding(2);
             this.chbx_CleanTemp.Name = "chbx_CleanTemp";
@@ -913,8 +913,6 @@
             // chbx_CleanDB
             // 
             this.chbx_CleanDB.AutoSize = true;
-            this.chbx_CleanDB.Checked = true;
-            this.chbx_CleanDB.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chbx_CleanDB.Location = new System.Drawing.Point(324, 66);
             this.chbx_CleanDB.Margin = new System.Windows.Forms.Padding(2);
             this.chbx_CleanDB.Name = "chbx_CleanDB";

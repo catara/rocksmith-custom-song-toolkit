@@ -10,6 +10,8 @@ using System.Windows.Forms;
 
 //bcapi
 using System.Data.OleDb;
+using RocksmithToolkitGUI;
+using RocksmithToolkitLib.Extensions;
 
 namespace RocksmithToolkitGUI.DLCManager
 {
@@ -32,6 +34,7 @@ namespace RocksmithToolkitGUI.DLCManager
         //bcapi
         public string DB_Path = "";
         public DataSet dssx = new DataSet();
+        public string SearchCmd = "";
         //public OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn);
 
         //private BindingSource bsPositions = new BindingSource();
@@ -92,7 +95,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private void button1_Click(object sender, EventArgs e)
         {
             //DLCManager.txt_DBFolder.Text
-            MessageBox.Show(DB_Path);
+            //MessageBox.Show(DB_Path);
             try
             {
                 Process process = Process.Start(@DB_Path);
@@ -175,10 +178,19 @@ namespace RocksmithToolkitGUI.DLCManager
             else chbx_BassDD.Checked = false;
             if (DataGridView1.Rows[i].Cells[84].Value.ToString() == "Yes") chbx_Bonus.Checked = true;
             else chbx_Bonus.Checked = false;
+            if (DataGridView1.Rows[i].Cells[87].Value.ToString() == "Yes") chbx_Avail_Old.Checked = true;
+            else chbx_Avail_Old.Checked = false;
+            if (DataGridView1.Rows[i].Cells[88].Value.ToString() == "Yes") chbx_Avail_Duplicate.Checked = true;
+            else chbx_Avail_Duplicate.Checked = false;
 
             //ImageSource imageSource = new BitmapImage(new Uri("C:\\Temp\\music_edit.png"));
 
             picbx_AlbumArtPath.ImageLocation= txt_AlbumArtPath.Text.Replace(".dds",".png");
+            btn_Search.Enabled = false;
+            btn_Save.Enabled = true;
+            txt_Artist_Sort.Enabled = true;
+            txt_Album.Enabled = true;
+            txt_Title_Sort.Enabled = true;
 
         }
 
@@ -242,7 +254,7 @@ namespace RocksmithToolkitGUI.DLCManager
             else DataGridView1.Rows[i].Cells[83].Value = "No";
             if (chbx_Bonus.Checked) DataGridView1.Rows[i].Cells[84].Value = "Yes";
             else DataGridView1.Rows[i].Cells[84].Value = "No";
-            if (chbx_Avail_Duplicate.Checked) DataGridView1.Rows[i].Cells[87].Value = "Yes";
+            if (chbx_Avail_Old.Checked) DataGridView1.Rows[i].Cells[87].Value = "Yes";
             else DataGridView1.Rows[i].Cells[87].Value = "No";
             if (chbx_Avail_Duplicate.Checked) DataGridView1.Rows[i].Cells[88].Value = "Yes";
             else DataGridView1.Rows[i].Cells[88].Value = "No";
@@ -302,9 +314,9 @@ namespace RocksmithToolkitGUI.DLCManager
                 command.CommandText += "Has_Bonus_Arrangement = @param84, ";
                 command.CommandText += "Artist_ShortName = @param85, ";
                 command.CommandText += "Album_ShortName = @param86, ";
-                command.CommandText += "Available_Duplicate = @param87, ";
-                command.CommandText += "Available_Old = @param88 ";
-                
+                command.CommandText += "Available_Old = @param87, ";
+                command.CommandText += "Available_Duplicate = @param88 ";
+
                 command.CommandText += "WHERE ID = " + txt_ID.Text;
 
                 command.Parameters.AddWithValue("@param1", DataGridView1.Rows[i].Cells[1].Value.ToString());
@@ -342,8 +354,8 @@ namespace RocksmithToolkitGUI.DLCManager
                 command.Parameters.AddWithValue("@param84", DataGridView1.Rows[i].Cells[84].Value.ToString());
                 command.Parameters.AddWithValue("@param85", DataGridView1.Rows[i].Cells[85].Value.ToString());
                 command.Parameters.AddWithValue("@param86", DataGridView1.Rows[i].Cells[86].Value.ToString());
-                command.Parameters.AddWithValue("@param87", DataGridView1.Rows[i].Cells[85].Value.ToString());
-                command.Parameters.AddWithValue("@param88", DataGridView1.Rows[i].Cells[86].Value.ToString());
+                command.Parameters.AddWithValue("@param87", DataGridView1.Rows[i].Cells[87].Value.ToString());
+                command.Parameters.AddWithValue("@param88", DataGridView1.Rows[i].Cells[88].Value.ToString());
                 
                 //MessageBox.Show(command.Parameters.);
                 try
@@ -383,12 +395,16 @@ namespace RocksmithToolkitGUI.DLCManager
 
         public void Populate(ref DataGridView DataGridView, ref BindingSource bs) //, ref BindingSource bsPositions, ref BindingSource bsBadges
         {
+            SearchCmd = "SELECT * FROM Main ORDER BY Artist, Album_Year, Album, Song_Title;";
+            FillGrill(SearchCmd);
 
-
+        }
+        public void FillGrill(string SearchCmd)
+        {
             //DB_Path = "../../../../tmp\\Files.accdb;";
             using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
             {
-                OleDbDataAdapter da = new OleDbDataAdapter("SELECT * FROM Main ORDER BY Artist, Album_Year, Album, Song_Title;", cn);
+                OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cn);
                 da.Fill(dssx, "Main");
                 //da = new OleDbDataAdapter("SELECT Identifier,ContactPosition FROM PositionType;", cn);
                 //da.Fill(ds, "PositionType");
@@ -483,137 +499,38 @@ namespace RocksmithToolkitGUI.DLCManager
             DataGridViewTextBoxColumn Has_Bonus_Arrangement = new DataGridViewTextBoxColumn { DataPropertyName = "Has_Bonus_Arrangement", HeaderText = "Has_Bonus_Arrangement " };
             DataGridViewTextBoxColumn Artist_ShortName = new DataGridViewTextBoxColumn { DataPropertyName = "Artist_ShortName", HeaderText = "Artist_ShortName " };
             DataGridViewTextBoxColumn Album_ShortName = new DataGridViewTextBoxColumn { DataPropertyName = "Album_ShortName", HeaderText = "Album_ShortName " };
-            DataGridViewTextBoxColumn Available_Duplicate = new DataGridViewTextBoxColumn { DataPropertyName = "Available_Duplicate", HeaderText = "Available_Duplicate " };
             DataGridViewTextBoxColumn Available_Old = new DataGridViewTextBoxColumn { DataPropertyName = "Available_Old", HeaderText = "Available_Old " };
+            DataGridViewTextBoxColumn Available_Duplicate = new DataGridViewTextBoxColumn { DataPropertyName = "Available_Duplicate", HeaderText = "Available_Duplicate " };
 
             //bsPositions.DataSource = ds.Tables["Main"];
             //bsBadges.DataSource = ds.Tables["Badge"];
 
-                //DataGridViewComboBoxColumn ContactPositionColumn = new DataGridViewComboBoxColumn 
-                //    { 
-                //        DataPropertyName = "ContactPosition", 
-                //        DataSource = bsPositions, 
-                //        DisplayMember = "ContactPosition", 
-                //        DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing, 
-                //        Name = "ContactsColumn", 
-                //        HeaderText = "Position", 
-                //        SortMode = DataGridViewColumnSortMode.Automatic, 
-                //        ValueMember = "ContactPosition" 
-                //    };
+            //DataGridViewComboBoxColumn ContactPositionColumn = new DataGridViewComboBoxColumn 
+            //    { 
+            //        DataPropertyName = "ContactPosition", 
+            //        DataSource = bsPositions, 
+            //        DisplayMember = "ContactPosition", 
+            //        DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing, 
+            //        Name = "ContactsColumn", 
+            //        HeaderText = "Position", 
+            //        SortMode = DataGridViewColumnSortMode.Automatic, 
+            //        ValueMember = "ContactPosition" 
+            //    };
 
-                //DataGridViewComboBoxColumn BadgeColumn = new DataGridViewComboBoxColumn 
-                //    { 
-                //        DataPropertyName = "Badge", 
-                //        DataSource = bsBadges, 
-                //        DisplayMember = "Badge", 
-                //        DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing, 
-                //        Name = "BadgeColumn", 
-                //        HeaderText = "Badge", 
-                //        SortMode = DataGridViewColumnSortMode.Automatic, 
-                //        ValueMember = "Badge" 
-                //    };
+            //DataGridViewComboBoxColumn BadgeColumn = new DataGridViewComboBoxColumn 
+            //    { 
+            //        DataPropertyName = "Badge", 
+            //        DataSource = bsBadges, 
+            //        DisplayMember = "Badge", 
+            //        DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing, 
+            //        Name = "BadgeColumn", 
+            //        HeaderText = "Badge", 
+            //        SortMode = DataGridViewColumnSortMode.Automatic, 
+            //        ValueMember = "Badge" 
+            //    };
 
-                DataGridView.AutoGenerateColumns = false;
+            
 
-            DataGridView.Columns.AddRange(new DataGridViewColumn[]
-            {
-                ID,
-                Song_Title,
-                Song_Title_Sort,
-                Album,
-                Artist,
-                Artist_Sort,
-                Album_Year,
-                AverageTempo,
-                Volume,
-                Preview_Volume,
-                AlbumArtPath,
-                AudioPath,
-                audioPreviewPath,
-                Track_No,
-                Author,
-                Version,
-                DLC_Name,
-                DLC_AppID,
-                Current_FileName,
-                Original_FileName,
-                Import_Path,
-                Import_Date,
-                Folder_Name,
-                File_Size,
-                File_Hash,
-                Original_File_Hash,
-                Is_Original,
-                Is_OLD,
-                Is_Beta,
-                Is_Alternate,
-                Is_Multitrack,
-                Is_Broken,
-                MultiTrack_Version,
-                Alternate_Version_No,
-                DLC,
-                Has_Bass,
-                Has_Guitar,
-                Has_Lead,
-                Has_Rhythm,
-                Has_Combo,
-                Has_Vocals,
-                Has_Sections,
-                Has_Cover,
-                Has_Preview,
-                Has_Custom_Tone,
-                Has_DD,
-                Has_Version,
-                Tunning,
-                Bass_Picking,
-                Tones,
-                Group,
-                Rating,
-                Description,
-                Comments,
-                Show_Album,
-                Show_Track,
-                Show_Year,
-                Show_CDLC,
-                Show_Rating,
-                Show_Description,
-                Show_Comments,
-                Show_Available_Instruments,
-                Show_Alternate_Version,
-                Show_MultiTrack_Details,
-                Show_Group,
-                Show_Beta,
-                Show_Broken,
-                Show_DD,
-                Original,
-                Selected,
-                YouTube_Link,
-                CustomsForge_Link,
-                CustomsForge_Like,
-                CustomsForge_ReleaseNotes,
-                SignatureType,
-                ToolkitVersion,
-                Has_Author,
-                OggPath,
-                oggPreviewPath,
-                UniqueDLCName,
-                AlbumArt_Hash,
-                Audio_Hash,
-                audioPreview_Hash,
-                Bass_Has_DD,
-                Has_Bonus_Arrangement,
-                Artist_ShortName,
-                Album_ShortName,
-                Available_Duplicate,
-                Available_Old
-            }
-            );
-
-            dssx.Tables["Main"].AcceptChanges();
-
-            bs.DataSource = dssx.Tables["Main"];
-            DataGridView.DataSource = bs;
-            //DataGridView.ExpandColumns();
         }
 
         public class Files
@@ -705,8 +622,8 @@ namespace RocksmithToolkitGUI.DLCManager
             public string Has_Bonus_Arrangement { get; set; }
             public string Artist_ShortName { get; set; }
             public string Album_ShortName { get; set; }
-            public string Available_Duplicate { get; set; }
             public string Available_Old { get; set; }
+            public string Available_Duplicate { get; set; }
         }
         public Files[] files = new Files[10000];
         //Generic procedure to read and parse Main.DB (&others..soon)
@@ -720,7 +637,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //rtxt_StatisticsOnReadDLCs.Text += "\n  ee= ";
             try
             {
-                MessageBox.Show(DB_Path);
+                //MessageBox.Show(DB_Path);
                 using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + DB_Path))
                 {
                     DataSet dus = new DataSet();
@@ -822,8 +739,8 @@ namespace RocksmithToolkitGUI.DLCManager
                         files[i].Has_Bonus_Arrangement = dataRow.ItemArray[84].ToString();
                         files[i].Artist_ShortName = dataRow.ItemArray[85].ToString();
                         files[i].Album_ShortName = dataRow.ItemArray[86].ToString();
-                        files[i].Available_Duplicate = dataRow.ItemArray[87].ToString();
-                        files[i].Available_Old = dataRow.ItemArray[88].ToString();
+                        files[i].Available_Old = dataRow.ItemArray[87].ToString();
+                        files[i].Available_Duplicate = dataRow.ItemArray[88].ToString();
                         i++;
                     }
                     //Closing Connection
@@ -856,6 +773,25 @@ namespace RocksmithToolkitGUI.DLCManager
         private void cbx_Format_SelectedValueChanged(object sender, EventArgs e)
         {
             btn_Conv_And_Transfer.Text = cbx_Format.SelectedValue.ToString();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            btn_ChangeCover.Enabled = false;
+            btn_Save.Enabled = false;
+            btn_Search.Enabled = true;
+            txt_Title.Text = "";
+            txt_Artist.Text = "";
+            txt_Artist_Sort.Enabled = false;
+            txt_Album.Enabled = false;
+            txt_Title_Sort.Enabled = false;
+        }
+
+        private void btn_Search_Click(object sender, EventArgs e)
+        {
+            SearchCmd = "SELECT * FROM Main ORDER BY Artist, Album_Year, Album, Song_Title;";
+            FillGrill(SearchCmd);
+
         }
     }
 }

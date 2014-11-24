@@ -9,6 +9,8 @@ using System.Windows.Forms;
 
 //bcapi
 using System.Data.OleDb;
+using RocksmithToolkitGUI;
+using RocksmithToolkitLib.Extensions; //dds
 using System.Diagnostics;
 
 namespace RocksmithToolkitGUI.DLCManager
@@ -189,12 +191,12 @@ namespace RocksmithToolkitGUI.DLCManager
             //da.Fill(ds, "Badge");
         }
             //MessageBox.Show("test");
-            DataGridViewTextBoxColumn ID = new DataGridViewTextBoxColumn { DataPropertyName = "ID", HeaderText = "ID " };
-            DataGridViewTextBoxColumn Artist = new DataGridViewTextBoxColumn { DataPropertyName = "Artist", HeaderText = "Artist " };
-            DataGridViewTextBoxColumn Artist_Correction = new DataGridViewTextBoxColumn { DataPropertyName = "Artist_Correction", HeaderText = "Artist_Correction " };
-            DataGridViewTextBoxColumn Album = new DataGridViewTextBoxColumn { DataPropertyName = "Album", HeaderText = "Album " };
-            DataGridViewTextBoxColumn Album_Correction = new DataGridViewTextBoxColumn { DataPropertyName = "Album_Correction", HeaderText = "Album_Correction " };
-            DataGridViewTextBoxColumn AlbumArtPath_Correction = new DataGridViewTextBoxColumn { DataPropertyName = "AlbumArtPath_Correction", HeaderText = "AlbumArtPath_Correction " };
+            DataGridViewTextBoxColumn ID = new DataGridViewTextBoxColumn { DataPropertyName = "ID", HeaderText = "ID ", Width = 40 };
+            DataGridViewTextBoxColumn Artist = new DataGridViewTextBoxColumn { DataPropertyName = "Artist", HeaderText = "Artist ", Width = 185 };
+            DataGridViewTextBoxColumn Artist_Correction = new DataGridViewTextBoxColumn { DataPropertyName = "Artist_Correction", HeaderText = "Artist_Correction ", Width = 185 };
+            DataGridViewTextBoxColumn Album = new DataGridViewTextBoxColumn { DataPropertyName = "Album", HeaderText = "Album ", Width = 185 };
+            DataGridViewTextBoxColumn Album_Correction = new DataGridViewTextBoxColumn { DataPropertyName = "Album_Correction", HeaderText = "Album_Correction ", Width = 185 };
+            DataGridViewTextBoxColumn AlbumArtPath_Correction = new DataGridViewTextBoxColumn { DataPropertyName = "AlbumArtPath_Correction", HeaderText = "AlbumArtPath_Correction ", Width = 495 };
 
 
             //bsPositions.DataSource = ds.Tables["Tones"];

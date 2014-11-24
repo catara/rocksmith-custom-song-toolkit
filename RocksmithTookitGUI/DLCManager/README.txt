@@ -17,6 +17,20 @@ Known Issues:
 - Re-Pack is broken momentarely
 - Edit of Arragements and Tones DB can only be done from Access for the moment
 
+ToDos:
+- save dupicates names in the dB
+- Fix Tone (dropdownboxes)
+- Fix standardization
+- Finish Arrangements(dropdownboxes)
+- Do search
+- Alice in chains no Excuses C vs BRL ..?shows as lead
+- Alternate No for duplicates logic
+- duplicate original (toolkit, version,author missing logic)
+- duplicate description/comments are overritten for Existing
+- Update Duplciates Existing should not update artist if name are diff (Behind blue eyes)
+- import issue with changes in the house of fly and  mjbeat it and nirvana smels, tool lost keys
+- Pinion Wish RL issue	no XML/JSON info
+
 Version History(release date):
 	0.1(12.08.2014) prototype, 
 	0.1.4 (22.08.2014) populating the Read Folder - File.DB,

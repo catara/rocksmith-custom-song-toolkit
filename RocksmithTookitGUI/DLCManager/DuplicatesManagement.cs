@@ -46,7 +46,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         //}
 
-        public DuplicatesManagement(string text, DLCManager.Files filed, DLCPackageData datas, string author, string tkversion, string dD, string bass, string guitar, string combo, string rhythm, string lead, string tunnings, int i, int norows, string original_FileName, string art_hash, string audio_hash, string audioPreview_hash, List<string> alist, List<string> blist)
+        public DuplicatesManagement(string text, DLCManager.Files filed, DLCPackageData datas, string author, string tkversion, string dD, string bass, string guitar, string combo, string rhythm, string lead, string vocal, string tunnings, int i, int norows, string original_FileName, string art_hash, string audio_hash, string audioPreview_hash, List<string> alist, List<string> blist)
         {
             Text = text;
             //MessageBox.Show("test2");
@@ -60,6 +60,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.combo = combo;
             this.rhythm = rhythm;
             this.lead = lead;
+            this.vocals = vocals;
             this.tunnings = tunnings;
             this.i = i;
             this.norows = norows;
@@ -85,6 +86,7 @@ namespace RocksmithToolkitGUI.DLCManager
         //bcapi
         public string DB_Path = "";
         public DataSet dssx = new DataSet();
+        public bool ExistChng = false;
 
         //public OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn);
 
@@ -164,12 +166,12 @@ namespace RocksmithToolkitGUI.DLCManager
                 txt_AudioExisting.Text = (filed.Audio_Hash.ToString() == "" ? "" : "Yes");
 
             if (filed.AudioPreview_Hash != audioPreview_hash) lbl_Preview.ForeColor = lbl_Reference.ForeColor;
-                txt_PreviewNew.Text = (audio_hash.ToString() == "" ? "" : "Yes");
-                txt_PreviewExisting.Text = (audioPreview_hash.ToString() == "" ? "" : "Yes");
+                txt_PreviewNew.Text = (audio_hash.ToString() == "" ? "missing" : "Yes");
+                txt_PreviewExisting.Text = (audioPreview_hash.ToString() == "" ? "missing" : "Yes");
 
-            if (((bass == "Yes") ? "B" : "") + ((rhythm == "Yes") ? "R" : "") + ((lead == "Yes") ? "L" : "") + ((combo == "Yes") ? "C" : "") != ((filed.Has_Bass == "Yes") ? "B" : "") + ((filed.Has_Rhythm == "Yes") ? "R" : "") + ((filed.Has_Lead == "Yes") ? "L" : "") + ((filed.Has_Combo == "Yes") ? "L" : "")) lbl_AvailableTracks.ForeColor = lbl_Reference.ForeColor;
-                txt_AvailTracksNew.Text = ((bass == "Yes") ? "B" : "") + ((rhythm == "Yes") ? "R" : "") + ((lead == "Yes") ? "L" : "") + ((combo == "Yes") ? "C" : "");
-                txt_AvailTracksExisting.Text = ((filed.Has_Bass == "Yes") ? "B" : "") + ((filed.Has_Rhythm == "Yes") ? "R" : "") + ((filed.Has_Lead == "Yes") ? "L" : "") + ((filed.Has_Combo == "Yes") ? "L" : "");
+            if (((bass == "Yes") ? "B" : "") + ((rhythm == "Yes") ? "R" : "") + ((lead == "Yes") ? "L" : "") + ((combo == "Yes") ? "C" : "") + ((vocals == "Yes") ? "V" : "") != ((filed.Has_Bass == "Yes") ? "B" : "") + ((filed.Has_Rhythm == "Yes") ? "R" : "") + ((filed.Has_Lead == "Yes") ? "L" : "") + ((filed.Has_Combo == "Yes") ? "L" : "") + ((filed.Has_Vocals == "Yes") ? "V" : "")) lbl_AvailableTracks.ForeColor = lbl_Reference.ForeColor;
+                txt_AvailTracksNew.Text = ((bass == "Yes") ? "B" : "") + ((rhythm == "Yes") ? "R" : "") + ((lead == "Yes") ? "L" : "") + ((combo == "Yes") ? "C" : "") + ((vocals == "Yes") ? "V" : "");
+                txt_AvailTracksExisting.Text = ((filed.Has_Bass == "Yes") ? "B" : "") + ((filed.Has_Rhythm == "Yes") ? "R" : "") + ((filed.Has_Lead == "Yes") ? "L" : "") + ((filed.Has_Combo == "Yes") ? "L" : "") + ((filed.Has_Vocals == "Yes") ? "V" : "");
 
             //string text = "Same Current -> Existing " + (i + 2) + "/" + (norows + 1) + " " + filed.Artist + "-" + filed.Album + "\n";
             //text += ((datas.SongInfo.SongDisplayName == filed.Song_Title) ? "" : ("\n1/14+ Song Titles: " + datas.SongInfo.SongDisplayName + "->" + filed.Song_Title));
@@ -344,7 +346,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //if (result1 == DialogResult.Yes) return "Update";
             //else if (result1 == DialogResult.No) return "Alternate";
             //else return "ignore";//if (result1 == DialogResult.Cancel) 
-
+            ExistChng = false;
         }
 
         public class Files
@@ -450,6 +452,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private string combo;
         private string rhythm;
         private string lead;
+        private string vocals;
         private string tunnings;
         private int i;
         private int norows;
@@ -621,10 +624,15 @@ namespace RocksmithToolkitGUI.DLCManager
         private void btn_Alternate_Click(object sender, EventArgs e)
         {
             Asses = "Alternate";
+            if (ExistChng)
+            {
+                DialogResult result1 = MessageBox.Show("Save the Existing Edits?\nYes for save \nNo for Ignore", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result1 == DialogResult.Yes) UpdateExisting();
+            }
             exit();
-            this.Hide();
-            //this.ParentForm.
-        }
+                this.Hide();
+                //this.ParentForm.
+            }
 
         private void btn_Ignore_Click(object sender, EventArgs e)
         {
@@ -660,6 +668,12 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void button2_Click(object sender, EventArgs e)
         {
+            UpdateExisting();
+            ExistChng = false;
+        }
+
+        public void UpdateExisting()
+        {
             var sel = "";
             var cmd = "";
             try
@@ -669,7 +683,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 {
                     sel = "UPDATE Main SET Artist=\"" + txt_Artist.Text + "\", Artist_Sort=\"" + txt_ArtistSortExisting.Text + "\", Album=\"" + txt_Album.Text + "\", Song_Title=\"" + txt_TitleExisting.Text;
                     sel += "\", Song_Title_Sort=\"" + txt_TitleSortExisting.Text + "\", Author=\"" + txt_AuthorExisting.Text + "\", Version=\"" + txt_VersionExisting.Text + "\", DLC_Name=\"" + txt_DLCIDExisting.Text;
-                    sel += "\", Description = \"" + txt_TitleSortExisting.Text + "\", Comments = \"" + txt_AuthorExisting.Text + "\", Is_Alternate = \"" + (chbx_IsAlternate.Checked ? "Yes": "No");
+                    sel += "\", Description = \"" + txt_TitleSortExisting.Text + "\", Comments = \"" + txt_AuthorExisting.Text + "\", Is_Alternate = \"" + (chbx_IsAlternate.Checked ? "Yes" : "No");
                     sel += "\", Alternate_Version_No = \"" + txt_AlternateNo.Text;// + "\"", AlbumArtPath = \"" + (rbtn_CoverNew.Checked ? picbx_AlbumArtPathNew.ImageLocation : picbx_AlbumArtPathExisting.ImageLocation);// + "\", Is_Original = \"" + (chbx_IsOriginal.Checked ? "Yes" : "No");
                     //sel += "\", AlbumArt_Hash = \"" + (rbtn_CoverNew.Checked ? art_hash : filed.AlbumArt_Hash);
                     sel += "\" WHERE ID=" + lbl_IDExisting.Text;
@@ -683,9 +697,11 @@ namespace RocksmithToolkitGUI.DLCManager
             }
             catch (System.IO.FileNotFoundException ee)
             {
-                MessageBox.Show(ee.Message + "Can not open Main DB connection ! "+ sel);
+                MessageBox.Show(ee.Message + "Can not open Main DB connection ! " + sel);
                 //MessageBox.Show(ee.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            MessageBox.Show("Existing Record updated");
+
         }
 
         public string calc_arthash(string ss)
@@ -700,6 +716,11 @@ namespace RocksmithToolkitGUI.DLCManager
                 return art_hash;
             }
 
+        }
+
+        public void ExistingChanged(object sender, EventArgs e)
+        {
+            ExistChng = true;
         }
 
         private void rbtn_CoverNew_CheckedChanged(object sender, EventArgs e)
@@ -719,6 +740,11 @@ namespace RocksmithToolkitGUI.DLCManager
             //txt_Description.Text = DB_Path;
             MainDB frm = new MainDB(DB_Path.Replace("\\Files.accdb;", ""));
             frm.Show();
+        }
+
+        private void txt_TitleExisting_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -271,10 +271,10 @@ namespace RocksmithToolkitGUI.DLCManager
                 if (connection != null) connection.Close();
             }
             ////OleDbDataAdapter das = new OleDbDataAdapter(command.CommandText, cnn);
-            //MessageBox.Show(das.UpdateCommand.CommandText);
+            MessageBox.Show("Tones Saved");
             //das.SelectCommand.CommandText = "SELECT * FROM Tones";
             //// das.Update(dssx, "Tones");
-        }
+            }
     }
 
     public void Populate(ref DataGridView DataGridView, ref BindingSource bs) //, ref BindingSource bsPositions, ref BindingSource bsBadges
@@ -527,5 +527,10 @@ namespace RocksmithToolkitGUI.DLCManager
         //rtxt_StatisticsOnReadDLCs.Text += "\n  max rows" + MaximumSize;
         return MaximumSize;//files[10000];
     }
-}
+
+        private void btn_Close_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+    }
 } 

@@ -163,6 +163,7 @@ namespace RocksmithToolkitGUI.DLCManager
             public string Album_ShortName { get; set; }
             public string Available_Old { get; set; }
             public string Available_Duplicate{ get; set; }
+            public string Has_Been_Corrected{ get; set; }
         }
         public Files[] files = new Files[10000];
         public DLCPackageData info;
@@ -681,6 +682,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         files[i].Album_ShortName = dataRow.ItemArray[86].ToString();
                         files[i].Available_Old = dataRow.ItemArray[87].ToString();
                         files[i].Available_Duplicate = dataRow.ItemArray[88].ToString();
+                        files[i].Has_Been_Corrected = dataRow.ItemArray[89].ToString();
                         i++;
                     }
                     //Closing Connection
@@ -2364,6 +2366,7 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             //var cmd2 = "";
             var cmd1 = "";
+            var cmd2 = "";
             var artpath_c = "";
             var artist_c = "";
             var album_c = "";
@@ -2373,7 +2376,7 @@ namespace RocksmithToolkitGUI.DLCManager
             {
                 using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
                 {
-                    cmd = "SELECT * FROM Standardization WHERE (Artist_Correction IS NOT null) or (Album_Correction IS NOT null) OR (AlbumArt_Correction IS NOT null);";
+                    cmd = "SELECT * FROM Standardization WHERE (Artist_Correction <> \"\") or (Album_Correction <> \"\") OR (AlbumArt_Correction <> \"\") order by id;";
                     DataSet dus = new DataSet();
                     OleDbDataAdapter dad = new OleDbDataAdapter(cmd, cnn);
                     dad.Fill(dus, "Main");
@@ -2389,15 +2392,21 @@ namespace RocksmithToolkitGUI.DLCManager
                         artpath_c = dus.Tables[0].Rows[i].ItemArray[5].ToString();
 
                         cmd1 = "UPDATE Main SET " + (artist_c != "" ? "Artist = \"" + artist_c + (album_c != ""? "\"," : "\"") : "") + (album_c != "" ? " Album = \"" + album_c + (artpath_c != "" ? "\"," : "\"") : "") + (artpath_c != "" ? " AlbumArtPath = \"" + artpath_c+"\"" : "");
-                        cmd1 += " WHERE Artist=\"" + dus.Tables[0].Rows[i].ItemArray[1].ToString() + "\" AND Album=\"" + dus.Tables[0].Rows[i].ItemArray[3].ToString() + "\"";
-                        //rtxt_StatisticsOnReadDLCs.Text = cmd1+ "-\n" + rtxt_StatisticsOnReadDLCs.Text;
-                        // rtxt_StatisticsOnReadDLCs.Text = "3" + cmd+ "..." + rtxt_StatisticsOnReadDLCs.Text;
+                        cmd1 += ", Has_Been_Corrected=\"Yes\" WHERE Artist=\"" + dus.Tables[0].Rows[i].ItemArray[1].ToString() + "\" AND Album=\"" + dus.Tables[0].Rows[i].ItemArray[3].ToString() + "\"";
+                        //rtxt_StatisticsOnReadDLCs.Text = dus.Tables[0].Rows[i].ItemArray[0].ToString() +"cmd -" +album_c+"-"+ cmd1 + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                         OleDbDataAdapter das = new OleDbDataAdapter(cmd1, cnn);
                         das.Fill(dus, "Main");
                         das.Dispose();
-                            //OleDbDataAdapter dun = new OleDbDataAdapter(cmd2, cnn);
-                            //dun.Fill(dus, "Main");
                     }
+                    //OleDbDataAdapter dun = new OleDbDataAdapter(cmd2, cnn);
+                    //dun.Fill(dus, "Main");
+                    //insert any translation if not alerady existing
+                    cmd2 = "INSERT INTO Standardization (Artist, Album) SELECT Artist_Correction, Album_Correction from Standardization WHERE Artist<>Artist_Correction or Album<>Album_Correction;";
+                    OleDbDataAdapter dam = new OleDbDataAdapter(cmd2, cnn);
+                    //rtxt_StatisticsOnReadDLCs.Text = cmd2 + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                    dam.Fill(dus, "Main");
+                    dam.Dispose();
+
                 }
             }
             catch (System.IO.FileNotFoundException ee)
@@ -2405,7 +2414,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 // To inform the user and continue is 
                 // sufficient for this demonstration. 
                 // Your application may require different behavior.
-                rtxt_StatisticsOnReadDLCs.Text = "Error at standardization" + cmd1 +cmd+ "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                rtxt_StatisticsOnReadDLCs.Text = "Error at standardization" + cmd1 +cmd+cmd2+ "\n" + rtxt_StatisticsOnReadDLCs.Text;
                 Console.WriteLine(ee.Message);
                 //continue;
             }
@@ -3449,6 +3458,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private void button1_Click(object sender, EventArgs e)
         {
             Translation_And_Correction();
+            MessageBox.Show("Normalization Applied");
         }
     }
 }

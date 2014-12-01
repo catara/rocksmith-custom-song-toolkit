@@ -40,6 +40,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private void InitializeComponent()
         {
             this.Panel1 = new System.Windows.Forms.Panel();
+            this.lbl_NoRec = new System.Windows.Forms.Label();
             this.chbx_Avail_Old = new System.Windows.Forms.CheckBox();
             this.chbx_Avail_Duplicate = new System.Windows.Forms.CheckBox();
             this.button15 = new System.Windows.Forms.Button();
@@ -82,6 +83,8 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_Arrangements = new System.Windows.Forms.Button();
             this.CheckBox1 = new System.Windows.Forms.CheckBox();
             this.DataGridView1 = new System.Windows.Forms.DataGridView();
+            this.btn_Close = new System.Windows.Forms.Button();
+            this.chbx_Has_Been_Corrected = new System.Windows.Forms.CheckBox();
             this.txt_AlbumArtPath = new RocksmithToolkitGUI.CueTextBox();
             this.txt_Artist_ShortName = new RocksmithToolkitGUI.CueTextBox();
             this.txt_Album_ShortName = new RocksmithToolkitGUI.CueTextBox();
@@ -114,6 +117,9 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // Panel1
             // 
+            this.Panel1.Controls.Add(this.chbx_Has_Been_Corrected);
+            this.Panel1.Controls.Add(this.btn_Close);
+            this.Panel1.Controls.Add(this.lbl_NoRec);
             this.Panel1.Controls.Add(this.chbx_Avail_Old);
             this.Panel1.Controls.Add(this.chbx_Avail_Duplicate);
             this.Panel1.Controls.Add(this.button15);
@@ -186,10 +192,19 @@ namespace RocksmithToolkitGUI.DLCManager
             this.Panel1.Size = new System.Drawing.Size(1106, 202);
             this.Panel1.TabIndex = 3;
             // 
+            // lbl_NoRec
+            // 
+            this.lbl_NoRec.AutoSize = true;
+            this.lbl_NoRec.Location = new System.Drawing.Point(12, 2);
+            this.lbl_NoRec.Name = "lbl_NoRec";
+            this.lbl_NoRec.Size = new System.Drawing.Size(59, 13);
+            this.lbl_NoRec.TabIndex = 113;
+            this.lbl_NoRec.Text = "of Records";
+            // 
             // chbx_Avail_Old
             // 
             this.chbx_Avail_Old.AutoSize = true;
-            this.chbx_Avail_Old.Location = new System.Drawing.Point(970, 181);
+            this.chbx_Avail_Old.Location = new System.Drawing.Point(857, 181);
             this.chbx_Avail_Old.Name = "chbx_Avail_Old";
             this.chbx_Avail_Old.Size = new System.Drawing.Size(71, 17);
             this.chbx_Avail_Old.TabIndex = 112;
@@ -199,7 +214,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // chbx_Avail_Duplicate
             // 
             this.chbx_Avail_Duplicate.AutoSize = true;
-            this.chbx_Avail_Duplicate.Location = new System.Drawing.Point(970, 165);
+            this.chbx_Avail_Duplicate.Location = new System.Drawing.Point(931, 180);
             this.chbx_Avail_Duplicate.Name = "chbx_Avail_Duplicate";
             this.chbx_Avail_Duplicate.Size = new System.Drawing.Size(100, 17);
             this.chbx_Avail_Duplicate.TabIndex = 111;
@@ -385,6 +400,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // btn_Save
             // 
+            this.btn_Save.ForeColor = System.Drawing.Color.Green;
             this.btn_Save.Location = new System.Drawing.Point(874, 80);
             this.btn_Save.Name = "btn_Save";
             this.btn_Save.Size = new System.Drawing.Size(84, 26);
@@ -632,6 +648,29 @@ namespace RocksmithToolkitGUI.DLCManager
             this.DataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick_1);
             this.DataGridView1.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick_1);
             this.DataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick_1);
+            // 
+            // btn_Close
+            // 
+            this.btn_Close.BackColor = System.Drawing.Color.LightSteelBlue;
+            this.btn_Close.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Close.Location = new System.Drawing.Point(1031, 180);
+            this.btn_Close.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_Close.Name = "btn_Close";
+            this.btn_Close.Size = new System.Drawing.Size(72, 20);
+            this.btn_Close.TabIndex = 273;
+            this.btn_Close.Text = "Close";
+            this.btn_Close.UseVisualStyleBackColor = false;
+            this.btn_Close.Click += new System.EventHandler(this.btn_Close_Click);
+            // 
+            // chbx_Has_Been_Corrected
+            // 
+            this.chbx_Has_Been_Corrected.AutoSize = true;
+            this.chbx_Has_Been_Corrected.Location = new System.Drawing.Point(931, 163);
+            this.chbx_Has_Been_Corrected.Name = "chbx_Has_Been_Corrected";
+            this.chbx_Has_Been_Corrected.Size = new System.Drawing.Size(122, 17);
+            this.chbx_Has_Been_Corrected.TabIndex = 274;
+            this.chbx_Has_Been_Corrected.Text = "Has Been Corrected";
+            this.chbx_Has_Been_Corrected.UseVisualStyleBackColor = true;
             // 
             // txt_AlbumArtPath
             // 
@@ -974,5 +1013,8 @@ namespace RocksmithToolkitGUI.DLCManager
         private Button button15;
         private CheckBox chbx_Avail_Old;
         private CheckBox chbx_Avail_Duplicate;
+        private Label lbl_NoRec;
+        private Button btn_Close;
+        private CheckBox chbx_Has_Been_Corrected;
     }
 }

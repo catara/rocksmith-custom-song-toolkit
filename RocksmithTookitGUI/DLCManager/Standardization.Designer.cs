@@ -44,6 +44,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_AlbumArtPath = new RocksmithToolkitGUI.CueTextBox();
             this.txt_ID = new RocksmithToolkitGUI.CueTextBox();
             this.txt_Album = new RocksmithToolkitGUI.CueTextBox();
+            this.btn_Close = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPath)).BeginInit();
             this.SuspendLayout();
@@ -58,6 +59,10 @@ namespace RocksmithToolkitGUI.DLCManager
             this.DataGridView1.RowHeadersWidth = 61;
             this.DataGridView1.Size = new System.Drawing.Size(878, 544);
             this.DataGridView1.TabIndex = 38;
+            this.DataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick_1);
+            this.DataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick_1);
+            this.DataGridView1.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick_1);
+            this.DataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick_1);
             // 
             // btn_ChangeCover
             // 
@@ -91,6 +96,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // button8
             // 
+            this.button8.ForeColor = System.Drawing.Color.Green;
             this.button8.Location = new System.Drawing.Point(1091, 7);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(84, 26);
@@ -112,6 +118,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // txt_AlbumArtPath_Correction
             // 
             this.txt_AlbumArtPath_Correction.Cue = "Album art Path Correction";
+            this.txt_AlbumArtPath_Correction.Enabled = false;
             this.txt_AlbumArtPath_Correction.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_AlbumArtPath_Correction.ForeColor = System.Drawing.Color.Gray;
             this.txt_AlbumArtPath_Correction.Location = new System.Drawing.Point(884, 188);
@@ -135,7 +142,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_Artist_Correction.Cue = "Artist  Correction";
             this.txt_Artist_Correction.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_Artist_Correction.ForeColor = System.Drawing.Color.Gray;
-            this.txt_Artist_Correction.Location = new System.Drawing.Point(953, 46);
+            this.txt_Artist_Correction.Location = new System.Drawing.Point(953, 84);
             this.txt_Artist_Correction.Name = "txt_Artist_Correction";
             this.txt_Artist_Correction.Size = new System.Drawing.Size(222, 20);
             this.txt_Artist_Correction.TabIndex = 132;
@@ -143,9 +150,10 @@ namespace RocksmithToolkitGUI.DLCManager
             // txt_Artist
             // 
             this.txt_Artist.Cue = "Artist";
+            this.txt_Artist.Enabled = false;
             this.txt_Artist.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_Artist.ForeColor = System.Drawing.Color.Gray;
-            this.txt_Artist.Location = new System.Drawing.Point(953, 84);
+            this.txt_Artist.Location = new System.Drawing.Point(953, 58);
             this.txt_Artist.Name = "txt_Artist";
             this.txt_Artist.Size = new System.Drawing.Size(222, 20);
             this.txt_Artist.TabIndex = 131;
@@ -176,6 +184,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // txt_Album
             // 
             this.txt_Album.Cue = "Album";
+            this.txt_Album.Enabled = false;
             this.txt_Album.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_Album.ForeColor = System.Drawing.Color.Gray;
             this.txt_Album.Location = new System.Drawing.Point(953, 110);
@@ -183,11 +192,25 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_Album.Size = new System.Drawing.Size(222, 20);
             this.txt_Album.TabIndex = 126;
             // 
+            // btn_Close
+            // 
+            this.btn_Close.BackColor = System.Drawing.Color.LightSteelBlue;
+            this.btn_Close.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Close.Location = new System.Drawing.Point(1103, 33);
+            this.btn_Close.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_Close.Name = "btn_Close";
+            this.btn_Close.Size = new System.Drawing.Size(72, 20);
+            this.btn_Close.TabIndex = 273;
+            this.btn_Close.Text = "Close";
+            this.btn_Close.UseVisualStyleBackColor = false;
+            this.btn_Close.Click += new System.EventHandler(this.btn_Close_Click);
+            // 
             // Standardization
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1187, 548);
+            this.Controls.Add(this.btn_Close);
             this.Controls.Add(this.txt_AlbumArtPath_Correction);
             this.Controls.Add(this.txt_Album_Correction);
             this.Controls.Add(this.txt_Artist_Correction);
@@ -268,5 +291,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.alist = alist;
             this.blist = blist;
         }
+
+        private System.Windows.Forms.Button btn_Close;
     }
 }

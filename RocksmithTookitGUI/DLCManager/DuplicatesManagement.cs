@@ -676,12 +676,17 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             var sel = "";
             var cmd = "";
+           // in case a similar artist covered the song ...don't attach wrong names
+            var al = txt_Album.Text;
+            var ar = txt_Artist.Text;
+            if (filed.Album != datas.SongInfo.Album) al = datas.SongInfo.Album;
+            if (filed.Artist != datas.SongInfo.Artist) ar = datas.SongInfo.Artist;
             try
             {
                 //MessageBox.Show(DB_Path);
                 using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
                 {
-                    sel = "UPDATE Main SET Artist=\"" + txt_Artist.Text + "\", Artist_Sort=\"" + txt_ArtistSortExisting.Text + "\", Album=\"" + txt_Album.Text + "\", Song_Title=\"" + txt_TitleExisting.Text;
+                    sel = "UPDATE Main SET Artist=\"" + ar + "\", Artist_Sort=\"" + txt_ArtistSortExisting.Text + "\", Album=\"" + al + "\", Song_Title=\"" + txt_TitleExisting.Text;
                     sel += "\", Song_Title_Sort=\"" + txt_TitleSortExisting.Text + "\", Author=\"" + txt_AuthorExisting.Text + "\", Version=\"" + txt_VersionExisting.Text + "\", DLC_Name=\"" + txt_DLCIDExisting.Text;
                     sel += "\", Description = \"" + txt_TitleSortExisting.Text + "\", Comments = \"" + txt_AuthorExisting.Text + "\", Is_Alternate = \"" + (chbx_IsAlternate.Checked ? "Yes" : "No");
                     sel += "\", Alternate_Version_No = \"" + txt_AlternateNo.Text;// + "\"", AlbumArtPath = \"" + (rbtn_CoverNew.Checked ? picbx_AlbumArtPathNew.ImageLocation : picbx_AlbumArtPathExisting.ImageLocation);// + "\", Is_Original = \"" + (chbx_IsOriginal.Checked ? "Yes" : "No");

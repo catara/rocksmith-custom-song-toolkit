@@ -242,7 +242,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     if (connection != null) connection.Close();
                 }
                 ////OleDbDataAdapter das = new OleDbDataAdapter(command.CommandText, cnn);
-                //MessageBox.Show(das.UpdateCommand.CommandText);
+                MessageBox.Show("Arrangement Saved");
                 //das.SelectCommand.CommandText = "SELECT * FROM Main";
                 //// das.Update(dssx, "Main");
             }
@@ -544,6 +544,11 @@ namespace RocksmithToolkitGUI.DLCManager
 
             if (DataGridView1.Rows[i].Cells[3].Value.ToString() == "Yes") chbx_Bonus.Checked = true;
             else chbx_Bonus.Checked = false;
+        }
+
+        private void btn_Close_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 } 

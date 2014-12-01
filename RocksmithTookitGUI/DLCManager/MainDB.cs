@@ -34,6 +34,8 @@ namespace RocksmithToolkitGUI.DLCManager
         //bcapi
         public string DB_Path = "";
         public DataSet dssx = new DataSet();
+        public DataSet dssx2 = new DataSet();
+        public int noOfRec = 0;
         public string SearchCmd = "";
         //public OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn);
 
@@ -44,6 +46,7 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             //DataAccess da = new DataAccess();
             //MessageBox.Show("test0");
+            SearchCmd = "SELECT top 3 * FROM Main ORDER BY Artist, Album_Year, Album, Song_Title;";
             Populate(ref DataGridView1, ref Main);//, ref bsPositions, ref bsBadges);
             DataGridView1.EditingControlShowing += DataGridView1_EditingControlShowing;
         }
@@ -182,7 +185,8 @@ namespace RocksmithToolkitGUI.DLCManager
             else chbx_Avail_Old.Checked = false;
             if (DataGridView1.Rows[i].Cells[88].Value.ToString() == "Yes") chbx_Avail_Duplicate.Checked = true;
             else chbx_Avail_Duplicate.Checked = false;
-
+            if (DataGridView1.Rows[i].Cells[89].Value.ToString() == "Yes") chbx_Has_Been_Corrected.Checked = true;
+            else chbx_Has_Been_Corrected.Checked = false;
             //ImageSource imageSource = new BitmapImage(new Uri("C:\\Temp\\music_edit.png"));
 
             picbx_AlbumArtPath.ImageLocation= txt_AlbumArtPath.Text.Replace(".dds",".png");
@@ -258,6 +262,8 @@ namespace RocksmithToolkitGUI.DLCManager
             else DataGridView1.Rows[i].Cells[87].Value = "No";
             if (chbx_Avail_Duplicate.Checked) DataGridView1.Rows[i].Cells[88].Value = "Yes";
             else DataGridView1.Rows[i].Cells[88].Value = "No";
+            //if (chbx_Has_Been_Corrected.Checked) DataGridView1.Rows[i].Cells[89].Value = "Yes";
+            //else DataGridView1.Rows[i].Cells[89].Value = "No";
 
             //var DB_Path = "../../../../tmp\\Files.accdb;";
             var connection = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path); //+ ";Persist Security Info=False"
@@ -375,7 +381,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     if (connection != null) connection.Close();
                 }
                 ////OleDbDataAdapter das = new OleDbDataAdapter(command.CommandText, cnn);
-                //MessageBox.Show(das.UpdateCommand.CommandText);
+                MessageBox.Show("Song Details Changes Saved");
                 //das.SelectCommand.CommandText = "SELECT * FROM Main";
                 //// das.Update(dssx, "Main");
             }
@@ -393,19 +399,38 @@ namespace RocksmithToolkitGUI.DLCManager
             ////}
         }
 
-        public void Populate(ref DataGridView DataGridView, ref BindingSource bs) //, ref BindingSource bsPositions, ref BindingSource bsBadges
-        {
-            SearchCmd = "SELECT * FROM Main ORDER BY Artist, Album_Year, Album, Song_Title;";
-            FillGrill(SearchCmd);
+    private void btn_Search_Click(object sender, EventArgs e)
+    {
+            SearchCmd = "SELECT * FROM Main WHERE  Artist Like '%" + txt_Artist.Text + "%' ORDER BY Artist, Album_Year, Album, Song_Title ;";
+            //DataGridView1.Dispose();
+            dssx.Dispose();
+            Populate(ref DataGridView1, ref Main);//, ref bsPositions, ref bsBadges);
+            DataGridView1.EditingControlShowing += DataGridView1_EditingControlShowing;
+            DataGridView1.Refresh();
 
         }
-        public void FillGrill(string SearchCmd)
+
+        
+        public void Populate(ref DataGridView DataGridView, ref BindingSource bs) //, ref BindingSource bsPositions, ref BindingSource bsBadges
         {
+            noOfRec = 0;
+            //dssx.Dispose();
+            lbl_NoRec.Text = " records.";
+            bs.DataSource = null;
+            dssx.Dispose();
+            //MessageBox.Show("zero " + noOfRec.ToString() + SearchCmd);
             //DB_Path = "../../../../tmp\\Files.accdb;";
             using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
             {
                 OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cn);
+                //MessageBox.Show("pop" + noOfRec.ToString() + SearchCmd);
+                dssx.Clear();
                 da.Fill(dssx, "Main");
+                da.Dispose();
+                cn.Dispose();
+                noOfRec = dssx.Tables[0].Rows.Count;
+                lbl_NoRec.Text = noOfRec.ToString() + " records.";
+                //MessageBox.Show("pop" + noOfRec.ToString() + SearchCmd);
                 //da = new OleDbDataAdapter("SELECT Identifier,ContactPosition FROM PositionType;", cn);
                 //da.Fill(ds, "PositionType");
                 //da = new OleDbDataAdapter("SELECT Identifier, Badge FROM Badge", cn);
@@ -501,6 +526,7 @@ namespace RocksmithToolkitGUI.DLCManager
             DataGridViewTextBoxColumn Album_ShortName = new DataGridViewTextBoxColumn { DataPropertyName = "Album_ShortName", HeaderText = "Album_ShortName " };
             DataGridViewTextBoxColumn Available_Old = new DataGridViewTextBoxColumn { DataPropertyName = "Available_Old", HeaderText = "Available_Old " };
             DataGridViewTextBoxColumn Available_Duplicate = new DataGridViewTextBoxColumn { DataPropertyName = "Available_Duplicate", HeaderText = "Available_Duplicate " };
+            DataGridViewTextBoxColumn Has_Been_Corrected = new DataGridViewTextBoxColumn { DataPropertyName = "Has_Been_Corrected", HeaderText = "Has_Been_Corrected " };
 
             //bsPositions.DataSource = ds.Tables["Main"];
             //bsBadges.DataSource = ds.Tables["Badge"];
@@ -529,7 +555,113 @@ namespace RocksmithToolkitGUI.DLCManager
             //        ValueMember = "Badge" 
             //    };
 
-            
+            DataGridView.AutoGenerateColumns = false;
+
+            DataGridView.Columns.AddRange(new DataGridViewColumn[]
+            {
+                ID,
+                Song_Title,
+                Song_Title_Sort,
+                Album,
+                Artist,
+                Artist_Sort,
+                Album_Year,
+                AverageTempo,
+                Volume,
+                Preview_Volume,
+                AlbumArtPath,
+                AudioPath,
+                audioPreviewPath,
+                Track_No,
+                Author,
+                Version,
+                DLC_Name,
+                DLC_AppID,
+                Current_FileName,
+                Original_FileName,
+                Import_Path,
+                Import_Date,
+                Folder_Name,
+                File_Size,
+                File_Hash,
+                Original_File_Hash,
+                Is_Original,
+                Is_OLD,
+                Is_Beta,
+                Is_Alternate,
+                Is_Multitrack,
+                Is_Broken,
+                MultiTrack_Version,
+                Alternate_Version_No,
+                DLC,
+                Has_Bass,
+                Has_Guitar,
+                Has_Lead,
+                Has_Rhythm,
+                Has_Combo,
+                Has_Vocals,
+                Has_Sections,
+                Has_Cover,
+                Has_Preview,
+                Has_Custom_Tone,
+                Has_DD,
+                Has_Version,
+                Tunning,
+                Bass_Picking,
+                Tones,
+                Group,
+                Rating,
+                Description,
+                Comments,
+                Show_Album,
+                Show_Track,
+                Show_Year,
+                Show_CDLC,
+                Show_Rating,
+                Show_Description,
+                Show_Comments,
+                Show_Available_Instruments,
+                Show_Alternate_Version,
+                Show_MultiTrack_Details,
+                Show_Group,
+                Show_Beta,
+                Show_Broken,
+                Show_DD,
+                Original,
+                Selected,
+                YouTube_Link,
+                CustomsForge_Link,
+                CustomsForge_Like,
+                CustomsForge_ReleaseNotes,
+                SignatureType,
+                ToolkitVersion,
+                Has_Author,
+                OggPath,
+                oggPreviewPath,
+                UniqueDLCName,
+                AlbumArt_Hash,
+                Audio_Hash,
+                audioPreview_Hash,
+                Bass_Has_DD,
+                Has_Bonus_Arrangement,
+                Artist_ShortName,
+                Album_ShortName,
+                Available_Duplicate,
+                Available_Old,
+                Has_Been_Corrected
+            }
+            );
+            bs.ResetBindings(false);
+            dssx.Tables["Main"].AcceptChanges();
+            bs.DataSource = dssx.Tables["Main"];
+            DataGridView.DataSource = null;
+            DataGridView.DataSource = bs;
+            DataGridView.Refresh();
+            //bs.Dispose();
+            dssx.Dispose();
+            //MessageBox.Show("-");
+            //DataGridView.ExpandColumns();
+
 
         }
 
@@ -624,6 +756,7 @@ namespace RocksmithToolkitGUI.DLCManager
             public string Album_ShortName { get; set; }
             public string Available_Old { get; set; }
             public string Available_Duplicate { get; set; }
+            public string Has_Been_Corrected { get; set; }
         }
         public Files[] files = new Files[10000];
         //Generic procedure to read and parse Main.DB (&others..soon)
@@ -741,6 +874,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         files[i].Album_ShortName = dataRow.ItemArray[86].ToString();
                         files[i].Available_Old = dataRow.ItemArray[87].ToString();
                         files[i].Available_Duplicate = dataRow.ItemArray[88].ToString();
+                        files[i].Has_Been_Corrected = dataRow.ItemArray[89].ToString();
                         i++;
                     }
                     //Closing Connection
@@ -787,11 +921,9 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_Title_Sort.Enabled = false;
         }
 
-        private void btn_Search_Click(object sender, EventArgs e)
+        private void btn_Close_Click(object sender, EventArgs e)
         {
-            SearchCmd = "SELECT * FROM Main ORDER BY Artist, Album_Year, Album, Song_Title;";
-            FillGrill(SearchCmd);
-
+            this.Close();
         }
     }
 }

@@ -66,6 +66,7 @@
             this.txt_CDLC_ID = new RocksmithToolkitGUI.CueTextBox();
             this.txt_Arrangement_Name = new RocksmithToolkitGUI.CueTextBox();
             this.CheckBox1 = new System.Windows.Forms.CheckBox();
+            this.btn_Close = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridView1)).BeginInit();
             this.Panel1.SuspendLayout();
             this.SuspendLayout();
@@ -92,6 +93,7 @@
             // 
             // Panel1
             // 
+            this.Panel1.Controls.Add(this.btn_Close);
             this.Panel1.Controls.Add(this.txt_RouteMask);
             this.Panel1.Controls.Add(this.txt_TuningPitch);
             this.Panel1.Controls.Add(this.chbx_ToneD);
@@ -285,6 +287,7 @@
             // 
             // button8
             // 
+            this.button8.ForeColor = System.Drawing.Color.Green;
             this.button8.Location = new System.Drawing.Point(883, 8);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(84, 26);
@@ -491,6 +494,19 @@
             this.CheckBox1.Text = "Show only MessageBox";
             this.CheckBox1.UseVisualStyleBackColor = true;
             // 
+            // btn_Close
+            // 
+            this.btn_Close.BackColor = System.Drawing.Color.LightSteelBlue;
+            this.btn_Close.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Close.Location = new System.Drawing.Point(1062, 48);
+            this.btn_Close.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_Close.Name = "btn_Close";
+            this.btn_Close.Size = new System.Drawing.Size(72, 20);
+            this.btn_Close.TabIndex = 273;
+            this.btn_Close.Text = "Close";
+            this.btn_Close.UseVisualStyleBackColor = false;
+            this.btn_Close.Click += new System.EventHandler(this.btn_Close_Click);
+            // 
             // ArrangementsDB
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -549,5 +565,6 @@
         private CueTextBox txt_String1;
         private CueTextBox txt_TuningPitch;
         private CueTextBox txt_RouteMask;
+        private System.Windows.Forms.Button btn_Close;
     }
 }

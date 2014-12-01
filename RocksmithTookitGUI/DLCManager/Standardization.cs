@@ -109,13 +109,13 @@ namespace RocksmithToolkitGUI.DLCManager
         int i;
             i = DataGridView1.SelectedCells[0].RowIndex;
             txt_ID.Text = DataGridView1.Rows[i].Cells[0].Value.ToString();
-            txt_Artist.Text = DataGridView1.Rows[i].Cells[1].Value.ToString();
-            txt_Artist_Correction.Text = DataGridView1.Rows[i].Cells[2].Value.ToString();
-            txt_Album.Text = DataGridView1.Rows[i].Cells[3].Value.ToString();
-            txt_Album_Correction.Text = DataGridView1.Rows[i].Cells[4].Value.ToString();
-            txt_AlbumArtPath_Correction.Text = DataGridView1.Rows[i].Cells[5].Value.ToString();
+            txt_Artist.Text = DataGridView1.Rows[i].Cells[2].Value.ToString();
+            txt_Artist_Correction.Text = DataGridView1.Rows[i].Cells[3].Value.ToString();
+            txt_Album.Text = DataGridView1.Rows[i].Cells[4].Value.ToString();
+            txt_Album_Correction.Text = DataGridView1.Rows[i].Cells[5].Value.ToString();
+            //txt_AlbumArtPath_Correction.Text = DataGridView1.Rows[i].Cells[5].Value.ToString();
 
-            if (txt_AlbumArtPath_Correction.Text != "") picbx_AlbumArtPath.ImageLocation = txt_AlbumArtPath.Text.Replace(".dds", ".png");
+           if (txt_AlbumArtPath_Correction.Text != "") picbx_AlbumArtPath.ImageLocation = txt_AlbumArtPath.Text.Replace(".dds", ".png");
 
         }
 
@@ -128,10 +128,10 @@ namespace RocksmithToolkitGUI.DLCManager
 
             //DataGridView1.Rows[i].Cells[0].Value = txt_ID.Text;
             //DataGridView1.Rows[i].Cells[1].Value = txt_Artist.Text;
-            DataGridView1.Rows[i].Cells[2].Value = txt_Artist_Correction.Text;
+            DataGridView1.Rows[i].Cells[3].Value = txt_Artist_Correction.Text;
             //DataGridView1.Rows[i].Cells[3].Value = txt_Album.Text;
-            DataGridView1.Rows[i].Cells[4].Value = txt_Album_Correction.Text;
-            DataGridView1.Rows[i].Cells[5].Value = txt_AlbumArtPath_Correction.Text;            
+            DataGridView1.Rows[i].Cells[5].Value = txt_Album_Correction.Text;
+            DataGridView1.Rows[i].Cells[6].Value = txt_AlbumArtPath_Correction.Text;
 
             //var DB_Path = "../../../../tmp\\Files.accdb;";
             var connection = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path); //+ ";Persist Security Info=False"
@@ -144,14 +144,14 @@ namespace RocksmithToolkitGUI.DLCManager
                 //SqlCommand cmds = new SqlCommand(sqlCmd, conn2);
                 command.CommandText = "UPDATE Standardization SET ";
 
-                command.CommandText += "Artist_Correction = @param2, ";
-                command.CommandText += "Album_Correction = @param4, ";
-                command.CommandText += "AlbumArtPath_Correction = @param5, ";
+                command.CommandText += "Artist_Correction = @param3, ";
+                command.CommandText += "Album_Correction = @param5 ";
+                //command.CommandText += "AlbumArtPath_Correction = @param6 ";
                 command.CommandText += "WHERE ID = " + txt_ID.Text;
 
-                command.Parameters.AddWithValue("@param2", DataGridView1.Rows[i].Cells[2].Value.ToString());
-                command.Parameters.AddWithValue("@param4", DataGridView1.Rows[i].Cells[4].Value.ToString());
-                command.Parameters.AddWithValue("@param5", DataGridView1.Rows[i].Cells[5].Value.ToString());
+                command.Parameters.AddWithValue("@param3", DataGridView1.Rows[i].Cells[3].Value.ToString() ?? DBNull.Value.ToString());
+                command.Parameters.AddWithValue("@param5", DataGridView1.Rows[i].Cells[5].Value.ToString() ?? DBNull.Value.ToString());
+                command.Parameters.AddWithValue("@param6", DataGridView1.Rows[i].Cells[6].Value.ToString() ?? DBNull.Value.ToString());
                 try
             {
                 command.CommandType = CommandType.Text;
@@ -170,7 +170,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 if (connection != null) connection.Close();
             }
             ////OleDbDataAdapter das = new OleDbDataAdapter(command.CommandText, cnn);
-            //MessageBox.Show(das.UpdateCommand.CommandText);
+            MessageBox.Show("Song Details Correction Saved");
             //das.SelectCommand.CommandText = "SELECT * FROM Tones";
             //// das.Update(dssx, "Tones");
         }
@@ -183,7 +183,7 @@ namespace RocksmithToolkitGUI.DLCManager
         //DB_Path = "../../../../tmp\\Files.accdb;";
         using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
         {
-            OleDbDataAdapter da = new OleDbDataAdapter("SELECT * FROM Standardization;", cn);
+            OleDbDataAdapter da = new OleDbDataAdapter("SELECT ID, (SELECT IIF(count(*)>1,\"Yes\",\"\") as Suspect from Standardization AS O WHERE LCASE(S.Artist)=LCASE(O.Artist) and LCASE(S.Album)=LCASE(O.Album)) as Suspect, Artist, Artist_Correction, Album, Album_Correction, AlbumArt_Correction FROM Standardization as S ORDER BY Artist, Album;", cn);
             da.Fill(dssx, "Standardization");
             //da = new OleDbDataAdapter("SELECT Identifier,ContactPosition FROM PositionType;", cn);
             //da.Fill(ds, "PositionType");
@@ -192,6 +192,7 @@ namespace RocksmithToolkitGUI.DLCManager
         }
             //MessageBox.Show("test");
             DataGridViewTextBoxColumn ID = new DataGridViewTextBoxColumn { DataPropertyName = "ID", HeaderText = "ID ", Width = 40 };
+            DataGridViewTextBoxColumn Suspect = new DataGridViewTextBoxColumn { DataPropertyName = "Suspect", HeaderText = "Suspect ", Width = 40 };
             DataGridViewTextBoxColumn Artist = new DataGridViewTextBoxColumn { DataPropertyName = "Artist", HeaderText = "Artist ", Width = 185 };
             DataGridViewTextBoxColumn Artist_Correction = new DataGridViewTextBoxColumn { DataPropertyName = "Artist_Correction", HeaderText = "Artist_Correction ", Width = 185 };
             DataGridViewTextBoxColumn Album = new DataGridViewTextBoxColumn { DataPropertyName = "Album", HeaderText = "Album ", Width = 185 };
@@ -231,6 +232,7 @@ namespace RocksmithToolkitGUI.DLCManager
         DataGridView.Columns.AddRange(new DataGridViewColumn[]
             {
                 ID,
+                Suspect,
                 Artist,
                 Artist_Correction,
                 Album,
@@ -283,11 +285,11 @@ namespace RocksmithToolkitGUI.DLCManager
 
                     //rtxt_StatisticsOnReadDLCs.Text += "\n  a= " + i + MaximumSize+dataRow.ItemArray[0].ToString();
                     files[i].ID = dataRow.ItemArray[0].ToString();
-                    files[i].Artist = dataRow.ItemArray[1].ToString();
-                    files[i].Artist_Correction = dataRow.ItemArray[2].ToString();
-                    files[i].Album = dataRow.ItemArray[3].ToString();
-                    files[i].Album_Correction = dataRow.ItemArray[4].ToString();
-                    files[i].AlbumArtPath_Correction = dataRow.ItemArray[5].ToString();
+                    files[i].Artist = dataRow.ItemArray[2].ToString();
+                    files[i].Artist_Correction = dataRow.ItemArray[3].ToString();
+                    files[i].Album = dataRow.ItemArray[4].ToString();
+                    files[i].Album_Correction = dataRow.ItemArray[5].ToString();
+                    files[i].AlbumArtPath_Correction = dataRow.ItemArray[6].ToString();
                     i++;
                 }
                 //Closing Connection
@@ -305,5 +307,10 @@ namespace RocksmithToolkitGUI.DLCManager
         //rtxt_StatisticsOnReadDLCs.Text += "\n  max rows" + MaximumSize;
         return MaximumSize;//files[10000];
     }
-}
+
+        private void btn_Close_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+    }
 } 

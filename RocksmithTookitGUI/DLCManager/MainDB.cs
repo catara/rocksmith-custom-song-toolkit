@@ -46,7 +46,7 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             //DataAccess da = new DataAccess();
             //MessageBox.Show("test0");
-            SearchCmd = "SELECT top 3 * FROM Main ORDER BY Artist, Album_Year, Album, Song_Title;";
+            SearchCmd = "SELECT * FROM Main ORDER BY Artist, Album_Year, Album, Song_Title;";
             Populate(ref DataGridView1, ref Main);//, ref bsPositions, ref bsBadges);
             DataGridView1.EditingControlShowing += DataGridView1_EditingControlShowing;
         }

@@ -2379,7 +2379,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     cmd = "SELECT * FROM Standardization WHERE (Artist_Correction <> \"\") or (Album_Correction <> \"\") OR (AlbumArt_Correction <> \"\") order by id;";
                     DataSet dus = new DataSet();
                     OleDbDataAdapter dad = new OleDbDataAdapter(cmd, cnn);
-                    dad.Fill(dus, "Main");
+                    dad.Fill(dus, "Standardization");
                     dad.Dispose();
                     //rtxt_StatisticsOnReadDLCs.Text = "Standardization of " + dus.Tables[0].Rows.Count + " base records\n\n" + rtxt_StatisticsOnReadDLCs.Text;
 
@@ -2393,7 +2393,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
                         cmd1 = "UPDATE Main SET " + (artist_c != "" ? "Artist = \"" + artist_c + (album_c != ""? "\"," : "\"") : "") + (album_c != "" ? " Album = \"" + album_c + (artpath_c != "" ? "\"," : "\"") : "") + (artpath_c != "" ? " AlbumArtPath = \"" + artpath_c+"\"" : "");
                         cmd1 += ", Has_Been_Corrected=\"Yes\" WHERE Artist=\"" + dus.Tables[0].Rows[i].ItemArray[1].ToString() + "\" AND Album=\"" + dus.Tables[0].Rows[i].ItemArray[3].ToString() + "\"";
-                        //rtxt_StatisticsOnReadDLCs.Text = dus.Tables[0].Rows[i].ItemArray[0].ToString() +"cmd -" +album_c+"-"+ cmd1 + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                        rtxt_StatisticsOnReadDLCs.Text = dus.Tables[0].Rows[i].ItemArray[0].ToString() +"cmd -" +album_c+"-"+ cmd1 + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                         OleDbDataAdapter das = new OleDbDataAdapter(cmd1, cnn);
                         das.Fill(dus, "Main");
                         das.Dispose();

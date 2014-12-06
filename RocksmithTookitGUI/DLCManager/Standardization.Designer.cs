@@ -45,6 +45,11 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_ID = new RocksmithToolkitGUI.CueTextBox();
             this.txt_Album = new RocksmithToolkitGUI.CueTextBox();
             this.btn_Close = new System.Windows.Forms.Button();
+            this.chbx_Include_ArtistSort = new System.Windows.Forms.CheckBox();
+            this.btn_Apply = new System.Windows.Forms.Button();
+            this.btn_DecompressAll = new System.Windows.Forms.Button();
+            this.btn_CopyArtist2ArtistSort = new System.Windows.Forms.Button();
+            this.btn_CopyTitle2TitleSort = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPath)).BeginInit();
             this.SuspendLayout();
@@ -97,7 +102,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // button8
             // 
             this.button8.ForeColor = System.Drawing.Color.Green;
-            this.button8.Location = new System.Drawing.Point(1091, 7);
+            this.button8.Location = new System.Drawing.Point(1092, 7);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(84, 26);
             this.button8.TabIndex = 123;
@@ -196,7 +201,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.btn_Close.BackColor = System.Drawing.Color.LightSteelBlue;
             this.btn_Close.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Close.Location = new System.Drawing.Point(1103, 33);
+            this.btn_Close.Location = new System.Drawing.Point(1104, 524);
             this.btn_Close.Margin = new System.Windows.Forms.Padding(2);
             this.btn_Close.Name = "btn_Close";
             this.btn_Close.Size = new System.Drawing.Size(72, 20);
@@ -205,11 +210,74 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_Close.UseVisualStyleBackColor = false;
             this.btn_Close.Click += new System.EventHandler(this.btn_Close_Click);
             // 
+            // chbx_Include_ArtistSort
+            // 
+            this.chbx_Include_ArtistSort.AutoSize = true;
+            this.chbx_Include_ArtistSort.Checked = true;
+            this.chbx_Include_ArtistSort.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chbx_Include_ArtistSort.Enabled = false;
+            this.chbx_Include_ArtistSort.Location = new System.Drawing.Point(1010, 524);
+            this.chbx_Include_ArtistSort.Name = "chbx_Include_ArtistSort";
+            this.chbx_Include_ArtistSort.Size = new System.Drawing.Size(89, 17);
+            this.chbx_Include_ArtistSort.TabIndex = 274;
+            this.chbx_Include_ArtistSort.Text = "Incl_Artistsort";
+            this.chbx_Include_ArtistSort.UseVisualStyleBackColor = true;
+            // 
+            // btn_Apply
+            // 
+            this.btn_Apply.Location = new System.Drawing.Point(894, 501);
+            this.btn_Apply.Name = "btn_Apply";
+            this.btn_Apply.Size = new System.Drawing.Size(110, 35);
+            this.btn_Apply.TabIndex = 275;
+            this.btn_Apply.Text = "Apply changes to the Main DB";
+            this.btn_Apply.UseVisualStyleBackColor = true;
+            this.btn_Apply.Click += new System.EventHandler(this.button1_Click_1);
+            // 
+            // btn_DecompressAll
+            // 
+            this.btn_DecompressAll.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            this.btn_DecompressAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_DecompressAll.Location = new System.Drawing.Point(1102, 485);
+            this.btn_DecompressAll.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_DecompressAll.Name = "btn_DecompressAll";
+            this.btn_DecompressAll.Size = new System.Drawing.Size(73, 35);
+            this.btn_DecompressAll.TabIndex = 276;
+            this.btn_DecompressAll.Text = "Open Main DB";
+            this.btn_DecompressAll.UseVisualStyleBackColor = false;
+            this.btn_DecompressAll.Click += new System.EventHandler(this.btn_DecompressAll_Click);
+            // 
+            // btn_CopyArtist2ArtistSort
+            // 
+            this.btn_CopyArtist2ArtistSort.ForeColor = System.Drawing.Color.Green;
+            this.btn_CopyArtist2ArtistSort.Location = new System.Drawing.Point(1010, 489);
+            this.btn_CopyArtist2ArtistSort.Name = "btn_CopyArtist2ArtistSort";
+            this.btn_CopyArtist2ArtistSort.Size = new System.Drawing.Size(84, 26);
+            this.btn_CopyArtist2ArtistSort.TabIndex = 277;
+            this.btn_CopyArtist2ArtistSort.Text = "Artist->ArtistSort";
+            this.btn_CopyArtist2ArtistSort.UseVisualStyleBackColor = true;
+            this.btn_CopyArtist2ArtistSort.Click += new System.EventHandler(this.btn_CopyArtist2ArtistSort_Click);
+            // 
+            // btn_CopyTitle2TitleSort
+            // 
+            this.btn_CopyTitle2TitleSort.ForeColor = System.Drawing.Color.Green;
+            this.btn_CopyTitle2TitleSort.Location = new System.Drawing.Point(1010, 457);
+            this.btn_CopyTitle2TitleSort.Name = "btn_CopyTitle2TitleSort";
+            this.btn_CopyTitle2TitleSort.Size = new System.Drawing.Size(84, 26);
+            this.btn_CopyTitle2TitleSort.TabIndex = 278;
+            this.btn_CopyTitle2TitleSort.Text = "Title->TitleSort";
+            this.btn_CopyTitle2TitleSort.UseVisualStyleBackColor = true;
+            this.btn_CopyTitle2TitleSort.Click += new System.EventHandler(this.btn_CopyTitle2TitleSort_Click);
+            // 
             // Standardization
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1187, 548);
+            this.Controls.Add(this.btn_CopyTitle2TitleSort);
+            this.Controls.Add(this.btn_CopyArtist2ArtistSort);
+            this.Controls.Add(this.btn_DecompressAll);
+            this.Controls.Add(this.btn_Apply);
+            this.Controls.Add(this.chbx_Include_ArtistSort);
             this.Controls.Add(this.btn_Close);
             this.Controls.Add(this.txt_AlbumArtPath_Correction);
             this.Controls.Add(this.txt_Album_Correction);
@@ -293,5 +361,10 @@ namespace RocksmithToolkitGUI.DLCManager
         }
 
         private System.Windows.Forms.Button btn_Close;
+        private System.Windows.Forms.CheckBox chbx_Include_ArtistSort;
+        private System.Windows.Forms.Button btn_Apply;
+        private System.Windows.Forms.Button btn_DecompressAll;
+        private System.Windows.Forms.Button btn_CopyArtist2ArtistSort;
+        private System.Windows.Forms.Button btn_CopyTitle2TitleSort;
     }
 }

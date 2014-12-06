@@ -10,6 +10,7 @@ using System.Windows.Forms;
 //bcapi
 using System.Data.OleDb;
 using RocksmithToolkitGUI;
+using RocksmithToolkitGUI.DLCManager;
 using RocksmithToolkitLib.Extensions; //dds
 using System.Diagnostics;
 
@@ -256,10 +257,12 @@ namespace RocksmithToolkitGUI.DLCManager
             public string Album { get; set; }
             public string Album_Correction { get; set; }
             public string AlbumArtPath_Correction { get; set; }
-        }
-        public Files[] files = new Files[10000];
-        //Generic procedure to read and parse Standardization.DB (&others..soon)
-        public int SQLAccess(string cmd)
+    }
+
+    public Files[] files = new Files[10000];
+    
+    //Generic procedure to read and parse Standardization.DB (&others..soon)
+    public int SQLAccess(string cmd)
     {
         //var DB_Path = txt_DBFolder.Text + "\\Files.mdb;";
         //Files[] files = new Files[10000];
@@ -311,6 +314,71 @@ namespace RocksmithToolkitGUI.DLCManager
         private void btn_Close_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void btn_DecompressAll_Click(object sender, EventArgs e)
+        {
+            //txt_Description.Text = DB_Path;
+            MainDB frm = new MainDB(DB_Path.Replace("\\Files.accdb;", ""));
+            frm.Show();
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            DLCManager v1 = new DLCManager();
+            v1.Translation_And_Correction(DB_Path);
+        }
+
+        private void btn_CopyArtist2ArtistSort_Click(object sender, EventArgs e)
+        {
+            var cmd1 = "";
+            //var DB_Path = DB_Path + "\\Files.accdb";
+            try
+            {
+                using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                {
+                    DataSet dus = new DataSet();
+                        cmd1 = "UPDATE Main SET Artist_Sort = Artist";
+                        OleDbDataAdapter das = new OleDbDataAdapter(cmd1, cnn);
+                        das.Fill(dus, "Main");
+                        das.Dispose();
+                }
+            }
+            catch (System.IO.FileNotFoundException ee)
+            {
+                // To inform the user and continue is 
+                // sufficient for this demonstration. 
+                // Your application may require different behavior.
+                Console.WriteLine(ee.Message);
+                //continue;
+            }
+            MessageBox.Show("ArtistSort is now the same as Artist");
+        }
+
+        private void btn_CopyTitle2TitleSort_Click(object sender, EventArgs e)
+        {
+            var cmd1 = "";
+            //var DB_Path = DB_Path + "\\Files.accdb";
+            try
+            {
+                using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                {
+                    DataSet dus = new DataSet();
+                    cmd1 = "UPDATE Main SET Song_Title_Sort = Song_Title";
+                    OleDbDataAdapter das = new OleDbDataAdapter(cmd1, cnn);
+                    das.Fill(dus, "Main");
+                    das.Dispose();
+                }
+            }
+            catch (System.IO.FileNotFoundException ee)
+            {
+                // To inform the user and continue is 
+                // sufficient for this demonstration. 
+                // Your application may require different behavior.
+                Console.WriteLine(ee.Message);
+                //continue;
+            }
+            MessageBox.Show("TitleSort is now the same as Title");
         }
     }
 } 

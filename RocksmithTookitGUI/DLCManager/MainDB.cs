@@ -49,6 +49,7 @@ namespace RocksmithToolkitGUI.DLCManager
             SearchCmd = "SELECT * FROM Main ORDER BY Artist, Album_Year, Album, Song_Title;";
             Populate(ref DataGridView1, ref Main);//, ref bsPositions, ref bsBadges);
             DataGridView1.EditingControlShowing += DataGridView1_EditingControlShowing;
+            btn_Search.Enabled = false;
         }
 
         private void DataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
@@ -139,7 +140,7 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_AlbumArtPath.Text = DataGridView1.Rows[i].Cells[10].Value.ToString();
             txt_Track_No.Text = DataGridView1.Rows[i].Cells[13].Value.ToString();
             txt_Author.Text = DataGridView1.Rows[i].Cells[14].Value.ToString();
-            txt_Version.Text = DataGridView1.Rows[i].Cells[15].Value.ToString();            
+            txt_Version.Text = DataGridView1.Rows[i].Cells[15].Value.ToString();
             txt_DLC_ID.Text = DataGridView1.Rows[i].Cells[16].Value.ToString();
             txt_APP_ID.Text = DataGridView1.Rows[i].Cells[17].Value.ToString();
             txt_Alt_No.Text = DataGridView1.Rows[i].Cells[33].Value.ToString();
@@ -187,8 +188,10 @@ namespace RocksmithToolkitGUI.DLCManager
             else chbx_Avail_Duplicate.Checked = false;
             if (DataGridView1.Rows[i].Cells[89].Value.ToString() == "Yes") chbx_Has_Been_Corrected.Checked = true;
             else chbx_Has_Been_Corrected.Checked = false;
-            //ImageSource imageSource = new BitmapImage(new Uri("C:\\Temp\\music_edit.png"));
 
+
+            //ImageSource imageSource = new BitmapImage(new Uri("C:\\Temp\\music_edit.png"));
+            //txt_Description.Text = txt_AlbumArtPath.Text.Replace(".dds", ".png");
             picbx_AlbumArtPath.ImageLocation= txt_AlbumArtPath.Text.Replace(".dds",".png");
             btn_Search.Enabled = false;
             btn_Save.Enabled = true;
@@ -262,8 +265,8 @@ namespace RocksmithToolkitGUI.DLCManager
             else DataGridView1.Rows[i].Cells[87].Value = "No";
             if (chbx_Avail_Duplicate.Checked) DataGridView1.Rows[i].Cells[88].Value = "Yes";
             else DataGridView1.Rows[i].Cells[88].Value = "No";
-            //if (chbx_Has_Been_Corrected.Checked) DataGridView1.Rows[i].Cells[89].Value = "Yes";
-            //else DataGridView1.Rows[i].Cells[89].Value = "No";
+            if (chbx_Has_Been_Corrected.Checked) DataGridView1.Rows[i].Cells[89].Value = "Yes";
+            else DataGridView1.Rows[i].Cells[89].Value = "No";
 
             //var DB_Path = "../../../../tmp\\Files.accdb;";
             var connection = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path); //+ ";Persist Security Info=False"
@@ -401,12 +404,20 @@ namespace RocksmithToolkitGUI.DLCManager
 
     private void btn_Search_Click(object sender, EventArgs e)
     {
-            SearchCmd = "SELECT * FROM Main WHERE  Artist Like '%" + txt_Artist.Text + "%' ORDER BY Artist, Album_Year, Album, Song_Title ;";
+            try
+            { 
+            SearchCmd = "SELECT * FROM Main WHERE "+(txt_Artist.Text != "" ? " Artist Like '%"+ txt_Artist.Text+ "%'":"")+ (txt_Artist.Text != "" ? (txt_Title.Text !=""? " AND " :"") :"") + (txt_Title.Text != "" ? " Song_Title Like '%" + txt_Title.Text + "%'" : "") + " ORDER BY Artist, Album_Year, Album, Song_Title ;";
             //DataGridView1.Dispose();
             dssx.Dispose();
             Populate(ref DataGridView1, ref Main);//, ref bsPositions, ref bsBadges);
             DataGridView1.EditingControlShowing += DataGridView1_EditingControlShowing;
             DataGridView1.Refresh();
+            }
+            catch (System.IO.FileNotFoundException ee)
+            {
+                MessageBox.Show(ee.Message + "Can run Search ! " + SearchCmd);
+                //MessageBox.Show(ee.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
         }
 
@@ -919,7 +930,17 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_Artist_Sort.Enabled = false;
             txt_Album.Enabled = false;
             txt_Title_Sort.Enabled = false;
-        }
+            if (btn_Search.Enabled)
+            {
+                ////SearchCmd = "SELECT * FROM Main WHERE " + (txt_Artist.Text != "" ? " Artist Like '%" + txt_Artist.Text + "%'" : "") + (txt_Artist.Text != "" ? (txt_Title.Text != "" ? " AND " : "") : "") + (txt_Title.Text != "" ? " Song_Title Like '%" + txt_Title.Text + "%'" : "") + " ORDER BY Artist, Album_Year, Album, Song_Title ;";
+                SearchCmd = "SELECT * FROM Main ORDER BY Artist, Album_Year, Album, Song_Title;";
+                dssx.Dispose();
+                Populate(ref DataGridView1, ref Main);//, ref bsPositions, ref bsBadges);
+                DataGridView1.EditingControlShowing += DataGridView1_EditingControlShowing;
+                DataGridView1.Refresh();
+                btn_Search.Enabled = false;
+            }
+            }
 
         private void btn_Close_Click(object sender, EventArgs e)
         {

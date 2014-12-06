@@ -103,8 +103,10 @@
             this.helpProvider1 = new System.Windows.Forms.HelpProvider();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.btn_Standardization = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btn_ApplyStandardization = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
+            this.chbx_WorkDGB = new System.Windows.Forms.CheckBox();
+            this.chbx_HomeDBG = new System.Windows.Forms.CheckBox();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainBindingSource)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -803,9 +805,7 @@
             // chbx_CleanDLC
             // 
             this.chbx_CleanDLC.AutoSize = true;
-            this.chbx_CleanDLC.Checked = true;
-            this.chbx_CleanDLC.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chbx_CleanDLC.Location = new System.Drawing.Point(324, 3);
+            this.chbx_CleanDLC.Location = new System.Drawing.Point(237, 648);
             this.chbx_CleanDLC.Margin = new System.Windows.Forms.Padding(2);
             this.chbx_CleanDLC.Name = "chbx_CleanDLC";
             this.chbx_CleanDLC.Size = new System.Drawing.Size(85, 17);
@@ -817,8 +817,6 @@
             // chbx_DebugB
             // 
             this.chbx_DebugB.AutoSize = true;
-            this.chbx_DebugB.Checked = true;
-            this.chbx_DebugB.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chbx_DebugB.Location = new System.Drawing.Point(406, 68);
             this.chbx_DebugB.Name = "chbx_DebugB";
             this.chbx_DebugB.Size = new System.Drawing.Size(58, 17);
@@ -1115,17 +1113,17 @@
             this.btn_Standardization.UseVisualStyleBackColor = false;
             this.btn_Standardization.Click += new System.EventHandler(this.btn_Standardization_Click);
             // 
-            // button1
+            // btn_ApplyStandardization
             // 
-            this.button1.BackColor = System.Drawing.SystemColors.Control;
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(521, 503);
-            this.button1.Margin = new System.Windows.Forms.Padding(2);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(14, 15);
-            this.button1.TabIndex = 328;
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btn_ApplyStandardization.BackColor = System.Drawing.SystemColors.Control;
+            this.btn_ApplyStandardization.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_ApplyStandardization.Location = new System.Drawing.Point(521, 503);
+            this.btn_ApplyStandardization.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_ApplyStandardization.Name = "btn_ApplyStandardization";
+            this.btn_ApplyStandardization.Size = new System.Drawing.Size(14, 15);
+            this.btn_ApplyStandardization.TabIndex = 328;
+            this.btn_ApplyStandardization.UseVisualStyleBackColor = false;
+            this.btn_ApplyStandardization.Click += new System.EventHandler(this.button1_Click);
             // 
             // label9
             // 
@@ -1137,12 +1135,38 @@
             this.label9.Text = "Apply->";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // chbx_WorkDGB
+            // 
+            this.chbx_WorkDGB.AutoSize = true;
+            this.chbx_WorkDGB.Location = new System.Drawing.Point(400, 3);
+            this.chbx_WorkDGB.Name = "chbx_WorkDGB";
+            this.chbx_WorkDGB.Size = new System.Drawing.Size(78, 17);
+            this.chbx_WorkDGB.TabIndex = 330;
+            this.chbx_WorkDGB.Text = "Work DBG";
+            this.chbx_WorkDGB.UseVisualStyleBackColor = true;
+            this.chbx_WorkDGB.Visible = false;
+            this.chbx_WorkDGB.CheckedChanged += new System.EventHandler(this.chbx_WorkDGB_CheckedChanged);
+            // 
+            // chbx_HomeDBG
+            // 
+            this.chbx_HomeDBG.AutoSize = true;
+            this.chbx_HomeDBG.Location = new System.Drawing.Point(324, 3);
+            this.chbx_HomeDBG.Name = "chbx_HomeDBG";
+            this.chbx_HomeDBG.Size = new System.Drawing.Size(80, 17);
+            this.chbx_HomeDBG.TabIndex = 331;
+            this.chbx_HomeDBG.Text = "Home DBG";
+            this.chbx_HomeDBG.UseVisualStyleBackColor = true;
+            this.chbx_HomeDBG.Visible = false;
+            this.chbx_HomeDBG.CheckedChanged += new System.EventHandler(this.chbx_HomeDBG_CheckedChanged);
+            // 
             // DLCManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.chbx_HomeDBG);
+            this.Controls.Add(this.chbx_WorkDGB);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btn_ApplyStandardization);
             this.Controls.Add(this.btn_Standardization);
             this.Controls.Add(this.cbx_Export);
             this.Controls.Add(this.Export_To);
@@ -1295,7 +1319,9 @@
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.HelpProvider helpProvider1;
         private System.Windows.Forms.Button btn_Standardization;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btn_ApplyStandardization;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.CheckBox chbx_WorkDGB;
+        private System.Windows.Forms.CheckBox chbx_HomeDBG;
     }
 }

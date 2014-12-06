@@ -138,6 +138,19 @@ namespace RocksmithToolkitLib.Xml
         [XmlArray("events")]
         [XmlArrayItem("event")]
         public SongEvent[] Events { get; set; }
+        /*
+         * B is for Beat?
+         * "B0", "High pitch tick"
+         * "B1", "Low pitch tick"
+         * E is for Emotions?
+         * "E1", "Crowd happy"
+         * "E3", "Crowd wild"
+         * "E13", "Crowd rxtra wild?"
+         * D is for DNA?
+         * "D3", "???"
+         * "dna_riff", "???"
+         * "dna_chord", "???"
+         */
 
         [XmlArray("controls")]
         [XmlArrayItem("control")]
@@ -160,7 +173,7 @@ namespace RocksmithToolkitLib.Xml
                 Title = attr.SongName;
                 Arrangement = ((ArrangementName)attr.ArrangementType).ToString();
                 Part = (short)attr.SongPartition;
-                Offset = attr.SongOffset;
+                Offset = (float)attr.SongOffset;
                 CentOffset = Convert.ToString(attr.CentOffset);
                 SongLength = (float)attr.SongLength;
                 SongNameSort = attr.SongNameSort;
@@ -270,6 +283,10 @@ namespace RocksmithToolkitLib.Xml
         [JsonProperty("bonusArr")]
         [XmlAttribute("bonusArr")]
         public Int32 BonusArr { get; set; }
+
+        [JsonProperty("Metronome")]
+        [XmlAttribute("Metronome")]
+        public Int32 Metronome { get; set; }
 
         [JsonProperty("pathLead")]
         [XmlAttribute("pathLead")]

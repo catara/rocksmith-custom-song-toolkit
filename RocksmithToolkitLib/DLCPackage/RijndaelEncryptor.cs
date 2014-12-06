@@ -1,13 +1,13 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 using System.Diagnostics;
+using System.IO;
+using System.Security.Cryptography;
 using System.Windows.Forms;
 using MiscUtil.Conversion;
 using MiscUtil.IO;
+using zlib;
+using System.Linq;
 
 namespace RocksmithToolkitLib.DLCPackage
 {
@@ -76,7 +76,55 @@ namespace RocksmithToolkitLib.DLCPackage
         };
 
         #endregion
+        /// <summary>
+        /// Unpacks zipped data.
+        /// </summary>
+        /// <param name="str">In Stream.</param>
+        /// <param name="outStream">Out stream.</param>
+        /// <param name = "plainLen">Data size after decompress.</param>
+        /// <param name = "rewind">Manual control for stream seek position.</param>
+        public static void Unzip(Stream str, Stream outStream, bool rewind = true)
+        {
+            int len;
+            var buffer = new byte[65536];
+            var zOutputStream = new ZInputStream(str);
+            while ((len = zOutputStream.read(buffer, 0, buffer.Length)) > 0)
+            {
+                outStream.Write(buffer, 0, len);
+            }
+            zOutputStream.Close(); buffer = null;
+            if (rewind) {
+                outStream.Position = 0;
+                outStream.Flush();
+            }
+        }
+        public static void Unzip(byte[] array, Stream outStream, bool rewind = true)
+        {
+            Unzip(new MemoryStream(array), outStream,rewind);
+        }
 
+        public static long Zip(Stream str, Stream outStream, long plainLen, bool rewind = true)
+        {
+            /*zlib works great, can't say that about SharpZipLib*/
+            var buffer = new byte[65536];
+            var zOutputStream = new ZOutputStream(outStream, 9);
+            while(str.Position < plainLen)
+            {
+                var size = (int)Math.Min(plainLen - str.Position, buffer.Length);
+                str.Read(buffer, 0, size);
+                zOutputStream.Write(buffer, 0, size);
+            }
+            zOutputStream.finish(); buffer = null;
+            if(rewind){
+                outStream.Position = 0;
+                outStream.Flush();
+            }
+            return zOutputStream.TotalOut;
+        }
+        public static long Zip(byte[] array, Stream outStream, long plainLen, bool rewind = true)
+        {
+            return Zip(new MemoryStream(array), outStream, plainLen, rewind);
+        }
         /// <summary>
         /// All profile stuff: crd (u play credentials), LocalProfiles.json and profiles themselves
         /// Good for RS2014 and RS1
@@ -88,37 +136,24 @@ namespace RocksmithToolkitLib.DLCPackage
             var source = EndianBitConverter.Little;
             var dec = EndianBitConverter.Big;
 
+            str.Position = 0;
             using (var decrypted = new MemoryStream())
-            using (EndianBinaryReader br = new EndianBinaryReader(source, str))
-            using (EndianBinaryReader brDec = new EndianBinaryReader(dec, decrypted))
+            using (var br = new EndianBinaryReader(source, str))
+            using (var brDec = new EndianBinaryReader(dec, decrypted))
             {
                 //EVAS + header
                 br.ReadBytes(16);
-                byte[] key = PCSaveKey;
-                uint zLen = br.ReadUInt32(); //size
-                // baseStr.pos = 20
-                DecryptFile(br.BaseStream, decrypted, key);
+                uint zLen = br.ReadUInt32();
+                DecryptFile(br.BaseStream, decrypted, PCSaveKey);
 
                 //unZip
-                int bSize = 1;
-                brDec.BaseStream.Position = 0;
                 ushort xU = brDec.ReadUInt16();
-                //back to 0
-                brDec.BaseStream.Position -= 2;
+                brDec.BaseStream.Position -= sizeof(ushort);
                 if (xU == 30938)//LE 55928 //BE 30938
                 {
-                    var z = new zlib.ZInputStream(brDec.BaseStream);
-                    do
-                    {
-                        byte[] buf = new byte[bSize];
-                        z.read(buf, 0, bSize);
-                        outStream.Write(buf, 0, bSize);
-                    } while (outStream.Length < (long)zLen);
-                    z.Close();
-                }
+                    Unzip(brDec.BaseStream, outStream);
+                }//endless loop if not
             }
-            outStream.Flush();
-            outStream.Position = 0;
         }
 
         public static void EncryptFile(Stream input, Stream output, byte[] key)
@@ -173,10 +208,12 @@ namespace RocksmithToolkitLib.DLCPackage
             }
         }
 
-        public static void DecryptSngData(Stream input, Stream output, byte[] key)
+        public static void DecryptSngData(Stream input, Stream output, byte[] key, EndianBitConverter conv)
         {
-            var reader = new BinaryReader(input);
-            reader.ReadBytes(8); //skip header
+            var reader = new EndianBinaryReader(conv, input);
+            if (0x4A != reader.ReadUInt32())
+                throw new InvalidDataException("This is not valid SNG file to decrypt.");
+            reader.ReadBytes(4);//platform header (bitfield? 001 - Compressed; 010 - Encrypted;)
             byte[] iv = reader.ReadBytes(16);
             using (var rij = new RijndaelManaged())
             {
@@ -234,7 +271,7 @@ namespace RocksmithToolkitLib.DLCPackage
         {
             rij.Padding = PaddingMode.None;
             rij.Mode = cipher;
-            rij.BlockSize = 128;    // byte[16]
+            rij.BlockSize = 128;
             rij.IV = new byte[16];
             rij.Key = key;          // byte[32]
         }
@@ -242,21 +279,20 @@ namespace RocksmithToolkitLib.DLCPackage
         private static void Crypto(Stream input, Stream output, ICryptoTransform transform, long len)
         {
             var buffer = new byte[512];
-            var cs = new CryptoStream(output, transform, CryptoStreamMode.Write);
-            for (long i = 0; i < len; i += buffer.Length)
-            {
-                int sz = (int)Math.Min(len - input.Position, buffer.Length);
-                input.Read(buffer, 0, sz);
-                cs.Write(buffer, 0, sz);
-            }
-            //Its need only for RS1, RS2 works fine w\o ?
             int pad = buffer.Length - (int)(len % buffer.Length);
-            if (pad > 0)
-                cs.Write(new byte[pad], 0, pad);
+            var decoder = new CryptoStream(output, transform, CryptoStreamMode.Write) ;
+            while( input.Position < len )
+            {
+                int size = (int)Math.Min(len - input.Position, buffer.Length);
+                input.Read(buffer, 0, size);
+                decoder.Write(buffer, 0, size);
+            }
+            if(pad > 0)
+                decoder.Write(new byte[pad], 0, pad);
 
-            cs.Flush();
-            output.Flush();
+            decoder.Flush();
             output.Seek(0, SeekOrigin.Begin);
+            output.Flush();
         }
 
         #region PS3 EDAT Encrypt/Decrypt
@@ -276,7 +312,7 @@ namespace RocksmithToolkitLib.DLCPackage
             try {
                 using(var version = new Process()){
                     version.StartInfo.FileName = "java";
-                    version.StartInfo.Arguments = "-version -d32";
+                    version.StartInfo.Arguments = "-version";
                     version.StartInfo.CreateNoWindow = true;
                     version.StartInfo.UseShellExecute = false;
                     // Java uses this output instead of stout.
@@ -353,7 +389,7 @@ namespace RocksmithToolkitLib.DLCPackage
 
             Process PS3Process = new Process();
             PS3Process.StartInfo.FileName = APP;
-            PS3Process.StartInfo.Arguments = String.Format("-cp \"{0}\" -Xms128m -Xmx1024m {1}", core, command);
+            PS3Process.StartInfo.Arguments = String.Format("-cp \"{0}\" -Xms256m -Xmx1024m {1}", core, command);
             PS3Process.StartInfo.WorkingDirectory = toolkitPath;
             PS3Process.StartInfo.UseShellExecute = false;
             PS3Process.StartInfo.CreateNoWindow = true;

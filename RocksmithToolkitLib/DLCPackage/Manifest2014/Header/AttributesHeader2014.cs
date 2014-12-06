@@ -1,14 +1,14 @@
-﻿﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;
+using System.Reflection;
+
 using Newtonsoft.Json;
+using RocksmithToolkitLib.Sng;
 using RocksmithToolkitLib.Xml;
 using RocksmithToolkitLib.DLCPackage.Manifest;
 using RocksmithToolkitLib.DLCPackage.Manifest.Tone;
 using RocksmithToolkitLib.DLCPackage.AggregateGraph;
 using RocksmithToolkitLib.Extensions;
-using System.Reflection;
+using System.Security.Principal;
 
 namespace RocksmithToolkitLib.DLCPackage.Manifest.Header
 {
@@ -37,9 +37,11 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest.Header
         public double? DNA_Riffs { get; set; }
         public double? DNA_Solo { get; set; }
         public double? EasyMastery { get; set; }
+        public bool? JapaneseVocal { get; set; }
         public int LeaderboardChallengeRating { get; set; }
         public string ManifestUrn { get; set; }
         public int MasterID_RDV { get; set; }
+        public int? Metronome { get; set; }
         public double? MediumMastery { get; set; }
         public double? NotesEasy { get; set; }
         public double? NotesHard { get; set; }
@@ -78,7 +80,8 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest.Header
 
             //FILL ATTRIBUTES
             this.AlbumArt = albumUrn;
-            ArrangementName = arrangement.Name.ToString();
+            JapaneseVocal |= arrangement.Name == Sng.ArrangementName.JVocals;
+            ArrangementName = IsVocal ? Sng.ArrangementName.Vocals.ToString() : arrangement.Name.ToString(); //HACK: weird vocals stuff
             DLC = true;
             DLCKey = info.Name;
             LeaderboardChallengeRating = 0;
@@ -93,7 +96,7 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest.Header
             {
                 AlbumName = AlbumNameSort = info.SongInfo.Album;
                 ArtistName = info.SongInfo.Artist;
-                CentOffset = arrangement.TuningPitch != 0 ? TuningFrequency.Frequency2Cents(arrangement.TuningPitch) : 0.0;
+                CentOffset = (!arrangement.TuningPitch.Equals(0)) ? TuningFrequency.Frequency2Cents(arrangement.TuningPitch) : 0.0;
                 ArtistNameSort = info.SongInfo.ArtistSort;
                 CapoFret = (arrangement.Sng2014.Metadata.CapoFretId == 0xFF) ? CapoFret = 0 : Convert.ToDecimal(arrangement.Sng2014.Metadata.CapoFretId);
                 DNA_Chords = arrangement.Sng2014.DNACount[(int) DNAId.Chord];
@@ -104,6 +107,7 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest.Header
                 NotesHard = arrangement.Sng2014.NoteCount[2];
                 EasyMastery = NotesEasy / NotesHard;
                 MediumMastery = NotesMedium / NotesHard;
+                Metronome = (int?)arrangement.Metronome;
                 Representative = Convert.ToInt32(!arrangement.BonusArr);
                 RouteMask = (int)arrangement.RouteMask;
 

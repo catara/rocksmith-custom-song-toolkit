@@ -82,13 +82,13 @@ namespace RocksmithToolkitLib.DLCPackage.AggregateGraph {
             }
         }
 
-        public void Write(StreamWriter writer, bool lastLine = false) {
+        public override void Write(StreamWriter writer, bool lastLine = false) {
             var uuid = UUID.ToString().ToLower();
 
-            base.Write(writer);
-            writer.WriteLine(GRAPHLINETEMPLATE, uuid, TagType.llid.ToString(), LLID);
+            base.Write(writer, lastLine);//hope it's ok to pass lastLine here.
+            writer.WriteLine(GRAPHLINETEMPLATE, uuid, TagType.llid, LLID);
 
-            var line = String.Format(GRAPHLINETEMPLATE, uuid, TagType.logpath.ToString(), LogPath);
+            var line = String.Format(GRAPHLINETEMPLATE, uuid, TagType.logpath, LogPath);
             if (!lastLine)
                 writer.WriteLine(line);
             else
@@ -98,7 +98,7 @@ namespace RocksmithToolkitLib.DLCPackage.AggregateGraph {
 
     public class GraphItem {
         public static readonly string GRAPHLINETEMPLATE = "<urn:uuid:{0}> <http://" + "emergent.net/aweb/1.0/{1}> \"{2}\".";
-        
+
         public Guid UUID { get; set; }
         [Description("tag")]
         public List<string> Tag { get; set; }
@@ -137,16 +137,16 @@ namespace RocksmithToolkitLib.DLCPackage.AggregateGraph {
             }
         }
 
-        public void Write(StreamWriter writer, bool lastLine = false) {
+        public virtual void Write(StreamWriter writer, bool lastLine = false) {
             var uuid = UUID.ToString().ToLower();
 
             foreach (var tag in Tag)
-                writer.WriteLine(GRAPHLINETEMPLATE, uuid, TagType.tag.ToString(), tag);
+                writer.WriteLine(GRAPHLINETEMPLATE, uuid, TagType.tag, tag);
 
-            writer.WriteLine(GRAPHLINETEMPLATE, uuid, TagType.canonical.ToString(), Canonical);
-            writer.WriteLine(GRAPHLINETEMPLATE, uuid, TagType.name.ToString(), Name);
+            writer.WriteLine(GRAPHLINETEMPLATE, uuid, TagType.canonical, Canonical);
+            writer.WriteLine(GRAPHLINETEMPLATE, uuid, TagType.name, Name);
 
-            var line = String.Format(GRAPHLINETEMPLATE, uuid, TagType.relpath.ToString(), RelPath);
+            var line = String.Format(GRAPHLINETEMPLATE, uuid, TagType.relpath, RelPath);
             if (!lastLine)
                 writer.WriteLine(line);
             else

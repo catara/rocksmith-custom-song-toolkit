@@ -35,6 +35,7 @@
             this.rbtn_Population_All = new System.Windows.Forms.RadioButton();
             this.rbtn_Population_Selected = new System.Windows.Forms.RadioButton();
             this.mainBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.defaultDBDataSet = new RocksmithToolkitGUI.DefaultDBDataSet();
             this.Export_To = new System.Windows.Forms.Button();
             this.chbx_Rebuild = new System.Windows.Forms.CheckBox();
             this.btn_Cleanup_MainDB = new System.Windows.Forms.Button();
@@ -99,7 +100,6 @@
             this.chbx_PS3 = new System.Windows.Forms.CheckBox();
             this.chbx_PC = new System.Windows.Forms.CheckBox();
             this.btn_RePack = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
             this.helpProvider1 = new System.Windows.Forms.HelpProvider();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.btn_Standardization = new System.Windows.Forms.Button();
@@ -107,8 +107,11 @@
             this.label9 = new System.Windows.Forms.Label();
             this.chbx_WorkDGB = new System.Windows.Forms.CheckBox();
             this.chbx_HomeDBG = new System.Windows.Forms.CheckBox();
+            this.chbx_DefaultDB = new System.Windows.Forms.CheckBox();
+            this.mainTableAdapter = new RocksmithToolkitGUI.DefaultDBDataSetTableAdapters.MainTableAdapter();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.defaultDBDataSet)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.grpbx_ApplyChanges.SuspendLayout();
             this.SuspendLayout();
@@ -173,6 +176,13 @@
             // mainBindingSource
             // 
             this.mainBindingSource.DataMember = "Main";
+            this.mainBindingSource.DataSource = this.defaultDBDataSet;
+            this.mainBindingSource.CurrentChanged += new System.EventHandler(this.mainBindingSource_CurrentChanged);
+            // 
+            // defaultDBDataSet
+            // 
+            this.defaultDBDataSet.DataSetName = "DefaultDBDataSet";
+            this.defaultDBDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // Export_To
             // 
@@ -192,11 +202,11 @@
             // 
             this.chbx_Rebuild.AutoSize = true;
             this.chbx_Rebuild.Enabled = false;
-            this.chbx_Rebuild.Location = new System.Drawing.Point(378, 44);
+            this.chbx_Rebuild.Location = new System.Drawing.Point(399, 65);
             this.chbx_Rebuild.Name = "chbx_Rebuild";
-            this.chbx_Rebuild.Size = new System.Drawing.Size(86, 17);
+            this.chbx_Rebuild.Size = new System.Drawing.Size(62, 17);
             this.chbx_Rebuild.TabIndex = 324;
-            this.chbx_Rebuild.Text = "Rebuild Only";
+            this.chbx_Rebuild.Text = "Rebuild";
             this.chbx_Rebuild.UseVisualStyleBackColor = true;
             // 
             // btn_Cleanup_MainDB
@@ -817,7 +827,7 @@
             // chbx_DebugB
             // 
             this.chbx_DebugB.AutoSize = true;
-            this.chbx_DebugB.Location = new System.Drawing.Point(406, 68);
+            this.chbx_DebugB.Location = new System.Drawing.Point(311, 3);
             this.chbx_DebugB.Name = "chbx_DebugB";
             this.chbx_DebugB.Size = new System.Drawing.Size(58, 17);
             this.chbx_DebugB.TabIndex = 277;
@@ -827,16 +837,16 @@
             // 
             // txt_DBFolder
             // 
-            this.txt_DBFolder.Location = new System.Drawing.Point(118, 64);
+            this.txt_DBFolder.Location = new System.Drawing.Point(118, 48);
             this.txt_DBFolder.Margin = new System.Windows.Forms.Padding(2);
             this.txt_DBFolder.Name = "txt_DBFolder";
-            this.txt_DBFolder.Size = new System.Drawing.Size(182, 20);
+            this.txt_DBFolder.Size = new System.Drawing.Size(165, 20);
             this.txt_DBFolder.TabIndex = 275;
             this.toolTip1.SetToolTip(this.txt_DBFolder, "Requires a Access2014 DB with");
             // 
             // btn_DBFolder
             // 
-            this.btn_DBFolder.Location = new System.Drawing.Point(300, 66);
+            this.btn_DBFolder.Location = new System.Drawing.Point(287, 49);
             this.btn_DBFolder.Margin = new System.Windows.Forms.Padding(2);
             this.btn_DBFolder.Name = "btn_DBFolder";
             this.btn_DBFolder.Size = new System.Drawing.Size(22, 15);
@@ -849,7 +859,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label1.Location = new System.Drawing.Point(5, 69);
+            this.label1.Location = new System.Drawing.Point(5, 53);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(79, 13);
@@ -860,7 +870,7 @@
             // 
             this.btn_Close.BackColor = System.Drawing.Color.LightSteelBlue;
             this.btn_Close.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Close.Location = new System.Drawing.Point(463, 64);
+            this.btn_Close.Location = new System.Drawing.Point(464, 543);
             this.btn_Close.Margin = new System.Windows.Forms.Padding(2);
             this.btn_Close.Name = "btn_Close";
             this.btn_Close.Size = new System.Drawing.Size(72, 20);
@@ -874,7 +884,7 @@
             this.txt_RocksmithDLCPath.Location = new System.Drawing.Point(118, 1);
             this.txt_RocksmithDLCPath.Margin = new System.Windows.Forms.Padding(2);
             this.txt_RocksmithDLCPath.Name = "txt_RocksmithDLCPath";
-            this.txt_RocksmithDLCPath.Size = new System.Drawing.Size(182, 20);
+            this.txt_RocksmithDLCPath.Size = new System.Drawing.Size(165, 20);
             this.txt_RocksmithDLCPath.TabIndex = 271;
             // 
             // txt_TempPath
@@ -882,14 +892,15 @@
             this.txt_TempPath.Location = new System.Drawing.Point(118, 25);
             this.txt_TempPath.Margin = new System.Windows.Forms.Padding(2);
             this.txt_TempPath.Name = "txt_TempPath";
-            this.txt_TempPath.Size = new System.Drawing.Size(182, 20);
+            this.txt_TempPath.Size = new System.Drawing.Size(165, 20);
             this.txt_TempPath.TabIndex = 270;
-            this.toolTip1.SetToolTip(this.txt_TempPath, "Also requires the subfolders 0, 0_old, 0_broken");
+            this.toolTip1.SetToolTip(this.txt_TempPath, "Also requires the subfolders 0, 0_old, 0_broken, 0_duplicates, 0_import .Will be " +
+        "used store decompressed version of all DLCs and the original version");
             // 
             // chbx_CleanTemp
             // 
             this.chbx_CleanTemp.AutoSize = true;
-            this.chbx_CleanTemp.Location = new System.Drawing.Point(324, 27);
+            this.chbx_CleanTemp.Location = new System.Drawing.Point(311, 27);
             this.chbx_CleanTemp.Margin = new System.Windows.Forms.Padding(2);
             this.chbx_CleanTemp.Name = "chbx_CleanTemp";
             this.chbx_CleanTemp.Size = new System.Drawing.Size(85, 17);
@@ -899,7 +910,7 @@
             // 
             // btn_SteamDLCFolder
             // 
-            this.btn_SteamDLCFolder.Location = new System.Drawing.Point(300, 3);
+            this.btn_SteamDLCFolder.Location = new System.Drawing.Point(287, 3);
             this.btn_SteamDLCFolder.Margin = new System.Windows.Forms.Padding(2);
             this.btn_SteamDLCFolder.Name = "btn_SteamDLCFolder";
             this.btn_SteamDLCFolder.Size = new System.Drawing.Size(22, 15);
@@ -911,7 +922,7 @@
             // chbx_CleanDB
             // 
             this.chbx_CleanDB.AutoSize = true;
-            this.chbx_CleanDB.Location = new System.Drawing.Point(324, 66);
+            this.chbx_CleanDB.Location = new System.Drawing.Point(311, 49);
             this.chbx_CleanDB.Margin = new System.Windows.Forms.Padding(2);
             this.chbx_CleanDB.Name = "chbx_CleanDB";
             this.chbx_CleanDB.Size = new System.Drawing.Size(71, 17);
@@ -954,7 +965,7 @@
             // 
             this.btn_PopulateDB.BackColor = System.Drawing.SystemColors.Control;
             this.btn_PopulateDB.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_PopulateDB.Location = new System.Drawing.Point(463, 37);
+            this.btn_PopulateDB.Location = new System.Drawing.Point(460, 61);
             this.btn_PopulateDB.Margin = new System.Windows.Forms.Padding(2);
             this.btn_PopulateDB.Name = "btn_PopulateDB";
             this.btn_PopulateDB.Size = new System.Drawing.Size(73, 25);
@@ -967,7 +978,7 @@
             // 
             this.btn_DecompressAll.BackColor = System.Drawing.SystemColors.MenuHighlight;
             this.btn_DecompressAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_DecompressAll.Location = new System.Drawing.Point(463, 1);
+            this.btn_DecompressAll.Location = new System.Drawing.Point(460, 25);
             this.btn_DecompressAll.Margin = new System.Windows.Forms.Padding(2);
             this.btn_DecompressAll.Name = "btn_DecompressAll";
             this.btn_DecompressAll.Size = new System.Drawing.Size(73, 35);
@@ -989,7 +1000,7 @@
             // 
             // btn_TempPath
             // 
-            this.btn_TempPath.Location = new System.Drawing.Point(300, 27);
+            this.btn_TempPath.Location = new System.Drawing.Point(287, 27);
             this.btn_TempPath.Margin = new System.Windows.Forms.Padding(2);
             this.btn_TempPath.Name = "btn_TempPath";
             this.btn_TempPath.Size = new System.Drawing.Size(22, 15);
@@ -1089,17 +1100,6 @@
             this.btn_RePack.UseVisualStyleBackColor = false;
             this.btn_RePack.Click += new System.EventHandler(this.btn_RePack_Click);
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label2.Location = new System.Drawing.Point(14, 46);
-            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(366, 13);
-            this.label2.TabIndex = 279;
-            this.label2.Text = "Will be used store decompressed version of all DLCs and the original version";
-            // 
             // btn_Standardization
             // 
             this.btn_Standardization.BackColor = System.Drawing.SystemColors.Control;
@@ -1138,7 +1138,7 @@
             // chbx_WorkDGB
             // 
             this.chbx_WorkDGB.AutoSize = true;
-            this.chbx_WorkDGB.Location = new System.Drawing.Point(400, 3);
+            this.chbx_WorkDGB.Location = new System.Drawing.Point(455, 3);
             this.chbx_WorkDGB.Name = "chbx_WorkDGB";
             this.chbx_WorkDGB.Size = new System.Drawing.Size(78, 17);
             this.chbx_WorkDGB.TabIndex = 330;
@@ -1150,7 +1150,7 @@
             // chbx_HomeDBG
             // 
             this.chbx_HomeDBG.AutoSize = true;
-            this.chbx_HomeDBG.Location = new System.Drawing.Point(324, 3);
+            this.chbx_HomeDBG.Location = new System.Drawing.Point(372, 3);
             this.chbx_HomeDBG.Name = "chbx_HomeDBG";
             this.chbx_HomeDBG.Size = new System.Drawing.Size(80, 17);
             this.chbx_HomeDBG.TabIndex = 331;
@@ -1159,10 +1159,27 @@
             this.chbx_HomeDBG.Visible = false;
             this.chbx_HomeDBG.CheckedChanged += new System.EventHandler(this.chbx_HomeDBG_CheckedChanged);
             // 
+            // chbx_DefaultDB
+            // 
+            this.chbx_DefaultDB.AutoSize = true;
+            this.chbx_DefaultDB.Enabled = false;
+            this.chbx_DefaultDB.Location = new System.Drawing.Point(311, 66);
+            this.chbx_DefaultDB.Margin = new System.Windows.Forms.Padding(2);
+            this.chbx_DefaultDB.Name = "chbx_DefaultDB";
+            this.chbx_DefaultDB.Size = new System.Drawing.Size(78, 17);
+            this.chbx_DefaultDB.TabIndex = 332;
+            this.chbx_DefaultDB.Text = "Default DB";
+            this.chbx_DefaultDB.UseVisualStyleBackColor = true;
+            // 
+            // mainTableAdapter
+            // 
+            this.mainTableAdapter.ClearBeforeFill = true;
+            // 
             // DLCManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.chbx_DefaultDB);
             this.Controls.Add(this.chbx_HomeDBG);
             this.Controls.Add(this.chbx_WorkDGB);
             this.Controls.Add(this.label9);
@@ -1229,12 +1246,12 @@
             this.Controls.Add(this.lbl_PreviewText);
             this.Controls.Add(this.grpbx_ApplyChanges);
             this.Controls.Add(this.btn_RePack);
-            this.Controls.Add(this.label2);
             this.Name = "DLCManager";
             this.Size = new System.Drawing.Size(613, 794);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.defaultDBDataSet)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.grpbx_ApplyChanges.ResumeLayout(false);
             this.grpbx_ApplyChanges.PerformLayout();
@@ -1311,7 +1328,6 @@
         private System.Windows.Forms.Label lbl_PreviewText;
         private System.Windows.Forms.GroupBox grpbx_ApplyChanges;
         private System.Windows.Forms.Button btn_RePack;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.CheckBox chbx_XBOX360;
         private System.Windows.Forms.CheckBox chbx_Mac;
         private System.Windows.Forms.CheckBox chbx_PS3;
@@ -1323,5 +1339,8 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.CheckBox chbx_WorkDGB;
         private System.Windows.Forms.CheckBox chbx_HomeDBG;
+        private System.Windows.Forms.CheckBox chbx_DefaultDB;
+        private DefaultDBDataSet defaultDBDataSet;
+        private DefaultDBDataSetTableAdapters.MainTableAdapter mainTableAdapter;
     }
 }

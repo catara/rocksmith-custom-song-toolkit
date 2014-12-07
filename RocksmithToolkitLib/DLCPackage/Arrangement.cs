@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Xml.Serialization;
 
 using RocksmithToolkitLib.DLCPackage;
 using RocksmithToolkitLib.DLCPackage.AggregateGraph;
@@ -43,6 +40,8 @@ namespace RocksmithToolkitLib.DLCPackage
         public decimal CapoFret { get; set; }
         public int ScrollSpeed { get; set; }
         public PluckedType PluckedType { get; set; }
+        public bool CustomFont { get; set; } //true for JVocals and custom fonts (planned)
+        public string FontSng { get; set; }
         // cache parsing results (speeds up generating for multiple platforms)
         public Sng2014File Sng2014 { get; set; }
         // Gameplay Path
@@ -58,6 +57,8 @@ namespace RocksmithToolkitLib.DLCPackage
         // DLC ID
         public Guid Id { get; set; }
         public int MasterId { get; set; }
+        // Motronome.
+        public Metronome Metronome { get; set; }
 
         public Arrangement()
         {
@@ -75,10 +76,9 @@ namespace RocksmithToolkitLib.DLCPackage
             this.SongXml = new SongXML();
             this.SongXml.File = xmlSongFile;
 
-            bool isBass = false;
             TuningDefinition tuning = null;
             switch ((ArrangementName)attr.ArrangementType)
-	        {
+            {
                 case ArrangementName.Lead:
                 case ArrangementName.Rhythm:
                 case ArrangementName.Combo:
@@ -88,13 +88,12 @@ namespace RocksmithToolkitLib.DLCPackage
                 case ArrangementName.Bass:
                     this.ArrangementType = Sng.ArrangementType.Bass;
                     tuning = TuningDefinitionRepository.Instance().SelectForBass(song.Tuning, GameVersion.RS2014);
-                    isBass = true;
                     break;
                 case ArrangementName.Vocals:
                     this.ArrangementType = Sng.ArrangementType.Vocal;
                     break;
-	        }
-            
+            }
+
             if (tuning == null) {
                 tuning = new TuningDefinition();
                 tuning.UIName = tuning.Name = tuning.NameFromStrings(song.Tuning, false);
@@ -115,6 +114,7 @@ namespace RocksmithToolkitLib.DLCPackage
             this.PluckedType = (PluckedType)attr.ArrangementProperties.BassPick;
             this.RouteMask = (RouteMask)attr.ArrangementProperties.RouteMask;
             this.BonusArr = attr.ArrangementProperties.BonusArr == 1;
+            this.Metronome = (Metronome)attr.ArrangementProperties.Metronome;
             this.ToneBase = attr.Tone_Base;
             this.ToneMultiplayer = attr.Tone_Multiplayer;
             this.ToneA = attr.Tone_A;
@@ -125,7 +125,7 @@ namespace RocksmithToolkitLib.DLCPackage
             this.Id = Guid.Parse(attr.PersistentID);
             this.MasterId = attr.MasterID_RDV;
         }
-        
+
         public override string ToString()
         {
             var toneDesc = String.Empty;
@@ -143,17 +143,21 @@ namespace RocksmithToolkitLib.DLCPackage
                 capoInfo = String.Format(", Capo Fret {0}", CapoFret);
 
             var pitchInfo = String.Empty;
-            if(TuningPitch != 440.0)
+            if(!TuningPitch.Equals(440.0))
                 pitchInfo = String.Format(": A{0}", TuningPitch);
+
+            var metDesc = String.Empty;
+            if (Metronome == Metronome.Generate)
+                metDesc = " +Metronome";
 
             switch (ArrangementType)
             {
                 case ArrangementType.Bass:
-                    return String.Format("{0} [{1}{2}{3}] ({4})", ArrangementType, Tuning, pitchInfo, capoInfo, toneDesc);
+                    return String.Format("{0} [{1}{2}{3}] ({4}){5}", ArrangementType, Tuning, pitchInfo, capoInfo, toneDesc, metDesc);
                 case ArrangementType.Vocal:
-                    return String.Format("{0}", ArrangementType);
+                    return String.Format("{0}", Name);
                 default:
-                    return String.Format("{0} - {1} [{2}{3}{4}] ({5})", ArrangementType, Name, Tuning, pitchInfo, capoInfo, toneDesc);
+                    return String.Format("{0} - {1} [{2}{3}{4}] ({5}){6}", ArrangementType, Name, Tuning, pitchInfo, capoInfo, toneDesc, metDesc);
             }
         }
 

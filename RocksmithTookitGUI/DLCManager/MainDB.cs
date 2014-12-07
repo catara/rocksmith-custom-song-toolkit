@@ -12,17 +12,19 @@ using System.Windows.Forms;
 using System.Data.OleDb;
 using RocksmithToolkitGUI;
 using RocksmithToolkitLib.Extensions;
+using System.IO;
 
 namespace RocksmithToolkitGUI.DLCManager
 {
     public partial class MainDB : Form
     {
-        public MainDB(string txt_DBFolder)
+        public MainDB(string txt_DBFolder, string txt_TempPath)
         {
             InitializeComponent();
             //MessageBox.Show("test0");
             DB_Path = txt_DBFolder;
             DB_Path = DB_Path + "\\Files.accdb";
+            TempPath = txt_TempPath;
         }
 
         private string Filename = System.IO.Path.Combine(Application.StartupPath, "Text.txt");
@@ -33,6 +35,7 @@ namespace RocksmithToolkitGUI.DLCManager
         //public DataAccess da = new DataAccess();
         //bcapi
         public string DB_Path = "";
+        public string TempPath = "";
         public DataSet dssx = new DataSet();
         public DataSet dssx2 = new DataSet();
         public int noOfRec = 0;
@@ -50,6 +53,56 @@ namespace RocksmithToolkitGUI.DLCManager
             Populate(ref DataGridView1, ref Main);//, ref bsPositions, ref bsBadges);
             DataGridView1.EditingControlShowing += DataGridView1_EditingControlShowing;
             btn_Search.Enabled = false;
+            if (!Directory.Exists(DataGridView1.Rows[0].Cells[22].Value.ToString()))
+            {
+                var OLD_Path = DataGridView1.Rows[0].Cells[22].Value.ToString().Substring(0, DataGridView1.Rows[0].Cells[22].Value.ToString().IndexOf("\\0\\")); //files[0].Folder_Name.Replace
+                if (!Directory.Exists(OLD_Path))
+                {
+                    var cmd = "UPDATE Main SET AlbumArtPath=REPLACE(AlbumArtPath,'" + OLD_Path + "','" + TempPath + "'), AudioPath=REPLACE(AudioPath,'" + OLD_Path + "','" + TempPath + "')";
+                    cmd += ", audioPreviewPath=REPLACE(audioPreviewPath,'" + OLD_Path + "','" + TempPath + "'), Folder_Name=REPLACE(Folder_Name,'" + OLD_Path + "','" + TempPath + "');";
+                    //txt_Description.Text = cmd;
+                   DialogResult result1 = MessageBox.Show("DB Repository has been moved from " + OLD_Path + " to " + TempPath +"-"+cmd, MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (result1 == DialogResult.Yes)
+                        try
+                        {
+                            using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                            {
+                                DataSet dus = new DataSet();
+                                OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
+                                dax.Fill(dus, "Main");
+                                dax.Dispose();
+                                //MessageBox.Show("Main table has been updated", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                DataSet ds = new DataSet();
+
+                                cmd = "UPDATE Main SET , OggPath=REPLACE(OggPath,'" + OLD_Path + "','" + TempPath + "') WHERE OggPath IS NOT NULL;";
+                                OleDbDataAdapter dac = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
+                                dac.Fill(ds, "Arrangements");
+                                dac.Dispose();
+
+                                cmd = "UPDATE Main SET oggPreviewPath=REPLACE(oggPreviewPath,'" + OLD_Path + "','" + TempPath + "') WHERE oggPreviewPath IS NOT NULL;";
+                                OleDbDataAdapter daH = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
+                                daH.Fill(ds, "Arrangements");
+                                daH.Dispose();
+                                MessageBox.Show("Main table has been updated", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                                cmd = "UPDATE Arrangements SET SNGFilePath=REPLACE(SNGFilePath,'" + OLD_Path + "','" + TempPath + "'), XMLFilePath=REPLACE(XMLFilePath,'" + OLD_Path + "','" + TempPath + "');";
+                                OleDbDataAdapter daN = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
+                                daN.Fill(ds, "Arrangements");
+                                daN.Dispose();
+                                MessageBox.Show("Arrangements table has been updated", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Can not open Main DB connection to Update DB Reporsitory ! " + DB_Path + "-" + cmd);
+                        }
+                    else {
+                        MessageBox.Show("1Issues with Temp Folder and DB Reporsitory");                    
+                        return;
+                        }
+                }
+            }
         }
 
         private void DataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
@@ -193,7 +246,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //ImageSource imageSource = new BitmapImage(new Uri("C:\\Temp\\music_edit.png"));
             //txt_Description.Text = txt_AlbumArtPath.Text.Replace(".dds", ".png");
             picbx_AlbumArtPath.ImageLocation= txt_AlbumArtPath.Text.Replace(".dds",".png");
-            btn_Search.Enabled = false;
+            //btn_Search.Enabled = false;
             btn_Save.Enabled = true;
             txt_Artist_Sort.Enabled = true;
             txt_Album.Enabled = true;
@@ -911,7 +964,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void button15_Click(object sender, EventArgs e)
         {
-            Standardization frm = new Standardization(DB_Path);
+            Standardization frm = new Standardization(DB_Path, TempPath);
             frm.Show();
         }
 
@@ -938,7 +991,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 Populate(ref DataGridView1, ref Main);//, ref bsPositions, ref bsBadges);
                 DataGridView1.EditingControlShowing += DataGridView1_EditingControlShowing;
                 DataGridView1.Refresh();
-                btn_Search.Enabled = false;
+                //btn_Search.Enabled = false;
             }
             }
 

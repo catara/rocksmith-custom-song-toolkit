@@ -36,6 +36,7 @@ namespace RocksmithToolkitGUI.DLCManager
         public string Art_Hash { get; set; }
         public string ArtistSort { get; set; }
         public string Artist { get; set; }
+        public string TempPath { get; set; }
         //public DuplicatesManagement(string txt_DBFolder, Files filed, DLCPackageData datas, string author, string tkversion, string DD, string Bass, string Guitar, string Combo, string Rhythm, string Lead, string tunnings, int i, int norows, string original_FileName, string art_hash, string audio_hash, string audioPreview_hash, List<string> alist, List<string> blist)
         //{
         //    InitializeComponent();
@@ -46,7 +47,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         //}
 
-        public DuplicatesManagement(string text, DLCManager.Files filed, DLCPackageData datas, string author, string tkversion, string dD, string bass, string guitar, string combo, string rhythm, string lead, string vocal, string tunnings, int i, int norows, string original_FileName, string art_hash, string audio_hash, string audioPreview_hash, List<string> alist, List<string> blist)
+        public DuplicatesManagement(string text, DLCManager.Files filed, DLCPackageData datas, string author, string tkversion, string dD, string bass, string guitar, string combo, string rhythm, string lead, string vocal, string tunnings, int i, int norows, string original_FileName, string art_hash, string audio_hash, string audioPreview_hash, List<string> alist, List<string> blist,string TempPath)
         {
             Text = text;
             //MessageBox.Show("test2");
@@ -70,11 +71,12 @@ namespace RocksmithToolkitGUI.DLCManager
             this.audioPreview_hash = audioPreview_hash;
             this.alist = alist;
             this.blist = blist;
+            this.TempPath = TempPath;
             InitializeComponent();
             //MessageBox.Show(DB_Path);
             DB_Path = text;
             //MessageBox.Show(DB_Path);
-            DB_Path = DB_Path;// + "\\Files.accdb";
+            //DB_Path = DB_Path;// + "\\Files.accdb";
         }
 
         private string Filename = System.IO.Path.Combine(Application.StartupPath, "Text.txt");
@@ -196,13 +198,13 @@ namespace RocksmithToolkitGUI.DLCManager
             i = 0;
             DB_Path = DB_Path + "\\Files.accdb;";
             string jsonHash = "";
-            bool diffjson = true;
+            //bool diffjson;// = true;
             string XmlHash = "";
             var XmlName = "";
             var XmlUUID = "";
             var XmlFile = "";
             var jsonFile = "";
-            bool diff = true;
+            //bool diff;// = true;
             int k = 0;
             string lastConversionDateTime_cur = "";
             string lastConversionDateTime_exist = "";
@@ -228,7 +230,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         //MessageBox.Show("1");
                         foreach (var arg in datas.Arrangements)
                         {
-                            diff = true; diffjson = true;
+                            //diff = true; diffjson = true;
                             lastConversionDateTime_cur = "";
                             lastConversionDateTime_exist = "";
                             for (i = 0; i <= noOfRec - 1; i++)
@@ -248,9 +250,9 @@ namespace RocksmithToolkitGUI.DLCManager
                                 if (XmlName == (arg.ArrangementType.ToString() + arg.RouteMask.ToString()) || (XmlUUID == arg.SongXml.UUID.ToString()))
                                 // rtxt_StatisticsOnReadDLCs.Text = "-" + XmlHash + "=" + alist[k] + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                 {
-                                    if (XmlHash == alist[k])
-                                        diff = false;
-                                    else
+                                    if (XmlHash != alist[k])
+                                        //diff = false;
+                                    //else
                                     {
                                         lastConversionDateTime_cur = GetTExtFromFile(arg.SongXml.File);
                                         lastConversionDateTime_exist = GetTExtFromFile(XmlFile);
@@ -285,10 +287,10 @@ namespace RocksmithToolkitGUI.DLCManager
                                             txt_XMLVocalNew.Text = lastConversionDateTime_cur;
                                             txt_XMLVocalExisting.Text = lastConversionDateTime_exist;
                                         }
-                                        }
-                                    if (jsonHash == blist[k])
-                                        diffjson = false;
-                                    else
+                                    }
+                                    if (jsonHash != blist[k])
+                                        //diffjson = false;
+                                    //else
                                     {
                                         lastConverjsonDateTime_cur = GetTExtFromFile(arg.SongFile.File);
                                         lastConverjsonDateTime_exist = GetTExtFromFile(jsonFile);
@@ -675,7 +677,7 @@ namespace RocksmithToolkitGUI.DLCManager
         public void UpdateExisting()
         {
             var sel = "";
-            var cmd = "";
+            //var cmd = "";
            // in case a similar artist covered the song ...don't attach wrong names
             var al = txt_Album.Text;
             var ar = txt_Artist.Text;
@@ -743,7 +745,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private void btn_DecompressAll_Click(object sender, EventArgs e)
         {
             //txt_Description.Text = DB_Path;
-            MainDB frm = new MainDB(DB_Path.Replace("\\Files.accdb;", ""));
+            MainDB frm = new MainDB(DB_Path.Replace("\\Files.accdb;", ""),TempPath);
             frm.Show();
         }
 

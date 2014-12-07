@@ -18,11 +18,12 @@ namespace RocksmithToolkitGUI.DLCManager
 {
     public partial class Standardization : Form
     {
-        public Standardization(string txt_DBFolder)
+        public Standardization(string txt_DBFolder,string txt_TempPath)
         { 
             InitializeComponent();
         //MessageBox.Show("test0");
         DB_Path = txt_DBFolder;
+        TempPath = txt_TempPath;
         }
 
     private string Filename = System.IO.Path.Combine(Application.StartupPath, "Text.txt");
@@ -33,6 +34,7 @@ namespace RocksmithToolkitGUI.DLCManager
     //public DataAccess da = new DataAccess();
     //bcapi
     public string DB_Path = "";
+    public string TempPath = "";
     public DataSet dssx = new DataSet();
     //public OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn);
 
@@ -319,7 +321,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private void btn_DecompressAll_Click(object sender, EventArgs e)
         {
             //txt_Description.Text = DB_Path;
-            MainDB frm = new MainDB(DB_Path.Replace("\\Files.accdb;", ""));
+            MainDB frm = new MainDB(DB_Path.Replace("\\Files.accdb;", ""), TempPath);
             frm.Show();
         }
 

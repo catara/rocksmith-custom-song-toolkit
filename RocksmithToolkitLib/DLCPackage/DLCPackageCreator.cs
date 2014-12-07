@@ -132,11 +132,6 @@ namespace RocksmithToolkitLib.DLCPackage
                // MessageBox.Show("2");
                 var packageName = Path.GetFileNameWithoutExtension(packagePath).StripPlatformEndName();
                 var songFileName = String.Format("{0}{1}", Path.Combine(Path.GetDirectoryName(packagePath), packageName), platform.GetPathName()[2]);
-<<<<<<< HEAD
-                //MessageBox.Show(songFileName+"-+++++++"+ packageName);
-=======
-
->>>>>>> 2bd8d9614ec8352a7ff2a9a598eac2592997d9a9
                 switch (platform.platform)
                 {
                     case GamePlatform.Pc:

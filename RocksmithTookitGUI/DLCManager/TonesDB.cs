@@ -106,7 +106,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
     private void DataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
     {
-        int i;
+        //int i;
             //i = DataGridView1.SelectedCells[0].RowIndex;
             //txt_ID.Text = DataGridView1.Rows[i].Cells[0].Value.ToString();
             //txt_Arrangement_Name.Text = DataGridView1.Rows[i].Cells[1].Value.ToString();

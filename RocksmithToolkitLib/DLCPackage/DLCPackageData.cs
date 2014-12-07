@@ -11,12 +11,8 @@ using RocksmithToolkitLib.DLCPackage.Manifest;
 using RocksmithToolkitLib.DLCPackage.Manifest.Tone;
 using RocksmithToolkitLib.Extensions;
 using RocksmithToolkitLib.Ogg;
-<<<<<<< HEAD
-using System.Xml.Serialization;
 using System.Windows.Forms;//bcapi
-=======
 using RocksmithToolkitLib.Sng;
->>>>>>> 2bd8d9614ec8352a7ff2a9a598eac2592997d9a9
 
 namespace RocksmithToolkitLib.DLCPackage
 {
@@ -270,21 +266,11 @@ namespace RocksmithToolkitLib.DLCPackage
             var jsonFiles = Directory.GetFiles(unpackedDir, "*.json", SearchOption.AllDirectories);
             var attr = Manifest2014<Attributes2014>.LoadFromFile(jsonFiles[0]).Entries.ToArray()[0].Value.ToArray()[0].Value;
             SongName = attr.FullName.Split('_')[0];
-<<<<<<< HEAD
-            //MessageBox.Show(SongName+"-"+ jsonFiles[0]);//bcapi
-=======
-
->>>>>>> 2bd8d9614ec8352a7ff2a9a598eac2592997d9a9
             //Create dir sruct
             outdir = Path.Combine(Path.GetDirectoryName(unpackedDir), String.Format("{0}_{1}", attr.ArtistName.GetValidSortName(), attr.SongName.GetValidSortName()).Replace(" ","-"));
             eofdir = Path.Combine(outdir, EOF);
             kitdir = Path.Combine(outdir, KIT);
             attr = null; //dispose
-<<<<<<< HEAD
-            //MessageBox.Show("2");//bcapi
-=======
-
->>>>>>> 2bd8d9614ec8352a7ff2a9a598eac2592997d9a9
             // Don't work in same dir
             if (Directory.Exists(outdir)){
                 if(outdir == unpackedDir)

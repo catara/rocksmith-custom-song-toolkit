@@ -26,6 +26,10 @@ ToDos:
 - import issue with changes in the house of fly and  mjbeat it and nirvana smels, tool lost keys
 - Pinion Wish RL issue	no XML/JSON info
 - Analyse why some psarc are not being read
+- Include Standardization names into duplication checks
+- Add sections flag
+- check has version
+- fux has author
 
 
 Version History(release date):
@@ -33,28 +37,28 @@ Version History(release date):
 	0.1.4 (22.08.2014) populating the Read Folder - File.DB,
 	0.1.4.1 (12.09.2014) fixed a solution folder issue when a folder includes another folder breaking the BUILD;
 	0.1.5 (12.10.2014) Read + change + Rebuild
-	0.1.6 (27.10.2014) (100%) Manage Import of Duplicates (upgrade to Access 2013 DB) 
-	wip: 0.1.7 (30.10.2014) (99%) FORK from/on git
-	wip: 0.2 (15.11.2014) (99%) Import 1000 dlcs, provide screen to edit, repack in any format
+	0.1.6 (27.10.2014) Manage Import of Duplicates (upgrade to Access 2013 DB) 
+	0.1.7 (30.10.2014) FORK from/on git from 06.12.2014
+	0.2 (15.11.2014) Import 1000 dlcs, provide screen to edit, repack in any format
 	0.2.0.1 (06.11.2014) manage the the/die at import(remove when creating a folder name), manage the errors at import (move broken files in a broken folder), fix the whitestripes 7armies import issue
 	0.2.0.2 (10.11) bugfixes and drafts on screen an future features
-	wip: 0.2.0.3 (18.11) (99%) Implement translation for cleanups (every artist The Black Key = Black Keys) plus add/remove DD.Added field in Main DB to say that record had naming issues.
+	0.2.0.3 (18.11) Implement translation for cleanups (every artist The Black Key = Black Keys) plus add/remove DD.Added field in Main DB to say that record had naming issues.
 	0.2.0.4 (20/11) Redesign stats & Duplicates screen as an independendent form not a yes no cancel alert window
 	0.2.0.5 (01.12) Search screen prototype
-	wip: 0.2.0.6 (20.11.2014) (10%) close bugs on Conversion to Ps3(nin hell) and analyse acuracy on conversion to ps4 (1979,7army..)
-	tbr: 0.2.0.7 (22.11.2014) remove bug on auto import if original
-	wip: 0.2.0.8 (24.11) (85%) full release (anyone can download and use the tool..no bugs..and all unimplemented featues disabled) DB independece/dependence on already provided 1, repack wo bugs, edit screens functional
-	wip: 0.2.0.9 (29.11) (90%) add save confirm for any save operation and add DLCID checks in all updates that mighht affect it WHERE (SELECT NO OTHER DLCNAME)
-	tbr: 0.2.0.10 (29.11) (0%) (0%) New features: add/remove: preview; lasconversiondata
-	tbr: 0.2.2 (31.11.2014) (10%) HTML&Excel exports
-	tbr: 0.2.2.1 (31.11.2014) (0%) Implement a logic to properly read DLCManager renamed DLCs
-	wip: 0.2.3 (31.11.2014) (75%) If importing an original over a alternate the alternate flag should be set no the Alternate
+	0.2.0.6 (29.11) add save confirm for any save operation and add DLCID checks in all updates that mighht affect it WHERE (SELECT NO OTHER DLCNAME)
+	wip: 0.2.0.7 (20.12.2014) (10%) close bugs on Conversion to Ps3(nin hell) and analyse acuracy on conversion to ps4 (1979,7army..)
+	tbr: 0.2.0.8 (22.12.2014) remove bug on auto import if original
+	wip: 0.2.0.9 (24.12) (85%) full release (anyone can download and use the tool..no bugs..and all unimplemented featues disabled) DB independece/dependence on already provided 1, repack wo bugs, edit screens functional
+	tbr: 0.2.0.10 (29.12) (0%) (0%) New features: add/remove: section; preview; lasconversiondata
+	tbr: 0.2.2 (31.12.2014) (10%) HTML&Excel exports
+	tbr: 0.2.2.1 (31.12.2014) (0%) Implement a logic to properly read DLCManager renamed DLCs
+	wip: 0.2.3 (31.12.2014) (75%) If importing an original over a alternate the alternate flag should be set no the Alternate
 	tbr: 0.3.1 move Import DB to Main.DB
 	tbr: 0.3.2 ?move Access code to project? or from hardcoded to views
-	tbr: 0.3.3 (12.12.2014) (0%) save settings in Toolkit config
+	tbr: 0.3.3 (12.01.2015) (0%) save settings in Toolkit config
 	tbr: 0.3.4 (03.03.2015) (60%) use parameterized SQL everywhere (&/ integrate template DB into project or a SQL DB)
-	wip: 0.4 (21.12.2014) (75%) Redesign MainDB+Edit Screen
-	tbr: 0.5 () () Implement FTP to PS3 (also as a copy to any other location)
+	wip: 0.4 (21.01.2014) (75%) Redesign MainDB+Edit Screen
+	tbr: 0.5 (26.12.2014) (0%) Implement FTP to PS3 (also as a copy to any other location)
 
 
 Date: 17.11.2014

@@ -99,7 +99,7 @@ namespace RocksmithToolkitLib.DLCPackage
 
             if (!targetAudioFiles.Any())
                 throw new InvalidDataException("Audio files not found.");
-            MessageBox.Show("0");
+            //MessageBox.Show("0");
             //Load files
             var jsonFiles = Directory.GetFiles(unpackedDir, "*.json", SearchOption.AllDirectories);
             foreach (var json in jsonFiles) {
@@ -157,7 +157,7 @@ namespace RocksmithToolkitLib.DLCPackage
                     data.Arrangements.Add(voc);
                 }
             }
-            MessageBox.Show("10");
+            //MessageBox.Show("10");
             //Get DDS Files + hacky reuse if exist
             var ddsFiles = Directory.GetFiles(unpackedDir, "album_*.dds", SearchOption.AllDirectories);
             if (ddsFiles.Length > 0) {
@@ -186,7 +186,7 @@ namespace RocksmithToolkitLib.DLCPackage
             string audioPath = null, audioPreviewPath = null;
             FileInfo a = new FileInfo(targetAudioFiles[0]);
             FileInfo b = null;
-            MessageBox.Show("40");
+            //MessageBox.Show("40");
             if (targetAudioFiles.Count == 2) {
                 b = new FileInfo(targetAudioFiles[1]);
 

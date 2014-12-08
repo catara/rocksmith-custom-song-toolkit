@@ -334,16 +334,16 @@ namespace RocksmithToolkitGUI.DLCManager
         private void btn_CopyArtist2ArtistSort_Click(object sender, EventArgs e)
         {
             var cmd1 = "";
-            //DB_Path = DB_Path.Replace("dlc\\Files.accdb","dlc");
+            //var DB_Path = DB_Path + "\\Files.accdb";
             try
             {
-                using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path.Replace("\\Files.accdb;", "")))
+                using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
                 {
                     DataSet dus = new DataSet();
-                    cmd1 = "UPDATE Main SET Artist_Sort = Artist";
-                    OleDbDataAdapter das = new OleDbDataAdapter(cmd1, cnn);
-                    das.Fill(dus, "Main");
-                    das.Dispose();
+                        cmd1 = "UPDATE Main SET Artist_Sort = Artist";
+                        OleDbDataAdapter das = new OleDbDataAdapter(cmd1, cnn);
+                        das.Fill(dus, "Main");
+                        das.Dispose();
                 }
             }
             catch (System.IO.FileNotFoundException ee)

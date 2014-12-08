@@ -107,6 +107,7 @@
     <Compile Include="Song2014ToTab\Rs2014Converter.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ToolkitVersion.cs" />
     <Compile Include="ToolkitVersionOnline.cs" />
     <Compile Include="DLCPackage\DLCPackageConverter.cs" />
     <Compile Include="DLCPackage\SongPartition.cs" />
@@ -203,7 +204,6 @@
     </Compile>
     <Compile Include="Sng\SngFile.cs" />
     <Compile Include="Sng\SngFileWriter.cs" />
-    <Compile Include="ToolkitVersion.cs" />
     <Compile Include="XmlRepository\Config.cs" />
     <Compile Include="XmlRepository\ConfigRepository.cs" />
     <Compile Include="XmlRepository\TuningDefinitionRepository.cs" />

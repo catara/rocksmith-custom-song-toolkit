@@ -165,6 +165,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.label31 = new System.Windows.Forms.Label();
             this.label32 = new System.Windows.Forms.Label();
             this.label33 = new System.Windows.Forms.Label();
+            this.lbl_diffCount = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPathNew)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPathExisting)).BeginInit();
             this.panel1.SuspendLayout();
@@ -1193,8 +1194,8 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.txt_AvailTracksExisting.Cue = "Available Tracks Existing";
             this.txt_AvailTracksExisting.Enabled = false;
-            this.txt_AvailTracksExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_AvailTracksExisting.ForeColor = System.Drawing.Color.DarkRed;
+            this.txt_AvailTracksExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.txt_AvailTracksExisting.ForeColor = System.Drawing.Color.Gray;
             this.txt_AvailTracksExisting.Location = new System.Drawing.Point(284, 334);
             this.txt_AvailTracksExisting.Name = "txt_AvailTracksExisting";
             this.txt_AvailTracksExisting.Size = new System.Drawing.Size(45, 21);
@@ -1204,8 +1205,8 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.txt_AvailTracksNew.Cue = "Available Tracks New";
             this.txt_AvailTracksNew.Enabled = false;
-            this.txt_AvailTracksNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_AvailTracksNew.ForeColor = System.Drawing.Color.DarkRed;
+            this.txt_AvailTracksNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.txt_AvailTracksNew.ForeColor = System.Drawing.Color.Gray;
             this.txt_AvailTracksNew.Location = new System.Drawing.Point(217, 334);
             this.txt_AvailTracksNew.Name = "txt_AvailTracksNew";
             this.txt_AvailTracksNew.Size = new System.Drawing.Size(43, 21);
@@ -1479,11 +1480,25 @@ namespace RocksmithToolkitGUI.DLCManager
             this.label33.TabIndex = 334;
             this.label33.Text = "Album";
             // 
+            // lbl_diffCount
+            // 
+            this.lbl_diffCount.AutoSize = true;
+            this.lbl_diffCount.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.lbl_diffCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_diffCount.ForeColor = System.Drawing.Color.DarkRed;
+            this.lbl_diffCount.Location = new System.Drawing.Point(321, 6);
+            this.lbl_diffCount.Name = "lbl_diffCount";
+            this.lbl_diffCount.Size = new System.Drawing.Size(39, 26);
+            this.lbl_diffCount.TabIndex = 335;
+            this.lbl_diffCount.Text = "x/y";
+            this.lbl_diffCount.Visible = false;
+            // 
             // DuplicatesManagement
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(766, 676);
+            this.Controls.Add(this.lbl_diffCount);
             this.Controls.Add(this.label33);
             this.Controls.Add(this.label32);
             this.Controls.Add(this.label31);
@@ -1750,5 +1765,6 @@ namespace RocksmithToolkitGUI.DLCManager
         private Label label31;
         private Label label32;
         private Label label33;
+        private Label lbl_diffCount;
     }
 }

@@ -23,12 +23,10 @@ ToDos:
 - Alternate No for duplicates logic
 - duplicate original (toolkit, version,author missing logic)
 - duplicate description/comments are overritten for Existing
-- import issue with changes in the house of fly and  mjbeat it and nirvana smels, tool lost keys
-- Pinion Wish RL issue	no XML/JSON info
 - Include Standardization names into duplication checks
 - Add sections flag
-- check has version
-- fix has author
+- Toolkit version flag does not sync to&from Github
+- Bin\debug folder content is needed
 
 
 Version History(release date):

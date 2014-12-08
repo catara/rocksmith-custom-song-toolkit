@@ -179,6 +179,7 @@ namespace RocksmithToolkitGUI.DLCManager
         public string Album = "";
         public string Title_Sort = "";
         public string Is_Alternate = "";
+        public string Is_Original = "";
         public string ArtistSort = "";
         public string Artist = "";
         public string PackageVersion = "";
@@ -1043,7 +1044,29 @@ namespace RocksmithToolkitGUI.DLCManager
                 //pB_ReadDLCs.Increment(1);
                 i++;
             }
-            rtxt_StatisticsOnReadDLCs.Text = i + " Import files Inserted" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+            DataSet dz = new DataSet();
+            var del=0;
+            using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            {
+                string updatecmd; //s.Substring(s.Length - pathDLC.Length)
+
+                updatecmd = "SELECT MAX(s.ID) FROM Import s LEFT JOIN Import as d on d.FileHash = s.FileHash WHERE d.ID is not null GROUP BY s.FileHash;";
+                OleDbDataAdapter dbf = new OleDbDataAdapter(updatecmd, cnb);
+                dbf.Fill(dz, "Import");
+                del = dz.Tables[0].Rows.Count;
+                dbf.Dispose();
+
+                updatecmd = @"DELETE FROM Import
+                                WHERE ID not IN (SELECT MAX(s.ID) FROM Import s LEFT JOIN Import as d on d.FileHash=s.FileHash WHERE d.ID is not null GROUP BY s.FileHash);";
+                OleDbDataAdapter db = new OleDbDataAdapter(updatecmd, cnb);
+                db.Fill(dz, "Import");
+                db.Dispose();
+
+
+                //dsz.Tables["Files"].AcceptChanges();
+                //MessageBox.Show(da)
+            }
+            rtxt_StatisticsOnReadDLCs.Text = del+"/"+i + " Import files Inserted (excl. "+del+" duplicates)" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
 
             DataSet ds = new DataSet();
             DataSet dns = new DataSet();
@@ -1053,7 +1076,7 @@ namespace RocksmithToolkitGUI.DLCManager
             {
                 using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
                 {// 1. If hash already exists do not insert
-                    var cmd = @"SELECT FullPath, Path, FileName, FileHash, FileSize, ImportDate, m.Import_Date
+                    var cmd = @"SELECT DISTINCT FullPath, Path, FileName, FileHash, FileSize, ImportDate, m.Import_Date
                             FROM Import as i
                             LEFT JOIN Main as m on m.File_Hash = i.FileHash OR m.Original_File_Hash = i.FileHash
                             WHERE m.ID is not NULL;";
@@ -1072,7 +1095,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             tft += "\n Deleting " + dns.Tables[0].Rows[m].ItemArray[0].ToString() + " as imported on " + dns.Tables[0].Rows[m].ItemArray[5].ToString();
                         }
 
-                        rtxt_StatisticsOnReadDLCs.Text = tft + noOfRec + "/" + (noOfRec+m) + " identical duplicates" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                        rtxt_StatisticsOnReadDLCs.Text = tft + noOfRec + "/" + (noOfRec+m) + " already imported" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
 
                     cmd = @"SELECT FullPath, Path, FileName, FileHash, FileSize, ImportDate
                                 FROM Import as i
@@ -1106,7 +1129,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             //MessageBox.Show(pB_ReadDLCs.Maximum+" test " +i); 
                             //DataTable AccTable = aSet.Tables["Accounts"];
                             var FullPath = ds.Tables[0].Rows[i].ItemArray[0].ToString();
-                            rtxt_StatisticsOnReadDLCs.Text = noOfRec + "/" + noOfRec + " " + FullPath + "\n\n" + rtxt_StatisticsOnReadDLCs.Text;
+                            rtxt_StatisticsOnReadDLCs.Text = (i+1) + "/" + noOfRec + " " + FullPath + "\n\n" + rtxt_StatisticsOnReadDLCs.Text;
                             if (!FullPath.IsValidPSARC())
                             {
                                 MessageBox.Show(String.Format("File '{0}' isn't valid. File extension was changed to '.invalid'", Path.GetFileName(FullPath)), MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -1381,7 +1404,39 @@ namespace RocksmithToolkitGUI.DLCManager
                                         tkversion = ReadPackageOLDToolkitVersion(versionFile[0]);
                                 }
                                 if (author=="" && tkversion!="") author= "Custom Song Creator";
-
+                                //rtxt_StatisticsOnReadDLCs.Text = vpos + "===" + txt.Length+ "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                if (versionFile.Length <= 0) Is_Original = "Yes";
+                                else Is_Original = "No";
+                                //rtxt_StatisticsOnReadDLCs.Text = Is_Original + "===" + versionFile.Length+ "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                
+                                //Get Version from FileName
+                                var import_path = ds.Tables[0].Rows[i].ItemArray[1].ToString();
+                                var original_FileName = ds.Tables[0].Rows[i].ItemArray[2].ToString();
+                                string txt = original_FileName;
+                                int vpos = (txt.IndexOf("v")) + 1;
+                                float vv = 0;
+                                for (var hh=0; vpos>0 && hh<100; hh++)
+                                { 
+                                    vpos = (txt.IndexOf("v"))+1;                                    
+                                    
+                                    //rtxt_StatisticsOnReadDLCs.Text = vpos + "===" + txt.Length+ "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                    if (vpos > 0 && txt.Substring(vpos, 1).ToInt32() > 0)
+                                    {
+                                        vv = txt.Substring(vpos, 1).ToInt32();
+                                        // and info.PackageVersion
+                                        if ((txt.Substring(vpos + 1, 1) == "." || txt.Substring(vpos + 2, 1) == "_") && txt.Substring(vpos + 2, 1).ToInt32() > 0)
+                                        {
+                                            //rtxt_StatisticsOnReadDLCs.Text = info.PackageVersion.ToInt32() + "--=" + (vv.ToString() + "." + txt.Substring(vpos + 2, 1)) + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                            vv = Convert.ToSingle(vv.ToString() + "." + txt.Substring(vpos + 2, 1));
+                                        }
+                                        //rtxt_StatisticsOnReadDLCs.Text = "___" + txt.Substring(vpos + 1, 1) + "---" + txt.Substring(vpos + 2, 1) + "---" + txt.Substring(vpos + 2, 1) + "---" + "\n" + rtxt_StatisticsOnReadDLCs.Text; 
+                                        if (vv > info.PackageVersion.ToInt32()) info.PackageVersion = vv.ToString();
+                                        //else if (info.PackageVersion.ToInt32()>0) info.PackageVersion = vv.ToString();
+                                    }
+                                    //rtxt_StatisticsOnReadDLCs.Text = "000" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                    txt=txt.Substring(vpos, txt.Length-vpos);
+                                }
+                                //rtxt_StatisticsOnReadDLCs.Text = "=___" + vv + "---" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                 //foreach (var infofile in versionFile)
                                 //{
                                 //    rtxt_StatisticsOnReadDLCs.Text += "\n last verrsfi " + infofile;
@@ -1396,8 +1451,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                 //cmdInsert.Parameters.Add(new OleDbParameter("Description", OleDbType.VarChar, 40, "Description"));
                                 //oleDa.InsertCommand = cmdInsert;
 
-                                var import_path = ds.Tables[0].Rows[i].ItemArray[1].ToString();
-                                var original_FileName = ds.Tables[0].Rows[i].ItemArray[2].ToString();
+
                                 //rtxt_StatisticsOnReadDLCs.Text = info.AlbumArtPath+"---" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
 
                                 //Generating the HASH code
@@ -1454,14 +1508,14 @@ namespace RocksmithToolkitGUI.DLCManager
                                 // 2.1.1.3 If (Artist+Album+Title or dlcname)+author the same check version If same ?
                                 // 3.1.2 If (Artist+Album+Title or dlcname) exists check author. If the not the same add as alternate
                                 // 4.1.3 If (Artist+Album+Title or dlcname) exists check author. If empty/generic(Custom Song Creator) show statistics and add as give choice to alternate or ignore
-                                //statistics: DLCName,Sort-s, Has-s, Original FileName, toolkit version, hash for all file, file size for all files
-                                //var updatecmd = "INSERT INTO Main(";
+
+
                                 //SELECT if the same artist, album, songname
                                 var sel = "SELECT * FROM Main WHERE LCASE(Artist)=LCASE(\"" + info.SongInfo.Artist + "\") AND LCASE(Album)=LCASE(\"" + info.SongInfo.Album + "\") AND ";
                                 sel += "(LCASE(Song_Title) = LCASE(\"" + info.SongInfo.SongDisplayName + "\") ";
                                 sel += "OR LCASE(Song_Title) like \"%" + info.SongInfo.SongDisplayName.ToLower() + "%\" ";
                                 //sel += "OR (\"%LCASE(Song_Title)%\" like LCASE(\"" + info.SongInfo.SongDisplayName + "\") ";
-                                sel += "OR LCASE(Song_Title_Sort) =LCASE(\"" + info.SongInfo.SongDisplayNameSort + "\")) OR LCASE(DLC_Name)=LCASE(\"" + info.Name + "\") ORDER BY Is_Original";
+                                sel += "OR LCASE(Song_Title_Sort) =LCASE(\"" + info.SongInfo.SongDisplayNameSort + "\")) OR LCASE(DLC_Name)=LCASE(\"" + info.Name + "\") ORDER BY Is_Original ASC";
                                 //Read from DB
                                 int norows = 0;
                                 norows = SQLAccess(sel);
@@ -1477,128 +1531,133 @@ namespace RocksmithToolkitGUI.DLCManager
                                 Random random = new Random();
                                 //info.Name = Name;
                                 //info.SongInfo.SongDisplayName =  info.SongInfo.SongDisplayName;
-                                foreach (var file in files)
-                                {
-                                    SongDisplayName = "";
-                                    Namee = "";
-                                    //rtxt_StatisticsOnReadDLCs.Text = "\n ------------ " + norows + " ------" +  "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                                    if (b == norows) break;
-                                    folder_name = file.Folder_Name;
-                                    filename = file.Current_FileName;
-                                    //rtxt_StatisticsOnReadDLCs.Text =file.Author.ToLower() +"-"+author.ToLower() + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                                    //When importing a original when there is already a similar CDLC
-                                    if (author == "" && tkversion == "" && chbx_Additional_Manipualtions.GetItemChecked(14))
+                                if (norows >0)
+                                    foreach (var file in files)
                                     {
-                                        artist = "Insert";
+                                        SongDisplayName = "";
+                                        Namee = "";
+                                        //rtxt_StatisticsOnReadDLCs.Text = "\n ------"+ file.Folder_Name.ToString() + "------ " + b + " ------"+ file.Current_FileName.ToString() + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                        if (b >= norows) break;
+                                        folder_name = file.Folder_Name;
+                                        filename = file.Current_FileName;
+                                        //rtxt_StatisticsOnReadDLCs.Text =file.Author.ToLower() +"-"+author.ToLower() + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                        //When importing a original when there is already a similar CDLC
+                                        if (author == "" && tkversion == "" && chbx_Additional_Manipualtions.GetItemChecked(14))
+                                        {
+                                            artist = "Insert";
                                         
-                                        //Generate MAX Alternate NO
-                                        var sel1 = sel.Replace("*", "max(Alternate_Version_No)");
-                                        sel1 = sel.Replace(" ORDER BY Is_Original", "");
-                                        //rtxt_StatisticsOnReadDLCs.Text = sel1 + "-" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                                        DataSet ddr = new DataSet();
-                                        OleDbDataAdapter dat = new OleDbDataAdapter(sel1, cnn);
-                                        dat.Fill(ddr, "Main");
-                                        dat.Dispose();
+                                            //Generate MAX Alternate NO
+                                            var sel1 = sel.Replace("*", "max(Alternate_Version_No)");
+                                            sel1 = sel.Replace(" ORDER BY Is_Original", "");
+                                            //rtxt_StatisticsOnReadDLCs.Text = sel1 + "-" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                            DataSet ddr = new DataSet();
+                                            OleDbDataAdapter dat = new OleDbDataAdapter(sel1, cnn);
+                                            dat.Fill(ddr, "Main");
+                                            dat.Dispose();
 
-                                        //UPDATE the 1(s) not an alternate already
-                                        int max = ddr.Tables[0].Rows[0].ItemArray[0].ToString().ToInt32() + 1 ;
-                                        var sel2 = "Update Main Set Song_Title = Song_Title+\" a." + max + "\", Song_Title_Sort = Song_Title_Sort+\" a." + max + "\", Is_Alternate = \"Yes\", Alternate_Version_No=" + max+ " where ID in (" + sel.Replace("*","ID") + ") and Is_Alternate=\"No\"";
-                                        //rtxt_StatisticsOnReadDLCs.Text = max.ToString()+"-"+sel2 + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                                        DataSet dxr = new DataSet();
-                                        OleDbDataAdapter dax = new OleDbDataAdapter(sel2, cnn);
-                                        dax.Fill(dxr, "Main");
-                                        dax.Dispose();
+                                            //UPDATE the 1(s) not an alternate already
+                                            int max = ddr.Tables[0].Rows[0].ItemArray[0].ToString().ToInt32() + 1 ;
+                                            var sel2 = "Update Main Set Song_Title = Song_Title+\" a." + max + "\", Song_Title_Sort = Song_Title_Sort+\" a." + max + "\", Is_Alternate = \"Yes\", Alternate_Version_No=" + max+ " where ID in (" + sel.Replace("*","ID") + ") and Is_Alternate=\"No\"";
+                                            //rtxt_StatisticsOnReadDLCs.Text = max.ToString()+"-"+sel2 + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                            DataSet dxr = new DataSet();
+                                            OleDbDataAdapter dax = new OleDbDataAdapter(sel2, cnn);
+                                            dax.Fill(dxr, "Main");
+                                            dax.Dispose();
 
-                                        //Add also a random DLCName if any of the Alternates has the same DLC Name ssame as the original
-                                        var sel3= "UPDATE Main SET DLC_Name = DLC_Name+\""+ random.Next(0, 100000) + "\" WHERE ID in (" + sel.Replace("*", "ID") + ") and LCASE(DLC_Name) = \"" + info.Name.ToLower()+"\"";
-                                       // rtxt_StatisticsOnReadDLCs.Text =  random.Next(0, 100000) + "-"+sel3 + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                                        DataSet dxf = new DataSet();
-                                        OleDbDataAdapter dbx = new OleDbDataAdapter(sel3, cnn);
-                                        dbx.Fill(dxf, "Main");
-                                        dbx.Dispose();
-                                        break;
-                                    }
+                                            //Add also a random DLCName if any of the Alternates has the same DLC Name ssame as the original
+                                            var sel3= "UPDATE Main SET DLC_Name = DLC_Name+\""+ random.Next(0, 100000) + "\" WHERE ID in (" + sel.Replace("*", "ID") + ") and LCASE(DLC_Name) = \"" + info.Name.ToLower()+"\"";
+                                           // rtxt_StatisticsOnReadDLCs.Text =  random.Next(0, 100000) + "-"+sel3 + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                            DataSet dxf = new DataSet();
+                                            OleDbDataAdapter dbx = new OleDbDataAdapter(sel3, cnn);
+                                            dbx.Fill(dxf, "Main");
+                                            dbx.Dispose();
+                                            break;
+                                        }
 
-                                    if ((author.ToLower() == file.Author.ToLower() && author != "" && file.Author != "" && file.Author != "Custom Song Creator" && author != "Custom Song Creator") || (file.DLC_Name == info.Name))
-                                    {
-                                        if (file.DLC_Name.ToLower() == info.Name.ToLower())
-                                            artist = AssesConflict(file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, Tunings, b, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist);
+                                        if ((author.ToLower() == file.Author.ToLower() && author != "" && file.Author != "" && file.Author != "Custom Song Creator" && author != "Custom Song Creator") || (file.DLC_Name == info.Name))
+                                        {
+                                            if (file.DLC_Name.ToLower() == info.Name.ToLower())
+                                                artist = AssesConflict(file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, Tunings, b, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist);
+                                            else
+                                            {
+                                                if (file.Version.ToInt32() > info.PackageVersion.ToInt32()) artist = "Update";
+                                                if (file.Version.ToInt32() < info.PackageVersion.ToInt32())
+                                                    if (file.Is_Alternate != "Yes") { artist = "Ignore"; rtxt_StatisticsOnReadDLCs.Text = "IGNORED" + "\n" + rtxt_StatisticsOnReadDLCs.Text; }
+                                                    else artist = AssesConflict(file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, Tunings, b, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist);
+                                                if (file.Version.ToInt32() == info.PackageVersion.ToInt32()) artist = AssesConflict(file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, Tunings, b, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist);
+                                                else { artist = "Ignore"; rtxt_StatisticsOnReadDLCs.Text = "IGNORED" + "\n" + rtxt_StatisticsOnReadDLCs.Text; }
+                                                // assess=alternate, update or ignore//as maybe a new package(ing) is desired to be inserted in the DB
+                                            }
+                                        }
                                         else
+                                            if (author.ToLower() != file.Author.ToLower() && (author != "" && author != "Custom Song Creator" && file.Author != "Custom Song Creator" && file.Author != ""))
+                                                artist = "Alternate";
+                                            else artist = AssesConflict(file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, Tunings, b, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist);
+                                        //rtxt_StatisticsOnReadDLCs.Text = "7 "+b + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                        //Exit condition
+
+
+
+                                        if (artist == "Alternate")
                                         {
-                                            if (file.Version.ToInt32() > info.PackageVersion.ToInt32()) artist = "Update";
-                                            if (file.Version.ToInt32() < info.PackageVersion.ToInt32())
-                                                if (file.Is_Alternate != "Yes") { artist = "Ignore"; rtxt_StatisticsOnReadDLCs.Text = "IGNORED" + "\n" + rtxt_StatisticsOnReadDLCs.Text; }
-                                                else artist = AssesConflict(file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, Tunings, b, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist);
-                                            if (file.Version.ToInt32() == info.PackageVersion.ToInt32()) artist = AssesConflict(file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, Tunings, b, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist);
-                                            else { artist = "Ignore"; rtxt_StatisticsOnReadDLCs.Text = "IGNORED" + "\n" + rtxt_StatisticsOnReadDLCs.Text; }
-                                            // assess=alternate, update or ignore//as maybe a new package(ing) is desired to be inserted in the DB
-                                        }
-                                    }
-                                    else
-                                        if (author.ToLower() != file.Author.ToLower() && (author != "" && author != "Custom Song Creator" && file.Author != "Custom Song Creator" && file.Author != ""))
-                                            artist = "Alternate";
-                                        else artist = AssesConflict(file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, Tunings, b, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist);
-                                    //rtxt_StatisticsOnReadDLCs.Text = "7 "+b + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                                    //Exit condition
+                                            alt = "1";
+                                            //txt = (info.PackageVersion != null ? "No" : "Yes");
+                                            //rtxt_StatisticsOnReadDLCs.Text = "\n" + "-" + + "\n-" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                            if (Namee != "") info.Name = Namee;
+                                            if (SongDisplayName != "") info.SongInfo.SongDisplayName = SongDisplayName;
+                                            if (Title_Sort != "") info.SongInfo.SongDisplayNameSort = Title_Sort;
+                                            if (ArtistSort != "") info.SongInfo.ArtistSort =ArtistSort;
+                                            if (Artist != "") info.SongInfo.Artist = Artist;
+                                            if (Is_Alternate != "" && Is_Original=="No")  alt= Alternate_No;
+                                            if (Album != "") info.SongInfo.Album = Album;
+                                            if (Alternate_No != "" && Is_Original=="No") alt = Alternate_No;
+                                            if (PackageVersion != "" ) info.PackageVersion = PackageVersion;
+                                            //if (AlbumArtPath != "") info.Name = Name;
+                                            //if (art_hash != "") info.Name = Name;
+                                            //if (txt == "No") info.PackageVersion = null;
+                                            //rtxt_StatisticsOnReadDLCs.Text = "\n"+"-"+ (PackageVersion != "" && info.PackageVersion != null ? "No" : "Yes") + "\n-"+ info.PackageVersion + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                            artist = "Insert";                                        
 
+                                            //Get the higgest Alternate Number
+                                            sel = "SELECT max(Alternate_Version_No) FROM Main WHERE(LCASE(Artist) =LCASE(\"" + info.SongInfo.Artist + "\") AND LCASE(Album)=LCASE(\"" + info.SongInfo.Album + "\") AND ";
+                                            sel += "(LCASE(Song_Title)=LCASE(\"" + info.SongInfo.SongDisplayName + "\") OR ";
+                                            sel += "LCASE(Song_Title) like \"%" + info.SongInfo.SongDisplayName.ToLower() + "%\" OR ";
+                                            sel += "LCASE(Song_Title_Sort) =LCASE(\"" + info.SongInfo.SongDisplayNameSort + "\"))) OR LCASE(DLC_Name)=LCASE(\"" + info.Name + "\");";
+                                            //Get last inserted ID
+                                            //rtxt_StatisticsOnReadDLCs.Text = sel + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                            DataSet dsr = new DataSet();
+                                            OleDbDataAdapter dad = new OleDbDataAdapter(sel, cnn);
+                                            dad.Fill(dss, "Main");
+                                            dad.Dispose();
+                                            string altver = ""; 
+                                            foreach (DataRow dataRow in dss.Tables[0].Rows)
+                                            {
+                                                altver = dataRow.ItemArray[0].ToString();
+                                                if  (Is_Original == "No") alt = (altver.ToInt32() + 1).ToString(); //Add Alternative_Version_No
+                                                //rtxt_StatisticsOnReadDLCs.Text = alt + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                            }
 
+                                            if (file.DLC_Name.ToLower() == info.Name.ToLower()) info.Name = random.Next(0, 100000) + info.Name;
+                                            if (file.Song_Title.ToLower() == info.SongInfo.SongDisplayName.ToLower() && Is_Original=="No") info.SongInfo.SongDisplayName += " a." + (alt.ToInt32() + 1).ToString() + ((author == null || author == "Custom Song Creator") ? "" : " " + author);// ;//random.Next(0, 100000).ToString()
+                                            //if (file.Song_Title_Sort == info.SongInfo.SongDisplayNameSort) info.SongInfo.SongDisplayNameSort += random.Next(0, 100000);
 
-                                    if (artist == "Alternate")
-                                    {   alt = "1";
-
-                                        if (Namee != "") info.Name = Namee;
-                                        if (SongDisplayName != "") info.SongInfo.SongDisplayName = SongDisplayName;
-                                        if (Title_Sort != "") info.SongInfo.SongDisplayNameSort = Title_Sort;
-                                        if (ArtistSort != "") info.SongInfo.ArtistSort =ArtistSort;
-                                        if (Artist != "") info.SongInfo.Artist = Artist;
-                                        if (Is_Alternate != "")  alt= Alternate_No;
-                                        if (Album != "") info.SongInfo.Album = Album;
-                                        if (Alternate_No != "") alt = Alternate_No;
-                                        if (PackageVersion != "") info.PackageVersion = PackageVersion;
-                                        //if (AlbumArtPath != "") info.Name = Name;
-                                        //if (art_hash != "") info.Name = Name;
-
-                                        //rtxt_StatisticsOnReadDLCs.Text = "\n"+author+"\nalternate" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                                        artist = "Insert";                                        
-
-                                        //Get the higgest Alternate Number
-                                        sel = "SELECT max(Alternate_Version_No) FROM Main WHERE(LCASE(Artist) =LCASE(\"" + info.SongInfo.Artist + "\") AND LCASE(Album)=LCASE(\"" + info.SongInfo.Album + "\") AND ";
-                                        sel += "(LCASE(Song_Title)=LCASE(\"" + info.SongInfo.SongDisplayName + "\") OR ";
-                                        sel += "LCASE(Song_Title) like \"%" + info.SongInfo.SongDisplayName.ToLower() + "%\" OR ";
-                                        sel += "LCASE(Song_Title_Sort) =LCASE(\"" + info.SongInfo.SongDisplayNameSort + "\"))) OR LCASE(DLC_Name)=LCASE(\"" + info.Name + "\");";
-                                        //Get last inserted ID
-                                        //rtxt_StatisticsOnReadDLCs.Text = sel + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                                        DataSet dsr = new DataSet();
-                                        OleDbDataAdapter dad = new OleDbDataAdapter(sel, cnn);
-                                        dad.Fill(dss, "Main");
-                                        dad.Dispose();
-                                        string altver = ""; 
-                                        foreach (DataRow dataRow in dss.Tables[0].Rows)
-                                        {
-                                            altver = dataRow.ItemArray[0].ToString();
-                                            alt = (altver.ToInt32() + 1).ToString(); //Add Alternative_Version_No
-                                            //rtxt_StatisticsOnReadDLCs.Text = alt + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                            // rtxt_StatisticsOnReadDLCs.Text = "highest " + altver + "\n" + rtxt_StatisticsOnReadDLCs.Text;                                    
                                         }
 
-                                        if (file.DLC_Name.ToLower() == info.Name.ToLower()) info.Name = random.Next(0, 100000) + info.Name;
-                                        if (file.Song_Title.ToLower() == info.SongInfo.SongDisplayName.ToLower()) info.SongInfo.SongDisplayName += " a." + (alt.ToInt32() + 1).ToString() + ((author == null || author == "Custom Song Creator") ? "" : " " + author);// ;//random.Next(0, 100000).ToString()
-                                        //if (file.Song_Title_Sort == info.SongInfo.SongDisplayNameSort) info.SongInfo.SongDisplayNameSort += random.Next(0, 100000);
+                                        //if (artist != "Ignore")
+                                        //{
+                                        //    b ++;
+                                        //    //rtxt_StatisticsOnReadDLCs.Text = txt_RocksmithDLCPath.Text + "\\" + original_FileName + " ccccc\n"+ dupli_Path_Import + "\\" + original_FileName + rtxt_StatisticsOnReadDLCs.Text;
 
-                                        // rtxt_StatisticsOnReadDLCs.Text = "highest " + altver + "\n" + rtxt_StatisticsOnReadDLCs.Text;                                    
-                                    }
+                                        //} //exit if an update/alternate=insert was triggered..autom or by choice(asses)
+                                        //else
+                                            b++;
 
-                                    if (artist != "Ignore")
-                                    {
-                                        b = norows;
-                                        //rtxt_StatisticsOnReadDLCs.Text = txt_RocksmithDLCPath.Text + "\\" + original_FileName + " ccccc\n"+ dupli_Path_Import + "\\" + original_FileName + rtxt_StatisticsOnReadDLCs.Text;
-
-                                        } //exit if an update/alternate=insert was triggered..autom or by choice(asses)
-                                    else b++;
                                         IDD = file.ID; //Save Id in case of update or asses-update
                                         j = file.Version;
                                         k = file.Author;
-
                                     }
+
                                 if (artist == "Ignore" && chbx_Additional_Manipualtions.GetItemChecked(29))
                                 {
                                     //rtxt_StatisticsOnReadDLCs.Text = dupli_Path_Import + "\\" + original_FileName + "\n" + rtxt_StatisticsOnReadDLCs.Text;
@@ -1610,7 +1669,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
                                     //Define final path for the imported song
                                     //rtxt_StatisticsOnReadDLCs.Text = info.PackageVersion + " ccccc\n" + rtxt_StatisticsOnReadDLCs.Text;
-                                    var norm_path = txt_TempPath.Text + "\\" + ((info.PackageVersion == "") ? "ORIG" : "CDLC") + "_" + info.SongInfo.Artist + "_" + info.SongInfo.SongYear + "_" + info.SongInfo.Album + "_" + info.SongInfo.SongDisplayName;
+                                    var norm_path = txt_TempPath.Text + "\\" + (Is_Original == "Yes" ? "ORIG" : "CDLC") + "_" + info.SongInfo.Artist + "_" + info.SongInfo.SongYear + "_" + info.SongInfo.Album + "_" + info.SongInfo.SongDisplayName;
                                 //if (artist == "ignore") ;
 
                                 //@Provider=Microsoft.ACE.OLEDB.12.0;Data Source=
@@ -1694,7 +1753,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                     command.Parameters.AddWithValue("@param12", info.SongInfo.Artist);
                                     command.Parameters.AddWithValue("@param13", info.SongInfo.ArtistSort);
                                     command.Parameters.AddWithValue("@param14", info.SongInfo.SongYear);
-                                    command.Parameters.AddWithValue("@param15", ((info.PackageVersion == "") ? "1" : info.PackageVersion));
+                                    command.Parameters.AddWithValue("@param15", ((info.PackageVersion == null) ? "1" : info.PackageVersion));
                                     command.Parameters.AddWithValue("@param16", info.SongInfo.AverageTempo);
                                     command.Parameters.AddWithValue("@param17", info.Volume);
                                     command.Parameters.AddWithValue("@param18", info.PreviewVolume);
@@ -1714,15 +1773,15 @@ namespace RocksmithToolkitGUI.DLCManager
                                     command.Parameters.AddWithValue("@param32", ((info.OggPreviewPath != null) ? "Yes" : "No"));
                                     command.Parameters.AddWithValue("@param33", Tones_Custom);
                                     command.Parameters.AddWithValue("@param34", DD);
-                                    command.Parameters.AddWithValue("@param35", ((info.PackageVersion != "" && tkversion != "") ? "Yes" : "No"));
-                                    command.Parameters.AddWithValue("@param36", ((author != "" && tkversion != "") ? "Yes" : "No"));
+                                    command.Parameters.AddWithValue("@param35", ((info.PackageVersion != null && tkversion != "" && Is_Original=="No") ? "Yes" : "No"));
+                                    command.Parameters.AddWithValue("@param36", ((((author != "" && tkversion != "") || author == "Custom Song Creator") && Is_Original=="No") ? "Yes" : "No"));
                                     command.Parameters.AddWithValue("@param37", Tunings);
                                     command.Parameters.AddWithValue("@param38", PluckedType);
-                                    command.Parameters.AddWithValue("@param39", ((info.PackageVersion == "") ? "ORIG" : "CDLC"));
+                                    command.Parameters.AddWithValue("@param39", ((Is_Original == "Yes") ? "ORIG" : "CDLC"));
                                     command.Parameters.AddWithValue("@param40", info.SignatureType);
                                     command.Parameters.AddWithValue("@param41", ((author != "") ? author : (tkversion != "" ? "Custom Song Creator" : "")));
                                     command.Parameters.AddWithValue("@param42", tkversion);
-                                    command.Parameters.AddWithValue("@param43", ((info.PackageVersion == "") ? "Yes" : "No"));
+                                    command.Parameters.AddWithValue("@param43", Is_Original);
                                     command.Parameters.AddWithValue("@param44", ((alt == "") ? "No" : "Yes"));
                                     command.Parameters.AddWithValue("@param45", alt);
                                     command.Parameters.AddWithValue("@param46", art_hash);
@@ -1854,7 +1913,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                     command.Parameters.AddWithValue("@param12", info.SongInfo.Artist);
                                     command.Parameters.AddWithValue("@param13", info.SongInfo.ArtistSort);
                                     command.Parameters.AddWithValue("@param14", info.SongInfo.SongYear);
-                                    command.Parameters.AddWithValue("@param15", ((info.PackageVersion == "") ? "1" : info.PackageVersion));
+                                    command.Parameters.AddWithValue("@param15", ((info.PackageVersion == null) ? "1" : info.PackageVersion));
                                     command.Parameters.AddWithValue("@param16", info.SongInfo.AverageTempo);
                                     command.Parameters.AddWithValue("@param17", info.Volume);
                                     command.Parameters.AddWithValue("@param18", info.PreviewVolume);
@@ -1874,15 +1933,15 @@ namespace RocksmithToolkitGUI.DLCManager
                                     command.Parameters.AddWithValue("@param32", ((info.OggPreviewPath != null) ? "Yes" : "No"));
                                     command.Parameters.AddWithValue("@param33", Tones_Custom);
                                     command.Parameters.AddWithValue("@param34", DD);
-                                    command.Parameters.AddWithValue("@param35", ((info.PackageVersion != "" && tkversion != "") ? "Yes" : "No"));
-                                    command.Parameters.AddWithValue("@param36", ((author != "" && tkversion != "") ? "Yes" : "No"));
+                                    command.Parameters.AddWithValue("@param35", ((info.PackageVersion != null && tkversion != "" && Is_Original=="No") ? "Yes" : "No"));
+                                    command.Parameters.AddWithValue("@param36", ((((author != "" && tkversion != "") || author == "Custom Song Creator") && Is_Original=="No") ? "Yes" : "No"));
                                     command.Parameters.AddWithValue("@param37", Tunings);
                                     command.Parameters.AddWithValue("@param38", PluckedType);
-                                    command.Parameters.AddWithValue("@param39", ((info.PackageVersion == "") ? "ORIG" : "CDLC"));
+                                    command.Parameters.AddWithValue("@param39", ((Is_Original == "Yes") ? "ORIG" : "CDLC"));
                                     command.Parameters.AddWithValue("@param40", info.SignatureType);
                                     command.Parameters.AddWithValue("@param41", ((author != "") ? author : (tkversion != "" ? "Custom Song Creator" : "")));
                                     command.Parameters.AddWithValue("@param42", tkversion);
-                                    command.Parameters.AddWithValue("@param43", ((info.PackageVersion == "") ? "Yes" : "No"));
+                                    command.Parameters.AddWithValue("@param43", Is_Original);
                                     command.Parameters.AddWithValue("@param44", ((alt == "") ? "No" : "Yes"));
                                     command.Parameters.AddWithValue("@param45", alt);
                                     command.Parameters.AddWithValue("@param46", art_hash);
@@ -1915,13 +1974,10 @@ namespace RocksmithToolkitGUI.DLCManager
                                     //TO DO If default album cover then mark it as suck !?
                                     //If no version found must by Rocksmith Original or DLC
 
-                                    rtxt_StatisticsOnReadDLCs.Text = "Records inserted in Main= " + (i + 1) + "..." + rtxt_StatisticsOnReadDLCs.Text;// + "-"+ ds.Tables[0].Rows[i].ItemArray[3].ToString();
-                                                                                                                                                     //updatecmd="SELECT Path, FileName,FileName, FileHash, FileSize, ImportDate FROM Import as i LEFT JOIN Main as m on m.File_Hash = i.FileHash OR m.Original_File_Hash = i.FileHash WHERE m.ID is NULL;";
-                                                                                                                                                     //OleDbDataAdapter dac = new OleDbDataAdapter(updatecmd, cnn);
-                                                                                                                                                     //dac.Fill(ds, "Main");
+                                    rtxt_StatisticsOnReadDLCs.Text = "Records inserted in Main= " + (i + 1) + "..." + rtxt_StatisticsOnReadDLCs.Text;
                                 }
-
-                                if (artist == "Insert" || artist == "Update") //Common set of action for all
+                                //rtxt_StatisticsOnReadDLCs.Text = artist + "...||..." + rtxt_StatisticsOnReadDLCs.Text;
+                                if (artist == "Insert" || artist == "Update" ) //Common set of action for all
                                 {
                                     //Get last inserted ID
                                     DataSet dus = new DataSet();
@@ -1937,9 +1993,9 @@ namespace RocksmithToolkitGUI.DLCManager
                                     // INSERTS in child table [Order Details]
                                     //cmd.CommandText = "SELECT @@identity";
                                     //string id = cmd.ExecuteScalar().ToString();
-
                                     //objAdapter.Fill(dus, "Main");
                                     //string strID = dus.Tables["Main"].Rows[0].ToString();
+
                                     //UPDATE ArarngementsDB
                                     var CDLC_ID = dus.Tables[0].Rows[0].ItemArray[0].ToString();
                                     connection = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path); //+ ";Persist Security Info=False"
@@ -1961,14 +2017,14 @@ namespace RocksmithToolkitGUI.DLCManager
                                             int poss = 0;
                                             if (mss.Length > 0)
                                             {
-                                                //                                          MessageBox.Show(mss);
                                                 poss = mss.ToString().LastIndexOf("\\") + 1;
                                                 //MessageBox.Show(poss);
+                                                //rtxt_StatisticsOnReadDLCs.Text = norm_path+"__________" + arg.SongFile.File + "...\n" + rtxt_StatisticsOnReadDLCs.Text;
                                                 arg.SongXml.File = norm_path + "\\EOF\\" + mss.Substring(poss);
-                                                if (arg.SongFile.File == "")
+                                               // if (arg.SongFile.File == null) WHY WAS THIS ON?
                                                     arg.SongFile.File = norm_path + "\\Toolkit\\" + (mss.Substring(poss)).Replace(".xml", ".json");
-                                                else arg.SongFile.File = arg.SongFile.File.Replace("0_import", "");
-                                                rtxt_StatisticsOnReadDLCs.Text = "..Arrangements renamed..." + n + rtxt_StatisticsOnReadDLCs.Text;//+ arg.SongXml.File+ arg.SongFile.File +
+                                                //else arg.SongFile.File = arg.SongFile.File.Replace("0_import", "");+ arg.SongFile.File 
+                                                rtxt_StatisticsOnReadDLCs.Text = "..Arrangements renamed..."+ n + rtxt_StatisticsOnReadDLCs.Text;//+ arg.SongXml.File+ arg.SongFile.File +
                                             }
 
                                             command.CommandText = "INSERT INTO Arrangements(";
@@ -3354,6 +3410,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 }
             }
             rtxt_StatisticsOnReadDLCs.Text = "\n...Repack done.." + rtxt_StatisticsOnReadDLCs.Text;
+            MessageBox.Show("Repack done");
         }
 
         private void ProgressChanged(object sender, ProgressChangedEventArgs e)

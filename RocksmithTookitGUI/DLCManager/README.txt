@@ -25,11 +25,10 @@ ToDos:
 - duplicate description/comments are overritten for Existing
 - import issue with changes in the house of fly and  mjbeat it and nirvana smels, tool lost keys
 - Pinion Wish RL issue	no XML/JSON info
-- Analyse why some psarc are not being read
 - Include Standardization names into duplication checks
 - Add sections flag
 - check has version
-- fux has author
+- fix has author
 
 
 Version History(release date):

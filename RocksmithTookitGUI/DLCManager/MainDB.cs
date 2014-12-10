@@ -468,7 +468,7 @@ namespace RocksmithToolkitGUI.DLCManager
             }
             catch (System.IO.FileNotFoundException ee)
             {
-                MessageBox.Show(ee.Message + "Can run Search ! " + SearchCmd);
+                MessageBox.Show(ee.Message + "Can't run Search ! " + SearchCmd);
                 //MessageBox.Show(ee.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
@@ -479,7 +479,7 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             noOfRec = 0;
             //dssx.Dispose();
-            lbl_NoRec.Text = " records.";
+            lbl_NoRec.Text = " songs.";
             bs.DataSource = null;
             dssx.Dispose();
             //MessageBox.Show("zero " + noOfRec.ToString() + SearchCmd);
@@ -718,8 +718,10 @@ namespace RocksmithToolkitGUI.DLCManager
             bs.ResetBindings(false);
             dssx.Tables["Main"].AcceptChanges();
             bs.DataSource = dssx.Tables["Main"];
+            DataGridView.AutoGenerateColumns = false;
             DataGridView.DataSource = null;
             DataGridView.DataSource = bs;
+            DataGridView.AutoGenerateColumns = false;
             DataGridView.Refresh();
             //bs.Dispose();
             dssx.Dispose();
@@ -970,7 +972,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void cbx_Format_SelectedValueChanged(object sender, EventArgs e)
         {
-            btn_Conv_And_Transfer.Text = cbx_Format.SelectedValue.ToString();
+            btn_Conv_And_Transfer.Text = cbx_Format.Text;// SelectedValue.ToString();
         }
 
         private void button6_Click(object sender, EventArgs e)
@@ -998,6 +1000,120 @@ namespace RocksmithToolkitGUI.DLCManager
         private void btn_Close_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void cmb_Filter_SelectedValueChanged(object sender, EventArgs e)
+        {
+            //No Cover
+            //No Preview
+            //No Vocals
+            //No Section
+            //No Bass
+            //No Guitar
+            //Original
+            //CDLC
+            //Selected
+            //Beta
+            //Broken
+            //Alternate
+            //With DD
+            //No DD
+            //No Bass DD
+            //E Standard
+            //Eb Standard
+            //Drop D
+            //Other Tunings
+            //With Bonus
+
+            //MessageBox.Show(cmb_Filter.Text.ToString() + SearchCmd);
+            SearchCmd = "SELECT * FROM Main WHERE ";
+            var Filtertxt =  cmb_Filter.Text;//cmb_Filter.SelectedValue.ToString();
+            
+            switch (Filtertxt)
+            {
+                case "No Cover":
+                    SearchCmd += "Has_Cover <> 'Yes'";// + (txt_Artist.Text != "" ? " Artist Like '%" + txt_Artist.Text + "%'" : "") + (txt_Artist.Text != "" ? (txt_Title.Text != "" ? " AND " : "") : "") + (txt_Title.Text != "" ? " Song_Title Like '%" + txt_Title.Text + "%'" : "") + " ORDER BY Artist, Album_Year, Album, Song_Title ;";
+                    break;
+                case "No Preview":
+                    SearchCmd += "Has_Preview <> 'Yes'";
+                    break;
+                case "No Vocals":
+                    SearchCmd += "Has_Vocals <> 'Yes'";
+                    break;
+                case "No Section":
+                    SearchCmd += "Has_Sections <> 'Yes'";
+                    break;
+                case "No Bass":
+                    SearchCmd += "Has_Bass <> 'Yes'";
+                    break;
+                case "No Guitar":
+                    SearchCmd += "Has_Guitar <> 'Yes'";
+                    break;
+                case "Original":
+                    SearchCmd += "Is_Original = 'Yes'";
+                    break;
+                case "CDLC":
+                    SearchCmd += "Is_Original <> 'Yes'";
+                    break;
+                case "Selected":
+                    SearchCmd += "Selected = 'Yes'";
+                    break;
+                case "Beta":
+                    SearchCmd += "Is_Beta = 'Yes'";
+                    break;
+                case "Broken":
+                    SearchCmd += "Is_Broken = 'Yes'";
+                    break;
+                case "Alternate":
+                    SearchCmd += "Is_Alternate = 'Yes'";
+                    break;
+                case "With DD":
+                    SearchCmd += "Has_DD = 'Yes'";
+                    break;
+                case "No DD":
+                    SearchCmd += "Has_DD <> 'Yes'";
+                    break;
+                case "No Bass DD":
+                    SearchCmd += "Bass_Has_DD <> 'Yes'";
+                    break;
+                case "E Standard":
+                    SearchCmd += "Tunning = 'E Standard'";
+                    break;
+                case "Eb Standard":
+                    SearchCmd += "Tunning = 'Eb Standard'";
+                    break;
+                case "Drop D":
+                    SearchCmd += "Tunning = 'Drop D'";
+                    break;
+                case "Other Tunings":
+                    SearchCmd += "Tunning not in ('E Standard','Eb Standard','Drop D')";
+                    break;
+                case "With Bonus":
+                    SearchCmd += "Has_Bonus_Arrangement = 'Yes'";
+                    break;
+                //case "":
+                //    SearchCmd = "";
+                //    break;
+                default:
+                    break;
+            }
+
+            SearchCmd += " ORDER BY Artist, Album_Year, Album, Song_Title ;";
+            //MessageBox.Show(Filtertxt + SearchCmd);
+            try
+            {
+                //DataGridView1.Dispose();
+                dssx.Dispose();
+                Populate(ref DataGridView1, ref Main);//, ref bsPositions, ref bsBadges);
+                DataGridView1.EditingControlShowing += DataGridView1_EditingControlShowing;
+                DataGridView1.Refresh();
+            }
+            catch (System.IO.FileNotFoundException ee)
+            {
+                MessageBox.Show(ee.Message + "Can't run Filter ! " + SearchCmd);
+                //MessageBox.Show(ee.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
         }
     }
 }

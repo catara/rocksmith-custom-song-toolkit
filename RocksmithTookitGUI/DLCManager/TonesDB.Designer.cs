@@ -30,6 +30,7 @@
         {
             this.DataGridView1 = new System.Windows.Forms.DataGridView();
             this.Panel1 = new System.Windows.Forms.Panel();
+            this.btn_Close = new System.Windows.Forms.Button();
             this.txt_lastConversionDateTime = new RocksmithToolkitGUI.CueTextBox();
             this.chbx_AmpPedalKey = new System.Windows.Forms.ComboBox();
             this.chbx_AmpKnobValues = new System.Windows.Forms.ComboBox();
@@ -50,7 +51,7 @@
             this.button3 = new System.Windows.Forms.Button();
             this.chbx_Broken = new System.Windows.Forms.CheckBox();
             this.CheckBox1 = new System.Windows.Forms.CheckBox();
-            this.btn_Close = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridView1)).BeginInit();
             this.Panel1.SuspendLayout();
             this.SuspendLayout();
@@ -70,6 +71,7 @@
             // 
             // Panel1
             // 
+            this.Panel1.Controls.Add(this.button1);
             this.Panel1.Controls.Add(this.btn_Close);
             this.Panel1.Controls.Add(this.txt_lastConversionDateTime);
             this.Panel1.Controls.Add(this.chbx_AmpPedalKey);
@@ -96,6 +98,19 @@
             this.Panel1.Name = "Panel1";
             this.Panel1.Size = new System.Drawing.Size(1174, 114);
             this.Panel1.TabIndex = 41;
+            // 
+            // btn_Close
+            // 
+            this.btn_Close.BackColor = System.Drawing.Color.LightSteelBlue;
+            this.btn_Close.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Close.Location = new System.Drawing.Point(1006, 8);
+            this.btn_Close.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_Close.Name = "btn_Close";
+            this.btn_Close.Size = new System.Drawing.Size(72, 20);
+            this.btn_Close.TabIndex = 273;
+            this.btn_Close.Text = "Close";
+            this.btn_Close.UseVisualStyleBackColor = false;
+            this.btn_Close.Click += new System.EventHandler(this.btn_Close_Click);
             // 
             // txt_lastConversionDateTime
             // 
@@ -280,25 +295,22 @@
             this.CheckBox1.AutoSize = true;
             this.CheckBox1.Enabled = false;
             this.CheckBox1.Location = new System.Drawing.Point(-153, 96);
-            this.CheckBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.CheckBox1.Margin = new System.Windows.Forms.Padding(2);
             this.CheckBox1.Name = "CheckBox1";
             this.CheckBox1.Size = new System.Drawing.Size(139, 17);
             this.CheckBox1.TabIndex = 34;
             this.CheckBox1.Text = "Show only MessageBox";
             this.CheckBox1.UseVisualStyleBackColor = true;
             // 
-            // btn_Close
+            // button1
             // 
-            this.btn_Close.BackColor = System.Drawing.Color.LightSteelBlue;
-            this.btn_Close.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Close.Location = new System.Drawing.Point(1006, 8);
-            this.btn_Close.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_Close.Name = "btn_Close";
-            this.btn_Close.Size = new System.Drawing.Size(72, 20);
-            this.btn_Close.TabIndex = 273;
-            this.btn_Close.Text = "Close";
-            this.btn_Close.UseVisualStyleBackColor = false;
-            this.btn_Close.Click += new System.EventHandler(this.btn_Close_Click);
+            this.button1.Enabled = false;
+            this.button1.Location = new System.Drawing.Point(125, 78);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(120, 35);
+            this.button1.TabIndex = 274;
+            this.button1.Text = "Open File";
+            this.button1.UseVisualStyleBackColor = true;
             // 
             // TonesDB
             // 
@@ -342,5 +354,6 @@
         private System.Windows.Forms.ComboBox chbx_CabinetCategory;
         private CueTextBox txt_lastConversionDateTime;
         private System.Windows.Forms.Button btn_Close;
+        private System.Windows.Forms.Button button1;
     }
 }

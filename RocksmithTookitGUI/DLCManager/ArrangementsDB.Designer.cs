@@ -31,6 +31,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.DataGridView1 = new System.Windows.Forms.DataGridView();
             this.Panel1 = new System.Windows.Forms.Panel();
+            this.btn_Close = new System.Windows.Forms.Button();
             this.txt_RouteMask = new RocksmithToolkitGUI.CueTextBox();
             this.txt_TuningPitch = new RocksmithToolkitGUI.CueTextBox();
             this.chbx_ToneD = new System.Windows.Forms.ComboBox();
@@ -66,7 +67,8 @@
             this.txt_CDLC_ID = new RocksmithToolkitGUI.CueTextBox();
             this.txt_Arrangement_Name = new RocksmithToolkitGUI.CueTextBox();
             this.CheckBox1 = new System.Windows.Forms.CheckBox();
-            this.btn_Close = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridView1)).BeginInit();
             this.Panel1.SuspendLayout();
             this.SuspendLayout();
@@ -93,6 +95,8 @@
             // 
             // Panel1
             // 
+            this.Panel1.Controls.Add(this.button4);
+            this.Panel1.Controls.Add(this.button5);
             this.Panel1.Controls.Add(this.btn_Close);
             this.Panel1.Controls.Add(this.txt_RouteMask);
             this.Panel1.Controls.Add(this.txt_TuningPitch);
@@ -134,6 +138,19 @@
             this.Panel1.Name = "Panel1";
             this.Panel1.Size = new System.Drawing.Size(1177, 114);
             this.Panel1.TabIndex = 40;
+            // 
+            // btn_Close
+            // 
+            this.btn_Close.BackColor = System.Drawing.Color.LightSteelBlue;
+            this.btn_Close.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Close.Location = new System.Drawing.Point(1062, 48);
+            this.btn_Close.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_Close.Name = "btn_Close";
+            this.btn_Close.Size = new System.Drawing.Size(72, 20);
+            this.btn_Close.TabIndex = 273;
+            this.btn_Close.Text = "Close";
+            this.btn_Close.UseVisualStyleBackColor = false;
+            this.btn_Close.Click += new System.EventHandler(this.btn_Close_Click);
             // 
             // txt_RouteMask
             // 
@@ -318,7 +335,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(43, 16);
+            this.button3.Location = new System.Drawing.Point(40, -2);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(120, 35);
             this.button3.TabIndex = 114;
@@ -494,18 +511,25 @@
             this.CheckBox1.Text = "Show only MessageBox";
             this.CheckBox1.UseVisualStyleBackColor = true;
             // 
-            // btn_Close
+            // button4
             // 
-            this.btn_Close.BackColor = System.Drawing.Color.LightSteelBlue;
-            this.btn_Close.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Close.Location = new System.Drawing.Point(1062, 48);
-            this.btn_Close.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_Close.Name = "btn_Close";
-            this.btn_Close.Size = new System.Drawing.Size(72, 20);
-            this.btn_Close.TabIndex = 273;
-            this.btn_Close.Text = "Close";
-            this.btn_Close.UseVisualStyleBackColor = false;
-            this.btn_Close.Click += new System.EventHandler(this.btn_Close_Click);
+            this.button4.Enabled = false;
+            this.button4.Location = new System.Drawing.Point(40, 34);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(120, 35);
+            this.button4.TabIndex = 277;
+            this.button4.Text = "Open JSON";
+            this.button4.UseVisualStyleBackColor = true;
+            // 
+            // button5
+            // 
+            this.button5.Enabled = false;
+            this.button5.Location = new System.Drawing.Point(40, 74);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(120, 35);
+            this.button5.TabIndex = 276;
+            this.button5.Text = "Open XML";
+            this.button5.UseVisualStyleBackColor = true;
             // 
             // ArrangementsDB
             // 
@@ -566,5 +590,7 @@
         private CueTextBox txt_TuningPitch;
         private CueTextBox txt_RouteMask;
         private System.Windows.Forms.Button btn_Close;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button5;
     }
 }

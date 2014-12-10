@@ -110,6 +110,8 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_Arrangements = new System.Windows.Forms.Button();
             this.CheckBox1 = new System.Windows.Forms.CheckBox();
             this.DataGridView1 = new System.Windows.Forms.DataGridView();
+            this.cmb_Filter = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.Panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPath)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridView1)).BeginInit();
@@ -117,6 +119,8 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // Panel1
             // 
+            this.Panel1.Controls.Add(this.label1);
+            this.Panel1.Controls.Add(this.cmb_Filter);
             this.Panel1.Controls.Add(this.chbx_Has_Been_Corrected);
             this.Panel1.Controls.Add(this.btn_Close);
             this.Panel1.Controls.Add(this.lbl_NoRec);
@@ -246,7 +250,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // button15
             // 
-            this.button15.Location = new System.Drawing.Point(12, 155);
+            this.button15.Location = new System.Drawing.Point(10, 155);
             this.button15.Name = "button15";
             this.button15.Size = new System.Drawing.Size(120, 35);
             this.button15.TabIndex = 110;
@@ -344,7 +348,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // button14
             // 
             this.button14.Enabled = false;
-            this.button14.Location = new System.Drawing.Point(12, 117);
+            this.button14.Location = new System.Drawing.Point(10, 117);
             this.button14.Name = "button14";
             this.button14.Size = new System.Drawing.Size(120, 35);
             this.button14.TabIndex = 102;
@@ -762,7 +766,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // btn_SearchReset
             // 
-            this.btn_SearchReset.Location = new System.Drawing.Point(151, 80);
+            this.btn_SearchReset.Location = new System.Drawing.Point(150, 93);
             this.btn_SearchReset.Name = "btn_SearchReset";
             this.btn_SearchReset.Size = new System.Drawing.Size(51, 32);
             this.btn_SearchReset.TabIndex = 56;
@@ -790,7 +794,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // btn_Search
             // 
-            this.btn_Search.Location = new System.Drawing.Point(151, 18);
+            this.btn_Search.Location = new System.Drawing.Point(150, 31);
             this.btn_Search.Name = "btn_Search";
             this.btn_Search.Size = new System.Drawing.Size(51, 60);
             this.btn_Search.TabIndex = 51;
@@ -872,7 +876,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(12, 76);
+            this.button1.Location = new System.Drawing.Point(10, 80);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(120, 35);
             this.button1.TabIndex = 37;
@@ -882,7 +886,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // btn_Tones
             // 
-            this.btn_Tones.Location = new System.Drawing.Point(10, 47);
+            this.btn_Tones.Location = new System.Drawing.Point(10, 56);
             this.btn_Tones.Name = "btn_Tones";
             this.btn_Tones.Size = new System.Drawing.Size(122, 23);
             this.btn_Tones.TabIndex = 36;
@@ -892,7 +896,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // btn_Arrangements
             // 
-            this.btn_Arrangements.Location = new System.Drawing.Point(10, 18);
+            this.btn_Arrangements.Location = new System.Drawing.Point(10, 31);
             this.btn_Arrangements.Name = "btn_Arrangements";
             this.btn_Arrangements.Size = new System.Drawing.Size(122, 23);
             this.btn_Arrangements.TabIndex = 35;
@@ -924,6 +928,43 @@ namespace RocksmithToolkitGUI.DLCManager
             this.DataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick_1);
             this.DataGridView1.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick_1);
             this.DataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick_1);
+            // 
+            // cmb_Filter
+            // 
+            this.cmb_Filter.FormattingEnabled = true;
+            this.cmb_Filter.Items.AddRange(new object[] {
+            "No Guitar",
+            "No Preview",
+            "No Section",
+            "No Vocals",
+            "No Bass DD",
+            "No Bass",
+            "No DD",
+            "With DD",
+            "Alternate",
+            "Beta",
+            "Broken",
+            "Selected",
+            "With Bonus",
+            "Original",
+            "CDLC",
+            "Drop D",
+            "E Standard",
+            "Eb Standard",
+            "Other Tunings"});
+            this.cmb_Filter.Location = new System.Drawing.Point(84, 9);
+            this.cmb_Filter.Name = "cmb_Filter";
+            this.cmb_Filter.Size = new System.Drawing.Size(117, 21);
+            this.cmb_Filter.TabIndex = 275;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(19, 15);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(29, 13);
+            this.label1.TabIndex = 276;
+            this.label1.Text = "Filter";
             // 
             // MainDB
             // 
@@ -1016,5 +1057,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private Label lbl_NoRec;
         private Button btn_Close;
         private CheckBox chbx_Has_Been_Corrected;
+        private Label label1;
+        private ComboBox cmb_Filter;
     }
 }

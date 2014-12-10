@@ -193,7 +193,7 @@ namespace RocksmithToolkitGUI.DLCManager
             chbx_Additional_Manipualtions.SetItemCheckState(8, CheckState.Checked);
             //chbx_Additional_Manipualtions.SetItemCheckState(13, CheckState.Checked);
             //chbx_Additional_Manipualtions.SetItemCheckState(14, CheckState.Checked);
-            chbx_Additional_Manipualtions.SetItemCheckState(15, CheckState.Checked);
+            if (chbx_DebugB.Checked) chbx_Additional_Manipualtions.SetItemCheckState(15, CheckState.Checked); 
             chbx_Additional_Manipualtions.SetItemCheckState(16, CheckState.Checked);
             chbx_Additional_Manipualtions.SetItemCheckState(17, CheckState.Checked);
             chbx_Additional_Manipualtions.SetItemCheckState(22, CheckState.Checked);
@@ -911,7 +911,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //Clean Temp Folder
             if (chbx_CleanTemp.Checked)
             {
-                //clean import folder
+                //clear content of 0_import folder
                 System.IO.DirectoryInfo downloadedMessageInfo = new DirectoryInfo(Temp_Path_Import);
                 foreach (FileInfo file in downloadedMessageInfo.GetFiles())
                 {
@@ -922,17 +922,17 @@ namespace RocksmithToolkitGUI.DLCManager
                     if (dir.Name != "0_import" && dir.Name != "0_old" && dir.Name != "0_broken" && dir.Name != "0_duplicate") dir.Delete(true);
                 }
 
-                //clean app working folders 
+                //clean app working folders 0 folder
                 //{
-                //System.IO.DirectoryInfo downloadedMessageInfo2 = new DirectoryInfo(txt_TempPath.Text);
-                //foreach (FileInfo file in downloadedMessageInfo2.GetFiles())
-                //{
-                //    file.Delete();
-                //}
-                //foreach (DirectoryInfo dir in downloadedMessageInfo2.GetDirectories())
-                //{
-                //    if (dir.Name != "0_import" && dir.Name != "0_old" && dir.Name != "0_broken" && dir.Name != "0_duplicate") dir.Delete(true);
-                //}
+                System.IO.DirectoryInfo downloadedMessageInfo2 = new DirectoryInfo(txt_TempPath.Text);
+                foreach (FileInfo file in downloadedMessageInfo2.GetFiles())
+                {
+                    file.Delete();
+                }
+                foreach (DirectoryInfo dir in downloadedMessageInfo2.GetDirectories())
+                {
+                    if (dir.Name != "0_import" && dir.Name != "0_old" && dir.Name != "0_broken" && dir.Name != "0_duplicate") dir.Delete(true);
+                }
                 //}
             }            
 
@@ -1220,6 +1220,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             //rtxt_StatisticsOnReadDLCs.Text = "2" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                             var DD = "No";
                             var Bass_Has_DD = "No";
+                            var sect1on = "Yes";
                             if (errr)
                             {
                                 //FIX for adding preview_preview_preview
@@ -1295,9 +1296,12 @@ namespace RocksmithToolkitGUI.DLCManager
                                 //calculate if has DD (Dynamic Dificulty)..if at least 1 track has a difficulty bigger than 1 then it has
                                 var xmlFiles = Directory.GetFiles(unpackedDir, "*.xml", SearchOption.AllDirectories);
                                 platform = FullPath.GetPlatform();
-
+                                var g = 0;
+                                List<string> clist = new List<string>();
+                                List<string> dlist = new List<string>();
                                 foreach (var xml in xmlFiles)
                                 {
+                                    g++;
                                     if (Path.GetFileNameWithoutExtension(xml).ToLower().Contains("vocal"))
                                         continue;
 
@@ -1311,14 +1315,41 @@ namespace RocksmithToolkitGUI.DLCManager
 
                                     //Bass_Has_DD
                                     //rtxt_StatisticsOnReadDLCs.Text = "\n chekin for BassDD" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                    var manifestFunctions1 = new ManifestFunctions(platform.version);
                                     if (Path.GetFileNameWithoutExtension(xml).ToLower().Contains("bass"))
                                     {
                                         //rtxt_StatisticsOnReadDLCs.Text = "\n still chekin for BassDD" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                         platform.version = RocksmithToolkitLib.GameVersion.RS2014;
                                         Song2014 xmlContent1 = Song2014.LoadFromFile(xml);
-                                        var manifestFunctions1 = new ManifestFunctions(platform.version);
+                                        
                                         if (manifestFunctions1.GetMaxDifficulty(xmlContent1) > 1)
                                             Bass_Has_DD = "Yes";
+                                    }
+
+                                    //Get sections and lastconvdate
+                                    var json = Directory.GetFiles(unpackedDir, String.Format("*{0}.json", Path.GetFileNameWithoutExtension(xml)), SearchOption.AllDirectories);
+                                    if (json.Length > 0 && g==1)
+                                    {
+                                        foreach (var fl in json)
+                                        {
+                                            if (Path.GetFileNameWithoutExtension(fl).ToLower().Contains("bass") || Path.GetFileNameWithoutExtension(fl).ToLower().Contains("lead") || Path.GetFileNameWithoutExtension(fl).ToLower().Contains("rhythm") || Path.GetFileNameWithoutExtension(fl).ToLower().Contains("combo"))
+                                            {
+                                                Attributes2014 attr = Manifest2014<Attributes2014>.LoadFromFile(fl).Entries.ToArray()[0].Value.ToArray()[0].Value;
+                                                manifestFunctions1.GenerateSectionData(attr, xmlContent);
+                                                rtxt_StatisticsOnReadDLCs.Text = Path.GetFileNameWithoutExtension(fl).ToLower() +" json lastconv date: " + attr.LastConversionDateTime + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                                rtxt_StatisticsOnReadDLCs.Text = json.Length+"sections: " + attr.Sections.Count + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                                if (attr.Sections.Count == 0) sect1on = "No";
+                                                clist.Add(attr.LastConversionDateTime);
+                                                dlist.Add((attr.Sections.Count>0 ? "Yes" : "No"));
+                                                //rtxt_StatisticsOnReadDLCs.Text = "techniques count: " + attr.Techniques.Count + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                            }
+                                            else
+                                            {
+                                                rtxt_StatisticsOnReadDLCs.Text = "no section/lastconvdate"  + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                                clist.Add("");
+                                                dlist.Add( "No");
+                                            }
+                                        }
                                     }
                                 }
 
@@ -1768,7 +1799,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                     command.Parameters.AddWithValue("@param27", ((Rhythm != "") ? Rhythm : "No"));
                                     command.Parameters.AddWithValue("@param28", ((Combo != "") ? Combo : "No"));
                                     command.Parameters.AddWithValue("@param29", ((Vocalss != "") ? Vocalss : "No"));
-                                    command.Parameters.AddWithValue("@param30", "sect1on");
+                                    command.Parameters.AddWithValue("@param30", sect1on);
                                     command.Parameters.AddWithValue("@param31", ((info.AlbumArtPath != "") ? "Yes" : "No"));
                                     command.Parameters.AddWithValue("@param32", ((info.OggPreviewPath != null) ? "Yes" : "No"));
                                     command.Parameters.AddWithValue("@param33", Tones_Custom);
@@ -1928,7 +1959,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                     command.Parameters.AddWithValue("@param27", ((Rhythm != "") ? Rhythm : "No"));
                                     command.Parameters.AddWithValue("@param28", ((Combo != "") ? Combo : "No"));
                                     command.Parameters.AddWithValue("@param29", ((Vocalss != "") ? Vocalss : "No"));
-                                    command.Parameters.AddWithValue("@param30", "sect1on");
+                                    command.Parameters.AddWithValue("@param30", sect1on);
                                     command.Parameters.AddWithValue("@param31", ((info.AlbumArtPath != "") ? "Yes" : "No"));
                                     command.Parameters.AddWithValue("@param32", ((info.OggPreviewPath != null) ? "Yes" : "No"));
                                     command.Parameters.AddWithValue("@param33", Tones_Custom);
@@ -2061,11 +2092,13 @@ namespace RocksmithToolkitGUI.DLCManager
                                             command.CommandText += "PluckedType, ";
                                             command.CommandText += "RouteMask,";
                                             command.CommandText += "XMLFile_Hash,";
-                                            command.CommandText += "SNGFileHash";
+                                            command.CommandText += "SNGFileHash,";
+                                            command.CommandText += "lastConversionDateTime,";
+                                            command.CommandText += "Has_Sections";
                                             command.CommandText += ") VALUES(@param1,@param2,@param3,@param4,@param5,@param6,@param7,@param8,@param9";
                                             command.CommandText += ",@param10,@param11,@param12,@param13,@param14,@param15,@param16,@param17,@param18,@param19";
                                             command.CommandText += ",@param20,@param21,@param22,@param23,@param24,@param25,@param26,@param27,@param28,@param29";
-                                            command.CommandText += ",@param30,@param31,@param32,@param33,@param34";
+                                            command.CommandText += ",@param30,@param31,@param32,@param33,@param34,@param35,@param36";
                                             command.CommandText += ")";
                                             command.Parameters.AddWithValue("@param1", CDLC_ID);
                                             command.Parameters.AddWithValue("@param2", arg.Name);
@@ -2101,6 +2134,8 @@ namespace RocksmithToolkitGUI.DLCManager
                                             command.Parameters.AddWithValue("@param32", (arg.RouteMask.ToString() ?? DBNull.Value.ToString()));
                                             command.Parameters.AddWithValue("@param33", (alist[n].ToString() ?? DBNull.Value.ToString()));
                                             command.Parameters.AddWithValue("@param34", (blist[n].ToString() ?? DBNull.Value.ToString()));
+                                            command.Parameters.AddWithValue("@param35", (clist[n].ToString() ?? DBNull.Value.ToString()));
+                                            command.Parameters.AddWithValue("@param36", (dlist[n].ToString() ?? DBNull.Value.ToString()));
                                             n++;
 
                                             //EXECUTE SQL/INSERT
@@ -2767,14 +2802,14 @@ namespace RocksmithToolkitGUI.DLCManager
                                                                                                                                                    //var unpackedDir = Packer.Unpack(FullPath, Temp_Path_Import, true, true, false);
                 var packagePlatform = file.Folder_Name.GetPlatform();
                 // REORGANIZE
-                rtxt_StatisticsOnReadDLCs.Text = "...0.1.." + file.Folder_Name + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                //rtxt_StatisticsOnReadDLCs.Text = "...0.1.." + file.Folder_Name + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                 var structured = ConfigRepository.Instance().GetBoolean("creator_structured");
                 //if (structured)
                 //file.Folder_Name = DLCPackageData.DoLikeProject(file.Folder_Name);
                 // LOAD DATA
-                rtxt_StatisticsOnReadDLCs.Text = "...0.5.." + file.Folder_Name + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                //rtxt_StatisticsOnReadDLCs.Text = "...0.5.." + file.Folder_Name + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                info = DLCPackageData.LoadFromFolder(file.Folder_Name, packagePlatform);
-               rtxt_StatisticsOnReadDLCs.Text = "...1.."+ file.Folder_Name + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+               //rtxt_StatisticsOnReadDLCs.Text = "...1.."+ file.Folder_Name + "\n" + rtxt_StatisticsOnReadDLCs.Text;
 
                 var xmlFiles = Directory.GetFiles(file.Folder_Name, "*.xml", SearchOption.AllDirectories);
                 var platform = file.Folder_Name.GetPlatform();
@@ -2782,12 +2817,15 @@ namespace RocksmithToolkitGUI.DLCManager
                 {
                     foreach (var xml in xmlFiles)
                     {
+                        if (chbx_Additional_Manipualtions.GetItemChecked(12) || chbx_Additional_Manipualtions.GetItemChecked(26))
                         //ADD DD
                         if (
-                            (chbx_Additional_Manipualtions.GetItemChecked(12) && !Path.GetFileNameWithoutExtension(xml).ToLower().Contains(".old")
-                            && ((Path.GetFileNameWithoutExtension(xml).ToLower().Contains("lead") || Path.GetFileNameWithoutExtension(xml).ToLower().Contains("combo") || Path.GetFileNameWithoutExtension(xml).ToLower().Contains("rthythm")) && file.Has_DD == "No")
-                            || (Path.GetFileNameWithoutExtension(xml).ToLower().Contains("bass") && file.Has_BassDD == "No")) || 
-                            (chbx_Additional_Manipualtions.GetItemChecked(26) && (Path.GetFileNameWithoutExtension(xml).ToLower().Contains("lead") || Path.GetFileNameWithoutExtension(xml).ToLower().Contains("combo") || Path.GetFileNameWithoutExtension(xml).ToLower().Contains("rthythm"))
+                            (//chbx_Additional_Manipualtions.GetItemChecked(12)
+                            false && !Path.GetFileNameWithoutExtension(xml).ToLower().Contains(".old")
+                            && ((Path.GetFileNameWithoutExtension(xml).ToLower().Contains("lead") || Path.GetFileNameWithoutExtension(xml).ToLower().Contains("combo") || Path.GetFileNameWithoutExtension(xml).ToLower().Contains("rthythm")) && file.Has_DD == "No") || (Path.GetFileNameWithoutExtension(xml).ToLower().Contains("bass") && file.Has_BassDD == "No")
+                            )
+                            || //chbx_Additional_Manipualtions.GetItemChecked(26)
+                            ( false && (Path.GetFileNameWithoutExtension(xml).ToLower().Contains("lead") || Path.GetFileNameWithoutExtension(xml).ToLower().Contains("combo") || Path.GetFileNameWithoutExtension(xml).ToLower().Contains("rthythm"))
                             && file.Has_DD=="No" && file.Has_Guitar == "Yes" && !Path.GetFileNameWithoutExtension(xml).ToLower().Contains(".old")
                             )
                            )
@@ -2795,7 +2833,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             File.Copy(xml, xml + ".old", true);
                                 var json = xml.Replace("EOF", "Toolkit").Replace(".xml", ".json");
                                 File.Copy(json, json + ".old", true);
-                                rtxt_StatisticsOnReadDLCs.Text = "...." + Path.GetFileNameWithoutExtension(xml) + "...Removing from Original using DDC tool" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                rtxt_StatisticsOnReadDLCs.Text = chbx_Additional_Manipualtions.GetItemChecked(12).ToString()+ chbx_Additional_Manipualtions.GetItemChecked(26).ToString()+"...." + Path.GetFileNameWithoutExtension(xml) + "...Adding DD using DDC tool" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                 var startInfo = new ProcessStartInfo();
 
                                 var r = String.Format(" -m \"{0}\"", Path.GetFullPath("ddc\\ddc_5_max_levels.xml"));
@@ -2821,8 +2859,12 @@ namespace RocksmithToolkitGUI.DLCManager
                                     //consoleOutput = DDC.StandardOutput.ReadToEnd();
                                     //consoleOutput += DDC.StandardError.ReadToEnd();
                                     DDC.WaitForExit(1000 * 60 * 15); //wait 15 minutes
+                                    if (DDC.ExitCode > 0 ) rtxt_StatisticsOnReadDLCs.Text = "Issues when adding DD !" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                 }
+                            
+
                         }
+
                         //REMOVE DD
                         //rtxt_StatisticsOnReadDLCs.Text = "...=.." + xml + "\n\n" + rtxt_StatisticsOnReadDLCs.Text;
                         if ((Path.GetFileNameWithoutExtension(xml).ToLower().Contains("bass") && file.Has_BassDD=="Yes" && !Path.GetFileNameWithoutExtension(xml).ToLower().Contains(".old") && chbx_Additional_Manipualtions.GetItemChecked(5))
@@ -2836,7 +2878,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             var json=xml.Replace("EOF","Toolkit").Replace(".xml",".json");
                             File.Copy(json, json + ".old", true);
 
-                            rtxt_StatisticsOnReadDLCs.Text = "...."+Path.GetFileNameWithoutExtension(xml)+"...Removing from Original using DDC tool" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                            rtxt_StatisticsOnReadDLCs.Text = "...."+Path.GetFileNameWithoutExtension(xml)+"...Removing DD using DDC tool" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                             var startInfo = new ProcessStartInfo();
 
                             var r = String.Format(" -m \"{0}\"", Path.GetFullPath("ddc\\ddc_dd_remover.xml"));
@@ -2863,13 +2905,13 @@ namespace RocksmithToolkitGUI.DLCManager
                                 //consoleOutput = DDC.StandardOutput.ReadToEnd();
                                 //consoleOutput += DDC.StandardError.ReadToEnd();
                                 DDC.WaitForExit(1000 * 60 * 15); //wait 15 minutes
-                                //rtxt_StatisticsOnReadDLCs.Text = "="+file.Has_BassDD+"...DDR: " + DDC.ExitCode + "----+-" + file.Folder_Name + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                rtxt_StatisticsOnReadDLCs.Text = "HAS BASS="+file.Has_BassDD+"...DDEXIT CODE: " + DDC.ExitCode + "----+-" + file.Folder_Name+"++++"+ platform.version +"___"+ RocksmithToolkitLib.GameVersion.RS2014 + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                 if (DDC.ExitCode > 0 && file.Is_Original == "No") rtxt_StatisticsOnReadDLCs.Text = "Issues at CDLC Bass DD removal!" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                 if (file.Is_Original=="Yes")
                                 { //http://code.google.com/p/rocksmith-custom-song-creator/issues/detail?id=60
-                                    if (platform.version == RocksmithToolkitLib.GameVersion.RS2014)
-                                        rtxt_StatisticsOnReadDLCs.Text = "...Removing from Original using own logic" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                                    {
+                                    //if (platform.version == RocksmithToolkitLib.GameVersion.RS2014)                                        
+                                    //{
+                                        rtxt_StatisticsOnReadDLCs.Text = "...Removing DD from Original using own logic" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                        // xml = Directory.GetFiles(unpackedDir, String.Format("*{0}.json", Path.GetFileNameWithoutExtension(json)), SearchOption.AllDirectories);
                                         if (xml.Length > 0)
                                         {
@@ -3087,14 +3129,14 @@ namespace RocksmithToolkitGUI.DLCManager
                                                 textfile = textfile.Replace("\"MaxPhraseDifficulty\": " + n + ",", "\"MaxPhraseDifficulty\": 0,");
                                             }
                                             File.WriteAllText(json, textfile);
-
-                                        }
+                                            //rtxt_StatisticsOnReadDLCs.Text = "...DD changes written to file" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                        //}
                                     }
                                 }
                                 file.Has_BassDD = "No";
                             }
 
-                            //remove altough original or to old dd
+                            //remove altough original or t0o old dd
                             platform.version = RocksmithToolkitLib.GameVersion.RS2014;
                             Song2014 xmlContent = Song2014.LoadFromFile(xml);
                             var manifestFunctions = new ManifestFunctions(platform.version);
@@ -3552,3 +3594,4 @@ namespace RocksmithToolkitGUI.DLCManager
         }
     }
 }
+

@@ -1301,16 +1301,60 @@ namespace RocksmithToolkitGUI.DLCManager
                                 List<string> dlist = new List<string>();
                                 foreach (var xml in xmlFiles)
                                 {
-                                    g++;
                                     if (Path.GetFileNameWithoutExtension(xml).ToLower().Contains("vocal"))
-                                        continue;
+                                    {
+                                        
+                                        clist.Add("");
+                                        dlist.Add("No");continue;
+                                    }
+
 
                                     if (Path.GetFileNameWithoutExtension(xml).ToLower().Contains("showlight"))
-                                        continue;
+                                    {
+                                        
+                                        clist.Add("");
+                                        dlist.Add("No");continue;
+                                    }
 
+                                   // rtxt_StatisticsOnReadDLCs.Text = "ffff\n" + rtxt_StatisticsOnReadDLCs.Text;
                                     platform.version = RocksmithToolkitLib.GameVersion.RS2014;
+                                    //rtxt_StatisticsOnReadDLCs.Text = "ddf\n" + rtxt_StatisticsOnReadDLCs.Text;
                                     Song2014 xmlContent = Song2014.LoadFromFile(xml);
+                                    //rtxt_StatisticsOnReadDLCs.Text = "xxx\n" + rtxt_StatisticsOnReadDLCs.Text;
                                     var manifestFunctions = new ManifestFunctions(platform.version);
+                                    //rtxt_StatisticsOnReadDLCs.Text = "aaa\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                    //Get sections and lastconvdate
+                                    var json = Directory.GetFiles(unpackedDir, String.Format("*{0}.json", Path.GetFileNameWithoutExtension(xml)), SearchOption.AllDirectories);
+                                    //rtxt_StatisticsOnReadDLCs.Text = json.Length + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                    if (json.Length > 0)//&& g==1
+                                    {
+                                        foreach (var fl in json)
+                                        {
+                                            rtxt_StatisticsOnReadDLCs.Text = Path.GetFileNameWithoutExtension(fl).ToLower() + " name " +"\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                                
+                                            if (Path.GetFileNameWithoutExtension(fl).ToLower().Contains("bass") || Path.GetFileNameWithoutExtension(fl).ToLower().Contains("lead") || Path.GetFileNameWithoutExtension(fl).ToLower().Contains("rhythm") || Path.GetFileNameWithoutExtension(fl).ToLower().Contains("combo"))
+                                            {
+                                                Attributes2014 attr = Manifest2014<Attributes2014>.LoadFromFile(fl).Entries.ToArray()[0].Value.ToArray()[0].Value;
+                                                manifestFunctions.GenerateSectionData(attr, xmlContent);
+                                                //rtxt_StatisticsOnReadDLCs.Text = Path.GetFileNameWithoutExtension(fl).ToLower() + " json lastconv date: " + attr.LastConversionDateTime + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                                //rtxt_StatisticsOnReadDLCs.Text = json.Length + "sections: " + attr.Sections.Count + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                                if (attr.Sections.Count == 0) sect1on = "No";
+                                                clist.Add(attr.LastConversionDateTime);
+                                                dlist.Add((attr.Sections.Count > 0 ? "Yes" : "No"));
+                                                //rtxt_StatisticsOnReadDLCs.Text = "techniques count: " + attr.Techniques.Count + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                            }
+                                            else
+                                            {
+                                                rtxt_StatisticsOnReadDLCs.Text = "no section/lastconvdate" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                                clist.Add("");
+                                                dlist.Add("No");
+                                            }
+                                        }
+                                    }
+
+                                    g++;
+
+
                                     if (manifestFunctions.GetMaxDifficulty(xmlContent) > 1) DD = "Yes";
 
                                     //Bass_Has_DD
@@ -1324,33 +1368,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                         
                                         if (manifestFunctions1.GetMaxDifficulty(xmlContent1) > 1)
                                             Bass_Has_DD = "Yes";
-                                    }
-
-                                    //Get sections and lastconvdate
-                                    var json = Directory.GetFiles(unpackedDir, String.Format("*{0}.json", Path.GetFileNameWithoutExtension(xml)), SearchOption.AllDirectories);
-                                    if (json.Length > 0 && g==1)
-                                    {
-                                        foreach (var fl in json)
-                                        {
-                                            if (Path.GetFileNameWithoutExtension(fl).ToLower().Contains("bass") || Path.GetFileNameWithoutExtension(fl).ToLower().Contains("lead") || Path.GetFileNameWithoutExtension(fl).ToLower().Contains("rhythm") || Path.GetFileNameWithoutExtension(fl).ToLower().Contains("combo"))
-                                            {
-                                                Attributes2014 attr = Manifest2014<Attributes2014>.LoadFromFile(fl).Entries.ToArray()[0].Value.ToArray()[0].Value;
-                                                manifestFunctions1.GenerateSectionData(attr, xmlContent);
-                                                rtxt_StatisticsOnReadDLCs.Text = Path.GetFileNameWithoutExtension(fl).ToLower() +" json lastconv date: " + attr.LastConversionDateTime + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                                                rtxt_StatisticsOnReadDLCs.Text = json.Length+"sections: " + attr.Sections.Count + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                                                if (attr.Sections.Count == 0) sect1on = "No";
-                                                clist.Add(attr.LastConversionDateTime);
-                                                dlist.Add((attr.Sections.Count>0 ? "Yes" : "No"));
-                                                //rtxt_StatisticsOnReadDLCs.Text = "techniques count: " + attr.Techniques.Count + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                                            }
-                                            else
-                                            {
-                                                rtxt_StatisticsOnReadDLCs.Text = "no section/lastconvdate"  + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                                                clist.Add("");
-                                                dlist.Add( "No");
-                                            }
-                                        }
-                                    }
+                                    }                                    
                                 }
 
                                 // READ ARRANGEMENTS

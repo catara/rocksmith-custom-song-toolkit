@@ -109,6 +109,7 @@
             this.chbx_HomeDBG = new System.Windows.Forms.CheckBox();
             this.chbx_DefaultDB = new System.Windows.Forms.CheckBox();
             this.mainTableAdapter = new RocksmithToolkitGUI.DefaultDBDataSetTableAdapters.MainTableAdapter();
+            this.chbx_HomeDGBVM = new System.Windows.Forms.CheckBox();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.defaultDBDataSet)).BeginInit();
@@ -267,6 +268,7 @@
             "29. If Original don\'t add QAs(NOs;DLC/ORIG;etc.) except for File Names",
             "30. When NOT importing a duplicate Move it to _duplicate",
             "31. When importing delete identical duplicates(same hash/filesize)",
+            "32. When removind DD use internal logic not DDC",
             "<IMPORT>",
             "<@Pack>"});
             this.chbx_Additional_Manipualtions.Location = new System.Drawing.Point(240, 88);
@@ -1138,11 +1140,11 @@
             // chbx_WorkDGB
             // 
             this.chbx_WorkDGB.AutoSize = true;
-            this.chbx_WorkDGB.Location = new System.Drawing.Point(455, 3);
+            this.chbx_WorkDGB.Location = new System.Drawing.Point(494, 3);
             this.chbx_WorkDGB.Name = "chbx_WorkDGB";
-            this.chbx_WorkDGB.Size = new System.Drawing.Size(78, 17);
+            this.chbx_WorkDGB.Size = new System.Drawing.Size(52, 17);
             this.chbx_WorkDGB.TabIndex = 330;
-            this.chbx_WorkDGB.Text = "Work DBG";
+            this.chbx_WorkDGB.Text = "Work";
             this.chbx_WorkDGB.UseVisualStyleBackColor = true;
             this.chbx_WorkDGB.Visible = false;
             this.chbx_WorkDGB.CheckedChanged += new System.EventHandler(this.chbx_WorkDGB_CheckedChanged);
@@ -1152,9 +1154,9 @@
             this.chbx_HomeDBG.AutoSize = true;
             this.chbx_HomeDBG.Location = new System.Drawing.Point(372, 3);
             this.chbx_HomeDBG.Name = "chbx_HomeDBG";
-            this.chbx_HomeDBG.Size = new System.Drawing.Size(80, 17);
+            this.chbx_HomeDBG.Size = new System.Drawing.Size(54, 17);
             this.chbx_HomeDBG.TabIndex = 331;
-            this.chbx_HomeDBG.Text = "Home DBG";
+            this.chbx_HomeDBG.Text = "Home";
             this.chbx_HomeDBG.UseVisualStyleBackColor = true;
             this.chbx_HomeDBG.Visible = false;
             this.chbx_HomeDBG.CheckedChanged += new System.EventHandler(this.chbx_HomeDBG_CheckedChanged);
@@ -1175,10 +1177,23 @@
             // 
             this.mainTableAdapter.ClearBeforeFill = true;
             // 
+            // chbx_HomeDGBVM
+            // 
+            this.chbx_HomeDGBVM.AutoSize = true;
+            this.chbx_HomeDGBVM.Location = new System.Drawing.Point(424, 3);
+            this.chbx_HomeDGBVM.Name = "chbx_HomeDGBVM";
+            this.chbx_HomeDGBVM.Size = new System.Drawing.Size(70, 17);
+            this.chbx_HomeDGBVM.TabIndex = 333;
+            this.chbx_HomeDGBVM.Text = "HomeVM";
+            this.chbx_HomeDGBVM.UseVisualStyleBackColor = true;
+            this.chbx_HomeDGBVM.Visible = false;
+            this.chbx_HomeDGBVM.CheckedChanged += new System.EventHandler(this.chbx_HomeDGBVM_CheckedChanged);
+            // 
             // DLCManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.chbx_HomeDGBVM);
             this.Controls.Add(this.chbx_DefaultDB);
             this.Controls.Add(this.chbx_HomeDBG);
             this.Controls.Add(this.chbx_WorkDGB);
@@ -1342,5 +1357,6 @@
         private System.Windows.Forms.CheckBox chbx_DefaultDB;
         private DefaultDBDataSet defaultDBDataSet;
         private DefaultDBDataSetTableAdapters.MainTableAdapter mainTableAdapter;
+        private System.Windows.Forms.CheckBox chbx_HomeDGBVM;
     }
 }

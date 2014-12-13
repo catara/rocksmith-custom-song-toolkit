@@ -268,6 +268,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 chbx_CleanDB.Checked = true;
                 chbx_HomeDBG.Visible = true;
                 chbx_WorkDGB.Visible = true;
+                chbx_HomeDGBVM.Visible = true;
                 //txt_RocksmithDLCPath.Text = "C:\\Users\\ladmin\\Dropbox\\OneDrive\\dlc\\0PC";
                 //txt_DBFolder.Text = "C:\\Users\\ladmin\\Dropbox\\OneDrive\\dlc";
                 //txt_TempPath.Text = "C:\\Users\\ladmin\\Dropbox\\OneDrive\\dlc\\0PC\\0";
@@ -289,6 +290,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 //txt_TempPath.Text = "";
                 chbx_HomeDBG.Visible = false;
                 chbx_WorkDGB.Visible = false;
+                chbx_HomeDGBVM.Visible = false;
             }
         }
 
@@ -1137,7 +1139,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             }
                             errr = true;
                             var unpackedDir = "";
-                            //rtxt_StatisticsOnReadDLCs.Text = "1" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                            rtxt_StatisticsOnReadDLCs.Text = "1" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                             var packagePlatform = FullPath.GetPlatform();
                             var Available_Duplicate = "No";
                             var Available_Old = "No";
@@ -1169,6 +1171,8 @@ namespace RocksmithToolkitGUI.DLCManager
 
                             // REORGANIZE
                             var platform = FullPath.GetPlatform();
+                            rtxt_StatisticsOnReadDLCs.Text = unpackedDir + " reorg...\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                
                             try
                             {
                                 var structured = ConfigRepository.Instance().GetBoolean("creator_structured");
@@ -1179,6 +1183,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             }
                             catch (Exception ex)
                             {
+                                rtxt_StatisticsOnReadDLCs.Text = "1111 ...\n" + rtxt_StatisticsOnReadDLCs.Text;
                                 var jsonFiles = Directory.GetFiles(unpackedDir, "*.json", SearchOption.AllDirectories);
                                 foreach (var json in jsonFiles)
                                 {
@@ -2913,19 +2918,24 @@ namespace RocksmithToolkitGUI.DLCManager
                             startInfo.CreateNoWindow = true;
                             startInfo.RedirectStandardOutput = true;
                             startInfo.RedirectStandardError = true;
-
+                            var DDCExitCode = 5;
                             using (var DDC = new Process())
                             {
                                 // rtxt_StatisticsOnReadDLCs.Text = "...1" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
 
-                                DDC.StartInfo = startInfo;
-                                DDC.Start();
-                                //consoleOutput = DDC.StandardOutput.ReadToEnd();
-                                //consoleOutput += DDC.StandardError.ReadToEnd();
-                                DDC.WaitForExit(1000 * 60 * 15); //wait 15 minutes
-                                rtxt_StatisticsOnReadDLCs.Text = "HAS BASS="+file.Has_BassDD+"...DDEXIT CODE: " + DDC.ExitCode + "----+-" + file.Folder_Name+"++++"+ platform.version +"___"+ RocksmithToolkitLib.GameVersion.RS2014 + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                if (!chbx_Additional_Manipualtions.GetItemChecked(31))
+                                {
+                                    DDC.StartInfo = startInfo;
+                                    DDC.Start();
+                                    //consoleOutput = DDC.StandardOutput.ReadToEnd();
+                                    //consoleOutput += DDC.StandardError.ReadToEnd();
+                                    DDC.WaitForExit(1000 * 60 * 15); //wait 15 minutes
+                                    rtxt_StatisticsOnReadDLCs.Text = "HAS BASS=" + file.Has_BassDD + "...DDEXIT CODE: " + DDC.ExitCode + "----+-" + file.Folder_Name + "++++" + platform.version + "___" + RocksmithToolkitLib.GameVersion.RS2014 + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                }
+                                else DDCExitCode = 5;
                                 if (DDC.ExitCode > 0 && file.Is_Original == "No") rtxt_StatisticsOnReadDLCs.Text = "Issues at CDLC Bass DD removal!" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                                if (file.Is_Original=="Yes")
+                                
+                                if (file.Is_Original=="Yes" || DDCExitCode==5)
                                 { //http://code.google.com/p/rocksmith-custom-song-creator/issues/detail?id=60
                                     //if (platform.version == RocksmithToolkitLib.GameVersion.RS2014)                                        
                                     //{
@@ -3609,6 +3619,15 @@ namespace RocksmithToolkitGUI.DLCManager
         private void mainBindingSource_CurrentChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void chbx_HomeDGBVM_CheckedChanged(object sender, EventArgs e)
+        {
+            txt_RocksmithDLCPath.Text = "Z:\\HFS\\Users\\bogdan\\Dropbox\\OneDrive\\dlc\\0PC";
+            txt_DBFolder.Text = "Z:\\HFS\\Users\\bogdan\\Dropbox\\OneDrive\\dlc";
+            txt_TempPath.Text = "Z:\\HFS\\Users\\bogdan\\Dropbox\\OneDrive\\dlc\\0PC\\0";
+            chbx_CleanTemp.Checked = false;
+            chbx_CleanDB.Checked = false;
         }
     }
 }

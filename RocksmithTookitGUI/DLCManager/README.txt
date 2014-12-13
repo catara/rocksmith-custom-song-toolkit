@@ -43,7 +43,7 @@ Version History(release date):
 	0.2.0.4 (20.11) Redesign stats & Duplicates screen as an independendent form not a yes no cancel alert window
 	0.2.0.5 (01.12) Search screen prototype
 	0.2.0.6 (29.11) add save confirm for any save operation and add DLCID checks in all updates that mighht affect it WHERE (SELECT NO OTHER DLCNAME)
-	wip: 0.2.0.7 (29.12) (60%) New features: Add: has_section flag; 30 sec preview midsong; lastconversiondata field per each arrangement, MainDb filters
+	wip: 0.2.0.7 (29.12) (70%) New features: Add: has_section flag; 30 sec preview midsong; lastconversiondata field per each arrangement, MainDb filters
 	wip: 0.2.0.8 (20.12.2014) (10%) close bugs on Conversion to Ps3(nin hell) and analyse acuracy on conversion to ps3 (1979,7army..)
 	wip: 0.2.0.9 (22.12.2014)  (10%)remove bug on auto import if original
 	wip: 0.2.0.10 (24.12) (85%) full release (anyone can download and use the tool..no bugs..and all unimplemented featues disabled) DB independece/dependence on already provided 1, repack wo bugs, edit screens functional

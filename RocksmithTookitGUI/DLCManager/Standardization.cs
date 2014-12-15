@@ -328,7 +328,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private void button1_Click_1(object sender, EventArgs e)
         {
             DLCManager v1 = new DLCManager();
-            v1.Translation_And_Correction(DB_Path);
+            v1.Translation_And_Correction(DB_Path.Replace("\\Files.accdb\\Files.accdb", ""));
         }
 
         private void btn_CopyArtist2ArtistSort_Click(object sender, EventArgs e)

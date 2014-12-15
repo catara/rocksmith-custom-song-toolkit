@@ -107,6 +107,15 @@ namespace RocksmithToolkitGUI.DLCManager
             this.lbl_IDExisting = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
             this.btn_DecompressAll = new System.Windows.Forms.Button();
+            this.label27 = new System.Windows.Forms.Label();
+            this.label28 = new System.Windows.Forms.Label();
+            this.label29 = new System.Windows.Forms.Label();
+            this.label30 = new System.Windows.Forms.Label();
+            this.label31 = new System.Windows.Forms.Label();
+            this.label32 = new System.Windows.Forms.Label();
+            this.label33 = new System.Windows.Forms.Label();
+            this.lbl_diffCount = new System.Windows.Forms.Label();
+            this.chbx_IgnoreDupli = new System.Windows.Forms.CheckBox();
             this.txt_AlternateNo = new RocksmithToolkitGUI.CueTextBox();
             this.txt_Album = new RocksmithToolkitGUI.CueTextBox();
             this.txt_VersionExisting = new RocksmithToolkitGUI.CueTextBox();
@@ -158,14 +167,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_ArtistSortNew = new RocksmithToolkitGUI.CueTextBox();
             this.txt_TitleExisting = new RocksmithToolkitGUI.CueTextBox();
             this.txt_TitleNew = new RocksmithToolkitGUI.CueTextBox();
-            this.label27 = new System.Windows.Forms.Label();
-            this.label28 = new System.Windows.Forms.Label();
-            this.label29 = new System.Windows.Forms.Label();
-            this.label30 = new System.Windows.Forms.Label();
-            this.label31 = new System.Windows.Forms.Label();
-            this.label32 = new System.Windows.Forms.Label();
-            this.label33 = new System.Windows.Forms.Label();
-            this.lbl_diffCount = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPathNew)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPathExisting)).BeginInit();
             this.panel1.SuspendLayout();
@@ -836,6 +837,97 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_DecompressAll.UseVisualStyleBackColor = false;
             this.btn_DecompressAll.Click += new System.EventHandler(this.btn_DecompressAll_Click);
             // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label27.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label27.Location = new System.Drawing.Point(230, 13);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(89, 18);
+            this.label27.TabIndex = 328;
+            this.label27.Text = "Differences";
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(9, 60);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(27, 13);
+            this.label28.TabIndex = 329;
+            this.label28.Text = "Title";
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Location = new System.Drawing.Point(3, 84);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(33, 13);
+            this.label29.TabIndex = 330;
+            this.label29.Text = "TSort";
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(3, 110);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(33, 13);
+            this.label30.TabIndex = 331;
+            this.label30.Text = "ASort";
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Location = new System.Drawing.Point(15, 135);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(21, 13);
+            this.label31.TabIndex = 332;
+            this.label31.Text = "FN";
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Location = new System.Drawing.Point(560, 15);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(30, 13);
+            this.label32.TabIndex = 333;
+            this.label32.Text = "Artist";
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Location = new System.Drawing.Point(560, 36);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(36, 13);
+            this.label33.TabIndex = 334;
+            this.label33.Text = "Album";
+            // 
+            // lbl_diffCount
+            // 
+            this.lbl_diffCount.AutoSize = true;
+            this.lbl_diffCount.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.lbl_diffCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_diffCount.ForeColor = System.Drawing.Color.DarkRed;
+            this.lbl_diffCount.Location = new System.Drawing.Point(321, 6);
+            this.lbl_diffCount.Name = "lbl_diffCount";
+            this.lbl_diffCount.Size = new System.Drawing.Size(39, 26);
+            this.lbl_diffCount.TabIndex = 335;
+            this.lbl_diffCount.Text = "x/y";
+            this.lbl_diffCount.Visible = false;
+            // 
+            // chbx_IgnoreDupli
+            // 
+            this.chbx_IgnoreDupli.AutoSize = true;
+            this.chbx_IgnoreDupli.Checked = true;
+            this.chbx_IgnoreDupli.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chbx_IgnoreDupli.Enabled = false;
+            this.chbx_IgnoreDupli.Location = new System.Drawing.Point(366, 11);
+            this.chbx_IgnoreDupli.Name = "chbx_IgnoreDupli";
+            this.chbx_IgnoreDupli.Size = new System.Drawing.Size(157, 17);
+            this.chbx_IgnoreDupli.TabIndex = 336;
+            this.chbx_IgnoreDupli.Text = "Ignore remaining Duplicates";
+            this.chbx_IgnoreDupli.UseVisualStyleBackColor = true;
+            // 
             // txt_AlternateNo
             // 
             this.txt_AlternateNo.Cue = "No.";
@@ -1415,89 +1507,12 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_TitleNew.TabIndex = 217;
             this.txt_TitleNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // label27
-            // 
-            this.label27.AutoSize = true;
-            this.label27.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label27.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label27.Location = new System.Drawing.Point(230, 13);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(89, 18);
-            this.label27.TabIndex = 328;
-            this.label27.Text = "Differences";
-            // 
-            // label28
-            // 
-            this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(9, 60);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(27, 13);
-            this.label28.TabIndex = 329;
-            this.label28.Text = "Title";
-            // 
-            // label29
-            // 
-            this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(3, 84);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(33, 13);
-            this.label29.TabIndex = 330;
-            this.label29.Text = "TSort";
-            // 
-            // label30
-            // 
-            this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(3, 110);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(33, 13);
-            this.label30.TabIndex = 331;
-            this.label30.Text = "ASort";
-            // 
-            // label31
-            // 
-            this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(15, 135);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(21, 13);
-            this.label31.TabIndex = 332;
-            this.label31.Text = "FN";
-            // 
-            // label32
-            // 
-            this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(560, 15);
-            this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(30, 13);
-            this.label32.TabIndex = 333;
-            this.label32.Text = "Artist";
-            // 
-            // label33
-            // 
-            this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(560, 36);
-            this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(36, 13);
-            this.label33.TabIndex = 334;
-            this.label33.Text = "Album";
-            // 
-            // lbl_diffCount
-            // 
-            this.lbl_diffCount.AutoSize = true;
-            this.lbl_diffCount.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.lbl_diffCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_diffCount.ForeColor = System.Drawing.Color.DarkRed;
-            this.lbl_diffCount.Location = new System.Drawing.Point(321, 6);
-            this.lbl_diffCount.Name = "lbl_diffCount";
-            this.lbl_diffCount.Size = new System.Drawing.Size(39, 26);
-            this.lbl_diffCount.TabIndex = 335;
-            this.lbl_diffCount.Text = "x/y";
-            this.lbl_diffCount.Visible = false;
-            // 
             // DuplicatesManagement
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(766, 676);
+            this.Controls.Add(this.chbx_IgnoreDupli);
             this.Controls.Add(this.lbl_diffCount);
             this.Controls.Add(this.label33);
             this.Controls.Add(this.label32);
@@ -1766,5 +1781,6 @@ namespace RocksmithToolkitGUI.DLCManager
         private Label label32;
         private Label label33;
         private Label lbl_diffCount;
+        private CheckBox chbx_IgnoreDupli;
     }
 }

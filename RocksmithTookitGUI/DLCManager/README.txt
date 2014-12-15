@@ -24,9 +24,13 @@ ToDos:
 - duplicate original (toolkit, version,author missing logic)
 - duplicate description/comments are overritten for Existing
 - Include Standardization names into duplication checks
-- Add sections flag
 - Toolkit version flag does not sync to&from Github
 - Bin\debug folder content is needed
+- newer older option for alternate naming
+- versions underlinedon't seem to always work'
+- pin wish now last convtime at alternate comparision screen
+- standardization apply button has one too many files.acc
+- bug on inserting a new standardization 
 
 
 Version History(release date):

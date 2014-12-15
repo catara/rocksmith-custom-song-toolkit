@@ -40,6 +40,8 @@ namespace RocksmithToolkitGUI.DLCManager
         private void InitializeComponent()
         {
             this.Panel1 = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.cmb_Filter = new System.Windows.Forms.ComboBox();
             this.chbx_Has_Been_Corrected = new System.Windows.Forms.CheckBox();
             this.btn_Close = new System.Windows.Forms.Button();
             this.lbl_NoRec = new System.Windows.Forms.Label();
@@ -110,8 +112,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_Arrangements = new System.Windows.Forms.Button();
             this.CheckBox1 = new System.Windows.Forms.CheckBox();
             this.DataGridView1 = new System.Windows.Forms.DataGridView();
-            this.cmb_Filter = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.Panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPath)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridView1)).BeginInit();
@@ -119,6 +120,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // Panel1
             // 
+            this.Panel1.Controls.Add(this.label2);
             this.Panel1.Controls.Add(this.label1);
             this.Panel1.Controls.Add(this.cmb_Filter);
             this.Panel1.Controls.Add(this.chbx_Has_Been_Corrected);
@@ -195,6 +197,44 @@ namespace RocksmithToolkitGUI.DLCManager
             this.Panel1.Name = "Panel1";
             this.Panel1.Size = new System.Drawing.Size(1106, 202);
             this.Panel1.TabIndex = 3;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(19, 15);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(29, 13);
+            this.label1.TabIndex = 276;
+            this.label1.Text = "Filter";
+            // 
+            // cmb_Filter
+            // 
+            this.cmb_Filter.FormattingEnabled = true;
+            this.cmb_Filter.Items.AddRange(new object[] {
+            "No Guitar",
+            "No Preview",
+            "No Section",
+            "No Vocals",
+            "No Bass DD",
+            "No Bass",
+            "No DD",
+            "With DD",
+            "Alternate",
+            "Beta",
+            "Broken",
+            "Selected",
+            "With Bonus",
+            "Original",
+            "CDLC",
+            "Drop D",
+            "E Standard",
+            "Eb Standard",
+            "Other Tunings"});
+            this.cmb_Filter.Location = new System.Drawing.Point(84, 9);
+            this.cmb_Filter.Name = "cmb_Filter";
+            this.cmb_Filter.Size = new System.Drawing.Size(117, 21);
+            this.cmb_Filter.TabIndex = 275;
+            this.cmb_Filter.SelectedValueChanged += new System.EventHandler(this.cmb_Filter_SelectedValueChanged);
             // 
             // chbx_Has_Been_Corrected
             // 
@@ -776,11 +816,11 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_Description
             // 
-            this.txt_Description.Location = new System.Drawing.Point(802, 9);
+            this.txt_Description.Location = new System.Drawing.Point(804, 10);
             this.txt_Description.Name = "txt_Description";
             this.txt_Description.Size = new System.Drawing.Size(156, 69);
             this.txt_Description.TabIndex = 54;
-            this.txt_Description.Text = "Description";
+            this.txt_Description.Text = "";
             // 
             // chbx_Broken
             // 
@@ -929,42 +969,14 @@ namespace RocksmithToolkitGUI.DLCManager
             this.DataGridView1.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick_1);
             this.DataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick_1);
             // 
-            // cmb_Filter
+            // label2
             // 
-            this.cmb_Filter.FormattingEnabled = true;
-            this.cmb_Filter.Items.AddRange(new object[] {
-            "No Guitar",
-            "No Preview",
-            "No Section",
-            "No Vocals",
-            "No Bass DD",
-            "No Bass",
-            "No DD",
-            "With DD",
-            "Alternate",
-            "Beta",
-            "Broken",
-            "Selected",
-            "With Bonus",
-            "Original",
-            "CDLC",
-            "Drop D",
-            "E Standard",
-            "Eb Standard",
-            "Other Tunings"});
-            this.cmb_Filter.Location = new System.Drawing.Point(84, 9);
-            this.cmb_Filter.Name = "cmb_Filter";
-            this.cmb_Filter.Size = new System.Drawing.Size(117, 21);
-            this.cmb_Filter.TabIndex = 275;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(19, 15);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(29, 13);
-            this.label1.TabIndex = 276;
-            this.label1.Text = "Filter";
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(801, -2);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(60, 13);
+            this.label2.TabIndex = 277;
+            this.label2.Text = "Description";
             // 
             // MainDB
             // 
@@ -1059,5 +1071,6 @@ namespace RocksmithToolkitGUI.DLCManager
         private CheckBox chbx_Has_Been_Corrected;
         private Label label1;
         private ComboBox cmb_Filter;
+        private Label label2;
     }
 }

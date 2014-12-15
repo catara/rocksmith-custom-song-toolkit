@@ -260,7 +260,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                         {
                                             lastConversionDateTime_cur = GetTExtFromFile(arg.SongXml.File);
                                             lastConversionDateTime_exist = GetTExtFromFile(XmlFile);
-                                            txt_Description.Text = "tst";
+                                            //txt_Description.Text = "tst";
                                             if (arg.RouteMask.ToString() == "Bass")
                                             {
                                                 if (lastConversionDateTime_cur != lastConversionDateTime_exist) lbl_XMLBass.ForeColor = lbl_Reference.ForeColor;
@@ -666,8 +666,8 @@ namespace RocksmithToolkitGUI.DLCManager
         }
         public void exit()
         {
-            Author = txt_AuthorNew.Text;
-            Version = txt_VersionNew.Text;
+            Author = (txt_AuthorNew.Text =="" ? "Custom Song Creator":txt_AuthorNew.Text);
+            Version = (txt_VersionNew.Text == "" ? "1" : txt_VersionNew.Text);
             DLCID = txt_DLCIDNew.Text;
             Title = txt_TitleNew.Text;
             Comment = txt_Comment.Text;
@@ -704,7 +704,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
                 {
                     sel = "UPDATE Main SET Artist=\"" + ar + "\", Artist_Sort=\"" + txt_ArtistSortExisting.Text + "\", Album=\"" + al + "\", Song_Title=\"" + txt_TitleExisting.Text;
-                    sel += "\", Song_Title_Sort=\"" + txt_TitleSortExisting.Text + "\", Author=\"" + txt_AuthorExisting.Text + "\", Version=\"" + txt_VersionExisting.Text + "\", DLC_Name=\"" + txt_DLCIDExisting.Text;
+                    sel += "\", Song_Title_Sort=\"" + txt_TitleSortExisting.Text + "\", Author=\"" + (txt_AuthorExisting.Text =="" ? "Custom Song Creator" :txt_AuthorExisting.Text)+ "\", Version=\"" + (txt_VersionExisting.Text=="" ? "1":txt_VersionExisting.Text) + "\", DLC_Name=\"" + txt_DLCIDExisting.Text;
                     sel += "\", Description = \"" + txt_Description.Text + "\", Comments = \"" + txt_AuthorExisting.Text + "\", Is_Alternate = \"" + (chbx_IsAlternate.Checked ? "Yes" : "No");
                     sel += "\", Alternate_Version_No = \"" + txt_AlternateNo.Text;// + "\"", AlbumArtPath = \"" + (rbtn_CoverNew.Checked ? picbx_AlbumArtPathNew.ImageLocation : picbx_AlbumArtPathExisting.ImageLocation);// + "\", Is_Original = \"" + (chbx_IsOriginal.Checked ? "Yes" : "No");
                     //sel += "\", AlbumArt_Hash = \"" + (rbtn_CoverNew.Checked ? art_hash : filed.AlbumArt_Hash);
@@ -715,6 +715,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
                     dat.Fill(ddr, "Main");
                     dat.Dispose();
+                    //MessageBox.Show(DB_Path);
                 }
             }
             catch (System.IO.FileNotFoundException ee)

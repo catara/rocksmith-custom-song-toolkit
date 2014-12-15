@@ -199,8 +199,10 @@ namespace RocksmithToolkitGUI.DLCManager
             chbx_Additional_Manipualtions.SetItemCheckState(22, CheckState.Checked);
             chbx_Additional_Manipualtions.SetItemCheckState(23, CheckState.Checked);
             chbx_Additional_Manipualtions.SetItemCheckState(24, CheckState.Checked);
+            chbx_Additional_Manipualtions.SetItemCheckState(28, CheckState.Checked);
             chbx_Additional_Manipualtions.SetItemCheckState(29, CheckState.Checked);
             chbx_Additional_Manipualtions.SetItemCheckState(30, CheckState.Checked);
+            chbx_Additional_Manipualtions.SetItemCheckState(32, CheckState.Checked);
             // Generate package worker
             //rtxt_StatisticsOnReadDLCs.Text = "genz : " + "\n" + rtxt_StatisticsOnReadDLCs.Text;
             bwRGenerate.DoWork += new DoWorkEventHandler(GeneratePackage);
@@ -1418,7 +1420,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                         if (arg.Tuning != Tunings && Tunings != "") Tunings = "Different";
                                         else Tunings = arg.Tuning;
                                     }
-                                    rtxt_StatisticsOnReadDLCs.Text = "gen ar hashes: " +arg.SongXml.File+"/"+arg.SongXml.File + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                    //rtxt_StatisticsOnReadDLCs.Text = "gen ar hashes: " +arg.SongXml.File+"/"+arg.SongXml.File + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                     var s1 = arg.SongXml.File;
                                     using (FileStream fs = File.OpenRead(s1))
                                     {
@@ -1436,7 +1438,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                     //rtxt_StatisticsOnReadDLCs.Text = "done ar hashes: " +"\n" + rtxt_StatisticsOnReadDLCs.Text;
 
                                 }
-                                rtxt_StatisticsOnReadDLCs.Text = "4" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                //rtxt_StatisticsOnReadDLCs.Text = "4" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                 //Check Tones
                                 var Tones_Custom = "No";
                                 foreach (var tn in info.TonesRS2014)//, Type
@@ -1483,7 +1485,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                     {
                                         vv = txt.Substring(vpos, 1).ToInt32();
                                         // and info.PackageVersion
-                                        if ((txt.Substring(vpos + 1, 1) == "." || txt.Substring(vpos + 2, 1) == "_") && txt.Substring(vpos + 2, 1).ToInt32() > 0)
+                                        if ((txt.Substring(vpos + 1, 1) == "." || txt.Substring(vpos + 1, 1) == "_") && txt.Substring(vpos + 2, 1).ToInt32() > 0)
                                         {
                                             //rtxt_StatisticsOnReadDLCs.Text = info.PackageVersion.ToInt32() + "--=" + (vv.ToString() + "." + txt.Substring(vpos + 2, 1)) + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                             vv = Convert.ToSingle( vv.ToString() + "." + txt.Substring(vpos + 2, 1) );
@@ -1587,6 +1589,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                 var IDD = "";
                                 var folder_name = "";
                                 var filename = "";
+                                bool newold = chbx_Additional_Manipualtions.GetItemChecked(32);
                                 Random random = new Random();
                                 //info.Name = Name;
                                 //info.SongInfo.SongDisplayName =  info.SongInfo.SongDisplayName;
@@ -1636,14 +1639,14 @@ namespace RocksmithToolkitGUI.DLCManager
                                         if ((author.ToLower() == file.Author.ToLower() && author != "" && file.Author != "" && file.Author != "Custom Song Creator" && author != "Custom Song Creator") || (file.DLC_Name == info.Name))
                                         {
                                             if (file.DLC_Name.ToLower() == info.Name.ToLower())
-                                                artist = AssesConflict(file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, Tunings, b, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist);
+                                                artist = AssesConflict(file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, Tunings, b, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist, DB_Path, clist, dlist, newold, Is_Original);
                                             else
                                             {
                                                 if (file.Version.ToInt32() > info.PackageVersion.ToInt32()) artist = "Update";
                                                 if (file.Version.ToInt32() < info.PackageVersion.ToInt32())
                                                     if (file.Is_Alternate != "Yes") { artist = "Ignore"; rtxt_StatisticsOnReadDLCs.Text = "IGNORED" + "\n" + rtxt_StatisticsOnReadDLCs.Text; }
-                                                    else artist = AssesConflict(file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, Tunings, b, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist);
-                                                if (file.Version.ToInt32() == info.PackageVersion.ToInt32()) artist = AssesConflict(file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, Tunings, b, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist);
+                                                    else artist = AssesConflict(file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, Tunings, b, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist, DB_Path, clist, dlist, newold, Is_Original);
+                                                if (file.Version.ToInt32() == info.PackageVersion.ToInt32()) artist = AssesConflict(file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, Tunings, b, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist, DB_Path, clist, dlist, newold,Is_Original);
                                                 else { artist = "Ignore"; rtxt_StatisticsOnReadDLCs.Text = "IGNORED" + "\n" + rtxt_StatisticsOnReadDLCs.Text; }
                                                 // assess=alternate, update or ignore//as maybe a new package(ing) is desired to be inserted in the DB
                                             }
@@ -1651,7 +1654,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                         else
                                             if (author.ToLower() != file.Author.ToLower() && (author != "" && author != "Custom Song Creator" && file.Author != "Custom Song Creator" && file.Author != ""))
                                                 artist = "Alternate";
-                                            else artist = AssesConflict(file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, Tunings, b, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist);
+                                            else artist = AssesConflict(file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, Tunings, b, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist, DB_Path, clist, dlist, newold, Is_Original);
                                         //rtxt_StatisticsOnReadDLCs.Text = "7 "+b + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                         //Exit condition
 
@@ -2545,9 +2548,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     //OleDbDataAdapter dun = new OleDbDataAdapter(cmd2, cnn);
                     //dun.Fill(dus, "Main");
                     //insert any translation if not alerady existing
-                    cmd2 = @"INSERT INTO Standardization (Artist, Album) SELECT DISTINCT Switch(S.Artist_Correction<>null,S.Artist_Correction,1=1,S.Artist) AS ArtistN, Switch(S.Album_Correction<>null,S.Album_Correction,1=1,S.Album) AS AlbumN
-                    FROM Standardization AS S
-                    WHERE(S.[Artist] <> S.[Artist_Correction] OR S.[Album] <> S.[Album_Correction]) AND((SELECT count(*) from Standardization AS SS WHERE SS.Artist = S.Artist_Correction and SS.Album = S.Album_Correction) = 0); ";
+                    cmd2 = "INSERT INTO Standardization (Artist, Album) SELECT DISTINCT (Switch([S].[Artist_Correction] <> \"\", [S].[Artist_Correction], 1=1, [S].[Album])) AS ArtistN, (Switch(S.Album_Correction <> \"\", [S].[Album_Correction], 1=1, [S].[Album])) AS AlbumN FROM Standardization AS S WHERE (((StrComp([S].[ARTIST],[S].[Artist_Correction],0))=-1) AND ((StrComp([S].[ALBUM],[S].[Album_Correction],0))=-1) AND (((SELECT COUNT(*) FROM Standardization AS SS WHERE (StrComp([SS].[Artist],[S].[Artist_Correction],0)=0) AND (StrComp([SS].[Album],[S].[Album_Correction],0)=0) ))=0)) OR (((StrComp([S].[ARTIST],[S].[Artist_Correction],0))=1) AND ((StrComp([S].[ALBUM],[S].[Album_Correction],0))=1) AND (((SELECT COUNT(*) FROM Standardization AS SS WHERE (StrComp([SS].[Artist],[S].[Artist_Correction],0)=0) AND (StrComp([SS].[Album],[S].[Album_Correction],0)=0) ))=0));";
                     OleDbDataAdapter dam = new OleDbDataAdapter(cmd2, cnn);
                     //rtxt_StatisticsOnReadDLCs.Text = cmd2 + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                     dam.Fill(dus, "Main");
@@ -2564,6 +2565,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 Console.WriteLine(ee.Message);
                 //continue;
             }
+            MessageBox.Show("Artist/Album Translation_And_Correction Standardization rules applied");
         }
 
         private static string ReadPackageAuthor(string filePath)
@@ -2611,7 +2613,7 @@ namespace RocksmithToolkitGUI.DLCManager
             return Toolkit_version;
         }
 
-        public string AssesConflict(Files filed, DLCPackageData datas, string Fauthor, string tkversion, string DD, string Bass, string Guitar, string Combo, string Rhythm, string Lead, string Vocalss, string tunnings, int i, int norows, string original_FileName, string art_hash, string audio_hash, string audioPreview_hash, List<string> alist, List<string> blist)
+        public string AssesConflict(Files filed, DLCPackageData datas, string Fauthor, string tkversion, string DD, string Bass, string Guitar, string Combo, string Rhythm, string Lead, string Vocalss, string tunnings, int i, int norows, string original_FileName, string art_hash, string audio_hash, string audioPreview_hash, List<string> alist, List<string> blist, string dbpathh, List<string>clist, List<string> dlist, bool newold, string Is_Original)
         {
             //rtxt_StatisticsOnReadDLCs = chbx_Additional_Manipualtions.SelectedValue + "\n" + rtxt_StatisticsOnReadDLCs;
             //rtxt_StatisticsOnReadDLCs.Text = "dashes: " + art_hash + " - " + audio_hash + " - " + audioPreview_hash + "\n" + rtxt_StatisticsOnReadDLCs.Text;
@@ -2623,7 +2625,7 @@ namespace RocksmithToolkitGUI.DLCManager
             {
                 //Duplicates frm = new Duplicates(txt_DBFolder.Text, filed, datas, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, tunnings, i, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist);
                 //frm.Show();
-                DuplicatesManagement frm1 = new DuplicatesManagement(txt_DBFolder.Text, filed, datas, Fauthor, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, tunnings, i, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist,txt_TempPath.Text);
+                DuplicatesManagement frm1 = new DuplicatesManagement(txt_DBFolder.Text, filed, datas, Fauthor, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, tunnings, i, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist,txt_TempPath.Text, clist, dlist, newold, Is_Original);
                 //frm1.Show();
                 frm1.ShowDialog();
                 //rtxt_StatisticsOnReadDLCs.Text = original_FileName+"-s..." + "\n" + rtxt_StatisticsOnReadDLCs.Text;
@@ -2955,7 +2957,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                     //consoleOutput = DDC.StandardOutput.ReadToEnd();
                                     //consoleOutput += DDC.StandardError.ReadToEnd();
                                     DDC.WaitForExit(1000 * 60 * 15); //wait 15 minutes
-                                    rtxt_StatisticsOnReadDLCs.Text = "HAS BASS=" + file.Has_BassDD + "...DDEXIT CODE: " + DDC.ExitCode + "----+-" + file.Folder_Name + "++++" + platform.version + "___" + RocksmithToolkitLib.GameVersion.RS2014 + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                    //rtxt_StatisticsOnReadDLCs.Text = "HAS BASS=" + file.Has_BassDD + "...DDEXIT CODE: " + DDC.ExitCode + "----+-" + file.Folder_Name + "++++" + platform.version + "___" + RocksmithToolkitLib.GameVersion.RS2014 + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                 }
                                 else DDCExitCode = 5;
                                 if (DDC.ExitCode > 0 && file.Is_Original == "No") rtxt_StatisticsOnReadDLCs.Text = "Issues at CDLC Bass DD removal!" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
@@ -2993,11 +2995,11 @@ namespace RocksmithToolkitGUI.DLCManager
                                                 header = header.Replace("maxDifficulty=\"" + m + "\"", "maxDifficulty=\"0\"");
                                             }
 
-                                            rtxt_StatisticsOnReadDLCs.Text = "head done"+ header.Length + "...\n" + rtxt_StatisticsOnReadDLCs.Text;
-                                            //fxml.Close();
+                                        //rtxt_StatisticsOnReadDLCs.Text = "head done"+ header.Length + "...\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                        //fxml.Close();
 
-                                            //fxml = File.OpenText(xml);
-                                            var v = 0; //difficulty level in the parsing
+                                        //fxml = File.OpenText(xml);
+                                        var v = 0; //difficulty level in the parsing
                                             var diff = 0;
                                             float[] timea= new float[10000]; //keeps the timestamp of each note
                                             float[] timeb = new float[10000]; //keeps the timestamp of each anchor
@@ -3023,8 +3025,8 @@ namespace RocksmithToolkitGUI.DLCManager
                                                     if (line != v.ToString())
                                                     {
                                                         MessageBox.Show("Errors at DD removal");
-                                                        rtxt_StatisticsOnReadDLCs.Text = "Errors at DD removal" + "\n" + rtxt_StatisticsOnReadDLCs.Text;                                                        
-                                                        break;
+                                                    //rtxt_StatisticsOnReadDLCs.Text = "Errors at DD removal" + "\n" + rtxt_StatisticsOnReadDLCs.Text;                                                        
+                                                    break;
                                                     }
                                                     v++;
                                                   //  is_header = false;
@@ -3103,9 +3105,9 @@ namespace RocksmithToolkitGUI.DLCManager
 
                                              }
 
-                                            //rtxt_StatisticsOnReadDLCs.Text = "content: " + ea + "-" +eb+"="+ v + "...\n" + rtxt_StatisticsOnReadDLCs.Text;
-                                            //reorder the storage array
-                                            var n=0;
+                                        //rtxt_StatisticsOnReadDLCs.Text = "content: " + ea + "-" +eb+"="+ v + "...\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                        //reorder the storage array
+                                        var n =0;
                                             string no;
                                             int lv;
                                             float ti; 
@@ -3159,8 +3161,8 @@ namespace RocksmithToolkitGUI.DLCManager
                                                 footer += anchor[m] + "\n";
                                             }
                                             footer += "      </anchors>" + "\n" + "      <handShapes />" + "\n" + "     </level>" + "\n" + "   </levels>" + "\n" + "</song>";
-                                            
-                                            fxml.Close();
+                                        //rtxt_StatisticsOnReadDLCs.Text = "Saving..." + "...\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                        fxml.Close();
                                             File.WriteAllText(xml, header + footer);
 
                                             //textfile = textfile.Replace("<heroLevels>", "");
@@ -3182,11 +3184,12 @@ namespace RocksmithToolkitGUI.DLCManager
                                                 textfile = textfile.Replace("\"MaxPhraseDifficulty\": " + n + ",", "\"MaxPhraseDifficulty\": 0,");
                                             }
                                             File.WriteAllText(json, textfile);
-                                            //rtxt_StatisticsOnReadDLCs.Text = "...DD changes written to file" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                        //rtxt_StatisticsOnReadDLCs.Text = "...DD changes written to file" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                         //}
                                     }
                                 }
                                 file.Has_BassDD = "No";
+                                //rtxt_StatisticsOnReadDLCs.Text = "something..." + "...\n" + rtxt_StatisticsOnReadDLCs.Text;
                             }
 
                             //remove altough original or t0o old dd
@@ -3198,16 +3201,19 @@ namespace RocksmithToolkitGUI.DLCManager
                         //rtxt_StatisticsOnReadDLCs.Text = "...°.." + xmlFiles.Length + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                     }
                 }
+                //rtxt_StatisticsOnReadDLCs.Text = "ooooo" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                 if (chbx_Additional_Manipualtions.GetItemChecked(17)) //18.Repack with Artist/ Title same as Artist / Title Sort
                 {
                     file.Artist_Sort = file.Artist;
                     file.Song_Title_Sort = file.Song_Title;
                 }
-                if (chbx_Additional_Manipualtions.GetItemChecked(23)) //24.Pack with The/ Die only at the end of Title Sort 
+                //rtxt_StatisticsOnReadDLCs.Text = "ggggoo" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                if (chbx_Additional_Manipualtions.GetItemChecked(23) && file.Artist_Sort.Length>4) //24.Pack with The/ Die only at the end of Title Sort 
                 {
-
-                    if (chbx_Additional_Manipualtions.GetItemChecked(21))
+                    //rtxt_StatisticsOnReadDLCs.Text = "1eeeeeeoo" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                    if (chbx_Additional_Manipualtions.GetItemChecked(21) && file.Song_Title_Sort.Length>4)
                     {
+                        //rtxt_StatisticsOnReadDLCs.Text = "2eeeeeeoo" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                         file.Song_Title_Sort = (file.Song_Title_Sort.Substring(0, 4) == "The " ? file.Song_Title_Sort.Substring(4, file.Song_Title_Sort.Length - 4) + ",The" : file.Song_Title_Sort);
                         file.Song_Title_Sort = (file.Song_Title_Sort.Substring(0, 4) == "Die " ? file.Song_Title_Sort.Substring(4, file.Song_Title_Sort.Length - 4) + ",Die" : file.Song_Title_Sort);
                         file.Song_Title_Sort = (file.Song_Title_Sort.Substring(0, 4) == "the " ? file.Song_Title_Sort.Substring(4, file.Song_Title_Sort.Length - 4) + ",The" : file.Song_Title_Sort);
@@ -3215,13 +3221,15 @@ namespace RocksmithToolkitGUI.DLCManager
                         file.Song_Title_Sort = (file.Song_Title_Sort.Substring(0, 4) == "THE " ? file.Song_Title_Sort.Substring(4, file.Song_Title_Sort.Length - 4) + ",The" : file.Song_Title_Sort);
                         file.Song_Title_Sort = (file.Song_Title_Sort.Substring(0, 4) == "DIE " ? file.Song_Title_Sort.Substring(4, file.Song_Title_Sort.Length - 4) + ",Die" : file.Song_Title_Sort);
                     }
-                        file.Artist_Sort = (file.Artist_Sort.Substring(0, 4) == "The " ? file.Artist_Sort.Substring(4, file.Artist_Sort.Length - 4) + ",The" : file.Artist_Sort);
+                    //rtxt_StatisticsOnReadDLCs.Text = file.Artist_Sort + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                    file.Artist_Sort = (file.Artist_Sort.Substring(0, 4) == "The " ? file.Artist_Sort.Substring(4, file.Artist_Sort.Length - 4) + ",The" : file.Artist_Sort);
                     file.Artist_Sort = (file.Artist_Sort.Substring(0, 4) == "Die " ? file.Artist_Sort.Substring(4, file.Artist_Sort.Length - 4) + ",Die" : file.Artist_Sort);
                     file.Artist_Sort = (file.Artist_Sort.Substring(0, 4) == "the " ? file.Artist_Sort.Substring(4, file.Artist_Sort.Length - 4) + ",The" : file.Artist_Sort);
                     file.Artist_Sort = (file.Artist_Sort.Substring(0, 4) == "die " ? file.Artist_Sort.Substring(4, file.Artist_Sort.Length - 4) + ",Die" : file.Artist_Sort);
                     file.Artist_Sort = (file.Artist_Sort.Substring(0, 4) == "THE " ? file.Artist_Sort.Substring(4, file.Artist_Sort.Length - 4) + ",The" : file.Artist_Sort);
                     file.Artist_Sort = (file.Artist_Sort.Substring(0, 4) == "DIE " ? file.Artist_Sort.Substring(4, file.Artist_Sort.Length - 4) + ",Die" : file.Artist_Sort);
                 }
+                //rtxt_StatisticsOnReadDLCs.Text = "4eeeeeeoo" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                 data = new DLCPackageData
                 {
                     GameVersion = GameVersion.RS2014,
@@ -3255,7 +3263,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     SignatureType = info.SignatureType,
                     PackageVersion = file.Version
                 };
-                //rtxt_StatisticsOnReadDLCs.Text = file.Song_Title+" test"+i+ data.SongInfo.Artist + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                rtxt_StatisticsOnReadDLCs.Text = file.Song_Title+" test"+i+ data.SongInfo.Artist + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                 var norm_path = txt_TempPath.Text + "\\" + ((file.ToolkitVersion == "") ? "ORIG" : "CDLC") + "_" + data.SongInfo.Artist + "_" + data.SongInfo.SongYear + "_" + data.SongInfo.Album + "_" + data.SongInfo.SongDisplayName;
                 //rtxt_StatisticsOnReadDLCs.Text = "8"+data.PackageVersion+"...manipul" + norm_path + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                 //manipulating the info

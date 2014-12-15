@@ -30,13 +30,15 @@ namespace RocksmithToolkitGUI.DLCManager
         public string Is_Alternate { get; set; }
         public string Title_Sort { get; set; }
         public string Album { get; set; }
-        //public string Is_Original { get; set; }
+        public string Is_Original { get; set; }
         public string AlbumArtPath { get; set; }
         public string Alternate_No { get; set; }
         public string Art_Hash { get; set; }
         public string ArtistSort { get; set; }
         public string Artist { get; set; }
         public string TempPath { get; set; }
+        //public bool newold { get; set; }
+        //public string clist { get; set; }
         //public DuplicatesManagement(string txt_DBFolder, Files filed, DLCPackageData datas, string author, string tkversion, string DD, string Bass, string Guitar, string Combo, string Rhythm, string Lead, string tunnings, int i, int norows, string original_FileName, string art_hash, string audio_hash, string audioPreview_hash, List<string> alist, List<string> blist)
         //{
         //    InitializeComponent();
@@ -47,7 +49,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         //}
 
-        public DuplicatesManagement(string text, DLCManager.Files filed, DLCPackageData datas, string author, string tkversion, string dD, string bass, string guitar, string combo, string rhythm, string lead, string vocal, string tunnings, int i, int norows, string original_FileName, string art_hash, string audio_hash, string audioPreview_hash, List<string> alist, List<string> blist,string TempPath)
+        public DuplicatesManagement(string text, DLCManager.Files filed, DLCPackageData datas, string author, string tkversion, string dD, string bass, string guitar, string combo, string rhythm, string lead, string vocal, string tunnings, int i, int norows, string original_FileName, string art_hash, string audio_hash, string audioPreview_hash, List<string> alist, List<string> blist, string TempPath, List<string> clist, List<string> dlist, bool newold, string Is_Original)
         {
             Text = text;
             //MessageBox.Show("test2");
@@ -72,6 +74,9 @@ namespace RocksmithToolkitGUI.DLCManager
             this.alist = alist;
             this.blist = blist;
             this.TempPath = TempPath;
+            this.clist= clist;
+            this.dlist = dlist;
+            this.newold = newold;
             InitializeComponent();
             //MessageBox.Show(DB_Path);
             DB_Path = text;
@@ -113,7 +118,8 @@ namespace RocksmithToolkitGUI.DLCManager
             Art_Hash = filed.AlbumArt_Hash;
 
             if (datas.SongInfo.SongDisplayName != filed.Song_Title) lbl_Title.ForeColor = lbl_Reference.ForeColor;
-            txt_TitleNew.Text = datas.SongInfo.SongDisplayName;
+            if (newold && (filed.Is_Original == "Yes" || Is_Original == "Yes")) ;
+                txt_TitleNew.Text = datas.SongInfo.SongDisplayName;
                 txt_TitleExisting.Text = filed.Song_Title;
 
             if (datas.SongInfo.SongDisplayNameSort != filed.Song_Title_Sort) lbl_TitleSort.ForeColor = lbl_Reference.ForeColor;
@@ -121,16 +127,16 @@ namespace RocksmithToolkitGUI.DLCManager
                 txt_TitleSortExisting.Text = filed.Song_Title_Sort;
 
             if (datas.SongInfo.ArtistSort != filed.Artist_Sort) lbl_ArtistSort.ForeColor = lbl_Reference.ForeColor;
-            txt_ArtistSortNew.Text = datas.SongInfo.ArtistSort;
-            txt_ArtistSortExisting.Text = filed.Artist_Sort;
+                txt_ArtistSortNew.Text = datas.SongInfo.ArtistSort;
+                txt_ArtistSortExisting.Text = filed.Artist_Sort;
 
             if (original_FileName != filed.Original_FileName) lbl_FileName.ForeColor = lbl_Reference.ForeColor;
                 txt_FileNameNew.Text = original_FileName;
                 txt_FileNameExisting.Text = filed.Original_FileName;
 
             if (author != filed.Author) lbl_Author.ForeColor= lbl_Reference.ForeColor;
-            txt_AuthorNew.Text = author;// (author == "" ? "missing" : author);
-            txt_AuthorExisting.Text = filed.Author;//(filed.Author == "" ? "missing" : filed.Author);
+                txt_AuthorNew.Text = author;// (author == "" ? "missing" : author);
+                txt_AuthorExisting.Text = filed.Author;//(filed.Author == "" ? "missing" : filed.Author);
             
 
             if (tunnings != filed.Tunning) lbl_Tuning.ForeColor = lbl_Reference.ForeColor;
@@ -168,8 +174,8 @@ namespace RocksmithToolkitGUI.DLCManager
                 txt_AudioExisting.Text = (filed.Audio_Hash.ToString() == "" ? "" : "Yes");
 
             if (filed.AudioPreview_Hash != audioPreview_hash) lbl_Preview.ForeColor = lbl_Reference.ForeColor;
-            txt_PreviewNew.Text = (audio_hash.ToString() == "" ? "" : "Yes");
-            txt_PreviewExisting.Text = (audioPreview_hash.ToString() == "" ? "" : "Yes");
+                txt_PreviewNew.Text = (audio_hash.ToString() == "" ? "" : "Yes");
+                txt_PreviewExisting.Text = (audioPreview_hash.ToString() == "" ? "" : "Yes");
 
             if (((bass == "Yes") ? "B" : "") + ((rhythm == "Yes") ? "R" : "") + ((lead == "Yes") ? "L" : "") + ((combo == "Yes") ? "C" : "") + ((vocal == "Yes") ? "V" : "") != ((filed.Has_Bass == "Yes") ? "B" : "") + ((filed.Has_Rhythm == "Yes") ? "R" : "") + ((filed.Has_Lead == "Yes") ? "L" : "") + ((filed.Has_Combo == "Yes") ? "L" : "") + ((filed.Has_Vocals == "Yes") ? "V" : "")) lbl_AvailableTracks.ForeColor = lbl_Reference.ForeColor;
                 txt_AvailTracksNew.Text = ((bass == "Yes") ? "B" : "") + ((rhythm == "Yes") ? "R" : "") + ((lead == "Yes") ? "L" : "") + ((combo == "Yes") ? "C" : "") + ((vocal == "Yes") ? "V" : "");
@@ -468,6 +474,12 @@ namespace RocksmithToolkitGUI.DLCManager
         private string audioPreview_hash;
         private List<string> alist;
         private List<string> blist;
+        private List<string> clist;
+        private List<string> dlist;
+        private bool newold;
+
+
+
 
         //Generic procedure to read and parse Main.DB (&others..soon)
         public int SQLAccess(string cmd)

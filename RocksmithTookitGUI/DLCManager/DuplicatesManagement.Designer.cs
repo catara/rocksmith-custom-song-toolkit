@@ -116,6 +116,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.label33 = new System.Windows.Forms.Label();
             this.lbl_diffCount = new System.Windows.Forms.Label();
             this.chbx_IgnoreDupli = new System.Windows.Forms.CheckBox();
+            this.btn_RemoveOldNew = new System.Windows.Forms.Button();
             this.txt_AlternateNo = new RocksmithToolkitGUI.CueTextBox();
             this.txt_Album = new RocksmithToolkitGUI.CueTextBox();
             this.txt_VersionExisting = new RocksmithToolkitGUI.CueTextBox();
@@ -928,6 +929,16 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_IgnoreDupli.Text = "Ignore remaining Duplicates";
             this.chbx_IgnoreDupli.UseVisualStyleBackColor = true;
             // 
+            // btn_RemoveOldNew
+            // 
+            this.btn_RemoveOldNew.Location = new System.Drawing.Point(507, 54);
+            this.btn_RemoveOldNew.Name = "btn_RemoveOldNew";
+            this.btn_RemoveOldNew.Size = new System.Drawing.Size(103, 20);
+            this.btn_RemoveOldNew.TabIndex = 338;
+            this.btn_RemoveOldNew.Text = "Remove Old/New";
+            this.btn_RemoveOldNew.UseVisualStyleBackColor = true;
+            this.btn_RemoveOldNew.Click += new System.EventHandler(this.btn_RemoveOldNew_Click);
+            // 
             // txt_AlternateNo
             // 
             this.txt_AlternateNo.Cue = "No.";
@@ -1512,6 +1523,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(766, 676);
+            this.Controls.Add(this.btn_RemoveOldNew);
             this.Controls.Add(this.chbx_IgnoreDupli);
             this.Controls.Add(this.lbl_diffCount);
             this.Controls.Add(this.label33);
@@ -1782,5 +1794,6 @@ namespace RocksmithToolkitGUI.DLCManager
         private Label label33;
         private Label lbl_diffCount;
         private CheckBox chbx_IgnoreDupli;
+        private Button btn_RemoveOldNew;
     }
 }

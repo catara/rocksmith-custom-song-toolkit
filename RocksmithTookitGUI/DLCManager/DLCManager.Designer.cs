@@ -269,7 +269,7 @@
             "30. When NOT importing a duplicate Move it to _duplicate",
             "31. When importing delete identical duplicates(same hash/filesize)",
             "32. When removing DD use internal logic not DDC",
-            "<33. When importing alternates add newer/older instead of alt.0author>",
+            "33. When importing alternates add newer/older instead of alt.0author",
             "<IMPORT>",
             "<@Pack>"});
             this.chbx_Additional_Manipualtions.Location = new System.Drawing.Point(240, 88);

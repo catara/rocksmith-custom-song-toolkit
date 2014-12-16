@@ -1115,5 +1115,15 @@ namespace RocksmithToolkitGUI.DLCManager
             }
 
         }
+
+        private void dDataGridView1_CellContentClick_1(object sender, KeyEventArgs eee)
+        {
+            DataGridView1_CellContentClick_1(sender, eee);
+        }
+
+        private void DataGridView1_CellContentClick_1(object sender, KeyEventArgs eee)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

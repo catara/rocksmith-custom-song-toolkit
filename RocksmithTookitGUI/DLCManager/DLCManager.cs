@@ -1720,7 +1720,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                         j = file.Version;
                                         //rtxt_StatisticsOnReadDLCs.Text = "dd" + original_FileName + rtxt_StatisticsOnReadDLCs.Text;
                                         k = file.Author;
-                                        if (b >= norows || artist != "Alternate") break;
+                                        if (b >= norows || artist != "Insert") break;
                                     }
                                 //rtxt_StatisticsOnReadDLCs.Text = "6" + original_FileName + rtxt_StatisticsOnReadDLCs.Text;
                                 if (artist == "Ignore" && chbx_Additional_Manipualtions.GetItemChecked(29))

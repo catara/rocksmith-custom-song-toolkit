@@ -15,6 +15,7 @@ using RocksmithToolkitGUI;
 using System.IO;
 using System.Security.Cryptography; //For File hash
 using RocksmithToolkitLib.Extensions; //dds
+using System.Globalization;
 
 namespace RocksmithToolkitGUI.DLCManager
 {
@@ -30,7 +31,7 @@ namespace RocksmithToolkitGUI.DLCManager
         public string Is_Alternate { get; set; }
         public string Title_Sort { get; set; }
         public string Album { get; set; }
-        public string Is_Original { get; set; }
+        //public string Is_Original { get; set; }
         public string AlbumArtPath { get; set; }
         public string Alternate_No { get; set; }
         public string Art_Hash { get; set; }
@@ -74,6 +75,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.alist = alist;
             this.blist = blist;
             this.TempPath = TempPath;
+            this.Is_Original = Is_Original;
             this.clist= clist;
             this.dlist = dlist;
             this.newold = newold;
@@ -154,8 +156,8 @@ namespace RocksmithToolkitGUI.DLCManager
                 txt_DLCIDNew.Text = datas.Name;
                 txt_DLCIDExisting.Text = filed.DLC_Name;
 
-            if ((tkversion == "" ? "Yes" : "No") != filed.Is_Original) lbl_IsOriginal.ForeColor = lbl_Reference.ForeColor;
-                txt_IsOriginalNew.Text = (tkversion == "" ? "Yes" : "No");
+            if (Is_Original != filed.Is_Original) lbl_IsOriginal.ForeColor = lbl_Reference.ForeColor;
+                txt_IsOriginalNew.Text = Is_Original;
                 txt_IsOriginalExisting.Text = filed.Is_Original;
 
             if (tkversion != filed.ToolkitVersion) lbl_Toolkit.ForeColor = lbl_Reference.ForeColor;
@@ -237,15 +239,19 @@ namespace RocksmithToolkitGUI.DLCManager
                         if (noOfRec > 0)
                         {
                             //MessageBox.Show("1");
-                            foreach (var arg in datas.Arrangements)
+                            string datenew = "12-13-11 13:11";
+                            string dateold = "12-13-11 13:11";
+                            string txtnew = "";
+                            string txtold = "";
+                            DateTime myOldDate;
+                            DateTime myNewDate;
+                            DateTime myCurDate;
+                            DateTime myExisDate;
+                        foreach (var arg in datas.Arrangements)
                             {
                                 //diff = true; diffjson = true;
                                 lastConversionDateTime_cur = "";
                                 lastConversionDateTime_exist = "";
-                                string datenew = "13.12.1900";
-                                string dateold = "13.12.1900";
-                                string txtnew = "";
-                                string txtold = "";
                                 for (i = 0; i <= noOfRec - 1; i++)
                                 {
                                     //MessageBox.Show(noOfRec.ToString());
@@ -267,10 +273,17 @@ namespace RocksmithToolkitGUI.DLCManager
                                         //diff = false;
                                         //else
                                         {
-                                            lastConversionDateTime_cur = GetTExtFromFile(arg.SongXml.File);
-                                            lastConversionDateTime_exist = GetTExtFromFile(XmlFile);
-                                            //txt_Description.Text = "tst";
-                                            if (arg.RouteMask.ToString() == "Bass")
+                                            lastConversionDateTime_cur = GetTExtFromFile(arg.SongXml.File).Trim(' ');
+                                            lastConversionDateTime_exist = GetTExtFromFile(XmlFile).Trim(' ');
+                                        if (lastConversionDateTime_cur.IndexOf("-") == 1) lastConversionDateTime_cur = "0" + lastConversionDateTime_cur;
+                                        if (lastConversionDateTime_cur.IndexOf("-", 3) == 4) lastConversionDateTime_cur = lastConversionDateTime_cur.Substring(0, 3) + "0" + lastConversionDateTime_cur.Substring(3, ((lastConversionDateTime_cur.Length) - 3));
+                                        if (lastConversionDateTime_cur.IndexOf(":") == 10) lastConversionDateTime_cur = lastConversionDateTime_cur.Substring(0, 9) + "0" + lastConversionDateTime_cur.Substring(9, lastConversionDateTime_cur.Length - 9);
+                                        if (lastConversionDateTime_exist.IndexOf("-") == 1) lastConversionDateTime_exist = "0" + lastConversionDateTime_exist;
+                                        if (lastConversionDateTime_exist.IndexOf("-", 3) == 4) lastConversionDateTime_exist = lastConversionDateTime_exist.Substring(0, 3) + "0" + lastConversionDateTime_exist.Substring(3, ((lastConversionDateTime_exist.Length) - 3));
+                                        if (lastConversionDateTime_exist.IndexOf(":") == 10) lastConversionDateTime_exist = lastConversionDateTime_exist.Substring(0, 9) + "0" + lastConversionDateTime_exist.Substring(9, lastConversionDateTime_exist.Length - 9);
+
+                                        //txt_Description.Text = "tst";
+                                        if (arg.RouteMask.ToString() == "Bass")
                                             {
                                                 if (lastConversionDateTime_cur != lastConversionDateTime_exist) lbl_XMLBass.ForeColor = lbl_Reference.ForeColor;
                                                 txt_XMLBassNew.Text = lastConversionDateTime_cur;
@@ -300,15 +313,18 @@ namespace RocksmithToolkitGUI.DLCManager
                                                 txt_XMLVocalNew.Text = lastConversionDateTime_cur;
                                                 txt_XMLVocalExisting.Text = lastConversionDateTime_exist;
                                             }
+                                        CultureInfo enUS = new CultureInfo("en-US");
+                                        myNewDate = DateTime.ParseExact(datenew, "MM-dd-yy HH:mm",enUS, System.Globalization.DateTimeStyles.None);
 
-                                            if ((Convert.ToDateTime(lastConversionDateTime_cur) < Convert.ToDateTime(datenew)) && (arg.RouteMask.ToString() == "Bass" || arg.RouteMask.ToString() == "Lead" || arg.RouteMask.ToString() == "Rhythm" || arg.RouteMask.ToString() == "Combo"))
-                                            {
+                                        myCurDate = DateTime.ParseExact(lastConversionDateTime_cur, "MM-dd-yy HH:mm", enUS);
+                                        myOldDate = DateTime.ParseExact(dateold, "MM-dd-yy HH:mm", enUS, System.Globalization.DateTimeStyles.None);
+                                        myExisDate = DateTime.ParseExact(lastConversionDateTime_exist, "MM-dd-yy HH:mm", enUS, System.Globalization.DateTimeStyles.None);
+
+                                        if ((myCurDate > myNewDate) && (arg.RouteMask.ToString() == "Bass" || arg.RouteMask.ToString() == "Lead" || arg.RouteMask.ToString() == "Rhythm" || arg.RouteMask.ToString() == "Combo"))
                                                 datenew = lastConversionDateTime_cur;
-                                            }
-                                            else if ((Convert.ToDateTime(dateold) > Convert.ToDateTime(lastConversionDateTime_exist)) && (arg.RouteMask.ToString() == "Bass" || arg.RouteMask.ToString() == "Lead" || arg.RouteMask.ToString() == "Rhythm" || arg.RouteMask.ToString() == "Combo"))
-                                            {
-                                                dateold = lastConversionDateTime_exist;
-                                            }
+                                        if (myExisDate > myOldDate && (arg.RouteMask.ToString() == "Bass" || arg.RouteMask.ToString() == "Lead" || arg.RouteMask.ToString() == "Rhythm" || arg.RouteMask.ToString() == "Combo"))
+                                                    dateold = lastConversionDateTime_exist;
+
                                         }
                                         if (jsonHash != blist[k])
                                         //diffjson = false;
@@ -350,20 +366,29 @@ namespace RocksmithToolkitGUI.DLCManager
                                     }
                                 }
 
-                                if (newold && (filed.Is_Original == "Yes" || Is_Original == "Yes") && (Convert.ToDateTime(lastConversionDateTime_cur) > Convert.ToDateTime(lastConversionDateTime_exist)) && (arg.RouteMask.ToString() == "Bass" || arg.RouteMask.ToString() == "Lead" || arg.RouteMask.ToString() == "Rhythm" || arg.RouteMask.ToString() == "Combo"))
-                                {
-                                    txtnew = " " + "(newer)";
-                                    txtold = " " + "(older)";
-                                }
-                                else if (newold && (filed.Is_Original == "Yes" || Is_Original == "Yes") && (Convert.ToDateTime(lastConversionDateTime_cur) < Convert.ToDateTime(lastConversionDateTime_exist)) && (Convert.ToDateTime(lastConversionDateTime_cur) > Convert.ToDateTime(lastConversionDateTime_exist)) && (arg.RouteMask.ToString() == "Bass" || arg.RouteMask.ToString() == "Lead" || arg.RouteMask.ToString() == "Rhythm" || arg.RouteMask.ToString() == "Combo"))
+                            //txt_Description.Text += dateold + datenew;
+                            myNewDate = DateTime.ParseExact(datenew, "MM-dd-yy HH:mm", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None);
+                            myOldDate = DateTime.ParseExact(dateold, "MM-dd-yy HH:mm", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None);                           
+
+                            if (dateold != "12-13-11 13:11" && datenew != "12-13-11 13:11")
+                            {
+                                //txt_Comment.Text += newold.ToString() + filed.Is_Original + Is_Original + Convert.ToDateTime(dateold) + Convert.ToDateTime(datenew);
+                                if (newold && filed.Is_Original != "Yes" && Is_Original != "Yes" && myOldDate > myNewDate)
                                 {
                                     txtnew = " " + "(older)";
                                     txtold = " " + "(newer)";
                                 }
-
-                                //text += ((diff) ? "\n" + (14 + i) + "/14+Diff XML" + arg.ArrangementType + arg.RouteMask + ": " + lastConversionDateTime_cur + "->" + lastConversionDateTime_exist + ": Yes" : "");//+ art_hash + "->" + filed.art_Hash
-                                //text += ((diffjson) ? "\n" + (15 + i) + "/14+Diff Json" + arg.ArrangementType + arg.RouteMask + ": " + lastConverjsonDateTime_cur + "->" + lastConverjsonDateTime_exist + ": Yes" : "");//+ art_hash + "->" + filed.art_Hash
-                                k++;
+                                else if (newold && filed.Is_Original != "Yes" && Is_Original != "Yes" && myOldDate < myNewDate)
+                                {
+                                    txtnew = " " + "(newer)";
+                                    txtold = " " + "(older)";
+                                }
+                                txt_TitleNew.Text = datas.SongInfo.SongDisplayName + txtnew+"";
+                                txt_TitleExisting.Text = filed.Song_Title + txtold+"";
+                            }
+                            //text += ((diff) ? "\n" + (14 + i) + "/14+Diff XML" + arg.ArrangementType + arg.RouteMask + ": " + lastConversionDateTime_cur + "->" + lastConversionDateTime_exist + ": Yes" : "");//+ art_hash + "->" + filed.art_Hash
+                            //text += ((diffjson) ? "\n" + (15 + i) + "/14+Diff Json" + arg.ArrangementType + arg.RouteMask + ": " + lastConverjsonDateTime_cur + "->" + lastConverjsonDateTime_exist + ": Yes" : "");//+ art_hash + "->" + filed.art_Hash
+                            k++;
                             }
 
                         }
@@ -494,6 +519,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private string art_hash;
         private string audio_hash;
         private string audioPreview_hash;
+        private string Is_Original;
         private List<string> alist;
         private List<string> blist;
         private List<string> clist;
@@ -739,7 +765,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 {
                     sel = "UPDATE Main SET Artist=\"" + ar + "\", Artist_Sort=\"" + txt_ArtistSortExisting.Text + "\", Album=\"" + al + "\", Song_Title=\"" + txt_TitleExisting.Text;
                     sel += "\", Song_Title_Sort=\"" + txt_TitleSortExisting.Text + "\", Author=\"" + (txt_AuthorExisting.Text =="" ? "Custom Song Creator" :txt_AuthorExisting.Text)+ "\", Version=\"" + (txt_VersionExisting.Text=="" ? "1":txt_VersionExisting.Text) + "\", DLC_Name=\"" + txt_DLCIDExisting.Text;
-                    sel += "\", Description = \"" + txt_Description.Text + "\", Comments = \"" + txt_AuthorExisting.Text + "\", Is_Alternate = \"" + (chbx_IsAlternate.Checked ? "Yes" : "No");
+                    sel += "\","+ (txt_Description.Text == "" ? "" : " Description = \"" + txt_Description.Text+"\",") + (txt_Comment.Text == "" ? "" : ", Comments = \"" + txt_Comment.Text+"\",")+ "Is_Alternate = \"" + (chbx_IsAlternate.Checked ? "Yes" : "No");
                     sel += "\", Alternate_Version_No = \"" + txt_AlternateNo.Text;// + "\"", AlbumArtPath = \"" + (rbtn_CoverNew.Checked ? picbx_AlbumArtPathNew.ImageLocation : picbx_AlbumArtPathExisting.ImageLocation);// + "\", Is_Original = \"" + (chbx_IsOriginal.Checked ? "Yes" : "No");
                     //sel += "\", AlbumArt_Hash = \"" + (rbtn_CoverNew.Checked ? art_hash : filed.AlbumArt_Hash);
                     sel += "\" WHERE ID=" + lbl_IDExisting.Text;
@@ -802,6 +828,19 @@ namespace RocksmithToolkitGUI.DLCManager
         private void txt_TitleExisting_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void chbx_DeleteOldNew_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_RemoveOldNew_Click(object sender, EventArgs e)
+        {
+            txt_TitleNew.Text = txt_TitleNew.Text.Replace(" (older)", "");
+            txt_TitleNew.Text = txt_TitleNew.Text.Replace(" (newer)", "");
+            txt_TitleExisting.Text = txt_TitleExisting.Text.Replace(" (older)", "");
+            txt_TitleExisting.Text = txt_TitleExisting.Text.Replace(" (newer)", "");
         }
     }
 }

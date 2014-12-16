@@ -17,21 +17,17 @@ Known Issues:
 - Re-Pack is broken momentarely
 - Edit of Arragements and Tones DB can only be done from Access for the moment
 
-ToDos:
-- save dupicates names in the dB
-- Alice in chains no Excuses C vs BRL ..?shows as lead
-- Alternate No for duplicates logic
-- duplicate original (toolkit, version,author missing logic)
-- duplicate description/comments are overritten for Existing
-- Include Standardization names into duplication checks
+ToDos/bugs:
+- feat:		 Alternate No for duplicates logic
+- small bug: name&album are overritten for Existing in case of Behind Blue Eyes
+- feat:		 Include Standardization names into duplication checks
+- bug?:		 pin wish now last convtime at alternate comparision screen
+- small bug: on inserting a new standardization 
+
+dev issues:
 - Toolkit version flag does not sync to&from Github
 - Bin\debug folder content is needed
-- newer older option for alternate naming
-- versions underlinedon't seem to always work'
-- pin wish now last convtime at alternate comparision screen
-- standardization apply button has one too many files.acc
-- bug on inserting a new standardization 
-
+- activate debug
 
 Version History(release date):
 	0.1(12.08.2014) prototype, 
@@ -47,17 +43,19 @@ Version History(release date):
 	0.2.0.4 (20.11) Redesign stats & Duplicates screen as an independendent form not a yes no cancel alert window
 	0.2.0.5 (01.12) Search screen prototype
 	0.2.0.6 (29.11) add save confirm for any save operation and add DLCID checks in all updates that mighht affect it WHERE (SELECT NO OTHER DLCNAME)
-	wip: 0.2.0.7 (29.12) (70%) New features: Add: has_section flag; 30 sec preview midsong; lastconversiondata field per each arrangement, MainDb filters
-	wip: 0.2.0.8 (20.12.2014) (10%) close bugs on Conversion to Ps3(nin hell) and analyse acuracy on conversion to ps3 (1979,7army..)
-	wip: 0.2.0.9 (22.12.2014)  (10%)remove bug on auto import if original
-	wip: 0.2.0.10 (24.12) (85%) full release (anyone can download and use the tool..no bugs..and all unimplemented featues disabled) DB independece/dependence on already provided 1, repack wo bugs, edit screens functional
-	tbr: 0.2.2 (31.12.2014) (10%) HTML&Excel exports
-	tbr: 0.2.2.1 (31.12.2014) (0%) Implement a logic to properly read DLCManager renamed DLCs
+	0.2.0.7 (15.12) New features: Add: lastconversiondata field per each arrangement, MainDb filters
+	wip: 0.2.0.8 (20%) has_section flag(to be tested with a song missing sections); Add 30 sec preview midsong; 
+	wip: 0.2.0.9 (20.12.2014) (10%) close bugs on Conversion to Ps3(nin hell) and analyse acuracy on conversion to ps3 (1979,7army..)
+	wip: 0.2.0.10 (22.12.2014)  (90%)remove bug on auto import if original
+	wip: 0.2.0.11 (24.12) (85%) full release (anyone can download and use the tool..no bugs..and all unimplemented featues disabled) DB independece/dependence on already provided 1, repack wo bugs, edit screens functional
+	wip: 0.2.2 (31.12.2014) (10%) HTML&Excel exports
+	tbr: 0.2.2.1 (31.12.2014) Implement a logic to properly read DLCManager renamed DLCs
 	wip: 0.2.3 (31.12.2014) (75%) If importing an original over a alternate the alternate flag should be set no the Alternate
 	tbr: 0.3.1 move Import DB to Main.DB or at least use an official data source as DB source to also be able to edit from the grid
 	tbr: 0.3.2 ?move Access code to project? or from hardcoded to views
 	tbr: 0.3.3 (12.01.2015) (0%) save settings in Toolkit config
-	tbr: 0.3.4 (03.03.2015) (70%) use parameterized SQL everywhere (&/ integrate template DB into project or a SQL DB)
+	wip: 0.3.4 (03.03.2015) (70%) use parameterized SQL everywhere (&/ integrate template DB into project or a SQL DB)
+	wip: 0.3.4 (03.03.2015) (30%) Remove getlastconversiondate from Duplicates as already coming from the arrangements table
 	wip: 0.4 (21.01.2014) (75%) Redesign MainDB+Edit Screen
 	tbr: 0.5 (26.12.2014) (0%) Implement FTP to PS3 (also as a copy to any other location)
 
@@ -82,11 +80,13 @@ IDE-Setup <old>
 3.1 Create a new Tab and a new Menu Item
 3.2. Add User Control
 3.3. Add New User Control &paste/create yr own assets(buttons..textboxes&logic)
-3.4. Rebuild and then 3.4. Add the tab to the MainFormControl from the Toolbox DLCManager object
+3.4. Rebuild and then Add the tab to the MainFormControl from the Toolbox DLCManager object
 3.5. Comment/fix regression Git issues
 6. --Add new libraries (include)
 7. --Add controls to activate User Controls
-8. Add Interop.Excel REference (Tools-AddReference-Extensions-Microsoft.Office.Interop.Excel)
+8. --Add Interop.Excel REference (Tools-AddReference-Extensions-Microsoft.Office.Interop.Excel)
+9. --activate debug by traying to debug?!
+10. copy missing dlls from...a prev version !?
 
 Main Features:
 +1. Ability to Generate a Database with all DLC

@@ -118,7 +118,6 @@ namespace RocksmithToolkitGUI.DLCManager
             Art_Hash = filed.AlbumArt_Hash;
 
             if (datas.SongInfo.SongDisplayName != filed.Song_Title) lbl_Title.ForeColor = lbl_Reference.ForeColor;
-            if (newold && (filed.Is_Original == "Yes" || Is_Original == "Yes")) ;
                 txt_TitleNew.Text = datas.SongInfo.SongDisplayName;
                 txt_TitleExisting.Text = filed.Song_Title;
 
@@ -243,6 +242,10 @@ namespace RocksmithToolkitGUI.DLCManager
                                 //diff = true; diffjson = true;
                                 lastConversionDateTime_cur = "";
                                 lastConversionDateTime_exist = "";
+                                string datenew = "13.12.1900";
+                                string dateold = "13.12.1900";
+                                string txtnew = "";
+                                string txtold = "";
                                 for (i = 0; i <= noOfRec - 1; i++)
                                 {
                                     //MessageBox.Show(noOfRec.ToString());
@@ -297,6 +300,15 @@ namespace RocksmithToolkitGUI.DLCManager
                                                 txt_XMLVocalNew.Text = lastConversionDateTime_cur;
                                                 txt_XMLVocalExisting.Text = lastConversionDateTime_exist;
                                             }
+
+                                            if ((Convert.ToDateTime(lastConversionDateTime_cur) < Convert.ToDateTime(datenew)) && (arg.RouteMask.ToString() == "Bass" || arg.RouteMask.ToString() == "Lead" || arg.RouteMask.ToString() == "Rhythm" || arg.RouteMask.ToString() == "Combo"))
+                                            {
+                                                datenew = lastConversionDateTime_cur;
+                                            }
+                                            else if ((Convert.ToDateTime(dateold) > Convert.ToDateTime(lastConversionDateTime_exist)) && (arg.RouteMask.ToString() == "Bass" || arg.RouteMask.ToString() == "Lead" || arg.RouteMask.ToString() == "Rhythm" || arg.RouteMask.ToString() == "Combo"))
+                                            {
+                                                dateold = lastConversionDateTime_exist;
+                                            }
                                         }
                                         if (jsonHash != blist[k])
                                         //diffjson = false;
@@ -338,6 +350,16 @@ namespace RocksmithToolkitGUI.DLCManager
                                     }
                                 }
 
+                                if (newold && (filed.Is_Original == "Yes" || Is_Original == "Yes") && (Convert.ToDateTime(lastConversionDateTime_cur) > Convert.ToDateTime(lastConversionDateTime_exist)) && (arg.RouteMask.ToString() == "Bass" || arg.RouteMask.ToString() == "Lead" || arg.RouteMask.ToString() == "Rhythm" || arg.RouteMask.ToString() == "Combo"))
+                                {
+                                    txtnew = " " + "(newer)";
+                                    txtold = " " + "(older)";
+                                }
+                                else if (newold && (filed.Is_Original == "Yes" || Is_Original == "Yes") && (Convert.ToDateTime(lastConversionDateTime_cur) < Convert.ToDateTime(lastConversionDateTime_exist)) && (Convert.ToDateTime(lastConversionDateTime_cur) > Convert.ToDateTime(lastConversionDateTime_exist)) && (arg.RouteMask.ToString() == "Bass" || arg.RouteMask.ToString() == "Lead" || arg.RouteMask.ToString() == "Rhythm" || arg.RouteMask.ToString() == "Combo"))
+                                {
+                                    txtnew = " " + "(older)";
+                                    txtold = " " + "(newer)";
+                                }
 
                                 //text += ((diff) ? "\n" + (14 + i) + "/14+Diff XML" + arg.ArrangementType + arg.RouteMask + ": " + lastConversionDateTime_cur + "->" + lastConversionDateTime_exist + ": Yes" : "");//+ art_hash + "->" + filed.art_Hash
                                 //text += ((diffjson) ? "\n" + (15 + i) + "/14+Diff Json" + arg.ArrangementType + arg.RouteMask + ": " + lastConverjsonDateTime_cur + "->" + lastConverjsonDateTime_exist + ": Yes" : "");//+ art_hash + "->" + filed.art_Hash

@@ -14,15 +14,21 @@ Main Features:
 - Repack
 
 Known Issues:
-- Re-Pack is broken momentarely
+- Import fails randomly...Import again (dont clear the DB)
 - Edit of Arragements and Tones DB can only be done from Access for the moment
 
 ToDos/bugs:
 - feat:		 Alternate No for duplicates logic
-- small bug: name&album are overritten for Existing in case of Behind Blue Eyes
 - feat:		 Include Standardization names into duplication checks
+- small improv: add audio hash also as duplicate criteria
 - bug?:		 pin wish now last convtime at alternate comparision screen
 - small bug: on inserting a new standardization 
+- big bug: reorg seems to randmly fail
+- small bug: last thibgs by billy talend fails at unpack/rorg
+- small improv: add the proper lasconvdate in the db 
+- small bug: sometimes preview shows empty but the vs is not red incubus echo
+- big feature: get the volume of the audio file and then compare against ther est or a norm
+- small bug: mj beat it issue with ading older to titles and so changing the xml path
 
 dev issues:
 - Toolkit version flag does not sync to&from Github

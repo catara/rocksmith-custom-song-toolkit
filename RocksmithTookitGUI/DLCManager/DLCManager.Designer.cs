@@ -235,6 +235,7 @@
             // 
             // chbx_Additional_Manipualtions
             // 
+            this.chbx_Additional_Manipualtions.CheckOnClick = true;
             this.chbx_Additional_Manipualtions.FormattingEnabled = true;
             this.chbx_Additional_Manipualtions.Items.AddRange(new object[] {
             "1. When Packing Add Increment to all songs Title",

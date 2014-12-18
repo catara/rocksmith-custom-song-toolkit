@@ -1170,6 +1170,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             }
 
                             // REORGANIZE
+                            //System.Threading.Thread.Sleep(1000);
                             var platform = FullPath.GetPlatform();
                             //rtxt_StatisticsOnReadDLCs.Text = unpackedDir + " reorg...\n" + rtxt_StatisticsOnReadDLCs.Text;
                                 
@@ -1183,6 +1184,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             }
                             catch (Exception ex)
                             {
+                               // System.Threading.Thread.Sleep(20000);
                                 //rtxt_StatisticsOnReadDLCs.Text = "1111 ...\n" + rtxt_StatisticsOnReadDLCs.Text;
                                 var jsonFiles = Directory.GetFiles(unpackedDir, "*.json", SearchOption.AllDirectories);
                                 foreach (var json in jsonFiles)
@@ -2449,8 +2451,8 @@ namespace RocksmithToolkitGUI.DLCManager
                                             }
                                         }
                                     //Fixing any _preview_preview issue..End
-
-                                    //Updating the Standardization table
+                                }
+                                //Updating the Standardization table
                                     try
                                     {
                                         cmd = "SELECT * FROM Standardization WHERE StrComp(Artist,\"" + info.SongInfo.Artist + "\", 0) = 0 AND StrComp(Album,\""+ info.SongInfo.Album + "\", 0) = 0;";
@@ -2475,8 +2477,6 @@ namespace RocksmithToolkitGUI.DLCManager
                                         rtxt_StatisticsOnReadDLCs.Text = "FAILED2" + ee.Message + "----" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                         Console.WriteLine(ee.Message);
                                     }
-
-                                }
                                 rtxt_StatisticsOnReadDLCs.Text = "done" + "..." + rtxt_StatisticsOnReadDLCs.Text;
                                 pB_ReadDLCs.Increment(1);
                             }
@@ -2881,38 +2881,36 @@ namespace RocksmithToolkitGUI.DLCManager
                            )
                          {
                             File.Copy(xml, xml + ".old", true);
-                                var json = xml.Replace("EOF", "Toolkit").Replace(".xml", ".json");
-                                File.Copy(json, json + ".old", true);
-                                rtxt_StatisticsOnReadDLCs.Text = chbx_Additional_Manipualtions.GetItemChecked(12).ToString()+ chbx_Additional_Manipualtions.GetItemChecked(26).ToString()+"...." + Path.GetFileNameWithoutExtension(xml) + "...Adding DD using DDC tool" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                                var startInfo = new ProcessStartInfo();
+                            var json = xml.Replace("EOF", "Toolkit").Replace(".xml", ".json");
+                            File.Copy(json, json + ".old", true);
+                            rtxt_StatisticsOnReadDLCs.Text = chbx_Additional_Manipualtions.GetItemChecked(12).ToString()+ chbx_Additional_Manipualtions.GetItemChecked(26).ToString()+"...." + Path.GetFileNameWithoutExtension(xml) + "...Adding DD using DDC tool" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                            var startInfo = new ProcessStartInfo();
 
-                                var r = String.Format(" -m \"{0}\"", Path.GetFullPath("ddc\\ddc_5_max_levels.xml"));
-                                var c = String.Format(" -c \"{0}\"", Path.GetFullPath("ddc\\ddc_keep_all_levels.xml"));
-                                startInfo.FileName = Path.Combine(AppWD, "ddc", "ddc.exe");
-                                startInfo.WorkingDirectory = file.Folder_Name + "\\EOF\\";// Path.GetDirectoryName();
-                                startInfo.Arguments = String.Format("\"{0}\" -l {1} -s {2}{3}{4}{5}",
-                                                                    Path.GetFileName(xml),
-                                                                    2, "N", r, c,
-                                                                     " -p Y", " -t N");
-                                //rtxt_StatisticsOnReadDLCs.Text = "working dir: "+ startInfo.WorkingDirectory + "...\n--"+startInfo.FileName+"..." +startInfo.Arguments + "\n\n" + rtxt_StatisticsOnReadDLCs.Text;
-                                startInfo.UseShellExecute = false;
-                                startInfo.CreateNoWindow = true;
-                                startInfo.RedirectStandardOutput = true;
-                                startInfo.RedirectStandardError = true;
+                            var r = String.Format(" -m \"{0}\"", Path.GetFullPath("ddc\\ddc_5_max_levels.xml"));
+                            var c = String.Format(" -c \"{0}\"", Path.GetFullPath("ddc\\ddc_keep_all_levels.xml"));
+                            startInfo.FileName = Path.Combine(AppWD, "ddc", "ddc.exe");
+                            startInfo.WorkingDirectory = file.Folder_Name + "\\EOF\\";// Path.GetDirectoryName();
+                            startInfo.Arguments = String.Format("\"{0}\" -l {1} -s {2}{3}{4}{5}",
+                                                                Path.GetFileName(xml),
+                                                                2, "N", r, c,
+                                                                    " -p Y", " -t N");
+                            //rtxt_StatisticsOnReadDLCs.Text = "working dir: "+ startInfo.WorkingDirectory + "...\n--"+startInfo.FileName+"..." +startInfo.Arguments + "\n\n" + rtxt_StatisticsOnReadDLCs.Text;
+                            startInfo.UseShellExecute = false;
+                            startInfo.CreateNoWindow = true;
+                            startInfo.RedirectStandardOutput = true;
+                            startInfo.RedirectStandardError = true;
 
-                                using (var DDC = new Process())
-                                {
-                                    // rtxt_StatisticsOnReadDLCs.Text = "...1" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                            using (var DDC = new Process())
+                            {
+                                // rtxt_StatisticsOnReadDLCs.Text = "...1" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
 
-                                    DDC.StartInfo = startInfo;
-                                    DDC.Start();
-                                    //consoleOutput = DDC.StandardOutput.ReadToEnd();
-                                    //consoleOutput += DDC.StandardError.ReadToEnd();
-                                    DDC.WaitForExit(1000 * 60 * 15); //wait 15 minutes
-                                    if (DDC.ExitCode > 0 ) rtxt_StatisticsOnReadDLCs.Text = "Issues when adding DD !" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                                }
-                            
-
+                                DDC.StartInfo = startInfo;
+                                DDC.Start();
+                                //consoleOutput = DDC.StandardOutput.ReadToEnd();
+                                //consoleOutput += DDC.StandardError.ReadToEnd();
+                                DDC.WaitForExit(1000 * 60 * 15); //wait 15 minutes
+                                if (DDC.ExitCode > 0 ) rtxt_StatisticsOnReadDLCs.Text = "Issues when adding DD !" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                            }
                         }
 
                         //REMOVE DD
@@ -3282,29 +3280,10 @@ namespace RocksmithToolkitGUI.DLCManager
                 if (cbx_Activ_Album.Checked)
                     data.SongInfo.Album = Manipulate_strings(txt_Album.Text, i, false);
                 //rtxt_StatisticsOnReadDLCs.Text = "...3" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                //continuing to manipualte the info
-                //1. Add Increment to all songs
-                //2. Add Increment to all songs(&Separately per artist)
-                //3. Make all DLC IDs unique(&save)
-                //4. Add DD (4 Levels)
-                //5. Remove DD
-                //6. Remove DD only for Bass Guitar
-                //7. Remove the 4sec of the Preview song
-                //8. Don't repack Broken songs
-                //9. Pack to cross-platform Compatible Filenames
-                //10. Generate random 30sec Preview
-                //11. Use shortnames in the Filename for Artist&Album //take only the capital letter/leters after a space
-                //12. Repack Originals
-                //13. Repack PC
-                //14. Import all Duplicates as Alternates
-                //15. Import any Custom as Alternate if an Original exists
-                //16. Move Original Imported files to temp/0_old
 
                 //rtxt_StatisticsOnReadDLCs.Text = "...nipul" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                 if (chbx_Additional_Manipualtions.GetItemChecked(0)) //"1. Add Increment to all Titles"
                     data.Name = i + data.Name;
-
-
 
                 //rtxt_StatisticsOnReadDLCs.Text = "...mpl" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                 artist = "";

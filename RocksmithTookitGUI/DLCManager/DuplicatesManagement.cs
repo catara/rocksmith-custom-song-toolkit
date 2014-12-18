@@ -159,6 +159,7 @@ namespace RocksmithToolkitGUI.DLCManager
             if (Is_Original != filed.Is_Original) lbl_IsOriginal.ForeColor = lbl_Reference.ForeColor;
                 txt_IsOriginalNew.Text = Is_Original;
                 txt_IsOriginalExisting.Text = filed.Is_Original;
+            if (filed.Is_Original == "Yes" || Is_Original == "Yes") lbl_Is_Original.ForeColor = lbl_Reference.ForeColor;
 
             if (tkversion != filed.ToolkitVersion) lbl_Toolkit.ForeColor = lbl_Reference.ForeColor;
                 txt_ToolkitNew.Text = tkversion;
@@ -275,15 +276,20 @@ namespace RocksmithToolkitGUI.DLCManager
                                         {
                                             lastConversionDateTime_cur = GetTExtFromFile(arg.SongXml.File).Trim(' ');
                                             lastConversionDateTime_exist = GetTExtFromFile(XmlFile).Trim(' ');
-                                        if (lastConversionDateTime_cur.IndexOf("-") == 1) lastConversionDateTime_cur = "0" + lastConversionDateTime_cur;
-                                        if (lastConversionDateTime_cur.IndexOf("-", 3) == 4) lastConversionDateTime_cur = lastConversionDateTime_cur.Substring(0, 3) + "0" + lastConversionDateTime_cur.Substring(3, ((lastConversionDateTime_cur.Length) - 3));
-                                        if (lastConversionDateTime_cur.IndexOf(":") == 10) lastConversionDateTime_cur = lastConversionDateTime_cur.Substring(0, 9) + "0" + lastConversionDateTime_cur.Substring(9, lastConversionDateTime_cur.Length - 9);
-                                        if (lastConversionDateTime_exist.IndexOf("-") == 1) lastConversionDateTime_exist = "0" + lastConversionDateTime_exist;
-                                        if (lastConversionDateTime_exist.IndexOf("-", 3) == 4) lastConversionDateTime_exist = lastConversionDateTime_exist.Substring(0, 3) + "0" + lastConversionDateTime_exist.Substring(3, ((lastConversionDateTime_exist.Length) - 3));
-                                        if (lastConversionDateTime_exist.IndexOf(":") == 10) lastConversionDateTime_exist = lastConversionDateTime_exist.Substring(0, 9) + "0" + lastConversionDateTime_exist.Substring(9, lastConversionDateTime_exist.Length - 9);
-
-                                        //txt_Description.Text = "tst";
-                                        if (arg.RouteMask.ToString() == "Bass")
+                                            if (lastConversionDateTime_cur.Length > 3)
+                                            {
+                                                if (lastConversionDateTime_cur.IndexOf("-") == 1) lastConversionDateTime_cur = "0" + lastConversionDateTime_cur;
+                                                if (lastConversionDateTime_cur.IndexOf("-", 3) == 4) lastConversionDateTime_cur = lastConversionDateTime_cur.Substring(0, 3) + "0" + lastConversionDateTime_cur.Substring(3, ((lastConversionDateTime_cur.Length) - 3));
+                                                if (lastConversionDateTime_cur.IndexOf(":") == 10) lastConversionDateTime_cur = lastConversionDateTime_cur.Substring(0, 9) + "0" + lastConversionDateTime_cur.Substring(9, lastConversionDateTime_cur.Length - 9);
+                                            }
+                                            if (lastConversionDateTime_exist.Length > 3)
+                                            {
+                                                if (lastConversionDateTime_exist.IndexOf("-") == 1) lastConversionDateTime_exist = "0" + lastConversionDateTime_exist;
+                                                if (lastConversionDateTime_exist.IndexOf("-", 3) == 4) lastConversionDateTime_exist = lastConversionDateTime_exist.Substring(0, 3) + "0" + lastConversionDateTime_exist.Substring(3, ((lastConversionDateTime_exist.Length) - 3));
+                                                if (lastConversionDateTime_exist.IndexOf(":") == 10) lastConversionDateTime_exist = lastConversionDateTime_exist.Substring(0, 9) + "0" + lastConversionDateTime_exist.Substring(9, lastConversionDateTime_exist.Length - 9);
+                                            }
+                                            //txt_Description.Text = "tst";
+                                            if (arg.RouteMask.ToString() == "Bass")
                                             {
                                                 if (lastConversionDateTime_cur != lastConversionDateTime_exist) lbl_XMLBass.ForeColor = lbl_Reference.ForeColor;
                                                 txt_XMLBassNew.Text = lastConversionDateTime_cur;
@@ -313,18 +319,24 @@ namespace RocksmithToolkitGUI.DLCManager
                                                 txt_XMLVocalNew.Text = lastConversionDateTime_cur;
                                                 txt_XMLVocalExisting.Text = lastConversionDateTime_exist;
                                             }
-                                        CultureInfo enUS = new CultureInfo("en-US");
-                                        myNewDate = DateTime.ParseExact(datenew, "MM-dd-yy HH:mm",enUS, System.Globalization.DateTimeStyles.None);
 
-                                        myCurDate = DateTime.ParseExact(lastConversionDateTime_cur, "MM-dd-yy HH:mm", enUS);
-                                        myOldDate = DateTime.ParseExact(dateold, "MM-dd-yy HH:mm", enUS, System.Globalization.DateTimeStyles.None);
-                                        myExisDate = DateTime.ParseExact(lastConversionDateTime_exist, "MM-dd-yy HH:mm", enUS, System.Globalization.DateTimeStyles.None);
+                                            //Get the oldest timestamp
+                                            CultureInfo enUS = new CultureInfo("en-US");
+                                            myNewDate = DateTime.ParseExact(datenew, "MM-dd-yy HH:mm", enUS, System.Globalization.DateTimeStyles.None);
+                                            myOldDate = DateTime.ParseExact(dateold, "MM-dd-yy HH:mm", enUS, System.Globalization.DateTimeStyles.None);
 
-                                        if ((myCurDate > myNewDate) && (arg.RouteMask.ToString() == "Bass" || arg.RouteMask.ToString() == "Lead" || arg.RouteMask.ToString() == "Rhythm" || arg.RouteMask.ToString() == "Combo"))
-                                                datenew = lastConversionDateTime_cur;
-                                        if (myExisDate > myOldDate && (arg.RouteMask.ToString() == "Bass" || arg.RouteMask.ToString() == "Lead" || arg.RouteMask.ToString() == "Rhythm" || arg.RouteMask.ToString() == "Combo"))
+                                            if (lastConversionDateTime_cur.Length > 3)
+                                            {
+                                                myCurDate = DateTime.ParseExact(lastConversionDateTime_cur, "MM-dd-yy HH:mm", enUS);
+                                                if ((myCurDate > myNewDate) && (arg.RouteMask.ToString() == "Bass" || arg.RouteMask.ToString() == "Lead" || arg.RouteMask.ToString() == "Rhythm" || arg.RouteMask.ToString() == "Combo"))
+                                                    datenew = lastConversionDateTime_cur;
+                                            }
+                                            if (lastConversionDateTime_exist.Length > 3)
+                                            {
+                                                myExisDate = DateTime.ParseExact(lastConversionDateTime_exist, "MM-dd-yy HH:mm", enUS, System.Globalization.DateTimeStyles.None);
+                                                if (myExisDate > myOldDate && (arg.RouteMask.ToString() == "Bass" || arg.RouteMask.ToString() == "Lead" || arg.RouteMask.ToString() == "Rhythm" || arg.RouteMask.ToString() == "Combo"))
                                                     dateold = lastConversionDateTime_exist;
-
+                                            }
                                         }
                                         if (jsonHash != blist[k])
                                         //diffjson = false;
@@ -332,7 +344,20 @@ namespace RocksmithToolkitGUI.DLCManager
                                         {
                                             lastConverjsonDateTime_cur = GetTExtFromFile(arg.SongFile.File);
                                             lastConverjsonDateTime_exist = GetTExtFromFile(jsonFile);
-                                            if (arg.RouteMask.ToString() == "Bass")
+                                        if (lastConverjsonDateTime_cur.Length > 3)
+                                        {
+                                            if (lastConverjsonDateTime_cur.IndexOf("-") == 1) lastConverjsonDateTime_cur = "0" + lastConverjsonDateTime_cur;
+                                            if (lastConverjsonDateTime_cur.IndexOf("-", 3) == 4) lastConverjsonDateTime_cur = lastConverjsonDateTime_cur.Substring(0, 3) + "0" + lastConverjsonDateTime_cur.Substring(3, ((lastConverjsonDateTime_cur.Length) - 3));
+                                            if (lastConverjsonDateTime_cur.IndexOf(":") == 10) lastConverjsonDateTime_cur = lastConverjsonDateTime_cur.Substring(0, 9) + "0" + lastConverjsonDateTime_cur.Substring(9, lastConverjsonDateTime_cur.Length - 9);
+                                        }
+                                        if (lastConverjsonDateTime_exist.Length > 3)
+                                        {
+                                            if (lastConverjsonDateTime_exist.IndexOf("-") == 1) lastConverjsonDateTime_exist = "0" + lastConverjsonDateTime_exist;
+                                            if (lastConverjsonDateTime_exist.IndexOf("-", 3) == 4) lastConverjsonDateTime_exist = lastConverjsonDateTime_exist.Substring(0, 3) + "0" + lastConverjsonDateTime_exist.Substring(3, ((lastConverjsonDateTime_exist.Length) - 3));
+                                            if (lastConverjsonDateTime_exist.IndexOf(":") == 10) lastConverjsonDateTime_exist = lastConverjsonDateTime_exist.Substring(0, 9) + "0" + lastConverjsonDateTime_exist.Substring(9, lastConverjsonDateTime_exist.Length - 9);
+                                        }
+
+                                        if (arg.RouteMask.ToString() == "Bass")
                                             {
                                                 if (lastConversionDateTime_cur != lastConversionDateTime_exist) lbl_JSONBass.ForeColor = lbl_Reference.ForeColor;
                                                 txt_JSONBassNew.Text = lastConverjsonDateTime_cur;
@@ -377,11 +402,13 @@ namespace RocksmithToolkitGUI.DLCManager
                                 {
                                     txtnew = " " + "(older)";
                                     txtold = " " + "(newer)";
+                                    ExistChng = true;
                                 }
                                 else if (newold && filed.Is_Original != "Yes" && Is_Original != "Yes" && myOldDate < myNewDate)
                                 {
                                     txtnew = " " + "(newer)";
                                     txtold = " " + "(older)";
+                                    ExistChng = true;
                                 }
                                 txt_TitleNew.Text = datas.SongInfo.SongDisplayName + txtnew+"";
                                 txt_TitleExisting.Text = filed.Song_Title + txtold+"";

@@ -95,7 +95,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.label2 = new System.Windows.Forms.Label();
             this.chbx_IsOriginal = new System.Windows.Forms.CheckBox();
             this.label17 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
+            this.lbl_Is_Original = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
@@ -722,14 +722,14 @@ namespace RocksmithToolkitGUI.DLCManager
             this.label17.TabIndex = 313;
             this.label17.Text = "MM-DD-YYYY";
             // 
-            // label18
+            // lbl_Is_Original
             // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(158, 161);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(53, 13);
-            this.label18.TabIndex = 314;
-            this.label18.Text = "Is Original";
+            this.lbl_Is_Original.AutoSize = true;
+            this.lbl_Is_Original.Location = new System.Drawing.Point(158, 161);
+            this.lbl_Is_Original.Name = "lbl_Is_Original";
+            this.lbl_Is_Original.Size = new System.Drawing.Size(53, 13);
+            this.lbl_Is_Original.TabIndex = 314;
+            this.lbl_Is_Original.Text = "Is Original";
             // 
             // label19
             // 
@@ -1546,7 +1546,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.Controls.Add(this.label21);
             this.Controls.Add(this.label20);
             this.Controls.Add(this.label19);
-            this.Controls.Add(this.label18);
+            this.Controls.Add(this.lbl_Is_Original);
             this.Controls.Add(this.label17);
             this.Controls.Add(this.chbx_IsOriginal);
             this.Controls.Add(this.label2);
@@ -1771,7 +1771,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private Label label2;
         private CheckBox chbx_IsOriginal;
         private Label label17;
-        private Label label18;
+        private Label lbl_Is_Original;
         private Label label19;
         private Label label20;
         private Label label21;

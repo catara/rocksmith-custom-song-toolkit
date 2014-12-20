@@ -213,40 +213,49 @@ namespace RocksmithToolkitLib.DLCPackage
             var reader = new EndianBinaryReader(conv, input);
             if (0x4A != reader.ReadUInt32())
                 throw new InvalidDataException("This is not valid SNG file to decrypt.");
-            reader.ReadBytes(4);//platform header (bitfield? 001 - Compressed; 010 - Encrypted;)
-            byte[] iv = reader.ReadBytes(16);
-            using (var rij = new RijndaelManaged())
-            {
-                InitRijndael(rij, key, CipherMode.CFB);
-                rij.IV = iv;
-
-                var buffer = new byte[16];
-                long len = input.Length - input.Position;
-                for (long i = 0; i < len; i += buffer.Length)
+            //try
+            //{ MessageBox.Show("This is not valid SNG file to decrypt.");//
+                reader.ReadBytes(4);//platform header (bitfield? 001 - Compressed; 010 - Encrypted;)
+                byte[] iv = reader.ReadBytes(16);
+                using (var rij = new RijndaelManaged())
                 {
-                    using (ICryptoTransform transform = rij.CreateDecryptor())
-                    {
-                        var cs = new CryptoStream(output, transform, CryptoStreamMode.Write);
-                        int bytesread = input.Read(buffer, 0, buffer.Length);
-                        cs.Write(buffer, 0, bytesread);
-
-                        int pad = buffer.Length - bytesread;
-                        if (pad > 0)
-                            cs.Write(new byte[pad], 0, pad);
-
-                        cs.Flush();
-                    }
-
-                    int j;
-                    bool carry;
-                    for (j = (rij.IV.Length) - 1, carry = true; j >= 0 && carry; j--)
-                        carry = ((iv[j] = (byte)(rij.IV[j] + 1)) == 0);
+                    InitRijndael(rij, key, CipherMode.CFB);
                     rij.IV = iv;
+
+                    var buffer = new byte[16];
+                    long len = input.Length - input.Position;
+                    for (long i = 0; i < len; i += buffer.Length)
+                    {
+                        using (ICryptoTransform transform = rij.CreateDecryptor())
+                        {
+                            var cs = new CryptoStream(output, transform, CryptoStreamMode.Write);
+                            int bytesread = input.Read(buffer, 0, buffer.Length);
+                            cs.Write(buffer, 0, bytesread);
+
+                            int pad = buffer.Length - bytesread;
+                            if (pad > 0)
+                                cs.Write(new byte[pad], 0, pad);
+
+                            cs.Flush();
+                        }
+
+                        int j;
+                        bool carry;
+                        for (j = (rij.IV.Length) - 1, carry = true; j >= 0 && carry; j--)
+                            carry = ((iv[j] = (byte)(rij.IV[j] + 1)) == 0);
+                        rij.IV = iv;
+                    }
+                    output.SetLength(input.Length - (iv.Length + 8));
                 }
-                output.SetLength(input.Length - (iv.Length + 8));
-            }
-            output.Flush();
-            output.Seek(0, SeekOrigin.Begin);
+                output.Flush();
+                output.Seek(0, SeekOrigin.Begin);
+           // }
+           //catch (Exception ex)
+           // {
+           //     MessageBox.Show(ex.Message);
+           //     MessageBox.Show("shit "+ex.Message);
+           // }
+            
         }
 
         public static void EncryptPSARC(Stream input, Stream output, long len)

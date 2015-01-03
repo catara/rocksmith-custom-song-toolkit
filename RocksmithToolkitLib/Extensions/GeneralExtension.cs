@@ -101,6 +101,30 @@ namespace RocksmithToolkitLib.Extensions
             return info;
         }
 
+        /// <summary>
+        /// Strips non-printable ASCII characters
+        /// </summary>
+        /// <param name="filePath">Full path to the File</param>
+        public static Stream StripIllegalXMLChars(this string filePath)
+        {
+            string tmpContents = File.ReadAllText(filePath);
+            string pattern = @"[^\x09\x0A\x0D\x20-\xD7FF\xE000-\xFFFD\x10000-x10FFFF]";
+
+            tmpContents = Regex.Replace(tmpContents, pattern, "", RegexOptions.IgnoreCase);
+
+            return new MemoryStream(new UTF8Encoding(false).GetBytes(tmpContents));
+        }
+
+        public static void PopFontPath(this RocksmithToolkitLib.Sng2014HSL.Sng2014File vox, string dlcname)
+        {
+            var path = String.Format("assets/ui/lyrics/{0}/lyrics_{0}.dds", dlcname);
+            if (vox.Vocals != null)
+                if (vox.Vocals.Count > 0 && vox.SymbolsTexture.Count > 0) {
+                RocksmithToolkitLib.Sng2014HSL.Sng2014FileWriter.readString(path, vox.SymbolsTexture.SymbolsTextures[0].Font);
+                    vox.SymbolsTexture.SymbolsTextures[0].FontpathLength = path.Length;
+            }
+        }
+
         public static string GetValidVersion(this string value)
         {
             if (!String.IsNullOrEmpty(value))

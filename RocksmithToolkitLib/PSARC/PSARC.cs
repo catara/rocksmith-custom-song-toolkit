@@ -40,8 +40,9 @@ namespace RocksmithToolkitLib.PSARC
         }
         private uint[] zBlocksSizeList;
 
-        internal int bNum{
-            get{ return (int)Math.Log(this.header.blockSizeAlloc, byte.MaxValue + 1); }
+        internal int bNum
+        {
+            get { return (int)Math.Log(this.header.blockSizeAlloc, byte.MaxValue + 1); }
         }
 
         public PSARC()
@@ -49,7 +50,7 @@ namespace RocksmithToolkitLib.PSARC
             this.header = new PSARC.Header();
             this.TOC = new List<Entry>();
             this.TOC.Add(new Entry());
-            this.zBlocksSizeList = new uint[]{};
+            this.zBlocksSizeList = new uint[] { };
         }
         /// <summary>
         /// Checks if psarc is not turncated.
@@ -57,12 +58,12 @@ namespace RocksmithToolkitLib.PSARC
         /// <returns>The psarc size.</returns>
         private long RequiredPsarcSize()
         {
-            if(this.TOC.Count > 0)
+            if (this.TOC.Count > 0)
             {//get last_entry.offset+it's size
                 var last_entry = this.TOC[this.TOC.Count - 1];
                 var TotalLen = last_entry.Offset;
                 var zNum = this.zBlocksSizeList.Length - last_entry.zIndexBegin;
-                for( int z = 0; z < zNum; z++ )
+                for (int z = 0; z < zNum; z++)
                 {
                     var num = this.zBlocksSizeList[last_entry.zIndexBegin + z];
                     TotalLen += (num == 0) ? this.header.blockSizeAlloc : num;
@@ -80,15 +81,19 @@ namespace RocksmithToolkitLib.PSARC
         }
         protected virtual void Dispose(bool disposing)
         {
-            if(disposing){
+            if (disposing)
+            {
                 header = null;
                 TOC.Clear();
-                if(_reader != null) _reader.Dispose();
-                if(_writer != null) _writer.Dispose();
+                if (_reader != null) _reader.Dispose();
+                if (_writer != null) _writer.Dispose();
             }
         }
         #endregion
-        #region Helpers
+        #region Helpers Inflator/Deflator
+
+        public string ErrMSG;
+
         /// <summary>
         /// Inflates selected entry.
         /// </summary>
@@ -96,7 +101,7 @@ namespace RocksmithToolkitLib.PSARC
         /// <param name = "destfilepath">Destanation file used instead of the temp file.</param>
         public void InflateEntry(Entry entry, string destfilepath = "")
         {
-            if(entry.Length > 0)
+            if (entry.Length > 0)
             {// Decompress Entry
                 uint zChunkID = entry.zIndexBegin;
                 int blockSize = (int)this.header.blockSizeAlloc;
@@ -107,40 +112,66 @@ namespace RocksmithToolkitLib.PSARC
                     entry.Data = new FileStream(destfilepath, FileMode.Create, FileAccess.Write, FileShare.Read);
                 else
                     entry.Data = new TempFileStream();
+                
                 var data = entry.Data;
                 _reader.BaseStream.Position = (long)entry.Offset;
+
                 do
                 {
-                    if (this.zBlocksSizeList[zChunkID] == 0)
-                    {// raw
-                        byte[] array = _reader.ReadBytes(blockSize);
-                        data.Write(array, 0, blockSize);
-                    }
-                    else
+                    // check for corrupt CDLC content and catch exceptions
+                    try
                     {
-                        var num = _reader.ReadUInt16();
-                        _reader.BaseStream.Position -= 2;
-
-                        byte[] array = _reader.ReadBytes((int)this.zBlocksSizeList[zChunkID]);
-                        if (num == zHeader)
-                        {// compressed
-                            try {
-                                RijndaelEncryptor.Unzip(array, data, false);
-                            }
-                            catch (Exception ex)
-                            {// skip... we can't "repair" it, but we can fill it with zeroes.
-                                ErrMSG = String.Format(@"{2}CDLC contains a broken datachunk in file '{0}'.{2}Warning: {1}[2]", entry.Name.Split('/').Last(), ex.Message, Environment.NewLine);
-                                Console.Write(ErrMSG);
-                                data.Write(new byte[array.Length], 0, array.Length);
-                            }
+                        if (this.zBlocksSizeList[zChunkID] == 0)
+                        {
+                            // raw
+                            byte[] array = _reader.ReadBytes(blockSize);
+                            data.Write(array, 0, blockSize);
                         }
                         else
-                        {// raw. used only after 0?
-                            data.Write(array, 0, array.Length);
+                        {
+                            var num = _reader.ReadUInt16();
+                            _reader.BaseStream.Position -= 2;
+
+                            byte[] array = _reader.ReadBytes((int)this.zBlocksSizeList[zChunkID]);
+                            if (num == zHeader)
+                            {
+                                // compressed
+                                try
+                                {
+                                    RijndaelEncryptor.Unzip(array, data, false);
+                                }
+                                catch (Exception ex)
+                                {
+                                    // corrupt CDLC zlib.net exception ... try to unpack
+                                    if (String.IsNullOrEmpty(entry.Name))
+                                        ErrMSG = String.Format(@"{1}CDLC contains a zlib exception.{1}Warning: {0}{1}", ex.Message, Environment.NewLine);
+                                    else
+                                        ErrMSG = String.Format(@"{2}CDLC contains a broken datachunk in file '{0}'.{2}Warning: {1}{2}", entry.Name.Split('/').Last(), ex.Message, Environment.NewLine);
+
+                                    Console.Write(ErrMSG);
+                                    // TODO: requires proper presizing of array length
+                                    // data.Write(new byte[array.Length], 0, array.Length);
+                                }
+                            }
+                            else
+                            {
+                                // raw. used only after 0?
+                                data.Write(array, 0, array.Length);
+                            }
                         }
+                        zChunkID += 1;
+
                     }
-                    zChunkID += 1;
+                    catch (Exception ex) // index is outside the bounds of the array 
+                    {
+                        // corrupt CDLC data length ... try to unpack                       
+                        ErrMSG = String.Format(@"{2}CDLC contains a broken datachunk in file '{0}'.{2}Warning: {1}{2}", entry.Name.Split('/').Last(), ex.Message, Environment.NewLine);
+                        Console.Write(ErrMSG + Environment.NewLine);
+                        break;
+                    }
+
                 }
+
                 while (data.Length < (long)entry.Length);
                 data.Seek(0, SeekOrigin.Begin);
                 data.Flush();
@@ -152,7 +183,7 @@ namespace RocksmithToolkitLib.PSARC
         /// <param name="name">Name with extension.</param>
         public void InflateEntry(string name)
         {
-            foreach(var entry in this.TOC.Where(t => t.Name.EndsWith(name, StringComparison.Ordinal)))
+            foreach (var entry in this.TOC.Where(t => t.Name.EndsWith(name, StringComparison.Ordinal)))
             {
                 this.InflateEntry(entry);
             }
@@ -231,11 +262,11 @@ namespace RocksmithToolkitLib.PSARC
             InflateEntry(toc);
             int index = 1;
             toc.Name = "NamesBlock.bin";
-            using( var bReader = new StreamReader(toc.Data, true) )
+            using (var bReader = new StreamReader(toc.Data, true))
             {
-                foreach(var name in bReader.ReadToEnd().Split('\n'))//0x0A
+                foreach (var name in bReader.ReadToEnd().Split('\n'))//0x0A
                 {
-                    if(index < this.TOC.Count)
+                    if (index < this.TOC.Count)
                         this.TOC[index].Name = name;
                     index++;
                 }
@@ -279,9 +310,10 @@ namespace RocksmithToolkitLib.PSARC
 
         void ParseTOC()
         {// Parse TOC Entries
-            for( int i = 0; i < this.header.numFiles; i++ )
+            for (int i = 0; i < this.header.numFiles; i++)
             {
-                this.TOC.Add(new Entry {
+                this.TOC.Add(new Entry
+                {
                     Id = i,
                     MD5 = _reader.ReadBytes(16),
                     zIndexBegin = _reader.ReadUInt32(),
@@ -291,14 +323,16 @@ namespace RocksmithToolkitLib.PSARC
             }
         }
         #endregion
-        public string ErrMSG;
+
+        #region Binary Reader/Writer
+
         private BigEndianBinaryReader _reader;
         public void Read(Stream psarc, bool lazy = false)
         {
             this.TOC.Clear();
             _reader = new BigEndianBinaryReader(psarc);
             this.header.MagicNumber = _reader.ReadUInt32();
-            if(this.header.MagicNumber == 1347633490)//PSAR (BE)
+            if (this.header.MagicNumber == 1347633490)//PSAR (BE)
             {
                 //Parse Header
                 this.header.VersionNumber = _reader.ReadUInt32();
@@ -311,20 +345,20 @@ namespace RocksmithToolkitLib.PSARC
                 //Read TOC
                 const int headerSize = 32;
                 int tocSize = (int)this.header.TotalTOCSize - headerSize;
-                if(this.header.archiveFlags == 4)//TOC_ENCRYPTED
+                if (this.header.archiveFlags == 4)//TOC_ENCRYPTED
                 {// Decrypt TOC
                     var tocStream = new MemoryStream();
-                    using( var decStream = new MemoryStream() )
+                    using (var decStream = new MemoryStream())
                     {
                         RijndaelEncryptor.DecryptPSARC(psarc, decStream, this.header.TotalTOCSize);
 
                         int bytesRead;
                         int decSize = 0;
                         var buffer = new byte[this.header.blockSizeAlloc];
-                        while((bytesRead = decStream.Read(buffer, 0, buffer.Length)) > 0)
+                        while ((bytesRead = decStream.Read(buffer, 0, buffer.Length)) > 0)
                         {
                             decSize += bytesRead;
-                            if(decSize > tocSize) bytesRead = tocSize - (decSize - bytesRead);
+                            if (decSize > tocSize) bytesRead = tocSize - (decSize - bytesRead);
                             tocStream.Write(buffer, 0, bytesRead);
                         }
                     }
@@ -335,9 +369,9 @@ namespace RocksmithToolkitLib.PSARC
                 //Parse zBlocksSizeList
                 int zNum = (int)((tocSize - this.header.numFiles * this.header.TOCEntrySize) / bNum);
                 var zLengths = new uint[zNum];
-                for(int i = 0; i < zNum; i++)
+                for (int i = 0; i < zNum; i++)
                 {
-                    switch(bNum)
+                    switch (bNum)
                     {
                         case 2://64KB
                             zLengths[i] = _reader.ReadUInt16();
@@ -353,25 +387,29 @@ namespace RocksmithToolkitLib.PSARC
                 this.zBlocksSizeList = zLengths.ToArray();
                 _reader.BaseStream.Flush();
                 _reader = new BigEndianBinaryReader(psarc);
-                //Validate psarc size
-                if(psarc.Length < RequiredPsarcSize())
-                    throw new InvalidDataException("Turncated psarc.");
-                if(this.header.CompressionMethod == 2053925218)//zlib (BE)
+
+                // Validate psarc size
+                // if (psarc.Length < RequiredPsarcSize())                 
+                // throw new InvalidDataException("Truncated psarc.");
+                // try to unpack corrupt CDLC for now
+
+                if (this.header.CompressionMethod == 2053925218)//zlib (BE)
                 {   //Read Filenames
                     ReadManifest();
                     psarc.Seek(this.header.TotalTOCSize, SeekOrigin.Begin);
-                    if(!lazy)
+                    if (!lazy)
                     {// Read Data
                         InflateEntries();
                     }
                 }
-                else if(this.header.CompressionMethod == 1819962721)//lzma (BE)
+                else if (this.header.CompressionMethod == 1819962721)//lzma (BE)
                 {
                     throw new NotImplementedException("LZMA compression not supported.");
                 }
             }
             psarc.Flush();
         }
+
         private BigEndianBinaryWriter _writer;
         public void Write(Stream psarc, bool encrypt)
         {
@@ -461,5 +499,7 @@ namespace RocksmithToolkitLib.PSARC
             }
             psarc.Flush();
         }
+
+        #endregion
     }
 }

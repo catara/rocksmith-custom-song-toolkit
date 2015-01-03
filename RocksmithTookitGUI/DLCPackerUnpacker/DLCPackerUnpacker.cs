@@ -167,7 +167,7 @@ namespace RocksmithToolkitGUI.DLCPackerUnpacker
                 }
                 catch (Exception ex)
                 {
-                    errorsFound.AppendLine(String.Format("Error trying unpack file '{0}': {1}", Path.GetFileName(sourceFileName), ex.Message));
+                    errorsFound.AppendLine(String.Format("Error unpacking file '{0}': {1}", Path.GetFileName(sourceFileName), ex.Message));
                 }
 
                 progress += step;
@@ -262,7 +262,7 @@ namespace RocksmithToolkitGUI.DLCPackerUnpacker
                     if (errorsFound.Length <= 0)
                         MessageBox.Show("Unpacking is complete.", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     else
-                        MessageBox.Show("Unpacking is complete with errors. See below: " + Environment.NewLine + errorsFound.ToString(), MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("Unpacking is complete with errors. See below: " + Environment.NewLine + Environment.NewLine + errorsFound.ToString(), MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     unpackButton.Enabled = true;
                     break;
             }

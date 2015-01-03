@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
-using System.Xml.Serialization;
-using System.Runtime.Serialization;
 using System.Xml;
-using System.IO;
+using System.Xml.Linq;
+using System.Xml.Serialization;
+
 using Newtonsoft.Json;
-using RocksmithToolkitLib.Extensions;
 using RocksmithToolkitLib.DLCPackage.Manifest;
-using RocksmithToolkitLib.DLCPackage.Manifest.Tone;
+using RocksmithToolkitLib.Extensions;
 using RocksmithToolkitLib.Sng;
 
 namespace RocksmithToolkitLib.Xml
@@ -142,19 +142,33 @@ namespace RocksmithToolkitLib.Xml
          * B is for Beat?
          * "B0", "High pitch tick"
          * "B1", "Low pitch tick"
-         * E is for Emotions?
+         * 
+         * E is for Emotions? or it's generic event?
          * "E1", "Crowd happy"
          * "E3", "Crowd wild"
          * "E13", "Crowd rxtra wild?"
-         * D is for DNA?
+         * 
+         * DNA stuff
+         * dna_none
+         * dna_chord
+         * dna_riff
+         * dna_solo
+         * 
+         * Tone changes
+         * tone_a
+         * tone_b
+         * tone_c
+         * tone_d
+         * 
          * "D3", "???"
-         * "dna_riff", "???"
-         * "dna_chord", "???"
          */
 
         [XmlArray("controls")]
         [XmlArrayItem("control")]
         public SongControl[] Controls { get; set; }
+
+        [XmlElement("transcriptionTrack")]// DDC recuired node
+        public TranscriptionTrack2014 TranscriptionTrack { get; set; }
 
         [XmlArray("levels")]
         [XmlArrayItem("level", typeof(SongLevel2014))]
@@ -248,6 +262,8 @@ namespace RocksmithToolkitLib.Xml
             PhraseProperties = SongPhraseProperty.Parse(sngData.PhraseExtraInfo);
             LinkedDiffs = new SongLinkedDiff[0];
             FretHandMuteTemplates = new SongFretHandMuteTemplate[0];
+            //ddc
+            TranscriptionTrack = TranscriptionTrack2014.GetDefault();
         }
 
         public static Song2014 LoadFromFile(string xmlSongRS2014File)
@@ -263,7 +279,8 @@ namespace RocksmithToolkitLib.Xml
             XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
             ns.Add("", "");
 
-            using (var writer = XmlWriter.Create(stream, new XmlWriterSettings
+            var song = new MemoryStream();
+            using (var writer = XmlWriter.Create(song, new XmlWriterSettings
             {
                 Indent = true,
                 OmitXmlDeclaration = omitXmlDeclaration,
@@ -272,9 +289,41 @@ namespace RocksmithToolkitLib.Xml
             {
                 new XmlSerializer(typeof(Song2014)).Serialize(writer, this, ns);
             }
+            FixArrayAttribs(song);
+            song.Position = 0;
+            song.CopyTo(stream);
 
             stream.Flush();
             stream.Seek(0, SeekOrigin.Begin);
+        }
+
+        /// <summary>
+        /// Writes count attribute for choosed nodes.
+        /// </summary>
+        /// <param name="xml">Xml stream.</param>
+        private static void FixArrayAttribs(Stream xml)
+        {
+            string[] anodes = { "phrases", "phraseIterations", "newLinkedDiffs", "linkedDiffs",
+                "phraseProperties", "chordTemplates", "fretHandMuteTemplates", "fretHandMutes"/*DDC*/,
+                "ebeats", "sections", "events", "levels", "notes", "chords", "anchors", "handShapes"
+            };
+
+            xml.Position = 0;
+            var doc = XDocument.Load(xml);
+            foreach (var n in anodes) {
+                var es = doc.Descendants(n);
+                if(es.Count() > 0)
+                foreach (var e in es)
+                {
+                    var ret = e.Attribute("count");
+                    if(ret == null)
+                        e.Add(new XAttribute("count", e.Elements().Count()));
+                    else
+                        ret.SetValue(e.Elements().Count());
+                }
+            }
+            xml.Position = 0;
+            doc.Save(xml);
         }
     }
 
@@ -540,6 +589,46 @@ namespace RocksmithToolkitLib.Xml
                     matchingChord.ChordId = ct.ChordId;
             }
             return chordTemplates;
+        }
+    }
+
+    public class TranscriptionTrack2014
+    {
+        [XmlAttribute("difficulty")]
+        public Int32 Difficulty { get; set; }
+
+        [XmlArray("notes")]
+        [XmlArrayItem("note")]
+        public SongNote2014[] Notes { get; set; }
+
+        [XmlArray("chords")]
+        [XmlArrayItem("chord")]
+        public SongChord2014[] Chords { get; set; }
+
+        //Something wrong
+        [XmlArray("anchors")]
+        [XmlArrayItem("anchor")]
+        public SongAnchor2014[] Anchors { get; set; }
+
+        [XmlArray("handShapes")]
+        [XmlArrayItem("handShape")]
+        public SongHandShape[] HandShapes { get; set; }
+
+        //DDC writes this idk why, It's not present in lessons.
+        [XmlArray("fretHandMutes")]
+        [XmlArrayItem("fretHandMute")]
+        public SongFretHandMuteTemplate[] FretHandMutes { get; set; }
+
+        internal static TranscriptionTrack2014 GetDefault()
+        {
+            var tt = new TranscriptionTrack2014();
+            tt.Difficulty = -1;
+            tt.Anchors = new SongAnchor2014[0];
+            tt.Chords = new SongChord2014[0];
+            tt.FretHandMutes = new SongFretHandMuteTemplate[0];
+            tt.HandShapes = new SongHandShape[0];
+            tt.Notes = new SongNote2014[0];
+            return tt;
         }
     }
 
@@ -916,7 +1005,7 @@ namespace RocksmithToolkitLib.Xml
         private void ParseChordNotes(Sng2014HSL.Chord template, Sng2014HSL.ChordNotes chordNotes = null)
         {
             var notes = new List<SongNote2014>();
-            var notSetup = unchecked((sbyte)-1);
+            const sbyte notSetup = unchecked((sbyte)-1);
 
             for (var i = 0; i < 6; i++)
             {

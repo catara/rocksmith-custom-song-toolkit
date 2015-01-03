@@ -127,6 +127,7 @@
     <Compile Include="CDLC2Tab\SongInfoForm.Designer.cs">
       <DependentUpon>SongInfoForm.cs</DependentUpon>
     </Compile>
+
     <Compile Include="DLCManager\ArrangementsDB.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -170,6 +171,9 @@
     </Compile>
     <Compile Include="DLCManager\TonesDB.Designer.cs">
       <DependentUpon>TonesDB.cs</DependentUpon>
+
+    <Compile Include="DLCPackageCreator\VocalsForm.Designer.cs">
+      <DependentUpon>VocalsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UpdateForm.cs">
       <SubType>Form</SubType>
@@ -324,6 +328,9 @@
     <EmbeddedResource Include="DLCPackageCreator\ToneImportForm.resx">
       <DependentUpon>ToneImportForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DLCPackageCreator\VocalsForm.resx">
+      <DependentUpon>VocalsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UpdateForm.resx">
       <DependentUpon>UpdateForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -424,6 +431,8 @@
     <Compile Include="DLCPackageCreator\ToneImportForm.Designer.cs">
       <DependentUpon>ToneImportForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="DLCPackageCreator\VocalsForm.cs" />
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\logo_small.png" />
@@ -509,15 +518,19 @@
     </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
-    <PostBuildEvent>xcopy /S /Y "$(SolutionDir)Third-party Apps" "$(TargetDir)"</PostBuildEvent>
-  </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'ReleaseMac'">
-    <PostBuildEvent>/bin/cp -Rf "$(ProjectDir)../Third-party Apps/" "$(TargetDir)"</PostBuildEvent>
+    <!-- be sure to address all build types in the PostBuildEvent -->
+    <PostBuildEvent>if $(ConfigurationName) == Debug (
+xcopy /S /Y "$(SolutionDir)Third-party Apps")
+
+if $(ConfigurationName) == Release (
+xcopy /S /Y "$(SolutionDir)Third-party Apps")
+
+if $(ConfigurationName) == ReleaseMac (
+/bin/cp -Rf "$(ProjectDir)../Third-party Apps/" "$(TargetDir)")
+</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

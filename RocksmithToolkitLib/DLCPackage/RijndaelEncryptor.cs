@@ -75,6 +75,14 @@ namespace RocksmithToolkitLib.DLCPackage
             0x4B, 0xCC, 0x58, 0xCD, 0x26, 0x44, 0xF2, 0x9E
         };
 
+        public static byte[] IniKey_Mac = new byte[32]
+        {
+            0x37, 0x8B, 0x90, 0x26, 0xEE, 0x7D, 0xE7, 0x0B,
+            0x8A, 0xF1, 0x24, 0xC1, 0xE3, 0x09, 0x78, 0x67,
+            0x0F, 0x9E, 0xC8, 0xFD, 0x5E, 0x72, 0x85, 0xA8,
+            0x64, 0x42, 0xDD, 0x73, 0x06, 0x8C, 0x04, 0x73
+        };
+
         #endregion
         /// <summary>
         /// Unpacks zipped data.
@@ -356,7 +364,7 @@ namespace RocksmithToolkitLib.DLCPackage
         public static string EncryptPS3Edat()
         {
             if(!IfJavaInstalled())
-                return "No JDK or JRE is intsalled on your machine";
+                return "No JDK or JRE is installed on your machine";
 
             string errors = string.Empty;
             var files = Directory.EnumerateFiles(Path.Combine(toolkitPath, "edat"), "*.psarc");
@@ -377,7 +385,7 @@ namespace RocksmithToolkitLib.DLCPackage
         public static string DecryptPS3Edat()
         {
             if(!IfJavaInstalled())
-                return "No JDK or JRE is intsalled on your machine";
+                return "No JDK or JRE is installed on your machine";
 
             string errors = string.Empty;
             var files = Directory.EnumerateFiles(Path.Combine(toolkitPath, "edat"), "*.edat");
@@ -408,9 +416,9 @@ namespace RocksmithToolkitLib.DLCPackage
             PS3Process.WaitForExit();
 
             string stdout = PS3Process.StandardError.ReadToEnd();
-            //Improove me please
+            //Improve me please
             if (!String.IsNullOrEmpty(stdout))
-                return String.Format("System error occured {0}\n", stdout);
+                return String.Format("System error occurred {0}\n", stdout);
             return "";
         }
 

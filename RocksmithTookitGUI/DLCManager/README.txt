@@ -29,6 +29,7 @@ ToDos/bugs:
 - small bug: sometimes preview shows empty but the vs is not red incubus echo
 - big feature: get the volume of the audio file and then compare against ther est or a norm
 - small bug: mj beat it issue with ading older to titles and so changing the xml path
+- audioslave sections missing maybe cause its an original and i used my own logic to strip the DD
 
 dev issues:
 - Toolkit version flag does not sync to&from Github

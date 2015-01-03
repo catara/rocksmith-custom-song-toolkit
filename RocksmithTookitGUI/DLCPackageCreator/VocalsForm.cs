@@ -26,9 +26,9 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
 
         public VocalsForm( string fontSng, string lyricArtPath )
         {
-            InitializeComponent();
-            SngPathCTB.Text = SngPath = fontSng;
-            ArtPathCTB.Text = ArtPath = lyricArtPath;
+            //InitializeComponent();
+            //SngPathCTB.Text = SngPath = fontSng;
+            //ArtPathCTB.Text = ArtPath = lyricArtPath;
         }
         
         void OkButton_Click(object sender, EventArgs e)

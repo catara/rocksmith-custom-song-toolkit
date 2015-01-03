@@ -127,7 +127,7 @@
     <Compile Include="CDLC2Tab\SongInfoForm.Designer.cs">
       <DependentUpon>SongInfoForm.cs</DependentUpon>
     </Compile>
-<<<<<<< HEAD
+
     <Compile Include="DLCManager\ArrangementsDB.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -171,10 +171,9 @@
     </Compile>
     <Compile Include="DLCManager\TonesDB.Designer.cs">
       <DependentUpon>TonesDB.cs</DependentUpon>
-=======
+
     <Compile Include="DLCPackageCreator\VocalsForm.Designer.cs">
       <DependentUpon>VocalsForm.cs</DependentUpon>
->>>>>>> 6dfc1b15afc96f19bf6c4547936e47e537957e8c
     </Compile>
     <Compile Include="UpdateForm.cs">
       <SubType>Form</SubType>
@@ -433,6 +432,7 @@
       <DependentUpon>ToneImportForm.cs</DependentUpon>
     </Compile>
     <Compile Include="DLCPackageCreator\VocalsForm.cs" />
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\logo_small.png" />

@@ -16,6 +16,7 @@ using System.IO;
 using System.Security.Cryptography; //For File hash
 using RocksmithToolkitLib.Extensions; //dds
 using System.Globalization;
+using Ookii.Dialogs; //cue text
 
 namespace RocksmithToolkitGUI.DLCManager
 {
@@ -848,7 +849,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private void btn_DecompressAll_Click(object sender, EventArgs e)
         {
             //txt_Description.Text = DB_Path;
-            MainDB frm = new MainDB(DB_Path.Replace("\\Files.accdb;", ""),TempPath);
+            MainDB frm = new MainDB(DB_Path.Replace("\\Files.accdb;", ""),TempPath, false);
             frm.Show();
         }
 

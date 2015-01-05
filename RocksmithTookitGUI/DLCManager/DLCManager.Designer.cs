@@ -271,6 +271,7 @@
             "31. When importing delete identical duplicates(same hash/filesize)",
             "32. When removing DD use internal logic not DDC",
             "33. When importing alternates add newer/older instead of alt.0author",
+            "34. Update Import location of all DB fields",
             "<IMPORT>",
             "<@Pack>"});
             this.chbx_Additional_Manipualtions.Location = new System.Drawing.Point(240, 88);

@@ -4,14 +4,15 @@
 
 
 
-DLC Library Manager v0.2.0.4 (beta version)
+DLC Library Manager v0.2.0.7 (beta version)
 Main Features:
 - Gather all DLCs metadata into 1 Access DB
 	- Manage Duplicates
-	- Edit Individual metadata
-- Modify meta data per each Rocksmith song: e.g. Album Field <Broken><Year> - <Album> - r<Rating> - <Avail. Instr.> - <DD> - <Tuning>
-- Mass add/remove DD (inc. Bass only option)
-- Repack
+	- Edit Individual metadata fields
+- Mass Modify meta data @repack per each Rocksmith song: e.g. Album Field: <Broken><Year> - <Album> - r<Rating> - <Avail. Instr.> - <DD> - <Tuning>
+- Mass add/remove DD @repack (inc. Bass only option)
+- Mass rename songs e.g. Black Keys->The Black Keys and maintain changes in a local DB
+
 
 Known Issues:
 - Import fails randomly...Import again (dont clear the DB)
@@ -28,13 +29,13 @@ ToDos/bugs:
 - small improv: add the proper lasconvdate in the db 
 - small bug: sometimes preview shows empty but the vs is not red incubus echo
 - big feature: get the volume of the audio file and then compare against ther est or a norm
-- small bug: mj beat it issue with ading older to titles and so changing the xml path
+- small bug: mj beat it issue with adding older to titles and so changing the xml path
 - audioslave sections missing maybe cause its an original and i used my own logic to strip the DD
 
 dev issues:
 - Toolkit version flag does not sync to&from Github
-- Bin\debug folder content is needed
-- activate debug
+- Bin\debug folder content is needed(rockmisht.lib)
+- activate debug(can't remember how i did it....)
 
 Version History(release date):
 	0.1(12.08.2014) prototype, 
@@ -51,8 +52,8 @@ Version History(release date):
 	0.2.0.5 (01.12) Search screen prototype
 	0.2.0.6 (29.11) add save confirm for any save operation and add DLCID checks in all updates that mighht affect it WHERE (SELECT NO OTHER DLCNAME)
 	0.2.0.7 (15.12) New features: Add: lastconversiondata field per each arrangement, MainDb filters
-	wip: 0.2.0.8 (20%) has_section flag(to be tested with a song missing sections); Add 30 sec preview midsong; 
-	wip: 0.2.0.9 (20.12.2014) (10%) close bugs on Conversion to Ps3(nin hell) and analyse acuracy on conversion to ps3 (1979,7army..)
+	wip: 0.2.0.8 (20.01.2015) (20%) has_section flag(to be tested with a song missing sections); Add 30 sec preview midsong; 
+	wip: 0.2.0.9 (20.01.2015) (10%) close bugs on Conversion to Ps3(nin hell) and analyse acuracy on conversion to ps3 (1979,7army..)
 	wip: 0.2.0.10 (22.12.2014)  (90%)remove bug on auto import if original
 	wip: 0.2.0.11 (24.12) (85%) full release (anyone can download and use the tool..no bugs..and all unimplemented featues disabled) DB independece/dependence on already provided 1, repack wo bugs, edit screens functional
 	wip: 0.2.2 (31.12.2014) (10%) HTML&Excel exports
@@ -67,7 +68,7 @@ Version History(release date):
 	tbr: 0.5 (26.12.2014) (0%) Implement FTP to PS3 (also as a copy to any other location)
 
 
-Date: 17.11.2014
+Date: 04.01.2015
 Document Name: Rocksmith DLC Management tool README
 				(fork of rocksmith-custom-song-toolkit)
 Document purpose: To describe the functionailities and the way to change, the NEW tab that enable MASS Manipulation of Rocksmith DLC Library
@@ -148,7 +149,7 @@ _5. Future feastures
 	- Manage Official DLCs
 		- Ability to create a package out of a list of Official DLCs
 			- Initially all DCLS will be manually matched & hardcoded as to the audio file name and the song title
-	- Flag files with no bass, no sections, no lyrics, no preview no DD, riff repeater..
+	+ Flag files with no bass, no sections, no lyrics, no preview no DD, riff repeater..
 		- FIX when possible
 	+ Show duplicates and solve conflicts
 	-- Audio Preview full track&preview track

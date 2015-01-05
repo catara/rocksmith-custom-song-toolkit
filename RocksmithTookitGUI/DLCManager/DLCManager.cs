@@ -2502,7 +2502,7 @@ namespace RocksmithToolkitGUI.DLCManager
             }
 
             //Show Intro database window
-            MainDB frm = new MainDB(txt_DBFolder.Text, txt_TempPath.Text);
+            MainDB frm = new MainDB(txt_DBFolder.Text, txt_TempPath.Text, chbx_Additional_Manipualtions.GetItemChecked(33));
             frm.Show();
 
             //dataGrid.frmMainForm.ActiveForm.Show();
@@ -3601,7 +3601,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private void btn_DecompressAll_Click(object sender, EventArgs e)
         {
             //Show Intro database window
-            MainDB frm = new MainDB(txt_DBFolder.Text, txt_TempPath.Text);
+            MainDB frm = new MainDB(txt_DBFolder.Text, txt_TempPath.Text, chbx_Additional_Manipualtions.GetItemChecked(33));
             frm.Show();
         }
 

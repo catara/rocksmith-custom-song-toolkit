@@ -18,13 +18,14 @@ namespace RocksmithToolkitGUI.DLCManager
 {
     public partial class MainDB : Form
     {
-        public MainDB(string txt_DBFolder, string txt_TempPath)
+        public MainDB(string txt_DBFolder, string txt_TempPath, bool updateDB)
         {
             InitializeComponent();
             //MessageBox.Show("test0");
             DB_Path = txt_DBFolder;
             DB_Path = DB_Path + "\\Files.accdb";
             TempPath = txt_TempPath;
+            updateDBb = updateDB;
         }
 
         private string Filename = System.IO.Path.Combine(Application.StartupPath, "Text.txt");
@@ -40,6 +41,7 @@ namespace RocksmithToolkitGUI.DLCManager
         public DataSet dssx2 = new DataSet();
         public int noOfRec = 0;
         public string SearchCmd = "";
+        public bool updateDBb=false;
         //public OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn);
 
         //private BindingSource bsPositions = new BindingSource();
@@ -53,54 +55,82 @@ namespace RocksmithToolkitGUI.DLCManager
             Populate(ref DataGridView1, ref Main);//, ref bsPositions, ref bsBadges);
             DataGridView1.EditingControlShowing += DataGridView1_EditingControlShowing;
             btn_Search.Enabled = false;
-            if (!Directory.Exists(DataGridView1.Rows[0].Cells[22].Value.ToString()))
+            //MessageBox.Show(updateDBb.ToString());
+            if (!Directory.Exists(DataGridView1.Rows[0].Cells[22].Value.ToString()) || updateDBb)
             {
-                var OLD_Path = DataGridView1.Rows[0].Cells[22].Value.ToString().Substring(0, DataGridView1.Rows[0].Cells[22].Value.ToString().IndexOf("\\0\\")); //files[0].Folder_Name.Replace
-                if (!Directory.Exists(OLD_Path))
+                var tmpp = "\\ORIG"; var OLD_Path = ""; var cmd = "";
+            for (var h = 0; h < 2; h++)
                 {
-                    var cmd = "UPDATE Main SET AlbumArtPath=REPLACE(AlbumArtPath,'" + OLD_Path + "','" + TempPath + "'), AudioPath=REPLACE(AudioPath,'" + OLD_Path + "','" + TempPath + "')";
-                    cmd += ", audioPreviewPath=REPLACE(audioPreviewPath,'" + OLD_Path + "','" + TempPath + "'), Folder_Name=REPLACE(Folder_Name,'" + OLD_Path + "','" + TempPath + "');";
-                    //txt_Description.Text = cmd;
-                   DialogResult result1 = MessageBox.Show("DB Repository has been moved from " + OLD_Path + " to " + TempPath +"-"+cmd, MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                    if (result1 == DialogResult.Yes)
-                        try
+                    try
+                    {
+                        using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
                         {
-                            using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                            SearchCmd = "SELECT top 1 AlbumArtPath, audioPreviewPath, OggPath, oggPreviewPath FROM Main WHERE AudioPath LIKE '%" + tmpp + "%' AND audioPreviewPath is not null and oggPreviewPath is not null;";
+                            DataSet duk = new DataSet();
+                            OleDbDataAdapter dal = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
+                            dal.Fill(duk, "Main");
+
+                            //dax.Dispose();
+                            OLD_Path = duk.Tables[0].Rows[0].ItemArray[0].ToString().Substring(0, duk.Tables[0].Rows[0].ItemArray[0].ToString().IndexOf(tmpp)) + tmpp;
+                            if (!Directory.Exists(OLD_Path) || updateDBb)
                             {
-                                DataSet dus = new DataSet();
-                                OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
-                                dax.Fill(dus, "Main");
-                                dax.Dispose();
-                                //MessageBox.Show("Main table has been updated", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                DataSet ds = new DataSet();
+                                //var cmd = "UPDATE Main SET AlbumArtPath=REPLACE(AlbumArtPath,'" + OLD_Path + "','" + TempPath + tmpp + "'), AudioPath=REPLACE(AudioPath,'" + OLD_Path + "','" + TempPath + tmpp + "')";
+                                //cmd += ", audioPreviewPath=REPLACE(audioPreviewPath,'" + OLD_Path + "','" + TempPath + tmpp + "'), Folder_Name=REPLACE(Folder_Name,'" + OLD_Path + "','" + TempPath + tmpp + "');";
+                                cmd = "UPDATE Main SET AlbumArtPath=REPLACE(AlbumArtPath, left(AlbumArtPath,instr(AlbumArtPath, '" + tmpp + "')-1),'" + TempPath + "'), AudioPath=REPLACE(AudioPath,left(AudioPath,instr(AudioPath, '" + tmpp + "')-1),'" + TempPath + "')";
+                                cmd += ", Folder_Name=REPLACE(Folder_Name, left(Folder_Name,instr(Folder_Name, '" + tmpp + "')-1),'" + TempPath + "')";
+                                cmd += " WHERE instr(AlbumArtPath, '" + tmpp + "')>0";
+                                //txt_Description.Text = cmd;
+                                //MessageBox.Show(duk.Tables[0].Rows[0].ItemArray[0].ToString());
+                                DialogResult result1 = MessageBox.Show("DB Repository has been moved from " + OLD_Path + "\n\n to " + TempPath + tmpp + "\n\n-" + cmd, MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                                if (result1 == DialogResult.Yes)  //|| updateDBb
+                                //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                                {
+                                    DataSet dus = new DataSet();
+                                    OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
+                                    dax.Fill(dus, "Main");
+                                    dax.Dispose();
+                                   // MessageBox.Show("Main table has been updated", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                                cmd = "UPDATE Main SET , OggPath=REPLACE(OggPath,'" + OLD_Path + "','" + TempPath + "') WHERE OggPath IS NOT NULL;";
-                                OleDbDataAdapter dac = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
-                                dac.Fill(ds, "Arrangements");
-                                dac.Dispose();
+                                    DataSet ds = new DataSet();
+                                    OLD_Path = duk.Tables[0].Rows[0].ItemArray[2].ToString().Substring(0, duk.Tables[0].Rows[0].ItemArray[2].ToString().IndexOf(tmpp)) + tmpp;
+                                    cmd = "UPDATE Main SET OggPath=REPLACE(OggPath, left(OggPath,instr(OggPath, '" + tmpp + "')-1),'" + TempPath + tmpp + "') WHERE OggPath IS NOT NULL AND instr(OggPath, '" + tmpp + "')>0";
+                                    OleDbDataAdapter dac = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
+                                   // MessageBox.Show(cmd + "\n" + OLD_Path + "\n" + TempPath + tmpp);
+                                    dac.Fill(ds, "Main");
+                                    dac.Dispose();
 
-                                cmd = "UPDATE Main SET oggPreviewPath=REPLACE(oggPreviewPath,'" + OLD_Path + "','" + TempPath + "') WHERE oggPreviewPath IS NOT NULL;";
-                                OleDbDataAdapter daH = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
-                                daH.Fill(ds, "Arrangements");
-                                daH.Dispose();
-                                MessageBox.Show("Main table has been updated", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    //tmpp = "\\ORIG";
+                                    //MessageBox.Show(duk.Tables[0].Rows[0].ItemArray[3].ToString());
+                                    OLD_Path = duk.Tables[0].Rows[0].ItemArray[3].ToString().Substring(0, duk.Tables[0].Rows[0].ItemArray[3].ToString().IndexOf(tmpp)) + tmpp;
+                                    cmd = "UPDATE Main SET oggPreviewPath=REPLACE(oggPreviewPath, left(oggPreviewPath,instr(oggPreviewPath, '" + tmpp + "')-1),'" + TempPath + tmpp + "'), audioPreviewPath=REPLACE(audioPreviewPath, left(audioPreviewPath,instr(audioPreviewPath, '" + tmpp + "')-1),'" + TempPath + "') WHERE oggPreviewPath IS NOT NULL AND instr(oggPreviewPath, '" + tmpp + "')>0";
+                                    OleDbDataAdapter daH = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
+                                    //MessageBox.Show("3");
+                                    daH.Fill(ds, "Main");
+                                    daH.Dispose();
+                                    MessageBox.Show("Main table has been updated", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                                cmd = "UPDATE Arrangements SET SNGFilePath=REPLACE(SNGFilePath,'" + OLD_Path + "','" + TempPath + "'), XMLFilePath=REPLACE(XMLFilePath,'" + OLD_Path + "','" + TempPath + "');";
-                                OleDbDataAdapter daN = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
-                                daN.Fill(ds, "Arrangements");
-                                daN.Dispose();
-                                MessageBox.Show("Arrangements table has been updated", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    //OLD_Path = DataGridView1.Rows[0].Cells[].Value.ToString().Substring(0, DataGridView1.Rows[0].Cells[77].Value.ToString().IndexOf("\\0\\")) + "\\0"; //files[0].Folder_Name.Replace
+                                    cmd = "UPDATE Arrangements SET SNGFilePath=REPLACE(SNGFilePath, left(SNGFilePath,instr(SNGFilePath, '" + tmpp + "')-1),'" + TempPath + tmpp + "'), XMLFilePath=REPLACE(XMLFilePath, left(XMLFilePath,instr(XMLFilePath, '" + tmpp + "')-1),'" + TempPath + tmpp + "') WHERE instr(XMLFilePath, '" + tmpp + "')>0";
+                                    OleDbDataAdapter daN = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
+                                    //MessageBox.Show(cmd);
+                                    daN.Fill(ds, "Arrangements");
+                                    daN.Dispose();
+                                    MessageBox.Show("Arrangements table has been updated", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Issues with Temp Folder and DB Reporsitory");
+                                    return;
+                                }
                             }
                         }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            MessageBox.Show("Can not open Main DB connection to Update DB Reporsitory ! " + DB_Path + "-" + cmd);
-                        }
-                    else {
-                        MessageBox.Show("1Issues with Temp Folder and DB Reporsitory");                    
-                        return;
-                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Can not open Main DB connection to Update DB Reporsitory ! " + DB_Path + "-" + cmd);
+                    }
+                    tmpp = "\\CDLC";
                 }
             }
         }
@@ -456,21 +486,24 @@ namespace RocksmithToolkitGUI.DLCManager
         }
 
     private void btn_Search_Click(object sender, EventArgs e)
-    {
-            try
-            { 
-            SearchCmd = "SELECT * FROM Main WHERE "+(txt_Artist.Text != "" ? " Artist Like '%"+ txt_Artist.Text+ "%'":"")+ (txt_Artist.Text != "" ? (txt_Title.Text !=""? " AND " :"") :"") + (txt_Title.Text != "" ? " Song_Title Like '%" + txt_Title.Text + "%'" : "") + " ORDER BY Artist, Album_Year, Album, Song_Title ;";
-            //DataGridView1.Dispose();
-            dssx.Dispose();
-            Populate(ref DataGridView1, ref Main);//, ref bsPositions, ref bsBadges);
-            DataGridView1.EditingControlShowing += DataGridView1_EditingControlShowing;
-            DataGridView1.Refresh();
-            }
-            catch (System.IO.FileNotFoundException ee)
-            {
-                MessageBox.Show(ee.Message + "Can't run Search ! " + SearchCmd);
-                //MessageBox.Show(ee.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+        {
+            if (txt_Artist.Text != "" || txt_Title.Text != "")
+                try
+                {
+                    SearchCmd = "SELECT * FROM Main WHERE " + (txt_Artist.Text != "" ? " Artist Like '%" + txt_Artist.Text + "%'" : "") + (txt_Artist.Text != "" ? (txt_Title.Text != "" ? " AND " : "") : "") + (txt_Title.Text != "" ? " Song_Title Like '%" + txt_Title.Text + "%'" : "") + " ORDER BY Artist, Album_Year, Album, Song_Title ;";
+                    //DataGridView1.Dispose();
+                    //txt_Description.Text = SearchCmd;
+                    dssx.Dispose();
+                    Populate(ref DataGridView1, ref Main);//, ref bsPositions, ref bsBadges);
+                    DataGridView1.EditingControlShowing += DataGridView1_EditingControlShowing;
+                    DataGridView1.Refresh();
+                }
+                catch (System.IO.FileNotFoundException ee)
+                {
+                    MessageBox.Show(ee.Message + "Can't run Search ! " + SearchCmd);
+                    //MessageBox.Show(ee.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            else MessageBox.Show("Add a search criteria");
 
         }
 

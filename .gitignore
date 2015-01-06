@@ -116,3 +116,6 @@ RocksmithToolkitLib/ToolkitVersion.cs
 __pycache__/
 *.py[cod]
 *.egg
+RocksmithCustomSongCreator.sln.ide/storage.ide
+*.ide
+*.ide

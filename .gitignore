@@ -119,3 +119,5 @@ __pycache__/
 RocksmithCustomSongCreator.sln.ide/storage.ide
 *.ide
 *.ide
+*.chk
+*.ide

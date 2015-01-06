@@ -13,6 +13,7 @@ using RocksmithToolkitGUI;
 using RocksmithToolkitGUI.DLCManager;
 using RocksmithToolkitLib.Extensions; //dds
 using System.Diagnostics;
+using Ookii.Dialogs; //cue text
 
 namespace RocksmithToolkitGUI.DLCManager
 {

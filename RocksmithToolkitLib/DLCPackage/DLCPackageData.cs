@@ -169,7 +169,8 @@ namespace RocksmithToolkitLib.DLCPackage
                         case "64":
                             ddsFilesC.Add(new DDSConvertedFile() { sizeX = 64, sizeY = 64, sourceFile = file, destinationFile = file.CopyToTempFile(".dds") });
                             break;
-                    } data.ArtFiles = ddsFilesC;
+                    }
+                data.ArtFiles = ddsFilesC;
             }
             // Lyric Art
             var LyricArt = Directory.GetFiles(unpackedDir, "lyrics_*.dds", SearchOption.AllDirectories);
@@ -259,7 +260,8 @@ namespace RocksmithToolkitLib.DLCPackage
                     {
                         File.Delete(file.destinationFile);
                     }
-                    catch { }
+                    catch
+                    { }
                 }
                 ArtFiles = null;
             }

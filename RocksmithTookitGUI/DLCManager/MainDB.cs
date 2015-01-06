@@ -13,6 +13,7 @@ using System.Data.OleDb;
 using RocksmithToolkitGUI;
 using RocksmithToolkitLib.Extensions;
 using System.IO;
+using Ookii.Dialogs; //cue text
 
 namespace RocksmithToolkitGUI.DLCManager
 {

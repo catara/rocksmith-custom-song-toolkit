@@ -16,11 +16,11 @@ using RocksmithToolkitLib.Xml; //For DD
 using RocksmithToolkitLib.DLCPackage.Manifest; //For DD
 using System.IO;
 using System.Data.OleDb;
-using Ookii.Dialogs;
 using System.Net;
 using System.Reflection;
 using System.Security.Cryptography; //For File hash
 using System.Diagnostics;//repack
+using Ookii.Dialogs; //cue text
 
 using RocksmithToolkitLib.Ogg;//pack check
 //For the Export to Excel function

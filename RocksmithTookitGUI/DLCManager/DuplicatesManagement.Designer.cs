@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
-using Ookii.Dialogs;
 using RocksmithToolkitLib;
 using RocksmithToolkitLib.Extensions;
 using RocksmithToolkitLib.DLCPackage;
+using Ookii.Dialogs; //cue text
 
 namespace RocksmithToolkitGUI.DLCManager
 {
@@ -1534,8 +1534,8 @@ namespace RocksmithToolkitGUI.DLCManager
             this.Controls.Add(this.label28);
             this.Controls.Add(this.label27);
             this.Controls.Add(this.btn_DecompressAll);
-            this.Controls.Add(this.label26);
-            this.Controls.Add(this.txt_AlternateNo);
+            Controls.Add(this.label26);
+            Controls.Add(txt_AlternateNo);
             this.Controls.Add(this.lbl_IDExisting);
             this.Controls.Add(this.label25);
             this.Controls.Add(this.label24);
@@ -1631,7 +1631,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.Controls.Add(this.txt_DLCIDNew);
             this.Controls.Add(this.txt_TuningExisting);
             this.Controls.Add(this.txt_TuningNew);
-            this.Controls.Add(this.txt_AuthorExisting);
+            Controls.Add(this.txt_AuthorExisting);
             this.Controls.Add(this.txt_AuthorNew);
             this.Controls.Add(this.txt_IsOriginalExisting);
             this.Controls.Add(this.txt_IsOriginalNew);

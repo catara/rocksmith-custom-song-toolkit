@@ -193,7 +193,6 @@ namespace RocksmithToolkitGUI.DDC
 
             startInfo.FileName = Path.Combine(AppWD, "ddc", "ddc.exe");
             startInfo.WorkingDirectory = Path.GetDirectoryName(file);
-            //MessageBox.Show(Path.GetFileName(file) + "-" + (UInt16)phaseLenNum.Value remSUS, rampPath, cfgPath, cleanProcess); //bcapi
             startInfo.Arguments = String.Format("\"{0}\" -l {1} -s {2}{3}{4}{5}", 
                                                 Path.GetFileName(file),
                                                 (UInt16)phaseLenNum.Value, 
@@ -205,7 +204,7 @@ namespace RocksmithToolkitGUI.DDC
             startInfo.CreateNoWindow = true;
             startInfo.RedirectStandardOutput = true;
             startInfo.RedirectStandardError = true;
-            //MessageBox.Show(startInfo.FileName + "---" + startInfo.WorkingDirectory + "---" + startInfo.FileName + "---" );
+
             using (var DDC = new Process()) {
                 DDC.StartInfo = startInfo;
                 DDC.Start();

@@ -73,8 +73,7 @@ namespace RocksmithToolkitLib.DLCPackage
         /// <param name="unpackedDir">Unpacked dir.</param>
         /// <param name="targetPlatform">Target platform.</param>
         /// <param name = "sourcePlatform"></param>
-        public static DLCPackageData LoadFromFolder(string unpackedDir, Platform targetPlatform, Platform sourcePlatform = null)
-        {
+        public static DLCPackageData LoadFromFolder(string unpackedDir, Platform targetPlatform, Platform sourcePlatform = null) {
             var data = new DLCPackageData();
             data.GameVersion = GameVersion.RS2014;
             data.SignatureType = PackageMagic.CON;
@@ -87,16 +86,13 @@ namespace RocksmithToolkitLib.DLCPackage
 
             //Load files
             var jsonFiles = Directory.GetFiles(unpackedDir, "*.json", SearchOption.AllDirectories);
-            foreach (var json in jsonFiles)
-            {
+            foreach (var json in jsonFiles) {
                 var attr = Manifest2014<Attributes2014>.LoadFromFile(json).Entries.ToArray()[0].Value.ToArray()[0].Value;
                 var xmlName = attr.SongXml.Split(':')[3];
                 var xmlFile = Directory.GetFiles(unpackedDir, xmlName + ".xml", SearchOption.AllDirectories)[0];
 
-                if (attr.Phrases != null)
-                {
-                    if (data.SongInfo == null)
-                    {
+                if (attr.Phrases != null) {
+                    if (data.SongInfo == null) {
                         // Fill Package Data
                         data.Name = attr.DLCKey;
                         data.Volume = attr.SongVolume;
@@ -114,8 +110,7 @@ namespace RocksmithToolkitLib.DLCPackage
                     }
 
                     // Adding Tones
-                    foreach (var jsonTone in attr.Tones)
-                    {
+                    foreach (var jsonTone in attr.Tones) {
                         if (jsonTone == null) continue;
                         var key = jsonTone.Key;
                         if (data.TonesRS2014.All(t => t.Key != key))
@@ -124,9 +119,7 @@ namespace RocksmithToolkitLib.DLCPackage
 
                     // Adding Arrangement
                     data.Arrangements.Add(new Arrangement(attr, xmlFile));
-                }
-                else
-                {
+                } else {
                     var voc = new Arrangement();
                     voc.Name = attr.JapaneseVocal == true ? ArrangementName.JVocals : ArrangementName.Vocals;
                     voc.ArrangementType = ArrangementType.Vocal;
@@ -137,8 +130,7 @@ namespace RocksmithToolkitLib.DLCPackage
                     // Get symbols stuff, write plain sng to disk.
                     var fontSng = Directory.GetFiles(unpackedDir, xmlName + ".sng", SearchOption.AllDirectories)[0];
                     var vocSng = Sng2014HSL.Sng2014File.LoadFromFile(fontSng, sourcePlatform);
-                    if (vocSng.IsCustomFont())
-                    {
+                    if (vocSng.IsCustomFont()) {
                         voc.CustomFont = true;
                         voc.FontSng = fontSng;
                         vocSng.WriteChartData(fontSng, new Platform(GamePlatform.Pc, GameVersion.None));
@@ -152,25 +144,22 @@ namespace RocksmithToolkitLib.DLCPackage
 
             //Get DDS Files + hacky reuse if exist
             var ddsFiles = Directory.GetFiles(unpackedDir, "album_*.dds", SearchOption.AllDirectories);
-            if (ddsFiles.Length > 0)
-            {
+            if (ddsFiles.Length > 0) {
                 var ddsFilesC = new List<DDSConvertedFile>();
-                foreach (var file in ddsFiles)
-                    switch (Path.GetFileNameWithoutExtension(file).Split('_')[2])
-                    {
+                foreach( var file in ddsFiles )
+                switch(Path.GetFileNameWithoutExtension(file).Split('_')[2]){
 
-                        case "256":
-                            data.AlbumArtPath = file;
-                            ddsFilesC.Add(new DDSConvertedFile() { sizeX = 256, sizeY = 256, sourceFile = file, destinationFile = file.CopyToTempFile(".dds") });
-                            break;
-                        case "128":
-                            ddsFilesC.Add(new DDSConvertedFile() { sizeX = 128, sizeY = 128, sourceFile = file, destinationFile = file.CopyToTempFile(".dds") });
-                            break;
-                        case "64":
-                            ddsFilesC.Add(new DDSConvertedFile() { sizeX = 64, sizeY = 64, sourceFile = file, destinationFile = file.CopyToTempFile(".dds") });
-                            break;
-                    }
-                data.ArtFiles = ddsFilesC;
+                case "256":
+                    data.AlbumArtPath = file;
+                    ddsFilesC.Add(new DDSConvertedFile() { sizeX = 256, sizeY = 256, sourceFile = file, destinationFile = file.CopyToTempFile(".dds") });
+                break;
+                case "128":
+                    ddsFilesC.Add(new DDSConvertedFile() { sizeX = 128, sizeY = 128, sourceFile = file, destinationFile = file.CopyToTempFile(".dds") });
+                break;
+                case "64":
+                    ddsFilesC.Add(new DDSConvertedFile() { sizeX = 64, sizeY = 64, sourceFile = file, destinationFile = file.CopyToTempFile(".dds") });
+                break;
+                } data.ArtFiles = ddsFilesC;
             }
             // Lyric Art
             var LyricArt = Directory.GetFiles(unpackedDir, "lyrics_*.dds", SearchOption.AllDirectories);
@@ -182,8 +171,7 @@ namespace RocksmithToolkitLib.DLCPackage
             var targetAudioFiles = new List<string>();
             var sourceAudioFiles = Directory.GetFiles(unpackedDir, "*.wem", SearchOption.AllDirectories).ToArray();
 
-            foreach (var file in sourceAudioFiles)
-            {
+            foreach (var file in sourceAudioFiles) {
                 var newFile = Path.Combine(Path.GetDirectoryName(file), String.Format("{0}_fixed{1}", Path.GetFileNameWithoutExtension(file), Path.GetExtension(file)));
                 if (targetPlatform.IsConsole != (sourcePlatform = file.GetAudioPlatform()).IsConsole)
                 {
@@ -200,29 +188,23 @@ namespace RocksmithToolkitLib.DLCPackage
             FileInfo a = new FileInfo(targetAudioFiles[0]);
             FileInfo b = null;
 
-            if (targetAudioFiles.Count == 2)
-            {
+            if (targetAudioFiles.Count == 2) {
                 b = new FileInfo(targetAudioFiles[1]);
 
-                if (a.Length > b.Length)
-                {
+                if (a.Length > b.Length) {
                     audioPath = a.FullName;
                     audioPreviewPath = b.FullName;
-                }
-                else
-                {
+                } else {
                     audioPath = b.FullName;
                     audioPreviewPath = a.FullName;
                 }
-            }
-            else
+            } else
                 audioPath = a.FullName;
 
             data.OggPath = audioPath;
 
             //Make Audio preview with expected name when rebuild
-            if (!String.IsNullOrEmpty(audioPreviewPath))
-            {
+            if (!String.IsNullOrEmpty(audioPreviewPath)) {
                 var newPreviewFileName = Path.Combine(Path.GetDirectoryName(audioPath), String.Format("{0}_preview{1}", Path.GetFileNameWithoutExtension(audioPath), Path.GetExtension(audioPath)));
                 File.Move(audioPreviewPath, newPreviewFileName);
                 data.OggPreviewPath = newPreviewFileName;
@@ -250,18 +232,12 @@ namespace RocksmithToolkitLib.DLCPackage
         #endregion
 
         // needs to be called after all packages for platforms are created
-        public void CleanCache()
-        {
-            if (ArtFiles != null)
-            {
-                foreach (var file in ArtFiles)
-                {
-                    try
-                    {
+        public void CleanCache() {
+            if (ArtFiles != null) {
+                foreach (var file in ArtFiles) {
+                    try {
                         File.Delete(file.destinationFile);
-                    }
-                    catch
-                    { }
+                    } catch { }
                 }
                 ArtFiles = null;
             }
@@ -293,15 +269,14 @@ namespace RocksmithToolkitLib.DLCPackage
             SongName = attr.FullName.Split('_')[0];
 
             //Create dir sruct
-            outdir = Path.Combine(Path.GetDirectoryName(unpackedDir), String.Format("{0}_{1}", attr.ArtistName.GetValidSortName(), attr.SongName.GetValidSortName()).Replace(" ", "-"));
+            outdir = Path.Combine(Path.GetDirectoryName(unpackedDir), String.Format("{0}_{1}", attr.ArtistName.GetValidSortName(), attr.SongName.GetValidSortName()).Replace(" ","-"));
             eofdir = Path.Combine(outdir, EOF);
             kitdir = Path.Combine(outdir, KIT);
             attr = null; //dispose
 
             // Don't work in same dir
-            if (Directory.Exists(outdir))
-            {
-                if (outdir == unpackedDir)
+            if (Directory.Exists(outdir)){
+                if(outdir == unpackedDir)
                     return unpackedDir;
                 DirectoryExtension.SafeDelete(outdir);
             }
@@ -319,7 +294,7 @@ namespace RocksmithToolkitLib.DLCPackage
                 var sngFile = sngFiles.FirstOrDefault(x => Path.GetFileNameWithoutExtension(x) == Name);
 
                 //Move all pair JSON\XML
-                File.Move(json, Path.Combine(kitdir, Name + ".json"));
+                File.Move(json,    Path.Combine(kitdir, Name + ".json"));
                 File.Move(xmlFile, Path.Combine(eofdir, Name + ".xml"));
                 if (Name.EndsWith("vocals", StringComparison.Ordinal))
                     File.Move(sngFile, Path.Combine(kitdir, Name + ".sng"));
@@ -328,31 +303,27 @@ namespace RocksmithToolkitLib.DLCPackage
             //Move all art_size.dds to KIT folder
             var ArtFiles = Directory.GetFiles(unpackedDir, "album_*_*.dds", SearchOption.AllDirectories);
             if (ArtFiles.Any())
-                foreach (var art in ArtFiles)
+                foreach(var art in ArtFiles)
                     File.Move(art, Path.Combine(kitdir, Path.GetFileName(art)));
             var LyricArt = Directory.GetFiles(unpackedDir, "lyrics_*.dds", SearchOption.AllDirectories);
             if (LyricArt.Any())
-                foreach (var art in LyricArt)
+                foreach(var art in LyricArt)
                     File.Move(art, Path.Combine(kitdir, Path.GetFileName(art)));
 
             //Move ogg to EOF folder + rename
             var OggFiles = Directory.GetFiles(unpackedDir, "*_fixed.ogg", SearchOption.AllDirectories);
-            if (!OggFiles.Any())
+            if(!OggFiles.Any())
                 throw new InvalidDataException("Audio files not found.");
             //TODO: read names from bnk and rename.
             var a0 = new FileInfo(OggFiles[0]);
             FileInfo b0 = null;
-            if (OggFiles.Length == 2)
-            {
+            if (OggFiles.Length == 2){
                 b0 = new FileInfo(OggFiles[1]);
 
-                if (a0.Length > b0.Length)
-                {
+                if (a0.Length > b0.Length) {
                     File.Move(a0.FullName, Path.Combine(eofdir, SongName + ".ogg"));
                     File.Move(b0.FullName, Path.Combine(eofdir, SongName + "_preview.ogg"));
-                }
-                else
-                {
+                } else {
                     File.Move(b0.FullName, Path.Combine(eofdir, SongName + ".ogg"));
                     File.Move(a0.FullName, Path.Combine(eofdir, SongName + "_preview.ogg"));
                 }
@@ -361,26 +332,22 @@ namespace RocksmithToolkitLib.DLCPackage
 
             //Move wem to KIT folder + rename
             var WemFiles = Directory.GetFiles(unpackedDir, "*.wem", SearchOption.AllDirectories);
-            if (!WemFiles.Any())
+            if(!WemFiles.Any())
                 throw new InvalidDataException("Audio files not found.");
 
             var a1 = new FileInfo(WemFiles[0]);
             FileInfo b1 = null;
-            if (WemFiles.Length == 2)
-            {
+            if (WemFiles.Length == 2){
                 b1 = new FileInfo(WemFiles[1]);
 
-                if (a1.Length > b1.Length)
-                {
+                if (a1.Length > b1.Length) {
                     File.Move(a1.FullName, Path.Combine(kitdir, SongName + ".wem"));
                     File.Move(b1.FullName, Path.Combine(kitdir, SongName + "_preview.wem"));
-                }
-                else
-                {
+                } else {
                     File.Move(b1.FullName, Path.Combine(kitdir, SongName + ".wem"));
                     File.Move(a1.FullName, Path.Combine(kitdir, SongName + "_preview.wem"));
                 }
-            }
+            } 
             else File.Move(a1.FullName, Path.Combine(kitdir, SongName + ".wem"));
 
             //Move Appid for correct template generation.
@@ -401,16 +368,14 @@ namespace RocksmithToolkitLib.DLCPackage
         #endregion
     }
 
-    public class DDSConvertedFile
-    {
+    public class DDSConvertedFile {
         public int sizeX { get; set; }
         public int sizeY { get; set; }
         public string sourceFile { get; set; }
         public string destinationFile { get; set; }
     }
 
-    public class InlayData
-    {
+    public class InlayData {
         public string DLCSixName { get; set; }
         public string InlayPath { get; set; }
         public string IconPath { get; set; }
@@ -418,8 +383,7 @@ namespace RocksmithToolkitLib.DLCPackage
         public bool Frets24 { get; set; }
         public bool Colored { get; set; }
 
-        public InlayData()
-        {
+        public InlayData() {
             Id = IdGenerator.Guid();
         }
     }

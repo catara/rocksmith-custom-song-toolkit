@@ -60,7 +60,7 @@ namespace RocksmithToolkitLib.Ogg
 
             // Verifying if third part apps is in root application directory
             if (!File.Exists(ww2oggPath))
-                throw new FileNotFoundException("ww2ogg executable not found " + ww2oggPath + "!"); //bcapi
+                throw new FileNotFoundException("ww2ogg executable not found!");
 
             if (!File.Exists(revorbPath))
                 throw new FileNotFoundException("revorb executable not found!");

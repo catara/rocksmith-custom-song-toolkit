@@ -59,7 +59,7 @@ namespace RocksmithToolkitLib.DLCPackage
             0x59, 0xDE, 0x7A, 0xDD, 0xA1, 0x8A, 0x3A, 0x30
         };
         //metadata
-        public static byte[] PCMetaDatKey = new byte[32]
+        public static byte[] PCMetaDatKey = new byte[32] 
         {
             0x5F, 0xB0, 0x23, 0xEF, 0x19, 0xD5, 0xDC, 0x37,
             0xAD, 0xDA, 0xC8, 0xF0, 0x17, 0xF8, 0x8F, 0x0E,
@@ -67,7 +67,7 @@ namespace RocksmithToolkitLib.DLCPackage
             0xA5, 0x9D, 0xE2, 0xBF, 0x05, 0x25, 0x12, 0xEB
         };
         //profile and other cdr profile.json stuff common for RS2\RS1
-        public static byte[] PCSaveKey = new byte[32]
+        public static byte[] PCSaveKey = new byte[32] 
         {
             0x72, 0x8B, 0x36, 0x9E, 0x24, 0xED, 0x01, 0x34,
             0x76, 0x85, 0x11, 0x02, 0x18, 0x12, 0xAF, 0xC0,
@@ -101,15 +101,14 @@ namespace RocksmithToolkitLib.DLCPackage
                 outStream.Write(buffer, 0, len);
             }
             zOutputStream.Close(); buffer = null;
-            if (rewind)
-            {
+            if (rewind) {
                 outStream.Position = 0;
                 outStream.Flush();
             }
         }
         public static void Unzip(byte[] array, Stream outStream, bool rewind = true)
         {
-            Unzip(new MemoryStream(array), outStream, rewind);
+            Unzip(new MemoryStream(array), outStream,rewind);
         }
 
         public static long Zip(Stream str, Stream outStream, long plainLen, bool rewind = true)
@@ -117,15 +116,14 @@ namespace RocksmithToolkitLib.DLCPackage
             /*zlib works great, can't say that about SharpZipLib*/
             var buffer = new byte[65536];
             var zOutputStream = new ZOutputStream(outStream, 9);
-            while (str.Position < plainLen)
+            while(str.Position < plainLen)
             {
                 var size = (int)Math.Min(plainLen - str.Position, buffer.Length);
                 str.Read(buffer, 0, size);
                 zOutputStream.Write(buffer, 0, size);
             }
             zOutputStream.finish(); buffer = null;
-            if (rewind)
-            {
+            if(rewind){
                 outStream.Position = 0;
                 outStream.Flush();
             }
@@ -290,14 +288,14 @@ namespace RocksmithToolkitLib.DLCPackage
         {
             var buffer = new byte[512];
             int pad = buffer.Length - (int)(len % buffer.Length);
-            var decoder = new CryptoStream(output, transform, CryptoStreamMode.Write);
-            while (input.Position < len)
+            var decoder = new CryptoStream(output, transform, CryptoStreamMode.Write) ;
+            while( input.Position < len )
             {
                 int size = (int)Math.Min(len - input.Position, buffer.Length);
                 input.Read(buffer, 0, size);
                 decoder.Write(buffer, 0, size);
             }
-            if (pad > 0)
+            if(pad > 0)
                 decoder.Write(new byte[pad], 0, pad);
 
             decoder.Flush();
@@ -307,7 +305,7 @@ namespace RocksmithToolkitLib.DLCPackage
 
         #region PS3 EDAT Encrypt/Decrypt
         private const string Flags = "0C",    //0x0c
-                             Type = "00",
+                             Type = "00", 
                              Version = "03";  //02 or 03
         private const string kLic = "CB4A06E85378CED307E63EFD1084C19D";
         private const string ContentID = "UP0001-BLUS30670_00-RS001PACK0000003";
@@ -319,10 +317,8 @@ namespace RocksmithToolkitLib.DLCPackage
         /// <returns></returns>
         internal static bool IfJavaInstalled()
         {
-            try
-            {
-                using (var version = new Process())
-                {
+            try {
+                using(var version = new Process()){
                     version.StartInfo.FileName = "java";
                     version.StartInfo.Arguments = "-version";
                     version.StartInfo.CreateNoWindow = true;
@@ -341,7 +337,7 @@ namespace RocksmithToolkitLib.DLCPackage
                     int maj = int.Parse(javaVer[0]);
                     int min = int.Parse(javaVer[1]);
 
-                    if (maj > 0 && min > 6)
+                    if(maj >0 && min >6)
                         return true;
                     return false;
                 }
@@ -358,14 +354,14 @@ namespace RocksmithToolkitLib.DLCPackage
         /// <returns>Output message from execution</returns>
         public static string EncryptPS3Edat()
         {
-            if (!IfJavaInstalled())
+            if(!IfJavaInstalled())
                 return "No JDK or JRE is installed on your machine";
 
             string errors = string.Empty;
             var files = Directory.EnumerateFiles(Path.Combine(toolkitPath, "edat"), "*.psarc");
             foreach (var InFile in files)
             {
-                string OutFile = InFile + ".edat";
+                string OutFile = InFile+".edat";
                 string command = String.Format("EncryptEDAT \"{0}\" \"{1}\" {2} {3} {4} {5} {6}",
                     InFile, OutFile, kLic, ContentID, Flags, Type, Version);
                 errors += EdatCrypto(command);
@@ -379,7 +375,7 @@ namespace RocksmithToolkitLib.DLCPackage
         /// <returns>Output message from execution</returns>
         public static string DecryptPS3Edat()
         {
-            if (!IfJavaInstalled())
+            if(!IfJavaInstalled())
                 return "No JDK or JRE is installed on your machine";
 
             string errors = string.Empty;
@@ -387,14 +383,14 @@ namespace RocksmithToolkitLib.DLCPackage
             foreach (var InFile in files)
             {
                 string OutFile = Path.ChangeExtension(InFile, ".dat");
-                string command = String.Format("DecryptFree \"{0}\" \"{1}\" {2}",
+                string command = String.Format("DecryptFree \"{0}\" \"{1}\" {2}", 
                     InFile, OutFile, kLic);
                 errors += EdatCrypto(command);
             }
             return String.IsNullOrEmpty(errors) ? "Decrypt all EDAT files successfully" : errors;
         }
 
-        internal static string EdatCrypto(string command)
+        internal static string EdatCrypto(string command) 
         {// Encrypt/decrypt using TrueAncestor Edat Rebuilder v1.4c
             string core = Path.Combine(toolkitPath, "tool/core.jar");
             string APP = "java";

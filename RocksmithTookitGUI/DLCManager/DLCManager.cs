@@ -3655,6 +3655,10 @@ namespace RocksmithToolkitGUI.DLCManager
             chbx_CleanTemp.Checked = false;
             chbx_CleanDB.Checked = false;
         }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }
-

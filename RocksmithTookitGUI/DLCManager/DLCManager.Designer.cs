@@ -110,6 +110,7 @@
             this.chbx_DefaultDB = new System.Windows.Forms.CheckBox();
             this.mainTableAdapter = new RocksmithToolkitGUI.DefaultDBDataSetTableAdapters.MainTableAdapter();
             this.chbx_HomeDGBVM = new System.Windows.Forms.CheckBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.defaultDBDataSet)).BeginInit();
@@ -271,7 +272,8 @@
             "31. When importing delete identical duplicates(same hash/filesize)",
             "32. When removing DD use internal logic not DDC",
             "33. When importing alternates add newer/older instead of alt.0author",
-            "34. Update Import location of all DB fields",
+            "34. Forcibly Update Import location of all DB fields",
+            "<35. Include Rocksmith 2012 to 2014 DLC Pack>",
             "<IMPORT>",
             "<@Pack>"});
             this.chbx_Additional_Manipualtions.Location = new System.Drawing.Point(240, 88);
@@ -1192,10 +1194,24 @@
             this.chbx_HomeDGBVM.Visible = false;
             this.chbx_HomeDGBVM.CheckedChanged += new System.EventHandler(this.chbx_HomeDGBVM_CheckedChanged);
             // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.SystemColors.Control;
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Location = new System.Drawing.Point(372, 521);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(131, 21);
+            this.button1.TabIndex = 334;
+            this.button1.Text = "Manipulate DLC Packs";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            // 
             // DLCManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.chbx_HomeDGBVM);
             this.Controls.Add(this.chbx_DefaultDB);
             this.Controls.Add(this.chbx_HomeDBG);
@@ -1361,5 +1377,6 @@
         private DefaultDBDataSet defaultDBDataSet;
         private DefaultDBDataSetTableAdapters.MainTableAdapter mainTableAdapter;
         private System.Windows.Forms.CheckBox chbx_HomeDGBVM;
+        private System.Windows.Forms.Button button1;
     }
 }

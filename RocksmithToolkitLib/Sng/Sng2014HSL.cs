@@ -37,8 +37,11 @@ namespace RocksmithToolkitLib.Sng2014HSL {
 		};
 		public string[] order { get { return _order; } }
 		public void read(EndianBinaryReader r) {
-			Count = r.ReadInt32();
-			BPMs = new Bpm[Count]; for (int i = 0; i < Count; i++) { var obj = new Bpm(); obj.read(r); BPMs[i] = obj; }
+            //if (r.BaseStream.Length >0)
+            //{
+                Count = r.ReadInt32();
+                BPMs = new Bpm[Count]; for (int i = 0; i < Count; i++) { var obj = new Bpm(); obj.read(r); BPMs[i] = obj; }
+            //}
 		}
 	}
 	public class Phrase {
@@ -81,8 +84,11 @@ namespace RocksmithToolkitLib.Sng2014HSL {
 		};
 		public string[] order { get { return _order; } }
 		public void read(EndianBinaryReader r) {
-			Count = r.ReadInt32();
-			Phrases = new Phrase[Count]; for (int i = 0; i < Count; i++) { var obj = new Phrase(); obj.read(r); Phrases[i] = obj; }
+            if (r.BaseStream.Length > 0)
+            {
+                Count = r.ReadInt32();
+                Phrases = new Phrase[Count]; for (int i = 0; i < Count; i++) { var obj = new Phrase(); obj.read(r); Phrases[i] = obj; }
+            }
 		}
 	}
 	public class Chord {
@@ -122,8 +128,11 @@ namespace RocksmithToolkitLib.Sng2014HSL {
 		};
 		public string[] order { get { return _order; } }
 		public void read(EndianBinaryReader r) {
-			Count = r.ReadInt32();
-			Chords = new Chord[Count]; for (int i = 0; i < Count; i++) { var obj = new Chord(); obj.read(r); Chords[i] = obj; }
+            if (r.BaseStream.Length > 0)
+            {
+                Count = r.ReadInt32();
+                Chords = new Chord[Count]; for (int i = 0; i < Count; i++) { var obj = new Chord(); obj.read(r); Chords[i] = obj; }
+            }
 		}
 	}
 	public class BendData32 {
@@ -216,8 +225,11 @@ namespace RocksmithToolkitLib.Sng2014HSL {
 		};
 		public string[] order { get { return _order; } }
 		public void read(EndianBinaryReader r) {
-			Count = r.ReadInt32();
-			ChordNotes = new ChordNotes[Count]; for (int i = 0; i < Count; i++) { var obj = new ChordNotes(); obj.read(r); ChordNotes[i] = obj; }
+            if (r.BaseStream.Length > 0)
+            {
+                Count = r.ReadInt32();
+                ChordNotes = new ChordNotes[Count]; for (int i = 0; i < Count; i++) { var obj = new ChordNotes(); obj.read(r); ChordNotes[i] = obj; }
+            }
 		}
 	}
 	public class Vocal {
@@ -251,8 +263,11 @@ namespace RocksmithToolkitLib.Sng2014HSL {
 		};
 		public string[] order { get { return _order; } }
 		public void read(EndianBinaryReader r) {
-			Count = r.ReadInt32();
-			Vocals = new Vocal[Count]; for (int i = 0; i < Count; i++) { var obj = new Vocal(); obj.read(r); Vocals[i] = obj; }
+            if (r.BaseStream.Length > 0)
+            {
+                Count = r.ReadInt32();
+                Vocals = new Vocal[Count]; for (int i = 0; i < Count; i++) { var obj = new Vocal(); obj.read(r); Vocals[i] = obj; }
+            }
 		}
 	}
 	public class SymbolsHeader {

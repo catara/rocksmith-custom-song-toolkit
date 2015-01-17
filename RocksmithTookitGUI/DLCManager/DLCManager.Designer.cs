@@ -274,6 +274,9 @@
             "33. When importing alternates add newer/older instead of alt.0author",
             "34. Forcibly Update Import location of all DB fields",
             "<35. Include Rocksmith 2012 to 2014 DLC Pack>",
+            "36. Remove illegal characters from Songs Metadata",
+            "37. Keep the Uncompressed Songs superorganized",
+            "38. Import other formats but PC, as well(separately of course)",
             "<IMPORT>",
             "<@Pack>"});
             this.chbx_Additional_Manipualtions.Location = new System.Drawing.Point(240, 88);

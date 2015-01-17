@@ -24,13 +24,15 @@ ToDos/bugs:
 - small improv: add audio hash also as duplicate criteria
 - bug?:		 pin wish now last convtime at alternate comparision screen
 - small bug: on inserting a new standardization 
-- big bug: reorg seems to randmly fail
+- big bug: repack&import seems to randmly fail
 - small bug: last thibgs by billy talend fails at unpack/rorg
 - small improv: add the proper lasconvdate in the db 
 - small bug: sometimes preview shows empty but the vs is not red incubus echo
-- big feature: get the volume of the audio file and then compare against ther est or a norm
+- big feature: get the volume of the audio file and then compare against the rest or a norm
 - small bug: mj beat it issue with adding older to titles and so changing the xml path
 - audioslave sections missing maybe cause its an original and i used my own logic to strip the DD
+- medium bug: uncompressed ogg preview song has a diff name the wem original preview (not incl.ogg or _fixed)
+- big feature - slimdown/control DLC/ORIG packages (multiplatform)
 
 dev issues:
 - Toolkit version flag does not sync to&from Github

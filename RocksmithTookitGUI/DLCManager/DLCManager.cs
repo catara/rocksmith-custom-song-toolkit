@@ -914,7 +914,7 @@ namespace RocksmithToolkitGUI.DLCManager
             }
 
             //Clean Temp Folder
-            if (chbx_CleanTemp.Checked)
+            if (chbx_CleanTemp.Checked && !chbx_Additional_Manipualtions.GetItemChecked(38)) //39.Use only unpacked songs already in the 0 / 0_Import folder
             {
                 //clear content of 0_import folder
                 System.IO.DirectoryInfo downloadedMessageInfo = new DirectoryInfo(Temp_Path_Import);
@@ -939,7 +939,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     if (dir.Name != "0_import" && dir.Name != "0_old" && dir.Name != "0_broken" && dir.Name != "0_duplicate") dir.Delete(true);
                 }
                 //}
-            }            
+            }
 
             //help code
             //using (var u = new UpdateForm())
@@ -947,7 +947,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //    u.Init(onlineVersion);
             //    u.ShowDialog();
             //}
-            
+
 
             //Clean ImportDB
             DataSet dss = new DataSet();
@@ -962,7 +962,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     daa.Fill(dss, "Import");
                     daa.Dispose();
                     rtxt_StatisticsOnReadDLCs.Text = "Cleaning....Import table...." + DB_Path + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                    if (chbx_CleanDB.Checked) 
+                    if (chbx_CleanDB.Checked)
                     {
                         OleDbDataAdapter dan = new OleDbDataAdapter("DELETE FROM Main;", cnn);
                         dan.Fill(dss, "Main");
@@ -974,7 +974,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         dam.Dispose();
                         dag.Dispose();
                     }
-                    
+
                 }
             }
             catch (System.IO.FileNotFoundException ee)
@@ -988,97 +988,124 @@ namespace RocksmithToolkitGUI.DLCManager
             }
             rtxt_StatisticsOnReadDLCs.Text = DB_Path + " Cleaned" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
 
-
+            int i = 0;
+            if (!chbx_Additional_Manipualtions.GetItemChecked(38)) //39. Use only unpacked songs already in the 0/0_Import folder
+            {
             //GetDirList and calcualte hash
             //MessageBox.Show(pathDLC, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             string[] filez;
             if (chbx_Additional_Manipualtions.GetItemChecked(37)) //38. Import other formats but PC, as well(separately of course)
-                filez=System.IO.Directory.GetFiles(pathDLC, "*.psarc");
+                filez = System.IO.Directory.GetFiles(pathDLC, "*.psarc");
             else
-                filez=System.IO.Directory.GetFiles(pathDLC, "*_p.psarc");
+                filez = System.IO.Directory.GetFiles(pathDLC, "*_p.psarc");
 
-            int i = 0;
-            foreach (string s in filez)
+                foreach (string s in filez)
+                {
+                    //try to get the details
+                    // Create the FileInfo object only when needed to ensure 
+                    // the information is as current as possible.
+                    System.IO.FileInfo fi = null;
+
+                    try
+                    {
+                        fi = new System.IO.FileInfo(s);
+                    }
+                    catch (System.IO.FileNotFoundException ee)
+                    {
+                        // To inform the user and continue is 
+                        // sufficient for this demonstration. 
+                        // Your application may require different behavior.
+                        Console.WriteLine(ee.Message);
+                        rtxt_StatisticsOnReadDLCs.Text = "error at import" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                        continue;
+                    }
+                    //- To remove usage of ee and loading
+                    Console.WriteLine("{0} : {1} : {2}", fi.Name, fi.Directory, loading);
+
+                    //details end
+
+                    //Generating the HASH code
+                    var FileHash = "";
+                    using (FileStream fs = File.OpenRead(s))
+                    {
+                        SHA1 sha = new SHA1Managed();
+                        FileHash = BitConverter.ToString(sha.ComputeHash(fs));
+                        fs.Close();
+                    }
+
+                    //Populate ImportDB
+                    rtxt_StatisticsOnReadDLCs.Text = "File " + (i + 1) + " :" + s + "\n" + rtxt_StatisticsOnReadDLCs.Text; //+ "-------"  + fi.GetHashCode() + "-----------" + fi.Length + "-" + fi.CreationTime + "-" + fi.DirectoryName + "-" + fi.LastWriteTime + "-" + fi.Name;
+                    DataSet dsz = new DataSet();
+                    DB_Path = txt_DBFolder.Text + "\\Files.accdb;";
+                    using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                    {
+                        string updatecmd; //s.Substring(s.Length - pathDLC.Length)
+                        updatecmd = "INSERT INTO Import (FullPath, Path, FileName, FileCreationDate, FileHash, FileSize, ImportDate) VALUES (\"" + s + "\",\"";
+                        updatecmd += fi.DirectoryName + "\",\"" + fi.Name + "\",\"" + fi.CreationTime + "\",\"" + FileHash + "\",\"" + fi.Length + "\",\"";
+                        updatecmd += System.DateTime.Today + "\");";
+                        OleDbDataAdapter dab = new OleDbDataAdapter(updatecmd, cnb);
+                        dab.Fill(dsz, "Import");
+                        dab.Dispose();
+                        //dsz.Tables["Files"].AcceptChanges();
+                        //MessageBox.Show(da)
+                    }
+
+                    //pB_ReadDLCs.Increment(1);
+                    i++;
+                }
+
+                DataSet dz = new DataSet();
+                var del = 0;
+                using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                {
+                    string updatecmd; //s.Substring(s.Length - pathDLC.Length)
+
+                    updatecmd = "SELECT MAX(s.ID) FROM Import s LEFT JOIN Import as d on d.FileHash = s.FileHash WHERE d.ID is not null GROUP BY s.FileHash;";
+                    OleDbDataAdapter dbf = new OleDbDataAdapter(updatecmd, cnb);
+                    dbf.Fill(dz, "Import");
+                    del = dz.Tables[0].Rows.Count;
+                    dbf.Dispose();
+                    rtxt_StatisticsOnReadDLCs.Text = updatecmd + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+
+                    updatecmd = @"DELETE FROM Import
+                                WHERE ID not IN (SELECT MAX(s.ID) FROM Import s LEFT JOIN Import as d on d.FileHash=s.FileHash WHERE d.ID is not null GROUP BY s.FileHash);";
+                    OleDbDataAdapter db = new OleDbDataAdapter(updatecmd, cnb);
+                    db.Fill(dz, "Import");
+                    db.Dispose();
+
+
+                    //dsz.Tables["Files"].AcceptChanges();
+                    //MessageBox.Show(da)
+                }
+                rtxt_StatisticsOnReadDLCs.Text = del + "/" + i + " Import files Inserted (excl. " + del + " duplicates)" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+            }
+            else
             {
-                //try to get the details
-                // Create the FileInfo object only when needed to ensure 
-                // the information is as current as possible.
-                System.IO.FileInfo fi = null;
+                System.IO.DirectoryInfo downloadedMessageInfo = new DirectoryInfo(txt_RocksmithDLCPath.Text);
+                foreach (DirectoryInfo dir in downloadedMessageInfo.GetDirectories())
+                {
 
-                try
-                {
-                    fi = new System.IO.FileInfo(s);
-                }
-                catch (System.IO.FileNotFoundException ee)
-                {
-                    // To inform the user and continue is 
-                    // sufficient for this demonstration. 
-                    // Your application may require different behavior.
-                    Console.WriteLine(ee.Message);
-                    rtxt_StatisticsOnReadDLCs.Text = "error at import" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                    continue;
-                }
-                //- To remove usage of ee and loading
-                Console.WriteLine("{0} : {1} : {2}", fi.Name, fi.Directory, loading);
-                
-                //details end
-
-                //Generating the HASH code
-                var FileHash = "";
-                using (FileStream fs = File.OpenRead(s))
-                {
-                    SHA1 sha = new SHA1Managed();
-                    FileHash = BitConverter.ToString(sha.ComputeHash(fs));
-                    fs.Close();
-                }
-                
                 //Populate ImportDB
-                rtxt_StatisticsOnReadDLCs.Text = "File " + (i + 1) + " :" + s + "\n" + rtxt_StatisticsOnReadDLCs.Text; //+ "-------"  + fi.GetHashCode() + "-----------" + fi.Length + "-" + fi.CreationTime + "-" + fi.DirectoryName + "-" + fi.LastWriteTime + "-" + fi.Name;
+                rtxt_StatisticsOnReadDLCs.Text = "Folder " + (i + 1) + " :" + "s" + "\n" + rtxt_StatisticsOnReadDLCs.Text; //+ "-------"  + fi.GetHashCode() + "-----------" + fi.Length + "-" + fi.CreationTime + "-" + fi.DirectoryName + "-" + fi.LastWriteTime + "-" + fi.Name;
                 DataSet dsz = new DataSet();
                 DB_Path = txt_DBFolder.Text + "\\Files.accdb;";
                 using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
                 {
                     string updatecmd; //s.Substring(s.Length - pathDLC.Length)
-                    updatecmd = "INSERT INTO Import (FullPath, Path, FileName, FileCreationDate, FileHash, FileSize, ImportDate) VALUES (\"" + s + "\",\"";
-                    updatecmd += fi.DirectoryName + "\",\"" + fi.Name + "\",\"" + fi.CreationTime + "\",\"" + FileHash + "\",\"" + fi.Length + "\",\"";
+                    updatecmd = "INSERT INTO Import (FullPath, Path, FileName, FileCreationDate, FileHash, FileSize, ImportDate) VALUES (\"" + txt_RocksmithDLCPath.Text+"\\"+dir.Name + "\",\"";
+                    updatecmd += txt_RocksmithDLCPath.Text+ "\\" + dir.Name + "\",\"" + txt_RocksmithDLCPath.Text+ "\\" + dir.Name + "\",\"" + DateTime.Now + "\",\"" + "0" + "\",\"" + "0" + "\",\"";
                     updatecmd += System.DateTime.Today + "\");";
                     OleDbDataAdapter dab = new OleDbDataAdapter(updatecmd, cnb);
                     dab.Fill(dsz, "Import");
                     dab.Dispose();
                     //dsz.Tables["Files"].AcceptChanges();
                     //MessageBox.Show(da)
-                }
-
-                //pB_ReadDLCs.Increment(1);
-                i++;
+                   // if (dir.Name != "0_import" && dir.Name != "0_old" && dir.Name != "0_broken" && dir.Name != "0_duplicate") dir.Delete(true);
+                }                }
             }
-            DataSet dz = new DataSet();
-            var del=0;
-            using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-            {
-                string updatecmd; //s.Substring(s.Length - pathDLC.Length)
 
-                updatecmd = "SELECT MAX(s.ID) FROM Import s LEFT JOIN Import as d on d.FileHash = s.FileHash WHERE d.ID is not null GROUP BY s.FileHash;";
-                OleDbDataAdapter dbf = new OleDbDataAdapter(updatecmd, cnb);
-                dbf.Fill(dz, "Import");
-                del = dz.Tables[0].Rows.Count;
-                dbf.Dispose();
-                rtxt_StatisticsOnReadDLCs.Text = updatecmd + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-
-                updatecmd = @"DELETE FROM Import
-                                WHERE ID not IN (SELECT MAX(s.ID) FROM Import s LEFT JOIN Import as d on d.FileHash=s.FileHash WHERE d.ID is not null GROUP BY s.FileHash);";
-                OleDbDataAdapter db = new OleDbDataAdapter(updatecmd, cnb);
-                db.Fill(dz, "Import");
-                db.Dispose();
-
-
-                //dsz.Tables["Files"].AcceptChanges();
-                //MessageBox.Show(da)
-            }
-            rtxt_StatisticsOnReadDLCs.Text = del+"/"+i + " Import files Inserted (excl. "+del+" duplicates)" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-
-            //START WITH mAINdb UPDATE
-            DataSet ds = new DataSet();
+                //START WITH mAINdb UPDATE
+                DataSet ds = new DataSet();
             DataSet dns = new DataSet();
             var m = 0;
             var errr = true;
@@ -1152,31 +1179,36 @@ namespace RocksmithToolkitGUI.DLCManager
                             var packagePlatform = FullPath.GetPlatform();
                             var Available_Duplicate = "No";
                             var Available_Old = "No";
-                            try
+                            if (!chbx_Additional_Manipualtions.GetItemChecked(38)) //39. Use only unpacked songs already in the 0/0_Import folder
                             {
-                                // UNPACK
-                                unpackedDir = Packer.Unpack(FullPath, Temp_Path_Import, true, true, false);
-                                //packagePlatform = FullPath.GetPlatform();
-                            }
-                            catch (Exception ex)
-                            {
-                                // MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                // MessageBox.Show("Error decompressing the file!(BACH OFFICIAL DLC CAUSE OF WEIRD CHAR IN FILENAME) " + "-" );
-                                rtxt_StatisticsOnReadDLCs.Text = ex.Message + "problem at unpacking" + FullPath + "---" + Temp_Path_Import + "...\n\n" + rtxt_StatisticsOnReadDLCs.Text;
-                                errr = false;
-                                //rtxt_StatisticsOnReadDLCs.Text = "predone" + "..." + rtxt_StatisticsOnReadDLCs.Text;
+
                                 try
                                 {
-                                    var Path = broken_Path_Import + "\\" + ds.Tables[0].Rows[i].ItemArray[2].ToString();
-                                    File.Copy(FullPath, Path, true);//.GetPlatform() FullPath.Substring(FullPath.LastIndexOf("\\")+1, FullPath.Length));  
-                                    errr = true; //bcapi???
+                                    // UNPACK
+                                    unpackedDir = Packer.Unpack(FullPath, Temp_Path_Import, true, true, false);
+                                    //packagePlatform = FullPath.GetPlatform();
                                 }
-                                catch (System.IO.FileNotFoundException ee)
+                                catch (Exception ex)
                                 {
-                                    rtxt_StatisticsOnReadDLCs.Text = "FAILED2" + ee.Message + "----" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                                    Console.WriteLine(ee.Message);
+                                    // MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    // MessageBox.Show("Error decompressing the file!(BACH OFFICIAL DLC CAUSE OF WEIRD CHAR IN FILENAME) " + "-" );
+                                    rtxt_StatisticsOnReadDLCs.Text = ex.Message + "problem at unpacking" + FullPath + "---" + Temp_Path_Import + "...\n\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                    errr = false;
+                                    //rtxt_StatisticsOnReadDLCs.Text = "predone" + "..." + rtxt_StatisticsOnReadDLCs.Text;
+                                    try
+                                    {
+                                        var Path = broken_Path_Import + "\\" + ds.Tables[0].Rows[i].ItemArray[2].ToString();
+                                        File.Copy(FullPath, Path, true);//.GetPlatform() FullPath.Substring(FullPath.LastIndexOf("\\")+1, FullPath.Length));  
+                                        errr = true; //bcapi???
+                                    }
+                                    catch (System.IO.FileNotFoundException ee)
+                                    {
+                                        rtxt_StatisticsOnReadDLCs.Text = "FAILED2" + ee.Message + "----" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                        Console.WriteLine(ee.Message);
+                                    }
                                 }
                             }
+                            else unpackedDir = FullPath;
 
                             //Commenting Reorganize as they might have fixed the incompatib char issue
                             // REORGANIZE

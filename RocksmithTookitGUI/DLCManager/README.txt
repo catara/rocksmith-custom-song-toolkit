@@ -33,6 +33,7 @@ ToDos/bugs:
 - audioslave sections missing maybe cause its an original and i used my own logic to strip the DD
 - medium bug: uncompressed ogg preview song has a diff name the wem original preview (not incl.ogg or _fixed)
 - big feature - slimdown/control DLC/ORIG packages (multiplatform)
+- big feature - For the tagging add the info to the Preview Image/Album Art
 
 dev issues:
 - Toolkit version flag does not sync to&from Github
@@ -54,23 +55,23 @@ Version History(release date):
 	0.2.0.5 (01.12) Search screen prototype
 	0.2.0.6 (29.11) add save confirm for any save operation and add DLCID checks in all updates that mighht affect it WHERE (SELECT NO OTHER DLCNAME)
 	0.2.0.7 (15.12) New features: Add: lastconversiondata field per each arrangement, MainDb filters
-	wip: 0.2.0.8 (20.01.2015) (20%) has_section flag(to be tested with a song missing sections); Add 30 sec preview midsong; 
-	wip: 0.2.0.9 (20.01.2015) (10%) close bugs on Conversion to Ps3(nin hell) and analyse acuracy on conversion to ps3 (1979,7army..)
-	wip: 0.2.0.10 (22.12.2014)  (90%)remove bug on auto import if original
+	wip: 0.2.0.8 (20.02.2015) (20%) has_section flag(to be tested with a song missing sections); Add 30 sec preview midsong; 
+	wip: 0.2.0.9 (20.02.2015) (10%) close bugs on Conversion to Ps3(nin hell) and analyse acuracy on conversion to ps3 (1979,7army..)
+	wip: 0.2.0.10 (22.02.2015)  (90%)remove bug on auto import if original
 	wip: 0.2.0.11 (24.12) (85%) full release (anyone can download and use the tool..no bugs..and all unimplemented featues disabled) DB independece/dependence on already provided 1, repack wo bugs, edit screens functional
-	wip: 0.2.2 (31.12.2014) (10%) HTML&Excel exports
-	tbr: 0.2.2.1 (31.12.2014) Implement a logic to properly read DLCManager renamed DLCs
-	wip: 0.2.3 (31.12.2014) (75%) If importing an original over a alternate the alternate flag should be set no the Alternate
+	wip: 0.2.2 (31.03.2015) (10%) HTML&Excel exports
+	tbr: 0.2.2.1 (15.04.2015) Implement a logic to properly read DLCManager renamed DLCs
+	wip: 0.2.3 (26.04.2015) (75%) If importing an original over a alternate the alternate flag should be set no the Alternate
 	tbr: 0.3.1 move Import DB to Main.DB or at least use an official data source as DB source to also be able to edit from the grid
 	tbr: 0.3.2 ?move Access code to project? or from hardcoded to views
-	tbr: 0.3.3 (12.01.2015) (0%) save settings in Toolkit config
-	wip: 0.3.4 (03.03.2015) (70%) use parameterized SQL everywhere (&/ integrate template DB into project or a SQL DB)
-	wip: 0.3.4 (03.03.2015) (30%) Remove getlastconversiondate from Duplicates as already coming from the arrangements table
-	wip: 0.4 (21.01.2014) (75%) Redesign MainDB+Edit Screen
-	tbr: 0.5 (26.12.2014) (0%) Implement FTP to PS3 (also as a copy to any other location)
+	tbr: 0.3.3 (12.05.2015) (0%) save settings in Toolkit config
+	wip: 0.3.4 (03.06.2015) (70%) use parameterized SQL everywhere (&/ integrate template DB into project or a SQL DB)
+	wip: 0.3.4 (03.07.2015) (30%) Remove getlastconversiondate from Duplicates as already coming from the arrangements table
+	wip: 0.4 (21.08.2015) (75%) Redesign MainDB+Edit Screen
+	tbr: 0.5 (26.09.2015) (0%) Implement FTP to PS3 (also as a copy to any other location)
 
 
-Date: 04.01.2015
+Date: 20.01.2015
 Document Name: Rocksmith DLC Management tool README
 				(fork of rocksmith-custom-song-toolkit)
 Document purpose: To describe the functionailities and the way to change, the NEW tab that enable MASS Manipulation of Rocksmith DLC Library

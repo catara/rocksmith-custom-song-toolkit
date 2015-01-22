@@ -277,6 +277,7 @@
             "36. Remove illegal characters from Songs Metadata",
             "37. Keep the Uncompressed Songs superorganized",
             "38. Import other formats but PC, as well(separately of course)",
+            "39. Use only unpacked songs already in the 0/0_Import folder",
             "<IMPORT>",
             "<@Pack>"});
             this.chbx_Additional_Manipualtions.Location = new System.Drawing.Point(240, 88);

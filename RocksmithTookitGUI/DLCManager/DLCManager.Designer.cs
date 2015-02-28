@@ -111,6 +111,7 @@
             this.mainTableAdapter = new RocksmithToolkitGUI.DefaultDBDataSetTableAdapters.MainTableAdapter();
             this.chbx_HomeDGBVM = new System.Windows.Forms.CheckBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.chbx_CleanCache = new System.Windows.Forms.CheckBox();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.defaultDBDataSet)).BeginInit();
@@ -853,6 +854,7 @@
             this.txt_DBFolder.Name = "txt_DBFolder";
             this.txt_DBFolder.Size = new System.Drawing.Size(165, 20);
             this.txt_DBFolder.TabIndex = 275;
+            this.txt_DBFolder.Text = "containing Files.accdb";
             this.toolTip1.SetToolTip(this.txt_DBFolder, "Requires a Access2014 DB with");
             // 
             // btn_DBFolder
@@ -1207,14 +1209,26 @@
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(131, 21);
             this.button1.TabIndex = 334;
-            this.button1.Text = "Manipulate DLC Packs";
+            this.button1.Text = "Load DLC Packs";
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            // 
+            // chbx_CleanCache
+            // 
+            this.chbx_CleanCache.AutoSize = true;
+            this.chbx_CleanCache.Location = new System.Drawing.Point(267, 525);
+            this.chbx_CleanCache.Margin = new System.Windows.Forms.Padding(2);
+            this.chbx_CleanCache.Name = "chbx_CleanCache";
+            this.chbx_CleanCache.Size = new System.Drawing.Size(102, 17);
+            this.chbx_CleanCache.TabIndex = 335;
+            this.chbx_CleanCache.Text = "Clean CacheDB";
+            this.chbx_CleanCache.UseVisualStyleBackColor = true;
             // 
             // DLCManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.chbx_CleanCache);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.chbx_HomeDGBVM);
             this.Controls.Add(this.chbx_DefaultDB);
@@ -1382,5 +1396,6 @@
         private DefaultDBDataSetTableAdapters.MainTableAdapter mainTableAdapter;
         private System.Windows.Forms.CheckBox chbx_HomeDGBVM;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.CheckBox chbx_CleanCache;
     }
 }

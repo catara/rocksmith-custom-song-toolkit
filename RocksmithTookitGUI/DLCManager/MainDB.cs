@@ -19,13 +19,14 @@ namespace RocksmithToolkitGUI.DLCManager
 {
     public partial class MainDB : Form
     {
-        public MainDB(string txt_DBFolder, string txt_TempPath, bool updateDB)
+        public MainDB(string txt_DBFolder, string txt_TempPath, bool updateDB, string txt_RocksmithDLCPath)
         {
             InitializeComponent();
             //MessageBox.Show("test0");
             DB_Path = txt_DBFolder;
             DB_Path = DB_Path + "\\Files.accdb";
             TempPath = txt_TempPath;
+            RocksmithDLCPath=txt_RocksmithDLCPath;
             updateDBb = updateDB;
         }
 
@@ -38,6 +39,7 @@ namespace RocksmithToolkitGUI.DLCManager
         //bcapi
         public string DB_Path = "";
         public string TempPath = "";
+        public string RocksmithDLCPath = "";
         public DataSet dssx = new DataSet();
         public DataSet dssx2 = new DataSet();
         public int noOfRec = 0;
@@ -1000,7 +1002,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void button15_Click(object sender, EventArgs e)
         {
-            Standardization frm = new Standardization(DB_Path, TempPath);
+            Standardization frm = new Standardization(DB_Path, TempPath, RocksmithDLCPath);
             frm.Show();
         }
 
@@ -1158,6 +1160,12 @@ namespace RocksmithToolkitGUI.DLCManager
         private void DataGridView1_CellContentClick_1(object sender, KeyEventArgs eee)
         {
             throw new NotImplementedException();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            Cache frm = new Cache(DB_Path, TempPath, RocksmithDLCPath);
+            frm.ShowDialog();
         }
     }
 }

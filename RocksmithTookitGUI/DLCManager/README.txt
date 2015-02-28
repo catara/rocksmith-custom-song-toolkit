@@ -34,6 +34,7 @@ ToDos/bugs:
 - medium bug: uncompressed ogg preview song has a diff name the wem original preview (not incl.ogg or _fixed)
 - big feature - slimdown/control DLC/ORIG packages (multiplatform)
 - big feature - For the tagging add the info to the Preview Image/Album Art
+- small improv: Any change of song in the list should also save :)
 
 dev issues:
 - Toolkit version flag does not sync to&from Github

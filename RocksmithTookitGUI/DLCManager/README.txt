@@ -35,6 +35,8 @@ ToDos/bugs:
 - big feature - slimdown/control DLC/ORIG packages (multiplatform)
 - big feature - For the tagging add the info to the Preview Image/Album Art
 - small improv: Any change of song in the list should also save :)
+- big feature: Manage RS12, RS12 DLC & RS14 retail songs
+- medium feature: add DLCs into cache.psarc to speed up the game startup
 
 dev issues:
 - Toolkit version flag does not sync to&from Github

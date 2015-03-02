@@ -496,7 +496,12 @@
     <Content Include="DLCManager\Files.accdb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="DLCManager\README.txt" />
+    <Content Include="DLCManager\psarc.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\README.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\ddc-512.png" />
     <None Include="Resources\guitar_256.png" />
     <None Include="Resources\flipXc.png" />

@@ -394,45 +394,11 @@ namespace RocksmithToolkitGUI.DLCManager
         }
         public void generatehsan()
         {
-            //DataTable results = new DataTable();
-            //using (SqlConnection conn = new SqlConnection("Provider=Microsoft.Jet.OLEDB.12.0;Data Source=" + DB_Path))
-            //using (SqlCommand command = new SqlCommand("SELECT * FROM Cache", conn))
-            //using (SqlDataAdapter dataAdapter = new SqlDataAdapter(command))
-            //    dataAdapter.Fill(results);
-            //dssx.Dispose();
-            //dssx.Reset();
             DataSet drsx = new DataSet();
             using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
             {
                 OleDbDataAdapter da = new OleDbDataAdapter("SELECT DISTINCT SongsHSANPath, PSARCName from Cache AS O", cn);
                 da.Fill(drsx, "Cache");
-                //dssx.Dispose();
-                //da = new OleDbDataAdapter("SELECT Identifier,ContactPosition FROM PositionType;", cn);
-                //da.Fill(ds, "PositionType");
-                //da = new OleDbDataAdapter("SELECT Identifier, Badge FROM Badge", cn);
-                //da.Fill(ds, "Badge");
-            //}
-
-            //using (OleDbConnection cnrn = new OleDbConnection("Provider=Microsoft.Jet.OLEDB.12.0;Data Source=" + DB_Path))
-            //{
-            //    string cmgd = "SELECT * FROM Cache"; //DISTINCT SongsHSANPath, PSARCName 
-            //    DataSet dgs = new DataSet();
-            //    OleDbDataAdapter drx = new OleDbDataAdapter(cmgd, cnrn); //WHERE id=253
-            //    drx.Fill(dgs, "Cache");
-    //    SqlCommand command = new SqlCommand(cmgd, cnrn);
-    //SqlDataReader reader = command.ExecuteReader();
-    //if (reader.Read())
-    //{
-    //    var userID = reader[0];
-    //    var ipID = reader[1];
-    //    var gameID = reader[2];
-    //}
-                //dgs.Tables[0].Rows[0].ItemArray[0] = "C:\\GitHub\\tmp\\0\\0_dlcpacks\\rs1compatibilitydisc_PS3\\manifests\\songs_rs1disc\\songs_rs1disc.hsan";
-                //dgs.Tables[0].Rows[0].ItemArray[1]= "RS1Retail";
-                //dgs.Tables[0].Rows[1].ItemArray[0] = "C:\\GitHub\\tmp\\0\\0_dlcpacks\\rs1compatibilitydlc_PS3\\manifests\\songs_rs1dlc\\songs_rs1dlc.hsan";
-                //dgs.Tables[0].Rows[1].ItemArray[1] = "COMPATIBILITY";
-                //dgs.Tables[0].Rows[2].ItemArray[0] = "C:\\GitHub\\tmp\\0\\0_dlcpacks\\songs_Pc\\manifests\\songs\\songs.hsan";
-                //dgs.Tables[0].Rows[2].ItemArray[1] = "CACHE";
                 if (drsx.Tables[0].Rows.Count != 0)
                     foreach (DataRow dataRow in drsx.Tables[0].Rows)
                     {
@@ -462,7 +428,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             var startInfo = new ProcessStartInfo();
                             var unpackedDir = "";
                             if (chbx_Songs2Cache.Checked) unpackedDir = TempPath + "\\0_dlcpacks\\cache_pc";
-                            unpackedDir = TempPath + "\\0_dlcpacks\\songs_pc";
+                            else unpackedDir = TempPath + "\\0_dlcpacks\\songs_pc";
                             startInfo.FileName = Path.Combine(AppWD, "DLCManager\\psarc.exe");
                             startInfo.WorkingDirectory = unpackedDir;// Path.GetDirectoryName();
                             var t = TempPath + "\\0_dlcpacks\\manipulated\\cache.psarc";

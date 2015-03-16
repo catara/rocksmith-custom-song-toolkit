@@ -358,7 +358,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_Songs2Cache.AutoSize = true;
             this.chbx_Songs2Cache.Checked = true;
             this.chbx_Songs2Cache.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chbx_Songs2Cache.Location = new System.Drawing.Point(1037, 666);
+            this.chbx_Songs2Cache.Location = new System.Drawing.Point(1037, 663);
             this.chbx_Songs2Cache.Name = "chbx_Songs2Cache";
             this.chbx_Songs2Cache.Size = new System.Drawing.Size(138, 17);
             this.chbx_Songs2Cache.TabIndex = 289;

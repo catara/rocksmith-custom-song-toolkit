@@ -45,6 +45,8 @@ namespace RocksmithToolkitGUI.DLCManager
             this.button11 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.btn_InvertAll = new System.Windows.Forms.Button();
+            this.txt_Platform = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_SongsHSANPath = new RocksmithToolkitGUI.CueTextBox();
             this.txt_PSARCName = new RocksmithToolkitGUI.CueTextBox();
             this.txt_AlbumArtPath = new RocksmithToolkitGUI.CueTextBox();
             this.txt_Identifier = new RocksmithToolkitGUI.CueTextBox();
@@ -55,8 +57,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_AlbumYear = new RocksmithToolkitGUI.CueTextBox();
             this.txt_ID = new RocksmithToolkitGUI.CueTextBox();
             this.txt_Album = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_SongsHSANPath = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_Platform = new RocksmithToolkitGUI.CueTextBox();
+            this.chbx_Songs2Cache = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPath)).BeginInit();
             this.SuspendLayout();
@@ -210,6 +211,32 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_InvertAll.UseVisualStyleBackColor = true;
             this.btn_InvertAll.Click += new System.EventHandler(this.btn_InvertAll_Click);
             // 
+            // txt_Platform
+            // 
+            this.txt_Platform.Cue = "Arrangements";
+            this.txt_Platform.Enabled = false;
+            this.txt_Platform.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_Platform.ForeColor = System.Drawing.Color.Black;
+            this.txt_Platform.Location = new System.Drawing.Point(396, 650);
+            this.txt_Platform.Name = "txt_Platform";
+            this.txt_Platform.Size = new System.Drawing.Size(222, 20);
+            this.txt_Platform.TabIndex = 288;
+            this.txt_Platform.Text = "Platform";
+            this.txt_Platform.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txt_SongsHSANPath
+            // 
+            this.txt_SongsHSANPath.Cue = "Arrangements";
+            this.txt_SongsHSANPath.Enabled = false;
+            this.txt_SongsHSANPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_SongsHSANPath.ForeColor = System.Drawing.Color.Black;
+            this.txt_SongsHSANPath.Location = new System.Drawing.Point(396, 627);
+            this.txt_SongsHSANPath.Name = "txt_SongsHSANPath";
+            this.txt_SongsHSANPath.Size = new System.Drawing.Size(222, 20);
+            this.txt_SongsHSANPath.TabIndex = 287;
+            this.txt_SongsHSANPath.Text = "Songs.HSAN Path";
+            this.txt_SongsHSANPath.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
             // txt_PSARCName
             // 
             this.txt_PSARCName.Cue = "Arrangements";
@@ -229,7 +256,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_AlbumArtPath.Enabled = false;
             this.txt_AlbumArtPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_AlbumArtPath.ForeColor = System.Drawing.Color.Gray;
-            this.txt_AlbumArtPath.Location = new System.Drawing.Point(837, 655);
+            this.txt_AlbumArtPath.Location = new System.Drawing.Point(644, 666);
             this.txt_AlbumArtPath.Name = "txt_AlbumArtPath";
             this.txt_AlbumArtPath.Size = new System.Drawing.Size(222, 20);
             this.txt_AlbumArtPath.TabIndex = 278;
@@ -326,37 +353,24 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_Album.Size = new System.Drawing.Size(222, 20);
             this.txt_Album.TabIndex = 126;
             // 
-            // txt_SongsHSANPath
+            // chbx_Songs2Cache
             // 
-            this.txt_SongsHSANPath.Cue = "Arrangements";
-            this.txt_SongsHSANPath.Enabled = false;
-            this.txt_SongsHSANPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_SongsHSANPath.ForeColor = System.Drawing.Color.Black;
-            this.txt_SongsHSANPath.Location = new System.Drawing.Point(396, 627);
-            this.txt_SongsHSANPath.Name = "txt_SongsHSANPath";
-            this.txt_SongsHSANPath.Size = new System.Drawing.Size(222, 20);
-            this.txt_SongsHSANPath.TabIndex = 287;
-            this.txt_SongsHSANPath.Text = "Songs.HSAN Path";
-            this.txt_SongsHSANPath.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // txt_Platform
-            // 
-            this.txt_Platform.Cue = "Arrangements";
-            this.txt_Platform.Enabled = false;
-            this.txt_Platform.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_Platform.ForeColor = System.Drawing.Color.Black;
-            this.txt_Platform.Location = new System.Drawing.Point(396, 650);
-            this.txt_Platform.Name = "txt_Platform";
-            this.txt_Platform.Size = new System.Drawing.Size(222, 20);
-            this.txt_Platform.TabIndex = 288;
-            this.txt_Platform.Text = "Platform";
-            this.txt_Platform.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.chbx_Songs2Cache.AutoSize = true;
+            this.chbx_Songs2Cache.Checked = true;
+            this.chbx_Songs2Cache.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chbx_Songs2Cache.Location = new System.Drawing.Point(1037, 666);
+            this.chbx_Songs2Cache.Name = "chbx_Songs2Cache";
+            this.chbx_Songs2Cache.Size = new System.Drawing.Size(138, 17);
+            this.chbx_Songs2Cache.TabIndex = 289;
+            this.chbx_Songs2Cache.Text = "Pack Songs into Cache";
+            this.chbx_Songs2Cache.UseVisualStyleBackColor = true;
             // 
             // Cache
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1187, 679);
+            this.Controls.Add(this.chbx_Songs2Cache);
             this.Controls.Add(this.txt_Platform);
             this.Controls.Add(this.txt_SongsHSANPath);
             this.Controls.Add(this.txt_PSARCName);
@@ -424,5 +438,6 @@ namespace RocksmithToolkitGUI.DLCManager
         private CueTextBox txt_PSARCName;
         private CueTextBox txt_SongsHSANPath;
         private CueTextBox txt_Platform;
+        private System.Windows.Forms.CheckBox chbx_Songs2Cache;
     }
 }

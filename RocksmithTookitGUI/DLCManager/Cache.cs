@@ -460,7 +460,9 @@ namespace RocksmithToolkitGUI.DLCManager
                             }
 
                             var startInfo = new ProcessStartInfo();
-                            var unpackedDir = TempPath + "\\0_dlcpacks\\cache_pc";
+                            var unpackedDir = "";
+                            if (chbx_Songs2Cache.Checked) unpackedDir = TempPath + "\\0_dlcpacks\\cache_pc";
+                            unpackedDir = TempPath + "\\0_dlcpacks\\songs_pc";
                             startInfo.FileName = Path.Combine(AppWD, "DLCManager\\psarc.exe");
                             startInfo.WorkingDirectory = unpackedDir;// Path.GetDirectoryName();
                             var t = TempPath + "\\0_dlcpacks\\manipulated\\cache.psarc";
@@ -547,22 +549,22 @@ namespace RocksmithToolkitGUI.DLCManager
             string tecst = "";
             string line;
             var header = "";
-            var linedone = false;
+            var linedone = true;
             var songkey = "";
             var footer = "";
 
             textfile = "{";
-            textfile += "\n\"Entries\" : {";
+            textfile += "\n    \"Entries\" : {";
             var IDD = "";
             var cmd = "";
             line = fxml.ReadLine(); line = fxml.ReadLine();
             //Read and Save Header
             while ((line = fxml.ReadLine()) != null)
             {
-                if (line == "") continue;
-                linedone = true;
+                //if (line == "") continue;
+                
                 if (line.Contains("\"DLCRS1Key\" : [") ) linedone = false;
-                if (line.Contains("],")) linedone = false;
+                if (line.Contains("],")) linedone = true;
                 //textfile += line;//if (header == "done") line.Contains("{") &&  && !linedone
                 if (line.Contains("\"SongKey\" : \""))
                 {
@@ -587,15 +589,16 @@ namespace RocksmithToolkitGUI.DLCManager
                 }
                 if (line.Contains("},") && linedone)//&& header == "done"
                 {
-                    if (IDD == "No") textfile += "\n" + tecst + "\n" + line;
+                    if (IDD == "No") textfile += tecst + "\n" + line; //"\n" +
                     //else rtxt_StatisticsOnReadDLCs.Text = "Removed " + songkey + " " + cmd + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                     IDD = "";
                     tecst = "";
+                    linedone = true;
                 }
-                else if (line != "") tecst += "\n" + line;
+                else tecst += "\n" + line;
             }
             textfile += "\n" + "    \"InsertRoot\" : \"Static.Songs.Headers\"";
-            textfile += "\n" + "}\"";
+            textfile += "\n" + "}";
             fxml.Close();
             File.WriteAllText(inputFilePath, textfile);
             //rtxt_StatisticsOnReadDLCs.Text = "Songs Removed from the Shipped version of the game" + "\n" + rtxt_StatisticsOnReadDLCs.Text;

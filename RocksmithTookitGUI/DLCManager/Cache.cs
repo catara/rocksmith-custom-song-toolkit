@@ -432,17 +432,19 @@ namespace RocksmithToolkitGUI.DLCManager
                             startInfo.FileName = Path.Combine(AppWD, "DLCManager\\psarc.exe");
                             startInfo.WorkingDirectory = unpackedDir;// Path.GetDirectoryName();
                             var t = TempPath + "\\0_dlcpacks\\manipulated\\cache.psarc";
-                            startInfo.Arguments = String.Format(" create -y --lzma -N -o {0} -i {1}",
+                            startInfo.Arguments = String.Format(" create -y --lzma -S -N -o {0} -i {1}",
                                                                 t,
                                                                 unpackedDir);// + platformDLCP
                             startInfo.UseShellExecute = true; startInfo.CreateNoWindow = false; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
-
+                            rtxt_Comments.Text = startInfo.FileName + " "+startInfo.Arguments;
                             //if (!File.Exists(t))
                                 using (var DDC = new Process())
                                 {
                                     DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 60 * 1); //wait 1min
                                     //if (DDC.ExitCode > 0) rtxt_StatisticsOnReadDLCs.Text = "Issues when packing rs1dlc DLC pack !" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                 }
+                            //manual workaround for wrongly packing the files
+                            MessageBox.Show("As the toolkit cannot pack with no compression and psarc.exe 2011 version cannot pack correctly,\n a manual workaround exists:\n1. Download&install TotalCommander http://ghisler.com/download.htm \n2. Download the psarc plugin 2013 http://www.totalcmd.net/plugring/PSARC.html \n3. While in TC open the zip archive witht he plugin&install the plugin\n4. Enter the manipulated/cache.psarc and Pack with External No Compression LZMA\n5. Copy in the Game DIR", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                             //rename the songs_rs1dlc folder to songs to enable the read of Browser function to work                                
                             //renamedir(unpackedDir + "\\manifests\\songs", unpackedDir + "\\manifests\\songs_rs1dlc");
@@ -456,7 +458,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             startInfo.FileName = Path.Combine(AppWD, "DLCManager\\psarc.exe");
                             startInfo.WorkingDirectory = unpackedDir;// Path.GetDirectoryName();
                             var t = TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydisc.psarc";
-                            startInfo.Arguments = String.Format(" create -y --zlib -N -o {0} -i {1}",
+                            startInfo.Arguments = String.Format(" create -y --zlib --level=4 -o {0} -i {1}",
                                                                 t,
                                                                 unpackedDir);// + platformDLCP
                             startInfo.UseShellExecute = true; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
@@ -471,6 +473,23 @@ namespace RocksmithToolkitGUI.DLCManager
                             //rename the songs_rs1dlc folder to songs to enable the read of Browser function to work                                
                             //renamedir(unpackedDir + "\\manifests\\songs", unpackedDir + "\\manifests\\songs_rs1dlc");
                             //rtxt_StatisticsOnReadDLCs.Text = "packed CACHE \n" + rtxt_StatisticsOnReadDLCs;
+                            MessageBox.Show("As the toolkit cannot pack&encrypt/I don't know how,\n a manual workaround exists:\n1. Download&install TotalCommander http://ghisler.com/download.htm \n2. Download the psarc plugin 2013 http://www.totalcmd.net/plugring/PSARC.html \n3. While in TC open the zip archive witht he plugin&install the plugin\n4. Enter the manipulated/rs1compatibilitydisc.psarc and Pack with External No Compression Zlib Compression Ratio 4\n5. Encrypt using the aldotool http://ps3tools.aldostools.org/ps3_edattool_gui.rar \n6. Copy in the DLC DIR", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                            var startI = new ProcessStartInfo();
+                            var hsanDir = dataRow.ItemArray[0].ToString();
+                            startI.FileName = Path.Combine(AppWD, "edattool.exe");
+                            startI.WorkingDirectory = TempPath + "\\0_dlcpacks\\manipulated\\";// Path.GetDirectoryName();
+                            var za = TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydisc.psarc.edat";
+                            var zi = TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydisc.psarc";
+                            startI.Arguments = String.Format(" encrypt -custom:CB4A06E85378CED307E63EFD1084C19D UP0001-BLUS31182_00-ROCKSMITHPATCH01 00 00 00 {0} {1}",
+                                                                za,
+                                                                zi);
+                            startI.UseShellExecute = true; startI.CreateNoWindow = false; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
+                            using (var DDC = new Process())
+                            {
+                                DDC.StartInfo = startI; DDC.Start(); DDC.WaitForExit(1000 * 60 * 1); //wait 1min
+                                //if (DDC.ExitCode > 0) rtxt_StatisticsOnReadDLCs.Text = "Issues when packing rs1dlc DLC pack !" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                            }
                         }
 
                         if (d.ToString() == "COMPATIBILITY")
@@ -480,7 +499,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             startInfo.FileName = Path.Combine(AppWD, "DLCManager\\psarc.exe");
                             startInfo.WorkingDirectory = unpackedDir;// Path.GetDirectoryName();
                             var t = TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydlc.psarc";
-                            startInfo.Arguments = String.Format(" create -y --zlib -N -o {0} -i {1}",
+                            startInfo.Arguments = String.Format(" create -y --zlib --level=4 -o {0} -i {1}",
                                                                 t,
                                                                 unpackedDir);// + platformDLCP
                             startInfo.UseShellExecute = true; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
@@ -495,6 +514,23 @@ namespace RocksmithToolkitGUI.DLCManager
                             //rename the songs_rs1dlc folder to songs to enable the read of Browser function to work                                
                             //renamedir(unpackedDir + "\\manifests\\songs", unpackedDir + "\\manifests\\songs_rs1dlc");
                             //rtxt_StatisticsOnReadDLCs.Text = "packed CACHE \n" + rtxt_StatisticsOnReadDLCs;
+                            MessageBox.Show("As the toolkit cannot pack&encrypt/I don't know how,\n a manual workaround exists:\n1. Download&install TotalCommander http://ghisler.com/download.htm \n2. Download the psarc plugin 2013 http://www.totalcmd.net/plugring/PSARC.html \n3. While in TC open the zip archive witht he plugin&install the plugin\n4. Enter the manipulated/rs1compatibilitydisc.psarc and Pack with External No Compression Zlib Compression Ratio 4\n5. Encrypt using the aldotool http://ps3tools.aldostools.org/ps3_edattool_gui.rar \n6. Copy in the folder containing DLC DIR", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                            var startI = new ProcessStartInfo();
+                            var hsanDir = dataRow.ItemArray[0].ToString();
+                            startI.FileName = Path.Combine(AppWD, "edattool.exe");
+                            startI.WorkingDirectory = TempPath + "\\0_dlcpacks\\manipulated\\";// Path.GetDirectoryName();
+                            var za = TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydlc.psarc.edat";
+                            var zi = TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydlc.psarc";
+                            startI.Arguments = String.Format(" encrypt -custom:CB4A06E85378CED307E63EFD1084C19D UP0001-BLUS31182_00-ROCKSMITHPATCH01 00 00 00 {0} {1}",
+                                                                za,
+                                                                zi);
+                            startI.UseShellExecute = true; startI.CreateNoWindow = false; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
+                            using (var DDC = new Process())
+                            {
+                                DDC.StartInfo = startI; DDC.Start(); DDC.WaitForExit(1000 * 60 * 1); //wait 1min
+                                //if (DDC.ExitCode > 0) rtxt_StatisticsOnReadDLCs.Text = "Issues when packing rs1dlc DLC pack !" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                            }
                         }
                     }
             }
@@ -560,10 +596,13 @@ namespace RocksmithToolkitGUI.DLCManager
                     IDD = "";
                     tecst = "";
                     linedone = true;
+                    var lastline = line;
                 }
                 else tecst += "\n" + line;
             }
-            textfile += "\n" + "    \"InsertRoot\" : \"Static.Songs.Headers\"";
+            if (IDD == "No") textfile += "\n" + "    \"InsertRoot\" : \"Static.Songs.Headers\"";
+                else textfile += "\n" + "    \"InsertRoot\" : \"Static.Songs.Headers\"";
+            
             textfile += "\n" + "}";
             fxml.Close();
             File.WriteAllText(inputFilePath, textfile);

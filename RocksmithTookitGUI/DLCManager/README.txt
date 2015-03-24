@@ -12,11 +12,13 @@ Main Features:
 - Mass Modify meta data @repack per each Rocksmith song: e.g. Album Field: <Broken><Year> - <Album> - r<Rating> - <Avail. Instr.> - <DD> - <Tuning>
 - Mass add/remove DD @repack (inc. Bass only option)
 - Mass rename songs e.g. Black Keys->The Black Keys and maintain changes in a local DB
+- Manipulates the Retail song list of Rocksmith (Rocksmith 2014 disc, or Rocksmith 2012 DLC, or Rocksmith 2012 Import disc)
 
 
 Known Issues:
 - Import fails randomly...Import again (dont clear the DB)
 - Edit of Arragements and Tones DB can only be done from Access for the moment
+- Packing of Rocksmith 2014 Retail manipulated files has manual steps
 
 ToDos/bugs:
 - feat:		 Alternate No for duplicates logic
@@ -58,7 +60,7 @@ Version History(release date):
 	0.2.0.5 (01.12) Search screen prototype
 	0.2.0.6 (29.11) add save confirm for any save operation and add DLCID checks in all updates that mighht affect it WHERE (SELECT NO OTHER DLCNAME)
 	0.2.0.7 (15.12) New features: Add: lastconversiondata field per each arrangement, MainDb filters
-	wip 0.2.0.8 (31.03) (80%) Manage RS12, RS12 DLC & RS14 retail songs. Pending platform independent...checks on copression platform dependent
+	wip 0.2.0.8 (31.03) (90%) Manage RS12, RS12 DLC & RS14 retail songs. Pending platform independent...checks on compression platform dependent
 	wip: 0.2.0.9 (20.02.2015) (20%) has_section flag(to be tested with a song missing sections); Add 30 sec preview midsong; 
 	wip: 0.2.0.10 (20.02.2015) (10%) close bugs on Conversion to Ps3(nin hell) and analyse acuracy on conversion to ps3 (1979,7army..)
 	wip: 0.2.0.11 (22.02.2015)  (90%)remove bug on auto import if original

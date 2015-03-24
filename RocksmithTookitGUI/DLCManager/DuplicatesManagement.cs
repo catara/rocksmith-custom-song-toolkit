@@ -51,7 +51,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         //}
 
-        public DuplicatesManagement(string text, DLCManager.Files filed, DLCPackageData datas, string author, string tkversion, string dD, string bass, string guitar, string combo, string rhythm, string lead, string vocal, string tunnings, int i, int norows, string original_FileName, string art_hash, string audio_hash, string audioPreview_hash, List<string> alist, List<string> blist, string TempPath, List<string> clist, List<string> dlist, bool newold, string Is_Original, string txt_RocksmithDLCPath)
+        public DuplicatesManagement(string text, DLCManager.Files filed, DLCPackageData datas, string author, string tkversion, string dD, string bass, string guitar, string combo, string rhythm, string lead, string vocal, string tunnings, int i, int norows, string original_FileName, string art_hash, string audio_hash, string audioPreview_hash, List<string> alist, List<string> blist, string TempPath, List<string> clist, List<string> dlist, bool newold, string Is_Original, string txt_RocksmithDLCPath, bool AllowEncript, bool AllowORIGDelete)
         {
             Text = text;
             //MessageBox.Show("test2");
@@ -98,7 +98,8 @@ namespace RocksmithToolkitGUI.DLCManager
         public string RocksmithDLCPath = "";
         public DataSet dssx = new DataSet();
         public bool ExistChng = false;
-
+        public bool AllowORIGDeleteb = false;
+        public bool AllowEncriptb = false;
         //public OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn);
 
         //private BindingSource bsPositions = new BindingSource();
@@ -850,7 +851,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private void btn_DecompressAll_Click(object sender, EventArgs e)
         {
             //txt_Description.Text = DB_Path;
-            MainDB frm = new MainDB(DB_Path.Replace("\\Files.accdb;", ""),TempPath, false, RocksmithDLCPath);
+            MainDB frm = new MainDB(DB_Path.Replace("\\Files.accdb;", ""),TempPath, false, RocksmithDLCPath, AllowEncriptb, AllowORIGDeleteb);
             frm.Show();
         }
 

@@ -37,7 +37,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private const string MESSAGEBOX_CAPTION = "Manage a Library of DLCs";
         private bool loading = false;
         public BackgroundWorker bwRGenerate = new BackgroundWorker(); //bcapi
-        private BackgroundWorker bwConvert = new BackgroundWorker { WorkerReportsProgress = true }; //bcapi1
+        private BackgroundWorker bwConvert = new BackgroundWorker { WorkerReportsProgress = true }; //bcapi1        
         private StringBuilder errorsFound;//bcapi1
         string dlcSavePath = "";
         int no_ord = 0;
@@ -46,6 +46,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
 
         internal static string AppWD = AppDomain.CurrentDomain.BaseDirectory; //when removing DDC
+        internal static string MyAppWD = AppDomain.CurrentDomain.BaseDirectory+"\\DLCManager"; //when removing DDC
 
         OleDbConnection connection;
         OleDbCommand command;
@@ -205,6 +206,8 @@ namespace RocksmithToolkitGUI.DLCManager
             chbx_Additional_Manipualtions.SetItemCheckState(30, CheckState.Checked);
             chbx_Additional_Manipualtions.SetItemCheckState(32, CheckState.Checked);
             chbx_Additional_Manipualtions.SetItemCheckState(35, CheckState.Checked);
+            chbx_Additional_Manipualtions.SetItemCheckState(39, CheckState.Checked);
+            chbx_Additional_Manipualtions.SetItemCheckState(40, CheckState.Checked);
             // Generate package worker
             //rtxt_StatisticsOnReadDLCs.Text = "genz : " + "\n" + rtxt_StatisticsOnReadDLCs.Text;
             bwRGenerate.DoWork += new DoWorkEventHandler(GeneratePackage);
@@ -273,6 +276,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 chbx_HomeDBG.Visible = true;
                 chbx_WorkDGB.Visible = true;
                 chbx_HomeDGBVM.Visible = true;
+                chbx_DefaultDB.Checked = false;
                 //txt_RocksmithDLCPath.Text = "C:\\Users\\ladmin\\Dropbox\\OneDrive\\dlc\\0PC";
                 //txt_DBFolder.Text = "C:\\Users\\ladmin\\Dropbox\\OneDrive\\dlc";
                 //txt_TempPath.Text = "C:\\Users\\ladmin\\Dropbox\\OneDrive\\dlc\\0PC\\0";
@@ -586,7 +590,7 @@ namespace RocksmithToolkitGUI.DLCManager
         //Generic procedure to read and parse Main.DB (&others..soon)
         public int SQLAccess(string cmd)
         {
-            var DB_Path = txt_DBFolder.Text + "\\Files.accdb";
+            var DB_Path = (chbx_DefaultDB.Checked == true ? MyAppWD : txt_DBFolder.Text) + "\\Files.accdb";
             //Files[] files = new Files[10000];
             //rtxt_StatisticsOnReadDLCs.Text = "re" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
             var MaximumSize = 0;
@@ -746,7 +750,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //xlWorkBook = xlApp.Workbooks.Add(misValue);
             //xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
 
-            var DB_Path = txt_DBFolder.Text + "\\Files.accdb;";
+            var DB_Path = (chbx_DefaultDB.Checked == true ? MyAppWD : txt_DBFolder.Text) + "\\Files.accdb;";
             //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
             connectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path;
             cnn = new SqlConnection(connectionString);
@@ -850,7 +854,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     if (i == norows) break;
                 }
             cmd += ");";
-            var DB_Path = txt_DBFolder.Text + "\\Files.accdb;";
+            var DB_Path = (chbx_DefaultDB.Checked == true ? MyAppWD : txt_DBFolder.Text) + "\\Files.accdb;";
 
             DialogResult result1 = MessageBox.Show("Following records will be deleted: " + cmd, MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result1 == DialogResult.Yes)
@@ -958,7 +962,7 @@ namespace RocksmithToolkitGUI.DLCManager
             DataSet dss = new DataSet();
             var DB_Path = "";
             //MessageBox.Show("cleaninig");
-            DB_Path = txt_DBFolder.Text + "\\Files.accdb;";
+            DB_Path = (chbx_DefaultDB.Checked == true ? MyAppWD : txt_DBFolder.Text) + "\\Files.accdb;";
             try
             {
                 using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
@@ -1041,7 +1045,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     //Populate ImportDB
                     rtxt_StatisticsOnReadDLCs.Text = "File " + (i + 1) + " :" + s + "\n" + rtxt_StatisticsOnReadDLCs.Text; //+ "-------"  + fi.GetHashCode() + "-----------" + fi.Length + "-" + fi.CreationTime + "-" + fi.DirectoryName + "-" + fi.LastWriteTime + "-" + fi.Name;
                     DataSet dsz = new DataSet();
-                    DB_Path = txt_DBFolder.Text + "\\Files.accdb;";
+                    DB_Path = (chbx_DefaultDB.Checked == true ? MyAppWD : txt_DBFolder.Text) + "\\Files.accdb;";
                     using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
                     {
                         string updatecmd; //s.Substring(s.Length - pathDLC.Length)
@@ -1093,7 +1097,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     //Populate ImportDB
                     rtxt_StatisticsOnReadDLCs.Text = "Folder " + (i + 1) + " :" + "s" + "\n" + rtxt_StatisticsOnReadDLCs.Text; //+ "-------"  + fi.GetHashCode() + "-----------" + fi.Length + "-" + fi.CreationTime + "-" + fi.DirectoryName + "-" + fi.LastWriteTime + "-" + fi.Name;
                     DataSet dsz = new DataSet();
-                    DB_Path = txt_DBFolder.Text + "\\Files.accdb;";
+                    DB_Path = (chbx_DefaultDB.Checked == true ? MyAppWD : txt_DBFolder.Text) + "\\Files.accdb;";
                     using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
                     {
                         string updatecmd; //s.Substring(s.Length - pathDLC.Length)
@@ -2579,11 +2583,11 @@ namespace RocksmithToolkitGUI.DLCManager
             //Cleanup
             if (chbx_Additional_Manipualtions.GetItemChecked(24)) //25. Use translation tables for naming standardization
             {
-                Translation_And_Correction(txt_DBFolder.Text);
+                Translation_And_Correction((chbx_DefaultDB.Checked == true ? MyAppWD : txt_DBFolder.Text));
             }
 
             //Show Intro database window
-            MainDB frm = new MainDB(txt_DBFolder.Text, txt_TempPath.Text, chbx_Additional_Manipualtions.GetItemChecked(33), txt_RocksmithDLCPath.Text);
+            MainDB frm = new MainDB((chbx_DefaultDB.Checked == true ? MyAppWD : txt_DBFolder.Text), txt_TempPath.Text, chbx_Additional_Manipualtions.GetItemChecked(33), txt_RocksmithDLCPath.Text, chbx_Additional_Manipualtions.GetItemChecked(39), chbx_Additional_Manipualtions.GetItemChecked(40));
             frm.Show();
 
             //dataGrid.frmMainForm.ActiveForm.Show();
@@ -2706,7 +2710,7 @@ namespace RocksmithToolkitGUI.DLCManager
             {
                 //Duplicates frm = new Duplicates(txt_DBFolder.Text, filed, datas, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, tunnings, i, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist);
                 //frm.Show();
-                DuplicatesManagement frm1 = new DuplicatesManagement(txt_DBFolder.Text, filed, datas, Fauthor, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, tunnings, i, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist, txt_TempPath.Text, clist, dlist, newold, Is_Original, txt_RocksmithDLCPath.Text);
+                DuplicatesManagement frm1 = new DuplicatesManagement((chbx_DefaultDB.Checked == true ? MyAppWD : txt_DBFolder.Text), filed, datas, Fauthor, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, tunnings, i, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist, txt_TempPath.Text, clist, dlist, newold, Is_Original, txt_RocksmithDLCPath.Text, chbx_Additional_Manipualtions.GetItemChecked(39), chbx_Additional_Manipualtions.GetItemChecked(40));
                 //frm1.Show();
                 frm1.ShowDialog();
                 //rtxt_StatisticsOnReadDLCs.Text = original_FileName+"-s..." + "\n" + rtxt_StatisticsOnReadDLCs.Text;
@@ -3415,7 +3419,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         {
                             Random random = new Random();
                             data.Name = random.Next(0, 100000) + data.Name;
-                            var DB_Path = txt_DBFolder.Text + "\\Files.accdb;";
+                            var DB_Path = (chbx_DefaultDB.Checked == true ? MyAppWD : txt_DBFolder.Text) + "\\Files.accdb;";
                             using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
                             {
                                 DataSet dis = new DataSet();
@@ -3704,15 +3708,15 @@ namespace RocksmithToolkitGUI.DLCManager
         private void btn_DecompressAll_Click(object sender, EventArgs e)
         {
             //Show Intro database window
-            MainDB frm = new MainDB(txt_DBFolder.Text, txt_TempPath.Text, chbx_Additional_Manipualtions.GetItemChecked(33), txt_RocksmithDLCPath.Text);
+            MainDB frm = new MainDB((chbx_DefaultDB.Checked == true ? MyAppWD : txt_DBFolder.Text), txt_TempPath.Text, chbx_Additional_Manipualtions.GetItemChecked(33), txt_RocksmithDLCPath.Text, chbx_Additional_Manipualtions.GetItemChecked(39), chbx_Additional_Manipualtions.GetItemChecked(40));
             frm.Show();
         }
 
         private void btn_Standardization_Click(object sender, EventArgs e)
         {
-            var DBb_Path = txt_DBFolder.Text + "\\Files.accdb";
+            var DBb_Path = (chbx_DefaultDB.Checked == true ? MyAppWD : txt_DBFolder.Text) + "\\Files.accdb";
             //MessageBox.Show(DBb_Path);
-            Standardization frm = new Standardization(DBb_Path, txt_TempPath.Text, txt_RocksmithDLCPath.Text);
+            Standardization frm = new Standardization(DBb_Path, txt_TempPath.Text, txt_RocksmithDLCPath.Text, chbx_Additional_Manipualtions.GetItemChecked(39), chbx_Additional_Manipualtions.GetItemChecked(40));
             frm.Show();
         }
 
@@ -3723,7 +3727,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Translation_And_Correction(txt_DBFolder.Text);
+            Translation_And_Correction((chbx_DefaultDB.Checked == true ? MyAppWD : txt_DBFolder.Text));
             MessageBox.Show("Normalization Applied");
         }
 
@@ -3764,7 +3768,7 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             var jsonFiles = Directory.GetFiles(txt_RocksmithDLCPath.Text, "*.psarc.*", SearchOption.AllDirectories); //read all the .PSARCs in the IMPORT folder
             var inputFilePath = ""; var locat = ""; var songshsanP=""; var unpackedDir = "";
-            var DBb_Path = txt_DBFolder.Text + "\\Files.accdb";
+            var DBb_Path = (chbx_DefaultDB.Checked == true? MyAppWD: txt_DBFolder.Text) + "\\Files.accdb";
             //string source_dir = "";
             //string destination_dir = "";
             var t = "";
@@ -3816,10 +3820,10 @@ namespace RocksmithToolkitGUI.DLCManager
                                 unpackedDir = Packer.Unpack(txt_RocksmithDLCPath.Text + "\\cache.psarc", txt_TempPath.Text + "\\0_dlcpacks", false, false, false); //Unpack cache.psarc for RS14 Official Retails songs rePACKING
                                 unpackedDir = Packer.Unpack(inputFilePath, txt_TempPath.Text + "\\0_dlcpacks", false, false, false);
                                 //FIX for unpacking w the wrong folder extension
-                                if (!Directory.Exists(unpackedDir+"\\songs\\bin\\ps3"))
+                                if (Directory.Exists(unpackedDir+"\\songs\\bin\\ps3"))
                                 {
-                                    renamedir(unpackedDir + "_pc", unpackedDir.Replace("_pc", "_ps3"));
-                                    unpackedDir = unpackedDir.Replace("_pc", "_ps3");
+                                    renamedir(unpackedDir, unpackedDir.Replace("_Pc", "_ps3"));
+                                    unpackedDir = unpackedDir.Replace("_Pc", "_ps3");
                                     platformDLCP = "PS3";
                                 }
                                 songshsanP = unpackedDir + "\\manifests\\songs\\songs.hsan";
@@ -3834,6 +3838,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             unpackedDir = txt_TempPath.Text + "\\0_dlcpacks\\songs_" + platformDLCP;
                             songshsanP = unpackedDir + "\\manifests\\songs\\songs.hsan";
                         }
+                        rtxt_StatisticsOnReadDLCs.Text = "Processed cache.psarc & songs.psarc" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                     } //repacking at the moment manually with psarc 1.4 and lzma ratio 0
                     else if (json == txt_RocksmithDLCPath.Text + "\\rs1compatibilitydlc.psarc.edat") //RS12 DLC
                     {
@@ -3882,6 +3887,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         {
                             rtxt_StatisticsOnReadDLCs.Text = ex.Message + "problem at dir rename" + unpackedDir + "...\n\n" + rtxt_StatisticsOnReadDLCs.Text;
                         }
+                        rtxt_StatisticsOnReadDLCs.Text = "Processed rs1compatibilitydlc.psarc" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                     }
                     else if (json == txt_RocksmithDLCPath.Text + "\\rs1compatibilitydisc.psarc.edat") //RS12 RETAIL
                     {
@@ -3928,6 +3934,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         {
                             rtxt_StatisticsOnReadDLCs.Text = ex.Message + "problem at dir rename" + unpackedDir + "...\n\n" + rtxt_StatisticsOnReadDLCs.Text;
                         }
+                        rtxt_StatisticsOnReadDLCs.Text = "Processed rs1compatibilitydisc.psarc" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                     }
                     else continue;
                     //var inputFilePath = txt_RocksmithDLCPath.Text + "\\songs.psarc";
@@ -3940,6 +3947,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
 
                     //Populate DB
+                    rtxt_StatisticsOnReadDLCs.Text = "Populating CACHE DB" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                     try
                     {
                         // var t = inputFilePath;//if (!File.Exists(inputFilePath)) 
@@ -4079,7 +4087,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     }
                 }//END no cahce.psarc to be decompressed
             }
-            Cache frm = new Cache(DBb_Path, txt_TempPath.Text, txt_RocksmithDLCPath.Text);
+            Cache frm = new Cache(DBb_Path, txt_TempPath.Text, txt_RocksmithDLCPath.Text, chbx_Additional_Manipualtions.GetItemChecked(39), chbx_Additional_Manipualtions.GetItemChecked(40));
             frm.Show();
         }
 
@@ -4133,29 +4141,40 @@ namespace RocksmithToolkitGUI.DLCManager
         public string Arrangement { get; set; }
     }
 
-private string calc_path(string jsonsFiles)
+        private string calc_path(string jsonsFiles)
+                {
+                    var ttt = Path.GetDirectoryName(jsonsFiles);
+                    var pattth = ttt.IndexOf("\\manifests\\");
+                    var ddd = ttt.Substring(pattth + 1, ttt.Length - pattth - 1);
+                    return ddd;
+                }
+
+
+        private void renamedir(string source_dir, string destination_dir)
         {
-            var ttt = Path.GetDirectoryName(jsonsFiles);
-            var pattth = ttt.IndexOf("\\manifests\\");
-            var ddd = ttt.Substring(pattth + 1, ttt.Length - pattth - 1);
-            return ddd;
+                  //replicate the directory structure
+            foreach (string dir in Directory.GetDirectories(source_dir, "*", System.IO.SearchOption.AllDirectories))// Create subdirectory structure in destination    
+            {
+                Directory.CreateDirectory(destination_dir + dir.Substring(source_dir.Length));
+            }
+
+            Directory.CreateDirectory(destination_dir);
+            foreach (string file_name in Directory.GetFiles(source_dir, "*.*", System.IO.SearchOption.AllDirectories))
+            {
+                File.Copy(file_name, destination_dir + file_name.Substring(source_dir.Length), true);
+            }
+            Directory.Delete(source_dir, true);    
         }
 
+        private void DBchanged(object sender, EventArgs e)
+        {
+            if (chbx_DefaultDB.Checked == true) chbx_DefaultDB.Checked = false;
+        }
 
-private void renamedir(string source_dir, string destination_dir)
-{
-    foreach (string dir in Directory.GetDirectories(source_dir, "*", System.IO.SearchOption.AllDirectories))// Create subdirectory structure in destination    
-    {
-        Directory.CreateDirectory(destination_dir + dir.Substring(source_dir.Length));
-    }
-
-    Directory.CreateDirectory(destination_dir);
-    foreach (string file_name in Directory.GetFiles(source_dir, "*.*", System.IO.SearchOption.AllDirectories))
-    {
-        File.Copy(file_name, destination_dir + file_name.Substring(source_dir.Length), true);
-    }
-    Directory.Delete(source_dir, true);    
-}
-
+        private void chbx_DefaultDB_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chbx_DefaultDB.Checked == true) txt_DBFolder.Text = MyAppWD + "\\Files.accdb";
+            //else txt_DBFolder.Text = "";
+        }
     }
 }

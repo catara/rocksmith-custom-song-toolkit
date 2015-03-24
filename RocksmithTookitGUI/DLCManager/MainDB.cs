@@ -19,7 +19,7 @@ namespace RocksmithToolkitGUI.DLCManager
 {
     public partial class MainDB : Form
     {
-        public MainDB(string txt_DBFolder, string txt_TempPath, bool updateDB, string txt_RocksmithDLCPath)
+        public MainDB(string txt_DBFolder, string txt_TempPath, bool updateDB, string txt_RocksmithDLCPath, bool AllowEncript, bool AllowORIGDelete)
         {
             InitializeComponent();
             //MessageBox.Show("test0");
@@ -28,6 +28,8 @@ namespace RocksmithToolkitGUI.DLCManager
             TempPath = txt_TempPath;
             RocksmithDLCPath=txt_RocksmithDLCPath;
             updateDBb = updateDB;
+            AllowEncriptb = AllowEncript;
+            AllowORIGDeleteb = AllowORIGDelete;
         }
 
         private string Filename = System.IO.Path.Combine(Application.StartupPath, "Text.txt");
@@ -45,6 +47,8 @@ namespace RocksmithToolkitGUI.DLCManager
         public int noOfRec = 0;
         public string SearchCmd = "";
         public bool updateDBb=false;
+        public bool AllowORIGDeleteb=false;
+        public bool AllowEncriptb = false;
         //public OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn);
 
         //private BindingSource bsPositions = new BindingSource();
@@ -1002,7 +1006,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void button15_Click(object sender, EventArgs e)
         {
-            Standardization frm = new Standardization(DB_Path, TempPath, RocksmithDLCPath);
+            Standardization frm = new Standardization(DB_Path, TempPath, RocksmithDLCPath, AllowEncriptb, AllowORIGDeleteb);
             frm.Show();
         }
 
@@ -1164,7 +1168,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void button5_Click(object sender, EventArgs e)
         {
-            Cache frm = new Cache(DB_Path, TempPath, RocksmithDLCPath);
+            Cache frm = new Cache(DB_Path, TempPath, RocksmithDLCPath, AllowEncriptb, AllowORIGDeleteb);
             frm.ShowDialog();
         }
     }

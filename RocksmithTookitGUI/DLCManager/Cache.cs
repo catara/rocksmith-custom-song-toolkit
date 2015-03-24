@@ -21,13 +21,15 @@ namespace RocksmithToolkitGUI.DLCManager
 {
     public partial class Cache : Form
     {
-        public Cache(string txt_DBFolder, string txt_TempPath, string txt_RocksmithDLCPath)
+        public Cache(string txt_DBFolder, string txt_TempPath, string txt_RocksmithDLCPath, bool AllowEncript, bool AllowORIGDelete)
         {
             InitializeComponent();
             //MessageBox.Show("test0");
             DB_Path = txt_DBFolder;
             TempPath = txt_TempPath;
             RocksmithDLCPath = txt_RocksmithDLCPath;
+            AllowEncriptb = AllowEncript;
+            AllowORIGDeleteb = AllowORIGDelete;
         }
 
         private string Filename = System.IO.Path.Combine(Application.StartupPath, "Text.txt");
@@ -42,6 +44,8 @@ namespace RocksmithToolkitGUI.DLCManager
         public string TempPath = "";
         public string RocksmithDLCPath="";
         public DataSet dssx = new DataSet();
+        public bool AllowORIGDeleteb = false;
+        public bool AllowEncriptb = false;
         //public OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn);
 
         //private BindingSource bsPositions = new BindingSource();
@@ -384,7 +388,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private void btn_DecompressAll_Click(object sender, EventArgs e)
         {
             //txt_Description.Text = DB_Path;
-            MainDB frm = new MainDB(DB_Path.Replace("\\Files.accdb", ""), TempPath, false, RocksmithDLCPath);
+            MainDB frm = new MainDB(DB_Path.Replace("\\Files.accdb", ""), TempPath, false, RocksmithDLCPath, AllowEncriptb, AllowORIGDeleteb);
             frm.Show();
         }
 
@@ -397,14 +401,15 @@ namespace RocksmithToolkitGUI.DLCManager
             DataSet drsx = new DataSet();
             using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
             {
-                OleDbDataAdapter da = new OleDbDataAdapter("SELECT DISTINCT SongsHSANPath, PSARCName from Cache AS O", cn);
+                OleDbDataAdapter da = new OleDbDataAdapter("SELECT DISTINCT SongsHSANPath, PSARCName, Platform from Cache AS O", cn);
                 da.Fill(drsx, "Cache");
                 if (drsx.Tables[0].Rows.Count != 0)
                     foreach (DataRow dataRow in drsx.Tables[0].Rows)
                     {
-                        var d = dataRow.ItemArray[1].ToString();
+                        var dpsarc = dataRow.ItemArray[1].ToString();
+                        var platfor = dataRow.ItemArray[2].ToString();
                         manipulateHSAN(dataRow.ItemArray[0].ToString());
-                        if (d.ToString() == "CACHE")
+                        if (dpsarc.ToString() == "CACHE")
                         {
                             DirectoryInfo di;
                             var startI = new ProcessStartInfo();
@@ -451,13 +456,16 @@ namespace RocksmithToolkitGUI.DLCManager
                             //rtxt_StatisticsOnReadDLCs.Text = "packed CACHE \n" + rtxt_StatisticsOnReadDLCs;
                         }
 
-                        if (d.ToString() == "RS1Retail")
+                        if (dpsarc.ToString() == "RS1Retail")
                         {
                             var startInfo = new ProcessStartInfo();
                             var unpackedDir = TempPath + "\\0_dlcpacks\\rs1compatibilitydisc_PS3";
                             startInfo.FileName = Path.Combine(AppWD, "DLCManager\\psarc.exe");
                             startInfo.WorkingDirectory = unpackedDir;// Path.GetDirectoryName();
                             var t = TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydisc.psarc";
+
+                            if (AllowORIGDeleteb) File.Delete(TempPath + "\\0_dlcpacks\\rs1compatibilitydisc_PS3\\manifests\\songs_rs1disc\\songs_rs1disc.hsan.orig");
+
                             startInfo.Arguments = String.Format(" create -y --zlib --level=4 -o {0} -i {1}",
                                                                 t,
                                                                 unpackedDir);// + platformDLCP
@@ -474,31 +482,37 @@ namespace RocksmithToolkitGUI.DLCManager
                             //renamedir(unpackedDir + "\\manifests\\songs", unpackedDir + "\\manifests\\songs_rs1dlc");
                             //rtxt_StatisticsOnReadDLCs.Text = "packed CACHE \n" + rtxt_StatisticsOnReadDLCs;
                             MessageBox.Show("As the toolkit cannot pack&encrypt/I don't know how,\n a manual workaround exists:\n1. Download&install TotalCommander http://ghisler.com/download.htm \n2. Download the psarc plugin 2013 http://www.totalcmd.net/plugring/PSARC.html \n3. While in TC open the zip archive witht he plugin&install the plugin\n4. Enter the manipulated/rs1compatibilitydisc.psarc and Pack with External No Compression Zlib Compression Ratio 4\n5. Encrypt using the aldotool http://ps3tools.aldostools.org/ps3_edattool_gui.rar \n6. Copy in the DLC DIR", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
-                            var startI = new ProcessStartInfo();
-                            var hsanDir = dataRow.ItemArray[0].ToString();
-                            startI.FileName = Path.Combine(AppWD, "edattool.exe");
-                            startI.WorkingDirectory = TempPath + "\\0_dlcpacks\\manipulated\\";// Path.GetDirectoryName();
-                            var za = TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydisc.psarc.edat";
-                            var zi = TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydisc.psarc";
-                            startI.Arguments = String.Format(" encrypt -custom:CB4A06E85378CED307E63EFD1084C19D UP0001-BLUS31182_00-ROCKSMITHPATCH01 00 00 00 {0} {1}",
-                                                                za,
-                                                                zi);
-                            startI.UseShellExecute = true; startI.CreateNoWindow = false; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
-                            using (var DDC = new Process())
+                            if (platfor == "PS3" && AllowEncriptb)
                             {
-                                DDC.StartInfo = startI; DDC.Start(); DDC.WaitForExit(1000 * 60 * 1); //wait 1min
-                                //if (DDC.ExitCode > 0) rtxt_StatisticsOnReadDLCs.Text = "Issues when packing rs1dlc DLC pack !" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                var startI = new ProcessStartInfo();
+                                var hsanDir = dataRow.ItemArray[0].ToString();
+                                startI.FileName = Path.Combine(AppWD, "DLCManager\\edattool.exe");
+                                startI.WorkingDirectory = TempPath + "\\0_dlcpacks\\manipulated\\";// Path.GetDirectoryName();
+                                var za = TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydisc.psarc.edat";
+                                var zi = TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydisc.psarc";
+                                startI.Arguments = String.Format(" encrypt -custom:CB4A06E85378CED307E63EFD1084C19D UP0001-BLUS31182_00-ROCKSMITHPATCH01 00 00 00 {0} {1}",
+                                                                    zi,
+                                                                    za);
+                                startI.UseShellExecute = true; startI.CreateNoWindow = false; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
+                                using (var DDC = new Process())
+                                {
+                                    DDC.StartInfo = startI; DDC.Start(); DDC.WaitForExit(1000 * 60 * 1); //wait 1min
+                                                                                                         //if (DDC.ExitCode > 0) rtxt_StatisticsOnReadDLCs.Text = "Issues when packing rs1dlc DLC pack !" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                }
                             }
+
                         }
 
-                        if (d.ToString() == "COMPATIBILITY")
+                        if (dpsarc.ToString() == "COMPATIBILITY")
                         {
                             var startInfo = new ProcessStartInfo();
                             var unpackedDir = TempPath + "\\0_dlcpacks\\rs1compatibilitydlc_PS3";
                             startInfo.FileName = Path.Combine(AppWD, "DLCManager\\psarc.exe");
                             startInfo.WorkingDirectory = unpackedDir;// Path.GetDirectoryName();
                             var t = TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydlc.psarc";
+
+                            if (AllowORIGDeleteb) File.Delete(TempPath + "\\0_dlcpacks\\rs1compatibilitydlc_PS3\\manifests\\songs_rs1dlc\\songs_rs1dlc.hsan.orig");
+
                             startInfo.Arguments = String.Format(" create -y --zlib --level=4 -o {0} -i {1}",
                                                                 t,
                                                                 unpackedDir);// + platformDLCP
@@ -516,20 +530,24 @@ namespace RocksmithToolkitGUI.DLCManager
                             //rtxt_StatisticsOnReadDLCs.Text = "packed CACHE \n" + rtxt_StatisticsOnReadDLCs;
                             MessageBox.Show("As the toolkit cannot pack&encrypt/I don't know how,\n a manual workaround exists:\n1. Download&install TotalCommander http://ghisler.com/download.htm \n2. Download the psarc plugin 2013 http://www.totalcmd.net/plugring/PSARC.html \n3. While in TC open the zip archive witht he plugin&install the plugin\n4. Enter the manipulated/rs1compatibilitydisc.psarc and Pack with External No Compression Zlib Compression Ratio 4\n5. Encrypt using the aldotool http://ps3tools.aldostools.org/ps3_edattool_gui.rar \n6. Copy in the folder containing DLC DIR", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-                            var startI = new ProcessStartInfo();
-                            var hsanDir = dataRow.ItemArray[0].ToString();
-                            startI.FileName = Path.Combine(AppWD, "edattool.exe");
-                            startI.WorkingDirectory = TempPath + "\\0_dlcpacks\\manipulated\\";// Path.GetDirectoryName();
-                            var za = TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydlc.psarc.edat";
-                            var zi = TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydlc.psarc";
-                            startI.Arguments = String.Format(" encrypt -custom:CB4A06E85378CED307E63EFD1084C19D UP0001-BLUS31182_00-ROCKSMITHPATCH01 00 00 00 {0} {1}",
-                                                                za,
-                                                                zi);
-                            startI.UseShellExecute = true; startI.CreateNoWindow = false; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
-                            using (var DDC = new Process())
+                            if (platfor == "PS3" && AllowEncriptb)
                             {
-                                DDC.StartInfo = startI; DDC.Start(); DDC.WaitForExit(1000 * 60 * 1); //wait 1min
-                                //if (DDC.ExitCode > 0) rtxt_StatisticsOnReadDLCs.Text = "Issues when packing rs1dlc DLC pack !" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                var startI = new ProcessStartInfo();
+                                var hsanDir = dataRow.ItemArray[0].ToString();
+                                startI.FileName = Path.Combine(AppWD, "DLCManager\\edattool.exe");
+                                startI.WorkingDirectory = TempPath + "\\0_dlcpacks\\manipulated\\";// Path.GetDirectoryName();
+                                var za = TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydlc.psarc.edat";
+                                var zi = TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydlc.psarc";
+
+                                startI.Arguments = String.Format(" encrypt -custom:CB4A06E85378CED307E63EFD1084C19D UP0001-BLUS31182_00-ROCKSMITHPATCH01 00 00 00 {0} {1}",
+                                                                    zi,
+                                                                    za);
+                                startI.UseShellExecute = true; startI.CreateNoWindow = false; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
+                                using (var DDC = new Process())
+                                {
+                                    DDC.StartInfo = startI; DDC.Start(); DDC.WaitForExit(1000 * 60 * 1); //wait 1min
+                                                                                                         //if (DDC.ExitCode > 0) rtxt_StatisticsOnReadDLCs.Text = "Issues when packing rs1dlc DLC pack !" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                }
                             }
                         }
                     }
@@ -554,6 +572,7 @@ namespace RocksmithToolkitGUI.DLCManager
             var linedone = true;
             var songkey = "";
             var footer = "";
+            var lastline = false; //if the last song is not removed then the end should be appended
 
             textfile = "{";
             textfile += "\n    \"Entries\" : {";
@@ -563,7 +582,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //Read and Save Header
             while ((line = fxml.ReadLine()) != null)
             {
-                //if (line == "") continue;
+                if (line.Contains("InsertRoot")) break; //got to the end so
                 
                 if (line.Contains("\"DLCRS1Key\" : [") ) linedone = false;
                 if (line.Contains("],")) linedone = true;
@@ -589,20 +608,20 @@ namespace RocksmithToolkitGUI.DLCManager
                         disx.Dispose();
                     }
                 }
+                
+                lastline = false;
                 if (line.Contains("},") && linedone)//&& header == "done"
                 {
-                    if (IDD == "No") textfile += tecst + "\n" + line; //"\n" +
-                    //else rtxt_StatisticsOnReadDLCs.Text = "Removed " + songkey + " " + cmd + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                    if (IDD == "No") { textfile += tecst + "\n" + line; lastline = true; }
                     IDD = "";
-                    tecst = "";
-                    linedone = true;
-                    var lastline = line;
-                }
-                else tecst += "\n" + line;
+                        tecst = "";
+                        linedone = true;
+                    }
+                    else tecst += "\n" + line;
             }
-            if (IDD == "No") textfile += "\n" + "    \"InsertRoot\" : \"Static.Songs.Headers\"";
-                else textfile += "\n" + "    \"InsertRoot\" : \"Static.Songs.Headers\"";
-            
+            if (lastline) textfile += "\n" + "    \"InsertRoot\" : \"Static.Songs.Headers\"";
+                else textfile = (textfile+"},").Replace("}, },", "}\n         },") +"\n" + "    \"InsertRoot\" : \"Static.Songs.Headers\"";
+
             textfile += "\n" + "}";
             fxml.Close();
             File.WriteAllText(inputFilePath, textfile);

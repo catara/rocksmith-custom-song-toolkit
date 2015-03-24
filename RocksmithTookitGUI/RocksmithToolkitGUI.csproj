@@ -493,7 +493,9 @@
   <ItemGroup>
     <None Include="Resources\colored.png" />
     <None Include="Resources\brasil_logo.png" />
-    <Content Include="DLCManager\edattool.exe" />
+    <Content Include="DLCManager\edattool.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="DLCManager\Files.accdb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

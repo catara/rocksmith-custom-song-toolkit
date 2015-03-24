@@ -279,6 +279,8 @@
             "37. Keep the Uncompressed Songs superorganized",
             "38. Import other formats but PC, as well(separately of course)",
             "39. Use only unpacked songs already in the 0/0_Import folder",
+            "40.  Encrypt PS3 Retails songs, with External tool",
+            "41. Delete ORIG HSAN when Packing Retails songs",
             "<IMPORT>",
             "<@Pack>"});
             this.chbx_Additional_Manipualtions.Location = new System.Drawing.Point(240, 88);
@@ -854,8 +856,8 @@
             this.txt_DBFolder.Name = "txt_DBFolder";
             this.txt_DBFolder.Size = new System.Drawing.Size(165, 20);
             this.txt_DBFolder.TabIndex = 275;
-            this.txt_DBFolder.Text = "containing Files.accdb";
             this.toolTip1.SetToolTip(this.txt_DBFolder, "Requires a Access2014 DB with");
+            this.txt_DBFolder.TextChanged += new System.EventHandler(this.DBchanged);
             // 
             // btn_DBFolder
             // 
@@ -1175,14 +1177,16 @@
             // chbx_DefaultDB
             // 
             this.chbx_DefaultDB.AutoSize = true;
-            this.chbx_DefaultDB.Enabled = false;
-            this.chbx_DefaultDB.Location = new System.Drawing.Point(311, 66);
+            this.chbx_DefaultDB.Checked = true;
+            this.chbx_DefaultDB.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chbx_DefaultDB.Location = new System.Drawing.Point(289, 66);
             this.chbx_DefaultDB.Margin = new System.Windows.Forms.Padding(2);
             this.chbx_DefaultDB.Name = "chbx_DefaultDB";
-            this.chbx_DefaultDB.Size = new System.Drawing.Size(78, 17);
+            this.chbx_DefaultDB.Size = new System.Drawing.Size(100, 17);
             this.chbx_DefaultDB.TabIndex = 332;
-            this.chbx_DefaultDB.Text = "Default DB";
+            this.chbx_DefaultDB.Text = "Use Default DB";
             this.chbx_DefaultDB.UseVisualStyleBackColor = true;
+            this.chbx_DefaultDB.CheckedChanged += new System.EventHandler(this.chbx_DefaultDB_CheckedChanged);
             // 
             // mainTableAdapter
             // 

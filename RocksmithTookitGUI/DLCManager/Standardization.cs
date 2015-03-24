@@ -19,7 +19,7 @@ namespace RocksmithToolkitGUI.DLCManager
 {
     public partial class Standardization : Form
     {
-        public Standardization(string txt_DBFolder,string txt_TempPath, string txt_RocksmithDLCPath)
+        public Standardization(string txt_DBFolder,string txt_TempPath, string txt_RocksmithDLCPath, bool AllowEncript, bool AllowORIGDelete)
         { 
             InitializeComponent();
             //MessageBox.Show("test0");
@@ -39,12 +39,14 @@ namespace RocksmithToolkitGUI.DLCManager
     public string TempPath = "";
         public string RocksmithDLCPath = "";
     public DataSet dssx = new DataSet();
-    //public OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn);
+        public bool AllowORIGDeleteb = false;
+        public bool AllowEncriptb = false;
+        //public OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn);
 
-    //private BindingSource bsPositions = new BindingSource();
-    //private BindingSource bsBadges = new BindingSource();
+        //private BindingSource bsPositions = new BindingSource();
+        //private BindingSource bsBadges = new BindingSource();
 
-    private void Standardization_Load(object sender, EventArgs e)
+        private void Standardization_Load(object sender, EventArgs e)
     {
         //DataAccess da = new DataAccess();
         //MessageBox.Show("test0");
@@ -324,7 +326,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private void btn_DecompressAll_Click(object sender, EventArgs e)
         {
             //txt_Description.Text = DB_Path;
-            MainDB frm = new MainDB(DB_Path.Replace("\\Files.accdb", ""), TempPath,false, "");
+            MainDB frm = new MainDB(DB_Path.Replace("\\Files.accdb", ""), TempPath, false, "", AllowEncriptb, AllowORIGDeleteb);
             frm.Show();
         }
 

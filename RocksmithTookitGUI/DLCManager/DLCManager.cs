@@ -37,7 +37,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private const string MESSAGEBOX_CAPTION = "Manage a Library of DLCs";
         private bool loading = false;
         public BackgroundWorker bwRGenerate = new BackgroundWorker(); //bcapi
-        private BackgroundWorker bwConvert = new BackgroundWorker { WorkerReportsProgress = true }; //bcapi1        
+        public BackgroundWorker bwConvert = new BackgroundWorker { WorkerReportsProgress = true }; //bcapi1        
         private StringBuilder errorsFound;//bcapi1
         string dlcSavePath = "";
         int no_ord = 0;
@@ -185,6 +185,8 @@ namespace RocksmithToolkitGUI.DLCManager
         public string ArtistSort = "";
         public string Artist = "";
         public string PackageVersion = "";
+        public string unpackedDir1 = "";
+        public string package1 = "";
 
         public DLCManager()
         {
@@ -218,6 +220,15 @@ namespace RocksmithToolkitGUI.DLCManager
             bwRGenerate.RunWorkerCompleted += new RunWorkerCompletedEventHandler(ProcessCompleted);
             //rtxt_StatisticsOnReadDLCs.Text = "gen7 : " + "\n" + rtxt_StatisticsOnReadDLCs.Text;
             bwRGenerate.WorkerReportsProgress = true;
+
+            bwConvert.DoWork += new DoWorkEventHandler(ConvertWEM);
+            //rtxt_StatisticsOnReadDLCs.Text = "genn : " + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+
+            bwConvert.ProgressChanged += new ProgressChangedEventHandler(ProgressChanged);
+            //rtxt_StatisticsOnReadDLCs.Text = "genc : " + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+            bwConvert.RunWorkerCompleted += new RunWorkerCompletedEventHandler(ProcessCompleted);
+            //rtxt_StatisticsOnReadDLCs.Text = "gen7 : " + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+            bwConvert.WorkerReportsProgress = true;
         }
 
         private void btn_SteamDLCFolder_Click(object sender, EventArgs e)
@@ -3867,7 +3878,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btn_LoadRetailSongs_Click(object sender, EventArgs e)
         {
-            rtxt_StatisticsOnReadDLCs.Text = "Starting Retail Songs processing ...." + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+            rtxt_StatisticsOnReadDLCs.Text = "Starting Retail Songs processing ...."+DateTime.Now + "\n" + rtxt_StatisticsOnReadDLCs.Text;
 
             var Temp_Path_Import = txt_TempPath.Text + "\\0_import";
             string pathDLC = txt_RocksmithDLCPath.Text;
@@ -3930,7 +3941,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             {
                                 // UNPACK
                                 rtxt_StatisticsOnReadDLCs.Text = "Unpacking cache.psarc.... " + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                                unpackedDir = Packer.Unpack(pathDLC + "\\cache.psarc", txt_TempPath.Text + "\\0_dlcpacks", false, false, false); //Unpack cache.psarc for RS14 Official Retails songs rePACKING
+                                if (File.Exists(pathDLC + "\\cache.psarc")) unpackedDir = Packer.Unpack(pathDLC + "\\cache.psarc", txt_TempPath.Text + "\\0_dlcpacks", false, false, false); //Unpack cache.psarc for RS14 Official Retails songs rePACKING
                                 rtxt_StatisticsOnReadDLCs.Text = "Unpacking songs.psarc.... " + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                 unpackedDir = Packer.Unpack(inputFilePath, txt_TempPath.Text + "\\0_dlcpacks", false, false, false);
                                 //FIX for unpacking w the wrong folder extension
@@ -3943,7 +3954,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                 songshsanP = unpackedDir + "\\manifests\\songs\\songs.hsan";
 
                                 //Convert WEM to OGG
-                                Convert2OGG(unpackedDir + "\\Audio\\windows", platformDLCP);
+                                Convert2OGG(unpackedDir + "\\Audio\\"+ (platformDLCP == "Pc" ? "windows" : platformDLCP), platformDLCP);
                             }
                             catch (Exception ex)
                             {
@@ -4002,7 +4013,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             rtxt_StatisticsOnReadDLCs.Text = "renaming internal folder \n" + rtxt_StatisticsOnReadDLCs.Text;
 
                             //Convert WEM to OGG
-                            Convert2OGG(unpackedDir + "\\Audio\\windows", platformDLCP);
+                            //Convert2OGG(unpackedDir + "\\Audio\\"+platformDLCP, platformDLCP);
                         }
                         catch (Exception ex)
                         {
@@ -4053,7 +4064,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             rtxt_StatisticsOnReadDLCs.Text = "renaming internal folder \n" + rtxt_StatisticsOnReadDLCs.Text;
 
                             //Convert WEM to OGG
-                            Convert2OGG(unpackedDir + "\\Audio\\windows", platformDLCP);
+                            Convert2OGG(unpackedDir + "\\Audio\\"+ (platformDLCP=="Pc"? "windows" : platformDLCP), platformDLCP);
                         }
                         catch (Exception ex)
                         {
@@ -4085,9 +4096,12 @@ namespace RocksmithToolkitGUI.DLCManager
                         //if (songshsanP.Contains("songs_rs1dlc")) File.Move(unpackedDir + "\\manifests\\songs", unpackedDir + "\\manifests\\songs_rs1dlc");
                         var AudioP = "";
                         var AudioPP = "";
+                        var AudioP1 = "";
+                        var AudioPP1 = "";
                         foreach (var song in songList)
                         {
                             DataSet dsx = new DataSet();
+                            DataSet dtx = new DataSet();
                             //convert to png
                             pic = songshsanP.Replace("\\manifests\\songs_rs1disc\\songs_rs1disc.hsan", "\\gfxassets\\album_art\\album_" + song.Identifier + "_256.dds");
                             if (pic == songshsanP) pic = songshsanP.Replace("\\manifests\\songs_rs1dlc\\songs_rs1dlc.hsan", "\\gfxassets\\album_art\\album_" + song.Identifier + "_256.dds");
@@ -4100,39 +4114,38 @@ namespace RocksmithToolkitGUI.DLCManager
                                 OleDbDataAdapter dah = new OleDbDataAdapter("SELECT EncryptedID from WEM2OGGCorrespondence AS O WHERE Identifier=\"" + song.Identifier + "\"", cgn);
                                 dah.Fill(dsx, "WEM2OGGCorrespondence");
                             }
+                            
+                            AudioP1 =  (dsx.Tables[0].Rows.Count > 0) ? dsx.Tables[0].Rows[0].ItemArray[0].ToString() :"";
                             dsx.Dispose();
-                            AudioP =  (dsx.Tables[0].Rows.Count > 0) ? dsx.Tables[0].Rows[0].ItemArray[0].ToString() :"";
-
                             using (OleDbConnection cvn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DBb_Path))
                             {
                                 OleDbDataAdapter dbh = new OleDbDataAdapter("SELECT EncryptedID from WEM2OGGCorrespondence AS O WHERE Identifier=\"" + song.Identifier + "_preview\"", cvn);
                                 dbh.Fill(dsx, "WEM2OGGCorrespondence");
-                            }
-                            dsx.Dispose();
-                            AudioPP = (dsx.Tables[0].Rows.Count > 0) ? dsx.Tables[0].Rows[0].ItemArray[0].ToString() : "";
+                            }                           
+                            AudioPP1 = (dsx.Tables[0].Rows.Count > 0) ? dsx.Tables[0].Rows[0].ItemArray[0].ToString() : "";
                             if (locat == "RS1Retail")
                             {
-                                AudioP = songshsanP.Replace("\\manifests\\songs_rs1disc\\songs_rs1disc.hsan", "\\audio\\windows\\") + AudioP + ".ogg";
-                                AudioPP = songshsanP.Replace("\\manifests\\songs_rs1disc\\songs_rs1disc.hsan", "\\audio\\windows\\") + AudioPP + ".ogg";
+                                AudioP = songshsanP.Replace("\\manifests\\songs_rs1disc\\songs_rs1disc.hsan", "\\audio\\" + platformDLCP + "\\") + AudioP1 + ".ogg";
+                                AudioPP = songshsanP.Replace("\\manifests\\songs_rs1disc\\songs_rs1disc.hsan", "\\audio\\" + platformDLCP + "\\") + AudioPP1 + ".ogg";
                             }
                             else if (locat == "COMPATIBILITY")
                             {
-                                AudioP = (songshsanP.Replace("\\manifests\\songs_rs1dlc\\songs_rs1disc.hsan", "\\audio\\windows\\") + AudioP + ".ogg").Replace("rs1compatibilitydlc", "songs_pc");
-                                AudioPP = (songshsanP.Replace("\\manifests\\songs_rs1dlc\\songs_rs1disc.hsan", "\\audio\\windows\\") + AudioPP + ".ogg").Replace("rs1compatibilitydlc", "songs_pc");
+                                AudioP = (songshsanP.Replace("\\manifests\\songs_rs1dlc\\songs_rs1dlc.hsan", "\\audio\\" + platformDLCP + "\\") + AudioP1 + ".ogg").Replace("rs1compatibilitydlc", "songs");
+                                AudioPP = (songshsanP.Replace("\\manifests\\songs_rs1dlc\\songs_rs1dlc.hsan", "\\audio\\" + platformDLCP + "\\") + AudioPP1 + ".ogg").Replace("rs1compatibilitydlc", "songs");
                             }
                             else if (locat == "CACHE")
                             {
-                                AudioP = (songshsanP.Replace("\\manifests\\songs\\songs_rs1disc.hsan", "\\audio\\windows\\") + AudioP + ".ogg");
-                                AudioPP = (songshsanP.Replace("\\manifests\\songs\\songs_rs1disc.hsan", "\\audio\\windows\\") + AudioPP + ".ogg");
+                                AudioP = (songshsanP.Replace("\\manifests\\songs\\songs.hsan", "\\audio\\" + platformDLCP + "\\") + AudioP1 + ".ogg");
+                                AudioPP = (songshsanP.Replace("\\manifests\\songs\\songs.hsan", "\\audio\\" + platformDLCP + "\\") + AudioPP1 + ".ogg");
                             }
 
-
+                            //dtx.Dispose();
                             var f = "";
                             using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DBb_Path))
                             {
-                                OleDbDataAdapter da = new OleDbDataAdapter("SELECT ID from Cache AS O WHERE Identifier=\"" + song.Identifier + "\"", cn);
-                                da.Fill(dsx, "Cache");
-                                if (dsx.Tables[0].Rows.Count == 0)
+                                OleDbDataAdapter da = new OleDbDataAdapter("SELECT ID from Cache AS O WHERE Plstform="+platformDLCP+" OR Identifier=\"" + song.Identifier + "\"", cn);
+                                da.Fill(dtx, "Cache");
+                                if (dtx.Tables[0].Rows.Count == 0) //If this record isn't already in the DB...add it
                                     using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DBb_Path))
                                     {
                                         var commands = cnn.CreateCommand();
@@ -4169,15 +4182,15 @@ namespace RocksmithToolkitGUI.DLCManager
                                         commands.Parameters.AddWithValue("@param12", songshsanP);
                                         commands.Parameters.AddWithValue("@param13", platformDLCP);
                                         commands.Parameters.AddWithValue("@param14", AudioP);
-                                        commands.Parameters.AddWithValue("@param15", AudioP);
+                                        commands.Parameters.AddWithValue("@param15", AudioPP);
                                         //EXECUTE SQL/INSERT
                                         try
                                         {
                                             commands.CommandType = CommandType.Text;
                                             cnn.Open();
                                             commands.ExecuteNonQuery();
-                                            rtxt_StatisticsOnReadDLCs.Text = String.Format("Saving: [{0}] = {1} - {2} ", song.Identifier,
-                                                                            song.Artist, song.Title) + "\n" + rtxt_StatisticsOnReadDLCs.Text;//({3}, {4})  {{{5}}//, song.Album, song.Year,string.Join(", ", song.Arrangements)
+                                            //rtxt_StatisticsOnReadDLCs.Text = String.Format("Saving: [{0}] = {1} - {2} ", song.Identifier,
+                                            //                                song.Artist, song.Title) + "\n" + rtxt_StatisticsOnReadDLCs.Text;//({3}, {4})  {{{5}}//, song.Album, song.Year,string.Join(", ", song.Arrangements)
                                         }
                                         catch (Exception ex)
                                         {
@@ -4259,6 +4272,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     }
                 }//END no cahce.psarc to be decompressed
             }
+            rtxt_StatisticsOnReadDLCs.Text = "Ending Retail Songs processing ...." + DateTime.Now + "\n" + rtxt_StatisticsOnReadDLCs.Text;
             Cache frm = new Cache(DBb_Path, txt_TempPath.Text, pathDLC, chbx_Additional_Manipualtions.GetItemChecked(39), chbx_Additional_Manipualtions.GetItemChecked(40));
             frm.Show();
         }
@@ -4271,14 +4285,34 @@ namespace RocksmithToolkitGUI.DLCManager
 
         public void Convert2OGG(string unpackedDir, string platform)
         {
-            rtxt_StatisticsOnReadDLCs.Text = "Starting Decrypting" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-            var wemFiles = Directory.GetFiles(unpackedDir, "*.wem", SearchOption.AllDirectories);
+            unpackedDir1 = unpackedDir;
+            //rtxt_StatisticsOnReadDLCs.Text = "Starting Decompressing WEMs 0/" + wemFiles.Count().ToString() + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+            if (!bwConvert.IsBusy) //&& data != null&& norows > 0
+            {
+                bwConvert.RunWorkerAsync(unpackedDir);
+                //rtxt_StatisticsOnReadDLCs.Text = " not buzy : " + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+            }
+            else
+            {
+                //bcapirtxt_StatisticsOnReadDLCs.Text = " Buzy : " + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+            }
+
+            
+            rtxt_StatisticsOnReadDLCs.Text = "Ended Decompressing WEMs" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+        }
+        public void ConvertWEM(object sender, DoWorkEventArgs e)
+        {
+            var wemFiles = Directory.GetFiles(unpackedDir1, "*.wem", SearchOption.AllDirectories);
+            var i = 0;
             foreach (var wem in wemFiles)
             {
+
+                i++;
+                //rtxt_StatisticsOnReadDLCs.Text = (rtxt_StatisticsOnReadDLCs.Text).Replace("Starting Decompressing WEMs " + (i - 1) + "/", "Starting Decompressing WEMs " + i + "/");
                 var startInfo = new ProcessStartInfo();
 
                 startInfo.FileName = Path.Combine(AppWD, "DLCManager\\audiocrossreference.exe");
-                startInfo.WorkingDirectory = unpackedDir;// Path.GetDirectoryName();
+                startInfo.WorkingDirectory = unpackedDir1;// Path.GetDirectoryName();
                 startInfo.Arguments = String.Format(" {0}",
                                                     wem);
                 startInfo.UseShellExecute = false; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
@@ -4286,13 +4320,12 @@ namespace RocksmithToolkitGUI.DLCManager
                 if (File.Exists(wem))
                     using (var DDC = new Process())
                     {
-                        DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 2 * 1); //wait 1min
+                        DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 3 * 1); //wait 1min
                         //if (DDC.ExitCode > 0) rtxt_StatisticsOnReadDLCs.Text = "Issues when decrypting wem files !" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                         Console.WriteLine("{0} is active: {1}", DDC.Id, !DDC.HasExited);
                         DDC.Kill();
                     }
             }
-            rtxt_StatisticsOnReadDLCs.Text = "Ended Decrypting" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
         }
     }
 }

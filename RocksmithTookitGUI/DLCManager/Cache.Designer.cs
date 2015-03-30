@@ -54,6 +54,10 @@ namespace RocksmithToolkitGUI.DLCManager
             this.button1 = new System.Windows.Forms.Button();
             this.chbx_VLCHome = new System.Windows.Forms.CheckBox();
             this.chbx_VLCWork = new System.Windows.Forms.CheckBox();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.txt_AudioPreviewPath = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_AudioPath = new RocksmithToolkitGUI.CueTextBox();
             this.txt_VLCPath = new RocksmithToolkitGUI.CueTextBox();
             this.txt_FTPPath = new RocksmithToolkitGUI.CueTextBox();
             this.txt_Platform = new RocksmithToolkitGUI.CueTextBox();
@@ -68,9 +72,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_AlbumYear = new RocksmithToolkitGUI.CueTextBox();
             this.txt_ID = new RocksmithToolkitGUI.CueTextBox();
             this.txt_Album = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_AudioPreviewPath = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_AudioPath = new RocksmithToolkitGUI.CueTextBox();
-            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPath)).BeginInit();
             this.SuspendLayout();
@@ -197,13 +198,13 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // button11
             // 
-            this.button11.Enabled = false;
             this.button11.Location = new System.Drawing.Point(644, 620);
             this.button11.Name = "button11";
             this.button11.Size = new System.Drawing.Size(68, 26);
             this.button11.TabIndex = 282;
             this.button11.Text = "Audio";
             this.button11.UseVisualStyleBackColor = true;
+            this.button11.Click += new System.EventHandler(this.button11_Click);
             // 
             // label2
             // 
@@ -324,6 +325,53 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_VLCWork.Text = "Work";
             this.chbx_VLCWork.UseVisualStyleBackColor = true;
             this.chbx_VLCWork.Visible = false;
+            // 
+            // button2
+            // 
+            this.button2.BackColor = System.Drawing.SystemColors.Info;
+            this.button2.Enabled = false;
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.Location = new System.Drawing.Point(12, 656);
+            this.button2.Margin = new System.Windows.Forms.Padding(2);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(110, 41);
+            this.button2.TabIndex = 302;
+            this.button2.Text = "Open WEM2OGG Corespondence DB";
+            this.button2.UseVisualStyleBackColor = false;
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(89, 620);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(50, 34);
+            this.button4.TabIndex = 303;
+            this.button4.Text = "Open Psarc";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // txt_AudioPreviewPath
+            // 
+            this.txt_AudioPreviewPath.Cue = "Audio Preview Path";
+            this.txt_AudioPreviewPath.Enabled = false;
+            this.txt_AudioPreviewPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_AudioPreviewPath.ForeColor = System.Drawing.Color.Gray;
+            this.txt_AudioPreviewPath.Location = new System.Drawing.Point(395, 673);
+            this.txt_AudioPreviewPath.Name = "txt_AudioPreviewPath";
+            this.txt_AudioPreviewPath.Size = new System.Drawing.Size(222, 20);
+            this.txt_AudioPreviewPath.TabIndex = 301;
+            this.txt_AudioPreviewPath.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txt_AudioPath
+            // 
+            this.txt_AudioPath.Cue = "Audio Path";
+            this.txt_AudioPath.Enabled = false;
+            this.txt_AudioPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_AudioPath.ForeColor = System.Drawing.Color.Gray;
+            this.txt_AudioPath.Location = new System.Drawing.Point(145, 673);
+            this.txt_AudioPath.Name = "txt_AudioPath";
+            this.txt_AudioPath.Size = new System.Drawing.Size(222, 20);
+            this.txt_AudioPath.TabIndex = 300;
+            this.txt_AudioPath.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txt_VLCPath
             // 
@@ -489,48 +537,12 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_Album.Size = new System.Drawing.Size(222, 20);
             this.txt_Album.TabIndex = 126;
             // 
-            // txt_AudioPreviewPath
-            // 
-            this.txt_AudioPreviewPath.Cue = "Audio Preview Path";
-            this.txt_AudioPreviewPath.Enabled = false;
-            this.txt_AudioPreviewPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_AudioPreviewPath.ForeColor = System.Drawing.Color.Gray;
-            this.txt_AudioPreviewPath.Location = new System.Drawing.Point(395, 673);
-            this.txt_AudioPreviewPath.Name = "txt_AudioPreviewPath";
-            this.txt_AudioPreviewPath.Size = new System.Drawing.Size(222, 20);
-            this.txt_AudioPreviewPath.TabIndex = 301;
-            this.txt_AudioPreviewPath.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // txt_AudioPath
-            // 
-            this.txt_AudioPath.Cue = "Audio Path";
-            this.txt_AudioPath.Enabled = false;
-            this.txt_AudioPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_AudioPath.ForeColor = System.Drawing.Color.Gray;
-            this.txt_AudioPath.Location = new System.Drawing.Point(145, 673);
-            this.txt_AudioPath.Name = "txt_AudioPath";
-            this.txt_AudioPath.Size = new System.Drawing.Size(222, 20);
-            this.txt_AudioPath.TabIndex = 300;
-            this.txt_AudioPath.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // button2
-            // 
-            this.button2.BackColor = System.Drawing.SystemColors.Info;
-            this.button2.Enabled = false;
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(12, 656);
-            this.button2.Margin = new System.Windows.Forms.Padding(2);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(110, 41);
-            this.button2.TabIndex = 302;
-            this.button2.Text = "Open WEM2OGG Corespondence DB";
-            this.button2.UseVisualStyleBackColor = false;
-            // 
             // Cache
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1187, 694);
+            this.Controls.Add(this.button4);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.txt_AudioPreviewPath);
             this.Controls.Add(this.txt_AudioPath);
@@ -626,5 +638,6 @@ namespace RocksmithToolkitGUI.DLCManager
         private CueTextBox txt_AudioPreviewPath;
         private CueTextBox txt_AudioPath;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button4;
     }
 }

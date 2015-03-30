@@ -114,6 +114,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_Arrangements = new System.Windows.Forms.Button();
             this.CheckBox1 = new System.Windows.Forms.CheckBox();
             this.DataGridView1 = new System.Windows.Forms.DataGridView();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.Panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPath)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridView1)).BeginInit();
@@ -121,6 +122,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // Panel1
             // 
+            this.Panel1.Controls.Add(this.checkBox2);
             this.Panel1.Controls.Add(this.button5);
             this.Panel1.Controls.Add(this.label2);
             this.Panel1.Controls.Add(this.label1);
@@ -202,11 +204,11 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(136, 143);
+            this.button5.Location = new System.Drawing.Point(136, 145);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(65, 45);
             this.button5.TabIndex = 278;
-            this.button5.Text = "TrimOut Retails Songs";
+            this.button5.Text = "Open Retail DB";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
@@ -315,7 +317,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.button15.Name = "button15";
             this.button15.Size = new System.Drawing.Size(120, 35);
             this.button15.TabIndex = 110;
-            this.button15.Text = "Standarization";
+            this.button15.Text = "Open Standarization DB";
             this.button15.UseVisualStyleBackColor = true;
             this.button15.Click += new System.EventHandler(this.button15_Click);
             // 
@@ -990,6 +992,19 @@ namespace RocksmithToolkitGUI.DLCManager
             this.DataGridView1.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick_1);
             this.DataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick_1);
             // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Checked = true;
+            this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox2.Enabled = false;
+            this.checkBox2.Location = new System.Drawing.Point(437, 119);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(68, 17);
+            this.checkBox2.TabIndex = 291;
+            this.checkBox2.Text = "AutoPlay";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            // 
             // MainDB
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1085,5 +1100,6 @@ namespace RocksmithToolkitGUI.DLCManager
         private ComboBox cmb_Filter;
         private Label label2;
         private Button button5;
+        private CheckBox checkBox2;
     }
 }

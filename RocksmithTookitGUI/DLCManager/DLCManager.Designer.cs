@@ -110,8 +110,11 @@
             this.chbx_DefaultDB = new System.Windows.Forms.CheckBox();
             this.mainTableAdapter = new RocksmithToolkitGUI.DefaultDBDataSetTableAdapters.MainTableAdapter();
             this.chbx_HomeDGBVM = new System.Windows.Forms.CheckBox();
-            this.btn_LoadRetailSongs = new System.Windows.Forms.Button();
+            this.btn_LoadRetrailSongs = new System.Windows.Forms.Button();
             this.chbx_CleanCache = new System.Windows.Forms.CheckBox();
+            this.button5 = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.btn_LoadRetailSongs = new System.Windows.Forms.Button();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.defaultDBDataSet)).BeginInit();
@@ -885,7 +888,7 @@
             // 
             this.btn_Close.BackColor = System.Drawing.Color.LightSteelBlue;
             this.btn_Close.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Close.Location = new System.Drawing.Point(464, 543);
+            this.btn_Close.Location = new System.Drawing.Point(464, 545);
             this.btn_Close.Margin = new System.Windows.Forms.Padding(2);
             this.btn_Close.Name = "btn_Close";
             this.btn_Close.Size = new System.Drawing.Size(72, 20);
@@ -1119,12 +1122,12 @@
             // 
             this.btn_Standardization.BackColor = System.Drawing.SystemColors.Control;
             this.btn_Standardization.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Standardization.Location = new System.Drawing.Point(372, 500);
+            this.btn_Standardization.Location = new System.Drawing.Point(344, 499);
             this.btn_Standardization.Margin = new System.Windows.Forms.Padding(2);
             this.btn_Standardization.Name = "btn_Standardization";
-            this.btn_Standardization.Size = new System.Drawing.Size(106, 21);
+            this.btn_Standardization.Size = new System.Drawing.Size(136, 21);
             this.btn_Standardization.TabIndex = 327;
-            this.btn_Standardization.Text = "Standardization";
+            this.btn_Standardization.Text = "Open Standardization DB";
             this.btn_Standardization.UseVisualStyleBackColor = false;
             this.btn_Standardization.Click += new System.EventHandler(this.btn_Standardization_Click);
             // 
@@ -1204,23 +1207,23 @@
             this.chbx_HomeDGBVM.Visible = false;
             this.chbx_HomeDGBVM.CheckedChanged += new System.EventHandler(this.chbx_HomeDGBVM_CheckedChanged);
             // 
-            // btn_LoadRetailSongs
+            // btn_LoadRetrailSongs
             // 
-            this.btn_LoadRetailSongs.BackColor = System.Drawing.SystemColors.Control;
-            this.btn_LoadRetailSongs.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_LoadRetailSongs.Location = new System.Drawing.Point(372, 521);
-            this.btn_LoadRetailSongs.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_LoadRetailSongs.Name = "btn_LoadRetailSongs";
-            this.btn_LoadRetailSongs.Size = new System.Drawing.Size(131, 21);
-            this.btn_LoadRetailSongs.TabIndex = 334;
-            this.btn_LoadRetailSongs.Text = "Load DLC Packs";
-            this.btn_LoadRetailSongs.UseVisualStyleBackColor = false;
-            this.btn_LoadRetailSongs.Click += new System.EventHandler(this.button1_Click_1);
+            this.btn_LoadRetrailSongs.BackColor = System.Drawing.SystemColors.Control;
+            this.btn_LoadRetrailSongs.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_LoadRetrailSongs.Location = new System.Drawing.Point(430, 594);
+            this.btn_LoadRetrailSongs.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_LoadRetrailSongs.Name = "btn_LoadRetrailSongs";
+            this.btn_LoadRetrailSongs.Size = new System.Drawing.Size(101, 21);
+            this.btn_LoadRetrailSongs.TabIndex = 334;
+            this.btn_LoadRetrailSongs.Text = "Load DLC Packs";
+            this.btn_LoadRetrailSongs.UseVisualStyleBackColor = false;
+            this.btn_LoadRetrailSongs.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // chbx_CleanCache
             // 
             this.chbx_CleanCache.AutoSize = true;
-            this.chbx_CleanCache.Location = new System.Drawing.Point(267, 525);
+            this.chbx_CleanCache.Location = new System.Drawing.Point(439, 524);
             this.chbx_CleanCache.Margin = new System.Windows.Forms.Padding(2);
             this.chbx_CleanCache.Name = "chbx_CleanCache";
             this.chbx_CleanCache.Size = new System.Drawing.Size(102, 17);
@@ -1228,12 +1231,47 @@
             this.chbx_CleanCache.Text = "Clean CacheDB";
             this.chbx_CleanCache.UseVisualStyleBackColor = true;
             // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(289, 521);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(90, 20);
+            this.button5.TabIndex = 336;
+            this.button5.Text = "Open Retail DB";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(386, 525);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(40, 13);
+            this.label2.TabIndex = 338;
+            this.label2.Text = "Load->";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // btn_LoadRetailSongs
+            // 
+            this.btn_LoadRetailSongs.BackColor = System.Drawing.SystemColors.Control;
+            this.btn_LoadRetailSongs.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_LoadRetailSongs.Location = new System.Drawing.Point(424, 524);
+            this.btn_LoadRetailSongs.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_LoadRetailSongs.Name = "btn_LoadRetailSongs";
+            this.btn_LoadRetailSongs.Size = new System.Drawing.Size(14, 15);
+            this.btn_LoadRetailSongs.TabIndex = 339;
+            this.btn_LoadRetailSongs.UseVisualStyleBackColor = false;
+            this.btn_LoadRetailSongs.Click += new System.EventHandler(this.btn_LoadRetailSongs_Click);
+            // 
             // DLCManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.chbx_CleanCache);
             this.Controls.Add(this.btn_LoadRetailSongs);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.button5);
+            this.Controls.Add(this.chbx_CleanCache);
+            this.Controls.Add(this.btn_LoadRetrailSongs);
             this.Controls.Add(this.chbx_HomeDGBVM);
             this.Controls.Add(this.chbx_DefaultDB);
             this.Controls.Add(this.chbx_HomeDBG);
@@ -1399,7 +1437,10 @@
         private DefaultDBDataSet defaultDBDataSet;
         private DefaultDBDataSetTableAdapters.MainTableAdapter mainTableAdapter;
         private System.Windows.Forms.CheckBox chbx_HomeDGBVM;
-        private System.Windows.Forms.Button btn_LoadRetailSongs;
+        private System.Windows.Forms.Button btn_LoadRetrailSongs;
         private System.Windows.Forms.CheckBox chbx_CleanCache;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button btn_LoadRetailSongs;
     }
 }

@@ -16,6 +16,7 @@ using RocksmithToolkitLib.Extensions; //dds
 using System.Diagnostics;
 using Ookii.Dialogs; //cue text
 using System.Data.SqlClient;
+using System.Net; //4ftp
 
 namespace RocksmithToolkitGUI.DLCManager
 {
@@ -136,8 +137,11 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_PSARCName.Text = DataGridView1.Rows[i].Cells[11].Value.ToString();
             txt_SongsHSANPath.Text = DataGridView1.Rows[i].Cells[12].Value.ToString();
             txt_Platform.Text = DataGridView1.Rows[i].Cells[13].Value.ToString();
+            txt_AudioPath.Text = DataGridView1.Rows[i].Cells[14].Value.ToString();
+            txt_AudioPreviewPath.Text = DataGridView1.Rows[i].Cells[15].Value.ToString();
 
-            if (txt_Arrangements.Text != "") picbx_AlbumArtPath.ImageLocation = txt_AlbumYear.Text.Replace(".dds", ".png");
+            //if (txt_Arrangements.Text != "") 
+            picbx_AlbumArtPath.ImageLocation = txt_AlbumArtPath.Text;//.Replace(".dds", ".png");
             SaveOK = true;
         }
 
@@ -232,6 +236,8 @@ namespace RocksmithToolkitGUI.DLCManager
             DataGridViewTextBoxColumn PSARCName = new DataGridViewTextBoxColumn { DataPropertyName = "PSARCName", HeaderText = "PSARCName ", Width = 195 };
             DataGridViewTextBoxColumn SongsHSANPath = new DataGridViewTextBoxColumn { DataPropertyName = "SongsHSANPath", HeaderText = "SongsHSANPath ", Width = 295 };
             DataGridViewTextBoxColumn Platform = new DataGridViewTextBoxColumn { DataPropertyName = "Platform", HeaderText = "Platform ", Width = 40 };
+            DataGridViewTextBoxColumn AudioPath = new DataGridViewTextBoxColumn { DataPropertyName = "AudioPath", HeaderText = "AudioPath ", Width = 295 };
+            DataGridViewTextBoxColumn AudioPreviewPath = new DataGridViewTextBoxColumn { DataPropertyName = "AudioPreviewPath", HeaderText = "AudioPreviewPath ", Width = 295 };
          
             //bsPositions.DataSource = ds.Tables["Tones"];
             //bsBadges.DataSource = ds.Tables["Badge"];
@@ -277,7 +283,9 @@ namespace RocksmithToolkitGUI.DLCManager
                 Comments,
                 PSARCName,
                 SongsHSANPath,
-                Platform
+                Platform,
+                AudioPath,
+                AudioPreviewPath
             }
             );
 
@@ -317,7 +325,10 @@ namespace RocksmithToolkitGUI.DLCManager
             public string Comments { get; set; }
             public string PSARCName { get; set; }
             public string SongsHSANPath { get; set; }
-            public string Platform { get; set; }        }
+            public string Platform { get; set; }
+            public string AudioPath { get; set; }
+            public string AudioPreviewPath { get; set; }
+        }
 
         public Files[] files = new Files[10000];
 
@@ -362,6 +373,8 @@ namespace RocksmithToolkitGUI.DLCManager
                         files[i].PSARCName = dataRow.ItemArray[11].ToString();
                         files[i].SongsHSANPath = dataRow.ItemArray[12].ToString();
                         files[i].Platform = dataRow.ItemArray[13].ToString();
+                        files[i].AudioPath = dataRow.ItemArray[14].ToString();
+                        files[i].AudioPreviewPath = dataRow.ItemArray[15].ToString();
                         i++;
                     }
                     //Closing Connection
@@ -403,9 +416,12 @@ namespace RocksmithToolkitGUI.DLCManager
             {
                 OleDbDataAdapter da = new OleDbDataAdapter("SELECT DISTINCT SongsHSANPath, PSARCName, Platform from Cache AS O", cn);
                 da.Fill(drsx, "Cache");
+                pB_ReadDLCs.Value = 0;
                 if (drsx.Tables[0].Rows.Count != 0)
+                    pB_ReadDLCs.Maximum = 2 * drsx.Tables[0].Rows.Count;
                     foreach (DataRow dataRow in drsx.Tables[0].Rows)
                     {
+                        pB_ReadDLCs.Increment(1);
                         var dpsarc = dataRow.ItemArray[1].ToString();
                         var platfor = dataRow.ItemArray[2].ToString();
                         manipulateHSAN(dataRow.ItemArray[0].ToString());
@@ -449,7 +465,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                     //if (DDC.ExitCode > 0) rtxt_StatisticsOnReadDLCs.Text = "Issues when packing rs1dlc DLC pack !" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                 }
                             //manual workaround for wrongly packing the files
-                            MessageBox.Show("As the toolkit cannot pack with no compression and psarc.exe 2011 version cannot pack correctly,\n a manual workaround exists:\n1. Download&install TotalCommander http://ghisler.com/download.htm \n2. Download the psarc plugin 2013 http://www.totalcmd.net/plugring/PSARC.html \n3. While in TC open the zip archive witht he plugin&install the plugin\n4. Enter the manipulated/cache.psarc and Pack with External No Compression LZMA\n5. Copy in the Game DIR", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            MessageBox.Show("For CACHE.PSCARC-RS2014 as the Toolkit cannot pack with no compression and PSARC.EXE(2011 version) cannot pack correctly,\n a manual workaround exists:\n1. Download&install TotalCommander http://ghisler.com/download.htm \n2. Download the psarc plugin 2013 http://www.totalcmd.net/plugring/PSARC.html \n3. While in TC open the zip archive with the plugin&install the plugin\n\n4. Enter the manipulated/cache.psarc and Pack with External No Compression LZMA\n5. Copy in the Game DIR", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                             //rename the songs_rs1dlc folder to songs to enable the read of Browser function to work                                
                             //renamedir(unpackedDir + "\\manifests\\songs", unpackedDir + "\\manifests\\songs_rs1dlc");
@@ -460,13 +476,14 @@ namespace RocksmithToolkitGUI.DLCManager
                         {
                             var startInfo = new ProcessStartInfo();
                             var unpackedDir = TempPath + "\\0_dlcpacks\\rs1compatibilitydisc_PS3";
-                            startInfo.FileName = Path.Combine(AppWD, "DLCManager\\psarc.exe");
+                            startInfo.FileName = Path.Combine(AppWD, "packer.exe");
                             startInfo.WorkingDirectory = unpackedDir;// Path.GetDirectoryName();
                             var t = TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydisc.psarc";
 
                             if (AllowORIGDeleteb) File.Delete(TempPath + "\\0_dlcpacks\\rs1compatibilitydisc_PS3\\manifests\\songs_rs1disc\\songs_rs1disc.hsan.orig");
 
-                            startInfo.Arguments = String.Format(" create -y --zlib --level=4 -o {0} -i {1}",
+                            startInfo.Arguments = String.Format(" --pack --version=RS2014 --platform={0} --output={1} --input={2}",
+                                                                platfor,
                                                                 t,
                                                                 unpackedDir);// + platformDLCP
                             startInfo.UseShellExecute = true; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
@@ -481,7 +498,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             //rename the songs_rs1dlc folder to songs to enable the read of Browser function to work                                
                             //renamedir(unpackedDir + "\\manifests\\songs", unpackedDir + "\\manifests\\songs_rs1dlc");
                             //rtxt_StatisticsOnReadDLCs.Text = "packed CACHE \n" + rtxt_StatisticsOnReadDLCs;
-                            MessageBox.Show("As the toolkit cannot pack&encrypt/I don't know how,\n a manual workaround exists:\n1. Download&install TotalCommander http://ghisler.com/download.htm \n2. Download the psarc plugin 2013 http://www.totalcmd.net/plugring/PSARC.html \n3. While in TC open the zip archive witht he plugin&install the plugin\n4. Enter the manipulated/rs1compatibilitydisc.psarc and Pack with External No Compression Zlib Compression Ratio 4\n5. Encrypt using the aldotool http://ps3tools.aldostools.org/ps3_edattool_gui.rar \n6. Copy in the DLC DIR", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            //MessageBox.Show("As the toolkit cannot pack&encrypt/I don't know how,\n a manual workaround exists:\n1. Download&install TotalCommander http://ghisler.com/download.htm \n2. Download the psarc plugin 2013 http://www.totalcmd.net/plugring/PSARC.html \n3. While in TC open the zip archive witht he plugin&install the plugin\n4. Enter the manipulated/rs1compatibilitydisc.psarc and Pack with External No Compression Zlib Compression Ratio 4\n5. Encrypt using the aldotool http://ps3tools.aldostools.org/ps3_edattool_gui.rar \n6. Copy in the DLC DIR", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             if (platfor == "PS3" && AllowEncriptb)
                             {
                                 var startI = new ProcessStartInfo();
@@ -507,13 +524,16 @@ namespace RocksmithToolkitGUI.DLCManager
                         {
                             var startInfo = new ProcessStartInfo();
                             var unpackedDir = TempPath + "\\0_dlcpacks\\rs1compatibilitydlc_PS3";
-                            startInfo.FileName = Path.Combine(AppWD, "DLCManager\\psarc.exe");
+                            //startInfo.FileName = Path.Combine(AppWD, "DLCManager\\psarc.exe");//not working
+                            startInfo.FileName = Path.Combine(AppWD, "packer.exe");
                             startInfo.WorkingDirectory = unpackedDir;// Path.GetDirectoryName();
                             var t = TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydlc.psarc";
 
                             if (AllowORIGDeleteb) File.Delete(TempPath + "\\0_dlcpacks\\rs1compatibilitydlc_PS3\\manifests\\songs_rs1dlc\\songs_rs1dlc.hsan.orig");
 
-                            startInfo.Arguments = String.Format(" create -y --zlib --level=4 -o {0} -i {1}",
+                            //startInfo.Arguments = String.Format(" --pack --version=RS2014 --platform=PS3 --input --zlib --level=4 -o {0} -i {1}",//not working
+                            startInfo.Arguments = String.Format(" --pack --version=RS2014 --platform={0} --output={1} --input={2}",
+                                                                platfor,
                                                                 t,
                                                                 unpackedDir);// + platformDLCP
                             startInfo.UseShellExecute = true; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
@@ -528,7 +548,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             //rename the songs_rs1dlc folder to songs to enable the read of Browser function to work                                
                             //renamedir(unpackedDir + "\\manifests\\songs", unpackedDir + "\\manifests\\songs_rs1dlc");
                             //rtxt_StatisticsOnReadDLCs.Text = "packed CACHE \n" + rtxt_StatisticsOnReadDLCs;
-                            MessageBox.Show("As the toolkit cannot pack&encrypt/I don't know how,\n a manual workaround exists:\n1. Download&install TotalCommander http://ghisler.com/download.htm \n2. Download the psarc plugin 2013 http://www.totalcmd.net/plugring/PSARC.html \n3. While in TC open the zip archive witht he plugin&install the plugin\n4. Enter the manipulated/rs1compatibilitydisc.psarc and Pack with External No Compression Zlib Compression Ratio 4\n5. Encrypt using the aldotool http://ps3tools.aldostools.org/ps3_edattool_gui.rar \n6. Copy in the folder containing DLC DIR", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            //MessageBox.Show("As the toolkit cannot pack&encrypt/I don't know how,\n a manual workaround exists:\n1. Download&install TotalCommander http://ghisler.com/download.htm \n2. Download the psarc plugin 2013 http://www.totalcmd.net/plugring/PSARC.html \n3. While in TC open the zip archive witht he plugin&install the plugin\n4. Enter the manipulated/rs1compatibilitydisc.psarc and Pack with External No Compression Zlib Compression Ratio 4\n5. Encrypt using the aldotool http://ps3tools.aldostools.org/ps3_edattool_gui.rar \n6. Copy in the folder containing DLC DIR", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                             if (platfor == "PS3" && AllowEncriptb)
                             {
@@ -719,5 +739,116 @@ namespace RocksmithToolkitGUI.DLCManager
                 MessageBox.Show("DB Removed values have ben inversed ;) Enjoy!");
                 }
             }
+
+        private void btn_FTP_Click(object sender, EventArgs e)
+        {
+            var GameID = txt_FTPPath.Text.Substring(txt_FTPPath.Text.LastIndexOf("BL"),9);
+            var startno = txt_FTPPath.Text.LastIndexOf("GAMES/");
+            var endno = (txt_FTPPath.Text.LastIndexOf("BL"))+9;
+            var GameName = ((txt_FTPPath.Text).Substring(startno, endno-startno)).Replace("GAMES/","");
+            var newpath = txt_FTPPath.Text.Replace("GAMES", "game").Replace("PS3_GAME", GameID).Replace(GameName+"/", "");
+            FTPFile(newpath, "rs1compatibilitydlc.psarc.edat");
+            FTPFile(newpath + "DLC/", "rs1compatibilitydlc.psarc.edat");
+            FTPFile(txt_FTPPath.Text, "cache.psarc");
+            MessageBox.Show("FTPed");
+        }
+
+        public void FTPFile(string filel, string filen)
+        {
+            // Get the object used to communicate with the server.
+            var ddd = filel +filen;
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(ddd);
+            request.Method = WebRequestMethods.Ftp.UploadFile;
+            request.UseBinary = true;
+
+            // This example assumes the FTP site uses anonymous logon.
+            request.Credentials = new NetworkCredential("anonymous", "janeDoe@contoso.com");
+
+            //// Copy the contents of the file to the request stream.
+            //StreamReader sourceStream = new StreamReader("c:\\GitHub\\tmp\\0\\0_dlcpacks\\manipulated\\rs1compatibilitydlc.psarc.edat");
+            //byte[] fileContents =Encoding.UTF16.GetBytes(sourceStream.ReadToEnd());
+
+            //sourceStream.Close();
+            //request.ContentLength = fileContents.Length;
+
+            //Stream requestStream = request.GetRequestStream();
+            //requestStream.Write(fileContents, 0, fileContents.Length);
+            //requestStream.Close();
+
+            //FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+
+            byte[] b = File.ReadAllBytes(TempPath+"\\0_dlcpacks\\manipulated\\rs1compatibilitydlc.psarc.edat");
+
+            request.ContentLength = b.Length;
+            using (Stream s = request.GetRequestStream())
+            {
+                s.Write(b, 0, b.Length);
+            }
+
+            FtpWebResponse ftpResp = (FtpWebResponse)request.GetResponse();
+
+
+            //Console.WriteLine("Upload File Complete, status {0}", response.StatusDescription);
+
+            //response.Close();
+
+        }
+
+        private void chbx_FTP2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chbx_FTP2.Checked) txt_FTPPath.Text = "ftp://192.168.1.12/" + "dev_hdd0/GAMES/Rocksmith 2014 FAV - BLES01862/PS3_GAME/USRDIR/";
+        }
+
+        private void chbx_FTP1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chbx_FTP1.Checked) txt_FTPPath.Text = "ftp://192.168.1.12/" + "dev_hdd0/GAMES/Rocksmith 2014 ALL DLC - BLUS31182/PS3_GAME/USRDIR/";
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            using (var fbd = new VistaFolderBrowserDialog())
+            {
+                if (fbd.ShowDialog() != DialogResult.OK)
+                    return;
+                var temppath = fbd.SelectedPath;
+                txt_VLCPath.Text = temppath;
+                //-Save the location in the Config file/reg
+                //ConfigRepository.Instance()["ManageTempFolder"] = temppath;
+            }
+        }
+
+        private void chbx_VLCHome_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chbx_VLCHome.Checked) txt_VLCPath.Text = "DLCManager\\VLCPortable.exe";
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {   //alternative impl could use http://nvorbis.codeplex.com/documentation
+            //txt_VLCPath.Text = "DLCManager\\VLCPortable.exe" + " ";
+            var startInfo = new ProcessStartInfo();
+            startInfo.FileName = Path.Combine(AppWD, "DLCManager\\oggdec.exe");
+            startInfo.WorkingDirectory = AppWD;// Path.GetDirectoryName();
+            var t = "C:\\GitHub\\tmp\\0\\0_dlcpacks\\rs1compatibilitydisc_PS3\\audio\\ps3\\149627248.ogg";//txt_TempPath.Text + "\\0_dlcpacks\\rs1compatibilitydlc.psarc";
+            startInfo.Arguments = String.Format(" -p {0}",
+                                                t);
+            startInfo.UseShellExecute = true; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
+
+            if (File.Exists(t))
+                using (var DDC = new Process())
+                {
+                    DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 60 * 1); //wait 1min
+                    //if (DDC.ExitCode > 0) rtxt_StatisticsOnReadDLCs.Text = "Issues when packing rs1dlc DLC pack !" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                }
+
+            //try
+            //{
+            //    Process process = Process.Start(@DB_Path);
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    MessageBox.Show("Can not Play the oggin Retails songs Edit screen ! " + DB_Path);
+            //}
+        }
     }
 }

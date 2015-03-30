@@ -139,6 +139,12 @@
     <Compile Include="DLCManager\Cache.Designer.cs">
       <DependentUpon>Cache.cs</DependentUpon>
     </Compile>
+    <Compile Include="DLCManager\WEM2OGGCorrespondence.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DLCManager\WEM2OGGCorrespondence.Designer.cs">
+      <DependentUpon>WEM2OGGCorrespondence.cs</DependentUpon>
+    </Compile>
     <Compile Include="DLCManager\Temp\DataAccess.cs" />
     <Compile Include="DLCManager\Temp\DataGridViewExtensions.cs" />
     <Compile Include="DLCManager\DLCManager.cs">
@@ -324,6 +330,9 @@
     <EmbeddedResource Include="DLCManager\Cache.resx">
       <DependentUpon>Cache.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DLCManager\WEM2OGGCorrespondence.resx">
+      <DependentUpon>WEM2OGGCorrespondence.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DLCManager\Standardization.resx">
       <DependentUpon>Standardization.cs</DependentUpon>
     </EmbeddedResource>
@@ -493,10 +502,16 @@
   <ItemGroup>
     <None Include="Resources\colored.png" />
     <None Include="Resources\brasil_logo.png" />
+    <Content Include="DLCManager\audiocrossreference.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="DLCManager\edattool.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="DLCManager\Files.accdb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\oggdec.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="DLCManager\psarc.exe">

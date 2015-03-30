@@ -876,25 +876,11 @@ namespace RocksmithToolkitGUI.DLCManager
                 }
         }
 
-
-
-        // Read a Folder (clean temp folder)
-        // Decompress the PC DLCs
-        // Read details and populate a DB (clean Import DB before, and only populate Main if not there already)
-        public void btn_PopulateDB_Click(object sender, EventArgs e)
+        public void CreateTempFolderStructure(string Temp_Path_Import, string old_Path_Import, string broken_Path_Import, string dupli_Path_Import, string dlcpacks, string pathDLC)
         {
-            rtxt_StatisticsOnReadDLCs.Text = "Starting... " + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-            //Set_DEBUG(); //Default value when in dEV/Debug mode, if needed
-
-            var Temp_Path_Import = txt_TempPath.Text + "\\0_import";
-            var old_Path_Import = txt_TempPath.Text + "\\0_old";
-            var broken_Path_Import = txt_TempPath.Text + "\\0_broken";
-            var dupli_Path_Import = txt_TempPath.Text + "\\0_duplicate";
-            var dlcpacks = txt_TempPath.Text + "\\0_dlcpacks";
-            string pathDLC = txt_RocksmithDLCPath.Text;
             if (!Directory.Exists(txt_TempPath.Text) || !Directory.Exists(Temp_Path_Import) || !Directory.Exists(pathDLC) || !Directory.Exists(old_Path_Import) || !Directory.Exists(broken_Path_Import) || !Directory.Exists(dupli_Path_Import))
             {
-                MessageBox.Show(String.Format("One of the mandatory backend, folder is missing " + txt_TempPath.Text + ", " + Temp_Path_Import + ", " + pathDLC + ", " + old_Path_Import + ", " + broken_Path_Import + ", " + dupli_Path_Import+", "+ dlcpacks, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error));
+                MessageBox.Show(String.Format("One of the mandatory backend, folder is missing " + txt_TempPath.Text + ", " + Temp_Path_Import + ", " + pathDLC + ", " + old_Path_Import + ", " + broken_Path_Import + ", " + dupli_Path_Import + ", " + dlcpacks, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error));
                 try
                 {
                     DirectoryInfo di;
@@ -917,10 +903,29 @@ namespace RocksmithToolkitGUI.DLCManager
                 {
                     rtxt_StatisticsOnReadDLCs.Text = "issue with creating directories... " + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                     MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    MessageBox.Show("Can not open create folders ! " + txt_TempPath + "-" + Temp_Path_Import + "-" + pathDLC + "-" + old_Path_Import + "-" + broken_Path_Import + "-" + dupli_Path_Import+"-"+ dlcpacks);
+                    MessageBox.Show("Can not open create folders ! " + txt_TempPath + "-" + Temp_Path_Import + "-" + pathDLC + "-" + old_Path_Import + "-" + broken_Path_Import + "-" + dupli_Path_Import + "-" + dlcpacks);
                 }
                 //return;
             }
+
+        }
+
+
+        // Read a Folder (clean temp folder)
+        // Decompress the PC DLCs
+        // Read details and populate a DB (clean Import DB before, and only populate Main if not there already)
+        public void btn_PopulateDB_Click(object sender, EventArgs e)
+        {
+            rtxt_StatisticsOnReadDLCs.Text = "Starting... " + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+            //Set_DEBUG(); //Default value when in dEV/Debug mode, if needed
+
+            var Temp_Path_Import = txt_TempPath.Text + "\\0_import";
+            var old_Path_Import = txt_TempPath.Text + "\\0_old";
+            var broken_Path_Import = txt_TempPath.Text + "\\0_broken";
+            var dupli_Path_Import = txt_TempPath.Text + "\\0_duplicate";
+            var dlcpacks = txt_TempPath.Text + "\\0_dlcpacks";
+            string pathDLC = txt_RocksmithDLCPath.Text;
+            CreateTempFolderStructure(Temp_Path_Import, old_Path_Import, broken_Path_Import, dupli_Path_Import, dlcpacks, pathDLC);
 
             //Clean Temp Folder
             if (chbx_CleanTemp.Checked && !chbx_Additional_Manipualtions.GetItemChecked(38)) //39.Use only unpacked songs already in the 0 / 0_Import folder
@@ -3766,329 +3771,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            var jsonFiles = Directory.GetFiles(txt_RocksmithDLCPath.Text, "*.psarc.*", SearchOption.AllDirectories); //read all the .PSARCs in the IMPORT folder
-            var inputFilePath = ""; var locat = ""; var songshsanP=""; var unpackedDir = "";
-            var DBb_Path = (chbx_DefaultDB.Checked == true? MyAppWD: txt_DBFolder.Text) + "\\Files.accdb";
-            //string source_dir = "";
-            //string destination_dir = "";
-            var t = "";
-          Platform platformDLC;//
-           var platformDLCP = "";
-
-           //Clean CachetDB
-           DataSet dss = new DataSet();
-           try
-           {
-               using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DBb_Path))
-               {
-                   if (chbx_CleanCache.Checked)
-                   {
-                       rtxt_StatisticsOnReadDLCs.Text = "Cleaning....Cache table...." + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                       OleDbDataAdapter dan = new OleDbDataAdapter("DELETE FROM Cache;", cnn);
-                       dan.Fill(dss, "Cache");
-                       dan.Dispose();
-                       rtxt_StatisticsOnReadDLCs.Text = " Cleaned" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                   }
-               }
-           }
-           catch (System.IO.FileNotFoundException ee)
-           {
-               // To inform the user and continue is 
-               // sufficient for this demonstration. 
-               // Your application may require different behavior.
-               Console.WriteLine(ee.Message);
-               rtxt_StatisticsOnReadDLCs.Text = "Error cleaning Cleaned" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-               //continue;
-           }
-
-            //UNPACK x3 psarcs
-            foreach (var json in jsonFiles)
-            {
-                if (json != txt_RocksmithDLCPath.Text+"\\cache.psarc")
-                {
-                    platformDLC = json.GetPlatform(); //Platform 
-                    platformDLCP = platformDLC.platform.ToString();
-                    if (json == txt_RocksmithDLCPath.Text + "\\songs.psarc") //RS14 RETAIL
-                    {
-                        inputFilePath = json; locat = "CACHE";
-                        t = inputFilePath;
-                        if (!chbx_Additional_Manipualtions.GetItemChecked(38)) //39. Use only unpacked songs already in the 0/0_Import folder
-                        {
-                            try
-                            {
-                                // UNPACK
-                                unpackedDir = Packer.Unpack(txt_RocksmithDLCPath.Text + "\\cache.psarc", txt_TempPath.Text + "\\0_dlcpacks", false, false, false); //Unpack cache.psarc for RS14 Official Retails songs rePACKING
-                                unpackedDir = Packer.Unpack(inputFilePath, txt_TempPath.Text + "\\0_dlcpacks", false, false, false);
-                                //FIX for unpacking w the wrong folder extension
-                                if (Directory.Exists(unpackedDir+"\\songs\\bin\\ps3"))
-                                {
-                                    renamedir(unpackedDir, unpackedDir.Replace("_Pc", "_ps3"));
-                                    unpackedDir = unpackedDir.Replace("_Pc", "_ps3");
-                                    platformDLCP = "PS3";
-                                }
-                                songshsanP = unpackedDir + "\\manifests\\songs\\songs.hsan";
-                            }
-                            catch (Exception ex)
-                            {
-                                rtxt_StatisticsOnReadDLCs.Text = ex.Message + "problem at unpacking" + inputFilePath + "---" + txt_TempPath.Text + "\\0songs" + "...\n\n" + rtxt_StatisticsOnReadDLCs.Text;
-                            }
-                        }
-                        else
-                        {
-                            unpackedDir = txt_TempPath.Text + "\\0_dlcpacks\\songs_" + platformDLCP;
-                            songshsanP = unpackedDir + "\\manifests\\songs\\songs.hsan";
-                        }
-                        rtxt_StatisticsOnReadDLCs.Text = "Processed cache.psarc & songs.psarc" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                    } //repacking at the moment manually with psarc 1.4 and lzma ratio 0
-                    else if (json == txt_RocksmithDLCPath.Text + "\\rs1compatibilitydlc.psarc.edat") //RS12 DLC
-                    {
-                        inputFilePath = json;
-                        locat = "COMPATIBILITY";
-                        if (!chbx_Additional_Manipualtions.GetItemChecked(38)) //39. Use only unpacked songs already in the 0/0_Import folder
-                        {
-                            try // UNPACK
-                            {
-                                unpackedDir = Packer.Unpack(inputFilePath, txt_TempPath.Text + "\\0_dlcpacks", false, false, false).Replace(".psarc", ""); ;
-                            }
-                            catch (Exception ex)
-                            {
-                                rtxt_StatisticsOnReadDLCs.Text = ex.Message + "problem at unpacking" + unpackedDir + "...\n\n" + rtxt_StatisticsOnReadDLCs.Text;
-                            }
-                        }
-                        else unpackedDir = txt_TempPath.Text + "\\0_dlcpacks\\rs1compatibilitydlc_" + platformDLCP;
-
-                        songshsanP = unpackedDir + "\\manifests\\songs_rs1dlc\\songs_rs1dlc.hsan";
-                        try //rename folder so we can use the read browser function                            
-                        {
-                            //rename the songs_rs1dlc folder to songs to enable the read of Browser function to work
-                            renamedir(unpackedDir + "\\manifests\\songs_rs1dlc", unpackedDir + "\\manifests\\songs");
-
-                            var startInfo = new ProcessStartInfo();
-                            startInfo.FileName = Path.Combine(AppWD, "DLCManager\\psarc.exe");
-                            startInfo.WorkingDirectory = unpackedDir;// Path.GetDirectoryName();
-                            t = txt_TempPath.Text + "\\0_dlcpacks\\rs1compatibilitydlc.psarc";
-                            startInfo.Arguments = String.Format(" create --zlib -N -o {0} {1}",
-                                                                t,
-                                                                unpackedDir);// + platformDLCP
-                            startInfo.UseShellExecute = true; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
-
-                            if (!File.Exists(t))
-                                using (var DDC = new Process())
-                                {
-                                    DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 60 * 1); //wait 1min
-                                    if (DDC.ExitCode > 0) rtxt_StatisticsOnReadDLCs.Text = "Issues when packing rs1dlc DLC pack !" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                                }
-
-                            //rename the songs_rs1dlc folder to songs to enable the read of Browser function to work                                
-                            renamedir(unpackedDir + "\\manifests\\songs", unpackedDir + "\\manifests\\songs_rs1dlc");
-                            rtxt_StatisticsOnReadDLCs.Text = "renaming internal folder \n" + rtxt_StatisticsOnReadDLCs;
-                        }
-                        catch (Exception ex)
-                        {
-                            rtxt_StatisticsOnReadDLCs.Text = ex.Message + "problem at dir rename" + unpackedDir + "...\n\n" + rtxt_StatisticsOnReadDLCs.Text;
-                        }
-                        rtxt_StatisticsOnReadDLCs.Text = "Processed rs1compatibilitydlc.psarc" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                    }
-                    else if (json == txt_RocksmithDLCPath.Text + "\\rs1compatibilitydisc.psarc.edat") //RS12 RETAIL
-                    {
-                        inputFilePath = json; locat = "RS1Retail";
-                        if (!chbx_Additional_Manipualtions.GetItemChecked(38)) //39. Use only unpacked songs already in the 0/0_Import folder
-                        {
-                            try // UNPACK
-                            {
-                                unpackedDir = Packer.Unpack(inputFilePath, txt_TempPath.Text + "\\0_dlcpacks", false, false, false).Replace(".psarc", "");
-                            }
-                            catch (Exception ex)
-                            {
-                                rtxt_StatisticsOnReadDLCs.Text = ex.Message + "problem at unpacking" + unpackedDir + "...\n\n" + rtxt_StatisticsOnReadDLCs.Text;
-                            }
-                        }
-                        else unpackedDir = txt_TempPath.Text + "\\0_dlcpacks\\rs1compatibilitydisc_" + platformDLCP;
-
-                        songshsanP = unpackedDir + "\\manifests\\songs_rs1disc\\songs_rs1disc.hsan";
-                        try //rename folder so we can use the read browser function                            
-                        {
-                            //rename the songs_rs1dlc folder to songs to enable the read of Browser function to work
-                            renamedir(unpackedDir + "\\manifests\\songs_rs1disc", unpackedDir + "\\manifests\\songs");
-                            var startInfo = new ProcessStartInfo();
-                            startInfo.FileName = Path.Combine(AppWD, "DLCManager\\psarc.exe");
-                            startInfo.WorkingDirectory = unpackedDir;// Path.GetDirectoryName();
-                            t = txt_TempPath.Text + "\\0_dlcpacks\\rs1compatibilitydisc.psarc";
-                            startInfo.Arguments = String.Format(" create --zlib -N -o {0} {1}",
-                                                                t,
-                                                                unpackedDir);// + platformDLCP
-                            startInfo.UseShellExecute = true; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
-
-                            if (!File.Exists(t))
-                                using (var DDC = new Process())
-                                {
-                                    DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 60 * 1); //wait 1min
-                                    if (DDC.ExitCode > 0) rtxt_StatisticsOnReadDLCs.Text = "Issues when packing rs1disc pack !" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                                }
-
-                            //rename the songs_rs1dlc folder to songs to enable the read of Browser function to work                                
-                            renamedir(unpackedDir + "\\manifests\\songs", unpackedDir + "\\manifests\\songs_rs1disc");
-                            rtxt_StatisticsOnReadDLCs.Text = "renaming internal folder \n" + rtxt_StatisticsOnReadDLCs;
-                        }
-                        catch (Exception ex)
-                        {
-                            rtxt_StatisticsOnReadDLCs.Text = ex.Message + "problem at dir rename" + unpackedDir + "...\n\n" + rtxt_StatisticsOnReadDLCs.Text;
-                        }
-                        rtxt_StatisticsOnReadDLCs.Text = "Processed rs1compatibilitydisc.psarc" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                    }
-                    else continue;
-                    //var inputFilePath = txt_RocksmithDLCPath.Text + "\\songs.psarc";
-                    //IList<RocksmithToolkitLib.Song2014ToTab.SongInfoShort> songListShort = null;
-                    IList<SongInfoShort> songListShort = null;
-
-                    Console.WriteLine("Opening archive {0} ...", inputFilePath);
-                    Console.WriteLine();
-
-
-
-                    //Populate DB
-                    rtxt_StatisticsOnReadDLCs.Text = "Populating CACHE DB" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                    try
-                    {
-                        // var t = inputFilePath;//if (!File.Exists(inputFilePath)) 
-                        //if (json == txt_RocksmithDLCPath.Text + "\\rs1compatibilitydlc.psarc.edat") inputFilePath= "C:\\GitHub\\rocksmith-custom-song-toolkit\\RocksmithTookitGUI\\bin\\Debug\\edat\\PS3.psarc";
-                        var browser = new PsarcBrowser(t);
-                        //inputFilePath = t;
-                        var songList = browser.GetSongList();
-                        var toolkitInfo = browser.GetToolkitInfo();
-                        //if (songshsanP.Contains("songs_rs1dlc")) File.Move(unpackedDir + "\\manifests\\songs", unpackedDir + "\\manifests\\songs_rs1dlc");
-                        foreach (var song in songList)
-                        {
-                            DataSet dsx = new DataSet();
-
-                            using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DBb_Path))
-                            {
-                                OleDbDataAdapter da = new OleDbDataAdapter("SELECT ID from Cache AS O WHERE Identifier=\"" + song.Identifier + "\"", cn);
-                                da.Fill(dsx, "Cache");
-                                if (dsx.Tables[0].Rows.Count == 0)
-                                    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DBb_Path))
-                                    {
-                                        var commands = cnn.CreateCommand();
-                                        commands.CommandText = "INSERT INTO Cache(";
-                                        //command.CommandText += "ID, ";
-                                        commands.CommandText += "Identifier, ";
-                                        commands.CommandText += "Artist, ";
-                                        commands.CommandText += "ArtistSort, ";
-                                        commands.CommandText += "Album, ";
-                                        commands.CommandText += "Title, ";
-                                        commands.CommandText += "AlbumYear, ";
-                                        commands.CommandText += "Arrangements, ";
-                                        commands.CommandText += "Removed, ";
-                                        commands.CommandText += "PSARCName, ";
-                                        commands.CommandText += "SongsHSANPath, ";
-                                        commands.CommandText += "Platform ";
-                                        commands.CommandText += ") VALUES (@param2,@param3,@param4,@param5,@param6,@param7,@param8,@param9,@param11,@param12,@param13"; ////@param1,
-                                        commands.CommandText += ")";
-
-                                        //command.Parameters.AddWithValue("@param1", ID);
-                                        commands.Parameters.AddWithValue("@param2", song.Identifier);
-                                        commands.Parameters.AddWithValue("@param3", song.Artist);
-                                        commands.Parameters.AddWithValue("@param4", song.ArtistSort);
-                                        commands.Parameters.AddWithValue("@param5", song.Album);
-                                        commands.Parameters.AddWithValue("@param6", song.Title);
-                                        commands.Parameters.AddWithValue("@param7", song.Year);
-                                        commands.Parameters.AddWithValue("@param8", string.Join(", ", song.Arrangements));
-                                        commands.Parameters.AddWithValue("@param9", "Yes");
-                                        commands.Parameters.AddWithValue("@param11", locat);
-                                        commands.Parameters.AddWithValue("@param12", songshsanP);
-                                        commands.Parameters.AddWithValue("@param13", platformDLCP);
-                                        //EXECUTE SQL/INSERT
-                                        try
-                                        {
-                                            commands.CommandType = CommandType.Text;
-                                            cnn.Open();
-                                            commands.ExecuteNonQuery();
-                                            rtxt_StatisticsOnReadDLCs.Text = String.Format("[{0}] = {1} - {2}  ({3}, {4})  {{{5}}}", song.Identifier,
-                                                                            song.Artist, song.Title, song.Album, song.Year,
-                                                                            string.Join(", ", song.Arrangements)) + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                                        }
-                                        catch (Exception ex)
-                                        {
-                                            MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                            MessageBox.Show("Can not open Cache DB connection in Cache Edit screen ! " + DBb_Path + "-" + commands.CommandText);
-
-                                            throw;
-                                        }
-                                        finally
-                                        {
-                                            if (connection != null) connection.Close();
-                                        }
-                                        rtxt_StatisticsOnReadDLCs.Text += Environment.NewLine;
-                                    }
-                            }
-                            dsx.Dispose();
-                        }
-
-                        //level the maxdiff overall setting in the xml
-                        //var m = 1; var j = 0;
-                        //for (m = 1; m <= j; m++)
-                        //{
-                        //    header = header.Replace("maxDifficulty=\"" + m + "\"", "maxDifficulty=\"0\"");
-                        //}
-
-                        //foreach (var song in toConvert)
-                        //{
-                        //    //var score = new Score();
-                        //    // get all default or user specified arrangements for the song 
-                        //    var arrangements = song.Arrangements;
-                        //    Console.WriteLine("Converting song " + song.Identifier + "...");
-
-                        //    foreach (var arr in arrangements)
-                        //    {
-                        //       ;// var arrangement = browser.GetArrangement(song..Identifier, arr);
-                        //        // get maximum difficulty for the arrangement
-                        //        var mf = new ManifestFunctions(GameVersion.RS2014);
-                        //        ;//int maxDif = mf.GetMaxDifficulty(arrangement);
-
-                        //        //if (allDif) // create seperate file for each difficulty
-                        //        //{
-                        //        //    for (int difLevel = 0; difLevel <= maxDif; difLevel++)
-                        //        //    {
-                        //        //        //ExportArrangement(score, arrangement, difLevel, inputFilePath, toolkitInfo);
-                        //        //        //Console.WriteLine("Difficulty Level: {0}", difLevel);
-
-                        //        //        //var baseFileName = CleanFileName(
-                        //        //        //    String.Format("{0} - {1}", score.Artist, score.Title));
-                        //        //        //baseFileName += String.Format(" ({0})", arr);
-                        //        //        //baseFileName += String.Format(" (level {0:D2})", difLevel);
-
-                        //        //        //SaveScore(score, baseFileName, outputDir, outputFormat);
-                        //        //        //// remember to remove the track from the score again
-                        //        //        //score.Tracks.Clear();
-                        //        //    }
-                        //        //}
-                        //        //else // combine maximum difficulty arrangements into one file
-                        //        //{
-                        //        //    Console.WriteLine(String.Format("Maximum Difficulty Level: {0}", maxDif));
-                        //        //    ExportArrangement(score, arrangement, maxDif, inputFilePath, toolkitInfo);
-                        //        //}
-                        //    }
-
-                        //    //if (!allDif) // only maximum difficulty
-                        //    //{
-                        //    //    var baseFileName = CleanFileName(
-                        //    //        String.Format("{0} - {1}", score.Artist, score.Title));
-                        //    //    SaveScore(score, baseFileName, outputDir, outputFormat);
-                        //    //}
-                        //}
-
-                        //    Console.WriteLine();
-                    }
-
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine("Error encountered:");
-                        Console.WriteLine(ex.Message);
-                    }
-                }//END no cahce.psarc to be decompressed
-            }
-            Cache frm = new Cache(DBb_Path, txt_TempPath.Text, txt_RocksmithDLCPath.Text, chbx_Additional_Manipualtions.GetItemChecked(39), chbx_Additional_Manipualtions.GetItemChecked(40));
-            frm.Show();
+            
         }
 
         /// <summary>
@@ -4175,6 +3858,441 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             if (chbx_DefaultDB.Checked == true) txt_DBFolder.Text = MyAppWD + "\\Files.accdb";
             //else txt_DBFolder.Text = "";
+        }
+
+        private void button1_Click1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_LoadRetailSongs_Click(object sender, EventArgs e)
+        {
+            rtxt_StatisticsOnReadDLCs.Text = "Starting Retail Songs processing ...." + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+
+            var Temp_Path_Import = txt_TempPath.Text + "\\0_import";
+            string pathDLC = txt_RocksmithDLCPath.Text;
+            if (!chbx_DebugB.Checked) MessageBox.Show("Please make sure one of the following Retail Packs:\ncache.psarc, songs.psarc, rs1compatibilitydisc.psarc(.edat if PS3 format), rs1compatibilitydlc.psarc(.edat) \n\n, are in the Import Folder: "+pathDLC+"\n\nAlso, make sure you have enought space for the packing&unpacking operations 2.x GB");
+            CreateTempFolderStructure(txt_TempPath.Text + "\\0_import", txt_TempPath.Text + "\\0_old", txt_TempPath.Text + "\\0_broken", txt_TempPath.Text + "\\0_duplicate", txt_TempPath.Text + "\\0_dlcpacks", pathDLC);
+
+            var jsonFiles = Directory.GetFiles(pathDLC, "*.psarc.*", SearchOption.AllDirectories); //read all the .PSARCs in the IMPORT folder
+            var inputFilePath = ""; var locat = ""; var songshsanP = ""; var unpackedDir = "";
+            var DBb_Path = (chbx_DefaultDB.Checked == true ? MyAppWD : txt_DBFolder.Text) + "\\Files.accdb";
+            //string source_dir = "";
+            //string destination_dir = "";
+            var t = "";
+            Platform platformDLC;//
+            var platformDLCP = "";
+
+            //Clean CachetDB
+            DataSet dss = new DataSet();
+            try
+            {
+                using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DBb_Path))
+                {
+                    if (chbx_CleanCache.Checked)
+                    {
+                        rtxt_StatisticsOnReadDLCs.Text = "Cleaning....Cache table...." + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                        OleDbDataAdapter dan = new OleDbDataAdapter("DELETE FROM Cache;", cnn);
+                        dan.Fill(dss, "Cache");
+                        dan.Dispose();
+                        rtxt_StatisticsOnReadDLCs.Text = " Cleaned" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                    }
+                }
+            }
+            catch (System.IO.FileNotFoundException ee)
+            {
+                // To inform the user and continue is 
+                // sufficient for this demonstration. 
+                // Your application may require different behavior.
+                Console.WriteLine(ee.Message);
+                rtxt_StatisticsOnReadDLCs.Text = "Error cleaning Cleaned" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                //continue;
+            }
+            pB_ReadDLCs.Value = 0;
+            pB_ReadDLCs.Maximum = 2 * 3; //jsonFiles.Length
+            //UNPACK x3 psarcs
+            foreach (var json in jsonFiles)
+            {
+                platformDLC = json.GetPlatform(); //Platform 
+                platformDLCP = platformDLC.platform.ToString();
+                if (json == pathDLC + "\\songs.psarc" || json == pathDLC + "\\rs1compatibilitydlc.psarc.edat" || json == pathDLC + "\\rs1compatibilitydisc.psarc.edat" || ((json == pathDLC + "\\rs1compatibilitydlc_p.psarc" || json == pathDLC + "\\rs1compatibilitydisc_p.psarc") && platformDLCP == "Pc") )
+                {
+                    rtxt_StatisticsOnReadDLCs.Text = "Decompressing  " + ".... " + json + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                    pB_ReadDLCs.Increment(2);
+
+                    if (json == pathDLC + "\\songs.psarc") //RS14 RETAIL
+                    {
+                        inputFilePath = json; locat = "CACHE";
+                        t = inputFilePath;
+                        if (!chbx_Additional_Manipualtions.GetItemChecked(38)) //39. Use only unpacked songs already in the 0/0_Import folder
+                        {
+                            try
+                            {
+                                // UNPACK
+                                rtxt_StatisticsOnReadDLCs.Text = "Unpacking cache.psarc.... " + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                unpackedDir = Packer.Unpack(pathDLC + "\\cache.psarc", txt_TempPath.Text + "\\0_dlcpacks", false, false, false); //Unpack cache.psarc for RS14 Official Retails songs rePACKING
+                                rtxt_StatisticsOnReadDLCs.Text = "Unpacking songs.psarc.... " + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                unpackedDir = Packer.Unpack(inputFilePath, txt_TempPath.Text + "\\0_dlcpacks", false, false, false);
+                                //FIX for unpacking w the wrong folder extension
+                                if (Directory.Exists(unpackedDir + "\\songs\\bin\\ps3"))
+                                {
+                                    renamedir(unpackedDir, unpackedDir.Replace("_Pc", "_ps3"));
+                                    unpackedDir = unpackedDir.Replace("_Pc", "_ps3");
+                                    platformDLCP = "PS3";
+                                }
+                                songshsanP = unpackedDir + "\\manifests\\songs\\songs.hsan";
+
+                                //Convert WEM to OGG
+                                Convert2OGG(unpackedDir + "\\Audio\\windows", platformDLCP);
+                            }
+                            catch (Exception ex)
+                            {
+                                rtxt_StatisticsOnReadDLCs.Text = ex.Message + "problem at unpacking" + inputFilePath + "---" + txt_TempPath.Text + "\\0songs" + "...\n\n" + rtxt_StatisticsOnReadDLCs.Text;
+                            }
+                        }
+                        else
+                        {
+                            unpackedDir = txt_TempPath.Text + "\\0_dlcpacks\\songs_" + platformDLCP;
+                            songshsanP = unpackedDir + "\\manifests\\songs\\songs.hsan";
+                        }
+                        rtxt_StatisticsOnReadDLCs.Text = "Processed cache.psarc & songs.psarc" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                    } //repacking at the moment manually with psarc 1.4 and lzma ratio 0
+                    else if (json == pathDLC + "\\rs1compatibilitydlc.psarc.edat" || (json == pathDLC + "\\rs1compatibilitydlc_p.psarc"  && platformDLCP == "Pc")) //RS12 DLC
+                    {
+                        inputFilePath = json;
+                        locat = "COMPATIBILITY";
+                        if (!chbx_Additional_Manipualtions.GetItemChecked(38)) //39. Use only unpacked songs already in the 0/0_Import folder
+                        {
+                            try // UNPACK
+                            {
+                                unpackedDir = Packer.Unpack(inputFilePath, txt_TempPath.Text + "\\0_dlcpacks", false, false, false).Replace(".psarc", ""); ;
+                            }
+                            catch (Exception ex)
+                            {
+                                rtxt_StatisticsOnReadDLCs.Text = ex.Message + "problem at unpacking" + unpackedDir + "...\n\n" + rtxt_StatisticsOnReadDLCs.Text;
+                            }
+                        }
+                        else unpackedDir = txt_TempPath.Text + "\\0_dlcpacks\\rs1compatibilitydlc_" + platformDLCP;
+
+                        songshsanP = unpackedDir + "\\manifests\\songs_rs1dlc\\songs_rs1dlc.hsan";
+                        rtxt_StatisticsOnReadDLCs.Text = "Repacking "+json+"2 use the internal/Browser Psarc Read function.... " + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                        try //rename folder so we can use the read browser function                            
+                        {
+                            //rename the songs_rs1dlc folder to songs to enable the read of Browser function to work
+                            renamedir(unpackedDir + "\\manifests\\songs_rs1dlc", unpackedDir + "\\manifests\\songs");
+
+                            var startInfo = new ProcessStartInfo();
+                            startInfo.FileName = Path.Combine(AppWD, "DLCManager\\psarc.exe");
+                            startInfo.WorkingDirectory = unpackedDir;// Path.GetDirectoryName();
+                            t = txt_TempPath.Text + "\\0_dlcpacks\\rs1compatibilitydlc.psarc";
+                            startInfo.Arguments = String.Format(" create --zlib -N -o {0} {1}",
+                                                                t,
+                                                                unpackedDir);// + platformDLCP
+                            startInfo.UseShellExecute = true; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
+
+                            if (!File.Exists(t))
+                                using (var DDC = new Process())
+                                {
+                                    DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 60 * 1); //wait 1min
+                                    if (DDC.ExitCode > 0) rtxt_StatisticsOnReadDLCs.Text = "Issues when packing rs1dlc DLC pack !" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                }
+
+                            //rename the songs_rs1dlc folder to songs to enable the read of Browser function to work                                
+                            renamedir(unpackedDir + "\\manifests\\songs", unpackedDir + "\\manifests\\songs_rs1dlc");
+                            rtxt_StatisticsOnReadDLCs.Text = "renaming internal folder \n" + rtxt_StatisticsOnReadDLCs.Text;
+
+                            //Convert WEM to OGG
+                            Convert2OGG(unpackedDir + "\\Audio\\windows", platformDLCP);
+                        }
+                        catch (Exception ex)
+                        {
+                            rtxt_StatisticsOnReadDLCs.Text = ex.Message + "problem at dir rename" + unpackedDir + "...\n\n" + rtxt_StatisticsOnReadDLCs.Text;
+                        }
+                        rtxt_StatisticsOnReadDLCs.Text = "Processed rs1compatibilitydlc.psarc" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                    }
+                    else if (json == pathDLC + "\\rs1compatibilitydisc.psarc.edat" || (json == pathDLC + "\\rs1compatibilitydisc_p.psarc" && platformDLCP == "Pc")) //RS12 RETAIL
+                    {
+                        inputFilePath = json; locat = "RS1Retail";
+                        if (!chbx_Additional_Manipualtions.GetItemChecked(38)) //39. Use only unpacked songs already in the 0/0_Import folder
+                        {
+                            try // UNPACK
+                            {
+                                unpackedDir = Packer.Unpack(inputFilePath, txt_TempPath.Text + "\\0_dlcpacks", false, false, false).Replace(".psarc", "");
+                            }
+                            catch (Exception ex)
+                            {
+                                rtxt_StatisticsOnReadDLCs.Text = ex.Message + "problem at unpacking" + unpackedDir + "...\n\n" + rtxt_StatisticsOnReadDLCs.Text;
+                            }
+                        }
+                        else unpackedDir = txt_TempPath.Text + "\\0_dlcpacks\\rs1compatibilitydisc_" + platformDLCP;
+
+                        songshsanP = unpackedDir + "\\manifests\\songs_rs1disc\\songs_rs1disc.hsan";
+                        rtxt_StatisticsOnReadDLCs.Text = "Repacking "+json+" 2 use the internal/Browser Psarc Read function.... " + json + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                        try //rename folder so we can use the read browser function                            
+                        {
+                            //rename the songs_rs1dlc folder to songs to enable the read of Browser function to work
+                            renamedir(unpackedDir + "\\manifests\\songs_rs1disc", unpackedDir + "\\manifests\\songs");
+                            var startInfo = new ProcessStartInfo();
+                            startInfo.FileName = Path.Combine(AppWD, "DLCManager\\psarc.exe");
+                            startInfo.WorkingDirectory = unpackedDir;// Path.GetDirectoryName();
+                            t = txt_TempPath.Text + "\\0_dlcpacks\\rs1compatibilitydisc.psarc";
+                            startInfo.Arguments = String.Format(" create --zlib -N -o {0} {1}",
+                                                                t,
+                                                                unpackedDir);// + platformDLCP
+                            startInfo.UseShellExecute = true; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
+
+                            if (!File.Exists(t))
+                                using (var DDC = new Process())
+                                {
+                                    DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 60 * 1); //wait 1min
+                                    if (DDC.ExitCode > 0) rtxt_StatisticsOnReadDLCs.Text = "Issues when packing rs1disc pack !" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                }
+
+                            //rename the songs_rs1dlc folder to songs to enable the read of Browser function to work                                
+                            renamedir(unpackedDir + "\\manifests\\songs", unpackedDir + "\\manifests\\songs_rs1disc");
+                            rtxt_StatisticsOnReadDLCs.Text = "renaming internal folder \n" + rtxt_StatisticsOnReadDLCs.Text;
+
+                            //Convert WEM to OGG
+                            Convert2OGG(unpackedDir + "\\Audio\\windows", platformDLCP);
+                        }
+                        catch (Exception ex)
+                        {
+                            rtxt_StatisticsOnReadDLCs.Text = ex.Message + "problem at dir rename" + unpackedDir + "...\n\n" + rtxt_StatisticsOnReadDLCs.Text;
+                        }
+                        rtxt_StatisticsOnReadDLCs.Text = "Processed rs1compatibilitydisc.psarc" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                    }
+                    else continue;
+                    //var inputFilePath = txt_RocksmithDLCPath.Text + "\\songs.psarc";
+                    //IList<RocksmithToolkitLib.Song2014ToTab.SongInfoShort> songListShort = null;
+                    IList<SongInfoShort> songListShort = null;
+
+                    Console.WriteLine("Opening archive {0} ...", inputFilePath);
+                    Console.WriteLine();
+
+
+
+                    //Populate DB
+                    rtxt_StatisticsOnReadDLCs.Text = "Populating CACHE DB" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                    var pic = "";
+                    try
+                    {
+                        // var t = inputFilePath;//if (!File.Exists(inputFilePath)) 
+                        //if (json == txt_RocksmithDLCPath.Text + "\\rs1compatibilitydlc.psarc.edat") inputFilePath= "C:\\GitHub\\rocksmith-custom-song-toolkit\\RocksmithTookitGUI\\bin\\Debug\\edat\\PS3.psarc";
+                        var browser = new PsarcBrowser(t);
+                        //inputFilePath = t;
+                        var songList = browser.GetSongList();
+                        var toolkitInfo = browser.GetToolkitInfo();
+                        //if (songshsanP.Contains("songs_rs1dlc")) File.Move(unpackedDir + "\\manifests\\songs", unpackedDir + "\\manifests\\songs_rs1dlc");
+                        var AudioP = "";
+                        var AudioPP = "";
+                        foreach (var song in songList)
+                        {
+                            DataSet dsx = new DataSet();
+                            //convert to png
+                            pic = songshsanP.Replace("\\manifests\\songs_rs1disc\\songs_rs1disc.hsan", "\\gfxassets\\album_art\\album_" + song.Identifier + "_256.dds");
+                            if (pic == songshsanP) pic = songshsanP.Replace("\\manifests\\songs_rs1dlc\\songs_rs1dlc.hsan", "\\gfxassets\\album_art\\album_" + song.Identifier + "_256.dds");
+                            if (pic == songshsanP) pic = songshsanP.Replace("\\manifests\\songs\\songs.hsan", "\\gfxassets\\album_art\\album_" + song.Identifier + "_256.dds");
+                            ExternalApps.Dds2Png(pic);
+
+                            
+                            using (OleDbConnection cgn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DBb_Path))
+                            {
+                                OleDbDataAdapter dah = new OleDbDataAdapter("SELECT EncryptedID from WEM2OGGCorrespondence AS O WHERE Identifier=\"" + song.Identifier + "\"", cgn);
+                                dah.Fill(dsx, "WEM2OGGCorrespondence");
+                            }
+                            dsx.Dispose();
+                            AudioP =  (dsx.Tables[0].Rows.Count > 0) ? dsx.Tables[0].Rows[0].ItemArray[0].ToString() :"";
+
+                            using (OleDbConnection cvn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DBb_Path))
+                            {
+                                OleDbDataAdapter dbh = new OleDbDataAdapter("SELECT EncryptedID from WEM2OGGCorrespondence AS O WHERE Identifier=\"" + song.Identifier + "_preview\"", cvn);
+                                dbh.Fill(dsx, "WEM2OGGCorrespondence");
+                            }
+                            dsx.Dispose();
+                            AudioPP = (dsx.Tables[0].Rows.Count > 0) ? dsx.Tables[0].Rows[0].ItemArray[0].ToString() : "";
+                            if (locat == "RS1Retail")
+                            {
+                                AudioP = songshsanP.Replace("\\manifests\\songs_rs1disc\\songs_rs1disc.hsan", "\\audio\\windows\\") + AudioP + ".ogg";
+                                AudioPP = songshsanP.Replace("\\manifests\\songs_rs1disc\\songs_rs1disc.hsan", "\\audio\\windows\\") + AudioPP + ".ogg";
+                            }
+                            else if (locat == "COMPATIBILITY")
+                            {
+                                AudioP = (songshsanP.Replace("\\manifests\\songs_rs1dlc\\songs_rs1disc.hsan", "\\audio\\windows\\") + AudioP + ".ogg").Replace("rs1compatibilitydlc", "songs_pc");
+                                AudioPP = (songshsanP.Replace("\\manifests\\songs_rs1dlc\\songs_rs1disc.hsan", "\\audio\\windows\\") + AudioPP + ".ogg").Replace("rs1compatibilitydlc", "songs_pc");
+                            }
+                            else if (locat == "CACHE")
+                            {
+                                AudioP = (songshsanP.Replace("\\manifests\\songs\\songs_rs1disc.hsan", "\\audio\\windows\\") + AudioP + ".ogg");
+                                AudioPP = (songshsanP.Replace("\\manifests\\songs\\songs_rs1disc.hsan", "\\audio\\windows\\") + AudioPP + ".ogg");
+                            }
+
+
+                            var f = "";
+                            using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DBb_Path))
+                            {
+                                OleDbDataAdapter da = new OleDbDataAdapter("SELECT ID from Cache AS O WHERE Identifier=\"" + song.Identifier + "\"", cn);
+                                da.Fill(dsx, "Cache");
+                                if (dsx.Tables[0].Rows.Count == 0)
+                                    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DBb_Path))
+                                    {
+                                        var commands = cnn.CreateCommand();
+                                        commands.CommandText = "INSERT INTO Cache(";
+                                        //command.CommandText += "ID, ";
+                                        commands.CommandText += "Identifier, ";
+                                        commands.CommandText += "Artist, ";
+                                        commands.CommandText += "ArtistSort, ";
+                                        commands.CommandText += "Album, ";
+                                        commands.CommandText += "Title, ";
+                                        commands.CommandText += "AlbumYear, ";
+                                        commands.CommandText += "Arrangements, ";
+                                        commands.CommandText += "Removed, ";
+                                        commands.CommandText += "AlbumArtPath, ";
+                                        commands.CommandText += "PSARCName, ";
+                                        commands.CommandText += "SongsHSANPath, ";
+                                        commands.CommandText += "Platform, ";
+                                        commands.CommandText += "AudioPath, ";
+                                        commands.CommandText += "AudioPreviewPath ";
+                                        commands.CommandText += ") VALUES (@param2,@param3,@param4,@param5,@param6,@param7,@param8,@param9,@param10,@param11,@param12,@param13,@param14,@param15"; ////@param1,
+                                        commands.CommandText += ")";
+
+                                        //command.Parameters.AddWithValue("@param1", ID);
+                                        commands.Parameters.AddWithValue("@param2", song.Identifier);
+                                        commands.Parameters.AddWithValue("@param3", song.Artist);
+                                        commands.Parameters.AddWithValue("@param4", song.ArtistSort);
+                                        commands.Parameters.AddWithValue("@param5", song.Album);
+                                        commands.Parameters.AddWithValue("@param6", song.Title);
+                                        commands.Parameters.AddWithValue("@param7", song.Year);
+                                        commands.Parameters.AddWithValue("@param8", string.Join(", ", song.Arrangements));
+                                        commands.Parameters.AddWithValue("@param9", "Yes");
+                                        commands.Parameters.AddWithValue("@param10", pic.Replace(".dds", ".png"));
+                                        commands.Parameters.AddWithValue("@param11", locat);
+                                        commands.Parameters.AddWithValue("@param12", songshsanP);
+                                        commands.Parameters.AddWithValue("@param13", platformDLCP);
+                                        commands.Parameters.AddWithValue("@param14", AudioP);
+                                        commands.Parameters.AddWithValue("@param15", AudioP);
+                                        //EXECUTE SQL/INSERT
+                                        try
+                                        {
+                                            commands.CommandType = CommandType.Text;
+                                            cnn.Open();
+                                            commands.ExecuteNonQuery();
+                                            rtxt_StatisticsOnReadDLCs.Text = String.Format("Saving: [{0}] = {1} - {2} ", song.Identifier,
+                                                                            song.Artist, song.Title) + "\n" + rtxt_StatisticsOnReadDLCs.Text;//({3}, {4})  {{{5}}//, song.Album, song.Year,string.Join(", ", song.Arrangements)
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                            MessageBox.Show("Can not open Cache DB connection in Cache Edit screen ! " + DBb_Path + "-" + commands.CommandText);
+
+                                            throw;
+                                        }
+                                        finally
+                                        {
+                                            if (connection != null) connection.Close();
+                                        }
+                                        rtxt_StatisticsOnReadDLCs.Text += Environment.NewLine;
+                                    }
+                            }
+                            dsx.Dispose();
+                        }
+
+                        //level the maxdiff overall setting in the xml
+                        //var m = 1; var j = 0;
+                        //for (m = 1; m <= j; m++)
+                        //{
+                        //    header = header.Replace("maxDifficulty=\"" + m + "\"", "maxDifficulty=\"0\"");
+                        //}
+
+                        //foreach (var song in toConvert)
+                        //{
+                        //    //var score = new Score();
+                        //    // get all default or user specified arrangements for the song 
+                        //    var arrangements = song.Arrangements;
+                        //    Console.WriteLine("Converting song " + song.Identifier + "...");
+
+                        //    foreach (var arr in arrangements)
+                        //    {
+                        //       ;// var arrangement = browser.GetArrangement(song..Identifier, arr);
+                        //        // get maximum difficulty for the arrangement
+                        //        var mf = new ManifestFunctions(GameVersion.RS2014);
+                        //        ;//int maxDif = mf.GetMaxDifficulty(arrangement);
+
+                        //        //if (allDif) // create seperate file for each difficulty
+                        //        //{
+                        //        //    for (int difLevel = 0; difLevel <= maxDif; difLevel++)
+                        //        //    {
+                        //        //        //ExportArrangement(score, arrangement, difLevel, inputFilePath, toolkitInfo);
+                        //        //        //Console.WriteLine("Difficulty Level: {0}", difLevel);
+
+                        //        //        //var baseFileName = CleanFileName(
+                        //        //        //    String.Format("{0} - {1}", score.Artist, score.Title));
+                        //        //        //baseFileName += String.Format(" ({0})", arr);
+                        //        //        //baseFileName += String.Format(" (level {0:D2})", difLevel);
+
+                        //        //        //SaveScore(score, baseFileName, outputDir, outputFormat);
+                        //        //        //// remember to remove the track from the score again
+                        //        //        //score.Tracks.Clear();
+                        //        //    }
+                        //        //}
+                        //        //else // combine maximum difficulty arrangements into one file
+                        //        //{
+                        //        //    Console.WriteLine(String.Format("Maximum Difficulty Level: {0}", maxDif));
+                        //        //    ExportArrangement(score, arrangement, maxDif, inputFilePath, toolkitInfo);
+                        //        //}
+                        //    }
+
+                        //    //if (!allDif) // only maximum difficulty
+                        //    //{
+                        //    //    var baseFileName = CleanFileName(
+                        //    //        String.Format("{0} - {1}", score.Artist, score.Title));
+                        //    //    SaveScore(score, baseFileName, outputDir, outputFormat);
+                        //    //}
+                        //}
+
+                        //    Console.WriteLine();
+                    }
+
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Error encountered:");
+                        Console.WriteLine(ex.Message);
+                    }
+                }//END no cahce.psarc to be decompressed
+            }
+            Cache frm = new Cache(DBb_Path, txt_TempPath.Text, pathDLC, chbx_Additional_Manipualtions.GetItemChecked(39), chbx_Additional_Manipualtions.GetItemChecked(40));
+            frm.Show();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            Cache frm = new Cache((chbx_DefaultDB.Checked == true ? MyAppWD : txt_DBFolder.Text) + "\\Files.accdb", txt_TempPath.Text, txt_RocksmithDLCPath.Text, chbx_Additional_Manipualtions.GetItemChecked(39), chbx_Additional_Manipualtions.GetItemChecked(40));
+            frm.ShowDialog();
+        }
+
+        public void Convert2OGG(string unpackedDir, string platform)
+        {
+            rtxt_StatisticsOnReadDLCs.Text = "Starting Decrypting" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+            var wemFiles = Directory.GetFiles(unpackedDir, "*.wem", SearchOption.AllDirectories);
+            foreach (var wem in wemFiles)
+            {
+                var startInfo = new ProcessStartInfo();
+
+                startInfo.FileName = Path.Combine(AppWD, "DLCManager\\audiocrossreference.exe");
+                startInfo.WorkingDirectory = unpackedDir;// Path.GetDirectoryName();
+                startInfo.Arguments = String.Format(" {0}",
+                                                    wem);
+                startInfo.UseShellExecute = false; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
+
+                if (File.Exists(wem))
+                    using (var DDC = new Process())
+                    {
+                        DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 2 * 1); //wait 1min
+                        //if (DDC.ExitCode > 0) rtxt_StatisticsOnReadDLCs.Text = "Issues when decrypting wem files !" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                        Console.WriteLine("{0} is active: {1}", DDC.Id, !DDC.HasExited);
+                        DDC.Kill();
+                    }
+            }
+            rtxt_StatisticsOnReadDLCs.Text = "Ended Decrypting" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
         }
     }
 }

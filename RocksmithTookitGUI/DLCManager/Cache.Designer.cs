@@ -72,6 +72,8 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_AlbumYear = new RocksmithToolkitGUI.CueTextBox();
             this.txt_ID = new RocksmithToolkitGUI.CueTextBox();
             this.txt_Album = new RocksmithToolkitGUI.CueTextBox();
+            this.chbx_Autosave = new System.Windows.Forms.CheckBox();
+            this.button5 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPath)).BeginInit();
             this.SuspendLayout();
@@ -136,7 +138,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.btn_Close.BackColor = System.Drawing.Color.LightSteelBlue;
             this.btn_Close.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Close.Location = new System.Drawing.Point(1094, 656);
+            this.btn_Close.Location = new System.Drawing.Point(1094, 672);
             this.btn_Close.Margin = new System.Windows.Forms.Padding(2);
             this.btn_Close.Name = "btn_Close";
             this.btn_Close.Size = new System.Drawing.Size(72, 20);
@@ -217,9 +219,9 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // btn_InvertAll
             // 
-            this.btn_InvertAll.Location = new System.Drawing.Point(1098, 629);
+            this.btn_InvertAll.Location = new System.Drawing.Point(1094, 650);
             this.btn_InvertAll.Name = "btn_InvertAll";
-            this.btn_InvertAll.Size = new System.Drawing.Size(68, 26);
+            this.btn_InvertAll.Size = new System.Drawing.Size(72, 21);
             this.btn_InvertAll.TabIndex = 285;
             this.btn_InvertAll.Text = "Invert All";
             this.btn_InvertAll.UseVisualStyleBackColor = true;
@@ -294,7 +296,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(799, 673);
+            this.button1.Location = new System.Drawing.Point(955, 401);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(101, 22);
             this.button1.TabIndex = 296;
@@ -306,7 +308,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // chbx_VLCHome
             // 
             this.chbx_VLCHome.AutoSize = true;
-            this.chbx_VLCHome.Location = new System.Drawing.Point(1082, 675);
+            this.chbx_VLCHome.Location = new System.Drawing.Point(1063, 406);
             this.chbx_VLCHome.Name = "chbx_VLCHome";
             this.chbx_VLCHome.Size = new System.Drawing.Size(54, 17);
             this.chbx_VLCHome.TabIndex = 298;
@@ -318,7 +320,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // chbx_VLCWork
             // 
             this.chbx_VLCWork.AutoSize = true;
-            this.chbx_VLCWork.Location = new System.Drawing.Point(1130, 675);
+            this.chbx_VLCWork.Location = new System.Drawing.Point(1123, 406);
             this.chbx_VLCWork.Name = "chbx_VLCWork";
             this.chbx_VLCWork.Size = new System.Drawing.Size(52, 17);
             this.chbx_VLCWork.TabIndex = 299;
@@ -378,7 +380,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_VLCPath.Cue = "VLC Path";
             this.txt_VLCPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_VLCPath.ForeColor = System.Drawing.Color.Gray;
-            this.txt_VLCPath.Location = new System.Drawing.Point(906, 673);
+            this.txt_VLCPath.Location = new System.Drawing.Point(996, 380);
             this.txt_VLCPath.Name = "txt_VLCPath";
             this.txt_VLCPath.Size = new System.Drawing.Size(170, 20);
             this.txt_VLCPath.TabIndex = 297;
@@ -390,9 +392,9 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_FTPPath.Cue = "FTP_Path";
             this.txt_FTPPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_FTPPath.ForeColor = System.Drawing.Color.Gray;
-            this.txt_FTPPath.Location = new System.Drawing.Point(963, 555);
+            this.txt_FTPPath.Location = new System.Drawing.Point(1079, 629);
             this.txt_FTPPath.Name = "txt_FTPPath";
-            this.txt_FTPPath.Size = new System.Drawing.Size(113, 20);
+            this.txt_FTPPath.Size = new System.Drawing.Size(87, 20);
             this.txt_FTPPath.TabIndex = 292;
             this.txt_FTPPath.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -537,11 +539,36 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_Album.Size = new System.Drawing.Size(222, 20);
             this.txt_Album.TabIndex = 126;
             // 
+            // chbx_Autosave
+            // 
+            this.chbx_Autosave.AutoSize = true;
+            this.chbx_Autosave.Checked = true;
+            this.chbx_Autosave.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chbx_Autosave.Enabled = false;
+            this.chbx_Autosave.Location = new System.Drawing.Point(1003, 554);
+            this.chbx_Autosave.Name = "chbx_Autosave";
+            this.chbx_Autosave.Size = new System.Drawing.Size(73, 17);
+            this.chbx_Autosave.TabIndex = 304;
+            this.chbx_Autosave.Text = "AutoSave";
+            this.chbx_Autosave.UseVisualStyleBackColor = true;
+            // 
+            // button5
+            // 
+            this.button5.Enabled = false;
+            this.button5.Location = new System.Drawing.Point(955, 676);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(118, 21);
+            this.button5.TabIndex = 305;
+            this.button5.Text = "Apply cross Platforms";
+            this.button5.UseVisualStyleBackColor = true;
+            // 
             // Cache
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1187, 694);
+            this.Controls.Add(this.button5);
+            this.Controls.Add(this.chbx_Autosave);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.txt_AudioPreviewPath);
@@ -639,5 +666,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private CueTextBox txt_AudioPath;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.CheckBox chbx_Autosave;
+        private System.Windows.Forms.Button button5;
     }
 }

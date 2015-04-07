@@ -414,7 +414,7 @@ namespace RocksmithToolkitGUI.DLCManager
             DataSet drsx = new DataSet();
             using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
             {
-                OleDbDataAdapter da = new OleDbDataAdapter("SELECT DISTINCT SongsHSANPath, PSARCName, Platform from Cache AS O", cn);
+                OleDbDataAdapter da = new OleDbDataAdapter("SELECT DISTINCT SongsHSANPath, PSARCName, Platform from Cache AS O;", cn);
                 da.Fill(drsx, "Cache");
                 pB_ReadDLCs.Value = 0;
                 if (drsx.Tables[0].Rows.Count != 0)
@@ -424,7 +424,8 @@ namespace RocksmithToolkitGUI.DLCManager
                         pB_ReadDLCs.Increment(1);
                         var dpsarc = dataRow.ItemArray[1].ToString();
                         var platfor = dataRow.ItemArray[2].ToString();
-                        manipulateHSAN(dataRow.ItemArray[0].ToString());
+                        var HSAN = dataRow.ItemArray[0].ToString();
+                        manipulateHSAN(HSAN);
                         if (dpsarc.ToString() == "CACHE")
                         {
                             DirectoryInfo di;
@@ -465,7 +466,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                     //if (DDC.ExitCode > 0) rtxt_StatisticsOnReadDLCs.Text = "Issues when packing rs1dlc DLC pack !" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                 }
                             //manual workaround for wrongly packing the files
-                            MessageBox.Show("For CACHE.PSCARC-RS2014 as the Toolkit cannot pack with no compression and PSARC.EXE(2011 version) cannot pack correctly,\n a manual workaround exists:\n1. Download&install TotalCommander http://ghisler.com/download.htm \n2. Download the psarc plugin 2013 http://www.totalcmd.net/plugring/PSARC.html \n3. While in TC open the zip archive with the plugin&install the plugin\n\n4. Enter the manipulated/cache.psarc and Pack with External No Compression LZMA\n5. Copy in the Game DIR", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                MessageBox.Show("For CACHE.PSCARC-RS2014 as the Toolkit cannot pack with \"NO compression\" and PSARC.EXE(2011 version) cannot pack correctly,\n a manual workaround exists:\n1. Download&install TotalCommander http://ghisler.com/download.htm \n2. Download the psarc plugin 2013 http://www.totalcmd.net/plugring/PSARC.html \n3. While in TC open the zip archive with the plugin&install the plugin\n\n4. Enter the manipulated/cache.psarc and Pack with External No Compression LZMA\n5. Copy in the Game DIR", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                             //rename the songs_rs1dlc folder to songs to enable the read of Browser function to work                                
                             //renamedir(unpackedDir + "\\manifests\\songs", unpackedDir + "\\manifests\\songs_rs1dlc");
@@ -475,12 +476,42 @@ namespace RocksmithToolkitGUI.DLCManager
                         if (dpsarc.ToString() == "RS1Retail")
                         {
                             var startInfo = new ProcessStartInfo();
-                            var unpackedDir = TempPath + "\\0_dlcpacks\\rs1compatibilitydisc_PS3";
+                            var unpackedDir = HSAN.Substring(0, HSAN.IndexOf("\\manifests"));//unpackedDir = TempPath + "\\0_dlcpacks\\rs1compatibilitydisc_PS3";
                             startInfo.FileName = Path.Combine(AppWD, "packer.exe");
                             startInfo.WorkingDirectory = unpackedDir;// Path.GetDirectoryName();
-                            var t = TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydisc.psarc";
+                            var t = TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydisc"+((platfor=="PS3") ? "" : ((platfor=="Mac") ? "_m" :((platfor=="Pc") ?"_p" :"")))+".psarc";
 
-                            if (AllowORIGDeleteb) File.Delete(TempPath + "\\0_dlcpacks\\rs1compatibilitydisc_PS3\\manifests\\songs_rs1disc\\songs_rs1disc.hsan.orig");
+                            //if (AllowORIGDeleteb) if (File.Exists(unpackedDir + "\\manifests\\songs_rs1disc\\songs_rs1disc.hsan.orig")) File.Delete(unpackedDir + "\\manifests\\songs_rs1disc\\songs_rs1disc.hsan.orig");
+                            try //Copy dir
+                            {
+                                string source_dir = @unpackedDir;
+                                string destination_dir = @unpackedDir.Replace("0_dlcpacks\\", "0_dlcpacks\\manipulated\\temp\\");
+
+                                // substring is to remove destination_dir absolute path (E:\).
+
+                                // Create subdirectory structure in destination    
+                                foreach (string dir in Directory.GetDirectories(source_dir, "*", System.IO.SearchOption.AllDirectories))
+                                {
+                                    Directory.CreateDirectory(destination_dir + dir.Substring(source_dir.Length));
+                                    // Example:
+                                    //     > C:\sources (and not C:\E:\sources)
+                                }
+
+                                foreach (string file_name in Directory.GetFiles(source_dir, "*.*", System.IO.SearchOption.AllDirectories))
+                                {
+                                    if (AllowORIGDeleteb && (file_name.IndexOf(".ogg") > 0 || (file_name.IndexOf(".orig") > 0))) ;
+                                    else File.Copy(file_name, destination_dir + file_name.Substring(source_dir.Length), true);
+                                }
+                                Directory.Delete(source_dir, true);
+                                //var ee = "";
+                                //rtxt_StatisticsOnReadDLCs.Text = " DIR Moved" + "..." + rtxt_StatisticsOnReadDLCs.Text;
+                                unpackedDir = destination_dir;
+                            }
+                            catch (Exception ee)
+                            {
+                                //rtxt_StatisticsOnReadDLCs.Text = "FAILED3 .." + "\n" + rtxt_StatisticsOnReadDLCs.Text;//ee.Message + "----" +
+                                Console.WriteLine(ee.Message);
+                            }
 
                             startInfo.Arguments = String.Format(" --pack --version=RS2014 --platform={0} --output={1} --input={2}",
                                                                 platfor,
@@ -523,13 +554,48 @@ namespace RocksmithToolkitGUI.DLCManager
                         if (dpsarc.ToString() == "COMPATIBILITY")
                         {
                             var startInfo = new ProcessStartInfo();
-                            var unpackedDir = TempPath + "\\0_dlcpacks\\rs1compatibilitydlc_PS3";
+                            var unpackedDir = HSAN.Substring(0, HSAN.IndexOf("\\manifests"));// var unpackedDir = TempPath + "\\0_dlcpacks\\rs1compatibilitydlc_PS3";
                             //startInfo.FileName = Path.Combine(AppWD, "DLCManager\\psarc.exe");//not working
                             startInfo.FileName = Path.Combine(AppWD, "packer.exe");
                             startInfo.WorkingDirectory = unpackedDir;// Path.GetDirectoryName();
-                            var t = TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydlc.psarc";
+                            //var t = TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydlc.psarc";
+                            var t = TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydlc" + ((platfor == "PS3") ? "" : ((platfor == "Mac") ? "_m" : ((platfor == "Pc") ? "_p" : ""))) + ".psarc";
 
-                            if (AllowORIGDeleteb) File.Delete(TempPath + "\\0_dlcpacks\\rs1compatibilitydlc_PS3\\manifests\\songs_rs1dlc\\songs_rs1dlc.hsan.orig");
+
+                            try //Copy dir
+                            {
+                                string source_dir = @unpackedDir;
+                                string destination_dir = @unpackedDir.Replace("0_dlcpacks\\", "0_dlcpacks\\manipulated\\temp\\");
+
+                                // substring is to remove destination_dir absolute path (E:\).
+
+                                // Create subdirectory structure in destination    
+                                foreach (string dir in Directory.GetDirectories(source_dir, "*", System.IO.SearchOption.AllDirectories))
+                                {
+                                    Directory.CreateDirectory(destination_dir + dir.Substring(source_dir.Length));
+                                    // Example:
+                                    //     > C:\sources (and not C:\E:\sources)
+                                }
+
+                                foreach (string file_name in Directory.GetFiles(source_dir, "*.*", System.IO.SearchOption.AllDirectories))
+                                {
+                                    if (AllowORIGDeleteb && (file_name.IndexOf(".ogg") > 0 || (file_name.IndexOf(".orig") > 0))) ;
+                                    else File.Copy(file_name, destination_dir + file_name.Substring(source_dir.Length), true);
+                                }
+                                Directory.Delete(source_dir, true);
+                                //var ee = "";
+                                //rtxt_StatisticsOnReadDLCs.Text = " DIR Moved" + "..." + rtxt_StatisticsOnReadDLCs.Text;
+                                unpackedDir = destination_dir;
+                            }
+                            catch (Exception ee)
+                            {
+                                //rtxt_StatisticsOnReadDLCs.Text = "FAILED3 .." + "\n" + rtxt_StatisticsOnReadDLCs.Text;//ee.Message + "----" +
+                                Console.WriteLine(ee.Message);
+                            }
+
+
+                            //if (AllowORIGDeleteb) File.Delete(TempPath + "\\0_dlcpacks\\rs1compatibilitydlc_PS3\\manifests\\songs_rs1dlc\\songs_rs1dlc.hsan.orig");
+                            //if (AllowORIGDeleteb) if (File.Exists(unpackedDir + "\\manifests\\songs_rs1disc\\songs_rs1disc.hsan.orig")) File.Delete(unpackedDir + "\\manifests\\songs_rs1disc\\songs_rs1disc.hsan.orig");
 
                             //startInfo.Arguments = String.Format(" --pack --version=RS2014 --platform=PS3 --input --zlib --level=4 -o {0} -i {1}",//not working
                             startInfo.Arguments = String.Format(" --pack --version=RS2014 --platform={0} --output={1} --input={2}",
@@ -541,7 +607,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             //if (!File.Exists(t))
                             using (var DDC = new Process())
                             {
-                                DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 60 * 1); //wait 1min
+                                DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 90 * 1); //wait 1min
                                                                                                         //if (DDC.ExitCode > 0) rtxt_StatisticsOnReadDLCs.Text = "Issues when packing rs1dlc DLC pack !" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                             }
 

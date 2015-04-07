@@ -282,8 +282,8 @@
             "37. Keep the Uncompressed Songs superorganized",
             "38. Import other formats but PC, as well(separately of course)",
             "39. Use only unpacked songs already in the 0/0_Import folder",
-            "40.  Encrypt PS3 Retails songs, with External tool",
-            "41. Delete ORIG HSAN when Packing Retails songs",
+            "40. Encrypt PS3 Retails songs, with External tool",
+            "41. Delete ORIG HSAN/OGG when Packing Retails songs",
             "<IMPORT>",
             "<@Pack>"});
             this.chbx_Additional_Manipualtions.Location = new System.Drawing.Point(240, 88);

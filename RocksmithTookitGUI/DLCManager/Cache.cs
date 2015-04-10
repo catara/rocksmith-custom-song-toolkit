@@ -137,8 +137,8 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_PSARCName.Text = DataGridView1.Rows[i].Cells[11].Value.ToString();
             txt_SongsHSANPath.Text = DataGridView1.Rows[i].Cells[12].Value.ToString();
             txt_Platform.Text = DataGridView1.Rows[i].Cells[13].Value.ToString();
-            txt_AudioPath.Text = DataGridView1.Rows[i].Cells[14].Value.ToString();
-            txt_AudioPreviewPath.Text = DataGridView1.Rows[i].Cells[15].Value.ToString();
+            if (DataGridView1.Rows[i].Cells[14].Value != null) txt_AudioPath.Text = DataGridView1.Rows[i].Cells[14].Value.ToString();
+            if (DataGridView1.Rows[i].Cells[15].Value != null) txt_AudioPreviewPath.Text = DataGridView1.Rows[i].Cells[15].Value.ToString();
 
             //if (txt_Arrangements.Text != "") 
             picbx_AlbumArtPath.ImageLocation = txt_AlbumArtPath.Text;//.Replace(".dds", ".png");
@@ -802,21 +802,54 @@ namespace RocksmithToolkitGUI.DLCManager
                     {
                         if (connection != null) connection.Close();
                     }
-                MessageBox.Show("DB Removed values have ben inversed ;) Enjoy!");
+                MessageBox.Show("DB Removed values have been inversed ;) Enjoy!");
                 }
             }
 
         private void btn_FTP_Click(object sender, EventArgs e)
         {
-            var GameID = txt_FTPPath.Text.Substring(txt_FTPPath.Text.LastIndexOf("BL"),9);
-            var startno = txt_FTPPath.Text.LastIndexOf("GAMES/");
-            var endno = (txt_FTPPath.Text.LastIndexOf("BL"))+9;
-            var GameName = ((txt_FTPPath.Text).Substring(startno, endno-startno)).Replace("GAMES/","");
-            var newpath = txt_FTPPath.Text.Replace("GAMES", "game").Replace("PS3_GAME", GameID).Replace(GameName+"/", "");
-            FTPFile(newpath, "rs1compatibilitydlc.psarc.edat");
-            FTPFile(newpath + "DLC/", "rs1compatibilitydlc.psarc.edat");
-            FTPFile(txt_FTPPath.Text, "cache.psarc");
-            MessageBox.Show("FTPed");
+            if (cbx_Format.Text == "PS3")
+            {
+                var GameID = txt_FTPPath.Text.Substring(txt_FTPPath.Text.LastIndexOf("BL"), 9);
+                var startno = txt_FTPPath.Text.LastIndexOf("GAMES/");
+                var endno = (txt_FTPPath.Text.LastIndexOf("BL")) + 9;
+                var GameName = ((txt_FTPPath.Text).Substring(startno, endno - startno)).Replace("GAMES/", "");
+                var newpath = txt_FTPPath.Text.Replace("GAMES", "game").Replace("PS3_GAME", GameID).Replace(GameName + "/", "");
+                FTPFile(newpath, "rs1compatibilitydlc.psarc.edat");
+                FTPFile(newpath + "DLC/", "rs1compatibilitydisc.psarc.edat");
+                FTPFile(txt_FTPPath.Text, "cache.psarc");
+                MessageBox.Show("FTPed");
+            }
+            else if (cbx_Format.Text == "PC" || cbx_Format.Text == "Mac" )
+            {
+                var dest = "";
+                if (RocksmithDLCPath.IndexOf("Rocksmith\\DLC") > 0)
+                {
+                    dest = RocksmithDLCPath;//!File.Exists(
+                    File.Copy(RocksmithDLCPath + "\\rs1compatibilitydlc.psarc", dest + "\\rs1compatibilitydlc.psarc.orig", true);
+                    File.Copy(TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydlc.psarc" + "\\rs1compatibilitydlc.psarc", dest, true);
+
+                    File.Copy(TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydisc.psarc", dest + "\\rs1compatibilitydisc.psarc.orig", true);
+                    File.Copy(TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydisc.psarc", dest + "\\rs1compatibilitydisc.psarc", true);
+
+                    dest = RocksmithDLCPath.Replace("\\DLC", "");
+                    File.Copy(TempPath + "\\0_dlcpacks\\manipulated\\cache.psarc", dest + "\\cache.psarc.orig", true);
+                    File.Copy(TempPath + "\\0_dlcpacks\\manipulated\\cache.psarc", dest + "\\cache.psarc", true);
+                }
+                else if (RocksmithDLCPath != txt_FTPPath.Text)
+                {
+                    dest = txt_FTPPath.Text;//!File.Exists(
+                    File.Copy(RocksmithDLCPath + "\\rs1compatibilitydlc.psarc", dest + "\\rs1compatibilitydlc.psarc.orig", true);
+                    File.Copy(TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydlc.psarc" + "\\rs1compatibilitydlc.psarc", dest, true);
+
+                    File.Copy(TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydisc.psarc", dest + "\\rs1compatibilitydisc.psarc.orig", true);
+                    File.Copy(TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydisc.psarc", dest + "\\rs1compatibilitydisc.psarc", true);
+
+                    File.Copy(TempPath + "\\0_dlcpacks\\manipulated\\cache.psarc", dest + "\\cache.psarc.orig", true);
+                    File.Copy(TempPath + "\\0_dlcpacks\\manipulated\\cache.psarc", dest + "\\cache.psarc", true);
+                }
+                else MessageBox.Show("Chose a different path to save");
+            }
         }
 
         public void FTPFile(string filel, string filen)
@@ -843,7 +876,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
             //FtpWebResponse response = (FtpWebResponse)request.GetResponse();
 
-            byte[] b = File.ReadAllBytes(TempPath+"\\0_dlcpacks\\manipulated\\rs1compatibilitydlc.psarc.edat");
+            byte[] b = File.ReadAllBytes(TempPath + "\\0_dlcpacks\\manipulated\\"+filen);
 
             request.ContentLength = b.Length;
             using (Stream s = request.GetRequestStream())
@@ -945,6 +978,92 @@ namespace RocksmithToolkitGUI.DLCManager
                     DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 60 * 1); //wait 1min
                     //if (DDC.ExitCode > 0) rtxt_StatisticsOnReadDLCs.Text = "Issues when packing rs1dlc DLC pack !" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                 }
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            var Pltfrm = txt_Platform.Text;
+            if (Pltfrm == "Platform") MessageBox.Show("Select 1 respresentative of THE desire Source plafrom");
+            else
+            {
+                var cmd = "SELECT Identifier, Removed, Comments FROM Cache AS O WHERE Platform=\"" + Pltfrm + "\"";
+                using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                {
+                    DataSet disx = new DataSet();
+                    OleDbDataAdapter da = new OleDbDataAdapter(cmd, cn);
+                    da.Fill(disx, "Cache");
+
+
+
+                    var connection = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path); //+ ";Persist Security Info=False"
+                    var command = connection.CreateCommand();
+                    pB_ReadDLCs.Value = 0;
+
+                    foreach (DataRow dataRow in disx.Tables[0].Rows)
+                    {
+                        pB_ReadDLCs.Maximum = 2 * disx.Tables[0].Rows.Count;
+                        pB_ReadDLCs.Increment(1);
+                        var iden = dataRow.ItemArray[0].ToString();
+                        var remov = dataRow.ItemArray[1].ToString();
+                        var comm = dataRow.ItemArray[2].ToString();
+                        ////dssx = DataGridView1;
+                        using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                        {
+                            command.CommandText = "UPDATE Cache SET ";
+                            command.CommandText += "Removed = @param8, Comments = @param9 WHERE Identifier=\"" + iden + "\" ";
+                            command.Parameters.AddWithValue("@param8", remov);
+                            command.Parameters.AddWithValue("@param9", comm);
+                            try
+                            {
+                                command.CommandType = CommandType.Text;
+                                connection.Open();
+                                command.ExecuteNonQuery();
+                                connection.Close();
+                                command.Dispose(); command = connection.CreateCommand();
+
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show("Can not open Cache DB connection in Cache Edit screen ! " + DB_Path + "-" + command.CommandText);
+                                throw;
+                            }
+                            finally
+                            {
+                                if (connection != null) connection.Close();
+                            }                            
+                        }                        
+                    }
+                    MessageBox.Show("Current Selected Platform REMOVED setting have been spread along the other Loaded platforms ;) Enjoy!");
+                }
+            }
+        }
+
+        private void cbx_Format_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbx_Format.Text=="PS3")
+            {
+                chbx_FTP1.Enabled = true;
+                chbx_FTP2.Enabled = true;
+            }
+            else
+            {
+                chbx_FTP1.Enabled=false;
+                chbx_FTP2.Enabled=false;
+            }
+        }
+
+        private void btn_SteamDLCFolder_Click(object sender, EventArgs e)
+        {
+            using (var fbd = new VistaFolderBrowserDialog())
+            {
+                if (fbd.ShowDialog() != DialogResult.OK)
+                    return;
+                var temppath = fbd.SelectedPath;
+                txt_FTPPath.Text = temppath;
+                //-Save the location in the Config file/reg
+                //ConfigRepository.Instance()["ManageTempFolder"] = temppath;
+            }
         }
     }
 }

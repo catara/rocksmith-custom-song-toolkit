@@ -46,7 +46,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.label2 = new System.Windows.Forms.Label();
             this.btn_InvertAll = new System.Windows.Forms.Button();
             this.chbx_Songs2Cache = new System.Windows.Forms.CheckBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.chbx_AutoPlay = new System.Windows.Forms.CheckBox();
             this.btn_FTP = new System.Windows.Forms.Button();
             this.pB_ReadDLCs = new System.Windows.Forms.ProgressBar();
             this.chbx_FTP2 = new System.Windows.Forms.CheckBox();
@@ -56,6 +56,9 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_VLCWork = new System.Windows.Forms.CheckBox();
             this.button2 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
+            this.chbx_Autosave = new System.Windows.Forms.CheckBox();
+            this.btn_ExpandSelCrossP = new System.Windows.Forms.Button();
+            this.cbx_Format = new System.Windows.Forms.ComboBox();
             this.txt_AudioPreviewPath = new RocksmithToolkitGUI.CueTextBox();
             this.txt_AudioPath = new RocksmithToolkitGUI.CueTextBox();
             this.txt_VLCPath = new RocksmithToolkitGUI.CueTextBox();
@@ -72,8 +75,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_AlbumYear = new RocksmithToolkitGUI.CueTextBox();
             this.txt_ID = new RocksmithToolkitGUI.CueTextBox();
             this.txt_Album = new RocksmithToolkitGUI.CueTextBox();
-            this.chbx_Autosave = new System.Windows.Forms.CheckBox();
-            this.button5 = new System.Windows.Forms.Button();
+            this.btn_SteamDLCFolder = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPath)).BeginInit();
             this.SuspendLayout();
@@ -175,7 +177,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_GenerateHSAN.Name = "btn_GenerateHSAN";
             this.btn_GenerateHSAN.Size = new System.Drawing.Size(110, 35);
             this.btn_GenerateHSAN.TabIndex = 280;
-            this.btn_GenerateHSAN.Text = "Regenerate HSAN";
+            this.btn_GenerateHSAN.Text = "Regenerate HSAN and  Pack";
             this.btn_GenerateHSAN.UseVisualStyleBackColor = true;
             this.btn_GenerateHSAN.Click += new System.EventHandler(this.btn_GenerateHSAN_Click);
             // 
@@ -232,33 +234,31 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_Songs2Cache.AutoSize = true;
             this.chbx_Songs2Cache.Checked = true;
             this.chbx_Songs2Cache.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chbx_Songs2Cache.Location = new System.Drawing.Point(999, 613);
+            this.chbx_Songs2Cache.Location = new System.Drawing.Point(1074, 614);
             this.chbx_Songs2Cache.Name = "chbx_Songs2Cache";
-            this.chbx_Songs2Cache.Size = new System.Drawing.Size(167, 17);
+            this.chbx_Songs2Cache.Size = new System.Drawing.Size(109, 17);
             this.chbx_Songs2Cache.TabIndex = 289;
-            this.chbx_Songs2Cache.Text = "Pack Songs into Cache.psarc";
+            this.chbx_Songs2Cache.Text = "Only cache.psarc";
             this.chbx_Songs2Cache.UseVisualStyleBackColor = true;
             // 
-            // checkBox1
+            // chbx_AutoPlay
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Checked = true;
-            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox1.Enabled = false;
-            this.checkBox1.Location = new System.Drawing.Point(746, 650);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(68, 17);
-            this.checkBox1.TabIndex = 290;
-            this.checkBox1.Text = "AutoPlay";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.chbx_AutoPlay.AutoSize = true;
+            this.chbx_AutoPlay.Enabled = false;
+            this.chbx_AutoPlay.Location = new System.Drawing.Point(746, 650);
+            this.chbx_AutoPlay.Name = "chbx_AutoPlay";
+            this.chbx_AutoPlay.Size = new System.Drawing.Size(80, 17);
+            this.chbx_AutoPlay.TabIndex = 290;
+            this.chbx_AutoPlay.Text = "<AutoPlay>";
+            this.chbx_AutoPlay.UseVisualStyleBackColor = true;
             // 
             // btn_FTP
             // 
-            this.btn_FTP.Location = new System.Drawing.Point(994, 629);
+            this.btn_FTP.Location = new System.Drawing.Point(963, 616);
             this.btn_FTP.Name = "btn_FTP";
-            this.btn_FTP.Size = new System.Drawing.Size(79, 47);
+            this.btn_FTP.Size = new System.Drawing.Size(110, 38);
             this.btn_FTP.TabIndex = 291;
-            this.btn_FTP.Text = "<Copy/>FTP Back to Game Folder";
+            this.btn_FTP.Text = "Copy/FTP Back to Game Folder";
             this.btn_FTP.UseVisualStyleBackColor = true;
             this.btn_FTP.Click += new System.EventHandler(this.btn_FTP_Click);
             // 
@@ -275,7 +275,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // chbx_FTP2
             // 
             this.chbx_FTP2.AutoSize = true;
-            this.chbx_FTP2.Location = new System.Drawing.Point(963, 645);
+            this.chbx_FTP2.Location = new System.Drawing.Point(1053, 658);
             this.chbx_FTP2.Name = "chbx_FTP2";
             this.chbx_FTP2.Size = new System.Drawing.Size(32, 17);
             this.chbx_FTP2.TabIndex = 294;
@@ -286,7 +286,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // chbx_FTP1
             // 
             this.chbx_FTP1.AutoSize = true;
-            this.chbx_FTP1.Location = new System.Drawing.Point(963, 629);
+            this.chbx_FTP1.Location = new System.Drawing.Point(1015, 658);
             this.chbx_FTP1.Name = "chbx_FTP1";
             this.chbx_FTP1.Size = new System.Drawing.Size(32, 17);
             this.chbx_FTP1.TabIndex = 295;
@@ -351,6 +351,45 @@ namespace RocksmithToolkitGUI.DLCManager
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
+            // chbx_Autosave
+            // 
+            this.chbx_Autosave.AutoSize = true;
+            this.chbx_Autosave.Checked = true;
+            this.chbx_Autosave.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chbx_Autosave.Enabled = false;
+            this.chbx_Autosave.Location = new System.Drawing.Point(1003, 554);
+            this.chbx_Autosave.Name = "chbx_Autosave";
+            this.chbx_Autosave.Size = new System.Drawing.Size(73, 17);
+            this.chbx_Autosave.TabIndex = 304;
+            this.chbx_Autosave.Text = "AutoSave";
+            this.chbx_Autosave.UseVisualStyleBackColor = true;
+            // 
+            // btn_ExpandSelCrossP
+            // 
+            this.btn_ExpandSelCrossP.Location = new System.Drawing.Point(857, 676);
+            this.btn_ExpandSelCrossP.Name = "btn_ExpandSelCrossP";
+            this.btn_ExpandSelCrossP.Size = new System.Drawing.Size(216, 21);
+            this.btn_ExpandSelCrossP.TabIndex = 305;
+            this.btn_ExpandSelCrossP.Text = "Extend current Selection cross Platforms";
+            this.btn_ExpandSelCrossP.UseVisualStyleBackColor = true;
+            this.btn_ExpandSelCrossP.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // cbx_Format
+            // 
+            this.cbx_Format.Enabled = false;
+            this.cbx_Format.FormattingEnabled = true;
+            this.cbx_Format.Items.AddRange(new object[] {
+            "PC",
+            "PS3",
+            "Mac",
+            "XBOX360"});
+            this.cbx_Format.Location = new System.Drawing.Point(963, 656);
+            this.cbx_Format.Name = "cbx_Format";
+            this.cbx_Format.Size = new System.Drawing.Size(46, 21);
+            this.cbx_Format.TabIndex = 306;
+            this.cbx_Format.Text = "PS3";
+            this.cbx_Format.SelectedIndexChanged += new System.EventHandler(this.cbx_Format_SelectedIndexChanged);
+            // 
             // txt_AudioPreviewPath
             // 
             this.txt_AudioPreviewPath.Cue = "Audio Preview Path";
@@ -392,9 +431,9 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_FTPPath.Cue = "FTP_Path";
             this.txt_FTPPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_FTPPath.ForeColor = System.Drawing.Color.Gray;
-            this.txt_FTPPath.Location = new System.Drawing.Point(1079, 629);
+            this.txt_FTPPath.Location = new System.Drawing.Point(1075, 629);
             this.txt_FTPPath.Name = "txt_FTPPath";
-            this.txt_FTPPath.Size = new System.Drawing.Size(87, 20);
+            this.txt_FTPPath.Size = new System.Drawing.Size(71, 20);
             this.txt_FTPPath.TabIndex = 292;
             this.txt_FTPPath.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -539,35 +578,25 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_Album.Size = new System.Drawing.Size(222, 20);
             this.txt_Album.TabIndex = 126;
             // 
-            // chbx_Autosave
+            // btn_SteamDLCFolder
             // 
-            this.chbx_Autosave.AutoSize = true;
-            this.chbx_Autosave.Checked = true;
-            this.chbx_Autosave.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chbx_Autosave.Enabled = false;
-            this.chbx_Autosave.Location = new System.Drawing.Point(1003, 554);
-            this.chbx_Autosave.Name = "chbx_Autosave";
-            this.chbx_Autosave.Size = new System.Drawing.Size(73, 17);
-            this.chbx_Autosave.TabIndex = 304;
-            this.chbx_Autosave.Text = "AutoSave";
-            this.chbx_Autosave.UseVisualStyleBackColor = true;
-            // 
-            // button5
-            // 
-            this.button5.Enabled = false;
-            this.button5.Location = new System.Drawing.Point(955, 676);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(118, 21);
-            this.button5.TabIndex = 305;
-            this.button5.Text = "Apply cross Platforms";
-            this.button5.UseVisualStyleBackColor = true;
+            this.btn_SteamDLCFolder.Location = new System.Drawing.Point(1151, 631);
+            this.btn_SteamDLCFolder.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_SteamDLCFolder.Name = "btn_SteamDLCFolder";
+            this.btn_SteamDLCFolder.Size = new System.Drawing.Size(22, 15);
+            this.btn_SteamDLCFolder.TabIndex = 307;
+            this.btn_SteamDLCFolder.Text = "...";
+            this.btn_SteamDLCFolder.UseVisualStyleBackColor = true;
+            this.btn_SteamDLCFolder.Click += new System.EventHandler(this.btn_SteamDLCFolder_Click);
             // 
             // Cache
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1187, 694);
-            this.Controls.Add(this.button5);
+            this.Controls.Add(this.btn_SteamDLCFolder);
+            this.Controls.Add(this.cbx_Format);
+            this.Controls.Add(this.btn_ExpandSelCrossP);
             this.Controls.Add(this.chbx_Autosave);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button2);
@@ -582,7 +611,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.Controls.Add(this.pB_ReadDLCs);
             this.Controls.Add(this.txt_FTPPath);
             this.Controls.Add(this.btn_FTP);
-            this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.chbx_AutoPlay);
             this.Controls.Add(this.chbx_Songs2Cache);
             this.Controls.Add(this.txt_Platform);
             this.Controls.Add(this.txt_SongsHSANPath);
@@ -652,7 +681,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private CueTextBox txt_SongsHSANPath;
         private CueTextBox txt_Platform;
         private System.Windows.Forms.CheckBox chbx_Songs2Cache;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox chbx_AutoPlay;
         private System.Windows.Forms.Button btn_FTP;
         private CueTextBox txt_FTPPath;
         private System.Windows.Forms.ProgressBar pB_ReadDLCs;
@@ -667,6 +696,8 @@ namespace RocksmithToolkitGUI.DLCManager
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.CheckBox chbx_Autosave;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button btn_ExpandSelCrossP;
+        private System.Windows.Forms.ComboBox cbx_Format;
+        private System.Windows.Forms.Button btn_SteamDLCFolder;
     }
 }

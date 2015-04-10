@@ -4189,7 +4189,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             }
 
                             //dtx.Dispose();
-                            var f = "";
+                            //var f = "";
                             using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DBb_Path))
                             {
                                 
@@ -4352,7 +4352,7 @@ namespace RocksmithToolkitGUI.DLCManager
             else
             {
                 MessageBox.Show("Error when multithreading PS3 WEM conv to OGG");
-                object sender; DoWorkEventArgs e;
+                //object sender; DoWorkEventArgs e;
                 //ConvertWEM(sender, e);
                 //bcapirtxt_StatisticsOnReadDLCs.Text = " Buzy : " + "\n" + rtxt_StatisticsOnReadDLCs.Text;
             }

@@ -115,6 +115,7 @@
             this.button5 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.btn_LoadRetailSongs = new System.Windows.Forms.Button();
+            this.chbx_CleanCacheTemp = new System.Windows.Forms.CheckBox();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.defaultDBDataSet)).BeginInit();
@@ -888,7 +889,7 @@
             // 
             this.btn_Close.BackColor = System.Drawing.Color.LightSteelBlue;
             this.btn_Close.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Close.Location = new System.Drawing.Point(464, 545);
+            this.btn_Close.Location = new System.Drawing.Point(464, 543);
             this.btn_Close.Margin = new System.Windows.Forms.Padding(2);
             this.btn_Close.Name = "btn_Close";
             this.btn_Close.Size = new System.Drawing.Size(72, 20);
@@ -1223,7 +1224,7 @@
             // chbx_CleanCache
             // 
             this.chbx_CleanCache.AutoSize = true;
-            this.chbx_CleanCache.Location = new System.Drawing.Point(439, 524);
+            this.chbx_CleanCache.Location = new System.Drawing.Point(441, 524);
             this.chbx_CleanCache.Margin = new System.Windows.Forms.Padding(2);
             this.chbx_CleanCache.Name = "chbx_CleanCache";
             this.chbx_CleanCache.Size = new System.Drawing.Size(102, 17);
@@ -1233,7 +1234,7 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(289, 521);
+            this.button5.Location = new System.Drawing.Point(286, 522);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(90, 20);
             this.button5.TabIndex = 336;
@@ -1244,7 +1245,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(386, 525);
+            this.label2.Location = new System.Drawing.Point(388, 525);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(40, 13);
             this.label2.TabIndex = 338;
@@ -1255,7 +1256,7 @@
             // 
             this.btn_LoadRetailSongs.BackColor = System.Drawing.SystemColors.Control;
             this.btn_LoadRetailSongs.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_LoadRetailSongs.Location = new System.Drawing.Point(424, 524);
+            this.btn_LoadRetailSongs.Location = new System.Drawing.Point(426, 524);
             this.btn_LoadRetailSongs.Margin = new System.Windows.Forms.Padding(2);
             this.btn_LoadRetailSongs.Name = "btn_LoadRetailSongs";
             this.btn_LoadRetailSongs.Size = new System.Drawing.Size(14, 15);
@@ -1263,10 +1264,22 @@
             this.btn_LoadRetailSongs.UseVisualStyleBackColor = false;
             this.btn_LoadRetailSongs.Click += new System.EventHandler(this.btn_LoadRetailSongs_Click);
             // 
+            // chbx_CleanCacheTemp
+            // 
+            this.chbx_CleanCacheTemp.AutoSize = true;
+            this.chbx_CleanCacheTemp.Location = new System.Drawing.Point(289, 627);
+            this.chbx_CleanCacheTemp.Margin = new System.Windows.Forms.Padding(2);
+            this.chbx_CleanCacheTemp.Name = "chbx_CleanCacheTemp";
+            this.chbx_CleanCacheTemp.Size = new System.Drawing.Size(115, 17);
+            this.chbx_CleanCacheTemp.TabIndex = 340;
+            this.chbx_CleanCacheTemp.Text = "Clean Temp Folder";
+            this.chbx_CleanCacheTemp.UseVisualStyleBackColor = true;
+            // 
             // DLCManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.chbx_CleanCacheTemp);
             this.Controls.Add(this.btn_LoadRetailSongs);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.button5);
@@ -1442,5 +1455,6 @@
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btn_LoadRetailSongs;
+        private System.Windows.Forms.CheckBox chbx_CleanCacheTemp;
     }
 }

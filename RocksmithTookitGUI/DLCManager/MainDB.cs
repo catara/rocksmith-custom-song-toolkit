@@ -63,6 +63,7 @@ namespace RocksmithToolkitGUI.DLCManager
             DataGridView1.EditingControlShowing += DataGridView1_EditingControlShowing;
             btn_Search.Enabled = false;
             //MessageBox.Show(updateDBb.ToString());
+            if (lbl_NoRec.Text != "0 records.")
             if (!Directory.Exists(DataGridView1.Rows[0].Cells[22].Value.ToString()) || updateDBb)
             {
                 var tmpp = "\\ORIG"; var OLD_Path = ""; var cmd = "";

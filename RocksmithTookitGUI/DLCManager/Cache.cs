@@ -433,7 +433,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             var hsanDir = dataRow.ItemArray[0].ToString();
                             startI.FileName = Path.Combine(AppWD, "7za.exe");
                             startI.WorkingDirectory = TempPath + "\\0_dlcpacks\\";// Path.GetDirectoryName();
-                            var za = TempPath + "\\0_dlcpacks\\cache_pc\\cache7.7z";
+                            var za = TempPath + "\\0_dlcpacks\\cache_" + platfor + "\\cache7.7z";
                             if (!Directory.Exists(TempPath + "\\0_dlcpacks\\manifests")) di = Directory.CreateDirectory(TempPath + "\\0_dlcpacks\\manifests");
                             if (!Directory.Exists(TempPath + "\\0_dlcpacks\\manifests\\songs")) di = Directory.CreateDirectory(TempPath + "\\0_dlcpacks\\manifests\\songs");
                             File.Copy(hsanDir, TempPath + "\\0_dlcpacks\\manifests\\songs\\songs.hsan", true);
@@ -449,24 +449,24 @@ namespace RocksmithToolkitGUI.DLCManager
 
                             var startInfo = new ProcessStartInfo();
                             var unpackedDir = "";
-                            if (chbx_Songs2Cache.Checked) unpackedDir = TempPath + "\\0_dlcpacks\\cache_pc";
-                            else unpackedDir = TempPath + "\\0_dlcpacks\\songs_pc";
+                            if (chbx_Songs2Cache.Checked) unpackedDir = TempPath + "\\0_dlcpacks\\cache_" + platfor;//((platfor == "PS3") ? "_ps3" : ((platfor == "Mac") ? "_m" : ((platfor == "Pc") ? "_p" : ""));
+                            else unpackedDir = TempPath + "\\0_dlcpacks\\songs_" + platfor;
                             startInfo.FileName = Path.Combine(AppWD, "DLCManager\\psarc.exe");
                             startInfo.WorkingDirectory = unpackedDir;// Path.GetDirectoryName();
-                            var t = TempPath + "\\0_dlcpacks\\manipulated\\cache.psarc";
+                            var t = TempPath + "\\0_dlcpacks\\manipulated\\cache_" + platfor+".psarc";
                             startInfo.Arguments = String.Format(" create -y --lzma -S -N -o {0} -i {1}",
                                                                 t,
                                                                 unpackedDir);// + platformDLCP
                             startInfo.UseShellExecute = true; startInfo.CreateNoWindow = false; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
                             rtxt_Comments.Text = startInfo.FileName + " "+startInfo.Arguments;
                             //if (!File.Exists(t))
-                                using (var DDC = new Process())
-                                {
-                                    DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 60 * 1); //wait 1min
-                                    //if (DDC.ExitCode > 0) rtxt_StatisticsOnReadDLCs.Text = "Issues when packing rs1dlc DLC pack !" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                                }
+                            using (var DDC = new Process())
+                            {
+                                DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 60 * 1); //wait 1min
+                                //if (DDC.ExitCode > 0) rtxt_StatisticsOnReadDLCs.Text = "Issues when packing rs1dlc DLC pack !" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                            }
                             //manual workaround for wrongly packing the files
-                                MessageBox.Show("For CACHE.PSCARC-RS2014 as the Toolkit cannot pack with \"NO compression\" and PSARC.EXE(2011 version) cannot pack correctly,\n a manual workaround exists:\n1. Download&install TotalCommander http://ghisler.com/download.htm \n2. Download the psarc plugin 2013 http://www.totalcmd.net/plugring/PSARC.html \n3. While in TC open the zip archive with the plugin&install the plugin\n\n4. Enter the manipulated/cache.psarc and Pack with External No Compression LZMA\n5. Copy in the Game DIR", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            MessageBox.Show("For CACHE.PSCARC-RS2014 as the Toolkit cannot pack with \"NO compression\" and PSARC.EXE(2011 version) cannot pack correctly,\n a manual workaround exists:\n1. Download&install TotalCommander http://ghisler.com/download.htm \n2. Download the psarc plugin 2013 http://www.totalcmd.net/plugring/PSARC.html \n3. While in TC open the zip archive with the plugin&install the plugin\n\n4. Enter the manipulated/cache.psarc and Pack with External No Compression LZMA\n(take out the _PS3/_Pc/_Mac from the name\n5. Copy in the Game(not DLC) DIR", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                             //rename the songs_rs1dlc folder to songs to enable the read of Browser function to work                                
                             //renamedir(unpackedDir + "\\manifests\\songs", unpackedDir + "\\manifests\\songs_rs1dlc");
@@ -582,7 +582,8 @@ namespace RocksmithToolkitGUI.DLCManager
                                     if (AllowORIGDeleteb && (file_name.IndexOf(".ogg") > 0 || (file_name.IndexOf(".orig") > 0))) ;
                                     else File.Copy(file_name, destination_dir + file_name.Substring(source_dir.Length), true);
                                 }
-                                Directory.Delete(source_dir, true);
+                                //Directory.Delete(source_dir, true); DONT DELETE
+
                                 //var ee = "";
                                 //rtxt_StatisticsOnReadDLCs.Text = " DIR Moved" + "..." + rtxt_StatisticsOnReadDLCs.Text;
                                 unpackedDir = destination_dir;
@@ -817,36 +818,37 @@ namespace RocksmithToolkitGUI.DLCManager
                 var newpath = txt_FTPPath.Text.Replace("GAMES", "game").Replace("PS3_GAME", GameID).Replace(GameName + "/", "");
                 FTPFile(newpath, "rs1compatibilitydlc.psarc.edat");
                 FTPFile(newpath + "DLC/", "rs1compatibilitydisc.psarc.edat");
-                FTPFile(txt_FTPPath.Text, "cache.psarc");
+                FTPFile(txt_FTPPath.Text, "cache_PS3.psarc");
                 MessageBox.Show("FTPed");
             }
             else if (cbx_Format.Text == "PC" || cbx_Format.Text == "Mac" )
             {
+                var platfrm= (cbx_Format.Text == "PC" ? "_p": (cbx_Format.Text == "Mac" ? "_m":"") );
                 var dest = "";
                 if (RocksmithDLCPath.IndexOf("Rocksmith\\DLC") > 0)
                 {
                     dest = RocksmithDLCPath;//!File.Exists(
-                    File.Copy(RocksmithDLCPath + "\\rs1compatibilitydlc.psarc", dest + "\\rs1compatibilitydlc.psarc.orig", true);
-                    File.Copy(TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydlc.psarc" + "\\rs1compatibilitydlc.psarc", dest, true);
+                    File.Copy(RocksmithDLCPath + "\\rs1compatibilitydlc" + platfrm + ".psarc", dest + "\\rs1compatibilitydlc" + platfrm + ".psarc.orig", true);
+                    File.Copy(TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydlc" + platfrm + ".psarc" + "\\rs1compatibilitydlc" + platfrm + ".psarc", dest, true);
 
-                    File.Copy(TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydisc.psarc", dest + "\\rs1compatibilitydisc.psarc.orig", true);
-                    File.Copy(TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydisc.psarc", dest + "\\rs1compatibilitydisc.psarc", true);
+                    File.Copy(dest + "\\rs1compatibilitydisc" + platfrm + ".psarc", dest + "\\rs1compatibilitydisc" + platfrm + ".psarc.orig", true);
+                    File.Copy(TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydisc" + platfrm + ".psarc", dest + "\\rs1compatibilitydisc" + platfrm + ".psarc", true);
 
                     dest = RocksmithDLCPath.Replace("\\DLC", "");
-                    File.Copy(TempPath + "\\0_dlcpacks\\manipulated\\cache.psarc", dest + "\\cache.psarc.orig", true);
-                    File.Copy(TempPath + "\\0_dlcpacks\\manipulated\\cache.psarc", dest + "\\cache.psarc", true);
+                    File.Copy(dest + "\\cache.psarc", dest + "\\cache.psarc.orig", true);
+                    File.Copy(TempPath + "\\0_dlcpacks\\manipulated\\cache" + cbx_Format.Text + ".psarc", dest + "\\cache.psarc", true);
                 }
                 else if (RocksmithDLCPath != txt_FTPPath.Text)
                 {
                     dest = txt_FTPPath.Text;//!File.Exists(
-                    File.Copy(RocksmithDLCPath + "\\rs1compatibilitydlc.psarc", dest + "\\rs1compatibilitydlc.psarc.orig", true);
-                    File.Copy(TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydlc.psarc" + "\\rs1compatibilitydlc.psarc", dest, true);
+                    File.Copy(dest + "\\rs1compatibilitydlc" + platfrm + ".psarc", dest + "\\rs1compatibilitydlc" + platfrm + ".psarc.orig", true);
+                    File.Copy(TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydlc" + platfrm + ".psarc" + "\\rs1compatibilitydlc" + platfrm + ".psarc", dest, true);
 
-                    File.Copy(TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydisc.psarc", dest + "\\rs1compatibilitydisc.psarc.orig", true);
-                    File.Copy(TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydisc.psarc", dest + "\\rs1compatibilitydisc.psarc", true);
+                    File.Copy(dest + "\\rs1compatibilitydisc" + platfrm + ".psarc", dest + "\\rs1compatibilitydisc" + platfrm + ".psarc.orig", true);
+                    File.Copy(TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydisc" + platfrm + ".psarc", dest + "\\rs1compatibilitydisc" + platfrm + ".psarc", true);
 
-                    File.Copy(TempPath + "\\0_dlcpacks\\manipulated\\cache.psarc", dest + "\\cache.psarc.orig", true);
-                    File.Copy(TempPath + "\\0_dlcpacks\\manipulated\\cache.psarc", dest + "\\cache.psarc", true);
+                    File.Copy(dest + "\\cache.psarc", dest + "\\cache.psarc.orig", true);
+                    File.Copy(TempPath + "\\0_dlcpacks\\manipulated\\cache" + cbx_Format.Text + ".psarc", dest + "\\cache.psarc", true);
                 }
                 else MessageBox.Show("Chose a different path to save");
             }

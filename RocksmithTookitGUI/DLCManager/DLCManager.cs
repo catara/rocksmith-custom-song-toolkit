@@ -293,7 +293,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 //txt_TempPath.Text = "C:\\Users\\ladmin\\Dropbox\\OneDrive\\dlc\\0PC\\0";
                 //txt_RocksmithDLCPath.Text = "Z:\\TOSHIBA EXT\\Steam\\SteamApps\\common\\Rocksmith2014\\dlc";
                 //txt_TempPath.Text = "Z:\\TOSHIBA EXT\\Steam\\SteamApps\\common\\Rocksmith2014\\dlc\\0";
-                //txt_TempPath.Text = "tmp\\0\\0_import";
+                //txt_TempPath.Text = "tmp\\0\\dlcpacks";
                 //txt_TempPath.Text = "tmp\\0\\0_old";
                 //txt_TempPath.Text = "tmp\\mac";
                 //txt_TempPath.Text = "tmp\\ps3";
@@ -889,9 +889,9 @@ namespace RocksmithToolkitGUI.DLCManager
 
         public void CreateTempFolderStructure(string Temp_Path_Import, string old_Path_Import, string broken_Path_Import, string dupli_Path_Import, string dlcpacks, string pathDLC)
         {
-            if (!Directory.Exists(txt_TempPath.Text) || !Directory.Exists(Temp_Path_Import) || !Directory.Exists(pathDLC) || !Directory.Exists(old_Path_Import) || !Directory.Exists(broken_Path_Import) || !Directory.Exists(dupli_Path_Import))
+            if (!Directory.Exists(txt_TempPath.Text) || !Directory.Exists(Temp_Path_Import) || !Directory.Exists(pathDLC) || !Directory.Exists(old_Path_Import) || !Directory.Exists(broken_Path_Import) || !Directory.Exists(dupli_Path_Import) || !Directory.Exists(dlcpacks + "\\temp") || !Directory.Exists(dlcpacks + "\\manipulated") || !Directory.Exists(dlcpacks + "\\manifests") || !Directory.Exists(dlcpacks + "\\manipulated\\temp"))
             {
-                MessageBox.Show(String.Format("One of the mandatory backend, folder is missing " + txt_TempPath.Text + ", " + Temp_Path_Import + ", " + pathDLC + ", " + old_Path_Import + ", " + broken_Path_Import + ", " + dupli_Path_Import + ", " + dlcpacks, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error));
+                MessageBox.Show(String.Format("One of the mandatory backend, folder is missing " + txt_TempPath.Text + ", " + Temp_Path_Import + ", " + pathDLC + ", " + old_Path_Import + ", " + broken_Path_Import + ", " + dupli_Path_Import + ", " + dlcpacks + "(manipulated or manipulated-temp or manifests or temp)", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error));
                 try
                 {
                     DirectoryInfo di;
@@ -905,8 +905,10 @@ namespace RocksmithToolkitGUI.DLCManager
                         if (!Directory.Exists(broken_Path_Import) && (broken_Path_Import != null)) di = Directory.CreateDirectory(broken_Path_Import);
                         if (!Directory.Exists(dupli_Path_Import) && (dupli_Path_Import != null)) di = Directory.CreateDirectory(dupli_Path_Import);
                         if (!Directory.Exists(dlcpacks) && (dlcpacks != null)) di = Directory.CreateDirectory(dlcpacks);
+                        if (!Directory.Exists(dlcpacks + "\\manifests") && (dlcpacks != null)) di = Directory.CreateDirectory(dlcpacks + "\\manifests");
                         if (!Directory.Exists(dlcpacks + "\\manipulated") && (dlcpacks != null)) di = Directory.CreateDirectory(dlcpacks + "\\manipulated");
                         if (!Directory.Exists(dlcpacks + "\\manipulated\\temp") && (dlcpacks != null)) di = Directory.CreateDirectory(dlcpacks + "\\manipulated\\temp");
+                        if (!Directory.Exists(dlcpacks + "\\temp") && (dlcpacks != null)) di = Directory.CreateDirectory(dlcpacks + "\\temp");
                         //rtxt_StatisticsOnReadDLCs.Text = Directory.Exists(dupli_Path_Import) +"-" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                     }
                     else if (result1 == DialogResult.No) return;
@@ -932,7 +934,7 @@ namespace RocksmithToolkitGUI.DLCManager
             rtxt_StatisticsOnReadDLCs.Text = "Starting... " + "\n" + rtxt_StatisticsOnReadDLCs.Text;
             //Set_DEBUG(); //Default value when in dEV/Debug mode, if needed
 
-            var Temp_Path_Import = txt_TempPath.Text + "\\0_import";
+            var Temp_Path_Import = txt_TempPath.Text;
             var old_Path_Import = txt_TempPath.Text + "\\0_old";
             var broken_Path_Import = txt_TempPath.Text + "\\0_broken";
             var dupli_Path_Import = txt_TempPath.Text + "\\0_duplicate";
@@ -941,9 +943,9 @@ namespace RocksmithToolkitGUI.DLCManager
             CreateTempFolderStructure(Temp_Path_Import, old_Path_Import, broken_Path_Import, dupli_Path_Import, dlcpacks, pathDLC);
 
             //Clean Temp Folder
-            if (chbx_CleanTemp.Checked && !chbx_Additional_Manipualtions.GetItemChecked(38)) //39.Use only unpacked songs already in the 0 / 0_Import folder
+            if (chbx_CleanTemp.Checked && !chbx_Additional_Manipualtions.GetItemChecked(38)) //39.Use only unpacked songs already in the 0 / dlcpacks folder
             {
-                //clear content of 0_import folder
+                //clear content of dlcpacks folder
                 System.IO.DirectoryInfo downloadedMessageInfo = new DirectoryInfo(Temp_Path_Import);
                 foreach (FileInfo file in downloadedMessageInfo.GetFiles())
                 {
@@ -951,7 +953,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 }
                 foreach (DirectoryInfo dir in downloadedMessageInfo.GetDirectories())
                 {
-                    if (dir.Name != "0_import" && dir.Name != "0_old" && dir.Name != "0_broken" && dir.Name != "0_duplicate" && dir.Name != "0_dlcpacks") dir.Delete(true);
+                    if (dir.Name != "dlcpacks" && dir.Name != "0_old" && dir.Name != "0_broken" && dir.Name != "0_duplicate" && dir.Name != "0_dlcpacks") dir.Delete(true);
                 }
 
                 //clean app working folders 0 folder
@@ -963,7 +965,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 }
                 foreach (DirectoryInfo dir in downloadedMessageInfo2.GetDirectories())
                 {
-                    if (dir.Name != "0_import" && dir.Name != "0_old" && dir.Name != "0_broken" && dir.Name != "0_duplicate" && dir.Name != "0_dlcpacks") dir.Delete(true);
+                    if (dir.Name != "dlcpacks" && dir.Name != "0_old" && dir.Name != "0_broken" && dir.Name != "0_duplicate" && dir.Name != "0_dlcpacks") dir.Delete(true);
                 }
                 //}
             }
@@ -1016,7 +1018,7 @@ namespace RocksmithToolkitGUI.DLCManager
             rtxt_StatisticsOnReadDLCs.Text = DB_Path + " Cleaned" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
 
             int i = 0;
-            if (!chbx_Additional_Manipualtions.GetItemChecked(38)) //39. Use only unpacked songs already in the 0/0_Import folder
+            if (!chbx_Additional_Manipualtions.GetItemChecked(38)) //39. Use only unpacked songs already in the 0/dlcpacks folder
             {
                 //GetDirList and calcualte hash
                 //MessageBox.Show(pathDLC, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -1127,7 +1129,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         dab.Dispose();
                         //dsz.Tables["Files"].AcceptChanges();
                         //MessageBox.Show(da)
-                        // if (dir.Name != "0_import" && dir.Name != "0_old" && dir.Name != "0_broken" && dir.Name != "0_duplicate") dir.Delete(true);
+                        // if (dir.Name != "dlcpacks" && dir.Name != "0_old" && dir.Name != "0_broken" && dir.Name != "0_duplicate") dir.Delete(true);
                     } }
             }
 
@@ -1206,7 +1208,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             var packagePlatform = FullPath.GetPlatform();
                             var Available_Duplicate = "No";
                             var Available_Old = "No";
-                            if (!chbx_Additional_Manipualtions.GetItemChecked(38)) //39. Use only unpacked songs already in the 0/0_Import folder
+                            if (!chbx_Additional_Manipualtions.GetItemChecked(38)) //39. Use only unpacked songs already in the 0/dlcpacks folder
                             {
 
                                 try
@@ -1305,7 +1307,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                 //FIX for adding preview_preview_preview
                                 if (unpackedDir == "")
                                 {
-                                    unpackedDir = "C:\\GitHub\\tmp\\0\\0_import\\songs_Pc";
+                                    unpackedDir = "C:\\GitHub\\tmp\\0\\dlcpacks\\songs_Pc";
                                     rtxt_StatisticsOnReadDLCs.Text = "FAILED2 empty path" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                 }
                                 // LOAD DATA
@@ -3027,7 +3029,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                         DDC.Start();
                                         //consoleOutput = DDC.StandardOutput.ReadToEnd();
                                         //consoleOutput += DDC.StandardError.ReadToEnd();
-                                        DDC.WaitForExit(1000 * 60 * 15); //wait 15 minutes
+                                        DDC.WaitForExit(1000 * 60 * 5); //wait 15 minutes
                                                                          // if (DDC.ExitCode > 0 ) rtxt_StatisticsOnReadDLCs.Text = "Issues when adding DD !" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                         DDAdded = "Yes";
                                         file.Has_BassDD = "Yes";
@@ -3082,7 +3084,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                         DDC.Start();
                                         //consoleOutput = DDC.StandardOutput.ReadToEnd();
                                         //consoleOutput += DDC.StandardError.ReadToEnd();
-                                        DDC.WaitForExit(1000 * 60 * 15); //wait 15 minutes
+                                        DDC.WaitForExit(1000 * 60 * 5); //wait 5 minutes
                                                                          //rtxt_StatisticsOnReadDLCs.Text = "HAS BASS=" + file.Has_BassDD + "...DDEXIT CODE: " + DDC.ExitCode + "----+-" + file.Folder_Name + "++++" + platform.version + "___" + RocksmithToolkitLib.GameVersion.RS2014 + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                     }
                                     else DDCExitCode = 5;
@@ -3849,18 +3851,32 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void renamedir(string source_dir, string destination_dir)
         {
-                  //replicate the directory structure
-            foreach (string dir in Directory.GetDirectories(source_dir, "*", System.IO.SearchOption.AllDirectories))// Create subdirectory structure in destination    
+            try
             {
-                Directory.CreateDirectory(destination_dir + dir.Substring(source_dir.Length));
-            }
+            ////replicate the directory structure
+            //foreach (string dir in Directory.GetDirectories(source_dir, "*", System.IO.SearchOption.AllDirectories))// Create subdirectory structure in destination    
+            //{
+            //    Directory.CreateDirectory(destination_dir + dir.Substring(source_dir.Length));
+            //}
 
-            Directory.CreateDirectory(destination_dir);
-            foreach (string file_name in Directory.GetFiles(source_dir, "*.*", System.IO.SearchOption.AllDirectories))
-            {
-                File.Copy(file_name, destination_dir + file_name.Substring(source_dir.Length), true);
+            //Directory.CreateDirectory(destination_dir);
+            //foreach (string file_name in Directory.GetFiles(source_dir, "*.*", System.IO.SearchOption.AllDirectories))
+            //{
+            //    File.Copy(file_name, destination_dir + file_name.Substring(source_dir.Length), true);
+            //}
+            //Directory.Delete(source_dir, true);    
+        
+                Directory.Move(source_dir, destination_dir);
             }
-            Directory.Delete(source_dir, true);    
+            catch (System.IO.FileNotFoundException ee)
+                {
+                    // To inform the user and continue is 
+                    // sufficient for this demonstration. 
+                    // Your application may require different behavior.
+                    Console.WriteLine(ee.Message);
+                    rtxt_StatisticsOnReadDLCs.Text = "Error cleaning Moving folder: " + source_dir + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                    //continue;
+                }
         }
 
         private void DBchanged(object sender, EventArgs e)
@@ -3883,10 +3899,10 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             rtxt_StatisticsOnReadDLCs.Text = "Starting Retail Songs processing ...."+DateTime.Now + "\n" + rtxt_StatisticsOnReadDLCs.Text;
 
-            var Temp_Path_Import = txt_TempPath.Text + "\\0_import";
+            var Temp_Path_Import = txt_TempPath.Text + "\\dlcpacks";
             string pathDLC = txt_RocksmithDLCPath.Text;
             if (!chbx_DebugB.Checked) MessageBox.Show("Please make sure one of the following Retail Packs:\ncache.psarc, songs.psarc, rs1compatibilitydisc.psarc(.edat if PS3 format), rs1compatibilitydlc.psarc(.edat) \n\n, are in the Import Folder: "+pathDLC+"\n\nAlso, make sure you have enought space for the packing&unpacking operations 2.x GB");
-            CreateTempFolderStructure(txt_TempPath.Text + "\\0_import", txt_TempPath.Text + "\\0_old", txt_TempPath.Text + "\\0_broken", txt_TempPath.Text + "\\0_duplicate", txt_TempPath.Text + "\\0_dlcpacks", pathDLC);
+            CreateTempFolderStructure(txt_TempPath.Text, txt_TempPath.Text + "\\0_old", txt_TempPath.Text + "\\0_broken", txt_TempPath.Text + "\\0_duplicate", txt_TempPath.Text + "\\0_dlcpacks", pathDLC);
 
             var jsonFiles = Directory.GetFiles(pathDLC, "*.psarc.*", SearchOption.AllDirectories); //read all the .PSARCs in the IMPORT folder
             var inputFilePath = ""; var locat = ""; var songshsanP = ""; var unpackedDir = "";
@@ -3899,33 +3915,72 @@ namespace RocksmithToolkitGUI.DLCManager
 
             //Clean dlcpack Folders
                         //Clean Temp Folder
-            if (chbx_CleanTemp.Checked && !chbx_Additional_Manipualtions.GetItemChecked(38)) //39.Use only unpacked songs already in the 0 / 0_Import folder
+            if (chbx_CleanTemp.Checked && !chbx_Additional_Manipualtions.GetItemChecked(38)) //39.Use only unpacked songs already in the 0 / dlcpacks folder
             {
-                //clear content of 0_import folder
-                System.IO.DirectoryInfo downloadedMessageInfo = new DirectoryInfo(txt_TempPath.Text + "\\0_dlcpacks");
-                //foreach (FileInfo file in downloadedMessageInfo.GetFiles())
-                //{
-                //    file.Delete();
-                //}
-                foreach (DirectoryInfo dir in downloadedMessageInfo.GetDirectories())
+                try
                 {
-                    if (dir.Name != "manipulated" && dir.Name != "manifests") dir.Delete(true);
-                }
-                
+                    //clear content of dlcpacks folder
+                    System.IO.DirectoryInfo downloadedMessageInfo = new DirectoryInfo(txt_TempPath.Text + "\\0_dlcpacks");
+                    //foreach (FileInfo file in downloadedMessageInfo.GetFiles())
+                    //{
+                    //    file.Delete();
+                    //}
+                    foreach (DirectoryInfo dir in downloadedMessageInfo.GetDirectories())
+                    {
+                        if (dir.Name != "manipulated" && dir.Name != "manifests" && dir.Name != "temp") dir.Delete(true);
+                    }
 
-                foreach (FileInfo file in downloadedMessageInfo.GetFiles())
+
+                    foreach (FileInfo file in downloadedMessageInfo.GetFiles())
+                    {
+                        file.Delete();
+                    }
+
+                    //clear content of dlcpacks\\manipulated\temp folder
+                    System.IO.DirectoryInfo downloadedMMessageInfo = new DirectoryInfo(txt_TempPath.Text + "\\0_dlcpacks\\manipulated\\temp");
+                    //foreach (FileInfo file in downloadedMessageInfo.GetFiles())
+                    //{
+                    //    file.Delete();
+                    //}
+                    foreach (DirectoryInfo dir in downloadedMMessageInfo.GetDirectories())
+                    {
+                        dir.Delete(true);
+                    }
+
+                    foreach (FileInfo file in downloadedMMessageInfo.GetFiles())
+                    {
+                        file.Delete();
+                    }
+
+                    System.IO.DirectoryInfo downloadedMmMessageInfo = new DirectoryInfo(txt_TempPath.Text + "\\0_dlcpacks\\manifests");
+                    foreach (DirectoryInfo dir in downloadedMmMessageInfo.GetDirectories())
+                    {
+                        dir.Delete(true);
+                    }
+
+                    foreach (FileInfo file in downloadedMmMessageInfo.GetFiles())
+                    {
+                        file.Delete();
+                    }
+                }
+                catch (System.IO.FileNotFoundException ee)
                 {
-                    file.Delete();
+                    // To inform the user and continue is 
+                    // sufficient for this demonstration. 
+                    // Your application may require different behavior.
+                    Console.WriteLine(ee.Message);
+                    rtxt_StatisticsOnReadDLCs.Text = "Error cleaning Temp Folder Cleaned" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                    //continue;
                 }
-
             }
+
             //Clean CachetDB
             DataSet dss = new DataSet();
             try
             {
                 using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DBb_Path))
                 {
-                    if (chbx_CleanCache.Checked)
+                    if (chbx_CleanDB.Checked)
                     {
                         rtxt_StatisticsOnReadDLCs.Text = "Cleaning....Cache table...." + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                         OleDbDataAdapter dan = new OleDbDataAdapter("DELETE FROM Cache;", cnn);
@@ -3941,7 +3996,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 // sufficient for this demonstration. 
                 // Your application may require different behavior.
                 Console.WriteLine(ee.Message);
-                rtxt_StatisticsOnReadDLCs.Text = "Error cleaning Cleaned" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                rtxt_StatisticsOnReadDLCs.Text = "Error cleaning Cleaned the CacheDB" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                 //continue;
             }
             pB_ReadDLCs.Value = 0;
@@ -3960,29 +4015,94 @@ namespace RocksmithToolkitGUI.DLCManager
                     {
                         inputFilePath = json; locat = "CACHE";
                         t = inputFilePath;
-                        if (!chbx_Additional_Manipualtions.GetItemChecked(38)) //39. Use only unpacked songs already in the 0/0_Import folder
+                        if (!chbx_Additional_Manipualtions.GetItemChecked(38)) //39. Use only unpacked songs already in the 0/dlcpacks folder
                         {
                             try
                             {
                                 // UNPACK
                                 rtxt_StatisticsOnReadDLCs.Text = "Unpacking cache.psarc.... " + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                                if (File.Exists(pathDLC + "\\cache.psarc")) unpackedDir = Packer.Unpack(pathDLC + "\\cache.psarc", txt_TempPath.Text + "\\0_dlcpacks", false, false, false); //Unpack cache.psarc for RS14 Official Retails songs rePACKING
+                                if (File.Exists(pathDLC + "\\cache.psarc"))
+                                {
+                                    
+                                    unpackedDir = Packer.Unpack(pathDLC + "\\cache.psarc", txt_TempPath.Text + "\\0_dlcpacks\\temp", false, false, false); //Unpack cache.psarc for RS14 Official Retails songs rePACKING
+                                    
+                                    //check if platform is correctly identified, &if NOT, correct it
+                                    var startI = new ProcessStartInfo(); 
+                                    startI.FileName = Path.Combine(AppWD, "7za.exe");
+                                    startI.WorkingDirectory = unpackedDir;// Path.GetDirectoryName();
+                                    var za = unpackedDir+"\\cache8.7z";
+                                    //if (!Directory.Exists(txt_TempPath.Text + "\\0_dlcpacks\\manifests")) di = Directory.CreateDirectory(txt_TempPath.Text + "\\0_dlcpacks\\manifests");
+                                    //if (!Directory.Exists(txt_TempPath.Text + "\\0_dlcpacks\\manifests\\songs")) di = Directory.CreateDirectory(txt_TempPath.Text + "\\0_dlcpacks\\manifests\\songs");
+                                    //File.Copy(hsanDir, txt_TempPath.Text + "\\0_dlcpacks\\manifests\\songs\\songs.hsan", true);
+                                    startI.Arguments = String.Format(" x {0} -o{1}",
+                                                                        za,
+                                                                        unpackedDir.Replace("\\cache_Pc","\\cache_Pc\\manipulated"));// + platformDLCP TempPath + "\\0_dlcpacks\\cache_pc\\
+                                    startI.UseShellExecute = true; startI.CreateNoWindow = false; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
+                                    using (var DDC = new Process())
+                                    {
+                                        DDC.StartInfo = startI; DDC.Start(); DDC.WaitForExit(1000 * 60 * 1); //wait 1min
+                                        //if (DDC.ExitCode > 0) rtxt_StatisticsOnReadDLCs.Text = "Issues when packing rs1dlc DLC pack !" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                    }
+                                    var tmtpdir = unpackedDir.Replace("\\cache_Pc", "\\cache_Pc\\manipulated") + "\\audio\\ps3";
+                                    if (Directory.Exists(tmtpdir))
+                                    {
+                                        renamedir(unpackedDir, unpackedDir.Replace("_Pc", "_ps3"));
+                                        unpackedDir = unpackedDir.Replace("_Pc", "_ps3");
+                                        platformDLCP = "PS3";
+                                    }
+                                    //clear temp cache_Pc folder
+                                    System.IO.DirectoryInfo downloadedMessageInfo = new DirectoryInfo(unpackedDir);
+                                    foreach (DirectoryInfo dir in downloadedMessageInfo.GetDirectories())
+                                    {
+                                        if (dir.Name == "manipulated") dir.Delete(true);
+                                    }
 
+                                    //move cache_xx to dlcpacks
+                                    if (Directory.Exists(unpackedDir.Replace("\\0_dlcpacks\\temp", "\\0_dlcpacks"))) Directory.Delete(unpackedDir.Replace("\\0_dlcpacks\\temp", "\\0_dlcpacks"));
+                                    renamedir(unpackedDir, unpackedDir.Replace("\\0_dlcpacks\\temp", "\\0_dlcpacks"));
+                                    unpackedDir = unpackedDir.Replace("\\0_dlcpacks\\temp", "\\0_dlcpacks");
+                                }
+
+                                //Process SONGS.PSARC
                                     rtxt_StatisticsOnReadDLCs.Text = "Unpacking songs.psarc.... " + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                 //if (platformDLCP == "PS3")
-                                    unpackedDir = Packer.Unpack(inputFilePath, txt_TempPath.Text + "\\0_dlcpacks\\manipulated", false, false, false);
+                                    unpackedDir = Packer.Unpack(inputFilePath, txt_TempPath.Text + "\\0_dlcpacks\\temp", false, false, false);
                                 //else unpackedDir = Packer.Unpack(inputFilePath, txt_TempPath.Text + "\\0_dlcpacks\\manipulated", true, false, false);
                             
                                 
                                 //FIX for unpacking w the wrong folder extension
+                                //And unpacking of PS3 WEM
                                 if (Directory.Exists(unpackedDir + "\\songs\\bin\\ps3"))
                                 {
-                                    renamedir(unpackedDir, unpackedDir.Replace("_Pc", "_ps3"));
-                                    unpackedDir = unpackedDir.Replace("_Pc", "_ps3");
-                                    platformDLCP = "PS3";
+                                    //Convert WEM to OGG
+                                    //if (platformDLCP == "PS3")
+                                    //{
+                                        var startInfo = new ProcessStartInfo();
+                                        //var unpackedDir = HSAN.Substring(0, HSAN.IndexOf("\\manifests"));//unpackedDir = TempPath + "\\0_dlcpacks\\rs1compatibilitydisc_PS3";
+                                        startInfo.FileName = Path.Combine(AppWD, "packer.exe");
+                                        startInfo.WorkingDirectory = unpackedDir;// Path.GetDirectoryName();
+                                        //var t = TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydisc" + ((platfor == "PS3") ? "" : ((platfor == "Mac") ? "_m" : ((platfor == "Pc") ? "_p" : ""))) + ".psarc";
+                                        startInfo.Arguments = String.Format(" --unpack --version=RS2014 --platform={0} --output={1} --input={2} --decodeogg",
+                                                                            platformDLCP,
+                                                                            unpackedDir.Replace("songs_Pc",""),
+                                                                            inputFilePath);// + platformDLCP
+                                        startInfo.UseShellExecute = true; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
+
+                                        //if (!File.Exists(t))
+                                        using (var DDC = new Process())
+                                        {
+                                            DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 60 * 15); //wait 15min
+                                            //if (DDC.ExitCode > 0) rtxt_StatisticsOnReadDLCs.Text = "Issues when packing rs1dlc DLC pack !" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                        }
+                                        renamedir(unpackedDir, unpackedDir.Replace("_Pc", "_ps3"));
+                                        unpackedDir = unpackedDir.Replace("_Pc", "_ps3");
+                                        platformDLCP = "PS3";
+                                    //}
+                                    //Convert2OGG(unpackedDir + "\\Audio\\"+ (platformDLCP == "Pc" ? "windows" : platformDLCP), platformDLCP);
+                                    //else unpackedDir = Packer.Unpack(inputFilePath, txt_TempPath.Text + "\\0_dlcpacks\\manipulated", true, false, false);
                                 }
                                 //elseif (platformDLCP == "PS3") ;//unpackedDir = Packer.Unpack(inputFilePath, txt_TempPath.Text + "\\0_dlcpacks\\manipulated", false, false, false);
-                                else unpackedDir = Packer.Unpack(inputFilePath, txt_TempPath.Text + "\\0_dlcpacks\\manipulated", true, false, false);
+                                else unpackedDir = Packer.Unpack(inputFilePath, txt_TempPath.Text + "\\0_dlcpacks", true, false, false);
                                 
                                 if (Directory.Exists(unpackedDir + "\\songs\\bin\\macos"))
                                 {
@@ -3990,15 +4110,17 @@ namespace RocksmithToolkitGUI.DLCManager
                                     unpackedDir = unpackedDir.Replace("_Pc", "_Mac");
                                     platformDLCP = "Mac";
                                 }
-                                
-                                
-                                Directory.Move(unpackedDir ,unpackedDir.Replace("\\manipulated", ""));
-                                unpackedDir = unpackedDir.Replace("\\manipulated","");
-                                songshsanP = unpackedDir + "\\manifests\\songs\\songs.hsan";
 
-                                //Convert WEM to OGG
-                                if (platformDLCP == "PS3") Convert2OGG(unpackedDir + "\\Audio\\"+ (platformDLCP == "Pc" ? "windows" : platformDLCP), platformDLCP);
-                                //else unpackedDir = Packer.Unpack(inputFilePath, txt_TempPath.Text + "\\0_dlcpacks\\manipulated", true, false, false);
+                                //move cache_xx to dlcpacks
+                                if (Directory.Exists(unpackedDir.Replace("\\0_dlcpacks\\temp", "\\0_dlcpacks"))) Directory.Delete(unpackedDir.Replace("\\0_dlcpacks\\temp", "\\0_dlcpacks"));
+                                renamedir(unpackedDir, unpackedDir.Replace("\\0_dlcpacks\\temp", "\\0_dlcpacks"));
+                                unpackedDir = unpackedDir.Replace("\\0_dlcpacks\\temp", "\\0_dlcpacks");
+                                
+                                
+                                //Directory.Move(unpackedDir ,unpackedDir.Replace("\\manipulated", ""));
+                                //unpackedDir = unpackedDir.Replace("\\manipulated","");
+                                songshsanP = unpackedDir + "\\manifests\\songs\\songs.hsan";
+                                
                             }
                             catch (Exception ex)
                             {
@@ -4016,7 +4138,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     {
                         inputFilePath = json;
                         locat = "COMPATIBILITY";
-                        if (!chbx_Additional_Manipualtions.GetItemChecked(38)) //39. Use only unpacked songs already in the 0/0_Import folder
+                        if (!chbx_Additional_Manipualtions.GetItemChecked(38)) //39. Use only unpacked songs already in the 0/dlcpacks folder
                         {
                             try // UNPACK
                             {
@@ -4048,7 +4170,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             //if (!File.Exists(t))
                                 using (var DDC = new Process())
                                 {
-                                    DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 60 * 1); //wait 1min
+                                    DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 60 * 5); //wait 1min
                                     if (DDC.ExitCode > 0) rtxt_StatisticsOnReadDLCs.Text = "Issues when packing rs1dlc DLC pack !" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                 }
 
@@ -4068,11 +4190,33 @@ namespace RocksmithToolkitGUI.DLCManager
                     else if (json == pathDLC + "\\rs1compatibilitydisc.psarc.edat" || (json == pathDLC + "\\rs1compatibilitydisc_p.psarc" && platformDLCP == "Pc") || (json == pathDLC + "\\rs1compatibilitydisc_m.psarc" && platformDLCP == "Mac")) //RS12 RETAIL
                     {
                         inputFilePath = json; locat = "RS1Retail";
-                        if (!chbx_Additional_Manipualtions.GetItemChecked(38)) //39. Use only unpacked songs already in the 0/0_Import folder
+                        if (!chbx_Additional_Manipualtions.GetItemChecked(38)) //39. Use only unpacked songs already in the 0/dlcpacks folder
                         {
                             try // UNPACK
                             {
-                                if (platformDLCP == "PS3") unpackedDir = Packer.Unpack(inputFilePath, txt_TempPath.Text + "\\0_dlcpacks", false, false, false).Replace(".psarc", "");
+                                if (platformDLCP == "PS3")
+                                {
+                                //Packer.Unpack fails
+                            //unpackedDir = Packer.Unpack(inputFilePath, txt_TempPath.Text + "\\0_dlcpacks", false, false, false).Replace(".psarc", "");
+                                    var startInfo = new ProcessStartInfo();
+                                    //var unpackedDir = HSAN.Substring(0, HSAN.IndexOf("\\manifests"));//unpackedDir = TempPath + "\\0_dlcpacks\\rs1compatibilitydisc_PS3";
+                                    startInfo.FileName = Path.Combine(AppWD, "packer.exe");
+                                    startInfo.WorkingDirectory = unpackedDir;// Path.GetDirectoryName();
+                                    //var t = TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydisc" + ((platfor == "PS3") ? "" : ((platfor == "Mac") ? "_m" : ((platfor == "Pc") ? "_p" : ""))) + ".psarc";
+                                    startInfo.Arguments = String.Format(" --unpack --decodeogg --version=RS2014 --platform={0} --output={1} --input={2}",
+                                                                        platformDLCP,
+                                                                        txt_TempPath.Text + "\\0_dlcpacks",//unpackedDir.Replace("songs_Pc", ""),
+                                                                        inputFilePath);// + platformDLCP
+                                    startInfo.UseShellExecute = true; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
+
+                                    //if (!File.Exists(t))
+                                    using (var DDC = new Process())
+                                    {
+                                        DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 60 * 20); //wait 1min
+                                        //if (DDC.ExitCode > 0) rtxt_StatisticsOnReadDLCs.Text = "Issues when packing rs1dlc DLC pack !" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                    }
+                                    unpackedDir = txt_TempPath.Text + "\\0_dlcpacks\\rs1compatibilitydisc_PS3";
+                                }
                                 else unpackedDir = Packer.Unpack(inputFilePath, txt_TempPath.Text + "\\0_dlcpacks", true, false, false);
                             }
                             catch (Exception ex)
@@ -4082,7 +4226,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         }
                         else unpackedDir = txt_TempPath.Text + "\\0_dlcpacks\\rs1compatibilitydisc_" + platformDLCP;
 
-                        songshsanP = unpackedDir + "\\manifests\\songs_rs1disc\\songs_rs1disc.hsan";
+                         songshsanP = unpackedDir + "\\manifests\\songs_rs1disc\\songs_rs1disc.hsan";
                         rtxt_StatisticsOnReadDLCs.Text = "Repacking "+json+" 2 use the internal/Browser Psarc Read function.... " + json + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                         try //rename folder so we can use the read browser function                            
                         {
@@ -4100,18 +4244,74 @@ namespace RocksmithToolkitGUI.DLCManager
                             if (!File.Exists(t)) ;
                                 using (var DDC = new Process())
                                 {
-                                    DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 60 * 1); //wait 1min
+                                    DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 60 * 10); //wait 10min
                                     if (DDC.ExitCode > 0) rtxt_StatisticsOnReadDLCs.Text = "Issues when packing rs1disc pack !" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                    
+                                    //rename the songs_rs1dlc folder to songs to enable the read of Browser function to work                                
+                                    renamedir(unpackedDir + "\\manifests\\songs", unpackedDir + "\\manifests\\songs_rs1disc");
+                                    rtxt_StatisticsOnReadDLCs.Text = "renaming internal folder \n" + rtxt_StatisticsOnReadDLCs.Text;
+                                    //t = txt_TempPath.Text + "\\0_dlcpacks\\rs1compatibilitydisc_PS3.psarc";
+                                    //startInfo.Arguments = String.Format(" create --zlib -N -o {0} {1}",
+                                    //                            t,
+                                    //                            unpackedDir);// + platformDLCP
+                                    //DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 60 * 10); //wait 10min
+                                    //if (DDC.ExitCode > 0) rtxt_StatisticsOnReadDLCs.Text = "Issues when packing again rs1disc pack !" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                 }
-
-                            //rename the songs_rs1dlc folder to songs to enable the read of Browser function to work                                
-                            renamedir(unpackedDir + "\\manifests\\songs", unpackedDir + "\\manifests\\songs_rs1disc");
-                            rtxt_StatisticsOnReadDLCs.Text = "renaming internal folder \n" + rtxt_StatisticsOnReadDLCs.Text;
 
                             //Convert WEM to OGG
                             //Convert2OGG(unpackedDir + "\\Audio\\"+ (platformDLCP=="Pc"? "windows" : platformDLCP), platformDLCP);
                             //Convert WEM to OGG
-                            if (platformDLCP == "PS3") Convert2OGG(unpackedDir + "\\Audio\\" + (platformDLCP == "Pc" ? "windows" : platformDLCP), platformDLCP);
+                            //if psarc.exe fails
+                            if (platformDLCP == "PS3")
+                            {
+                                //commenting next line altough owrknig to use the official packer
+                                //Convert2OGG(unpackedDir + "\\Audio\\" + (platformDLCP == "Pc" ? "windows" : platformDLCP), platformDLCP);
+                                var unpackedDir1 = unpackedDir;
+                            var wemFiles = Directory.GetFiles(unpackedDir1, "*.wem", SearchOption.AllDirectories);
+                            var i = 0;
+                            foreach (var wem in wemFiles)
+                            {
+
+                                i++;
+                                //rtxt_StatisticsOnReadDLCs.Text = (rtxt_StatisticsOnReadDLCs.Text).Replace("Starting Decompressing WEMs " + (i - 1) + "/", "Starting Decompressing WEMs " + i + "/");
+                               startInfo = new ProcessStartInfo();
+
+                                startInfo.FileName = Path.Combine(AppWD, "DLCManager\\audiocrossreference.exe");
+                                startInfo.WorkingDirectory = unpackedDir1;// Path.GetDirectoryName();
+                                startInfo.Arguments = String.Format(" {0}",
+                                                                    wem);
+                                startInfo.UseShellExecute = false; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
+
+                                if (File.Exists(wem))
+                                    using (var DDC = new Process())
+                                    {
+                                        DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 3 * 60); //wait min
+                                        //if (DDC.ExitCode > 0) rtxt_StatisticsOnReadDLCs.Text = "Issues when decrypting wem files !" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                        Console.WriteLine("{0} is active: {1}", DDC.Id, !DDC.HasExited);
+                                        DDC.Kill();
+                                    }
+                            }
+                            //    startInfo = new ProcessStartInfo();
+                            //    //var unpackedDir = HSAN.Substring(0, HSAN.IndexOf("\\manifests"));//unpackedDir = TempPath + "\\0_dlcpacks\\rs1compatibilitydisc_PS3";
+                            //    startInfo.FileName = Path.Combine(AppWD, "packer.exe");
+                            //    startInfo.WorkingDirectory = unpackedDir;// Path.GetDirectoryName();
+                            //    //var t = TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydisc" + ((platfor == "PS3") ? "" : ((platfor == "Mac") ? "_m" : ((platfor == "Pc") ? "_p" : ""))) + ".psarc";
+                            //    startInfo.Arguments = String.Format(" --unpack --decodeogg --version=RS2014 --platform={0} --output={1} --input={2}",
+                            //                                        platformDLCP,
+                            //                                        txt_TempPath.Text + "\\0_dlcpacks",//unpackedDir.Replace("songs_Pc", ""),
+                            //                                        t);// + platformDLCP
+                            //    startInfo.UseShellExecute = true; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
+
+                            //    //if (!File.Exists(t))
+                            //    using (var DDC = new Process())
+                            //    {
+                            //        DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 60 * 20); //wait 1min
+                            //        //if (DDC.ExitCode > 0) rtxt_StatisticsOnReadDLCs.Text = "Issues when packing rs1dlc DLC pack !" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                            //    }
+                            //    renamedir(txt_TempPath.Text + "\\0_dlcpacks", txt_TempPath.Text + "\\0_dlcpacks\\rs1compatibilitydisc_PS3");
+                            //    //renamedir(unpackedDir + "\\manifests\\songs", unpackedDir + "\\manifests\\songs_rs1disc");
+                            //    unpackedDir = txt_TempPath.Text + "\\0_dlcpacks\\rs1compatibilitydisc_PS3";
+                            }
                                 //else unpackedDir = Packer.Unpack(inputFilePath, txt_TempPath.Text + "\\0_dlcpacks\\", true, false, false);
                         }
                         catch (Exception ex)
@@ -4164,7 +4364,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                 dah.Fill(dsx, "WEM2OGGCorrespondence");
                             }
                             
-                            AudioP1 =  (dsx.Tables[0].Rows.Count > 0) ? dsx.Tables[0].Rows[0].ItemArray[0].ToString() :"";
+                            AudioP1 =  (dsx.Tables[0].Rows.Count > 0) ? dsx.Tables[0].Rows[0].ItemArray[0].ToString() : "";
                             dsx.Dispose();
                             using (OleDbConnection cvn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DBb_Path))
                             {
@@ -4179,13 +4379,13 @@ namespace RocksmithToolkitGUI.DLCManager
                             }
                             else if (locat == "COMPATIBILITY")
                             {
-                                AudioP = (songshsanP.Replace("\\manifests\\songs_rs1dlc\\songs_rs1dlc.hsan", "\\audio\\" + (platformDLCP == "PS3" ? platformDLCP : (platformDLCP == "Pc" ? "windows" : platformDLCP)) + "\\") + AudioP1 + (platformDLCP == "PS3" ? ".ogg" : "_fixed.ogg")).Replace("rs1compatibilitydlc", "songs").Replace("_p_Pc", "_Pc").Replace("_p_Pc", "_Mac");
-                                AudioPP = (songshsanP.Replace("\\manifests\\songs_rs1dlc\\songs_rs1dlc.hsan", "\\audio\\" + (platformDLCP == "PS3" ? platformDLCP : (platformDLCP == "Pc" ? "windows" : platformDLCP)) + "\\") + AudioPP1 + (platformDLCP == "PS3" ? ".ogg" : "_fixed.ogg")).Replace("rs1compatibilitydlc", "songs").Replace("_p_Pc", "_Pc").Replace("_p_Pc", "_Mac");
+                                AudioP = (songshsanP.Replace("\\manifests\\songs_rs1dlc\\songs_rs1dlc.hsan", "\\audio\\" + (platformDLCP == "PS3" ? platformDLCP : (platformDLCP == "Pc" ? "windows" : platformDLCP)) + "\\") + AudioP1 + "_fixed.ogg").Replace("rs1compatibilitydlc", "songs").Replace("_p_Pc", "_Pc").Replace("_p_Pc", "_Mac");
+                                AudioPP = (songshsanP.Replace("\\manifests\\songs_rs1dlc\\songs_rs1dlc.hsan", "\\audio\\" + (platformDLCP == "PS3" ? platformDLCP : (platformDLCP == "Pc" ? "windows" : platformDLCP)) + "\\") + AudioPP1 + "_fixed.ogg").Replace("rs1compatibilitydlc", "songs").Replace("_p_Pc", "_Pc").Replace("_p_Pc", "_Mac");
                             }
                             else if (locat == "CACHE")
                             {
-                                AudioP = (songshsanP.Replace("\\manifests\\songs\\songs.hsan", "\\audio\\" + (platformDLCP == "PS3" ? platformDLCP : (platformDLCP == "Pc" ? "windows" : platformDLCP)) + "\\") + AudioP1 + (platformDLCP == "PS3" ? ".ogg" : "_fixed.ogg"));
-                                AudioPP = (songshsanP.Replace("\\manifests\\songs\\songs.hsan", "\\audio\\" + (platformDLCP == "PS3" ? platformDLCP : (platformDLCP == "Pc" ? "windows" : platformDLCP)) + "\\") + AudioPP1 + (platformDLCP == "PS3" ? ".ogg" : "_fixed.ogg"));
+                                AudioP = (songshsanP.Replace("\\manifests\\songs\\songs.hsan", "\\audio\\" + (platformDLCP == "PS3" ? platformDLCP : (platformDLCP == "Pc" ? "windows" : platformDLCP)) + "\\") + AudioP1 + "_fixed.ogg");
+                                AudioPP = (songshsanP.Replace("\\manifests\\songs\\songs.hsan", "\\audio\\" + (platformDLCP == "PS3" ? platformDLCP : (platformDLCP == "Pc" ? "windows" : platformDLCP)) + "\\") + AudioPP1 + "_fixed.ogg");
                             }
 
                             //dtx.Dispose();
@@ -4324,6 +4524,9 @@ namespace RocksmithToolkitGUI.DLCManager
 
                     catch (Exception ex)
                     {
+                        MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Can not Load "+platformDLCP);
+
                         Console.WriteLine("Error encountered:");
                         Console.WriteLine(ex.Message);
                     }
@@ -4380,7 +4583,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 if (File.Exists(wem))
                     using (var DDC = new Process())
                     {
-                        DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 3 * 1); //wait 1min
+                        DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 3 * 60); //wait min
                         //if (DDC.ExitCode > 0) rtxt_StatisticsOnReadDLCs.Text = "Issues when decrypting wem files !" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                         Console.WriteLine("{0} is active: {1}", DDC.Id, !DDC.HasExited);
                         DDC.Kill();

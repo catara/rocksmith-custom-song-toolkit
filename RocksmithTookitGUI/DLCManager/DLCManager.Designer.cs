@@ -944,9 +944,9 @@
             this.chbx_CleanDB.Location = new System.Drawing.Point(311, 49);
             this.chbx_CleanDB.Margin = new System.Windows.Forms.Padding(2);
             this.chbx_CleanDB.Name = "chbx_CleanDB";
-            this.chbx_CleanDB.Size = new System.Drawing.Size(71, 17);
+            this.chbx_CleanDB.Size = new System.Drawing.Size(76, 17);
             this.chbx_CleanDB.TabIndex = 267;
-            this.chbx_CleanDB.Text = "Clean DB";
+            this.chbx_CleanDB.Text = "Clean DBs";
             this.chbx_CleanDB.UseVisualStyleBackColor = true;
             // 
             // lbl_StatisticsOnReadDLCs
@@ -1224,7 +1224,7 @@
             // chbx_CleanCache
             // 
             this.chbx_CleanCache.AutoSize = true;
-            this.chbx_CleanCache.Location = new System.Drawing.Point(441, 524);
+            this.chbx_CleanCache.Location = new System.Drawing.Point(344, 648);
             this.chbx_CleanCache.Margin = new System.Windows.Forms.Padding(2);
             this.chbx_CleanCache.Name = "chbx_CleanCache";
             this.chbx_CleanCache.Size = new System.Drawing.Size(102, 17);
@@ -1234,7 +1234,7 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(286, 522);
+            this.button5.Location = new System.Drawing.Point(390, 522);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(90, 20);
             this.button5.TabIndex = 336;
@@ -1245,7 +1245,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(388, 525);
+            this.label2.Location = new System.Drawing.Point(482, 525);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(40, 13);
             this.label2.TabIndex = 338;
@@ -1256,7 +1256,7 @@
             // 
             this.btn_LoadRetailSongs.BackColor = System.Drawing.SystemColors.Control;
             this.btn_LoadRetailSongs.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_LoadRetailSongs.Location = new System.Drawing.Point(426, 524);
+            this.btn_LoadRetailSongs.Location = new System.Drawing.Point(520, 524);
             this.btn_LoadRetailSongs.Margin = new System.Windows.Forms.Padding(2);
             this.btn_LoadRetailSongs.Name = "btn_LoadRetailSongs";
             this.btn_LoadRetailSongs.Size = new System.Drawing.Size(14, 15);

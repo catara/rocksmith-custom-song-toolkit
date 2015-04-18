@@ -40,6 +40,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private void InitializeComponent()
         {
             this.Panel1 = new System.Windows.Forms.Panel();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.button5 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -114,7 +115,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_Arrangements = new System.Windows.Forms.Button();
             this.CheckBox1 = new System.Windows.Forms.CheckBox();
             this.DataGridView1 = new System.Windows.Forms.DataGridView();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.Panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPath)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridView1)).BeginInit();
@@ -201,6 +201,19 @@ namespace RocksmithToolkitGUI.DLCManager
             this.Panel1.Name = "Panel1";
             this.Panel1.Size = new System.Drawing.Size(1106, 202);
             this.Panel1.TabIndex = 3;
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Checked = true;
+            this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox2.Enabled = false;
+            this.checkBox2.Location = new System.Drawing.Point(437, 119);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(68, 17);
+            this.checkBox2.TabIndex = 291;
+            this.checkBox2.Text = "AutoPlay";
+            this.checkBox2.UseVisualStyleBackColor = true;
             // 
             // button5
             // 
@@ -598,7 +611,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_Conv_And_Transfer.Name = "btn_Conv_And_Transfer";
             this.btn_Conv_And_Transfer.Size = new System.Drawing.Size(133, 26);
             this.btn_Conv_And_Transfer.TabIndex = 84;
-            this.btn_Conv_And_Transfer.Text = "Pack2Ps3 & Copy/FTP";
+            this.btn_Conv_And_Transfer.Text = "Pack & Copy/FTP";
             this.btn_Conv_And_Transfer.UseVisualStyleBackColor = true;
             // 
             // txt_Alt_No
@@ -991,19 +1004,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.DataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick_1);
             this.DataGridView1.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick_1);
             this.DataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick_1);
-            // 
-            // checkBox2
-            // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Checked = true;
-            this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox2.Enabled = false;
-            this.checkBox2.Location = new System.Drawing.Point(437, 119);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(68, 17);
-            this.checkBox2.TabIndex = 291;
-            this.checkBox2.Text = "AutoPlay";
-            this.checkBox2.UseVisualStyleBackColor = true;
             // 
             // MainDB
             // 

@@ -14,6 +14,7 @@ using RocksmithToolkitGUI;
 using RocksmithToolkitLib.Extensions;
 using System.IO;
 using Ookii.Dialogs; //cue text
+using System.Net; //4ftp
 
 namespace RocksmithToolkitGUI.DLCManager
 {
@@ -33,6 +34,7 @@ namespace RocksmithToolkitGUI.DLCManager
         }
 
         private string Filename = System.IO.Path.Combine(Application.StartupPath, "Text.txt");
+        internal static string AppWD = AppDomain.CurrentDomain.BaseDirectory; //when repacking
 
         private BindingSource Main = new BindingSource();
         private const string MESSAGEBOX_CAPTION = "MainDB";
@@ -242,6 +244,8 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_Description.Text = DataGridView1.Rows[i].Cells[52].Value.ToString();
             txt_Artist_ShortName.Text = DataGridView1.Rows[i].Cells[85].Value.ToString();
             txt_Album_ShortName.Text = DataGridView1.Rows[i].Cells[86].Value.ToString();
+            txt_AudioPath.Text = DataGridView1.Rows[i].Cells[77].Value.ToString().Replace(".ogg", "_fixed.ogg");
+            txt_AudioPreviewPath.Text = DataGridView1.Rows[i].Cells[78].Value.ToString().Replace(".ogg", "_fixed.ogg");
 
             if (DataGridView1.Rows[i].Cells[26].Value.ToString() == "Yes") chbx_Original.Checked = true;
             else chbx_Original.Checked = false;
@@ -1171,6 +1175,131 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             Cache frm = new Cache(DB_Path, TempPath, RocksmithDLCPath, AllowEncriptb, AllowORIGDeleteb);
             frm.ShowDialog();
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            var startInfo = new ProcessStartInfo();
+            startInfo.FileName = Path.Combine(AppWD, "DLCManager\\oggdec.exe");
+            startInfo.WorkingDirectory = AppWD;// Path.GetDirectoryName();
+            var t = txt_AudioPath.Text;//"C:\\GitHub\\tmp\\0\\0_dlcpacks\\rs1compatibilitydisc_PS3\\audio\\ps3\\149627248.ogg";//txt_TempPath.Text + "\\0_dlcpacks\\rs1compatibilitydlc.psarc";
+            startInfo.Arguments = String.Format(" -p \"{0}\"", t);
+            startInfo.UseShellExecute = true; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
+
+            //var outputBuilder = new StringBuilder();
+            if (File.Exists(t))
+                using (var DDC = new Process())
+                {
+                    DDC.StartInfo = startInfo;
+                    //DDC.OutputDataReceived += new DataReceivedEventHandler
+                    //(
+                    //    delegate(object senderd, DataReceivedEventArgs fe)
+                    //    {
+                    //        // append the new data to the data already read-in
+                    //        outputBuilder.Append(fe.Data);
+                    //    }
+                    //);
+                    DDC.Start(); DDC.WaitForExit(1000 * 60 * 1); //wait 1min
+                    //DDC.BeginOutputReadLine();
+                    //DDC.CancelOutputRead();
+
+                    //// use the output
+                    //txt_Description.Text = outputBuilder.ToString();
+                    //if (DDC.ExitCode > 0) rtxt_StatisticsOnReadDLCs.Text = "Issues when packing rs1dlc DLC pack !" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                }
+        }
+
+        private void btm_PlayPreview_Click(object sender, EventArgs e)
+        {
+             var startInfo = new ProcessStartInfo();
+            startInfo.FileName = Path.Combine(AppWD, "DLCManager\\oggdec.exe");
+            startInfo.WorkingDirectory = AppWD;// Path.GetDirectoryName();
+            var t = txt_AudioPreviewPath.Text;//"C:\\GitHub\\tmp\\0\\0_dlcpacks\\rs1compatibilitydisc_PS3\\audio\\ps3\\149627248.ogg";//txt_TempPath.Text + "\\0_dlcpacks\\rs1compatibilitydlc.psarc";
+            startInfo.Arguments = String.Format(" -p {0}",
+                                                t);
+            startInfo.UseShellExecute = true; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
+
+            if (File.Exists(t))
+                using (var DDC = new Process())
+                {
+                    DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 60 * 1); //wait 1min
+                    //if (DDC.ExitCode > 0) rtxt_StatisticsOnReadDLCs.Text = "Issues when packing rs1dlc DLC pack !" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                }
+        }
+
+        private void btn_SteamDLCFolder_Click(object sender, EventArgs e)
+        {
+            using (var fbd = new VistaFolderBrowserDialog())
+            {
+                if (fbd.ShowDialog() != DialogResult.OK)
+                    return;
+                var temppath = fbd.SelectedPath;
+                txt_FTPPath.Text = temppath;
+            }
+        }
+
+        private void btn_Conv_And_Transfer_Click(object sender, EventArgs e)
+        {
+            if (cbx_Format.Text == "PS3")
+            {
+                var GameID = txt_FTPPath.Text.Substring(txt_FTPPath.Text.LastIndexOf("BL"), 9);
+                var startno = txt_FTPPath.Text.LastIndexOf("GAMES/");
+                var endno = (txt_FTPPath.Text.LastIndexOf("BL")) + 9;
+                var GameName = ((txt_FTPPath.Text).Substring(startno, endno - startno)).Replace("GAMES/", "");
+                var newpath = txt_FTPPath.Text.Replace("GAMES", "game").Replace("PS3_GAME", GameID).Replace(GameName + "/", "");
+                FTPFile(newpath, "rs1compatibilitydlc.psarc.edat");
+                MessageBox.Show("FTPed");
+            }
+            else if (cbx_Format.Text == "PC" || cbx_Format.Text == "Mac")
+            {
+                var platfrm = (cbx_Format.Text == "PC" ? "_p" : (cbx_Format.Text == "Mac" ? "_m" : ""));
+                var dest = "";
+                if (RocksmithDLCPath.IndexOf("Rocksmith\\DLC") > 0)
+                {
+                    dest = RocksmithDLCPath;//!File.Exists(
+                    File.Copy(RocksmithDLCPath + "\\rs1compatibilitydlc" + platfrm + ".psarc", dest + "\\rs1compatibilitydlc" + platfrm + ".psarc.orig", true);
+                    File.Copy(TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydlc" + platfrm + ".psarc" + "\\rs1compatibilitydlc" + platfrm + ".psarc", dest, true);
+                }
+                else if (RocksmithDLCPath != txt_FTPPath.Text)
+                {
+                    dest = txt_FTPPath.Text;//!File.Exists(
+                    File.Copy(dest + "\\rs1compatibilitydlc" + platfrm + ".psarc", dest + "\\rs1compatibilitydlc" + platfrm + ".psarc.orig", true);
+                    File.Copy(TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydlc" + platfrm + ".psarc" + "\\rs1compatibilitydlc" + platfrm + ".psarc", dest, true);
+
+                }
+                else MessageBox.Show("Chose a different path to save");
+            }
+        }
+        public void FTPFile(string filel, string filen)
+        {
+            // Get the object used to communicate with the server.
+            var ddd = filel + filen;
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(ddd);
+            request.Method = WebRequestMethods.Ftp.UploadFile;
+            request.UseBinary = true;
+
+            // This example assumes the FTP site uses anonymous logon.
+            request.Credentials = new NetworkCredential("anonymous", "janeDoe@contoso.com");
+
+
+
+            byte[] b = File.ReadAllBytes(TempPath + "\\0_dlcpacks\\manipulated\\" + filen);
+
+            request.ContentLength = b.Length;
+            using (Stream s = request.GetRequestStream())
+            {
+                s.Write(b, 0, b.Length);
+            }
+
+            FtpWebResponse ftpResp = (FtpWebResponse)request.GetResponse();
+
+
+
+        }
+
+        private void button13_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

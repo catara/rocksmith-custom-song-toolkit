@@ -429,6 +429,9 @@
     <None Include="DefaultDBDataSet.xss">
       <DependentUpon>DefaultDBDataSet.xsd</DependentUpon>
     </None>
+    <None Include="DLCManager\packed_codebooks_aoTuV_603.bin">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
@@ -518,6 +521,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="DLCManager\README.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\ww2ogg.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\ddc-512.png" />

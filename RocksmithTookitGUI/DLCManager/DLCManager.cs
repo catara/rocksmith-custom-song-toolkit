@@ -2057,13 +2057,15 @@ namespace RocksmithToolkitGUI.DLCManager
                                     command.CommandText += "Available_Duplicate, ";
                                     command.CommandText += "Available_Old, ";
                                     command.CommandText += "Description, ";
-                                    command.CommandText += "Comments ";
+                                    command.CommandText += "Comments, ";
+                                    command.CommandText += "OggPath, ";
+                                    command.CommandText += "OggPreviewPath ";
                                     command.CommandText += ") VALUES (@param1,@param2,@param3,@param4,@param5,@param6,@param7,@param8,@param9";
                                     command.CommandText += ",@param10,@param11,@param12,@param13,@param14,@param15,@param16,@param17,@param18,@param19";
                                     command.CommandText += ",@param20,@param21,@param22,@param23,@param24,@param25,@param26,@param27,@param28,@param29";
                                     command.CommandText += ",@param30,@param31,@param32,@param33,@param34,@param35,@param36,@param37,@param38,@param39";
                                     command.CommandText += ",@param40,@param41,@param42,@param43,@param44,@param45,@param46,@param47,@param48,@param49";
-                                    command.CommandText += ",@param50,@param51,@param52,@param53,@param54" + ")"; //,@param44,@param45,@param46,@param47,@param48,@param49
+                                    command.CommandText += ",@param50,@param51,@param52,@param53,@param54,@param55,@param56" + ")"; //,@param44,@param45,@param46,@param47,@param48,@param49
                                                                                                                   //command.CommandText += ") VALUES(@param50,@param51,@param52" + ")"; //,@param33,@param44,@param44,@param45,@param46,@param47,@param48,@param49
 
                                     command.Parameters.AddWithValue("@param1", import_path);
@@ -2120,7 +2122,8 @@ namespace RocksmithToolkitGUI.DLCManager
                                     command.Parameters.AddWithValue("@param52", Available_Old);
                                     command.Parameters.AddWithValue("@param53", description);
                                     command.Parameters.AddWithValue("@param54", comment);
-
+                                    command.Parameters.AddWithValue("@param55", info.OggPath.Replace(".wem", "_fixed.ogg"));
+                                    command.Parameters.AddWithValue("@param56", (info.OggPreviewPath == null ? DBNull.Value.ToString() :info.OggPreviewPath.Replace(".wem","_fixed.ogg") ));
                                     //EXECUTE SQL/INSERT
                                     try
                                     {
@@ -4115,12 +4118,10 @@ namespace RocksmithToolkitGUI.DLCManager
                                 if (Directory.Exists(unpackedDir.Replace("\\0_dlcpacks\\temp", "\\0_dlcpacks"))) Directory.Delete(unpackedDir.Replace("\\0_dlcpacks\\temp", "\\0_dlcpacks"));
                                 renamedir(unpackedDir, unpackedDir.Replace("\\0_dlcpacks\\temp", "\\0_dlcpacks"));
                                 unpackedDir = unpackedDir.Replace("\\0_dlcpacks\\temp", "\\0_dlcpacks");
-                                
-                                
+
                                 //Directory.Move(unpackedDir ,unpackedDir.Replace("\\manipulated", ""));
                                 //unpackedDir = unpackedDir.Replace("\\manipulated","");
                                 songshsanP = unpackedDir + "\\manifests\\songs\\songs.hsan";
-                                
                             }
                             catch (Exception ex)
                             {
@@ -4132,6 +4133,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             unpackedDir = txt_TempPath.Text + "\\0_dlcpacks\\songs_" + platformDLCP;
                             songshsanP = unpackedDir + "\\manifests\\songs\\songs.hsan";
                         }
+
                         rtxt_StatisticsOnReadDLCs.Text = "Processed cache.psarc & songs.psarc" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                     } //repacking at the moment manually with psarc 1.4 and lzma ratio 0
                     else if (json == pathDLC + "\\rs1compatibilitydlc.psarc.edat" || (json == pathDLC + "\\rs1compatibilitydlc_p.psarc" && platformDLCP == "Pc") || (json == pathDLC + "\\rs1compatibilitydlc_m.psarc" && platformDLCP == "Mac")) //RS12 DLC
@@ -4170,7 +4172,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             //if (!File.Exists(t))
                                 using (var DDC = new Process())
                                 {
-                                    DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 60 * 5); //wait 1min
+                                    DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 60 * 5); //wait 5min
                                     if (DDC.ExitCode > 0) rtxt_StatisticsOnReadDLCs.Text = "Issues when packing rs1dlc DLC pack !" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                 }
 
@@ -4276,19 +4278,20 @@ namespace RocksmithToolkitGUI.DLCManager
                                 //rtxt_StatisticsOnReadDLCs.Text = (rtxt_StatisticsOnReadDLCs.Text).Replace("Starting Decompressing WEMs " + (i - 1) + "/", "Starting Decompressing WEMs " + i + "/");
                                startInfo = new ProcessStartInfo();
 
-                                startInfo.FileName = Path.Combine(AppWD, "DLCManager\\audiocrossreference.exe");
-                                startInfo.WorkingDirectory = unpackedDir1;// Path.GetDirectoryName();
-                                startInfo.Arguments = String.Format(" {0}",
-                                                                    wem);
+                               startInfo.FileName = Path.Combine(AppWD, "DLCManager\\ww2ogg.exe");
+                               startInfo.WorkingDirectory = AppWD;// unpackedDir1;// Path.GetDirectoryName();
+                                startInfo.Arguments = String.Format(" {0} -o {1} --pcb packed_codebooks_aoTuV_603.bin",
+                                                                    wem,
+                                                                    wem.Replace(".wem",".ogg"));
                                 startInfo.UseShellExecute = false; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
 
                                 if (File.Exists(wem))
                                     using (var DDC = new Process())
                                     {
-                                        DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 3 * 60); //wait min
+                                        DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 30 * 60); //wait 30min
                                         //if (DDC.ExitCode > 0) rtxt_StatisticsOnReadDLCs.Text = "Issues when decrypting wem files !" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                                        Console.WriteLine("{0} is active: {1}", DDC.Id, !DDC.HasExited);
-                                        DDC.Kill();
+                                        //Console.WriteLine("{0} is active: {1}", DDC.Id, !DDC.HasExited);
+                                        //DDC.Kill();
                                     }
                             }
                             //    startInfo = new ProcessStartInfo();

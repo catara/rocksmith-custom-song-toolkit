@@ -13,21 +13,6 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <StartupObject>RocksmithToolkitGUI.Program</StartupObject>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -110,11 +95,6 @@
     <Compile Include="AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="DefaultDBDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DefaultDBDataSet.xsd</DependentUpon>
-    </Compile>
     <Compile Include="DLCInlayCreator\IntroScreensCreator.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -127,64 +107,26 @@
     <Compile Include="CDLC2Tab\SongInfoForm.Designer.cs">
       <DependentUpon>SongInfoForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="DLCManager\ArrangementsDB.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="DLCManager\ArrangementsDB.Designer.cs">
-      <DependentUpon>ArrangementsDB.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DLCManager\Cache.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="DLCManager\Cache.Designer.cs">
-      <DependentUpon>Cache.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DLCManager\WEM2OGGCorrespondence.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="DLCManager\WEM2OGGCorrespondence.Designer.cs">
-      <DependentUpon>WEM2OGGCorrespondence.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DLCManager\Temp\DataAccess.cs" />
-    <Compile Include="DLCManager\Temp\DataGridViewExtensions.cs" />
-    <Compile Include="DLCManager\DLCManager.cs">
+    <Compile Include="DLCPackageCreator\DLCPackageCreator.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="DLCManager\DLCManager.Designer.cs">
-      <DependentUpon>DLCManager.cs</DependentUpon>
+    <Compile Include="DLCPackageCreator\DLCPackageCreator.designer.cs">
+      <DependentUpon>DLCPackageCreator.cs</DependentUpon>
     </Compile>
-    <Compile Include="DLCManager\DuplicatesManagement.cs">
-      <SubType>Form</SubType>
+    <Compile Include="DLCPackageCreator\ToneControl.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="DLCManager\DuplicatesManagement.Designer.cs">
-      <DependentUpon>DuplicatesManagement.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DLCManager\MainDB.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="DLCManager\MainDB.Designer.cs">
-      <DependentUpon>MainDB.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DLCManager\Standardization.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="DLCManager\Standardization.Designer.cs">
-      <DependentUpon>Standardization.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DLCManager\Temp\Duplicates.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="DLCManager\Temp\Duplicates.Designer.cs">
-      <DependentUpon>Duplicates.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DLCManager\TonesDB.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="DLCManager\TonesDB.Designer.cs">
-      <DependentUpon>TonesDB.cs</DependentUpon>
+    <Compile Include="DLCPackageCreator\ToneControl.designer.cs">
+      <DependentUpon>ToneControl.cs</DependentUpon>
     </Compile>
     <Compile Include="DLCPackageCreator\VocalsForm.Designer.cs">
       <DependentUpon>VocalsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UpdateForm.cs">
       <SubType>Form</SubType>
@@ -237,18 +179,6 @@
     <Compile Include="DLCPackageCreator\TuningForm.Designer.cs">
       <DependentUpon>TuningForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="DLCPackageCreator\DLCPackageCreator.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="DLCPackageCreator\DLCPackageCreator.Designer.cs">
-      <DependentUpon>DLCPackageCreator.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DLCPackageCreator\ToneControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="DLCPackageCreator\ToneControl.Designer.cs">
-      <DependentUpon>ToneControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="DLCPackageCreator\ToneForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -274,12 +204,6 @@
     <Compile Include="HelpForm.Designer.cs">
       <DependentUpon>HelpForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="OggConverter\OggConverter.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -300,11 +224,11 @@
     <Compile Include="CDLC2Tab\CDLC2Tab.Designer.cs">
       <DependentUpon>CDLC2Tab.cs</DependentUpon>
     </Compile>
-    <Compile Include="ZiggyProEditorConverter\ConverterInput.cs">
+    <Compile Include="ZiggyProEditorConverter\ZpeConverter.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ZiggyProEditorConverter\ConverterInput.Designer.cs">
-      <DependentUpon>ConverterInput.cs</DependentUpon>
+    <Compile Include="ZiggyProEditorConverter\ZpeConverter.designer.cs">
+      <DependentUpon>ZpeConverter.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
@@ -315,38 +239,20 @@
     <EmbeddedResource Include="CDLC2Tab\SongInfoForm.resx">
       <DependentUpon>SongInfoForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DLCManager\ArrangementsDB.resx">
-      <DependentUpon>ArrangementsDB.cs</DependentUpon>
+    <EmbeddedResource Include="DLCPackageCreator\DLCPackageCreator.resx">
+      <DependentUpon>DLCPackageCreator.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DLCManager\DLCManager.resx">
-      <DependentUpon>DLCManager.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DLCManager\DuplicatesManagement.resx">
-      <DependentUpon>DuplicatesManagement.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DLCManager\MainDB.resx">
-      <DependentUpon>MainDB.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DLCManager\Cache.resx">
-      <DependentUpon>Cache.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DLCManager\WEM2OGGCorrespondence.resx">
-      <DependentUpon>WEM2OGGCorrespondence.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DLCManager\Standardization.resx">
-      <DependentUpon>Standardization.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DLCManager\Temp\Duplicates.resx">
-      <DependentUpon>Duplicates.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DLCManager\TonesDB.resx">
-      <DependentUpon>TonesDB.cs</DependentUpon>
+    <EmbeddedResource Include="DLCPackageCreator\ToneControl.resx">
+      <DependentUpon>ToneControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DLCPackageCreator\ToneImportForm.resx">
       <DependentUpon>ToneImportForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DLCPackageCreator\VocalsForm.resx">
       <DependentUpon>VocalsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UpdateForm.resx">
       <DependentUpon>UpdateForm.cs</DependentUpon>
@@ -372,12 +278,6 @@
     <EmbeddedResource Include="DLCPackageCreator\TuningForm.resx">
       <DependentUpon>TuningForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DLCPackageCreator\DLCPackageCreator.resx">
-      <DependentUpon>DLCPackageCreator.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DLCPackageCreator\ToneControl.resx">
-      <DependentUpon>ToneControl.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="DLCPackageCreator\ToneForm.resx">
       <DependentUpon>ToneForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -389,9 +289,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="HelpForm.resx">
       <DependentUpon>HelpForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OggConverter\OggConverter.resx">
       <DependentUpon>OggConverter.cs</DependentUpon>
@@ -412,25 +309,11 @@
     <EmbeddedResource Include="CDLC2Tab\CDLC2Tab.resx">
       <DependentUpon>CDLC2Tab.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ZiggyProEditorConverter\ConverterInput.resx">
-      <DependentUpon>ConverterInput.cs</DependentUpon>
+    <EmbeddedResource Include="ZiggyProEditorConverter\ZpeConverter.resx">
+      <DependentUpon>ZpeConverter.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="DefaultDBDataSet.xsc">
-      <DependentUpon>DefaultDBDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="DefaultDBDataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>DefaultDBDataSet.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="DefaultDBDataSet.xss">
-      <DependentUpon>DefaultDBDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="DLCManager\packed_codebooks_aoTuV_603.bin">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -462,6 +345,14 @@
     <None Include="Resources\pick.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\RocksmithToolkitCLI\artistfolders\artistfolders.csproj">
+      <Project>{E742753F-9DC3-4AB7-B129-DC11EB2302CA}</Project>
+      <Name>artistfolders</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RocksmithToolkitCLI\convert2012\convert2012.csproj">
+      <Project>{FE4E3BDA-2942-4009-9F42-07ECEF8DE350}</Project>
+      <Name>convert2012</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RocksmithToolkitCLI\devtools\devtools.csproj">
       <Project>{63FB3334-1E7E-42D7-A025-744BC387AAD6}</Project>
       <Name>devtools</Name>
@@ -469,6 +360,10 @@
     <ProjectReference Include="..\RocksmithToolkitCLI\dlcconverter\dlcconverter.csproj">
       <Project>{972BC97A-B70A-4007-B915-952CC3606A2A}</Project>
       <Name>dlcconverter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RocksmithToolkitCLI\PackageCreator\packagecreator.csproj">
+      <Project>{ED268869-387A-477E-A652-C6E47BE2AC02}</Project>
+      <Name>packagecreator</Name>
     </ProjectReference>
     <ProjectReference Include="..\RocksmithToolkitCLI\packer\packer.csproj">
       <Project>{822D185A-28A3-4AE0-A811-800E968AA2E7}</Project>
@@ -505,27 +400,6 @@
   <ItemGroup>
     <None Include="Resources\colored.png" />
     <None Include="Resources\brasil_logo.png" />
-    <Content Include="DLCManager\audiocrossreference.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\edattool.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\Files.accdb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\oggdec.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\psarc.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\README.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\ww2ogg.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Resources\ddc-512.png" />
     <None Include="Resources\guitar_256.png" />
     <None Include="Resources\flipXc.png" />
@@ -533,28 +407,7 @@
     <None Include="Resources\music_edit.png" />
     <Content Include="songcreator.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
-      <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Windows.Installer.4.5">
-      <Visible>False</Visible>
-      <ProductName>Windows Installer 4.5</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
@@ -576,5 +429,4 @@ if $(ConfigurationName) == ReleaseMac (
   </Target>
   <Target Name="AfterBuild">
   </Target>
-  -->
 </Project>

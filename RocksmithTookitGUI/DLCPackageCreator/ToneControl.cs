@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using System.Text.RegularExpressions;
 using RocksmithToolkitLib;
 using RocksmithToolkitLib.Extensions;
 using RocksmithToolkitLib.ToolkitTone;
-using RocksmithToolkitLib.DLCPackage.Tone;
 using RocksmithToolkitLib.DLCPackage.Manifest.Tone;
 
 namespace RocksmithToolkitGUI.DLCPackageCreator
@@ -33,8 +29,10 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
         }
 
         private string loopOrRackSlot;
-        private string LoopOrRackSlot {
-            get {
+        private string LoopOrRackSlot
+        {
+            get
+            {
                 loopOrRackSlot = "LoopPedal";
                 if (CurrentGameVersion == GameVersion.RS2014)
                     loopOrRackSlot = "Rack";
@@ -93,6 +91,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
 
             if (CurrentGameVersion == GameVersion.RS2014)
             {
+                // TODO: multiple ToneDescriptors improved handling and editing
                 if (tone.ToneDescriptors.Count > 0)
                 {
                     if (ToneDescriptor.List().Any<ToneDescriptor>(t => t.Descriptor == tone.ToneDescriptors[0]))
@@ -105,7 +104,8 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
 
         private void UpdateComboSelection(ComboBox box, Control knobSelectButton, string pedalSlot)
         {
-            switch (CurrentGameVersion) {
+            switch (CurrentGameVersion)
+            {
                 case GameVersion.RS2012:
                     box.SelectedItem = tone.PedalList.ContainsKey(pedalSlot) ? box.Items.OfType<ToolkitPedal>().First(p => p.Key == tone.PedalList[pedalSlot].PedalKey) : null;
                     knobSelectButton.Enabled = tone.PedalList.ContainsKey(pedalSlot) ? ((Pedal)tone.PedalList[pedalSlot]).KnobValues.Any() : false;
@@ -156,7 +156,8 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             tvt.SetToolTip(volumeBox, "LOWEST 0,-1,-2,-3,..., AVERAGE -12 ,...,-20,-21 HIGHER");
         }
 
-        private void UpdateToneDescription(ComboBox combo) {
+        private void UpdateToneDescription(ComboBox combo)
+        {
             if (_refreshingCombos)
                 return;
 
@@ -206,7 +207,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             InitializeSelectedPedal(postPedal1Box, postPedal1KnobButton, "PostPedal1", postPedals, true);
             InitializeSelectedPedal(postPedal2Box, postPedal2KnobButton, "PostPedal2", postPedals, true);
             InitializeSelectedPedal(postPedal3Box, postPedal3KnobButton, "PostPedal3", postPedals, true);
-            InitializeSelectedPedal(postPedal4Box, postPedal4KnobButton, "PostPedal4", postPedals, true);           
+            InitializeSelectedPedal(postPedal4Box, postPedal4KnobButton, "PostPedal4", postPedals, true);
         }
 
         private void InitializeSelectedPedal(ComboBox box, Control knobSelectButton, string pedalSlot, ToolkitPedal[] pedals, bool allowNull)
@@ -235,7 +236,8 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 var pedal = box.SelectedItem as ToolkitPedal;
                 if (pedal == null)
                 {
-                    switch (CurrentGameVersion) {
+                    switch (CurrentGameVersion)
+                    {
                         case GameVersion.RS2012:
                             tone.PedalList.Remove(pedalSlot);
                             break;
@@ -244,13 +246,14 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                             break;
                         default:
                             break;
-                    }                    
+                    }
                     knobSelectButton.Enabled = false;
                 }
                 else
                 {
                     string pedalKey = "";
-                    switch (CurrentGameVersion) {
+                    switch (CurrentGameVersion)
+                    {
                         case GameVersion.RS2012:
                             if (tone.PedalList.ContainsKey(pedalSlot))
                                 pedalKey = tone.PedalList[pedalSlot].PedalKey;
@@ -264,7 +267,8 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                     if (pedal.Key != pedalKey)
                     {
                         var pedalSetting = pedal.MakePedalSetting(CurrentGameVersion);
-                        switch (CurrentGameVersion) {
+                        switch (CurrentGameVersion)
+                        {
                             case GameVersion.RS2012:
                                 tone.PedalList[pedalSlot] = pedalSetting;
                                 knobSelectButton.Enabled = ((Pedal)pedalSetting).KnobValues.Any();
@@ -275,9 +279,11 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                                 break;
                         }
                     }
-                    else {
+                    else
+                    {
                         bool knobEnabled = false;
-                        switch (CurrentGameVersion) {
+                        switch (CurrentGameVersion)
+                        {
                             case GameVersion.RS2012:
                                 knobEnabled = ((Pedal)tone.PedalList[pedalSlot]).KnobValues.Any();
                                 break;
@@ -291,10 +297,12 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             };
         }
 
-        private void toneNameBox_Leave(object sender, EventArgs e) {
+        private void toneNameBox_Leave(object sender, EventArgs e)
+        {
             TextBox control = (TextBox)sender;
-            control.Text = control.Text.Trim().GetValidName();
+            control.Text = control.Text.Trim().GetValidName(true);
         }
+
     }
 }
 

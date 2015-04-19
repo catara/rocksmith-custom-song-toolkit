@@ -1,16 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using RocksmithToolkitLib.DLCPackage.Tone;
-using System.Runtime.Serialization;
-using System.Xml;
 using RocksmithToolkitLib;
 using RocksmithToolkitLib.DLCPackage.Manifest.Tone;
+
+
 
 namespace RocksmithToolkitGUI.DLCPackageCreator
 {
@@ -18,10 +11,15 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
     {
         public bool Saved = false;
         public GameVersion CurrentGameVersion;
+        private DLCPackageCreator parentControl = null;
 
-        private string CurrentOFDFilter {
-            get {
-                switch (CurrentGameVersion) {
+
+        private string CurrentOFDFilter
+        {
+            get
+            {
+                switch (CurrentGameVersion)
+                {
                     case GameVersion.RS2014:
                         return "Rocksmith 2014 Tone Template (*.tone2014.xml)|*.tone2014.xml";
                     default:
@@ -33,6 +31,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
         public ToneForm()
         {
             InitializeComponent();
+
         }
 
         private void okButton_Click(object sender, EventArgs e)
@@ -53,6 +52,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
         private void loadButton_Click(object sender, EventArgs e)
         {
             string toneSavePath;
+
             using (var ofd = new OpenFileDialog())
             {
                 ofd.Filter = CurrentOFDFilter;
@@ -63,7 +63,8 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             dynamic tone = null;
             try
             {
-                switch (CurrentGameVersion) {
+                switch (CurrentGameVersion)
+                {
                     case GameVersion.RS2012:
                         tone = Tone.LoadFromXmlTemplateFile(toneSavePath);
                         break;
@@ -71,7 +72,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                         tone = Tone2014.LoadFromXmlTemplateFile(toneSavePath);
                         break;
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -100,5 +101,6 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
 
             MessageBox.Show("Tone was saved.", DLCPackageCreator.MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
     }
 }

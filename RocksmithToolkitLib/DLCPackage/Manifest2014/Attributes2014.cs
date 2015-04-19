@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
+using RocksmithToolkitLib.DLCPackage.Manifest.Functions;
 using RocksmithToolkitLib.Xml;
 using RocksmithToolkitLib.DLCPackage.Manifest.Tone;
 using RocksmithToolkitLib.DLCPackage.Manifest.Header;
@@ -11,7 +12,8 @@ using RocksmithToolkitLib.Extensions;
 
 namespace RocksmithToolkitLib.DLCPackage.Manifest
 {
-    public class Attributes2014 : AttributesHeader2014, IAttributes {
+    public class Attributes2014 : AttributesHeader2014, IAttributes
+    {
         public SongArrangementProperties2014 ArrangementProperties { get; set; }
         public int ArrangementSort { get; set; }
         public int? ArrangementType { get; set; }
@@ -40,7 +42,7 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest
         public int SongPartition { get; set; }
         public string SongXml { get; set; }
         public int TargetScore { get; set; }
-        public Dictionary<string, Dictionary<string, object>> Techniques { get; set; } //Problem in 3rd sublevel that can be a list or not
+        public Dictionary<string, Dictionary<string, List<int>>> Techniques { get; set; }
         public string Tone_A { get; set; }
         public string Tone_B { get; set; }
         public string Tone_Base { get; set; }
@@ -52,7 +54,7 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest
         public float SongVolume { get; set; } //Customs only (to easy platform conversion) its float!
         public float? PreviewVolume { get; set; } //Customs only like above
 
-        public Attributes2014() {}
+        public Attributes2014() { }
 
         public Attributes2014(string arrangementFileName, Arrangement arrangement, DLCPackageData info, Platform platform)
             : base(arrangementFileName, arrangement, info, platform)
@@ -146,20 +148,16 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest
 
                 //SongPartition  -- Generated in DLCPackageCreator after this constructor
 
-                //Techniques     -- //TODO: MISSING GENERATE
-                /*
-                 Techniques: {
-                       DiffLevelID: {
-                           // 4 : 0,[6,9],[13],[12,15] // unpitchedSlides, tremolo, hopo
-                           PhraseIterationIndex: [TechID, TechID...]
-                       }
-                 }
-                 */
+                //Techniques TODO: improove me
+                try
+                {
+                    manifestFunctions.GenerateTechniques(this, SongContent);
+                }
+                catch { }
 
                 //Fix for Dead tones
                 var it = info.TonesRS2014;
                 Tones = new List<Tone2014>();
-
                 Tone_A = GetToneName(arrangement.ToneA, it);
                 Tone_B = GetToneName(arrangement.ToneB, it);
                 Tone_Base = GetToneName(arrangement.ToneBase, it);
@@ -181,9 +179,11 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest
             string ToneName = "";
             const string Default = "Default";
 
-            if(!String.IsNullOrEmpty(arrTone))
+            if (!String.IsNullOrEmpty(arrTone))
             {
-                var matchedTone = it.SingleOrDefault(t => t.Name == arrTone);
+                // recognize that ToneBase name alpha case mismatches do exist and process it
+                // take the first if there are multiple matches so error is not thrown
+                var matchedTone = it.FirstOrDefault(t => t.Name.ToLower() == arrTone.ToLower());
                 if (ReferenceEquals(matchedTone, null))
                     return ToneName;
 

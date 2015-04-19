@@ -2,7 +2,6 @@
 # C# gitignore template
 
 # Build Folders (you can keep bin if you'd like, to store dlls and pdbs)
-[Bb]in/
 [Oo]bj/
 
 # mstest test results
@@ -17,6 +16,8 @@ TestResults
 *.sln.docstates
 
 # Build results
+[Bb]in/
+[Oo]bj/
 [Dd]ebug/
 [Rr]elease/
 x64/
@@ -92,12 +93,12 @@ csx
 AppPackages/
 
 # Others
-[Bb]in
 [Oo]bj
 sql
 TestResults
 [Tt]est[Rr]esult*
 *.Cache
+*.resources
 ClientBin
 [Ss]tyle[Cc]op.*
 ~$*
@@ -116,8 +117,5 @@ RocksmithToolkitLib/ToolkitVersion.cs
 __pycache__/
 *.py[cod]
 *.egg
-RocksmithCustomSongCreator.sln.ide/storage.ide
-*.ide
-*.ide
-*.chk
-*.ide
+
+*.userprefs

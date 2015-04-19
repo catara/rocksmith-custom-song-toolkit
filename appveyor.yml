@@ -1,0 +1,35 @@
+version: "{build}"
+branches:
+  only:
+    - master
+configuration: Release
+test: off
+
+build:
+  parallel: true
+  verbosity: minimal
+
+after_build:
+  - rem Windows package
+  - 7z a Windows.zip %APPVEYOR_BUILD_FOLDER%\RocksmithTookitGUI\bin\Release\*
+  - rem Mac package
+  - del "%APPVEYOR_BUILD_FOLDER%\RocksmithTookitGUI\bin\RocksmithCustomSongToolkit.app\Contents\Resources\gitkeep.txt"
+  - xcopy /E "%APPVEYOR_BUILD_FOLDER%\RocksmithTookitGUI\bin\Release\*" "%APPVEYOR_BUILD_FOLDER%\RocksmithTookitGUI\bin\RocksmithCustomSongToolkit.app\Contents\Resources\"
+  - xcopy "%APPVEYOR_BUILD_FOLDER%\RocksmithTookitGUI\songcreator.icns" "%APPVEYOR_BUILD_FOLDER%\RocksmithTookitGUI\bin\RocksmithCustomSongToolkit.app\Contents\Resources\"
+  - copy "%APPVEYOR_BUILD_FOLDER%\RocksmithTookitGUI\bin\RocksmithCustomSongToolkit.app\Contents\Resources\RocksmithToolkitGUI.exe" "%APPVEYOR_BUILD_FOLDER%\RocksmithTookitGUI\bin\RocksmithCustomSongToolkit.app\Contents\Resources\RocksmithCustomSongToolkit.exe"
+  - 7z a -ttar Mac.tar %APPVEYOR_BUILD_FOLDER%\RocksmithTookitGUI\bin\RocksmithCustomSongToolkit.app\
+  - 7z a -tgzip Mac.tar.gz Mac.tar
+
+artifacts:
+  - path: Windows.zip
+  - path: Mac.tar.gz
+
+notifications:
+  - provider: Webhook
+    url: "http://www.rscustom.net/hook/appveyor"
+    headers:
+      Authorization:
+        secure: NjVdRVVdkTGELbhe2ejYz/soldL9HWrzpaVcDpPM5tX0lYfFd0ld8Q2NowOfBiqxEKa1t7jgV6z8XO6B5g4nMM9rkqJwjzmrN8ZQbfIX7+Z2xokQo6A1ET4uadCfKrIOHPYBQyGaaimojJKJlq+Zzw+BsQD/OLDKf3u9q6MARyg=
+    on_build_success: true
+    on_build_failure: true
+    on_build_status_changed: true

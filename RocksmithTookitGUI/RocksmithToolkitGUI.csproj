@@ -107,6 +107,54 @@
     <Compile Include="CDLC2Tab\SongInfoForm.Designer.cs">
       <DependentUpon>SongInfoForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="DLCManager\ArrangementsDB.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DLCManager\ArrangementsDB.Designer.cs">
+      <DependentUpon>ArrangementsDB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DLCManager\Cache.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DLCManager\Cache.Designer.cs">
+      <DependentUpon>Cache.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DLCManager\DLCManager.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DLCManager\DLCManager.Designer.cs">
+      <DependentUpon>DLCManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DLCManager\DuplicatesManagement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DLCManager\DuplicatesManagement.Designer.cs">
+      <DependentUpon>DuplicatesManagement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DLCManager\MainDB.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DLCManager\MainDB.Designer.cs">
+      <DependentUpon>MainDB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DLCManager\Standardization.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DLCManager\Standardization.Designer.cs">
+      <DependentUpon>Standardization.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DLCManager\TonesDB.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DLCManager\TonesDB.Designer.cs">
+      <DependentUpon>TonesDB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DLCManager\WEM2OGGCorrespondence.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DLCManager\WEM2OGGCorrespondence.Designer.cs">
+      <DependentUpon>WEM2OGGCorrespondence.cs</DependentUpon>
+    </Compile>
     <Compile Include="DLCPackageCreator\DLCPackageCreator.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -239,6 +287,30 @@
     <EmbeddedResource Include="CDLC2Tab\SongInfoForm.resx">
       <DependentUpon>SongInfoForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DLCManager\ArrangementsDB.resx">
+      <DependentUpon>ArrangementsDB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DLCManager\Cache.resx">
+      <DependentUpon>Cache.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DLCManager\DLCManager.resx">
+      <DependentUpon>DLCManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DLCManager\DuplicatesManagement.resx">
+      <DependentUpon>DuplicatesManagement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DLCManager\MainDB.resx">
+      <DependentUpon>MainDB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DLCManager\Standardization.resx">
+      <DependentUpon>Standardization.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DLCManager\TonesDB.resx">
+      <DependentUpon>TonesDB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DLCManager\WEM2OGGCorrespondence.resx">
+      <DependentUpon>WEM2OGGCorrespondence.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DLCPackageCreator\DLCPackageCreator.resx">
       <DependentUpon>DLCPackageCreator.cs</DependentUpon>
     </EmbeddedResource>
@@ -314,6 +386,9 @@
     </EmbeddedResource>
     <None Include="app.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DLCManager\packed_codebooks_aoTuV_603.bin">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -400,6 +475,25 @@
   <ItemGroup>
     <None Include="Resources\colored.png" />
     <None Include="Resources\brasil_logo.png" />
+    <Content Include="DLCManager\audiocrossreference.exe" />
+    <Content Include="DLCManager\edattool.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\Files.accdb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\oggdec.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\psarc.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\README.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\ww2ogg.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\ddc-512.png" />
     <None Include="Resources\guitar_256.png" />
     <None Include="Resources\flipXc.png" />
@@ -429,4 +523,5 @@ if $(ConfigurationName) == ReleaseMac (
   </Target>
   <Target Name="AfterBuild">
   </Target>
+  -->
 </Project>

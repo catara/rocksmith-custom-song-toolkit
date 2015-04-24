@@ -118,7 +118,12 @@ namespace RocksmithToolkitGUI.DLCManager
             }
         }
 
-        private void DataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        public void DataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        {
+           if (DataGridView1.SelectedCells[0].RowIndex>0) ChangeRow();
+        }
+
+        public void ChangeRow()
         {
             int i;
             i = DataGridView1.SelectedCells[0].RowIndex;
@@ -142,7 +147,8 @@ namespace RocksmithToolkitGUI.DLCManager
 
             //if (txt_Arrangements.Text != "") 
             picbx_AlbumArtPath.ImageLocation = txt_AlbumArtPath.Text;//.Replace(".dds", ".png");
-            SaveOK = true;
+            if (chbx_Autosave.Checked) SaveOK = true;
+            else SaveOK = false;
         }
 
         private void button8_Click(object sender, EventArgs e)
@@ -502,7 +508,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                     if (AllowORIGDeleteb && (file_name.IndexOf(".ogg") > 0 || (file_name.IndexOf(".orig") > 0))) ;
                                     else File.Copy(file_name, destination_dir + file_name.Substring(source_dir.Length), true);
                                 }
-                                Directory.Delete(source_dir, true);
+                                //Directory.Delete(source_dir, true);
                                 //var ee = "";
                                 //rtxt_StatisticsOnReadDLCs.Text = " DIR Moved" + "..." + rtxt_StatisticsOnReadDLCs.Text;
                                 unpackedDir = destination_dir;
@@ -718,7 +724,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void DataGridView1_CellLeave(object sender, DataGridViewCellEventArgs e)
         {
-            if (SaveOK) SaveRecord();
+            if (chbx_Autosave.Checked && SaveOK) SaveRecord();
         }
 
         private void btn_InvertAll_Click(object sender, EventArgs e)
@@ -1066,6 +1072,78 @@ namespace RocksmithToolkitGUI.DLCManager
                 //-Save the location in the Config file/reg
                 //ConfigRepository.Instance()["ManageTempFolder"] = temppath;
             }
+        }
+
+        private void ChangeEdit(object sender, EventArgs e)
+        {
+            if (txt_Album.Text != "") ChangeRow();
+        }
+
+        private void vScrollBar1_Scroll(object sender, ScrollEventArgs e)
+        {
+            //int halfWay = (DataGridView1.DisplayedRowCount(false) / 2);
+            //if (DataGridView1.FirstDisplayedScrollingRowIndex + halfWay > DataGridView1.SelectedRows[0].Index ||
+            //    (DataGridView1.FirstDisplayedScrollingRowIndex + DataGridView1.DisplayedRowCount(false) - halfWay) <= DataGridView1.SelectedRows[0].Index)
+            //{
+            //    int targetRow = DataGridView1.SelectedRows[0].Index;
+            //    targetRow = Math.Max(targetRow - halfWay, 0);
+//            DataGridView1.FirstDisplayedScrollingRowIndex = DataGridView1.SelectedRows+1;
+            //}
+            //if (DataGridView1.CurrentCell.ReadOnly)
+            //    DataGridView1.CurrentCell = GetNextCell(DataGridView1.CurrentCell);
+
+
+            // now get the testinfo at the gridcoordinate
+            //DataGridView.HitTestInfo hti = 10; //grdJobs.HitTest(pt.X, pt.Y);
+ 
+            // is it a cell?
+            //if (hti.Type == DataGridViewHitTestType.Cell)
+            //{
+            // make the cell the current on and select the row
+            //DataGridView1.ClearSelection();
+            //DataGridView1.CurrentCell = DataGridView1.Rows[DataGridView1.SelectedCells[0].RowIndex+1].Cells[1];
+            //DataGridView1.Rows[DataGridView1.SelectedCells[0].RowIndex+1].Selected = true;
+            
+                 	int rowindex;
+         DataGridViewRow row;
+         var i = DataGridView1.SelectedCells[0].RowIndex;
+         rowindex = i;// DataGridView1.SelectedRows[0].Index;
+        DataGridView1.Rows[rowindex + 1].Selected = true;
+        DataGridView1.Rows[rowindex].Selected = false;
+        row = DataGridView1.Rows[rowindex + 1];
+
+            // do whatever you want to do, set contextmenu text for example
+
+        }
+        private DataGridViewCell GetNextCell(DataGridViewCell currentCell)
+        {            //DataGridView1.
+            int i = 0; //DataGridViewCell currentCell = DataGridView1.CurrentCell;
+            DataGridViewCell nextCell = currentCell;
+
+            do
+            {
+                int nextCellIndex = (nextCell.ColumnIndex + 1) % DataGridView1.ColumnCount;
+                int nextRowIndex = nextCellIndex == 0 ? (nextCell.RowIndex + 1) % DataGridView1.RowCount : nextCell.RowIndex;
+                nextCell = DataGridView1.Rows[nextRowIndex].Cells[nextCellIndex];
+                i++;
+            } while (i < DataGridView1.RowCount * DataGridView1.ColumnCount && nextCell.ReadOnly);
+
+            return nextCell;
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+           //if (DataGridView1.SelectedCells[0].RowIndex > 0) 
+            SaveRecord();// ChangeRow();
+            int rowindex;
+            DataGridViewRow row;
+            var i = DataGridView1.SelectedCells[0].RowIndex;
+            rowindex = i;// DataGridView1.SelectedRows[0].Index;
+            DataGridView1.Rows[rowindex + 1].Selected = true;
+            DataGridView1.Rows[rowindex].Selected = false;
+            row = DataGridView1.Rows[rowindex + 1];
+            //if (DataGridView1.SelectedCells[0].RowIndex > 0) 
+            
         }
     }
 }

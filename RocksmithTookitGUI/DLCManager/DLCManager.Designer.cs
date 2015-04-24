@@ -35,7 +35,7 @@
             this.rbtn_Population_All = new System.Windows.Forms.RadioButton();
             this.rbtn_Population_Selected = new System.Windows.Forms.RadioButton();
             this.mainBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.defaultDBDataSet = new RocksmithToolkitGUI.DefaultDBDataSet();
+            //this.defaultDBDataSet = new RocksmithToolkitGUI.DefaultDBDataSet();
             this.Export_To = new System.Windows.Forms.Button();
             this.chbx_Rebuild = new System.Windows.Forms.CheckBox();
             this.btn_Cleanup_MainDB = new System.Windows.Forms.Button();
@@ -108,7 +108,7 @@
             this.chbx_WorkDGB = new System.Windows.Forms.CheckBox();
             this.chbx_HomeDBG = new System.Windows.Forms.CheckBox();
             this.chbx_DefaultDB = new System.Windows.Forms.CheckBox();
-            this.mainTableAdapter = new RocksmithToolkitGUI.DefaultDBDataSetTableAdapters.MainTableAdapter();
+            //this.mainTableAdapter = new RocksmithToolkitGUI.DefaultDBDataSetTableAdapters.MainTableAdapter();
             this.chbx_HomeDGBVM = new System.Windows.Forms.CheckBox();
             this.btn_LoadRetrailSongs = new System.Windows.Forms.Button();
             this.chbx_CleanCache = new System.Windows.Forms.CheckBox();
@@ -118,7 +118,7 @@
             this.chbx_CleanCacheTemp = new System.Windows.Forms.CheckBox();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.defaultDBDataSet)).BeginInit();
+            //((System.ComponentModel.ISupportInitialize)(this.defaultDBDataSet)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.grpbx_ApplyChanges.SuspendLayout();
             this.SuspendLayout();
@@ -183,13 +183,13 @@
             // mainBindingSource
             // 
             this.mainBindingSource.DataMember = "Main";
-            this.mainBindingSource.DataSource = this.defaultDBDataSet;
+            //this.mainBindingSource.DataSource = this.defaultDBDataSet;
             this.mainBindingSource.CurrentChanged += new System.EventHandler(this.mainBindingSource_CurrentChanged);
             // 
             // defaultDBDataSet
             // 
-            this.defaultDBDataSet.DataSetName = "DefaultDBDataSet";
-            this.defaultDBDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            //this.defaultDBDataSet.DataSetName = "DefaultDBDataSet";
+            //this.defaultDBDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // Export_To
             // 
@@ -1194,7 +1194,7 @@
             // 
             // mainTableAdapter
             // 
-            this.mainTableAdapter.ClearBeforeFill = true;
+            //this.mainTableAdapter.ClearBeforeFill = true;
             // 
             // chbx_HomeDGBVM
             // 
@@ -1358,7 +1358,7 @@
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.defaultDBDataSet)).EndInit();
+            //((System.ComponentModel.ISupportInitialize)(this.defaultDBDataSet)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.grpbx_ApplyChanges.ResumeLayout(false);
             this.grpbx_ApplyChanges.PerformLayout();
@@ -1447,8 +1447,8 @@
         private System.Windows.Forms.CheckBox chbx_WorkDGB;
         private System.Windows.Forms.CheckBox chbx_HomeDBG;
         private System.Windows.Forms.CheckBox chbx_DefaultDB;
-        private DefaultDBDataSet defaultDBDataSet;
-        private DefaultDBDataSetTableAdapters.MainTableAdapter mainTableAdapter;
+        //private DefaultDBDataSet defaultDBDataSet;
+        //private DefaultDBDataSetTableAdapters.MainTableAdapter mainTableAdapter;
         private System.Windows.Forms.CheckBox chbx_HomeDGBVM;
         private System.Windows.Forms.Button btn_LoadRetrailSongs;
         private System.Windows.Forms.CheckBox chbx_CleanCache;

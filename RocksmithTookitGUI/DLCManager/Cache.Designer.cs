@@ -59,6 +59,8 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_Autosave = new System.Windows.Forms.CheckBox();
             this.btn_ExpandSelCrossP = new System.Windows.Forms.Button();
             this.cbx_Format = new System.Windows.Forms.ComboBox();
+            this.btn_SteamDLCFolder = new System.Windows.Forms.Button();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.txt_AudioPreviewPath = new RocksmithToolkitGUI.CueTextBox();
             this.txt_AudioPath = new RocksmithToolkitGUI.CueTextBox();
             this.txt_VLCPath = new RocksmithToolkitGUI.CueTextBox();
@@ -75,9 +77,9 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_AlbumYear = new RocksmithToolkitGUI.CueTextBox();
             this.txt_ID = new RocksmithToolkitGUI.CueTextBox();
             this.txt_Album = new RocksmithToolkitGUI.CueTextBox();
-            this.btn_SteamDLCFolder = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPath)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // DataGridView1
@@ -95,6 +97,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.DataGridView1.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick_1);
             this.DataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick_1);
             this.DataGridView1.CellLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellLeave);
+            this.DataGridView1.SelectionChanged += new System.EventHandler(this.ChangeEdit);
             // 
             // picbx_AlbumArtPath
             // 
@@ -108,7 +111,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // chbx_Removed
             // 
             this.chbx_Removed.AutoSize = true;
-            this.chbx_Removed.Location = new System.Drawing.Point(16, 567);
+            this.chbx_Removed.Location = new System.Drawing.Point(754, 650);
             this.chbx_Removed.Name = "chbx_Removed";
             this.chbx_Removed.Size = new System.Drawing.Size(72, 17);
             this.chbx_Removed.TabIndex = 124;
@@ -156,7 +159,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_DecompressAll.Location = new System.Drawing.Point(12, 619);
             this.btn_DecompressAll.Margin = new System.Windows.Forms.Padding(2);
             this.btn_DecompressAll.Name = "btn_DecompressAll";
-            this.btn_DecompressAll.Size = new System.Drawing.Size(73, 35);
+            this.btn_DecompressAll.Size = new System.Drawing.Size(59, 35);
             this.btn_DecompressAll.TabIndex = 276;
             this.btn_DecompressAll.Text = "Open Main DB";
             this.btn_DecompressAll.UseVisualStyleBackColor = false;
@@ -245,7 +248,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.chbx_AutoPlay.AutoSize = true;
             this.chbx_AutoPlay.Enabled = false;
-            this.chbx_AutoPlay.Location = new System.Drawing.Point(746, 650);
+            this.chbx_AutoPlay.Location = new System.Drawing.Point(644, 650);
             this.chbx_AutoPlay.Name = "chbx_AutoPlay";
             this.chbx_AutoPlay.Size = new System.Drawing.Size(80, 17);
             this.chbx_AutoPlay.TabIndex = 290;
@@ -343,11 +346,11 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(89, 620);
+            this.button4.Location = new System.Drawing.Point(76, 620);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(50, 34);
+            this.button4.Size = new System.Drawing.Size(62, 34);
             this.button4.TabIndex = 303;
-            this.button4.Text = "Open Psarc";
+            this.button4.Text = "Open HSAN file";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
@@ -376,7 +379,6 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // cbx_Format
             // 
-            this.cbx_Format.Enabled = false;
             this.cbx_Format.FormattingEnabled = true;
             this.cbx_Format.Items.AddRange(new object[] {
             "PC",
@@ -389,6 +391,25 @@ namespace RocksmithToolkitGUI.DLCManager
             this.cbx_Format.TabIndex = 306;
             this.cbx_Format.Text = "PS3";
             this.cbx_Format.SelectedIndexChanged += new System.EventHandler(this.cbx_Format_SelectedIndexChanged);
+            // 
+            // btn_SteamDLCFolder
+            // 
+            this.btn_SteamDLCFolder.Location = new System.Drawing.Point(1151, 631);
+            this.btn_SteamDLCFolder.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_SteamDLCFolder.Name = "btn_SteamDLCFolder";
+            this.btn_SteamDLCFolder.Size = new System.Drawing.Size(22, 15);
+            this.btn_SteamDLCFolder.TabIndex = 307;
+            this.btn_SteamDLCFolder.Text = "...";
+            this.btn_SteamDLCFolder.UseVisualStyleBackColor = true;
+            this.btn_SteamDLCFolder.Click += new System.EventHandler(this.btn_SteamDLCFolder_Click);
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Location = new System.Drawing.Point(721, 649);
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(31, 20);
+            this.numericUpDown1.TabIndex = 310;
+            this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
             // 
             // txt_AudioPreviewPath
             // 
@@ -562,7 +583,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_ID.Enabled = false;
             this.txt_ID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_ID.ForeColor = System.Drawing.Color.Gray;
-            this.txt_ID.Location = new System.Drawing.Point(94, 564);
+            this.txt_ID.Location = new System.Drawing.Point(15, 565);
             this.txt_ID.Name = "txt_ID";
             this.txt_ID.Size = new System.Drawing.Size(45, 20);
             this.txt_ID.TabIndex = 128;
@@ -578,22 +599,12 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_Album.Size = new System.Drawing.Size(222, 20);
             this.txt_Album.TabIndex = 126;
             // 
-            // btn_SteamDLCFolder
-            // 
-            this.btn_SteamDLCFolder.Location = new System.Drawing.Point(1151, 631);
-            this.btn_SteamDLCFolder.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_SteamDLCFolder.Name = "btn_SteamDLCFolder";
-            this.btn_SteamDLCFolder.Size = new System.Drawing.Size(22, 15);
-            this.btn_SteamDLCFolder.TabIndex = 307;
-            this.btn_SteamDLCFolder.Text = "...";
-            this.btn_SteamDLCFolder.UseVisualStyleBackColor = true;
-            this.btn_SteamDLCFolder.Click += new System.EventHandler(this.btn_SteamDLCFolder_Click);
-            // 
             // Cache
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1187, 694);
+            this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.btn_SteamDLCFolder);
             this.Controls.Add(this.cbx_Format);
             this.Controls.Add(this.btn_ExpandSelCrossP);
@@ -644,6 +655,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.Load += new System.EventHandler(this.Standardization_Load);
             ((System.ComponentModel.ISupportInitialize)(this.DataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPath)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -699,5 +711,6 @@ namespace RocksmithToolkitGUI.DLCManager
         private System.Windows.Forms.Button btn_ExpandSelCrossP;
         private System.Windows.Forms.ComboBox cbx_Format;
         private System.Windows.Forms.Button btn_SteamDLCFolder;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
     }
 }

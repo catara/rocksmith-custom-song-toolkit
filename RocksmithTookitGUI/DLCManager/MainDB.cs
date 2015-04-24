@@ -35,6 +35,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private string Filename = System.IO.Path.Combine(Application.StartupPath, "Text.txt");
         internal static string AppWD = AppDomain.CurrentDomain.BaseDirectory; //when repacking
+        public bool SaveOK = false;
 
         private BindingSource Main = new BindingSource();
         private const string MESSAGEBOX_CAPTION = "MainDB";
@@ -267,8 +268,8 @@ namespace RocksmithToolkitGUI.DLCManager
             else chbx_Sections.Checked = false;
             if (DataGridView1.Rows[i].Cells[42].Value.ToString() == "Yes") chbx_Cover.Checked = true;
             else chbx_Cover.Checked = false;
-            if (DataGridView1.Rows[i].Cells[43].Value.ToString() == "Yes") chbx_Preview.Checked = true;
-            else chbx_Preview.Checked = false;
+            if (DataGridView1.Rows[i].Cells[43].Value.ToString() == "Yes") { chbx_Preview.Checked = true; btn_PlayPreview.Enabled = true; }
+            else {chbx_Preview.Checked = false; btn_PlayPreview.Enabled = false;}
             if (DataGridView1.Rows[i].Cells[45].Value.ToString() == "Yes") chbx_DD.Checked = true;
             else chbx_DD.Checked = false;
             if (DataGridView1.Rows[i].Cells[69].Value.ToString() == "Yes") chbx_Selected.Checked = true;
@@ -293,10 +294,16 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_Artist_Sort.Enabled = true;
             txt_Album.Enabled = true;
             txt_Title_Sort.Enabled = true;
+            if (chbx_AutoSave.Checked) SaveOK = true;
+            else SaveOK = false;
 
         }
 
-        private void button8_Click(object sender, EventArgs e)
+        public void button8_Click(object sender, EventArgs e)
+        {
+            SaveRecord();
+        }
+        public void SaveRecord()
         {
             int i;
             DataSet dis = new DataSet();
@@ -324,6 +331,7 @@ namespace RocksmithToolkitGUI.DLCManager
             DataGridView1.Rows[i].Cells[50].Value = txt_Group.Text;
             DataGridView1.Rows[i].Cells[51].Value = txt_Rating.Text;
             DataGridView1.Rows[i].Cells[52].Value = txt_Description.Text;
+            DataGridView1.Rows[i].Cells[76].Value = txt_AudioPreviewPath.Text;
             DataGridView1.Rows[i].Cells[85].Value = txt_Artist_ShortName.Text;
             DataGridView1.Rows[i].Cells[86].Value = txt_Album_ShortName.Text;
             if (chbx_Original.Checked) DataGridView1.Rows[i].Cells[26].Value = "Yes";
@@ -413,6 +421,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 //command.CommandText += "CustomsForge_ReleaseNotes = @param73, ";
                 //command.CommandText += "SignatureType = @param74, ";
                 //command.CommandText += "ToolkitVersion = @param75, ";
+                command.CommandText += "oggPreviewPath = @param76, ";
                 //command.CommandText += "UniqueDLCName = @param79, ";
                 command.CommandText += "Bass_Has_DD = @param83, ";
                 command.CommandText += "Has_Bonus_Arrangement = @param84, ";
@@ -454,13 +463,14 @@ namespace RocksmithToolkitGUI.DLCManager
                 command.Parameters.AddWithValue("@param51", DataGridView1.Rows[i].Cells[51].Value.ToString());
                 command.Parameters.AddWithValue("@param52", DataGridView1.Rows[i].Cells[52].Value.ToString());
                 command.Parameters.AddWithValue("@param69", DataGridView1.Rows[i].Cells[69].Value.ToString());
+                command.Parameters.AddWithValue("@param76", DataGridView1.Rows[i].Cells[76].Value.ToString());
                 command.Parameters.AddWithValue("@param83", DataGridView1.Rows[i].Cells[83].Value.ToString());
                 command.Parameters.AddWithValue("@param84", DataGridView1.Rows[i].Cells[84].Value.ToString());
                 command.Parameters.AddWithValue("@param85", DataGridView1.Rows[i].Cells[85].Value.ToString());
                 command.Parameters.AddWithValue("@param86", DataGridView1.Rows[i].Cells[86].Value.ToString());
                 command.Parameters.AddWithValue("@param87", DataGridView1.Rows[i].Cells[87].Value.ToString());
                 command.Parameters.AddWithValue("@param88", DataGridView1.Rows[i].Cells[88].Value.ToString());
-                
+
                 //MessageBox.Show(command.Parameters.);
                 try
                 {
@@ -479,7 +489,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     if (connection != null) connection.Close();
                 }
                 ////OleDbDataAdapter das = new OleDbDataAdapter(command.CommandText, cnn);
-                MessageBox.Show("Song Details Changes Saved");
+               if (!chbx_AutoSave.Checked) MessageBox.Show("Song Details Changes Saved");
                 //das.SelectCommand.CommandText = "SELECT * FROM Main";
                 //// das.Update(dssx, "Main");
             }
@@ -1211,11 +1221,11 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btm_PlayPreview_Click(object sender, EventArgs e)
         {
-             var startInfo = new ProcessStartInfo();
+            var startInfo = new ProcessStartInfo();
             startInfo.FileName = Path.Combine(AppWD, "DLCManager\\oggdec.exe");
             startInfo.WorkingDirectory = AppWD;// Path.GetDirectoryName();
             var t = txt_AudioPreviewPath.Text;//"C:\\GitHub\\tmp\\0\\0_dlcpacks\\rs1compatibilitydisc_PS3\\audio\\ps3\\149627248.ogg";//txt_TempPath.Text + "\\0_dlcpacks\\rs1compatibilitydlc.psarc";
-            startInfo.Arguments = String.Format(" -p {0}",
+            startInfo.Arguments = String.Format(" -p \"{0}\"",
                                                 t);
             startInfo.UseShellExecute = true; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
 
@@ -1299,7 +1309,63 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void button13_Click(object sender, EventArgs e)
         {
+            var startInfo = new ProcessStartInfo();
+            startInfo.FileName = Path.Combine(AppWD, "oggcut.exe");
+            startInfo.WorkingDirectory = AppWD;// Path.GetDirectoryName();
+            var t = txt_AudioPath.Text;//"C:\\GitHub\\tmp\\0\\0_dlcpacks\\rs1compatibilitydisc_PS3\\audio\\ps3\\149627248.ogg";//txt_TempPath.Text + "\\0_dlcpacks\\rs1compatibilitydlc.psarc";
+            var tt=t.Replace(".ogg","_preview.ogg");
+            string[] timepieces =txt_PreviewStart.Text.ToString().Split(':');
+            TimeSpan r = new TimeSpan(0, timepieces[0].ToInt32(), timepieces[1].ToInt32());
+            startInfo.Arguments = String.Format(" -i \"{0}\" -o \"{1}\" -s \"{2}\" -e \"{3}\"",
+                                                t,
+                                                tt,
+                                                r.TotalMilliseconds,
+                                                (r.TotalMilliseconds + (txt_PreviewEnd.Text.ToInt32()*1000)));
+            startInfo.UseShellExecute = true; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
 
+            if (File.Exists(t))
+                using (var DDC = new Process())
+                {
+                    DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 60 * 1); //wait 1min
+                    if (DDC.ExitCode == 0)
+                    {
+                        txt_AudioPreviewPath.Text = tt;
+                        chbx_Preview.Checked = true;
+                        var i = DataGridView1.SelectedCells[0].RowIndex;
+                        DataGridView1.Rows[i].Cells[43].Value= "Yes";
+                        btn_PlayPreview.Enabled = true;
+                    }
+                }
+        }
+
+        private void chbx_FTP1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chbx_FTP1.Checked) txt_FTPPath.Text = "ftp://192.168.1.12/" + "dev_hdd0/GAMES/Rocksmith 2014 ALL DLC - BLUS31182/PS3_GAME/USRDIR/";
+        }
+
+        private void chbx_FTP2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chbx_FTP2.Checked) txt_FTPPath.Text = "ftp://192.168.1.12/" + "dev_hdd0/GAMES/Rocksmith 2014 FAV - BLES01862/PS3_GAME/USRDIR/";
+        }
+
+        private void txt_PreviewStart_Leave(object sender, EventArgs e)
+        {
+            if (txt_PreviewEnd.Text != null)
+            {
+                //string[] r = Convert.ToDateTime("00:" + txt_PreviewStart.Text).AddSeconds(30).ToString().Split(' ');
+                //txt_PreviewEnd.Text = r[1].Substring(3,5);
+                txt_PreviewEnd.Text = "30";
+            }
+        }
+
+        private void DataGridView1_CellLeave(object sender, DataGridViewCellEventArgs e)
+        {
+            if (chbx_AutoSave.Checked && SaveOK) SaveRecord();
+        }
+
+        private void txt_Author_Leave(object sender, EventArgs e)
+        {
+            if (txt_Author.Text != null) chbx_Author.Checked = true;
         }
     }
 }

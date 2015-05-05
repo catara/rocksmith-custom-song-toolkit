@@ -51,19 +51,15 @@ namespace RocksmithToolkitGUI.DLCManager
             this.pB_ReadDLCs = new System.Windows.Forms.ProgressBar();
             this.chbx_FTP2 = new System.Windows.Forms.CheckBox();
             this.chbx_FTP1 = new System.Windows.Forms.CheckBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.chbx_VLCHome = new System.Windows.Forms.CheckBox();
-            this.chbx_VLCWork = new System.Windows.Forms.CheckBox();
             this.button2 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.chbx_Autosave = new System.Windows.Forms.CheckBox();
             this.btn_ExpandSelCrossP = new System.Windows.Forms.Button();
             this.cbx_Format = new System.Windows.Forms.ComboBox();
             this.btn_SteamDLCFolder = new System.Windows.Forms.Button();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.nud_RemoveSlide = new System.Windows.Forms.NumericUpDown();
             this.txt_AudioPreviewPath = new RocksmithToolkitGUI.CueTextBox();
             this.txt_AudioPath = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_VLCPath = new RocksmithToolkitGUI.CueTextBox();
             this.txt_FTPPath = new RocksmithToolkitGUI.CueTextBox();
             this.txt_Platform = new RocksmithToolkitGUI.CueTextBox();
             this.txt_SongsHSANPath = new RocksmithToolkitGUI.CueTextBox();
@@ -79,7 +75,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_Album = new RocksmithToolkitGUI.CueTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPath)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_RemoveSlide)).BeginInit();
             this.SuspendLayout();
             // 
             // DataGridView1
@@ -187,7 +183,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // lbl_NoRec
             // 
             this.lbl_NoRec.AutoSize = true;
-            this.lbl_NoRec.Location = new System.Drawing.Point(12, 551);
+            this.lbl_NoRec.Location = new System.Drawing.Point(12, 548);
             this.lbl_NoRec.Name = "lbl_NoRec";
             this.lbl_NoRec.Size = new System.Drawing.Size(59, 13);
             this.lbl_NoRec.TabIndex = 281;
@@ -297,40 +293,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_FTP1.UseVisualStyleBackColor = true;
             this.chbx_FTP1.CheckedChanged += new System.EventHandler(this.chbx_FTP1_CheckedChanged);
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(955, 401);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(101, 22);
-            this.button1.TabIndex = 296;
-            this.button1.Text = "Path 2 VLC";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Visible = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click_1);
-            // 
-            // chbx_VLCHome
-            // 
-            this.chbx_VLCHome.AutoSize = true;
-            this.chbx_VLCHome.Location = new System.Drawing.Point(1063, 406);
-            this.chbx_VLCHome.Name = "chbx_VLCHome";
-            this.chbx_VLCHome.Size = new System.Drawing.Size(54, 17);
-            this.chbx_VLCHome.TabIndex = 298;
-            this.chbx_VLCHome.Text = "Home";
-            this.chbx_VLCHome.UseVisualStyleBackColor = true;
-            this.chbx_VLCHome.Visible = false;
-            this.chbx_VLCHome.CheckedChanged += new System.EventHandler(this.chbx_VLCHome_CheckedChanged);
-            // 
-            // chbx_VLCWork
-            // 
-            this.chbx_VLCWork.AutoSize = true;
-            this.chbx_VLCWork.Location = new System.Drawing.Point(1123, 406);
-            this.chbx_VLCWork.Name = "chbx_VLCWork";
-            this.chbx_VLCWork.Size = new System.Drawing.Size(52, 17);
-            this.chbx_VLCWork.TabIndex = 299;
-            this.chbx_VLCWork.Text = "Work";
-            this.chbx_VLCWork.UseVisualStyleBackColor = true;
-            this.chbx_VLCWork.Visible = false;
-            // 
             // button2
             // 
             this.button2.BackColor = System.Drawing.SystemColors.Info;
@@ -403,13 +365,13 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_SteamDLCFolder.UseVisualStyleBackColor = true;
             this.btn_SteamDLCFolder.Click += new System.EventHandler(this.btn_SteamDLCFolder_Click);
             // 
-            // numericUpDown1
+            // nud_RemoveSlide
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(721, 649);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(31, 20);
-            this.numericUpDown1.TabIndex = 310;
-            this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
+            this.nud_RemoveSlide.Location = new System.Drawing.Point(721, 649);
+            this.nud_RemoveSlide.Name = "nud_RemoveSlide";
+            this.nud_RemoveSlide.Size = new System.Drawing.Size(31, 20);
+            this.nud_RemoveSlide.TabIndex = 310;
+            this.nud_RemoveSlide.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
             // 
             // txt_AudioPreviewPath
             // 
@@ -434,18 +396,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_AudioPath.Size = new System.Drawing.Size(222, 20);
             this.txt_AudioPath.TabIndex = 300;
             this.txt_AudioPath.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // txt_VLCPath
-            // 
-            this.txt_VLCPath.Cue = "VLC Path";
-            this.txt_VLCPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_VLCPath.ForeColor = System.Drawing.Color.Gray;
-            this.txt_VLCPath.Location = new System.Drawing.Point(996, 380);
-            this.txt_VLCPath.Name = "txt_VLCPath";
-            this.txt_VLCPath.Size = new System.Drawing.Size(170, 20);
-            this.txt_VLCPath.TabIndex = 297;
-            this.txt_VLCPath.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txt_VLCPath.Visible = false;
             // 
             // txt_FTPPath
             // 
@@ -583,7 +533,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_ID.Enabled = false;
             this.txt_ID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_ID.ForeColor = System.Drawing.Color.Gray;
-            this.txt_ID.Location = new System.Drawing.Point(15, 565);
+            this.txt_ID.Location = new System.Drawing.Point(15, 562);
             this.txt_ID.Name = "txt_ID";
             this.txt_ID.Size = new System.Drawing.Size(45, 20);
             this.txt_ID.TabIndex = 128;
@@ -604,7 +554,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1187, 694);
-            this.Controls.Add(this.numericUpDown1);
+            this.Controls.Add(this.nud_RemoveSlide);
             this.Controls.Add(this.btn_SteamDLCFolder);
             this.Controls.Add(this.cbx_Format);
             this.Controls.Add(this.btn_ExpandSelCrossP);
@@ -613,10 +563,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.Controls.Add(this.button2);
             this.Controls.Add(this.txt_AudioPreviewPath);
             this.Controls.Add(this.txt_AudioPath);
-            this.Controls.Add(this.chbx_VLCWork);
-            this.Controls.Add(this.chbx_VLCHome);
-            this.Controls.Add(this.txt_VLCPath);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.chbx_FTP1);
             this.Controls.Add(this.chbx_FTP2);
             this.Controls.Add(this.pB_ReadDLCs);
@@ -655,7 +601,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.Load += new System.EventHandler(this.Standardization_Load);
             ((System.ComponentModel.ISupportInitialize)(this.DataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPath)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_RemoveSlide)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -675,8 +621,8 @@ namespace RocksmithToolkitGUI.DLCManager
         private CueTextBox txt_Artist;
         private CueTextBox txt_Title;
         private CueTextBox txt_Arrangements;
-        private DLCManager.Files filed;
-        private DLCPackageData datas;
+        //private DLCManager.Files filed;
+        //private DLCPackageData datas;
 
         private System.Windows.Forms.Button btn_Close;
         private System.Windows.Forms.Button btn_DecompressAll;
@@ -699,10 +645,6 @@ namespace RocksmithToolkitGUI.DLCManager
         private System.Windows.Forms.ProgressBar pB_ReadDLCs;
         private System.Windows.Forms.CheckBox chbx_FTP2;
         private System.Windows.Forms.CheckBox chbx_FTP1;
-        private System.Windows.Forms.Button button1;
-        private CueTextBox txt_VLCPath;
-        private System.Windows.Forms.CheckBox chbx_VLCHome;
-        private System.Windows.Forms.CheckBox chbx_VLCWork;
         private CueTextBox txt_AudioPreviewPath;
         private CueTextBox txt_AudioPath;
         private System.Windows.Forms.Button button2;
@@ -711,6 +653,6 @@ namespace RocksmithToolkitGUI.DLCManager
         private System.Windows.Forms.Button btn_ExpandSelCrossP;
         private System.Windows.Forms.ComboBox cbx_Format;
         private System.Windows.Forms.Button btn_SteamDLCFolder;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown nud_RemoveSlide;
     }
 }

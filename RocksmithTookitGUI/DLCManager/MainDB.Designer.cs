@@ -43,6 +43,8 @@ namespace RocksmithToolkitGUI.DLCManager
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.Panel1 = new System.Windows.Forms.Panel();
+            this.btn_SelectPreview = new System.Windows.Forms.Button();
+            this.chbx_Author = new System.Windows.Forms.CheckBox();
             this.txt_AudioPreviewPath = new RocksmithToolkitGUI.CueTextBox();
             this.txt_AudioPath = new RocksmithToolkitGUI.CueTextBox();
             this.btn_SteamDLCFolder = new System.Windows.Forms.Button();
@@ -124,7 +126,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_Arrangements = new System.Windows.Forms.Button();
             this.CheckBox1 = new System.Windows.Forms.CheckBox();
             this.DataGridView1 = new System.Windows.Forms.DataGridView();
-            this.chbx_Author = new System.Windows.Forms.CheckBox();
             this.Panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPath)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridView1)).BeginInit();
@@ -132,6 +133,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // Panel1
             // 
+            this.Panel1.Controls.Add(this.btn_SelectPreview);
             this.Panel1.Controls.Add(this.chbx_Author);
             this.Panel1.Controls.Add(this.txt_AudioPreviewPath);
             this.Panel1.Controls.Add(this.txt_AudioPath);
@@ -218,6 +220,27 @@ namespace RocksmithToolkitGUI.DLCManager
             this.Panel1.Name = "Panel1";
             this.Panel1.Size = new System.Drawing.Size(1106, 202);
             this.Panel1.TabIndex = 3;
+            // 
+            // btn_SelectPreview
+            // 
+            this.btn_SelectPreview.Location = new System.Drawing.Point(524, 167);
+            this.btn_SelectPreview.Name = "btn_SelectPreview";
+            this.btn_SelectPreview.Size = new System.Drawing.Size(94, 22);
+            this.btn_SelectPreview.TabIndex = 315;
+            this.btn_SelectPreview.Text = "Change Preview";
+            this.btn_SelectPreview.UseVisualStyleBackColor = true;
+            this.btn_SelectPreview.Click += new System.EventHandler(this.btn_SelectPreview_Click);
+            // 
+            // chbx_Author
+            // 
+            this.chbx_Author.AutoSize = true;
+            this.chbx_Author.Enabled = false;
+            this.chbx_Author.Location = new System.Drawing.Point(738, 72);
+            this.chbx_Author.Name = "chbx_Author";
+            this.chbx_Author.Size = new System.Drawing.Size(57, 17);
+            this.chbx_Author.TabIndex = 314;
+            this.chbx_Author.Text = "Author";
+            this.chbx_Author.UseVisualStyleBackColor = true;
             // 
             // txt_AudioPreviewPath
             // 
@@ -468,12 +491,11 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // btn_ChangeCover
             // 
-            this.btn_ChangeCover.Enabled = false;
             this.btn_ChangeCover.Location = new System.Drawing.Point(421, 143);
             this.btn_ChangeCover.Name = "btn_ChangeCover";
             this.btn_ChangeCover.Size = new System.Drawing.Size(84, 22);
             this.btn_ChangeCover.TabIndex = 106;
-            this.btn_ChangeCover.Text = "Change cover";
+            this.btn_ChangeCover.Text = "Change Cover";
             this.btn_ChangeCover.UseVisualStyleBackColor = true;
             this.btn_ChangeCover.Click += new System.EventHandler(this.btn_ChangeCover_Click);
             // 
@@ -828,6 +850,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_Author.Name = "txt_Author";
             this.txt_Author.Size = new System.Drawing.Size(156, 20);
             this.txt_Author.TabIndex = 72;
+            this.txt_Author.TextChanged += new System.EventHandler(this.txt_Author_TextChanged);
             this.txt_Author.Leave += new System.EventHandler(this.txt_Author_Leave);
             // 
             // txt_Rating
@@ -1120,17 +1143,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.DataGridView1.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick_1);
             this.DataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick_1);
             this.DataGridView1.CellLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellLeave);
-            // 
-            // chbx_Author
-            // 
-            this.chbx_Author.AutoSize = true;
-            this.chbx_Author.Enabled = false;
-            this.chbx_Author.Location = new System.Drawing.Point(738, 72);
-            this.chbx_Author.Name = "chbx_Author";
-            this.chbx_Author.Size = new System.Drawing.Size(57, 17);
-            this.chbx_Author.TabIndex = 314;
-            this.chbx_Author.Text = "Author";
-            this.chbx_Author.UseVisualStyleBackColor = true;
+            this.DataGridView1.SelectionChanged += new System.EventHandler(this.ChangeRowD);
             // 
             // MainDB
             // 
@@ -1235,5 +1248,6 @@ namespace RocksmithToolkitGUI.DLCManager
         private CueTextBox txt_AudioPreviewPath;
         private CueTextBox txt_AudioPath;
         private CheckBox chbx_Author;
+        private Button btn_SelectPreview;
     }
 }

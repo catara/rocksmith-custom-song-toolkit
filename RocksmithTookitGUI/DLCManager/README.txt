@@ -35,12 +35,10 @@ ToDos/bugs:
 - big feature: get the volume of the audio file and then compare against the rest or a norm
 - small bug: mj beat it issue with adding older to titles and so changing the xml path
 - audioslave sections missing maybe cause its an original and i used my own logic to strip the DD
-- medium bug: uncompressed ogg preview song has a diff name the wem original preview (not incl.ogg or _fixed)
 - big feature - For the tagging add the info to the Preview Image/Album Art
 - small improv: Any change of song in the list should also save :)
 - medium feature: add DLCs into cache.psarc to speed up the game startup
 - small feature: when opening MainDB and detecting directory check runs, if next directory exists (give a change to empty the db then if possible)
-- small bug: some Retail songs, like RUMine, appear twice in the browser song listing window
 
 dev issues:
 - Toolkit version flag does not sync to&from Github
@@ -62,11 +60,11 @@ Version History(release date):
 	0.2.0.5 (01.12) Search screen prototype
 	0.2.0.6 (29.11) add save confirm for any save operation and add DLCID checks in all updates that mighht affect it WHERE (SELECT NO OTHER DLCNAME)
 	0.2.0.7 (15.12) New features: Add: lastconversiondata field per each arrangement, MainDb filters
-	wip 0.2.0.8 (31.03) (95%) Manage RS12, RS12 DLC & RS14 retail songs. Pending platform independent...checks on compression platform dependent
+	0.2.0.8 (31.03) Manage RS12, RS12 DLC & RS14 retail songs. Pending platform independent...checks on compression platform dependent...DB independece/dependence on already provided 1..play and FTP and Preview Adding
 	wip: 0.2.0.9 (20.02.2015) (20%) has_section flag(to be tested with a song missing sections); Add 30 sec preview midsong; 
 	wip: 0.2.0.10 (20.02.2015) (10%) close bugs on Conversion to Ps3(nin hell) and analyse acuracy on conversion to ps3 (1979,7army..)
-	wip: 0.2.0.11 (22.02.2015)  (90%)remove bug on auto import if original
-	wip: 0.2.0.12 (24.12) (85%) full release (anyone can download and use the tool..no bugs..and all unimplemented featues disabled) DB independece/dependence on already provided 1, repack wo bugs, edit screens functional
+	wip: 0.2.0.11 (22.02.2015)  (90%) remove bug on auto import if original
+	wip: 0.2.0.12 (24.12) (85%) full release (anyone can download and use the tool..no bugs..and all unimplemented featues disabled) , repack wo bugs, edit screens functional
 	wip: 0.2.2 (31.03.2015) (10%) HTML&Excel exports
 	tbr: 0.2.2.1 (15.04.2015) Implement a logic to properly read DLCManager renamed DLCs
 	wip: 0.2.3 (26.04.2015) (75%) If importing an original over a alternate the alternate flag should be set no the Alternate

@@ -70,71 +70,73 @@ namespace RocksmithToolkitGUI.DLCManager
             if (!Directory.Exists(DataGridView1.Rows[0].Cells[22].Value.ToString()) || updateDBb)
             {
                 var tmpp = "\\ORIG"; var OLD_Path = ""; var cmd = "";
-            for (var h = 0; h < 2; h++)
-                {
-                    try
+                for (var h = 0; h < 2; h++)
                     {
-                        using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                        try
                         {
-                            SearchCmd = "SELECT top 1 AlbumArtPath, audioPreviewPath, OggPath, oggPreviewPath FROM Main WHERE AudioPath LIKE '%" + tmpp + "%' AND audioPreviewPath is not null and oggPreviewPath is not null;";
-                            DataSet duk = new DataSet();
-                            OleDbDataAdapter dal = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
-                            dal.Fill(duk, "Main");
-
-                            //dax.Dispose();
-                            OLD_Path = duk.Tables[0].Rows[0].ItemArray[0].ToString().Substring(0, duk.Tables[0].Rows[0].ItemArray[0].ToString().IndexOf(tmpp)) + tmpp;
-                            if (!Directory.Exists(OLD_Path) || updateDBb)
+                            using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
                             {
-                                //var cmd = "UPDATE Main SET AlbumArtPath=REPLACE(AlbumArtPath,'" + OLD_Path + "','" + TempPath + tmpp + "'), AudioPath=REPLACE(AudioPath,'" + OLD_Path + "','" + TempPath + tmpp + "')";
-                                //cmd += ", audioPreviewPath=REPLACE(audioPreviewPath,'" + OLD_Path + "','" + TempPath + tmpp + "'), Folder_Name=REPLACE(Folder_Name,'" + OLD_Path + "','" + TempPath + tmpp + "');";
-                                cmd = "UPDATE Main SET AlbumArtPath=REPLACE(AlbumArtPath, left(AlbumArtPath,instr(AlbumArtPath, '" + tmpp + "')-1),'" + TempPath + "'), AudioPath=REPLACE(AudioPath,left(AudioPath,instr(AudioPath, '" + tmpp + "')-1),'" + TempPath + "')";
-                                cmd += ", Folder_Name=REPLACE(Folder_Name, left(Folder_Name,instr(Folder_Name, '" + tmpp + "')-1),'" + TempPath + "')";
-                                cmd += " WHERE instr(AlbumArtPath, '" + tmpp + "')>0";
-                                //txt_Description.Text = cmd;
-                                //MessageBox.Show(duk.Tables[0].Rows[0].ItemArray[0].ToString());
-                                DialogResult result1 = MessageBox.Show("DB Repository has been moved from " + OLD_Path + "\n\n to " + TempPath + tmpp + "\n\n-" + cmd, MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                                if (result1 == DialogResult.Yes)  //|| updateDBb
-                                //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                                SearchCmd = "SELECT top 1 AlbumArtPath, audioPreviewPath, OggPath, oggPreviewPath FROM Main WHERE AudioPath LIKE '%" + tmpp + "%' AND audioPreviewPath is not null and oggPreviewPath is not null;";
+                                DataSet duk = new DataSet();
+                                OleDbDataAdapter dal = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
+                                dal.Fill(duk, "Main");
+
+                                //dax.Dispose();
+                                OLD_Path = duk.Tables[0].Rows[0].ItemArray[0].ToString().Substring(0, duk.Tables[0].Rows[0].ItemArray[0].ToString().IndexOf(tmpp)) + tmpp;
+                                if (!Directory.Exists(OLD_Path) || updateDBb)
                                 {
-                                    DataSet dus = new DataSet();
-                                    OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
-                                    dax.Fill(dus, "Main");
-                                    dax.Dispose();
-                                   // MessageBox.Show("Main table has been updated", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    //var cmd = "UPDATE Main SET AlbumArtPath=REPLACE(AlbumArtPath,'" + OLD_Path + "','" + TempPath + tmpp + "'), AudioPath=REPLACE(AudioPath,'" + OLD_Path + "','" + TempPath + tmpp + "')";
+                                    //cmd += ", audioPreviewPath=REPLACE(audioPreviewPath,'" + OLD_Path + "','" + TempPath + tmpp + "'), Folder_Name=REPLACE(Folder_Name,'" + OLD_Path + "','" + TempPath + tmpp + "');";
+                                    cmd = "UPDATE Main SET AlbumArtPath=REPLACE(AlbumArtPath, left(AlbumArtPath,instr(AlbumArtPath, '" + tmpp + "')-1),'" + TempPath + "'), AudioPath=REPLACE(AudioPath,left(AudioPath,instr(AudioPath, '" + tmpp + "')-1),'" + TempPath + "')";
+                                    cmd += ", Folder_Name=REPLACE(Folder_Name, left(Folder_Name,instr(Folder_Name, '" + tmpp + "')-1),'" + TempPath + "')";
+                                    cmd += " WHERE instr(AlbumArtPath, '" + tmpp + "')>0";
+                                    //txt_Description.Text = cmd;
+                                    //MessageBox.Show(duk.Tables[0].Rows[0].ItemArray[0].ToString());
+                                    DialogResult result1 = MessageBox.Show("DB Repository has been moved from " + OLD_Path + "\n\n to " + TempPath + tmpp + "\n\n-" + cmd, MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                                    if (result1 == DialogResult.Yes)  //|| updateDBb
+                                    //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                                    {
+                                        DataSet dus = new DataSet();
+                                        OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
+                                        dax.Fill(dus, "Main");
+                                        dax.Dispose();
+                                       // MessageBox.Show("Main table has been updated", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                                    DataSet ds = new DataSet();
-                                    OLD_Path = duk.Tables[0].Rows[0].ItemArray[2].ToString().Substring(0, duk.Tables[0].Rows[0].ItemArray[2].ToString().IndexOf(tmpp)) + tmpp;
-                                    cmd = "UPDATE Main SET OggPath=REPLACE(OggPath, left(OggPath,instr(OggPath, '" + tmpp + "')-1),'" + TempPath + tmpp + "') WHERE OggPath IS NOT NULL AND instr(OggPath, '" + tmpp + "')>0";
-                                    OleDbDataAdapter dac = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
-                                   // MessageBox.Show(cmd + "\n" + OLD_Path + "\n" + TempPath + tmpp);
-                                    dac.Fill(ds, "Main");
-                                    dac.Dispose();
+                                        DataSet ds = new DataSet();
+                                        OLD_Path = duk.Tables[0].Rows[0].ItemArray[2].ToString().Substring(0, duk.Tables[0].Rows[0].ItemArray[2].ToString().IndexOf(tmpp)) + tmpp;
+                                        cmd = "UPDATE Main SET OggPath=REPLACE(OggPath, left(OggPath,instr(OggPath, '" + tmpp + "')-1),'" + TempPath + tmpp + "') WHERE OggPath IS NOT NULL AND instr(OggPath, '" + tmpp + "')>0";
+                                        OleDbDataAdapter dac = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
+                                       // MessageBox.Show(cmd + "\n" + OLD_Path + "\n" + TempPath + tmpp);
+                                        dac.Fill(ds, "Main");
+                                        dac.Dispose();
 
-                                    //tmpp = "\\ORIG";
-                                    //MessageBox.Show(duk.Tables[0].Rows[0].ItemArray[3].ToString());
-                                    OLD_Path = duk.Tables[0].Rows[0].ItemArray[3].ToString().Substring(0, duk.Tables[0].Rows[0].ItemArray[3].ToString().IndexOf(tmpp)) + tmpp;
-                                    cmd = "UPDATE Main SET oggPreviewPath=REPLACE(oggPreviewPath, left(oggPreviewPath,instr(oggPreviewPath, '" + tmpp + "')-1),'" + TempPath + tmpp + "'), audioPreviewPath=REPLACE(audioPreviewPath, left(audioPreviewPath,instr(audioPreviewPath, '" + tmpp + "')-1),'" + TempPath + "') WHERE oggPreviewPath IS NOT NULL AND instr(oggPreviewPath, '" + tmpp + "')>0";
-                                    OleDbDataAdapter daH = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
-                                    //MessageBox.Show("3");
-                                    daH.Fill(ds, "Main");
-                                    daH.Dispose();
-                                    MessageBox.Show("Main table has been updated", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                        //tmpp = "\\ORIG";
+                                        //MessageBox.Show(duk.Tables[0].Rows[0].ItemArray[3].ToString());
+                                        OLD_Path = duk.Tables[0].Rows[0].ItemArray[3].ToString().Substring(0, duk.Tables[0].Rows[0].ItemArray[3].ToString().IndexOf(tmpp)) + tmpp;
+                                        cmd = "UPDATE Main SET oggPreviewPath=REPLACE(oggPreviewPath, left(oggPreviewPath,instr(oggPreviewPath, '" + tmpp + "')-1),'" + TempPath + tmpp + "'), audioPreviewPath=REPLACE(audioPreviewPath, left(audioPreviewPath,instr(audioPreviewPath, '" + tmpp + "')-1),'" + TempPath + "') WHERE oggPreviewPath IS NOT NULL AND instr(oggPreviewPath, '" + tmpp + "')>0";
+                                        OleDbDataAdapter daH = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
+                                        //MessageBox.Show("3");
+                                        daH.Fill(ds, "Main");
+                                        daH.Dispose();
+                                        MessageBox.Show("Main table has been updated", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                                    //OLD_Path = DataGridView1.Rows[0].Cells[].Value.ToString().Substring(0, DataGridView1.Rows[0].Cells[77].Value.ToString().IndexOf("\\0\\")) + "\\0"; //files[0].Folder_Name.Replace
-                                    cmd = "UPDATE Arrangements SET SNGFilePath=REPLACE(SNGFilePath, left(SNGFilePath,instr(SNGFilePath, '" + tmpp + "')-1),'" + TempPath + tmpp + "'), XMLFilePath=REPLACE(XMLFilePath, left(XMLFilePath,instr(XMLFilePath, '" + tmpp + "')-1),'" + TempPath + tmpp + "') WHERE instr(XMLFilePath, '" + tmpp + "')>0";
-                                    OleDbDataAdapter daN = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
-                                    //MessageBox.Show(cmd);
-                                    daN.Fill(ds, "Arrangements");
-                                    daN.Dispose();
-                                    MessageBox.Show("Arrangements table has been updated", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                }
-                                else
-                                {
-                                    MessageBox.Show("Issues with Temp Folder and DB Reporsitory");
-                                    return;
+                                        //OLD_Path = DataGridView1.Rows[0].Cells[].Value.ToString().Substring(0, DataGridView1.Rows[0].Cells[77].Value.ToString().IndexOf("\\0\\")) + "\\0"; //files[0].Folder_Name.Replace
+                                        cmd = "UPDATE Arrangements SET SNGFilePath=REPLACE(SNGFilePath, left(SNGFilePath,instr(SNGFilePath, '" + tmpp + "')-1),'" + TempPath + tmpp + "'), XMLFilePath=REPLACE(XMLFilePath, left(XMLFilePath,instr(XMLFilePath, '" + tmpp + "')-1),'" + TempPath + tmpp + "') WHERE instr(XMLFilePath, '" + tmpp + "')>0";
+                                        OleDbDataAdapter daN = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
+                                        //MessageBox.Show(cmd);
+                                        daN.Fill(ds, "Arrangements");
+                                        daN.Dispose();
+                                        MessageBox.Show("Arrangements table has been updated", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("Issues with Temp Folder and DB Reporsitory");
+                                        return;
+                                    }
                                 }
                             }
-                        }
+                    DataGridView1.Rows[1].Selected = true;
+                    DataGridView1.Rows[1].Selected = false;
                     }
                     catch (Exception ex)
                     {
@@ -219,7 +221,13 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void DataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
-            int i;
+            if (DataGridView1.SelectedCells[0].RowIndex > 0) ChangeRow();
+        }
+
+        public void ChangeRow()
+        {
+
+        int i;
             i = DataGridView1.SelectedCells[0].RowIndex;
             txt_ID.Text = DataGridView1.Rows[i].Cells[0].Value.ToString();
             txt_Title.Text = DataGridView1.Rows[i].Cells[1].Value.ToString();
@@ -274,6 +282,10 @@ namespace RocksmithToolkitGUI.DLCManager
             else chbx_DD.Checked = false;
             if (DataGridView1.Rows[i].Cells[69].Value.ToString() == "Yes") chbx_Selected.Checked = true;
             else chbx_Selected.Checked = false;
+            if (DataGridView1.Rows[i].Cells[74].Value.ToString() == "Yes") chbx_Author.Checked = true;
+            else chbx_Author.Checked = false;
+            if (DataGridView1.Rows[i].Cells[76].Value.ToString() == "Yes") chbx_Preview.Checked = true;
+            else chbx_Preview.Checked = false;
             if (DataGridView1.Rows[i].Cells[83].Value.ToString() == "Yes") chbx_BassDD.Checked = true;
             else chbx_BassDD.Checked = false;
             if (DataGridView1.Rows[i].Cells[84].Value.ToString() == "Yes") chbx_Bonus.Checked = true;
@@ -296,7 +308,6 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_Title_Sort.Enabled = true;
             if (chbx_AutoSave.Checked) SaveOK = true;
             else SaveOK = false;
-
         }
 
         public void button8_Click(object sender, EventArgs e)
@@ -360,6 +371,10 @@ namespace RocksmithToolkitGUI.DLCManager
             else DataGridView1.Rows[i].Cells[45].Value = "No";
             if (chbx_Selected.Checked) DataGridView1.Rows[i].Cells[69].Value = "Yes";
             else DataGridView1.Rows[i].Cells[69].Value = "No";
+            //if (chbx_Preview.Checked) DataGridView1.Rows[i].Cells[].Value = "Yes";
+            //else DataGridView1.Rows[i].Cells[75].Value = "No";
+            if (chbx_Author.Checked) DataGridView1.Rows[i].Cells[74].Value = "Yes";
+            else DataGridView1.Rows[i].Cells[74].Value = "No";
             if (chbx_BassDD.Checked) DataGridView1.Rows[i].Cells[83].Value = "Yes";
             else DataGridView1.Rows[i].Cells[83].Value = "No";
             if (chbx_Bonus.Checked) DataGridView1.Rows[i].Cells[84].Value = "Yes";
@@ -419,8 +434,8 @@ namespace RocksmithToolkitGUI.DLCManager
                 //command.CommandText += "CustomsForge_Link = @param71, ";
                 //command.CommandText += "CustomsForge_Like = @param72, ";
                 //command.CommandText += "CustomsForge_ReleaseNotes = @param73, ";
-                //command.CommandText += "SignatureType = @param74, ";
-                //command.CommandText += "ToolkitVersion = @param75, ";
+                command.CommandText += "Has_Author = @param74, ";
+                //command.CommandText += "Has_Author = @param75, ";
                 command.CommandText += "oggPreviewPath = @param76, ";
                 //command.CommandText += "UniqueDLCName = @param79, ";
                 command.CommandText += "Bass_Has_DD = @param83, ";
@@ -458,11 +473,11 @@ namespace RocksmithToolkitGUI.DLCManager
                 command.Parameters.AddWithValue("@param45", DataGridView1.Rows[i].Cells[45].Value.ToString());
                 command.Parameters.AddWithValue("@param47", DataGridView1.Rows[i].Cells[47].Value.ToString());
                 command.Parameters.AddWithValue("@param48", DataGridView1.Rows[i].Cells[48].Value.ToString());
-                command.Parameters.AddWithValue("@param49", DataGridView1.Rows[i].Cells[49].Value.ToString());
-                //command.Parameters.AddWithValue("@param50", DataGridView1.Rows[i].Cells[50].Value.ToString());
+                command.Parameters.AddWithValue("@param49", DataGridView1.Rows[i].Cells[49].Value.ToString());                
                 command.Parameters.AddWithValue("@param51", DataGridView1.Rows[i].Cells[51].Value.ToString());
                 command.Parameters.AddWithValue("@param52", DataGridView1.Rows[i].Cells[52].Value.ToString());
                 command.Parameters.AddWithValue("@param69", DataGridView1.Rows[i].Cells[69].Value.ToString());
+                command.Parameters.AddWithValue("@param74", DataGridView1.Rows[i].Cells[74].Value.ToString());
                 command.Parameters.AddWithValue("@param76", DataGridView1.Rows[i].Cells[76].Value.ToString());
                 command.Parameters.AddWithValue("@param83", DataGridView1.Rows[i].Cells[83].Value.ToString());
                 command.Parameters.AddWithValue("@param84", DataGridView1.Rows[i].Cells[84].Value.ToString());
@@ -544,7 +559,15 @@ namespace RocksmithToolkitGUI.DLCManager
                 OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cn);
                 //MessageBox.Show("pop" + noOfRec.ToString() + SearchCmd);
                 dssx.Clear();
-                da.Fill(dssx, "Main");
+                try
+                {
+                    da.Fill(dssx, "Main");
+                }
+                catch
+                {
+                    MessageBox.Show("Download Connectivity patch @ https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734");
+                    return;
+                }
                 da.Dispose();
                 cn.Dispose();
                 noOfRec = dssx.Tables[0].Rows.Count;
@@ -1016,7 +1039,23 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btn_ChangeCover_Click(object sender, EventArgs e)
         {
-            //ExternalApps.Png2Dds(IconFile, Path.Combine(tmpWorkDir, "icon.dds"), 512, 512);
+            var temppath = String.Empty;
+            using (var fbd = new OpenFileDialog())
+            {
+                fbd.Title = "Select you NEW Cover PNG file";
+                fbd.Filter = "PNG file (*.png)|*.png";
+                fbd.Multiselect = false;
+                //fbd.FileOk += OpenFileDialog_FileLimit; // Event handler
+                if (fbd.ShowDialog() != DialogResult.OK)
+                    return;
+                temppath = fbd.FileName;
+                // Create workDir folder
+                var tmpWorkDir = Path.Combine(Path.GetTempPath(), Path.GetFileNameWithoutExtension(temppath));
+                ExternalApps.Png2Dds(temppath, Path.Combine(tmpWorkDir, temppath.Replace(".png",".dds")), 512, 512);
+                txt_AlbumArtPath.Text = temppath;
+                chbx_Cover.Checked = true;
+            }
+            
         }
 
         private void button15_Click(object sender, EventArgs e)
@@ -1266,14 +1305,14 @@ namespace RocksmithToolkitGUI.DLCManager
                 var dest = "";
                 if (RocksmithDLCPath.IndexOf("Rocksmith\\DLC") > 0)
                 {
-                    dest = RocksmithDLCPath;//!File.Exists(
-                    File.Copy(RocksmithDLCPath + "\\rs1compatibilitydlc" + platfrm + ".psarc", dest + "\\rs1compatibilitydlc" + platfrm + ".psarc.orig", true);
+                    dest = RocksmithDLCPath;
+                    File.Copy(RocksmithDLCPath + "\\rs1compatibilitydlc" + platfrm + ".psarc", dest + "\\rs1compatibilitydlc" + platfrm + ".psarc.orig", false);
                     File.Copy(TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydlc" + platfrm + ".psarc" + "\\rs1compatibilitydlc" + platfrm + ".psarc", dest, true);
                 }
                 else if (RocksmithDLCPath != txt_FTPPath.Text)
                 {
                     dest = txt_FTPPath.Text;//!File.Exists(
-                    File.Copy(dest + "\\rs1compatibilitydlc" + platfrm + ".psarc", dest + "\\rs1compatibilitydlc" + platfrm + ".psarc.orig", true);
+                    File.Copy(dest + "\\rs1compatibilitydlc" + platfrm + ".psarc", dest + "\\rs1compatibilitydlc" + platfrm + ".psarc.orig", false);
                     File.Copy(TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydlc" + platfrm + ".psarc" + "\\rs1compatibilitydlc" + platfrm + ".psarc", dest, true);
 
                 }
@@ -1366,6 +1405,33 @@ namespace RocksmithToolkitGUI.DLCManager
         private void txt_Author_Leave(object sender, EventArgs e)
         {
             if (txt_Author.Text != null) chbx_Author.Checked = true;
+        }
+
+        private void btn_SelectPreview_Click(object sender, EventArgs e)
+        {
+            var temppath = String.Empty;
+            using (var fbd = new OpenFileDialog())
+            {
+                fbd.Title = "Select you NEW Preview OGG file";
+                fbd.Filter = "OGG file (*.ogg)|*.ogg";
+                fbd.Multiselect = false;
+                //fbd.FileOk += OpenFileDialog_FileLimit; // Event handler
+                if (fbd.ShowDialog() != DialogResult.OK)
+                    return;
+                temppath = fbd.FileName;
+                txt_AudioPreviewPath.Text = temppath;
+                chbx_Preview.Checked = true;
+            }
+        }
+
+        private void txt_Author_TextChanged(object sender, EventArgs e)
+        {
+            if (txt_Author.Text != null) chbx_Author.Checked = true;
+        }
+
+        private void ChangeRowD(object sender, EventArgs e)
+        {
+            if (txt_Album.Text != "") ChangeRow();
         }
     }
 }

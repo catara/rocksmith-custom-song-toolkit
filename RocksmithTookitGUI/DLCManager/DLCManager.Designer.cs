@@ -35,7 +35,6 @@
             this.rbtn_Population_All = new System.Windows.Forms.RadioButton();
             this.rbtn_Population_Selected = new System.Windows.Forms.RadioButton();
             this.mainBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            //this.defaultDBDataSet = new RocksmithToolkitGUI.DefaultDBDataSet();
             this.Export_To = new System.Windows.Forms.Button();
             this.chbx_Rebuild = new System.Windows.Forms.CheckBox();
             this.btn_Cleanup_MainDB = new System.Windows.Forms.Button();
@@ -74,7 +73,6 @@
             this.txt_Title_Sort = new System.Windows.Forms.TextBox();
             this.lbl_Title = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.chbx_CleanDLC = new System.Windows.Forms.CheckBox();
             this.chbx_DebugB = new System.Windows.Forms.CheckBox();
             this.txt_DBFolder = new System.Windows.Forms.TextBox();
             this.btn_DBFolder = new System.Windows.Forms.Button();
@@ -108,17 +106,12 @@
             this.chbx_WorkDGB = new System.Windows.Forms.CheckBox();
             this.chbx_HomeDBG = new System.Windows.Forms.CheckBox();
             this.chbx_DefaultDB = new System.Windows.Forms.CheckBox();
-            //this.mainTableAdapter = new RocksmithToolkitGUI.DefaultDBDataSetTableAdapters.MainTableAdapter();
             this.chbx_HomeDGBVM = new System.Windows.Forms.CheckBox();
-            this.btn_LoadRetrailSongs = new System.Windows.Forms.Button();
-            this.chbx_CleanCache = new System.Windows.Forms.CheckBox();
             this.button5 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.btn_LoadRetailSongs = new System.Windows.Forms.Button();
-            this.chbx_CleanCacheTemp = new System.Windows.Forms.CheckBox();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainBindingSource)).BeginInit();
-            //((System.ComponentModel.ISupportInitialize)(this.defaultDBDataSet)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.grpbx_ApplyChanges.SuspendLayout();
             this.SuspendLayout();
@@ -160,36 +153,30 @@
             // rbtn_Population_All
             // 
             this.rbtn_Population_All.AutoSize = true;
-            this.rbtn_Population_All.Checked = true;
             this.rbtn_Population_All.Location = new System.Drawing.Point(71, 3);
             this.rbtn_Population_All.Margin = new System.Windows.Forms.Padding(0);
             this.rbtn_Population_All.Name = "rbtn_Population_All";
             this.rbtn_Population_All.Size = new System.Drawing.Size(36, 17);
             this.rbtn_Population_All.TabIndex = 205;
-            this.rbtn_Population_All.TabStop = true;
             this.rbtn_Population_All.Text = "All";
             this.rbtn_Population_All.UseVisualStyleBackColor = true;
             // 
             // rbtn_Population_Selected
             // 
             this.rbtn_Population_Selected.AutoSize = true;
+            this.rbtn_Population_Selected.Checked = true;
             this.rbtn_Population_Selected.Location = new System.Drawing.Point(3, 3);
             this.rbtn_Population_Selected.Name = "rbtn_Population_Selected";
             this.rbtn_Population_Selected.Size = new System.Drawing.Size(67, 17);
             this.rbtn_Population_Selected.TabIndex = 204;
+            this.rbtn_Population_Selected.TabStop = true;
             this.rbtn_Population_Selected.Text = "Selected";
             this.rbtn_Population_Selected.UseVisualStyleBackColor = true;
             // 
             // mainBindingSource
             // 
             this.mainBindingSource.DataMember = "Main";
-            //this.mainBindingSource.DataSource = this.defaultDBDataSet;
             this.mainBindingSource.CurrentChanged += new System.EventHandler(this.mainBindingSource_CurrentChanged);
-            // 
-            // defaultDBDataSet
-            // 
-            //this.defaultDBDataSet.DataSetName = "DefaultDBDataSet";
-            //this.defaultDBDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // Export_To
             // 
@@ -830,18 +817,6 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Repack Only";
             // 
-            // chbx_CleanDLC
-            // 
-            this.chbx_CleanDLC.AutoSize = true;
-            this.chbx_CleanDLC.Location = new System.Drawing.Point(237, 648);
-            this.chbx_CleanDLC.Margin = new System.Windows.Forms.Padding(2);
-            this.chbx_CleanDLC.Name = "chbx_CleanDLC";
-            this.chbx_CleanDLC.Size = new System.Drawing.Size(85, 17);
-            this.chbx_CleanDLC.TabIndex = 288;
-            this.chbx_CleanDLC.Text = "Clean Folder";
-            this.chbx_CleanDLC.UseVisualStyleBackColor = true;
-            this.chbx_CleanDLC.Visible = false;
-            // 
             // chbx_DebugB
             // 
             this.chbx_DebugB.AutoSize = true;
@@ -1192,10 +1167,6 @@
             this.chbx_DefaultDB.UseVisualStyleBackColor = true;
             this.chbx_DefaultDB.CheckedChanged += new System.EventHandler(this.chbx_DefaultDB_CheckedChanged);
             // 
-            // mainTableAdapter
-            // 
-            //this.mainTableAdapter.ClearBeforeFill = true;
-            // 
             // chbx_HomeDGBVM
             // 
             this.chbx_HomeDGBVM.AutoSize = true;
@@ -1207,30 +1178,6 @@
             this.chbx_HomeDGBVM.UseVisualStyleBackColor = true;
             this.chbx_HomeDGBVM.Visible = false;
             this.chbx_HomeDGBVM.CheckedChanged += new System.EventHandler(this.chbx_HomeDGBVM_CheckedChanged);
-            // 
-            // btn_LoadRetrailSongs
-            // 
-            this.btn_LoadRetrailSongs.BackColor = System.Drawing.SystemColors.Control;
-            this.btn_LoadRetrailSongs.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_LoadRetrailSongs.Location = new System.Drawing.Point(430, 594);
-            this.btn_LoadRetrailSongs.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_LoadRetrailSongs.Name = "btn_LoadRetrailSongs";
-            this.btn_LoadRetrailSongs.Size = new System.Drawing.Size(101, 21);
-            this.btn_LoadRetrailSongs.TabIndex = 334;
-            this.btn_LoadRetrailSongs.Text = "Load DLC Packs";
-            this.btn_LoadRetrailSongs.UseVisualStyleBackColor = false;
-            this.btn_LoadRetrailSongs.Click += new System.EventHandler(this.button1_Click_1);
-            // 
-            // chbx_CleanCache
-            // 
-            this.chbx_CleanCache.AutoSize = true;
-            this.chbx_CleanCache.Location = new System.Drawing.Point(344, 648);
-            this.chbx_CleanCache.Margin = new System.Windows.Forms.Padding(2);
-            this.chbx_CleanCache.Name = "chbx_CleanCache";
-            this.chbx_CleanCache.Size = new System.Drawing.Size(102, 17);
-            this.chbx_CleanCache.TabIndex = 335;
-            this.chbx_CleanCache.Text = "Clean CacheDB";
-            this.chbx_CleanCache.UseVisualStyleBackColor = true;
             // 
             // button5
             // 
@@ -1264,27 +1211,13 @@
             this.btn_LoadRetailSongs.UseVisualStyleBackColor = false;
             this.btn_LoadRetailSongs.Click += new System.EventHandler(this.btn_LoadRetailSongs_Click);
             // 
-            // chbx_CleanCacheTemp
-            // 
-            this.chbx_CleanCacheTemp.AutoSize = true;
-            this.chbx_CleanCacheTemp.Location = new System.Drawing.Point(289, 627);
-            this.chbx_CleanCacheTemp.Margin = new System.Windows.Forms.Padding(2);
-            this.chbx_CleanCacheTemp.Name = "chbx_CleanCacheTemp";
-            this.chbx_CleanCacheTemp.Size = new System.Drawing.Size(115, 17);
-            this.chbx_CleanCacheTemp.TabIndex = 340;
-            this.chbx_CleanCacheTemp.Text = "Clean Temp Folder";
-            this.chbx_CleanCacheTemp.UseVisualStyleBackColor = true;
-            // 
             // DLCManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.chbx_CleanCacheTemp);
             this.Controls.Add(this.btn_LoadRetailSongs);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.button5);
-            this.Controls.Add(this.chbx_CleanCache);
-            this.Controls.Add(this.btn_LoadRetrailSongs);
             this.Controls.Add(this.chbx_HomeDGBVM);
             this.Controls.Add(this.chbx_DefaultDB);
             this.Controls.Add(this.chbx_HomeDBG);
@@ -1331,7 +1264,6 @@
             this.Controls.Add(this.txt_Title_Sort);
             this.Controls.Add(this.lbl_Title);
             this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.chbx_CleanDLC);
             this.Controls.Add(this.chbx_DebugB);
             this.Controls.Add(this.txt_DBFolder);
             this.Controls.Add(this.btn_DBFolder);
@@ -1358,7 +1290,6 @@
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainBindingSource)).EndInit();
-            //((System.ComponentModel.ISupportInitialize)(this.defaultDBDataSet)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.grpbx_ApplyChanges.ResumeLayout(false);
             this.grpbx_ApplyChanges.PerformLayout();
@@ -1413,7 +1344,6 @@
         private System.Windows.Forms.TextBox txt_Title_Sort;
         private System.Windows.Forms.Label lbl_Title;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.CheckBox chbx_CleanDLC;
         private System.Windows.Forms.CheckBox chbx_DebugB;
         private System.Windows.Forms.TextBox txt_DBFolder;
         private System.Windows.Forms.Button btn_DBFolder;
@@ -1450,11 +1380,8 @@
         //private DefaultDBDataSet defaultDBDataSet;
         //private DefaultDBDataSetTableAdapters.MainTableAdapter mainTableAdapter;
         private System.Windows.Forms.CheckBox chbx_HomeDGBVM;
-        private System.Windows.Forms.Button btn_LoadRetrailSongs;
-        private System.Windows.Forms.CheckBox chbx_CleanCache;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btn_LoadRetailSongs;
-        private System.Windows.Forms.CheckBox chbx_CleanCacheTemp;
     }
 }

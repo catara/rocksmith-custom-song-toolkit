@@ -161,7 +161,7 @@ namespace RocksmithToolkitGUI.DLCManager
             DataSet dis = new DataSet();
 
             i = DataGridView1.SelectedCells[0].RowIndex;
-
+            nud_RemoveSlide.Value = i;
             //DataGridView1.Rows[i].Cells[0].Value = txt_I.Text;
             //DataGridView1.Rows[i].Cells[1].Value = txt_Artist.Text;
             //DataGridView1.Rows[i].Cells[3].Value = txt_ArtistSort.Text;
@@ -464,7 +464,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                                                 t,
                                                                 unpackedDir);// + platformDLCP
                             startInfo.UseShellExecute = true; startInfo.CreateNoWindow = false; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
-                            rtxt_Comments.Text = startInfo.FileName + " "+startInfo.Arguments;
+                            //rtxt_Comments.Text = startInfo.FileName + " "+startInfo.Arguments;
                             //if (!File.Exists(t))
                             using (var DDC = new Process())
                             {
@@ -505,8 +505,8 @@ namespace RocksmithToolkitGUI.DLCManager
 
                                 foreach (string file_name in Directory.GetFiles(source_dir, "*.*", System.IO.SearchOption.AllDirectories))
                                 {
-                                    if (AllowORIGDeleteb && (file_name.IndexOf(".ogg") > 0 || (file_name.IndexOf(".orig") > 0))) ;
-                                    else File.Copy(file_name, destination_dir + file_name.Substring(source_dir.Length), true);
+                                    if (!(AllowORIGDeleteb && (file_name.IndexOf(".ogg") > 0 || (file_name.IndexOf(".orig") > 0))))
+                                     File.Copy(file_name, destination_dir + file_name.Substring(source_dir.Length), true);
                                 }
                                 //Directory.Delete(source_dir, true);
                                 //var ee = "";
@@ -585,8 +585,8 @@ namespace RocksmithToolkitGUI.DLCManager
 
                                 foreach (string file_name in Directory.GetFiles(source_dir, "*.*", System.IO.SearchOption.AllDirectories))
                                 {
-                                    if (AllowORIGDeleteb && (file_name.IndexOf(".ogg") > 0 || (file_name.IndexOf(".orig") > 0))) ;
-                                    else File.Copy(file_name, destination_dir + file_name.Substring(source_dir.Length), true);
+                                    if (!(AllowORIGDeleteb && (file_name.IndexOf(".ogg") > 0 || (file_name.IndexOf(".orig") > 0))))
+                                     File.Copy(file_name, destination_dir + file_name.Substring(source_dir.Length), true);
                                 }
                                 //Directory.Delete(source_dir, true); DONT DELETE
 
@@ -661,10 +661,10 @@ namespace RocksmithToolkitGUI.DLCManager
             if (!File.Exists(inputFilePath + ".orig")) File.Copy(inputFilePath, inputFilePath + ".orig", true);
             string tecst = "";
             string line;
-            var header = "";
+            //var header = "";
             var linedone = true;
             var songkey = "";
-            var footer = "";
+            //var footer = "";
             var lastline = false; //if the last song is not removed then the end should be appended
 
             textfile = "{";
@@ -831,29 +831,29 @@ namespace RocksmithToolkitGUI.DLCManager
             {
                 var platfrm= (cbx_Format.Text == "PC" ? "_p": (cbx_Format.Text == "Mac" ? "_m":"") );
                 var dest = "";
-                if (RocksmithDLCPath.IndexOf("Rocksmith\\DLC") > 0)
+                if (RocksmithDLCPath.IndexOf("Rocksmith2014\\DLC") > 0)
                 {
-                    dest = RocksmithDLCPath;//!File.Exists(
-                    File.Copy(RocksmithDLCPath + "\\rs1compatibilitydlc" + platfrm + ".psarc", dest + "\\rs1compatibilitydlc" + platfrm + ".psarc.orig", true);
-                    File.Copy(TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydlc" + platfrm + ".psarc" + "\\rs1compatibilitydlc" + platfrm + ".psarc", dest, true);
+                    dest = RocksmithDLCPath;//
+                    File.Copy(RocksmithDLCPath + "\\rs1compatibilitydlc" + platfrm + ".psarc", dest + "\\rs1compatibilitydlc" + platfrm + ".psarc.orig", false);
+                    File.Copy(TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydlc" + platfrm + ".psarc", dest+"rs1compatibilitydlc" + platfrm + ".psarc", true);
 
-                    File.Copy(dest + "\\rs1compatibilitydisc" + platfrm + ".psarc", dest + "\\rs1compatibilitydisc" + platfrm + ".psarc.orig", true);
+                    File.Copy(dest + "\\rs1compatibilitydisc" + platfrm + ".psarc", dest + "\\rs1compatibilitydisc" + platfrm + ".psarc.orig", false);
                     File.Copy(TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydisc" + platfrm + ".psarc", dest + "\\rs1compatibilitydisc" + platfrm + ".psarc", true);
 
                     dest = RocksmithDLCPath.Replace("\\DLC", "");
-                    File.Copy(dest + "\\cache.psarc", dest + "\\cache.psarc.orig", true);
-                    File.Copy(TempPath + "\\0_dlcpacks\\manipulated\\cache" + cbx_Format.Text + ".psarc", dest + "\\cache.psarc", true);
+                    File.Copy(dest + "\\cache.psarc", dest + "\\cache.psarc.orig", false);
+                    File.Copy(TempPath + "\\0_dlcpacks\\manipulated\\cache_" + cbx_Format.Text + ".psarc", dest + "\\cache.psarc", true);
                 }
                 else if (RocksmithDLCPath != txt_FTPPath.Text)
                 {
                     dest = txt_FTPPath.Text;//!File.Exists(
-                    File.Copy(dest + "\\rs1compatibilitydlc" + platfrm + ".psarc", dest + "\\rs1compatibilitydlc" + platfrm + ".psarc.orig", true);
+                    File.Copy(dest + "\\rs1compatibilitydlc" + platfrm + ".psarc", dest + "\\rs1compatibilitydlc" + platfrm + ".psarc.orig", false);
                     File.Copy(TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydlc" + platfrm + ".psarc" + "\\rs1compatibilitydlc" + platfrm + ".psarc", dest, true);
 
-                    File.Copy(dest + "\\rs1compatibilitydisc" + platfrm + ".psarc", dest + "\\rs1compatibilitydisc" + platfrm + ".psarc.orig", true);
+                    File.Copy(dest + "\\rs1compatibilitydisc" + platfrm + ".psarc", dest + "\\rs1compatibilitydisc" + platfrm + ".psarc.orig", false);
                     File.Copy(TempPath + "\\0_dlcpacks\\manipulated\\rs1compatibilitydisc" + platfrm + ".psarc", dest + "\\rs1compatibilitydisc" + platfrm + ".psarc", true);
 
-                    File.Copy(dest + "\\cache.psarc", dest + "\\cache.psarc.orig", true);
+                    File.Copy(dest + "\\cache.psarc", dest + "\\cache.psarc.orig", false);
                     File.Copy(TempPath + "\\0_dlcpacks\\manipulated\\cache" + cbx_Format.Text + ".psarc", dest + "\\cache.psarc", true);
                 }
                 else MessageBox.Show("Chose a different path to save");
@@ -911,23 +911,23 @@ namespace RocksmithToolkitGUI.DLCManager
             if (chbx_FTP1.Checked) txt_FTPPath.Text = "ftp://192.168.1.12/" + "dev_hdd0/GAMES/Rocksmith 2014 ALL DLC - BLUS31182/PS3_GAME/USRDIR/";
         }
 
-        private void button1_Click_1(object sender, EventArgs e)
-        {
-            using (var fbd = new VistaFolderBrowserDialog())
-            {
-                if (fbd.ShowDialog() != DialogResult.OK)
-                    return;
-                var temppath = fbd.SelectedPath;
-                txt_VLCPath.Text = temppath;
-                //-Save the location in the Config file/reg
-                //ConfigRepository.Instance()["ManageTempFolder"] = temppath;
-            }
-        }
+        //private void button1_Click_1(object sender, EventArgs e)
+        //{
+        //    using (var fbd = new VistaFolderBrowserDialog())
+        //    {
+        //        if (fbd.ShowDialog() != DialogResult.OK)
+        //            return;
+        //        var temppath = fbd.SelectedPath;
+        //        txt_VLCPath.Text = temppath;
+        //        //-Save the location in the Config file/reg
+        //        //ConfigRepository.Instance()["ManageTempFolder"] = temppath;
+        //    }
+        //}
 
-        private void chbx_VLCHome_CheckedChanged(object sender, EventArgs e)
-        {
-            if (chbx_VLCHome.Checked) txt_VLCPath.Text = "DLCManager\\VLCPortable.exe";
-        }
+        //private void chbx_VLCHome_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    if (chbx_VLCHome.Checked) txt_VLCPath.Text = "DLCManager\\VLCPortable.exe";
+        //}
 
         private void button12_Click(object sender, EventArgs e)
         {   //alternative impl could use http://nvorbis.codeplex.com/documentation
@@ -1134,6 +1134,8 @@ namespace RocksmithToolkitGUI.DLCManager
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
            //if (DataGridView1.SelectedCells[0].RowIndex > 0) 
+            var prev = nud_RemoveSlide.Value;
+         
             SaveRecord();// ChangeRow();
             int rowindex;
             DataGridViewRow row;

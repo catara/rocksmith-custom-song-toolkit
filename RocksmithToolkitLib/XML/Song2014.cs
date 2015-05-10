@@ -170,7 +170,7 @@ namespace RocksmithToolkitLib.Xml
         [XmlArrayItem("control")]
         public SongControl[] Controls { get; set; }
 
-        [XmlElement("transcriptionTrack")] // DDC recuired node
+        [XmlElement("transcriptionTrack")] // DDC required node
         public TranscriptionTrack2014 TranscriptionTrack { get; set; }
 
         [XmlArray("levels")]
@@ -302,6 +302,7 @@ namespace RocksmithToolkitLib.Xml
         public static void WriteXmlComments(string xmlSongRS2014File, IEnumerable<XComment> commentNodes = null)
         {
             bool cstComment = false;
+            string cstVersion = " CST v" + ToolkitVersion.version + " ";
             XDocument xml = XDocument.Load(xmlSongRS2014File);
 
             if (commentNodes != null && commentNodes.Any())
@@ -313,13 +314,13 @@ namespace RocksmithToolkitLib.Xml
                     // this looks nicers but does not match the EOF original
                     // it is used to distinguish XML that is modified by toolkit
                     xml.Element("song").AddBeforeSelf(new XComment(commentNode));
-                    if (commentNode.ToString().Contains(" CST v"))
+                    if (commentNode.ToString().Contains(cstVersion))
                         cstComment = true;
                 }
             }
 
             if (!cstComment)
-                xml.Element("song").AddBeforeSelf(new XComment(" CST v" + ToolkitVersion.version + " "));
+                xml.Element("song").AddBeforeSelf(new XComment(cstVersion));
 
             if (commentNodes != null && commentNodes.Any() || !cstComment)
                 xml.Save(xmlSongRS2014File);
@@ -1195,9 +1196,8 @@ namespace RocksmithToolkitLib.Xml
         [XmlAttribute("time")]
         public float Time { get; set; }
 
-        [DefaultValue(-1)]
         [XmlAttribute("id")]
-        public Int32 Id { get; set; } // could be optional/unused paramenter
+        public Int32 Id { get; set; }
 
         [XmlAttribute("name")]
         public string Name { get; set; }

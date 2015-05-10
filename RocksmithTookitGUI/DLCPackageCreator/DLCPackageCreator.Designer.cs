@@ -763,7 +763,7 @@
             0,
             0});
             this.audioQualityBox.Minimum = new decimal(new int[] {
-            4,
+            2,
             0,
             0,
             0});

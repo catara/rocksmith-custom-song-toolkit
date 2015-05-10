@@ -44,6 +44,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 if (!String.IsNullOrEmpty(_arrangement.Tuning))
                     tuningComboBox.SelectedIndex = tuningComboBox.FindStringExact(_arrangement.Tuning);
                 frequencyTB.Text = (_arrangement.TuningPitch > 0) ? _arrangement.TuningPitch.ToString() : "440";
+                UpdateCentOffset();
 
                 //Update it only here
                 var scrollSpeed = _arrangement.ScrollSpeed;
@@ -156,7 +157,6 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 Picked.Enabled = selectedType == ArrangementType.Bass;
                 BonusCheckBox.Enabled = gbTuningPitch.Enabled;
                 MetronomeCb.Enabled = gbTuningPitch.Enabled;
-                UpdateCentOffset();
 
                 // Gameplay Path
                 UpdateRouteMaskPath(selectedType, selectedArrangementName);
@@ -227,7 +227,8 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             // foreach (var tuning in TuningDefinitionRepository.Instance().Select(gameVersion))
             foreach (var tuning in tuningDefinitions)
             {
-                if (arrangementType == ArrangementType.Guitar)
+                // need to populate for Vocals too even though not used
+                if (arrangementType != ArrangementType.Bass)
                     tuningComboBox.Items.Add(tuning);
                 if (arrangementType == ArrangementType.Bass)
                     tuningComboBox.Items.Add(TuningDefinition.Convert2Bass(tuning));
@@ -245,8 +246,8 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 return;
             }
 
-            TuningDefinition formTuning = new TuningDefinition();
-            bool addNew = false;
+            bool addNew;
+            TuningDefinition formTuning;
             using (var form = new TuningForm())
             {
                 form.Tuning = tuning;
@@ -287,7 +288,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             {
                 tuningComboBox.SelectedIndex = tcbIndex;
                 tuning = (TuningDefinition)tuningComboBox.Items[tcbIndex];
-                if (TuningDefinition.TuningEquals(tuning.Tuning, formTuning.Tuning))
+                if (tuning.Tuning == formTuning.Tuning)
                 {
                     foundTuning = tcbIndex;
                     break;
@@ -295,7 +296,6 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             }
 
             // add the custom tuning to tuningComboBox
-
             if (foundTuning == -1)
             {
                 formTuning.Custom = true;
@@ -420,10 +420,17 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
         }
 
         private void SequencialToneComboEnabling()
-        {
-            toneBCombo.Enabled = !String.IsNullOrEmpty((string)toneACombo.SelectedItem) && toneACombo.SelectedIndex > 0;
-            toneCCombo.Enabled = !String.IsNullOrEmpty((string)toneBCombo.SelectedItem) && toneBCombo.SelectedIndex > 0;
-            toneDCombo.Enabled = !String.IsNullOrEmpty((string)toneCCombo.SelectedItem) && toneCCombo.SelectedIndex > 0;
+        {//TODO: handle not one-by-one enabilng disabling tone slots and use data from enabled one, confused about this one.
+            if (currentGameVersion != GameVersion.RS2012)
+            {
+                toneBCombo.Enabled = !String.IsNullOrEmpty((string)toneACombo.SelectedItem) && toneACombo.SelectedIndex > 0;
+                toneCCombo.Enabled = !String.IsNullOrEmpty((string)toneBCombo.SelectedItem) && toneBCombo.SelectedIndex > 0;
+                toneDCombo.Enabled = !String.IsNullOrEmpty((string)toneCCombo.SelectedItem) && toneCCombo.SelectedIndex > 0;
+            }
+            else
+            {
+                toneACombo.Enabled = toneBCombo.Enabled = toneCCombo.Enabled = toneDCombo.Enabled = false;
+            }
         }
 
         private bool isAlreadyAdded(string xmlPath)
@@ -569,9 +576,9 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                         }
                     }
 
-                    //Tones setup
                     if (currentGameVersion != GameVersion.RS2012)
                     {
+                        //Tones setup
                         Arrangement.ToneBase = xmlSong.ToneBase;
                         Arrangement.ToneA = xmlSong.ToneA;
                         Arrangement.ToneB = xmlSong.ToneB;
@@ -605,7 +612,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                     {
                         tuningComboBox.SelectedIndex = tcbIndex;
                         TuningDefinition tuning = (TuningDefinition)tuningComboBox.Items[tcbIndex];
-                        if (TuningDefinition.TuningEquals(tuning.Tuning, xmlSong.Tuning))
+                        if (tuning.Tuning == xmlSong.Tuning)
                         {
                             foundTuning = tcbIndex;
                             break;
@@ -613,7 +620,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                     }
 
                     if (foundTuning == -1)
-                        ShowTuningForm(selectedType, new TuningDefinition() { Tuning = xmlSong.Tuning, Custom = true, GameVersion = currentGameVersion });
+                        ShowTuningForm(selectedType, new TuningDefinition { Tuning = xmlSong.Tuning, Custom = true, GameVersion = currentGameVersion });
                     else
                         tuningComboBox.SelectedIndex = foundTuning;
 

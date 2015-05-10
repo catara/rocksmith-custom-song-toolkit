@@ -11,7 +11,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
     {
         public bool Saved = false;
         public GameVersion CurrentGameVersion;
-        private DLCPackageCreator parentControl = null;
+        //private DLCPackageCreator parentControl = null;
 
 
         private string CurrentOFDFilter
@@ -35,14 +35,20 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
         }
 
         private void okButton_Click(object sender, EventArgs e)
-        {
+        {//TODO: max 6 gears allowed, 2 nessesary and 4 extra.
             switch (CurrentGameVersion)
             {
                 case GameVersion.RS2012:
                     if (toneControl1.Tone.PedalList.Count == 0) return;
+                    if (toneControl1.Tone.PedalList.Count > 6) return;
                     break;
                 case GameVersion.RS2014:
                     if (toneControl1.Tone.GearList.IsNull()) return;
+                    if (toneControl1.Tone.GearList.SlotsUsed() > 6)
+                    {
+                        MessageBox.Show("Reached effects limit, Only 4 extra gears allowed.", DLCPackageCreator.MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
                     break;
             }
             Saved = true;
@@ -52,7 +58,6 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
         private void loadButton_Click(object sender, EventArgs e)
         {
             string toneSavePath;
-
             using (var ofd = new OpenFileDialog())
             {
                 ofd.Filter = CurrentOFDFilter;
@@ -60,27 +65,25 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 toneSavePath = ofd.FileName;
             }
 
-            dynamic tone = null;
             try
             {
                 switch (CurrentGameVersion)
                 {
                     case GameVersion.RS2012:
-                        tone = Tone.LoadFromXmlTemplateFile(toneSavePath);
+                        toneControl1.Tone = Tone.LoadFromXmlTemplateFile(toneSavePath);
                         break;
                     case GameVersion.RS2014:
-                        tone = Tone2014.LoadFromXmlTemplateFile(toneSavePath);
+                        toneControl1.Tone = Tone2014.LoadFromXmlTemplateFile(toneSavePath);
                         break;
                 }
 
             }
             catch (Exception ex)
             {
+                toneControl1.Tone = null;
                 MessageBox.Show("Can't load saved tone. \n" + ex.Message, DLCPackageCreator.MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-
-            toneControl1.Tone = tone;
 
             MessageBox.Show("Tone was loaded.", DLCPackageCreator.MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -92,6 +95,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             {
                 ofd.Filter = CurrentOFDFilter;
                 ofd.AddExtension = true;
+                ofd.FileName = toneControl1.Tone.Name;
                 if (ofd.ShowDialog() != DialogResult.OK) return;
                 toneSavePath = ofd.FileName;
             }

@@ -35,59 +35,44 @@ namespace RocksmithToolkitLib.DLCPackage.Showlight
         [XmlAttribute("count")]
         public Int32 Count { get; set; }
 
-        public Showlights() { ShowlightList = new List<Showlight>(); }
-
-        public Showlights(DLCPackageData info) {
+        public Showlights()
+        {
             ShowlightList = new List<Showlight>();
+        }
 
+        public Showlights(string showlightsfile)
+            : this()
+        {
+            GetShowlights(showlightsfile);
+        }
+
+        public Showlights(DLCPackageData info)
+            : this()
+        {
             foreach (var arrangement in info.Arrangements) {
                 if (arrangement.ArrangementType == Sng.ArrangementType.Vocal)
                     continue;
-
-                var showlightFile = Path.Combine(Path.GetDirectoryName(arrangement.SongXml.File), 
-                    Path.GetFileNameWithoutExtension(arrangement.SongXml.File) + "_showlights.xml");
-
-                if (!File.Exists(showlightFile))
-                {
-                    showlightFile = Path.Combine(Path.GetDirectoryName(arrangement.SongXml.File), info.Name + "_showlights.xml");
-
-                    if (PopShList(Genegate(arrangement.SongXml.File).ShowlightList))
-                        continue;
-                }
-
-                if (PopShList(LoadFromFile(showlightFile).ShowlightList))
+                if (arrangement.SongXml.File == null)
                     continue;
-            }
 
-            ShowlightList = FixShowlights(ShowlightList);
-            Count = ShowlightList.Count;
-        }
-
-        class EqShowlight : IEqualityComparer<Showlight>
-        {
-            public bool Equals(Showlight x, Showlight y)
-            {
-                if  (x == null)
-                    return y == null;
-
-                return (x.Note == y.Note && x.Time.Equals(y.Time)) || 
-                       (x.Note == y.Note && x.Time + 2.0D > y.Time);
-            }
-
-            public int GetHashCode(Showlight obj)
-            {
-                if (Object.ReferenceEquals(obj, null))
-                    return 0;
-
-                return obj.Time.GetHashCode() ^ obj.Time.GetHashCode() + obj.Note.GetHashCode();
+                var shlFile = Path.Combine(Path.GetDirectoryName(arrangement.SongXml.File),
+                    arrangement.SongXml.Name + "_showlights.xml");
+                var shlCommon = Path.Combine(Path.GetDirectoryName(shlFile), info.Name + "_showlights.xml");
+                if (!File.Exists(shlCommon))
+                {//Generate
+                    GetShowlights(arrangement.SongXml.File);
+                    continue;
+                }
+                GetShowlights(shlCommon);
             }
         }
 
         public void Serialize(Stream stream)
         {
-            XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
+            var ns = new XmlSerializerNamespaces();
             ns.Add("", "");
 
+            Count = ShowlightList.Count;
             using (var writer = System.Xml.XmlWriter.Create(stream, new System.Xml.XmlWriterSettings {
                 Indent = true,
                 OmitXmlDeclaration = false,
@@ -100,76 +85,91 @@ namespace RocksmithToolkitLib.DLCPackage.Showlight
             stream.Seek(0, SeekOrigin.Begin);
         }
 
-        private int getFogNote(int midiNote)
+        private void GetShowlights(string showlightsfile)
+        {
+            FixShowlights(showlightsfile.ToLower().Contains("_showlights")
+                ? LoadFromFile(showlightsfile)
+                : Generate(showlightsfile));
+        }
+
+        private int GetFogNote(int midiNote)
         {
             return (midiNote % 12) + (12 * 2);
         }
 
-        private int getBeamNote(int midiNote)
+        private int GetBeamNote(int midiNote)
         {
             return (midiNote % 12) + (12 * 4);
+        }
+
+        public bool FixShowlights(Showlights shl)
+        {
+            return FixShowlights(shl.ShowlightList);
         }
 
         /* Add to list logic
          * if (i+1 == List.Count) List.Add(objectToAdd);
          * else List.Insert(i+1, objectToAdd);
          */
-        public List<Showlight> FixShowlights(List<Showlight> ShowlightList)
+        public bool FixShowlights(List<Showlight> showlightList)
         {
-            if (ShowlightList.Count == 0) return ShowlightList;
+            if (showlightList.Count == 0) return true;
 
             //Setup Stage Fog Color
-            if (ShowlightList[0].Time > 10.0F) {
-                ShowlightList.Insert(0, new Showlight() { Note = getFogNote(ShowlightList[0].Note), Time = 10.0F });
+            if (showlightList[0].Time > 10.0F) {
+                showlightList.Insert(0, new Showlight { Note = GetFogNote(showlightList[0].Note), Time = 10.0F });
             }
-            else if (ShowlightList[0].Note < 24 || ShowlightList[0].Note > 35) {
-                ShowlightList[0].Note = getFogNote(ShowlightList[0].Note);
+            else if (showlightList[0].Note < 24 || showlightList[0].Note > 35) {
+                showlightList[0].Note = GetFogNote(showlightList[0].Note);
             }
             //Setup Stage lights
             //Additional fix for stage lights
-            for (var i = 1; i + 1 <= ShowlightList.Count; i++)
+            for (var i = 1; i + 1 <= showlightList.Count; i++)
             {
 
                 //if current is last, add new one n=n t=t+1
-                if (i + 1 == ShowlightList.Count)
+                if (i + 1 == showlightList.Count)
                 {
-                    var objectToAdd = new Showlight()
+                    var objectToAdd = new Showlight
                     {
-                        Note = ShowlightList[i].Note,
-                        Time = ShowlightList[i].Time + 1
+                        Note = showlightList[i].Note,
+                        Time = showlightList[i].Time + 1
                     };
 
-                    ShowlightList.Add(objectToAdd);
+                    showlightList.Add(objectToAdd);
                 }
 
-                if (ShowlightList[i].Note == ShowlightList[i + 1].Note) // if next note is current
-                    ShowlightList.Remove(ShowlightList[i + 1]);
+                if (showlightList[i].Note == showlightList[i + 1].Note) // if next note is current
+                    showlightList.Remove(showlightList[i + 1]);
 
                 //Fog Color for, every: Solo, every 30% of the song. NO EFFECT.
-                if (ShowlightList[i].Note > 23 && ShowlightList[i].Note < 36)
+                if (showlightList[i].Note > 23 && showlightList[i].Note < 36)
                 {
-                    ShowlightList[i].Note = getBeamNote(ShowlightList[i].Note);
+                    showlightList[i].Note = GetBeamNote(showlightList[i].Note);
                     continue;
                 }
 
                 //For all notes > 67 || note in range [36..41] translate it to Beam\spotlight, range [42..59]
-                if (ShowlightList[i].Note < 24 || ShowlightList[i].Note > 35 && ShowlightList[i].Note < 42 || ShowlightList[i].Note > 67)
+                if (showlightList[i].Note < 24 || showlightList[i].Note > 35 && showlightList[i].Note < 42 || showlightList[i].Note > 67)
                 {
-                    ShowlightList[i].Note = getBeamNote(ShowlightList[i].Note);
-                    continue;
+                    showlightList[i].Note = GetBeamNote(showlightList[i].Note);
+                    continue;//useless for now
                 }
             }
             //Forced laser effect for last note (we probablty couldn't see it)
-            ShowlightList[ShowlightList.Count - 1].Note = 66;
+            showlightList[showlightList.Count - 1].Note = 66;
 
-            return ShowlightList;
+            return PopShList(showlightList);
         }
 
-        public Showlights Genegate(string xmlFile)
+        /// <summary>
+        /// Poorly written sowlights generator, lots of things missing.
+        /// </summary>
+        /// <param name="xmlFile">Xml file.</param>
+        public Showlights Generate(string xmlFile)
         {
             var midiNotes = new List<Showlight>();
             var chordNotes = new List<Showlight>();
-            var ShowL = new Showlights();
             var song = Song2014.LoadFromFile(xmlFile);
             // If vocals
             if (song.Phrases == null || song.Tuning == null) return null;
@@ -188,7 +188,7 @@ namespace RocksmithToolkitLib.DLCPackage.Showlight
                             song.Arrangement == "Bass",
                             song.Capo);
 
-                        midiNotes.Add(new Showlight() { Time = lvl.Notes[i].Time, Note = mNote });
+                        midiNotes.Add(new Showlight { Time = lvl.Notes[i].Time, Note = mNote });
                     }
                     for (int i = 0; i + 1 <= lvl.Chords.Length; i++)
                     {
@@ -200,34 +200,42 @@ namespace RocksmithToolkitLib.DLCPackage.Showlight
                             song.Arrangement == "Bass",
                             song.Capo);
 
-                        chordNotes.Add(new Showlight() { Time = lvl.Chords[i].Time, Note = mNote });
+                        chordNotes.Add(new Showlight { Time = lvl.Chords[i].Time, Note = mNote });
                     }
                 }
             }
 
-            ShowL.PopShList(midiNotes);
-            ShowL.PopShList(chordNotes);
-            ShowL.Count = ShowL.ShowlightList.Count;
+            PopShList(midiNotes);
+            PopShList(chordNotes);
 
-            return ShowL;
+            return this;
         }
 
-        internal bool PopShList(List<Showlight> list)
+        public bool PopShList(Showlights shl)
         {
-            if (ShowlightList.Count == 0)
-                ShowlightList.AddRange(list);
+            return PopShList(shl.ShowlightList);
+        }
+        /// <summary>
+        /// Populates current showlights list.
+        /// </summary>
+        /// <param name="list"></param>
+        /// <returns>true if success.</returns>
+        public bool PopShList(List<Showlight> list)
+        {
+            if (this.ShowlightList.Count == 0)
+                this.ShowlightList.AddRange(list);
             else
             {
-                try {
-                    var comp = new EqShowlight();
-                    ShowlightList = list.Union(ShowlightList, comp).OrderBy(x => x.Time).ToList<Showlight>();
-                    ShowlightList.TrimExcess();
+                try
+                {
+                    this.ShowlightList = list.OrderBy(x => x.Time).Union(this.ShowlightList).ToList();
+                    this.ShowlightList.TrimExcess();
                 }
-                catch {
+                catch
+                {
                     return false;
                 }
             }
-
             return true;
         }
 

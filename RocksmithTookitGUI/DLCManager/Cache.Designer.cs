@@ -31,6 +31,9 @@ namespace RocksmithToolkitGUI.DLCManager
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.DataGridView1 = new System.Windows.Forms.DataGridView();
             this.picbx_AlbumArtPath = new System.Windows.Forms.PictureBox();
             this.chbx_Removed = new System.Windows.Forms.CheckBox();
@@ -58,6 +61,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.cbx_Format = new System.Windows.Forms.ComboBox();
             this.btn_SteamDLCFolder = new System.Windows.Forms.Button();
             this.nud_RemoveSlide = new System.Windows.Forms.NumericUpDown();
+            this.txt_Counter = new RocksmithToolkitGUI.CueTextBox();
             this.txt_AudioPreviewPath = new RocksmithToolkitGUI.CueTextBox();
             this.txt_AudioPath = new RocksmithToolkitGUI.CueTextBox();
             this.txt_FTPPath = new RocksmithToolkitGUI.CueTextBox();
@@ -73,6 +77,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_AlbumYear = new RocksmithToolkitGUI.CueTextBox();
             this.txt_ID = new RocksmithToolkitGUI.CueTextBox();
             this.txt_Album = new RocksmithToolkitGUI.CueTextBox();
+            this.btn_NextItem = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPath)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nud_RemoveSlide)).BeginInit();
@@ -82,9 +87,33 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.DataGridView1.AllowUserToOrderColumns = true;
             this.DataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllHeaders;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.DataGridView1.DefaultCellStyle = dataGridViewCellStyle5;
             this.DataGridView1.Location = new System.Drawing.Point(0, 0);
             this.DataGridView1.Name = "DataGridView1";
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.DataGridView1.RowHeadersWidth = 61;
             this.DataGridView1.Size = new System.Drawing.Size(1175, 544);
             this.DataGridView1.TabIndex = 38;
@@ -107,7 +136,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // chbx_Removed
             // 
             this.chbx_Removed.AutoSize = true;
-            this.chbx_Removed.Location = new System.Drawing.Point(754, 650);
+            this.chbx_Removed.Location = new System.Drawing.Point(758, 650);
             this.chbx_Removed.Name = "chbx_Removed";
             this.chbx_Removed.Size = new System.Drawing.Size(72, 17);
             this.chbx_Removed.TabIndex = 124;
@@ -244,7 +273,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.chbx_AutoPlay.AutoSize = true;
             this.chbx_AutoPlay.Enabled = false;
-            this.chbx_AutoPlay.Location = new System.Drawing.Point(644, 650);
+            this.chbx_AutoPlay.Location = new System.Drawing.Point(636, 650);
             this.chbx_AutoPlay.Name = "chbx_AutoPlay";
             this.chbx_AutoPlay.Size = new System.Drawing.Size(80, 17);
             this.chbx_AutoPlay.TabIndex = 290;
@@ -367,11 +396,27 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // nud_RemoveSlide
             // 
-            this.nud_RemoveSlide.Location = new System.Drawing.Point(721, 649);
+            this.nud_RemoveSlide.Location = new System.Drawing.Point(762, 546);
+            this.nud_RemoveSlide.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
             this.nud_RemoveSlide.Name = "nud_RemoveSlide";
             this.nud_RemoveSlide.Size = new System.Drawing.Size(31, 20);
             this.nud_RemoveSlide.TabIndex = 310;
             this.nud_RemoveSlide.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
+            // 
+            // txt_Counter
+            // 
+            this.txt_Counter.Cue = "Up/Down";
+            this.txt_Counter.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_Counter.ForeColor = System.Drawing.Color.Gray;
+            this.txt_Counter.Location = new System.Drawing.Point(799, 676);
+            this.txt_Counter.Name = "txt_Counter";
+            this.txt_Counter.Size = new System.Drawing.Size(52, 20);
+            this.txt_Counter.TabIndex = 311;
+            this.txt_Counter.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txt_AudioPreviewPath
             // 
@@ -549,11 +594,24 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_Album.Size = new System.Drawing.Size(222, 20);
             this.txt_Album.TabIndex = 126;
             // 
+            // btn_NextItem
+            // 
+            this.btn_NextItem.Location = new System.Drawing.Point(705, 648);
+            this.btn_NextItem.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_NextItem.Name = "btn_NextItem";
+            this.btn_NextItem.Size = new System.Drawing.Size(48, 22);
+            this.btn_NextItem.TabIndex = 312;
+            this.btn_NextItem.Text = "Next";
+            this.btn_NextItem.UseVisualStyleBackColor = true;
+            this.btn_NextItem.Click += new System.EventHandler(this.btn_NextItem_Click);
+            // 
             // Cache
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1187, 694);
+            this.Controls.Add(this.btn_NextItem);
+            this.Controls.Add(this.txt_Counter);
             this.Controls.Add(this.nud_RemoveSlide);
             this.Controls.Add(this.btn_SteamDLCFolder);
             this.Controls.Add(this.cbx_Format);
@@ -654,5 +712,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private System.Windows.Forms.ComboBox cbx_Format;
         private System.Windows.Forms.Button btn_SteamDLCFolder;
         private System.Windows.Forms.NumericUpDown nud_RemoveSlide;
+        private CueTextBox txt_Counter;
+        private System.Windows.Forms.Button btn_NextItem;
     }
 }

@@ -120,7 +120,9 @@ namespace RocksmithToolkitGUI.DLCManager
 
         public void DataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
-           if (DataGridView1.SelectedCells[0].RowIndex>0) ChangeRow();
+            var line = -1;
+            line = DataGridView1.SelectedCells[0].RowIndex;
+            if (line > -1) ChangeRow();
         }
 
         public void ChangeRow()
@@ -1134,8 +1136,27 @@ namespace RocksmithToolkitGUI.DLCManager
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
            //if (DataGridView1.SelectedCells[0].RowIndex > 0) 
-            var prev = nud_RemoveSlide.Value;
+            //var prev = DataGridView1.SelectedCells[0].RowIndex; //nud_RemoveSlide.Value;
          
+            //SaveRecord();// ChangeRow();
+            //int rowindex;
+            //DataGridViewRow row;
+            //var i = DataGridView1.SelectedCells[0].RowIndex;
+            //rowindex = i;// DataGridView1.SelectedRows[0].Index;
+            ////DataGridView1.Rows[rowindex + 1].Selected = true;           
+            ////DataGridView1.Rows[rowindex].Selected = false;
+            ////if (prev>txt_Counter.Text.ToInt32()) row = DataGridView1.Rows[rowindex + 1];
+            ////else row = DataGridView1.Rows[rowindex - 1];
+            ////if (DataGridView1.SelectedCells[0].RowIndex > 0) 
+            //txt_Counter.Text = prev.ToString();
+            
+        }
+
+        private void btn_NextItem_Click(object sender, EventArgs e)
+        {
+            //if (DataGridView1.SelectedCells[0].RowIndex > 0) 
+            var prev = DataGridView1.SelectedCells[0].RowIndex; //nud_RemoveSlide.Value;
+
             SaveRecord();// ChangeRow();
             int rowindex;
             DataGridViewRow row;
@@ -1143,9 +1164,11 @@ namespace RocksmithToolkitGUI.DLCManager
             rowindex = i;// DataGridView1.SelectedRows[0].Index;
             DataGridView1.Rows[rowindex + 1].Selected = true;
             DataGridView1.Rows[rowindex].Selected = false;
+            //if (prev>txt_Counter.Text.ToInt32())
             row = DataGridView1.Rows[rowindex + 1];
+            //else row = DataGridView1.Rows[rowindex - 1];
             //if (DataGridView1.SelectedCells[0].RowIndex > 0) 
-            
+            txt_Counter.Text = prev.ToString();
         }
     }
 }

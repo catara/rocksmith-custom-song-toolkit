@@ -221,13 +221,15 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void DataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
-            if (DataGridView1.SelectedCells[0].RowIndex > 0) ChangeRow();
+            var line = -1;
+            line = DataGridView1.SelectedCells[0].RowIndex;
+            if ( line> -1) ChangeRow();
         }
 
         public void ChangeRow()
         {
 
-        int i;
+            int i;
             i = DataGridView1.SelectedCells[0].RowIndex;
             txt_ID.Text = DataGridView1.Rows[i].Cells[0].Value.ToString();
             txt_Title.Text = DataGridView1.Rows[i].Cells[1].Value.ToString();
@@ -1430,6 +1432,11 @@ namespace RocksmithToolkitGUI.DLCManager
         }
 
         private void ChangeRowD(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ChangeEdit(object sender, EventArgs e)
         {
             if (txt_Album.Text != "") ChangeRow();
         }

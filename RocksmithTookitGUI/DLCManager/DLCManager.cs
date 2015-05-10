@@ -2675,7 +2675,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                         l = ms.Substring(pos).Length;
                                         audioprevpath = norm_path + path_decom1 + ms.Substring(pos, l);
                                         cmd += " , audioPreviewPath=\"" + audioprevpath + "_preview.wem\"";
-                                        cmd += " , oggPreviewPath=\"" + norm_path + path_decom2 + ms.Substring(pos, l) + "_preview.ogg\"";
+                                        cmd += " , oggPreviewPath=\"" + norm_path + path_decom2 + ms.Substring(pos, l) + ".ogg\"";//_preview
                                     }
                                     //rtxt_StatisticsOnReadDLCs.Text = "3" + "..." + rtxt_StatisticsOnReadDLCs.Text;
                                     cmd += " , Folder_Name=\"" + norm_path + "\"";

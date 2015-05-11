@@ -230,86 +230,89 @@ namespace RocksmithToolkitGUI.DLCManager
         {
 
             int i;
-            i = DataGridView1.SelectedCells[0].RowIndex;
-            txt_ID.Text = DataGridView1.Rows[i].Cells[0].Value.ToString();
-            txt_Title.Text = DataGridView1.Rows[i].Cells[1].Value.ToString();
-            txt_Title_Sort.Text = DataGridView1.Rows[i].Cells[2].Value.ToString();
-            txt_Album.Text = DataGridView1.Rows[i].Cells[3].Value.ToString();
-            txt_Artist.Text = DataGridView1.Rows[i].Cells[4].Value.ToString();
-            txt_Artist_Sort.Text = DataGridView1.Rows[i].Cells[5].Value.ToString();
-            txt_Album_Year.Text = DataGridView1.Rows[i].Cells[6].Value.ToString();
-            txt_AverageTempo.Text = DataGridView1.Rows[i].Cells[7].Value.ToString();
-            txt_Volume.Text = DataGridView1.Rows[i].Cells[8].Value.ToString();
-            txt_Preview_Volume.Text = DataGridView1.Rows[i].Cells[9].Value.ToString();
-            txt_AlbumArtPath.Text = DataGridView1.Rows[i].Cells[10].Value.ToString();
-            txt_Track_No.Text = DataGridView1.Rows[i].Cells[13].Value.ToString();
-            txt_Author.Text = DataGridView1.Rows[i].Cells[14].Value.ToString();
-            txt_Version.Text = DataGridView1.Rows[i].Cells[15].Value.ToString();
-            txt_DLC_ID.Text = DataGridView1.Rows[i].Cells[16].Value.ToString();
-            txt_APP_ID.Text = DataGridView1.Rows[i].Cells[17].Value.ToString();
-            txt_Alt_No.Text = DataGridView1.Rows[i].Cells[33].Value.ToString();
-            txt_Tuning.Text = DataGridView1.Rows[i].Cells[47].Value.ToString();
-            txt_BassPicking.Text = DataGridView1.Rows[i].Cells[48].Value.ToString();
-            txt_Group.Text = DataGridView1.Rows[i].Cells[50].Value.ToString();
-            txt_Rating.Text = DataGridView1.Rows[i].Cells[51].Value.ToString();
-            txt_Description.Text = DataGridView1.Rows[i].Cells[52].Value.ToString();
-            txt_Artist_ShortName.Text = DataGridView1.Rows[i].Cells[85].Value.ToString();
-            txt_Album_ShortName.Text = DataGridView1.Rows[i].Cells[86].Value.ToString();
-            txt_AudioPath.Text = DataGridView1.Rows[i].Cells[77].Value.ToString().Replace(".ogg", "_fixed.ogg");
-            txt_AudioPreviewPath.Text = DataGridView1.Rows[i].Cells[78].Value.ToString().Replace(".ogg", "_fixed.ogg");
+            if (DataGridView1.SelectedCells.Count >0)
+            {
+                i = DataGridView1.SelectedCells[0].RowIndex;
+                txt_ID.Text = DataGridView1.Rows[i].Cells[0].Value.ToString();
+                txt_Title.Text = DataGridView1.Rows[i].Cells[1].Value.ToString();
+                txt_Title_Sort.Text = DataGridView1.Rows[i].Cells[2].Value.ToString();
+                txt_Album.Text = DataGridView1.Rows[i].Cells[3].Value.ToString();
+                txt_Artist.Text = DataGridView1.Rows[i].Cells[4].Value.ToString();
+                txt_Artist_Sort.Text = DataGridView1.Rows[i].Cells[5].Value.ToString();
+                txt_Album_Year.Text = DataGridView1.Rows[i].Cells[6].Value.ToString();
+                txt_AverageTempo.Text = DataGridView1.Rows[i].Cells[7].Value.ToString();
+                txt_Volume.Text = DataGridView1.Rows[i].Cells[8].Value.ToString();
+                txt_Preview_Volume.Text = DataGridView1.Rows[i].Cells[9].Value.ToString();
+                txt_AlbumArtPath.Text = DataGridView1.Rows[i].Cells[10].Value.ToString();
+                txt_Track_No.Text = DataGridView1.Rows[i].Cells[13].Value.ToString();
+                txt_Author.Text = DataGridView1.Rows[i].Cells[14].Value.ToString();
+                txt_Version.Text = DataGridView1.Rows[i].Cells[15].Value.ToString();
+                txt_DLC_ID.Text = DataGridView1.Rows[i].Cells[16].Value.ToString();
+                txt_APP_ID.Text = DataGridView1.Rows[i].Cells[17].Value.ToString();
+                txt_Alt_No.Text = DataGridView1.Rows[i].Cells[33].Value.ToString();
+                txt_Tuning.Text = DataGridView1.Rows[i].Cells[47].Value.ToString();
+                txt_BassPicking.Text = DataGridView1.Rows[i].Cells[48].Value.ToString();
+                txt_Group.Text = DataGridView1.Rows[i].Cells[50].Value.ToString();
+                txt_Rating.Text = DataGridView1.Rows[i].Cells[51].Value.ToString();
+                txt_Description.Text = DataGridView1.Rows[i].Cells[52].Value.ToString();
+                txt_Artist_ShortName.Text = DataGridView1.Rows[i].Cells[85].Value.ToString();
+                txt_Album_ShortName.Text = DataGridView1.Rows[i].Cells[86].Value.ToString();
+                txt_AudioPath.Text = DataGridView1.Rows[i].Cells[77].Value.ToString().Replace(".ogg", "_fixed.ogg");
+                txt_AudioPreviewPath.Text = DataGridView1.Rows[i].Cells[78].Value.ToString().Replace(".ogg", "_fixed.ogg");
 
-            if (DataGridView1.Rows[i].Cells[26].Value.ToString() == "Yes") chbx_Original.Checked = true;
-            else chbx_Original.Checked = false;
-            if (DataGridView1.Rows[i].Cells[28].Value.ToString() == "Yes") chbx_Beta.Checked = true;
-            else chbx_Beta.Checked = false;
-            if (DataGridView1.Rows[i].Cells[29].Value.ToString() == "Yes") chbx_Alternate.Checked = true;
-            else chbx_Alternate.Checked = false;
-            if (DataGridView1.Rows[i].Cells[31].Value.ToString() == "Yes") chbx_Broken.Checked = true;
-            else chbx_Broken.Checked = false;
-            if (DataGridView1.Rows[i].Cells[35].Value.ToString() == "Yes") chbx_Bass.Checked = true;
-            else chbx_Bass.Checked = false;
-            if (DataGridView1.Rows[i].Cells[37].Value.ToString() == "Yes") chbx_Lead.Checked = true;
-            else chbx_Lead.Checked = false;
-            if (DataGridView1.Rows[i].Cells[39].Value.ToString() == "Yes") chbx_Combo.Checked = true;
-            else chbx_Combo.Checked = false;
-            if (DataGridView1.Rows[i].Cells[38].Value.ToString() == "Yes") chbx_Rhythm.Checked = true;
-            else chbx_Rhythm.Checked = false;
-            if (DataGridView1.Rows[i].Cells[41].Value.ToString() == "Yes") chbx_Sections.Checked = true;
-            else chbx_Sections.Checked = false;
-            if (DataGridView1.Rows[i].Cells[42].Value.ToString() == "Yes") chbx_Cover.Checked = true;
-            else chbx_Cover.Checked = false;
-            if (DataGridView1.Rows[i].Cells[43].Value.ToString() == "Yes") { chbx_Preview.Checked = true; btn_PlayPreview.Enabled = true; }
-            else {chbx_Preview.Checked = false; btn_PlayPreview.Enabled = false;}
-            if (DataGridView1.Rows[i].Cells[45].Value.ToString() == "Yes") chbx_DD.Checked = true;
-            else chbx_DD.Checked = false;
-            if (DataGridView1.Rows[i].Cells[69].Value.ToString() == "Yes") chbx_Selected.Checked = true;
-            else chbx_Selected.Checked = false;
-            if (DataGridView1.Rows[i].Cells[74].Value.ToString() == "Yes") chbx_Author.Checked = true;
-            else chbx_Author.Checked = false;
-            if (DataGridView1.Rows[i].Cells[76].Value.ToString() == "Yes") chbx_Preview.Checked = true;
-            else chbx_Preview.Checked = false;
-            if (DataGridView1.Rows[i].Cells[83].Value.ToString() == "Yes") chbx_BassDD.Checked = true;
-            else chbx_BassDD.Checked = false;
-            if (DataGridView1.Rows[i].Cells[84].Value.ToString() == "Yes") chbx_Bonus.Checked = true;
-            else chbx_Bonus.Checked = false;
-            if (DataGridView1.Rows[i].Cells[87].Value.ToString() == "Yes") chbx_Avail_Old.Checked = true;
-            else chbx_Avail_Old.Checked = false;
-            if (DataGridView1.Rows[i].Cells[88].Value.ToString() == "Yes") chbx_Avail_Duplicate.Checked = true;
-            else chbx_Avail_Duplicate.Checked = false;
-            if (DataGridView1.Rows[i].Cells[89].Value.ToString() == "Yes") chbx_Has_Been_Corrected.Checked = true;
-            else chbx_Has_Been_Corrected.Checked = false;
+                if (DataGridView1.Rows[i].Cells[26].Value.ToString() == "Yes") chbx_Original.Checked = true;
+                else chbx_Original.Checked = false;
+                if (DataGridView1.Rows[i].Cells[28].Value.ToString() == "Yes") chbx_Beta.Checked = true;
+                else chbx_Beta.Checked = false;
+                if (DataGridView1.Rows[i].Cells[29].Value.ToString() == "Yes") chbx_Alternate.Checked = true;
+                else chbx_Alternate.Checked = false;
+                if (DataGridView1.Rows[i].Cells[31].Value.ToString() == "Yes") chbx_Broken.Checked = true;
+                else chbx_Broken.Checked = false;
+                if (DataGridView1.Rows[i].Cells[35].Value.ToString() == "Yes") chbx_Bass.Checked = true;
+                else chbx_Bass.Checked = false;
+                if (DataGridView1.Rows[i].Cells[37].Value.ToString() == "Yes") chbx_Lead.Checked = true;
+                else chbx_Lead.Checked = false;
+                if (DataGridView1.Rows[i].Cells[39].Value.ToString() == "Yes") chbx_Combo.Checked = true;
+                else chbx_Combo.Checked = false;
+                if (DataGridView1.Rows[i].Cells[38].Value.ToString() == "Yes") chbx_Rhythm.Checked = true;
+                else chbx_Rhythm.Checked = false;
+                if (DataGridView1.Rows[i].Cells[41].Value.ToString() == "Yes") chbx_Sections.Checked = true;
+                else chbx_Sections.Checked = false;
+                if (DataGridView1.Rows[i].Cells[42].Value.ToString() == "Yes") chbx_Cover.Checked = true;
+                else chbx_Cover.Checked = false;
+                if (DataGridView1.Rows[i].Cells[43].Value.ToString() == "Yes") { chbx_Preview.Checked = true; btn_PlayPreview.Enabled = true; }
+                else { chbx_Preview.Checked = false; btn_PlayPreview.Enabled = false; }
+                if (DataGridView1.Rows[i].Cells[45].Value.ToString() == "Yes") chbx_DD.Checked = true;
+                else chbx_DD.Checked = false;
+                if (DataGridView1.Rows[i].Cells[69].Value.ToString() == "Yes") chbx_Selected.Checked = true;
+                else chbx_Selected.Checked = false;
+                if (DataGridView1.Rows[i].Cells[74].Value.ToString() == "Yes") chbx_Author.Checked = true;
+                else chbx_Author.Checked = false;
+                if (DataGridView1.Rows[i].Cells[76].Value.ToString() == "Yes") chbx_Preview.Checked = true;
+                else chbx_Preview.Checked = false;
+                if (DataGridView1.Rows[i].Cells[83].Value.ToString() == "Yes") chbx_BassDD.Checked = true;
+                else chbx_BassDD.Checked = false;
+                if (DataGridView1.Rows[i].Cells[84].Value.ToString() == "Yes") chbx_Bonus.Checked = true;
+                else chbx_Bonus.Checked = false;
+                if (DataGridView1.Rows[i].Cells[87].Value.ToString() == "Yes") chbx_Avail_Old.Checked = true;
+                else chbx_Avail_Old.Checked = false;
+                if (DataGridView1.Rows[i].Cells[88].Value.ToString() == "Yes") chbx_Avail_Duplicate.Checked = true;
+                else chbx_Avail_Duplicate.Checked = false;
+                if (DataGridView1.Rows[i].Cells[89].Value.ToString() == "Yes") chbx_Has_Been_Corrected.Checked = true;
+                else chbx_Has_Been_Corrected.Checked = false;
 
 
-            //ImageSource imageSource = new BitmapImage(new Uri("C:\\Temp\\music_edit.png"));
-            //txt_Description.Text = txt_AlbumArtPath.Text.Replace(".dds", ".png");
-            picbx_AlbumArtPath.ImageLocation= txt_AlbumArtPath.Text.Replace(".dds",".png");
-            //btn_Search.Enabled = false;
-            btn_Save.Enabled = true;
-            txt_Artist_Sort.Enabled = true;
-            txt_Album.Enabled = true;
-            txt_Title_Sort.Enabled = true;
-            if (chbx_AutoSave.Checked) SaveOK = true;
-            else SaveOK = false;
+                //ImageSource imageSource = new BitmapImage(new Uri("C:\\Temp\\music_edit.png"));
+                //txt_Description.Text = txt_AlbumArtPath.Text.Replace(".dds", ".png");
+                picbx_AlbumArtPath.ImageLocation = txt_AlbumArtPath.Text.Replace(".dds", ".png");
+                //btn_Search.Enabled = false;
+                btn_Save.Enabled = true;
+                txt_Artist_Sort.Enabled = true;
+                txt_Album.Enabled = true;
+                txt_Title_Sort.Enabled = true;
+                if (chbx_AutoSave.Checked) SaveOK = true;
+                else SaveOK = false;
+            }
         }
 
         public void button8_Click(object sender, EventArgs e)
@@ -321,207 +324,210 @@ namespace RocksmithToolkitGUI.DLCManager
             int i;
             DataSet dis = new DataSet();
 
-            i = DataGridView1.SelectedCells[0].RowIndex;
-
-            DataGridView1.Rows[i].Cells[1].Value = txt_Title.Text;
-            DataGridView1.Rows[i].Cells[2].Value = txt_Title_Sort.Text;
-            DataGridView1.Rows[i].Cells[3].Value = txt_Album.Text;
-            DataGridView1.Rows[i].Cells[4].Value = txt_Artist.Text;
-            DataGridView1.Rows[i].Cells[5].Value = txt_Artist_Sort.Text;
-            DataGridView1.Rows[i].Cells[6].Value = txt_Album_Year.Text;
-            DataGridView1.Rows[i].Cells[7].Value = txt_AverageTempo.Text;
-            DataGridView1.Rows[i].Cells[8].Value = txt_Volume.Text;
-            DataGridView1.Rows[i].Cells[9].Value = txt_Preview_Volume.Text;
-            DataGridView1.Rows[i].Cells[10].Value = txt_AlbumArtPath.Text;
-            DataGridView1.Rows[i].Cells[13].Value = txt_Track_No.Text;
-            DataGridView1.Rows[i].Cells[14].Value = txt_Author.Text;
-            DataGridView1.Rows[i].Cells[15].Value = txt_Version.Text;
-            DataGridView1.Rows[i].Cells[16].Value = txt_DLC_ID.Text;
-            DataGridView1.Rows[i].Cells[17].Value = txt_APP_ID.Text;
-            DataGridView1.Rows[i].Cells[33].Value = txt_Alt_No.Text;
-            DataGridView1.Rows[i].Cells[47].Value = txt_Tuning.Text;
-            DataGridView1.Rows[i].Cells[48].Value = txt_BassPicking.Text;
-            DataGridView1.Rows[i].Cells[50].Value = txt_Group.Text;
-            DataGridView1.Rows[i].Cells[51].Value = txt_Rating.Text;
-            DataGridView1.Rows[i].Cells[52].Value = txt_Description.Text;
-            DataGridView1.Rows[i].Cells[76].Value = txt_AudioPreviewPath.Text;
-            DataGridView1.Rows[i].Cells[85].Value = txt_Artist_ShortName.Text;
-            DataGridView1.Rows[i].Cells[86].Value = txt_Album_ShortName.Text;
-            if (chbx_Original.Checked) DataGridView1.Rows[i].Cells[26].Value = "Yes";
-            else DataGridView1.Rows[i].Cells[26].Value = "No";
-            if (chbx_Beta.Checked) DataGridView1.Rows[i].Cells[28].Value = "Yes";
-            else DataGridView1.Rows[i].Cells[28].Value = "No";
-            if (chbx_Alternate.Checked) DataGridView1.Rows[i].Cells[29].Value = "Yes";
-            else DataGridView1.Rows[i].Cells[29].Value = "No";
-            if (chbx_Broken.Checked) DataGridView1.Rows[i].Cells[31].Value = "Yes";
-            else DataGridView1.Rows[i].Cells[31].Value = "No";
-            if (chbx_Bass.Checked) DataGridView1.Rows[i].Cells[35].Value = "Yes";
-            else DataGridView1.Rows[i].Cells[35].Value = "No";
-            if (chbx_Lead.Checked) DataGridView1.Rows[i].Cells[37].Value = "Yes";
-            else DataGridView1.Rows[i].Cells[37].Value = "No";
-            if (chbx_Rhythm.Checked) DataGridView1.Rows[i].Cells[38].Value = "Yes";
-            else DataGridView1.Rows[i].Cells[38].Value = "No";
-            if (chbx_Combo.Checked) DataGridView1.Rows[i].Cells[39].Value = "Yes";
-            else DataGridView1.Rows[i].Cells[39].Value = "No";
-            //if (chbx_Sections.Checked) DataGridView1.Rows[i].Cells[41].Value = "Yes";
-            //else DataGridView1.Rows[i].Cells[41].Value = "No";
-            if (chbx_Cover.Checked) DataGridView1.Rows[i].Cells[42].Value = "Yes";
-            else DataGridView1.Rows[i].Cells[42].Value = "No";
-            if (chbx_Preview.Checked) DataGridView1.Rows[i].Cells[43].Value = "Yes";
-            else DataGridView1.Rows[i].Cells[43].Value = "No";
-            if (chbx_DD.Checked) DataGridView1.Rows[i].Cells[45].Value = "Yes";
-            else DataGridView1.Rows[i].Cells[45].Value = "No";
-            if (chbx_Selected.Checked) DataGridView1.Rows[i].Cells[69].Value = "Yes";
-            else DataGridView1.Rows[i].Cells[69].Value = "No";
-            //if (chbx_Preview.Checked) DataGridView1.Rows[i].Cells[].Value = "Yes";
-            //else DataGridView1.Rows[i].Cells[75].Value = "No";
-            if (chbx_Author.Checked) DataGridView1.Rows[i].Cells[74].Value = "Yes";
-            else DataGridView1.Rows[i].Cells[74].Value = "No";
-            if (chbx_BassDD.Checked) DataGridView1.Rows[i].Cells[83].Value = "Yes";
-            else DataGridView1.Rows[i].Cells[83].Value = "No";
-            if (chbx_Bonus.Checked) DataGridView1.Rows[i].Cells[84].Value = "Yes";
-            else DataGridView1.Rows[i].Cells[84].Value = "No";
-            if (chbx_Avail_Old.Checked) DataGridView1.Rows[i].Cells[87].Value = "Yes";
-            else DataGridView1.Rows[i].Cells[87].Value = "No";
-            if (chbx_Avail_Duplicate.Checked) DataGridView1.Rows[i].Cells[88].Value = "Yes";
-            else DataGridView1.Rows[i].Cells[88].Value = "No";
-            if (chbx_Has_Been_Corrected.Checked) DataGridView1.Rows[i].Cells[89].Value = "Yes";
-            else DataGridView1.Rows[i].Cells[89].Value = "No";
-
-            //var DB_Path = "../../../../tmp\\Files.accdb;";
-            var connection = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path); //+ ";Persist Security Info=False"
-            var command = connection.CreateCommand();
-            //dssx = DataGridView1;
-            using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            if (DataGridView1.SelectedCells.Count > 0)
             {
-                //OleDbCommand command = new OleDbCommand(); ;
-                //Update MainDB
-                //SqlCommand cmds = new SqlCommand(sqlCmd, conn2);
-                command.CommandText = "UPDATE Main SET ";
+                i = DataGridView1.SelectedCells[0].RowIndex;
 
-                command.CommandText += "Song_Title = @param1, ";
-                command.CommandText += "Song_Title_Sort = @param2, ";
-                command.CommandText += "Album = @param3, ";
-                command.CommandText += "Artist = @param4, ";
-                command.CommandText += "Artist_Sort = @param5, ";
-                command.CommandText += "Album_Year = @param6, ";
-                command.CommandText += "AverageTempo = @param7, ";
-                command.CommandText += "Volume = @param8, ";
-                command.CommandText += "Preview_Volume = @param9, ";
-                command.CommandText += "AlbumArtPath = @param10, ";
-                command.CommandText += "Track_No = @param13, ";
-                command.CommandText += "Author = @param14, ";
-                command.CommandText += "Version = @param15, ";
-                command.CommandText += "DLC_Name = @param16, ";
-                command.CommandText += "DLC_AppID = @param17, ";
-                command.CommandText += "Is_Original = @param26, ";
-                command.CommandText += "Is_Beta = @param28, ";
-                command.CommandText += "Is_Alternate = @param29, ";
-                //command.CommandText += "Is_Multitrack = @param30, ";
-                command.CommandText += "Is_Broken = @param31, ";
-                //command.CommandText += "MultiTrack_Version = @param32, ";
-                command.CommandText += "Alternate_Version_No = @param33, ";
-                //command.CommandText += "Has_Sections = @param41, ";
-                command.CommandText += "Has_Cover = @param42, ";
-                command.CommandText += "Has_Preview = @param43, ";
-                command.CommandText += "Has_DD = @param45, ";
-                command.CommandText += "Tunning = @param47, ";
-                command.CommandText += "Bass_Picking = @param48, ";
-                command.CommandText += "Tones = @param49, ";
-                //command.CommandText += "Group = @param50, ";
-                command.CommandText += "Rating = @param51, ";
-                command.CommandText += "Description = @param52, ";
-                command.CommandText += "Selected = @param69, ";
-                //command.CommandText += "YouTube_Link = @param70, ";
-                //command.CommandText += "CustomsForge_Link = @param71, ";
-                //command.CommandText += "CustomsForge_Like = @param72, ";
-                //command.CommandText += "CustomsForge_ReleaseNotes = @param73, ";
-                command.CommandText += "Has_Author = @param74, ";
-                //command.CommandText += "Has_Author = @param75, ";
-                command.CommandText += "oggPreviewPath = @param76, ";
-                //command.CommandText += "UniqueDLCName = @param79, ";
-                command.CommandText += "Bass_Has_DD = @param83, ";
-                command.CommandText += "Has_Bonus_Arrangement = @param84, ";
-                command.CommandText += "Artist_ShortName = @param85, ";
-                command.CommandText += "Album_ShortName = @param86, ";
-                command.CommandText += "Available_Old = @param87, ";
-                command.CommandText += "Available_Duplicate = @param88 ";
+                DataGridView1.Rows[i].Cells[1].Value = txt_Title.Text;
+                DataGridView1.Rows[i].Cells[2].Value = txt_Title_Sort.Text;
+                DataGridView1.Rows[i].Cells[3].Value = txt_Album.Text;
+                DataGridView1.Rows[i].Cells[4].Value = txt_Artist.Text;
+                DataGridView1.Rows[i].Cells[5].Value = txt_Artist_Sort.Text;
+                DataGridView1.Rows[i].Cells[6].Value = txt_Album_Year.Text;
+                DataGridView1.Rows[i].Cells[7].Value = txt_AverageTempo.Text;
+                DataGridView1.Rows[i].Cells[8].Value = txt_Volume.Text;
+                DataGridView1.Rows[i].Cells[9].Value = txt_Preview_Volume.Text;
+                DataGridView1.Rows[i].Cells[10].Value = txt_AlbumArtPath.Text;
+                DataGridView1.Rows[i].Cells[13].Value = txt_Track_No.Text;
+                DataGridView1.Rows[i].Cells[14].Value = txt_Author.Text;
+                DataGridView1.Rows[i].Cells[15].Value = txt_Version.Text;
+                DataGridView1.Rows[i].Cells[16].Value = txt_DLC_ID.Text;
+                DataGridView1.Rows[i].Cells[17].Value = txt_APP_ID.Text;
+                DataGridView1.Rows[i].Cells[33].Value = txt_Alt_No.Text;
+                DataGridView1.Rows[i].Cells[47].Value = txt_Tuning.Text;
+                DataGridView1.Rows[i].Cells[48].Value = txt_BassPicking.Text;
+                DataGridView1.Rows[i].Cells[50].Value = txt_Group.Text;
+                DataGridView1.Rows[i].Cells[51].Value = txt_Rating.Text;
+                DataGridView1.Rows[i].Cells[52].Value = txt_Description.Text;
+                DataGridView1.Rows[i].Cells[76].Value = txt_AudioPreviewPath.Text;
+                DataGridView1.Rows[i].Cells[85].Value = txt_Artist_ShortName.Text;
+                DataGridView1.Rows[i].Cells[86].Value = txt_Album_ShortName.Text;
+                if (chbx_Original.Checked) DataGridView1.Rows[i].Cells[26].Value = "Yes";
+                else DataGridView1.Rows[i].Cells[26].Value = "No";
+                if (chbx_Beta.Checked) DataGridView1.Rows[i].Cells[28].Value = "Yes";
+                else DataGridView1.Rows[i].Cells[28].Value = "No";
+                if (chbx_Alternate.Checked) DataGridView1.Rows[i].Cells[29].Value = "Yes";
+                else DataGridView1.Rows[i].Cells[29].Value = "No";
+                if (chbx_Broken.Checked) DataGridView1.Rows[i].Cells[31].Value = "Yes";
+                else DataGridView1.Rows[i].Cells[31].Value = "No";
+                if (chbx_Bass.Checked) DataGridView1.Rows[i].Cells[35].Value = "Yes";
+                else DataGridView1.Rows[i].Cells[35].Value = "No";
+                if (chbx_Lead.Checked) DataGridView1.Rows[i].Cells[37].Value = "Yes";
+                else DataGridView1.Rows[i].Cells[37].Value = "No";
+                if (chbx_Rhythm.Checked) DataGridView1.Rows[i].Cells[38].Value = "Yes";
+                else DataGridView1.Rows[i].Cells[38].Value = "No";
+                if (chbx_Combo.Checked) DataGridView1.Rows[i].Cells[39].Value = "Yes";
+                else DataGridView1.Rows[i].Cells[39].Value = "No";
+                //if (chbx_Sections.Checked) DataGridView1.Rows[i].Cells[41].Value = "Yes";
+                //else DataGridView1.Rows[i].Cells[41].Value = "No";
+                if (chbx_Cover.Checked) DataGridView1.Rows[i].Cells[42].Value = "Yes";
+                else DataGridView1.Rows[i].Cells[42].Value = "No";
+                if (chbx_Preview.Checked) DataGridView1.Rows[i].Cells[43].Value = "Yes";
+                else DataGridView1.Rows[i].Cells[43].Value = "No";
+                if (chbx_DD.Checked) DataGridView1.Rows[i].Cells[45].Value = "Yes";
+                else DataGridView1.Rows[i].Cells[45].Value = "No";
+                if (chbx_Selected.Checked) DataGridView1.Rows[i].Cells[69].Value = "Yes";
+                else DataGridView1.Rows[i].Cells[69].Value = "No";
+                //if (chbx_Preview.Checked) DataGridView1.Rows[i].Cells[].Value = "Yes";
+                //else DataGridView1.Rows[i].Cells[75].Value = "No";
+                if (chbx_Author.Checked) DataGridView1.Rows[i].Cells[74].Value = "Yes";
+                else DataGridView1.Rows[i].Cells[74].Value = "No";
+                if (chbx_BassDD.Checked) DataGridView1.Rows[i].Cells[83].Value = "Yes";
+                else DataGridView1.Rows[i].Cells[83].Value = "No";
+                if (chbx_Bonus.Checked) DataGridView1.Rows[i].Cells[84].Value = "Yes";
+                else DataGridView1.Rows[i].Cells[84].Value = "No";
+                if (chbx_Avail_Old.Checked) DataGridView1.Rows[i].Cells[87].Value = "Yes";
+                else DataGridView1.Rows[i].Cells[87].Value = "No";
+                if (chbx_Avail_Duplicate.Checked) DataGridView1.Rows[i].Cells[88].Value = "Yes";
+                else DataGridView1.Rows[i].Cells[88].Value = "No";
+                if (chbx_Has_Been_Corrected.Checked) DataGridView1.Rows[i].Cells[89].Value = "Yes";
+                else DataGridView1.Rows[i].Cells[89].Value = "No";
 
-                command.CommandText += "WHERE ID = " + txt_ID.Text;
-
-                command.Parameters.AddWithValue("@param1", DataGridView1.Rows[i].Cells[1].Value.ToString());
-                command.Parameters.AddWithValue("@param2", DataGridView1.Rows[i].Cells[2].Value.ToString());
-                command.Parameters.AddWithValue("@param3", DataGridView1.Rows[i].Cells[3].Value.ToString());
-                command.Parameters.AddWithValue("@param4", DataGridView1.Rows[i].Cells[4].Value.ToString());
-                command.Parameters.AddWithValue("@param5", DataGridView1.Rows[i].Cells[5].Value.ToString());
-                command.Parameters.AddWithValue("@param6", DataGridView1.Rows[i].Cells[6].Value.ToString());
-                command.Parameters.AddWithValue("@param7", DataGridView1.Rows[i].Cells[7].Value.ToString());
-                command.Parameters.AddWithValue("@param8", DataGridView1.Rows[i].Cells[8].Value.ToString());
-                command.Parameters.AddWithValue("@param9", DataGridView1.Rows[i].Cells[9].Value.ToString());
-                command.Parameters.AddWithValue("@param10", DataGridView1.Rows[i].Cells[10].Value.ToString());
-                command.Parameters.AddWithValue("@param13", DataGridView1.Rows[i].Cells[13].Value.ToString());
-                command.Parameters.AddWithValue("@param14", DataGridView1.Rows[i].Cells[14].Value.ToString());
-                command.Parameters.AddWithValue("@param15", DataGridView1.Rows[i].Cells[15].Value.ToString());
-                command.Parameters.AddWithValue("@param16", DataGridView1.Rows[i].Cells[16].Value.ToString());
-                command.Parameters.AddWithValue("@param17", DataGridView1.Rows[i].Cells[17].Value.ToString());
-                command.Parameters.AddWithValue("@param26", DataGridView1.Rows[i].Cells[26].Value.ToString());
-                command.Parameters.AddWithValue("@param28", DataGridView1.Rows[i].Cells[28].Value.ToString());
-                command.Parameters.AddWithValue("@param29", DataGridView1.Rows[i].Cells[29].Value.ToString());
-                command.Parameters.AddWithValue("@param31", DataGridView1.Rows[i].Cells[31].Value.ToString());
-                command.Parameters.AddWithValue("@param33", DataGridView1.Rows[i].Cells[33].Value.ToString());
-                //command.Parameters.AddWithValue("@param41", DataGridView1.Rows[i].Cells[41].Value.ToString());
-                command.Parameters.AddWithValue("@param42", DataGridView1.Rows[i].Cells[42].Value.ToString());
-                command.Parameters.AddWithValue("@param43", DataGridView1.Rows[i].Cells[43].Value.ToString());
-                command.Parameters.AddWithValue("@param45", DataGridView1.Rows[i].Cells[45].Value.ToString());
-                command.Parameters.AddWithValue("@param47", DataGridView1.Rows[i].Cells[47].Value.ToString());
-                command.Parameters.AddWithValue("@param48", DataGridView1.Rows[i].Cells[48].Value.ToString());
-                command.Parameters.AddWithValue("@param49", DataGridView1.Rows[i].Cells[49].Value.ToString());                
-                command.Parameters.AddWithValue("@param51", DataGridView1.Rows[i].Cells[51].Value.ToString());
-                command.Parameters.AddWithValue("@param52", DataGridView1.Rows[i].Cells[52].Value.ToString());
-                command.Parameters.AddWithValue("@param69", DataGridView1.Rows[i].Cells[69].Value.ToString());
-                command.Parameters.AddWithValue("@param74", DataGridView1.Rows[i].Cells[74].Value.ToString());
-                command.Parameters.AddWithValue("@param76", DataGridView1.Rows[i].Cells[76].Value.ToString());
-                command.Parameters.AddWithValue("@param83", DataGridView1.Rows[i].Cells[83].Value.ToString());
-                command.Parameters.AddWithValue("@param84", DataGridView1.Rows[i].Cells[84].Value.ToString());
-                command.Parameters.AddWithValue("@param85", DataGridView1.Rows[i].Cells[85].Value.ToString());
-                command.Parameters.AddWithValue("@param86", DataGridView1.Rows[i].Cells[86].Value.ToString());
-                command.Parameters.AddWithValue("@param87", DataGridView1.Rows[i].Cells[87].Value.ToString());
-                command.Parameters.AddWithValue("@param88", DataGridView1.Rows[i].Cells[88].Value.ToString());
-
-                //MessageBox.Show(command.Parameters.);
-                try
+                //var DB_Path = "../../../../tmp\\Files.accdb;";
+                var connection = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path); //+ ";Persist Security Info=False"
+                var command = connection.CreateCommand();
+                //dssx = DataGridView1;
+                using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
                 {
-                    command.CommandType = CommandType.Text;
-                    connection.Open();
-                    command.ExecuteNonQuery();
+                    //OleDbCommand command = new OleDbCommand(); ;
+                    //Update MainDB
+                    //SqlCommand cmds = new SqlCommand(sqlCmd, conn2);
+                    command.CommandText = "UPDATE Main SET ";
+
+                    command.CommandText += "Song_Title = @param1, ";
+                    command.CommandText += "Song_Title_Sort = @param2, ";
+                    command.CommandText += "Album = @param3, ";
+                    command.CommandText += "Artist = @param4, ";
+                    command.CommandText += "Artist_Sort = @param5, ";
+                    command.CommandText += "Album_Year = @param6, ";
+                    command.CommandText += "AverageTempo = @param7, ";
+                    command.CommandText += "Volume = @param8, ";
+                    command.CommandText += "Preview_Volume = @param9, ";
+                    command.CommandText += "AlbumArtPath = @param10, ";
+                    command.CommandText += "Track_No = @param13, ";
+                    command.CommandText += "Author = @param14, ";
+                    command.CommandText += "Version = @param15, ";
+                    command.CommandText += "DLC_Name = @param16, ";
+                    command.CommandText += "DLC_AppID = @param17, ";
+                    command.CommandText += "Is_Original = @param26, ";
+                    command.CommandText += "Is_Beta = @param28, ";
+                    command.CommandText += "Is_Alternate = @param29, ";
+                    //command.CommandText += "Is_Multitrack = @param30, ";
+                    command.CommandText += "Is_Broken = @param31, ";
+                    //command.CommandText += "MultiTrack_Version = @param32, ";
+                    command.CommandText += "Alternate_Version_No = @param33, ";
+                    //command.CommandText += "Has_Sections = @param41, ";
+                    command.CommandText += "Has_Cover = @param42, ";
+                    command.CommandText += "Has_Preview = @param43, ";
+                    command.CommandText += "Has_DD = @param45, ";
+                    command.CommandText += "Tunning = @param47, ";
+                    command.CommandText += "Bass_Picking = @param48, ";
+                    command.CommandText += "Tones = @param49, ";
+                    //command.CommandText += "Group = @param50, ";
+                    command.CommandText += "Rating = @param51, ";
+                    command.CommandText += "Description = @param52, ";
+                    command.CommandText += "Selected = @param69, ";
+                    //command.CommandText += "YouTube_Link = @param70, ";
+                    //command.CommandText += "CustomsForge_Link = @param71, ";
+                    //command.CommandText += "CustomsForge_Like = @param72, ";
+                    //command.CommandText += "CustomsForge_ReleaseNotes = @param73, ";
+                    command.CommandText += "Has_Author = @param74, ";
+                    //command.CommandText += "Has_Author = @param75, ";
+                    command.CommandText += "oggPreviewPath = @param76, ";
+                    //command.CommandText += "UniqueDLCName = @param79, ";
+                    command.CommandText += "Bass_Has_DD = @param83, ";
+                    command.CommandText += "Has_Bonus_Arrangement = @param84, ";
+                    command.CommandText += "Artist_ShortName = @param85, ";
+                    command.CommandText += "Album_ShortName = @param86, ";
+                    command.CommandText += "Available_Old = @param87, ";
+                    command.CommandText += "Available_Duplicate = @param88 ";
+
+                    command.CommandText += "WHERE ID = " + txt_ID.Text;
+
+                    command.Parameters.AddWithValue("@param1", DataGridView1.Rows[i].Cells[1].Value.ToString());
+                    command.Parameters.AddWithValue("@param2", DataGridView1.Rows[i].Cells[2].Value.ToString());
+                    command.Parameters.AddWithValue("@param3", DataGridView1.Rows[i].Cells[3].Value.ToString());
+                    command.Parameters.AddWithValue("@param4", DataGridView1.Rows[i].Cells[4].Value.ToString());
+                    command.Parameters.AddWithValue("@param5", DataGridView1.Rows[i].Cells[5].Value.ToString());
+                    command.Parameters.AddWithValue("@param6", DataGridView1.Rows[i].Cells[6].Value.ToString());
+                    command.Parameters.AddWithValue("@param7", DataGridView1.Rows[i].Cells[7].Value.ToString());
+                    command.Parameters.AddWithValue("@param8", DataGridView1.Rows[i].Cells[8].Value.ToString());
+                    command.Parameters.AddWithValue("@param9", DataGridView1.Rows[i].Cells[9].Value.ToString());
+                    command.Parameters.AddWithValue("@param10", DataGridView1.Rows[i].Cells[10].Value.ToString());
+                    command.Parameters.AddWithValue("@param13", DataGridView1.Rows[i].Cells[13].Value.ToString());
+                    command.Parameters.AddWithValue("@param14", DataGridView1.Rows[i].Cells[14].Value.ToString());
+                    command.Parameters.AddWithValue("@param15", DataGridView1.Rows[i].Cells[15].Value.ToString());
+                    command.Parameters.AddWithValue("@param16", DataGridView1.Rows[i].Cells[16].Value.ToString());
+                    command.Parameters.AddWithValue("@param17", DataGridView1.Rows[i].Cells[17].Value.ToString());
+                    command.Parameters.AddWithValue("@param26", DataGridView1.Rows[i].Cells[26].Value.ToString());
+                    command.Parameters.AddWithValue("@param28", DataGridView1.Rows[i].Cells[28].Value.ToString());
+                    command.Parameters.AddWithValue("@param29", DataGridView1.Rows[i].Cells[29].Value.ToString());
+                    command.Parameters.AddWithValue("@param31", DataGridView1.Rows[i].Cells[31].Value.ToString());
+                    command.Parameters.AddWithValue("@param33", DataGridView1.Rows[i].Cells[33].Value.ToString());
+                    //command.Parameters.AddWithValue("@param41", DataGridView1.Rows[i].Cells[41].Value.ToString());
+                    command.Parameters.AddWithValue("@param42", DataGridView1.Rows[i].Cells[42].Value.ToString());
+                    command.Parameters.AddWithValue("@param43", DataGridView1.Rows[i].Cells[43].Value.ToString());
+                    command.Parameters.AddWithValue("@param45", DataGridView1.Rows[i].Cells[45].Value.ToString());
+                    command.Parameters.AddWithValue("@param47", DataGridView1.Rows[i].Cells[47].Value.ToString());
+                    command.Parameters.AddWithValue("@param48", DataGridView1.Rows[i].Cells[48].Value.ToString());
+                    command.Parameters.AddWithValue("@param49", DataGridView1.Rows[i].Cells[49].Value.ToString());
+                    command.Parameters.AddWithValue("@param51", DataGridView1.Rows[i].Cells[51].Value.ToString());
+                    command.Parameters.AddWithValue("@param52", DataGridView1.Rows[i].Cells[52].Value.ToString());
+                    command.Parameters.AddWithValue("@param69", DataGridView1.Rows[i].Cells[69].Value.ToString());
+                    command.Parameters.AddWithValue("@param74", DataGridView1.Rows[i].Cells[74].Value.ToString());
+                    command.Parameters.AddWithValue("@param76", DataGridView1.Rows[i].Cells[76].Value.ToString());
+                    command.Parameters.AddWithValue("@param83", DataGridView1.Rows[i].Cells[83].Value.ToString());
+                    command.Parameters.AddWithValue("@param84", DataGridView1.Rows[i].Cells[84].Value.ToString());
+                    command.Parameters.AddWithValue("@param85", DataGridView1.Rows[i].Cells[85].Value.ToString());
+                    command.Parameters.AddWithValue("@param86", DataGridView1.Rows[i].Cells[86].Value.ToString());
+                    command.Parameters.AddWithValue("@param87", DataGridView1.Rows[i].Cells[87].Value.ToString());
+                    command.Parameters.AddWithValue("@param88", DataGridView1.Rows[i].Cells[88].Value.ToString());
+
+                    //MessageBox.Show(command.Parameters.);
+                    try
+                    {
+                        command.CommandType = CommandType.Text;
+                        connection.Open();
+                        command.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Can not open Main DB connection in Edit Main screen ! " + DB_Path + "-" + command.CommandText);
+                        throw;
+                    }
+                    finally
+                    {
+                        if (connection != null) connection.Close();
+                    }
+                    ////OleDbDataAdapter das = new OleDbDataAdapter(command.CommandText, cnn);
+                    if (!chbx_AutoSave.Checked) MessageBox.Show("Song Details Changes Saved");
+                    //das.SelectCommand.CommandText = "SELECT * FROM Main";
+                    //// das.Update(dssx, "Main");
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    MessageBox.Show("Can not open Main DB connection in Edit Main screen ! " + DB_Path + "-" + command.CommandText);
-                    throw;
-                }
-                finally
-                {
-                    if (connection != null) connection.Close();
-                }
-                ////OleDbDataAdapter das = new OleDbDataAdapter(command.CommandText, cnn);
-               if (!chbx_AutoSave.Checked) MessageBox.Show("Song Details Changes Saved");
-                //das.SelectCommand.CommandText = "SELECT * FROM Main";
-                //// das.Update(dssx, "Main");
+
+
+                //var DB_Path = "../../../../tmp\\Files.accdb;";
+                ////DataAccess da = new DataAccess();
+                //cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                //dax = new OleDbDataAdapter("Select * from Main", cn);
+                ////using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + DB_Path))
+                ////{
+                //dax.Update(da, "Main");
+                //    da.AcceptChanges();
+                //    //fillgrid();
+                ////}
             }
-
-
-            //var DB_Path = "../../../../tmp\\Files.accdb;";
-            ////DataAccess da = new DataAccess();
-            //cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-            //dax = new OleDbDataAdapter("Select * from Main", cn);
-            ////using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + DB_Path))
-            ////{
-            //dax.Update(da, "Main");
-            //    da.AcceptChanges();
-            //    //fillgrid();
-            ////}
         }
 
     private void btn_Search_Click(object sender, EventArgs e)
@@ -1291,6 +1297,15 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btn_Conv_And_Transfer_Click(object sender, EventArgs e)
         {
+            //if (!DLCManager.bwRGenerate.IsBusy) //&& data != null&& norows > 0
+            //{
+            //    DLCManager.bwRGenerate.RunWorkerAsync(data);
+            //}
+            //else
+            //{
+
+            //}
+
             if (cbx_Format.Text == "PS3")
             {
                 var GameID = txt_FTPPath.Text.Substring(txt_FTPPath.Text.LastIndexOf("BL"), 9);
@@ -1439,6 +1454,122 @@ namespace RocksmithToolkitGUI.DLCManager
         private void ChangeEdit(object sender, EventArgs e)
         {
             if (txt_Album.Text != "") ChangeRow();
+        }
+
+        private void chbx_Combo_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void chbx_Rhythm_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txt_PreviewStart_J_TextChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void btn_Prev_Click(object sender, EventArgs e)
+        {
+            //if (DataGridView1.SelectedCells[0].RowIndex > 0) 
+            var prev = DataGridView1.SelectedCells[0].RowIndex; //nud_RemoveSlide.Value;
+
+            SaveRecord();// ChangeRow();
+            int rowindex;
+            DataGridViewRow row;
+            var i = DataGridView1.SelectedCells[0].RowIndex;
+            rowindex = i;// DataGridView1.SelectedRows[0].Index;
+            DataGridView1.Rows[rowindex - 1].Selected = true;
+            DataGridView1.Rows[rowindex].Selected = false;
+            //if (prev>txt_Counter.Text.ToInt32())
+            row = DataGridView1.Rows[rowindex - 1];
+            //else row = DataGridView1.Rows[rowindex - 1];
+            //if (DataGridView1.SelectedCells[0].RowIndex > 0) 
+            //txt_Counter.Text = prev.ToString();
+        }
+
+        private void btn_NextItem_Click(object sender, EventArgs e)
+        {
+            //if (DataGridView1.SelectedCells[0].RowIndex > 0) 
+            var prev = DataGridView1.SelectedCells[0].RowIndex; //nud_RemoveSlide.Value;
+
+            SaveRecord();// ChangeRow();
+            int rowindex;
+            DataGridViewRow row;
+            var i = DataGridView1.SelectedCells[0].RowIndex;
+            rowindex = i;// DataGridView1.SelectedRows[0].Index;
+            DataGridView1.Rows[rowindex + 1].Selected = true;
+            DataGridView1.Rows[rowindex].Selected = false;
+            //if (prev>txt_Counter.Text.ToInt32())
+            row = DataGridView1.Rows[rowindex + 1];
+            //else row = DataGridView1.Rows[rowindex - 1];
+            //if (DataGridView1.SelectedCells[0].RowIndex > 0) 
+            //txt_Counter.Text = prev.ToString();
+        }
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+            var cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path); //+ ";Persist Security Info=False"
+                var command = cnn.CreateCommand();
+                //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                //{
+                    command.CommandText = "UPDATE Main SET ";
+                    command.CommandText += "Selected = @param8 ";
+                    command.Parameters.AddWithValue("@param8", "Yes");
+                    try
+                    {
+                        command.CommandType = CommandType.Text;
+                        cnn.Open();
+                        command.ExecuteNonQuery();
+                        cnn.Close();
+                        command.Dispose();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Can not open Main DB connection in Main Edit screen ! " + DB_Path + "-" + command.CommandText);
+                        throw;
+                    }
+                    finally
+                    {
+                        if (cnn != null) cnn.Close();
+                    }
+                //}
+                    MessageBox.Show("All songs in DB have been marked as Selected");
+        }
+
+        private void btn_SelectNone_Click(object sender, EventArgs e)
+        {
+
+            var cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path); //+ ";Persist Security Info=False"
+            var command = cnn.CreateCommand();
+            //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //{
+            command.CommandText = "UPDATE Main SET ";
+            command.CommandText += "Selected = @param8 ";
+            command.Parameters.AddWithValue("@param8", "No");
+            try
+            {
+                command.CommandType = CommandType.Text;
+                cnn.Open();
+                command.ExecuteNonQuery();
+                cnn.Close();
+                command.Dispose();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Can not open Main DB connection in Main Edit screen ! " + DB_Path + "-" + command.CommandText);
+                throw;
+            }
+            finally
+            {
+                if (cnn != null) cnn.Close();
+            }
+            //}
+            MessageBox.Show("All songs in DB have been UNmarked from Selected");
         }
     }
 }

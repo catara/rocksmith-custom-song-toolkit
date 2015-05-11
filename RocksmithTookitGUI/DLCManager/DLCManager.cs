@@ -3073,7 +3073,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //    {
             //        ConfigRepository.Instance()["creator_ps3pkgnamewarn"] = true.ToString();
             //    }
-            //rtxt_StatisticsOnReadDLCs.Text = "gen r: " + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+            rtxt_StatisticsOnReadDLCs.Text = "Packing: " + "\n" + rtxt_StatisticsOnReadDLCs.Text;
             if (!bwRGenerate.IsBusy) //&& data != null&& norows > 0
             {
                 bwRGenerate.RunWorkerAsync(data);
@@ -3203,7 +3203,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                 if (chbx_Additional_Manipualtions.GetItemChecked(36)) //37. Keep the Uncompressed Songs superorganized
                                     jsons = xml.Replace("EOF", "Toolkit").Replace(".xml", ".json");
                                 else
-                                    jsons = (xml.Replace(".xml", ".json").Replace("\\songs\\arr\\", calc_path(Directory.GetFiles(file.Folder_Name, "*.json", SearchOption.AllDirectories)[0])));
+                                    jsons = (xml.Replace(".xml", ".json").Replace("songs\\arr", calc_path(Directory.GetFiles(file.Folder_Name, "*.json", SearchOption.AllDirectories)[0])));
 
                                 //Save a copy
                                 File.Copy(xml, xml + ".old", true);
@@ -3240,9 +3240,9 @@ namespace RocksmithToolkitGUI.DLCManager
                                         //consoleOutput += DDC.StandardError.ReadToEnd();
                                         DDC.WaitForExit(1000 * 60 * 5); //wait 5 minutes
                                                                          //rtxt_StatisticsOnReadDLCs.Text = "HAS BASS=" + file.Has_BassDD + "...DDEXIT CODE: " + DDC.ExitCode + "----+-" + file.Folder_Name + "++++" + platform.version + "___" + RocksmithToolkitLib.GameVersion.RS2014 + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                        if (DDC.ExitCode > 0 && file.Is_Original == "No") rtxt_StatisticsOnReadDLCs.Text = "Issues at CDLC Bass DD removal!" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                     }
                                     else DDCExitCode = 5;
-                                    if (DDC.ExitCode > 0 && file.Is_Original == "No") rtxt_StatisticsOnReadDLCs.Text = "Issues at CDLC Bass DD removal!" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
 
                                     if (file.Is_Original == "Yes" || DDCExitCode == 5)
                                     { //http://code.google.com/p/rocksmith-custom-song-creator/issues/detail?id=60

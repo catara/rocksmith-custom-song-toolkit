@@ -128,29 +128,32 @@ namespace RocksmithToolkitGUI.DLCManager
         public void ChangeRow()
         {
             int i;
-            i = DataGridView1.SelectedCells[0].RowIndex;
-            txt_ID.Text = DataGridView1.Rows[i].Cells[0].Value.ToString();
-            txt_Identifier.Text = DataGridView1.Rows[i].Cells[1].Value.ToString();
-            txt_Artist.Text = DataGridView1.Rows[i].Cells[2].Value.ToString();
-            txt_ArtistSort.Text = DataGridView1.Rows[i].Cells[3].Value.ToString();
-            txt_Album.Text = DataGridView1.Rows[i].Cells[4].Value.ToString();
-            txt_Title.Text = DataGridView1.Rows[i].Cells[5].Value.ToString();
-            txt_AlbumYear.Text = DataGridView1.Rows[i].Cells[6].Value.ToString();
-            txt_Arrangements.Text = DataGridView1.Rows[i].Cells[7].Value.ToString();
-            if (DataGridView1.Rows[i].Cells[8].Value.ToString() == "Yes") chbx_Removed.Checked = true;
-            else if (DataGridView1.Rows[i].Cells[8].Value.ToString() == "No") chbx_Removed.Checked = false;
-            txt_AlbumArtPath.Text = DataGridView1.Rows[i].Cells[9].Value.ToString();
-            rtxt_Comments.Text = DataGridView1.Rows[i].Cells[10].Value.ToString();
-            txt_PSARCName.Text = DataGridView1.Rows[i].Cells[11].Value.ToString();
-            txt_SongsHSANPath.Text = DataGridView1.Rows[i].Cells[12].Value.ToString();
-            txt_Platform.Text = DataGridView1.Rows[i].Cells[13].Value.ToString();
-            if (DataGridView1.Rows[i].Cells[14].Value != null) txt_AudioPath.Text = DataGridView1.Rows[i].Cells[14].Value.ToString();
-            if (DataGridView1.Rows[i].Cells[15].Value != null) txt_AudioPreviewPath.Text = DataGridView1.Rows[i].Cells[15].Value.ToString();
+            if (DataGridView1.SelectedCells.Count > 0)
+            {
+                i = DataGridView1.SelectedCells[0].RowIndex;
+                txt_ID.Text = DataGridView1.Rows[i].Cells[0].Value.ToString();
+                txt_Identifier.Text = DataGridView1.Rows[i].Cells[1].Value.ToString();
+                txt_Artist.Text = DataGridView1.Rows[i].Cells[2].Value.ToString();
+                txt_ArtistSort.Text = DataGridView1.Rows[i].Cells[3].Value.ToString();
+                txt_Album.Text = DataGridView1.Rows[i].Cells[4].Value.ToString();
+                txt_Title.Text = DataGridView1.Rows[i].Cells[5].Value.ToString();
+                txt_AlbumYear.Text = DataGridView1.Rows[i].Cells[6].Value.ToString();
+                txt_Arrangements.Text = DataGridView1.Rows[i].Cells[7].Value.ToString();
+                if (DataGridView1.Rows[i].Cells[8].Value.ToString() == "Yes") chbx_Removed.Checked = true;
+                else if (DataGridView1.Rows[i].Cells[8].Value.ToString() == "No") chbx_Removed.Checked = false;
+                txt_AlbumArtPath.Text = DataGridView1.Rows[i].Cells[9].Value.ToString();
+                rtxt_Comments.Text = DataGridView1.Rows[i].Cells[10].Value.ToString();
+                txt_PSARCName.Text = DataGridView1.Rows[i].Cells[11].Value.ToString();
+                txt_SongsHSANPath.Text = DataGridView1.Rows[i].Cells[12].Value.ToString();
+                txt_Platform.Text = DataGridView1.Rows[i].Cells[13].Value.ToString();
+                if (DataGridView1.Rows[i].Cells[14].Value != null) txt_AudioPath.Text = DataGridView1.Rows[i].Cells[14].Value.ToString();
+                if (DataGridView1.Rows[i].Cells[15].Value != null) txt_AudioPreviewPath.Text = DataGridView1.Rows[i].Cells[15].Value.ToString();
 
-            //if (txt_Arrangements.Text != "") 
-            picbx_AlbumArtPath.ImageLocation = txt_AlbumArtPath.Text;//.Replace(".dds", ".png");
-            if (chbx_Autosave.Checked) SaveOK = true;
-            else SaveOK = false;
+                //if (txt_Arrangements.Text != "") 
+                picbx_AlbumArtPath.ImageLocation = txt_AlbumArtPath.Text;//.Replace(".dds", ".png");
+                if (chbx_Autosave.Checked) SaveOK = true;
+                else SaveOK = false;
+            }
         }
 
         private void button8_Click(object sender, EventArgs e)
@@ -1166,6 +1169,25 @@ namespace RocksmithToolkitGUI.DLCManager
             DataGridView1.Rows[rowindex].Selected = false;
             //if (prev>txt_Counter.Text.ToInt32())
             row = DataGridView1.Rows[rowindex + 1];
+            //else row = DataGridView1.Rows[rowindex - 1];
+            //if (DataGridView1.SelectedCells[0].RowIndex > 0) 
+            txt_Counter.Text = prev.ToString();
+        }
+
+        private void btn_Prev_Click(object sender, EventArgs e)
+        {
+            //if (DataGridView1.SelectedCells[0].RowIndex > 0) 
+            var prev = DataGridView1.SelectedCells[0].RowIndex; //nud_RemoveSlide.Value;
+
+            SaveRecord();// ChangeRow();
+            int rowindex;
+            DataGridViewRow row;
+            var i = DataGridView1.SelectedCells[0].RowIndex;
+            rowindex = i;// DataGridView1.SelectedRows[0].Index;
+            DataGridView1.Rows[rowindex -1].Selected = true;
+            DataGridView1.Rows[rowindex].Selected = false;
+            //if (prev>txt_Counter.Text.ToInt32())
+            row = DataGridView1.Rows[rowindex - 1];
             //else row = DataGridView1.Rows[rowindex - 1];
             //if (DataGridView1.SelectedCells[0].RowIndex > 0) 
             txt_Counter.Text = prev.ToString();

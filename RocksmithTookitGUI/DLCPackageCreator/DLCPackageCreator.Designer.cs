@@ -151,6 +151,7 @@
             this.arrangementLB.FormattingEnabled = true;
             this.arrangementLB.Location = new System.Drawing.Point(6, 18);
             this.arrangementLB.Name = "arrangementLB";
+            this.arrangementLB.ScrollAlwaysVisible = true;
             this.arrangementLB.Size = new System.Drawing.Size(389, 69);
             this.arrangementLB.TabIndex = 20;
             this.arrangementLB.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ListBox_KeyDown);
@@ -215,6 +216,7 @@
             this.tonesLB.FormattingEnabled = true;
             this.tonesLB.Location = new System.Drawing.Point(6, 19);
             this.tonesLB.Name = "tonesLB";
+            this.tonesLB.ScrollAlwaysVisible = true;
             this.tonesLB.Size = new System.Drawing.Size(389, 95);
             this.tonesLB.TabIndex = 28;
             this.tonesLB.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ListBox_KeyDown);

@@ -400,7 +400,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 if (userChangesToInputControls > 0)
                     UpdateXml(arr, packageData);
 
-                if (arr.ArrangementType != ArrangementType.Vocal)
+                if (arr.ArrangementType == ArrangementType.Guitar || arr.ArrangementType == ArrangementType.Bass)
                     Song2014.WriteXmlComments(arr.SongXml.File, arr.XmlComments);
             }
 
@@ -1022,7 +1022,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                     }
                 }
 
-                if (arrangement.ArrangementType != ArrangementType.Vocal)
+                if (arrangement.ArrangementType == ArrangementType.Bass || arrangement.ArrangementType == ArrangementType.Guitar)
                 {
                     // Populate tuning info
                     try
@@ -1082,9 +1082,9 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             Control control = (Control)sender;
             string name = control.Name;
             if (name == "songVolumeBox")
-                tt.SetToolTip(songVolumeBox, "HIGHER 0,-1,-2,-3,..., AVERAGE -12 ,...,-16,-17 LOWER");
+                tt.SetToolTip(songVolumeBox, "Higher 0,-1,-2,-3,..., Average -12 ,...,-16,-17 Lower");
             else
-                tt.SetToolTip(previewVolumeBox, "HIGHER 0,-1,-2,-3,..., AVERAGE -12 ,...,-16,-17 LOWER");
+                tt.SetToolTip(previewVolumeBox, "Higher 0,-1,-2,-3,..., Average -12 ,...,-16,-17 Lower");
         }
 
         private DLCPackageData GetPackageData()
@@ -1183,7 +1183,9 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 return null;
             }
             int chorusTime = 4000;
+            int previewLength = 30000;
             var arrangements = arrangementLB.Items.OfType<Arrangement>().ToList();
+
             foreach (Arrangement arr in arrangements)
             {
                 if (!File.Exists(arr.SongXml.File))
@@ -1192,26 +1194,43 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                     return null;
                 }
                 arr.SongFile.File = "";
-                if(arr.ArrangementType != ArrangementType.Vocal)
-                {
-                    if(chorusTime != 4000)
-                        continue;
 
-                    if(arr.Sng2014 == null)
+                if (arr.ArrangementType == ArrangementType.Bass || arr.ArrangementType == ArrangementType.Guitar)
+                {
+                    if (chorusTime != 4000)
+                        break;
+
+                    var songLength = Song2014.LoadFromFile(arr.SongXml.File).SongLength;
+                    if (songLength < 30)
+                    {
+                        previewLength = (int)songLength * 1000;
+                        chorusTime = 0;
+                        break;
+                    }
+
+                    if (arr.Sng2014 == null) // should always be true
                     {
                         var sections = Song2014.LoadFromFile(arr.SongXml.File).Sections;
+
                         if (sections.Any(x => x.Name.ToLower() == "chorus"))
                             chorusTime = (int)sections.First(x => x.Name.ToLower() == "chorus").StartTime * 1000;
                         else
                             chorusTime = (int)sections.First().StartTime * 1000;
+
+                        if ((chorusTime + 30000) > ((int)sections.Last().StartTime * 1000))
+                            chorusTime = (int)(sections.Last().StartTime - 30) * 1000;
                     }
-                    else
+                    else // in theory this condition should never be used
                     {
                         var sections = arr.Sng2014.Sections.Sections;
+
                         if (sections.Any(x => x.Name.ToString().ToLower() == "chorus"))
                             chorusTime = (int)sections.First(x => x.Name.ToString().ToLower() == "chorus").StartTime * 1000;
                         else
                             chorusTime = (int)sections.First().StartTime * 1000;
+
+                        if ((chorusTime + 30000) > ((int)sections.Last().StartTime * 1000))
+                            chorusTime = (int)(sections.Last().StartTime - 30) * 1000;
                     }
                 }
             }
@@ -1224,6 +1243,11 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             if (arrangements.Count(x => x.ArrangementType == ArrangementType.Vocal && x.Name == ArrangementName.JVocals) > 1)
             {
                 MessageBox.Show("Error: Multiple JVocals arrangement found", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+            if (arrangements.Count(x => x.ArrangementType == ArrangementType.ShowLight && x.Name == ArrangementName.ShowLights) > 1)
+            {
+                MessageBox.Show("Error: Multiple Showlights arrangements found", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
 
@@ -1241,51 +1265,10 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             string audioPreviewPath = null;
             if (CurrentGameVersion != GameVersion.RS2012)
             {
-                // ExternalApps.VerifyExternalApps(); // for testing
+                // impliment reusable audio to WEM conversion code
+                AudioPath = OggFile.Convert2Wem(AudioPath, (int)audioQualityBox.Value, previewLength, chorusTime);
                 var audioPathNoExt = Path.Combine(Path.GetDirectoryName(AudioPath), Path.GetFileNameWithoutExtension(AudioPath));
-                var oggPath = String.Format(audioPathNoExt + ".ogg");
-                var wavPath = String.Format(audioPathNoExt + ".wav");
-                var wemPath = String.Format(audioPathNoExt + ".wem");
-                var oggPreviewPath = String.Format(audioPathNoExt + "_preview.ogg");
-                var wavPreviewPath = String.Format(audioPathNoExt + "_preview.wav");
-                var wemPreviewPath = String.Format(audioPathNoExt + "_preview.wem");
-                audioPreviewPath = wemPreviewPath;
-
-                if (AudioPath.Substring(AudioPath.Length - 4).ToLower() == ".ogg")//RS1 old ogg was actually wwise
-                {
-                    ExternalApps.Ogg2Wav(AudioPath, wavPath);
-                    if (!File.Exists(oggPreviewPath))
-                    {
-                        ExternalApps.Ogg2Preview(AudioPath, oggPreviewPath, chorusTime);
-                        ExternalApps.Ogg2Wav(oggPreviewPath, wavPreviewPath);
-                    }
-                    AudioPath = wavPath;
-                }
-
-                if (AudioPath.Substring(AudioPath.Length - 4).ToLower() == ".wav")
-                {
-                    if (!File.Exists(wavPreviewPath))
-                    {
-                        if (!File.Exists(oggPath))
-                        {//may cause issues if you've got another guitar.ogg in folder, but it's extreamley rare.
-                            ExternalApps.Wav2Ogg(AudioPath, oggPath, (int)audioQualityBox.Value); // 4
-                        }
-                        ExternalApps.Ogg2Preview(oggPath, oggPreviewPath, chorusTime);
-                        ExternalApps.Ogg2Wav(oggPreviewPath, wavPreviewPath);
-                    }
-                    Wwise.Convert2Wem(AudioPath, wemPath, (int)audioQualityBox.Value);
-                    AudioPath = wemPath;
-                }
-
-                if (AudioPath.Substring(AudioPath.Length - 4).ToLower() == ".wem" && !File.Exists(wemPreviewPath))
-                {
-                    OggFile.Revorb(AudioPath, oggPath, Path.GetDirectoryName(Application.ExecutablePath), OggFile.WwiseVersion.Wwise2013);
-                    ExternalApps.Ogg2Wav(oggPath, wavPath);
-                    ExternalApps.Ogg2Preview(oggPath, oggPreviewPath, chorusTime);
-                    ExternalApps.Ogg2Wav(oggPreviewPath, wavPreviewPath);
-                    Wwise.Convert2Wem(wavPath, wemPath, (int)audioQualityBox.Value);
-                    AudioPath = wemPath;
-                }
+                audioPreviewPath = String.Format(audioPathNoExt + "_preview.wem");
             }
 
             var tones = new List<Tone>();
@@ -1365,8 +1348,10 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             // generate new ids
             arr.Id = IdGenerator.Guid();
             arr.MasterId = RandomGenerator.NextInt();
-     
+
             if (arr.ArrangementType == ArrangementType.Vocal)
+                return;
+            if (arr.ArrangementType == ArrangementType.ShowLight)
                 return;
 
             if (CurrentGameVersion != GameVersion.RS2012)
@@ -1403,7 +1388,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 using (var stream = File.Open(arr.SongXml.File, FileMode.Create))
                     songXml.Serialize(stream);
             }
-       }
+        }
 
         public Arrangement GenMetronomeArr(Arrangement arr)
         {
@@ -1569,6 +1554,8 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                     {
                         var arrangement = (Arrangement)arrangementLB.Items[i];
                         if (arrangement.ArrangementType == ArrangementType.Vocal)
+                            continue;
+                        if (arrangement.ArrangementType == ArrangementType.ShowLight)
                             continue;
 
                         // TODO: optimize using common Arrangement.cs method
@@ -1974,13 +1961,13 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
 
         private void audioQualityBox_MouseEnter(object sender, EventArgs e)
         {
+            // Default 4 ~ 128kbps
             tt.IsBalloon = true;
             tt.InitialDelay = 0;
             tt.ShowAlways = true;
-            tt.SetToolTip(audioQualityBox, "HIGH QUALITY 9 ... DEFAULT 4" +
-                Environment.NewLine + "Leave audio quality set to default 4  " +
+            tt.SetToolTip(audioQualityBox, "High Quality 6 ... Default Quality 4" +
+                Environment.NewLine + "Leave audio quality set to Default 4  " +
                 Environment.NewLine + "if source audio quality is unknown");
-
         }
 
         private void rbConvert_MouseEnter(object sender, EventArgs e)

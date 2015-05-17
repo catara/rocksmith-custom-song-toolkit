@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Xml.Serialization;
+using RocksmithToolkitLib.Sng;
 using RocksmithToolkitLib.Xml;
 using RocksmithToolkitLib.Sng2014HSL;
 
@@ -49,22 +50,36 @@ namespace RocksmithToolkitLib.DLCPackage.Showlight
         public Showlights(DLCPackageData info)
             : this()
         {
+            if (info.Arrangements.Any(a => a.ArrangementType == ArrangementType.Bass))
+            {
+                DoTheThing(info, info.Arrangements.First(ar => ar.ArrangementType == ArrangementType.Bass));
+                return;
+            }
+
             foreach (var arrangement in info.Arrangements) {
-                if (arrangement.ArrangementType == Sng.ArrangementType.Vocal)
+                if (arrangement.ArrangementType == ArrangementType.Vocal)
+                    continue;
+                if (arrangement.ArrangementType == ArrangementType.ShowLight)
                     continue;
                 if (arrangement.SongXml.File == null)
                     continue;
 
-                var shlFile = Path.Combine(Path.GetDirectoryName(arrangement.SongXml.File),
-                    arrangement.SongXml.Name + "_showlights.xml");
-                var shlCommon = Path.Combine(Path.GetDirectoryName(shlFile), info.Name + "_showlights.xml");
-                if (!File.Exists(shlCommon))
-                {//Generate
-                    GetShowlights(arrangement.SongXml.File);
-                    continue;
-                }
-                GetShowlights(shlCommon);
+                DoTheThing(info, arrangement);
             }
+        }
+
+        private void DoTheThing(DLCPackageData info, Arrangement arrangement)
+        {
+            var shlFile = Path.Combine(Path.GetDirectoryName(arrangement.SongXml.File),
+                arrangement.SongXml.Name + "_showlights.xml");
+            var shlCommon = Path.Combine(Path.GetDirectoryName(shlFile), info.Name + "_showlights.xml");
+            if (!File.Exists(shlCommon))
+            {
+                //Generate
+                GetShowlights(arrangement.SongXml.File);
+                return;
+            }
+            GetShowlights(shlCommon);
         }
 
         public void Serialize(Stream stream)
@@ -72,6 +87,7 @@ namespace RocksmithToolkitLib.DLCPackage.Showlight
             var ns = new XmlSerializerNamespaces();
             ns.Add("", "");
 
+            FixShowlights(ShowlightList);
             Count = ShowlightList.Count;
             using (var writer = System.Xml.XmlWriter.Create(stream, new System.Xml.XmlWriterSettings {
                 Indent = true,
@@ -87,23 +103,26 @@ namespace RocksmithToolkitLib.DLCPackage.Showlight
 
         private void GetShowlights(string showlightsfile)
         {
-            FixShowlights(showlightsfile.ToLower().Contains("_showlights")
+            PopShList(showlightsfile.ToLower().Contains("_showlights")
                 ? LoadFromFile(showlightsfile)
                 : Generate(showlightsfile));
         }
 
         private int GetFogNote(int midiNote)
         {
+            Console.WriteLine((midiNote % 12) + (12 * 2));
             return (midiNote % 12) + (12 * 2);
         }
 
         private int GetBeamNote(int midiNote)
         {
+            Console.WriteLine((midiNote % 12) + (12 * 4));
             return (midiNote % 12) + (12 * 4);
         }
 
         public bool FixShowlights(Showlights shl)
         {
+            Console.WriteLine(shl.ShowlightList.ToString());
             return FixShowlights(shl.ShowlightList);
         }
 
@@ -228,10 +247,10 @@ namespace RocksmithToolkitLib.DLCPackage.Showlight
             {
                 try
                 {
-                    this.ShowlightList = list.OrderBy(x => x.Time).Union(this.ShowlightList).ToList();
+                    this.ShowlightList = this.ShowlightList.OrderBy(x => x.Time).Union(list.OrderBy(x => x.Time)).ToList();
                     this.ShowlightList.TrimExcess();
                 }
-                catch
+                catch (Exception)
                 {
                     return false;
                 }

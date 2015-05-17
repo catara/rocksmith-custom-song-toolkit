@@ -166,7 +166,7 @@ namespace RocksmithToolkitGUI.DLCManager
             DataSet dis = new DataSet();
 
             i = DataGridView1.SelectedCells[0].RowIndex;
-            nud_RemoveSlide.Value = i;
+            //nud_RemoveSlide.Value = i;
             //DataGridView1.Rows[i].Cells[0].Value = txt_I.Text;
             //DataGridView1.Rows[i].Cells[1].Value = txt_Artist.Text;
             //DataGridView1.Rows[i].Cells[3].Value = txt_ArtistSort.Text;
@@ -1159,8 +1159,10 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             //if (DataGridView1.SelectedCells[0].RowIndex > 0) 
             var prev = DataGridView1.SelectedCells[0].RowIndex; //nud_RemoveSlide.Value;
+            if (DataGridView1.Rows.Count == prev + 2) return; 
 
             SaveRecord();// ChangeRow();
+
             int rowindex;
             DataGridViewRow row;
             var i = DataGridView1.SelectedCells[0].RowIndex;
@@ -1178,8 +1180,10 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             //if (DataGridView1.SelectedCells[0].RowIndex > 0) 
             var prev = DataGridView1.SelectedCells[0].RowIndex; //nud_RemoveSlide.Value;
+            if (prev == 0) return;
 
             SaveRecord();// ChangeRow();
+
             int rowindex;
             DataGridViewRow row;
             var i = DataGridView1.SelectedCells[0].RowIndex;

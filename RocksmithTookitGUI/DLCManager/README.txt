@@ -51,9 +51,9 @@ wnyp:
 - small feature: when opening MainDB and detecting directory check runs, if next directory exists (give a change to empty the db then if possible)
 
 ### dev issues:
--- Toolkit version flag does not sync to&from Github
--- Bin\debug folder content is needed(rockmisht.lib)
-+ activate debug: set a dierctory for the project/bin in Project Properties
++ Toolkit version flag does not sync to&from Github: Run RunMeFirst.bat
++ Bin\debug folder content is needed(rockmisht.lib): Run RunMeFirst.bat, then Rebuild
++ activate debug: set RocksmithToolkitGUI Folder as Start-up project
 
 # Version History(release date):
 	0.1(12.08.2014) prototype, 

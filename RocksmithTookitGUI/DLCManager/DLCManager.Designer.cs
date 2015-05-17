@@ -39,7 +39,7 @@
             this.chbx_Rebuild = new System.Windows.Forms.CheckBox();
             this.btn_Cleanup_MainDB = new System.Windows.Forms.Button();
             this.cbx_Groups = new System.Windows.Forms.ComboBox();
-            this.chbx_Additional_Manipualtions = new System.Windows.Forms.CheckedListBox();
+            this.chbx_Additional_Manipulations = new System.Windows.Forms.CheckedListBox();
             this.label10 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.btn_Preview_Artist_Sort = new System.Windows.Forms.Button();
@@ -226,11 +226,11 @@
             this.cbx_Groups.Size = new System.Drawing.Size(120, 21);
             this.cbx_Groups.TabIndex = 322;
             // 
-            // chbx_Additional_Manipualtions
+            // chbx_Additional_Manipulations
             // 
-            this.chbx_Additional_Manipualtions.CheckOnClick = true;
-            this.chbx_Additional_Manipualtions.FormattingEnabled = true;
-            this.chbx_Additional_Manipualtions.Items.AddRange(new object[] {
+            this.chbx_Additional_Manipulations.CheckOnClick = true;
+            this.chbx_Additional_Manipulations.FormattingEnabled = true;
+            this.chbx_Additional_Manipulations.Items.AddRange(new object[] {
             "1. When Packing Add Increment to all songs Title",
             "2. When Packing Add Increment to all songs Title per artist",
             "3. When Packing Make all DLC IDs unique(&save)",
@@ -274,11 +274,11 @@
             "41. Delete ORIG HSAN/OGG when Packing Retails songs",
             "<IMPORT>",
             "<@Pack>"});
-            this.chbx_Additional_Manipualtions.Location = new System.Drawing.Point(240, 88);
-            this.chbx_Additional_Manipualtions.Name = "chbx_Additional_Manipualtions";
-            this.chbx_Additional_Manipualtions.Size = new System.Drawing.Size(295, 109);
-            this.chbx_Additional_Manipualtions.TabIndex = 321;
-            this.chbx_Additional_Manipualtions.SelectedIndexChanged += new System.EventHandler(this.chbx_Additional_Manipualtions_SelectedIndexChanged);
+            this.chbx_Additional_Manipulations.Location = new System.Drawing.Point(240, 88);
+            this.chbx_Additional_Manipulations.Name = "chbx_Additional_Manipulations";
+            this.chbx_Additional_Manipulations.Size = new System.Drawing.Size(295, 109);
+            this.chbx_Additional_Manipulations.TabIndex = 321;
+            this.chbx_Additional_Manipulations.SelectedIndexChanged += new System.EventHandler(this.chbx_Additional_Manipualtions_SelectedIndexChanged);
             // 
             // label10
             // 
@@ -1230,7 +1230,7 @@
             this.Controls.Add(this.chbx_Rebuild);
             this.Controls.Add(this.btn_Cleanup_MainDB);
             this.Controls.Add(this.cbx_Groups);
-            this.Controls.Add(this.chbx_Additional_Manipualtions);
+            this.Controls.Add(this.chbx_Additional_Manipulations);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.btn_Preview_Artist_Sort);
@@ -1310,7 +1310,7 @@
         private System.Windows.Forms.CheckBox chbx_Rebuild;
         private System.Windows.Forms.Button btn_Cleanup_MainDB;
         private System.Windows.Forms.ComboBox cbx_Groups;
-        private System.Windows.Forms.CheckedListBox chbx_Additional_Manipualtions;
+        private System.Windows.Forms.CheckedListBox chbx_Additional_Manipulations;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button btn_Preview_Artist_Sort;

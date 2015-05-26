@@ -439,15 +439,30 @@ namespace RocksmithToolkitGUI.DLCManager
                         manipulateHSAN(HSAN);
                         if (dpsarc.ToString() == "CACHE")
                         {
+                            if (chbx_RemoveBassDD.Checked) //REMOVE Bass DD
+                            {
+                                var source_dir1 = Path.GetDirectoryName(TempPath + "\\0_dlcpacks\\cache_" + platfor + "manifests\\");
+                                var destination_dir1 = Path.GetDirectoryName(TempPath + "\\0_dlcpacks\\cache_" + platfor + "songs\\bin\\"); ;
+                                var previewN = "";
+                                foreach (string preview_name in Directory.GetFiles(source_dir1, "*_bass.xml", System.IO.SearchOption.AllDirectories))
+                                {
+                                    foreach (string file_name in Directory.GetFiles(source_dir1, "*.sng", System.IO.SearchOption.AllDirectories))
+                                    {
+                                    }
+                                }
+                            }
+
                             DirectoryInfo di;
                             var startI = new ProcessStartInfo();
                             var hsanDir = dataRow.ItemArray[0].ToString();
                             startI.FileName = Path.Combine(AppWD, "7za.exe");
                             startI.WorkingDirectory = TempPath + "\\0_dlcpacks\\";// Path.GetDirectoryName();
                             var za = TempPath + "\\0_dlcpacks\\cache_" + platfor + "\\cache7.7z";
+                            
                             if (!Directory.Exists(TempPath + "\\0_dlcpacks\\manifests")) di = Directory.CreateDirectory(TempPath + "\\0_dlcpacks\\manifests");
                             if (!Directory.Exists(TempPath + "\\0_dlcpacks\\manifests\\songs")) di = Directory.CreateDirectory(TempPath + "\\0_dlcpacks\\manifests\\songs");
                             File.Copy(hsanDir, TempPath + "\\0_dlcpacks\\manifests\\songs\\songs.hsan", true);
+                            
                             startI.Arguments = String.Format(" a {0} {1}",
                                                                 za,
                                                                 "manifests\\songs\\songs.hsan");// + platformDLCP TempPath + "\\0_dlcpacks\\cache_pc\\
@@ -908,12 +923,12 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void chbx_FTP2_CheckedChanged(object sender, EventArgs e)
         {
-            if (chbx_FTP2.Checked) txt_FTPPath.Text = "ftp://192.168.1.12/" + "dev_hdd0/GAMES/Rocksmith 2014 FAV - BLES01862/PS3_GAME/USRDIR/";
+           // if (chbx_FTP2.Checked) txt_FTPPath.Text = "ftp://192.168.1.12/" + "dev_hdd0/GAMES/Rocksmith 2014 FAV - BLES01862/PS3_GAME/USRDIR/";
         }
 
         private void chbx_FTP1_CheckedChanged(object sender, EventArgs e)
         {
-            if (chbx_FTP1.Checked) txt_FTPPath.Text = "ftp://192.168.1.12/" + "dev_hdd0/GAMES/Rocksmith 2014 ALL DLC - BLUS31182/PS3_GAME/USRDIR/";
+            //if (chbx_FTP1.Checked) txt_FTPPath.Text = "ftp://192.168.1.12/" + "dev_hdd0/GAMES/Rocksmith 2014 ALL DLC - BLUS31182/PS3_GAME/USRDIR/";
         }
 
         //private void button1_Click_1(object sender, EventArgs e)
@@ -1056,13 +1071,13 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             if (cbx_Format.Text=="PS3")
             {
-                chbx_FTP1.Enabled = true;
-                chbx_FTP2.Enabled = true;
+                chbx_PreSavedFTP.Enabled = true;
+                //chbx_FTP2.Enabled = true;
             }
             else
             {
-                chbx_FTP1.Enabled=false;
-                chbx_FTP2.Enabled=false;
+                chbx_PreSavedFTP.Enabled = false;
+                //chbx_FTP2.Enabled=false;
             }
         }
 

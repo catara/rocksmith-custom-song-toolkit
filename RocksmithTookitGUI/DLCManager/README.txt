@@ -49,6 +49,15 @@ wnyp:
 - small improv: Any change of song in the list should also save :)
 - medium feature: add DLCs into cache.psarc to speed up the game startup
 - small feature: when opening MainDB and detecting directory check runs, if next directory exists (give a change to empty the db then if possible)
+-- small bug: when changing the Album Cover or the Preview, convert &calc the hash of the WEM as well besides the ogg/png
+-- when repacking the Retail songs Remove Bass DD
+- has author should be no for custom toolkit
+- bonus is working?
+- fix old tag appearing as duplicate
+- when importing but not deleting and moving to 0_old some files dissapear
+- preview not working...what is being overitten is not what preview plays
+- a refresh should happen after each preview-repack (dlc unique name is not appearing)
+
 
 ### dev issues:
 + Toolkit version flag does not sync to&from Github: Run RunMeFirst.bat

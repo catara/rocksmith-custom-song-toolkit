@@ -11,6 +11,8 @@ using System.Windows.Forms;
 //bcapi
 using System.Data.OleDb;
 using RocksmithToolkitGUI;
+//using RocksmithToolkitGUI.OggConverter;//convert ogg to wem
+using RocksmithToolkitLib.Ogg;//convert ogg to wem
 using RocksmithToolkitLib.Extensions;
 using System.IO;
 using Ookii.Dialogs; //cue text
@@ -18,6 +20,9 @@ using System.Net; //4ftp
 using RocksmithToolkitLib.DLCPackage; //4packing
 using RocksmithToolkitLib;//4REPACKING
 using RocksmithToolkitGUI.DLCManager;//4 using then
+using System.Collections;//webparsing
+using System.Collections.Specialized;//webparsing
+using System.Security.Cryptography; //For File hash
 namespace RocksmithToolkitGUI.DLCManager
 {
     public partial class MainDB : Form
@@ -66,12 +71,12 @@ namespace RocksmithToolkitGUI.DLCManager
             //DataAccess da = new DataAccess();
             //MessageBox.Show("test0");
             SearchCmd = "SELECT * FROM Main ORDER BY Artist, Album_Year, Album, Song_Title;";
-            Populate(ref DataGridView1, ref Main);//, ref bsPositions, ref bsBadges);
-            DataGridView1.EditingControlShowing += DataGridView1_EditingControlShowing;
+            Populate(ref DataViewGrid, ref Main);//, ref bsPositions, ref bsBadges);
+            DataViewGrid.EditingControlShowing += DataGridView1_EditingControlShowing;
             btn_Search.Enabled = false;
             //MessageBox.Show(updateDBb.ToString());
             if (lbl_NoRec.Text != "0 records.")
-                if (!Directory.Exists(DataGridView1.Rows[0].Cells[22].Value.ToString()) || updateDBb)
+                if (!Directory.Exists(DataViewGrid.Rows[0].Cells[22].Value.ToString()) || updateDBb)
                 {
                     var tmpp = "\\ORIG"; var OLD_Path = ""; var cmd = "";
                     for (var h = 0; h < 2; h++)
@@ -140,16 +145,16 @@ namespace RocksmithToolkitGUI.DLCManager
                                 }
                                 cnn.Close();
                             }
-                            DataGridView1.Rows[0].Selected = true;
-                            DataGridView1.Rows[1].Selected = true;
+                            DataViewGrid.Rows[0].Selected = true;
+                            DataViewGrid.Rows[1].Selected = true;
                             DataGridViewRow row;
-                            var i = DataGridView1.SelectedCells[0].RowIndex;
+                            var i = DataViewGrid.SelectedCells[0].RowIndex;
                             int rowindex = i;// DataGridView1.SelectedRows[0].Index;
-                            DataGridView1.Rows[0].Selected = true;
-                            DataGridView1.Rows[rowindex].Selected = false;
-                            DataGridView1.Rows[0].Selected = true;
+                            DataViewGrid.Rows[0].Selected = true;
+                            DataViewGrid.Rows[rowindex].Selected = false;
+                            DataViewGrid.Rows[0].Selected = true;
                             //if (prev>txt_Counter.Text.ToInt32())
-                            row = DataGridView1.Rows[0];
+                            row = DataViewGrid.Rows[0];
                         }
                         catch (Exception ex)
                         {
@@ -166,7 +171,7 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             if (true) //(DataGridView1.CurrentCell.IsComboBoxCell())
             {
-                if (DataGridView1.Columns[DataGridView1.CurrentCell.ColumnIndex].Name == "ContactsColumn")
+                if (DataViewGrid.Columns[DataViewGrid.CurrentCell.ColumnIndex].Name == "ContactsColumn")
                 {
                     ComboBox cb = e.Control as ComboBox;
                     if (cb != null)
@@ -236,7 +241,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private void DataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
             var line = -1;
-            line = DataGridView1.SelectedCells[0].RowIndex;
+            line = DataViewGrid.SelectedCells[0].RowIndex;
             if (line > -1) ChangeRow();
         }
 
@@ -244,86 +249,100 @@ namespace RocksmithToolkitGUI.DLCManager
         {
 
             int i;
-            if (DataGridView1.SelectedCells.Count > 0)
+            if (DataViewGrid.SelectedCells.Count > 0)
             {
-                i = DataGridView1.SelectedCells[0].RowIndex;
-                txt_ID.Text = DataGridView1.Rows[i].Cells[0].Value.ToString();
-                txt_Title.Text = DataGridView1.Rows[i].Cells[1].Value.ToString();
-                txt_Title_Sort.Text = DataGridView1.Rows[i].Cells[2].Value.ToString();
-                txt_Album.Text = DataGridView1.Rows[i].Cells[3].Value.ToString();
-                txt_Artist.Text = DataGridView1.Rows[i].Cells[4].Value.ToString();
-                txt_Artist_Sort.Text = DataGridView1.Rows[i].Cells[5].Value.ToString();
-                txt_Album_Year.Text = DataGridView1.Rows[i].Cells[6].Value.ToString();
-                txt_AverageTempo.Text = DataGridView1.Rows[i].Cells[7].Value.ToString();
-                txt_Volume.Text = DataGridView1.Rows[i].Cells[8].Value.ToString();
-                txt_Preview_Volume.Text = DataGridView1.Rows[i].Cells[9].Value.ToString();
-                txt_AlbumArtPath.Text = DataGridView1.Rows[i].Cells[10].Value.ToString();
-                txt_Track_No.Text = DataGridView1.Rows[i].Cells[13].Value.ToString();
-                txt_Author.Text = DataGridView1.Rows[i].Cells[14].Value.ToString();
-                txt_Version.Text = DataGridView1.Rows[i].Cells[15].Value.ToString();
-                txt_DLC_ID.Text = DataGridView1.Rows[i].Cells[16].Value.ToString();
-                txt_APP_ID.Text = DataGridView1.Rows[i].Cells[17].Value.ToString();
-                txt_Alt_No.Text = DataGridView1.Rows[i].Cells[33].Value.ToString();
-                txt_Tuning.Text = DataGridView1.Rows[i].Cells[47].Value.ToString();
-                txt_BassPicking.Text = DataGridView1.Rows[i].Cells[48].Value.ToString();
-                txt_Group.Text = DataGridView1.Rows[i].Cells[50].Value.ToString();
-                txt_Rating.Text = DataGridView1.Rows[i].Cells[51].Value.ToString();
-                txt_Description.Text = DataGridView1.Rows[i].Cells[52].Value.ToString();
-                txt_Artist_ShortName.Text = DataGridView1.Rows[i].Cells[85].Value.ToString();
-                txt_Album_ShortName.Text = DataGridView1.Rows[i].Cells[86].Value.ToString();
-                txt_AudioPath.Text = DataGridView1.Rows[i].Cells[77].Value.ToString().Replace(".ogg", "_fixed.ogg");
-                txt_AudioPreviewPath.Text = DataGridView1.Rows[i].Cells[78].Value.ToString().Replace(".ogg", "_fixed.ogg");
+                i = DataViewGrid.SelectedCells[0].RowIndex;
+                txt_ID.Text = DataViewGrid.Rows[i].Cells[0].Value.ToString();
+                txt_Title.Text = DataViewGrid.Rows[i].Cells[1].Value.ToString();
+                txt_Title_Sort.Text = DataViewGrid.Rows[i].Cells[2].Value.ToString();
+                txt_Album.Text = DataViewGrid.Rows[i].Cells[3].Value.ToString();
+                txt_Artist.Text = DataViewGrid.Rows[i].Cells[4].Value.ToString();
+                txt_Artist_Sort.Text = DataViewGrid.Rows[i].Cells[5].Value.ToString();
+                txt_Album_Year.Text = DataViewGrid.Rows[i].Cells[6].Value.ToString();
+                txt_AverageTempo.Text = DataViewGrid.Rows[i].Cells[7].Value.ToString();
+                txt_Volume.Value = (DataViewGrid.Rows[i].Cells[8].Value.ToString()).ToInt32();
+                txt_Preview_Volume.Value = (DataViewGrid.Rows[i].Cells[9].Value.ToString()).ToInt32();
+                txt_AlbumArtPath.Text = DataViewGrid.Rows[i].Cells[10].Value.ToString();
+                txt_Track_No.Text = DataViewGrid.Rows[i].Cells[13].Value.ToString();
+                txt_Author.Text = DataViewGrid.Rows[i].Cells[14].Value.ToString();
+                txt_Version.Text = DataViewGrid.Rows[i].Cells[15].Value.ToString();
+                txt_DLC_ID.Text = DataViewGrid.Rows[i].Cells[16].Value.ToString();
+                txt_APP_ID.Text = DataViewGrid.Rows[i].Cells[17].Value.ToString();
+                txt_Alt_No.Text = DataViewGrid.Rows[i].Cells[33].Value.ToString();
+                txt_Tuning.Text = DataViewGrid.Rows[i].Cells[47].Value.ToString();
+                txt_BassPicking.Text = DataViewGrid.Rows[i].Cells[48].Value.ToString();
+                txt_Group.Text = DataViewGrid.Rows[i].Cells[50].Value.ToString();
+                txt_Rating.Text = DataViewGrid.Rows[i].Cells[51].Value.ToString();
+                txt_Description.Text = DataViewGrid.Rows[i].Cells[52].Value.ToString();
+                txt_AudioPath.Text = DataViewGrid.Rows[i].Cells[77].Value.ToString();//.Replace(".ogg", "_fixed.ogg");
+                txt_AudioPreviewPath.Text = DataViewGrid.Rows[i].Cells[78].Value.ToString();//.Replace(".ogg", "_fixed.ogg");
+                txt_Artist_ShortName.Text = DataViewGrid.Rows[i].Cells[85].Value.ToString();
+                txt_Album_ShortName.Text = DataViewGrid.Rows[i].Cells[86].Value.ToString();
+                txt_Platform.Text = "Pc";
+                //txt_Volume.Text = DataGridView1.Rows[i].Cells[86].Value.ToString();
+                //txt_Preview_Volume.Text = DataGridView1.Rows[i].Cells[9].Value.ToString();
 
-                if (DataGridView1.Rows[i].Cells[26].Value.ToString() == "Yes") chbx_Original.Checked = true;
+                if (DataViewGrid.Rows[i].Cells[26].Value.ToString() == "Yes") chbx_Original.Checked = true;
                 else chbx_Original.Checked = false;
-                if (DataGridView1.Rows[i].Cells[28].Value.ToString() == "Yes") chbx_Beta.Checked = true;
+                if (DataViewGrid.Rows[i].Cells[28].Value.ToString() == "Yes") chbx_Beta.Checked = true;
                 else chbx_Beta.Checked = false;
-                if (DataGridView1.Rows[i].Cells[29].Value.ToString() == "Yes") chbx_Alternate.Checked = true;
+                if (DataViewGrid.Rows[i].Cells[29].Value.ToString() == "Yes") chbx_Alternate.Checked = true;
                 else chbx_Alternate.Checked = false;
-                if (DataGridView1.Rows[i].Cells[31].Value.ToString() == "Yes") chbx_Broken.Checked = true;
+                if (DataViewGrid.Rows[i].Cells[31].Value.ToString() == "Yes") chbx_Broken.Checked = true;
                 else chbx_Broken.Checked = false;
-                if (DataGridView1.Rows[i].Cells[35].Value.ToString() == "Yes") chbx_Bass.Checked = true;
+                if (DataViewGrid.Rows[i].Cells[35].Value.ToString() == "Yes") chbx_Bass.Checked = true;
                 else chbx_Bass.Checked = false;
-                if (DataGridView1.Rows[i].Cells[37].Value.ToString() == "Yes") chbx_Lead.Checked = true;
+                if (DataViewGrid.Rows[i].Cells[37].Value.ToString() == "Yes") chbx_Lead.Checked = true;
                 else chbx_Lead.Checked = false;
-                if (DataGridView1.Rows[i].Cells[39].Value.ToString() == "Yes") chbx_Combo.Checked = true;
+                if (DataViewGrid.Rows[i].Cells[39].Value.ToString() == "Yes") chbx_Combo.Checked = true;
                 else chbx_Combo.Checked = false;
-                if (DataGridView1.Rows[i].Cells[38].Value.ToString() == "Yes") chbx_Rhythm.Checked = true;
+                if (DataViewGrid.Rows[i].Cells[38].Value.ToString() == "Yes") chbx_Rhythm.Checked = true;
                 else chbx_Rhythm.Checked = false;
-                if (DataGridView1.Rows[i].Cells[41].Value.ToString() == "Yes") chbx_Sections.Checked = true;
+                if (DataViewGrid.Rows[i].Cells[41].Value.ToString() == "Yes") chbx_Sections.Checked = true;
                 else chbx_Sections.Checked = false;
-                if (DataGridView1.Rows[i].Cells[42].Value.ToString() == "Yes") chbx_Cover.Checked = true;
+                if (DataViewGrid.Rows[i].Cells[42].Value.ToString() == "Yes") chbx_Cover.Checked = true;
                 else chbx_Cover.Checked = false;
-                if (DataGridView1.Rows[i].Cells[43].Value.ToString() == "Yes") { chbx_Preview.Checked = true; btn_PlayPreview.Enabled = true; }
+                if (DataViewGrid.Rows[i].Cells[43].Value.ToString() == "Yes") { chbx_Preview.Checked = true; btn_PlayPreview.Enabled = true; }
                 else { chbx_Preview.Checked = false; btn_PlayPreview.Enabled = false; }
-                if (DataGridView1.Rows[i].Cells[45].Value.ToString() == "Yes") { numericUpDown1.Enabled=false;chbx_DD.Checked = true; btn_RemoveDD.Enabled = true; btn_AddDD.Enabled = false; }
+                if (DataViewGrid.Rows[i].Cells[45].Value.ToString() == "Yes") { numericUpDown1.Enabled=false;chbx_DD.Checked = true; btn_RemoveDD.Enabled = true; btn_AddDD.Enabled = false; }
                 else { chbx_DD.Checked = false; btn_AddDD.Enabled = true; btn_RemoveDD.Enabled = false; } //numericUpDown1.Enabled = true;
-                if (DataGridView1.Rows[i].Cells[69].Value.ToString() == "Yes") chbx_Selected.Checked = true;
+                if (DataViewGrid.Rows[i].Cells[69].Value.ToString() == "Yes") chbx_Selected.Checked = true;
                 else chbx_Selected.Checked = false;
-                if (DataGridView1.Rows[i].Cells[74].Value.ToString() == "Yes") chbx_Author.Checked = true;
+                if (DataViewGrid.Rows[i].Cells[76].Value.ToString() == "Yes") chbx_Author.Checked = true;
                 else chbx_Author.Checked = false;
-                if (DataGridView1.Rows[i].Cells[76].Value.ToString() == "Yes") chbx_Preview.Checked = true;
-                else chbx_Preview.Checked = false;
-                if (DataGridView1.Rows[i].Cells[83].Value.ToString() == "Yes") { chbx_BassDD.Checked = true; btn_RemoveBassDD.Enabled = true; }
+                //if (DataGridView1.Rows[i].Cells[78].Value.ToString() == "Yes") chbx_Preview.Checked = true;
+                //else chbx_Preview.Checked = false;
+                if (DataViewGrid.Rows[i].Cells[83].Value.ToString() == "Yes") { chbx_BassDD.Checked = true; btn_RemoveBassDD.Enabled = true; }
                 else { chbx_BassDD.Checked = false; btn_RemoveBassDD.Enabled = false; }
-                if (DataGridView1.Rows[i].Cells[84].Value.ToString() == "Yes") chbx_Bonus.Checked = true;
+                if (DataViewGrid.Rows[i].Cells[84].Value.ToString() == "Yes") chbx_Bonus.Checked = true;
                 else chbx_Bonus.Checked = false;
-                if (DataGridView1.Rows[i].Cells[87].Value.ToString() == "Yes") { chbx_Avail_Old.Checked = true; btn_OldFolder.Enabled = true; }
+                if (DataViewGrid.Rows[i].Cells[87].Value.ToString() == "Yes") { chbx_Avail_Old.Checked = true; btn_OldFolder.Enabled = true; }
                 else { chbx_Avail_Old.Checked = false; btn_OldFolder.Enabled = false; }
-                if (DataGridView1.Rows[i].Cells[88].Value.ToString() == "Yes") { chbx_Avail_Duplicate.Checked = true; btn_DuplicateFolder.Enabled = true; }
+                if (DataViewGrid.Rows[i].Cells[88].Value.ToString() == "Yes") { chbx_Avail_Duplicate.Checked = true; btn_DuplicateFolder.Enabled = true; }
                 else { chbx_Avail_Duplicate.Checked = false; btn_DuplicateFolder.Enabled = false; }
-                if (DataGridView1.Rows[i].Cells[89].Value.ToString() == "Yes") chbx_Has_Been_Corrected.Checked = true;
+                if (DataViewGrid.Rows[i].Cells[89].Value.ToString() == "Yes") chbx_Has_Been_Corrected.Checked = true;
                 else chbx_Has_Been_Corrected.Checked = false;
 
 
                 //ImageSource imageSource = new BitmapImage(new Uri("C:\\Temp\\music_edit.png"));
                 //txt_Description.Text = txt_AlbumArtPath.Text.Replace(".dds", ".png");
                 picbx_AlbumArtPath.ImageLocation = txt_AlbumArtPath.Text.Replace(".dds", ".png");
+                btn_Delete.Enabled = true;
+                btn_Duplicate.Enabled = true;
+                btn_Package.Enabled = true;
+                btn_ChangeCover.Enabled = true;
+                btn_AddPreview.Enabled = true;
+                btn_SelectPreview.Enabled = true;
+                btn_PlayAudio.Enabled = true;
+                //btn_PlayPreview.Enabled = true;
                 //btn_Search.Enabled = false;
                 btn_Save.Enabled = true;
                 txt_Artist_Sort.Enabled = true;
                 txt_Album.Enabled = true;
                 txt_Title_Sort.Enabled = true;
+                //Defaults
+                txt_FTPPath.Text = "ftp://192.168.1.12/" + "dev_hdd0/game/BLES01862/USRDIR/DLC/";
+                txt_PreviewStart.Value.AddMinutes(10);
                 if (chbx_AutoSave.Checked) SaveOK = true;
                 else SaveOK = false;
             }
@@ -338,74 +357,72 @@ namespace RocksmithToolkitGUI.DLCManager
             int i;
             DataSet dis = new DataSet();
 
-            if (DataGridView1.SelectedCells.Count > 0 && txt_ID.Text != "")
+            if (DataViewGrid.SelectedCells.Count > 0 && txt_ID.Text != "")
             {
-                i = DataGridView1.SelectedCells[0].RowIndex;
+                i = DataViewGrid.SelectedCells[0].RowIndex;
 
-                DataGridView1.Rows[i].Cells[1].Value = txt_Title.Text;
-                DataGridView1.Rows[i].Cells[2].Value = txt_Title_Sort.Text;
-                DataGridView1.Rows[i].Cells[3].Value = txt_Album.Text;
-                DataGridView1.Rows[i].Cells[4].Value = txt_Artist.Text;
-                DataGridView1.Rows[i].Cells[5].Value = txt_Artist_Sort.Text;
-                DataGridView1.Rows[i].Cells[6].Value = txt_Album_Year.Text;
-                DataGridView1.Rows[i].Cells[7].Value = txt_AverageTempo.Text;
-                DataGridView1.Rows[i].Cells[8].Value = txt_Volume.Text;
-                DataGridView1.Rows[i].Cells[9].Value = txt_Preview_Volume.Text;
-                DataGridView1.Rows[i].Cells[10].Value = txt_AlbumArtPath.Text;
-                DataGridView1.Rows[i].Cells[13].Value = txt_Track_No.Text;
-                DataGridView1.Rows[i].Cells[14].Value = txt_Author.Text;
-                DataGridView1.Rows[i].Cells[15].Value = txt_Version.Text;
-                DataGridView1.Rows[i].Cells[16].Value = txt_DLC_ID.Text;
-                DataGridView1.Rows[i].Cells[17].Value = txt_APP_ID.Text;
-                DataGridView1.Rows[i].Cells[33].Value = txt_Alt_No.Text;
-                DataGridView1.Rows[i].Cells[47].Value = txt_Tuning.Text;
-                DataGridView1.Rows[i].Cells[48].Value = txt_BassPicking.Text;
-                DataGridView1.Rows[i].Cells[50].Value = txt_Group.Text;
-                DataGridView1.Rows[i].Cells[51].Value = txt_Rating.Text;
-                DataGridView1.Rows[i].Cells[52].Value = txt_Description.Text;
-                DataGridView1.Rows[i].Cells[76].Value = txt_AudioPreviewPath.Text;
-                DataGridView1.Rows[i].Cells[85].Value = txt_Artist_ShortName.Text;
-                DataGridView1.Rows[i].Cells[86].Value = txt_Album_ShortName.Text;
-                if (chbx_Original.Checked) DataGridView1.Rows[i].Cells[26].Value = "Yes";
-                else DataGridView1.Rows[i].Cells[26].Value = "No";
-                if (chbx_Beta.Checked) DataGridView1.Rows[i].Cells[28].Value = "Yes";
-                else DataGridView1.Rows[i].Cells[28].Value = "No";
-                if (chbx_Alternate.Checked) DataGridView1.Rows[i].Cells[29].Value = "Yes";
-                else DataGridView1.Rows[i].Cells[29].Value = "No";
-                if (chbx_Broken.Checked) DataGridView1.Rows[i].Cells[31].Value = "Yes";
-                else DataGridView1.Rows[i].Cells[31].Value = "No";
-                if (chbx_Bass.Checked) DataGridView1.Rows[i].Cells[35].Value = "Yes";
-                else DataGridView1.Rows[i].Cells[35].Value = "No";
-                if (chbx_Lead.Checked) DataGridView1.Rows[i].Cells[37].Value = "Yes";
-                else DataGridView1.Rows[i].Cells[37].Value = "No";
-                if (chbx_Rhythm.Checked) DataGridView1.Rows[i].Cells[38].Value = "Yes";
-                else DataGridView1.Rows[i].Cells[38].Value = "No";
-                if (chbx_Combo.Checked) DataGridView1.Rows[i].Cells[39].Value = "Yes";
-                else DataGridView1.Rows[i].Cells[39].Value = "No";
+                DataViewGrid.Rows[i].Cells[1].Value = txt_Title.Text;
+                DataViewGrid.Rows[i].Cells[2].Value = txt_Title_Sort.Text;
+                DataViewGrid.Rows[i].Cells[3].Value = txt_Album.Text;
+                DataViewGrid.Rows[i].Cells[4].Value = txt_Artist.Text;
+                DataViewGrid.Rows[i].Cells[5].Value = txt_Artist_Sort.Text;
+                DataViewGrid.Rows[i].Cells[6].Value = txt_Album_Year.Text;
+                DataViewGrid.Rows[i].Cells[7].Value = txt_AverageTempo.Text;
+                DataViewGrid.Rows[i].Cells[8].Value = txt_Volume.Text;
+                DataViewGrid.Rows[i].Cells[9].Value = txt_Preview_Volume.Text;
+                DataViewGrid.Rows[i].Cells[10].Value = txt_AlbumArtPath.Text;
+                DataViewGrid.Rows[i].Cells[13].Value = txt_Track_No.Text;
+                DataViewGrid.Rows[i].Cells[14].Value = txt_Author.Text;
+                DataViewGrid.Rows[i].Cells[15].Value = txt_Version.Text;
+                DataViewGrid.Rows[i].Cells[16].Value = txt_DLC_ID.Text;
+                DataViewGrid.Rows[i].Cells[17].Value = txt_APP_ID.Text;
+                DataViewGrid.Rows[i].Cells[33].Value = txt_Alt_No.Text;
+                DataViewGrid.Rows[i].Cells[47].Value = txt_Tuning.Text;
+                DataViewGrid.Rows[i].Cells[48].Value = txt_BassPicking.Text;
+                DataViewGrid.Rows[i].Cells[50].Value = txt_Group.Text;
+                DataViewGrid.Rows[i].Cells[51].Value = txt_Rating.Text;
+                DataViewGrid.Rows[i].Cells[52].Value = txt_Description.Text;
+                DataViewGrid.Rows[i].Cells[78].Value = txt_AudioPreviewPath.Text;
+                DataViewGrid.Rows[i].Cells[85].Value = txt_Artist_ShortName.Text;
+                DataViewGrid.Rows[i].Cells[86].Value = txt_Album_ShortName.Text;
+                if (chbx_Original.Checked) DataViewGrid.Rows[i].Cells[26].Value = "Yes";
+                else DataViewGrid.Rows[i].Cells[26].Value = "No";
+                if (chbx_Beta.Checked) DataViewGrid.Rows[i].Cells[28].Value = "Yes";
+                else DataViewGrid.Rows[i].Cells[28].Value = "No";
+                if (chbx_Alternate.Checked) DataViewGrid.Rows[i].Cells[29].Value = "Yes";
+                else DataViewGrid.Rows[i].Cells[29].Value = "No";
+                if (chbx_Broken.Checked) DataViewGrid.Rows[i].Cells[31].Value = "Yes";
+                else DataViewGrid.Rows[i].Cells[31].Value = "No";
+                if (chbx_Bass.Checked) DataViewGrid.Rows[i].Cells[35].Value = "Yes";
+                else DataViewGrid.Rows[i].Cells[35].Value = "No";
+                if (chbx_Lead.Checked) DataViewGrid.Rows[i].Cells[37].Value = "Yes";
+                else DataViewGrid.Rows[i].Cells[37].Value = "No";
+                if (chbx_Rhythm.Checked) DataViewGrid.Rows[i].Cells[38].Value = "Yes";
+                else DataViewGrid.Rows[i].Cells[38].Value = "No";
+                if (chbx_Combo.Checked) DataViewGrid.Rows[i].Cells[39].Value = "Yes";
+                else DataViewGrid.Rows[i].Cells[39].Value = "No";
                 //if (chbx_Sections.Checked) DataGridView1.Rows[i].Cells[41].Value = "Yes";
                 //else DataGridView1.Rows[i].Cells[41].Value = "No";
-                if (chbx_Cover.Checked) DataGridView1.Rows[i].Cells[42].Value = "Yes";
-                else DataGridView1.Rows[i].Cells[42].Value = "No";
-                if (chbx_Preview.Checked) DataGridView1.Rows[i].Cells[43].Value = "Yes";
-                else DataGridView1.Rows[i].Cells[43].Value = "No";
-                if (chbx_DD.Checked) DataGridView1.Rows[i].Cells[45].Value = "Yes";
-                else DataGridView1.Rows[i].Cells[45].Value = "No";
-                if (chbx_Selected.Checked) DataGridView1.Rows[i].Cells[69].Value = "Yes";
-                else DataGridView1.Rows[i].Cells[69].Value = "No";
-                //if (chbx_Preview.Checked) DataGridView1.Rows[i].Cells[].Value = "Yes";
-                //else DataGridView1.Rows[i].Cells[75].Value = "No";
-                if (chbx_Author.Checked) DataGridView1.Rows[i].Cells[74].Value = "Yes";
-                else DataGridView1.Rows[i].Cells[74].Value = "No";
-                if (chbx_BassDD.Checked) DataGridView1.Rows[i].Cells[83].Value = "Yes";
-                else DataGridView1.Rows[i].Cells[83].Value = "No";
-                if (chbx_Bonus.Checked) DataGridView1.Rows[i].Cells[84].Value = "Yes";
-                else DataGridView1.Rows[i].Cells[84].Value = "No";
-                if (chbx_Avail_Old.Checked) DataGridView1.Rows[i].Cells[87].Value = "Yes";
-                else DataGridView1.Rows[i].Cells[87].Value = "No";
-                if (chbx_Avail_Duplicate.Checked) DataGridView1.Rows[i].Cells[88].Value = "Yes";
-                else DataGridView1.Rows[i].Cells[88].Value = "No";
-                if (chbx_Has_Been_Corrected.Checked) DataGridView1.Rows[i].Cells[89].Value = "Yes";
-                else DataGridView1.Rows[i].Cells[89].Value = "No";
+                if (chbx_Cover.Checked) DataViewGrid.Rows[i].Cells[42].Value = "Yes";
+                else DataViewGrid.Rows[i].Cells[42].Value = "No";
+                if (chbx_Preview.Checked) DataViewGrid.Rows[i].Cells[43].Value = "Yes";
+                else DataViewGrid.Rows[i].Cells[43].Value = "No";
+                if (chbx_DD.Checked) DataViewGrid.Rows[i].Cells[45].Value = "Yes";
+                else DataViewGrid.Rows[i].Cells[45].Value = "No";
+                if (chbx_Selected.Checked) DataViewGrid.Rows[i].Cells[69].Value = "Yes";
+                else DataViewGrid.Rows[i].Cells[69].Value = "No";
+                if (chbx_Author.Checked) DataViewGrid.Rows[i].Cells[76].Value = "Yes";
+                else DataViewGrid.Rows[i].Cells[76].Value = "No";
+                if (chbx_BassDD.Checked) DataViewGrid.Rows[i].Cells[83].Value = "Yes";
+                else DataViewGrid.Rows[i].Cells[83].Value = "No";
+                if (chbx_Bonus.Checked) DataViewGrid.Rows[i].Cells[84].Value = "Yes";
+                else DataViewGrid.Rows[i].Cells[84].Value = "No";
+                if (chbx_Avail_Old.Checked) DataViewGrid.Rows[i].Cells[87].Value = "Yes";
+                else DataViewGrid.Rows[i].Cells[87].Value = "No";
+                if (chbx_Avail_Duplicate.Checked) DataViewGrid.Rows[i].Cells[88].Value = "Yes";
+                else DataViewGrid.Rows[i].Cells[88].Value = "No";
+                if (chbx_Has_Been_Corrected.Checked) DataViewGrid.Rows[i].Cells[89].Value = "Yes";
+                else DataViewGrid.Rows[i].Cells[89].Value = "No";
 
                 //var DB_Path = "../../../../tmp\\Files.accdb;";
                 var connection = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path); //+ ";Persist Security Info=False"
@@ -447,7 +464,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     command.CommandText += "Tunning = @param47, ";
                     command.CommandText += "Bass_Picking = @param48, ";
                     command.CommandText += "Tones = @param49, ";
-                    //command.CommandText += "Group = @param50, ";
+                    command.CommandText += "Groups = @param50, ";
                     command.CommandText += "Rating = @param51, ";
                     command.CommandText += "Description = @param52, ";
                     command.CommandText += "Selected = @param69, ";
@@ -455,10 +472,13 @@ namespace RocksmithToolkitGUI.DLCManager
                     //command.CommandText += "CustomsForge_Link = @param71, ";
                     //command.CommandText += "CustomsForge_Like = @param72, ";
                     //command.CommandText += "CustomsForge_ReleaseNotes = @param73, ";
-                    command.CommandText += "Has_Author = @param74, ";
-                    //command.CommandText += "Has_Author = @param75, ";
-                    command.CommandText += "oggPreviewPath = @param76, ";
+                    command.CommandText += "Has_Author = @param76, ";
+                    command.CommandText += "oggPath = @param77, ";
+                    command.CommandText += "oggPreviewPath = @param78, ";
                     //command.CommandText += "UniqueDLCName = @param79, ";
+                    command.CommandText += "AlbumArt_Hash = @param80, ";
+                    command.CommandText += "Audio_Hash = @param81, ";
+                    command.CommandText += "AudioPreview_Hash = @param82, ";
                     command.CommandText += "Bass_Has_DD = @param83, ";
                     command.CommandText += "Has_Bonus_Arrangement = @param84, ";
                     command.CommandText += "Artist_ShortName = @param85, ";
@@ -468,44 +488,49 @@ namespace RocksmithToolkitGUI.DLCManager
 
                     command.CommandText += "WHERE ID = " + txt_ID.Text;
 
-                    command.Parameters.AddWithValue("@param1", DataGridView1.Rows[i].Cells[1].Value.ToString());
-                    command.Parameters.AddWithValue("@param2", DataGridView1.Rows[i].Cells[2].Value.ToString());
-                    command.Parameters.AddWithValue("@param3", DataGridView1.Rows[i].Cells[3].Value.ToString());
-                    command.Parameters.AddWithValue("@param4", DataGridView1.Rows[i].Cells[4].Value.ToString());
-                    command.Parameters.AddWithValue("@param5", DataGridView1.Rows[i].Cells[5].Value.ToString());
-                    command.Parameters.AddWithValue("@param6", DataGridView1.Rows[i].Cells[6].Value.ToString());
-                    command.Parameters.AddWithValue("@param7", DataGridView1.Rows[i].Cells[7].Value.ToString());
-                    command.Parameters.AddWithValue("@param8", DataGridView1.Rows[i].Cells[8].Value.ToString());
-                    command.Parameters.AddWithValue("@param9", DataGridView1.Rows[i].Cells[9].Value.ToString());
-                    command.Parameters.AddWithValue("@param10", DataGridView1.Rows[i].Cells[10].Value.ToString());
-                    command.Parameters.AddWithValue("@param13", DataGridView1.Rows[i].Cells[13].Value.ToString());
-                    command.Parameters.AddWithValue("@param14", DataGridView1.Rows[i].Cells[14].Value.ToString());
-                    command.Parameters.AddWithValue("@param15", DataGridView1.Rows[i].Cells[15].Value.ToString());
-                    command.Parameters.AddWithValue("@param16", DataGridView1.Rows[i].Cells[16].Value.ToString());
-                    command.Parameters.AddWithValue("@param17", DataGridView1.Rows[i].Cells[17].Value.ToString());
-                    command.Parameters.AddWithValue("@param26", DataGridView1.Rows[i].Cells[26].Value.ToString());
-                    command.Parameters.AddWithValue("@param28", DataGridView1.Rows[i].Cells[28].Value.ToString());
-                    command.Parameters.AddWithValue("@param29", DataGridView1.Rows[i].Cells[29].Value.ToString());
-                    command.Parameters.AddWithValue("@param31", DataGridView1.Rows[i].Cells[31].Value.ToString());
-                    command.Parameters.AddWithValue("@param33", DataGridView1.Rows[i].Cells[33].Value.ToString());
+                    command.Parameters.AddWithValue("@param1", DataViewGrid.Rows[i].Cells[1].Value.ToString());
+                    command.Parameters.AddWithValue("@param2", DataViewGrid.Rows[i].Cells[2].Value.ToString());
+                    command.Parameters.AddWithValue("@param3", DataViewGrid.Rows[i].Cells[3].Value.ToString());
+                    command.Parameters.AddWithValue("@param4", DataViewGrid.Rows[i].Cells[4].Value.ToString());
+                    command.Parameters.AddWithValue("@param5", DataViewGrid.Rows[i].Cells[5].Value.ToString());
+                    command.Parameters.AddWithValue("@param6", DataViewGrid.Rows[i].Cells[6].Value.ToString());
+                    command.Parameters.AddWithValue("@param7", DataViewGrid.Rows[i].Cells[7].Value.ToString());
+                    command.Parameters.AddWithValue("@param8", DataViewGrid.Rows[i].Cells[8].Value.ToString());
+                    command.Parameters.AddWithValue("@param9", DataViewGrid.Rows[i].Cells[9].Value.ToString());
+                    command.Parameters.AddWithValue("@param10", DataViewGrid.Rows[i].Cells[10].Value.ToString());
+                    command.Parameters.AddWithValue("@param13", DataViewGrid.Rows[i].Cells[13].Value.ToString());
+                    command.Parameters.AddWithValue("@param14", DataViewGrid.Rows[i].Cells[14].Value.ToString());
+                    command.Parameters.AddWithValue("@param15", DataViewGrid.Rows[i].Cells[15].Value.ToString());
+                    command.Parameters.AddWithValue("@param16", DataViewGrid.Rows[i].Cells[16].Value.ToString());
+                    command.Parameters.AddWithValue("@param17", DataViewGrid.Rows[i].Cells[17].Value.ToString());
+                    command.Parameters.AddWithValue("@param26", DataViewGrid.Rows[i].Cells[26].Value.ToString());
+                    command.Parameters.AddWithValue("@param28", DataViewGrid.Rows[i].Cells[28].Value.ToString());
+                    command.Parameters.AddWithValue("@param29", DataViewGrid.Rows[i].Cells[29].Value.ToString());
+                    command.Parameters.AddWithValue("@param31", DataViewGrid.Rows[i].Cells[31].Value.ToString());
+                    command.Parameters.AddWithValue("@param33", DataViewGrid.Rows[i].Cells[33].Value.ToString());
                     //command.Parameters.AddWithValue("@param41", DataGridView1.Rows[i].Cells[41].Value.ToString());
-                    command.Parameters.AddWithValue("@param42", DataGridView1.Rows[i].Cells[42].Value.ToString());
-                    command.Parameters.AddWithValue("@param43", DataGridView1.Rows[i].Cells[43].Value.ToString());
-                    command.Parameters.AddWithValue("@param45", DataGridView1.Rows[i].Cells[45].Value.ToString());
-                    command.Parameters.AddWithValue("@param47", DataGridView1.Rows[i].Cells[47].Value.ToString());
-                    command.Parameters.AddWithValue("@param48", DataGridView1.Rows[i].Cells[48].Value.ToString());
-                    command.Parameters.AddWithValue("@param49", DataGridView1.Rows[i].Cells[49].Value.ToString());
-                    command.Parameters.AddWithValue("@param51", DataGridView1.Rows[i].Cells[51].Value.ToString());
-                    command.Parameters.AddWithValue("@param52", DataGridView1.Rows[i].Cells[52].Value.ToString());
-                    command.Parameters.AddWithValue("@param69", DataGridView1.Rows[i].Cells[69].Value.ToString());
-                    command.Parameters.AddWithValue("@param74", DataGridView1.Rows[i].Cells[74].Value.ToString());
-                    command.Parameters.AddWithValue("@param76", DataGridView1.Rows[i].Cells[76].Value.ToString());
-                    command.Parameters.AddWithValue("@param83", DataGridView1.Rows[i].Cells[83].Value.ToString());
-                    command.Parameters.AddWithValue("@param84", DataGridView1.Rows[i].Cells[84].Value.ToString());
-                    command.Parameters.AddWithValue("@param85", DataGridView1.Rows[i].Cells[85].Value.ToString());
-                    command.Parameters.AddWithValue("@param86", DataGridView1.Rows[i].Cells[86].Value.ToString());
-                    command.Parameters.AddWithValue("@param87", DataGridView1.Rows[i].Cells[87].Value.ToString());
-                    command.Parameters.AddWithValue("@param88", DataGridView1.Rows[i].Cells[88].Value.ToString());
+                    command.Parameters.AddWithValue("@param42", DataViewGrid.Rows[i].Cells[42].Value.ToString());
+                    command.Parameters.AddWithValue("@param43", DataViewGrid.Rows[i].Cells[43].Value.ToString());
+                    command.Parameters.AddWithValue("@param45", DataViewGrid.Rows[i].Cells[45].Value.ToString());
+                    command.Parameters.AddWithValue("@param47", DataViewGrid.Rows[i].Cells[47].Value.ToString());
+                    command.Parameters.AddWithValue("@param48", DataViewGrid.Rows[i].Cells[48].Value.ToString());
+                    command.Parameters.AddWithValue("@param49", DataViewGrid.Rows[i].Cells[49].Value.ToString());
+                    command.Parameters.AddWithValue("@param50", DataViewGrid.Rows[i].Cells[51].Value.ToString());
+                    command.Parameters.AddWithValue("@param51", DataViewGrid.Rows[i].Cells[51].Value.ToString());
+                    command.Parameters.AddWithValue("@param52", DataViewGrid.Rows[i].Cells[52].Value.ToString());
+                    command.Parameters.AddWithValue("@param69", DataViewGrid.Rows[i].Cells[69].Value.ToString());
+                    command.Parameters.AddWithValue("@param76", DataViewGrid.Rows[i].Cells[76].Value.ToString());
+                    command.Parameters.AddWithValue("@param77", DataViewGrid.Rows[i].Cells[77].Value.ToString());
+                    command.Parameters.AddWithValue("@param78", DataViewGrid.Rows[i].Cells[78].Value.ToString());
+                    command.Parameters.AddWithValue("@param80", DataViewGrid.Rows[i].Cells[80].Value.ToString());
+                    command.Parameters.AddWithValue("@param81", DataViewGrid.Rows[i].Cells[81].Value.ToString());
+                    command.Parameters.AddWithValue("@param82", DataViewGrid.Rows[i].Cells[82].Value.ToString());
+                    command.Parameters.AddWithValue("@param83", DataViewGrid.Rows[i].Cells[83].Value.ToString());
+                    command.Parameters.AddWithValue("@param84", DataViewGrid.Rows[i].Cells[84].Value.ToString());
+                    command.Parameters.AddWithValue("@param85", DataViewGrid.Rows[i].Cells[85].Value.ToString());
+                    command.Parameters.AddWithValue("@param86", DataViewGrid.Rows[i].Cells[86].Value.ToString());
+                    command.Parameters.AddWithValue("@param87", DataViewGrid.Rows[i].Cells[87].Value.ToString());
+                    command.Parameters.AddWithValue("@param88", DataViewGrid.Rows[i].Cells[88].Value.ToString());
 
                     //MessageBox.Show(command.Parameters.);
                     try
@@ -553,9 +578,9 @@ namespace RocksmithToolkitGUI.DLCManager
                     //DataGridView1.Dispose();
                     //txt_Description.Text = SearchCmd;
                     dssx.Dispose();
-                    Populate(ref DataGridView1, ref Main);//, ref bsPositions, ref bsBadges);
-                    DataGridView1.EditingControlShowing += DataGridView1_EditingControlShowing;
-                    DataGridView1.Refresh();
+                    Populate(ref DataViewGrid, ref Main);//, ref bsPositions, ref bsBadges);
+                    DataViewGrid.EditingControlShowing += DataGridView1_EditingControlShowing;
+                    DataViewGrid.Refresh();
                 }
                 catch (System.IO.FileNotFoundException ee)
                 {
@@ -651,7 +676,7 @@ namespace RocksmithToolkitGUI.DLCManager
             DataGridViewTextBoxColumn Tunning = new DataGridViewTextBoxColumn { DataPropertyName = "Tunning", HeaderText = "Tunning " };
             DataGridViewTextBoxColumn Bass_Picking = new DataGridViewTextBoxColumn { DataPropertyName = "Bass_Picking", HeaderText = "Bass_Picking " };
             DataGridViewTextBoxColumn Tones = new DataGridViewTextBoxColumn { DataPropertyName = "Tones", HeaderText = "Tones " };
-            DataGridViewTextBoxColumn Group = new DataGridViewTextBoxColumn { DataPropertyName = "Group", HeaderText = "Group " };
+            DataGridViewTextBoxColumn Groups = new DataGridViewTextBoxColumn { DataPropertyName = "Groups", HeaderText = "Groups " };
             DataGridViewTextBoxColumn Rating = new DataGridViewTextBoxColumn { DataPropertyName = "Rating", HeaderText = "Rating " };
             DataGridViewTextBoxColumn Description = new DataGridViewTextBoxColumn { DataPropertyName = "Description", HeaderText = "Description " };
             DataGridViewTextBoxColumn Comments = new DataGridViewTextBoxColumn { DataPropertyName = "Comments", HeaderText = "Comments " };
@@ -773,7 +798,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 Tunning,
                 Bass_Picking,
                 Tones,
-                Group,
+                Groups,
                 Rating,
                 Description,
                 Comments,
@@ -883,7 +908,7 @@ namespace RocksmithToolkitGUI.DLCManager
             public string Tunning { get; set; }
             public string Bass_Picking { get; set; }
             public string Tones { get; set; }
-            public string Group { get; set; }
+            public string Groups { get; set; }
             public string Rating { get; set; }
             public string Description { get; set; }
             public string Comments { get; set; }
@@ -1001,7 +1026,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         files[i].Tunning = dataRow.ItemArray[47].ToString();
                         files[i].Bass_Picking = dataRow.ItemArray[48].ToString();
                         files[i].Tones = dataRow.ItemArray[49].ToString();
-                        files[i].Group = dataRow.ItemArray[50].ToString();
+                        files[i].Groups = dataRow.ItemArray[50].ToString();
                         files[i].Rating = dataRow.ItemArray[51].ToString();
                         files[i].Description = dataRow.ItemArray[52].ToString();
                         files[i].Comments = dataRow.ItemArray[53].ToString();
@@ -1076,6 +1101,14 @@ namespace RocksmithToolkitGUI.DLCManager
                 ExternalApps.Png2Dds(temppath, Path.Combine(tmpWorkDir, temppath.Replace(".png", ".dds")), 512, 512);
                 txt_AlbumArtPath.Text = temppath;
                 chbx_Cover.Checked = true;
+                var i = DataViewGrid.SelectedCells[0].RowIndex;
+                if (File.Exists(temppath))
+                    using (FileStream fss = File.OpenRead(temppath))
+                    {
+                        SHA1 sha = new SHA1Managed();
+                        DataViewGrid.Rows[i].Cells[80].Value = BitConverter.ToString(sha.ComputeHash(fss));
+                        fss.Close();
+                    }
                 SaveRecord();
             }
 
@@ -1107,9 +1140,9 @@ namespace RocksmithToolkitGUI.DLCManager
                 ////SearchCmd = "SELECT * FROM Main WHERE " + (txt_Artist.Text != "" ? " Artist Like '%" + txt_Artist.Text + "%'" : "") + (txt_Artist.Text != "" ? (txt_Title.Text != "" ? " AND " : "") : "") + (txt_Title.Text != "" ? " Song_Title Like '%" + txt_Title.Text + "%'" : "") + " ORDER BY Artist, Album_Year, Album, Song_Title ;";
                 SearchCmd = "SELECT * FROM Main ORDER BY Artist, Album_Year, Album, Song_Title;";
                 dssx.Dispose();
-                Populate(ref DataGridView1, ref Main);//, ref bsPositions, ref bsBadges);
-                DataGridView1.EditingControlShowing += DataGridView1_EditingControlShowing;
-                DataGridView1.Refresh();
+                Populate(ref DataViewGrid, ref Main);//, ref bsPositions, ref bsBadges);
+                DataViewGrid.EditingControlShowing += DataGridView1_EditingControlShowing;
+                DataViewGrid.Refresh();
                 //btn_Search.Enabled = false;
             }
         }
@@ -1221,9 +1254,9 @@ namespace RocksmithToolkitGUI.DLCManager
             {
                 //DataGridView1.Dispose();
                 dssx.Dispose();
-                Populate(ref DataGridView1, ref Main);//, ref bsPositions, ref bsBadges);
-                DataGridView1.EditingControlShowing += DataGridView1_EditingControlShowing;
-                DataGridView1.Refresh();
+                Populate(ref DataViewGrid, ref Main);//, ref bsPositions, ref bsBadges);
+                DataViewGrid.EditingControlShowing += DataGridView1_EditingControlShowing;
+                DataViewGrid.Refresh();
             }
             catch (System.IO.FileNotFoundException ee)
             {
@@ -1325,12 +1358,12 @@ namespace RocksmithToolkitGUI.DLCManager
             string h = GeneratePackage(txt_ID.Text);
             if (chbx_Format.Text == "PS3" && chbx_Copy.Checked)
             {
-                var GameID = txt_FTPPath.Text.Substring(txt_FTPPath.Text.LastIndexOf("BL"), 9);
-                var startno = txt_FTPPath.Text.LastIndexOf("GAMES/");
-                var endno = (txt_FTPPath.Text.LastIndexOf("BL")) + 9;
-                var GameName = ((txt_FTPPath.Text).Substring(startno, endno - startno)).Replace("GAMES/", "");
-                var newpath = txt_FTPPath.Text.Replace("GAMES", "game").Replace("PS3_GAME", GameID).Replace(GameName + "/", "");
-                FTPFile(newpath, h + ".psarc.edat");
+                //var GameID = txt_FTPPath.Text.Substring(txt_FTPPath.Text.LastIndexOf("BL"), 9);
+                //var startno = txt_FTPPath.Text.LastIndexOf("GAMES/");
+                //var endno = (txt_FTPPath.Text.LastIndexOf("BL")) + 9;
+                //var GameName = ((txt_FTPPath.Text).Substring(startno, endno - startno)).Replace("GAMES/", "");
+                //var newpath = txt_FTPPath.Text.Replace("GAMES", "game").Replace("PS3_GAME", GameID).Replace(GameName + "/", "");
+                FTPFile(txt_FTPPath.Text, h + "_ps3.psarc.edat");
                 MessageBox.Show("FTPed");
             }
             else if ((chbx_Format.Text == "PC" || chbx_Format.Text == "Mac") && chbx_Copy.Checked)
@@ -1348,36 +1381,40 @@ namespace RocksmithToolkitGUI.DLCManager
                     dest = txt_FTPPath.Text;//!File.Exists(
                     //File.Copy(dest + "\\rs1compatibilitydlc" + platfrm + ".psarc", dest + "\\rs1compatibilitydlc" + platfrm + ".psarc.orig", false);
                     File.Copy(h + platfrm + ".psarc", dest, true);
-
                 }
                 else MessageBox.Show("Chose a different path to save");
             }
         }
+
         public void FTPFile(string filel, string filen)
         {
             // Get the object used to communicate with the server.
-            var ddd = filel + filen;
+            var ddd = filel + filen.Replace(TempPath + "\\", "");
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(ddd);
             request.Method = WebRequestMethods.Ftp.UploadFile;
             request.UseBinary = true;
 
             // This example assumes the FTP site uses anonymous logon.
-            request.Credentials = new NetworkCredential("anonymous", "janeDoe@contoso.com");
+            request.Credentials = new NetworkCredential("anonymous", "bogdan@capi.ro");
 
 
 
-            byte[] b = File.ReadAllBytes(TempPath + "\\0_dlcpacks\\manipulated\\" + filen);
+            byte[] b = File.ReadAllBytes(filen);//TempPath + "\\0_dlcpacks\\manipulated\\" +
 
             request.ContentLength = b.Length;
-            using (Stream s = request.GetRequestStream())
+            try
             {
-                s.Write(b, 0, b.Length);
+                using (Stream s = request.GetRequestStream())
+                {
+                     s.Write(b, 0, b.Length);
+                }
+                FtpWebResponse ftpResp = (FtpWebResponse)request.GetResponse();
             }
-
-            FtpWebResponse ftpResp = (FtpWebResponse)request.GetResponse();
-
-
-
+            catch (System.IO.FileNotFoundException ee)
+            {
+                MessageBox.Show(ee.Message + "PS3 is down :(! " + SearchCmd);
+                //MessageBox.Show(ee.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void button13_Click(object sender, EventArgs e)
@@ -1402,16 +1439,110 @@ namespace RocksmithToolkitGUI.DLCManager
                     DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 60 * 1); //wait 1min
                     if (DDC.ExitCode == 0)
                     {
+                        Converter(tt, ConverterType.Ogg2Wem);
                         txt_AudioPreviewPath.Text = tt;
                         chbx_Preview.Checked = true;
-                        var i = DataGridView1.SelectedCells[0].RowIndex;
-                        DataGridView1.Rows[i].Cells[43].Value = "Yes";
+                        var i = DataViewGrid.SelectedCells[0].RowIndex;
+                        DataViewGrid.Rows[i].Cells[43].Value = "Yes";
+                        DataViewGrid.Rows[i].Cells[78].Value = tt;
                         btn_PlayPreview.Enabled = true;
+
+                        if (File.Exists(tt))
+                            using (FileStream fss = File.OpenRead(tt))
+                            {
+                                SHA1 sha = new SHA1Managed();
+                                DataViewGrid.Rows[i].Cells[82].Value = BitConverter.ToString(sha.ComputeHash(fss));
+                                fss.Close();
+                            }
+
                         SaveRecord();
                     }
+
                 }
 
         }
+
+        private enum ConverterType
+        {
+            HeaderFix,
+            Revorb,
+            WEM,
+            Ogg2Wem
+        }
+        private void Converter(string file, ConverterType converterType)
+        {
+            
+            var txtOgg2FixHdr = String.Empty;
+            var txtWwiseConvert = String.Empty;
+            var txtWwise2Ogg = String.Empty;
+           var  txtAudio2Wem = String.Empty;
+
+            //using (var fd = new OpenFileDialog())
+            //{
+            //    fd.Multiselect = true;
+            //    fd.Filter = "Wwise 2010.3.3 OGG files (*.ogg)|*.ogg";
+            //    if (converterType == ConverterType.Revorb || converterType == ConverterType.WEM)
+            //        fd.Filter += "|Wwise 2013 WEM files (*.wem)|*.wem";
+            //    else if (converterType == ConverterType.Ogg2Wem)
+            //        fd.Filter = "Vobis Ogg or Wave files (*.ogg, *.wav)|*.ogg; *.wav";
+
+            //    fd.ShowDialog();
+            //    if (!fd.FileNames.Any())
+            //        return;
+
+                //InputAudioFiles = fd.FileNames;
+                Dictionary<string, string> errorFiles = new Dictionary<string, string>();
+                List<string> successFiles = new List<string>();
+
+                    try
+                    {
+                        var extension = Path.GetExtension(file);
+                        var outputFileName = Path.Combine(Path.GetDirectoryName(file), String.Format("{0}_fixed{1}", Path.GetFileNameWithoutExtension(file), ".ogg"));
+                        switch (converterType)
+                        {
+                            case ConverterType.Ogg2Wem:
+                                //txtAudio2Wem.Text = file;
+                                OggFile.Convert2Wem(file, 4, 4 * 1000);
+                                break;
+                        }
+
+                        successFiles.Add(file);
+                    }
+                    catch (Exception ex)
+                    {
+                        errorFiles.Add(file, ex.Message);
+                    }
+                
+
+                if (errorFiles.Count <= 0 && successFiles.Count > 0)
+                    MessageBox.Show("Conversion complete!", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                else if (errorFiles.Count > 0 && successFiles.Count > 0)
+                {
+                    StringBuilder alertMessage = new StringBuilder(
+                        "Conversion complete with errors." + Environment.NewLine + Environment.NewLine);
+                    alertMessage.AppendLine(
+                        "Files converted with success:" + Environment.NewLine);
+
+                    foreach (var sFile in successFiles)
+                        alertMessage.AppendLine(String.Format("File: {0}", sFile));
+                    alertMessage.AppendLine("Files converted with error:" + Environment.NewLine);
+                    foreach (var eFile in errorFiles)
+                        alertMessage.AppendLine(String.Format("File: {0}; error: {1}", eFile.Key, eFile.Value));
+
+                    MessageBox.Show(alertMessage.ToString(), MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else
+                {
+                    StringBuilder alertMessage = new StringBuilder(
+                        "Conversion complete with errors." + Environment.NewLine);
+                    alertMessage.AppendLine(
+                        "Files converted with error: " + Environment.NewLine);
+                    foreach (var eFile in errorFiles)
+                        alertMessage.AppendLine(String.Format("File: {0}, error: {1}", eFile.Key, eFile.Value));
+
+                    MessageBox.Show(alertMessage.ToString(), MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
 
         private void chbx_FTP1_CheckedChanged(object sender, EventArgs e)
         {
@@ -1457,6 +1588,15 @@ namespace RocksmithToolkitGUI.DLCManager
                 temppath = fbd.FileName;
                 txt_AudioPreviewPath.Text = temppath;
                 chbx_Preview.Checked = true;
+                var i = DataViewGrid.SelectedCells[0].RowIndex;
+                DataViewGrid.Rows[i].Cells[78].Value = temppath;
+                if (File.Exists(temppath))
+                    using (FileStream fss = File.OpenRead(temppath))
+                    {
+                        SHA1 sha = new SHA1Managed();
+                        DataViewGrid.Rows[i].Cells[82].Value = BitConverter.ToString(sha.ComputeHash(fss));
+                        fss.Close();
+                    }
                 SaveRecord();
             }
         }
@@ -1494,19 +1634,19 @@ namespace RocksmithToolkitGUI.DLCManager
         private void btn_Prev_Click(object sender, EventArgs e)
         {
             //if (DataGridView1.SelectedCells[0].RowIndex > 0) 
-            var prev = DataGridView1.SelectedCells[0].RowIndex; //nud_RemoveSlide.Value;
+            var prev = DataViewGrid.SelectedCells[0].RowIndex; //nud_RemoveSlide.Value;
             if (prev == 0) return;
 
             SaveRecord();// ChangeRow();
 
             int rowindex;
             DataGridViewRow row;
-            var i = DataGridView1.SelectedCells[0].RowIndex;
+            var i = DataViewGrid.SelectedCells[0].RowIndex;
             rowindex = i;// DataGridView1.SelectedRows[0].Index;
-            DataGridView1.Rows[rowindex - 1].Selected = true;
-            DataGridView1.Rows[rowindex].Selected = false;
+            DataViewGrid.Rows[rowindex - 1].Selected = true;
+            DataViewGrid.Rows[rowindex].Selected = false;
             //if (prev>txt_Counter.Text.ToInt32())
-            row = DataGridView1.Rows[rowindex - 1];
+            row = DataViewGrid.Rows[rowindex - 1];
             //else row = DataGridView1.Rows[rowindex - 1];
             //if (DataGridView1.SelectedCells[0].RowIndex > 0) 
             //txt_Counter.Text = prev.ToString();
@@ -1515,19 +1655,19 @@ namespace RocksmithToolkitGUI.DLCManager
         private void btn_NextItem_Click(object sender, EventArgs e)
         {
             //if (DataGridView1.SelectedCells[0].RowIndex > 0) 
-            var prev = DataGridView1.SelectedCells[0].RowIndex; //nud_RemoveSlide.Value;
-            if (DataGridView1.Rows.Count == prev + 2) return;
+            var prev = DataViewGrid.SelectedCells[0].RowIndex; //nud_RemoveSlide.Value;
+            if (DataViewGrid.Rows.Count == prev + 2) return;
 
             SaveRecord();// ChangeRow();
 
             int rowindex;
             DataGridViewRow row;
-            var i = DataGridView1.SelectedCells[0].RowIndex;
+            var i = DataViewGrid.SelectedCells[0].RowIndex;
             rowindex = i;// DataGridView1.SelectedRows[0].Index;
-            DataGridView1.Rows[rowindex + 1].Selected = true;
-            DataGridView1.Rows[rowindex].Selected = false;
+            DataViewGrid.Rows[rowindex + 1].Selected = true;
+            DataViewGrid.Rows[rowindex].Selected = false;
             //if (prev>txt_Counter.Text.ToInt32())
-            row = DataGridView1.Rows[rowindex + 1];
+            row = DataViewGrid.Rows[rowindex + 1];
             //else row = DataGridView1.Rows[rowindex - 1];
             //if (DataGridView1.SelectedCells[0].RowIndex > 0) 
             //txt_Counter.Text = prev.ToString();
@@ -1637,7 +1777,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //else if (rbtn_Population_All.Checked) ;
             //else if (rbtn_Population_Groups.Checked) cmd += "WHERE Groups = " + cbx_Groups.SelectedText;
 
-            cmd += " ORDER BY Artist";
+            //cmd += " ORDER BY Artist";
             //Read from DB
             var norows = 0;
             norows = SQLAccess(cmd);
@@ -1816,12 +1956,13 @@ namespace RocksmithToolkitGUI.DLCManager
                 data = new DLCPackageData
                 {
                     GameVersion = GameVersion.RS2014,
-                    Pc = chbx_Format.Text == "PC" ? true : false,
+                    Pc = chbx_Format.Text == "PC" ? true : false, //txt_Platform.Text 
                     Mac = chbx_Format.Text == "Mac" ? true : false,
-                    XBox360 = chbx_Format.Text == "XBOX" ? true : false,
+                    XBox360 = chbx_Format.Text == "XBOX360" ? true : false,
                     PS3 = chbx_Format.Text == "PS3" ? true : false,
                     Name = file.DLC_Name,
                     AppId = file.DLC_AppID,
+                    ArtFiles=info.ArtFiles,
 
                     //USEFUL CMDs String.IsNullOrEmpty(
                     SongInfo = new RocksmithToolkitLib.DLCPackage.SongInfo
@@ -1837,7 +1978,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
                     AlbumArtPath = file.AlbumArtPath,
                     OggPath = file.AudioPath,
-                    OggPreviewPath = ((file.audioPreviewPath != "") ? file.audioPreviewPath : file.AudioPath),
+                    OggPreviewPath = ((file.audioPreviewPath != "") ? file.oggPreviewPath : file.AudioPath),
                     Arrangements = info.Arrangements, //Not yet done
                     Tones = info.Tones,//Not yet done
                     TonesRS2014 = info.TonesRS2014,//Not yet done
@@ -1887,16 +2028,18 @@ namespace RocksmithToolkitGUI.DLCManager
                 //rtxt_StatisticsOnReadDLCs.Text = "...4" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                 //rtxt_StatisticsOnReadDLCs.Text = "...manipl" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                 //if (chbx_Additional_Manipualtions.GetItemChecked(2)) //"3. Make all DLC IDs unique (&save)"
-                if (file.UniqueDLCName != null) data.Name = file.UniqueDLCName;
+                if (file.UniqueDLCName != "" ) data.Name = file.UniqueDLCName;
                 else
                 {
                     Random random = new Random();
                     data.Name = random.Next(0, 100000) + data.Name;
+                    var k = DataViewGrid.SelectedCells[0].RowIndex;
+                    DataViewGrid.Rows[k].Cells[79].Value = data.Name;
                     //var DB_Path = DBFolder + "\\Files.accdb;";
                     using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
                     {
                         DataSet dis = new DataSet();
-                        cmd += "UPDATE Main SET UniqueDLCName=" + data.Name + " WHERE ID=" + file.ID;
+                        cmd = "UPDATE Main SET UniqueDLCName=\"" + data.Name + "\" WHERE ID=" + file.ID;
                         OleDbDataAdapter das = new OleDbDataAdapter(cmd, cnn);
                         das.Fill(dis, "Main");
                         das.Dispose();
@@ -2067,8 +2210,8 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void comboBox1_SelectedValueChanged(object sender, EventArgs e)
         {
-            if (chbx_PreSavedFTP.Text == "US") txt_FTPPath.Text = "ftp://192.168.1.12/" + "dev_hdd0/GAMES/Rocksmith 2014 ALL DLC - BLUS31182/PS3_GAME/USRDIR/";
-            else txt_FTPPath.Text = "ftp://192.168.1.12/" + "dev_hdd0/GAMES/Rocksmith 2014 FAV - BLES01862/PS3_GAME/USRDIR/";
+            if (chbx_PreSavedFTP.Text == "US") txt_FTPPath.Text = "ftp://192.168.1.12/" + "dev_hdd0/game/BLUS31182/USRDIR/DLC/";
+            else txt_FTPPath.Text = "ftp://192.168.1.12/" + "dev_hdd0/game/BLES01862/USRDIR/DLC/";
         }
 
         public string Manipulate_strings(string words, int k, bool ifn, bool orig_flag) //static
@@ -2171,7 +2314,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             fulltxt += files[k].MultiTrack_Version;//?
                             break;
                         case "<Group>":
-                            fulltxt += files[k].Group;
+                            fulltxt += files[k].Groups;
                             break;
                         case "<Beta>":
                             fulltxt = ((files[k].Is_Beta == "Yes") ? "0" : "") + fulltxt;
@@ -2325,8 +2468,8 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btn_OldFolder_Click(object sender, EventArgs e)
         {
-            var i = DataGridView1.SelectedCells[0].RowIndex;
-            string filePath = TempPath + "\\0_old\\"+ DataGridView1.Rows[i].Cells[19].Value.ToString();
+            var i = DataViewGrid.SelectedCells[0].RowIndex;
+            string filePath = TempPath + "\\0_old\\"+ DataViewGrid.Rows[i].Cells[19].Value.ToString();
                 //dus.Tables[0].Rows[DataGridView1.SelectedCells[0].RowIndex].ItemArray[19].ToString();// files[0].Original_FileName;
             try
             {
@@ -2355,33 +2498,67 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void button4_Click(object sender, EventArgs e)
         {
-            var cmd = "DELETE FROM Main WHERE ID ="+txt_ID.Text;
+            //1. Delete Song Folder
+             try
+            {
+                var j = DataViewGrid.SelectedCells[0].RowIndex;
+                string filePath = DataViewGrid.Rows[j].Cells[22].Value.ToString(); //TempPath + "\\0_old\\" + 
+                Directory.Delete(filePath, true);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Can not Delete Song folder ! ");
+            }
+
+            var cmd = "DELETE FROM Main WHERE ID IN ("+txt_ID.Text+")";
             //var DB_Path = DBFolder;
 
-            DialogResult result1 = MessageBox.Show("Following record will be deleted: " + cmd, MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result1 == DialogResult.Yes)
-                try
-                {
-                    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //1. Delete DB records
+            DLCManager.DeleteRecords(txt_ID.Text, cmd, DB_Path);
+
+            //redresh 
+            Populate(ref DataViewGrid, ref Main);//, ref bsPositions, ref bsBadges);
+            DataViewGrid.EditingControlShowing += DataGridView1_EditingControlShowing;
+            DataViewGrid.Refresh();
+
+            //advance or step back in the song list
+            if (DataViewGrid.Rows.Count > 1)
+            {
+                var prev = DataViewGrid.SelectedCells[0].RowIndex; //nud_RemoveSlide.Value;
+                if (DataViewGrid.Rows.Count == prev + 2)
+                    if (prev == 0) return;
+                    else
                     {
-                        DataSet dus = new DataSet();
-                        OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
-                        dax.Fill(dus, "Main");
-                        dax.Dispose();
-                        MessageBox.Show("Record has been deleted", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        int rowindex;
+                        DataGridViewRow row;
+                        var i = DataViewGrid.SelectedCells[0].RowIndex;
+                        rowindex = i;// DataGridView1.SelectedRows[0].Index;
+                        DataViewGrid.Rows[rowindex - 1].Selected = true;
+                        DataViewGrid.Rows[rowindex].Selected = false;
+                        //if (prev>txt_Counter.Text.ToInt32())
+                        row = DataViewGrid.Rows[rowindex - 1];
                     }
-                }
-                catch (Exception ex)
+                else
                 {
-                    MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    MessageBox.Show("Can not open Main DB connection in Cleanup ! " + DB_Path + "-" + cmd);
+                    int rowindex;
+                    DataGridViewRow row;
+                    var i = DataViewGrid.SelectedCells[0].RowIndex;
+                    rowindex = i;// DataGridView1.SelectedRows[0].Index;
+                    DataViewGrid.Rows[rowindex + 1].Selected = true;
+                    DataViewGrid.Rows[rowindex].Selected = false;
+                    //if (prev>txt_Counter.Text.ToInt32())
+                    row = DataViewGrid.Rows[rowindex + 1];
                 }
+            }
+
         }
 
         private void button7_Click(object sender, EventArgs e)
         {
-            var i = DataGridView1.SelectedCells[0].RowIndex;
-            string filePath = DataGridView1.Rows[i].Cells[22].Value.ToString(); //TempPath + "\\0_old\\" + 
+            //1. Copy Files
+            var i = DataViewGrid.SelectedCells[0].RowIndex;
+            string filePath = DataViewGrid.Rows[i].Cells[22].Value.ToString(); //TempPath + "\\0_old\\" + 
             string t = filePath + "2";
             try //Copy dir
             {
@@ -2410,6 +2587,212 @@ namespace RocksmithToolkitGUI.DLCManager
                 //rtxt_StatisticsOnReadDLCs.Text = "FAILED3 .." + "\n" + rtxt_StatisticsOnReadDLCs.Text;//ee.Message + "----" +
                 Console.WriteLine(ee.Message);
             }
+
+            //2. Copy Records
+            try //Copy dir
+            {
+                var cmd = "INSERT into Main (Song_Title, Song_Title_Sort, Album, Artist, Artist_Sort, Album_Year, AverageTempo, Volume, Preview_Volume, AlbumArtPath, AudioPath, audioPreviewPath, Track_No, Author, Version, DLC_Name, DLC_AppID, Current_FileName, Original_FileName, Import_Path, Import_Date, Folder_Name, File_Size, File_Hash, Original_File_Hash, Is_Original, Is_OLD, Is_Beta, Is_Alternate, Is_Multitrack, Is_Broken, MultiTrack_Version, Alternate_Version_No, DLC, Has_Bass, Has_Guitar, Has_Lead, Has_Rhythm, Has_Combo, Has_Vocals, Has_Sections, Has_Cover, Has_Preview, Has_Custom_Tone, Has_DD, Has_Version, Tunning, Bass_Picking, Tones, Groups, Rating, Description, Comments, Show_Album, Show_Track, Show_Year, Show_CDLC, Show_Rating, Show_Description, Show_Comments, Show_Available_Instruments, Show_Alternate_Version, Show_MultiTrack_Details, Show_Group, Show_Beta, Show_Broken, Show_DD, Original, Selected, YouTube_Link, CustomsForge_Link, CustomsForge_Like, CustomsForge_ReleaseNotes, SignatureType, ToolkitVersion, Has_Author, OggPath, oggPreviewPath, UniqueDLCName, AlbumArt_Hash, Audio_Hash, audioPreview_Hash, Bass_Has_DD, Has_Bonus_Arrangement, Artist_ShortName, Album_ShortName, Available_Old, Available_Duplicate, Has_Been_Corrected) SELECT Song_Title+\"2\", Song_Title_Sort+\"2\", Album, Artist, Artist_Sort, Album_Year, AverageTempo, Volume, Preview_Volume, AlbumArtPath, AudioPath, audioPreviewPath, Track_No, Author, Version, DLC_Name, DLC_AppID+\"2\", Current_FileName, Original_FileName, Import_Path, Import_Date, Folder_Name+\"2\", File_Size, File_Hash, Original_File_Hash, Is_Original, Is_OLD, Is_Beta, Is_Alternate, Is_Multitrack, Is_Broken, MultiTrack_Version, Alternate_Version_No, DLC, Has_Bass, Has_Guitar, Has_Lead, Has_Rhythm, Has_Combo, Has_Vocals, Has_Sections, Has_Cover, Has_Preview, Has_Custom_Tone, Has_DD, Has_Version, Tunning, Bass_Picking, Tones, Groups, Rating, Description+\" duplicate\", Comments, Show_Album, Show_Track, Show_Year, Show_CDLC, Show_Rating, Show_Description, Show_Comments, Show_Available_Instruments, Show_Alternate_Version, Show_MultiTrack_Details, Show_Group, Show_Beta, Show_Broken, Show_DD, Original, Selected, YouTube_Link, CustomsForge_Link, CustomsForge_Like, CustomsForge_ReleaseNotes, SignatureType, ToolkitVersion, Has_Author, OggPath, oggPreviewPath, UniqueDLCName, AlbumArt_Hash, Audio_Hash, audioPreview_Hash, Bass_Has_DD, Has_Bonus_Arrangement, Artist_ShortName, Album_ShortName, Available_Old, Available_Duplicate, Has_Been_Corrected FROM Main  WHERE ID = " + txt_ID.Text;
+                DataSet dsz = new DataSet();
+                using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                {
+                    OleDbDataAdapter dab = new OleDbDataAdapter(cmd, cnb);
+                    dab.Fill(dsz, "Main");
+                    dab.Dispose();
+                }
+
+
+                //getting ID
+                DataSet dus = new DataSet();
+                using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                {
+                    OleDbDataAdapter dad = new OleDbDataAdapter("SELECT ID FROM Main WHERE Song_Title=\"" + txt_Title.Text + "2\"", cnb);
+                    dad.Fill(dus, "Main");
+                    dad.Dispose();
+                }
+                var CDLC_ID = dus.Tables[0].Rows[0].ItemArray[0].ToString();
+
+
+                cmd = "INSERT into Main (Arrangement_Name, CDLC_ID, Bonus, SNGFilePath, XMLFilePath, XMLFile_Hash, ScrollSpeed, Tunning, Rating, PlayThoughYBLink, CustomsForge_Link, ArrangementSort, TuningPitch, ToneBase, Idd, MasterId, ArrangementType, String0, String1, String2, String3, String4, String5, PluckedType, RouteMask, XMLFileName, XMLFileLLID, XMLFileUUID, SNGFileName, SNGFileLLID, SNGFileUUID, ToneMultiplayer, ToneA, ToneB, ToneC, ToneD, lastConversionDateTime, SNGFileHash, Has_Sections, Comments) SELECT Arrangement_Name, " + CDLC_ID + ", Bonus, SNGFilePath, XMLFilePath, XMLFile_Hash, ScrollSpeed, Tunning, Rating, PlayThoughYBLink, CustomsForge_Link, ArrangementSort, TuningPitch, ToneBase, Idd, MasterId, ArrangementType, String0, String1, String2, String3, String4, String5, PluckedType, RouteMask, XMLFileName, XMLFileLLID, XMLFileUUID, SNGFileName, SNGFileLLID, SNGFileUUID, ToneMultiplayer, ToneA, ToneB, ToneC, ToneD, lastConversionDateTime, SNGFileHash, Has_Sections, Comments FROM Arrangements WHERE CDLC_ID = " + CDLC_ID;
+                DataSet dgz = new DataSet();
+                using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                {
+                    OleDbDataAdapter dah = new OleDbDataAdapter(cmd, cnb);
+                    dah.Fill(dgz, "Tones");
+                    dah.Dispose();
+                }
+
+                cmd = "INSERT into Main (Tone_Name, CDLC_ID, Volume, Keyy, Is_Custom, GearList, AmpRack, Pedals, Description, Favorite, SortOrder, NameSeparator, Cabinet, PostPedal1, PostPedal2, PostPedal3, PostPedal4, PrePedal1, PrePedal2, PrePedal3, PrePedal4, Rack1, Rack2, Rack3, Rack4, AmpType, AmpCategory, AmpKnobValues, AmpPedalKey, CabinetCategory, CabinetKnobValues, CabinetPedalKey, CabinetType, lastConversionDateTime, lastConverjsonDateTime) SELECT Tone_Name, " + CDLC_ID+ ", Volume, Keyy, Is_Custom, GearList, AmpRack, Pedals, Description, Favorite, SortOrder, NameSeparator, Cabinet, PostPedal1, PostPedal2, PostPedal3, PostPedal4, PrePedal1, PrePedal2, PrePedal3, PrePedal4, Rack1, Rack2, Rack3, Rack4, AmpType, AmpCategory, AmpKnobValues, AmpPedalKey, CabinetCategory, CabinetKnobValues, CabinetPedalKey, CabinetType, lastConversionDateTime, lastConverjsonDateTime FROM Tones WHERE CDLC_ID = " + CDLC_ID;
+                DataSet djz = new DataSet();
+                using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                {
+                    OleDbDataAdapter djb = new OleDbDataAdapter(cmd, cnb);
+                    djb.Fill(djz, "Tones");
+                    djb.Dispose();
+                }
+                
+                MessageBox.Show("Record has been duplicated");
+
+                //redresh 
+                Populate(ref DataViewGrid, ref Main);//, ref bsPositions, ref bsBadges);
+                DataViewGrid.EditingControlShowing += DataGridView1_EditingControlShowing;
+                DataViewGrid.Refresh();
+            }
+            catch (Exception ee)
+            {
+                //rtxt_StatisticsOnReadDLCs.Text = "FAILED3 .." + "\n" + rtxt_StatisticsOnReadDLCs.Text;//ee.Message + "----" +
+                Console.WriteLine(ee.Message);
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            //Read Track no
+            //www.metrolyrics.com: Nirvana Bleach Swap Meet
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://www.google.com/?gws_rd=ssl#q=www.metrolyrics.com:" + txt_Artist.Text + txt_Album.Text + txt_Title.Text.Replace(" ", "+"));
+            //request.Proxy = WebProxy.GetDefaultProxy();
+            //request.Proxy.Credentials = System.Net.CredentialCache.DefaultCredentials;
+
+            //// Set the Method property of the request to POST.
+            //request.Method = "POST";
+
+            //// Create POST data and convert it to a byte array.
+            //string postData = "This is a test that posts this string to a Web server.";
+            //byte[] byteArray = Encoding.UTF8.GetBytes(postData);
+            //// Set the ContentType property of the WebRequest.
+            //request.ContentType = "application/x-www-form-urlencoded";
+            //// Set the ContentLength property of the WebRequest.
+            //request.ContentLength = byteArray.Length;
+
+            //// Get the request stream.
+            //Stream dataStream = request.GetRequestStream();
+            //// Write the data to the request stream.
+            //dataStream.Write(byteArray, 0, byteArray.Length);
+            //// Close the Stream object.
+            //dataStream.Close();
+
+            //// Get the response.
+            //WebResponse response = request.GetResponse();
+            //// Display the status.
+            //Console.WriteLine(((HttpWebResponse)response).StatusDescription);
+            //// Get the stream containing content returned by the server.
+            //dataStream = response.GetResponseStream();
+            //// Open the stream using a StreamReader for easy access.
+            //StreamReader reader = new StreamReader(dataStream);
+            //// Read the content.
+            //string responseFromServer = reader.ReadToEnd();
+            //// Display the content.
+            //Console.WriteLine(responseFromServer);
+            //// Clean up the streams.
+            //reader.Close();
+            //dataStream.Close();
+            //response.Close();
+
+            //ttpWebRequest request = WebRequest.Create("http://google.com") as HttpWebRequest;
+
+            //request.Accept = "application/xrds+xml";  
+            ////HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+            ////WebHeaderCollection header = response.Headers;
+
+            ////var encoding = ASCIIEncoding.ASCII;
+            ////using (var reader = new System.IO.StreamReader(response.GetResponseStream(), encoding))
+            ////{
+            ////    string responseText = reader.ReadToEnd();
+            ////    string a= responseText.Substring(responseText.IndexOf("#"),3);
+            ////}
+
+            ////tring uriString = "http://www.google.com/search";
+            ////string keywordString = "Test Keyword";
+
+            ////WebClient webClient = new WebClient();
+
+            ////NameValueCollection nameValueCollection = new NameValueCollection();
+            ////nameValueCollection.Add("q", keywordString);
+
+            ////webClient.QueryString.Add(nameValueCollection);
+            ////textBox1.Text = webClient.DownloadString(uriString);
+
+            txt_Track_No.Text = (GetTrackNo(txt_Artist.Text , txt_Album.Text, txt_Title.Text)).ToString();
+            
+
+        }
+
+        public static int GetTrackNo(string Artist, string Album, string Title)
+        {
+
+            string uriString = "http://ws.spotify.com/search/1/track";// "http://www.google.com/search";
+            string keywordString = Artist + "\" \"" + Album + "\" \"" + Title + "\""; //"discorg.com:\"" + txt_Artist.Text + "\" \"" + txt_Album.Text + "\" \"" + txt_Title.Text + "\" \"track\""; //"www.metrolyrics.com:" + 
+
+            WebClient webClient = new WebClient();
+
+            NameValueCollection nameValueCollection = new NameValueCollection();
+            nameValueCollection.Add("q", keywordString);
+
+            webClient.QueryString.Add(nameValueCollection);
+            var aa = (webClient.DownloadString(uriString));
+            var a1 = "";
+            //if ( (aa.ToLower()).IndexOf(", <b>"+ txt_Title.Text.ToLower() ) >0 ) a1 = aa.Substring(((aa.ToLower()).IndexOf(", <b>"+txt_Title.Text.ToLower())) -1, 1);//<b>+ txt_Title.Text
+
+            if ((aa.ToLower()).IndexOf("<track-number>") > 0) a1 = aa.Substring(((aa.ToLower()).IndexOf("<track-number>")) + 14, 1);//<b>+ txt_Title.Text
+
+            if (IsNumbers(a1)) return a1.ToInt32();
+            else return 0;
+            //var a2 = aa.Substring(((aa.ToLower()).IndexOf("<track-number>")) + 1, 15);
+            //var a3 = aa.Substring(((aa.ToLower()).IndexOf("track"))+7,1);
+            //var a4 = aa.Substring(((aa.ToLower()).IndexOf("track")) + 8, 1) + aa;
+            
+            //txt_debug.Text = a1 + "\n\n " + a2 + "\n " + a3 + "\n " + a4;
+
+        }
+
+        public static Boolean IsNumbers(String value)
+        {
+            return value.All(Char.IsDigit);
+        }
+
+        public static string IndexOfTest(string strSource)
+        {
+            //string strSource = "This is the string which we will perform the search on";
+
+            Console.WriteLine("The search string is:{0}\"{1}\"{0}", Environment.NewLine, strSource);
+
+            string strTarget = "";
+            int found = 0;
+            int totFinds = 0;
+
+            do {
+                Console.Write("Please enter a search value to look for in the above string (hit Enter to exit) ==> ");
+
+                strTarget = Console.ReadLine();
+
+                if (strTarget != "") {
+
+                    for (int i = 0; i < strSource.Length; i++) {
+
+                        found = strSource.IndexOf(strTarget, i);
+
+                        if (found >= 0) {
+                            totFinds++;
+                            i = found;
+                        }
+                        else 
+                            break;
+                    }
+                }
+                else 
+                    return "-";
+
+                Console.WriteLine("{0}The search parameter '{1}' was found {2} times.{0}",
+                        Environment.NewLine, strTarget, totFinds);
+
+                totFinds = 0;
+
+            } while ( true );
+        }
+
+        private void bth_GetTrackNo_Click(object sender, EventArgs e)
+        {
+            txt_Track_No.Text = (GetTrackNo(txt_Artist.Text, txt_Album.Text, txt_Title.Text)).ToString();
         }
     }
 }

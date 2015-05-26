@@ -123,7 +123,7 @@
             this.cbx_Export.Items.AddRange(new object[] {
             "Excel",
             "WebPage"});
-            this.cbx_Export.Location = new System.Drawing.Point(364, 359);
+            this.cbx_Export.Location = new System.Drawing.Point(473, 359);
             this.cbx_Export.Name = "cbx_Export";
             this.cbx_Export.Size = new System.Drawing.Size(61, 21);
             this.cbx_Export.TabIndex = 326;
@@ -183,7 +183,7 @@
             this.Export_To.BackColor = System.Drawing.SystemColors.Control;
             this.Export_To.Enabled = false;
             this.Export_To.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Export_To.Location = new System.Drawing.Point(286, 359);
+            this.Export_To.Location = new System.Drawing.Point(395, 359);
             this.Export_To.Margin = new System.Windows.Forms.Padding(2);
             this.Export_To.Name = "Export_To";
             this.Export_To.Size = new System.Drawing.Size(76, 21);
@@ -207,12 +207,12 @@
             // 
             this.btn_Cleanup_MainDB.BackColor = System.Drawing.SystemColors.Control;
             this.btn_Cleanup_MainDB.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Cleanup_MainDB.Location = new System.Drawing.Point(430, 359);
+            this.btn_Cleanup_MainDB.Location = new System.Drawing.Point(9, 188);
             this.btn_Cleanup_MainDB.Margin = new System.Windows.Forms.Padding(2);
             this.btn_Cleanup_MainDB.Name = "btn_Cleanup_MainDB";
-            this.btn_Cleanup_MainDB.Size = new System.Drawing.Size(106, 21);
+            this.btn_Cleanup_MainDB.Size = new System.Drawing.Size(75, 21);
             this.btn_Cleanup_MainDB.TabIndex = 323;
-            this.btn_Cleanup_MainDB.Text = "Remove Only";
+            this.btn_Cleanup_MainDB.Text = "Remove";
             this.btn_Cleanup_MainDB.UseVisualStyleBackColor = false;
             this.btn_Cleanup_MainDB.Click += new System.EventHandler(this.btn_Cleanup_MainDB_Click);
             // 
@@ -272,6 +272,7 @@
             "39. Use only unpacked songs already in the 0/0_Import folder",
             "40. Encrypt PS3 Retails songs, with External tool",
             "41. Delete ORIG HSAN/OGG when Packing Retails songs",
+            "42. Read Track No. from www.metrolyrics.com",
             "<IMPORT>",
             "<@Pack>"});
             this.chbx_Additional_Manipulations.Location = new System.Drawing.Point(240, 88);
@@ -1088,7 +1089,7 @@
             this.btn_RePack.Location = new System.Drawing.Point(8, 131);
             this.btn_RePack.Margin = new System.Windows.Forms.Padding(2);
             this.btn_RePack.Name = "btn_RePack";
-            this.btn_RePack.Size = new System.Drawing.Size(77, 78);
+            this.btn_RePack.Size = new System.Drawing.Size(77, 56);
             this.btn_RePack.TabIndex = 283;
             this.btn_RePack.Text = "RePack";
             this.btn_RePack.UseVisualStyleBackColor = false;
@@ -1192,7 +1193,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(482, 525);
+            this.label2.Location = new System.Drawing.Point(480, 525);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(40, 13);
             this.label2.TabIndex = 338;
@@ -1203,7 +1204,7 @@
             // 
             this.btn_LoadRetailSongs.BackColor = System.Drawing.SystemColors.Control;
             this.btn_LoadRetailSongs.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_LoadRetailSongs.Location = new System.Drawing.Point(520, 524);
+            this.btn_LoadRetailSongs.Location = new System.Drawing.Point(521, 524);
             this.btn_LoadRetailSongs.Margin = new System.Windows.Forms.Padding(2);
             this.btn_LoadRetailSongs.Name = "btn_LoadRetailSongs";
             this.btn_LoadRetailSongs.Size = new System.Drawing.Size(14, 15);

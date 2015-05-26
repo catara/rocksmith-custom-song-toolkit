@@ -50,6 +50,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_DecompressAll = new System.Windows.Forms.Button();
             this.btn_CopyArtist2ArtistSort = new System.Windows.Forms.Button();
             this.btn_CopyTitle2TitleSort = new System.Windows.Forms.Button();
+            this.lbl_NoRec = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPath)).BeginInit();
             this.SuspendLayout();
@@ -268,11 +269,20 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_CopyTitle2TitleSort.UseVisualStyleBackColor = true;
             this.btn_CopyTitle2TitleSort.Click += new System.EventHandler(this.btn_CopyTitle2TitleSort_Click);
             // 
+            // lbl_NoRec
+            // 
+            this.lbl_NoRec.Location = new System.Drawing.Point(884, 30);
+            this.lbl_NoRec.Name = "lbl_NoRec";
+            this.lbl_NoRec.Size = new System.Drawing.Size(49, 29);
+            this.lbl_NoRec.TabIndex = 279;
+            this.lbl_NoRec.Text = "of Records";
+            // 
             // Standardization
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1187, 548);
+            this.Controls.Add(this.lbl_NoRec);
             this.Controls.Add(this.btn_CopyTitle2TitleSort);
             this.Controls.Add(this.btn_CopyArtist2ArtistSort);
             this.Controls.Add(this.btn_DecompressAll);
@@ -367,5 +377,6 @@ namespace RocksmithToolkitGUI.DLCManager
         private System.Windows.Forms.Button btn_DecompressAll;
         private System.Windows.Forms.Button btn_CopyArtist2ArtistSort;
         private System.Windows.Forms.Button btn_CopyTitle2TitleSort;
+        private System.Windows.Forms.Label lbl_NoRec;
     }
 }

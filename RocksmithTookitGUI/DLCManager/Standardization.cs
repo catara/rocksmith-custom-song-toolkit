@@ -193,6 +193,8 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             OleDbDataAdapter da = new OleDbDataAdapter("SELECT ID, (SELECT IIF(count(*)>1,\"Yes\",\"\") as Suspect from Standardization AS O WHERE LCASE(S.Artist)=LCASE(O.Artist) and LCASE(S.Album)=LCASE(O.Album)) as Suspect, Artist, Artist_Correction, Album, Album_Correction, AlbumArt_Correction FROM Standardization as S ORDER BY Artist, Album;", cn);
             da.Fill(dssx, "Standardization");
+            var noOfRec = dssx.Tables[0].Rows.Count;
+            lbl_NoRec.Text = noOfRec.ToString() + " records.";
             //da = new OleDbDataAdapter("SELECT Identifier,ContactPosition FROM PositionType;", cn);
             //da.Fill(ds, "PositionType");
             //da = new OleDbDataAdapter("SELECT Identifier, Badge FROM Badge", cn);

@@ -23,7 +23,8 @@
   <Config Key="cgm_inlayname" Value="Default Inlay" />
   <Config Key="cgm_24frets" Value="false" />
   <Config Key="cgm_coloredinlay" Value="true" />
-  <!--bcapi-->
+  
+  <!--bcapi DLCManager-->
   <Config Key="dlcm_AdditionalManipul0" Value="No" />
   <Config Key="dlcm_AdditionalManipul1" Value="No" />
   <Config Key="dlcm_AdditionalManipul2" Value="No" />
@@ -46,7 +47,7 @@
   <Config Key="dlcm_AdditionalManipul19" Value="No" />
   <Config Key="dlcm_AdditionalManipul20" Value="No" />
   <Config Key="dlcm_AdditionalManipul21" Value="No" />
-  <Config Key="dlcm_AdditionalManipul22" Value="Yes" />
+  <Config Key="dlcm_AdditionalManipul22" Value="No" />
   <Config Key="dlcm_AdditionalManipul23" Value="Yes" />
   <Config Key="dlcm_AdditionalManipul24" Value="Yes" />
   <Config Key="dlcm_AdditionalManipul25" Value="No" />
@@ -54,7 +55,7 @@
   <Config Key="dlcm_AdditionalManipul27" Value="No" />
   <Config Key="dlcm_AdditionalManipul28" Value="Yes" />
   <Config Key="dlcm_AdditionalManipul29" Value="Yes" />
-  <Config Key="dlcm_AdditionalManipul30" Value="Yes" />
+  <Config Key="dlcm_AdditionalManipul30" Value="No" />
   <Config Key="dlcm_AdditionalManipul30" Value="No" />
   <Config Key="dlcm_AdditionalManipul32" Value="Yes" />
   <Config Key="dlcm_AdditionalManipul33" Value="No" />
@@ -65,7 +66,7 @@
   <Config Key="dlcm_AdditionalManipul38" Value="No" />
   <Config Key="dlcm_AdditionalManipul39" Value="Yes" />
   <Config Key="dlcm_AdditionalManipul40" Value="Yes" />
-  <Config Key="dlcm_AdditionalManipul41" Value="No" />
+  <Config Key="dlcm_AdditionalManipul41" Value="Yes" />
   <Config Key="dlcm_AdditionalManipul42" Value="No" />
   <Config Key="dlcm_AdditionalManipul43" Value="No" />
   <Config Key="dlcm_AdditionalManipul44" Value="No" />
@@ -89,6 +90,11 @@
   <Config Key="dlcm_TempPath" Value="C:\GitHub\tmp\0" />;
   <Config Key="dlcm_Title" Value="&#60;Title&#62;" />;
   <Config Key="dlcm_Title_sort" Value="&#60;Year&#62;&#60;Album&#62;&#60;Track No.&#62;&#60;Title&#62;" />;
+  <Config Key="dlcm_FTP" Value="ftp://192.168.1.12/dev_hdd0/game/BLES01862/USRDIR/DLC/" />;
+  <Config Key="dlcm_RemoveBassDD" Value="Yes" />;
+  <Config Key="dlcm_UniqueID" Value="Yes" />;
+  <Config Key="dlcm_andCopy" Value="Yes" />;
+<!--<Config Key="general_wwisepath" Value="C:\Program Files (x86)\Audiokinetic\Wwise v2013.2.10 build 4884" />-->
 
   <!--<Config Key="first_time" Value="true" /> determine if we launched toolkit at first time-->
 </ArrayOfConfig>

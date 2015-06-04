@@ -261,7 +261,7 @@
             "<28. Convert and Transfer/FTP>",
             "29. If Original don\'t add QAs(NOs;DLC/ORIG;etc.) except for File Names",
             "30. When NOT importing a duplicate Move it to _duplicate",
-            "31. When importing delete identical duplicates(same hash/filesize)",
+            "<31. >",
             "32. When removing DD use internal logic not DDC",
             "33. When importing alternates add newer/older instead of alt.0author",
             "34. Forcibly Update Import location of all DB fields",
@@ -272,7 +272,7 @@
             "39. Use only unpacked songs already in the 0/0_Import folder",
             "40. Encrypt PS3 Retails songs, with External tool",
             "41. Delete ORIG HSAN/OGG when Packing Retails songs",
-            "42. Read Track No. from www.metrolyrics.com",
+            "42. Try to get Track No. from Spotify ",
             "<IMPORT>",
             "<@Pack>"});
             this.chbx_Additional_Manipulations.Location = new System.Drawing.Point(240, 88);

@@ -16,6 +16,7 @@ Main Features:
 	- Edit Individual metadata fields
 	- Fix Songs without
 		- Preview
+		- Cover
 	- Listen to songs Audio
 - Mass Modify songdetails/metadata @repack per each Rocksmith song: e.g. Album Field: <Broken><Year> - <Album> - r<Rating> - <Avail. Instr.> - <DD> - <Tuning>
 	- Copies songs/packs directly to the PS3 by means of FTP
@@ -49,14 +50,23 @@ wnyp:
 - small improv: Any change of song in the list should also save :)
 - medium feature: add DLCs into cache.psarc to speed up the game startup
 - small feature: when opening MainDB and detecting directory check runs, if next directory exists (give a change to empty the db then if possible)
--- small bug: when changing the Album Cover or the Preview, convert &calc the hash of the WEM as well besides the ogg/png
--- when repacking the Retail songs Remove Bass DD
-- has author should be no for custom toolkit
-- bonus is working?
-- fix old tag appearing as duplicate
-- when importing but not deleting and moving to 0_old some files dissapear
-- preview not working...what is being overitten is not what preview plays
-- a refresh should happen after each preview-repack (dlc unique name is not appearing)
+-- medium feature: when repacking the Retail songs Remove Bass DD
+-- small bug: Standardization 87 message
+-- Big Bug PC repacking seems to fail
+-- small bug Serv the servant and Peaches doent seem to Import
+-- additional 22 might be in conflict with someone else
+--- excludin files seems to be the same as the inportin when no duplciaets found by filehash
+-- maindb apply save settings (as well as the rest of the screens)
+	- when opening new windows..save settings
+
+
+To Test:
+- Standardisation Ghosting
+- Duplication detection
+- Mass packing
+- Full Lib Loading
+
+
 
 
 ### dev issues:

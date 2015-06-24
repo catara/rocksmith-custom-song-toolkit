@@ -251,6 +251,43 @@ namespace RocksmithToolkitGUI.DLCManager
             int i;
             if (DataViewGrid.SelectedCells.Count > 0)
             {
+
+                DataSet ds = new DataSet();
+                using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                {
+                    string SearchCmd = "SELECT DISTINCT Groups FROM Main;";
+                    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
+                    da.Fill(ds, "Main");
+                    var norec = ds.Tables[0].Rows.Count;
+
+                    if (norec > 0)
+                    {
+                        //remove items
+                        if (chbx_Group.Items.Count > 0)
+                        {
+                            chbx_Group.DataSource = null;
+                            for (int k = chbx_Group.Items.Count - 1; k >= 0; --k)
+                            {
+                                if (!chbx_Group.Items[k].ToString().Contains("--"))
+                                {
+                                    chbx_Group.Items.RemoveAt(k);
+                                }
+                            }
+                        }
+                        //add items
+                        for (int j = 0; j < norec; j++)
+                            chbx_Group.Items.Add(ds.Tables[0].Rows[j][0].ToString());
+                        //if (ds.Tables[0].Rows.Count > 0)
+                        //{
+                        //    chbx_Group.DataSource = ds.Tables[0];
+                        //    chbx_Group.DataTextField = "company_name";
+                        //    chbx_Group.DataValueField = "Company_ID";
+                        //    chbx_Group.DataBind();
+                        //    chbx_Group.Items.Insert(0, new ListItem("--Select--", "0"));
+                        //}
+                    }
+
+
                 i = DataViewGrid.SelectedCells[0].RowIndex;
                 txt_ID.Text = DataViewGrid.Rows[i].Cells[0].Value.ToString();
                 txt_Title.Text = DataViewGrid.Rows[i].Cells[1].Value.ToString();
@@ -267,7 +304,8 @@ namespace RocksmithToolkitGUI.DLCManager
                 txt_Author.Text = DataViewGrid.Rows[i].Cells[14].Value.ToString();
                 txt_Version.Text = DataViewGrid.Rows[i].Cells[15].Value.ToString();
                 txt_DLC_ID.Text = DataViewGrid.Rows[i].Cells[16].Value.ToString();
-                txt_APP_ID.Text = DataViewGrid.Rows[i].Cells[17].Value.ToString();
+                txt_APP_ID.Text = DataViewGrid.Rows[i].Cells[17].Value.ToString();//SelectedIndex
+                txt_MultiTrackType.Text = DataViewGrid.Rows[i].Cells[32].Value.ToString();// != "" ? txt_MultiTrackType.FindString(DataViewGrid.Rows[i].Cells[32].Value.ToString()) : 5;
                 txt_Alt_No.Text = DataViewGrid.Rows[i].Cells[33].Value.ToString();
                 txt_Tuning.Text = DataViewGrid.Rows[i].Cells[47].Value.ToString();
                 txt_BassPicking.Text = DataViewGrid.Rows[i].Cells[48].Value.ToString();
@@ -279,6 +317,14 @@ namespace RocksmithToolkitGUI.DLCManager
                 else txt_PreviewStart.Value = Convert.ToDateTime("00:"+DataViewGrid.Rows[i].Cells[56].Value.ToString());
                 if (DataViewGrid.Rows[i].Cells[57].Value.ToString() == "") txt_PreviewEnd.Value = 30;
                     else txt_PreviewEnd.Text = DataViewGrid.Rows[i].Cells[57].Value.ToString();
+                txt_YouTube_Link.Text = DataViewGrid.Rows[i].Cells[70].Value.ToString();
+                btn_Youtube.Enabled = DataViewGrid.Rows[i].Cells[70].Value.ToString() == "" ? false : true;
+                txt_CustomsForge_Link.Text = DataViewGrid.Rows[i].Cells[71].Value.ToString();
+                btn_CustomForge_Link.Enabled = DataViewGrid.Rows[i].Cells[71].Value.ToString() == "" ? false : true;
+                txt_CustomsForge_Like.Text = DataViewGrid.Rows[i].Cells[72].Value.ToString();
+                //txt_CustomsForge_Like.Enabled = DataViewGrid.Rows[i].Cells[72].Value.ToString() == "" ? false : true;
+                txt_CustomsForge_ReleaseNotes.Text = DataViewGrid.Rows[i].Cells[73].Value.ToString();
+                //txt_CustomsForge_ReleaseNotes.Enabled = DataViewGrid.Rows[i].Cells[73].Value.ToString() == "" ? false : true;
 
                 txt_OggPath.Text = DataViewGrid.Rows[i].Cells[77].Value.ToString();//.Replace(".ogg", "_fixed.ogg");
                 txt_OggPreviewPath.Text = DataViewGrid.Rows[i].Cells[78].Value.ToString();//.Replace(".ogg", "_fixed.ogg");
@@ -293,8 +339,10 @@ namespace RocksmithToolkitGUI.DLCManager
                 else chbx_Original.Checked = false;
                 if (DataViewGrid.Rows[i].Cells[28].Value.ToString() == "Yes") chbx_Beta.Checked = true;
                 else chbx_Beta.Checked = false;
-                if (DataViewGrid.Rows[i].Cells[29].Value.ToString() == "Yes") chbx_Alternate.Checked = true;
-                else chbx_Alternate.Checked = false;
+                if (DataViewGrid.Rows[i].Cells[29].Value.ToString() == "Yes") {chbx_Alternate.Checked = true;txt_Alt_No.Enabled = true; }
+                else { chbx_Alternate.Checked = false; txt_Alt_No.Enabled = false; }
+                if (DataViewGrid.Rows[i].Cells[30].Value.ToString() == "Yes") { chbx_MultiTrack.Checked = true; txt_MultiTrackType.Enabled = true; }
+                else {chbx_MultiTrack.Checked = false;txt_MultiTrackType.Enabled = false; }
                 if (DataViewGrid.Rows[i].Cells[31].Value.ToString() == "Yes") chbx_Broken.Checked = true;
                 else chbx_Broken.Checked = false;
                 if (DataViewGrid.Rows[i].Cells[35].Value.ToString() == "Yes") chbx_Bass.Checked = true;
@@ -362,22 +410,6 @@ namespace RocksmithToolkitGUI.DLCManager
 
 
 
-                DataSet ds = new DataSet();
-                using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-                {
-                    string SearchCmd = "SELECT DISTINCT Groups FROM Main;";
-                    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
-                    da.Fill(ds, "Main");
-                    for (int j = 0; j < ds.Tables[0].Rows.Count; j++)
-                        chbx_Group.Items.Add(ds.Tables[0].Rows[j][0].ToString());
-                    //if (ds.Tables[0].Rows.Count > 0)
-                    //{
-                    //    chbx_Group.DataSource = ds.Tables[0];
-                    //    chbx_Group.DataTextField = "company_name";
-                    //    chbx_Group.DataValueField = "Company_ID";
-                    //    chbx_Group.DataBind();
-                    //    chbx_Group.Items.Insert(0, new ListItem("--Select--", "0"));
-                    //}
 
                     cnn.Close();
                     //chbx_Group.Items.Add("");
@@ -417,6 +449,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 DataViewGrid.Rows[i].Cells[15].Value = txt_Version.Text;
                 DataViewGrid.Rows[i].Cells[16].Value = txt_DLC_ID.Text;
                 DataViewGrid.Rows[i].Cells[17].Value = txt_APP_ID.Text;
+                DataViewGrid.Rows[i].Cells[32].Value = txt_MultiTrackType.Text ;
                 DataViewGrid.Rows[i].Cells[33].Value = txt_Alt_No.Text;
                 DataViewGrid.Rows[i].Cells[47].Value = txt_Tuning.Text;
                 DataViewGrid.Rows[i].Cells[48].Value = txt_BassPicking.Text;
@@ -425,8 +458,12 @@ namespace RocksmithToolkitGUI.DLCManager
                 DataViewGrid.Rows[i].Cells[52].Value = txt_Description.Text;
                 DataViewGrid.Rows[i].Cells[55].Value = txt_Platform.Text;
                 //commented out As i dont want to add a tinestamp altough the preview has not been generated with the Tool
-                //DataViewGrid.Rows[i].Cells[56].Value = txt_PreviewStart.Text;
-                //DataViewGrid.Rows[i].Cells[57].Value = txt_PreviewEnd.Text;
+                DataViewGrid.Rows[i].Cells[56].Value = txt_PreviewStart.Text;
+                DataViewGrid.Rows[i].Cells[57].Value = txt_PreviewEnd.Text;
+                DataViewGrid.Rows[i].Cells[70].Value = txt_YouTube_Link.Text;
+                DataViewGrid.Rows[i].Cells[71].Value = txt_CustomsForge_Link.Text;
+                DataViewGrid.Rows[i].Cells[72].Value = txt_CustomsForge_Like.Text;
+                DataViewGrid.Rows[i].Cells[73].Value = txt_CustomsForge_ReleaseNotes.Text;
                 DataViewGrid.Rows[i].Cells[78].Value = txt_OggPreviewPath.Text;
                 DataViewGrid.Rows[i].Cells[85].Value = txt_Artist_ShortName.Text;
                 DataViewGrid.Rows[i].Cells[86].Value = txt_Album_ShortName.Text;
@@ -436,6 +473,8 @@ namespace RocksmithToolkitGUI.DLCManager
                 else DataViewGrid.Rows[i].Cells[28].Value = "No";
                 if (chbx_Alternate.Checked) DataViewGrid.Rows[i].Cells[29].Value = "Yes";
                 else DataViewGrid.Rows[i].Cells[29].Value = "No";
+                if (chbx_MultiTrack.Checked) DataViewGrid.Rows[i].Cells[30].Value = "Yes";
+                else DataViewGrid.Rows[i].Cells[30].Value = "No";
                 if (chbx_Broken.Checked) DataViewGrid.Rows[i].Cells[31].Value = "Yes";
                 else DataViewGrid.Rows[i].Cells[31].Value = "No";
                 if (chbx_Bass.Checked) DataViewGrid.Rows[i].Cells[35].Value = "Yes";
@@ -503,9 +542,9 @@ namespace RocksmithToolkitGUI.DLCManager
                     command.CommandText += "Is_Original = @param26, ";
                     command.CommandText += "Is_Beta = @param28, ";
                     command.CommandText += "Is_Alternate = @param29, ";
-                    //command.CommandText += "Is_Multitrack = @param30, ";
+                    command.CommandText += "Is_Multitrack = @param30, ";
                     command.CommandText += "Is_Broken = @param31, ";
-                    //command.CommandText += "MultiTrack_Version = @param32, ";
+                    command.CommandText += "MultiTrack_Version = @param32, ";
                     command.CommandText += "Alternate_Version_No = @param33, ";
                     command.CommandText += "Has_Vocals = @param40, ";
                     command.CommandText += "Has_Sections = @param41, ";
@@ -519,13 +558,14 @@ namespace RocksmithToolkitGUI.DLCManager
                     command.CommandText += "Rating = @param51, ";
                     command.CommandText += "Description = @param52, ";
                     command.CommandText += "Has_Track_No = @param54, ";
-                    //command.CommandText += "PreviewTime = @param56, ";
-                    //command.CommandText += "PreviewLenght = @param57, ";
+                    command.CommandText += "PreviewTime = @param56, ";
+                    command.CommandText += "PreviewLenght = @param57, ";
+                    //command.CommandText += "MultiTrackType = @param58, ";
                     command.CommandText += "Selected = @param69, ";
-                    //command.CommandText += "YouTube_Link = @param70, ";
-                    //command.CommandText += "CustomsForge_Link = @param71, ";
-                    //command.CommandText += "CustomsForge_Like = @param72, ";
-                    //command.CommandText += "CustomsForge_ReleaseNotes = @param73, ";
+                    command.CommandText += "YouTube_Link = @param70, ";
+                    command.CommandText += "CustomsForge_Link = @param71, ";
+                    command.CommandText += "CustomsForge_Like = @param72, ";
+                    command.CommandText += "CustomsForge_ReleaseNotes = @param73, ";
                     command.CommandText += "Has_Author = @param76, ";
                     command.CommandText += "oggPath = @param77, ";
                     command.CommandText += "oggPreviewPath = @param78, ";
@@ -561,7 +601,9 @@ namespace RocksmithToolkitGUI.DLCManager
                     command.Parameters.AddWithValue("@param26", DataViewGrid.Rows[i].Cells[26].Value.ToString());
                     command.Parameters.AddWithValue("@param28", DataViewGrid.Rows[i].Cells[28].Value.ToString());
                     command.Parameters.AddWithValue("@param29", DataViewGrid.Rows[i].Cells[29].Value.ToString());
+                    command.Parameters.AddWithValue("@param30", DataViewGrid.Rows[i].Cells[30].Value.ToString());
                     command.Parameters.AddWithValue("@param31", DataViewGrid.Rows[i].Cells[31].Value.ToString());
+                    command.Parameters.AddWithValue("@param32", DataViewGrid.Rows[i].Cells[32].Value.ToString());
                     command.Parameters.AddWithValue("@param33", DataViewGrid.Rows[i].Cells[33].Value.ToString());
                     command.Parameters.AddWithValue("@param40", DataViewGrid.Rows[i].Cells[40].Value.ToString());
                     command.Parameters.AddWithValue("@param41", DataViewGrid.Rows[i].Cells[41].Value.ToString());
@@ -575,9 +617,14 @@ namespace RocksmithToolkitGUI.DLCManager
                     command.Parameters.AddWithValue("@param51", DataViewGrid.Rows[i].Cells[51].Value.ToString());
                     command.Parameters.AddWithValue("@param52", DataViewGrid.Rows[i].Cells[52].Value.ToString());
                     command.Parameters.AddWithValue("@param54", DataViewGrid.Rows[i].Cells[54].Value.ToString());
-                    //command.Parameters.AddWithValue("@param56", DataViewGrid.Rows[i].Cells[54].Value.ToString());
-                    //command.Parameters.AddWithValue("@param57", DataViewGrid.Rows[i].Cells[54].Value.ToString());
+                    command.Parameters.AddWithValue("@param56", DataViewGrid.Rows[i].Cells[56].Value.ToString());
+                    command.Parameters.AddWithValue("@param57", DataViewGrid.Rows[i].Cells[57].Value.ToString());
+                    //command.Parameters.AddWithValue("@param58", DataViewGrid.Rows[i].Cells[58].Value.ToString());
                     command.Parameters.AddWithValue("@param69", DataViewGrid.Rows[i].Cells[69].Value.ToString());
+                    command.Parameters.AddWithValue("@param70", DataViewGrid.Rows[i].Cells[70].Value.ToString());
+                    command.Parameters.AddWithValue("@param71", DataViewGrid.Rows[i].Cells[71].Value.ToString());
+                    command.Parameters.AddWithValue("@param72", DataViewGrid.Rows[i].Cells[72].Value.ToString());
+                    command.Parameters.AddWithValue("@param73", DataViewGrid.Rows[i].Cells[73].Value.ToString());
                     command.Parameters.AddWithValue("@param76", DataViewGrid.Rows[i].Cells[76].Value.ToString());
                     command.Parameters.AddWithValue("@param77", DataViewGrid.Rows[i].Cells[77].Value.ToString());
                     command.Parameters.AddWithValue("@param78", DataViewGrid.Rows[i].Cells[78].Value.ToString());
@@ -669,8 +716,9 @@ namespace RocksmithToolkitGUI.DLCManager
                 {
                     da.Fill(dssx, "Main");
                 }
-                catch
+                catch (Exception ex)
                 {
+                    MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     MessageBox.Show("DB Open in Design Mode or Download Connectivity patch @ https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734");
                     return;
                 }
@@ -743,9 +791,9 @@ namespace RocksmithToolkitGUI.DLCManager
             DataGridViewTextBoxColumn Platform = new DataGridViewTextBoxColumn { DataPropertyName = "Platform", HeaderText = "Platform " };
             DataGridViewTextBoxColumn PreviewTime = new DataGridViewTextBoxColumn { DataPropertyName = "PreviewTime", HeaderText = "PreviewTime " };
             DataGridViewTextBoxColumn PreviewLenght = new DataGridViewTextBoxColumn { DataPropertyName = "PreviewLenght", HeaderText = "PreviewLenght " };
-            DataGridViewTextBoxColumn Show_Rating = new DataGridViewTextBoxColumn { DataPropertyName = "Show_Rating", HeaderText = "Show_Rating " };
-            DataGridViewTextBoxColumn Show_Description = new DataGridViewTextBoxColumn { DataPropertyName = "Show_Description", HeaderText = "Show_Description " };
-            DataGridViewTextBoxColumn Show_Comments = new DataGridViewTextBoxColumn { DataPropertyName = "Show_Comments", HeaderText = "Show_Comments " };
+            DataGridViewTextBoxColumn Temp = new DataGridViewTextBoxColumn { DataPropertyName = "Temp", HeaderText = "Temp " };
+            DataGridViewTextBoxColumn CustomForge_Followers = new DataGridViewTextBoxColumn { DataPropertyName = "CustomForge_Followers", HeaderText = "CustomForge_Followers " };
+            DataGridViewTextBoxColumn CustomForge_Version = new DataGridViewTextBoxColumn { DataPropertyName = "CustomForge_Version", HeaderText = "CustomForge_Version " };
             DataGridViewTextBoxColumn Show_Available_Instruments = new DataGridViewTextBoxColumn { DataPropertyName = "Show_Available_Instruments", HeaderText = "Show_Available_Instruments " };
             DataGridViewTextBoxColumn Show_Alternate_Version = new DataGridViewTextBoxColumn { DataPropertyName = "Show_Alternate_Version", HeaderText = "Show_Alternate_Version " };
             DataGridViewTextBoxColumn Show_MultiTrack_Details = new DataGridViewTextBoxColumn { DataPropertyName = "Show_MultiTrack_Details", HeaderText = "Show_MultiTrack_Details " };
@@ -865,9 +913,9 @@ namespace RocksmithToolkitGUI.DLCManager
                 Platform,
                 PreviewTime,
                 PreviewLenght,
-                Show_Rating,
-                Show_Description,
-                Show_Comments,
+                Temp,
+                CustomForge_Followers,
+                CustomForge_Version,
                 Show_Available_Instruments,
                 Show_Alternate_Version,
                 Show_MultiTrack_Details,
@@ -975,9 +1023,9 @@ namespace RocksmithToolkitGUI.DLCManager
             public string Platform { get; set; }
             public string PreviewTime { get; set; }
             public string PreviewLenght { get; set; }
-            public string Show_Rating { get; set; }
-            public string Show_Description { get; set; }
-            public string Show_Comments { get; set; }
+            public string Temp { get; set; }
+            public string CustomForge_Followers { get; set; }
+            public string CustomForge_Version { get; set; }
             public string Show_Available_Instruments { get; set; }
             public string Show_Alternate_Version { get; set; }
             public string Show_MultiTrack_Details { get; set; }
@@ -1093,9 +1141,9 @@ namespace RocksmithToolkitGUI.DLCManager
                         files[i].Platform = dataRow.ItemArray[55].ToString();
                         files[i].PreviewTime = dataRow.ItemArray[56].ToString();
                         files[i].PreviewLenght = dataRow.ItemArray[57].ToString();
-                        files[i].Show_Rating = dataRow.ItemArray[58].ToString();
-                        files[i].Show_Description = dataRow.ItemArray[59].ToString();
-                        files[i].Show_Comments = dataRow.ItemArray[60].ToString();
+                        files[i].Temp = dataRow.ItemArray[58].ToString();
+                        files[i].CustomForge_Followers = dataRow.ItemArray[59].ToString();
+                        files[i].CustomForge_Version = dataRow.ItemArray[60].ToString();
                         files[i].Show_Available_Instruments = dataRow.ItemArray[61].ToString();
                         files[i].Show_Alternate_Version = dataRow.ItemArray[62].ToString();
                         files[i].Show_MultiTrack_Details = dataRow.ItemArray[63].ToString();
@@ -1499,7 +1547,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     //chbx_Additional_Manipulations.GetItemChecked(3) || chbx_Additional_Manipulations.GetItemChecked(5) || chbx_Additional_Manipulations.GetItemChecked(12) || chbx_Additional_Manipulations.GetItemChecked(26))
                     {
                         //if (!File.Exists(xml)) 
-                        File.Copy(xml, xml.Replace(".old",""), false);
+                        File.Copy(xml, xml.Replace(".old",""), true);
                         File.Delete(xml);                
                     }
             }
@@ -1563,7 +1611,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 60 * 1); //wait 1min
                     if (DDC.ExitCode == 0)
                     {
-                        Converter(tt, ConverterType.Ogg2Wem);
+                        Converters(tt, ConverterTypes.Ogg2Wem);
                         txt_OggPreviewPath.Text = tt;
                         chbx_Preview.Checked = true;
                         var i = DataViewGrid.SelectedCells[0].RowIndex;
@@ -1588,14 +1636,14 @@ namespace RocksmithToolkitGUI.DLCManager
 
         }
 
-        private enum ConverterType
+        public enum ConverterTypes
         {
             HeaderFix,
             Revorb,
             WEM,
             Ogg2Wem
         }
-        private void Converter(string file, ConverterType converterType)
+        public static void Converters(string file, ConverterTypes converterType)
         {
             
             var txtOgg2FixHdr = String.Empty;
@@ -1626,7 +1674,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         var outputFileName = Path.Combine(Path.GetDirectoryName(file), String.Format("{0}_fixed{1}", Path.GetFileNameWithoutExtension(file), ".ogg"));
                         switch (converterType)
                         {
-                            case ConverterType.Ogg2Wem:
+                            case ConverterTypes.Ogg2Wem:
                                 //txtAudio2Wem.Text = file;
                                 OggFile.Convert2Wem(file, 4, 4 * 1000);
                                 break;
@@ -1716,7 +1764,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 chbx_Preview.Checked = true;
                 var i = DataViewGrid.SelectedCells[0].RowIndex;
                 DataViewGrid.Rows[i].Cells[78].Value = temppath;
-                Converter(temppath, ConverterType.Ogg2Wem);
+                Converters(temppath, ConverterTypes.Ogg2Wem);
                 DataViewGrid.Rows[i].Cells[12].Value = temppath.Replace(".ogg", ".wem");
                 if (File.Exists(temppath.Replace(".ogg", ".wem")))
                     using (FileStream fss = File.OpenRead(temppath.Replace(".ogg", ".wem")))
@@ -2720,7 +2768,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //2. Copy Records
             try //Copy dir
             {
-                var cmd = "INSERT into Main (Song_Title, Song_Title_Sort, Album, Artist, Artist_Sort, Album_Year, AverageTempo, Volume, Preview_Volume, AlbumArtPath, AudioPath, audioPreviewPath, Track_No, Author, Version, DLC_Name, DLC_AppID, Current_FileName, Original_FileName, Import_Path, Import_Date, Folder_Name, File_Size, File_Hash, Original_File_Hash, Is_Original, Is_OLD, Is_Beta, Is_Alternate, Is_Multitrack, Is_Broken, MultiTrack_Version, Alternate_Version_No, DLC, Has_Bass, Has_Guitar, Has_Lead, Has_Rhythm, Has_Combo, Has_Vocals, Has_Sections, Has_Cover, Has_Preview, Has_Custom_Tone, Has_DD, Has_Version, Tunning, Bass_Picking, Tones, Groups, Rating, Description, Comments, Has_Track_No, Platform, PreviewTime, PreviewLenght, Show_Rating, Show_Description, Show_Comments, Show_Available_Instruments, Show_Alternate_Version, Show_MultiTrack_Details, Show_Group, Show_Beta, Show_Broken, Show_DD, Original, Selected, YouTube_Link, CustomsForge_Link, CustomsForge_Like, CustomsForge_ReleaseNotes, SignatureType, ToolkitVersion, Has_Author, OggPath, oggPreviewPath, UniqueDLCName, AlbumArt_Hash, Audio_Hash, audioPreview_Hash, Bass_Has_DD, Has_Bonus_Arrangement, Artist_ShortName, Album_ShortName, Available_Old, Available_Duplicate, Has_Been_Corrected) SELECT Song_Title+\"2\", Song_Title_Sort+\"2\", Album, Artist, Artist_Sort, Album_Year, AverageTempo, Volume, Preview_Volume, AlbumArtPath, AudioPath, audioPreviewPath, Track_No, Author, Version, DLC_Name, DLC_AppID+\"2\", Current_FileName, Original_FileName, Import_Path, Import_Date, Folder_Name+\"2\", File_Size, File_Hash, Original_File_Hash, Is_Original, Is_OLD, Is_Beta, Is_Alternate, Is_Multitrack, Is_Broken, MultiTrack_Version, Alternate_Version_No, DLC, Has_Bass, Has_Guitar, Has_Lead, Has_Rhythm, Has_Combo, Has_Vocals, Has_Sections, Has_Cover, Has_Preview, Has_Custom_Tone, Has_DD, Has_Version, Tunning, Bass_Picking, Tones, Groups, Rating, Description+\" duplicate\", Comments, Has_Track_No, Platform, PreviewTime, PreviewLenght, Show_Rating, Show_Description, Show_Comments, Show_Available_Instruments, Show_Alternate_Version, Show_MultiTrack_Details, Show_Group, Show_Beta, Show_Broken, Show_DD, Original, Selected, YouTube_Link, CustomsForge_Link, CustomsForge_Like, CustomsForge_ReleaseNotes, SignatureType, ToolkitVersion, Has_Author, OggPath, oggPreviewPath, UniqueDLCName, AlbumArt_Hash, Audio_Hash, audioPreview_Hash, Bass_Has_DD, Has_Bonus_Arrangement, Artist_ShortName, Album_ShortName, Available_Old, Available_Duplicate, Has_Been_Corrected FROM Main  WHERE ID = " + txt_ID.Text;
+                var cmd = "INSERT into Main (Song_Title, Song_Title_Sort, Album, Artist, Artist_Sort, Album_Year, AverageTempo, Volume, Preview_Volume, AlbumArtPath, AudioPath, audioPreviewPath, Track_No, Author, Version, DLC_Name, DLC_AppID, Current_FileName, Original_FileName, Import_Path, Import_Date, Folder_Name, File_Size, File_Hash, Original_File_Hash, Is_Original, Is_OLD, Is_Beta, Is_Alternate, Is_Multitrack, Is_Broken, MultiTrack_Version, Alternate_Version_No, DLC, Has_Bass, Has_Guitar, Has_Lead, Has_Rhythm, Has_Combo, Has_Vocals, Has_Sections, Has_Cover, Has_Preview, Has_Custom_Tone, Has_DD, Has_Version, Tunning, Bass_Picking, Tones, Groups, Rating, Description, Comments, Has_Track_No, Platform, PreviewTime, PreviewLenght, Temp, CustomForge_Followers, CustomForge_Version, Show_Available_Instruments, Show_Alternate_Version, Show_MultiTrack_Details, Show_Group, Show_Beta, Show_Broken, Show_DD, Original, Selected, YouTube_Link, CustomsForge_Link, CustomsForge_Like, CustomsForge_ReleaseNotes, SignatureType, ToolkitVersion, Has_Author, OggPath, oggPreviewPath, UniqueDLCName, AlbumArt_Hash, Audio_Hash, audioPreview_Hash, Bass_Has_DD, Has_Bonus_Arrangement, Artist_ShortName, Album_ShortName, Available_Old, Available_Duplicate, Has_Been_Corrected) SELECT Song_Title+\"2\", Song_Title_Sort+\"2\", Album, Artist, Artist_Sort, Album_Year, AverageTempo, Volume, Preview_Volume, AlbumArtPath, AudioPath, audioPreviewPath, Track_No, Author, Version, DLC_Name, DLC_AppID+\"2\", Current_FileName, Original_FileName, Import_Path, Import_Date, Folder_Name+\"2\", File_Size, File_Hash, Original_File_Hash, Is_Original, Is_OLD, Is_Beta, Is_Alternate, Is_Multitrack, Is_Broken, MultiTrack_Version, Alternate_Version_No, DLC, Has_Bass, Has_Guitar, Has_Lead, Has_Rhythm, Has_Combo, Has_Vocals, Has_Sections, Has_Cover, Has_Preview, Has_Custom_Tone, Has_DD, Has_Version, Tunning, Bass_Picking, Tones, Groups, Rating, Description+\" duplicate\", Comments, Has_Track_No, Platform, PreviewTime, PreviewLenght, Temp, CustomForge_Followers, CustomForge_Version, Show_Available_Instruments, Show_Alternate_Version, Show_MultiTrack_Details, Show_Group, Show_Beta, Show_Broken, Show_DD, Original, Selected, YouTube_Link, CustomsForge_Link, CustomsForge_Like, CustomsForge_ReleaseNotes, SignatureType, ToolkitVersion, Has_Author, OggPath, oggPreviewPath, UniqueDLCName, AlbumArt_Hash, Audio_Hash, audioPreview_Hash, Bass_Has_DD, Has_Bonus_Arrangement, Artist_ShortName, Album_ShortName, Available_Old, Available_Duplicate, Has_Been_Corrected FROM Main  WHERE ID = " + txt_ID.Text;
                 DataSet dsz = new DataSet();
                 using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
                 {
@@ -2989,6 +3037,37 @@ namespace RocksmithToolkitGUI.DLCManager
             //    MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
             //    MessageBox.Show("Can not open Old Folder in Explorer ! ");
             //}
+        }
+
+        private void chbx_Alternate_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_Youtube_Click(object sender, EventArgs e)
+        {
+            Process.Start("IExplore.exe", txt_YouTube_Link.Text);
+        }
+
+        private void btn_Playthrough_Click(object sender, EventArgs e)
+        {
+            Process.Start("IExplore.exe", txt_Playthough.Text);
+        }
+
+        private void button6_Click_1(object sender, EventArgs e)
+        {
+            Process.Start("IExplore.exe", txt_CustomsForge_Link.Text);
+        }
+
+        private void chbx_MultiTrack_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chbx_MultiTrack.Checked) txt_MultiTrackType.Enabled = true;
+            else txt_MultiTrackType.Enabled = false;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Standardization.MakeCover();
         }
     }
 }

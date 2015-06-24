@@ -391,5 +391,15 @@ namespace RocksmithToolkitGUI.DLCManager
             }
             MessageBox.Show("TitleSort is now the same as Title");
         }
+
+        public void button1_Click_2(object sender, EventArgs e)
+        {
+            MakeCover();
+        }
+
+        public static void MakeCover()
+        {
+
+        }
     }
 } 

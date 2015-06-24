@@ -51,6 +51,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_CopyArtist2ArtistSort = new System.Windows.Forms.Button();
             this.btn_CopyTitle2TitleSort = new System.Windows.Forms.Button();
             this.lbl_NoRec = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPath)).BeginInit();
             this.SuspendLayout();
@@ -156,11 +157,11 @@ namespace RocksmithToolkitGUI.DLCManager
             // txt_Artist
             // 
             this.txt_Artist.Cue = "Artist";
-            this.txt_Artist.Enabled = false;
             this.txt_Artist.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_Artist.ForeColor = System.Drawing.Color.Gray;
             this.txt_Artist.Location = new System.Drawing.Point(953, 58);
             this.txt_Artist.Name = "txt_Artist";
+            this.txt_Artist.ReadOnly = true;
             this.txt_Artist.Size = new System.Drawing.Size(222, 20);
             this.txt_Artist.TabIndex = 131;
             // 
@@ -190,11 +191,11 @@ namespace RocksmithToolkitGUI.DLCManager
             // txt_Album
             // 
             this.txt_Album.Cue = "Album";
-            this.txt_Album.Enabled = false;
             this.txt_Album.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_Album.ForeColor = System.Drawing.Color.Gray;
             this.txt_Album.Location = new System.Drawing.Point(953, 110);
             this.txt_Album.Name = "txt_Album";
+            this.txt_Album.ReadOnly = true;
             this.txt_Album.Size = new System.Drawing.Size(222, 20);
             this.txt_Album.TabIndex = 126;
             // 
@@ -277,11 +278,23 @@ namespace RocksmithToolkitGUI.DLCManager
             this.lbl_NoRec.TabIndex = 279;
             this.lbl_NoRec.Text = "of Records";
             // 
+            // button1
+            // 
+            this.button1.Enabled = false;
+            this.button1.Location = new System.Drawing.Point(912, 246);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(113, 22);
+            this.button1.TabIndex = 383;
+            this.button1.Text = "Default Cover";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_2);
+            // 
             // Standardization
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1187, 548);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.lbl_NoRec);
             this.Controls.Add(this.btn_CopyTitle2TitleSort);
             this.Controls.Add(this.btn_CopyArtist2ArtistSort);
@@ -378,5 +391,6 @@ namespace RocksmithToolkitGUI.DLCManager
         private System.Windows.Forms.Button btn_CopyArtist2ArtistSort;
         private System.Windows.Forms.Button btn_CopyTitle2TitleSort;
         private System.Windows.Forms.Label lbl_NoRec;
+        private System.Windows.Forms.Button button1;
     }
 }

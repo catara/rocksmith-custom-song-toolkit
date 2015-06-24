@@ -219,12 +219,12 @@
             // cbx_Groups
             // 
             this.cbx_Groups.DataSource = this.mainBindingSource;
-            this.cbx_Groups.Enabled = false;
             this.cbx_Groups.FormattingEnabled = true;
             this.cbx_Groups.Location = new System.Drawing.Point(91, 185);
             this.cbx_Groups.Name = "cbx_Groups";
             this.cbx_Groups.Size = new System.Drawing.Size(120, 21);
             this.cbx_Groups.TabIndex = 322;
+            this.cbx_Groups.DropDown += new System.EventHandler(this.cbx_Groups_DropDown);
             // 
             // chbx_Additional_Manipulations
             // 
@@ -265,7 +265,7 @@
             "32. When removing DD use internal logic not DDC",
             "33. When importing alternates add newer/older instead of alt.0author",
             "34. Forcibly Update Import location of all DB fields",
-            "<35. Include Rocksmith 2012 to 2014 DLC Pack>",
+            "35. @Import Add Preview if missing 00:30 for 30sec",
             "36. Remove illegal characters from Songs Metadata",
             "37. Keep the Uncompressed Songs superorganized",
             "38. Import other formats but PC, as well(separately of course)",
@@ -273,6 +273,7 @@
             "40. Encrypt PS3 Retails songs, with External tool",
             "41. Delete ORIG HSAN/OGG when Packing Retails songs",
             "42. Try to get Track No. from Spotify ",
+            "43. Save Log After Import (DLCManager INSIDE folder)",
             "<IMPORT>",
             "<@Pack>"});
             this.chbx_Additional_Manipulations.Location = new System.Drawing.Point(240, 88);
@@ -334,9 +335,9 @@
             this.label3.Location = new System.Drawing.Point(5, 279);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(55, 13);
+            this.label3.Size = new System.Drawing.Size(49, 13);
             this.label3.TabIndex = 316;
-            this.label3.Text = "Artist_Sort";
+            this.label3.Text = "ArtistSort";
             // 
             // cbx_Artist_Sort
             // 

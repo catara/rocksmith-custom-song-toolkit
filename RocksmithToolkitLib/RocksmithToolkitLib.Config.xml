@@ -38,7 +38,7 @@
   <Config Key="dlcm_AdditionalManipul10" Value="No" />
   <Config Key="dlcm_AdditionalManipul11" Value="No" />
   <Config Key="dlcm_AdditionalManipul12" Value="No" />
-  <Config Key="dlcm_AdditionalManipul13" Value="Yes" />
+  <Config Key="dlcm_AdditionalManipul13" Value="No" />
   <Config Key="dlcm_AdditionalManipul14" Value="Yes" />
   <Config Key="dlcm_AdditionalManipul15" Value="Yes" />
   <Config Key="dlcm_AdditionalManipul16" Value="Yes" />
@@ -67,7 +67,7 @@
   <Config Key="dlcm_AdditionalManipul39" Value="Yes" />
   <Config Key="dlcm_AdditionalManipul40" Value="Yes" />
   <Config Key="dlcm_AdditionalManipul41" Value="Yes" />
-  <Config Key="dlcm_AdditionalManipul42" Value="No" />
+  <Config Key="dlcm_AdditionalManipul42" Value="Yes" />
   <Config Key="dlcm_AdditionalManipul43" Value="No" />
   <Config Key="dlcm_AdditionalManipul44" Value="No" />
   <Config Key="dlcm_AdditionalManipul45" Value="No" />
@@ -94,6 +94,9 @@
   <Config Key="dlcm_RemoveBassDD" Value="Yes" />;
   <Config Key="dlcm_UniqueID" Value="Yes" />;
   <Config Key="dlcm_andCopy" Value="Yes" />;
+  <Config Key="dlcm_PathForBRM" Value="c:\\GitHub\\" />;
+  <Config Key="dlcm_Preview Lenght" Value="Yes30" />;
+  <Config Key="dlcm_PreviewStart" Value="00:30" />;
 <!--<Config Key="general_wwisepath" Value="C:\Program Files (x86)\Audiokinetic\Wwise v2013.2.10 build 4884" />-->
 
   <!--<Config Key="first_time" Value="true" /> determine if we launched toolkit at first time-->

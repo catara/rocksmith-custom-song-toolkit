@@ -53,19 +53,51 @@ wnyp:
 -- medium feature: when repacking the Retail songs Remove Bass DD
 -- small bug: Standardization 87 message
 -- Big Bug PC repacking seems to fail
--- small bug Serv the servant and Peaches doent seem to Import
--- additional 22 might be in conflict with someone else
---- excludin files seems to be the same as the inportin when no duplciaets found by filehash
--- maindb apply save settings (as well as the rest of the screens)
+-- small feature: maindb apply save settings (as well as the rest of the screens)
 	- when opening new windows..save settings
 
+Dulpicate Management improv:
 
-To Test:
-- Standardisation Ghosting
-- Duplication detection
-- Mass packing
-- Full Lib Loading
+-- add No Bass, no Lead, No Rhythm,No Drums, No Vocal, Only Bass, Only Lead, Only Rhythm, Only Drums, Only Vocal
+-- add no guitars, backing only
+-- multitrack is it saved? foo fokers
+-- no cover for passenger duplic, she drives me crazy, 
+-- multitrack default to blank
+-- multitrack disable if empty
+-- add saving log
+-- if hives have dd and then no dd....title is stillVs red (vocals are really diff)
+- incubus morning multitrack has alternate flag?
+- alternate is not the latest+1 no
+-- Add DD (IF exiting don't add)
+-- Add tunning
+- activate ignore the rest as per overrite
+-- ignore as duplciate or old
+-- nirvana smells cover issue
+-- send multitrack info
+- checkbox if and of the + are diff..then add to title
+-- add go to folder
+- check meaning of life
+- add fix sections with external tool
+- zombie fails
+- the pretender fails
+- better improve reading the version of joalene 1_05 (or 6669 should be 6.669)
+- joaleen is tone is different.....where do we see that
+-- version and customforge should also save original (@Ignore)
+- add setalbum cover for all
+- fix log
+- add preview automatically
 
+
+Testing Issues:
+-- small bug Serv the servant and Peaches doent seem to Import
+-- sometimes all go to duplicate folder
+-- importing pink floyd duplices with delete everything reports them as duplicates
+-- reported version is wrong
+-- Duplicate: Update and overrite still takes the Alternate..it should not
+- overrite sometimes gives Directory not empty error
+- Improve duplicate management for the beat it & smells fiasco
+- Think about improving the Multitrack with Instr. list (more accurate but a little criptic)
+- save error log separately
 
 
 
@@ -91,19 +123,19 @@ To Test:
 	0.2.0.7 (15.12) New features: Add: lastconversiondata field per each arrangement, MainDb filters
 	0.2.0.8 (31.03) Manage RS12, RS12 DLC & RS14 retail songs. Pending platform independent...checks on compression platform dependent...DB independece/dependence on already provided 1..play and FTP and Preview Adding
 	0.2.0.9 (30.04) Implement FTP to PS3 (also as a copy to any other location)
-	0.2.0.10 (05.05) save settings in Toolkit config
-	wip: 0.2.0.11 (20.05.2015) (20%) has_section flag(to be tested with a song missing sections); Add 30 sec preview midsong; 
-	wip: 0.2.0.12 (20.05.2015) (10%) close bugs on Conversion to Ps3(nin hell) and analyse acuracy on conversion to ps3 (1979,7army..)
-	wip: 0.2.0.13 (22.05.2015)  (90%) remove bug on auto import if original
-	wip: 0.2.0.14 (24.05) (85%) full release (anyone can download and use the tool..no bugs..and all unimplemented featues disabled) , repack wo bugs, edit screens functional
-	wip: 0.2.1 (31.05.2015) (10%) HTML&Excel exports
-	tbr: 0.2.1.1 (15.06.2015) Implement a logic to properly read DLCManager renamed DLCs
-	wip: 0.2.2 (26.06.2015) (75%) If importing an original over a alternate the alternate flag should be set no the Alternate
+	0.2.0.10 (05.05) save settings in Toolkit config, getrck no, groups, 
+	wip: 0.2.0.11 (20.07.2015) (20%) has_section flag(to be tested with a song missing sections); Add 30 sec preview midsong; 
+	wip: 0.2.0.12 (20.07.2015) (10%) close bugs on Conversion to Ps3(nin hell) and analyse acuracy on conversion to ps3 (1979,7army..)
+	wip: 0.2.0.13 (22.07.2015)  (90%) remove bug on auto import if original
+	wip: 0.2.0.14 (24.07) (85%) full release (anyone can download and use the tool..no bugs..and all unimplemented featues disabled) , repack wo bugs, edit screens functional
+	wip: 0.2.1 (31.07.2015) (10%) HTML&Excel exports
+	tbr: 0.2.1.1 (15.08.2015) Implement a logic to properly read DLCManager renamed DLCs
+	wip: 0.2.2 (26.07.2015) (75%) If importing an original over a alternate the alternate flag should be set no the Alternate
 	tbr: 0.3.1 move Import DB to Main.DB or at least use an official data source as DB source to also be able to edit from the grid
 	tbr: 0.3.2 ?move Access code to project? or from hardcoded to views	
-	wip: 0.3.3 (03.06.2015) (70%) use parameterized SQL everywhere (&/ integrate template DB into project or a SQL DB)
-	wip: 0.3.4 (03.07.2015) (30%) Remove getlastconversiondate from Duplicates as already coming from the arrangements table
-	wip: 0.4 (21.08.2015) (85%) Redesign MainDB+Edit Screen
+	wip: 0.3.3 (03.09.2015) (70%) use parameterized SQL everywhere (&/ integrate template DB into project or a SQL DB)
+	wip: 0.3.4 (03.09.2015) (30%) Remove getlastconversiondate from Duplicates as already coming from the arrangements table
+	wip: 0.4 (21.10.2015) (85%) Redesign MainDB+Edit Screen
 
 
 
@@ -174,20 +206,20 @@ _ future release
 
 +4. Ability to Repack all DLCs
 	-- ?Original files changed should also be packaged?
-		-- Ability to package songs by Groups(e.g. party songs, great bass, rating 10) :)
+		+ Ability to package songs by Groups(e.g. party songs, great bass, rating 10) :)
 
 
 _5. Future features
-	- Read the customforge.net website (Parse costonsforge.com and enrich the DB/Library w playthrough videos, yb preview, update required, release notes....)
+	-- Read the customforge.net website (Parse costonsforge.com and enrich the DB/Library w playthrough videos, yb preview, update required, release notes....)
 		- Reconcile the version no
 		- Keep Download links
-	- Help manage and create MultiTracks
-		- Based on a original track plus aaudicity track creat e a new version
+	-- Help manage and create MultiTracks
+		- Based on a original track plus audicity track create a new version
 	-- Manage Official DLCs
 		- Ability to create a package out of a list of Official DLCs
 			-- Initially all DCLS will be manually matched & hardcoded as to the audio file name and the song title
 		+ Hide specific Official songs from view/Main screen
-	+ Flag files with no bass, no sections, no lyrics, no preview no DD, riff repeater..
+	+ Flag files with no bass, no sections, no lyrics, no preview, no DD, riff repeater..
 		-- FIX when possible
 	+ Show duplicates and solve conflicts
 	+ Audio Preview full track&preview track

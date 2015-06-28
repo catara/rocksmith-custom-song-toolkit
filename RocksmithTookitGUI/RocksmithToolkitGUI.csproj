@@ -108,7 +108,6 @@
     <Compile Include="CDLC2Tab\SongInfoForm.Designer.cs">
       <DependentUpon>SongInfoForm.cs</DependentUpon>
     </Compile>
-<<<<<<< HEAD
     <Compile Include="DLCManager\ArrangementsDB.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -156,13 +155,13 @@
     </Compile>
     <Compile Include="DLCManager\WEM2OGGCorrespondence.Designer.cs">
       <DependentUpon>WEM2OGGCorrespondence.cs</DependentUpon>
-=======
+
     <Compile Include="DLCPackageCreator\ShowLightsForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="DLCPackageCreator\ShowLightsForm.Designer.cs">
       <DependentUpon>ShowLightsForm.cs</DependentUpon>
->>>>>>> dfb996bd23c5c3a6d24fdcd8f8e7e6020daf04a0
+
     </Compile>
     <Compile Include="DLCPackageCreator\DLCPackageCreator.cs">
       <SubType>UserControl</SubType>
@@ -296,7 +295,7 @@
     <EmbeddedResource Include="CDLC2Tab\SongInfoForm.resx">
       <DependentUpon>SongInfoForm.cs</DependentUpon>
     </EmbeddedResource>
-<<<<<<< HEAD
+
     <EmbeddedResource Include="DLCManager\ArrangementsDB.resx">
       <DependentUpon>ArrangementsDB.cs</DependentUpon>
     </EmbeddedResource>
@@ -320,10 +319,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DLCManager\WEM2OGGCorrespondence.resx">
       <DependentUpon>WEM2OGGCorrespondence.cs</DependentUpon>
-=======
+
     <EmbeddedResource Include="DLCPackageCreator\ShowLightsForm.resx">
       <DependentUpon>ShowLightsForm.cs</DependentUpon>
->>>>>>> dfb996bd23c5c3a6d24fdcd8f8e7e6020daf04a0
     </EmbeddedResource>
     <EmbeddedResource Include="DLCPackageCreator\DLCPackageCreator.resx">
       <DependentUpon>DLCPackageCreator.cs</DependentUpon>
@@ -398,17 +396,14 @@
     <EmbeddedResource Include="ZiggyProEditorConverter\ZpeConverter.resx">
       <DependentUpon>ZpeConverter.cs</DependentUpon>
     </EmbeddedResource>
-<<<<<<< HEAD
-    <None Include="app.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+
     <None Include="DLCManager\packed_codebooks_aoTuV_603.bin">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="DLCManager\README.md" />
-=======
+
     <None Include="App.config" />
->>>>>>> dfb996bd23c5c3a6d24fdcd8f8e7e6020daf04a0
+
     <None Include="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>

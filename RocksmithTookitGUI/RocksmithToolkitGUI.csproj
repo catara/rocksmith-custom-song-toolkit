@@ -31,7 +31,8 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>
+    </DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PostBuildEvent>xcopy /S /Y "$(SolutionDir)Third-party Apps" "$(TargetDir)"</PostBuildEvent>
@@ -107,6 +108,7 @@
     <Compile Include="CDLC2Tab\SongInfoForm.Designer.cs">
       <DependentUpon>SongInfoForm.cs</DependentUpon>
     </Compile>
+<<<<<<< HEAD
     <Compile Include="DLCManager\ArrangementsDB.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -154,6 +156,13 @@
     </Compile>
     <Compile Include="DLCManager\WEM2OGGCorrespondence.Designer.cs">
       <DependentUpon>WEM2OGGCorrespondence.cs</DependentUpon>
+=======
+    <Compile Include="DLCPackageCreator\ShowLightsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DLCPackageCreator\ShowLightsForm.Designer.cs">
+      <DependentUpon>ShowLightsForm.cs</DependentUpon>
+>>>>>>> dfb996bd23c5c3a6d24fdcd8f8e7e6020daf04a0
     </Compile>
     <Compile Include="DLCPackageCreator\DLCPackageCreator.cs">
       <SubType>UserControl</SubType>
@@ -287,6 +296,7 @@
     <EmbeddedResource Include="CDLC2Tab\SongInfoForm.resx">
       <DependentUpon>SongInfoForm.cs</DependentUpon>
     </EmbeddedResource>
+<<<<<<< HEAD
     <EmbeddedResource Include="DLCManager\ArrangementsDB.resx">
       <DependentUpon>ArrangementsDB.cs</DependentUpon>
     </EmbeddedResource>
@@ -310,6 +320,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DLCManager\WEM2OGGCorrespondence.resx">
       <DependentUpon>WEM2OGGCorrespondence.cs</DependentUpon>
+=======
+    <EmbeddedResource Include="DLCPackageCreator\ShowLightsForm.resx">
+      <DependentUpon>ShowLightsForm.cs</DependentUpon>
+>>>>>>> dfb996bd23c5c3a6d24fdcd8f8e7e6020daf04a0
     </EmbeddedResource>
     <EmbeddedResource Include="DLCPackageCreator\DLCPackageCreator.resx">
       <DependentUpon>DLCPackageCreator.cs</DependentUpon>
@@ -384,6 +398,7 @@
     <EmbeddedResource Include="ZiggyProEditorConverter\ZpeConverter.resx">
       <DependentUpon>ZpeConverter.cs</DependentUpon>
     </EmbeddedResource>
+<<<<<<< HEAD
     <None Include="app.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -391,10 +406,14 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="DLCManager\README.md" />
+=======
+    <None Include="App.config" />
+>>>>>>> dfb996bd23c5c3a6d24fdcd8f8e7e6020daf04a0
     <None Include="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -429,10 +448,6 @@
       <Project>{FE4E3BDA-2942-4009-9F42-07ECEF8DE350}</Project>
       <Name>convert2012</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RocksmithToolkitCLI\devtools\devtools.csproj">
-      <Project>{63FB3334-1E7E-42D7-A025-744BC387AAD6}</Project>
-      <Name>devtools</Name>
-    </ProjectReference>
     <ProjectReference Include="..\RocksmithToolkitCLI\dlcconverter\dlcconverter.csproj">
       <Project>{972BC97A-B70A-4007-B915-952CC3606A2A}</Project>
       <Name>dlcconverter</Name>
@@ -445,14 +460,6 @@
       <Project>{822D185A-28A3-4AE0-A811-800E968AA2E7}</Project>
       <Name>packer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RocksmithToolkitCLI\pcdecrypt\pcdecrypt.csproj">
-      <Project>{9190164B-E755-4C8D-812E-70BE8FA286DD}</Project>
-      <Name>pcdecrypt</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RocksmithToolkitCLI\pedalgen\pedalgen.csproj">
-      <Project>{54637C43-E331-443B-B30F-C181A5CA60A4}</Project>
-      <Name>pedalgen</Name>
-    </ProjectReference>
     <ProjectReference Include="..\RocksmithToolkitCLI\sng2014\sng2014.csproj">
       <Project>{8FDBC548-DEBF-46D6-A933-33C8D72F33AB}</Project>
       <Name>sng2014</Name>
@@ -460,6 +467,10 @@
     <ProjectReference Include="..\RocksmithToolkitCLI\sngtotab\sngtotab.csproj">
       <Project>{3AB6A6D5-B5AE-4319-9B57-2758D13EB042}</Project>
       <Name>sngtotab</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RocksmithToolkitCLI\xml2sng\xml2sng.csproj">
+      <Project>{48703f6c-9f98-4534-ab1d-67856a84d806}</Project>
+      <Name>xml2sng</Name>
     </ProjectReference>
     <ProjectReference Include="..\RocksmithToolkitLib\RocksmithToolkitLib.csproj">
       <Project>{2231C13A-14F6-478A-96D7-D1D3E1094CD6}</Project>
@@ -500,21 +511,16 @@
     <None Include="Resources\music_edit.png" />
     <Content Include="songcreator.ico" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
     <!-- be sure to address all build types in the PostBuildEvent -->
-    <PostBuildEvent>if $(ConfigurationName) == Debug (
-xcopy /S /Y "$(SolutionDir)Third-party Apps")
-
-if $(ConfigurationName) == Release (
-xcopy /S /Y "$(SolutionDir)Third-party Apps")
-
-if $(ConfigurationName) == ReleaseMac (
+    <PostBuildEvent>IF $(ConfigurationName) == ReleaseMac (
 /bin/cp -Rf "$(ProjectDir)../Third-party Apps/" "$(TargetDir)")
-</PostBuildEvent>
+
+IF NOT $(ConfigurationName) == ReleaseMac (
+xcopy /S /Y "$(SolutionDir)Third-party Apps")</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

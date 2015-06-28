@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using RocksmithToolkitLib.DLCPackage;
 using RocksmithToolkitLib.DLCPackage.AggregateGraph;
 using RocksmithToolkitLib.DLCPackage.Manifest;
+using RocksmithToolkitLib.DLCPackage.Manifest2014;
 using RocksmithToolkitLib.Sng;
 using RocksmithToolkitLib.Sng2014HSL;
 using RocksmithToolkitLib.Xml;
@@ -54,7 +55,7 @@ namespace RocksmithToolkitLib.DLCPackage
         public Sng2014File Sng2014 { get; set; }
         // Gameplay Path
         public RouteMask RouteMask { get; set; }
-        public bool BonusArr = false;
+        public bool BonusArr { get; set; } // = false;
         // Tone Selector
         public string ToneBase { get; set; }
         public string ToneMultiplayer { get; set; }
@@ -86,7 +87,7 @@ namespace RocksmithToolkitLib.DLCPackage
 
             this.SongXml = new SongXML();
             this.SongXml.File = xmlSongFile;
-
+            //Tuning
             TuningDefinition tuning = null;
             switch ((ArrangementName)attr.ArrangementType)
             {
@@ -98,7 +99,9 @@ namespace RocksmithToolkitLib.DLCPackage
                     break;
                 case ArrangementName.Bass:
                     this.ArrangementType = Sng.ArrangementType.Bass;
-                    tuning = TuningDefinitionRepository.Instance().SelectForBass(song.Tuning, GameVersion.RS2014);
+                    // TODO: trying to fix bass tuning issue
+                    tuning = TuningDefinitionRepository.Instance().Select(song.Tuning, GameVersion.RS2014);
+                    // tuning = TuningDefinitionRepository.Instance().SelectForBass(song.Tuning, GameVersion.RS2014);
                     break;
                 case ArrangementName.Vocals:
                     this.ArrangementType = Sng.ArrangementType.Vocal;
@@ -120,7 +123,7 @@ namespace RocksmithToolkitLib.DLCPackage
             this.CapoFret = attr.CapoFret;
             if (attr.CentOffset != null)
                 this.TuningPitch = attr.CentOffset.Cents2Frequency();
-
+            //Properties
             this.ArrangementSort = attr.ArrangementSort;
             this.Name = (ArrangementName)Enum.Parse(typeof(ArrangementName), attr.ArrangementName);
             this.ScrollSpeed = Convert.ToInt32(attr.DynamicVisualDensity.Last() * 10);
@@ -132,7 +135,7 @@ namespace RocksmithToolkitLib.DLCPackage
             this.Id = Guid.Parse(attr.PersistentID);
             this.MasterId = attr.MasterID_RDV;
             this.XmlComments = Song2014.ReadXmlComments(xmlSongFile);
-
+            //Tones
             if (attr.Tones == null) // RS2012
             {
                 this.ToneBase = attr.Tone_Base;
@@ -236,7 +239,6 @@ namespace RocksmithToolkitLib.DLCPackage
                 case ArrangementType.Bass:
                     return String.Format("{0} [{1}{2}{3}] ({4}){5}", ArrangementType, Tuning, pitchInfo, capoInfo, toneDesc, metDesc);
                 case ArrangementType.Vocal:
-                    return String.Format("{0}", Name);
                 case ArrangementType.ShowLight:
                     return String.Format("{0}", Name);
                 default:

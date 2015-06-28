@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using System.Xml;
 
 using Ookii.Dialogs;
+using RocksmithToolkitLib.DLCPackage.Manifest2014.Tone;
 using X360.STFS;
 
 using RocksmithToolkitLib;
@@ -335,12 +336,27 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
 
         private void arrangementRemoveButton_Click(object sender, EventArgs e)
         {
+            if (arrangementLB.SelectedItem == null)
+                return;
+
             if (MessageBox.Show("Are you sure to delete the selected arrangement?", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
                 return;
 
-            if (arrangementLB.SelectedItem != null)
-                arrangementLB.Items.Remove(arrangementLB.SelectedItem);
+            // regenerate new showlights arrangement 
+            if (arrangementLB.SelectedItem.ToString().ToLower().Contains("showlight"))
+            {
+                var packageData = GetPackageData();
+                foreach (var arr in packageData.Arrangements)
+                    if (arr.ArrangementType == ArrangementType.ShowLight)
+                    {
+                        File.Delete(arr.SongXml.File);
+                        arr.SongXml.File = null; // forces regeneration of shl                        
+                    }
+            }
+
+            arrangementLB.Items.Remove(arrangementLB.SelectedItem);
         }
+
         //TODO: allow to choose audio for each arrangement separately. #Lessons, #Multitracks
         private void openAudioButton_Click(object sender, EventArgs e)
         {
@@ -385,6 +401,10 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 if (ofd.ShowDialog() != DialogResult.OK) return;
                 dlcSavePath = ofd.FileName;
             }
+
+            // added on/off feature for debugging 
+            // showlights cause in game hanging for some RS1-RS2 conversions
+            packageData.Showlights = chkShowlights.Checked;
 
             //Generate metronome arrangemnts here
             var mArr = new List<Arrangement>();
@@ -900,7 +920,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             {
                 tuning = new TuningDefinition();
                 tuning.Tuning = new TuningStrings(strings);
-                tuning.UIName = tuning.Name = tuning.NameFromStrings(tuning.Tuning, true, false);
+                tuning.UIName = tuning.Name = tuning.NameFromStrings(tuning.Tuning, false);
                 tuning.Custom = true;
                 tuning.GameVersion = GameVersion.RS2014;
                 TuningDefinitionRepository.Instance().Add(tuning, true);
@@ -1422,7 +1442,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             return mArr;
         }
 
-        public class EqSEvent : IEqualityComparer<RocksmithToolkitLib.Xml.SongEvent>
+        private class EqSEvent : IEqualityComparer<RocksmithToolkitLib.Xml.SongEvent>
         {
             public bool Equals(RocksmithToolkitLib.Xml.SongEvent x, RocksmithToolkitLib.Xml.SongEvent y)
             {

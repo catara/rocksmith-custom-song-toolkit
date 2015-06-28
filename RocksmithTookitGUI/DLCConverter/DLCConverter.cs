@@ -10,7 +10,6 @@ using X360.STFS;
 using RocksmithToolkitLib;
 using RocksmithToolkitLib.DLCPackage;
 using RocksmithToolkitLib.DLCPackage.Manifest.Tone;
-using RocksmithToolkitLib.DLCPackage.Manifest.Header;
 using RocksmithToolkitLib.DLCPackage.Manifest;
 using RocksmithToolkitLib.DLCPackage.AggregateGraph;
 using RocksmithToolkitLib.Sng;
@@ -24,7 +23,7 @@ namespace RocksmithToolkitGUI.DLCConverter
     public partial class DLCConverter : UserControl
     {
         private const string MESSAGEBOX_CAPTION = "DLC Converter";
-        private BackgroundWorker bwConvert = new BackgroundWorker { WorkerReportsProgress = true };
+        private BackgroundWorker bwConvert;
         private StringBuilder errorsFound;
 
         public string AppId
@@ -58,6 +57,7 @@ namespace RocksmithToolkitGUI.DLCConverter
         public DLCConverter()
         {
             InitializeComponent();
+            bwConvert = new BackgroundWorker { WorkerReportsProgress = true };
         }
 
         private void DLCConverter_Load(object sender, EventArgs e) {

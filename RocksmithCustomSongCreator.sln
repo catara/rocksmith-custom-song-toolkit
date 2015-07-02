@@ -1,5 +1,7 @@
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Express 2013 for Windows Desktop
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RocksmithToolkitLibTest", "RocksmithToolkitLibTest\RocksmithToolkitLibTest.csproj", "{1940BBE3-640F-499C-80BC-2291585406D2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RocksmithToolkitGUI", "RocksmithTookitGUI\RocksmithToolkitGUI.csproj", "{1A3DEAD6-14F3-43C3-B15C-A866D48FEF61}"

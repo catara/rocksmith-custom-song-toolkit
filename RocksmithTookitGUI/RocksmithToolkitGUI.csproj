@@ -155,13 +155,12 @@
     </Compile>
     <Compile Include="DLCManager\WEM2OGGCorrespondence.Designer.cs">
       <DependentUpon>WEM2OGGCorrespondence.cs</DependentUpon>
-
+    </Compile>
     <Compile Include="DLCPackageCreator\ShowLightsForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="DLCPackageCreator\ShowLightsForm.Designer.cs">
       <DependentUpon>ShowLightsForm.cs</DependentUpon>
-
     </Compile>
     <Compile Include="DLCPackageCreator\DLCPackageCreator.cs">
       <SubType>UserControl</SubType>
@@ -295,7 +294,6 @@
     <EmbeddedResource Include="CDLC2Tab\SongInfoForm.resx">
       <DependentUpon>SongInfoForm.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="DLCManager\ArrangementsDB.resx">
       <DependentUpon>ArrangementsDB.cs</DependentUpon>
     </EmbeddedResource>
@@ -319,7 +317,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DLCManager\WEM2OGGCorrespondence.resx">
       <DependentUpon>WEM2OGGCorrespondence.cs</DependentUpon>
-
+    </EmbeddedResource>
     <EmbeddedResource Include="DLCPackageCreator\ShowLightsForm.resx">
       <DependentUpon>ShowLightsForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -396,14 +394,11 @@
     <EmbeddedResource Include="ZiggyProEditorConverter\ZpeConverter.resx">
       <DependentUpon>ZpeConverter.cs</DependentUpon>
     </EmbeddedResource>
-
     <None Include="DLCManager\packed_codebooks_aoTuV_603.bin">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="DLCManager\README.md" />
-
     <None Include="App.config" />
-
     <None Include="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
@@ -483,6 +478,21 @@
     <None Include="Resources\colored.png" />
     <None Include="Resources\brasil_logo.png" />
     <Content Include="DLCManager\audiocrossreference.exe" />
+    <Content Include="DLCManager\bpr_v0.3\bpr.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\bpr_v0.3\bpr_config.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\bpr_v0.3\bpr_help.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\bpr_v0.3\bpr_icon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\bpr_v0.3\license.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="DLCManager\edattool.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

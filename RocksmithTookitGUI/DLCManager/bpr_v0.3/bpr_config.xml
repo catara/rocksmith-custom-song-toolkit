@@ -1,0 +1,9 @@
+<config>
+    <RSToolkitDirectory value="C:\\GitHub\\rocksmith-custom-song-toolkit\\RocksmithTookitGUI\\bin\\Debug"/>
+    <DDCPhraseLength value="20"/>
+    <DDCConfigFile value="ddc_default"/>
+    <DDCRampUpModel value="ddc_default"/>
+    <BPRWindowWidth value="1200"/>
+    <BPRWindowHeight value="350"/>
+</config>
+

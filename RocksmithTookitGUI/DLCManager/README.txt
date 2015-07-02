@@ -77,15 +77,15 @@ Dulpicate Management improv:
 - checkbox if and of the + are diff..then add to title
 -- add go to folder
 - check meaning of life
-- add fix sections with external tool
+-- add fix sections with external tool
 - zombie fails
 - the pretender fails
 - better improve reading the version of joalene 1_05 (or 6669 should be 6.669)
 - joaleen is tone is different.....where do we see that
 -- version and customforge should also save original (@Ignore)
 - add setalbum cover for all
-- fix log
-- add preview automatically
+-? fix log
+-- add preview automatically
 
 
 Testing Issues:
@@ -254,6 +254,9 @@ http://www.aldostools.org/ps3tools.html
 
 - audiocrossreference.exe no actively used by contained in the package (possible usage in decomperssing PS3 WEM or in the future to Match Songs ws ecripted Audio Filenames, currently hardcoded)
 https://sites.google.com/site/cozy1cgi/
+
+- Beats & Phrases Resynchronizer by Svengraph
+http://customsforge.com/topic/15687-beats-phrases-resynchronizer/
 
 ## Contact
 

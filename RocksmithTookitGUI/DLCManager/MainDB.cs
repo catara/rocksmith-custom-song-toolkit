@@ -1611,7 +1611,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 60 * 1); //wait 1min
                     if (DDC.ExitCode == 0)
                     {
-                        Converters(tt, ConverterTypes.Ogg2Wem);
+                        Converters(tt, ConverterTypes.Ogg2Wem, true);
                         txt_OggPreviewPath.Text = tt;
                         chbx_Preview.Checked = true;
                         var i = DataViewGrid.SelectedCells[0].RowIndex;
@@ -1643,7 +1643,7 @@ namespace RocksmithToolkitGUI.DLCManager
             WEM,
             Ogg2Wem
         }
-        public static void Converters(string file, ConverterTypes converterType)
+        public static void Converters(string file, ConverterTypes converterType, bool mssON)
         {
             
             var txtOgg2FixHdr = String.Empty;
@@ -1689,7 +1689,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 
 
                 if (errorFiles.Count <= 0 && successFiles.Count > 0)
-                    MessageBox.Show("Conversion complete!", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    if (mssON) MessageBox.Show("Conversion complete!", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 else if (errorFiles.Count > 0 && successFiles.Count > 0)
                 {
                     StringBuilder alertMessage = new StringBuilder(
@@ -1703,7 +1703,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     foreach (var eFile in errorFiles)
                         alertMessage.AppendLine(String.Format("File: {0}; error: {1}", eFile.Key, eFile.Value));
 
-                    MessageBox.Show(alertMessage.ToString(), MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    if (mssON) MessageBox.Show(alertMessage.ToString(), MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
                 else
                 {
@@ -1714,7 +1714,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     foreach (var eFile in errorFiles)
                         alertMessage.AppendLine(String.Format("File: {0}, error: {1}", eFile.Key, eFile.Value));
 
-                    MessageBox.Show(alertMessage.ToString(), MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    if (mssON) MessageBox.Show(alertMessage.ToString(), MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
 
@@ -1764,7 +1764,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 chbx_Preview.Checked = true;
                 var i = DataViewGrid.SelectedCells[0].RowIndex;
                 DataViewGrid.Rows[i].Cells[78].Value = temppath;
-                Converters(temppath, ConverterTypes.Ogg2Wem);
+                Converters(temppath, ConverterTypes.Ogg2Wem, true);
                 DataViewGrid.Rows[i].Cells[12].Value = temppath.Replace(".ogg", ".wem");
                 if (File.Exists(temppath.Replace(".ogg", ".wem")))
                     using (FileStream fss = File.OpenRead(temppath.Replace(".ogg", ".wem")))
@@ -3068,6 +3068,21 @@ namespace RocksmithToolkitGUI.DLCManager
         private void button3_Click(object sender, EventArgs e)
         {
             Standardization.MakeCover();
+        }
+
+        private void btn_AddSections_Click(object sender, EventArgs e)
+        {
+            var j = DataViewGrid.SelectedCells[0].RowIndex;
+            var xx = Path.Combine(AppWD, "DLCManager\\bpr_v0.3\\bpr.exe ", DataViewGrid.Rows[j].Cells[18].Value.ToString()); 
+            try
+            {
+                Process process = Process.Start(@xx);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Can not open Main DB connection in MainDB ! " + DB_Path);
+            }
         }
     }
 }

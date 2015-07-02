@@ -15,6 +15,7 @@ using RocksmithToolkitLib.DLCPackage;
 using RocksmithToolkitLib.Sng;
 using RocksmithToolkitLib.Xml; //For DD
 using RocksmithToolkitLib.DLCPackage.Manifest; //For DD
+using RocksmithToolkitLib.DLCPackage.Manifest2014;
 using System.IO;
 using System.Data.OleDb;
 using System.Net;
@@ -224,7 +225,8 @@ namespace RocksmithToolkitGUI.DLCManager
 
 
             //Enable Preview geenration
-            ConfigRepository.Instance()["general_wwisepath"] = "C:\\Program Files (x86)\\Audiokinetic\\Wwise v2013.2.10 build 4884";
+            ConfigRepository.Instance()["general_wwisepath"] = "C:\\Program Files (x86)\\Audiokinetic\\Wwise v2014.1.5 build 5282";
+            //C:\\Program Files (x86)\\Audiokinetic\\Wwise v2013.2.10 build 4884";
 
             //Colored = ConfigRepository.Instance().GetBoolean("cgm_coloredinlay");
             // Saving for later
@@ -415,7 +417,7 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             if (chbx_DebugB.Checked)
             {
-                txt_RocksmithDLCPath.Text = "c:\\GitHub\\tmp\\";//tmp\\0PC
+                txt_RocksmithDLCPath.Text = "c:\\GitHub\\tmp\\to import\\";//tmp\\0PC
                 txt_DBFolder.Text = "C:\\GitHub\\tmp";
                 txt_TempPath.Text = "C:\\GitHub\\tmp\\0";
                 chbx_CleanTemp.Checked = true;
@@ -2271,7 +2273,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                             DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 60 * 1); //wait 1min
                                             if (DDC.ExitCode == 0)
                                             {
-                                                MainDB.Converters(tt, MainDB.ConverterTypes.Ogg2Wem);
+                                                MainDB.Converters(tt, MainDB.ConverterTypes.Ogg2Wem, false);
                                                 info.OggPreviewPath = tt;
 
                                                 if (File.Exists(tt))

@@ -48,6 +48,7 @@ namespace RocksmithToolkitGUI.DLCManager
         public string CustomsForge_Link { get; set; }
         public string CustomsForge_Like { get; set; }
         public string CustomsForge_ReleaseNotes { get; set; }
+         public string ExistingTrackNo { get; set; }
         public string dupliID { get; set; }
         public string txt_RocksmithDLCPath { get; set; }
         public string AllowEncript { get; set; }
@@ -161,6 +162,7 @@ namespace RocksmithToolkitGUI.DLCManager
         public bool ExistChng = false;
         public bool AllowORIGDeleteb = false;
         public bool AllowEncriptb = false;
+        internal static string AppWD = AppDomain.CurrentDomain.BaseDirectory; //when removing DDC
         //public OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn);
 
         //private BindingSource bsPositions = new BindingSource();
@@ -296,6 +298,8 @@ namespace RocksmithToolkitGUI.DLCManager
             else if (filed.AudioPreview_Hash == "" && "" == audioPreview_hash) lbl_Vocals.Text = "";
             txt_PreviewNew.Text = (audioPreview_hash.ToString() == "" ? "No" : "Yes");
             txt_PreviewExisting.Text = (filed.AudioPreview_Hash.ToString() == "" ? "No" : "Yes");
+            if (audioPreview_hash.ToString() == "" ) btn_PlayPreviewNew.Enabled=true;
+            if (filed.AudioPreview_Hash.ToString() == "" ) btn_PlayPreviewExisting.Enabled=true;
 
             if (filed.Has_Vocals.ToString() != vocal) lbl_Vocals.ForeColor = lbl_Reference.ForeColor;
             //else if (filed.Has_Vocals == "" && "" == vocal) lbl_Vocals.Text = "";
@@ -426,29 +430,29 @@ namespace RocksmithToolkitGUI.DLCManager
                                     //txt_Description.Text = "tst";
                                     if (arg.RouteMask.ToString() == "Bass")
                                     {
-                                        if (lastConversionDateTime_cur == "" && "" == lastConversionDateTime_exist) lbl_XMLBass.Text = "";
-                                        else if (lastConversionDateTime_cur != lastConversionDateTime_exist) lbl_XMLBass.ForeColor = lbl_Reference.ForeColor;
+                                        if ((lastConversionDateTime_cur == "" && "" == lastConversionDateTime_exist)) lbl_XMLBass.Text = "";
+                                        else if (lastConversionDateTime_cur != lastConversionDateTime_exist || XmlHash != alist[k]) lbl_XMLBass.ForeColor = lbl_Reference.ForeColor;
                                         txt_XMLBassNew.Text = lastConversionDateTime_cur;
                                         txt_XMLBassExisting.Text = lastConversionDateTime_exist;
                                     }
                                     if (arg.RouteMask.ToString() == "Lead")
                                     {
-                                        if (lastConversionDateTime_cur == "" && "" == lastConversionDateTime_exist) lbl_XMLLead.Text = "";
-                                        else if (lastConversionDateTime_cur != lastConversionDateTime_exist) lbl_XMLLead.ForeColor = lbl_Reference.ForeColor;
+                                        if ((lastConversionDateTime_cur == "" && "" == lastConversionDateTime_exist)) lbl_XMLLead.Text = "";
+                                        else if (lastConversionDateTime_cur != lastConversionDateTime_exist || XmlHash != alist[k]) lbl_XMLLead.ForeColor = lbl_Reference.ForeColor;
                                         txt_XMLLeadNew.Text = lastConversionDateTime_cur;
                                         txt_XMLLeadExisting.Text = lastConversionDateTime_exist;
                                     }
                                     if (arg.RouteMask.ToString() == "Combo")
                                     {
-                                        if (lastConversionDateTime_cur == "" && "" == lastConversionDateTime_exist) lbl_XMLCombo.Text = "";
-                                        else if (lastConversionDateTime_cur != lastConversionDateTime_exist) lbl_XMLCombo.ForeColor = lbl_Reference.ForeColor;
+                                        if ((lastConversionDateTime_cur == "" && "" == lastConversionDateTime_exist)) lbl_XMLCombo.Text = "";
+                                        else if (lastConversionDateTime_cur != lastConversionDateTime_exist || XmlHash != alist[k]) lbl_XMLCombo.ForeColor = lbl_Reference.ForeColor;
                                         txt_XMLComboNew.Text = lastConversionDateTime_cur;
                                         txt_XMLComboExisting.Text = lastConversionDateTime_exist;
                                     }
                                     if (arg.RouteMask.ToString() == "Rhythm")
                                     {
-                                        if (lastConversionDateTime_cur == "" && "" == lastConversionDateTime_exist) lbl_XMLRhythm.Text = "";
-                                        else if (lastConversionDateTime_cur != lastConversionDateTime_exist) lbl_XMLRhythm.ForeColor = lbl_Reference.ForeColor;
+                                        if ((lastConversionDateTime_cur == "" && "" == lastConversionDateTime_exist)) lbl_XMLRhythm.Text = "";
+                                        else if (lastConversionDateTime_cur != lastConversionDateTime_exist || XmlHash != alist[k]) lbl_XMLRhythm.ForeColor = lbl_Reference.ForeColor;
                                         txt_XMLRhythmNew.Text = lastConversionDateTime_cur;
                                         txt_XMLRhythmExisting.Text = lastConversionDateTime_exist;
                                     }
@@ -504,29 +508,29 @@ namespace RocksmithToolkitGUI.DLCManager
 
                                     if (arg.RouteMask.ToString() == "Bass")
                                     {
-                                        if (lastConverjsonDateTime_cur == "" && "" == lastConverjsonDateTime_exist) lbl_JSONBass.Text = "";
-                                        else if (lastConverjsonDateTime_cur != lastConverjsonDateTime_exist) lbl_JSONBass.ForeColor = lbl_Reference.ForeColor;
+                                        if ((lastConverjsonDateTime_cur == "" && "" == lastConverjsonDateTime_exist)) lbl_JSONBass.Text = "";
+                                        else if (lastConverjsonDateTime_cur != lastConverjsonDateTime_exist || jsonHash != blist[k]) lbl_JSONBass.ForeColor = lbl_Reference.ForeColor;
                                         txt_JSONBassNew.Text = lastConverjsonDateTime_cur;
                                         txt_JSONBassExisting.Text = lastConverjsonDateTime_exist;
                                     }
                                     if (arg.RouteMask.ToString() == "Lead")
                                     {
-                                        if (lastConverjsonDateTime_cur == "" && "" == lastConverjsonDateTime_exist) lbl_JSONLead.Text = "";
-                                        else if (lastConverjsonDateTime_cur != lastConverjsonDateTime_exist) lbl_JSONLead.ForeColor = lbl_Reference.ForeColor;
+                                        if ((lastConverjsonDateTime_cur == "" && "" == lastConverjsonDateTime_exist)) lbl_JSONLead.Text = "";
+                                        else if (lastConverjsonDateTime_cur != lastConverjsonDateTime_exist || jsonHash != blist[k]) lbl_JSONLead.ForeColor = lbl_Reference.ForeColor;
                                         txt_JSONLeadNew.Text = lastConverjsonDateTime_cur;
                                         txt_JSONLeadExisting.Text = lastConverjsonDateTime_exist;
                                     }
                                     if (arg.RouteMask.ToString() == "Combo")
                                     {
-                                        if (lastConverjsonDateTime_cur == "" && "" == lastConverjsonDateTime_exist) lbl_JSONCombo.Text = "";
-                                        else if (lastConverjsonDateTime_cur != lastConverjsonDateTime_exist) lbl_JSONCombo.ForeColor = lbl_Reference.ForeColor;
+                                        if ((lastConverjsonDateTime_cur == "" && "" == lastConverjsonDateTime_exist)) lbl_JSONCombo.Text = "";
+                                        else if (lastConverjsonDateTime_cur != lastConverjsonDateTime_exist || jsonHash != blist[k]) lbl_JSONCombo.ForeColor = lbl_Reference.ForeColor;
                                         txt_JSONComboNew.Text = lastConverjsonDateTime_cur;
                                         txt_JSONComboExisting.Text = lastConverjsonDateTime_exist;
                                     }
                                     if (arg.RouteMask.ToString() == "Rhythm")
                                     {
-                                        if (lastConverjsonDateTime_cur == "" && "" == lastConverjsonDateTime_exist) lbl_JSONRhythm.Text = "";
-                                        else if (lastConverjsonDateTime_cur != lastConverjsonDateTime_exist) lbl_JSONRhythm.ForeColor = lbl_Reference.ForeColor;
+                                        if ((lastConverjsonDateTime_cur == "" && "" == lastConverjsonDateTime_exist)) lbl_JSONRhythm.Text = "";
+                                        else if (lastConverjsonDateTime_cur != lastConverjsonDateTime_exist || jsonHash != blist[k]) lbl_JSONRhythm.ForeColor = lbl_Reference.ForeColor;
                                         txt_JSONRhythmNew.Text = lastConverjsonDateTime_cur;
                                         txt_JSONRhythmExisting.Text = lastConverjsonDateTime_exist;
                                     }
@@ -938,9 +942,10 @@ namespace RocksmithToolkitGUI.DLCManager
             MultiTV = txt_MultiTrackNew.Text;
             AlbumAP = AlbumArtPath;
             YouTube_Link = txt_YouTube_LinkExisting.Text;
-            CustomsForge_Link=txt_CustomsForge_LinkExisting.Text;
-            CustomsForge_Like=txt_CustomsForge_LikeExisting.Text;
+            CustomsForge_Link = txt_CustomsForge_LinkExisting.Text;
+            CustomsForge_Like = txt_CustomsForge_LikeExisting.Text;
             CustomsForge_ReleaseNotes = txt_CustomsForge_ReleaseNotesExisting.Text;
+            ExistingTrackNo= filed.Track_No;
             
         }
 
@@ -1300,6 +1305,82 @@ namespace RocksmithToolkitGUI.DLCManager
                 MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 MessageBox.Show("Can not open New folder in Exporer ! ");
             }
+        }
+
+        private void btn_PlayPreview_Click(object sender, EventArgs e)
+        {
+            var startInfo = new ProcessStartInfo();
+            startInfo.FileName = Path.Combine(AppWD, "DLCManager\\oggdec.exe");
+            startInfo.WorkingDirectory = AppWD;// Path.GetDirectoryName();
+            var t = filed.oggPreviewPath;//"C:\\GitHub\\tmp\\0\\0_dlcpacks\\rs1compatibilitydisc_PS3\\audio\\ps3\\149627248.ogg";//txt_TempPath.Text + "\\0_dlcpacks\\rs1compatibilitydlc.psarc";
+            startInfo.Arguments = String.Format(" -p \"{0}\"",
+                                                t);
+            startInfo.UseShellExecute = true; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
+
+            if (File.Exists(t))
+                using (var DDC = new Process())
+                {
+                    DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 60 * 1); //wait 1min
+                    //if (DDC.ExitCode > 0) rtxt_StatisticsOnReadDLCs.Text = "Issues when packing rs1dlc DLC pack !" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                }
+        }
+
+        private void btn_PlayAudio_Click(object sender, EventArgs e)
+        {
+            var startInfo = new ProcessStartInfo();
+            startInfo.FileName = Path.Combine(AppWD, "DLCManager\\oggdec.exe");
+            startInfo.WorkingDirectory = AppWD;// Path.GetDirectoryName();
+            var t = filed.OggPath;//"C:\\GitHub\\tmp\\0\\0_dlcpacks\\rs1compatibilitydisc_PS3\\audio\\ps3\\149627248.ogg";//txt_TempPath.Text + "\\0_dlcpacks\\rs1compatibilitydlc.psarc";
+            startInfo.Arguments = String.Format(" -p \"{0}\"", t);
+            startInfo.UseShellExecute = true; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
+
+            //var outputBuilder = new StringBuilder();
+            if (File.Exists(t))
+                using (var DDC = new Process())
+                {
+                    DDC.StartInfo = startInfo;
+                    DDC.Start(); DDC.WaitForExit(1000 * 60 * 1); //wait 1min
+                }
+        }
+
+        private void btn_PlayAudioNew_Click(object sender, EventArgs e)
+        {
+            var startInfo = new ProcessStartInfo();
+            startInfo.FileName = Path.Combine(AppWD, "DLCManager\\oggdec.exe");
+            startInfo.WorkingDirectory = AppWD;// Path.GetDirectoryName();
+            //var t = filed.OggPath;//"C:\\GitHub\\tmp\\0\\0_dlcpacks\\rs1compatibilitydisc_PS3\\audio\\ps3\\149627248.ogg";//txt_TempPath.Text + "\\0_dlcpacks\\rs1compatibilitydlc.psarc";
+            var t = datas.OggPath.Replace(".wem", "_fixed.ogg"); ;//"C:\\GitHub\\tmp\\0\\0_dlcpacks\\rs1compatibilitydisc_PS3\\audio\\ps3\\149627248.ogg";//txt_TempPath.Text + "\\0_dlcpacks\\rs1compatibilitydlc.psarc";
+            //var tt = t.Replace(".ogg", "_preview.ogg");
+            startInfo.Arguments = String.Format(" -p \"{0}\"", t);
+            startInfo.UseShellExecute = true; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
+
+            //var outputBuilder = new StringBuilder();
+            if (File.Exists(t))
+                using (var DDC = new Process())
+                {
+                    DDC.StartInfo = startInfo;
+                    DDC.Start(); DDC.WaitForExit(1000 * 60 * 1); //wait 1min
+                }
+        }
+
+        private void btn_PlayPreviewNew_Click(object sender, EventArgs e)
+        {
+            var startInfo = new ProcessStartInfo();
+            startInfo.FileName = Path.Combine(AppWD, "DLCManager\\oggdec.exe");
+            startInfo.WorkingDirectory = AppWD;// Path.GetDirectoryName();
+            var t = datas.OggPath.Replace(".wem", "_fixed.ogg"); ;//"C:\\GitHub\\tmp\\0\\0_dlcpacks\\rs1compatibilitydisc_PS3\\audio\\ps3\\149627248.ogg";//txt_TempPath.Text + "\\0_dlcpacks\\rs1compatibilitydlc.psarc";
+            var tt = t.Replace(".ogg", "_preview.ogg");
+            //var t = filed.oggPreviewPath;//"C:\\GitHub\\tmp\\0\\0_dlcpacks\\rs1compatibilitydisc_PS3\\audio\\ps3\\149627248.ogg";//txt_TempPath.Text + "\\0_dlcpacks\\rs1compatibilitydlc.psarc";
+            startInfo.Arguments = String.Format(" -p \"{0}\"",
+                                                t);
+            startInfo.UseShellExecute = true; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
+
+            if (File.Exists(t))
+                using (var DDC = new Process())
+                {
+                    DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 60 * 1); //wait 1min
+                    //if (DDC.ExitCode > 0) rtxt_StatisticsOnReadDLCs.Text = "Issues when packing rs1dlc DLC pack !" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                }
         }
     }
 }

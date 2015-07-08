@@ -33,31 +33,23 @@ Main Features:
 
 ## ToDos/bugs:
 wip:
-- small bug: on inserting a new standardization 
+-- small bug: on inserting a new standardization 
 wnyp:
 - feat:		 Alternate No for duplicates logic
 - feat:		 Include Standardization names into duplication checks
-- small improv: add audio hash also as duplicate criteria
-- bug?:		 pin wish now last convtime at alternate comparision screen
-- big bug: repack&import seems to randmly fail
-- small bug: last thibs by billy talend fails at unpack/rorg
 - small improv: add the proper lasconvdate in the db 
-- small bug: sometimes preview shows empty but the vs is not red incubus echo
 - big feature: get the volume of the audio file and then compare against the rest or a norm
-- small bug: mj beat it issue with adding older to titles and so changing the xml path
-- audioslave sections missing maybe cause its an original and i used my own logic to strip the DD
-- big feature - For the tagging add the info to the Preview Image/Album Art
-- small improv: Any change of song in the list should also save :)
+-+ small improv: Any change of song in the list should also save :)
 - medium feature: add DLCs into cache.psarc to speed up the game startup
 - small feature: when opening MainDB and detecting directory check runs, if next directory exists (give a change to empty the db then if possible)
--- medium feature: when repacking the Retail songs Remove Bass DD
--- small bug: Standardization 87 message
--- Big Bug PC repacking seems to fail
--- small feature: maindb apply save settings (as well as the rest of the screens)
-	- when opening new windows..save settings
+
 
 Dulpicate Management improv:
-
+- checkbox if and of the + are diff..then add to title
+- activate ignore the rest as per overrite
+- Improve duplicate management for the beat it & smells fiasco
+-- alternate is not the latest+1 no
+-- add audio/preview play
 -- add No Bass, no Lead, No Rhythm,No Drums, No Vocal, Only Bass, Only Lead, Only Rhythm, Only Drums, Only Vocal
 -- add no guitars, backing only
 -- multitrack is it saved? foo fokers
@@ -66,39 +58,51 @@ Dulpicate Management improv:
 -- multitrack disable if empty
 -- add saving log
 -- if hives have dd and then no dd....title is stillVs red (vocals are really diff)
-- incubus morning multitrack has alternate flag?
-- alternate is not the latest+1 no
+-- incubus morning multitrack has alternate flag?
 -- Add DD (IF exiting don't add)
 -- Add tunning
-- activate ignore the rest as per overrite
 -- ignore as duplciate or old
 -- nirvana smells cover issue
 -- send multitrack info
-- checkbox if and of the + are diff..then add to title
 -- add go to folder
-- check meaning of life
--- add fix sections with external tool
-- zombie fails
-- the pretender fails
-- better improve reading the version of joalene 1_05 (or 6669 should be 6.669)
-- joaleen is tone is different.....where do we see that
 -- version and customforge should also save original (@Ignore)
-- add setalbum cover for all
--? fix log
--- add preview automatically
-
+-- fix current yb/cf links not saved
+-- fix is_alt being save although not the case
+-- duplicates get 1 as track no
 
 Testing Issues:
+- better improve reading the version of joalene 1_05 (or 6669 should be 6.669)
+- audioslave sections missing maybe cause its an original and i used my own logic to strip the DD
+- medium feature: when repacking the Retail songs Remove Bass DD
+- big feature - For the tagging add the info to the Preview Image/Album Art
+- joaleen is tone is different.....where do we see that
+- overrite sometimes gives Directory not empty error
+- Think about improving the Multitrack with Instr. list (more accurate but a little criptic)
+- save error log separately
+- add setalbum cover for all
+- add labels on covers
+- zombie fails
+- the pretender fails
+- check meaning of life
+-- small feature: maindb apply save settings (as well as the rest of the screens)
+	- when opening new windows..save settings
+-+ add fix sections with external tool
+-- small bug: Standardization 87 message
+-- Big Bug PC repacking seems to fail
 -- small bug Serv the servant and Peaches doent seem to Import
 -- sometimes all go to duplicate folder
 -- importing pink floyd duplices with delete everything reports them as duplicates
 -- reported version is wrong
 -- Duplicate: Update and overrite still takes the Alternate..it should not
-- overrite sometimes gives Directory not empty error
-- Improve duplicate management for the beat it & smells fiasco
-- Think about improving the Multitrack with Instr. list (more accurate but a little criptic)
-- save error log separately
-
+-- small bug: last thibs by billy talend fails at unpack/rorg
+-- fix log
+-- add preview automatically
+-- small bug: sometimes preview shows empty but the vs is not red incubus echo
+-- small improv: add audio hash also as duplicate criteria
+-- bug?:		 pin wish now last convtime at alternate comparision screen
+-- big bug: repack&import seems to randmly fail
+-- small bug: mj beat it issue with adding older to titles and so changing the xml path
+-- improve the MultiTrack detection (no Guitar, noguitar, no_Guitar)
 
 
 ### dev issues:
@@ -123,23 +127,23 @@ Testing Issues:
 	0.2.0.7 (15.12) New features: Add: lastconversiondata field per each arrangement, MainDb filters
 	0.2.0.8 (31.03) Manage RS12, RS12 DLC & RS14 retail songs. Pending platform independent...checks on compression platform dependent...DB independece/dependence on already provided 1..play and FTP and Preview Adding
 	0.2.0.9 (30.04) Implement FTP to PS3 (also as a copy to any other location)
-	0.2.0.10 (05.05) save settings in Toolkit config, getrck no, groups, 
-	wip: 0.2.0.11 (20.07.2015) (20%) has_section flag(to be tested with a song missing sections); Add 30 sec preview midsong; 
-	wip: 0.2.0.12 (20.07.2015) (10%) close bugs on Conversion to Ps3(nin hell) and analyse acuracy on conversion to ps3 (1979,7army..)
-	wip: 0.2.0.13 (22.07.2015)  (90%) remove bug on auto import if original
-	wip: 0.2.0.14 (24.07) (85%) full release (anyone can download and use the tool..no bugs..and all unimplemented featues disabled) , repack wo bugs, edit screens functional
-	wip: 0.2.1 (31.07.2015) (10%) HTML&Excel exports
-	tbr: 0.2.1.1 (15.08.2015) Implement a logic to properly read DLCManager renamed DLCs
-	wip: 0.2.2 (26.07.2015) (75%) If importing an original over a alternate the alternate flag should be set no the Alternate
+	0.2.0.10 (05.05) save settings in Toolkit config, getrck no, groups, Add 30 sec preview midsong; close bugs on Conversion to Ps3(nin hell)
+	wip: 0.2.0.11 (20.08.2015) (20%) has_section flag(to be tested with a song missing sections); 
+	wip: 0.2.0.12 (20.08.2015) (10%)  analyse acuracy on conversion to ps3 (1979,7army..)
+	wip: 0.2.0.13 (22.08.2015)  (90%) remove bug on auto import if original
+	wip: 0.2.0.14 (24.08) (85%) full release (anyone can download and use the tool..no bugs..and all un-implemented features disabled) , repack wo bugs, edit screens functional
+	wip: 0.2.1 (31.09.2015) (10%) HTML&Excel exports
+	tbr: 0.2.1.1 (15.09.2015) Implement a logic to properly read DLCManager renamed DLCs
+	wip: 0.2.2 (26.09.2015) (75%) If importing an original over a alternate the alternate flag should be set no the Alternate
 	tbr: 0.3.1 move Import DB to Main.DB or at least use an official data source as DB source to also be able to edit from the grid
 	tbr: 0.3.2 ?move Access code to project? or from hardcoded to views	
-	wip: 0.3.3 (03.09.2015) (70%) use parameterized SQL everywhere (&/ integrate template DB into project or a SQL DB)
-	wip: 0.3.4 (03.09.2015) (30%) Remove getlastconversiondate from Duplicates as already coming from the arrangements table
-	wip: 0.4 (21.10.2015) (85%) Redesign MainDB+Edit Screen
+	wip: 0.3.3 (03.10.2015) (70%) use parameterized SQL everywhere (&/ integrate template DB into project or a SQL DB)
+	wip: 0.3.4 (03.10.2015) (30%) Remove getlastconversiondate from Duplicates as already coming from the arrangements table
+	wip: 0.4 (21.10.2015) (85%) Redesign MainDB+Edit Screens
 
 
 
-# Date: 05.05.2015
+# Date: 08.07.2015
 # Document Name: Rocksmith DLC Management tool README
 				(fork of rocksmith-custom-song-toolkit)
 # Document purpose: To describe the functionailities and the way to change, the NEW tab that enable MASS Manipulation of Rocksmith DLC Library
@@ -257,6 +261,10 @@ https://sites.google.com/site/cozy1cgi/
 
 - Beats & Phrases Resynchronizer by Svengraph
 http://customsforge.com/topic/15687-beats-phrases-resynchronizer/
+
+- Cover Manipualtions
+https://github.com/Lovroman/RS-CDLC-Tagger/
+http://customsforge.com/topic/20334-tool-cdlc-tagger/
 
 ## Contact
 

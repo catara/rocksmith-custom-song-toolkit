@@ -197,6 +197,7 @@ namespace RocksmithToolkitGUI.DLCManager
         public string CustomsForge_Link = "";
         public string CustomsForge_Like = "";
         public string CustomsForge_ReleaseNotes = "";
+        public string ExistingTrackNo = "";
         public string dupliID = "";
 
         public DLCManager()
@@ -1909,7 +1910,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                 string txt = original_FileName;
                                 int vpos = (txt.IndexOf("v")) + 1;
                                 float vv = 0;
-                                for (var hh = 0; vpos > 0 && hh < 100; hh++)
+                                for (var hh = 0; vpos > 0 && hh < 150; hh++)
                                 {
                                     vpos = (txt.IndexOf("v")) + 1;
 
@@ -1927,7 +1928,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                         //rtxt_StatisticsOnReadDLCs.Text = "___" + txt.Substring(vpos + 1, 1) + "---" + txt.Substring(vpos + 2, 1) + "---" + txt.Substring(vpos + 2, 1) + "---" + "\n" + rtxt_StatisticsOnReadDLCs.Text; 
                                         if (vv > info.PackageVersion.ToInt32()) info.PackageVersion = vv.ToString();
                                         //else if (info.PackageVersion.ToInt32()>0) info.PackageVersion = vv.ToString();
-                                        hh = 100;
+                                        hh = 150;
                                     }
                                     //rtxt_StatisticsOnReadDLCs.Text = "000" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                     txt = txt.Substring(vpos, txt.Length - vpos);
@@ -1949,6 +1950,48 @@ namespace RocksmithToolkitGUI.DLCManager
 
 
                                 //rtxt_StatisticsOnReadDLCs.Text = info.AlbumArtPath+"---" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+
+
+                                //Set MultiTrack absed on FileName                                
+                                //No Bass
+                                //No Lead
+                                //No Rhythm
+                                //No Drums
+                                //No Vocal
+                                //(No Guitars)
+                                //Only Bass
+                                //Only Lead
+                                //Only Rhythm
+                                //Only Drums
+                                //Only Vocal
+                                //(Only BackTrack)
+                                string origFN = ds.Tables[0].Rows[i].ItemArray[2].ToString().ToLower();
+                                if (origFN.IndexOf("noguitar")>0 || origFN.IndexOf("no guitar")>0 || origFN.IndexOf("no_guitar")>0 || origFN.IndexOf("no-guitar")>0)
+                                {
+                                    Is_MultiTrack = "Yes"; MultiTrack_Version = "(No Guitars)";
+                                }
+                                if (origFN.IndexOf("nobass") > 0 || origFN.IndexOf("no bass") > 0 || origFN.IndexOf("no_bass") > 0 || origFN.IndexOf("no-bass") > 0)
+                                {
+                                    Is_MultiTrack = "Yes"; MultiTrack_Version = "No Bass";
+                                }
+                                if (origFN.IndexOf("nolead") > 0 || origFN.IndexOf("no lead") > 0 || origFN.IndexOf("no_lead") > 0 || origFN.IndexOf("no-lead") > 0)
+                                {
+                                    Is_MultiTrack = "Yes"; MultiTrack_Version = "No Lead";
+                                }
+                                if (origFN.IndexOf("norhythm") > 0 || origFN.IndexOf("no rhythm") > 0 || origFN.IndexOf("no_rhythm") > 0 || origFN.IndexOf("no-rhythm") > 0)
+                                {
+                                    Is_MultiTrack = "Yes"; MultiTrack_Version = "No Rhythm";
+                                }
+                                if (origFN.IndexOf("novocals") > 0 || origFN.IndexOf("no vocals") > 0 || origFN.IndexOf("no_vocals") > 0 || origFN.IndexOf("no-vocals") > 0)
+                                {
+                                    Is_MultiTrack = "Yes"; MultiTrack_Version = "No Vocal";
+                                }
+                                if (origFN.IndexOf("backingonly") > 0 || origFN.IndexOf("backing only") > 0 || origFN.IndexOf("backing_only") > 0 || origFN.IndexOf("backing-only") > 0)
+                                {
+                                    Is_MultiTrack = "Yes"; MultiTrack_Version = "(Only BackTrack)";
+                                }
+
+                                if (Is_MultiTrack == "Yes") rtxt_StatisticsOnReadDLCs.Text = "Multitrack=-=" + MultiTrack_Version + "\n" + rtxt_StatisticsOnReadDLCs.Text;
 
                                 //Generating the HASH code
                                 art_hash = "";
@@ -2088,7 +2131,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                             dda.Dispose();
 
                                             var altvert = dds.Tables[0].Rows[0].ItemArray[0].ToString().ToInt32() == -1 ? 0 : dds.Tables[0].Rows[0].ItemArray[0].ToString().ToInt32();
-                                            if (Is_Original == "No") altver = (altver + 1).ToString(); //file.Alternate_Version_No//Add Alternative_Version_No
+                                            if (Is_Original == "No") altver = (altvert + 1).ToString(); //file.Alternate_Version_No//Add Alternative_Version_No
                                             //rtxt_StatisticsOnReadDLCs.Text = alt + "\n" + rtxt_StatisticsOnReadDLCs.Text;
 
                                             //}
@@ -2099,6 +2142,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                             // sufficient for this demonstration. 
                                             // Your application may require different behavior.
                                             Console.WriteLine(ee.Message);
+                                            rtxt_StatisticsOnReadDLCs.Text = "error at altver calc \n" + rtxt_StatisticsOnReadDLCs.Text;
                                             //continue;
                                         }
                                         //if (Is_Original == "No") Alternate_No = (GetAlternateNo().ToInt32() + 1).ToString();
@@ -2252,6 +2296,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                 //Set Preview
                                 if (chbx_Additional_Manipulations.GetItemChecked(34) && (info.OggPreviewPath == null))
                                 {
+                                    rtxt_StatisticsOnReadDLCs.Text = "Trying to add preview as missing.\n" + rtxt_StatisticsOnReadDLCs.Text;
                                     var startInfo = new ProcessStartInfo();
                                     startInfo.FileName = Path.Combine(AppWD, "oggcut.exe");
                                     startInfo.WorkingDirectory = AppWD;// Path.GetDirectoryName();
@@ -2416,7 +2461,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                     command.Parameters.AddWithValue("@param41", ((author != "") ? author : (tkversion != "" ? "Custom Song Creator" : "")));
                                     command.Parameters.AddWithValue("@param42", tkversion);
                                     command.Parameters.AddWithValue("@param43", Is_Original);
-                                    command.Parameters.AddWithValue("@param44", ((alt == "") ? "No" : "Yes"));
+                                    command.Parameters.AddWithValue("@param44", ((alt == "" || alt == null) ? "No" : "Yes"));
                                     command.Parameters.AddWithValue("@param45", alt);
                                     command.Parameters.AddWithValue("@param46", art_hash);
                                     command.Parameters.AddWithValue("@param47", audio_hash);
@@ -2490,9 +2535,14 @@ namespace RocksmithToolkitGUI.DLCManager
 
                                 //Read Track no
                                 //www.metrolyrics.com: Nirvana Bleach Swap Meet
-                                HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://www.google.com/webhp?sourceid=chrome-instant&ion=1&espv=2&es_th=1&ie=UTF-8#q=www.metrolyrics.com:" + info.SongInfo.Artist + info.SongInfo.Album + info.SongInfo.SongDisplayName.Replace(" ", "+"));
-                                request.Proxy = WebProxy.GetDefaultProxy();
-                                request.Proxy.Credentials = System.Net.CredentialCache.DefaultCredentials;
+                                if (ExistingTrackNo != "")
+                                {
+                                    trackno = ExistingTrackNo.ToInt32();
+                                //HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://www.google.com/webhp?sourceid=chrome-instant&ion=1&espv=2&es_th=1&ie=UTF-8#q=www.metrolyrics.com:" + info.SongInfo.Artist + info.SongInfo.Album + info.SongInfo.SongDisplayName.Replace(" ", "+"));
+                                //request.Proxy = WebProxy.GetDefaultProxy();
+                                //request.Proxy.Credentials = System.Net.CredentialCache.DefaultCredentials;
+                                }
+                                //else
 
                                 //rtxt_StatisticsOnReadDLCs.Text = Available_Duplicate + "==" + Available_Old + rtxt_StatisticsOnReadDLCs.Text;
                                 if (artist == "Insert")
@@ -2622,7 +2672,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                     command.Parameters.AddWithValue("@param41", ((author != "") ? author : (tkversion != "" ? "Custom Song Creator" : "")));
                                     command.Parameters.AddWithValue("@param42", tkversion);
                                     command.Parameters.AddWithValue("@param43", Is_Original);
-                                    command.Parameters.AddWithValue("@param44", ((alt == "") ? "No" : "Yes"));
+                                    command.Parameters.AddWithValue("@param44", ((alt == "" || alt == null) ? "No" : "Yes"));
                                     command.Parameters.AddWithValue("@param45", alt ?? DBNull.Value.ToString() );
                                     command.Parameters.AddWithValue("@param46", art_hash);
                                     command.Parameters.AddWithValue("@param47", audio_hash);
@@ -2638,12 +2688,12 @@ namespace RocksmithToolkitGUI.DLCManager
                                     command.Parameters.AddWithValue("@param57", (trackno == -1 ? "No" : "Yes"));
                                     command.Parameters.AddWithValue("@param58", trackno.ToString());
                                     command.Parameters.AddWithValue("@param59", packagePlatform.platform.ToString());
-                                    command.Parameters.AddWithValue("@param60", "");
-                                    command.Parameters.AddWithValue("@param61", "");
-                                    command.Parameters.AddWithValue("@param62", "");
-                                    command.Parameters.AddWithValue("@param63", "");
-                                    command.Parameters.AddWithValue("@param64", "");
-                                    command.Parameters.AddWithValue("@param65", "");
+                                    command.Parameters.AddWithValue("@param60", Is_MultiTrack);
+                                    command.Parameters.AddWithValue("@param61", MultiTrack_Version);
+                                    command.Parameters.AddWithValue("@param62", YouTube_Link);
+                                    command.Parameters.AddWithValue("@param63", CustomsForge_Link);
+                                    command.Parameters.AddWithValue("@param64", CustomsForge_Like);
+                                    command.Parameters.AddWithValue("@param65", CustomsForge_ReleaseNotes);
                                     //EXECUTE SQL/INSERT
                                     try
                                     {
@@ -3383,6 +3433,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 if (frm1.CustomsForge_Like != "") CustomsForge_Like = frm1.CustomsForge_Like; //MultiT
                 if (frm1.CustomsForge_ReleaseNotes != "") CustomsForge_ReleaseNotes = frm1.CustomsForge_ReleaseNotes; //MultiTV
                 if (frm1.dupliID != "") dupliID = frm1.dupliID; //MultiTV
+                if (frm1.ExistingTrackNo != "") ExistingTrackNo = frm1.ExistingTrackNo; //MultiTV
                 //      Is_Alternate
                 //      Title_Sort
                 //      Album

@@ -192,6 +192,10 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_CoverNew = new System.Windows.Forms.Button();
             this.btn_CoverExisting = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btn_PlayPreviewNew = new System.Windows.Forms.Button();
+            this.btn_PlayAudioNew = new System.Windows.Forms.Button();
+            this.btn_PlayPreviewExisting = new System.Windows.Forms.Button();
+            this.btn_PlayAudioExisting = new System.Windows.Forms.Button();
             this.btn_AddDD = new System.Windows.Forms.Button();
             this.btn_AddTracks = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
@@ -269,7 +273,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(158, 94);
+            this.label14.Location = new System.Drawing.Point(90, 94);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(45, 13);
             this.label14.TabIndex = 274;
@@ -278,7 +282,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(169, 68);
+            this.label13.Location = new System.Drawing.Point(101, 68);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(34, 13);
             this.label13.TabIndex = 273;
@@ -1930,6 +1934,10 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.btn_PlayPreviewNew);
+            this.groupBox3.Controls.Add(this.btn_PlayAudioNew);
+            this.groupBox3.Controls.Add(this.btn_PlayPreviewExisting);
+            this.groupBox3.Controls.Add(this.btn_PlayAudioExisting);
             this.groupBox3.Controls.Add(this.btn_AddDD);
             this.groupBox3.Controls.Add(this.btn_AddTracks);
             this.groupBox3.Controls.Add(this.label19);
@@ -1958,6 +1966,48 @@ namespace RocksmithToolkitGUI.DLCManager
             this.groupBox3.TabIndex = 379;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Comparisons based on Availability or Hash";
+            // 
+            // btn_PlayPreviewNew
+            // 
+            this.btn_PlayPreviewNew.Enabled = false;
+            this.btn_PlayPreviewNew.Location = new System.Drawing.Point(141, 90);
+            this.btn_PlayPreviewNew.Name = "btn_PlayPreviewNew";
+            this.btn_PlayPreviewNew.Size = new System.Drawing.Size(62, 21);
+            this.btn_PlayPreviewNew.TabIndex = 398;
+            this.btn_PlayPreviewNew.Text = "Preview";
+            this.btn_PlayPreviewNew.UseVisualStyleBackColor = true;
+            this.btn_PlayPreviewNew.Click += new System.EventHandler(this.btn_PlayPreviewNew_Click);
+            // 
+            // btn_PlayAudioNew
+            // 
+            this.btn_PlayAudioNew.Location = new System.Drawing.Point(141, 64);
+            this.btn_PlayAudioNew.Name = "btn_PlayAudioNew";
+            this.btn_PlayAudioNew.Size = new System.Drawing.Size(62, 21);
+            this.btn_PlayAudioNew.TabIndex = 397;
+            this.btn_PlayAudioNew.Text = "Audio";
+            this.btn_PlayAudioNew.UseVisualStyleBackColor = true;
+            this.btn_PlayAudioNew.Click += new System.EventHandler(this.btn_PlayAudioNew_Click);
+            // 
+            // btn_PlayPreviewExisting
+            // 
+            this.btn_PlayPreviewExisting.Enabled = false;
+            this.btn_PlayPreviewExisting.Location = new System.Drawing.Point(322, 90);
+            this.btn_PlayPreviewExisting.Name = "btn_PlayPreviewExisting";
+            this.btn_PlayPreviewExisting.Size = new System.Drawing.Size(62, 21);
+            this.btn_PlayPreviewExisting.TabIndex = 396;
+            this.btn_PlayPreviewExisting.Text = "Preview";
+            this.btn_PlayPreviewExisting.UseVisualStyleBackColor = true;
+            this.btn_PlayPreviewExisting.Click += new System.EventHandler(this.btn_PlayPreview_Click);
+            // 
+            // btn_PlayAudioExisting
+            // 
+            this.btn_PlayAudioExisting.Location = new System.Drawing.Point(322, 64);
+            this.btn_PlayAudioExisting.Name = "btn_PlayAudioExisting";
+            this.btn_PlayAudioExisting.Size = new System.Drawing.Size(62, 21);
+            this.btn_PlayAudioExisting.TabIndex = 395;
+            this.btn_PlayAudioExisting.Text = "Audio";
+            this.btn_PlayAudioExisting.UseVisualStyleBackColor = true;
+            this.btn_PlayAudioExisting.Click += new System.EventHandler(this.btn_PlayAudio_Click);
             // 
             // btn_AddDD
             // 
@@ -2311,7 +2361,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.lbl_Multitrack.AutoSize = true;
             this.lbl_Multitrack.ForeColor = System.Drawing.Color.DarkGreen;
-            this.lbl_Multitrack.Location = new System.Drawing.Point(260, 309);
+            this.lbl_Multitrack.Location = new System.Drawing.Point(262, 307);
             this.lbl_Multitrack.Name = "lbl_Multitrack";
             this.lbl_Multitrack.Size = new System.Drawing.Size(22, 13);
             this.lbl_Multitrack.TabIndex = 394;
@@ -2632,5 +2682,9 @@ namespace RocksmithToolkitGUI.DLCManager
         private Label lbl_Multitrack;
         private Button btn_GoToNew;
         private Button btn_GoToExisting;
+        private Button btn_PlayPreviewNew;
+        private Button btn_PlayAudioNew;
+        private Button btn_PlayPreviewExisting;
+        private Button btn_PlayAudioExisting;
     }
 }

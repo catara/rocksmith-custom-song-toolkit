@@ -1677,6 +1677,11 @@ namespace RocksmithToolkitGUI.DLCManager
                             case ConverterTypes.Ogg2Wem:
                                 //txtAudio2Wem.Text = file;
                                 OggFile.Convert2Wem(file, 4, 4 * 1000);
+                                //Delete any preview_preview file created..by....?ccc
+                                foreach (string prev_prev in Directory.GetFiles(Path.GetDirectoryName(file), "*preview_preview*", System.IO.SearchOption.AllDirectories))
+                                {
+                                    File.Delete(prev_prev);
+                                }
                                 break;
                         }
 
@@ -3067,7 +3072,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void button3_Click(object sender, EventArgs e)
         {
-            Standardization.MakeCover();
+            Standardization.MakeCover(DB_Path, txt_AlbumArtPath.Text, txt_Artist.Text, txt_Album.Text);
         }
 
         private void btn_AddSections_Click(object sender, EventArgs e)

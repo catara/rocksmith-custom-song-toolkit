@@ -48,13 +48,16 @@ namespace RocksmithToolkitGUI.DLCManager
         public string CustomsForge_Link { get; set; }
         public string CustomsForge_Like { get; set; }
         public string CustomsForge_ReleaseNotes { get; set; }
-         public string ExistingTrackNo { get; set; }
+        public string ExistingTrackNo { get; set; }
         public string dupliID { get; set; }
         public string txt_RocksmithDLCPath { get; set; }
         public string AllowEncript { get; set; }
         public string AllowORIGDelete { get; set; }
         public string FileSize { get; set; }
         public string unpackedDir { get; set; }
+        public string Is_MultiTracks { get; set; }
+        public string MultiTrack_Versions { get; set; }
+        public bool IgnoreRest { get; set; }
 
         //public bool newold { get; set; }
         //public string clist { get; set; }
@@ -68,7 +71,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         //}
 
-        public Duplicates_Management(DLCManager.Files filed, DLCPackageData datas, string author, string tkversion, string dD, string bass, string guitar, string combo, string rhythm, string lead, string vocal, string tunnings, int i, int norows, string original_FileName, string art_hash, string audio_hash, string audioPreview_hash, List<string> alist, List<string> blist, string DBPath, List<string> clist, List<string> dlist, bool newold, string Is_Original, string altvert, string txt_RocksmithDLCPath, bool AllowEncript, bool AllowORIGDelete, string FileSize, string unpackedDir)//string Is_MultiTracking, string Multitracking, 
+        public Duplicates_Management(DLCManager.Files filed, DLCPackageData datas, string author, string tkversion, string dD, string bass, string guitar, string combo, string rhythm, string lead, string vocal, string tunnings, int i, int norows, string original_FileName, string art_hash, string audio_hash, string audioPreview_hash, List<string> alist, List<string> blist, string DBPath, List<string> clist, List<string> dlist, bool newold, string Is_Original, string altvert, string txt_RocksmithDLCPath, bool AllowEncript, bool AllowORIGDelete, string FileSize, string unpackedDir,string Is_MultiTrack,string MultiTrack_Version)//string Is_MultiTracking, string Multitracking, 
        //file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, Tunings, b, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist, DB_Path, clist, dlist, newold, Is_Original, altver
         {
             //Text = text;
@@ -106,6 +109,8 @@ namespace RocksmithToolkitGUI.DLCManager
             //this.AllowORIGDelete = AllowORIGDelete;
             this.FileSize = FileSize;
             this.unpackedDir = unpackedDir;
+            this.Is_MultiTracks = Is_MultiTrack;
+            this.MultiTrack_Versions = MultiTrack_Version;
             InitializeComponent();
             //MessageBox.Show(DB_Path);
             //DB_Path = text;
@@ -196,15 +201,16 @@ namespace RocksmithToolkitGUI.DLCManager
 
             //Alternate
             txt_AlternateNoNew.Value = altver.ToInt32();
-            chbx_IsAlternateNew.Checked = true;
-
-            chbx_IsAlternateExisting.Checked = filed.Is_Alternate == "Yes" ? true : false;
-            txt_AlternateNoExisting.Enabled = filed.Is_Alternate == "Yes" ? true : false;
+            chbx_IsAlternateNew.Checked = filed.Is_Multitrack !="Yes"  ? true : false;;
+            chbx_IsAlternateExisting.Checked = filed.Is_Alternate == "Yes" && filed.Is_Multitrack !="Yes" ? true : false;
+            txt_AlternateNoExisting.Enabled = filed.Is_Alternate == "Yes" && filed.Is_Multitrack !="Yes"  ? true : false;
             txt_AlternateNoExisting.Value = (filed.Alternate_Version_No.ToInt32() == -1) ? 0 : filed.Alternate_Version_No.ToInt32();
 
             //Multitrack
             //txt_MultiTrackNew.Text = "";
-            //chbx_MultiTrackNew.Checked = true;
+            chbx_MultiTrackNew.Checked = Is_MultiTracks == "Yes" ? true : false;
+            txt_MultiTrackNew.Enabled = Is_MultiTracks == "Yes" ? true : false;
+            txt_MultiTrackNew.Text = (MultiTrack_Versions == "") ? "" : MultiTrack_Versions;
 
             chbx_MultiTrackExisting.Checked = filed.Is_Multitrack == "Yes" ? true : false;
             txt_MultiTrackExisting.Enabled = filed.Is_Multitrack == "Yes" ? true : false;
@@ -298,8 +304,8 @@ namespace RocksmithToolkitGUI.DLCManager
             else if (filed.AudioPreview_Hash == "" && "" == audioPreview_hash) lbl_Vocals.Text = "";
             txt_PreviewNew.Text = (audioPreview_hash.ToString() == "" ? "No" : "Yes");
             txt_PreviewExisting.Text = (filed.AudioPreview_Hash.ToString() == "" ? "No" : "Yes");
-            if (audioPreview_hash.ToString() == "" ) btn_PlayPreviewNew.Enabled=true;
-            if (filed.AudioPreview_Hash.ToString() == "" ) btn_PlayPreviewExisting.Enabled=true;
+            if (audioPreview_hash.ToString() != "" ) btn_PlayPreviewNew.Enabled=true;
+            if (filed.AudioPreview_Hash.ToString() != "" ) btn_PlayPreviewExisting.Enabled=true;
 
             if (filed.Has_Vocals.ToString() != vocal) lbl_Vocals.ForeColor = lbl_Reference.ForeColor;
             //else if (filed.Has_Vocals == "" && "" == vocal) lbl_Vocals.Text = "";
@@ -312,7 +318,8 @@ namespace RocksmithToolkitGUI.DLCManager
 
             //Show the alternate/duplicates in the DB
             lbl_diffCount.Text = (i + 1).ToString() + "/" + norows.ToString();
-            lbl_diffCount.Visible = true;
+            //lbl_diffCount.Visible = true;
+            if (norows > 1) chbx_IgnoreDupli.Enabled = true;
 
             //string text = "Same Current -> Existing " + (i + 2) + "/" + (norows + 1) + " " + filed.Artist + "-" + filed.Album + "\n";
             //text += ((datas.SongInfo.SongDisplayName == filed.Song_Title) ? "" : ("\n1/14+ Song Titles: " + datas.SongInfo.SongDisplayName + "->" + filed.Song_Title));
@@ -946,6 +953,7 @@ namespace RocksmithToolkitGUI.DLCManager
             CustomsForge_Like = txt_CustomsForge_LikeExisting.Text;
             CustomsForge_ReleaseNotes = txt_CustomsForge_ReleaseNotesExisting.Text;
             ExistingTrackNo= filed.Track_No;
+            IgnoreRest = chbx_IgnoreDupli.Checked;
             
         }
 
@@ -1053,9 +1061,9 @@ namespace RocksmithToolkitGUI.DLCManager
            // //txt_TitleNew.Text = txt_TitleNew.Text.Replace(" (older)", "");
            // txt_TitleNew.Text = txt_TitleNew.Text.Replace(" (newer)", "");
            //// txt_TitleExisting.Text = txt_TitleExisting.Text.Replace(" (older)", "");
-            txt_TitleExisting.Text = txt_TitleExisting.Text.Replace(" (newer)", "").Replace(" (older)", "").Replace(" " + txt_AvailTracksExisting.Text, "").Replace(" " + txt_VersionExisting, "").Replace(" " + txt_AuthorExisting, "").Replace(" noDD", "").Replace(" DD", "").Replace(" "+txt_TuningExisting, ""); ;
+            txt_TitleExisting.Text = txt_TitleExisting.Text.Replace(" (newer)", "").Replace(" (older)", "").Replace(" " + txt_AvailTracksExisting.Text, "").Replace(" " + txt_VersionExisting.Text, "").Replace(" " + txt_AuthorExisting.Text, "").Replace(" noDD", "").Replace(" DD", "").Replace(" "+txt_TuningExisting.Text, "");
 
-            txt_TitleNew.Text = datas.SongInfo.SongDisplayName;
+            txt_TitleNew.Text = datas.SongInfo.SongDisplayName.Replace(" (newer)", "").Replace(" (older)", "").Replace(" " + txt_AvailTracksNew.Text, "").Replace(" " + txt_VersionNew.Text, "").Replace(" " + txt_AuthorNew.Text, "").Replace(" noDD", "").Replace(" DD", "").Replace(" " + txt_TuningNew.Text, ""); ;
             //txt_TitleExisting.Text = filed.Song_Title;
         }
 
@@ -1269,8 +1277,8 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btn_AddTunning_Click(object sender, EventArgs e)
         {
-            txt_TitleNew.Text = txt_TitleNew.Text.Replace("Standard","").Replace("standard","")+" "+txt_TuningNew.Text;
-            txt_TitleExisting.Text = txt_TitleExisting.Text.Replace("Standard","").Replace("standard","")+ " " + txt_TuningExisting.Text;
+            txt_TitleNew.Text = txt_TitleNew.Text.Replace(" "+txt_TuningNew.Text, "") + " " + txt_TuningNew.Text;
+            txt_TitleExisting.Text = txt_TitleExisting.Text.Replace(" " + txt_TuningExisting.Text, "") + " " + txt_TuningExisting.Text;
         }
 
         private void button6_Click(object sender, EventArgs e)

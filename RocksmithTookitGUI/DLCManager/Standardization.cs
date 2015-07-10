@@ -394,12 +394,47 @@ namespace RocksmithToolkitGUI.DLCManager
 
         public void button1_Click_2(object sender, EventArgs e)
         {
-            MakeCover();
+            MakeCover(DB_Path, txt_AlbumArtPath.Text, txt_Artist.Text, txt_Album.Text);
         }
 
-        public static void MakeCover()
+        public static void MakeCover(string DBs_Path, string AlbumArtPath,string Artist,string Albums)
         {
+            var cmd1 = "";
+            //var DB_Path = DB_Path + "\\Files.accdb";
+            try
+            {
+                using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DBs_Path))
+                {
+                    DataSet dus = new DataSet();
+                    cmd1 = "UPDATE Main SET AlbumArtPath = \""+AlbumArtPath +"\" WHERE Artist=\""+Artist+"\" and Album=\""+Albums+"\"";
+                    OleDbDataAdapter das = new OleDbDataAdapter(cmd1, cnn);
+                    das.Fill(dus, "Main");
+                    das.Dispose();
+                }
+            }
+            catch (System.IO.FileNotFoundException ee)
+            {
+                // To inform the user and continue is 
+                // sufficient for this demonstration. 
+                // Your application may require different behavior.
+                Console.WriteLine(ee.Message);
+                //continue;
+            }
 
+            var lbl_NoRec="";
+            DataSet dssx = new DataSet();
+            using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DBs_Path))
+            {
+                OleDbDataAdapter da = new OleDbDataAdapter("SELECT ID FROM Main WHERE Artist=\""+Artist+"\" and Album=\""+Albums+"\";", cn);
+                da.Fill(dssx, "Standardization");
+                var noOfRec = dssx.Tables[0].Rows.Count;
+                lbl_NoRec = noOfRec.ToString() + " records.";
+                //da = new OleDbDataAdapter("SELECT Identifier,ContactPosition FROM PositionType;", cn);
+                //da.Fill(ds, "PositionType");
+                //da = new OleDbDataAdapter("SELECT Identifier, Badge FROM Badge", cn);
+                //da.Fill(ds, "Badge");
+            }
+            MessageBox.Show("Cover has been defaulted as Cover to " + lbl_NoRec + " songs");
         }
     }
 } 

@@ -276,7 +276,6 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // button3
             // 
-            this.button3.Enabled = false;
             this.button3.Location = new System.Drawing.Point(834, 185);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(113, 22);
@@ -1841,35 +1840,39 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_OggPath.Cue = "Ogg Path";
             this.txt_OggPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_OggPath.ForeColor = System.Drawing.Color.Gray;
+            this.txt_OggPath.HideSelection = false;
             this.txt_OggPath.Location = new System.Drawing.Point(7, 64);
-            this.txt_OggPath.Multiline = true;
             this.txt_OggPath.Name = "txt_OggPath";
             this.txt_OggPath.ReadOnly = true;
+            this.txt_OggPath.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
             this.txt_OggPath.Size = new System.Drawing.Size(99, 20);
             this.txt_OggPath.TabIndex = 312;
-            this.txt_OggPath.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txt_OggPreviewPath
             // 
             this.txt_OggPreviewPath.Cue = "Ogg Preview Path";
             this.txt_OggPreviewPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_OggPreviewPath.ForeColor = System.Drawing.Color.Gray;
+            this.txt_OggPreviewPath.HideSelection = false;
             this.txt_OggPreviewPath.Location = new System.Drawing.Point(110, 64);
             this.txt_OggPreviewPath.Name = "txt_OggPreviewPath";
+            this.txt_OggPreviewPath.ReadOnly = true;
+            this.txt_OggPreviewPath.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
             this.txt_OggPreviewPath.Size = new System.Drawing.Size(99, 20);
             this.txt_OggPreviewPath.TabIndex = 313;
-            this.txt_OggPreviewPath.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txt_AlbumArtPath
             // 
             this.txt_AlbumArtPath.Cue = "Album art Path";
             this.txt_AlbumArtPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_AlbumArtPath.ForeColor = System.Drawing.Color.Gray;
+            this.txt_AlbumArtPath.HideSelection = false;
             this.txt_AlbumArtPath.Location = new System.Drawing.Point(834, 137);
             this.txt_AlbumArtPath.Name = "txt_AlbumArtPath";
+            this.txt_AlbumArtPath.ReadOnly = true;
+            this.txt_AlbumArtPath.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
             this.txt_AlbumArtPath.Size = new System.Drawing.Size(113, 20);
             this.txt_AlbumArtPath.TabIndex = 107;
-            this.txt_AlbumArtPath.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txt_Artist_ShortName
             // 

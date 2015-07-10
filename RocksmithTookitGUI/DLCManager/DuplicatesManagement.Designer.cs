@@ -804,7 +804,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(135, 13);
             this.label26.TabIndex = 326;
-            this.label26.Text = "DLC Name (always unique)";
+            this.label26.Text = "DLC Name (autom. unique)";
             // 
             // btn_DecompressAll
             // 
@@ -877,13 +877,10 @@ namespace RocksmithToolkitGUI.DLCManager
             this.lbl_diffCount.Size = new System.Drawing.Size(39, 26);
             this.lbl_diffCount.TabIndex = 335;
             this.lbl_diffCount.Text = "x/y";
-            this.lbl_diffCount.Visible = false;
             // 
             // chbx_IgnoreDupli
             // 
             this.chbx_IgnoreDupli.AutoSize = true;
-            this.chbx_IgnoreDupli.Checked = true;
-            this.chbx_IgnoreDupli.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chbx_IgnoreDupli.Enabled = false;
             this.chbx_IgnoreDupli.Location = new System.Drawing.Point(603, 12);
             this.chbx_IgnoreDupli.Name = "chbx_IgnoreDupli";
@@ -1535,11 +1532,11 @@ namespace RocksmithToolkitGUI.DLCManager
             // txt_FileNameExisting
             // 
             this.txt_FileNameExisting.Cue = "File Name Existing";
-            this.txt_FileNameExisting.Enabled = false;
             this.txt_FileNameExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_FileNameExisting.ForeColor = System.Drawing.Color.Gray;
             this.txt_FileNameExisting.Location = new System.Drawing.Point(284, 179);
             this.txt_FileNameExisting.Name = "txt_FileNameExisting";
+            this.txt_FileNameExisting.ReadOnly = true;
             this.txt_FileNameExisting.Size = new System.Drawing.Size(222, 20);
             this.txt_FileNameExisting.TabIndex = 280;
             this.txt_FileNameExisting.TextChanged += new System.EventHandler(this.ExistingChanged);
@@ -1547,11 +1544,12 @@ namespace RocksmithToolkitGUI.DLCManager
             // txt_FileNameNew
             // 
             this.txt_FileNameNew.Cue = "File Name New";
-            this.txt_FileNameNew.Enabled = false;
             this.txt_FileNameNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_FileNameNew.ForeColor = System.Drawing.Color.Gray;
             this.txt_FileNameNew.Location = new System.Drawing.Point(38, 179);
             this.txt_FileNameNew.Name = "txt_FileNameNew";
+            this.txt_FileNameNew.ReadOnly = true;
+            this.txt_FileNameNew.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
             this.txt_FileNameNew.Size = new System.Drawing.Size(222, 20);
             this.txt_FileNameNew.TabIndex = 279;
             this.txt_FileNameNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -1677,6 +1675,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_DLCIDNew.ForeColor = System.Drawing.Color.Gray;
             this.txt_DLCIDNew.Location = new System.Drawing.Point(144, 354);
             this.txt_DLCIDNew.Name = "txt_DLCIDNew";
+            this.txt_DLCIDNew.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
             this.txt_DLCIDNew.Size = new System.Drawing.Size(116, 20);
             this.txt_DLCIDNew.TabIndex = 232;
             this.txt_DLCIDNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -1901,7 +1900,7 @@ namespace RocksmithToolkitGUI.DLCManager
             "Only Drums",
             "Only Vocal",
             "(Only BackTrack)"});
-            this.txt_MultiTrackExisting.Location = new System.Drawing.Point(283, 303);
+            this.txt_MultiTrackExisting.Location = new System.Drawing.Point(284, 303);
             this.txt_MultiTrackExisting.Name = "txt_MultiTrackExisting";
             this.txt_MultiTrackExisting.Size = new System.Drawing.Size(65, 21);
             this.txt_MultiTrackExisting.TabIndex = 375;
@@ -2160,6 +2159,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_YouTube_LinkNew.ForeColor = System.Drawing.Color.Gray;
             this.txt_YouTube_LinkNew.Location = new System.Drawing.Point(79, 15);
             this.txt_YouTube_LinkNew.Name = "txt_YouTube_LinkNew";
+            this.txt_YouTube_LinkNew.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
             this.txt_YouTube_LinkNew.Size = new System.Drawing.Size(110, 20);
             this.txt_YouTube_LinkNew.TabIndex = 314;
             this.txt_YouTube_LinkNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -2330,7 +2330,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_SizeExisting.Enabled = false;
             this.txt_SizeExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_SizeExisting.ForeColor = System.Drawing.Color.Gray;
-            this.txt_SizeExisting.Location = new System.Drawing.Point(283, 378);
+            this.txt_SizeExisting.Location = new System.Drawing.Point(284, 378);
             this.txt_SizeExisting.Name = "txt_SizeExisting";
             this.txt_SizeExisting.Size = new System.Drawing.Size(116, 20);
             this.txt_SizeExisting.TabIndex = 391;

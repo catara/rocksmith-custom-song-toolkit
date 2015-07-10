@@ -40,14 +40,23 @@ wnyp:
 - small improv: add the proper lasconvdate in the db 
 - big feature: get the volume of the audio file and then compare against the rest or a norm
 -+ small improv: Any change of song in the list should also save :)
+-+ small feature: maindb apply save settings (as well as the rest of the screens)
+	- when opening new windows..save settings
 - medium feature: add DLCs into cache.psarc to speed up the game startup
 - small feature: when opening MainDB and detecting directory check runs, if next directory exists (give a change to empty the db then if possible)
-
+- small feature: Dulpicate Management improv:checkbox if and of the + are diff..then add to title
+- small feature: Think about improving the Multitrack with Instr. list (more accurate but a little criptic)
+- big feature - For the tagging add the info to the Preview Image/Album Art
+- medium feature: when repacking the Retail songs Remove Bass DD
+- medium feature: add face for user gen previews
 
 Dulpicate Management improv:
-- checkbox if and of the + are diff..then add to title
-- activate ignore the rest as per overrite
-- Improve duplicate management for the beat it & smells fiasco
+- add/implement option for add preview add packing
+- improve the error management so the tool does not crash
+-- Improve duplicate management for the beat it & smells fiasco
+-- activate ignore the rest as per overrite
+-- audio preview button and is off for battouch already imported
+-- audio preview flag and is off for battouch already imported
 -- alternate is not the latest+1 no
 -- add audio/preview play
 -- add No Bass, no Lead, No Rhythm,No Drums, No Vocal, Only Bass, Only Lead, Only Rhythm, Only Drums, Only Vocal
@@ -69,24 +78,38 @@ Dulpicate Management improv:
 -- fix current yb/cf links not saved
 -- fix is_alt being save although not the case
 -- duplicates get 1 as track no
+-- regression dlc id align to right
+-- if multitasking dont flag it as alternate
+-- add will always be unique
+-- vs issue at multitrack ..other inconsitencie
+-- why broken dont delete after copy to broken
+-- add tunning does not add correctly when adding twice :)
+-- clear text does not remove tunning on exiting
+-- duplicates doesnt not go to the second ..beat it...
 
-Testing Issues:
-- better improve reading the version of joalene 1_05 (or 6669 should be 6.669)
-- audioslave sections missing maybe cause its an original and i used my own logic to strip the DD
-- medium feature: when repacking the Retail songs Remove Bass DD
-- big feature - For the tagging add the info to the Preview Image/Album Art
+Testing Issues to be checked&fixed:
+
 - joaleen is tone is different.....where do we see that
 - overrite sometimes gives Directory not empty error
-- Think about improving the Multitrack with Instr. list (more accurate but a little criptic)
 - save error log separately
-- add setalbum cover for all
-- add labels on covers
+
 - zombie fails
 - the pretender fails
 - check meaning of life
--- small feature: maindb apply save settings (as well as the rest of the screens)
-	- when opening new windows..save settings
+- audioslave sections missing maybe cause its an original and i used my own logic to strip the DD
+
+- change in the house of file no cover and same name
+- comedonwn and glcerine wrong names
+-- regression living on a prayer werid names
+-- weird alternate nunmbers (9)
+-- weird alternate nos 1722 hole in the earth learn to fly
+- ordinary world no alternate
+
 -+ add fix sections with external tool
+-- regressionPreview saving issue
+-- add setalbum cover for all
+-- better improve reading the version of joalene 1_05 (or 6669 should be 6.669)
+-- delete wav after preview split
 -- small bug: Standardization 87 message
 -- Big Bug PC repacking seems to fail
 -- small bug Serv the servant and Peaches doent seem to Import

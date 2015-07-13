@@ -109,7 +109,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_RemoveOldNew = new System.Windows.Forms.Button();
             this.lbl_Vocals = new System.Windows.Forms.Label();
             this.lbl_txt_Vocals = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.chbx_Autosave = new System.Windows.Forms.CheckBox();
             this.btn_TitleNew = new System.Windows.Forms.Button();
             this.btn_TitleExisting = new System.Windows.Forms.Button();
             this.btn_TitleSortNew = new System.Windows.Forms.Button();
@@ -918,18 +918,17 @@ namespace RocksmithToolkitGUI.DLCManager
             this.lbl_txt_Vocals.TabIndex = 341;
             this.lbl_txt_Vocals.Text = "Vocals";
             // 
-            // checkBox1
+            // chbx_Autosave
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Checked = true;
-            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox1.Enabled = false;
-            this.checkBox1.Location = new System.Drawing.Point(663, 35);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(98, 17);
-            this.checkBox1.TabIndex = 346;
-            this.checkBox1.Text = "AutoSave New";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.chbx_Autosave.AutoSize = true;
+            this.chbx_Autosave.Checked = true;
+            this.chbx_Autosave.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chbx_Autosave.Location = new System.Drawing.Point(663, 35);
+            this.chbx_Autosave.Name = "chbx_Autosave";
+            this.chbx_Autosave.Size = new System.Drawing.Size(98, 17);
+            this.chbx_Autosave.TabIndex = 346;
+            this.chbx_Autosave.Text = "AutoSave New";
+            this.chbx_Autosave.UseVisualStyleBackColor = true;
             // 
             // btn_TitleNew
             // 
@@ -2408,7 +2407,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.Controls.Add(this.btn_TitleSortExisting);
             this.Controls.Add(this.btn_TitleNew);
             this.Controls.Add(this.btn_TitleExisting);
-            this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.chbx_Autosave);
             this.Controls.Add(this.txt_AlbumExisting);
             this.Controls.Add(this.txt_ArtistExisting);
             this.Controls.Add(this.btn_RemoveOldNew);
@@ -2618,7 +2617,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private CueTextBox txt_VocalsNew;
         private CueTextBox txt_AlbumExisting;
         private CueTextBox txt_ArtistExisting;
-        private CheckBox checkBox1;
+        private CheckBox chbx_Autosave;
         private Button btn_TitleNew;
         private Button btn_TitleExisting;
         private Button btn_TitleSortNew;

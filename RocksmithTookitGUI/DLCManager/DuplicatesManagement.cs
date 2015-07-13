@@ -564,20 +564,21 @@ namespace RocksmithToolkitGUI.DLCManager
                             if (dateold != "12-13-11 13:11" && datenew != "12-13-11 13:11")
                             {
                                 //txt_Comment.Text += newold.ToString() + filed.Is_Original + Is_Original + Convert.ToDateTime(dateold) + Convert.ToDateTime(datenew);
+                                //Commenting out the Auto addition of OLDer&Newer
                                 if (newold && filed.Is_Original != "Yes" && Is_Original != "Yes" && myOldDate > myNewDate)
                                 {
                                     txtnew = " " + "(older)";
                                     txtold = " " + "(newer)";
-                                    ExistChng = true;
+                                    //ExistChng = true;
                                 }
                                 else if (newold && filed.Is_Original != "Yes" && Is_Original != "Yes" && myOldDate < myNewDate)
                                 {
                                     txtnew = " " + "(newer)";
                                     txtold = " " + "(older)";
-                                    ExistChng = true;
+                                    //ExistChng = true;
                                 }
-                                txt_TitleNew.Text = datas.SongInfo.SongDisplayName + txtnew + "";
-                                txt_TitleExisting.Text = filed.Song_Title + txtold + "";
+                                //txt_TitleNew.Text = datas.SongInfo.SongDisplayName + txtnew + "";
+                                //txt_TitleExisting.Text = filed.Song_Title + txtold + "";
                             }
                             //text += ((diff) ? "\n" + (14 + i) + "/14+Diff XML" + arg.ArrangementType + arg.RouteMask + ": " + lastConversionDateTime_cur + "->" + lastConversionDateTime_exist + ": Yes" : "");//+ art_hash + "->" + filed.art_Hash
                             //text += ((diffjson) ? "\n" + (15 + i) + "/14+Diff Json" + arg.ArrangementType + arg.RouteMask + ": " + lastConverjsonDateTime_cur + "->" + lastConverjsonDateTime_exist + ": Yes" : "");//+ art_hash + "->" + filed.art_Hash
@@ -902,8 +903,12 @@ namespace RocksmithToolkitGUI.DLCManager
             Asses = "Alternate";
             if (ExistChng)
             {
-                DialogResult result1 = MessageBox.Show("Save the Existing Edits?\nYes for save \nNo for Ignore", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (result1 == DialogResult.Yes) UpdateExisting();
+                if (!chbx_Autosave.Checked)
+                {
+                    DialogResult result1 = MessageBox.Show("Save the Existing Edits?\nYes for save \nNo for Ignore", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (result1 == DialogResult.Yes) UpdateExisting();
+                }
+                else UpdateExisting();
             }
             exit();
             this.Hide();
@@ -915,8 +920,12 @@ namespace RocksmithToolkitGUI.DLCManager
             Asses = "Ignore";
             if (ExistChng)
             {
+                                if (!chbx_Autosave.Checked)
+                {
                 DialogResult result1 = MessageBox.Show("Save the Existing Edits?\nYes for save \nNo for Ignore", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result1 == DialogResult.Yes) UpdateExisting();
+                }
+                                else UpdateExisting();
             }
             exit();
             this.Hide();
@@ -1004,7 +1013,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 MessageBox.Show(ee.Message + "Can not open Main DB connection ! " + sel);
                 //MessageBox.Show(ee.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            MessageBox.Show("Existing Record updated");
+            if (!chbx_Autosave.Checked) MessageBox.Show("Existing Record updated");
 
         }
 
@@ -1061,10 +1070,12 @@ namespace RocksmithToolkitGUI.DLCManager
            // //txt_TitleNew.Text = txt_TitleNew.Text.Replace(" (older)", "");
            // txt_TitleNew.Text = txt_TitleNew.Text.Replace(" (newer)", "");
            //// txt_TitleExisting.Text = txt_TitleExisting.Text.Replace(" (older)", "");
-            txt_TitleExisting.Text = txt_TitleExisting.Text.Replace(" (newer)", "").Replace(" (older)", "").Replace(" " + txt_AvailTracksExisting.Text, "").Replace(" " + txt_VersionExisting.Text, "").Replace(" " + txt_AuthorExisting.Text, "").Replace(" noDD", "").Replace(" DD", "").Replace(" "+txt_TuningExisting.Text, "");
+            txt_TitleExisting.Text = txt_TitleExisting.Text.Replace(" (newer)", "").Replace(" (older)", "").Replace(" " + txt_AvailTracksExisting.Text, "").Replace(" v." + txt_VersionExisting.Text, "").Replace(" " + txt_AuthorExisting.Text, "").Replace(" noDD", "").Replace(" DD", "").Replace(" "+txt_TuningExisting.Text, "");
 
-            txt_TitleNew.Text = datas.SongInfo.SongDisplayName.Replace(" (newer)", "").Replace(" (older)", "").Replace(" " + txt_AvailTracksNew.Text, "").Replace(" " + txt_VersionNew.Text, "").Replace(" " + txt_AuthorNew.Text, "").Replace(" noDD", "").Replace(" DD", "").Replace(" " + txt_TuningNew.Text, ""); ;
+            txt_TitleNew.Text = datas.SongInfo.SongDisplayName.Replace(" (newer)", "").Replace(" (older)", "").Replace(" " + txt_AvailTracksNew.Text, "").Replace(" v." + txt_VersionNew.Text, "").Replace(" " + txt_AuthorNew.Text, "").Replace(" noDD", "").Replace(" DD", "").Replace(" " + txt_TuningNew.Text, ""); ;
             //txt_TitleExisting.Text = filed.Song_Title;
+            if (txt_TitleExisting.Text == txt_TitleNew.Text) lbl_Title.ForeColor = lbl_Artist.ForeColor;
+
         }
 
         private void txt_JSONVocalNew_TextChanged(object sender, EventArgs e)
@@ -1177,17 +1188,20 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             if (txt_TitleNew.Text.IndexOf(" (older)") > 0 || txt_TitleNew.Text.IndexOf(" (newer)") > 0)
             {
-                txt_TitleNew.Text = txt_TitleNew.Text.Replace(" (older)", " v." + txt_VersionNew.Text);
+                txt_TitleNew.Text = (txt_TitleNew.Text.Replace(" v." + txt_VersionNew.Text, "")).Replace(" (older)", " v." + txt_VersionNew.Text);
                 txt_TitleNew.Text = txt_TitleNew.Text.Replace(" (newer)", " v." + txt_VersionNew.Text);
             }
-            else txt_TitleNew.Text = txt_TitleNew.Text+ " v." + txt_VersionNew.Text;
+            else txt_TitleNew.Text = txt_TitleNew.Text.Replace(" v." + txt_VersionNew.Text,"")+ " v." + txt_VersionNew.Text;
 
             if (txt_TitleExisting.Text.IndexOf(" (older)") > 0 || txt_TitleExisting.Text.IndexOf(" (newer)") > 0)
             {
-                txt_TitleExisting.Text = txt_TitleExisting.Text.Replace(" (older)", " v." + txt_VersionExisting.Text);
+                txt_TitleExisting.Text = txt_TitleExisting.Text.Replace(" v." + txt_VersionExisting.Text, "").Replace(" (older)", " v." + txt_VersionExisting.Text);
                 txt_TitleExisting.Text = txt_TitleExisting.Text.Replace(" (newer)", " v." + txt_VersionExisting.Text);
             }
-            else txt_TitleExisting.Text = txt_TitleExisting.Text+" v." + txt_VersionExisting.Text;
+            else txt_TitleExisting.Text = txt_TitleExisting.Text.Replace(" v." + txt_VersionExisting.Text, "") + " v." + txt_VersionExisting.Text;
+
+            if (txt_TitleExisting.Text == txt_TitleNew.Text) lbl_Title.ForeColor = lbl_Reference.ForeColor;
+            else lbl_Title.ForeColor = lbl_Artist.ForeColor;
         }
 
         private void btn_ArtistSortNew_Click(object sender, EventArgs e)
@@ -1235,6 +1249,8 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             txt_TitleNew.Text = txt_TitleNew.Text.Replace(" "+txt_AvailTracksNew.Text, "") + " " + txt_AvailTracksNew.Text;
             txt_TitleExisting.Text = txt_TitleExisting.Text.Replace(" "+txt_AvailTracksExisting.Text, "") + " " + txt_AvailTracksExisting.Text;
+            if (txt_TitleExisting.Text == txt_TitleNew.Text) lbl_Title.ForeColor = lbl_Reference.ForeColor;
+            else lbl_Title.ForeColor = lbl_Artist.ForeColor;
         }
 
         private void btn_CoverNew_Click(object sender, EventArgs e)
@@ -1265,31 +1281,39 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btn_AddAuthor_Click(object sender, EventArgs e)
         {
-            txt_TitleNew.Text += " " + txt_AuthorNew.Text;
-            txt_TitleExisting.Text += " " + txt_AuthorExisting.Text;
+            txt_TitleNew.Text = txt_TitleNew.Text.Replace(" " + txt_AuthorNew.Text, "") + (" " + txt_AuthorNew.Text).Replace(" Custom Song Creator", "");
+            txt_TitleExisting.Text = txt_TitleExisting.Text.Replace(" " + txt_AuthorExisting.Text, "") + (" " + txt_AuthorExisting.Text).Replace(" Custom Song Creator", "");
+            if (txt_TitleExisting.Text == txt_TitleNew.Text) lbl_Title.ForeColor = lbl_Reference.ForeColor;
+            else lbl_Title.ForeColor = lbl_Artist.ForeColor;
         }
 
         private void btn_AddDD_Click(object sender, EventArgs e)
         {
             txt_TitleNew.Text = (txt_TitleNew.Text).Replace(" DD", "").Replace(" noDD", "") + " " + (txt_DDNew.Text == "Yes" ? "DD" : "noDD");
             txt_TitleExisting.Text = (txt_TitleExisting.Text).Replace(" DD", "").Replace(" noDD", "") + " " + (txt_DDExisting.Text == "Yes" ? "DD" : "noDD");
+            if (txt_TitleExisting.Text == txt_TitleNew.Text) lbl_Title.ForeColor = lbl_Reference.ForeColor;
+            else lbl_Title.ForeColor = lbl_Artist.ForeColor;
         }
 
         private void btn_AddTunning_Click(object sender, EventArgs e)
         {
             txt_TitleNew.Text = txt_TitleNew.Text.Replace(" "+txt_TuningNew.Text, "") + " " + txt_TuningNew.Text;
             txt_TitleExisting.Text = txt_TitleExisting.Text.Replace(" " + txt_TuningExisting.Text, "") + " " + txt_TuningExisting.Text;
+            if (txt_TitleExisting.Text == txt_TitleNew.Text) lbl_Title.ForeColor = lbl_Reference.ForeColor;
+            else lbl_Title.ForeColor = lbl_Artist.ForeColor;
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
             txt_TitleNew.Text = txt_TitleNew.Text.Replace(" (older)", "").Replace(" (newer)", "") + lbl_New.Text;// " (" + +")";
             txt_TitleExisting.Text = txt_TitleExisting.Text.Replace(" (older)", "").Replace(" (newer)", "") + lbl_Existing.Text;// " (" + +")";
+            if (txt_TitleExisting.Text == txt_TitleNew.Text) lbl_Title.ForeColor = lbl_Reference.ForeColor;
+            else lbl_Title.ForeColor = lbl_Artist.ForeColor;
         }
 
         private void button6_Click_1(object sender, EventArgs e)
         {
-            string t = filed.Folder_Name;
+            string t = unpackedDir;
             try
             {
                 Process process = Process.Start(@t);
@@ -1303,7 +1327,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btn_GoToExisting_Click(object sender, EventArgs e)
         {
-            string t = unpackedDir;
+            string t = filed.Folder_Name;
             try
             {
                 Process process = Process.Start(@t);

@@ -44,6 +44,7 @@ namespace RocksmithToolkitGUI.DLCManager
         public BackgroundWorker bwRGenerate = new BackgroundWorker(); //bcapi
         internal static string AppWD = AppDomain.CurrentDomain.BaseDirectory; //when repacking
         public bool SaveOK = false;
+        public bool Search = false;
         DLCPackageData data;
 
         private BindingSource Main = new BindingSource();
@@ -693,8 +694,8 @@ namespace RocksmithToolkitGUI.DLCManager
                     MessageBox.Show(ee.Message + "Can't run Search ! " + SearchCmd);
                     //MessageBox.Show(ee.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-            else MessageBox.Show("Add a search criteria");
-            btn_Search.Enabled = false;
+            else MessageBox.Show("Add a search criteria");            
+            Search=true;
         }
 
 
@@ -1244,7 +1245,7 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_Artist_Sort.Enabled = false;
             txt_Album.Enabled = false;
             txt_Title_Sort.Enabled = false;
-            if (btn_Search.Enabled)
+            if (Search)
             {
                 ////SearchCmd = "SELECT * FROM Main WHERE " + (txt_Artist.Text != "" ? " Artist Like '%" + txt_Artist.Text + "%'" : "") + (txt_Artist.Text != "" ? (txt_Title.Text != "" ? " AND " : "") : "") + (txt_Title.Text != "" ? " Song_Title Like '%" + txt_Title.Text + "%'" : "") + " ORDER BY Artist, Album_Year, Album, Song_Title ;";
                 SearchCmd = "SELECT * FROM Main ORDER BY Artist, Album_Year, Album, Song_Title;";
@@ -1252,9 +1253,14 @@ namespace RocksmithToolkitGUI.DLCManager
                 Populate(ref DataViewGrid, ref Main);//, ref bsPositions, ref bsBadges);
                 DataViewGrid.EditingControlShowing += DataGridView1_EditingControlShowing;
                 DataViewGrid.Refresh();
-                //btn_Search.Enabled = false;
+                btn_SearchReset.Text = "Start Search";
+                btn_Search.Enabled = false;
             }
-            btn_Search.Enabled = true;
+            else
+            {
+                btn_Search.Enabled = true;
+                btn_SearchReset.Text = "Exit Search";
+            }
         }
 
         private void btn_Close_Click(object sender, EventArgs e)
@@ -1264,26 +1270,37 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void cmb_Filter_SelectedValueChanged(object sender, EventArgs e)
         {
-            //No Cover
-            //No Preview
-            //No Vocals
-            //No Section
-            //No Bass
             //No Guitar
-            //Original
-            //CDLC
-            //Selected
+            //No Preview
+            //No Section
+            //No Vocals
+            //No Track No.
+            //No Version
+            //No Author
+            //No Bass DD
+            //No Bass
+            //No DD
+            //With DD
+            //Alternate
             //Beta
             //Broken
-            //Alternate
-            //With DD
-            //No DD
-            //No Bass DD
+            //Selected
+            //With Bonus
+            //Original
+            //CDLC
+            //Drop D
             //E Standard
             //Eb Standard
-            //Drop D
             //Other Tunings
-            //With Bonus
+            //Pc
+            //PS3
+            //Mac
+            //XBOX360
+            //0ALL
+            //Track No. 1
+            //DLCID diff than Default
+            //Autom gen Preview
+            //With Duplicates
 
             //MessageBox.Show(cmb_Filter.Text.ToString() + SearchCmd);
             SearchCmd = "SELECT * FROM Main WHERE ";
@@ -1371,6 +1388,26 @@ namespace RocksmithToolkitGUI.DLCManager
                     break;
                 case "XBOX360":
                     SearchCmd += "Platform = 'XBOX360'";
+                    break;
+                //0ALL
+                case "0All":
+                    SearchCmd += "1=1";
+                    break;
+                //Track No. 1
+                case "Track No. 1":
+                    SearchCmd += "Track_No = '1'";
+                    break;
+                //DLCID diff than Default
+                case "DLCID diff than Default":
+                    SearchCmd += "DLC_AppID = '" + ConfigRepository.Instance()["general_defaultappid_RS2014"] + "'";
+                    break;
+                //Autom gen Preview
+                case "Autom gen Preview":
+                    SearchCmd += "Platform = '00:30' AND PreviewLenght='30'";
+                    break;
+                //With Duplicates
+                case "With Duplicates":
+                    SearchCmd += "Available_Duplicate = 'Yes'";
                     break;
                 //case "":
                 //    SearchCmd = "";
@@ -2681,17 +2718,33 @@ namespace RocksmithToolkitGUI.DLCManager
         private void button4_Click(object sender, EventArgs e)
         {
             //1. Delete Song Folder
+            var j = DataViewGrid.SelectedCells[0].RowIndex;
+            string filePath = DataViewGrid.Rows[j].Cells[22].Value.ToString(); //TempPath + "\\0_old\\" + 
              try
             {
-                var j = DataViewGrid.SelectedCells[0].RowIndex;
-                string filePath = DataViewGrid.Rows[j].Cells[22].Value.ToString(); //TempPath + "\\0_old\\" + 
-                Directory.Delete(filePath, true);
+                 Directory.Delete(filePath, true);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 MessageBox.Show("Can not Delete Song folder ! ");
             }
+
+             //Move psarc file to Duplicates
+             var iii = DataViewGrid.SelectedCells[0].RowIndex;
+            string psarcPath = TempPath + "\\0_old\\"+ DataViewGrid.Rows[iii].Cells[19].Value.ToString();
+             try
+             {
+                 if (!File.Exists(psarcPath.Replace("0_old", "0_duplicate\\")))
+                 File.Move(psarcPath, psarcPath.Replace("0_old", "0_duplicate\\"));
+                 else File.Delete(psarcPath);
+             }
+             catch (Exception ex)
+             {
+                 //MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                 //MessageBox.Show("Can not Move psarc ! ");
+                 //File.Delete(psarcPath);
+             }
 
             var cmd = "DELETE FROM Main WHERE ID IN ("+txt_ID.Text+")";
             //var DB_Path = DBFolder;
@@ -3078,7 +3131,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private void btn_AddSections_Click(object sender, EventArgs e)
         {
             var j = DataViewGrid.SelectedCells[0].RowIndex;
-            var xx = Path.Combine(AppWD, "DLCManager\\bpr_v0.3\\bpr.exe ", DataViewGrid.Rows[j].Cells[18].Value.ToString()); 
+            var xx = Path.Combine(AppWD, "DLCManager\\bpr_v0.3\\bpr.exe");// +" " + DataViewGrid.Rows[j].Cells[18].Value.ToString(); 
             try
             {
                 Process process = Process.Start(@xx);
@@ -3086,7 +3139,7 @@ namespace RocksmithToolkitGUI.DLCManager
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                MessageBox.Show("Can not open Main DB connection in MainDB ! " + DB_Path);
+                MessageBox.Show("Can not open External tool for phase beats and section fixes ! " + DB_Path);
             }
         }
     }

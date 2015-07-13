@@ -240,7 +240,7 @@
             "<7. Remove the 4sec of the Preview song>",
             "8. Don\'t repack Broken songs",
             "9. Pack to cross-platform Compatible Filenames",
-            "<10. Generate random 30sec Preview>",
+            "10. @Pack Add Preview if missing 00:30 for 30sec",
             "<11. Convert Originals>",
             "<12. Repack PC>",
             "13. Add DD (5 Levels)",
@@ -255,7 +255,7 @@
             "22. Pack with The/Die at the end of Artist/Title Sort",
             "23. Import with the The/Die only at the end of Artist Sort",
             "24. Pack with The/Die only at the end of Artist Sort",
-            "25. Use translation tables for naming standardization",
+            "25. @Import Use translation tables for naming standardization",
             "26. If Original don\'t add QAs(NOs;DLC/ORIG;etc.)",
             "27. When packing Add 5 Levels of DD only to Guitar tracks",
             "<28. Convert and Transfer/FTP>",
@@ -274,6 +274,8 @@
             "41. Delete ORIG HSAN/OGG when Packing Retails songs",
             "42. Try to get Track No. from Spotify ",
             "43. Save Log After Import (DLCManager INSIDE folder)",
+            "44. @Import Set the DLCID autom",
+            "45. @Pack Set the DLCID autom",
             "<IMPORT>",
             "<@Pack>"});
             this.chbx_Additional_Manipulations.Location = new System.Drawing.Point(240, 88);

@@ -227,6 +227,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_SizeNew = new RocksmithToolkitGUI.CueTextBox();
             this.lbl_Size = new System.Windows.Forms.Label();
             this.lbl_Multitrack = new System.Windows.Forms.Label();
+            this.chbx_UseBrakets = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPathNew)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPathExisting)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -923,11 +924,11 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_Autosave.AutoSize = true;
             this.chbx_Autosave.Checked = true;
             this.chbx_Autosave.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chbx_Autosave.Location = new System.Drawing.Point(663, 35);
+            this.chbx_Autosave.Location = new System.Drawing.Point(687, 35);
             this.chbx_Autosave.Name = "chbx_Autosave";
-            this.chbx_Autosave.Size = new System.Drawing.Size(98, 17);
+            this.chbx_Autosave.Size = new System.Drawing.Size(73, 17);
             this.chbx_Autosave.TabIndex = 346;
-            this.chbx_Autosave.Text = "AutoSave New";
+            this.chbx_Autosave.Text = "AutoSave";
             this.chbx_Autosave.UseVisualStyleBackColor = true;
             // 
             // btn_TitleNew
@@ -2366,11 +2367,25 @@ namespace RocksmithToolkitGUI.DLCManager
             this.lbl_Multitrack.TabIndex = 394;
             this.lbl_Multitrack.Text = "Vs.";
             // 
+            // chbx_UseBrakets
+            // 
+            this.chbx_UseBrakets.AutoSize = true;
+            this.chbx_UseBrakets.Checked = true;
+            this.chbx_UseBrakets.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chbx_UseBrakets.Enabled = false;
+            this.chbx_UseBrakets.Location = new System.Drawing.Point(489, 334);
+            this.chbx_UseBrakets.Name = "chbx_UseBrakets";
+            this.chbx_UseBrakets.Size = new System.Drawing.Size(271, 17);
+            this.chbx_UseBrakets.TabIndex = 395;
+            this.chbx_UseBrakets.Text = "At Save Use Brackets for Additional Title added info";
+            this.chbx_UseBrakets.UseVisualStyleBackColor = true;
+            // 
             // Duplicates_Management
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(772, 779);
+            this.Controls.Add(this.chbx_UseBrakets);
             this.Controls.Add(this.lbl_Multitrack);
             this.Controls.Add(this.lbl_Size);
             this.Controls.Add(this.lblSoye);
@@ -2685,5 +2700,6 @@ namespace RocksmithToolkitGUI.DLCManager
         private Button btn_PlayAudioNew;
         private Button btn_PlayPreviewExisting;
         private Button btn_PlayAudioExisting;
+        private CheckBox chbx_UseBrakets;
     }
 }

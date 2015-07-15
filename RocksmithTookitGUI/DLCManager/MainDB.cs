@@ -1327,7 +1327,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     SearchCmd += "Has_Guitar <> 'Yes'";
                     break;
                 case "No Track No.":
-                    SearchCmd += "Has_Track_No <> 'Yes'";
+                    SearchCmd += "Has_Track_No <> 'Yes' OR Track_No='-1' OR Track_No='0'";
                     break;
                 case "No Version":
                     SearchCmd += "Has_Version <> 'Yes'";
@@ -3055,7 +3055,12 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void bth_GetTrackNo_Click(object sender, EventArgs e)
         {
-            txt_Track_No.Text = (GetTrackNo(txt_Artist.Text, txt_Album.Text, txt_Title.Text)).ToString();
+            var CleanTitle = "";
+            if (txt_Title.Text.IndexOf("[") > 0) CleanTitle = txt_Title.Text.Substring(0,txt_Title.Text.IndexOf("["));
+            if (txt_Title.Text.IndexOf("]") > 0) CleanTitle += txt_Title.Text.Substring(txt_Title.Text.IndexOf("]"), txt_Title.Text.Length - txt_Title.Text.IndexOf("]"));
+            else if (txt_Title.Text.IndexOf("[") == 0 && txt_Title.Text.Substring(0,1) != "[") CleanTitle = txt_Title.Text;
+            
+            txt_Track_No.Text = (GetTrackNo(txt_Artist.Text, txt_Album.Text, CleanTitle)).ToString();
             var i = DataViewGrid.SelectedCells[0].RowIndex;
 
             if (txt_Track_No.Text == "-1") { chbx_TrackNo.Checked = false; DataViewGrid.Rows[i].Cells[54].Value = "No"; }

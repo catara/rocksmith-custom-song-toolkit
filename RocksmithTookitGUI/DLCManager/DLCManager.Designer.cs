@@ -241,8 +241,8 @@
             "8. Don\'t repack Broken songs",
             "9. Pack to cross-platform Compatible Filenames",
             "10. @Pack Add Preview if missing 00:30 for 30sec",
-            "<11. Convert Originals>",
-            "<12. Repack PC>",
+            "11. @Pack Make all DLC IDs unique",
+            "<12. @PackAdd DD (5 Levels)>",
             "13. Add DD (5 Levels)",
             "14. Import all Duplicates as Alternates",
             "15. Import any Custom as Alternate if an Original exists",
@@ -276,6 +276,9 @@
             "43. Save Log After Import (DLCManager INSIDE folder)",
             "44. @Import Set the DLCID autom",
             "45. @Pack Set the DLCID autom",
+            "<46. Convert Originals>",
+            "47. Duplicate Mangement, Title added info is inbetween []",
+            "48. Add New Toolkit v. and RePackedByAuthor",
             "<IMPORT>",
             "<@Pack>"});
             this.chbx_Additional_Manipulations.Location = new System.Drawing.Point(240, 88);

@@ -57,6 +57,9 @@ Testing Issues to be checked&fixed:
 
 - the pretender fails
 - audioslave sections missing maybe cause its an original and i used my own logic to strip the DD
+- some standardization lines sill generate duplicates..any
+- some tracks no don't get read/picked
+	- Ralph Wiggum is not 7 ..is 3..but it was 7 :)
 
 ### dev issues:
 + Toolkit version flag does not sync to&from Github: Run RunMeFirst.bat

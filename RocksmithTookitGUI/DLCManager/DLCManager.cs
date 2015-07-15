@@ -342,17 +342,16 @@ namespace RocksmithToolkitGUI.DLCManager
             else chbx_Additional_Manipulations.SetItemCheckState(43, CheckState.Unchecked);
             if (ConfigRepository.Instance()["dlcm_AdditionalManipul44"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(44, CheckState.Checked);
             else chbx_Additional_Manipulations.SetItemCheckState(44, CheckState.Unchecked);
-            //NOT YET In     
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul45"] == "Yes") chbx_Additional_Manipualtions.SetItemCheckState(45, CheckState.Checked);
-            //else chbx_Additional_Manipualtions.SetItemCheckState(45, CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul46"] == "Yes") chbx_Additional_Manipualtions.SetItemCheckState(46, CheckState.Checked);
-            //else chbx_Additional_Manipualtions.SetItemCheckState(46, CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul47"] == "Yes") chbx_Additional_Manipualtions.SetItemCheckState(47, CheckState.Checked);
-            //else chbx_Additional_Manipualtions.SetItemCheckState(47, CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul48"] == "Yes") chbx_Additional_Manipualtions.SetItemCheckState(48, CheckState.Checked);
-            //else chbx_Additional_Manipualtions.SetItemCheckState(48, CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul49"] == "Yes") chbx_Additional_Manipualtions.SetItemCheckState(49, CheckState.Checked);
-            //else chbx_Additional_Manipualtions.SetItemCheckState(49, CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul45"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(45, CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(45, CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul46"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(46, CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(46, CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul47"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(47, CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(47, CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul48"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(48, CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(48, CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul49"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(49, CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(49, CheckState.Unchecked);
             //if (ConfigRepository.Instance()["dlcm_AdditionalManipul50"] == "Yes") chbx_Additional_Manipualtions.SetItemCheckState(50, CheckState.Checked);
             //else chbx_Additional_Manipualtions.SetItemCheckState(50, CheckState.Unchecked);
 
@@ -3361,7 +3360,7 @@ namespace RocksmithToolkitGUI.DLCManager
         // For Each Corrected Record build up an Update sentence
         // Insert any translation if not already existing
         {
-            rtxt_StatisticsOnReadDLCs.Text = "Starting Standartization" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+            //rtxt_StatisticsOnReadDLCs.Text = "Starting Standartization" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
             //var cmd2 = "";
             var cmd1 = "";
             var cmd2 = "";
@@ -3488,7 +3487,9 @@ namespace RocksmithToolkitGUI.DLCManager
                 //rtxt_StatisticsOnReadDLCs.Text = "0" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                 if (frm1.Comment != comment) comment = frm1.Comment;
                 //rtxt_StatisticsOnReadDLCs.Text = "1" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                if (frm1.Title != SongDisplayName) SongDisplayName = frm1.Title;
+                if (frm1.Title != SongDisplayName) if (chbx_Additional_Manipulations.GetItemChecked(46)) //SongDisplayName = filed.Song_Title + "[" + frm1.Title.Replace(filed.Song_Title, "") + "]";
+                //    else
+                SongDisplayName = frm1.Title;
                 //rtxt_StatisticsOnReadDLCs.Text = "2" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                 if (frm1.Version != tkversion) PackageVersion = frm1.Version;
                 //rtxt_StatisticsOnReadDLCs.Text = "\n" + tkversion+"-----"+ author + "\n" + rtxt_StatisticsOnReadDLCs.Text;
@@ -3814,6 +3815,13 @@ namespace RocksmithToolkitGUI.DLCManager
                         file.Song_Title_Sort = file.Song_Title;
                     }
 
+                    if (chbx_Additional_Manipulations.GetItemChecked(10))
+                    {
+                        Random random = new Random();
+                        string apppid = random.Next(0, 100000) + file.DLC_Name;
+                        file.DLC_Name = apppid;
+                    }
+
                     //rtxt_StatisticsOnReadDLCs.Text = "ggggoo" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                     if (chbx_Additional_Manipulations.GetItemChecked(23) && file.Artist_Sort.Length > 4) //24.Pack with The/ Die only at the end of Title Sort 
                     {
@@ -3837,6 +3845,9 @@ namespace RocksmithToolkitGUI.DLCManager
                         file.Artist_Sort = (file.Artist_Sort.Substring(0, 4) == "DIE " ? file.Artist_Sort.Substring(4, file.Artist_Sort.Length - 4) + ",Die" : file.Artist_Sort);
                     }
                     //rtxt_StatisticsOnReadDLCs.Text = "4eeeeeeoo" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                    var toolkitv="";
+                    if (chbx_Additional_Manipulations.GetItemChecked(47)) toolkitv=ToolkitVersion.version.ToString();
+                    else toolkitv=file.Version ;
                     data = new DLCPackageData
                     {
                         GameVersion = GameVersion.RS2014,
@@ -3869,9 +3880,12 @@ namespace RocksmithToolkitGUI.DLCManager
                         Volume = file.Volume.ToInt32(),
                         PreviewVolume = file.Preview_Volume.ToInt32(),
                         SignatureType = info.SignatureType,
-                        PackageVersion = file.Version
+                        PackageVersion = toolkitv//file.Version                        
                     };
                     //bcapirtxt_StatisticsOnReadDLCs.Text = file.Song_Title+" test"+i+ data.SongInfo.Artist + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                    
+                    if (file.Author == "Custom Song Creator" || file.Author == "" && chbx_Additional_Manipulations.GetItemChecked(47)) file.Author = "RepackedBy" + ConfigRepository.Instance()["general_defaultauthor"].ToUpper();
+
                     var norm_path = txt_TempPath.Text + "\\" + ((file.ToolkitVersion == "") ? "ORIG" : "CDLC") + "_" + data.SongInfo.Artist + "_" + data.SongInfo.SongYear + "_" + data.SongInfo.Album + "_" + data.SongInfo.SongDisplayName;
                     //rtxt_StatisticsOnReadDLCs.Text = "8"+data.PackageVersion+"...manipul" + norm_path + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                     //manipulating the info
@@ -3911,7 +3925,8 @@ namespace RocksmithToolkitGUI.DLCManager
                     //    if (file.Is_Broken == "Yes") break;
                     //rtxt_StatisticsOnReadDLCs.Text = "...4" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                     //rtxt_StatisticsOnReadDLCs.Text = "...manipl" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                    if (chbx_Additional_Manipulations.GetItemChecked(2)) //"3. Make all DLC IDs unique (&save)"
+                    if (chbx_Additional_Manipulations.GetItemChecked(2))
+                        //"3. Make all DLC IDs unique (&save)"
                         if (file.UniqueDLCName != null) data.Name = file.UniqueDLCName;
                         else
                         {

@@ -75,7 +75,7 @@ namespace RocksmithToolkitLib.DLCPackage
             data.GameVersion = (convert ? GameVersion.RS2014 : GameVersion.RS2012);
             data.SignatureType = PackageMagic.CON;
             // set default volumes
-            data.Volume = (float)-7.0; // - 7 default maybe too quite
+            data.Volume = -6.5F; // default maybe too quite
             data.PreviewVolume = data.Volume;
 
             //Load song manifest
@@ -222,11 +222,11 @@ namespace RocksmithToolkitLib.DLCPackage
                         obj1.SongToXml(rsSong, xmlFile, true);
 
                     if (convert)
-                    {
                         using (var obj1 = new Rs1Converter())
-                            tones2014.Add(obj1.ToneToTone2014(tone));
-                    }
+                            tones2014.Add(obj1.ToneToTone2014(tone, rsSong));
 
+                    var test = tones2014.ToArray();
+ 
                     // load attr2014 with RS1 mapped values for use by Arrangement()
                     attr2014.Tone_Base = tone.Name;
                     attr2014.ArrangementName = arrangement.ArrangementName;
@@ -351,9 +351,9 @@ namespace RocksmithToolkitLib.DLCPackage
                 }
             }
 
-            // get rid of duplicate tones
-            tones2014 = tones2014.Where(p => p.Key != null)
-                .GroupBy(p => p.Key).Select(g => g.First()).ToList();
+            // get rid of duplicate tone names
+            tones2014 = tones2014.Where(p => p.Name != null)
+                .GroupBy(p => p.Name).Select(g => g.First()).ToList();
             data.TonesRS2014 = tones2014;
 
             //Get Album Artwork DDS Files

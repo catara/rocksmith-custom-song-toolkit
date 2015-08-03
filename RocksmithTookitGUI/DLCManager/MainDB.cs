@@ -62,6 +62,7 @@ namespace RocksmithToolkitGUI.DLCManager
         public bool updateDBb = false;
         public bool AllowORIGDeleteb = false;
         public bool AllowEncriptb = false;
+        public string GetTrkTxt = "";
         //public OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn);
 
         //private BindingSource bsPositions = new BindingSource();
@@ -399,7 +400,8 @@ namespace RocksmithToolkitGUI.DLCManager
                 txt_Album.Enabled = true;
                 txt_Title_Sort.Enabled = true;
                 //Defaults
-                txt_FTPPath.Text = ConfigRepository.Instance()["dlcm_FTP"];;
+                chbx_PreSavedFTP.Text = ConfigRepository.Instance()["dlcm_FTP"];
+                txt_FTPPath.Text = chbx_PreSavedFTP.Text=="EU"? ConfigRepository.Instance()["dlcm_FTP1"]: ConfigRepository.Instance()["dlcm_FTP2"];
                 txt_PreviewStart.Value.AddMinutes(10);
                 if (ConfigRepository.Instance()["dlcm_RemoveBassDD"]=="Yes") chbx_RemoveBassDD.Checked=true;
                 else chbx_RemoveBassDD.Checked=false;
@@ -1265,6 +1267,16 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btn_Close_Click(object sender, EventArgs e)
         {
+            ConfigRepository.Instance()["dlcm_FTP"] = chbx_PreSavedFTP.Text;
+            if (chbx_PreSavedFTP.Text=="EU") ConfigRepository.Instance()["dlcm_FTP1"] = txt_FTPPath.Text;
+            if (chbx_PreSavedFTP.Text=="US") ConfigRepository.Instance()["dlcm_FTP2"] = txt_FTPPath.Text;
+            ConfigRepository.Instance()["dlcm_RemoveBassDD"] = chbx_RemoveBassDD.Checked? "Yes": "No";
+            ConfigRepository.Instance()["dlcm_UniqueID"] = chbx_UniqueID.Checked? "Yes": "No";
+            ConfigRepository.Instance()["dlcm_andCopy"] = chbx_Copy.Checked? "Yes": "No";
+            //ConfigRepository.Instance()["dlcm_PathForBRM"] = ;
+            //ConfigRepository.Instance()["dlcm_Preview Lenght"] = ;
+            //ConfigRepository.Instance()["dlcm_PreviewStart"] = ;
+            //ConfigRepository.Instance()[""] = ;
             this.Close();
         }
 
@@ -1551,7 +1563,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 //var endno = (txt_FTPPath.Text.LastIndexOf("BL")) + 9;
                 //var GameName = ((txt_FTPPath.Text).Substring(startno, endno - startno)).Replace("GAMES/", "");
                 //var newpath = txt_FTPPath.Text.Replace("GAMES", "game").Replace("PS3_GAME", GameID).Replace(GameName + "/", "");
-                FTPFile(txt_FTPPath.Text, h + "_ps3.psarc.edat");
+                FTPFile(txt_FTPPath.Text, h + "_ps3.psarc.edat", TempPath, SearchCmd);
                 copyftp = " and FTPed";
             }
             else if ((chbx_Format.Text == "PC" || chbx_Format.Text == "Mac") && chbx_Copy.Checked)
@@ -1594,10 +1606,10 @@ namespace RocksmithToolkitGUI.DLCManager
 
         }
 
-        public void FTPFile(string filel, string filen)
+        public static void FTPFile(string filel, string filen, string TempPat, string SearchCm)
         {
             // Get the object used to communicate with the server.
-            var ddd = filel + filen.Replace(TempPath + "\\", "");
+            var ddd = filel + filen.Replace(TempPat + "\\", "");
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(ddd);
             request.Method = WebRequestMethods.Ftp.UploadFile;
             request.UseBinary = true;
@@ -1620,7 +1632,7 @@ namespace RocksmithToolkitGUI.DLCManager
             }
             catch (System.IO.FileNotFoundException ee)
             {
-                MessageBox.Show(ee.Message + "PS3 is down :(! " + SearchCmd);
+                MessageBox.Show(ee.Message + "PS3 is down :(! " + SearchCm);
                 //MessageBox.Show(ee.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -2205,24 +2217,44 @@ namespace RocksmithToolkitGUI.DLCManager
                     SignatureType = info.SignatureType,
                     PackageVersion = file.Version
                 };
+
+                //get track no
+                if (ConfigRepository.Instance()["dlcm_AdditionalManipul48"] == "Yes")
+            {
+                var CleanTitle = "";
+                if (txt_Title.Text.IndexOf("[") > 0) CleanTitle = txt_Title.Text.Substring(0, txt_Title.Text.IndexOf("["));
+                if (txt_Title.Text.IndexOf("]") > 0) CleanTitle += txt_Title.Text.Substring(txt_Title.Text.IndexOf("]"), txt_Title.Text.Length - txt_Title.Text.IndexOf("]"));
+                else if (txt_Title.Text.IndexOf("[") == 0 || txt_Title.Text.Substring(0, 1) != "[") CleanTitle = txt_Title.Text;
+      
+                string z = (GetTrackNo(txt_Artist.Text, txt_Album.Text, CleanTitle)).ToString();
+                txt_Track_No.Text = z == "0" && txt_Track_No.Text != "" ? txt_Track_No.Text : z;
+            }
+
+
                 //bcapirtxt_StatisticsOnReadDLCs.Text = file.Song_Title+" test"+i+ data.SongInfo.Artist + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                var norm_path = TempPath + "\\" + ((file.ToolkitVersion == "") ? "ORIG" : "CDLC") + "_" + data.SongInfo.Artist + "_" + data.SongInfo.SongYear + "_" + data.SongInfo.Album + "_" + data.SongInfo.SongDisplayName;
+                var norm_path = TempPath + "\\" + Manipulate_strings(ConfigRepository.Instance()["dlcm_File_Name"], i, false, false); ;//((file.ToolkitVersion == "") ? "ORIG" : "CDLC") + "_" + data.SongInfo.Artist + "_" + data.SongInfo.SongYear + "_" + data.SongInfo.Album + "_" + data.SongInfo.SongDisplayName;
                 //rtxt_StatisticsOnReadDLCs.Text = "8"+data.PackageVersion+"...manipul" + norm_path + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                 //manipulating the info
-                //if (cbx_Activ_Title.Checked)
-                data.SongInfo.SongDisplayName = Manipulate_strings(txt_Title.Text, i, false, false);
+
+                //ConfigRepository.Instance()["dlcm_Title"] = txt_Title.Text;
+                //ConfigRepository.Instance()["dlcm_Title_sort"] = txt_Title_Sort.Text;
+                //ConfigRepository.Instance()["dlcm_Artist"] = txt_Artist.Text;
+                //ConfigRepository.Instance()["dlcm_Artist_Sort"] = txt_Artist_Sort.Text;
+                //ConfigRepository.Instance()["dlcm_Album"] = txt_Album.Text;
+                //ConfigRepository.Instance()["dlcm_File_Name"] = txt_File_Name.Text;
+                data.SongInfo.SongDisplayName = Manipulate_strings(ConfigRepository.Instance()["dlcm_Title"], i, false, false);
                 // rtxt_StatisticsOnReadDLCs.Text = "...manipul: "+ file.Song_Title + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                 //if (cbx_Activ_Title_Sort.Checked)
-                data.SongInfo.SongDisplayNameSort = Manipulate_strings(txt_Title_Sort.Text, i, false, false);
+                data.SongInfo.SongDisplayNameSort = Manipulate_strings(ConfigRepository.Instance()["dlcm_Title_sort"], i, false, false);
                 //rtxt_StatisticsOnReadDLCs.Text = "...manipul" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                 //if (cbx_Activ_Artist.Checked)
-                data.SongInfo.Artist = Manipulate_strings(txt_Artist.Text, i, false, false);
+                data.SongInfo.Artist = Manipulate_strings(ConfigRepository.Instance()["dlcm_Artist"], i, false, false);
                 //rtxt_StatisticsOnReadDLCs.Text = "...manipul" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                 //if (cbx_Activ_Artist_Sort.Checked)
-                data.SongInfo.ArtistSort = Manipulate_strings(txt_Artist_Sort.Text, i, false, false);
+                data.SongInfo.ArtistSort = Manipulate_strings(ConfigRepository.Instance()["dlcm_Artist_Sort"], i, false, false);
                 //rtxt_StatisticsOnReadDLCs.Text = "...manipul" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                 //if (cbx_Activ_Album.Checked)
-                data.SongInfo.Album = Manipulate_strings(txt_Album.Text, i, false, false);
+                data.SongInfo.Album = Manipulate_strings(ConfigRepository.Instance()["dlcm_Album"], i, false, false);
                 //rtxt_StatisticsOnReadDLCs.Text = "...3" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
 
                 //rtxt_StatisticsOnReadDLCs.Text = "...nipul" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
@@ -2429,8 +2461,8 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void comboBox1_SelectedValueChanged(object sender, EventArgs e)
         {
-            if (chbx_PreSavedFTP.Text == "US") txt_FTPPath.Text = "ftp://192.168.1.12/" + "dev_hdd0/game/BLUS31182/USRDIR/DLC/";
-            else txt_FTPPath.Text = "ftp://192.168.1.12/" + "dev_hdd0/game/BLES01862/USRDIR/DLC/";
+            if (chbx_PreSavedFTP.Text == "EU") txt_FTPPath.Text = ConfigRepository.Instance()["dlcm_FTP1"];//"ftp://192.168.1.12/" + "dev_hdd0/game/BLUS31182/USRDIR/DLC/";
+            else txt_FTPPath.Text = ConfigRepository.Instance()["dlcm_FTP2"];//"ftp://192.168.1.12/" + "dev_hdd0/game/BLES01862/USRDIR/DLC/";
         }
 
         public string Manipulate_strings(string words, int k, bool ifn, bool orig_flag) //static
@@ -2793,8 +2825,28 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             //1. Copy Files
             var i = DataViewGrid.SelectedCells[0].RowIndex;
-            string filePath = DataViewGrid.Rows[i].Cells[22].Value.ToString(); //TempPath + "\\0_old\\" + 
-            string t = filePath + "2";
+            string filePath = DataViewGrid.Rows[i].Cells[22].Value.ToString(); //TempPath + "\\0_old\\" +
+                        //Random random = new Random();random.Next(0, 100000)
+            //Generate MAX Alternate NO
+            var sel = "SELECT * FROM Main WHERE LCASE(Artist)=LCASE(\"" + txt_Artist.Text + "\") AND "; //AND LCASE(Album)=LCASE(\"" + info.SongInfo.Album + "\")
+            sel += "(LCASE(Song_Title) = LCASE(\"" + txt_Title.Text+ "\") ";
+            sel += "OR LCASE(Song_Title) like \"%" + txt_Title.Text.ToLower() + "%\" ";
+            //sel += "OR (\"%LCASE(Song_Title)%\" like LCASE(\"" + info.SongInfo.SongDisplayName + "\") ";
+            sel += "OR LCASE(Song_Title_Sort) =LCASE(\"" + txt_Title_Sort.Text + "\")) OR LCASE(DLC_Name) like LCASE(\"%" + txt_DLC_ID.Text + "%\") ORDER BY Is_Original ASC";
+            var sel1 = sel.Replace("SELECT *", "SELECT max(Alternate_Version_No)");
+            sel1 = sel1.Replace(" ORDER BY Is_Original ASC", "");
+            //rtxt_StatisticsOnReadDLCs.Text = sel1 + "-" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+            int max = 1;
+            using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                {
+                    DataSet ddzv = new DataSet();
+                    OleDbDataAdapter dat = new OleDbDataAdapter(sel1, cnn);
+                    dat.Fill(ddzv, "Main");
+                    dat.Dispose();
+                max = ddzv.Tables[0].Rows[0].ItemArray[0].ToString()==""? 0: ddzv.Tables[0].Rows[0].ItemArray[0].ToString().ToInt32();
+                    max += 1;
+                }        
+            string t = filePath + max.ToString();
             try //Copy dir
             {
                 string source_dir = @filePath;
@@ -2826,7 +2878,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //2. Copy Records
             try //Copy dir
             {
-                var cmd = "INSERT into Main (Song_Title, Song_Title_Sort, Album, Artist, Artist_Sort, Album_Year, AverageTempo, Volume, Preview_Volume, AlbumArtPath, AudioPath, audioPreviewPath, Track_No, Author, Version, DLC_Name, DLC_AppID, Current_FileName, Original_FileName, Import_Path, Import_Date, Folder_Name, File_Size, File_Hash, Original_File_Hash, Is_Original, Is_OLD, Is_Beta, Is_Alternate, Is_Multitrack, Is_Broken, MultiTrack_Version, Alternate_Version_No, DLC, Has_Bass, Has_Guitar, Has_Lead, Has_Rhythm, Has_Combo, Has_Vocals, Has_Sections, Has_Cover, Has_Preview, Has_Custom_Tone, Has_DD, Has_Version, Tunning, Bass_Picking, Tones, Groups, Rating, Description, Comments, Has_Track_No, Platform, PreviewTime, PreviewLenght, Temp, CustomForge_Followers, CustomForge_Version, Show_Available_Instruments, Show_Alternate_Version, Show_MultiTrack_Details, Show_Group, Show_Beta, Show_Broken, Show_DD, Original, Selected, YouTube_Link, CustomsForge_Link, CustomsForge_Like, CustomsForge_ReleaseNotes, SignatureType, ToolkitVersion, Has_Author, OggPath, oggPreviewPath, UniqueDLCName, AlbumArt_Hash, Audio_Hash, audioPreview_Hash, Bass_Has_DD, Has_Bonus_Arrangement, Artist_ShortName, Album_ShortName, Available_Old, Available_Duplicate, Has_Been_Corrected) SELECT Song_Title+\"2\", Song_Title_Sort+\"2\", Album, Artist, Artist_Sort, Album_Year, AverageTempo, Volume, Preview_Volume, AlbumArtPath, AudioPath, audioPreviewPath, Track_No, Author, Version, DLC_Name, DLC_AppID+\"2\", Current_FileName, Original_FileName, Import_Path, Import_Date, Folder_Name+\"2\", File_Size, File_Hash, Original_File_Hash, Is_Original, Is_OLD, Is_Beta, Is_Alternate, Is_Multitrack, Is_Broken, MultiTrack_Version, Alternate_Version_No, DLC, Has_Bass, Has_Guitar, Has_Lead, Has_Rhythm, Has_Combo, Has_Vocals, Has_Sections, Has_Cover, Has_Preview, Has_Custom_Tone, Has_DD, Has_Version, Tunning, Bass_Picking, Tones, Groups, Rating, Description+\" duplicate\", Comments, Has_Track_No, Platform, PreviewTime, PreviewLenght, Temp, CustomForge_Followers, CustomForge_Version, Show_Available_Instruments, Show_Alternate_Version, Show_MultiTrack_Details, Show_Group, Show_Beta, Show_Broken, Show_DD, Original, Selected, YouTube_Link, CustomsForge_Link, CustomsForge_Like, CustomsForge_ReleaseNotes, SignatureType, ToolkitVersion, Has_Author, OggPath, oggPreviewPath, UniqueDLCName, AlbumArt_Hash, Audio_Hash, audioPreview_Hash, Bass_Has_DD, Has_Bonus_Arrangement, Artist_ShortName, Album_ShortName, Available_Old, Available_Duplicate, Has_Been_Corrected FROM Main  WHERE ID = " + txt_ID.Text;
+                var cmd = "INSERT into Main (Song_Title, Song_Title_Sort, Album, Artist, Artist_Sort, Album_Year, AverageTempo, Volume, Preview_Volume, AlbumArtPath, AudioPath, audioPreviewPath, Track_No, Author, Version, DLC_Name, DLC_AppID, Current_FileName, Original_FileName, Import_Path, Import_Date, Folder_Name, File_Size, File_Hash, Original_File_Hash, Is_Original, Is_OLD, Is_Beta, Is_Alternate, Is_Multitrack, Is_Broken, MultiTrack_Version, Alternate_Version_No, DLC, Has_Bass, Has_Guitar, Has_Lead, Has_Rhythm, Has_Combo, Has_Vocals, Has_Sections, Has_Cover, Has_Preview, Has_Custom_Tone, Has_DD, Has_Version, Tunning, Bass_Picking, Tones, Groups, Rating, Description, Comments, Has_Track_No, Platform, PreviewTime, PreviewLenght, Youtube_Playthrough, CustomForge_Followers, CustomForge_Version, Show_Available_Instruments, Show_Alternate_Version, Show_MultiTrack_Details, Show_Group, Show_Beta, Show_Broken, Show_DD, Original, Selected, YouTube_Link, CustomsForge_Link, CustomsForge_Like, CustomsForge_ReleaseNotes, SignatureType, ToolkitVersion, Has_Author, OggPath, oggPreviewPath, UniqueDLCName, AlbumArt_Hash, Audio_Hash, audioPreview_Hash, Bass_Has_DD, Has_Bonus_Arrangement, Artist_ShortName, Album_ShortName, Available_Old, Available_Duplicate, Has_Been_Corrected) SELECT Song_Title+\" alt" + max.ToString() + "\", Song_Title_Sort+\" alt" + max.ToString() + "\", Album, Artist, Artist_Sort, Album_Year, AverageTempo, Volume, Preview_Volume, AlbumArtPath, AudioPath, audioPreviewPath, Track_No, Author, Version, DLC_Name+\"" + max.ToString() + "\", DLC_AppID, Current_FileName, Original_FileName, Import_Path, Import_Date, Folder_Name+\"" + max.ToString() + "\", File_Size, File_Hash, Original_File_Hash, Is_Original, Is_OLD, Is_Beta, Is_Alternate, Is_Multitrack, Is_Broken, MultiTrack_Version, " + max.ToString() + ", DLC, Has_Bass, Has_Guitar, Has_Lead, Has_Rhythm, Has_Combo, Has_Vocals, Has_Sections, Has_Cover, Has_Preview, Has_Custom_Tone, Has_DD, Has_Version, Tunning, Bass_Picking, Tones, Groups, Rating, Description+\" duplicate\", Comments, Has_Track_No, Platform, PreviewTime, PreviewLenght, Youtube_Playthrough, CustomForge_Followers, CustomForge_Version, Show_Available_Instruments, Show_Alternate_Version, Show_MultiTrack_Details, Show_Group, Show_Beta, Show_Broken, Show_DD, Original, Selected, YouTube_Link, CustomsForge_Link, CustomsForge_Like, CustomsForge_ReleaseNotes, SignatureType, ToolkitVersion, Has_Author, OggPath, oggPreviewPath, UniqueDLCName, AlbumArt_Hash, Audio_Hash, audioPreview_Hash, Bass_Has_DD, Has_Bonus_Arrangement, Artist_ShortName, Album_ShortName, Available_Old, Available_Duplicate, Has_Been_Corrected FROM Main  WHERE ID = " + txt_ID.Text;
                 DataSet dsz = new DataSet();
                 using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
                 {
@@ -2838,25 +2890,26 @@ namespace RocksmithToolkitGUI.DLCManager
 
                 //getting ID
                 DataSet dus = new DataSet();
+                cmd = "SELECT ID FROM Main WHERE Song_Title=\"" + txt_Title.Text + " alt" + max.ToString() + "\"";
                 using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
                 {
-                    OleDbDataAdapter dad = new OleDbDataAdapter("SELECT ID FROM Main WHERE Song_Title=\"" + txt_Title.Text + "2\"", cnb);
+                    OleDbDataAdapter dad = new OleDbDataAdapter(cmd, cnb);
                     dad.Fill(dus, "Main");
                     dad.Dispose();
                 }
                 var CDLC_ID = dus.Tables[0].Rows[0].ItemArray[0].ToString();
 
 
-                cmd = "INSERT into Main (Arrangement_Name, CDLC_ID, Bonus, SNGFilePath, XMLFilePath, XMLFile_Hash, ScrollSpeed, Tunning, Rating, PlayThoughYBLink, CustomsForge_Link, ArrangementSort, TuningPitch, ToneBase, Idd, MasterId, ArrangementType, String0, String1, String2, String3, String4, String5, PluckedType, RouteMask, XMLFileName, XMLFileLLID, XMLFileUUID, SNGFileName, SNGFileLLID, SNGFileUUID, ToneMultiplayer, ToneA, ToneB, ToneC, ToneD, lastConversionDateTime, SNGFileHash, Has_Sections, Comments) SELECT Arrangement_Name, " + CDLC_ID + ", Bonus, SNGFilePath, XMLFilePath, XMLFile_Hash, ScrollSpeed, Tunning, Rating, PlayThoughYBLink, CustomsForge_Link, ArrangementSort, TuningPitch, ToneBase, Idd, MasterId, ArrangementType, String0, String1, String2, String3, String4, String5, PluckedType, RouteMask, XMLFileName, XMLFileLLID, XMLFileUUID, SNGFileName, SNGFileLLID, SNGFileUUID, ToneMultiplayer, ToneA, ToneB, ToneC, ToneD, lastConversionDateTime, SNGFileHash, Has_Sections, Comments FROM Arrangements WHERE CDLC_ID = " + CDLC_ID;
+                cmd = "INSERT into Arrangements (Arrangement_Name, CDLC_ID, Bonus, SNGFilePath, XMLFilePath, XMLFile_Hash, ScrollSpeed, Tunning, Rating, PlayThoughYBLink, CustomsForge_Link, ArrangementSort, TuningPitch, ToneBase, Idd, MasterId, ArrangementType, String0, String1, String2, String3, String4, String5, PluckedType, RouteMask, XMLFileName, XMLFileLLID, XMLFileUUID, SNGFileName, SNGFileLLID, SNGFileUUID, ToneMultiplayer, ToneA, ToneB, ToneC, ToneD, lastConversionDateTime, SNGFileHash, Has_Sections, Comments) SELECT Arrangement_Name, " + CDLC_ID + ", Bonus, SNGFilePath, XMLFilePath, XMLFile_Hash, ScrollSpeed, Tunning, Rating, PlayThoughYBLink, CustomsForge_Link, ArrangementSort, TuningPitch, ToneBase, Idd, MasterId, ArrangementType, String0, String1, String2, String3, String4, String5, PluckedType, RouteMask, XMLFileName, XMLFileLLID, XMLFileUUID, SNGFileName, SNGFileLLID, SNGFileUUID, ToneMultiplayer, ToneA, ToneB, ToneC, ToneD, lastConversionDateTime, SNGFileHash, Has_Sections, Comments FROM Arrangements WHERE CDLC_ID = " + txt_ID.Text;
                 DataSet dgz = new DataSet();
                 using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
                 {
                     OleDbDataAdapter dah = new OleDbDataAdapter(cmd, cnb);
-                    dah.Fill(dgz, "Tones");
+                    dah.Fill(dgz, "Arrangements");
                     dah.Dispose();
                 }
 
-                cmd = "INSERT into Main (Tone_Name, CDLC_ID, Volume, Keyy, Is_Custom, GearList, AmpRack, Pedals, Description, Favorite, SortOrder, NameSeparator, Cabinet, PostPedal1, PostPedal2, PostPedal3, PostPedal4, PrePedal1, PrePedal2, PrePedal3, PrePedal4, Rack1, Rack2, Rack3, Rack4, AmpType, AmpCategory, AmpKnobValues, AmpPedalKey, CabinetCategory, CabinetKnobValues, CabinetPedalKey, CabinetType, lastConversionDateTime, lastConverjsonDateTime) SELECT Tone_Name, " + CDLC_ID+ ", Volume, Keyy, Is_Custom, GearList, AmpRack, Pedals, Description, Favorite, SortOrder, NameSeparator, Cabinet, PostPedal1, PostPedal2, PostPedal3, PostPedal4, PrePedal1, PrePedal2, PrePedal3, PrePedal4, Rack1, Rack2, Rack3, Rack4, AmpType, AmpCategory, AmpKnobValues, AmpPedalKey, CabinetCategory, CabinetKnobValues, CabinetPedalKey, CabinetType, lastConversionDateTime, lastConverjsonDateTime FROM Tones WHERE CDLC_ID = " + CDLC_ID;
+                cmd = "INSERT into Tones (Tone_Name, CDLC_ID, Volume, Keyy, Is_Custom, GearList, AmpRack, Pedals, Description, Favorite, SortOrder, NameSeparator, Cabinet, PostPedal1, PostPedal2, PostPedal3, PostPedal4, PrePedal1, PrePedal2, PrePedal3, PrePedal4, Rack1, Rack2, Rack3, Rack4, AmpType, AmpCategory, AmpKnobValues, AmpPedalKey, CabinetCategory, CabinetKnobValues, CabinetPedalKey, CabinetType, lastConversionDateTime, lastConverjsonDateTime) SELECT Tone_Name, " + CDLC_ID + ", Volume, Keyy, Is_Custom, GearList, AmpRack, Pedals, Description, Favorite, SortOrder, NameSeparator, Cabinet, PostPedal1, PostPedal2, PostPedal3, PostPedal4, PrePedal1, PrePedal2, PrePedal3, PrePedal4, Rack1, Rack2, Rack3, Rack4, AmpType, AmpCategory, AmpKnobValues, AmpPedalKey, CabinetCategory, CabinetKnobValues, CabinetPedalKey, CabinetType, lastConversionDateTime, lastConverjsonDateTime FROM Tones WHERE CDLC_ID = " + txt_ID.Text;
                 DataSet djz = new DataSet();
                 using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
                 {
@@ -2979,7 +3032,7 @@ namespace RocksmithToolkitGUI.DLCManager
         {
 
             string uriString = "http://ws.spotify.com/search/1/track";// "http://www.google.com/search";
-            string keywordString = (Artist + "\" \"" + Album + "\" \"" + Title + "\"").Replace("&","%26"); //"discorg.com:\"" + txt_Artist.Text + "\" \"" + txt_Album.Text + "\" \"" + txt_Title.Text + "\" \"track\""; //"www.metrolyrics.com:" + 
+            string keywordString = ("\""+Artist + "\" \"" + Album + "\" \"" + Title + "\"").Replace("&","%26"); //"discorg.com:\"" + txt_Artist.Text + "\" \"" + txt_Album.Text + "\" \"" + txt_Title.Text + "\" \"track\""; //"www.metrolyrics.com:" + 
 
             WebClient webClient = new WebClient();
 
@@ -2993,7 +3046,7 @@ namespace RocksmithToolkitGUI.DLCManager
             var aa = (webClient.DownloadString(uriString));
             
             //if ( (aa.ToLower()).IndexOf(", <b>"+ txt_Title.Text.ToLower() ) >0 ) a1 = aa.Substring(((aa.ToLower()).IndexOf(", <b>"+txt_Title.Text.ToLower())) -1, 1);//<b>+ txt_Title.Text
-
+            //GetTrkTxt=aa;
             if ((aa.ToLower()).IndexOf("<track-number>") > 0) a1 = aa.Substring(((aa.ToLower()).IndexOf("<track-number>")) + 14, 2);//<b>+ txt_Title.Text
             a1 = a1.Replace("<","");
             }
@@ -3001,6 +3054,15 @@ namespace RocksmithToolkitGUI.DLCManager
             {
                 MessageBox.Show("FAILED To get track" + ee.Message + "----");
                 Console.WriteLine(ee.Message);
+            }
+
+            if (a1=="" && Album!="") 
+            {
+                a1 = GetTrackNo(Artist, "", Title).ToString();
+            }
+            if (a1 == "" && Artist != "")
+            {
+                a1 = GetTrackNo("", "", Title).ToString();
             }
             if (IsNumbers(a1)) return a1.ToInt32();
             else return 0;
@@ -3058,9 +3120,10 @@ namespace RocksmithToolkitGUI.DLCManager
             var CleanTitle = "";
             if (txt_Title.Text.IndexOf("[") > 0) CleanTitle = txt_Title.Text.Substring(0,txt_Title.Text.IndexOf("["));
             if (txt_Title.Text.IndexOf("]") > 0) CleanTitle += txt_Title.Text.Substring(txt_Title.Text.IndexOf("]"), txt_Title.Text.Length - txt_Title.Text.IndexOf("]"));
-            else if (txt_Title.Text.IndexOf("[") == 0 && txt_Title.Text.Substring(0,1) != "[") CleanTitle = txt_Title.Text;
+            else if (txt_Title.Text.IndexOf("[") == 0 || txt_Title.Text.Substring(0,1) != "[") CleanTitle = txt_Title.Text;
             
-            txt_Track_No.Text = (GetTrackNo(txt_Artist.Text, txt_Album.Text, CleanTitle)).ToString();
+            string z=(GetTrackNo(txt_Artist.Text, txt_Album.Text, CleanTitle)).ToString();
+            txt_Track_No.Text = z == "0" && txt_Track_No.Text != ""? txt_Track_No.Text : z;
             var i = DataViewGrid.SelectedCells[0].RowIndex;
 
             if (txt_Track_No.Text == "-1") { chbx_TrackNo.Checked = false; DataViewGrid.Rows[i].Cells[54].Value = "No"; }

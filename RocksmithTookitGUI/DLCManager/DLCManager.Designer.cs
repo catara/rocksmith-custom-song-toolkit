@@ -279,6 +279,8 @@
             "<46. Convert Originals>",
             "47. Duplicate Mangement, Title added info is inbetween []",
             "48. Add New Toolkit v. and RePackedByAuthor",
+            "49. @Pack try to get Track No again ",
+            "50. @Pack Also Copy/FTP",
             "<IMPORT>",
             "<@Pack>"});
             this.chbx_Additional_Manipulations.Location = new System.Drawing.Point(240, 88);

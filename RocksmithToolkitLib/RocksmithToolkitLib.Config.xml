@@ -73,8 +73,8 @@
   <Config Key="dlcm_AdditionalManipul45" Value="No" />
   <Config Key="dlcm_AdditionalManipul46" Value="Yes" />
   <Config Key="dlcm_AdditionalManipul47" Value="Yes" />
-  <Config Key="dlcm_AdditionalManipul48" Value="No" />
-  <Config Key="dlcm_AdditionalManipul49" Value="No" />
+  <Config Key="dlcm_AdditionalManipul48" Value="Yes" />
+  <Config Key="dlcm_AdditionalManipul49" Value="Yes" />
   <Config Key="dlcm_AdditionalManipul50" Value="No" />
   <Config Key="dlcm_Album" Value="&#60;Broken&#62;&#60;Year&#62; - &#60;Album&#62; - r&#60;Rating&#62; - &#60;Avail. Instr.&#62; - &#60;DD&#62; - &#60;Tuning&#62;" />;
   <Config Key="dlcm_Artist" Value="&#60;Artist&#62;-&#60;CDLC&#62;-&#60;Avail. Tracks&#62;-&#60;DD&#62;-&#60;QAs&#62;-&#60;Bass_HasDD&#62;" />;
@@ -90,12 +90,14 @@
   <Config Key="dlcm_TempPath" Value="C:\GitHub\tmp\0" />;
   <Config Key="dlcm_Title" Value="&#60;Title&#62;" />;
   <Config Key="dlcm_Title_sort" Value="&#60;Year&#62;&#60;Album&#62;&#60;Track No.&#62;&#60;Title&#62;" />;
-  <Config Key="dlcm_FTP" Value="ftp://192.168.1.12/dev_hdd0/game/BLES01862/USRDIR/DLC/" />;
+  <Config Key="dlcm_FTP" Value="EU" />;
+  <Config Key="dlcm_FTP1" Value="ftp://192.168.1.12/dev_hdd0/game/BLES01862/USRDIR/DLC/" />;
+  <Config Key="dlcm_FTP2" Value="ftp://192.168.1.12/dev_hdd0/game/BLUS31182/USRDIR/DLC/" />;
   <Config Key="dlcm_RemoveBassDD" Value="Yes" />;
   <Config Key="dlcm_UniqueID" Value="Yes" />;
   <Config Key="dlcm_andCopy" Value="Yes" />;
   <Config Key="dlcm_PathForBRM" Value="c:\\GitHub\\" />;
-  <Config Key="dlcm_Preview Lenght" Value="Yes30" />;
+  <Config Key="dlcm_Preview Lenght" Value="30" />;
   <Config Key="dlcm_PreviewStart" Value="00:30" />;
 
   <!--<Config Key="first_time" Value="true" /> determine if we launched toolkit at first time-->

@@ -2431,14 +2431,17 @@ namespace RocksmithToolkitGUI.DLCManager
                         //rtxt_StatisticsOnReadDLCs.Text = "ps3...start..." + rtxt_StatisticsOnReadDLCs.Text;
                         //bwRGenerate.ReportProgress(progress, "Generating PS3 package");
                         //rtxt_StatisticsOnReadDLCs.Text = dlcSavePath + rtxt_StatisticsOnReadDLCs.Text;
-                        RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate(dlcSavePath, data, new Platform(GamePlatform.PS3, GameVersion.RS2014));
+                        string dds = dlcSavePath;// + ".psarc.edat";
+                        RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate(dds, data, new Platform(GamePlatform.PS3, GameVersion.RS2014));
                         //progress += step;
                         //bwRGenerate.ReportProgress(progress);
                         // rtxt_StatisticsOnReadDLCs.Text = "ps3...off..." + rtxt_StatisticsOnReadDLCs.Text;
                     }
                     catch (Exception ex)
                     {
-                        errorsFound.AppendLine(String.Format("Error 2generate PS3 package: {0}{1}. {0}PS3 package require 'JAVA x86' (32 bits) installed on your machine to generate properly.{0}", Environment.NewLine, ex.StackTrace));
+                        string ss = String.Format("Error 2generate PS3 package: {0}{1}. {0}PS3 package require 'JAVA x86' (32 bits) installed on your machine to generate properly.{0}", Environment.NewLine, ex.StackTrace);
+                        MessageBox.Show(ss);
+                        errorsFound.AppendLine(ss);
                         //bcapirtxt_StatisticsOnReadDLCs.Text = "...0Ps3 ERROR..."+ dlcSavePath+"---"+ dlcSavePath.Length+ "----" + ex.Message + rtxt_StatisticsOnReadDLCs.Text;
                     }
                 data.CleanCache();

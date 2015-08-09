@@ -54,16 +54,27 @@ Testing Issues to be checked&fixed:
 - joaleen is tone is different.....where do we see that
 - overrite sometimes gives Directory not empty error
 - save error log separately
+  - save constantly not only at the end
+- import duplciates at the end of the import process
+- make a custom song out of retail
+- finish arrangement (demo with the hives overdrive sall the time :) )
+- the error dwld access db ..should have a hyperlink so a separate window/form is required
+- when packing the progress bar is not changing when packing
+- search is not working
+-- mising java showboxes at generate
+- missing conversion showboxes at preview?
+- is close saving the setting in maindb?
+- author is not chaged to repacked w
+- add folder 0_packed
 
 - the pretender fails
 - audioslave sections missing maybe cause its an original and i used my own logic to strip the DD
 - some standardization lines sill generate duplicates..any
-- some tracks no don't get read/picked
++ some tracks no don't get read/picked
 	- Ralph Wiggum is not 7 ..is 3..but it was 7 :)
 
 ### dev issues:
 + Toolkit version flag does not sync to&from Github: Run RunMeFirst.bat
-+ Bin\debug folder content is needed(rockmisht.lib): Run RunMeFirst.bat, then Rebuild
 + activate debug: set RocksmithToolkitGUI Folder as Start-up project
 
 # Version History(release date):

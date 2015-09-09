@@ -26,9 +26,9 @@ Main Features:
 
 
 ## Known Issues:
-- Import fails randomly...workaround Import again (dont clear the DB)
-- Tool is based on Rocksmith Toolkit April version
-- Edit of Arragements and Tones DB can only be done from Access for the moment
++ Import fails randomly...workaround Import again (don't clear the DB)
++ Tool is based on Rocksmith Toolkit April version
+-- Edit of Arragements and Tones DB can only be done from Access for the moment
 - Packing of Rocksmith 2014 Retail manipulated files has 1 manual step for RS14 Retail songs
 
 ## ToDos/bugs:
@@ -52,26 +52,26 @@ wnyp:
 Testing Issues to be checked&fixed:
 
 - joaleen is tone is different.....where do we see that
-- overrite sometimes gives Directory not empty error
+-- overrite sometimes gives Directory not empty error
 - save error log separately
   - save constantly not only at the end
-- import duplciates at the end of the import process
+- import duplicates at the end of the import process
 - make a custom song out of retail
 - finish arrangement (demo with the hives overdrive sall the time :) )
 - the error dwld access db ..should have a hyperlink so a separate window/form is required
 - when packing the progress bar is not changing when packing
-- search is not working
+- search is not working completely after the search result have returned 
 -- mising java showboxes at generate
 - missing conversion showboxes at preview?
-- is close saving the setting in maindb?
+- @close save the setting in maindb?
 - author is not chaged to repacked w
 - add folder 0_packed
 
 - the pretender fails
 - audioslave sections missing maybe cause its an original and i used my own logic to strip the DD
-- some standardization lines sill generate duplicates..any
+- some standardization lines sill generate duplicates..
 + some tracks no don't get read/picked
-	- Ralph Wiggum is not 7 ..is 3..but it was 7 :)
+	+ Ralph Wiggum is not 7 ..is 3..but it was 7 :)
 
 ### dev issues:
 + Toolkit version flag does not sync to&from Github: Run RunMeFirst.bat
@@ -177,7 +177,7 @@ _ future release
 
 +4. Ability to Repack all DLCs
 	-- ?Original files changed should also be packaged?
-		+ Ability to package songs by Groups(e.g. party songs, great bass, rating 10) :)
+		-- Ability to package songs by Groups(e.g. party songs, great bass, rating 10) :)
 
 
 _5. Future features
@@ -206,9 +206,10 @@ Steam by purchasing original game content and software releases so that
 these companies may continue making products that we enjoy.  
 
 Additioanlly, No modification have been applied to Rocksmith Custom Song Project sourcecode (besides new UI tab).
+  - 1fix for PS3 conversion (#273 on github)
 
 This software makes use of Applications not made
-by developers who are not part of this project.
+by developers who are part of this project.
 
 All claims and liabilities of any misuse of the programs
 of this folder should be directed to the respective developer.
@@ -223,7 +224,7 @@ http://www.rarewares.org/ogg-oggdec.php
 - edattool.exe -- encript PS3 Retail DLCs packs
 http://www.aldostools.org/ps3tools.html
 
-- audiocrossreference.exe no actively used by contained in the package (possible usage in decomperssing PS3 WEM or in the future to Match Songs ws ecripted Audio Filenames, currently hardcoded)
+- audiocrossreference.exe not actively used; but contained in the package (possible usage in decompressing PS3 WEM or in the future to Match Songs ws ecripted Audio Filenames, currently hardcoded)
 https://sites.google.com/site/cozy1cgi/
 
 - Beats & Phrases Resynchronizer by Svengraph

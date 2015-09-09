@@ -213,7 +213,10 @@ namespace RocksmithToolkitGUI.DLCManager
             //chbx_Additional_Manipualtions.SetItemCheckState(8, CheckState.Checked);
             ////chbx_Additional_Manipualtions.SetItemCheckState(13, CheckState.Checked);
             ////chbx_Additional_Manipualtions.SetItemCheckState(14, CheckState.Checked);
-            if (chbx_DebugB.Checked) chbx_Additional_Manipulations.SetItemCheckState(15, CheckState.Checked);
+            if (chbx_DebugB.Checked)
+            {
+                chbx_Additional_Manipulations.SetItemCheckState(15, CheckState.Checked);
+            }
             //commented out as now read from Settings/xml
             //chbx_Additional_Manipualtions.SetItemCheckState(16, CheckState.Checked);
             //chbx_Additional_Manipualtions.SetItemCheckState(17, CheckState.Checked);
@@ -1219,11 +1222,11 @@ ConfigRepository.Instance()["dlcm_RocksmithDLCPath"] = txt_RocksmithDLCPath.Text
                 }
         }
 
-        public void CreateTempFolderStructure(string Temp_Path_Import, string old_Path_Import, string broken_Path_Import, string dupli_Path_Import, string dlcpacks, string pathDLC)
+        public void CreateTempFolderStructure(string Temp_Path_Import, string old_Path_Import, string broken_Path_Import, string dupli_Path_Import, string dlcpacks, string pathDLC, string repacked_path)
         {
-            if (!Directory.Exists(txt_TempPath.Text) || !Directory.Exists(Temp_Path_Import) || !Directory.Exists(pathDLC) || !Directory.Exists(old_Path_Import) || !Directory.Exists(broken_Path_Import) || !Directory.Exists(dupli_Path_Import) || !Directory.Exists(dlcpacks + "\\temp") || !Directory.Exists(dlcpacks + "\\manipulated") || !Directory.Exists(dlcpacks + "\\manifests") || !Directory.Exists(dlcpacks + "\\manipulated\\temp"))
+            if (!Directory.Exists(txt_TempPath.Text) || !Directory.Exists(Temp_Path_Import) || !Directory.Exists(pathDLC) || !Directory.Exists(old_Path_Import) || !Directory.Exists(broken_Path_Import) || !Directory.Exists(dupli_Path_Import) || !Directory.Exists(dlcpacks + "\\temp") || !Directory.Exists(dlcpacks + "\\manipulated") || !Directory.Exists(dlcpacks + "\\manifests") || !Directory.Exists(dlcpacks + "\\manipulated\\temp") || !Directory.Exists(repacked_path))
             {
-                MessageBox.Show(String.Format("One of the mandatory backend, folder is missing " + txt_TempPath.Text + ", " + Temp_Path_Import + ", " + pathDLC + ", " + old_Path_Import + ", " + broken_Path_Import + ", " + dupli_Path_Import + ", " + dlcpacks + "(manipulated or manipulated-temp or manifests or temp)", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error));
+                MessageBox.Show(String.Format("One of the mandatory backend, folder is missing " + txt_TempPath.Text + ", " + Temp_Path_Import + ", " + pathDLC + ", " + old_Path_Import + ", " + broken_Path_Import + ", " + dupli_Path_Import + ", " + dlcpacks + "(manipulated or manipulated-temp or manifests or temp), "+ repacked_path, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error));
                 try
                 {
                     DirectoryInfo di;
@@ -1241,6 +1244,7 @@ ConfigRepository.Instance()["dlcm_RocksmithDLCPath"] = txt_RocksmithDLCPath.Text
                         if (!Directory.Exists(dlcpacks + "\\manipulated") && (dlcpacks != null)) di = Directory.CreateDirectory(dlcpacks + "\\manipulated");
                         if (!Directory.Exists(dlcpacks + "\\manipulated\\temp") && (dlcpacks != null)) di = Directory.CreateDirectory(dlcpacks + "\\manipulated\\temp");
                         if (!Directory.Exists(dlcpacks + "\\temp") && (dlcpacks != null)) di = Directory.CreateDirectory(dlcpacks + "\\temp");
+                        if (!Directory.Exists(repacked_path) && (repacked_path != null)) di = Directory.CreateDirectory(repacked_path);
                         //rtxt_StatisticsOnReadDLCs.Text = Directory.Exists(dupli_Path_Import) +"-" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                     }
                     else if (result1 == DialogResult.No) return;
@@ -1250,7 +1254,7 @@ ConfigRepository.Instance()["dlcm_RocksmithDLCPath"] = txt_RocksmithDLCPath.Text
                 {
                     rtxt_StatisticsOnReadDLCs.Text = "issue with creating directories... " + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                     MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    MessageBox.Show("Can not open create folders ! " + txt_TempPath + "-" + Temp_Path_Import + "-" + pathDLC + "-" + old_Path_Import + "-" + broken_Path_Import + "-" + dupli_Path_Import + "-" + dlcpacks);
+                    MessageBox.Show("Can not open create folders ! " + txt_TempPath + "-" + Temp_Path_Import + "-" + pathDLC + "-" + old_Path_Import + "-" + broken_Path_Import + "-" + dupli_Path_Import + "-" + dlcpacks + "-" + repacked_path);
                 }
                 //return;
             }
@@ -1271,8 +1275,9 @@ ConfigRepository.Instance()["dlcm_RocksmithDLCPath"] = txt_RocksmithDLCPath.Text
             var broken_Path_Import = txt_TempPath.Text + "\\0_broken";
             var dupli_Path_Import = txt_TempPath.Text + "\\0_duplicate";
             var dlcpacks = txt_TempPath.Text + "\\0_dlcpacks";
+            var repacked_Path = txt_TempPath.Text + "\\0_Repacked";
             string pathDLC = txt_RocksmithDLCPath.Text;
-            CreateTempFolderStructure(Temp_Path_Import, old_Path_Import, broken_Path_Import, dupli_Path_Import, dlcpacks, pathDLC);
+            CreateTempFolderStructure(Temp_Path_Import, old_Path_Import, broken_Path_Import, dupli_Path_Import, dlcpacks, pathDLC, repacked_Path);
 
             //Clean Temp Folder
             if (chbx_CleanTemp.Checked && !chbx_Additional_Manipulations.GetItemChecked(38)) //39.Use only unpacked songs already in the 0 / dlcpacks folder
@@ -1297,7 +1302,8 @@ ConfigRepository.Instance()["dlcm_RocksmithDLCPath"] = txt_RocksmithDLCPath.Text
                 }
                 foreach (DirectoryInfo dir in downloadedMessageInfo2.GetDirectories())
                 {
-                    if (dir.Name != "0_dlcpacks" && dir.Name != "0_old" && dir.Name != "0_broken" && dir.Name != "0_duplicate" && dir.Name != "0_dlcpacks") dir.Delete(true);
+                    if (dir.Name != "0_dlcpacks" && dir.Name != "0_old" && dir.Name != "0_broken" && dir.Name != "0_duplicate" && dir.Name != "0_dlcpacks" && dir.Name != "0_Repacked")
+                        dir.Delete(true);
                 }
                 //}
             }
@@ -1415,6 +1421,7 @@ ConfigRepository.Instance()["dlcm_RocksmithDLCPath"] = txt_RocksmithDLCPath.Text
                     i++;
                 }
 
+                //Delete duplicates(same £HASH) from ImportDB
                 DataSet dz = new DataSet();
                 DataSet drz = new DataSet();
                 var del = 0;
@@ -1537,17 +1544,32 @@ ConfigRepository.Instance()["dlcm_RocksmithDLCPath"] = txt_RocksmithDLCPath.Text
 
                     if (noOfRec > 0)
                     {
-                        //connection.Open();
-                        //DataSet dds = new DataSet();
-                        //OleDbDataAdapter daf = new OleDbDataAdapter("SELECT FullPath, Path, FileName, FileHash, FileSize, ImportDate FROM Import as i LEFT JOIN Main as m on m.File_Hash = i.FileHash OR m.Original_File_Hash = i.FileHash WHERE m.ID is NULL;", cnn);
-                        //daf.Fill(dds, "Import");
-                        //oledbAdapter.Dispose();
-                        //connection.Close();
-                        //dss.Tables["Import"].AcceptChanges();
-                        pB_ReadDLCs.Value = 0;
-                        pB_ReadDLCs.Maximum = 2 * (noOfRec - 1);
-                        for (i = 0; i <= noOfRec - 1; i++)
+                        //Move duplicates to the end
+
+                        for (var k = 0; k <= noOfRec - 1; k++)
                         {
+                            //for (j = 0; j <= noOfRec - 1; j++)
+                            //{
+                                if (1 == 0)
+                                {
+                                    ds.Tables[0].Rows[i].ItemArray[0] = ds.Tables[0].Rows[i];
+                                    noOfRec++;
+                                }
+                            //}
+                        }
+                            //connection.Open();
+                            //DataSet dds = new DataSet();
+                            //OleDbDataAdapter daf = new OleDbDataAdapter("SELECT FullPath, Path, FileName, FileHash, FileSize, ImportDate FROM Import as i LEFT JOIN Main as m on m.File_Hash = i.FileHash OR m.Original_File_Hash = i.FileHash WHERE m.ID is NULL;", cnn);
+                            //daf.Fill(dds, "Import");
+                            //oledbAdapter.Dispose();
+                            //connection.Close();
+                            //dss.Tables["Import"].AcceptChanges();
+                            pB_ReadDLCs.Value = 0;
+                        pB_ReadDLCs.Maximum = 2 * (noOfRec - 1);
+                        string[,] dupliInfo=new string[0,0];
+                        for (var j = 0; j <= 1; j++)
+                            for (i = 0; i <= noOfRec - 1; i++)
+                        {                                
                             //MessageBox.Show(pB_ReadDLCs.Maximum+" test " +i); 
                             //DataTable AccTable = aSet.Tables["Accounts"];
                             var FullPath = ds.Tables[0].Rows[i].ItemArray[0].ToString();
@@ -1607,11 +1629,31 @@ ConfigRepository.Instance()["dlcm_RocksmithDLCPath"] = txt_RocksmithDLCPath.Text
                                 }
                             }
                             else unpackedDir = FullPath;
+                            
+                                //determine if there is a possible obvious duplicate
+                                bool posib_duplicate = false;
+                                if (chbx_Additional_Manipulations.GetItemChecked(50))
+                                {
+                                    dupliInfo[i,0] = info.SongInfo.Artist.ToString();
+                                    dupliInfo[i, 1] = info.SongInfo.Album.ToString();
+                                    dupliInfo[i, 2]=info.SongInfo.SongDisplayName.ToString();
+                                    dupliInfo[i, 3] = info.Name.ToString();
+                                for (var k = 0; k <= i; k++)
+                                    {
 
-                            //Commenting Reorganize as they might have fixed the incompatib char issue
-                            // REORGANIZE
-                            //System.Threading.Thread.Sleep(1000);
-                            var platform = FullPath.GetPlatform();
+                                        if ((info.SongInfo.Artist.ToString() == dupliInfo[k, 0] && info.SongInfo.Album.ToString() == dupliInfo[k, 1] && info.SongInfo.SongDisplayName.ToString() == dupliInfo[k, 2])
+                                            || (info.Name.ToString() == dupliInfo[k, 3])
+                                            || ()) 
+                                                posib_duplicate = true;
+                                    }
+                                }
+                                if (j == 1 && posib_duplicate ) break;
+                                else;
+
+                                //Commenting Reorganize as they might have fixed the incompatib char issue
+                                // REORGANIZE
+                                //System.Threading.Thread.Sleep(1000);
+                                var platform = FullPath.GetPlatform();
                             //rtxt_StatisticsOnReadDLCs.Text = unpackedDir + " reorg...\n" + rtxt_StatisticsOnReadDLCs.Text;
                             if (chbx_Additional_Manipulations.GetItemChecked(36) && !errr) //37. Keep the Uncompressed Songs superorganized    
                             {
@@ -2144,7 +2186,7 @@ ConfigRepository.Instance()["dlcm_RocksmithDLCPath"] = txt_RocksmithDLCPath.Text
 
                                 var b = 0;
                                 var artist = "Insert";
-                                string j = ""; string k = "";
+                                string jk = ""; string k = "";
                                 var IDD = "";
                                 var folder_name = "";
                                 var filename = "";
@@ -2328,7 +2370,7 @@ ConfigRepository.Instance()["dlcm_RocksmithDLCPath"] = txt_RocksmithDLCPath.Text
                                         //rtxt_StatisticsOnReadDLCs.Text =  "\\" + original_FileName + rtxt_StatisticsOnReadDLCs.Text;
                                         IDD = file.ID; //Save Id in case of update or asses-update
                                         //rtxt_StatisticsOnReadDLCs.Text = "\\" + original_FileName + rtxt_StatisticsOnReadDLCs.Text;
-                                        j = file.Version;
+                                        jk = file.Version;
                                         //rtxt_StatisticsOnReadDLCs.Text = "dd" + original_FileName + rtxt_StatisticsOnReadDLCs.Text;
                                         k = file.Author;
                                         if (b >= norows || artist != "Insert" || IgnoreRest) break;
@@ -3946,7 +3988,7 @@ ConfigRepository.Instance()["dlcm_RocksmithDLCPath"] = txt_RocksmithDLCPath.Text
                     
                     if (file.Author == "Custom Song Creator" || file.Author == "" && chbx_Additional_Manipulations.GetItemChecked(47)) file.Author = "RepackedBy" + ConfigRepository.Instance()["general_defaultauthor"].ToUpper();
 
-                    var norm_path = txt_TempPath.Text + "\\" + ((file.ToolkitVersion == "") ? "ORIG" : "CDLC") + "_" + data.SongInfo.Artist + "_" + data.SongInfo.SongYear + "_" + data.SongInfo.Album + "_" + data.SongInfo.SongDisplayName;
+                    var norm_path = txt_TempPath.Text + "\\0_Repacked\\" + ((file.ToolkitVersion == "") ? "ORIG" : "CDLC") + "_" + data.SongInfo.Artist + "_" + data.SongInfo.SongYear + "_" + data.SongInfo.Album + "_" + data.SongInfo.SongDisplayName;
                     //rtxt_StatisticsOnReadDLCs.Text = "8"+data.PackageVersion+"...manipul" + norm_path + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                     //manipulating the info
                     if (cbx_Activ_Title.Checked)
@@ -4489,7 +4531,7 @@ ConfigRepository.Instance()["dlcm_RocksmithDLCPath"] = txt_RocksmithDLCPath.Text
             var Temp_Path_Import = txt_TempPath.Text + "\\dlcpacks";
             string pathDLC = txt_RocksmithDLCPath.Text;
             if (!chbx_DebugB.Checked) MessageBox.Show("Please make sure one of the following Retail Packs:\ncache.psarc, songs.psarc, rs1compatibilitydisc.psarc(.edat if PS3 format), rs1compatibilitydlc.psarc(.edat) \n\n, are in the Import Folder: " + pathDLC + "\n\nAlso, make sure you have enought space for the packing&unpacking operations Platform x 3GB");
-            CreateTempFolderStructure(txt_TempPath.Text, txt_TempPath.Text + "\\0_old", txt_TempPath.Text + "\\0_broken", txt_TempPath.Text + "\\0_duplicate", txt_TempPath.Text + "\\0_dlcpacks", pathDLC);
+            CreateTempFolderStructure(txt_TempPath.Text, txt_TempPath.Text + "\\0_old", txt_TempPath.Text + "\\0_broken", txt_TempPath.Text + "\\0_duplicate", txt_TempPath.Text + "\\0_dlcpacks", pathDLC,txt_TempPath.Text + "\\0_Repacked");
 
             //read all the .PSARCs in the IMPORT folder
             var jsonFiles = Directory.GetFiles(pathDLC.Replace("Rocksmith2014\\DLC", "Rocksmith2014"), "*.psarc*", SearchOption.AllDirectories);

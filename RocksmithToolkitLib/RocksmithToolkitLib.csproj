@@ -26,14 +26,7 @@
     <OutputPath>bin\Release\</OutputPath>
     <WarningLevel>4</WarningLevel>
     <Optimize>true</Optimize>
-    <PreBuildEvent>CALL "$(SolutionDir)prebuild.bat" "$(SolutionDir)" "$(ProjectDir)ToolkitVersion.cs"</PreBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseMac|x86'">
-    <PlatformTarget>x86</PlatformTarget>
-    <OutputPath>bin\ReleaseMac\</OutputPath>
-    <PreBuildEvent>"$(ProjectDir)../prebuild.sh" "$(ProjectDir).." "$(ProjectDir)ToolkitVersion.cs"</PreBuildEvent>
-    <WarningLevel>4</WarningLevel>
-    <Optimize>false</Optimize>
+	<DebugType>pdbonly</DebugType>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ICSharpCode.SharpZipLib">
@@ -79,6 +72,7 @@
     <Compile Include="DLCPackage\Showlight\Showlights.cs" />
     <Compile Include="DLCPackage\XBlock\XblockX.cs" />
     <Compile Include="Extensions\ExternalApps.cs" />
+    <Compile Include="Extensions\GlobalExtension.cs" />
     <Compile Include="Extensions\JitVersionInfo.cs" />
     <Compile Include="Extensions\MemoryStreamExtension.cs" />
     <Compile Include="Ogg\Wwise.cs" />
@@ -253,13 +247,12 @@
     </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>IF NOT $(ConfigurationName) == ReleaseMac (
-    CALL "$(SolutionDir)prebuild.bat" "$(SolutionDir)" "$(ProjectDir)ToolkitVersion.cs"
-)
-
-IF $(ConfigurationName) == ReleaseMac (
-    "$(ProjectDir)../prebuild.sh" "$(ProjectDir)" "$(ProjectDir)ToolkitVersion.cs"
-)</PreBuildEvent>
+    <PreBuildEvent Condition=" '$(OS)' != 'Unix' ">
+      CALL "$(SolutionDir)prebuild.bat" "$(SolutionDir)" "$(ProjectDir)ToolkitVersion.cs"
+    </PreBuildEvent>
+    <PreBuildEvent Condition=" '$(OS)' == 'Unix' ">
+      "$(SolutionDir)prebuild.sh" "$(ProjectDir)" "$(ProjectDir)ToolkitVersion.cs"
+    </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

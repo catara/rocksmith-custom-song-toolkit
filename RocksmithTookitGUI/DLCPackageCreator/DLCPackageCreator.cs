@@ -403,10 +403,6 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 dlcSavePath = ofd.FileName;
             }
 
-            // added on/off feature for debugging 
-            // showlights cause in game hanging for some RS1-RS2 conversions
-            packageData.Showlights = chkShowlights.Checked;
-
             //Generate metronome arrangemnts here
             var mArr = new List<Arrangement>();
             foreach (var arr in packageData.Arrangements)
@@ -416,10 +412,18 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             } packageData.Arrangements.AddRange(mArr);
 
             // Update Xml arrangements song info
+            bool updateArrangmentID = false;
+            if (userChangesToInputControls > 0)
+                if (MessageBox.Show(@"The song information has been changed." + Environment.NewLine +
+                    @"Do you also want to update the 'Arrangement IDs'?" + Environment.NewLine +
+                    @"Answering 'Yes' will reduce the risk of CDLC" + Environment.NewLine +
+                    @"in game hanging and song stats will be reset.  ", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                    updateArrangmentID = true;
+
             foreach (var arr in packageData.Arrangements)
             {
                 if (userChangesToInputControls > 0)
-                    UpdateXml(arr, packageData);
+                    UpdateXml(arr, packageData, updateArrangmentID);
 
                 if (arr.ArrangementType == ArrangementType.Guitar || arr.ArrangementType == ArrangementType.Bass)
                     Song2014.WriteXmlComments(arr.SongXml.File, arr.XmlComments);
@@ -706,7 +710,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             {
                 fbd.Description = "Select folder to save project artifacts";
                 fbd.UseDescriptionForTitle = true;
-                fbd.SelectedPath = Path.GetDirectoryName(sourcePackage);
+                fbd.SelectedPath = Path.GetDirectoryName(sourcePackage) + Path.DirectorySeparatorChar;
                 if (fbd.ShowDialog() != DialogResult.OK)
                     return;
                 savePath = fbd.SelectedPath;
@@ -754,12 +758,13 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             // FILL PACKAGE CREATOR FORM
             FillPackageCreatorForm(info, unpackedDir);
 
-            // TODO: this code is depreicated for now
             // AUTO SAVE CDLC TEMPLATE
-            //SaveTemplateFile(unpackedDir);
-            //Application.DoEvents();
-            //MessageBox.Show(CurrentRocksmithTitle + " CDLC Template was imported.", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+            if (!rbConvert.Checked)
+            {
+                SaveTemplateFile(unpackedDir);
+                Application.DoEvents();
+                MessageBox.Show(CurrentRocksmithTitle + " CDLC Template was imported.", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
             Parent.Focus();
         }
 
@@ -1378,11 +1383,14 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
         /// </summary>
         /// <param name="arr"></param>
         /// <param name="info"></param>
-        public void UpdateXml(Arrangement arr, DLCPackageData info)
+        public void UpdateXml(Arrangement arr, DLCPackageData info, bool updateArrangementID = false)
         {
-            // generate new ids
-            arr.Id = IdGenerator.Guid();
-            arr.MasterId = RandomGenerator.NextInt();
+            // generate new Arrangment IDs
+            if (updateArrangementID)
+            {
+                arr.Id = IdGenerator.Guid();
+                arr.MasterId = RandomGenerator.NextInt();
+            }
 
             if (arr.ArrangementType == ArrangementType.Vocal)
                 return;

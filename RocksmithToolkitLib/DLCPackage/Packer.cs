@@ -28,8 +28,9 @@ namespace RocksmithToolkitLib.DLCPackage
 
         #region PACK
 
-        public static void Pack(string sourcePath, string saveFileName, bool updateSng = false, Platform predefinedPlatform = null, bool updateManifest = false)
+        public static void Pack(string sourcePath, string saveFileName, bool updateSng = false, Platform predefinedPlatform = null, bool updateManifest = false, bool fixShowlights = true)
         {
+            //  if (!Path.GetFileName(sourcePath).ToLower().Contains("crowd.psarc"))
             DeleteFixedAudio(sourcePath);
             Platform platform = sourcePath.GetPlatform();
 
@@ -43,7 +44,7 @@ namespace RocksmithToolkitLib.DLCPackage
                     if (platform.version == GameVersion.RS2012)
                         PackPC(sourcePath, saveFileName, true, updateSng);
                     else if (platform.version == GameVersion.RS2014)
-                        Pack2014(sourcePath, saveFileName, platform, updateSng, updateManifest);
+                        Pack2014(sourcePath, saveFileName, platform, updateSng, updateManifest, fixShowlights: fixShowlights);
                     break;
                 case GamePlatform.XBox360:
                     PackXBox360(sourcePath, saveFileName, platform, updateSng, updateManifest);
@@ -195,13 +196,7 @@ namespace RocksmithToolkitLib.DLCPackage
                 {
                     var fileStream = File.OpenRead(x);
                     streamCollection.Add(fileStream);
-                    var entry = new PSARC.Entry
-                    {
-                        Name = Path.GetFileName(x),
-                        Data = fileStream,
-                        Length = (ulong)fileStream.Length
-                    };
-                    psarc.AddEntry(entry);
+                    psarc.AddEntry(Path.GetFileName(x), fileStream);
                 }
 
                 foreach (var directory in Directory.EnumerateDirectories(sourcePath))
@@ -223,8 +218,6 @@ namespace RocksmithToolkitLib.DLCPackage
                     using (var psarcStream = new MemoryStream())
                     {
                         psarc.Write(psarcStream, false);
-                        psarcStream.Seek(0, SeekOrigin.Begin);
-                        psarcStream.Flush();
                         RijndaelEncryptor.EncryptFile(psarcStream, outputFileStream, RijndaelEncryptor.DLCKey);
                         return;
                     }
@@ -244,7 +237,7 @@ namespace RocksmithToolkitLib.DLCPackage
                     streamCollection.Add(fileStream);
                     innerPsarc.AddEntry(a, fileStream);
                 });
-                innerPsarc.Write(output, false);
+                innerPsarc.Write(output, false, false);
             }
         }
 
@@ -252,25 +245,23 @@ namespace RocksmithToolkitLib.DLCPackage
 
         #region PC/MAC 2014
 
-        private static void Pack2014(string sourcePath, string saveFileName, Platform platform, bool updateSng, bool updateManifest)
+        private static void Pack2014(string sourcePath, string saveFileName, Platform platform, bool updateSng, bool updateManifest, bool fixShowlights = true)
         {
             using (var psarc = new PSARC.PSARC())
-            using (var psarcStream = new MemoryStream())
+            using (var psarcStream = new MemoryStreamExtension())
             {
                 if (updateSng)
-                    UpdateSng2014(sourcePath, platform);
+                    UpdateSng2014(sourcePath, platform, fixShowlights: fixShowlights);
                 if (updateManifest)
                     UpdateManifest2014(sourcePath, platform);
 
                 WalkThroughDirectory("", sourcePath, (a, b) =>
-                {
-                    var fileStream = File.OpenRead(b);
-                    psarc.AddEntry(a, fileStream);
-                });
+               {
+                   var fileStream = File.OpenRead(b);
+                   psarc.AddEntry(a, fileStream);
+               });
 
                 psarc.Write(psarcStream, !platform.IsConsole);
-                psarcStream.Flush();
-                psarcStream.Seek(0, SeekOrigin.Begin);
 
                 if (Path.GetExtension(saveFileName) != ".psarc")
                     saveFileName += ".psarc";
@@ -415,9 +406,7 @@ namespace RocksmithToolkitLib.DLCPackage
                     innerPsarc.AddEntry(a, fileStream);
                 });
 
-                innerPsarc.Write(psarcStream, false);
-                psarcStream.Flush();
-
+                innerPsarc.Write(psarcStream, false, false);
                 using (var outputFileStream = File.Create(Path.Combine(sourcePath, Path.GetFileName(directory)) + ".psarc"))
                 {
                     psarcStream.Seek(0, SeekOrigin.Begin);
@@ -618,6 +607,10 @@ namespace RocksmithToolkitLib.DLCPackage
                     else
                         return new Platform(GamePlatform.XBox360, GameVersion.None);
                 }
+                else if (fullPath.ToLower().Contains("_pc"))
+                {
+                    return new Platform(GamePlatform.Pc, GameVersion.RS2014);
+                }
                 else
                 {
                     // PS3 2012/2014
@@ -691,6 +684,11 @@ namespace RocksmithToolkitLib.DLCPackage
 
             var psarc = new PSARC.PSARC();
             psarc.Read(inputStream, true);
+
+            var step = Math.Round(1.0 / (psarc.TOC.Count + 2) * 100, 3);
+            double progress = 0;
+            GlobalExtension.ShowProgress("Inflating Entries ...");
+
             foreach (var entry in psarc.TOC)
             {// custom InflateEntries
                 var fullfilename = Path.Combine(destpath, entry.Name);
@@ -706,12 +704,16 @@ namespace RocksmithToolkitLib.DLCPackage
                     psarc.InflateEntry(entry, fullfilename);
                     if (entry.Data != null)
                     {
-                        entry.Data.Dispose();//Close();
+                        entry.Data.Dispose(); //Close();
                     }
                 }
 
                 if (!String.IsNullOrEmpty(psarc.ErrMSG)) throw new InvalidDataException(psarc.ErrMSG);
+
+                progress += step;
+                GlobalExtension.UpdateProgress.Value = (int)progress;
             }
+            GlobalExtension.HideProgress();
         }
 
         private static void UpdateSng(string songDirectory, Platform platform)
@@ -748,10 +750,10 @@ namespace RocksmithToolkitLib.DLCPackage
             }
         }
 
-        private static void UpdateSng2014(string songDirectory, Platform targetPlatform)
+        private static void UpdateSng2014(string songDirectory, Platform targetPlatform, bool fixShowlights = true)
         {
             var xmlFiles = Directory.EnumerateFiles(Path.Combine(songDirectory, "songs", "arr"), "*_*.xml", SearchOption.AllDirectories).ToList();
-            var sngFolder = Path.Combine(songDirectory, "songs", "bin", targetPlatform.GetPathName()[1]); //-3 or more times re-calculation
+            var sngFolder = Path.Combine(songDirectory, "songs", "bin", targetPlatform.GetPathName()[1].ToLower()); //-3 or more times re-calculation
             foreach (var xmlFile in xmlFiles)
             {
                 if (File.Exists(xmlFile))
@@ -761,7 +763,7 @@ namespace RocksmithToolkitLib.DLCPackage
 
                     //Update Showlights
                     if (xmlName.ToLower().Contains("_showlights"))
-                        UpdateShl(xmlFile);
+                        UpdateShl(xmlFile, fixShowlights: fixShowlights);
                     else
                     {
                         var sngFile = Path.Combine(sngFolder, xmlName + ".sng");
@@ -807,15 +809,17 @@ namespace RocksmithToolkitLib.DLCPackage
         /// Fixes showlights and updates existing xml.
         /// </summary>
         /// <param name="shlPath"></param>
-        /// <returns></returns>
-        internal static void UpdateShl(string shlPath)
-        {
+        /// <param name = "fixShowlights"></param>
+        internal static void UpdateShl(string shlPath, bool fixShowlights = true)
+        {//TODO:FIXME
+            if (!fixShowlights) return;
             var shl = new Showlight.Showlights(shlPath);
             if (shl.FixShowlights(shl))
             {
                 using (var fs = new FileStream(shlPath, FileMode.Create))
                     shl.Serialize(fs);
             }
+
         }
 
         private static void UpdateManifest2014(string songDirectory, Platform platform)

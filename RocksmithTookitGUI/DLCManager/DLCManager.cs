@@ -1174,11 +1174,13 @@ ConfigRepository.Instance()["dlcm_RocksmithDLCPath"] = txt_RocksmithDLCPath.Text
             if (norows > 0)
                 foreach (var file in files)
                 {
-
-                    ids += file.ID.ToString();
-                    i++;
-                    if (i < norows) ids += ", ";
-                    if (i == norows) break;
+                    if (file != null)
+                    { 
+                        ids += file.ID.ToString();
+                        i++;
+                        if (i < norows) ids += ", ";
+                        if (i == norows) break;
+                    }
                 }
             cmd += ids + ");";
             var DB_Path = (chbx_DefaultDB.Checked == true ? MyAppWD : txt_DBFolder.Text) + "\\Files.accdb;";
@@ -1193,12 +1195,30 @@ ConfigRepository.Instance()["dlcm_RocksmithDLCPath"] = txt_RocksmithDLCPath.Text
             if (result1 == DialogResult.Yes)
                 try
                 {
+
+                    //var connections = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DBPath); //+ ";Persist Security Info=False"
+                    //var commands = connections.CreateCommand();
+                    ////dssx = DataGridView1;
+                    //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DBPath))
+                    //{
+                    //    //OleDbCommand command = new OleDbCommand(); ;
+                    //    //Update MainDB
+                    //    //SqlCommand cmds = new SqlCommand(sqlCmd, conn2);
+                    //    //command.CommandText = "UPDATE Main SET ";
+                    //    commands.CommandText = cmd;
+
+                    //    commands = cnn.CreateCommand();
+                    //    commands.CommandType = CommandType.Text;
+                    //    cnn.Open();
+                    //    commands.ExecuteNonQuery();
+                    //}
                     using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DBPath))
                     {
-                        DataSet dus = new DataSet();
-                        OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn);
-                        dax.Fill(dus, "Main");
-                        dax.Dispose();
+                        //DataSet dus = new DataSet();
+                        //OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn);
+                        //dax.Fill(dus, "Main");
+                        //dax.Dispose();
+
                         DataSet dis = new DataSet();
 
                         DataSet dhs = new DataSet();
@@ -1567,12 +1587,14 @@ ConfigRepository.Instance()["dlcm_RocksmithDLCPath"] = txt_RocksmithDLCPath.Text
                             pB_ReadDLCs.Value = 0;
                         pB_ReadDLCs.Maximum = 2 * (noOfRec - 1);
                         string[,] dupliInfo=new string[0,0];
+                        int[] dupliSongs = new int[noOfRec];
                         for (var j = 0; j <= 1; j++)
                             for (i = 0; i <= noOfRec - 1; i++)
                         {                                
-                            //MessageBox.Show(pB_ReadDLCs.Maximum+" test " +i); 
-                            //DataTable AccTable = aSet.Tables["Accounts"];
-                            var FullPath = ds.Tables[0].Rows[i].ItemArray[0].ToString();
+                                if (j==1 && dupliSongs[i] == 0) break; 
+                                //MessageBox.Show(pB_ReadDLCs.Maximum+" test " +i); 
+                                //DataTable AccTable = aSet.Tables["Accounts"];
+                                var FullPath = ds.Tables[0].Rows[i].ItemArray[0].ToString();
                             rtxt_StatisticsOnReadDLCs.Text = (i + 1) + "/" + noOfRec + " " + FullPath + "\n\n" + rtxt_StatisticsOnReadDLCs.Text;
                             errr = false;
                             if (!chbx_Additional_Manipulations.GetItemChecked(37))
@@ -1629,27 +1651,7 @@ ConfigRepository.Instance()["dlcm_RocksmithDLCPath"] = txt_RocksmithDLCPath.Text
                                 }
                             }
                             else unpackedDir = FullPath;
-                            
-                                //determine if there is a possible obvious duplicate
-                                bool posib_duplicate = false;
-                                if (chbx_Additional_Manipulations.GetItemChecked(50))
-                                {
-                                    dupliInfo[i,0] = info.SongInfo.Artist.ToString();
-                                    dupliInfo[i, 1] = info.SongInfo.Album.ToString();
-                                    dupliInfo[i, 2]=info.SongInfo.SongDisplayName.ToString();
-                                    dupliInfo[i, 3] = info.Name.ToString();
-                                for (var k = 0; k <= i; k++)
-                                    {
-
-                                        if ((info.SongInfo.Artist.ToString() == dupliInfo[k, 0] && info.SongInfo.Album.ToString() == dupliInfo[k, 1] && info.SongInfo.SongDisplayName.ToString() == dupliInfo[k, 2])
-                                            || (info.Name.ToString() == dupliInfo[k, 3])
-                                            || ()) 
-                                                posib_duplicate = true;
-                                    }
-                                }
-                                if (j == 1 && posib_duplicate ) break;
-                                else;
-
+                                
                                 //Commenting Reorganize as they might have fixed the incompatib char issue
                                 // REORGANIZE
                                 //System.Threading.Thread.Sleep(1000);
@@ -2286,14 +2288,18 @@ ConfigRepository.Instance()["dlcm_RocksmithDLCPath"] = txt_RocksmithDLCPath.Text
                                         if ((author.ToLower() == file.Author.ToLower() && author != "" && file.Author != "" && file.Author != "Custom Song Creator" && author != "Custom Song Creator") || (file.DLC_Name == info.Name))
                                         {
                                             if (file.DLC_Name.ToLower() == info.Name.ToLower())
-                                                artist = AssessConflict(file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, Tunings, b, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist, DB_Path, clist, dlist, newold, Is_Original, altver, fsz, unpackedDir, Is_MultiTrack, MultiTrack_Version);
+                                                    if (chbx_Additional_Manipulations.GetItemChecked(50)) {dupliSongs[i] = 1; break;}
+                                                        else artist = AssessConflict(file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, Tunings, b, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist, DB_Path, clist, dlist, newold, Is_Original, altver, fsz, unpackedDir, Is_MultiTrack, MultiTrack_Version);
                                             else
                                             {
                                                 if (file.Version.ToInt32() > info.PackageVersion.ToInt32()) artist = "Update";
                                                 if (file.Version.ToInt32() < info.PackageVersion.ToInt32())
                                                     if (file.Is_Alternate != "Yes") { artist = "Ignore"; rtxt_StatisticsOnReadDLCs.Text = "IGNORED" + "\n" + rtxt_StatisticsOnReadDLCs.Text; }
-                                                    else artist = AssessConflict(file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, Tunings, b, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist, DB_Path, clist, dlist, newold, Is_Original, altver, fsz, unpackedDir, Is_MultiTrack, MultiTrack_Version);
-                                                if (file.Version.ToInt32() == info.PackageVersion.ToInt32()) artist = AssessConflict(file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, Tunings, b, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist, DB_Path, clist, dlist, newold, Is_Original, altver, fsz, unpackedDir, Is_MultiTrack, MultiTrack_Version);
+                                                        else if (chbx_Additional_Manipulations.GetItemChecked(50)) { dupliSongs[i] = 1; break; }
+                                                                else artist = AssessConflict(file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, Tunings, b, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist, DB_Path, clist, dlist, newold, Is_Original, altver, fsz, unpackedDir, Is_MultiTrack, MultiTrack_Version);
+                                                if (file.Version.ToInt32() == info.PackageVersion.ToInt32())
+                                                        if (chbx_Additional_Manipulations.GetItemChecked(50)) { dupliSongs[i] = 1; break; }
+                                                            else artist = AssessConflict(file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, Tunings, b, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist, DB_Path, clist, dlist, newold, Is_Original, altver, fsz, unpackedDir, Is_MultiTrack, MultiTrack_Version);
                                                 else { artist = "Ignore"; rtxt_StatisticsOnReadDLCs.Text = "IGNORED" + "\n" + rtxt_StatisticsOnReadDLCs.Text; }
                                                 // assess=alternate, update or ignore//as maybe a new package(ing) is desired to be inserted in the DB
                                             }
@@ -2301,7 +2307,8 @@ ConfigRepository.Instance()["dlcm_RocksmithDLCPath"] = txt_RocksmithDLCPath.Text
                                         else
                                             if (author.ToLower() != file.Author.ToLower() && (author != "" && author != "Custom Song Creator" && file.Author != "Custom Song Creator" && file.Author != ""))
                                                 artist = "Alternate";
-                                            else artist = AssessConflict(file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, Tunings, b, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist, DB_Path, clist, dlist, newold, Is_Original, altver, fsz, unpackedDir, Is_MultiTrack, MultiTrack_Version);
+                                            else if (chbx_Additional_Manipulations.GetItemChecked(50)) { dupliSongs[i] = 1; break; }
+                                                    else artist = AssessConflict(file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, Tunings, b, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist, DB_Path, clist, dlist, newold, Is_Original, altver, fsz, unpackedDir, Is_MultiTrack, MultiTrack_Version);
                                         //rtxt_StatisticsOnReadDLCs.Text = "7 "+b + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                         //Exit condition
 
@@ -4186,6 +4193,8 @@ ConfigRepository.Instance()["dlcm_RocksmithDLCPath"] = txt_RocksmithDLCPath.Text
                         catch (Exception ex)
                         {
                             errorsFound.AppendLine(String.Format("Error 2generate PS3 package: {0}{1}. {0}PS3 package require 'JAVA x86' (32 bits) installed on your machine to generate properly.{0}", Environment.NewLine, ex.StackTrace));
+                            ErrorWindow frm1 = new ErrorWindow("Error 2generate PS3 package: {0}"+ex.StackTrace+". {0}PS3 package require 'JAVA x86' (32 bits) installed on your machine to generate properly. "+Environment.NewLine, "http://www.java.com/");
+
                             //bcapirtxt_StatisticsOnReadDLCs.Text = "...0Ps3 ERROR..."+ dlcSavePath+"---"+ dlcSavePath.Length+ "----" + ex.Message + rtxt_StatisticsOnReadDLCs.Text;
                         }
                     data.CleanCache();

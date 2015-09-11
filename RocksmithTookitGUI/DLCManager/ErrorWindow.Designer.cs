@@ -3,7 +3,7 @@ using RocksmithToolkitLib.DLCPackage;
 
 namespace RocksmithToolkitGUI.DLCManager
 {
-    partial class Standardization
+    partial class ErrorWindow
     {
         /// <summary>
         /// Required designer variable.
@@ -14,16 +14,16 @@ namespace RocksmithToolkitGUI.DLCManager
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        //protected override void Dispose(bool disposing)
-        //{
-        //    if (disposing && (clomponents != null))
-        //    {
-        //        clomponents.Dispose();
-        //    }
-        //    base.Disposet(disposing);
-        //}
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (clomponents != null))
+            {
+                clomponents.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
-        #region Windows Form Designer generated code
+        //#region Windows Form Designer generated code
 
         /// <summary>
         /// Required method for Designer support - do not modify
@@ -31,16 +31,18 @@ namespace RocksmithToolkitGUI.DLCManager
         /// </summary>
         private void InitializeComponentt()
         {
-            
+
             this.SuspendLayout();
             // 
             // DataGridView1
             // 
-            
+
         }
 
         private System.Windows.Forms.Button btn_OK;
         private System.Windows.Forms.Button btn_Close;
         private System.Windows.Forms.HelpProvider helpProvider1;
+        private System.Windows.Forms.LinkLabel lbl_Link;
+        private System.Windows.Forms.Label lbl_Message;
     }
 }

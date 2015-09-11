@@ -9,7 +9,7 @@
 
 
 
-# Rksmith DLC Library Manager v0.2.0.10 (beta version)
+# Roksmith DLC Library Manager v0.2.0.10 (beta version)
 Main Features:
 - Gather all DLCs metadata into 1 Access DB
 	- Manage Duplicates
@@ -27,9 +27,15 @@ Main Features:
 
 ## Known Issues:
 + Import fails randomly...workaround Import again (don't clear the DB)
-+ Tool is based on Rocksmith Toolkit April version
++ Tool is based on Rocksmith Toolkit 5th Sept '15 version
 -- Edit of Arragements and Tones DB can only be done from Access for the moment
 - Packing of Rocksmith 2014 Retail manipulated files has 1 manual step for RS14 Retail songs
+-- When having GitHub conficting issue
+ https://help.github.com/articles/resolving-a-merge-conflict-from-the-command-line/
+ git status
+ edit in notepad 
+ git add xxx.xxx
+ git commit
 
 ## ToDos/bugs:
 wip:

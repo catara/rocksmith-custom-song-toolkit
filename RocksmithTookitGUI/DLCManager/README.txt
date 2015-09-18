@@ -56,28 +56,32 @@ wnyp:
 - medium feature: when repacking the Retail songs Remove Bass DD
 
 Testing Issues to be checked&fixed:
+-- mising java showboxes at generate
+-+ the error dwld access db ..should have a hyperlink so a separate window/form is required
+-+ author is not chaged to repacked w
+-+ with or without u still doesnt have the right alternate no when importing vs an existing song= a2....maybe OK :)
+-+ some tracks no don't get read/picked cause" (1) "
 
 - joaleen is tone is different.....where do we see that
--- overrite sometimes gives Directory not empty error
 - save error log separately
   - save constantly not only at the end
-- import duplicates at the end of the import process
 - make a custom song out of retail
 - finish arrangement (demo with the hives overdrive sall the time :) )
-- the error dwld access db ..should have a hyperlink so a separate window/form is required
 - when packing the progress bar is not changing when packing
-- search is not working completely after the search result have returned 
--- mising java showboxes at generate
 - missing conversion showboxes at preview?
 - @close save the setting in maindb?
-- author is not chaged to repacked w
-- add folder 0_packed
+- Add DLCID_Platform to each folder
+- overrite seemts to break the songs
+- nirvana poly/xx Stars old has no cover and xmls...in the duplciate management window
+- cannot find sick sick sic (override)
+  - consistency check function
+- tool Ænema duplciate management no info
+- tool Ænema override error
 
 - the pretender fails
 - audioslave sections missing maybe cause its an original and i used my own logic to strip the DD
 - some standardization lines sill generate duplicates..
-+ some tracks no don't get read/picked
-	+ Ralph Wiggum is not 7 ..is 3..but it was 7 :)
+
 
 ### dev issues:
 + Toolkit version flag does not sync to&from Github: Run RunMeFirst.bat

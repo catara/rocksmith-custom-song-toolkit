@@ -228,6 +228,8 @@ namespace RocksmithToolkitGUI.DLCManager
             this.lbl_Size = new System.Windows.Forms.Label();
             this.lbl_Multitrack = new System.Windows.Forms.Label();
             this.chbx_UseBrakets = new System.Windows.Forms.CheckBox();
+            this.button6 = new System.Windows.Forms.Button();
+            this.button7 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPathNew)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPathExisting)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -1415,7 +1417,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_IsAlternateExisting.AutoSize = true;
             this.chbx_IsAlternateExisting.Checked = true;
             this.chbx_IsAlternateExisting.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chbx_IsAlternateExisting.Location = new System.Drawing.Point(335, 206);
+            this.chbx_IsAlternateExisting.Location = new System.Drawing.Point(371, 204);
             this.chbx_IsAlternateExisting.Name = "chbx_IsAlternateExisting";
             this.chbx_IsAlternateExisting.Size = new System.Drawing.Size(68, 17);
             this.chbx_IsAlternateExisting.TabIndex = 368;
@@ -1425,7 +1427,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_AlternateNoExisting
             // 
-            this.txt_AlternateNoExisting.Location = new System.Drawing.Point(400, 201);
+            this.txt_AlternateNoExisting.Location = new System.Drawing.Point(334, 202);
             this.txt_AlternateNoExisting.Margin = new System.Windows.Forms.Padding(2);
             this.txt_AlternateNoExisting.Maximum = new decimal(new int[] {
             9,
@@ -1438,7 +1440,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_AlternateNoNew
             // 
-            this.txt_AlternateNoNew.Location = new System.Drawing.Point(121, 199);
+            this.txt_AlternateNoNew.Location = new System.Drawing.Point(121, 204);
             this.txt_AlternateNoNew.Margin = new System.Windows.Forms.Padding(2);
             this.txt_AlternateNoNew.Maximum = new decimal(new int[] {
             9,
@@ -1973,7 +1975,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_PlayPreviewNew.Name = "btn_PlayPreviewNew";
             this.btn_PlayPreviewNew.Size = new System.Drawing.Size(62, 21);
             this.btn_PlayPreviewNew.TabIndex = 398;
-            this.btn_PlayPreviewNew.Text = "Preview";
+            this.btn_PlayPreviewNew.Text = "Play Preview";
             this.btn_PlayPreviewNew.UseVisualStyleBackColor = true;
             this.btn_PlayPreviewNew.Click += new System.EventHandler(this.btn_PlayPreviewNew_Click);
             // 
@@ -1983,7 +1985,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_PlayAudioNew.Name = "btn_PlayAudioNew";
             this.btn_PlayAudioNew.Size = new System.Drawing.Size(62, 21);
             this.btn_PlayAudioNew.TabIndex = 397;
-            this.btn_PlayAudioNew.Text = "Audio";
+            this.btn_PlayAudioNew.Text = "Play Audio";
             this.btn_PlayAudioNew.UseVisualStyleBackColor = true;
             this.btn_PlayAudioNew.Click += new System.EventHandler(this.btn_PlayAudioNew_Click);
             // 
@@ -1994,7 +1996,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_PlayPreviewExisting.Name = "btn_PlayPreviewExisting";
             this.btn_PlayPreviewExisting.Size = new System.Drawing.Size(62, 21);
             this.btn_PlayPreviewExisting.TabIndex = 396;
-            this.btn_PlayPreviewExisting.Text = "Preview";
+            this.btn_PlayPreviewExisting.Text = "Play Preview";
             this.btn_PlayPreviewExisting.UseVisualStyleBackColor = true;
             this.btn_PlayPreviewExisting.Click += new System.EventHandler(this.btn_PlayPreview_Click);
             // 
@@ -2004,7 +2006,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_PlayAudioExisting.Name = "btn_PlayAudioExisting";
             this.btn_PlayAudioExisting.Size = new System.Drawing.Size(62, 21);
             this.btn_PlayAudioExisting.TabIndex = 395;
-            this.btn_PlayAudioExisting.Text = "Audio";
+            this.btn_PlayAudioExisting.Text = "Play Audio";
             this.btn_PlayAudioExisting.UseVisualStyleBackColor = true;
             this.btn_PlayAudioExisting.Click += new System.EventHandler(this.btn_PlayAudio_Click);
             // 
@@ -2380,11 +2382,39 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_UseBrakets.Text = "At Save Use Brackets for Additional Title added info";
             this.chbx_UseBrakets.UseVisualStyleBackColor = true;
             // 
+            // button6
+            // 
+            this.button6.BackColor = System.Drawing.SystemColors.Control;
+            this.button6.Enabled = false;
+            this.button6.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button6.Location = new System.Drawing.Point(431, 205);
+            this.button6.Margin = new System.Windows.Forms.Padding(2);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(14, 15);
+            this.button6.TabIndex = 396;
+            this.button6.Text = "+";
+            this.button6.UseVisualStyleBackColor = false;
+            // 
+            // button7
+            // 
+            this.button7.BackColor = System.Drawing.SystemColors.Control;
+            this.button7.Enabled = false;
+            this.button7.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button7.Location = new System.Drawing.Point(38, 205);
+            this.button7.Margin = new System.Windows.Forms.Padding(2);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(14, 15);
+            this.button7.TabIndex = 397;
+            this.button7.Text = "+";
+            this.button7.UseVisualStyleBackColor = false;
+            // 
             // Duplicates_Management
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(772, 779);
+            this.Controls.Add(this.button7);
+            this.Controls.Add(this.button6);
             this.Controls.Add(this.chbx_UseBrakets);
             this.Controls.Add(this.lbl_Multitrack);
             this.Controls.Add(this.lbl_Size);
@@ -2701,5 +2731,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private Button btn_PlayPreviewExisting;
         private Button btn_PlayAudioExisting;
         private CheckBox chbx_UseBrakets;
+        private Button button6;
+        private Button button7;
     }
 }

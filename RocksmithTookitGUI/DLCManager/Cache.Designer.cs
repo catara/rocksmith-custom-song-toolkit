@@ -217,7 +217,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.lbl_NoRec.Name = "lbl_NoRec";
             this.lbl_NoRec.Size = new System.Drawing.Size(59, 13);
             this.lbl_NoRec.TabIndex = 281;
-            this.lbl_NoRec.Text = "of Records";
+            this.lbl_NoRec.Text = " Records";
             // 
             // button12
             // 

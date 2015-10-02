@@ -151,40 +151,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_IsAlternateExisting = new System.Windows.Forms.CheckBox();
             this.txt_AlternateNoExisting = new System.Windows.Forms.NumericUpDown();
             this.txt_AlternateNoNew = new System.Windows.Forms.NumericUpDown();
-            this.txt_AlbumExisting = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_ArtistExisting = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_VocalsExisting = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_VocalsNew = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_AlbumNew = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_VersionExisting = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_VersionNew = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_FileNameExisting = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_FileNameNew = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_ArtistNew = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_PreviewExisting = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_PreviewNew = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_AudioExisting = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_AudioNew = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_AvailTracksExisting = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_AvailTracksNew = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_DDExisting = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_DDNew = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_DLCIDExisting = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_DLCIDNew = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_TuningExisting = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_TuningNew = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_AuthorExisting = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_AuthorNew = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_IsOriginalExisting = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_IsOriginalNew = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_ToolkitExisting = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_ToolkitNew = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_TitleSortExisting = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_TitleSortNew = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_ArtistSortExisting = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_ArtistSortNew = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_TitleExisting = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_TitleNew = new RocksmithToolkitGUI.CueTextBox();
             this.chbx_MultiTrackExisting = new System.Windows.Forms.CheckBox();
             this.chbx_MultiTrackNew = new System.Windows.Forms.CheckBox();
             this.txt_MultiTrackNew = new System.Windows.Forms.ComboBox();
@@ -198,6 +164,16 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_PlayAudioExisting = new System.Windows.Forms.Button();
             this.btn_AddDD = new System.Windows.Forms.Button();
             this.btn_AddTracks = new System.Windows.Forms.Button();
+            this.txt_DDNew = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_DDExisting = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_AvailTracksNew = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_AvailTracksExisting = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_AudioNew = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_AudioExisting = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_PreviewNew = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_PreviewExisting = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_VocalsNew = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_VocalsExisting = new RocksmithToolkitGUI.CueTextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.button5 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
@@ -223,13 +199,41 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_AddVersion1 = new System.Windows.Forms.Button();
             this.btn_AddAuthor = new System.Windows.Forms.Button();
             this.lblSoye = new System.Windows.Forms.Label();
-            this.txt_SizeExisting = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_SizeNew = new RocksmithToolkitGUI.CueTextBox();
             this.lbl_Size = new System.Windows.Forms.Label();
             this.lbl_Multitrack = new System.Windows.Forms.Label();
             this.chbx_UseBrakets = new System.Windows.Forms.CheckBox();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
+            this.btn_AddAlternate = new System.Windows.Forms.Button();
+            this.btn_StopImport = new System.Windows.Forms.Button();
+            this.txt_SizeExisting = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_SizeNew = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_AlbumExisting = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_ArtistExisting = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_AlbumNew = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_VersionExisting = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_VersionNew = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_FileNameExisting = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_FileNameNew = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_ArtistNew = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_DLCIDExisting = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_DLCIDNew = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_TuningExisting = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_TuningNew = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_AuthorExisting = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_AuthorNew = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_IsOriginalExisting = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_IsOriginalNew = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_ToolkitExisting = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_ToolkitNew = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_TitleSortExisting = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_TitleSortNew = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_ArtistSortExisting = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_ArtistSortNew = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_TitleExisting = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_TitleNew = new RocksmithToolkitGUI.CueTextBox();
+            this.chbx_DeleteTemp = new System.Windows.Forms.CheckBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.btn_Title2SortT = new System.Windows.Forms.Button();
+            this.btn_Artist2SortA = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPathNew)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPathExisting)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -255,6 +259,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_Comment.Size = new System.Drawing.Size(156, 69);
             this.txt_Comment.TabIndex = 277;
             this.txt_Comment.Text = "";
+            this.txt_Comment.Visible = false;
             // 
             // txt_Description
             // 
@@ -894,9 +899,9 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // btn_RemoveOldNew
             // 
-            this.btn_RemoveOldNew.Location = new System.Drawing.Point(550, 104);
+            this.btn_RemoveOldNew.Location = new System.Drawing.Point(563, 104);
             this.btn_RemoveOldNew.Name = "btn_RemoveOldNew";
-            this.btn_RemoveOldNew.Size = new System.Drawing.Size(84, 19);
+            this.btn_RemoveOldNew.Size = new System.Drawing.Size(71, 19);
             this.btn_RemoveOldNew.TabIndex = 338;
             this.btn_RemoveOldNew.Text = "Clear extra txt";
             this.btn_RemoveOldNew.UseVisualStyleBackColor = true;
@@ -1175,7 +1180,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // btn_GoToNew
             // 
             this.btn_GoToNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_GoToNew.Location = new System.Drawing.Point(171, 15);
+            this.btn_GoToNew.Location = new System.Drawing.Point(168, 15);
             this.btn_GoToNew.Name = "btn_GoToNew";
             this.btn_GoToNew.Size = new System.Drawing.Size(21, 15);
             this.btn_GoToNew.TabIndex = 396;
@@ -1186,7 +1191,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // btn_GoToExisting
             // 
             this.btn_GoToExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_GoToExisting.Location = new System.Drawing.Point(348, 14);
+            this.btn_GoToExisting.Location = new System.Drawing.Point(350, 14);
             this.btn_GoToExisting.Name = "btn_GoToExisting";
             this.btn_GoToExisting.Size = new System.Drawing.Size(21, 15);
             this.btn_GoToExisting.TabIndex = 395;
@@ -1233,7 +1238,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.lbl_New.AutoSize = true;
             this.lbl_New.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.lbl_New.Location = new System.Drawing.Point(191, 14);
+            this.lbl_New.Location = new System.Drawing.Point(189, 14);
             this.lbl_New.Name = "lbl_New";
             this.lbl_New.Size = new System.Drawing.Size(32, 15);
             this.lbl_New.TabIndex = 390;
@@ -1451,394 +1456,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_AlternateNoNew.Size = new System.Drawing.Size(32, 20);
             this.txt_AlternateNoNew.TabIndex = 371;
             // 
-            // txt_AlbumExisting
-            // 
-            this.txt_AlbumExisting.Cue = "Album";
-            this.txt_AlbumExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_AlbumExisting.ForeColor = System.Drawing.Color.Gray;
-            this.txt_AlbumExisting.Location = new System.Drawing.Point(284, 78);
-            this.txt_AlbumExisting.Name = "txt_AlbumExisting";
-            this.txt_AlbumExisting.Size = new System.Drawing.Size(222, 20);
-            this.txt_AlbumExisting.TabIndex = 344;
-            this.txt_AlbumExisting.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txt_AlbumExisting.TextChanged += new System.EventHandler(this.ExistingChanged);
-            // 
-            // txt_ArtistExisting
-            // 
-            this.txt_ArtistExisting.Cue = "Artist";
-            this.txt_ArtistExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_ArtistExisting.ForeColor = System.Drawing.Color.Gray;
-            this.txt_ArtistExisting.Location = new System.Drawing.Point(284, 55);
-            this.txt_ArtistExisting.Name = "txt_ArtistExisting";
-            this.txt_ArtistExisting.Size = new System.Drawing.Size(222, 20);
-            this.txt_ArtistExisting.TabIndex = 343;
-            this.txt_ArtistExisting.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txt_ArtistExisting.TextChanged += new System.EventHandler(this.ExistingChanged);
-            // 
-            // txt_VocalsExisting
-            // 
-            this.txt_VocalsExisting.Cue = "Vocals Existing";
-            this.txt_VocalsExisting.Enabled = false;
-            this.txt_VocalsExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_VocalsExisting.ForeColor = System.Drawing.Color.Gray;
-            this.txt_VocalsExisting.Location = new System.Drawing.Point(276, 117);
-            this.txt_VocalsExisting.Name = "txt_VocalsExisting";
-            this.txt_VocalsExisting.Size = new System.Drawing.Size(45, 20);
-            this.txt_VocalsExisting.TabIndex = 340;
-            // 
-            // txt_VocalsNew
-            // 
-            this.txt_VocalsNew.Cue = "Vocals New";
-            this.txt_VocalsNew.Enabled = false;
-            this.txt_VocalsNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_VocalsNew.ForeColor = System.Drawing.Color.Gray;
-            this.txt_VocalsNew.Location = new System.Drawing.Point(209, 117);
-            this.txt_VocalsNew.Name = "txt_VocalsNew";
-            this.txt_VocalsNew.Size = new System.Drawing.Size(43, 20);
-            this.txt_VocalsNew.TabIndex = 339;
-            this.txt_VocalsNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // txt_AlbumNew
-            // 
-            this.txt_AlbumNew.Cue = "Album";
-            this.txt_AlbumNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_AlbumNew.ForeColor = System.Drawing.Color.Gray;
-            this.txt_AlbumNew.Location = new System.Drawing.Point(38, 77);
-            this.txt_AlbumNew.Name = "txt_AlbumNew";
-            this.txt_AlbumNew.Size = new System.Drawing.Size(222, 20);
-            this.txt_AlbumNew.TabIndex = 319;
-            this.txt_AlbumNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // txt_VersionExisting
-            // 
-            this.txt_VersionExisting.Cue = "Version  Existing";
-            this.txt_VersionExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_VersionExisting.ForeColor = System.Drawing.Color.Gray;
-            this.txt_VersionExisting.Location = new System.Drawing.Point(284, 277);
-            this.txt_VersionExisting.Name = "txt_VersionExisting";
-            this.txt_VersionExisting.Size = new System.Drawing.Size(45, 20);
-            this.txt_VersionExisting.TabIndex = 282;
-            this.txt_VersionExisting.TextChanged += new System.EventHandler(this.ExistingChanged);
-            // 
-            // txt_VersionNew
-            // 
-            this.txt_VersionNew.Cue = "Version New";
-            this.txt_VersionNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_VersionNew.ForeColor = System.Drawing.Color.Gray;
-            this.txt_VersionNew.Location = new System.Drawing.Point(217, 277);
-            this.txt_VersionNew.Name = "txt_VersionNew";
-            this.txt_VersionNew.Size = new System.Drawing.Size(43, 20);
-            this.txt_VersionNew.TabIndex = 281;
-            this.txt_VersionNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // txt_FileNameExisting
-            // 
-            this.txt_FileNameExisting.Cue = "File Name Existing";
-            this.txt_FileNameExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_FileNameExisting.ForeColor = System.Drawing.Color.Gray;
-            this.txt_FileNameExisting.Location = new System.Drawing.Point(284, 179);
-            this.txt_FileNameExisting.Name = "txt_FileNameExisting";
-            this.txt_FileNameExisting.ReadOnly = true;
-            this.txt_FileNameExisting.Size = new System.Drawing.Size(222, 20);
-            this.txt_FileNameExisting.TabIndex = 280;
-            this.txt_FileNameExisting.TextChanged += new System.EventHandler(this.ExistingChanged);
-            // 
-            // txt_FileNameNew
-            // 
-            this.txt_FileNameNew.Cue = "File Name New";
-            this.txt_FileNameNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_FileNameNew.ForeColor = System.Drawing.Color.Gray;
-            this.txt_FileNameNew.Location = new System.Drawing.Point(38, 179);
-            this.txt_FileNameNew.Name = "txt_FileNameNew";
-            this.txt_FileNameNew.ReadOnly = true;
-            this.txt_FileNameNew.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
-            this.txt_FileNameNew.Size = new System.Drawing.Size(222, 20);
-            this.txt_FileNameNew.TabIndex = 279;
-            this.txt_FileNameNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // txt_ArtistNew
-            // 
-            this.txt_ArtistNew.Cue = "Artist";
-            this.txt_ArtistNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_ArtistNew.ForeColor = System.Drawing.Color.Gray;
-            this.txt_ArtistNew.Location = new System.Drawing.Point(38, 54);
-            this.txt_ArtistNew.Name = "txt_ArtistNew";
-            this.txt_ArtistNew.Size = new System.Drawing.Size(222, 20);
-            this.txt_ArtistNew.TabIndex = 278;
-            this.txt_ArtistNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // txt_PreviewExisting
-            // 
-            this.txt_PreviewExisting.Cue = "Preview Existing";
-            this.txt_PreviewExisting.Enabled = false;
-            this.txt_PreviewExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_PreviewExisting.ForeColor = System.Drawing.Color.Gray;
-            this.txt_PreviewExisting.Location = new System.Drawing.Point(276, 91);
-            this.txt_PreviewExisting.Name = "txt_PreviewExisting";
-            this.txt_PreviewExisting.Size = new System.Drawing.Size(45, 20);
-            this.txt_PreviewExisting.TabIndex = 243;
-            // 
-            // txt_PreviewNew
-            // 
-            this.txt_PreviewNew.Cue = "Preview New";
-            this.txt_PreviewNew.Enabled = false;
-            this.txt_PreviewNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_PreviewNew.ForeColor = System.Drawing.Color.Gray;
-            this.txt_PreviewNew.Location = new System.Drawing.Point(209, 91);
-            this.txt_PreviewNew.Name = "txt_PreviewNew";
-            this.txt_PreviewNew.Size = new System.Drawing.Size(43, 20);
-            this.txt_PreviewNew.TabIndex = 242;
-            this.txt_PreviewNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // txt_AudioExisting
-            // 
-            this.txt_AudioExisting.Cue = "Audio Existing";
-            this.txt_AudioExisting.Enabled = false;
-            this.txt_AudioExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_AudioExisting.ForeColor = System.Drawing.Color.Gray;
-            this.txt_AudioExisting.Location = new System.Drawing.Point(276, 65);
-            this.txt_AudioExisting.Name = "txt_AudioExisting";
-            this.txt_AudioExisting.Size = new System.Drawing.Size(45, 20);
-            this.txt_AudioExisting.TabIndex = 239;
-            // 
-            // txt_AudioNew
-            // 
-            this.txt_AudioNew.Cue = "Audio New";
-            this.txt_AudioNew.Enabled = false;
-            this.txt_AudioNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_AudioNew.ForeColor = System.Drawing.Color.Gray;
-            this.txt_AudioNew.Location = new System.Drawing.Point(209, 65);
-            this.txt_AudioNew.Name = "txt_AudioNew";
-            this.txt_AudioNew.Size = new System.Drawing.Size(43, 20);
-            this.txt_AudioNew.TabIndex = 238;
-            this.txt_AudioNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // txt_AvailTracksExisting
-            // 
-            this.txt_AvailTracksExisting.Cue = "Available Tracks Existing";
-            this.txt_AvailTracksExisting.Enabled = false;
-            this.txt_AvailTracksExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.txt_AvailTracksExisting.ForeColor = System.Drawing.Color.Gray;
-            this.txt_AvailTracksExisting.Location = new System.Drawing.Point(276, 39);
-            this.txt_AvailTracksExisting.Name = "txt_AvailTracksExisting";
-            this.txt_AvailTracksExisting.Size = new System.Drawing.Size(45, 21);
-            this.txt_AvailTracksExisting.TabIndex = 237;
-            // 
-            // txt_AvailTracksNew
-            // 
-            this.txt_AvailTracksNew.Cue = "Available Tracks New";
-            this.txt_AvailTracksNew.Enabled = false;
-            this.txt_AvailTracksNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.txt_AvailTracksNew.ForeColor = System.Drawing.Color.Gray;
-            this.txt_AvailTracksNew.Location = new System.Drawing.Point(209, 39);
-            this.txt_AvailTracksNew.Name = "txt_AvailTracksNew";
-            this.txt_AvailTracksNew.Size = new System.Drawing.Size(43, 21);
-            this.txt_AvailTracksNew.TabIndex = 236;
-            this.txt_AvailTracksNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // txt_DDExisting
-            // 
-            this.txt_DDExisting.Cue = "DD Existing";
-            this.txt_DDExisting.Enabled = false;
-            this.txt_DDExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_DDExisting.ForeColor = System.Drawing.Color.Gray;
-            this.txt_DDExisting.Location = new System.Drawing.Point(276, 13);
-            this.txt_DDExisting.Name = "txt_DDExisting";
-            this.txt_DDExisting.Size = new System.Drawing.Size(45, 20);
-            this.txt_DDExisting.TabIndex = 235;
-            // 
-            // txt_DDNew
-            // 
-            this.txt_DDNew.Cue = "DD New";
-            this.txt_DDNew.Enabled = false;
-            this.txt_DDNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_DDNew.ForeColor = System.Drawing.Color.Gray;
-            this.txt_DDNew.Location = new System.Drawing.Point(209, 13);
-            this.txt_DDNew.Name = "txt_DDNew";
-            this.txt_DDNew.Size = new System.Drawing.Size(43, 20);
-            this.txt_DDNew.TabIndex = 234;
-            this.txt_DDNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // txt_DLCIDExisting
-            // 
-            this.txt_DLCIDExisting.Cue = "DLC Name Existing";
-            this.txt_DLCIDExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_DLCIDExisting.ForeColor = System.Drawing.Color.Gray;
-            this.txt_DLCIDExisting.Location = new System.Drawing.Point(284, 354);
-            this.txt_DLCIDExisting.Name = "txt_DLCIDExisting";
-            this.txt_DLCIDExisting.Size = new System.Drawing.Size(116, 20);
-            this.txt_DLCIDExisting.TabIndex = 233;
-            this.txt_DLCIDExisting.TextChanged += new System.EventHandler(this.ExistingChanged);
-            // 
-            // txt_DLCIDNew
-            // 
-            this.txt_DLCIDNew.Cue = "DLC Name New";
-            this.txt_DLCIDNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_DLCIDNew.ForeColor = System.Drawing.Color.Gray;
-            this.txt_DLCIDNew.Location = new System.Drawing.Point(144, 354);
-            this.txt_DLCIDNew.Name = "txt_DLCIDNew";
-            this.txt_DLCIDNew.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
-            this.txt_DLCIDNew.Size = new System.Drawing.Size(116, 20);
-            this.txt_DLCIDNew.TabIndex = 232;
-            this.txt_DLCIDNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // txt_TuningExisting
-            // 
-            this.txt_TuningExisting.Cue = "Tunig Existing";
-            this.txt_TuningExisting.Enabled = false;
-            this.txt_TuningExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_TuningExisting.ForeColor = System.Drawing.Color.Gray;
-            this.txt_TuningExisting.Location = new System.Drawing.Point(284, 331);
-            this.txt_TuningExisting.Name = "txt_TuningExisting";
-            this.txt_TuningExisting.Size = new System.Drawing.Size(116, 20);
-            this.txt_TuningExisting.TabIndex = 231;
-            // 
-            // txt_TuningNew
-            // 
-            this.txt_TuningNew.Cue = "Tuning New";
-            this.txt_TuningNew.Enabled = false;
-            this.txt_TuningNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_TuningNew.ForeColor = System.Drawing.Color.Gray;
-            this.txt_TuningNew.Location = new System.Drawing.Point(144, 331);
-            this.txt_TuningNew.Name = "txt_TuningNew";
-            this.txt_TuningNew.Size = new System.Drawing.Size(116, 20);
-            this.txt_TuningNew.TabIndex = 230;
-            this.txt_TuningNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // txt_AuthorExisting
-            // 
-            this.txt_AuthorExisting.Cue = "Author Existing";
-            this.txt_AuthorExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_AuthorExisting.ForeColor = System.Drawing.Color.Gray;
-            this.txt_AuthorExisting.Location = new System.Drawing.Point(284, 253);
-            this.txt_AuthorExisting.Name = "txt_AuthorExisting";
-            this.txt_AuthorExisting.Size = new System.Drawing.Size(116, 20);
-            this.txt_AuthorExisting.TabIndex = 229;
-            this.txt_AuthorExisting.TextChanged += new System.EventHandler(this.ExistingChanged);
-            // 
-            // txt_AuthorNew
-            // 
-            this.txt_AuthorNew.Cue = "Author New";
-            this.txt_AuthorNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_AuthorNew.ForeColor = System.Drawing.Color.Gray;
-            this.txt_AuthorNew.Location = new System.Drawing.Point(144, 253);
-            this.txt_AuthorNew.Name = "txt_AuthorNew";
-            this.txt_AuthorNew.Size = new System.Drawing.Size(116, 20);
-            this.txt_AuthorNew.TabIndex = 228;
-            this.txt_AuthorNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // txt_IsOriginalExisting
-            // 
-            this.txt_IsOriginalExisting.Cue = "Is Original Existing";
-            this.txt_IsOriginalExisting.Enabled = false;
-            this.txt_IsOriginalExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_IsOriginalExisting.ForeColor = System.Drawing.Color.Gray;
-            this.txt_IsOriginalExisting.Location = new System.Drawing.Point(284, 204);
-            this.txt_IsOriginalExisting.Name = "txt_IsOriginalExisting";
-            this.txt_IsOriginalExisting.Size = new System.Drawing.Size(45, 20);
-            this.txt_IsOriginalExisting.TabIndex = 227;
-            // 
-            // txt_IsOriginalNew
-            // 
-            this.txt_IsOriginalNew.Cue = "Is Original New";
-            this.txt_IsOriginalNew.Enabled = false;
-            this.txt_IsOriginalNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_IsOriginalNew.ForeColor = System.Drawing.Color.Gray;
-            this.txt_IsOriginalNew.Location = new System.Drawing.Point(217, 204);
-            this.txt_IsOriginalNew.Name = "txt_IsOriginalNew";
-            this.txt_IsOriginalNew.Size = new System.Drawing.Size(43, 20);
-            this.txt_IsOriginalNew.TabIndex = 226;
-            this.txt_IsOriginalNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // txt_ToolkitExisting
-            // 
-            this.txt_ToolkitExisting.Cue = "Toolkit Existing";
-            this.txt_ToolkitExisting.Enabled = false;
-            this.txt_ToolkitExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_ToolkitExisting.ForeColor = System.Drawing.Color.Gray;
-            this.txt_ToolkitExisting.Location = new System.Drawing.Point(284, 228);
-            this.txt_ToolkitExisting.Name = "txt_ToolkitExisting";
-            this.txt_ToolkitExisting.Size = new System.Drawing.Size(116, 20);
-            this.txt_ToolkitExisting.TabIndex = 225;
-            // 
-            // txt_ToolkitNew
-            // 
-            this.txt_ToolkitNew.Cue = "Toolkit New";
-            this.txt_ToolkitNew.Enabled = false;
-            this.txt_ToolkitNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_ToolkitNew.ForeColor = System.Drawing.Color.Gray;
-            this.txt_ToolkitNew.Location = new System.Drawing.Point(144, 228);
-            this.txt_ToolkitNew.Name = "txt_ToolkitNew";
-            this.txt_ToolkitNew.Size = new System.Drawing.Size(116, 20);
-            this.txt_ToolkitNew.TabIndex = 224;
-            this.txt_ToolkitNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // txt_TitleSortExisting
-            // 
-            this.txt_TitleSortExisting.Cue = "Title Sort Existing";
-            this.txt_TitleSortExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_TitleSortExisting.ForeColor = System.Drawing.Color.Gray;
-            this.txt_TitleSortExisting.Location = new System.Drawing.Point(284, 128);
-            this.txt_TitleSortExisting.Name = "txt_TitleSortExisting";
-            this.txt_TitleSortExisting.Size = new System.Drawing.Size(222, 20);
-            this.txt_TitleSortExisting.TabIndex = 223;
-            this.txt_TitleSortExisting.TextChanged += new System.EventHandler(this.ExistingChanged);
-            // 
-            // txt_TitleSortNew
-            // 
-            this.txt_TitleSortNew.Cue = "Title Sort New";
-            this.txt_TitleSortNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_TitleSortNew.ForeColor = System.Drawing.Color.Gray;
-            this.txt_TitleSortNew.Location = new System.Drawing.Point(38, 128);
-            this.txt_TitleSortNew.Name = "txt_TitleSortNew";
-            this.txt_TitleSortNew.Size = new System.Drawing.Size(222, 20);
-            this.txt_TitleSortNew.TabIndex = 222;
-            this.txt_TitleSortNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // txt_ArtistSortExisting
-            // 
-            this.txt_ArtistSortExisting.Cue = "Artist Sort Existing";
-            this.txt_ArtistSortExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_ArtistSortExisting.ForeColor = System.Drawing.Color.Gray;
-            this.txt_ArtistSortExisting.Location = new System.Drawing.Point(284, 154);
-            this.txt_ArtistSortExisting.Name = "txt_ArtistSortExisting";
-            this.txt_ArtistSortExisting.Size = new System.Drawing.Size(222, 20);
-            this.txt_ArtistSortExisting.TabIndex = 221;
-            this.txt_ArtistSortExisting.TextChanged += new System.EventHandler(this.ExistingChanged);
-            // 
-            // txt_ArtistSortNew
-            // 
-            this.txt_ArtistSortNew.Cue = "Artist Sort New";
-            this.txt_ArtistSortNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_ArtistSortNew.ForeColor = System.Drawing.Color.Gray;
-            this.txt_ArtistSortNew.Location = new System.Drawing.Point(38, 154);
-            this.txt_ArtistSortNew.Name = "txt_ArtistSortNew";
-            this.txt_ArtistSortNew.Size = new System.Drawing.Size(222, 20);
-            this.txt_ArtistSortNew.TabIndex = 220;
-            this.txt_ArtistSortNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // txt_TitleExisting
-            // 
-            this.txt_TitleExisting.Cue = "Title Existing";
-            this.txt_TitleExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_TitleExisting.ForeColor = System.Drawing.Color.Gray;
-            this.txt_TitleExisting.Location = new System.Drawing.Point(284, 102);
-            this.txt_TitleExisting.Name = "txt_TitleExisting";
-            this.txt_TitleExisting.Size = new System.Drawing.Size(222, 20);
-            this.txt_TitleExisting.TabIndex = 219;
-            this.txt_TitleExisting.TextChanged += new System.EventHandler(this.ExistingChanged);
-            // 
-            // txt_TitleNew
-            // 
-            this.txt_TitleNew.Cue = "Title New";
-            this.txt_TitleNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_TitleNew.ForeColor = System.Drawing.Color.Gray;
-            this.txt_TitleNew.Location = new System.Drawing.Point(38, 102);
-            this.txt_TitleNew.Name = "txt_TitleNew";
-            this.txt_TitleNew.Size = new System.Drawing.Size(222, 20);
-            this.txt_TitleNew.TabIndex = 217;
-            this.txt_TitleNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
             // chbx_MultiTrackExisting
             // 
             this.chbx_MultiTrackExisting.AutoSize = true;
@@ -2035,6 +1652,121 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_AddTracks.Text = "+";
             this.btn_AddTracks.UseVisualStyleBackColor = false;
             this.btn_AddTracks.Click += new System.EventHandler(this.btn_AddInstruments_Click);
+            // 
+            // txt_DDNew
+            // 
+            this.txt_DDNew.Cue = "DD New";
+            this.txt_DDNew.Enabled = false;
+            this.txt_DDNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_DDNew.ForeColor = System.Drawing.Color.Gray;
+            this.txt_DDNew.Location = new System.Drawing.Point(209, 13);
+            this.txt_DDNew.Name = "txt_DDNew";
+            this.txt_DDNew.Size = new System.Drawing.Size(43, 20);
+            this.txt_DDNew.TabIndex = 234;
+            this.txt_DDNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txt_DDExisting
+            // 
+            this.txt_DDExisting.Cue = "DD Existing";
+            this.txt_DDExisting.Enabled = false;
+            this.txt_DDExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_DDExisting.ForeColor = System.Drawing.Color.Gray;
+            this.txt_DDExisting.Location = new System.Drawing.Point(276, 13);
+            this.txt_DDExisting.Name = "txt_DDExisting";
+            this.txt_DDExisting.Size = new System.Drawing.Size(45, 20);
+            this.txt_DDExisting.TabIndex = 235;
+            // 
+            // txt_AvailTracksNew
+            // 
+            this.txt_AvailTracksNew.Cue = "Available Tracks New";
+            this.txt_AvailTracksNew.Enabled = false;
+            this.txt_AvailTracksNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.txt_AvailTracksNew.ForeColor = System.Drawing.Color.Gray;
+            this.txt_AvailTracksNew.Location = new System.Drawing.Point(209, 39);
+            this.txt_AvailTracksNew.Name = "txt_AvailTracksNew";
+            this.txt_AvailTracksNew.Size = new System.Drawing.Size(43, 21);
+            this.txt_AvailTracksNew.TabIndex = 236;
+            this.txt_AvailTracksNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txt_AvailTracksExisting
+            // 
+            this.txt_AvailTracksExisting.Cue = "Available Tracks Existing";
+            this.txt_AvailTracksExisting.Enabled = false;
+            this.txt_AvailTracksExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.txt_AvailTracksExisting.ForeColor = System.Drawing.Color.Gray;
+            this.txt_AvailTracksExisting.Location = new System.Drawing.Point(276, 39);
+            this.txt_AvailTracksExisting.Name = "txt_AvailTracksExisting";
+            this.txt_AvailTracksExisting.Size = new System.Drawing.Size(45, 21);
+            this.txt_AvailTracksExisting.TabIndex = 237;
+            // 
+            // txt_AudioNew
+            // 
+            this.txt_AudioNew.Cue = "Audio New";
+            this.txt_AudioNew.Enabled = false;
+            this.txt_AudioNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_AudioNew.ForeColor = System.Drawing.Color.Gray;
+            this.txt_AudioNew.Location = new System.Drawing.Point(209, 65);
+            this.txt_AudioNew.Name = "txt_AudioNew";
+            this.txt_AudioNew.Size = new System.Drawing.Size(43, 20);
+            this.txt_AudioNew.TabIndex = 238;
+            this.txt_AudioNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txt_AudioExisting
+            // 
+            this.txt_AudioExisting.Cue = "Audio Existing";
+            this.txt_AudioExisting.Enabled = false;
+            this.txt_AudioExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_AudioExisting.ForeColor = System.Drawing.Color.Gray;
+            this.txt_AudioExisting.Location = new System.Drawing.Point(276, 65);
+            this.txt_AudioExisting.Name = "txt_AudioExisting";
+            this.txt_AudioExisting.Size = new System.Drawing.Size(45, 20);
+            this.txt_AudioExisting.TabIndex = 239;
+            // 
+            // txt_PreviewNew
+            // 
+            this.txt_PreviewNew.Cue = "Preview New";
+            this.txt_PreviewNew.Enabled = false;
+            this.txt_PreviewNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_PreviewNew.ForeColor = System.Drawing.Color.Gray;
+            this.txt_PreviewNew.Location = new System.Drawing.Point(209, 91);
+            this.txt_PreviewNew.Name = "txt_PreviewNew";
+            this.txt_PreviewNew.Size = new System.Drawing.Size(43, 20);
+            this.txt_PreviewNew.TabIndex = 242;
+            this.txt_PreviewNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txt_PreviewExisting
+            // 
+            this.txt_PreviewExisting.Cue = "Preview Existing";
+            this.txt_PreviewExisting.Enabled = false;
+            this.txt_PreviewExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_PreviewExisting.ForeColor = System.Drawing.Color.Gray;
+            this.txt_PreviewExisting.Location = new System.Drawing.Point(276, 91);
+            this.txt_PreviewExisting.Name = "txt_PreviewExisting";
+            this.txt_PreviewExisting.Size = new System.Drawing.Size(45, 20);
+            this.txt_PreviewExisting.TabIndex = 243;
+            // 
+            // txt_VocalsNew
+            // 
+            this.txt_VocalsNew.Cue = "Vocals New";
+            this.txt_VocalsNew.Enabled = false;
+            this.txt_VocalsNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_VocalsNew.ForeColor = System.Drawing.Color.Gray;
+            this.txt_VocalsNew.Location = new System.Drawing.Point(209, 117);
+            this.txt_VocalsNew.Name = "txt_VocalsNew";
+            this.txt_VocalsNew.Size = new System.Drawing.Size(43, 20);
+            this.txt_VocalsNew.TabIndex = 339;
+            this.txt_VocalsNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txt_VocalsExisting
+            // 
+            this.txt_VocalsExisting.Cue = "Vocals Existing";
+            this.txt_VocalsExisting.Enabled = false;
+            this.txt_VocalsExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_VocalsExisting.ForeColor = System.Drawing.Color.Gray;
+            this.txt_VocalsExisting.Location = new System.Drawing.Point(276, 117);
+            this.txt_VocalsExisting.Name = "txt_VocalsExisting";
+            this.txt_VocalsExisting.Size = new System.Drawing.Size(45, 20);
+            this.txt_VocalsExisting.TabIndex = 340;
             // 
             // groupBox4
             // 
@@ -2326,29 +2058,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.lblSoye.TabIndex = 392;
             this.lblSoye.Text = "File Size";
             // 
-            // txt_SizeExisting
-            // 
-            this.txt_SizeExisting.Cue = "Size Existing";
-            this.txt_SizeExisting.Enabled = false;
-            this.txt_SizeExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_SizeExisting.ForeColor = System.Drawing.Color.Gray;
-            this.txt_SizeExisting.Location = new System.Drawing.Point(284, 378);
-            this.txt_SizeExisting.Name = "txt_SizeExisting";
-            this.txt_SizeExisting.Size = new System.Drawing.Size(116, 20);
-            this.txt_SizeExisting.TabIndex = 391;
-            // 
-            // txt_SizeNew
-            // 
-            this.txt_SizeNew.Cue = "Size New";
-            this.txt_SizeNew.Enabled = false;
-            this.txt_SizeNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_SizeNew.ForeColor = System.Drawing.Color.Gray;
-            this.txt_SizeNew.Location = new System.Drawing.Point(143, 378);
-            this.txt_SizeNew.Name = "txt_SizeNew";
-            this.txt_SizeNew.Size = new System.Drawing.Size(116, 20);
-            this.txt_SizeNew.TabIndex = 390;
-            this.txt_SizeNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
             // lbl_Size
             // 
             this.lbl_Size.AutoSize = true;
@@ -2382,39 +2091,381 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_UseBrakets.Text = "At Save Use Brackets for Additional Title added info";
             this.chbx_UseBrakets.UseVisualStyleBackColor = true;
             // 
-            // button6
+            // btn_AddAlternate
             // 
-            this.button6.BackColor = System.Drawing.SystemColors.Control;
-            this.button6.Enabled = false;
-            this.button6.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button6.Location = new System.Drawing.Point(431, 205);
-            this.button6.Margin = new System.Windows.Forms.Padding(2);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(14, 15);
-            this.button6.TabIndex = 396;
-            this.button6.Text = "+";
-            this.button6.UseVisualStyleBackColor = false;
+            this.btn_AddAlternate.BackColor = System.Drawing.SystemColors.Control;
+            this.btn_AddAlternate.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_AddAlternate.Location = new System.Drawing.Point(431, 205);
+            this.btn_AddAlternate.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_AddAlternate.Name = "btn_AddAlternate";
+            this.btn_AddAlternate.Size = new System.Drawing.Size(14, 15);
+            this.btn_AddAlternate.TabIndex = 396;
+            this.btn_AddAlternate.Text = "+";
+            this.btn_AddAlternate.UseVisualStyleBackColor = false;
+            this.btn_AddAlternate.Click += new System.EventHandler(this.button6_Click_2);
             // 
-            // button7
+            // btn_StopImport
             // 
-            this.button7.BackColor = System.Drawing.SystemColors.Control;
-            this.button7.Enabled = false;
-            this.button7.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button7.Location = new System.Drawing.Point(38, 205);
-            this.button7.Margin = new System.Windows.Forms.Padding(2);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(14, 15);
-            this.button7.TabIndex = 397;
-            this.button7.Text = "+";
-            this.button7.UseVisualStyleBackColor = false;
+            this.btn_StopImport.Location = new System.Drawing.Point(640, 509);
+            this.btn_StopImport.Name = "btn_StopImport";
+            this.btn_StopImport.Size = new System.Drawing.Size(120, 35);
+            this.btn_StopImport.TabIndex = 397;
+            this.btn_StopImport.Text = "Stop the Import";
+            this.btn_StopImport.UseVisualStyleBackColor = true;
+            this.btn_StopImport.Click += new System.EventHandler(this.btn_StopImport_Click);
+            // 
+            // txt_SizeExisting
+            // 
+            this.txt_SizeExisting.Cue = "Size Existing";
+            this.txt_SizeExisting.Enabled = false;
+            this.txt_SizeExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_SizeExisting.ForeColor = System.Drawing.Color.Gray;
+            this.txt_SizeExisting.Location = new System.Drawing.Point(284, 378);
+            this.txt_SizeExisting.Name = "txt_SizeExisting";
+            this.txt_SizeExisting.Size = new System.Drawing.Size(116, 20);
+            this.txt_SizeExisting.TabIndex = 391;
+            // 
+            // txt_SizeNew
+            // 
+            this.txt_SizeNew.Cue = "Size New";
+            this.txt_SizeNew.Enabled = false;
+            this.txt_SizeNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_SizeNew.ForeColor = System.Drawing.Color.Gray;
+            this.txt_SizeNew.Location = new System.Drawing.Point(143, 378);
+            this.txt_SizeNew.Name = "txt_SizeNew";
+            this.txt_SizeNew.Size = new System.Drawing.Size(116, 20);
+            this.txt_SizeNew.TabIndex = 390;
+            this.txt_SizeNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txt_AlbumExisting
+            // 
+            this.txt_AlbumExisting.Cue = "Album";
+            this.txt_AlbumExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_AlbumExisting.ForeColor = System.Drawing.Color.Gray;
+            this.txt_AlbumExisting.Location = new System.Drawing.Point(284, 78);
+            this.txt_AlbumExisting.Name = "txt_AlbumExisting";
+            this.txt_AlbumExisting.Size = new System.Drawing.Size(222, 20);
+            this.txt_AlbumExisting.TabIndex = 344;
+            this.txt_AlbumExisting.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txt_AlbumExisting.TextChanged += new System.EventHandler(this.ExistingChanged);
+            // 
+            // txt_ArtistExisting
+            // 
+            this.txt_ArtistExisting.Cue = "Artist";
+            this.txt_ArtistExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_ArtistExisting.ForeColor = System.Drawing.Color.Gray;
+            this.txt_ArtistExisting.Location = new System.Drawing.Point(284, 55);
+            this.txt_ArtistExisting.Name = "txt_ArtistExisting";
+            this.txt_ArtistExisting.Size = new System.Drawing.Size(222, 20);
+            this.txt_ArtistExisting.TabIndex = 343;
+            this.txt_ArtistExisting.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txt_ArtistExisting.TextChanged += new System.EventHandler(this.ExistingChanged);
+            // 
+            // txt_AlbumNew
+            // 
+            this.txt_AlbumNew.Cue = "Album";
+            this.txt_AlbumNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_AlbumNew.ForeColor = System.Drawing.Color.Gray;
+            this.txt_AlbumNew.Location = new System.Drawing.Point(38, 77);
+            this.txt_AlbumNew.Name = "txt_AlbumNew";
+            this.txt_AlbumNew.Size = new System.Drawing.Size(222, 20);
+            this.txt_AlbumNew.TabIndex = 319;
+            this.txt_AlbumNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // txt_VersionExisting
+            // 
+            this.txt_VersionExisting.Cue = "Version  Existing";
+            this.txt_VersionExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_VersionExisting.ForeColor = System.Drawing.Color.Gray;
+            this.txt_VersionExisting.Location = new System.Drawing.Point(284, 277);
+            this.txt_VersionExisting.Name = "txt_VersionExisting";
+            this.txt_VersionExisting.Size = new System.Drawing.Size(45, 20);
+            this.txt_VersionExisting.TabIndex = 282;
+            this.txt_VersionExisting.TextChanged += new System.EventHandler(this.ExistingChanged);
+            // 
+            // txt_VersionNew
+            // 
+            this.txt_VersionNew.Cue = "Version New";
+            this.txt_VersionNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_VersionNew.ForeColor = System.Drawing.Color.Gray;
+            this.txt_VersionNew.Location = new System.Drawing.Point(217, 277);
+            this.txt_VersionNew.Name = "txt_VersionNew";
+            this.txt_VersionNew.Size = new System.Drawing.Size(43, 20);
+            this.txt_VersionNew.TabIndex = 281;
+            this.txt_VersionNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txt_FileNameExisting
+            // 
+            this.txt_FileNameExisting.Cue = "File Name Existing";
+            this.txt_FileNameExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_FileNameExisting.ForeColor = System.Drawing.Color.Gray;
+            this.txt_FileNameExisting.Location = new System.Drawing.Point(284, 179);
+            this.txt_FileNameExisting.Name = "txt_FileNameExisting";
+            this.txt_FileNameExisting.ReadOnly = true;
+            this.txt_FileNameExisting.Size = new System.Drawing.Size(222, 20);
+            this.txt_FileNameExisting.TabIndex = 280;
+            this.txt_FileNameExisting.TextChanged += new System.EventHandler(this.ExistingChanged);
+            // 
+            // txt_FileNameNew
+            // 
+            this.txt_FileNameNew.Cue = "File Name New";
+            this.txt_FileNameNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_FileNameNew.ForeColor = System.Drawing.Color.Gray;
+            this.txt_FileNameNew.Location = new System.Drawing.Point(38, 179);
+            this.txt_FileNameNew.Name = "txt_FileNameNew";
+            this.txt_FileNameNew.ReadOnly = true;
+            this.txt_FileNameNew.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
+            this.txt_FileNameNew.Size = new System.Drawing.Size(222, 20);
+            this.txt_FileNameNew.TabIndex = 279;
+            this.txt_FileNameNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txt_ArtistNew
+            // 
+            this.txt_ArtistNew.Cue = "Artist";
+            this.txt_ArtistNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_ArtistNew.ForeColor = System.Drawing.Color.Gray;
+            this.txt_ArtistNew.Location = new System.Drawing.Point(38, 54);
+            this.txt_ArtistNew.Name = "txt_ArtistNew";
+            this.txt_ArtistNew.Size = new System.Drawing.Size(222, 20);
+            this.txt_ArtistNew.TabIndex = 278;
+            this.txt_ArtistNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // txt_DLCIDExisting
+            // 
+            this.txt_DLCIDExisting.Cue = "DLC Name Existing";
+            this.txt_DLCIDExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_DLCIDExisting.ForeColor = System.Drawing.Color.Gray;
+            this.txt_DLCIDExisting.Location = new System.Drawing.Point(284, 354);
+            this.txt_DLCIDExisting.Name = "txt_DLCIDExisting";
+            this.txt_DLCIDExisting.Size = new System.Drawing.Size(116, 20);
+            this.txt_DLCIDExisting.TabIndex = 233;
+            this.txt_DLCIDExisting.TextChanged += new System.EventHandler(this.ExistingChanged);
+            // 
+            // txt_DLCIDNew
+            // 
+            this.txt_DLCIDNew.Cue = "DLC Name New";
+            this.txt_DLCIDNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_DLCIDNew.ForeColor = System.Drawing.Color.Gray;
+            this.txt_DLCIDNew.Location = new System.Drawing.Point(144, 354);
+            this.txt_DLCIDNew.Name = "txt_DLCIDNew";
+            this.txt_DLCIDNew.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
+            this.txt_DLCIDNew.Size = new System.Drawing.Size(116, 20);
+            this.txt_DLCIDNew.TabIndex = 232;
+            this.txt_DLCIDNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txt_TuningExisting
+            // 
+            this.txt_TuningExisting.Cue = "Tunig Existing";
+            this.txt_TuningExisting.Enabled = false;
+            this.txt_TuningExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_TuningExisting.ForeColor = System.Drawing.Color.Gray;
+            this.txt_TuningExisting.Location = new System.Drawing.Point(284, 331);
+            this.txt_TuningExisting.Name = "txt_TuningExisting";
+            this.txt_TuningExisting.Size = new System.Drawing.Size(116, 20);
+            this.txt_TuningExisting.TabIndex = 231;
+            // 
+            // txt_TuningNew
+            // 
+            this.txt_TuningNew.Cue = "Tuning New";
+            this.txt_TuningNew.Enabled = false;
+            this.txt_TuningNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_TuningNew.ForeColor = System.Drawing.Color.Gray;
+            this.txt_TuningNew.Location = new System.Drawing.Point(144, 331);
+            this.txt_TuningNew.Name = "txt_TuningNew";
+            this.txt_TuningNew.Size = new System.Drawing.Size(116, 20);
+            this.txt_TuningNew.TabIndex = 230;
+            this.txt_TuningNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txt_AuthorExisting
+            // 
+            this.txt_AuthorExisting.Cue = "Author Existing";
+            this.txt_AuthorExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_AuthorExisting.ForeColor = System.Drawing.Color.Gray;
+            this.txt_AuthorExisting.Location = new System.Drawing.Point(284, 253);
+            this.txt_AuthorExisting.Name = "txt_AuthorExisting";
+            this.txt_AuthorExisting.Size = new System.Drawing.Size(116, 20);
+            this.txt_AuthorExisting.TabIndex = 229;
+            this.txt_AuthorExisting.TextChanged += new System.EventHandler(this.ExistingChanged);
+            // 
+            // txt_AuthorNew
+            // 
+            this.txt_AuthorNew.Cue = "Author New";
+            this.txt_AuthorNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_AuthorNew.ForeColor = System.Drawing.Color.Gray;
+            this.txt_AuthorNew.Location = new System.Drawing.Point(144, 253);
+            this.txt_AuthorNew.Name = "txt_AuthorNew";
+            this.txt_AuthorNew.Size = new System.Drawing.Size(116, 20);
+            this.txt_AuthorNew.TabIndex = 228;
+            this.txt_AuthorNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txt_IsOriginalExisting
+            // 
+            this.txt_IsOriginalExisting.Cue = "Is Original Existing";
+            this.txt_IsOriginalExisting.Enabled = false;
+            this.txt_IsOriginalExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_IsOriginalExisting.ForeColor = System.Drawing.Color.Gray;
+            this.txt_IsOriginalExisting.Location = new System.Drawing.Point(284, 204);
+            this.txt_IsOriginalExisting.Name = "txt_IsOriginalExisting";
+            this.txt_IsOriginalExisting.Size = new System.Drawing.Size(45, 20);
+            this.txt_IsOriginalExisting.TabIndex = 227;
+            // 
+            // txt_IsOriginalNew
+            // 
+            this.txt_IsOriginalNew.Cue = "Is Original New";
+            this.txt_IsOriginalNew.Enabled = false;
+            this.txt_IsOriginalNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_IsOriginalNew.ForeColor = System.Drawing.Color.Gray;
+            this.txt_IsOriginalNew.Location = new System.Drawing.Point(217, 204);
+            this.txt_IsOriginalNew.Name = "txt_IsOriginalNew";
+            this.txt_IsOriginalNew.Size = new System.Drawing.Size(43, 20);
+            this.txt_IsOriginalNew.TabIndex = 226;
+            this.txt_IsOriginalNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txt_ToolkitExisting
+            // 
+            this.txt_ToolkitExisting.Cue = "Toolkit Existing";
+            this.txt_ToolkitExisting.Enabled = false;
+            this.txt_ToolkitExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_ToolkitExisting.ForeColor = System.Drawing.Color.Gray;
+            this.txt_ToolkitExisting.Location = new System.Drawing.Point(284, 228);
+            this.txt_ToolkitExisting.Name = "txt_ToolkitExisting";
+            this.txt_ToolkitExisting.Size = new System.Drawing.Size(116, 20);
+            this.txt_ToolkitExisting.TabIndex = 225;
+            // 
+            // txt_ToolkitNew
+            // 
+            this.txt_ToolkitNew.Cue = "Toolkit New";
+            this.txt_ToolkitNew.Enabled = false;
+            this.txt_ToolkitNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_ToolkitNew.ForeColor = System.Drawing.Color.Gray;
+            this.txt_ToolkitNew.Location = new System.Drawing.Point(144, 228);
+            this.txt_ToolkitNew.Name = "txt_ToolkitNew";
+            this.txt_ToolkitNew.Size = new System.Drawing.Size(116, 20);
+            this.txt_ToolkitNew.TabIndex = 224;
+            this.txt_ToolkitNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txt_TitleSortExisting
+            // 
+            this.txt_TitleSortExisting.Cue = "Title Sort Existing";
+            this.txt_TitleSortExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_TitleSortExisting.ForeColor = System.Drawing.Color.Gray;
+            this.txt_TitleSortExisting.Location = new System.Drawing.Point(284, 128);
+            this.txt_TitleSortExisting.Name = "txt_TitleSortExisting";
+            this.txt_TitleSortExisting.Size = new System.Drawing.Size(222, 20);
+            this.txt_TitleSortExisting.TabIndex = 223;
+            this.txt_TitleSortExisting.TextChanged += new System.EventHandler(this.ExistingChanged);
+            // 
+            // txt_TitleSortNew
+            // 
+            this.txt_TitleSortNew.Cue = "Title Sort New";
+            this.txt_TitleSortNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_TitleSortNew.ForeColor = System.Drawing.Color.Gray;
+            this.txt_TitleSortNew.Location = new System.Drawing.Point(38, 128);
+            this.txt_TitleSortNew.Name = "txt_TitleSortNew";
+            this.txt_TitleSortNew.Size = new System.Drawing.Size(222, 20);
+            this.txt_TitleSortNew.TabIndex = 222;
+            this.txt_TitleSortNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txt_ArtistSortExisting
+            // 
+            this.txt_ArtistSortExisting.Cue = "Artist Sort Existing";
+            this.txt_ArtistSortExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_ArtistSortExisting.ForeColor = System.Drawing.Color.Gray;
+            this.txt_ArtistSortExisting.Location = new System.Drawing.Point(284, 154);
+            this.txt_ArtistSortExisting.Name = "txt_ArtistSortExisting";
+            this.txt_ArtistSortExisting.Size = new System.Drawing.Size(222, 20);
+            this.txt_ArtistSortExisting.TabIndex = 221;
+            this.txt_ArtistSortExisting.TextChanged += new System.EventHandler(this.ExistingChanged);
+            // 
+            // txt_ArtistSortNew
+            // 
+            this.txt_ArtistSortNew.Cue = "Artist Sort New";
+            this.txt_ArtistSortNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_ArtistSortNew.ForeColor = System.Drawing.Color.Gray;
+            this.txt_ArtistSortNew.Location = new System.Drawing.Point(38, 154);
+            this.txt_ArtistSortNew.Name = "txt_ArtistSortNew";
+            this.txt_ArtistSortNew.Size = new System.Drawing.Size(222, 20);
+            this.txt_ArtistSortNew.TabIndex = 220;
+            this.txt_ArtistSortNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txt_TitleExisting
+            // 
+            this.txt_TitleExisting.Cue = "Title Existing";
+            this.txt_TitleExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_TitleExisting.ForeColor = System.Drawing.Color.Gray;
+            this.txt_TitleExisting.Location = new System.Drawing.Point(284, 102);
+            this.txt_TitleExisting.Name = "txt_TitleExisting";
+            this.txt_TitleExisting.Size = new System.Drawing.Size(222, 20);
+            this.txt_TitleExisting.TabIndex = 219;
+            this.txt_TitleExisting.TextChanged += new System.EventHandler(this.ExistingChanged);
+            // 
+            // txt_TitleNew
+            // 
+            this.txt_TitleNew.Cue = "Title New";
+            this.txt_TitleNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_TitleNew.ForeColor = System.Drawing.Color.Gray;
+            this.txt_TitleNew.Location = new System.Drawing.Point(38, 102);
+            this.txt_TitleNew.Name = "txt_TitleNew";
+            this.txt_TitleNew.Size = new System.Drawing.Size(222, 20);
+            this.txt_TitleNew.TabIndex = 217;
+            this.txt_TitleNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // chbx_DeleteTemp
+            // 
+            this.chbx_DeleteTemp.AutoSize = true;
+            this.chbx_DeleteTemp.Enabled = false;
+            this.chbx_DeleteTemp.Location = new System.Drawing.Point(473, 522);
+            this.chbx_DeleteTemp.Name = "chbx_DeleteTemp";
+            this.chbx_DeleteTemp.Size = new System.Drawing.Size(167, 17);
+            this.chbx_DeleteTemp.TabIndex = 398;
+            this.chbx_DeleteTemp.Text = "Delete Sikipped Songs Temp ";
+            this.chbx_DeleteTemp.UseVisualStyleBackColor = true;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label3.Location = new System.Drawing.Point(412, 692);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(288, 15);
+            this.label3.TabIndex = 399;
+            this.label3.Text = "If timestamp is the same diff(Vs in red) comes from the Tone";
+            // 
+            // btn_Title2SortT
+            // 
+            this.btn_Title2SortT.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Title2SortT.Location = new System.Drawing.Point(546, 104);
+            this.btn_Title2SortT.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_Title2SortT.Name = "btn_Title2SortT";
+            this.btn_Title2SortT.Size = new System.Drawing.Size(18, 17);
+            this.btn_Title2SortT.TabIndex = 400;
+            this.btn_Title2SortT.Text = ">";
+            this.btn_Title2SortT.UseVisualStyleBackColor = true;
+            this.btn_Title2SortT.Click += new System.EventHandler(this.btn_Title2SortT_Click);
+            // 
+            // btn_Artist2SortA
+            // 
+            this.btn_Artist2SortA.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Artist2SortA.Location = new System.Drawing.Point(547, 55);
+            this.btn_Artist2SortA.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_Artist2SortA.Name = "btn_Artist2SortA";
+            this.btn_Artist2SortA.Size = new System.Drawing.Size(18, 17);
+            this.btn_Artist2SortA.TabIndex = 401;
+            this.btn_Artist2SortA.Text = ">";
+            this.btn_Artist2SortA.UseVisualStyleBackColor = true;
+            this.btn_Artist2SortA.Click += new System.EventHandler(this.button6_Click_3);
             // 
             // Duplicates_Management
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(772, 779);
-            this.Controls.Add(this.button7);
-            this.Controls.Add(this.button6);
+            this.ClientSize = new System.Drawing.Size(772, 784);
+            this.Controls.Add(this.btn_Artist2SortA);
+            this.Controls.Add(this.btn_Title2SortT);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.chbx_DeleteTemp);
+            this.Controls.Add(this.btn_StopImport);
+            this.Controls.Add(this.btn_AddAlternate);
             this.Controls.Add(this.chbx_UseBrakets);
             this.Controls.Add(this.lbl_Multitrack);
             this.Controls.Add(this.lbl_Size);
@@ -2731,7 +2782,11 @@ namespace RocksmithToolkitGUI.DLCManager
         private Button btn_PlayPreviewExisting;
         private Button btn_PlayAudioExisting;
         private CheckBox chbx_UseBrakets;
-        private Button button6;
-        private Button button7;
+        private Button btn_AddAlternate;
+        private Button btn_StopImport;
+        private CheckBox chbx_DeleteTemp;
+        private Label label3;
+        private Button btn_Title2SortT;
+        private Button btn_Artist2SortA;
     }
 }

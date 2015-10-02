@@ -23,6 +23,7 @@
   <Config Key="cgm_inlayname" Value="Default Inlay" />
   <Config Key="cgm_24frets" Value="false" />
   <Config Key="cgm_coloredinlay" Value="true" />
+  <!--<Config Key="first_time" Value="true" /> determine if we launched toolkit at first time-->
   
   <!--bcapi DLCManager-->
   <Config Key="dlcm_AdditionalManipul0" Value="No" />
@@ -42,7 +43,7 @@
   <Config Key="dlcm_AdditionalManipul14" Value="Yes" />
   <Config Key="dlcm_AdditionalManipul15" Value="Yes" />
   <Config Key="dlcm_AdditionalManipul16" Value="Yes" />
-  <Config Key="dlcm_AdditionalManipul17" Value="Yes" />
+  <Config Key="dlcm_AdditionalManipul17" Value="No" />
   <Config Key="dlcm_AdditionalManipul18" Value="No" />
   <Config Key="dlcm_AdditionalManipul19" Value="No" />
   <Config Key="dlcm_AdditionalManipul20" Value="No" />
@@ -107,9 +108,9 @@
   <Config Key="dlcm_RemoveBassDD" Value="Yes" />;
   <Config Key="dlcm_UniqueID" Value="Yes" />;
   <Config Key="dlcm_andCopy" Value="Yes" />;
-  <Config Key="dlcm_PathForBRM" Value="c:\\GitHub\\" />;
-  <Config Key="dlcm_Preview Lenght" Value="30" />;
+  <Config Key="dlcm_PathForBRM" Value="c:\GitHub\" />;
+  <Config Key="dlcm_PreviewLenght" Value="30" />;
   <Config Key="dlcm_PreviewStart" Value="00:30" />;
-
-  <!--<Config Key="first_time" Value="true" /> determine if we launched toolkit at first time-->
+  <Config Key="dlcm_Debug" Value="No" />;
+  <Config Key="dlcm_LogPath" Value="C:\GitHub\tmp\to import" />;
 </ArrayOfConfig>

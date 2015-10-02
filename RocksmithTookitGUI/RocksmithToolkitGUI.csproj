@@ -541,7 +541,9 @@
     <Content Include="DLCManager\ww2ogg.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DLCManager\external_tools\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -95,11 +95,14 @@ namespace RocksmithToolkitGUI.DLCManager
         private void btn_Close_Click(object sender, EventArgs e)
         {
 
+            this.Hide();
         }
 
         private void btn_OK_Click(object sender, EventArgs e)
         {
 
+
+            this.Hide();
         }
     }
 } 

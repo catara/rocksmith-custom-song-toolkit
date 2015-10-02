@@ -2,6 +2,10 @@
 
 
 
+# Rksmith DLC Library Manager [![Latest release](http://img.shields.io/github/release/catara/rocksmith-custom-song-toolkit.svg)](https://github.com/catara/rocksmith-custom-song-toolkit/releases/)
+
+
+
 ## App Description: MASS Manipulation of Rocksmith DLC Library 
             e.g. 1. in Rocksmith in the Library, each songs Album, to contain a personal rating, if it has DD, instr. avail
             e.g. 2. in Rocksmith in the Library, each song to be sorted by Album(Year) and Track No
@@ -9,13 +13,14 @@
 
 
 
-# Rksmith DLC Library Manager v0.2.0.10 (beta version)
+# Roksmith DLC Library Manager v0.2.0.12 (beta version)
 Main Features:
-- Gather all DLCs metadata into 1 Access DB
+- Gather all DLCs metadata into 1 Microsoft Access DB
 	- Manage Duplicates
 	- Edit Individual metadata fields
 	- Fix Songs without
 		- Preview
+		- Cover
 	- Listen to songs Audio
 - Mass Modify songdetails/metadata @repack per each Rocksmith song: e.g. Album Field: <Broken><Year> - <Album> - r<Rating> - <Avail. Instr.> - <DD> - <Tuning>
 	- Copies songs/packs directly to the PS3 by means of FTP
@@ -25,35 +30,70 @@ Main Features:
 
 
 ## Known Issues:
-- Import fails randomly...workaround Import again (dont clear the DB)
-- Tool is based on Rocksmith Toolkit April version
-- Edit of Arragements and Tones DB can only be done from Access for the moment
++ Import fails randomly...workaround Import again (don't clear the DB)
++ Tool is based on Rocksmith Toolkit 5th Sept '15 version
+-- Edit of Arragements and Tones DB can only be done from Access for the moment
 - Packing of Rocksmith 2014 Retail manipulated files has 1 manual step for RS14 Retail songs
+-- When having GitHub conficting issue
+ https://help.github.com/articles/resolving-a-merge-conflict-from-the-command-line/
+ git status
+ edit in notepad 
+ git add xxx.xxx
+ git commit
 
 ## ToDos/bugs:
 wip:
-- small bug: on inserting a new standardization 
+-+ small improv: Any change of song in the list should also save :)
+-+ small feature: maindb apply save settings (as well as the rest of the screens)
+	- when opening new windows..save settings
+-+ with or without u still doesnt have the right alternate no when importing vs an existing song= a2....maybe OK :)
+-+ some tracks no don't get read/picked cause" (1) "
+-+ small bug: on inserting a new standardization 
+-+ small feature: when opening MainDB and detecting directory check runs, if next directory exists (give a change to empty the db then if possible)
+-+ joaleen is tone is different.....where do we see that
+   - footnote added but it could dinamically be made to appear only when neede
+-- cannot find sick sick sic (override)
+  - consistency check function
+-+ small improv: add the proper lasconvdate in the db 
+  - make sure its read only once when imported and not anzmore in the duplication management section
+
 wnyp:
 - feat:		 Alternate No for duplicates logic
 - feat:		 Include Standardization names into duplication checks
-- small improv: add audio hash also as duplicate criteria
-- bug?:		 pin wish now last convtime at alternate comparision screen
-- big bug: repack&import seems to randmly fail
-- small bug: last thibs by billy talend fails at unpack/rorg
-- small improv: add the proper lasconvdate in the db 
-- small bug: sometimes preview shows empty but the vs is not red incubus echo
 - big feature: get the volume of the audio file and then compare against the rest or a norm
-- small bug: mj beat it issue with adding older to titles and so changing the xml path
-- audioslave sections missing maybe cause its an original and i used my own logic to strip the DD
-- big feature - For the tagging add the info to the Preview Image/Album Art
-- small improv: Any change of song in the list should also save :)
 - medium feature: add DLCs into cache.psarc to speed up the game startup
-- small feature: when opening MainDB and detecting directory check runs, if next directory exists (give a change to empty the db then if possible)
+- big feature - For the tagging add the info to the Preview Image/Album Art
+- medium feature: when repacking the Retail songs Remove Bass DD
+- the pretender fails
+- audioslave sections missing maybe cause its an original and i used my own logic to strip the DD
+- save error log separately
+  - save constantly not only at the end
+  - smart dEbug OUTPUTING function...
+  -+ save in the db as well
+- make a custom song out of retail
+- finish arrangement (demo with the hives overdrive sall the time :) )
+- move all external tools in external
+- remove commented out code 
+- dupicate import should save the names of the files in a multivalue(;) field :)
+  - save also hash not to ask again for duplciates if already decided as duplicate
+- make Groups as multivalue
+- if i delete a foolder do i get a warning in the maintenance check
+  - check for json existance as well. Maybe
+- ignore Multitracks as duplicates
+- add date as duplication text
+- preview in duplciate manangement is yes if it was manually added..coloring is req maybe
+- add the overrite xml in the Import option section
+
+
+
+wd:
+
+
+
 
 ### dev issues:
--- Toolkit version flag does not sync to&from Github
--- Bin\debug folder content is needed(rockmisht.lib)
-+ activate debug: set a dierctory for the project/bin in Project Properties
++ Toolkit version flag does not sync to&from Github: Run RunMeFirst.bat
++ activate debug: set RocksmithToolkitGUI Folder as Start-up project
 
 # Version History(release date):
 	0.1(12.08.2014) prototype, 
@@ -72,23 +112,23 @@ wnyp:
 	0.2.0.7 (15.12) New features: Add: lastconversiondata field per each arrangement, MainDb filters
 	0.2.0.8 (31.03) Manage RS12, RS12 DLC & RS14 retail songs. Pending platform independent...checks on compression platform dependent...DB independece/dependence on already provided 1..play and FTP and Preview Adding
 	0.2.0.9 (30.04) Implement FTP to PS3 (also as a copy to any other location)
-	0.2.0.10 (05.05) save settings in Toolkit config
-	wip: 0.2.0.11 (20.05.2015) (20%) has_section flag(to be tested with a song missing sections); Add 30 sec preview midsong; 
-	wip: 0.2.0.12 (20.05.2015) (10%) close bugs on Conversion to Ps3(nin hell) and analyse acuracy on conversion to ps3 (1979,7army..)
-	wip: 0.2.0.13 (22.05.2015)  (90%) remove bug on auto import if original
-	wip: 0.2.0.14 (24.05) (85%) full release (anyone can download and use the tool..no bugs..and all unimplemented featues disabled) , repack wo bugs, edit screens functional
-	wip: 0.2.1 (31.05.2015) (10%) HTML&Excel exports
-	tbr: 0.2.1.1 (15.06.2015) Implement a logic to properly read DLCManager renamed DLCs
-	wip: 0.2.2 (26.06.2015) (75%) If importing an original over a alternate the alternate flag should be set no the Alternate
+	0.2.0.10 (05.05) save settings in Toolkit config, getrck no, groups, Add 30 sec preview midsong; close bugs on Conversion to Ps3(nin hell)
+	0.2.0.11 (22.08.2015)  (100%) remove bug on auto import if original
+	0.2.2.12 (26.09.2015) (100%) If importing an original over a alternate the alternate flag should be set no the Alternate
+	wip: 0.2.0.13 (10.10.2015) (95%) full release (anyone can download and use the tool..no bugs..and all un-implemented features disabled) , repack wo bugs, edit screens functional
+	wip: 0.2.0.14 (20.10.2015) (60%)  analyse acuracy on conversion to ps3 (1979,7army..)
+	wip: 0.2.0.15 (20.10.2015) (20%) has_section flag(to be tested with a song missing sections); 
+	wip: 0.2.1 (31.10.2015) (10%) HTML&Excel exports
+	tbr: 0.2.1.1 (15.09.2015) Implement a logic to properly read DLCManager renamed DLCs
 	tbr: 0.3.1 move Import DB to Main.DB or at least use an official data source as DB source to also be able to edit from the grid
 	tbr: 0.3.2 ?move Access code to project? or from hardcoded to views	
-	wip: 0.3.3 (03.06.2015) (70%) use parameterized SQL everywhere (&/ integrate template DB into project or a SQL DB)
-	wip: 0.3.4 (03.07.2015) (30%) Remove getlastconversiondate from Duplicates as already coming from the arrangements table
-	wip: 0.4 (21.08.2015) (85%) Redesign MainDB+Edit Screen
+	wip: 0.3.3 (03.10.2015) (70%) use parameterized SQL everywhere (&/ integrate template DB into project or a SQL DB)
+	wip: 0.3.4 (03.10.2015) (30%) Remove getlastconversiondate from Duplicates as already coming from the arrangements table
+	wip: 0.4 (21.10.2015) (85%) Redesign MainDB+Edit Screens
 
 
 
-# Date: 05.05.2015
+# Date: 10.10.2015
 # Document Name: Rocksmith DLC Management tool README
 				(fork of rocksmith-custom-song-toolkit)
 # Document purpose: To describe the functionailities and the way to change, the NEW tab that enable MASS Manipulation of Rocksmith DLC Library
@@ -159,16 +199,16 @@ _ future release
 
 
 _5. Future features
-	- Read the customforge.net website (Parse costonsforge.com and enrich the DB/Library w playthrough videos, yb preview, update required, release notes....)
+	-- Read the customforge.net website (Parse costonsforge.com and enrich the DB/Library w playthrough videos, yb preview, update required, release notes....)
 		- Reconcile the version no
 		- Keep Download links
-	- Help manage and create MultiTracks
-		- Based on a original track plus aaudicity track creat e a new version
+	-- Help manage and create MultiTracks
+		- Based on a original track plus audicity track create a new version
 	-- Manage Official DLCs
 		- Ability to create a package out of a list of Official DLCs
 			-- Initially all DCLS will be manually matched & hardcoded as to the audio file name and the song title
 		+ Hide specific Official songs from view/Main screen
-	+ Flag files with no bass, no sections, no lyrics, no preview no DD, riff repeater..
+	+ Flag files with no bass, no sections, no lyrics, no preview, no DD, riff repeater..
 		-- FIX when possible
 	+ Show duplicates and solve conflicts
 	+ Audio Preview full track&preview track
@@ -184,9 +224,10 @@ Steam by purchasing original game content and software releases so that
 these companies may continue making products that we enjoy.  
 
 Additioanlly, No modification have been applied to Rocksmith Custom Song Project sourcecode (besides new UI tab).
+  - 1fix for PS3 conversion (#273 on github)
 
 This software makes use of Applications not made
-by developers who are not part of this project.
+by developers who are part of this project.
 
 All claims and liabilities of any misuse of the programs
 of this folder should be directed to the respective developer.
@@ -201,8 +242,15 @@ http://www.rarewares.org/ogg-oggdec.php
 - edattool.exe -- encript PS3 Retail DLCs packs
 http://www.aldostools.org/ps3tools.html
 
-- audiocrossreference.exe no actively used by contained in the package (possible usage in decomperssing PS3 WEM or in the future to Match Songs ws ecripted Audio Filenames, currently hardcoded)
+- audiocrossreference.exe not actively used; but contained in the package (possible usage in decompressing PS3 WEM or in the future to Match Songs ws ecripted Audio Filenames, currently hardcoded)
 https://sites.google.com/site/cozy1cgi/
+
+- Beats & Phrases Resynchronizer by Svengraph
+http://customsforge.com/topic/15687-beats-phrases-resynchronizer/
+
+- Cover Manipualtions
+https://github.com/Lovroman/RS-CDLC-Tagger/
+http://customsforge.com/topic/20334-tool-cdlc-tagger/
 
 ## Contact
 

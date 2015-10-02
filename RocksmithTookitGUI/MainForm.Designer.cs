@@ -64,8 +64,8 @@
             this.ziggyConverterControl = new RocksmithToolkitGUI.ZiggyProEditorConverter.ZpeConverter();
             this.GeneralConfigTab = new System.Windows.Forms.TabPage();
             this.generalConfigControl = new RocksmithToolkitGUI.Config.GeneralConfig();
-            this.DLCManagerTab = new System.Windows.Forms.TabPage();
             this.dlcManager1 = new RocksmithToolkitGUI.DLCManager.DLCManager();
+            this.DLCManagerTab = new System.Windows.Forms.TabPage();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.updateButton = new System.Windows.Forms.Button();
             this.oggConverter1 = new RocksmithToolkitGUI.OggConverter.OggConverter();
@@ -402,6 +402,14 @@
             // 
             // DLCManagerTab
             // 
+            // dlcManager1
+            // 
+            this.dlcManager1.CurrentGameVersion = RocksmithToolkitLib.GameVersion.RS2014;
+            this.dlcManager1.Location = new System.Drawing.Point(-4, 0);
+            this.dlcManager1.Name = "dlcManagers";
+            this.dlcManager1.Size = new System.Drawing.Size(613, 794);
+            this.dlcManager1.TabIndex = 0;
+            // 
             this.DLCManagerTab.Controls.Add(this.dlcManager1);
             this.DLCManagerTab.Location = new System.Drawing.Point(4, 22);
             this.DLCManagerTab.Name = "DLCManagerTab";
@@ -410,14 +418,7 @@
             this.DLCManagerTab.TabIndex = 11;
             this.DLCManagerTab.Text = "Manage DLCs";
             this.DLCManagerTab.UseVisualStyleBackColor = true;
-            // 
-            // dlcManager1
-            // 
-            this.dlcManager1.CurrentGameVersion = RocksmithToolkitLib.GameVersion.RS2014;
-            this.dlcManager1.Location = new System.Drawing.Point(-4, 0);
-            this.dlcManager1.Name = "dlcManager1";
-            this.dlcManager1.Size = new System.Drawing.Size(613, 794);
-            this.dlcManager1.TabIndex = 0;
+
             // 
             // pictureBox1
             // 
@@ -525,8 +526,9 @@
         private CDLC2Tab.CDLC2Tab cdlC2Tab1;
         private OggConverter.OggConverter oggConverter1;
         private System.Windows.Forms.ToolStripMenuItem dLCLibraryManagerToolStripMenuItem;
-        private System.Windows.Forms.TabPage DLCManagerTab;
         private DLCManager.DLCManager dlcManager1;
+        private System.Windows.Forms.TabPage DLCManagerTab;
+
     }
 }
 

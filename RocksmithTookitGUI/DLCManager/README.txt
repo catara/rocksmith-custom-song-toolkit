@@ -39,48 +39,62 @@ Main Features:
 
 ## ToDos/bugs:
 wip:
--- small bug: on inserting a new standardization 
+-+ small improv: Any change of song in the list should also save :)
+-+ small feature: maindb apply save settings (as well as the rest of the screens)
+	- when opening new windows..save settings
+-+ with or without u still doesnt have the right alternate no when importing vs an existing song= a2....maybe OK :)
+-+ some tracks no don't get read/picked cause" (1) "
+-+ connect apply translation to progressbar
+-+ same DLCName
+-+ small bug: on inserting a new standardization 
+-+ small feature: when opening MainDB and detecting directory check runs, if next directory exists (give a change to empty the db then if possible)
+
 wnyp:
 - feat:		 Alternate No for duplicates logic
 - feat:		 Include Standardization names into duplication checks
 - small improv: add the proper lasconvdate in the db 
 - big feature: get the volume of the audio file and then compare against the rest or a norm
--+ small improv: Any change of song in the list should also save :)
--+ small feature: maindb apply save settings (as well as the rest of the screens)
-	- when opening new windows..save settings
 - medium feature: add DLCs into cache.psarc to speed up the game startup
-- small feature: when opening MainDB and detecting directory check runs, if next directory exists (give a change to empty the db then if possible)
-- small feature: Duplicate Management improv:checkbox if and of the + are diff..then add to title
-- small feature: Think about improving the Multitrack with Instr. list (more accurate but a little criptic)
 - big feature - For the tagging add the info to the Preview Image/Album Art
 - medium feature: when repacking the Retail songs Remove Bass DD
-
-Testing Issues to be checked&fixed:
--- mising java showboxes at generate
--+ the error dwld access db ..should have a hyperlink so a separate window/form is required
--+ author is not chaged to repacked w
--+ with or without u still doesnt have the right alternate no when importing vs an existing song= a2....maybe OK :)
--+ some tracks no don't get read/picked cause" (1) "
-
 - joaleen is tone is different.....where do we see that
+- add alternative as duplicate title text
+- the pretender fails
+- audioslave sections missing maybe cause its an original and i used my own logic to strip the DD
+- some standardization lines sill generate duplicates..
 - save error log separately
   - save constantly not only at the end
 - make a custom song out of retail
 - finish arrangement (demo with the hives overdrive sall the time :) )
-- when packing the progress bar is not changing when packing
-- missing conversion showboxes at preview?
-- @close save the setting in maindb?
-- Add DLCID_Platform to each folder
+- add audio preview while in duplication mode?
 - overrite seemts to break the songs
 - nirvana poly/xx Stars old has no cover and xmls...in the duplciate management window
 - cannot find sick sick sic (override)
   - consistency check function
+- move all external tools in external
 - tool Ænema duplciate management no info
 - tool Ænema override error
+- remove commented out code 
+- Why AT REPACK CRETED PREVIEW is not copied
 
-- the pretender fails
-- audioslave sections missing maybe cause its an original and i used my own logic to strip the DD
-- some standardization lines sill generate duplicates..
+wd:
+-- mising java showboxes at generate
+-- small feature: Duplicate Management improv:checkbox if and of the + are diff..then add to title
+-- small feature: Think about improving the Multitrack with Instr. list (more accurate but a little criptic)
+-- when packing the progress bar is not changing when packing
+-- @close save the setting in maindb?
+-- add no o_old, no preview file, no cover file,
+-- add date in filename
+-- add dlcm name duplicate query/filter
+-- select all ----from the filter
+-- Add DLCID_Platform to each folder
+-- add last month filter
+-- fixed preview
+   -- improved wwise detection to show an error window
+-- connnected the config xml values for Autom Preview Defaults
+-- author is not chaged to repacked w
+-- the error dwld access db ..should have a hyperlink so a separate window/form is required
+
 
 
 ### dev issues:

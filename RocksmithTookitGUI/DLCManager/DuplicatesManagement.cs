@@ -183,6 +183,8 @@ namespace RocksmithToolkitGUI.DLCManager
             Comment = "";
             Description = "";
             dupliID = "";
+            btn_Title2SortT.Text=char.ConvertFromUtf32(8595);
+            btn_Artist2SortA.Text=char.ConvertFromUtf32(8595);
 
             //MessageBox.Show("test6");
             if (datas.SongInfo.Artist != filed.Artist) { lbl_Artist.ForeColor = lbl_Reference.ForeColor; btn_ArtistExisting.Enabled = true; btn_ArtistNew.Enabled = true; }
@@ -667,7 +669,7 @@ namespace RocksmithToolkitGUI.DLCManager
             public string Youtube_Playthrough { get; set; }
             public string CustomForge_Followers { get; set; }
             public string CustomForge_Version { get; set; }
-            public string Show_Available_Instruments { get; set; }
+            public string FilesMissingIssues { get; set; }
             public string Show_Alternate_Version { get; set; }
             public string Show_MultiTrack_Details { get; set; }
             public string Show_Group { get; set; }
@@ -812,7 +814,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         files[i].Youtube_Playthrough = dataRow.ItemArray[58].ToString();
                         files[i].CustomForge_Followers = dataRow.ItemArray[59].ToString();
                         files[i].CustomForge_Version = dataRow.ItemArray[60].ToString();
-                        files[i].Show_Available_Instruments = dataRow.ItemArray[61].ToString();
+                        files[i].FilesMissingIssues = dataRow.ItemArray[61].ToString();
                         files[i].Show_Alternate_Version = dataRow.ItemArray[62].ToString();
                         files[i].Show_MultiTrack_Details = dataRow.ItemArray[63].ToString();
                         files[i].Show_Group = dataRow.ItemArray[64].ToString();
@@ -950,8 +952,8 @@ namespace RocksmithToolkitGUI.DLCManager
             Album = txt_AlbumNew.Text;
             //Is_Original= (chbx_IsOriginal.Checked ? "Yes" : "No");
             Alternate_No = chbx_IsAlternateNew.Checked ? txt_AlternateNoNew.Text : null;
-            AlbumArtPath = txt_TitleNew.Text!="" ? picbx_AlbumArtPathExisting.ImageLocation.Replace(".png", ".dds") : "";//rbtn_CoverExisting.Checked ? picbx_AlbumArtPathExisting.ImageLocation.Replace("png", "dds") : picbx_AlbumArtPathNew.ImageLocation.Replace("png", "dds");
-            Art_Hash = txt_TitleNew.Text!="" ? calc_arthash(picbx_AlbumArtPathExisting.ImageLocation.Replace(".png", ".dds")) : "";//.Checked ? filed.AlbumArt_Hash : art_hash;
+            AlbumArtPath = txt_TitleNew.Text!="" ? picbx_AlbumArtPathNew.ImageLocation.Replace(".png", ".dds") : "";//rbtn_CoverExisting.Checked ? picbx_AlbumArtPathExisting.ImageLocation.Replace("png", "dds") : picbx_AlbumArtPathNew.ImageLocation.Replace("png", "dds");
+            Art_Hash = txt_TitleNew.Text!="" ? calc_arthash(picbx_AlbumArtPathNew.ImageLocation.Replace(".png", ".dds")) : "";//.Checked ? filed.AlbumArt_Hash : art_hash;
             ArtistSort = txt_ArtistSortNew.Text;
             Artist = txt_ArtistNew.Text;
             MultiT = chbx_MultiTrackNew.Checked ? "Yes": "No";
@@ -963,7 +965,34 @@ namespace RocksmithToolkitGUI.DLCManager
             CustomsForge_ReleaseNotes = txt_CustomsForge_ReleaseNotesExisting.Text;
             ExistingTrackNo= filed.Track_No;
             IgnoreRest = chbx_IgnoreDupli.Checked;
-            
+
+
+            //Delete old arrangements and tones
+            //Clean CachetDB
+            DataSet dss = new DataSet();
+            try
+            {
+                using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                {
+                    if (Asses == "Update")
+                    {
+                        OleDbDataAdapter dan = new OleDbDataAdapter("DELETE FROM Tones WHERE CDLC_ID="+ lbl_IDExisting.Text, cnn);
+                        dan.Fill(dss, "Cache");
+                        dan.Dispose();
+                        OleDbDataAdapter das = new OleDbDataAdapter("DELETE FROM Arrangements WHERE CDLC_ID=" + lbl_IDExisting.Text, cnn);
+                        das.Fill(dss, "Cache");
+                        das.Dispose();
+                    }
+                }
+            }
+            catch (System.IO.FileNotFoundException ee)
+            {
+                // To inform the user and continue is 
+                // sufficient for this demonstration. 
+                // Your application may require different behavior.
+                Console.WriteLine(ee.Message);
+            }
+
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -1073,9 +1102,9 @@ namespace RocksmithToolkitGUI.DLCManager
            // //txt_TitleNew.Text = txt_TitleNew.Text.Replace(" (older)", "");
            // txt_TitleNew.Text = txt_TitleNew.Text.Replace(" (newer)", "");
            //// txt_TitleExisting.Text = txt_TitleExisting.Text.Replace(" (older)", "");
-            txt_TitleExisting.Text = (txt_TitleExisting.Text.Replace("(newer)", "").Replace("(older)", "").Replace("v." + txt_VersionExisting.Text, "").Replace(txt_AuthorExisting.Text, "").Replace("noDD", "").Replace("DD", "").Replace(txt_TuningExisting.Text, "")).Replace(txt_AvailTracksExisting.Text, "").Replace("  ", " ").Replace("  ", " ").Replace(" [ ]", "").Replace(" []", "");
+            txt_TitleExisting.Text = (txt_TitleExisting.Text.Replace("(newer)", "").Replace("(older)", "").Replace("a." + txt_AlternateNoExisting.Text, "").Replace("v." + txt_VersionExisting.Text, "").Replace(txt_AuthorExisting.Text, "").Replace("noDD", "").Replace("DD", "").Replace(txt_TuningExisting.Text, "")).Replace(txt_AvailTracksExisting.Text, "").Replace("  ", " ").Replace("  ", " ").Replace(" [ ]", "").Replace(" []", "");
 
-            txt_TitleNew.Text = (datas.SongInfo.SongDisplayName.Replace("(newer)", "").Replace("(older)", "").Replace("v." + txt_VersionNew.Text, "").Replace(txt_AuthorNew.Text, "").Replace("noDD", "").Replace("DD", "").Replace(txt_TuningNew.Text, "")).Replace(txt_AvailTracksNew.Text, "").Replace("  ", " ").Replace("  ", " ").Replace(" [ ]", "").Replace(" []", "");
+            txt_TitleNew.Text = (datas.SongInfo.SongDisplayName.Replace("(newer)", "").Replace("(older)", "").Replace("a." + txt_AlternateNoNew.Text, "").Replace("v." + txt_VersionNew.Text, "").Replace(txt_AuthorNew.Text, "").Replace("noDD", "").Replace("DD", "").Replace(txt_TuningNew.Text, "")).Replace(txt_AvailTracksNew.Text, "").Replace("  ", " ").Replace("  ", " ").Replace(" [ ]", "").Replace(" []", "");
             //txt_TitleExisting.Text = filed.Song_Title;
             if (txt_TitleExisting.Text == txt_TitleNew.Text) lbl_Title.ForeColor = lbl_Artist.ForeColor;
 
@@ -1416,6 +1445,41 @@ namespace RocksmithToolkitGUI.DLCManager
                     DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 60 * 1); //wait 1min
                     //if (DDC.ExitCode > 0) rtxt_StatisticsOnReadDLCs.Text = "Issues when packing rs1dlc DLC pack !" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                 }
+        }
+
+        private void button6_Click_2(object sender, EventArgs e)
+        {
+            txt_TitleNew.Text = (txt_TitleNew.Text.Replace(" a." + txt_AlternateNoNew.Text, "").Replace("[a." + txt_AlternateNoNew.Text, "[").Replace("]", "") + (txt_TitleNew.Text.IndexOf(" [") > 0 ? "" : " [") + " a." + (txt_AlternateNoNew.Text).Replace("[ ", "[").Replace("  ", " ") + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " ");
+            txt_TitleExisting.Text = (txt_TitleExisting.Text.Replace(" a." + txt_AlternateNoExisting.Text, "").Replace("[a." + txt_AlternateNoExisting.Text, "[").Replace("]", "") + (txt_TitleExisting.Text.IndexOf(" [") > 0 ? "" : " [") + " a." + (txt_AlternateNoExisting.Text + (chbx_UseBrakets.Checked ? "]" : ""))).Replace("[ ", "[").Replace("  ", " ");
+            if (txt_TitleExisting.Text == txt_TitleNew.Text) lbl_Title.ForeColor = lbl_Reference.ForeColor;
+            else lbl_Title.ForeColor = lbl_Artist.ForeColor;
+        }
+
+        //private void button7_Click(object sender, EventArgs e)
+        //{
+        //    txt_TitleNew.Text = ((txt_TitleNew.Text.Replace(" a." + txt_AlternateNoNew.Text, "").Replace("[a." + txt_AlternateNoNew.Text, "").Replace("]", "") + (txt_TitleNew.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + txt_AlternateNoNew.Text + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[")).Replace("[ ", "[").Replace("  ", " ");
+        //    txt_TitleExisting.Text = ((txt_TitleExisting.Text.Replace(" a." + txt_AlternateNoExisting.Text, "").Replace("[a." + txt_AlternateNoExisting.Text, "").Replace("]", "") + (txt_TitleExisting.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + txt_AlternateNoExisting.Text + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[")).Replace("[ ", "[").Replace("  ", " ");
+        //    if (txt_TitleExisting.Text == txt_TitleNew.Text) lbl_Title.ForeColor = lbl_Reference.ForeColor;
+        //    else lbl_Title.ForeColor = lbl_Artist.ForeColor;
+        //}
+
+        private void btn_StopImport_Click(object sender, EventArgs e)
+        {
+            Asses = "Stop";
+            exit();
+            this.Hide();
+        }
+
+        private void btn_Title2SortT_Click(object sender, EventArgs e)
+        {
+            txt_TitleSortExisting.Text = txt_TitleExisting.Text;
+            txt_TitleSortNew.Text = txt_TitleNew.Text;
+        }
+
+        private void button6_Click_3(object sender, EventArgs e)
+        {
+            txt_ArtistSortExisting.Text = txt_ArtistExisting.Text;
+            txt_ArtistSortNew.Text = txt_ArtistNew.Text;
         }
     }
 }

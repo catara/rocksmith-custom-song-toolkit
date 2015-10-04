@@ -388,7 +388,7 @@
     <EmbeddedResource Include="ZiggyProEditorConverter\ZpeConverter.resx">
       <DependentUpon>ZpeConverter.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="DLCManager\packed_codebooks_aoTuV_603.bin">
+    <None Include="DLCManager\external_tools\packed_codebooks_aoTuV_603.bin">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="DLCManager\README.md" />
@@ -476,8 +476,16 @@
     <None Include="Resources\flipXc.png" />
     <None Include="Resources\flipYc.png" />
     <None Include="Resources\music_edit.png" />
+    <Content Include="DLCManager\external_tools\MDBPlus.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\oggCut.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="songcreator.ico" />
-    <Content Include="DLCManager\audiocrossreference.exe" />
+    <Content Include="DLCManager\external_tools\audiocrossreference.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="DLCManager\bpr_v0.3\bpr.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -493,23 +501,24 @@
     <Content Include="DLCManager\bpr_v0.3\license.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="DLCManager\edattool.exe">
+    <Content Include="DLCManager\external_tools\edattool.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="DLCManager\Files.accdb">
+    <Content Include="DLCManager\external_tools\Files.accdb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="DLCManager\oggdec.exe">
+    <Content Include="DLCManager\external_tools\oggdec.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="DLCManager\psarc.exe">
+    <Content Include="DLCManager\external_tools\psarc.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="DLCManager\README.txt" />
-    <Content Include="DLCManager\ww2ogg.exe">
+    <Content Include="DLCManager\external_tools\README.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="DLCManager\audiocrossreference.exe" />
+    <Content Include="DLCManager\external_tools\ww2ogg.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="DLCManager\bpr_v0.3\bpr.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -525,26 +534,8 @@
     <Content Include="DLCManager\bpr_v0.3\license.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="DLCManager\edattool.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\Files.accdb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\oggdec.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\psarc.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\README.txt" />
-    <Content Include="DLCManager\ww2ogg.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DLCManager\external_tools\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>

@@ -10,6 +10,7 @@ using System.Windows.Forms;
 
 //bcapi
 using System.Data.OleDb;
+using RocksmithToolkitLib; //config
 using RocksmithToolkitLib.DLCPackage;
 using RocksmithToolkitGUI;
 using System.IO;
@@ -71,8 +72,8 @@ namespace RocksmithToolkitGUI.DLCManager
 
         //}
 
-        public Duplicates_Management(DLCManager.Files filed, DLCPackageData datas, string author, string tkversion, string dD, string bass, string guitar, string combo, string rhythm, string lead, string vocal, string tunnings, int i, int norows, string original_FileName, string art_hash, string audio_hash, string audioPreview_hash, List<string> alist, List<string> blist, string DBPath, List<string> clist, List<string> dlist, bool newold, string Is_Original, string altvert, string txt_RocksmithDLCPath, bool AllowEncript, bool AllowORIGDelete, string FileSize, string unpackedDir,string Is_MultiTrack,string MultiTrack_Version)//string Is_MultiTracking, string Multitracking, 
-       //file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, Tunings, b, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist, DB_Path, clist, dlist, newold, Is_Original, altver
+        public Duplicates_Management(DLCManager.Files filed, DLCPackageData datas, string author, string tkversion, string dD, string bass, string guitar, string combo, string rhythm, string lead, string vocal, string tunnings, int i, int norows, string original_FileName, string art_hash, string audio_hash, string audioPreview_hash, List<string> alist, List<string> blist, string DBPath, List<string> clist, List<string> dlist, bool newold, string Is_Original, string altvert, string txt_RocksmithDLCPath, bool AllowEncript, bool AllowORIGDelete, string FileSize, string unpackedDir, string Is_MultiTrack, string MultiTrack_Version)//string Is_MultiTracking, string Multitracking, 
+        //file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, Tunings, b, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist, DB_Path, clist, dlist, newold, Is_Original, altver
         {
             //Text = text;
             //MessageBox.Show("test2");
@@ -167,7 +168,7 @@ namespace RocksmithToolkitGUI.DLCManager
         public bool ExistChng = false;
         public bool AllowORIGDeleteb = false;
         public bool AllowEncriptb = false;
-        internal static string AppWD = AppDomain.CurrentDomain.BaseDirectory; //when removing DDC
+        internal static string AppWD = AppDomain.CurrentDomain.BaseDirectory + "DLCManager\\external_tools"; //when removing DDC
         //public OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn);
 
         //private BindingSource bsPositions = new BindingSource();
@@ -183,8 +184,15 @@ namespace RocksmithToolkitGUI.DLCManager
             Comment = "";
             Description = "";
             dupliID = "";
-            btn_Title2SortT.Text=char.ConvertFromUtf32(8595);
-            btn_Artist2SortA.Text=char.ConvertFromUtf32(8595);
+
+            btn_Title2SortT.Text = char.ConvertFromUtf32(8595);
+            btn_Artist2SortA.Text = char.ConvertFromUtf32(8595);
+
+            chbx_Sort.Checked = ConfigRepository.Instance()["dlcm_DupliM_Sync"] == "Yes" ? true : false;
+            chbx_Autosave.Checked = ConfigRepository.Instance()["dlcm_Autosave"] == "Yes" ? true : false;
+
+            lbl_tonediff.Visible = false;
+            lbl_previewFootnote.Visible = false;
 
             //MessageBox.Show("test6");
             if (datas.SongInfo.Artist != filed.Artist) { lbl_Artist.ForeColor = lbl_Reference.ForeColor; btn_ArtistExisting.Enabled = true; btn_ArtistNew.Enabled = true; }
@@ -203,9 +211,9 @@ namespace RocksmithToolkitGUI.DLCManager
 
             //Alternate
             txt_AlternateNoNew.Value = altver.ToInt32();
-            chbx_IsAlternateNew.Checked = filed.Is_Multitrack !="Yes"  ? true : false;;
-            chbx_IsAlternateExisting.Checked = filed.Is_Alternate == "Yes" && filed.Is_Multitrack !="Yes" ? true : false;
-            txt_AlternateNoExisting.Enabled = filed.Is_Alternate == "Yes" && filed.Is_Multitrack !="Yes"  ? true : false;
+            chbx_IsAlternateNew.Checked = filed.Is_Multitrack != "Yes" ? true : false; ;
+            chbx_IsAlternateExisting.Checked = filed.Is_Alternate == "Yes" && filed.Is_Multitrack != "Yes" ? true : false;
+            txt_AlternateNoExisting.Enabled = filed.Is_Alternate == "Yes" && filed.Is_Multitrack != "Yes" ? true : false;
             txt_AlternateNoExisting.Value = (filed.Alternate_Version_No.ToInt32() == -1) ? 0 : filed.Alternate_Version_No.ToInt32();
 
             //Multitrack
@@ -220,7 +228,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
             Art_Hash = filed.AlbumArt_Hash;
 
-            txt_YouTube_LinkExisting.Text=filed.YouTube_Link;
+            txt_YouTube_LinkExisting.Text = filed.YouTube_Link;
             txt_CustomsForge_LinkExisting.Text = filed.YouTube_Link;
             txt_CustomsForge_LikeExisting.Text = filed.YouTube_Link;
             txt_CustomsForge_ReleaseNotesExisting.Text = filed.YouTube_Link;
@@ -228,12 +236,12 @@ namespace RocksmithToolkitGUI.DLCManager
             // string altver = GetAlternateNo();
 
             //FileSize
-            if (FileSize != filed.File_Size) { lbl_Size.ForeColor = lbl_Reference.ForeColor;}
+            if (FileSize != filed.File_Size) { lbl_Size.ForeColor = lbl_Reference.ForeColor; }
             txt_SizeNew.Text = FileSize.ToInt32().ToString("###,###,###");
             txt_SizeExisting.Text = filed.File_Size.ToInt32().ToString("###,###,###");
 
 
-            if (datas.SongInfo.SongDisplayName != filed.Song_Title) {lbl_Title.ForeColor = lbl_Reference.ForeColor; }//btn_TitleExisting.Enabled = true; btn_TitleNew.Enabled = true; }
+            if (datas.SongInfo.SongDisplayName != filed.Song_Title) { lbl_Title.ForeColor = lbl_Reference.ForeColor; }//btn_TitleExisting.Enabled = true; btn_TitleNew.Enabled = true; }
             else if (datas.SongInfo.SongDisplayName == "" && "" == filed.Song_Title) lbl_Title.Text = "";
             txt_TitleNew.Text = datas.SongInfo.SongDisplayName;
             txt_TitleExisting.Text = filed.Song_Title;
@@ -243,7 +251,7 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_TitleSortNew.Text = datas.SongInfo.SongDisplayNameSort;
             txt_TitleSortExisting.Text = filed.Song_Title_Sort;
 
-            if (datas.SongInfo.ArtistSort != filed.Artist_Sort) {lbl_ArtistSort.ForeColor = lbl_Reference.ForeColor; btn_ArtistSortExisting.Enabled = true; btn_ArtistSortNew.Enabled = true; }
+            if (datas.SongInfo.ArtistSort != filed.Artist_Sort) { lbl_ArtistSort.ForeColor = lbl_Reference.ForeColor; btn_ArtistSortExisting.Enabled = true; btn_ArtistSortNew.Enabled = true; }
             else if (datas.SongInfo.ArtistSort == "" && "" == filed.Artist_Sort) lbl_ArtistSort.Text = "";
             txt_ArtistSortNew.Text = datas.SongInfo.ArtistSort;
             txt_ArtistSortExisting.Text = filed.Artist_Sort;
@@ -253,7 +261,7 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_FileNameNew.Text = original_FileName;
             txt_FileNameExisting.Text = filed.Original_FileName;
 
-            if (author != filed.Author) {lbl_Author.ForeColor = lbl_FileName.ForeColor; btn_AuthorExisting.Enabled = true; btn_AuthorNew.Enabled = true; }
+            if (author != filed.Author) { lbl_Author.ForeColor = lbl_FileName.ForeColor; btn_AuthorExisting.Enabled = true; btn_AuthorNew.Enabled = true; }
             else if (author == "" && "" == filed.Author) lbl_Author.Text = "";
             txt_AuthorNew.Text = author;// (author == "" ? "missing" : author);
             txt_AuthorExisting.Text = filed.Author;//(filed.Author == "" ? "missing" : filed.Author);            
@@ -289,7 +297,7 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_ToolkitNew.Text = tkversion;
             txt_ToolkitExisting.Text = filed.ToolkitVersion;
 
-            if (filed.AlbumArt_Hash != art_hash) {lbl_AlbumArt.ForeColor = lbl_Reference.ForeColor;btn_CoverNew.Enabled = true; btn_CoverExisting.Enabled = true; }
+            if (filed.AlbumArt_Hash != art_hash) { lbl_AlbumArt.ForeColor = lbl_Reference.ForeColor; btn_CoverNew.Enabled = true; btn_CoverExisting.Enabled = true; }
             else if (filed.AlbumArt_Hash == "" && "" == art_hash) lbl_AlbumArt.Text = "";
 
             datas.AlbumArtPath = datas.AlbumArtPath.Replace("/", "\\");
@@ -306,8 +314,9 @@ namespace RocksmithToolkitGUI.DLCManager
             else if (filed.AudioPreview_Hash == "" && "" == audioPreview_hash) lbl_Vocals.Text = "";
             txt_PreviewNew.Text = (audioPreview_hash.ToString() == "" ? "No" : "Yes");
             txt_PreviewExisting.Text = (filed.AudioPreview_Hash.ToString() == "" ? "No" : "Yes");
-            if (audioPreview_hash.ToString() != "" ) btn_PlayPreviewNew.Enabled=true;
-            if (filed.AudioPreview_Hash.ToString() != "" ) btn_PlayPreviewExisting.Enabled=true;
+            if (audioPreview_hash.ToString() != "") btn_PlayPreviewNew.Enabled = true;
+            if (filed.AudioPreview_Hash.ToString() != "") btn_PlayPreviewExisting.Enabled = true;
+            if (filed.PreviewLenght != "") { lbl_Preview.ForeColor = lbl_previewFootnote.ForeColor; lbl_previewFootnote.Visible = true; }
 
             if (filed.Has_Vocals.ToString() != vocal) lbl_Vocals.ForeColor = lbl_Reference.ForeColor;
             //else if (filed.Has_Vocals == "" && "" == vocal) lbl_Vocals.Text = "";
@@ -357,7 +366,11 @@ namespace RocksmithToolkitGUI.DLCManager
             string lastConversionDateTime_cur = "";
             string lastConversionDateTime_exist = "";
             string lastConverjsonDateTime_cur = "";
+            CultureInfo enUS = new CultureInfo("en-US");
             string lastConverjsonDateTime_exist = "";
+
+            DateTime LastConvDate_exis = DateTime.ParseExact("12-13-11 13:11", "MM-dd-yy HH:mm", enUS, System.Globalization.DateTimeStyles.None);
+            DateTime LastConvDate_new = DateTime.ParseExact("12-13-11 13:11", "MM-dd-yy HH:mm", enUS, System.Globalization.DateTimeStyles.None);
             string txtnew = "";
             string txtold = "";
             //MessageBox.Show(DB_Path);
@@ -407,36 +420,41 @@ namespace RocksmithToolkitGUI.DLCManager
                                     arg.SongFile.File = (arg.SongXml.File.Replace(".xml", ".json").Replace("\\EOF\\", "\\Toolkit\\"));
                                 else
                                     arg.SongFile.File = arg.SongXml.File.Replace(".xml", ".json").Replace("\\songs\\arr", "\\" + DLCManager.calc_path(xx));
-                                //arg.SongFile.File = (arg.SongXml.File.Replace(".xml", ".json")).Replace("EOF", "Toolkit");
 
-                                //rtxt_StatisticsOnReadDLCs.Text = "-"+XmlName + "=" + (arg.ArrangementType.ToString() + arg.RouteMask.ToString()) + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                                //rtxt_StatisticsOnReadDLCs.Text = "-" + arg.SongXml.File + "=" + XmlFile + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                                //rtxt_StatisticsOnReadDLCs.Text = "-" + arg.SongFile.File + "==" + jsonFile + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                lastConversionDateTime_cur = GetTExtFromFile(arg.SongXml.File).Trim(' ');
+                                lastConversionDateTime_exist = GetTExtFromFile(XmlFile).Trim(' ');
+                                if (lastConversionDateTime_cur.Length > 3)
+                                {
+                                    if (lastConversionDateTime_cur.IndexOf("-") == 1) lastConversionDateTime_cur = "0" + lastConversionDateTime_cur;
+                                    if (lastConversionDateTime_cur.IndexOf("-", 3) == 4) lastConversionDateTime_cur = lastConversionDateTime_cur.Substring(0, 3) + "0" + lastConversionDateTime_cur.Substring(3, ((lastConversionDateTime_cur.Length) - 3));
+                                    if (lastConversionDateTime_cur.IndexOf(":") == 10) lastConversionDateTime_cur = lastConversionDateTime_cur.Substring(0, 9) + "0" + lastConversionDateTime_cur.Substring(9, lastConversionDateTime_cur.Length - 9);
+                                }
+                                if (lastConversionDateTime_exist.Length > 3)
+                                {
+                                    if (lastConversionDateTime_exist.IndexOf("-") == 1) lastConversionDateTime_exist = "0" + lastConversionDateTime_exist;
+                                    if (lastConversionDateTime_exist.IndexOf("-", 3) == 4) lastConversionDateTime_exist = lastConversionDateTime_exist.Substring(0, 3) + "0" + lastConversionDateTime_exist.Substring(3, ((lastConversionDateTime_exist.Length) - 3));
+                                    if (lastConversionDateTime_exist.IndexOf(":") == 10) lastConversionDateTime_exist = lastConversionDateTime_exist.Substring(0, 9) + "0" + lastConversionDateTime_exist.Substring(9, lastConversionDateTime_exist.Length - 9);
+                                }
+
+                                lastConverjsonDateTime_cur = GetTExtFromFile(arg.SongFile.File).Trim(' '); ;
+                                lastConverjsonDateTime_exist = GetTExtFromFile(jsonFile).Trim(' '); ;
+                                if (lastConverjsonDateTime_cur.Length > 3)
+                                {
+                                    if (lastConverjsonDateTime_cur.IndexOf("-") == 1) lastConverjsonDateTime_cur = "0" + lastConverjsonDateTime_cur;
+                                    if (lastConverjsonDateTime_cur.IndexOf("-", 3) == 4) lastConverjsonDateTime_cur = lastConverjsonDateTime_cur.Substring(0, 3) + "0" + lastConverjsonDateTime_cur.Substring(3, ((lastConverjsonDateTime_cur.Length) - 3));
+                                    if (lastConverjsonDateTime_cur.IndexOf(":") == 10) lastConverjsonDateTime_cur = lastConverjsonDateTime_cur.Substring(0, 9) + "0" + lastConverjsonDateTime_cur.Substring(9, lastConverjsonDateTime_cur.Length - 9);
+                                }
+                                if (lastConverjsonDateTime_exist.Length > 3)
+                                {
+                                    if (lastConverjsonDateTime_exist.IndexOf("-") == 1) lastConverjsonDateTime_exist = "0" + lastConverjsonDateTime_exist;
+                                    if (lastConverjsonDateTime_exist.IndexOf("-", 3) == 4) lastConverjsonDateTime_exist = lastConverjsonDateTime_exist.Substring(0, 3) + "0" + lastConverjsonDateTime_exist.Substring(3, ((lastConverjsonDateTime_exist.Length) - 3));
+                                    if (lastConverjsonDateTime_exist.IndexOf(":") == 10) lastConverjsonDateTime_exist = lastConverjsonDateTime_exist.Substring(0, 9) + "0" + lastConverjsonDateTime_exist.Substring(9, lastConverjsonDateTime_exist.Length - 9);
+                                }
+
                                 if (XmlName == (arg.ArrangementType.ToString() + arg.RouteMask.ToString()) || (XmlUUID == arg.SongXml.UUID.ToString()))
                                 // rtxt_StatisticsOnReadDLCs.Text = "-" + XmlHash + "=" + alist[k] + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                 {
-                                    //if (XmlHash == alist[k])
-                                    ////diff = false;
-                                    //{
 
-                                    //}
-                                    //else
-                                    //{
-                                    lastConversionDateTime_cur = GetTExtFromFile(arg.SongXml.File).Trim(' ');
-                                    lastConversionDateTime_exist = GetTExtFromFile(XmlFile).Trim(' ');
-                                    if (lastConversionDateTime_cur.Length > 3)
-                                    {
-                                        if (lastConversionDateTime_cur.IndexOf("-") == 1) lastConversionDateTime_cur = "0" + lastConversionDateTime_cur;
-                                        if (lastConversionDateTime_cur.IndexOf("-", 3) == 4) lastConversionDateTime_cur = lastConversionDateTime_cur.Substring(0, 3) + "0" + lastConversionDateTime_cur.Substring(3, ((lastConversionDateTime_cur.Length) - 3));
-                                        if (lastConversionDateTime_cur.IndexOf(":") == 10) lastConversionDateTime_cur = lastConversionDateTime_cur.Substring(0, 9) + "0" + lastConversionDateTime_cur.Substring(9, lastConversionDateTime_cur.Length - 9);
-                                    }
-                                    if (lastConversionDateTime_exist.Length > 3)
-                                    {
-                                        if (lastConversionDateTime_exist.IndexOf("-") == 1) lastConversionDateTime_exist = "0" + lastConversionDateTime_exist;
-                                        if (lastConversionDateTime_exist.IndexOf("-", 3) == 4) lastConversionDateTime_exist = lastConversionDateTime_exist.Substring(0, 3) + "0" + lastConversionDateTime_exist.Substring(3, ((lastConversionDateTime_exist.Length) - 3));
-                                        if (lastConversionDateTime_exist.IndexOf(":") == 10) lastConversionDateTime_exist = lastConversionDateTime_exist.Substring(0, 9) + "0" + lastConversionDateTime_exist.Substring(9, lastConversionDateTime_exist.Length - 9);
-                                    }
-                                    //txt_Description.Text = "tst";
                                     if (arg.RouteMask.ToString() == "Bass")
                                     {
                                         if ((lastConversionDateTime_cur == "" && "" == lastConversionDateTime_exist)) lbl_XMLBass.Text = "";
@@ -465,7 +483,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                         txt_XMLRhythmNew.Text = lastConversionDateTime_cur;
                                         txt_XMLRhythmExisting.Text = lastConversionDateTime_exist;
                                     }
-                                    if (arg.RouteMask.ToString() == "Vocal" || XmlName=="VocalNone")
+                                    if (arg.RouteMask.ToString() == "Vocal" || XmlName == "VocalNone")
                                     {
                                         //if (lastConversionDateTime_cur == "" && "" == lastConversionDateTime_exist)
                                         //lbl_XMLVocal.Text = "";
@@ -473,46 +491,9 @@ namespace RocksmithToolkitGUI.DLCManager
                                         //txt_XMLVocalNew.Text = lastConversionDateTime_cur;
                                         //txt_XMLVocalExisting.Text = lastConversionDateTime_exist;lbl_XMLVocal.ForeColor = lbl_Reference.ForeColor;
 
-                                        if (XmlHash != alist[k]) {  lbl_Vocals.ForeColor = lbl_Reference.ForeColor; }
+                                        if (XmlHash != alist[k]) { lbl_Vocals.ForeColor = lbl_Reference.ForeColor; }
                                         else if (XmlHash == "" && "" == alist[k]) lbl_Vocals.Text = "";
                                         //var r = blist[k];
-                                    }
-
-                                    //Get the oldest timestamp
-                                    CultureInfo enUS = new CultureInfo("en-US");
-                                    myNewDate = DateTime.ParseExact(datenew, "MM-dd-yy HH:mm", enUS, System.Globalization.DateTimeStyles.None);
-                                    myOldDate = DateTime.ParseExact(dateold, "MM-dd-yy HH:mm", enUS, System.Globalization.DateTimeStyles.None);
-
-                                    if (lastConversionDateTime_cur.Length > 3)
-                                    {
-                                        myCurDate = DateTime.ParseExact(lastConversionDateTime_cur, "MM-dd-yy HH:mm", enUS);
-                                        if ((myCurDate > myNewDate) && (arg.RouteMask.ToString() == "Bass" || arg.RouteMask.ToString() == "Lead" || arg.RouteMask.ToString() == "Rhythm" || arg.RouteMask.ToString() == "Combo"))
-                                            datenew = lastConversionDateTime_cur;
-                                    }
-                                    if (lastConversionDateTime_exist.Length > 3)
-                                    {
-                                        myExisDate = DateTime.ParseExact(lastConversionDateTime_exist, "MM-dd-yy HH:mm", enUS, System.Globalization.DateTimeStyles.None);
-                                        if (myExisDate > myOldDate && (arg.RouteMask.ToString() == "Bass" || arg.RouteMask.ToString() == "Lead" || arg.RouteMask.ToString() == "Rhythm" || arg.RouteMask.ToString() == "Combo"))
-                                            dateold = lastConversionDateTime_exist;
-                                    }
-                                    //}
-                                    //if (jsonHash != blist[k])
-                                    ////diffjson = false;
-                                    ////else
-                                    //{
-                                    lastConverjsonDateTime_cur = GetTExtFromFile(arg.SongFile.File).Trim(' '); ;
-                                    lastConverjsonDateTime_exist = GetTExtFromFile(jsonFile).Trim(' '); ;
-                                    if (lastConverjsonDateTime_cur.Length > 3)
-                                    {
-                                        if (lastConverjsonDateTime_cur.IndexOf("-") == 1) lastConverjsonDateTime_cur = "0" + lastConverjsonDateTime_cur;
-                                        if (lastConverjsonDateTime_cur.IndexOf("-", 3) == 4) lastConverjsonDateTime_cur = lastConverjsonDateTime_cur.Substring(0, 3) + "0" + lastConverjsonDateTime_cur.Substring(3, ((lastConverjsonDateTime_cur.Length) - 3));
-                                        if (lastConverjsonDateTime_cur.IndexOf(":") == 10) lastConverjsonDateTime_cur = lastConverjsonDateTime_cur.Substring(0, 9) + "0" + lastConverjsonDateTime_cur.Substring(9, lastConverjsonDateTime_cur.Length - 9);
-                                    }
-                                    if (lastConverjsonDateTime_exist.Length > 3)
-                                    {
-                                        if (lastConverjsonDateTime_exist.IndexOf("-") == 1) lastConverjsonDateTime_exist = "0" + lastConverjsonDateTime_exist;
-                                        if (lastConverjsonDateTime_exist.IndexOf("-", 3) == 4) lastConverjsonDateTime_exist = lastConverjsonDateTime_exist.Substring(0, 3) + "0" + lastConverjsonDateTime_exist.Substring(3, ((lastConverjsonDateTime_exist.Length) - 3));
-                                        if (lastConverjsonDateTime_exist.IndexOf(":") == 10) lastConverjsonDateTime_exist = lastConverjsonDateTime_exist.Substring(0, 9) + "0" + lastConverjsonDateTime_exist.Substring(9, lastConverjsonDateTime_exist.Length - 9);
                                     }
 
                                     if (arg.RouteMask.ToString() == "Bass")
@@ -552,38 +533,51 @@ namespace RocksmithToolkitGUI.DLCManager
                                         if (jsonHash != blist[k]) { lbl_Vocals.ForeColor = lbl_Reference.ForeColor; }
                                         else if (jsonHash == "" && "" == blist[k]) lbl_Vocals.Text = "";
                                     }
-                                    //}
                                 }
-                                else
+
+
+                                //Get the oldest timestamp
+                                myNewDate = DateTime.ParseExact(datenew, "MM-dd-yy HH:mm", enUS, System.Globalization.DateTimeStyles.None);
+                                myOldDate = DateTime.ParseExact(dateold, "MM-dd-yy HH:mm", enUS, System.Globalization.DateTimeStyles.None);
+
+                                if (lastConversionDateTime_cur.Length > 3)
                                 {
+                                    myCurDate = DateTime.ParseExact(lastConversionDateTime_cur, "MM-dd-yy HH:mm", enUS);
+                                    if ((myCurDate > myNewDate) && (arg.RouteMask.ToString() == "Bass" || arg.RouteMask.ToString() == "Lead" || arg.RouteMask.ToString() == "Rhythm" || arg.RouteMask.ToString() == "Combo"))
+                                        datenew = lastConversionDateTime_cur;
+                                }
+                                if (lastConversionDateTime_exist.Length > 3)
+                                {
+                                    myExisDate = DateTime.ParseExact(lastConversionDateTime_exist, "MM-dd-yy HH:mm", enUS, System.Globalization.DateTimeStyles.None);
+                                    if (myExisDate > myOldDate && (arg.RouteMask.ToString() == "Bass" || arg.RouteMask.ToString() == "Lead" || arg.RouteMask.ToString() == "Rhythm" || arg.RouteMask.ToString() == "Combo"))
+                                        dateold = lastConversionDateTime_exist;
+                                }
+
+                                myNewDate = DateTime.ParseExact(datenew, "MM-dd-yy HH:mm", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None);
+                                myOldDate = DateTime.ParseExact(dateold, "MM-dd-yy HH:mm", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None);
+
+                                if (dateold != "12-13-11 13:11" && datenew != "12-13-11 13:11")
+                                {
+                                    //Commenting out the Auto addition of OLDer&Newer
+                                    if (newold && filed.Is_Original != "Yes" && Is_Original != "Yes" && myOldDate > myNewDate)
+                                    {
+                                        txtnew = " " + "(older)";
+                                        txtold = " " + "(newer)";
+                                        
+                                    }
+                                    else if (newold && filed.Is_Original != "Yes" && Is_Original != "Yes" && myOldDate < myNewDate)
+                                    {
+                                        txtnew = " " + "(newer)";
+                                        txtold = " " + "(older)";
+                                        
+                                    }
+                                    LastConvDate_exis = myOldDate > LastConvDate_exis ? myOldDate : LastConvDate_exis;
+                                    LastConvDate_new = myNewDate > LastConvDate_new ? myNewDate : LastConvDate_new;
                                 }
                             }
 
-                            //txt_Description.Text += dateold + datenew;
-                            myNewDate = DateTime.ParseExact(datenew, "MM-dd-yy HH:mm", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None);
-                            myOldDate = DateTime.ParseExact(dateold, "MM-dd-yy HH:mm", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None);
 
-                            if (dateold != "12-13-11 13:11" && datenew != "12-13-11 13:11")
-                            {
-                                //txt_Comment.Text += newold.ToString() + filed.Is_Original + Is_Original + Convert.ToDateTime(dateold) + Convert.ToDateTime(datenew);
-                                //Commenting out the Auto addition of OLDer&Newer
-                                if (newold && filed.Is_Original != "Yes" && Is_Original != "Yes" && myOldDate > myNewDate)
-                                {
-                                    txtnew = " " + "(older)";
-                                    txtold = " " + "(newer)";
-                                    //ExistChng = true;
-                                }
-                                else if (newold && filed.Is_Original != "Yes" && Is_Original != "Yes" && myOldDate < myNewDate)
-                                {
-                                    txtnew = " " + "(newer)";
-                                    txtold = " " + "(older)";
-                                    //ExistChng = true;
-                                }
-                                //txt_TitleNew.Text = datas.SongInfo.SongDisplayName + txtnew + "";
-                                //txt_TitleExisting.Text = filed.Song_Title + txtold + "";
-                            }
-                            //text += ((diff) ? "\n" + (14 + i) + "/14+Diff XML" + arg.ArrangementType + arg.RouteMask + ": " + lastConversionDateTime_cur + "->" + lastConversionDateTime_exist + ": Yes" : "");//+ art_hash + "->" + filed.art_Hash
-                            //text += ((diffjson) ? "\n" + (15 + i) + "/14+Diff Json" + arg.ArrangementType + arg.RouteMask + ": " + lastConverjsonDateTime_cur + "->" + lastConverjsonDateTime_exist + ": Yes" : "");//+ art_hash + "->" + filed.art_Hash
+
                             k++;
                         }
 
@@ -604,6 +598,9 @@ namespace RocksmithToolkitGUI.DLCManager
             ExistChng = false;
             lbl_New.Text = txtnew;
             lbl_Existing.Text = txtold;
+            lbl_DateNew.Text = LastConvDate_new.ToString();
+            lbl_DateExisting.Text = LastConvDate_exis.ToString();
+            if (LastConvDate_new.ToString() == LastConvDate_exis.ToString()) lbl_tonediff.Visible = true;
         }
 
         public class Files
@@ -922,12 +919,12 @@ namespace RocksmithToolkitGUI.DLCManager
             Asses = "Ignore";
             if (ExistChng)
             {
-                                if (!chbx_Autosave.Checked)
+                if (!chbx_Autosave.Checked)
                 {
-                DialogResult result1 = MessageBox.Show("Save the Existing Edits?\nYes for save \nNo for Ignore", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (result1 == DialogResult.Yes) UpdateExisting();
+                    DialogResult result1 = MessageBox.Show("Save the Existing Edits?\nYes for save \nNo for Ignore", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (result1 == DialogResult.Yes) UpdateExisting();
                 }
-                                else UpdateExisting();
+                else UpdateExisting();
             }
             exit();
             this.Hide();
@@ -952,20 +949,22 @@ namespace RocksmithToolkitGUI.DLCManager
             Album = txt_AlbumNew.Text;
             //Is_Original= (chbx_IsOriginal.Checked ? "Yes" : "No");
             Alternate_No = chbx_IsAlternateNew.Checked ? txt_AlternateNoNew.Text : null;
-            AlbumArtPath = txt_TitleNew.Text!="" ? picbx_AlbumArtPathNew.ImageLocation.Replace(".png", ".dds") : "";//rbtn_CoverExisting.Checked ? picbx_AlbumArtPathExisting.ImageLocation.Replace("png", "dds") : picbx_AlbumArtPathNew.ImageLocation.Replace("png", "dds");
-            Art_Hash = txt_TitleNew.Text!="" ? calc_arthash(picbx_AlbumArtPathNew.ImageLocation.Replace(".png", ".dds")) : "";//.Checked ? filed.AlbumArt_Hash : art_hash;
+            AlbumArtPath = txt_TitleNew.Text != "" ? picbx_AlbumArtPathNew.ImageLocation.Replace(".png", ".dds") : "";//rbtn_CoverExisting.Checked ? picbx_AlbumArtPathExisting.ImageLocation.Replace("png", "dds") : picbx_AlbumArtPathNew.ImageLocation.Replace("png", "dds");
+            Art_Hash = txt_TitleNew.Text != "" ? calc_arthash(picbx_AlbumArtPathNew.ImageLocation.Replace(".png", ".dds")) : "";//.Checked ? filed.AlbumArt_Hash : art_hash;
             ArtistSort = txt_ArtistSortNew.Text;
             Artist = txt_ArtistNew.Text;
-            MultiT = chbx_MultiTrackNew.Checked ? "Yes": "No";
+            MultiT = chbx_MultiTrackNew.Checked ? "Yes" : "No";
             MultiTV = txt_MultiTrackNew.Text;
             AlbumAP = AlbumArtPath;
             YouTube_Link = txt_YouTube_LinkExisting.Text;
             CustomsForge_Link = txt_CustomsForge_LinkExisting.Text;
             CustomsForge_Like = txt_CustomsForge_LikeExisting.Text;
             CustomsForge_ReleaseNotes = txt_CustomsForge_ReleaseNotesExisting.Text;
-            ExistingTrackNo= filed.Track_No;
+            ExistingTrackNo = filed.Track_No;
             IgnoreRest = chbx_IgnoreDupli.Checked;
 
+            ConfigRepository.Instance()["dlcm_DupliM_Sync"] =chbx_Sort.Checked == true ? "Yes" : "No";
+            ConfigRepository.Instance()["dlcm_Autosave"] = chbx_Autosave.Checked== true ? "Yes" : "No";
 
             //Delete old arrangements and tones
             //Clean CachetDB
@@ -976,7 +975,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 {
                     if (Asses == "Update")
                     {
-                        OleDbDataAdapter dan = new OleDbDataAdapter("DELETE FROM Tones WHERE CDLC_ID="+ lbl_IDExisting.Text, cnn);
+                        OleDbDataAdapter dan = new OleDbDataAdapter("DELETE FROM Tones WHERE CDLC_ID=" + lbl_IDExisting.Text, cnn);
                         dan.Fill(dss, "Cache");
                         dan.Dispose();
                         OleDbDataAdapter das = new OleDbDataAdapter("DELETE FROM Arrangements WHERE CDLC_ID=" + lbl_IDExisting.Text, cnn);
@@ -1010,7 +1009,7 @@ namespace RocksmithToolkitGUI.DLCManager
             var ar = txt_ArtistExisting.Text;
             //if (filed.Album != datas.SongInfo.Album) al = datas.SongInfo.Album;
             //if (filed.Artist != datas.SongInfo.Artist) ar = datas.SongInfo.Artist;
-            var alt= chbx_IsAlternateExisting.Checked ? txt_AlternateNoExisting.Value.ToString() : null;
+            var alt = chbx_IsAlternateExisting.Checked ? txt_AlternateNoExisting.Value.ToString() : null;
 
             try
             {
@@ -1019,9 +1018,9 @@ namespace RocksmithToolkitGUI.DLCManager
                 {
                     sel = "UPDATE Main SET Artist=\"" + ar + "\", Artist_Sort=\"" + txt_ArtistSortExisting.Text + "\", Album=\"" + al + "\", Song_Title=\"" + txt_TitleExisting.Text;
                     sel += "\", Song_Title_Sort=\"" + txt_TitleSortExisting.Text + "\", Author=\"" + (txt_AuthorExisting.Text == "" ? "Custom Song Creator" : txt_AuthorExisting.Text);
-                    sel += "\", Version=\"" + (txt_VersionExisting.Text == "" ? "1" : txt_VersionExisting.Text) + "\", DLC_Name=\"" + txt_DLCIDExisting.Text + "\"," ;
-                    sel +=  (txt_Description.Text == "" ? "" : " Description = \"" + txt_Description.Text + "\",") + (txt_Comment.Text == "" ? "" : " Comments = \"" + txt_Comment.Text + "\","); //"\"," +
-                    sel += " Is_Alternate = \"" + (chbx_IsAlternateExisting.Checked ? "Yes" : "No")+ "\", Alternate_Version_No = \"" + alt+"\",";// + "\"", AlbumArtPath = \"" + (rbtn_CoverNew.Checked ? picbx_AlbumArtPathNew.ImageLocation : picbx_AlbumArtPathExisting.ImageLocation);// + "\", Is_Original = \"" + (chbx_IsOriginal.Checked ? "Yes" : "No");
+                    sel += "\", Version=\"" + (txt_VersionExisting.Text == "" ? "1" : txt_VersionExisting.Text) + "\", DLC_Name=\"" + txt_DLCIDExisting.Text + "\",";
+                    sel += (txt_Description.Text == "" ? "" : " Description = \"" + txt_Description.Text + "\",") + (txt_Comment.Text == "" ? "" : " Comments = \"" + txt_Comment.Text + "\","); //"\"," +
+                    sel += " Is_Alternate = \"" + (chbx_IsAlternateExisting.Checked ? "Yes" : "No") + "\", Alternate_Version_No = \"" + alt + "\",";// + "\"", AlbumArtPath = \"" + (rbtn_CoverNew.Checked ? picbx_AlbumArtPathNew.ImageLocation : picbx_AlbumArtPathExisting.ImageLocation);// + "\", Is_Original = \"" + (chbx_IsOriginal.Checked ? "Yes" : "No");
                     sel += " Is_MultiTrack = \"" + (chbx_MultiTrackExisting.Checked ? "Yes" : "No") + "\", MultiTrack_Version = \"" + (chbx_MultiTrackExisting.Checked ? txt_MultiTrackExisting.Text : "") + "\",";// + "\"", AlbumArtPath = \"" + (rbtn_CoverNew.Checked ? picbx_AlbumArtPathNew.ImageLocation : picbx_AlbumArtPathExisting.ImageLocation);// + "\", Is_Original = \"" + (chbx_IsOriginal.Checked ? "Yes" : "No");
                     sel += " AlbumArtPath = \"" + picbx_AlbumArtPathExisting.ImageLocation.Replace(".png", ".dds") + "\", AlbumArt_Hash = \"" + calc_arthash(picbx_AlbumArtPathExisting.ImageLocation.Replace(".png", ".dds")) + "\",";// + "\"", AlbumArtPath = \"" + (rbtn_CoverNew.Checked ? picbx_AlbumArtPathNew.ImageLocation : picbx_AlbumArtPathExisting.ImageLocation);// + "\", Is_Original = \"" + (chbx_IsOriginal.Checked ? "Yes" : "No");
                     sel += " YouTube_Link = \"" + txt_YouTube_LinkExisting.Text + "\", CustomsForge_Link = \"" + txt_CustomsForge_LinkExisting.Text + "\",";
@@ -1054,8 +1053,8 @@ namespace RocksmithToolkitGUI.DLCManager
                 {
                     SHA1 sha = new SHA1Managed();
                     var art_hash = BitConverter.ToString(sha.ComputeHash(fs));//MessageBox.Show(FileHash+"-"+ss);
-                                                                              //convert to png
-                                                                              //ExternalApps.Dds2Png(ss);
+                    //convert to png
+                    //ExternalApps.Dds2Png(ss);
                     fs.Close();
                     return art_hash.ToString();
                 }
@@ -1099,9 +1098,9 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btn_RemoveOldNew_Click(object sender, EventArgs e)
         {
-           // //txt_TitleNew.Text = txt_TitleNew.Text.Replace(" (older)", "");
-           // txt_TitleNew.Text = txt_TitleNew.Text.Replace(" (newer)", "");
-           //// txt_TitleExisting.Text = txt_TitleExisting.Text.Replace(" (older)", "");
+            // //txt_TitleNew.Text = txt_TitleNew.Text.Replace(" (older)", "");
+            // txt_TitleNew.Text = txt_TitleNew.Text.Replace(" (newer)", "");
+            //// txt_TitleExisting.Text = txt_TitleExisting.Text.Replace(" (older)", "");
             txt_TitleExisting.Text = (txt_TitleExisting.Text.Replace("(newer)", "").Replace("(older)", "").Replace("a." + txt_AlternateNoExisting.Text, "").Replace("v." + txt_VersionExisting.Text, "").Replace(txt_AuthorExisting.Text, "").Replace("noDD", "").Replace("DD", "").Replace(txt_TuningExisting.Text, "")).Replace(txt_AvailTracksExisting.Text, "").Replace("  ", " ").Replace("  ", " ").Replace(" [ ]", "").Replace(" []", "");
 
             txt_TitleNew.Text = (datas.SongInfo.SongDisplayName.Replace("(newer)", "").Replace("(older)", "").Replace("a." + txt_AlternateNoNew.Text, "").Replace("v." + txt_VersionNew.Text, "").Replace(txt_AuthorNew.Text, "").Replace("noDD", "").Replace("DD", "").Replace(txt_TuningNew.Text, "")).Replace(txt_AvailTracksNew.Text, "").Replace("  ", " ").Replace("  ", " ").Replace(" [ ]", "").Replace(" []", "");
@@ -1136,6 +1135,7 @@ namespace RocksmithToolkitGUI.DLCManager
             else if (txt_TitleNew.Text.IndexOf("(older)") > 0) txt_TitleNew.Text = txt_TitleExisting.Text.Replace("(older)", "(newer)");
             else txt_TitleNew.Text = txt_TitleExisting.Text;
             lbl_Title.ForeColor = lbl_diffCount.ForeColor;
+            if (chbx_Sort.Checked) syncTitle();
             //btn_TitleExisting.Enabled = false;
             //btn_TitleNew.Enabled = false;
         }
@@ -1146,6 +1146,7 @@ namespace RocksmithToolkitGUI.DLCManager
             else if (txt_TitleExisting.Text.IndexOf("(older)") > 0) txt_TitleExisting.Text = txt_TitleNew.Text.Replace("(older)", "(newer)");
             else txt_TitleExisting.Text = txt_TitleNew.Text;
             lbl_Title.ForeColor = lbl_diffCount.ForeColor;
+            if (chbx_Sort.Checked) syncTitle();
             //btn_TitleExisting.Enabled = false;
             //btn_TitleNew.Enabled = false;
         }
@@ -1205,6 +1206,7 @@ namespace RocksmithToolkitGUI.DLCManager
             btn_ArtistExisting.Enabled = false;
             btn_ArtistNew.Enabled = false;
             lbl_Artist.ForeColor = lbl_diffCount.ForeColor;
+            if (chbx_Sort.Checked) syncArtist();
         }
 
         private void btn_ArtistExisting_Click(object sender, EventArgs e)
@@ -1214,6 +1216,7 @@ namespace RocksmithToolkitGUI.DLCManager
             btn_ArtistExisting.Enabled = false;
             btn_ArtistNew.Enabled = false;
             lbl_Artist.ForeColor = lbl_diffCount.ForeColor;
+            if (chbx_Sort.Checked) syncArtist();
         }
 
         private void btn_AddVersion_Click(object sender, EventArgs e)
@@ -1221,19 +1224,20 @@ namespace RocksmithToolkitGUI.DLCManager
             if (txt_TitleNew.Text.IndexOf(" (older)") > 0 || txt_TitleNew.Text.IndexOf(" (newer)") > 0)
             {
                 txt_TitleNew.Text = (txt_TitleNew.Text.Replace(" v." + txt_VersionNew.Text, "")).Replace(" (older)", " v." + txt_VersionNew.Text);
-                txt_TitleNew.Text = txt_TitleNew.Text.Replace(" (newer)", " v." + txt_VersionNew.Text).Replace("]","") + (chbx_UseBrakets.Checked ? "]" : "");
+                txt_TitleNew.Text = txt_TitleNew.Text.Replace(" (newer)", " v." + txt_VersionNew.Text).Replace("]", "") + (chbx_UseBrakets.Checked ? "]" : "");
             }
-            else txt_TitleNew.Text = (txt_TitleNew.Text.Replace(" v." + txt_VersionNew.Text, "").Replace("[v." + txt_VersionNew.Text, "[").Replace("]", "") + (txt_TitleNew.Text.IndexOf(" [") > 0 ? "" : " [") + " v." + (txt_VersionNew.Text).Replace("[ ", "[").Replace("  ", " ")+ (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " ");
+            else txt_TitleNew.Text = (txt_TitleNew.Text.Replace(" v." + txt_VersionNew.Text, "").Replace("[v." + txt_VersionNew.Text, "[").Replace("]", "") + (txt_TitleNew.Text.IndexOf(" [") > 0 ? "" : " [") + " v." + (txt_VersionNew.Text).Replace("[ ", "[").Replace("  ", " ") + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " ");
 
             if (txt_TitleExisting.Text.IndexOf(" (older)") > 0 || txt_TitleExisting.Text.IndexOf(" (newer)") > 0)
             {
                 txt_TitleExisting.Text = txt_TitleExisting.Text.Replace(" v." + txt_VersionExisting.Text, "").Replace(" (older)", " v." + txt_VersionExisting.Text);
-                txt_TitleExisting.Text = txt_TitleExisting.Text.Replace(" (newer)", " v." + txt_VersionExisting.Text).Replace("]","") + (chbx_UseBrakets.Checked ? "]" : "");
+                txt_TitleExisting.Text = txt_TitleExisting.Text.Replace(" (newer)", " v." + txt_VersionExisting.Text).Replace("]", "") + (chbx_UseBrakets.Checked ? "]" : "");
             }
             else txt_TitleExisting.Text = (txt_TitleExisting.Text.Replace(" v." + txt_VersionExisting.Text, "").Replace("[v." + txt_VersionExisting.Text, "[").Replace("]", "") + (txt_TitleExisting.Text.IndexOf(" [") > 0 ? "" : " [") + " v." + (txt_VersionExisting.Text + (chbx_UseBrakets.Checked ? "]" : ""))).Replace("[ ", "[").Replace("  ", " ");
 
             if (txt_TitleExisting.Text == txt_TitleNew.Text) lbl_Title.ForeColor = lbl_Reference.ForeColor;
             else lbl_Title.ForeColor = lbl_Artist.ForeColor;
+            if (chbx_Sort.Checked) syncTitle();
         }
 
         private void btn_ArtistSortNew_Click(object sender, EventArgs e)
@@ -1279,10 +1283,11 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btn_AddInstruments_Click(object sender, EventArgs e)
         {
-            txt_TitleNew.Text = (txt_TitleNew.Text.Replace(" "+txt_AvailTracksNew.Text, " ").Replace("["+txt_AvailTracksNew.Text, "[").Replace("]", "") + (txt_TitleNew.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + txt_AvailTracksNew.Text + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " ");
-            txt_TitleExisting.Text = (txt_TitleExisting.Text.Replace(" "+txt_AvailTracksExisting.Text, " ").Replace("["+txt_AvailTracksExisting.Text, "[").Replace("]", "") + (txt_TitleExisting.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + txt_AvailTracksExisting.Text + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " ");
+            txt_TitleNew.Text = (txt_TitleNew.Text.Replace(" " + txt_AvailTracksNew.Text, " ").Replace("[" + txt_AvailTracksNew.Text, "[").Replace("]", "") + (txt_TitleNew.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + txt_AvailTracksNew.Text + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " ");
+            txt_TitleExisting.Text = (txt_TitleExisting.Text.Replace(" " + txt_AvailTracksExisting.Text, " ").Replace("[" + txt_AvailTracksExisting.Text, "[").Replace("]", "") + (txt_TitleExisting.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + txt_AvailTracksExisting.Text + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " ");
             if (txt_TitleExisting.Text == txt_TitleNew.Text) lbl_Title.ForeColor = lbl_Reference.ForeColor;
             else lbl_Title.ForeColor = lbl_Artist.ForeColor;
+            if (chbx_Sort.Checked) syncTitle();
         }
 
         private void btn_CoverNew_Click(object sender, EventArgs e)
@@ -1293,7 +1298,7 @@ namespace RocksmithToolkitGUI.DLCManager
             btn_CoverExisting.Enabled = false;
             lbl_AlbumArt.ForeColor = lbl_diffCount.ForeColor;
             //txt_Description.Text= datas.AlbumArtPath.Replace(".dds", ".png");
-            
+
         }
 
         private void btn_CoverExisting_Click(object sender, EventArgs e)
@@ -1317,6 +1322,7 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_TitleExisting.Text = (txt_TitleExisting.Text.Replace(" " + txt_AuthorExisting.Text, "").Replace("]", "") + (txt_TitleExisting.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + (txt_AuthorExisting.Text).Replace("Custom Song Creator", "") + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " ").Replace(" ]", "]").Replace("[]", "");
             if (txt_TitleExisting.Text == txt_TitleNew.Text) lbl_Title.ForeColor = lbl_Reference.ForeColor;
             else lbl_Title.ForeColor = lbl_Artist.ForeColor;
+            if (chbx_Sort.Checked) syncTitle();
         }
 
         private void btn_AddDD_Click(object sender, EventArgs e)
@@ -1325,6 +1331,7 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_TitleExisting.Text = ((txt_TitleExisting.Text).Replace("noDD", "").Replace("DD", "").Replace("]", "") + (txt_TitleExisting.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + (txt_DDExisting.Text == "Yes" ? "DD" : "noDD").Replace("[ ", "[") + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " ");
             if (txt_TitleExisting.Text == txt_TitleNew.Text) lbl_Title.ForeColor = lbl_Reference.ForeColor;
             else lbl_Title.ForeColor = lbl_Artist.ForeColor;
+            if (chbx_Sort.Checked) syncTitle();
         }
 
         private void btn_AddTunning_Click(object sender, EventArgs e)
@@ -1333,14 +1340,16 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_TitleExisting.Text = ((txt_TitleExisting.Text.Replace(txt_TuningExisting.Text, "").Replace("]", "") + (txt_TitleExisting.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + txt_TuningExisting.Text + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[")).Replace("[ ", "[").Replace("  ", " ");
             if (txt_TitleExisting.Text == txt_TitleNew.Text) lbl_Title.ForeColor = lbl_Reference.ForeColor;
             else lbl_Title.ForeColor = lbl_Artist.ForeColor;
+            if (chbx_Sort.Checked) syncTitle();
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
-            txt_TitleNew.Text = (txt_TitleNew.Text.Replace(" (older)", "").Replace(" (newer)", "").Replace("(older)", "").Replace("(newer)", "").Replace("]", "") + (txt_TitleNew.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? "" : " [") + lbl_New.Text + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ","[");// " (" + +")";
-            txt_TitleExisting.Text = (txt_TitleExisting.Text.Replace(" (older)", "").Replace(" (newer)", "").Replace("(older)", "").Replace("(newer)", "").Replace("]", "") + (txt_TitleExisting.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? "" : " [") + lbl_Existing.Text + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ","[");// " (" + +")";
+            txt_TitleNew.Text = (txt_TitleNew.Text.Replace(" (older)", "").Replace(" (newer)", "").Replace("(older)", "").Replace("(newer)", "").Replace("]", "") + (txt_TitleNew.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? "" : " [") + lbl_New.Text + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[");// " (" + +")";
+            txt_TitleExisting.Text = (txt_TitleExisting.Text.Replace(" (older)", "").Replace(" (newer)", "").Replace("(older)", "").Replace("(newer)", "").Replace("]", "") + (txt_TitleExisting.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? "" : " [") + lbl_Existing.Text + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[");// " (" + +")";
             if (txt_TitleExisting.Text == txt_TitleNew.Text) lbl_Title.ForeColor = lbl_Reference.ForeColor;
             else lbl_Title.ForeColor = lbl_Artist.ForeColor;
+            if (chbx_Sort.Checked) syncTitle();
         }
 
         private void button6_Click_1(object sender, EventArgs e)
@@ -1453,6 +1462,7 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_TitleExisting.Text = (txt_TitleExisting.Text.Replace(" a." + txt_AlternateNoExisting.Text, "").Replace("[a." + txt_AlternateNoExisting.Text, "[").Replace("]", "") + (txt_TitleExisting.Text.IndexOf(" [") > 0 ? "" : " [") + " a." + (txt_AlternateNoExisting.Text + (chbx_UseBrakets.Checked ? "]" : ""))).Replace("[ ", "[").Replace("  ", " ");
             if (txt_TitleExisting.Text == txt_TitleNew.Text) lbl_Title.ForeColor = lbl_Reference.ForeColor;
             else lbl_Title.ForeColor = lbl_Artist.ForeColor;
+            if (chbx_Sort.Checked) syncTitle();
         }
 
         //private void button7_Click(object sender, EventArgs e)
@@ -1472,11 +1482,20 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btn_Title2SortT_Click(object sender, EventArgs e)
         {
+            syncTitle();
+        }
+
+        private void syncTitle()
+        {
             txt_TitleSortExisting.Text = txt_TitleExisting.Text;
             txt_TitleSortNew.Text = txt_TitleNew.Text;
         }
 
         private void button6_Click_3(object sender, EventArgs e)
+        {
+            syncArtist();
+        }
+        private void syncArtist()
         {
             txt_ArtistSortExisting.Text = txt_ArtistExisting.Text;
             txt_ArtistSortNew.Text = txt_ArtistNew.Text;

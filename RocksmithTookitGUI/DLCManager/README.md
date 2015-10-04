@@ -42,29 +42,28 @@ Main Features:
  git commit
 
 ## ToDos/bugs:
-wip:
+n2h:
 -+ small improv: Any change of song in the list should also save :)
 -+ small feature: maindb apply save settings (as well as the rest of the screens)
-	- when opening new windows..save settings
+	-- when opening new windows..save settings
 -+ with or without u still doesnt have the right alternate no when importing vs an existing song= a2....maybe OK :)
 -+ some tracks no don't get read/picked cause" (1) "
 -+ small bug: on inserting a new standardization 
 -+ small feature: when opening MainDB and detecting directory check runs, if next directory exists (give a change to empty the db then if possible)
--+ joaleen is tone is different.....where do we see that
-   - footnote added but it could dinamically be made to appear only when neede
 -- cannot find sick sick sic (override)
-  - consistency check function
+  -? consistency check function
 -+ small improv: add the proper lasconvdate in the db 
   - make sure its read only once when imported and not anzmore in the duplication management section
+-+ at pack mark as selected - Conflicting with Select functionality (is this useful? :) )
+-+ vs blue maybe also yes blue
 
-wnyp:
+wip:
 - feat:		 Alternate No for duplicates logic
 - feat:		 Include Standardization names into duplication checks
 - big feature: get the volume of the audio file and then compare against the rest or a norm
 - medium feature: add DLCs into cache.psarc to speed up the game startup
 - big feature - For the tagging add the info to the Preview Image/Album Art
 - medium feature: when repacking the Retail songs Remove Bass DD
-- the pretender fails
 - audioslave sections missing maybe cause its an original and i used my own logic to strip the DD
 - save error log separately
   - save constantly not only at the end
@@ -72,23 +71,22 @@ wnyp:
   -+ save in the db as well
 - make a custom song out of retail
 - finish arrangement (demo with the hives overdrive sall the time :) )
-- move all external tools in external
 - remove commented out code 
 - dupicate import should save the names of the files in a multivalue(;) field :)
   - save also hash not to ask again for duplciates if already decided as duplicate
 - make Groups as multivalue
-- if i delete a foolder do i get a warning in the maintenance check
+- if i delete a foolder do i get a warning in the maintenance check ?
   - check for json existance as well. Maybe
 - ignore Multitracks as duplicates
 - add date as duplication text
-- preview in duplciate manangement is yes if it was manually added..coloring is req maybe
-- add the overrite xml in the Import option section
-
+- increase the no of threads
+ -- add cancelation button
+ -- progress bar update
+- duplicate window should return last maximum conv date and save it 
+- fix the long name issue
 
 
 wd:
-
-
 
 
 ### dev issues:
@@ -251,6 +249,10 @@ http://customsforge.com/topic/15687-beats-phrases-resynchronizer/
 - Cover Manipualtions
 https://github.com/Lovroman/RS-CDLC-Tagger/
 http://customsforge.com/topic/20334-tool-cdlc-tagger/
+
+- MDB Viewver
+http://www.alexnolan.net/software/mdb_viewer_plus.htm
+
 
 ## Contact
 

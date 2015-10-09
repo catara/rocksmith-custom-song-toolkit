@@ -43,9 +43,6 @@ Main Features:
 
 ## ToDos/bugs:
 n2h:
--+ small improv: Any change of song in the list should also save :)
--+ small feature: maindb apply save settings (as well as the rest of the screens)
-	-- when opening new windows..save settings
 -+ with or without u still doesnt have the right alternate no when importing vs an existing song= a2....maybe OK :)
 -+ some tracks no don't get read/picked cause" (1) "
 -+ small bug: on inserting a new standardization 
@@ -56,6 +53,7 @@ n2h:
   - make sure its read only once when imported and not anzmore in the duplication management section
 -+ at pack mark as selected - Conflicting with Select functionality (is this useful? :) )
 -+ vs blue maybe also yes blue
+-+ small improv: Any change of song in the list should also save :)
 
 wip:
 - feat:		 Alternate No for duplicates logic
@@ -63,7 +61,6 @@ wip:
 - big feature: get the volume of the audio file and then compare against the rest or a norm
 - medium feature: add DLCs into cache.psarc to speed up the game startup
 - big feature - For the tagging add the info to the Preview Image/Album Art
-- medium feature: when repacking the Retail songs Remove Bass DD
 - audioslave sections missing maybe cause its an original and i used my own logic to strip the DD
 - save error log separately
   - save constantly not only at the end
@@ -72,7 +69,7 @@ wip:
 - make a custom song out of retail
 - finish arrangement (demo with the hives overdrive sall the time :) )
 - remove commented out code 
-- dupicate import should save the names of the files in a multivalue(;) field :)
+- duplicate import should save the names of the files in a multivalue(;) field :)
   - save also hash not to ask again for duplciates if already decided as duplicate
 - make Groups as multivalue
 - if i delete a foolder do i get a warning in the maintenance check ?
@@ -84,9 +81,10 @@ wip:
  -- progress bar update
 - duplicate window should return last maximum conv date and save it 
 - fix the long name issue
-
+- update to latest(15sept)
 
 wd:
+
 
 
 ### dev issues:
@@ -111,17 +109,17 @@ wd:
 	0.2.0.8 (31.03) Manage RS12, RS12 DLC & RS14 retail songs. Pending platform independent...checks on compression platform dependent...DB independece/dependence on already provided 1..play and FTP and Preview Adding
 	0.2.0.9 (30.04) Implement FTP to PS3 (also as a copy to any other location)
 	0.2.0.10 (05.05) save settings in Toolkit config, getrck no, groups, Add 30 sec preview midsong; close bugs on Conversion to Ps3(nin hell)
-	0.2.0.11 (22.08.2015)  (100%) remove bug on auto import if original
-	0.2.2.12 (26.09.2015) (100%) If importing an original over a alternate the alternate flag should be set no the Alternate
+	0.2.0.11 (22.08.2015) remove bug on auto import if original
+	0.2.2.12 (26.09.2015) If importing an original over a alternate the alternate flag should be set no the Alternate
 	wip: 0.2.0.13 (10.10.2015) (95%) full release (anyone can download and use the tool..no bugs..and all un-implemented features disabled) , repack wo bugs, edit screens functional
-	wip: 0.2.0.14 (20.10.2015) (60%)  analyse acuracy on conversion to ps3 (1979,7army..)
-	wip: 0.2.0.15 (20.10.2015) (20%) has_section flag(to be tested with a song missing sections); 
+	wip: 0.2.0.14 (03.10.2015) (90%) Remove getlastconversiondate from Duplicates as already coming from the arrangements table
+	wip: 0.2.0.15 (20.10.2015) (60%)  analyse acuracy on conversion to ps3 (1979,7army..)
+	wip: 0.2.0.16 (20.10.2015) (20%) has_section flag(to be tested with a song missing sections); 
 	wip: 0.2.1 (31.10.2015) (10%) HTML&Excel exports
 	tbr: 0.2.1.1 (15.09.2015) Implement a logic to properly read DLCManager renamed DLCs
 	tbr: 0.3.1 move Import DB to Main.DB or at least use an official data source as DB source to also be able to edit from the grid
 	tbr: 0.3.2 ?move Access code to project? or from hardcoded to views	
-	wip: 0.3.3 (03.10.2015) (70%) use parameterized SQL everywhere (&/ integrate template DB into project or a SQL DB)
-	wip: 0.3.4 (03.10.2015) (30%) Remove getlastconversiondate from Duplicates as already coming from the arrangements table
+	wip: 0.3.3 (03.10.2015) (10%) use parameterized SQL everywhere (&/ integrate template DB into project or a SQL DB)
 	wip: 0.4 (21.10.2015) (85%) Redesign MainDB+Edit Screens
 
 

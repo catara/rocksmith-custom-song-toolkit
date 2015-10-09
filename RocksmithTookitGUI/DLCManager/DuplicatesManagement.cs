@@ -1500,5 +1500,10 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_ArtistSortExisting.Text = txt_ArtistExisting.Text;
             txt_ArtistSortNew.Text = txt_ArtistNew.Text;
         }
+
+        private void chbx_Autosave_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

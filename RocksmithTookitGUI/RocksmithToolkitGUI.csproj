@@ -388,6 +388,9 @@
     <EmbeddedResource Include="ZiggyProEditorConverter\ZpeConverter.resx">
       <DependentUpon>ZpeConverter.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="DLCManager\external_tools\bpr_v0.3\bpr.log">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="DLCManager\external_tools\packed_codebooks_aoTuV_603.bin">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -476,6 +479,19 @@
     <None Include="Resources\flipXc.png" />
     <None Include="Resources\flipYc.png" />
     <None Include="Resources\music_edit.png" />
+    <Content Include="DLCManager\external_tools\bpr_v0.3\bpr.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\bpr_v0.3\bpr_config.xml" />
+    <Content Include="DLCManager\external_tools\bpr_v0.3\bpr_help.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\bpr_v0.3\bpr_icon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\bpr_v0.3\license.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="DLCManager\external_tools\MDBPlus.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -484,21 +500,6 @@
     </Content>
     <Content Include="songcreator.ico" />
     <Content Include="DLCManager\external_tools\audiocrossreference.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\bpr_v0.3\bpr.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\bpr_v0.3\bpr_config.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\bpr_v0.3\bpr_help.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\bpr_v0.3\bpr_icon.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\bpr_v0.3\license.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="DLCManager\external_tools\edattool.exe">
@@ -517,21 +518,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="DLCManager\external_tools\ww2ogg.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\bpr_v0.3\bpr.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\bpr_v0.3\bpr_config.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\bpr_v0.3\bpr_help.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\bpr_v0.3\bpr_icon.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\bpr_v0.3\license.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

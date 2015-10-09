@@ -40,7 +40,7 @@ namespace RocksmithToolkitGUI.DLCManager
         //bcapi
         private const string MESSAGEBOX_CAPTION = "Manage a Library of DLCs";
         private bool loading = false;
-        public BackgroundWorker bwRGenerate = new BackgroundWorker(); //bcapi
+        public BackgroundWorker bwRGenerate = new BackgroundWorker { WorkerReportsProgress = true, WorkerSupportsCancellation = true }; //bcapi
         public BackgroundWorker bwConvert = new BackgroundWorker { WorkerReportsProgress = true, WorkerSupportsCancellation = true }; //bcapi1        
         private StringBuilder errorsFound;//bcapi1
         string dlcSavePath = "";
@@ -1531,16 +1531,27 @@ namespace RocksmithToolkitGUI.DLCManager
                         fs.Close();
                     }
 
-                    //Populate ImportDB
-                    rtxt_StatisticsOnReadDLCs.Text = "File " + (i + 1) + " :" + s + "\n" + rtxt_StatisticsOnReadDLCs.Text; //+ "-------"  + fi.GetHashCode() + "-----------" + fi.Length + "-" + fi.CreationTime + "-" + fi.DirectoryName + "-" + fi.LastWriteTime + "-" + fi.Name;
+                        //Populate ImportDB
+                        rtxt_StatisticsOnReadDLCs.Text = "File " + (i + 1) + " :" + s + "\n" + rtxt_StatisticsOnReadDLCs.Text; //+ "-------"  + fi.GetHashCode() + "-----------" + fi.Length + "-" + fi.CreationTime + "-" + fi.DirectoryName + "-" + fi.LastWriteTime + "-" + fi.Name;
+                    DataSet doz = new DataSet();
                     DataSet dsz = new DataSet();
                     DB_Path = (chbx_DefaultDB.Checked == true ? MyAppWD : txt_DBFolder.Text) + "\\Files.accdb;";
                     using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
                     {
                         string updatecmd; //s.Substring(s.Length - pathDLC.Length)
-                        updatecmd = "INSERT INTO Import (FullPath, Path, FileName, FileCreationDate, FileHash, FileSize, ImportDate) VALUES (\"" + s + "\",\"";
-                        updatecmd += fi.DirectoryName + "\",\"" + fi.Name + "\",\"" + fi.CreationTime + "\",\"" + FileHash + "\",\"" + fi.Length + "\",\"";
-                        updatecmd += System.DateTime.Now + "\");";
+                        //Get last ID to make it N3ext Import Pack ID
+                        updatecmd = "SELECT MAX(s.ID) FROM Main s;";
+                        OleDbDataAdapter dbf = new OleDbDataAdapter(updatecmd, cnb);
+                        dbf.Fill(doz, "Import");
+                        dbf.Dispose();
+
+                        var ff = "-";
+                            ff=System.DateTime.Now.ToString();
+                            var tz = doz.Tables[0].Rows.Count == 0 ? "0" : doz.Tables[0].Rows[0].ItemArray[0].ToString();
+
+                        updatecmd = "INSERT INTO Import (FullPath, Path, FileName, FileCreationDate, FileHash, FileSize, ImportDate, Pack) VALUES (\"" + s + "\",\"";
+                        updatecmd += fi.DirectoryName + "\",\"" + fi.Name + "\",\"" + fi.CreationTime + "\",\"" + FileHash + "\",\"" + fi.Length + "\",\""+ff+"\",\"" + tz + "\");";
+                        //updatecmd += "\",\"" + doz.Tables[0].Rows.Count=="0" ? "0": doz.Tables[0].Rows[0].ItemArray[0].ToString() + "\");";
                         OleDbDataAdapter dab = new OleDbDataAdapter(updatecmd, cnb);
                         dab.Fill(dsz, "Import");
                         dab.Dispose();
@@ -1657,7 +1668,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
                     rtxt_StatisticsOnReadDLCs.Text = tft + noOfRec + "/" + (noOfRec + m) + " already imported" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
 
-                    cmd = @"SELECT FullPath, Path, FileName, FileHash, FileSize, ImportDate
+                    cmd = @"SELECT i.FullPath, i.Path, i.FileName, i.FileHash, i.FileSize, i.ImportDate, i.Pack
                                 FROM Import as i
                                 LEFT JOIN Main as m on m.File_Hash = i.FileHash OR m.Original_File_Hash = i.FileHash
                                 WHERE m.ID is NULL;";
@@ -2729,7 +2740,8 @@ namespace RocksmithToolkitGUI.DLCManager
                                                 command.CommandText += "CustomsForge_Like = @param64, ";
                                                 command.CommandText += "CustomsForge_ReleaseNotes = @param65, ";
                                                 command.CommandText += "PreviewTime = @param66, ";
-                                                command.CommandText += "PreviewLenght = @param67 ";
+                                                command.CommandText += "PreviewLenght = @param67, ";
+                                                command.CommandText += "PreviewLenght = @param68 ";
                                                 command.CommandText += "WHERE ID = " + IDD;
 
                                                 command.Parameters.AddWithValue("@param1", import_path);
@@ -2799,6 +2811,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                                 command.Parameters.AddWithValue("@param65", CustomsForge_ReleaseNotes);
                                                 command.Parameters.AddWithValue("@param66", PreviewTime ?? DBNull.Value.ToString());
                                                 command.Parameters.AddWithValue("@param67", PreviewLenght ?? DBNull.Value.ToString());
+                                                command.Parameters.AddWithValue("@param68", ds.Tables[0].Rows[i].ItemArray[6].ToString());
                                                 //EXECUTE SQL/INSERT
                                                 try
                                                 {
@@ -2935,14 +2948,15 @@ namespace RocksmithToolkitGUI.DLCManager
                                                 command.CommandText += "CustomsForge_Like, ";
                                                 command.CommandText += "CustomsForge_ReleaseNotes, ";
                                                 command.CommandText += "PreviewTime, ";
-                                                command.CommandText += "PreviewLenght ";
+                                                command.CommandText += "PreviewLenght, ";
+                                                command.CommandText += "Pack ";
                                                 command.CommandText += ") VALUES (@param1,@param2,@param3,@param4,@param5,@param6,@param7,@param8,@param9";
                                                 command.CommandText += ",@param10,@param11,@param12,@param13,@param14,@param15,@param16,@param17,@param18,@param19";
                                                 command.CommandText += ",@param20,@param21,@param22,@param23,@param24,@param25,@param26,@param27,@param28,@param29";
                                                 command.CommandText += ",@param30,@param31,@param32,@param33,@param34,@param35,@param36,@param37,@param38,@param39";
                                                 command.CommandText += ",@param40,@param41,@param42,@param43,@param44,@param45,@param46,@param47,@param48,@param49";
                                                 command.CommandText += ",@param50,@param51,@param52,@param53,@param54,@param55,@param56,@param57,@param58,@param59";
-                                                command.CommandText += ",@param60,@param61,@param62,@param63,@param64,@param65,@param66,@param67" + ")"; //,@param44,@param45,@param46,@param47,@param48,@param49
+                                                command.CommandText += ",@param60,@param61,@param62,@param63,@param64,@param65,@param66,@param67,@param68" + ")"; //,@param44,@param45,@param46,@param47,@param48,@param49
                                                 //command.CommandText += ") VALUES(@param50,@param51,@param52" + ")"; //,@param33,@param44,@param44,@param45,@param46,@param47,@param48,@param49
 
 
@@ -3014,6 +3028,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                                 command.Parameters.AddWithValue("@param65", CustomsForge_ReleaseNotes);
                                                 command.Parameters.AddWithValue("@param66", PreviewTime ?? DBNull.Value.ToString());
                                                 command.Parameters.AddWithValue("@param67", PreviewLenght ?? DBNull.Value.ToString());
+                                                command.Parameters.AddWithValue("@param68", ds.Tables[0].Rows[i].ItemArray[6]);
                                                 //EXECUTE SQL/INSERT
                                                 try
                                                 {
@@ -4447,7 +4462,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             var DBc_Path = (chbx_DefaultDB.Checked == true ? MyAppWD : txt_DBFolder.Text) + "\\Files.accdb";
                             try
                             {
-                                var cmdi = "INSERT into ErrorPackingLog (ErrorPack, CDLC_ID, Dates, Comments) VALUES ('" + packid + "','" + file.ID + "','" + System.DateTime.Now + "','" + ex.ToString().Replace("'", "") + "')";
+                                var cmdi = "INSERT into LogPackinErrorg(ErrorPack, CDLC_ID, Dates, Comments) VALUES ('" + packid + "','" + file.ID + "','" + System.DateTime.Now + "','" + ex.ToString().Replace("'", "") + "')";
 
                                 DataSet dsz = new DataSet();
                                 using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DBc_Path))
@@ -4535,7 +4550,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     var DBc_Path2 = (chbx_DefaultDB.Checked == true ? MyAppWD : txt_DBFolder.Text) + "\\Files.accdb";
                     try
                     {
-                        var cmdi = "INSERT into PackingLog (Pack, CDLC_ID, Dates, Comments) VALUES ('" + packid + "','" + file.ID + "','" + System.DateTime.Now + "','Done')";
+                        var cmdi = "INSERT into LogPacking (Pack, CDLC_ID, Dates, Comments) VALUES ('" + packid + "','" + file.ID + "','" + System.DateTime.Now + "','Done')";
 
                         DataSet dsz = new DataSet();
                         using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DBc_Path2))

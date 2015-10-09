@@ -52,6 +52,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_CopyTitle2TitleSort = new System.Windows.Forms.Button();
             this.lbl_NoRec = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.chbx_AutoSave = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPath)).BeginInit();
             this.SuspendLayout();
@@ -70,6 +71,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.DataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick_1);
             this.DataGridView1.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick_1);
             this.DataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick_1);
+            this.DataGridView1.CellLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellLeave);
             // 
             // btn_ChangeCover
             // 
@@ -289,11 +291,24 @@ namespace RocksmithToolkitGUI.DLCManager
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click_2);
             // 
+            // chbx_AutoSave
+            // 
+            this.chbx_AutoSave.AutoSize = true;
+            this.chbx_AutoSave.Checked = true;
+            this.chbx_AutoSave.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chbx_AutoSave.Location = new System.Drawing.Point(1092, 35);
+            this.chbx_AutoSave.Name = "chbx_AutoSave";
+            this.chbx_AutoSave.Size = new System.Drawing.Size(73, 17);
+            this.chbx_AutoSave.TabIndex = 384;
+            this.chbx_AutoSave.Text = "AutoSave";
+            this.chbx_AutoSave.UseVisualStyleBackColor = true;
+            // 
             // Standardization
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1187, 548);
+            this.Controls.Add(this.chbx_AutoSave);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.lbl_NoRec);
             this.Controls.Add(this.btn_CopyTitle2TitleSort);
@@ -392,5 +407,6 @@ namespace RocksmithToolkitGUI.DLCManager
         private System.Windows.Forms.Button btn_CopyTitle2TitleSort;
         private System.Windows.Forms.Label lbl_NoRec;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.CheckBox chbx_AutoSave;
     }
 }

@@ -12,6 +12,7 @@ using System.Data.OleDb;
 using RocksmithToolkitGUI;
 using RocksmithToolkitGUI.DLCManager;
 using RocksmithToolkitLib.Extensions; //dds
+using RocksmithToolkitLib; //config
 using System.Diagnostics;
 using Ookii.Dialogs; //cue text
 
@@ -26,6 +27,7 @@ namespace RocksmithToolkitGUI.DLCManager
             DB_Path = txt_DBFolder;
             TempPath = txt_TempPath;
             RocksmithDLCPath = txt_RocksmithDLCPath;
+            chbx_AutoSave.Checked = ConfigRepository.Instance()["dlcm_Autosave"] == "Yes" ? true : false;
         }
 
     private string Filename = System.IO.Path.Combine(Application.StartupPath, "Text.txt");
@@ -52,7 +54,8 @@ namespace RocksmithToolkitGUI.DLCManager
         //MessageBox.Show("test0");
         Populate(ref DataGridView1, ref Main);//, ref bsPositions, ref bsBadges);
         DataGridView1.EditingControlShowing += DataGridView1_EditingControlShowing;
-    }
+        chbx_AutoSave.Checked = ConfigRepository.Instance()["dlcm_Autosave"] == "Yes" ? true : false;
+        }
 
     private void DataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
     {
@@ -129,59 +132,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
     private void button8_Click(object sender, EventArgs e)
     {
-        int i;
-        DataSet dis = new DataSet();
-
-        i = DataGridView1.SelectedCells[0].RowIndex;
-
-            //DataGridView1.Rows[i].Cells[0].Value = txt_ID.Text;
-            //DataGridView1.Rows[i].Cells[1].Value = txt_Artist.Text;
-            DataGridView1.Rows[i].Cells[3].Value = txt_Artist_Correction.Text;
-            //DataGridView1.Rows[i].Cells[3].Value = txt_Album.Text;
-            DataGridView1.Rows[i].Cells[5].Value = txt_Album_Correction.Text;
-            DataGridView1.Rows[i].Cells[6].Value = txt_AlbumArtPath_Correction.Text;
-
-            //var DB_Path = "../../../../tmp\\Files.accdb;";
-            var connection = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path); //+ ";Persist Security Info=False"
-            var command = connection.CreateCommand();
-            //dssx = DataGridView1;
-            using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-        {
-                //OleDbCommand command = new OleDbCommand();
-                //Update StadardizationDB
-                //SqlCommand cmds = new SqlCommand(sqlCmd, conn2);
-                command.CommandText = "UPDATE Standardization SET ";
-
-                command.CommandText += "Artist_Correction = @param3, ";
-                command.CommandText += "Album_Correction = @param5 ";
-                //command.CommandText += "AlbumArtPath_Correction = @param6 ";
-                command.CommandText += "WHERE ID = " + txt_ID.Text;
-
-                command.Parameters.AddWithValue("@param3", DataGridView1.Rows[i].Cells[3].Value.ToString() ?? DBNull.Value.ToString());
-                command.Parameters.AddWithValue("@param5", DataGridView1.Rows[i].Cells[5].Value.ToString() ?? DBNull.Value.ToString());
-                command.Parameters.AddWithValue("@param6", DataGridView1.Rows[i].Cells[6].Value.ToString() ?? DBNull.Value.ToString());
-                try
-            {
-                command.CommandType = CommandType.Text;
-                connection.Open();
-                command.ExecuteNonQuery();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                MessageBox.Show("Can not open Standardization DB connection in Standardization Edit screen ! " + DB_Path + "-" + command.CommandText);
-
-                throw;
-            }
-            finally
-            {
-                if (connection != null) connection.Close();
-            }
-            ////OleDbDataAdapter das = new OleDbDataAdapter(command.CommandText, cnn);
-            MessageBox.Show("Song Details Correction Saved");
-            //das.SelectCommand.CommandText = "SELECT * FROM Tones";
-            //// das.Update(dssx, "Tones");
-        }
+            SaveRecord();
     }
 
     public void Populate(ref DataGridView DataGridView, ref BindingSource bs) //, ref BindingSource bsPositions, ref BindingSource bsBadges
@@ -208,34 +159,6 @@ namespace RocksmithToolkitGUI.DLCManager
             DataGridViewTextBoxColumn Album = new DataGridViewTextBoxColumn { DataPropertyName = "Album", HeaderText = "Album ", Width = 185 };
             DataGridViewTextBoxColumn Album_Correction = new DataGridViewTextBoxColumn { DataPropertyName = "Album_Correction", HeaderText = "Album_Correction ", Width = 185 };
             DataGridViewTextBoxColumn AlbumArtPath_Correction = new DataGridViewTextBoxColumn { DataPropertyName = "AlbumArtPath_Correction", HeaderText = "AlbumArtPath_Correction ", Width = 495 };
-
-
-            //bsPositions.DataSource = ds.Tables["Tones"];
-            //bsBadges.DataSource = ds.Tables["Badge"];
-
-            //DataGridViewComboBoxColumn ContactPositionColumn = new DataGridViewComboBoxColumn 
-            //    { 
-            //        DataPropertyName = "ContactPosition", 
-            //        DataSource = bsPositions, 
-            //        DisplayMember = "ContactPosition", 
-            //        DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing, 
-            //        Name = "ContactsColumn", 
-            //        HeaderText = "Position", 
-            //        SortMode = DataGridViewColumnSortMode.Automatic, 
-            //        ValueMember = "ContactPosition" 
-            //    };
-
-            //DataGridViewComboBoxColumn BadgeColumn = new DataGridViewComboBoxColumn 
-            //    { 
-            //        DataPropertyName = "Badge", 
-            //        DataSource = bsBadges, 
-            //        DisplayMember = "Badge", 
-            //        DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing, 
-            //        Name = "BadgeColumn", 
-            //        HeaderText = "Badge", 
-            //        SortMode = DataGridViewColumnSortMode.Automatic, 
-            //        ValueMember = "Badge" 
-            //    };
 
             DataGridView.AutoGenerateColumns = false;
 
@@ -322,6 +245,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btn_Close_Click(object sender, EventArgs e)
         {
+            ConfigRepository.Instance()["dlcm_Autosave"] = chbx_AutoSave.Checked == true ? "Yes" : "No";
             this.Close();
         }
 
@@ -435,6 +359,70 @@ namespace RocksmithToolkitGUI.DLCManager
                 //da.Fill(ds, "Badge");
             }
             MessageBox.Show("Cover has been defaulted as Cover to " + lbl_NoRec + " songs");
+        }
+
+        private void DataGridView1_CellLeave(object sender, DataGridViewCellEventArgs e)
+        {
+            if (chbx_AutoSave.Checked && txt_Artist_Correction.Text != "") SaveRecord();//&& SaveOK
+        }
+
+        private void SaveRecord()
+        {
+            int i;
+            DataSet dis = new DataSet();
+
+            i = DataGridView1.SelectedCells[0].RowIndex;
+
+            //DataGridView1.Rows[i].Cells[0].Value = txt_ID.Text;
+            //DataGridView1.Rows[i].Cells[1].Value = txt_Artist.Text;
+            DataGridView1.Rows[i].Cells[3].Value = txt_Artist_Correction.Text;
+            //DataGridView1.Rows[i].Cells[3].Value = txt_Album.Text;
+            DataGridView1.Rows[i].Cells[5].Value = txt_Album_Correction.Text;
+            DataGridView1.Rows[i].Cells[6].Value = txt_AlbumArtPath_Correction.Text;
+
+            //var DB_Path = "../../../../tmp\\Files.accdb;";
+            var connection = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path); //+ ";Persist Security Info=False"
+            var command = connection.CreateCommand();
+            //dssx = DataGridView1;
+            using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            {
+                //OleDbCommand command = new OleDbCommand();
+                //Update StadardizationDB
+                //SqlCommand cmds = new SqlCommand(sqlCmd, conn2);
+                command.CommandText = "UPDATE Standardization SET ";
+
+                command.CommandText += "Artist_Correction = @param3, ";
+                command.CommandText += "Album_Correction = @param5 ";
+                //command.CommandText += "AlbumArtPath_Correction = @param6 ";
+                command.CommandText += "WHERE ID = " + txt_ID.Text;
+
+                command.Parameters.AddWithValue("@param3", DataGridView1.Rows[i].Cells[3].Value.ToString() ?? DBNull.Value.ToString());
+                command.Parameters.AddWithValue("@param5", DataGridView1.Rows[i].Cells[5].Value.ToString() ?? DBNull.Value.ToString());
+                command.Parameters.AddWithValue("@param6", DataGridView1.Rows[i].Cells[6].Value.ToString() ?? DBNull.Value.ToString());
+                try
+                {
+                    command.CommandType = CommandType.Text;
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Can not open Standardization DB connection in Standardization Edit screen ! " + DB_Path + "-" + command.CommandText);
+
+                    throw;
+                }
+                finally
+                {
+                    if (connection != null) connection.Close();
+                }
+                ////OleDbDataAdapter das = new OleDbDataAdapter(command.CommandText, cnn);
+                if (!chbx_AutoSave.Checked) MessageBox.Show("Song Details Correction Saved");
+                //das.SelectCommand.CommandText = "SELECT * FROM Tones";
+                //// das.Update(dssx, "Tones");
+            }
+
+
         }
     }
 } 

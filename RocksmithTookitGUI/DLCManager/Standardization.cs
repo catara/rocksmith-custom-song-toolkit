@@ -137,10 +137,11 @@ namespace RocksmithToolkitGUI.DLCManager
 
     public void Populate(ref DataGridView DataGridView, ref BindingSource bs) //, ref BindingSource bsPositions, ref BindingSource bsBadges
     {
+            bs.DataSource = null;
+            dssx.Dispose();
 
-
-        //DB_Path = "../../../../tmp\\Files.accdb;";
-        using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //DB_Path = "../../../../tmp\\Files.accdb;";
+            using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
         {
             OleDbDataAdapter da = new OleDbDataAdapter("SELECT ID, (SELECT IIF(count(*)>1,\"Yes\",\"\") as Suspect from Standardization AS O WHERE LCASE(S.Artist)=LCASE(O.Artist) and LCASE(S.Album)=LCASE(O.Album)) as Suspect, Artist, Artist_Correction, Album, Album_Correction, AlbumArt_Correction FROM Standardization as S ORDER BY Artist, Album;", cn);
             da.Fill(dssx, "Standardization");
@@ -160,9 +161,9 @@ namespace RocksmithToolkitGUI.DLCManager
             DataGridViewTextBoxColumn Album_Correction = new DataGridViewTextBoxColumn { DataPropertyName = "Album_Correction", HeaderText = "Album_Correction ", Width = 185 };
             DataGridViewTextBoxColumn AlbumArtPath_Correction = new DataGridViewTextBoxColumn { DataPropertyName = "AlbumArtPath_Correction", HeaderText = "AlbumArtPath_Correction ", Width = 495 };
 
-            DataGridView.AutoGenerateColumns = false;
+            DataGridView1.AutoGenerateColumns = false;
 
-        DataGridView.Columns.AddRange(new DataGridViewColumn[]
+        DataGridView1.Columns.AddRange(new DataGridViewColumn[]
             {
                 ID,
                 Suspect,
@@ -175,11 +176,14 @@ namespace RocksmithToolkitGUI.DLCManager
         );
 
         dssx.Tables["Standardization"].AcceptChanges();
-
-        bs.DataSource = dssx.Tables["Standardization"];
-        DataGridView.DataSource = bs;
-        //DataGridView.ExpandColumns();
-    }
+            bs.ResetBindings(false);
+            bs.DataSource = dssx.Tables["Standardization"];
+            DataGridView1.DataSource = null;
+            DataGridView1.DataSource = bs;
+            DataGridView1.Refresh();
+            dssx.Dispose();
+            //DataGridView.ExpandColumns();
+        }
 
     public class Files
     {
@@ -363,7 +367,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void DataGridView1_CellLeave(object sender, DataGridViewCellEventArgs e)
         {
-            if (chbx_AutoSave.Checked && txt_Artist_Correction.Text != "") SaveRecord();//&& SaveOK
+            if (chbx_AutoSave.Checked && (txt_Artist_Correction.Text != "" || txt_Album_Correction.Text != "")) SaveRecord();//&& SaveOK
         }
 
         private void SaveRecord()
@@ -423,6 +427,57 @@ namespace RocksmithToolkitGUI.DLCManager
             }
 
 
+        }
+
+        private void btn_Delete_Click(object sender, EventArgs e)
+        {
+            var cmd = "DELETE FROM Standardization WHERE ID IN (" + txt_ID.Text + ")";
+            using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            {
+                DataSet dhs = new DataSet();
+                //var rr = cmd.Replace("DELETE FROM Main WHERE ID IN (", "SELECT * FROM Main WHERE ID IN (");
+                OleDbDataAdapter dhx = new OleDbDataAdapter(cmd, cnn);
+                dhx.Fill(dhs, "Standardization");
+                dhx.Dispose();
+            }
+
+
+                //redresh 
+                Populate(ref DataGridView1, ref Main);//, ref bsPositions, ref bsBadges);
+            DataGridView1.EditingControlShowing += DataGridView1_EditingControlShowing;
+            DataGridView1.Refresh();
+
+            ////advance or step back in the song list
+            //if (DataGridView1.Rows.Count > 1)
+            //{
+            //    var prev = DataGridView1.SelectedCells[0].RowIndex; //nud_RemoveSlide.Value;
+            //    if (DataGridView1.Rows.Count == prev + 2)
+            //        if (prev == 0) return;
+            //        else
+            //        {
+            //            int rowindex;
+            //            DataGridViewRow row;
+            //            var i = DataGridView1.SelectedCells[0].RowIndex;
+            //            rowindex = i;// DataGridView1.SelectedRows[0].Index;
+            //            DataGridView1.Rows[rowindex - 1].Selected = true;
+            //            DataGridView1.Rows[rowindex].Selected = false;
+            //            //if (prev>txt_Counter.Text.ToInt32())
+            //            row = DataGridView1.Rows[rowindex - 1];
+            //        }
+            //    else
+            //    {
+            //        int rowindex;
+            //        DataGridViewRow row;
+            //        var i = DataGridView1.SelectedCells[0].RowIndex;
+            //        rowindex = i;// DataGridView1.SelectedRows[0].Index;
+            //        DataGridView1.Rows[rowindex + 1].Selected = true;
+            //        DataGridView1.Rows[rowindex].Selected = false;
+            //        //if (prev>txt_Counter.Text.ToInt32())
+            //        row = DataGridView1.Rows[rowindex + 1];
+            //    }
+            //}
+
+        
         }
     }
 } 

@@ -84,8 +84,17 @@ wip:
 - update to latest(15sept)
 
 wd:
-
-
+-- standardization save
+-+ standardiation delete
+-- long names for arrangement files
+-- exit search label rename fails sometime
+-- search by enter
+- improve progress bar of repacks
+-no bdd appears at al repqafck but not indiv repack
+- reorder main db fields
+- add a filed dont remove bass/dd
+- split packing folder
+- ask if you wanna have the packing folder deleted
 
 ### dev issues:
 + Toolkit version flag does not sync to&from Github: Run RunMeFirst.bat

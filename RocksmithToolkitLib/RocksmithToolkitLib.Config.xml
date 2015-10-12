@@ -112,7 +112,7 @@
   <Config Key="dlcm_PreviewLenght" Value="30" />;
   <Config Key="dlcm_PreviewStart" Value="00:30" />;
   <Config Key="dlcm_Debug" Value="No" />;
-  <Config Key="dlcm_LogPath" Value="C:\GitHub\tmp\to import" />;
+  <Config Key="dlcm_LogPath" Value="C:\GitHub\tmp\to import\Log" />;
   <Config Key="dlcm_Activ_Title" Value="Yes" />;
   <Config Key="dlcm_Activ_TitleSort" Value="Yes" />;
   <Config Key="dlcm_Activ_Artist" Value="Yes" />;

@@ -290,6 +290,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 SearchExit = false;
             }
             btn_Search.Enabled = false;
+            btn_SearchReset.Text = "Start Search";
 
             int i;
             if (DataViewGrid.SelectedCells.Count > 0)
@@ -984,10 +985,10 @@ namespace RocksmithToolkitGUI.DLCManager
             bs.ResetBindings(false);
             dssx.Tables["Main"].AcceptChanges();
             bs.DataSource = dssx.Tables["Main"];
-            DataGridView.AutoGenerateColumns = false;
+            //DataGridView.AutoGenerateColumns = false;
             DataGridView.DataSource = null;
             DataGridView.DataSource = bs;
-            DataGridView.AutoGenerateColumns = false;
+            //DataGridView.AutoGenerateColumns = false;
             DataGridView.Refresh();
             //bs.Dispose();
             dssx.Dispose();
@@ -1290,21 +1291,21 @@ namespace RocksmithToolkitGUI.DLCManager
             }
             else
                 if (SearchON) //|| (SearchON && SearchExit))
-                {
+            {
 
 
-                    ////SearchCmd = "SELECT * FROM Main WHERE " + (txt_Artist.Text != "" ? " Artist Like '%" + txt_Artist.Text + "%'" : "") + (txt_Artist.Text != "" ? (txt_Title.Text != "" ? " AND " : "") : "") + (txt_Title.Text != "" ? " Song_Title Like '%" + txt_Title.Text + "%'" : "") + " ORDER BY Artist, Album_Year, Album, Song_Title ;";
-                    SearchCmd = "SELECT * FROM Main ORDER BY Artist, Album_Year, Album, Song_Title;";
-                    dssx.Dispose();
-                    Populate(ref DataViewGrid, ref Main);//, ref bsPositions, ref bsBadges);
-                    DataViewGrid.EditingControlShowing += DataGridView1_EditingControlShowing;
-                    DataViewGrid.Refresh();
-                    btn_SearchReset.Text = "Start Search";
-                    btn_Search.Enabled = false;
+                ////SearchCmd = "SELECT * FROM Main WHERE " + (txt_Artist.Text != "" ? " Artist Like '%" + txt_Artist.Text + "%'" : "") + (txt_Artist.Text != "" ? (txt_Title.Text != "" ? " AND " : "") : "") + (txt_Title.Text != "" ? " Song_Title Like '%" + txt_Title.Text + "%'" : "") + " ORDER BY Artist, Album_Year, Album, Song_Title ;";
+                SearchCmd = "SELECT * FROM Main ORDER BY Artist, Album_Year, Album, Song_Title;";
+                dssx.Dispose();
+                Populate(ref DataViewGrid, ref Main);//, ref bsPositions, ref bsBadges);
+                DataViewGrid.EditingControlShowing += DataGridView1_EditingControlShowing;
+                DataViewGrid.Refresh();
+                btn_SearchReset.Text = "Start Search";
+                btn_Search.Enabled = false;
 
-                    SearchON = false;
-                    SearchExit = false;
-                }
+                SearchON = false;
+                SearchExit = false;
+            }
         }
 
         private void btn_Close_Click(object sender, EventArgs e)
@@ -1749,27 +1750,36 @@ namespace RocksmithToolkitGUI.DLCManager
                 //var endno = (txt_FTPPath.Text.LastIndexOf("BL")) + 9;
                 //var GameName = ((txt_FTPPath.Text).Substring(startno, endno - startno)).Replace("GAMES/", "");
                 //var newpath = txt_FTPPath.Text.Replace("GAMES", "game").Replace("PS3_GAME", GameID).Replace(GameName + "/", "");
-                FTPFile(txt_FTPPath.Text, h + "_ps3.psarc.edat", TempPath, SearchCmd);
-                copyftp = " and FTPed";
+                var a = FTPFile(txt_FTPPath.Text, h + "_ps3.psarc.edat", TempPath, SearchCmd);
+                copyftp = " and " + a + " FTPed";
             }
             else if ((chbx_Format.Text == "PC" || chbx_Format.Text == "Mac") && chbx_Copy.Checked)
             {
                 var platfrm = (chbx_Format.Text == "PC" ? "_p" : (chbx_Format.Text == "Mac" ? "_m" : ""));
                 var dest = "";
-                if (RocksmithDLCPath.IndexOf("Rocksmith\\DLC") > 0)
+                //if (RocksmithDLCPath.ToLower().IndexOf(("Rocksmith2014\\DLC").ToLower()) > 0)
+                //{
+                var source = h + platfrm + ".psarc";
+                dest = RocksmithDLCPath + source.Substring(source.LastIndexOf("\\"));
+                //File.Copy(RocksmithDLCPath + "\\rs1compatibilitydlc" + platfrm + ".psarc", dest + "\\rs1compatibilitydlc" + platfrm + ".psarc.orig", false);
+                try
                 {
-                    dest = RocksmithDLCPath;
-                    //File.Copy(RocksmithDLCPath + "\\rs1compatibilitydlc" + platfrm + ".psarc", dest + "\\rs1compatibilitydlc" + platfrm + ".psarc.orig", false);
-                    File.Copy(h + platfrm + ".psarc", dest, true);
+                    File.Copy(source, dest, true);
                 }
-                else if (RocksmithDLCPath != txt_FTPPath.Text)
+                catch (Exception ee)
                 {
-                    dest = txt_FTPPath.Text;//!File.Exists(
-                    //File.Copy(dest + "\\rs1compatibilitydlc" + platfrm + ".psarc", dest + "\\rs1compatibilitydlc" + platfrm + ".psarc.orig", false);
-                    File.Copy(h + platfrm + ".psarc", dest, true);
+                    copyftp = "Not";
                 }
-                else MessageBox.Show("Chose a different path to save");
-                copyftp = " and Copied";
+
+                //}
+                //else if (RocksmithDLCPath != txt_FTPPath.Text)
+                //{
+                //    dest = txt_FTPPath.Text;//!File.Exists(
+                //    //File.Copy(dest + "\\rs1compatibilitydlc" + platfrm + ".psarc", dest + "\\rs1compatibilitydlc" + platfrm + ".psarc.orig", false);
+                //    File.Copy(h + platfrm + ".psarc", dest, true);
+                //}
+                //else MessageBox.Show("Chose a different path to save");
+                copyftp = "and " + copyftp + " Copied";
             }
 
             if (chbx_RemoveBassDD.Checked && chbx_BassDD.Checked)
@@ -1792,10 +1802,10 @@ namespace RocksmithToolkitGUI.DLCManager
 
         }
 
-        public static void FTPFile(string filel, string filen, string TempPat, string SearchCm)
+        public static string FTPFile(string filel, string filen, string TempPat, string SearchCm)
         {
             // Get the object used to communicate with the server.
-            var ddd = filel + filen.Replace(TempPat + "\\", "");
+            var ddd = filel + filen.Replace(TempPat + "\\0_repacked\\", "");
             try
             {
                 FtpWebRequest request = (FtpWebRequest)WebRequest.Create(ddd);
@@ -1812,20 +1822,23 @@ namespace RocksmithToolkitGUI.DLCManager
                 request.ContentLength = b.Length;
                 try
                 {
-                using (Stream s = request.GetRequestStream())
-                {
-                    s.Write(b, 0, b.Length);
+                    using (Stream s = request.GetRequestStream())
+                    {
+                        s.Write(b, 0, b.Length);
+                    }
+                    FtpWebResponse ftpResp = (FtpWebResponse)request.GetResponse();
+                    return "Truly ";
                 }
-                FtpWebResponse ftpResp = (FtpWebResponse)request.GetResponse();
-                            }
+                catch (Exception ee)
+                {
+                    return "Not ";
+                    //MessageBox.Show(ee.Message + "PS3 is down :(! " + SearchCm);
+                    //MessageBox.Show(ee.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
             catch (Exception ee)
             {
-                //MessageBox.Show(ee.Message + "PS3 is down :(! " + SearchCm);
-                //MessageBox.Show(ee.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            }
-            catch (Exception ee)
-            {
+                return "Not ";
                 //MessageBox.Show(ee.Message + "PS3 is down :(! " + SearchCm);
                 //MessageBox.Show(ee.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -2696,7 +2709,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         string dds = dlcSavePath;//.Substring(0,37);
                         RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate(dds, data, new Platform(GamePlatform.PS3, GameVersion.RS2014));
                         progress += step;
-                        bwRGenerate.ReportProgress(progress);
+                        //bwRGenerate.ReportProgress(progress);
                         // rtxt_StatisticsOnReadDLCs.Text = "ps3...off..." + rtxt_StatisticsOnReadDLCs.Text;
                     }
                     catch (Exception ex)
@@ -2927,7 +2940,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 if (xml.IndexOf("bass") > 0 && (xml.IndexOf(".old") <= 0))
                 //chbx_Additional_Manipulations.GetItemChecked(3) || chbx_Additional_Manipulations.GetItemChecked(5) || chbx_Additional_Manipulations.GetItemChecked(12) || chbx_Additional_Manipulations.GetItemChecked(26))
                 {
-                    var bassRemoved = (DLCManager.RemoveDD(files[0].Folder_Name, chbx_Original.Checked?"Yes":"", xml, platform, false, false) == "Yes") ? "No" : "Yes";
+                    var bassRemoved = (DLCManager.RemoveDD(files[0].Folder_Name, chbx_Original.Checked ? "Yes" : "", xml, platform, false, false) == "Yes") ? "No" : "Yes";
                     chbx_BassDD.Checked = false;
                     btn_RemoveBassDD.Enabled = false;
                     SaveRecord();
@@ -2980,9 +2993,9 @@ namespace RocksmithToolkitGUI.DLCManager
             var platform = files[0].Folder_Name.GetPlatform();
 
             foreach (var xml in xmlFiles)
-                if (xml.IndexOf("showlights") < 1 && xml.IndexOf("vocals")<1)
+                if (xml.IndexOf("showlights") < 1 && xml.IndexOf("vocals") < 1)
                 {
-                    var DDRemoved = (DLCManager.RemoveDD(files[0].Folder_Name, chbx_Original.Checked ? "Yes":"", xml, platform, false, false) == "Yes") ? "No" : "Yes";
+                    var DDRemoved = (DLCManager.RemoveDD(files[0].Folder_Name, chbx_Original.Checked ? "Yes" : "", xml, platform, false, false) == "Yes") ? "No" : "Yes";
                 }
             chbx_DD.Checked = false;
             chbx_BassDD.Checked = false;
@@ -3567,7 +3580,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         catch (System.IO.FileNotFoundException ee)
                         {
                             Console.WriteLine(ee.Message);
-                            MessageBox.Show(filePath+"----"+dest+"Error at copy OLD " + ee);
+                            MessageBox.Show(filePath + "----" + dest + "Error at copy OLD " + ee);
                         }
                         pB_ReadDLCs.Value++;
                     }
@@ -3654,6 +3667,15 @@ namespace RocksmithToolkitGUI.DLCManager
             {
                 Console.WriteLine(ee.Message);
                 MessageBox.Show("Error at select inverted " + ee);
+            }
+        }
+
+        private void txt_Artist_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                btn_SearchReset.Text = "Start Search";
+                btn_Search.PerformClick();
             }
         }
     }

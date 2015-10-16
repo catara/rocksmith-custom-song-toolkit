@@ -146,9 +146,9 @@ namespace RocksmithToolkitGUI.DLCManager
             public string FilesMissingIssues { get; set; }   //	FilesMissingIssues
             public string Show_Alternate_Version { get; set; }   //	Show_Alternate_Version
             public string Show_MultiTrack_Details { get; set; }  //	Show_MultiTrack_Details
-            public string Show_Group { get; set; }   //	Show_Groups
-            public string Show_Beta { get; set; }    //	Show_Beta
-            public string Show_Broken { get; set; }  //	Show_Broken
+            public string Keep_BassDD { get; set; }   //	Keep_BassDDs
+            public string Keep_DD { get; set; }    //	Keep_DD
+            public string Keep_Original { get; set; }  //	Keep_Original
             public string Show_DD { get; set; }  //	Show_DD
             public string Original { get; set; }     //	Original
             public string Selected { get; set; }     //	Selected
@@ -233,6 +233,7 @@ namespace RocksmithToolkitGUI.DLCManager
             chbx_PS3.Checked = (ConfigRepository.Instance()["dlcm_chbx_PS3"] == "Yes") ? true : false;
             chbx_XBOX360.Checked = (ConfigRepository.Instance()["dlcm_chbx_XBOX360"] == "Yes") ? true : false;
             chbx_DebugB.Checked = (ConfigRepository.Instance()["dlcm_Debug"] == "Yes") ? true : false;
+            chbx_DefaultDB.Checked = (ConfigRepository.Instance()["dlcm_DefaultDB"] == "Yes") ? true : false;
             Set_DEBUG();
             cbx_Activ_Title.Checked = (ConfigRepository.Instance()["dlcm_Activ_Title"] == "Yes") ? true : false;
             cbx_Activ_Title_Sort.Checked = (ConfigRepository.Instance()["dlcm_Activ_TitleSort"] == "Yes") ? true : false;
@@ -345,10 +346,10 @@ namespace RocksmithToolkitGUI.DLCManager
             else chbx_Additional_Manipulations.SetItemCheckState(50, CheckState.Unchecked);
             if (ConfigRepository.Instance()["dlcm_AdditionalManipul51"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(51, CheckState.Checked);
             else chbx_Additional_Manipulations.SetItemCheckState(51, CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul52"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(52, CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(52, CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul53"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(53, CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(53, CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul52"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(52, CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(52, CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul53"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(53, CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(53, CheckState.Unchecked);
             //if (ConfigRepository.Instance()["dlcm_AdditionalManipul54"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(54, CheckState.Checked);
             //else chbx_Additional_Manipulations.SetItemCheckState(54, CheckState.Unchecked);
             //if (ConfigRepository.Instance()["dlcm_AdditionalManipul55"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(55, CheckState.Checked);
@@ -434,8 +435,8 @@ namespace RocksmithToolkitGUI.DLCManager
             if (chbx_DebugB.Checked)
             {
                 txt_RocksmithDLCPath.Text = "c:\\GitHub\\tmp\\to import"; x6 = ConfigRepository.Instance()["dlcm_RocksmithDLCPath"]; ;
-                txt_DBFolder.Text = "C:\\GitHub\\tmp"; x7 = ConfigRepository.Instance()["dlcm_TempPath"];
-                txt_TempPath.Text = "C:\\GitHub\\tmp\\0"; x8 = ConfigRepository.Instance()["dlcm_DBFolder"];
+                txt_DBFolder.Text = "C:\\GitHub\\tmp"; x7 = ConfigRepository.Instance()["dlcm_DBFolder"];
+                txt_TempPath.Text = "C:\\GitHub\\tmp\\0"; x8 = ConfigRepository.Instance()["dlcm_TempPath"];
                 x1 = chbx_CleanTemp.Checked; chbx_CleanTemp.Checked = true;
                 x2 = chbx_CleanDB.Checked; chbx_CleanDB.Checked = true;
                 chbx_HomeDBG.Visible = true;
@@ -468,8 +469,9 @@ namespace RocksmithToolkitGUI.DLCManager
                 chbx_Additional_Manipulations.SetItemCheckState(49, x9 ? CheckState.Checked : CheckState.Unchecked);
 
                 if (x6 != null) txt_RocksmithDLCPath.Text = x6;
-                if (x7 != null) txt_TempPath.Text = x7;
-                if (x8 != null) txt_DBFolder.Text = x8;
+                if (x8 != null) txt_DBFolder.Text = x7;
+                if (x7 != null) txt_TempPath.Text = x8;
+
             }
         }
 
@@ -500,6 +502,7 @@ namespace RocksmithToolkitGUI.DLCManager
             ConfigRepository.Instance()["dlcm_chbx_PS3"] = chbx_PS3.Checked ? "Yes" : "No";
             ConfigRepository.Instance()["dlcm_chbx_XBOX360"] = chbx_XBOX360.Checked ? "Yes" : "No";
             ConfigRepository.Instance()["dlcm_Debug"] = chbx_DebugB.Checked ? "Yes" : "No";
+            ConfigRepository.Instance()["dlcm_DefaultDB"] = chbx_DefaultDB.Checked ? "Yes" : "No";
             ConfigRepository.Instance()["dlcm_Activ_Title"] = cbx_Activ_Title.Checked ? "Yes" : "No";
             ConfigRepository.Instance()["dlcm_Activ_TitleSort"] = cbx_Activ_Title_Sort.Checked ? "Yes" : "No";
             ConfigRepository.Instance()["dlcm_Activ_Artist"] = cbx_Activ_Artist.Checked ? "Yes" : "No";
@@ -559,8 +562,8 @@ namespace RocksmithToolkitGUI.DLCManager
             ConfigRepository.Instance()["dlcm_AdditionalManipul49"] = chbx_Additional_Manipulations.GetItemChecked(49) ? "Yes" : "No";
             ConfigRepository.Instance()["dlcm_AdditionalManipul50"] = chbx_Additional_Manipulations.GetItemChecked(50) ? "Yes" : "No";
             ConfigRepository.Instance()["dlcm_AdditionalManipul51"] = chbx_Additional_Manipulations.GetItemChecked(51) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul52"] = chbx_Additional_Manipulations.GetItemChecked(52) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul53"] = chbx_Additional_Manipulations.GetItemChecked(53) ? "Yes" : "No";
+            ConfigRepository.Instance()["dlcm_AdditionalManipul52"] = chbx_Additional_Manipulations.GetItemChecked(52) ? "Yes" : "No";
+            ConfigRepository.Instance()["dlcm_AdditionalManipul53"] = chbx_Additional_Manipulations.GetItemChecked(53) ? "Yes" : "No";
             //ConfigRepository.Instance()["dlcm_AdditionalManipul54"] = chbx_Additional_Manipulations.GetItemChecked(54) ? "Yes" : "No";
             //ConfigRepository.Instance()["dlcm_AdditionalManipul55"] = chbx_Additional_Manipulations.GetItemChecked(55) ? "Yes" : "No";
             //ConfigRepository.Instance()["dlcm_AdditionalManipul56"] = chbx_Additional_Manipulations.GetItemChecked(56) ? "Yes" : "No";
@@ -942,9 +945,9 @@ namespace RocksmithToolkitGUI.DLCManager
                         files[i].FilesMissingIssues = dataRow.ItemArray[61].ToString();
                         files[i].Show_Alternate_Version = dataRow.ItemArray[62].ToString();
                         files[i].Show_MultiTrack_Details = dataRow.ItemArray[63].ToString();
-                        files[i].Show_Group = dataRow.ItemArray[64].ToString();
-                        files[i].Show_Beta = dataRow.ItemArray[65].ToString();
-                        files[i].Show_Broken = dataRow.ItemArray[66].ToString();
+                        files[i].Keep_BassDD = dataRow.ItemArray[64].ToString();
+                        files[i].Keep_DD = dataRow.ItemArray[65].ToString();
+                        files[i].Keep_Original = dataRow.ItemArray[66].ToString();
                         files[i].Show_DD = dataRow.ItemArray[67].ToString();
                         files[i].Original = dataRow.ItemArray[68].ToString();
                         files[i].Selected = dataRow.ItemArray[69].ToString();
@@ -1038,9 +1041,9 @@ namespace RocksmithToolkitGUI.DLCManager
                     //	61	 	FilesMissingIssues
                     //	62	 	Show_Alternate_Version
                     //	63	 	Show_MultiTrack_Details
-                    //	64	 	Show_Group
-                    //	65	 	Show_Beta
-                    //	66	 	Show_Broken
+                    //	64	 	Keep_BassDD
+                    //	65	 	Keep_DD
+                    //	66	 	Keep_Original
                     //	67	 	Show_DD
                     //	68	 	Original
                     //	69	 	Selected
@@ -1312,11 +1315,11 @@ namespace RocksmithToolkitGUI.DLCManager
                 }
         }
 
-        public void CreateTempFolderStructure(string Temp_Path_Import, string old_Path_Import, string broken_Path_Import, string dupli_Path_Import, string dlcpacks, string pathDLC, string repacked_path)
+        public void CreateTempFolderStructure(string Temp_Path_Import, string old_Path_Import, string broken_Path_Import, string dupli_Path_Import, string dlcpacks, string pathDLC, string repacked_path, string repacked_XBOXPath, string repacked_PCPath, string repacked_MACPath, string repacked_PSPath, string log_Path)
         {
-            if (!Directory.Exists(txt_TempPath.Text) || !Directory.Exists(Temp_Path_Import) || !Directory.Exists(pathDLC) || !Directory.Exists(old_Path_Import) || !Directory.Exists(broken_Path_Import) || !Directory.Exists(dupli_Path_Import) || !Directory.Exists(dlcpacks + "\\temp") || !Directory.Exists(dlcpacks + "\\manipulated") || !Directory.Exists(dlcpacks + "\\manifests") || !Directory.Exists(dlcpacks + "\\manipulated\\temp") || !Directory.Exists(repacked_path))
+            if (!Directory.Exists(txt_TempPath.Text) || !Directory.Exists(Temp_Path_Import) || !Directory.Exists(pathDLC) || !Directory.Exists(old_Path_Import) || !Directory.Exists(broken_Path_Import) || !Directory.Exists(dupli_Path_Import) || !Directory.Exists(dlcpacks + "\\temp") || !Directory.Exists(dlcpacks + "\\manipulated") || !Directory.Exists(dlcpacks + "\\manifests") || !Directory.Exists(dlcpacks + "\\manipulated\\temp") || !Directory.Exists(repacked_path) || !Directory.Exists(repacked_XBOXPath) || !Directory.Exists(repacked_PCPath) || !Directory.Exists(repacked_MACPath) || !Directory.Exists(repacked_PSPath) || !Directory.Exists(log_Path))
             {
-                MessageBox.Show(String.Format("One of the mandatory backend, folder is missing " + txt_TempPath.Text + ", " + Temp_Path_Import + ", " + pathDLC + ", " + old_Path_Import + ", " + broken_Path_Import + ", " + dupli_Path_Import + ", " + dlcpacks + "(manipulated or manipulated-temp or manifests or temp), " + repacked_path, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error));
+                MessageBox.Show(String.Format("One of the mandatory backend, folder is missing " + txt_TempPath.Text + ", " + Temp_Path_Import + ", " + pathDLC + ", " + old_Path_Import + ", " + broken_Path_Import + ", " + dupli_Path_Import + ", " + dlcpacks + "(manipulated or manipulated-temp or manifests or temp), " + repacked_path+ "(split by platform), "+ log_Path, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error));
                 try
                 {
                     DirectoryInfo di;
@@ -1335,6 +1338,11 @@ namespace RocksmithToolkitGUI.DLCManager
                         if (!Directory.Exists(dlcpacks + "\\manipulated\\temp") && (dlcpacks != null)) di = Directory.CreateDirectory(dlcpacks + "\\manipulated\\temp");
                         if (!Directory.Exists(dlcpacks + "\\temp") && (dlcpacks != null)) di = Directory.CreateDirectory(dlcpacks + "\\temp");
                         if (!Directory.Exists(repacked_path) && (repacked_path != null)) di = Directory.CreateDirectory(repacked_path);
+                        if (!Directory.Exists(repacked_XBOXPath) && (repacked_XBOXPath != null)) di = Directory.CreateDirectory(repacked_XBOXPath);
+                        if (!Directory.Exists(repacked_PCPath) && (repacked_PCPath != null)) di = Directory.CreateDirectory(repacked_PCPath);
+                        if (!Directory.Exists(repacked_MACPath) && (repacked_MACPath != null)) di = Directory.CreateDirectory(repacked_MACPath);
+                        if (!Directory.Exists(repacked_PSPath) && (repacked_PSPath != null)) di = Directory.CreateDirectory(repacked_PSPath);
+                        if (!Directory.Exists(log_Path) && (log_Path != null)) di = Directory.CreateDirectory(log_Path);
                         //rtxt_StatisticsOnReadDLCs.Text = Directory.Exists(dupli_Path_Import) +"-" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                     }
                     else if (result1 == DialogResult.No) return;
@@ -1369,9 +1377,13 @@ namespace RocksmithToolkitGUI.DLCManager
             var dupli_Path_Import = txt_TempPath.Text + "\\0_duplicate";
             var dlcpacks = txt_TempPath.Text + "\\0_dlcpacks";
             var repacked_Path = txt_TempPath.Text + "\\0_repacked";
+            var repacked_XBOXPath = txt_TempPath.Text + "\\0_repacked\\XBOX360";
+            var repacked_PCPath = txt_TempPath.Text + "\\0_repacked\\PC";
+            var repacked_MACPath = txt_TempPath.Text + "\\0_repacked\\MAC";
+            var repacked_PSPath = txt_TempPath.Text + "\\0_repacked\\PS3";
             var log_Path = ConfigRepository.Instance()["dlcm_LogPath"];
             string pathDLC = txt_RocksmithDLCPath.Text;
-            CreateTempFolderStructure(Temp_Path_Import, old_Path_Import, broken_Path_Import, dupli_Path_Import, dlcpacks, pathDLC, repacked_Path);
+            CreateTempFolderStructure(Temp_Path_Import, old_Path_Import, broken_Path_Import, dupli_Path_Import, dlcpacks, pathDLC, repacked_Path, repacked_XBOXPath, repacked_PCPath, repacked_MACPath, repacked_PSPath, log_Path);
 
             //Clean Temp Folder
             if (chbx_CleanTemp.Checked && !chbx_Additional_Manipulations.GetItemChecked(38)) //39.Use only unpacked songs already in the 0 / dlcpacks folder
@@ -1937,7 +1949,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                         pB_ReadDLCs.Increment(1);
 
                                         //calculate if has DD (Dynamic Dificulty)..if at least 1 track has a difficulty bigger than 1 then it has
-                                        var xmlFiles = Directory.GetFiles(unpackedDir, "*.xml", SearchOption.AllDirectories);
+                                        var xmlFiles = Directory.GetFiles(unpackedDir+"\\songs", "*.xml", SearchOption.AllDirectories);
                                         platform = FullPath.GetPlatform();
                                         var g = 0;
                                         List<string> clist = new List<string>();
@@ -2720,7 +2732,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                                 command.CommandText += "CustomsForge_ReleaseNotes = @param65, ";
                                                 command.CommandText += "PreviewTime = @param66, ";
                                                 command.CommandText += "PreviewLenght = @param67, ";
-                                                command.CommandText += "PreviewLenght = @param68 ";
+                                                command.CommandText += "Pack = @param68 ";
                                                 command.CommandText += "WHERE ID = " + IDD;
 
                                                 command.Parameters.AddWithValue("@param1", import_path);
@@ -4128,9 +4140,10 @@ namespace RocksmithToolkitGUI.DLCManager
 
                             //REMOVE DD
                             //rtxt_StatisticsOnReadDLCs.Text = "...=.." + xml + "\n\n" + rtxt_StatisticsOnReadDLCs.Text;
-                            if ((Path.GetFileNameWithoutExtension(xml).ToLower().Contains("bass") && file.Has_BassDD == "Yes" && !Path.GetFileNameWithoutExtension(xml).ToLower().Contains(".old") && chbx_Additional_Manipulations.GetItemChecked(5))
-                                || ((Path.GetFileNameWithoutExtension(xml).ToLower().Contains("lead") || Path.GetFileNameWithoutExtension(xml).ToLower().Contains("combo") || Path.GetFileNameWithoutExtension(xml).ToLower().Contains("rthythm"))
-                                && file.Has_Guitar == "Yes" && !Path.GetFileNameWithoutExtension(xml).ToLower().Contains(".old") && chbx_Additional_Manipulations.GetItemChecked(3)))
+                            if ((!(chbx_Additional_Manipulations.GetItemChecked(53) || !chbx_Additional_Manipulations.GetItemChecked(52)) && Path.GetFileNameWithoutExtension(xml).ToLower().Contains("bass") && file.Has_BassDD == "Yes" && !Path.GetFileNameWithoutExtension(xml).ToLower().Contains(".old") && chbx_Additional_Manipulations.GetItemChecked(5))
+                                || (!chbx_Additional_Manipulations.GetItemChecked(53)&&((Path.GetFileNameWithoutExtension(xml).ToLower().Contains("lead") || Path.GetFileNameWithoutExtension(xml).ToLower().Contains("combo") || Path.GetFileNameWithoutExtension(xml).ToLower().Contains("rthythm")))
+                                && file.Has_Guitar == "Yes" && !Path.GetFileNameWithoutExtension(xml).ToLower().Contains(".old") && chbx_Additional_Manipulations.GetItemChecked(3))
+                               )
                             // continue;
                             {
                                 if (chbx_Additional_Manipulations.GetItemChecked(5) && !chbx_Additional_Manipulations.GetItemChecked(3) && !Path.GetFileNameWithoutExtension(xml).ToLower().Contains("bass")) continue;
@@ -4408,62 +4421,52 @@ namespace RocksmithToolkitGUI.DLCManager
                         numPlatforms++;
 
                     var step = (int)Math.Round(1.0 / numPlatforms * 100, 0);
-                    // rtxt_StatisticsOnReadDLCs.Text = "...6" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                     if (chbx_PC.Checked)
                         try
                         {
                             bwRGenerate.ReportProgress(progress, "Generating PC package");
-                            //bcapirtxt_StatisticsOnReadDLCs.Text = "1pc..." + rtxt_StatisticsOnReadDLCs.Text;
-                            RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate(dlcSavePath, data, new Platform(GamePlatform.Pc, CurrentGameVersion));
-                            //bcapirtxt_StatisticsOnReadDLCs.Text = "2pc..." + rtxt_StatisticsOnReadDLCs.Text;
+                            RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate(dlcSavePath.Replace("\\0_repacked\\","\\0_repacked\\PC\\"), data, new Platform(GamePlatform.Pc, CurrentGameVersion));
                             progress += step;
                             bwRGenerate.ReportProgress(progress);
-                            //bcapirtxt_StatisticsOnReadDLCs.Text = "3pc..." + rtxt_StatisticsOnReadDLCs.Text;
                         }
                         catch (Exception ex)
                         {
                             errorsFound.AppendLine(String.Format("Error 0 generate PC package: {0}{1}{0}{2}{0}", Environment.NewLine, ex.Message, ex.StackTrace));
-                            //bcapirtxt_StatisticsOnReadDLCs.Text = "...0pc ERROR..." + ex.Message + rtxt_StatisticsOnReadDLCs.Text;
                         }
 
                     if (chbx_Mac.Checked)
                         try
                         {
                             bwRGenerate.ReportProgress(progress, "Generating Mac package");
-                            RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate(dlcSavePath, data, new Platform(GamePlatform.Mac, CurrentGameVersion));
+                            RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate(dlcSavePath.Replace("\\0_repacked\\", "\\0_repacked\\MAC\\"), data, new Platform(GamePlatform.Mac, CurrentGameVersion));
                             progress += step;
                             bwRGenerate.ReportProgress(progress);
                         }
                         catch (Exception ex)
                         {
                             errorsFound.AppendLine(String.Format("Error 1 generate Mac package: {0}{1}{0}{2}{0}", Environment.NewLine, ex.Message, ex.StackTrace));
-                            //bcapirtxt_StatisticsOnReadDLCs.Text = "...0mac ERROR..." + ex.Message + rtxt_StatisticsOnReadDLCs.Text;
                         }
 
                     if (chbx_XBOX360.Checked)
                         try
                         {
                             bwRGenerate.ReportProgress(progress, "Generating XBox 360 package");
-                            RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate(dlcSavePath, data, new Platform(GamePlatform.XBox360, CurrentGameVersion));
+                            RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate(dlcSavePath.Replace("\\0_repacked\\", "\\0_repacked\\XBOX360\\"), data, new Platform(GamePlatform.XBox360, CurrentGameVersion));
                             progress += step;
                             bwRGenerate.ReportProgress(progress);
                         }
                         catch (Exception ex)
                         {
                             errorsFound.AppendLine(String.Format("Error generate XBox 360 package: {0}{1}{0}{2}{0}", Environment.NewLine, ex.Message, ex.StackTrace));
-                            //bcapirtxt_StatisticsOnReadDLCs.Text = "...0mac ERROR..." + ex.Message + rtxt_StatisticsOnReadDLCs.Text;
                         }
 
                     if (chbx_PS3.Checked)
                         try
                         {
-                            //rtxt_StatisticsOnReadDLCs.Text = "ps3...start..." + rtxt_StatisticsOnReadDLCs.Text;
                             bwRGenerate.ReportProgress(progress, "Generating PS3 package");
-                            //rtxt_StatisticsOnReadDLCs.Text = dlcSavePath + rtxt_StatisticsOnReadDLCs.Text;
-                            RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate(dlcSavePath, data, new Platform(GamePlatform.PS3, CurrentGameVersion));
+                            RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate(dlcSavePath.Replace("\\0_repacked\\", "\\0_repacked\\PS3\\"), data, new Platform(GamePlatform.PS3, CurrentGameVersion));
                             progress += step;
                             bwRGenerate.ReportProgress(progress);
-                            // rtxt_StatisticsOnReadDLCs.Text = "ps3...off..." + rtxt_StatisticsOnReadDLCs.Text;
                         }
                         catch (Exception ex)
                         {
@@ -4848,7 +4851,7 @@ namespace RocksmithToolkitGUI.DLCManager
             var Temp_Path_Import = txt_TempPath.Text + "\\dlcpacks";
             string pathDLC = txt_RocksmithDLCPath.Text;
             if (!chbx_DebugB.Checked) MessageBox.Show("Please make sure one of the following Retail Packs:\ncache.psarc, songs.psarc, rs1compatibilitydisc.psarc(.edat if PS3 format), rs1compatibilitydlc.psarc(.edat) \n\n, are in the Import Folder: " + pathDLC + "\n\nAlso, make sure you have enought space for the packing&unpacking operations Platform x 3GB");
-            CreateTempFolderStructure(txt_TempPath.Text, txt_TempPath.Text + "\\0_old", txt_TempPath.Text + "\\0_broken", txt_TempPath.Text + "\\0_duplicate", txt_TempPath.Text + "\\0_dlcpacks", pathDLC, txt_TempPath.Text + "\\0_Repacked");
+            CreateTempFolderStructure(txt_TempPath.Text, txt_TempPath.Text + "\\0_old", txt_TempPath.Text + "\\0_broken", txt_TempPath.Text + "\\0_duplicate", txt_TempPath.Text + "\\0_dlcpacks", pathDLC, txt_TempPath.Text + "\\0_Repacked", txt_TempPath.Text + "\\0_Repacked\\XBOX", txt_TempPath.Text + "\\0_Repacked\\PC", txt_TempPath.Text + "\\0_Repacked\\MAC", txt_TempPath.Text + "\\0_Repacked\\PS", ConfigRepository.Instance()["dlcm_LogPath"]);
 
             //read all the .PSARCs in the IMPORT folder
             var jsonFiles = Directory.GetFiles(pathDLC.Replace("Rocksmith2014\\DLC", "Rocksmith2014"), "*.psarc*", SearchOption.AllDirectories);
@@ -5932,8 +5935,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         //}
                     }
                 }
-                Has_BassDD = "No";
-                //bassRemoved = "Yes";
+                Has_BassDD = "Yes";
                 //rtxt_StatisticsOnReadDLCs.Text = "something..." + "...\n" + rtxt_StatisticsOnReadDLCs.Text;
             }
 
@@ -6044,8 +6046,8 @@ namespace RocksmithToolkitGUI.DLCManager
             }
             else
             {
-                return currn;
                 MessageBox.Show("File " + currn + " " + futuren + " too big to rename");
+                return currn;                
             }
         }
     }

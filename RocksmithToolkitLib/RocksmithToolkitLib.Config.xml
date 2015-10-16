@@ -121,4 +121,6 @@
   <Config Key="dlcm_Activ_FileName" Value="Yes" />;
   <Config Key="dlcm_Autosave" Value="Yes" />;
   <Config Key="dlcm_DupliM_Sync" Value="Yes" />;
+  <Config Key="dlcm_DupliM_Sync" Value="Yes" />;
+  <Config Key="dlcm_DefaultDB" Value="No" />;
 </ArrayOfConfig>

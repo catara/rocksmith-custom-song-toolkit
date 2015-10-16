@@ -54,6 +54,7 @@ n2h:
 -+ at pack mark as selected - Conflicting with Select functionality (is this useful? :) )
 -+ vs blue maybe also yes blue
 -+ small improv: Any change of song in the list should also save :)
+-+ standardiation delete
 
 wip:
 - feat:		 Alternate No for duplicates logic
@@ -71,7 +72,6 @@ wip:
 - remove commented out code 
 - duplicate import should save the names of the files in a multivalue(;) field :)
   - save also hash not to ask again for duplciates if already decided as duplicate
-- make Groups as multivalue
 - if i delete a foolder do i get a warning in the maintenance check ?
   - check for json existance as well. Maybe
 - ignore Multitracks as duplicates
@@ -80,21 +80,17 @@ wip:
  -- add cancelation button
  -- progress bar update
 - duplicate window should return last maximum conv date and save it 
-- fix the long name issue
-- update to latest(15sept)
+- update to latest(15oct)
+- answer to ps3 bug https://github.com/rscustom/rocksmith-custom-song-toolkit/issues/227 https://github.com/rscustom/rocksmith-custom-song-toolkit/issues/231
 
 wd:
--- standardization save
--+ standardiation delete
--- long names for arrangement files
--- exit search label rename fails sometime
--- search by enter
-- improve progress bar of repacks
--no bdd appears at al repqafck but not indiv repack
+- make Groups as multivalue
 - reorder main db fields
-- add a filed dont remove bass/dd
-- split packing folder
+- rename the Options and use the xml code inside the tool (removing the 03 14 35 dependency)
+- improve progress bar of repacks
+- enable shortNames and Album correction in Standardization
 - ask if you wanna have the packing folder deleted
+- dont conv Orig
 
 ### dev issues:
 + Toolkit version flag does not sync to&from Github: Run RunMeFirst.bat

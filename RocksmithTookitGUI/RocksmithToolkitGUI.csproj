@@ -388,9 +388,6 @@
     <EmbeddedResource Include="ZiggyProEditorConverter\ZpeConverter.resx">
       <DependentUpon>ZpeConverter.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="DLCManager\external_tools\bpr_v0.3\bpr.log">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="DLCManager\external_tools\packed_codebooks_aoTuV_603.bin">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

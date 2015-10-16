@@ -669,9 +669,9 @@ namespace RocksmithToolkitGUI.DLCManager
             public string FilesMissingIssues { get; set; }
             public string Show_Alternate_Version { get; set; }
             public string Show_MultiTrack_Details { get; set; }
-            public string Show_Group { get; set; }
-            public string Show_Beta { get; set; }
-            public string Show_Broken { get; set; }
+            public string Keep_BassDD { get; set; }
+            public string Keep_DD { get; set; }
+            public string Keep_Original { get; set; }
             public string Show_DD { get; set; }
             public string Original { get; set; }
             public string Selected { get; set; }
@@ -814,9 +814,9 @@ namespace RocksmithToolkitGUI.DLCManager
                         files[i].FilesMissingIssues = dataRow.ItemArray[61].ToString();
                         files[i].Show_Alternate_Version = dataRow.ItemArray[62].ToString();
                         files[i].Show_MultiTrack_Details = dataRow.ItemArray[63].ToString();
-                        files[i].Show_Group = dataRow.ItemArray[64].ToString();
-                        files[i].Show_Beta = dataRow.ItemArray[65].ToString();
-                        files[i].Show_Broken = dataRow.ItemArray[66].ToString();
+                        files[i].Keep_BassDD = dataRow.ItemArray[64].ToString();
+                        files[i].Keep_DD = dataRow.ItemArray[65].ToString();
+                        files[i].Keep_Original = dataRow.ItemArray[66].ToString();
                         files[i].Show_DD = dataRow.ItemArray[67].ToString();
                         files[i].Original = dataRow.ItemArray[68].ToString();
                         files[i].Selected = dataRow.ItemArray[69].ToString();

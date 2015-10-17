@@ -1811,7 +1811,7 @@ namespace RocksmithToolkitGUI.DLCManager
         public static string FTPFile(string filel, string filen, string TempPat, string SearchCm)
         {
             // Get the object used to communicate with the server.
-            var ddd = filel + filen.Replace(TempPat + "\\0_repacked\\", "");
+            var ddd = filel + filen.Replace(TempPat + "\\0_repacked\\PS3\\", "");
             try
             {
                 FtpWebRequest request = (FtpWebRequest)WebRequest.Create(ddd);
@@ -2631,7 +2631,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     FN = FN.Replace(" ", "_");
                 }
 
-                dlcSavePath = repacked_Path + "\\" + FN;
+                dlcSavePath = repacked_Path + "\\" + chbx_Format.Text + "\\" + FN;
                 //rtxt_StatisticsOnReadDLCs.Text = "rez : " + dlcSavePath + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                 //if (GameVersion.RS2014 == GameVersion.RS2012) //old code
                 //{
@@ -2664,7 +2664,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 if (chbx_Format.Text == "PC")
                     try
                     {
-                        RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate(dlcSavePath.Replace("\\0_repacked\\", "\\0_repacked\\PC\\"), data, new Platform(GamePlatform.Pc, GameVersion.RS2014));
+                        RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate(dlcSavePath, data, new Platform(GamePlatform.Pc, GameVersion.RS2014));
                         progress += step;
                     }
                     catch (Exception ex)
@@ -2675,7 +2675,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 if (chbx_Format.Text == "Mac")
                     try
                     {
-                        RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate(dlcSavePath.Replace("\\0_repacked\\", "\\0_repacked\\MAC\\"), data, new Platform(GamePlatform.Mac, GameVersion.RS2014));
+                        RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate(dlcSavePath, data, new Platform(GamePlatform.Mac, GameVersion.RS2014));
                         progress += step;
                     }
                     catch (Exception ex)
@@ -2686,7 +2686,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 if (chbx_Format.Text == "XBOX360")
                     try
                     {
-                        RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate(dlcSavePath.Replace("\\0_repacked\\", "\\0_repacked\\XBOX360\\"), data, new Platform(GamePlatform.XBox360, GameVersion.RS2014));
+                        RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate(dlcSavePath, data, new Platform(GamePlatform.XBox360, GameVersion.RS2014));
                         progress += step;
                     }
                     catch (Exception ex)
@@ -2697,7 +2697,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 if (chbx_Format.Text == "PS3")
                     try
                     {
-                        RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate(dlcSavePath.Replace("\\0_repacked\\", "\\0_repacked\\PS3\\"), data, new Platform(GamePlatform.PS3, GameVersion.RS2014));
+                        RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate(dlcSavePath, data, new Platform(GamePlatform.PS3, GameVersion.RS2014));
                         progress += step;
                     }
                     catch (Exception ex)
@@ -2705,7 +2705,6 @@ namespace RocksmithToolkitGUI.DLCManager
                         string ss = String.Format("Error 2generate PS3 package: {0}{1}. {0}PS3 package require 'JAVA x86' (32 bits) installed on your machine to generate properly.{0}", Environment.NewLine, ex.StackTrace);
                         MessageBox.Show(ex + ss);
                         errorsFound.AppendLine(ss);
-                        //bcapirtxt_StatisticsOnReadDLCs.Text = "...0Ps3 ERROR..."+ dlcSavePath+"---"+ dlcSavePath.Length+ "----" + ex.Message + rtxt_StatisticsOnReadDLCs.Text;
                     }
                 data.CleanCache();
                 //rtxt_StatisticsOnReadDLCs.Text = "gen2 : " + "\n" + rtxt_StatisticsOnReadDLCs.Text;
@@ -2724,20 +2723,8 @@ namespace RocksmithToolkitGUI.DLCManager
             MessageBox.Show("Repack done");
         }
 
-
-
-        private void comboBox1_SelectedValueChanged(object sender, EventArgs e)
+        public string Manipulate_strings(string words, int k, bool ifn, bool orig_flag, bool bassRemoved)
         {
-            if (chbx_PreSavedFTP.Text == "EU") txt_FTPPath.Text = ConfigRepository.Instance()["dlcm_FTP1"];//"ftp://192.168.1.12/" + "dev_hdd0/game/BLUS31182/USRDIR/DLC/";
-            else txt_FTPPath.Text = ConfigRepository.Instance()["dlcm_FTP2"];//"ftp://192.168.1.12/" + "dev_hdd0/game/BLES01862/USRDIR/DLC/";
-        }
-
-        public string Manipulate_strings(string words, int k, bool ifn, bool orig_flag, bool bassRemoved) //static
-        //words: 
-        //k :
-        //ifn: 
-        {
-            //rtxt_StatisticsOnReadDLCs.Text = "ff" + rtxt_StatisticsOnReadDLCs.Text;
             //Read from DB
             int norows = 0;
             //1. Get Random Song ID
@@ -2858,17 +2845,17 @@ namespace RocksmithToolkitGUI.DLCManager
                         case "<Space>":
                             fulltxt += " ";
                             break;
-                        case "<TimeStamp>":
-                            fulltxt += " " + (System.DateTime.Now.ToString()).Replace(":", "").Replace("/", "");
-                            break;
                         case "<Avail. Tracks>":
-                            fulltxt += ((files[k].Has_Bass == "Yes") ? "B" : "") + ((files[k].Has_Lead == "Yes") ? "L" : "") + ((files[k].Has_Combo == "Yes") ? "C" : "") + ((files[k].Has_Rhythm == "Yes") ? "R" : "");
+                            fulltxt += ((files[k].Has_Bass == "Yes") ? "B" : "") + ((files[k].Has_Lead == "Yes") ? "L" : "") + ((files[k].Has_Combo == "Yes") ? "C" : "") + ((files[k].Has_Rhythm == "Yes") ? "R" : "") + ((files[k].Has_Vocals == "Yes") ? "V" : "");
                             break;
                         case "<Bass_HasDD>":
-                            fulltxt += ((files[k].Has_BassDD == "No"|| bassRemoved) && files[k].Has_DD == "Yes" ? "NoBDD" : ""); //not yet done
+                            fulltxt += (files[k].Has_BassDD == "No" && files[k].Has_DD == "Yes" ? "NoBDD" : ""); //not yet done
                             break;
                         case "<Avail. Instr.>":
                             fulltxt += ((files[k].Has_Bass == "Yes") ? "B" : "") + ((files[k].Has_Guitar == "Yes") ? "G" : "");
+                            break;
+                        case "<Timestamp>":
+                            fulltxt += System.DateTime.Now.ToString().Replace(":", "").Replace(" ", "").Replace(".", "");
                             break;
                         default:
                             if ((origQAs) || (ifn))
@@ -2902,6 +2889,12 @@ namespace RocksmithToolkitGUI.DLCManager
             }
             //rtxt_StatisticsOnReadDLCs.Text = "returning " + i + " char " + fulltxt + "\n" + rtxt_StatisticsOnReadDLCs.Text;
             return fulltxt;
+        }
+
+        private void comboBox1_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if (chbx_PreSavedFTP.Text == "EU") txt_FTPPath.Text = ConfigRepository.Instance()["dlcm_FTP1"];//"ftp://192.168.1.12/" + "dev_hdd0/game/BLUS31182/USRDIR/DLC/";
+            else txt_FTPPath.Text = ConfigRepository.Instance()["dlcm_FTP2"];//"ftp://192.168.1.12/" + "dev_hdd0/game/BLES01862/USRDIR/DLC/";
         }
 
         private void btn_RemoveBassDD_Click(object sender, EventArgs e)

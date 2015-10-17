@@ -659,40 +659,36 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btn_Preview_Title_Click(object sender, EventArgs e)
         {
-            lbl_PreviewText.Text = "Title: " + Manipulate_strings(txt_Title.Text, -1, false, false);
+            lbl_PreviewText.Text = "Title: " + Manipulate_strings(txt_Title.Text, -1, false, false, false);
         }
 
         private void btn_Preview_Title_Sort_Click(object sender, EventArgs e)
         {
-            lbl_PreviewText.Text = "Sort Title: " + Manipulate_strings(txt_Title_Sort.Text, -1, false, false);
+            lbl_PreviewText.Text = "Sort Title: " + Manipulate_strings(txt_Title_Sort.Text, -1, false, false, false);
         }
 
         private void btn_Preview_Artist_Click(object sender, EventArgs e)
         {
-            lbl_PreviewText.Text = "Artist: " + Manipulate_strings(txt_Artist.Text, -1, false, false);
+            lbl_PreviewText.Text = "Artist: " + Manipulate_strings(txt_Artist.Text, -1, false, false, false);
         }
 
         private void btn_Preview_Artist_Sort_Click(object sender, EventArgs e)
         {
-            lbl_PreviewText.Text = "Sort Artist: " + Manipulate_strings(txt_Artist_Sort.Text, -1, false, false);
+            lbl_PreviewText.Text = "Sort Artist: " + Manipulate_strings(txt_Artist_Sort.Text, -1, false, false, false);
         }
 
         private void btn_Preview_Album_Click(object sender, EventArgs e)
         {
-            lbl_PreviewText.Text = "Album: " + Manipulate_strings(txt_Album.Text, -1, false, false);
+            lbl_PreviewText.Text = "Album: " + Manipulate_strings(txt_Album.Text, -1, false, false, false);
         }
 
         private void btn_Preview_File_Name_Click(object sender, EventArgs e)
         {
-            lbl_PreviewText.Text = "FileName: " + Manipulate_strings(txt_File_Name.Text, -1, true, false);
+            lbl_PreviewText.Text = "FileName: " + Manipulate_strings(txt_File_Name.Text, -1, true, false, false);
         }
 
-        public string Manipulate_strings(string words, int k, bool ifn, bool orig_flag) //static
-        //words: 
-        //k :
-        //ifn: 
+        public string Manipulate_strings(string words, int k, bool ifn, bool orig_flag, bool bassRemoved)
         {
-            //rtxt_StatisticsOnReadDLCs.Text = "ff" + rtxt_StatisticsOnReadDLCs.Text;
             //Read from DB
             int norows = 0;
             //1. Get Random Song ID
@@ -766,10 +762,10 @@ namespace RocksmithToolkitGUI.DLCManager
                             fulltxt += files[k].Album_Year;
                             break;
                         case "<Rating>":
-                            fulltxt += ((files[k].Rating == "") ? "0" : files[k].Rating);
+                            fulltxt += ((files[k].Rating == "") ? "" : "r." + files[k].Rating);
                             break;
                         case "<Alt. Vers.>":
-                            fulltxt += "ALT" + files[k].Alternate_Version_No;
+                            fulltxt += files[k].Alternate_Version_No == "" ? "" : "a." + files[k].Alternate_Version_No;
                             break;
                         case "<Descr.>":
                             fulltxt += files[k].Description;
@@ -814,7 +810,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             fulltxt += " ";
                             break;
                         case "<Avail. Tracks>":
-                            fulltxt += ((files[k].Has_Bass == "Yes") ? "B" : "") + ((files[k].Has_Lead == "Yes") ? "L" : "") + ((files[k].Has_Combo == "Yes") ? "C" : "") + ((files[k].Has_Rhythm == "Yes") ? "R" : "");
+                            fulltxt += ((files[k].Has_Bass == "Yes") ? "B" : "") + ((files[k].Has_Lead == "Yes") ? "L" : "") + ((files[k].Has_Combo == "Yes") ? "C" : "") + ((files[k].Has_Rhythm == "Yes") ? "R" : "") + ((files[k].Has_Vocals == "Yes") ? "V" : "");
                             break;
                         case "<Bass_HasDD>":
                             fulltxt += (files[k].Has_BassDD == "No" && files[k].Has_DD == "Yes" ? "NoBDD" : ""); //not yet done
@@ -4287,19 +4283,19 @@ namespace RocksmithToolkitGUI.DLCManager
                     //rtxt_StatisticsOnReadDLCs.Text = "8"+data.PackageVersion+"...manipul" + norm_path + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                     //manipulating the info
                     if (cbx_Activ_Title.Checked)
-                        data.SongInfo.SongDisplayName = Manipulate_strings(txt_Title.Text, i, false, chbx_Additional_Manipulations.GetItemChecked(25));
+                        data.SongInfo.SongDisplayName = Manipulate_strings(txt_Title.Text, i, false, chbx_Additional_Manipulations.GetItemChecked(25), false);
                     // rtxt_StatisticsOnReadDLCs.Text = "...manipul: "+ file.Song_Title + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                     if (cbx_Activ_Title_Sort.Checked)
-                        data.SongInfo.SongDisplayNameSort = Manipulate_strings(txt_Title_Sort.Text, i, false, chbx_Additional_Manipulations.GetItemChecked(25));
+                        data.SongInfo.SongDisplayNameSort = Manipulate_strings(txt_Title_Sort.Text, i, false, chbx_Additional_Manipulations.GetItemChecked(25), false);
                     //rtxt_StatisticsOnReadDLCs.Text = "...manipul" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                     if (cbx_Activ_Artist.Checked)
-                        data.SongInfo.Artist = Manipulate_strings(txt_Artist.Text, i, false, chbx_Additional_Manipulations.GetItemChecked(25));
+                        data.SongInfo.Artist = Manipulate_strings(txt_Artist.Text, i, false, chbx_Additional_Manipulations.GetItemChecked(25), false);
                     //rtxt_StatisticsOnReadDLCs.Text = "...manipul" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                     if (cbx_Activ_Artist_Sort.Checked)
-                        data.SongInfo.ArtistSort = Manipulate_strings(txt_Artist_Sort.Text, i, false, chbx_Additional_Manipulations.GetItemChecked(25));
+                        data.SongInfo.ArtistSort = Manipulate_strings(txt_Artist_Sort.Text, i, false, chbx_Additional_Manipulations.GetItemChecked(25), false);
                     //rtxt_StatisticsOnReadDLCs.Text = "...manipul" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                     if (cbx_Activ_Album.Checked)
-                        data.SongInfo.Album = Manipulate_strings(txt_Album.Text, i, false, chbx_Additional_Manipulations.GetItemChecked(25));
+                        data.SongInfo.Album = Manipulate_strings(txt_Album.Text, i, false, chbx_Additional_Manipulations.GetItemChecked(25), false);
                     //rtxt_StatisticsOnReadDLCs.Text = "...3" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
 
                     //rtxt_StatisticsOnReadDLCs.Text = "...nipul" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
@@ -4380,7 +4376,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     //var dlcSavePath = GeneralExtensions.GetShortName("{0}_{1}_v{2}", (((file.Version == null) ? "Original" : "CDLC") + "_" + info.SongInfo.SongDisplayName), (info.SongInfo.SongDisplayName + "_" + info.SongInfo.Album + "_" + info.SongInfo.SongYear), info.PackageVersion, ConfigRepository.Instance().GetBoolean("creator_useacronyms"));
                     var FN = "";
                     //bcapirtxt_StatisticsOnReadDLCs.Text = file.Song_Title+ "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                    if (cbx_Activ_File_Name.Checked) FN = Manipulate_strings(txt_File_Name.Text, i, true, chbx_Additional_Manipulations.GetItemChecked(25));
+                    if (cbx_Activ_File_Name.Checked) FN = Manipulate_strings(txt_File_Name.Text, i, true, chbx_Additional_Manipulations.GetItemChecked(25), false);
                     else FN = GeneralExtensions.GetShortName("{0}-{1}-v{2}", ("def" + ((file.Version == null) ? "ORIG" : "CDLC") + "_" + file.Artist), (file.Album_Year.ToInt32() + "_" + file.Album + "_" + file.Song_Title), file.Version, ConfigRepository.Instance().GetBoolean("creator_useacronyms"));//((data.PackageVersion == null) ? "Original" : "CDLC") + "_" + data.SongInfo.Artist + "_" + data.SongInfo.SongYear + "_" + data.SongInfo.Album + "_" + data.SongInfo.SongDisplayName;
 
                     if (file.Is_Alternate == "Yes" && file.Author != "Custom Song Creator" && file.Author == "" && rrt != "Custom Song Creator" && !chbx_Additional_Manipulations.GetItemChecked(47)) FN += "a." + file.Alternate_Version_No + file.Author;
@@ -4392,7 +4388,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         FN = FN.Replace(" ", "_");
                     }
 
-                    dlcSavePath = txt_TempPath.Text + "\\0_repacked\\" + FN;
+                    dlcSavePath = txt_TempPath.Text + "\\0_repacked\\" + (chbx_XBOX360.Checked ? "XBOX360" : chbx_PC.Checked ? "PC" : chbx_Mac.Checked? "MAC" :chbx_PS3.Checked ? "PS3":"") + "\\"+FN;
                     //rtxt_StatisticsOnReadDLCs.Text = "rez : " + dlcSavePath + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                     //if (GameVersion.RS2014 == GameVersion.RS2012) //old code
                     //{
@@ -4425,7 +4421,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         try
                         {
                             bwRGenerate.ReportProgress(progress, "Generating PC package");
-                            RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate(dlcSavePath.Replace("\\0_repacked\\","\\0_repacked\\PC\\"), data, new Platform(GamePlatform.Pc, CurrentGameVersion));
+                            RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate(dlcSavePath, data, new Platform(GamePlatform.Pc, CurrentGameVersion));
                             progress += step;
                             bwRGenerate.ReportProgress(progress);
                         }
@@ -4438,7 +4434,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         try
                         {
                             bwRGenerate.ReportProgress(progress, "Generating Mac package");
-                            RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate(dlcSavePath.Replace("\\0_repacked\\", "\\0_repacked\\MAC\\"), data, new Platform(GamePlatform.Mac, CurrentGameVersion));
+                            RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate(dlcSavePath, data, new Platform(GamePlatform.Mac, CurrentGameVersion));
                             progress += step;
                             bwRGenerate.ReportProgress(progress);
                         }
@@ -4451,7 +4447,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         try
                         {
                             bwRGenerate.ReportProgress(progress, "Generating XBox 360 package");
-                            RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate(dlcSavePath.Replace("\\0_repacked\\", "\\0_repacked\\XBOX360\\"), data, new Platform(GamePlatform.XBox360, CurrentGameVersion));
+                            RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate(dlcSavePath, data, new Platform(GamePlatform.XBox360, CurrentGameVersion));
                             progress += step;
                             bwRGenerate.ReportProgress(progress);
                         }
@@ -4464,7 +4460,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         try
                         {
                             bwRGenerate.ReportProgress(progress, "Generating PS3 package");
-                            RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate(dlcSavePath.Replace("\\0_repacked\\", "\\0_repacked\\PS3\\"), data, new Platform(GamePlatform.PS3, CurrentGameVersion));
+                            RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate(dlcSavePath, data, new Platform(GamePlatform.PS3, CurrentGameVersion));
                             progress += step;
                             bwRGenerate.ReportProgress(progress);
                         }

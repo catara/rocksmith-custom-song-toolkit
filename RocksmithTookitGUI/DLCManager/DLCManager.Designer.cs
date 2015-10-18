@@ -123,10 +123,9 @@
             this.cbx_Export.Items.AddRange(new object[] {
             "Excel",
             "WebPage"});
-            this.cbx_Export.Location = new System.Drawing.Point(631, 442);
-            this.cbx_Export.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbx_Export.Location = new System.Drawing.Point(473, 359);
             this.cbx_Export.Name = "cbx_Export";
-            this.cbx_Export.Size = new System.Drawing.Size(80, 24);
+            this.cbx_Export.Size = new System.Drawing.Size(61, 21);
             this.cbx_Export.TabIndex = 326;
             this.cbx_Export.Text = "Excel";
             // 
@@ -135,19 +134,17 @@
             this.panel2.Controls.Add(this.rbtn_Population_Groups);
             this.panel2.Controls.Add(this.rbtn_Population_All);
             this.panel2.Controls.Add(this.rbtn_Population_Selected);
-            this.panel2.Location = new System.Drawing.Point(8, 16);
-            this.panel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel2.Location = new System.Drawing.Point(6, 13);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(156, 52);
+            this.panel2.Size = new System.Drawing.Size(117, 42);
             this.panel2.TabIndex = 204;
             // 
             // rbtn_Population_Groups
             // 
             this.rbtn_Population_Groups.AutoSize = true;
-            this.rbtn_Population_Groups.Location = new System.Drawing.Point(4, 31);
-            this.rbtn_Population_Groups.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rbtn_Population_Groups.Location = new System.Drawing.Point(3, 25);
             this.rbtn_Population_Groups.Name = "rbtn_Population_Groups";
-            this.rbtn_Population_Groups.Size = new System.Drawing.Size(70, 20);
+            this.rbtn_Population_Groups.Size = new System.Drawing.Size(59, 17);
             this.rbtn_Population_Groups.TabIndex = 206;
             this.rbtn_Population_Groups.Text = "Groups";
             this.rbtn_Population_Groups.UseVisualStyleBackColor = true;
@@ -156,10 +153,10 @@
             // rbtn_Population_All
             // 
             this.rbtn_Population_All.AutoSize = true;
-            this.rbtn_Population_All.Location = new System.Drawing.Point(95, 4);
+            this.rbtn_Population_All.Location = new System.Drawing.Point(71, 3);
             this.rbtn_Population_All.Margin = new System.Windows.Forms.Padding(0);
             this.rbtn_Population_All.Name = "rbtn_Population_All";
-            this.rbtn_Population_All.Size = new System.Drawing.Size(41, 20);
+            this.rbtn_Population_All.Size = new System.Drawing.Size(36, 17);
             this.rbtn_Population_All.TabIndex = 205;
             this.rbtn_Population_All.Text = "All";
             this.rbtn_Population_All.UseVisualStyleBackColor = true;
@@ -168,10 +165,9 @@
             // 
             this.rbtn_Population_Selected.AutoSize = true;
             this.rbtn_Population_Selected.Checked = true;
-            this.rbtn_Population_Selected.Location = new System.Drawing.Point(4, 4);
-            this.rbtn_Population_Selected.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rbtn_Population_Selected.Location = new System.Drawing.Point(3, 3);
             this.rbtn_Population_Selected.Name = "rbtn_Population_Selected";
-            this.rbtn_Population_Selected.Size = new System.Drawing.Size(80, 20);
+            this.rbtn_Population_Selected.Size = new System.Drawing.Size(67, 17);
             this.rbtn_Population_Selected.TabIndex = 204;
             this.rbtn_Population_Selected.TabStop = true;
             this.rbtn_Population_Selected.Text = "Selected";
@@ -187,10 +183,10 @@
             this.Export_To.BackColor = System.Drawing.SystemColors.Control;
             this.Export_To.Enabled = false;
             this.Export_To.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Export_To.Location = new System.Drawing.Point(527, 442);
-            this.Export_To.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
+            this.Export_To.Location = new System.Drawing.Point(395, 359);
+            this.Export_To.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.Export_To.Name = "Export_To";
-            this.Export_To.Size = new System.Drawing.Size(101, 26);
+            this.Export_To.Size = new System.Drawing.Size(76, 21);
             this.Export_To.TabIndex = 325;
             this.Export_To.Text = "Export";
             this.Export_To.UseVisualStyleBackColor = false;
@@ -200,10 +196,9 @@
             // 
             this.chbx_Rebuild.AutoSize = true;
             this.chbx_Rebuild.Enabled = false;
-            this.chbx_Rebuild.Location = new System.Drawing.Point(9, 80);
-            this.chbx_Rebuild.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chbx_Rebuild.Location = new System.Drawing.Point(7, 65);
             this.chbx_Rebuild.Name = "chbx_Rebuild";
-            this.chbx_Rebuild.Size = new System.Drawing.Size(74, 20);
+            this.chbx_Rebuild.Size = new System.Drawing.Size(62, 17);
             this.chbx_Rebuild.TabIndex = 324;
             this.chbx_Rebuild.Text = "Rebuild";
             this.chbx_Rebuild.UseVisualStyleBackColor = true;
@@ -213,10 +208,10 @@
             // 
             this.btn_Cleanup_MainDB.BackColor = System.Drawing.SystemColors.Control;
             this.btn_Cleanup_MainDB.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Cleanup_MainDB.Location = new System.Drawing.Point(11, 231);
-            this.btn_Cleanup_MainDB.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
+            this.btn_Cleanup_MainDB.Location = new System.Drawing.Point(8, 188);
+            this.btn_Cleanup_MainDB.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.btn_Cleanup_MainDB.Name = "btn_Cleanup_MainDB";
-            this.btn_Cleanup_MainDB.Size = new System.Drawing.Size(103, 26);
+            this.btn_Cleanup_MainDB.Size = new System.Drawing.Size(77, 21);
             this.btn_Cleanup_MainDB.TabIndex = 323;
             this.btn_Cleanup_MainDB.Text = "Remove";
             this.btn_Cleanup_MainDB.UseVisualStyleBackColor = false;
@@ -227,10 +222,9 @@
             this.cbx_Groups.DataSource = this.mainBindingSource;
             this.cbx_Groups.Enabled = false;
             this.cbx_Groups.FormattingEnabled = true;
-            this.cbx_Groups.Location = new System.Drawing.Point(7, 73);
-            this.cbx_Groups.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbx_Groups.Location = new System.Drawing.Point(5, 59);
             this.cbx_Groups.Name = "cbx_Groups";
-            this.cbx_Groups.Size = new System.Drawing.Size(159, 24);
+            this.cbx_Groups.Size = new System.Drawing.Size(120, 21);
             this.cbx_Groups.TabIndex = 322;
             this.cbx_Groups.DropDown += new System.EventHandler(this.cbx_Groups_DropDown);
             // 
@@ -295,10 +289,9 @@
             "54. @Pack keep All DD if indicated so",
             "<IMPORT>",
             "<@Pack>"});
-            this.chbx_Additional_Manipulations.Location = new System.Drawing.Point(320, 117);
-            this.chbx_Additional_Manipulations.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chbx_Additional_Manipulations.Location = new System.Drawing.Point(240, 95);
             this.chbx_Additional_Manipulations.Name = "chbx_Additional_Manipulations";
-            this.chbx_Additional_Manipulations.Size = new System.Drawing.Size(392, 123);
+            this.chbx_Additional_Manipulations.Size = new System.Drawing.Size(295, 94);
             this.chbx_Additional_Manipulations.TabIndex = 321;
             this.chbx_Additional_Manipulations.SelectedIndexChanged += new System.EventHandler(this.chbx_Additional_Manipualtions_SelectedIndexChanged);
             // 
@@ -306,9 +299,10 @@
             // 
             this.label8.AutoSize = true;
             this.label8.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label8.Location = new System.Drawing.Point(7, 425);
+            this.label8.Location = new System.Drawing.Point(5, 345);
+            this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(95, 16);
+            this.label8.Size = new System.Drawing.Size(77, 13);
             this.label8.TabIndex = 319;
             this.label8.Text = "Mask Preview:";
             // 
@@ -316,10 +310,10 @@
             // 
             this.btn_Preview_Artist_Sort.BackColor = System.Drawing.SystemColors.Control;
             this.btn_Preview_Artist_Sort.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Preview_Artist_Sort.Location = new System.Drawing.Point(692, 343);
-            this.btn_Preview_Artist_Sort.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
+            this.btn_Preview_Artist_Sort.Location = new System.Drawing.Point(519, 279);
+            this.btn_Preview_Artist_Sort.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.btn_Preview_Artist_Sort.Name = "btn_Preview_Artist_Sort";
-            this.btn_Preview_Artist_Sort.Size = new System.Drawing.Size(19, 17);
+            this.btn_Preview_Artist_Sort.Size = new System.Drawing.Size(14, 14);
             this.btn_Preview_Artist_Sort.TabIndex = 318;
             this.toolTip1.SetToolTip(this.btn_Preview_Artist_Sort, "Preview Artist Sort Mask");
             this.btn_Preview_Artist_Sort.UseVisualStyleBackColor = false;
@@ -330,8 +324,7 @@
             this.cbx_Activ_Artist_Sort.AutoSize = true;
             this.cbx_Activ_Artist_Sort.Checked = true;
             this.cbx_Activ_Artist_Sort.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbx_Activ_Artist_Sort.Location = new System.Drawing.Point(673, 345);
-            this.cbx_Activ_Artist_Sort.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbx_Activ_Artist_Sort.Location = new System.Drawing.Point(505, 280);
             this.cbx_Activ_Artist_Sort.Name = "cbx_Activ_Artist_Sort";
             this.cbx_Activ_Artist_Sort.Size = new System.Drawing.Size(15, 14);
             this.cbx_Activ_Artist_Sort.TabIndex = 317;
@@ -342,9 +335,10 @@
             // 
             this.label3.AutoSize = true;
             this.label3.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label3.Location = new System.Drawing.Point(7, 343);
+            this.label3.Location = new System.Drawing.Point(5, 279);
+            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(64, 16);
+            this.label3.Size = new System.Drawing.Size(52, 13);
             this.label3.TabIndex = 316;
             this.label3.Text = "Artist Sort";
             // 
@@ -382,19 +376,18 @@
             "<Avail. Tracks>",
             "<Bass_HasDD>",
             "<Timestamp>"});
-            this.cbx_Artist_Sort.Location = new System.Drawing.Point(531, 340);
-            this.cbx_Artist_Sort.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbx_Artist_Sort.Location = new System.Drawing.Point(398, 276);
             this.cbx_Artist_Sort.Name = "cbx_Artist_Sort";
-            this.cbx_Artist_Sort.Size = new System.Drawing.Size(139, 24);
+            this.cbx_Artist_Sort.Size = new System.Drawing.Size(105, 21);
             this.cbx_Artist_Sort.TabIndex = 315;
             this.cbx_Artist_Sort.SelectedIndexChanged += new System.EventHandler(this.cbx_Artist_Sort_SelectedIndexChanged);
             // 
             // txt_Artist_Sort
             // 
-            this.txt_Artist_Sort.Location = new System.Drawing.Point(80, 341);
-            this.txt_Artist_Sort.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
+            this.txt_Artist_Sort.Location = new System.Drawing.Point(60, 278);
+            this.txt_Artist_Sort.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.txt_Artist_Sort.Name = "txt_Artist_Sort";
-            this.txt_Artist_Sort.Size = new System.Drawing.Size(445, 22);
+            this.txt_Artist_Sort.Size = new System.Drawing.Size(335, 20);
             this.txt_Artist_Sort.TabIndex = 314;
             this.txt_Artist_Sort.Text = "<Beta><Artist>";
             // 
@@ -402,10 +395,10 @@
             // 
             this.btn_Preview_File_Name.BackColor = System.Drawing.SystemColors.Control;
             this.btn_Preview_File_Name.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Preview_File_Name.Location = new System.Drawing.Point(692, 400);
-            this.btn_Preview_File_Name.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
+            this.btn_Preview_File_Name.Location = new System.Drawing.Point(519, 325);
+            this.btn_Preview_File_Name.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.btn_Preview_File_Name.Name = "btn_Preview_File_Name";
-            this.btn_Preview_File_Name.Size = new System.Drawing.Size(19, 17);
+            this.btn_Preview_File_Name.Size = new System.Drawing.Size(14, 14);
             this.btn_Preview_File_Name.TabIndex = 313;
             this.toolTip1.SetToolTip(this.btn_Preview_File_Name, "Preview File Name Mask");
             this.btn_Preview_File_Name.UseVisualStyleBackColor = false;
@@ -415,10 +408,10 @@
             // 
             this.btn_Preview_Album.BackColor = System.Drawing.SystemColors.Control;
             this.btn_Preview_Album.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Preview_Album.Location = new System.Drawing.Point(692, 369);
-            this.btn_Preview_Album.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
+            this.btn_Preview_Album.Location = new System.Drawing.Point(519, 301);
+            this.btn_Preview_Album.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.btn_Preview_Album.Name = "btn_Preview_Album";
-            this.btn_Preview_Album.Size = new System.Drawing.Size(19, 17);
+            this.btn_Preview_Album.Size = new System.Drawing.Size(14, 14);
             this.btn_Preview_Album.TabIndex = 312;
             this.toolTip1.SetToolTip(this.btn_Preview_Album, "Preview Album Mask");
             this.btn_Preview_Album.UseVisualStyleBackColor = false;
@@ -428,10 +421,10 @@
             // 
             this.btn_Preview_Artist.BackColor = System.Drawing.SystemColors.Control;
             this.btn_Preview_Artist.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Preview_Artist.Location = new System.Drawing.Point(692, 319);
-            this.btn_Preview_Artist.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
+            this.btn_Preview_Artist.Location = new System.Drawing.Point(519, 259);
+            this.btn_Preview_Artist.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.btn_Preview_Artist.Name = "btn_Preview_Artist";
-            this.btn_Preview_Artist.Size = new System.Drawing.Size(19, 17);
+            this.btn_Preview_Artist.Size = new System.Drawing.Size(14, 14);
             this.btn_Preview_Artist.TabIndex = 311;
             this.toolTip1.SetToolTip(this.btn_Preview_Artist, "Preview Artist Mask");
             this.btn_Preview_Artist.UseVisualStyleBackColor = false;
@@ -441,10 +434,10 @@
             // 
             this.btn_Preview_Title_Sort.BackColor = System.Drawing.SystemColors.Control;
             this.btn_Preview_Title_Sort.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Preview_Title_Sort.Location = new System.Drawing.Point(692, 289);
-            this.btn_Preview_Title_Sort.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
+            this.btn_Preview_Title_Sort.Location = new System.Drawing.Point(519, 235);
+            this.btn_Preview_Title_Sort.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.btn_Preview_Title_Sort.Name = "btn_Preview_Title_Sort";
-            this.btn_Preview_Title_Sort.Size = new System.Drawing.Size(19, 17);
+            this.btn_Preview_Title_Sort.Size = new System.Drawing.Size(14, 14);
             this.btn_Preview_Title_Sort.TabIndex = 310;
             this.toolTip1.SetToolTip(this.btn_Preview_Title_Sort, "Preview Title Sort Mask");
             this.btn_Preview_Title_Sort.UseVisualStyleBackColor = false;
@@ -454,10 +447,10 @@
             // 
             this.btn_Preview_Title.BackColor = System.Drawing.SystemColors.Control;
             this.btn_Preview_Title.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Preview_Title.Location = new System.Drawing.Point(692, 265);
-            this.btn_Preview_Title.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
+            this.btn_Preview_Title.Location = new System.Drawing.Point(519, 215);
+            this.btn_Preview_Title.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.btn_Preview_Title.Name = "btn_Preview_Title";
-            this.btn_Preview_Title.Size = new System.Drawing.Size(19, 17);
+            this.btn_Preview_Title.Size = new System.Drawing.Size(14, 14);
             this.btn_Preview_Title.TabIndex = 309;
             this.toolTip1.SetToolTip(this.btn_Preview_Title, "Preview Title Mask");
             this.btn_Preview_Title.UseVisualStyleBackColor = false;
@@ -468,8 +461,7 @@
             this.cbx_Activ_File_Name.AutoSize = true;
             this.cbx_Activ_File_Name.Checked = true;
             this.cbx_Activ_File_Name.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbx_Activ_File_Name.Location = new System.Drawing.Point(673, 401);
-            this.cbx_Activ_File_Name.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbx_Activ_File_Name.Location = new System.Drawing.Point(505, 326);
             this.cbx_Activ_File_Name.Name = "cbx_Activ_File_Name";
             this.cbx_Activ_File_Name.Size = new System.Drawing.Size(15, 14);
             this.cbx_Activ_File_Name.TabIndex = 308;
@@ -481,8 +473,7 @@
             this.cbx_Activ_Album.AutoSize = true;
             this.cbx_Activ_Album.Checked = true;
             this.cbx_Activ_Album.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbx_Activ_Album.Location = new System.Drawing.Point(673, 372);
-            this.cbx_Activ_Album.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbx_Activ_Album.Location = new System.Drawing.Point(505, 303);
             this.cbx_Activ_Album.Name = "cbx_Activ_Album";
             this.cbx_Activ_Album.Size = new System.Drawing.Size(15, 14);
             this.cbx_Activ_Album.TabIndex = 307;
@@ -494,8 +485,7 @@
             this.cbx_Activ_Artist.AutoSize = true;
             this.cbx_Activ_Artist.Checked = true;
             this.cbx_Activ_Artist.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbx_Activ_Artist.Location = new System.Drawing.Point(673, 319);
-            this.cbx_Activ_Artist.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbx_Activ_Artist.Location = new System.Drawing.Point(505, 259);
             this.cbx_Activ_Artist.Name = "cbx_Activ_Artist";
             this.cbx_Activ_Artist.Size = new System.Drawing.Size(15, 14);
             this.cbx_Activ_Artist.TabIndex = 306;
@@ -507,8 +497,7 @@
             this.cbx_Activ_Title_Sort.AutoSize = true;
             this.cbx_Activ_Title_Sort.Checked = true;
             this.cbx_Activ_Title_Sort.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbx_Activ_Title_Sort.Location = new System.Drawing.Point(673, 292);
-            this.cbx_Activ_Title_Sort.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbx_Activ_Title_Sort.Location = new System.Drawing.Point(505, 237);
             this.cbx_Activ_Title_Sort.Name = "cbx_Activ_Title_Sort";
             this.cbx_Activ_Title_Sort.Size = new System.Drawing.Size(15, 14);
             this.cbx_Activ_Title_Sort.TabIndex = 305;
@@ -520,8 +509,7 @@
             this.cbx_Activ_Title.AutoSize = true;
             this.cbx_Activ_Title.Checked = true;
             this.cbx_Activ_Title.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbx_Activ_Title.Location = new System.Drawing.Point(673, 266);
-            this.cbx_Activ_Title.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbx_Activ_Title.Location = new System.Drawing.Point(505, 216);
             this.cbx_Activ_Title.Name = "cbx_Activ_Title";
             this.cbx_Activ_Title.Size = new System.Drawing.Size(15, 14);
             this.cbx_Activ_Title.TabIndex = 304;
@@ -532,9 +520,10 @@
             // 
             this.label7.AutoSize = true;
             this.label7.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label7.Location = new System.Drawing.Point(7, 319);
+            this.label7.Location = new System.Drawing.Point(5, 259);
+            this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(37, 16);
+            this.label7.Size = new System.Drawing.Size(30, 13);
             this.label7.TabIndex = 303;
             this.label7.Text = "Artist";
             // 
@@ -572,19 +561,18 @@
             "<Avail. Tracks>",
             "<Bass_HasDD>",
             "<Timestamp>"});
-            this.cbx_Artist.Location = new System.Drawing.Point(531, 314);
-            this.cbx_Artist.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbx_Artist.Location = new System.Drawing.Point(398, 255);
             this.cbx_Artist.Name = "cbx_Artist";
-            this.cbx_Artist.Size = new System.Drawing.Size(139, 24);
+            this.cbx_Artist.Size = new System.Drawing.Size(105, 21);
             this.cbx_Artist.TabIndex = 302;
             this.cbx_Artist.SelectedIndexChanged += new System.EventHandler(this.cbx_Artist_SelectedIndexChanged);
             // 
             // txt_Artist
             // 
-            this.txt_Artist.Location = new System.Drawing.Point(80, 314);
-            this.txt_Artist.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
+            this.txt_Artist.Location = new System.Drawing.Point(60, 256);
+            this.txt_Artist.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.txt_Artist.Name = "txt_Artist";
-            this.txt_Artist.Size = new System.Drawing.Size(445, 22);
+            this.txt_Artist.Size = new System.Drawing.Size(335, 20);
             this.txt_Artist.TabIndex = 301;
             this.txt_Artist.Text = "<Artist>-<CDLC>-<Avail. Tracks>-<DD>-<QAs>-<Bass_HasDD>";
             // 
@@ -622,19 +610,18 @@
             "<Avail. Tracks>",
             "<Bass_HasDD>",
             "<Timestamp>"});
-            this.cbx_Title.Location = new System.Drawing.Point(531, 261);
-            this.cbx_Title.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbx_Title.Location = new System.Drawing.Point(398, 212);
             this.cbx_Title.Name = "cbx_Title";
-            this.cbx_Title.Size = new System.Drawing.Size(139, 24);
+            this.cbx_Title.Size = new System.Drawing.Size(105, 21);
             this.cbx_Title.TabIndex = 299;
             this.cbx_Title.SelectedIndexChanged += new System.EventHandler(this.cbx_Title_SelectedIndexChanged);
             // 
             // txt_Title
             // 
-            this.txt_Title.Location = new System.Drawing.Point(80, 262);
-            this.txt_Title.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
+            this.txt_Title.Location = new System.Drawing.Point(60, 212);
+            this.txt_Title.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.txt_Title.Name = "txt_Title";
-            this.txt_Title.Size = new System.Drawing.Size(445, 22);
+            this.txt_Title.Size = new System.Drawing.Size(335, 20);
             this.txt_Title.TabIndex = 298;
             this.txt_Title.Text = "<Title>";
             // 
@@ -642,9 +629,10 @@
             // 
             this.label6.AutoSize = true;
             this.label6.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label6.Location = new System.Drawing.Point(8, 400);
+            this.label6.Location = new System.Drawing.Point(6, 325);
+            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(70, 16);
+            this.label6.Size = new System.Drawing.Size(54, 13);
             this.label6.TabIndex = 297;
             this.label6.Text = "File Name";
             // 
@@ -652,9 +640,10 @@
             // 
             this.label5.AutoSize = true;
             this.label5.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label5.Location = new System.Drawing.Point(8, 372);
+            this.label5.Location = new System.Drawing.Point(6, 303);
+            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(46, 16);
+            this.label5.Size = new System.Drawing.Size(36, 13);
             this.label5.TabIndex = 296;
             this.label5.Text = "Album";
             // 
@@ -662,9 +651,10 @@
             // 
             this.label4.AutoSize = true;
             this.label4.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label4.Location = new System.Drawing.Point(7, 292);
+            this.label4.Location = new System.Drawing.Point(5, 237);
+            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(61, 16);
+            this.label4.Size = new System.Drawing.Size(49, 13);
             this.label4.TabIndex = 295;
             this.label4.Text = "Title Sort";
             // 
@@ -703,19 +693,18 @@
             "<Bass_HasDD>",
             "<Timestamp>",
             "<Space>"});
-            this.cbx_File_Name.Location = new System.Drawing.Point(532, 396);
-            this.cbx_File_Name.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbx_File_Name.Location = new System.Drawing.Point(399, 322);
             this.cbx_File_Name.Name = "cbx_File_Name";
-            this.cbx_File_Name.Size = new System.Drawing.Size(137, 24);
+            this.cbx_File_Name.Size = new System.Drawing.Size(104, 21);
             this.cbx_File_Name.TabIndex = 294;
             this.cbx_File_Name.SelectedIndexChanged += new System.EventHandler(this.cbx_File_Name_SelectedIndexChanged);
             // 
             // txt_File_Name
             // 
-            this.txt_File_Name.Location = new System.Drawing.Point(80, 396);
-            this.txt_File_Name.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
+            this.txt_File_Name.Location = new System.Drawing.Point(60, 322);
+            this.txt_File_Name.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.txt_File_Name.Name = "txt_File_Name";
-            this.txt_File_Name.Size = new System.Drawing.Size(445, 22);
+            this.txt_File_Name.Size = new System.Drawing.Size(335, 20);
             this.txt_File_Name.TabIndex = 293;
             this.txt_File_Name.Text = "<Beta><Broken><CDLC>-<Artist>-<Year>-<Album><Track No.>-<Title>-<DD>-<Avail. Trac" +
     "ks>-<QAs>-v<Version>-<Bass_HasDD>";
@@ -754,19 +743,18 @@
             "<Avail. Tracks>",
             "<Bass_HasDD>",
             "<Timestamp>"});
-            this.cbx_Album.Location = new System.Drawing.Point(531, 367);
-            this.cbx_Album.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbx_Album.Location = new System.Drawing.Point(398, 299);
             this.cbx_Album.Name = "cbx_Album";
-            this.cbx_Album.Size = new System.Drawing.Size(139, 24);
+            this.cbx_Album.Size = new System.Drawing.Size(105, 21);
             this.cbx_Album.TabIndex = 292;
             this.cbx_Album.SelectedIndexChanged += new System.EventHandler(this.cbx_Album_SelectedIndexChanged);
             // 
             // txt_Album
             // 
-            this.txt_Album.Location = new System.Drawing.Point(80, 368);
-            this.txt_Album.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
+            this.txt_Album.Location = new System.Drawing.Point(60, 300);
+            this.txt_Album.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.txt_Album.Name = "txt_Album";
-            this.txt_Album.Size = new System.Drawing.Size(445, 22);
+            this.txt_Album.Size = new System.Drawing.Size(335, 20);
             this.txt_Album.TabIndex = 291;
             this.txt_Album.Text = "<Broken><Year> - <Album> - r<Rating> - <Avail. Instr.> - <DD> - <Tuning>";
             // 
@@ -804,19 +792,18 @@
             "<Avail. Tracks>",
             "<Bass_HasDD>",
             "<Timestamp>"});
-            this.cbx_Title_Sort.Location = new System.Drawing.Point(531, 288);
-            this.cbx_Title_Sort.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbx_Title_Sort.Location = new System.Drawing.Point(398, 234);
             this.cbx_Title_Sort.Name = "cbx_Title_Sort";
-            this.cbx_Title_Sort.Size = new System.Drawing.Size(139, 24);
+            this.cbx_Title_Sort.Size = new System.Drawing.Size(105, 21);
             this.cbx_Title_Sort.TabIndex = 290;
             this.cbx_Title_Sort.SelectedIndexChanged += new System.EventHandler(this.cbx_Title_Sort_SelectedIndexChanged);
             // 
             // txt_Title_Sort
             // 
-            this.txt_Title_Sort.Location = new System.Drawing.Point(80, 289);
-            this.txt_Title_Sort.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
+            this.txt_Title_Sort.Location = new System.Drawing.Point(60, 234);
+            this.txt_Title_Sort.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.txt_Title_Sort.Name = "txt_Title_Sort";
-            this.txt_Title_Sort.Size = new System.Drawing.Size(445, 22);
+            this.txt_Title_Sort.Size = new System.Drawing.Size(335, 20);
             this.txt_Title_Sort.TabIndex = 289;
             this.txt_Title_Sort.Text = "<Year><Album><Track No.><Title>";
             // 
@@ -824,9 +811,10 @@
             // 
             this.lbl_Title.AutoSize = true;
             this.lbl_Title.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lbl_Title.Location = new System.Drawing.Point(7, 267);
+            this.lbl_Title.Location = new System.Drawing.Point(5, 217);
+            this.lbl_Title.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_Title.Name = "lbl_Title";
-            this.lbl_Title.Size = new System.Drawing.Size(34, 16);
+            this.lbl_Title.Size = new System.Drawing.Size(27, 13);
             this.lbl_Title.TabIndex = 300;
             this.lbl_Title.Text = "Title";
             // 
@@ -834,11 +822,9 @@
             // 
             this.groupBox2.Controls.Add(this.panel2);
             this.groupBox2.Controls.Add(this.cbx_Groups);
-            this.groupBox2.Location = new System.Drawing.Point(117, 161);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox2.Location = new System.Drawing.Point(88, 131);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.groupBox2.Size = new System.Drawing.Size(168, 100);
+            this.groupBox2.Size = new System.Drawing.Size(126, 81);
             this.groupBox2.TabIndex = 282;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Repack && Remove";
@@ -846,10 +832,9 @@
             // chbx_DebugB
             // 
             this.chbx_DebugB.AutoSize = true;
-            this.chbx_DebugB.Location = new System.Drawing.Point(416, 4);
-            this.chbx_DebugB.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chbx_DebugB.Location = new System.Drawing.Point(312, 3);
             this.chbx_DebugB.Name = "chbx_DebugB";
-            this.chbx_DebugB.Size = new System.Drawing.Size(68, 20);
+            this.chbx_DebugB.Size = new System.Drawing.Size(58, 17);
             this.chbx_DebugB.TabIndex = 277;
             this.chbx_DebugB.Text = "Debug";
             this.chbx_DebugB.UseVisualStyleBackColor = true;
@@ -857,20 +842,20 @@
             // 
             // txt_DBFolder
             // 
-            this.txt_DBFolder.Location = new System.Drawing.Point(169, 57);
-            this.txt_DBFolder.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
+            this.txt_DBFolder.Location = new System.Drawing.Point(127, 46);
+            this.txt_DBFolder.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.txt_DBFolder.Name = "txt_DBFolder";
-            this.txt_DBFolder.Size = new System.Drawing.Size(211, 22);
+            this.txt_DBFolder.Size = new System.Drawing.Size(159, 20);
             this.txt_DBFolder.TabIndex = 275;
             this.toolTip1.SetToolTip(this.txt_DBFolder, "Requires a Access2014 DB with");
             this.txt_DBFolder.TextChanged += new System.EventHandler(this.DBchanged);
             // 
             // btn_DBFolder
             // 
-            this.btn_DBFolder.Location = new System.Drawing.Point(384, 58);
-            this.btn_DBFolder.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
+            this.btn_DBFolder.Location = new System.Drawing.Point(288, 47);
+            this.btn_DBFolder.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.btn_DBFolder.Name = "btn_DBFolder";
-            this.btn_DBFolder.Size = new System.Drawing.Size(29, 17);
+            this.btn_DBFolder.Size = new System.Drawing.Size(22, 14);
             this.btn_DBFolder.TabIndex = 273;
             this.btn_DBFolder.Text = "...";
             this.btn_DBFolder.UseVisualStyleBackColor = true;
@@ -880,9 +865,10 @@
             // 
             this.label1.AutoSize = true;
             this.label1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label1.Location = new System.Drawing.Point(7, 60);
+            this.label1.Location = new System.Drawing.Point(5, 49);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(99, 16);
+            this.label1.Size = new System.Drawing.Size(79, 13);
             this.label1.TabIndex = 274;
             this.label1.Text = "DB Folder Path";
             // 
@@ -890,10 +876,10 @@
             // 
             this.btn_Close.BackColor = System.Drawing.Color.LightSteelBlue;
             this.btn_Close.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Close.Location = new System.Drawing.Point(617, 496);
-            this.btn_Close.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
+            this.btn_Close.Location = new System.Drawing.Point(463, 403);
+            this.btn_Close.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.btn_Close.Name = "btn_Close";
-            this.btn_Close.Size = new System.Drawing.Size(96, 33);
+            this.btn_Close.Size = new System.Drawing.Size(72, 27);
             this.btn_Close.TabIndex = 272;
             this.btn_Close.Text = "Close";
             this.btn_Close.UseVisualStyleBackColor = false;
@@ -901,18 +887,18 @@
             // 
             // txt_RocksmithDLCPath
             // 
-            this.txt_RocksmithDLCPath.Location = new System.Drawing.Point(169, 4);
-            this.txt_RocksmithDLCPath.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
+            this.txt_RocksmithDLCPath.Location = new System.Drawing.Point(127, 3);
+            this.txt_RocksmithDLCPath.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.txt_RocksmithDLCPath.Name = "txt_RocksmithDLCPath";
-            this.txt_RocksmithDLCPath.Size = new System.Drawing.Size(211, 22);
+            this.txt_RocksmithDLCPath.Size = new System.Drawing.Size(159, 20);
             this.txt_RocksmithDLCPath.TabIndex = 271;
             // 
             // txt_TempPath
             // 
-            this.txt_TempPath.Location = new System.Drawing.Point(169, 30);
-            this.txt_TempPath.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
+            this.txt_TempPath.Location = new System.Drawing.Point(127, 24);
+            this.txt_TempPath.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.txt_TempPath.Name = "txt_TempPath";
-            this.txt_TempPath.Size = new System.Drawing.Size(211, 22);
+            this.txt_TempPath.Size = new System.Drawing.Size(159, 20);
             this.txt_TempPath.TabIndex = 270;
             this.toolTip1.SetToolTip(this.txt_TempPath, "Also requires the subfolders 0, 0_old, 0_broken, 0_duplicates, 0_import .Will be " +
         "used store decompressed version of all DLCs and the original version");
@@ -921,20 +907,20 @@
             // chbx_CleanTemp
             // 
             this.chbx_CleanTemp.AutoSize = true;
-            this.chbx_CleanTemp.Location = new System.Drawing.Point(416, 32);
-            this.chbx_CleanTemp.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
+            this.chbx_CleanTemp.Location = new System.Drawing.Point(312, 26);
+            this.chbx_CleanTemp.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.chbx_CleanTemp.Name = "chbx_CleanTemp";
-            this.chbx_CleanTemp.Size = new System.Drawing.Size(104, 20);
+            this.chbx_CleanTemp.Size = new System.Drawing.Size(85, 17);
             this.chbx_CleanTemp.TabIndex = 269;
             this.chbx_CleanTemp.Text = "Clean Folder";
             this.chbx_CleanTemp.UseVisualStyleBackColor = true;
             // 
             // btn_SteamDLCFolder
             // 
-            this.btn_SteamDLCFolder.Location = new System.Drawing.Point(384, 4);
-            this.btn_SteamDLCFolder.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
+            this.btn_SteamDLCFolder.Location = new System.Drawing.Point(288, 3);
+            this.btn_SteamDLCFolder.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.btn_SteamDLCFolder.Name = "btn_SteamDLCFolder";
-            this.btn_SteamDLCFolder.Size = new System.Drawing.Size(29, 17);
+            this.btn_SteamDLCFolder.Size = new System.Drawing.Size(22, 14);
             this.btn_SteamDLCFolder.TabIndex = 268;
             this.btn_SteamDLCFolder.Text = "...";
             this.btn_SteamDLCFolder.UseVisualStyleBackColor = true;
@@ -943,10 +929,10 @@
             // chbx_CleanDB
             // 
             this.chbx_CleanDB.AutoSize = true;
-            this.chbx_CleanDB.Location = new System.Drawing.Point(416, 58);
-            this.chbx_CleanDB.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
+            this.chbx_CleanDB.Location = new System.Drawing.Point(312, 47);
+            this.chbx_CleanDB.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.chbx_CleanDB.Name = "chbx_CleanDB";
-            this.chbx_CleanDB.Size = new System.Drawing.Size(91, 20);
+            this.chbx_CleanDB.Size = new System.Drawing.Size(76, 17);
             this.chbx_CleanDB.TabIndex = 267;
             this.chbx_CleanDB.Text = "Clean DBs";
             this.chbx_CleanDB.UseVisualStyleBackColor = true;
@@ -954,21 +940,21 @@
             // 
             // rtxt_StatisticsOnReadDLCs
             // 
-            this.rtxt_StatisticsOnReadDLCs.Location = new System.Drawing.Point(12, 532);
-            this.rtxt_StatisticsOnReadDLCs.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
+            this.rtxt_StatisticsOnReadDLCs.Location = new System.Drawing.Point(9, 432);
+            this.rtxt_StatisticsOnReadDLCs.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.rtxt_StatisticsOnReadDLCs.Name = "rtxt_StatisticsOnReadDLCs";
-            this.rtxt_StatisticsOnReadDLCs.Size = new System.Drawing.Size(703, 115);
+            this.rtxt_StatisticsOnReadDLCs.Size = new System.Drawing.Size(528, 94);
             this.rtxt_StatisticsOnReadDLCs.TabIndex = 264;
             this.rtxt_StatisticsOnReadDLCs.Text = "";
             this.rtxt_StatisticsOnReadDLCs.Visible = false;
             // 
             // pB_ReadDLCs
             // 
-            this.pB_ReadDLCs.Location = new System.Drawing.Point(11, 468);
-            this.pB_ReadDLCs.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
+            this.pB_ReadDLCs.Location = new System.Drawing.Point(8, 380);
+            this.pB_ReadDLCs.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.pB_ReadDLCs.Maximum = 10000;
             this.pB_ReadDLCs.Name = "pB_ReadDLCs";
-            this.pB_ReadDLCs.Size = new System.Drawing.Size(703, 25);
+            this.pB_ReadDLCs.Size = new System.Drawing.Size(527, 20);
             this.pB_ReadDLCs.Step = 1;
             this.pB_ReadDLCs.TabIndex = 263;
             // 
@@ -976,10 +962,10 @@
             // 
             this.btn_PopulateDB.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.btn_PopulateDB.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_PopulateDB.Location = new System.Drawing.Point(11, 166);
-            this.btn_PopulateDB.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
+            this.btn_PopulateDB.Location = new System.Drawing.Point(8, 135);
+            this.btn_PopulateDB.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.btn_PopulateDB.Name = "btn_PopulateDB";
-            this.btn_PopulateDB.Size = new System.Drawing.Size(103, 31);
+            this.btn_PopulateDB.Size = new System.Drawing.Size(77, 25);
             this.btn_PopulateDB.TabIndex = 262;
             this.btn_PopulateDB.Text = "Import";
             this.btn_PopulateDB.UseVisualStyleBackColor = false;
@@ -989,10 +975,10 @@
             // 
             this.btn_DecompressAll.BackColor = System.Drawing.SystemColors.MenuHighlight;
             this.btn_DecompressAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_DecompressAll.Location = new System.Drawing.Point(544, 1);
-            this.btn_DecompressAll.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
+            this.btn_DecompressAll.Location = new System.Drawing.Point(408, 1);
+            this.btn_DecompressAll.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.btn_DecompressAll.Name = "btn_DecompressAll";
-            this.btn_DecompressAll.Size = new System.Drawing.Size(169, 43);
+            this.btn_DecompressAll.Size = new System.Drawing.Size(127, 35);
             this.btn_DecompressAll.TabIndex = 261;
             this.btn_DecompressAll.Text = "Open Main DB";
             this.btn_DecompressAll.UseVisualStyleBackColor = false;
@@ -1002,18 +988,19 @@
             // 
             this.lbl_RocksmithDLCPath.AutoSize = true;
             this.lbl_RocksmithDLCPath.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lbl_RocksmithDLCPath.Location = new System.Drawing.Point(7, 5);
+            this.lbl_RocksmithDLCPath.Location = new System.Drawing.Point(5, 4);
+            this.lbl_RocksmithDLCPath.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_RocksmithDLCPath.Name = "lbl_RocksmithDLCPath";
-            this.lbl_RocksmithDLCPath.Size = new System.Drawing.Size(121, 16);
+            this.lbl_RocksmithDLCPath.Size = new System.Drawing.Size(98, 13);
             this.lbl_RocksmithDLCPath.TabIndex = 259;
             this.lbl_RocksmithDLCPath.Text = "Importing DLC path";
             // 
             // btn_TempPath
             // 
-            this.btn_TempPath.Location = new System.Drawing.Point(384, 32);
-            this.btn_TempPath.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
+            this.btn_TempPath.Location = new System.Drawing.Point(288, 26);
+            this.btn_TempPath.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.btn_TempPath.Name = "btn_TempPath";
-            this.btn_TempPath.Size = new System.Drawing.Size(29, 17);
+            this.btn_TempPath.Size = new System.Drawing.Size(22, 14);
             this.btn_TempPath.TabIndex = 257;
             this.btn_TempPath.Text = "...";
             this.btn_TempPath.UseVisualStyleBackColor = true;
@@ -1023,9 +1010,10 @@
             // 
             this.lbl_TempFolders.AutoSize = true;
             this.lbl_TempFolders.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lbl_TempFolders.Location = new System.Drawing.Point(5, 32);
+            this.lbl_TempFolders.Location = new System.Drawing.Point(4, 26);
+            this.lbl_TempFolders.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_TempFolders.Name = "lbl_TempFolders";
-            this.lbl_TempFolders.Size = new System.Drawing.Size(116, 16);
+            this.lbl_TempFolders.Size = new System.Drawing.Size(91, 13);
             this.lbl_TempFolders.TabIndex = 258;
             this.lbl_TempFolders.Text = "Temp Folder Path";
             // 
@@ -1033,9 +1021,10 @@
             // 
             this.lbl_PreviewText.AutoEllipsis = true;
             this.lbl_PreviewText.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.lbl_PreviewText.Location = new System.Drawing.Point(113, 425);
+            this.lbl_PreviewText.Location = new System.Drawing.Point(85, 345);
+            this.lbl_PreviewText.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_PreviewText.Name = "lbl_PreviewText";
-            this.lbl_PreviewText.Size = new System.Drawing.Size(597, 43);
+            this.lbl_PreviewText.Size = new System.Drawing.Size(448, 35);
             this.lbl_PreviewText.TabIndex = 285;
             this.lbl_PreviewText.Text = "File name Beta(0) CDLC/ORIG-Artist-Year-Album-TrackNo(if existing)-Title-TrackAva" +
     "il(LRBVS)-Version_Platform.psarc";
@@ -1046,11 +1035,9 @@
             this.grpbx_ApplyChanges.Controls.Add(this.chbx_Mac);
             this.grpbx_ApplyChanges.Controls.Add(this.chbx_PS3);
             this.grpbx_ApplyChanges.Controls.Add(this.chbx_PC);
-            this.grpbx_ApplyChanges.Location = new System.Drawing.Point(11, 103);
-            this.grpbx_ApplyChanges.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.grpbx_ApplyChanges.Location = new System.Drawing.Point(8, 84);
             this.grpbx_ApplyChanges.Name = "grpbx_ApplyChanges";
-            this.grpbx_ApplyChanges.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.grpbx_ApplyChanges.Size = new System.Drawing.Size(275, 52);
+            this.grpbx_ApplyChanges.Size = new System.Drawing.Size(206, 42);
             this.grpbx_ApplyChanges.TabIndex = 278;
             this.grpbx_ApplyChanges.TabStop = false;
             this.grpbx_ApplyChanges.Text = "RePack format";
@@ -1058,10 +1045,9 @@
             // chbx_XBOX360
             // 
             this.chbx_XBOX360.AutoSize = true;
-            this.chbx_XBOX360.Location = new System.Drawing.Point(176, 23);
-            this.chbx_XBOX360.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chbx_XBOX360.Location = new System.Drawing.Point(132, 19);
             this.chbx_XBOX360.Name = "chbx_XBOX360";
-            this.chbx_XBOX360.Size = new System.Drawing.Size(83, 20);
+            this.chbx_XBOX360.Size = new System.Drawing.Size(73, 17);
             this.chbx_XBOX360.TabIndex = 4;
             this.chbx_XBOX360.Text = "XBOX360";
             this.chbx_XBOX360.UseVisualStyleBackColor = true;
@@ -1069,10 +1055,9 @@
             // chbx_Mac
             // 
             this.chbx_Mac.AutoSize = true;
-            this.chbx_Mac.Location = new System.Drawing.Point(115, 23);
-            this.chbx_Mac.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chbx_Mac.Location = new System.Drawing.Point(86, 19);
             this.chbx_Mac.Name = "chbx_Mac";
-            this.chbx_Mac.Size = new System.Drawing.Size(53, 20);
+            this.chbx_Mac.Size = new System.Drawing.Size(47, 17);
             this.chbx_Mac.TabIndex = 3;
             this.chbx_Mac.Text = "Mac";
             this.chbx_Mac.UseVisualStyleBackColor = true;
@@ -1082,10 +1067,9 @@
             this.chbx_PS3.AutoSize = true;
             this.chbx_PS3.Checked = true;
             this.chbx_PS3.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chbx_PS3.Location = new System.Drawing.Point(57, 23);
-            this.chbx_PS3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chbx_PS3.Location = new System.Drawing.Point(43, 19);
             this.chbx_PS3.Name = "chbx_PS3";
-            this.chbx_PS3.Size = new System.Drawing.Size(52, 20);
+            this.chbx_PS3.Size = new System.Drawing.Size(46, 17);
             this.chbx_PS3.TabIndex = 2;
             this.chbx_PS3.Text = "PS3";
             this.chbx_PS3.UseVisualStyleBackColor = true;
@@ -1093,10 +1077,9 @@
             // chbx_PC
             // 
             this.chbx_PC.AutoSize = true;
-            this.chbx_PC.Location = new System.Drawing.Point(8, 23);
-            this.chbx_PC.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chbx_PC.Location = new System.Drawing.Point(6, 19);
             this.chbx_PC.Name = "chbx_PC";
-            this.chbx_PC.Size = new System.Drawing.Size(45, 20);
+            this.chbx_PC.Size = new System.Drawing.Size(40, 17);
             this.chbx_PC.TabIndex = 1;
             this.chbx_PC.Text = "PC";
             this.chbx_PC.UseVisualStyleBackColor = true;
@@ -1105,10 +1088,10 @@
             // 
             this.btn_RePack.BackColor = System.Drawing.SystemColors.Control;
             this.btn_RePack.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_RePack.Location = new System.Drawing.Point(12, 201);
-            this.btn_RePack.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
+            this.btn_RePack.Location = new System.Drawing.Point(9, 163);
+            this.btn_RePack.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.btn_RePack.Name = "btn_RePack";
-            this.btn_RePack.Size = new System.Drawing.Size(103, 28);
+            this.btn_RePack.Size = new System.Drawing.Size(77, 23);
             this.btn_RePack.TabIndex = 283;
             this.btn_RePack.Text = "RePack";
             this.btn_RePack.UseVisualStyleBackColor = false;
@@ -1118,10 +1101,10 @@
             // 
             this.btn_ApplyStandardization.BackColor = System.Drawing.SystemColors.Control;
             this.btn_ApplyStandardization.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_ApplyStandardization.Location = new System.Drawing.Point(520, 54);
-            this.btn_ApplyStandardization.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
+            this.btn_ApplyStandardization.Location = new System.Drawing.Point(390, 44);
+            this.btn_ApplyStandardization.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.btn_ApplyStandardization.Name = "btn_ApplyStandardization";
-            this.btn_ApplyStandardization.Size = new System.Drawing.Size(19, 17);
+            this.btn_ApplyStandardization.Size = new System.Drawing.Size(14, 14);
             this.btn_ApplyStandardization.TabIndex = 328;
             this.toolTip1.SetToolTip(this.btn_ApplyStandardization, "Apply Standardization Rules");
             this.btn_ApplyStandardization.UseVisualStyleBackColor = false;
@@ -1131,10 +1114,10 @@
             // 
             this.btn_LoadRetailSongs.BackColor = System.Drawing.SystemColors.Control;
             this.btn_LoadRetailSongs.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_LoadRetailSongs.Location = new System.Drawing.Point(520, 85);
-            this.btn_LoadRetailSongs.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
+            this.btn_LoadRetailSongs.Location = new System.Drawing.Point(390, 69);
+            this.btn_LoadRetailSongs.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.btn_LoadRetailSongs.Name = "btn_LoadRetailSongs";
-            this.btn_LoadRetailSongs.Size = new System.Drawing.Size(19, 17);
+            this.btn_LoadRetailSongs.Size = new System.Drawing.Size(14, 14);
             this.btn_LoadRetailSongs.TabIndex = 339;
             this.toolTip1.SetToolTip(this.btn_LoadRetailSongs, "Load Retail files: Disc Songs, DLC Songs, RS1DLC Songs");
             this.btn_LoadRetailSongs.UseVisualStyleBackColor = false;
@@ -1144,10 +1127,10 @@
             // 
             this.btn_Standardization.BackColor = System.Drawing.SystemColors.Control;
             this.btn_Standardization.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Standardization.Location = new System.Drawing.Point(544, 48);
-            this.btn_Standardization.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
+            this.btn_Standardization.Location = new System.Drawing.Point(408, 39);
+            this.btn_Standardization.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.btn_Standardization.Name = "btn_Standardization";
-            this.btn_Standardization.Size = new System.Drawing.Size(169, 27);
+            this.btn_Standardization.Size = new System.Drawing.Size(127, 22);
             this.btn_Standardization.TabIndex = 327;
             this.btn_Standardization.Text = "Open Standardization DB";
             this.btn_Standardization.UseVisualStyleBackColor = false;
@@ -1156,10 +1139,9 @@
             // chbx_WorkDGB
             // 
             this.chbx_WorkDGB.AutoSize = true;
-            this.chbx_WorkDGB.Location = new System.Drawing.Point(453, 81);
-            this.chbx_WorkDGB.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chbx_WorkDGB.Location = new System.Drawing.Point(340, 66);
             this.chbx_WorkDGB.Name = "chbx_WorkDGB";
-            this.chbx_WorkDGB.Size = new System.Drawing.Size(59, 20);
+            this.chbx_WorkDGB.Size = new System.Drawing.Size(52, 17);
             this.chbx_WorkDGB.TabIndex = 330;
             this.chbx_WorkDGB.Text = "Work";
             this.chbx_WorkDGB.UseVisualStyleBackColor = true;
@@ -1169,10 +1151,9 @@
             // chbx_HomeDBG
             // 
             this.chbx_HomeDBG.AutoSize = true;
-            this.chbx_HomeDBG.Location = new System.Drawing.Point(296, 81);
-            this.chbx_HomeDBG.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chbx_HomeDBG.Location = new System.Drawing.Point(222, 66);
             this.chbx_HomeDBG.Name = "chbx_HomeDBG";
-            this.chbx_HomeDBG.Size = new System.Drawing.Size(64, 20);
+            this.chbx_HomeDBG.Size = new System.Drawing.Size(54, 17);
             this.chbx_HomeDBG.TabIndex = 331;
             this.chbx_HomeDBG.Text = "Home";
             this.chbx_HomeDBG.UseVisualStyleBackColor = true;
@@ -1184,10 +1165,10 @@
             this.chbx_DefaultDB.AutoSize = true;
             this.chbx_DefaultDB.Checked = true;
             this.chbx_DefaultDB.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chbx_DefaultDB.Location = new System.Drawing.Point(161, 81);
-            this.chbx_DefaultDB.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
+            this.chbx_DefaultDB.Location = new System.Drawing.Point(121, 66);
+            this.chbx_DefaultDB.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.chbx_DefaultDB.Name = "chbx_DefaultDB";
-            this.chbx_DefaultDB.Size = new System.Drawing.Size(119, 20);
+            this.chbx_DefaultDB.Size = new System.Drawing.Size(100, 17);
             this.chbx_DefaultDB.TabIndex = 332;
             this.chbx_DefaultDB.Text = "Use Default DB";
             this.chbx_DefaultDB.UseVisualStyleBackColor = true;
@@ -1196,10 +1177,9 @@
             // chbx_HomeDGBVM
             // 
             this.chbx_HomeDGBVM.AutoSize = true;
-            this.chbx_HomeDGBVM.Location = new System.Drawing.Point(361, 81);
-            this.chbx_HomeDGBVM.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chbx_HomeDGBVM.Location = new System.Drawing.Point(271, 66);
             this.chbx_HomeDGBVM.Name = "chbx_HomeDGBVM";
-            this.chbx_HomeDGBVM.Size = new System.Drawing.Size(84, 20);
+            this.chbx_HomeDGBVM.Size = new System.Drawing.Size(70, 17);
             this.chbx_HomeDGBVM.TabIndex = 333;
             this.chbx_HomeDGBVM.Text = "HomeVM";
             this.chbx_HomeDGBVM.UseVisualStyleBackColor = true;
@@ -1208,10 +1188,9 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(544, 80);
-            this.button5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button5.Location = new System.Drawing.Point(408, 65);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(169, 28);
+            this.button5.Size = new System.Drawing.Size(127, 23);
             this.button5.TabIndex = 336;
             this.button5.Text = "Open Retail DB";
             this.button5.UseVisualStyleBackColor = true;
@@ -1220,10 +1199,9 @@
             // btn_GoImport
             // 
             this.btn_GoImport.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_GoImport.Location = new System.Drawing.Point(135, 5);
-            this.btn_GoImport.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btn_GoImport.Location = new System.Drawing.Point(101, 4);
             this.btn_GoImport.Name = "btn_GoImport";
-            this.btn_GoImport.Size = new System.Drawing.Size(28, 17);
+            this.btn_GoImport.Size = new System.Drawing.Size(21, 14);
             this.btn_GoImport.TabIndex = 340;
             this.btn_GoImport.Text = "->";
             this.btn_GoImport.UseVisualStyleBackColor = true;
@@ -1232,10 +1210,9 @@
             // btm_GoTemp
             // 
             this.btm_GoTemp.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btm_GoTemp.Location = new System.Drawing.Point(135, 31);
-            this.btm_GoTemp.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btm_GoTemp.Location = new System.Drawing.Point(101, 25);
             this.btm_GoTemp.Name = "btm_GoTemp";
-            this.btm_GoTemp.Size = new System.Drawing.Size(28, 17);
+            this.btm_GoTemp.Size = new System.Drawing.Size(21, 14);
             this.btm_GoTemp.TabIndex = 341;
             this.btm_GoTemp.Text = "->";
             this.btm_GoTemp.UseVisualStyleBackColor = true;
@@ -1244,10 +1221,9 @@
             // btm_GoDB
             // 
             this.btm_GoDB.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btm_GoDB.Location = new System.Drawing.Point(135, 58);
-            this.btm_GoDB.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btm_GoDB.Location = new System.Drawing.Point(101, 47);
             this.btm_GoDB.Name = "btm_GoDB";
-            this.btm_GoDB.Size = new System.Drawing.Size(28, 17);
+            this.btm_GoDB.Size = new System.Drawing.Size(21, 14);
             this.btm_GoDB.TabIndex = 342;
             this.btm_GoDB.Text = "->";
             this.btm_GoDB.UseVisualStyleBackColor = true;
@@ -1257,10 +1233,10 @@
             // 
             this.btn_Log.BackColor = System.Drawing.SystemColors.Control;
             this.btn_Log.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Log.Location = new System.Drawing.Point(9, 497);
-            this.btn_Log.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
+            this.btn_Log.Location = new System.Drawing.Point(7, 404);
+            this.btn_Log.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.btn_Log.Name = "btn_Log";
-            this.btn_Log.Size = new System.Drawing.Size(103, 33);
+            this.btn_Log.Size = new System.Drawing.Size(77, 27);
             this.btn_Log.TabIndex = 345;
             this.btn_Log.Text = "Log";
             this.btn_Log.UseVisualStyleBackColor = false;
@@ -1268,7 +1244,7 @@
             // 
             // DLCManager
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.btn_Log);
             this.Controls.Add(this.btm_GoDB);
@@ -1339,9 +1315,8 @@
             this.Controls.Add(this.lbl_PreviewText);
             this.Controls.Add(this.grpbx_ApplyChanges);
             this.Controls.Add(this.btn_RePack);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "DLCManager";
-            this.Size = new System.Drawing.Size(817, 977);
+            this.Size = new System.Drawing.Size(613, 794);
             this.Load += new System.EventHandler(this.DLCManager_Load);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();

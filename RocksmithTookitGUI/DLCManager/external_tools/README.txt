@@ -84,9 +84,9 @@ wnyp:
 - duplicate windoww should return last maximum conv date and save it 
 
 wd:
- -- repacking or conversion fails the pot or sleater kinney cities
- - fever issues at picking up the track
+ - fever issues at picking up the track no
  - third eye fails at packing
+ - is the presindets of usa Peaches working @pack?
 
 ### dev issues:
 + Toolkit version flag does not sync to&from Github: Run RunMeFirst.bat
@@ -220,7 +220,7 @@ or supported.  Rocksmith users should remember to support Ubisoft® and
 Steam by purchasing original game content and software releases so that
 these companies may continue making products that we enjoy.  
 
-Additioanlly, No modification have been applied to Rocksmith Custom Song Project sourcecode (besides new UI tab).
+Additioanlly, No modifications have been applied to Rocksmith Custom Song Project sourcecode (besides new UI tab).
   - 1fix for PS3 conversion (#273 on github)
 
 This software makes use of Applications not made

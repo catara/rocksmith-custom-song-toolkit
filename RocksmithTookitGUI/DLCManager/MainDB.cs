@@ -766,7 +766,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 {
                     MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     MessageBox.Show("-DB Open in Design Mode or Download Connectivity patch @ https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734");
-                    ErrorWindow frm1 = new ErrorWindow("DB Open in Design Mode or Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734");
+                    ErrorWindow frm1 = new ErrorWindow("DB Open in Design Mode or Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error when opening the DB",false,false);
                     frm1.ShowDialog();
                     return;
                 }
@@ -1876,8 +1876,9 @@ namespace RocksmithToolkitGUI.DLCManager
                     {
                         if (!File.Exists(dfssdf))
                         {
-                            ErrorWindow frm1 = new ErrorWindow("Please Install Wwise v2014.1.6 build 5318: " + Environment.NewLine, "https://www.audiokinetic.com/download/");
+                            ErrorWindow frm1 = new ErrorWindow("Please Install Wwise v2014.1.6 build 5318: " + Environment.NewLine  + "A restart is required for the Conversion to WEM process to be succesful,l else the errors can be captured through the Missing Files Query" + Environment.NewLine, "https://www.audiokinetic.com/download/", "Error when Generating a Preview", false, false);
                             frm1.ShowDialog();
+
                         }
                         Converters(tt, ConverterTypes.Ogg2Wem, true);
                         txt_OggPreviewPath.Text = tt;
@@ -3660,6 +3661,138 @@ namespace RocksmithToolkitGUI.DLCManager
             {
                 btn_SearchReset.Text = "Start Search";
                 btn_Search.PerformClick();
+            }
+        }
+
+        private void btn_Beta_Click(object sender, EventArgs e)
+        {
+            var cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path); //+ ";Persist Security Info=False"
+            var command = cnn.CreateCommand();
+            //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //{
+            command.CommandText = "UPDATE Main SET ";
+            command.CommandText += "Is_Beta = @param8 ";
+            command.CommandText += " WHERE ID IN (" + SearchCmd.Replace("*", "ID").Replace(";", "") + ")";
+            command.Parameters.AddWithValue("@param8", "Yes");
+            try
+            {
+                command.CommandType = CommandType.Text;
+                cnn.Open();
+                command.ExecuteNonQuery();
+                cnn.Close();
+                command.Dispose();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //MessageBox.Show("Can not open Main DB connection in Main Edit screen ! " + DB_Path + "-" + command.CommandText);
+                //throw;
+            }
+            finally
+            {
+                //if (cnn != null) cnn.Close();
+            }
+            //}
+            Populate(ref DataViewGrid, ref Main);//, ref bsPositions, ref bsBadges);
+            DataViewGrid.EditingControlShowing += DataGridView1_EditingControlShowing;
+            DataViewGrid.Refresh();
+            try
+            {
+                var com = "Select * FROM Main";
+                com += " WHERE ID IN (" + SearchCmd.Replace("*", "ID").Replace(";", "") + ")";
+                DataSet dhs = new DataSet();
+                using (OleDbConnection cBn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                {// 1. If hash already exists do not insert
+                    OleDbDataAdapter dBs = new OleDbDataAdapter(com, cBn);
+                    dBs.Fill(dhs, "Main");
+                    dBs.Dispose();
+                    MessageBox.Show("All Filtered songs(" + dhs.Tables[0].Rows.Count + ") in DB have been marked as Beta");
+                }
+            }
+            catch (Exception ee)
+            {
+                Console.WriteLine(ee.Message);
+                MessageBox.Show("Error at select filtered " + ee);
+            }
+        }
+
+        private void btn_EOF_Click(object sender, EventArgs e)
+        {
+            var i = DataViewGrid.SelectedCells[0].RowIndex;
+            string filePath = DataViewGrid.Rows[i].Cells[22].Value.ToString();
+
+            try
+            {
+                Process process = Process.Start(@filePath);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Can not open Song Folder in Exporer ! ");
+            }
+
+            //var DB_Path = (chbx_DefaultDB.Checked == true ? MyAppWD : txt_DBFolder.Text) + "\\Files.accdb";
+            var xx = Path.Combine(AppWD, "eof1.8RC10(r1337)\\eof.exe");
+
+            var startInfo = new ProcessStartInfo();
+            startInfo.FileName = xx;
+            startInfo.WorkingDirectory = AppWD.Replace("external_tools", "");// Path.GetDirectoryName();
+            startInfo.Arguments = String.Format(" " + txt_OggPath.Text);
+            startInfo.UseShellExecute = true; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
+
+            if (File.Exists(xx) && File.Exists(DB_Path))
+                using (var DDC = new Process())
+                {
+                    DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 60 * 1);
+                }
+            try
+            {
+                Process process = Process.Start(@xx);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //MessageBox.Show("Can not open External tool for phase beats and section fixes ! " + DB_Path);
+            }
+        }
+
+        private void btn_CreateLyrics_Click(object sender, EventArgs e)
+        {
+            var i = DataViewGrid.SelectedCells[0].RowIndex;
+            string filePath = DataViewGrid.Rows[i].Cells[22].Value.ToString();
+
+            try
+            {
+                Process process = Process.Start(@filePath);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Can not open Song Folder in Exporer ! ");
+            }
+
+            //var DB_Path = (chbx_DefaultDB.Checked == true ? MyAppWD : txt_DBFolder.Text) + "\\Files.accdb";
+            var xx = Path.Combine(AppWD, "UltraStar Creator\\usc.exe");
+
+            var startInfo = new ProcessStartInfo();
+            startInfo.FileName = xx;
+            startInfo.WorkingDirectory = AppWD.Replace("external_tools", "");// Path.GetDirectoryName();
+            startInfo.Arguments = String.Format(" " + txt_OggPath.Text);
+            startInfo.UseShellExecute = true; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
+
+            if (File.Exists(xx) && File.Exists(DB_Path))
+                using (var DDC = new Process())
+                {
+                    DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 60 * 1);
+                }
+            try
+            {
+                Process process = Process.Start(@xx);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //MessageBox.Show("Can not open External tool for phase beats and section fixes ! " + DB_Path);
             }
         }
     }

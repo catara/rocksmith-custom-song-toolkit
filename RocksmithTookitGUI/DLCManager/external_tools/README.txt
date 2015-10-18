@@ -30,8 +30,6 @@ Main Features:
 
 
 ## Known Issues:
-+ Import fails randomly...workaround Import again (don't clear the DB)
-+ Tool is based on Rocksmith Toolkit 5th Sept '15 version
 -- Edit of Arragements and Tones DB can only be done from Access for the moment
 - Packing of Rocksmith 2014 Retail manipulated files has 1 manual step for RS14 Retail songs
 -- When having GitHub conficting issue
@@ -86,17 +84,9 @@ wnyp:
 - duplicate windoww should return last maximum conv date and save it 
 
 wd:
--- add the overrite xml in the Import option section
--- repacked by custom song creator at mass repack
--- pack id should be the same
--- add inverse selecton
--- doublecheck active title/album manipul flag
--- if raking is 0 then dont display :) in the title/album manipulations
--- preview in duplciate manangement is yes if it was manually added..coloring is req maybe -- Timestamp appears now
--- the pretender fails
--- add mdb viewer
--- preview issues (assumingly at pack)
--- move all external tools in external
+ -- repacking or conversion fails the pot or sleater kinney cities
+ - fever issues at picking up the track
+ - third eye fails at packing
 
 ### dev issues:
 + Toolkit version flag does not sync to&from Github: Run RunMeFirst.bat
@@ -259,8 +249,14 @@ http://customsforge.com/topic/15687-beats-phrases-resynchronizer/
 https://github.com/Lovroman/RS-CDLC-Tagger/
 http://customsforge.com/topic/20334-tool-cdlc-tagger/
 
-- MDB Viewver
+- MDB Viewver ;alternative to Microsoft Access
 http://www.alexnolan.net/software/mdb_viewer_plus.htm
+
+- Ultrastar Creator ;lyrics creator
+http://sourceforge.net/projects/usc/
+
+- EOF ;Rocksmith Custom DLC CONTENT creator (windows version)
+http://ignition.customsforge.com/eof
 
 ## Contact
 

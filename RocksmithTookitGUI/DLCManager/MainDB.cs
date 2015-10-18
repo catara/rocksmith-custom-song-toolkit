@@ -2445,13 +2445,16 @@ namespace RocksmithToolkitGUI.DLCManager
                 data = new DLCPackageData
                 {
                     GameVersion = GameVersion.RS2014,
-                    Pc = chbx_Format.Text == "PC" ? true : false, //txt_Platform.Text 
-                    Mac = chbx_Format.Text == "Mac" ? true : false,
-                    XBox360 = chbx_Format.Text == "XBOX360" ? true : false,
-                    PS3 = chbx_Format.Text == "PS3" ? true : false,
+                    Pc = chbx_Format.Text == "PC" || file.Platform=="Pc"? true : false, //txt_Platform.Text 
+                    Mac = chbx_Format.Text == "Mac" || file.Platform == "Mac" ? true : false,
+                    XBox360 = chbx_Format.Text == "XBOX360" || file.Platform == "Xbox360" ? true : false,
+                    PS3 = chbx_Format.Text == "PS3" || file.Platform == "Ps3" ? true : false,
                     Name = file.DLC_Name,
                     AppId = file.DLC_AppID,
-                    ArtFiles = info.ArtFiles,
+                    ArtFiles = info.ArtFiles, //not complete
+                    Showlights=true,//info.Showlights, //apparently this infor is not read..also the tone base is removed/not read also
+                    Inlay=info.Inlay,
+                    LyricArtPath=info.LyricArtPath,
 
                     //USEFUL CMDs String.IsNullOrEmpty(
                     SongInfo = new RocksmithToolkitLib.DLCPackage.SongInfo
@@ -2471,8 +2474,8 @@ namespace RocksmithToolkitGUI.DLCManager
                     Arrangements = info.Arrangements, //Not yet done
                     Tones = info.Tones,//Not yet done
                     TonesRS2014 = info.TonesRS2014,//Not yet done
-                    Volume = file.Volume.ToInt32(),
-                    PreviewVolume = file.Preview_Volume.ToInt32(),
+                    Volume = Convert.ToSingle(file.Volume),
+                    PreviewVolume = Convert.ToSingle(file.Preview_Volume),
                     SignatureType = info.SignatureType,
                     PackageVersion = file.Version
                 };

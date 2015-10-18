@@ -4243,13 +4243,16 @@ namespace RocksmithToolkitGUI.DLCManager
                     data = new DLCPackageData
                     {
                         GameVersion = GameVersion.RS2014,
-                        Pc = true,
-                        Mac = chbx_Mac.Checked,
-                        XBox360 = chbx_XBOX360.Checked,
-                        PS3 = chbx_PS3.Checked,
+                        Pc = chbx_PC.Text == "PC" || file.Platform == "Pc" ? true : false, //txt_Platform.Text 
+                        Mac = chbx_Mac.Text == "Mac" || file.Platform == "Mac" ? true : false,
+                        XBox360 = chbx_XBOX360.Text == "XBOX360" || file.Platform == "XBox360" ? true : false,
+                        PS3 = chbx_PS3.Text == "PS3" || file.Platform == "Ps3" ? true : false,
                         Name = file.DLC_Name,
                         AppId = file.DLC_AppID,
                         ArtFiles = info.ArtFiles,
+                        Showlights = true,//info.Showlights, //apparently this infor is not read..also the tone base is removed/not read also
+                        Inlay = info.Inlay,
+                        LyricArtPath = info.LyricArtPath,
 
                         //USEFUL CMDs String.IsNullOrEmpty(
                         SongInfo = new RocksmithToolkitLib.DLCPackage.SongInfo
@@ -4269,8 +4272,8 @@ namespace RocksmithToolkitGUI.DLCManager
                         Arrangements = info.Arrangements, //Not yet done
                         Tones = info.Tones,//Not yet done
                         TonesRS2014 = info.TonesRS2014,//Not yet done
-                        Volume = file.Volume.ToInt32(),
-                        PreviewVolume = file.Preview_Volume.ToInt32(),
+                        Volume = Convert.ToSingle(file.Volume),
+                        PreviewVolume = Convert.ToSingle(file.Preview_Volume),
                         SignatureType = info.SignatureType,
                         PackageVersion = toolkitv//file.Version                    
                     };
@@ -4702,6 +4705,7 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_TempPath.Text = "C:\\GitHub\\tmp\\0";
             chbx_CleanTemp.Checked = false;
             chbx_CleanDB.Checked = false;
+            chbx_Additional_Manipulations.SetItemCheckState(49, CheckState.Checked);
         }
 
         private void chbx_WorkDGB_CheckedChanged(object sender, EventArgs e)

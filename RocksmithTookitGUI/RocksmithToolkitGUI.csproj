@@ -412,9 +412,6 @@
     <None Include="DLCManager\external_tools\eof1.8RC10%28r1337%29\Example Song\notes.eof">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="DLCManager\external_tools\eof1.8RC10%28r1337%29\memwatch.log">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="DLCManager\external_tools\eof1.8RC10%28r1337%29\mp3toogg.bat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

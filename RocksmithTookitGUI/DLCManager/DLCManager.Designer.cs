@@ -287,6 +287,7 @@
             "52. @Import Overrite the XML",
             "53. @Pack keep Bass DD if indicated so",
             "54. @Pack keep All DD if indicated so",
+            "55. @Pack consider songs as beta(place them top of the list)",
             "<IMPORT>",
             "<@Pack>"});
             this.chbx_Additional_Manipulations.Location = new System.Drawing.Point(240, 95);

@@ -1626,6 +1626,52 @@ namespace RocksmithToolkitGUI.DLCManager
                         //continue;
                     }
                     break;
+                case "Packed Last":
+                    var SearchCmd6 = "SELECT top 1 Pack FROM LogPacking order by ID DESC;";// ORDER BY Pack,Import_Date DESC "SELECT MAX(ID),Import_Date FROM Main;";// WHERE Import_Date=''";
+                    DataSet dzs = new DataSet();
+                    //var DB_Path = "";
+                    //DB_Path = (chbx_DefaultDB.Checked == true ? MyAppWD : txt_DBFolder.Text) + "\\Files.accdb;";
+                    try
+                    {
+                        using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                        {
+                            OleDbDataAdapter dan = new OleDbDataAdapter(SearchCmd6, cnn);
+                            dan.Fill(dzs, "Main");
+                            SearchCmd += "CSTR(ID) in (SELECT CDLC_ID FROM LogPacking WHERE Pack='" + dzs.Tables[0].Rows[0].ItemArray[0].ToString() + "')";//Import_Date > .Replace(" AM", "").Replace(" PM", "")
+                        }
+                    }
+                    catch (System.IO.FileNotFoundException ee)
+                    {
+                        // To inform the user and continue is 
+                        // sufficient for this demonstration. 
+                        // Your application may require different behavior.
+                        Console.WriteLine(ee.Message);
+                        //continue;
+                    }
+                    break;
+                case "Packing Errors":
+                    var SearchCmd7 = "SELECT top 1 ErrorPack FROM LogPackingError order by ID DESC;";// ORDER BY Pack,Import_Date DESC "SELECT MAX(ID),Import_Date FROM Main;";// WHERE Import_Date=''";
+                    DataSet dks = new DataSet();
+                    //var DB_Path = "";
+                    //DB_Path = (chbx_DefaultDB.Checked == true ? MyAppWD : txt_DBFolder.Text) + "\\Files.accdb;";
+                    try
+                    {
+                        using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                        {
+                            OleDbDataAdapter dan = new OleDbDataAdapter(SearchCmd7, cnn);
+                            dan.Fill(dks, "Main");
+                            SearchCmd += "CSTR(ID) in (SELECT CDLC_ID FROM LogPackingError WHERE ErrorPack='" + dks.Tables[0].Rows[0].ItemArray[0].ToString() + "')";
+                        }
+                    }
+                    catch (System.IO.FileNotFoundException ee)
+                    {
+                        // To inform the user and continue is 
+                        // sufficient for this demonstration. 
+                        // Your application may require different behavior.
+                        Console.WriteLine(ee.Message);
+                        //continue;
+                    }
+                    break;
                 case "Same DLCName":
                     var SearchCmd5 = "SELECT n.ID as IDs FROM Main AS m LEFT JOIN Main AS n ON (m.ID <> n.ID) AND (n.DLC_Name = m.DLC_Name)";
                     //SELECT ID FROM Main WHERE COUNT(DLC_Name)=2";// "SELECT MAX(ID),Import_Date FROM Main;";// WHERE Import_Date=''";
@@ -2144,9 +2190,18 @@ namespace RocksmithToolkitGUI.DLCManager
             //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
             //{
             command.CommandText = "UPDATE Main SET ";
-            command.CommandText += "Selected = @param8 ";
-            command.CommandText += " WHERE ID IN (" + SearchCmd.Replace("*", "ID").Replace(";", "") + ")";
+            command.CommandText += "Selected = @param8 ";            
             command.Parameters.AddWithValue("@param8", "Yes");
+            
+            var test = "";
+            if (chbx_InclBeta.Checked)
+            {
+                command.CommandText += ",Is_Beta = @param9 ";
+                command.Parameters.AddWithValue("@param9", "Yes");
+                test = " or Beta";
+            }
+            command.CommandText += " WHERE ID IN (" + SearchCmd.Replace("*", "ID").Replace(";", "") + ")";
+
             try
             {
                 command.CommandType = CommandType.Text;
@@ -2179,7 +2234,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     OleDbDataAdapter dBs = new OleDbDataAdapter(com, cBn);
                     dBs.Fill(dhs, "Main");
                     dBs.Dispose();
-                    MessageBox.Show("All Filtered songs(" + dhs.Tables[0].Rows.Count + ") in DB have been marked as Selected");
+                    MessageBox.Show("All Filtered songs(" + dhs.Tables[0].Rows.Count + ") in DB have been marked as Selected"+test);
                 }
             }
             catch (Exception ee)
@@ -2200,6 +2255,13 @@ namespace RocksmithToolkitGUI.DLCManager
             command.CommandText = "UPDATE Main SET ";
             command.CommandText += "Selected = @param8 ";
             command.Parameters.AddWithValue("@param8", "No");
+            var test = "";
+            if (chbx_InclBeta.Checked)
+            {
+                command.CommandText += ",Is_Beta = @param9 ";
+                command.Parameters.AddWithValue("@param9", "No");
+                test = " or Beta";
+            }
             try
             {
                 command.CommandType = CommandType.Text;
@@ -2222,7 +2284,7 @@ namespace RocksmithToolkitGUI.DLCManager
             Populate(ref DataViewGrid, ref Main);//, ref bsPositions, ref bsBadges);
             DataViewGrid.EditingControlShowing += DataGridView1_EditingControlShowing;
             DataViewGrid.Refresh();
-            MessageBox.Show("All songs in DB have been UNmarked from Selected");
+            MessageBox.Show("All songs in DB have been UNmarked from being Selected"+ test);
         }
 
         private void cbx_Format_SelectedIndexChanged(object sender, EventArgs e)
@@ -3495,8 +3557,15 @@ namespace RocksmithToolkitGUI.DLCManager
 
             command.CommandText = "UPDATE Main SET ";
             command.CommandText += "Selected = @param8 ";
-            command.CommandText += " WHERE not ID IN (" + SearchCmd.Replace("*", "ID").Replace(";", "") + ")";
             command.Parameters.AddWithValue("@param8", "Yes");
+            var test = "";
+            if (chbx_InclBeta.Checked)
+            {
+                command.CommandText += ",Is_Beta = @param9 ";
+                command.Parameters.AddWithValue("@param9", "Yes");
+                test = " or Beta";
+            }
+            command.CommandText += " WHERE not ID IN (" + SearchCmd.Replace("*", "ID").Replace(";", "") + ")";
             try
             {
                 command.CommandType = CommandType.Text;
@@ -3529,7 +3598,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     OleDbDataAdapter dBs = new OleDbDataAdapter(com, cBn);
                     dBs.Fill(dhs, "Main");
                     dBs.Dispose();
-                    MessageBox.Show("All NON Filtered songs(" + dhs.Tables[0].Rows.Count + ") in DB have been marked as Selected");
+                    MessageBox.Show("All NON Filtered songs(" + dhs.Tables[0].Rows.Count + ") in DB have been marked as Selected"+test);
                 }
             }
             catch (Exception ee)
@@ -3587,8 +3656,16 @@ namespace RocksmithToolkitGUI.DLCManager
 
             command.CommandText = "UPDATE Main SET ";
             command.CommandText += "Selected = @param8 ";
-            command.CommandText += " WHERE ID IN (" + SearchCmd.Replace("*", "ID").Replace(";", "") + ")";
             command.Parameters.AddWithValue("@param8", "No");
+            var test = "";
+            if (chbx_InclBeta.Checked)
+            {
+                command.CommandText += ",Is_Beta = @param9 ";
+                command.Parameters.AddWithValue("@param9", "No");
+                test = " or Beta";
+            }
+            command.CommandText += " WHERE ID IN (" + SearchCmd.Replace("*", "ID").Replace(";", "") + ")";
+
             try
             {
                 command.CommandType = CommandType.Text;
@@ -3611,8 +3688,14 @@ namespace RocksmithToolkitGUI.DLCManager
 
             command.CommandText = "UPDATE Main SET ";
             command.CommandText += "Selected = @param8 ";
-            command.CommandText += " WHERE not ID IN (" + SearchCmd.Replace("*", "ID").Replace(";", "") + ")";
             command.Parameters.AddWithValue("@param8", "Yes");
+            if (chbx_InclBeta.Checked)
+            {
+                command.CommandText += ",Is_Beta = @param9 ";
+                command.Parameters.AddWithValue("@param9", "Yes");
+            }
+
+            command.CommandText += " WHERE not ID IN (" + SearchCmd.Replace("*", "ID").Replace(";", "") + ")";
             try
             {
                 command.CommandType = CommandType.Text;
@@ -3645,7 +3728,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     OleDbDataAdapter dBs = new OleDbDataAdapter(com, cBn);
                     dBs.Fill(dhs, "Main");
                     dBs.Dispose();
-                    MessageBox.Show("All NON Filtered songs(" + dhs.Tables[0].Rows.Count + ") in DB have been marked as Selected");
+                    MessageBox.Show("All NON Filtered songs(" + dhs.Tables[0].Rows.Count + ") in DB have been marked as Selected"+test);
                 }
             }
             catch (Exception ee)

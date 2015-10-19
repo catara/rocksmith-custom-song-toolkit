@@ -55,6 +55,8 @@ n2h:
 -+ vs blue maybe also yes blue
 -+ small improv: Any change of song in the list should also save :)
 -+ standardiation delete
+-+ third eye investig
+-+ usa peaches
 
 wip:
 - feat:		 Alternate No for duplicates logic
@@ -80,8 +82,7 @@ wip:
  -- add cancelation button
  -- progress bar update
 - duplicate window should return last maximum conv date and save it 
-- update to latest(15oct)
-- answer to ps3 bug https://github.com/rscustom/rocksmith-custom-song-toolkit/issues/227 https://github.com/rscustom/rocksmith-custom-song-toolkit/issues/231
+
 
 wd:
 - make Groups as multivalue

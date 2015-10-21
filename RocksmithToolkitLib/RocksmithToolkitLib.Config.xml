@@ -80,7 +80,7 @@
   <Config Key="dlcm_AdditionalManipul51" Value="Yes" />
   <Config Key="dlcm_AdditionalManipul52" Value="Yes" />
   <Config Key="dlcm_AdditionalManipul53" Value="Yes" />
-  <Config Key="dlcm_AdditionalManipul54" Value="Yes" />
+  <Config Key="dlcm_AdditionalManipul54" Value="No" />
   <Config Key="dlcm_AdditionalManipul55" Value="Yes" />
   <Config Key="dlcm_AdditionalManipul56" Value="Yes" />
   <Config Key="dlcm_AdditionalManipul57" Value="Yes" />

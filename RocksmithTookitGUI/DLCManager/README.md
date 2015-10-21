@@ -31,7 +31,8 @@ Main Features:
 
 ## Known Issues:
 + Import fails randomly...workaround Import again (don't clear the DB)
-+ Tool is based on Rocksmith Toolkit 5th Sept '15 version
++ Tool is based on Rocksmith Toolkit 16th Oct version
++ Filter is know for giving eerrors after too many runs
 -- Edit of Arragements and Tones DB can only be done from Access for the moment
 - Packing of Rocksmith 2014 Retail manipulated files has 1 manual step for RS14 Retail songs
 -- When having GitHub conficting issue
@@ -92,6 +93,7 @@ wd:
 - enable shortNames and Album correction in Standardization
 - ask if you wanna have the packing folder deleted
 - dont conv Orig
+
 
 ### dev issues:
 + Toolkit version flag does not sync to&from Github: Run RunMeFirst.bat

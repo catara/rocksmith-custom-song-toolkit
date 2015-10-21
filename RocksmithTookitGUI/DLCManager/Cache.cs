@@ -418,6 +418,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btn_Close_Click(object sender, EventArgs e)
         {
+            if (chbx_Autosave.Checked) SaveRecord();
             chbx_Autosave.Checked = ConfigRepository.Instance()["dlcm_Autosave"] == "Yes" ? true : false;
             this.Close();
         }

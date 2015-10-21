@@ -1324,6 +1324,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btn_Close_Click(object sender, EventArgs e)
         {
+            if (chbx_AutoSave.Checked) SaveRecord();
             ConfigRepository.Instance()["dlcm_FTP"] = chbx_PreSavedFTP.Text;
             if (chbx_PreSavedFTP.Text == "EU") ConfigRepository.Instance()["dlcm_FTP1"] = txt_FTPPath.Text;
             if (chbx_PreSavedFTP.Text == "US") ConfigRepository.Instance()["dlcm_FTP2"] = txt_FTPPath.Text;
@@ -1794,7 +1795,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 Platform platform = DataViewGrid.Rows[i].Cells[22].Value.ToString().GetPlatform();
 
                 foreach (var xml in xmlFiles)
-                    if (xml.IndexOf("bass") > 0 && !(xml.IndexOf(".old") > 0))
+                    if (xml.IndexOf("bass") > 0 && !(xml.IndexOf(".old") > 0) && !(xml.IndexOf("showlights")>0))
                     //chbx_Additional_Manipulations.GetItemChecked(3) || chbx_Additional_Manipulations.GetItemChecked(5) || chbx_Additional_Manipulations.GetItemChecked(12) || chbx_Additional_Manipulations.GetItemChecked(26))
                     {
                         bassRemoved = (DLCManager.RemoveDD(DataViewGrid.Rows[i].Cells[22].Value.ToString(), chbx_Original.Text, xml, platform, false, false) == "Yes") ? "No" : "Yes";
@@ -1840,7 +1841,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 var platform = files[0].Folder_Name.GetPlatform();
 
                 foreach (var xml in xmlFiles)
-                    if (xml.IndexOf("bass") > 0 && (xml.IndexOf(".old") > 0))
+                    if (xml.IndexOf("bass") > 0 && (xml.IndexOf(".old") > 0) && !(xml.IndexOf("showlights") > 0))
                     //chbx_Additional_Manipulations.GetItemChecked(3) || chbx_Additional_Manipulations.GetItemChecked(5) || chbx_Additional_Manipulations.GetItemChecked(12) || chbx_Additional_Manipulations.GetItemChecked(26))
                     {
                         //if (!File.Exists(xml)) 
@@ -3671,8 +3672,8 @@ namespace RocksmithToolkitGUI.DLCManager
                 command.CommandType = CommandType.Text;
                 cnn.Open();
                 command.ExecuteNonQuery();
-                cnn.Close();
-                command.Dispose();
+                //cnn.Close();
+                //command.Dispose();
             }
             catch (Exception ex)
             {
@@ -3698,8 +3699,8 @@ namespace RocksmithToolkitGUI.DLCManager
             command.CommandText += " WHERE not ID IN (" + SearchCmd.Replace("*", "ID").Replace(";", "") + ")";
             try
             {
-                command.CommandType = CommandType.Text;
-                cnn.Open();
+                //command.CommandType = CommandType.Text;
+                //cnn.Open();
                 command.ExecuteNonQuery();
                 cnn.Close();
                 command.Dispose();

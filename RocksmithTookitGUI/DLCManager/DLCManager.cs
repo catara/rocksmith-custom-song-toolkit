@@ -4138,10 +4138,12 @@ namespace RocksmithToolkitGUI.DLCManager
 
                             //REMOVE DD
                             //rtxt_StatisticsOnReadDLCs.Text = "...=.." + xml + "\n\n" + rtxt_StatisticsOnReadDLCs.Text;
+                            var aa = xml.IndexOf("showlights");
+                            if (aa<1) 
                             if ((!(chbx_Additional_Manipulations.GetItemChecked(52) && file.Keep_BassDD == "Yes") && Path.GetFileNameWithoutExtension(xml).ToLower().Contains("bass") && file.Has_BassDD == "Yes" && !Path.GetFileNameWithoutExtension(xml).ToLower().Contains(".old") && chbx_Additional_Manipulations.GetItemChecked(5))
                                 || (!(chbx_Additional_Manipulations.GetItemChecked(53) && file.Keep_DD=="Yes") && ((Path.GetFileNameWithoutExtension(xml).ToLower().Contains("lead") || Path.GetFileNameWithoutExtension(xml).ToLower().Contains("combo") || Path.GetFileNameWithoutExtension(xml).ToLower().Contains("rthythm")))
-                                && file.Has_Guitar == "Yes" && !Path.GetFileNameWithoutExtension(xml).ToLower().Contains(".old") && chbx_Additional_Manipulations.GetItemChecked(3))
-                               )
+                                  && file.Has_Guitar == "Yes" && !Path.GetFileNameWithoutExtension(xml).ToLower().Contains(".old") && chbx_Additional_Manipulations.GetItemChecked(3))
+                               && (xml.IndexOf("showlights") <1))
                             // continue;
                             {
                                 if (chbx_Additional_Manipulations.GetItemChecked(5) && !chbx_Additional_Manipulations.GetItemChecked(3) && !Path.GetFileNameWithoutExtension(xml).ToLower().Contains("bass")) continue;
@@ -4283,8 +4285,9 @@ namespace RocksmithToolkitGUI.DLCManager
                     var rrt = ConfigRepository.Instance()["general_defaultauthor"];
                     if ((file.Author == "Custom Song Creator" || file.Author == "") && rrt != "Custom Song Creator" && chbx_Additional_Manipulations.GetItemChecked(47))
                         file.Author = "RepackedBy" + ConfigRepository.Instance()["general_defaultauthor"].ToUpper();
+                    if (chbx_Additional_Manipulations.GetItemChecked(54)) file.Is_Beta = "Yes";
 
-                    var norm_path = txt_TempPath.Text + "\\0_repacked\\" + ((file.ToolkitVersion == "") ? "ORIG" : "CDLC") + "_" + data.SongInfo.Artist + "_" + data.SongInfo.SongYear + "_" + data.SongInfo.Album + "_" + data.SongInfo.SongDisplayName;
+                        var norm_path = txt_TempPath.Text + "\\0_repacked\\" + ((file.ToolkitVersion == "") ? "ORIG" : "CDLC") + "_" + data.SongInfo.Artist + "_" + data.SongInfo.SongYear + "_" + data.SongInfo.Album + "_" + data.SongInfo.SongDisplayName;
                     //rtxt_StatisticsOnReadDLCs.Text = "8"+data.PackageVersion+"...manipul" + norm_path + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                     //manipulating the info
                     if (cbx_Activ_Title.Checked)
@@ -4533,11 +4536,12 @@ namespace RocksmithToolkitGUI.DLCManager
                     {
                         if (bassRemoved == "Yes") file.Has_BassDD = "Yes";
                         foreach (var xml in xmlFiles)
-                        {
-                            //rtxt_StatisticsOnReadDLCs.Text = "...=.." + xml + "\n\n" + rtxt_StatisticsOnReadDLCs.Text;
-                            if ((Path.GetFileNameWithoutExtension(xml).ToLower().Contains("bass") && file.Has_BassDD == "Yes" && xml.ToLower().Contains(".old") && chbx_Additional_Manipulations.GetItemChecked(5))
+                        { 
+                            if (!(Path.GetFileNameWithoutExtension(xml).ToLower().Contains("showlights")))
+                                //rtxt_StatisticsOnReadDLCs.Text = "...=.." + xml + "\n\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                if ((Path.GetFileNameWithoutExtension(xml).ToLower().Contains("bass") && file.Has_BassDD == "Yes" && xml.ToLower().Contains(".old") && chbx_Additional_Manipulations.GetItemChecked(5))
                                 || ((Path.GetFileNameWithoutExtension(xml).ToLower().Contains("lead") || Path.GetFileNameWithoutExtension(xml).ToLower().Contains("rhythm") || Path.GetFileNameWithoutExtension(xml).ToLower().Contains("combo"))
-                                    && file.Has_Guitar == "Yes" && xml.ToLower().Contains(".old") && chbx_Additional_Manipulations.GetItemChecked(3)))
+                                   && file.Has_Guitar == "Yes" && xml.ToLower().Contains(".old") && chbx_Additional_Manipulations.GetItemChecked(3)))
                             // continue;
                             {
                                 if (chbx_Additional_Manipulations.GetItemChecked(5) && !chbx_Additional_Manipulations.GetItemChecked(3) && !Path.GetFileNameWithoutExtension(xml).ToLower().Contains("bass")) continue;

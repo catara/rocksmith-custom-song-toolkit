@@ -1315,7 +1315,7 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             if (!Directory.Exists(txt_TempPath.Text) || !Directory.Exists(Temp_Path_Import) || !Directory.Exists(pathDLC) || !Directory.Exists(old_Path_Import) || !Directory.Exists(broken_Path_Import) || !Directory.Exists(dupli_Path_Import) || !Directory.Exists(dlcpacks + "\\temp") || !Directory.Exists(dlcpacks + "\\manipulated") || !Directory.Exists(dlcpacks + "\\manifests") || !Directory.Exists(dlcpacks + "\\manipulated\\temp") || !Directory.Exists(repacked_path) || !Directory.Exists(repacked_XBOXPath) || !Directory.Exists(repacked_PCPath) || !Directory.Exists(repacked_MACPath) || !Directory.Exists(repacked_PSPath) || !Directory.Exists(log_Path))
             {
-                MessageBox.Show(String.Format("One of the mandatory backend, folder is missing " + txt_TempPath.Text + ", " + Temp_Path_Import + ", " + pathDLC + ", " + old_Path_Import + ", " + broken_Path_Import + ", " + dupli_Path_Import + ", " + dlcpacks + "(manipulated or manipulated-temp or manifests or temp), " + repacked_path+ "(split by platform), "+ log_Path, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error));
+                MessageBox.Show(String.Format("One of the mandatory backend, folder is missing " + txt_TempPath.Text + ", " + Temp_Path_Import + ", " + pathDLC + ", " + old_Path_Import + ", " + broken_Path_Import + ", " + dupli_Path_Import + ", " + dlcpacks + "(manipulated or manipulated-temp or manifests or temp), " + repacked_path + "(split by platform), " + log_Path, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error));
                 try
                 {
                     DirectoryInfo di;
@@ -1945,7 +1945,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                         pB_ReadDLCs.Increment(1);
 
                                         //calculate if has DD (Dynamic Dificulty)..if at least 1 track has a difficulty bigger than 1 then it has
-                                        var xmlFiles = Directory.GetFiles(unpackedDir+"\\songs", "*.xml", SearchOption.AllDirectories);
+                                        var xmlFiles = Directory.GetFiles(unpackedDir + "\\songs", "*.xml", SearchOption.AllDirectories);
                                         platform = FullPath.GetPlatform();
                                         var g = 0;
                                         List<string> clist = new List<string>();
@@ -1988,28 +1988,21 @@ namespace RocksmithToolkitGUI.DLCManager
                                                 Console.WriteLine(ee.Message);
                                                 continue;
                                             }
-                                            //rtxt_StatisticsOnReadDLCs.Text = "xxx\n" + rtxt_StatisticsOnReadDLCs.Text;
+
                                             var manifestFunctions = new ManifestFunctions(platform.version);
-                                            //rtxt_StatisticsOnReadDLCs.Text = "aaa\n" + rtxt_StatisticsOnReadDLCs.Text;
                                             //Get sections and lastconvdate
                                             var json = Directory.GetFiles(unpackedDir, String.Format("*{0}.json", Path.GetFileNameWithoutExtension(xml)), SearchOption.AllDirectories);
-                                            //rtxt_StatisticsOnReadDLCs.Text = json.Length + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                             if (json.Length > 0)//&& g==1
                                             {
                                                 foreach (var fl in json)
                                                 {
-                                                    //rtxt_StatisticsOnReadDLCs.Text = Path.GetFileNameWithoutExtension(fl).ToLower() + " name " +"\n" + rtxt_StatisticsOnReadDLCs.Text;
-
                                                     if (Path.GetFileNameWithoutExtension(fl).ToLower().Contains("bass") || Path.GetFileNameWithoutExtension(fl).ToLower().Contains("lead") || Path.GetFileNameWithoutExtension(fl).ToLower().Contains("rhythm") || Path.GetFileNameWithoutExtension(fl).ToLower().Contains("combo"))
                                                     {
                                                         Attributes2014 attr = Manifest2014<Attributes2014>.LoadFromFile(fl).Entries.ToArray()[0].Value.ToArray()[0].Value;
                                                         manifestFunctions.GenerateSectionData(attr, xmlContent);
-                                                        //rtxt_StatisticsOnReadDLCs.Text = Path.GetFileNameWithoutExtension(fl).ToLower() + " json lastconv date: " + attr.LastConversionDateTime + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                                                        //rtxt_StatisticsOnReadDLCs.Text = json.Length + "sections: " + attr.Sections.Count + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                                         if (attr.Sections.Count == 0) sect1on = "No";
                                                         clist.Add(attr.LastConversionDateTime);
                                                         dlist.Add((attr.Sections.Count > 0 ? "Yes" : "No"));
-                                                        //rtxt_StatisticsOnReadDLCs.Text = "techniques count: " + attr.Techniques.Count + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                                     }
                                                     else
                                                     {
@@ -2025,16 +2018,20 @@ namespace RocksmithToolkitGUI.DLCManager
                                             if (manifestFunctions.GetMaxDifficulty(xmlContent) > 1) DD = "Yes";
 
                                             //Bass_Has_DD
-                                            //rtxt_StatisticsOnReadDLCs.Text = "\n chekin for BassDD" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                             var manifestFunctions1 = new ManifestFunctions(platform.version);
-                                            if (Path.GetFileNameWithoutExtension(xml).ToLower().Contains("bass"))
+                                            xmlContent = null;
+                                            try
                                             {
-                                                //rtxt_StatisticsOnReadDLCs.Text = "\n still chekin for BassDD" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                                                platform.version = RocksmithToolkitLib.GameVersion.RS2014;
-                                                Song2014 xmlContent1 = Song2014.LoadFromFile(xml);
-
-                                                if (manifestFunctions1.GetMaxDifficulty(xmlContent1) > 1)
-                                                    Bass_Has_DD = "Yes";
+                                                xmlContent = Song2014.LoadFromFile(xml);
+                                                if (xmlContent.Arrangement.ToLower() == "bass")
+                                                {
+                                                    platform.version = RocksmithToolkitLib.GameVersion.RS2014;
+                                                    if (manifestFunctions1.GetMaxDifficulty(xmlContent) > 1)
+                                                        Bass_Has_DD = "Yes";
+                                                }
+                                            }
+                                            catch (Exception ee)
+                                            {
                                             }
                                         }
 
@@ -2625,7 +2622,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                                         {
                                                             if (!File.Exists(ConfigRepository.Instance()["general_wwisepath"] + "\\Authoring\\Win32\\Release\\bin\\Wwise.exe"))//Help\\WwiseHelp_en.chm"))//
                                                             {
-                                                                ErrorWindow frm1 = new ErrorWindow("Please Install Wwise v2014.1.6 build 5318with Authorithy binaries : " + Environment.NewLine + "A restart is required for the Conversion to WEM, process to be succesfull, else the errors can be captured through the Missing Files Query"+Environment.NewLine, "https://www.audiokinetic.com/download/", "Error at WEM Creation", true, true);
+                                                                ErrorWindow frm1 = new ErrorWindow("Please Install Wwise v2014.1.6 build 5318with Authorithy binaries : " + Environment.NewLine + "A restart is required for the Conversion to WEM, process to be succesfull, else the errors can be captured through the Missing Files Query" + Environment.NewLine, "https://www.audiokinetic.com/download/", "Error at WEM Creation", true, true);
                                                                 frm1.ShowDialog();
                                                                 if (frm1.IgnoreSong) break;
                                                                 if (frm1.StopImport) { j = 10; break; }
@@ -4126,36 +4123,35 @@ namespace RocksmithToolkitGUI.DLCManager
 
 
                                 if (chbx_Additional_Manipulations.GetItemChecked(12) || chbx_Additional_Manipulations.GetItemChecked(26))
-                                //ADD DD
-                                if (
-                                    (//chbx_Additional_Manipualtions.GetItemChecked(12)
-                            false && !Path.GetFileNameWithoutExtension(xml).ToLower().Contains(".old")
-                                    && ((xmlContent.Arrangement=="Lead" || xmlContent.Arrangement == "combo" || xmlContent.Arrangement == "rthythm") && file.Has_DD == "No") || (xmlContent.Arrangement == "bass" && file.Has_BassDD == "No")
-                                    )
-                                    || //chbx_Additional_Manipualtions.GetItemChecked(26)
-                            (false && (xmlContent.Arrangement == "lead" || xmlContent.Arrangement == "combo" || xmlContent.Arrangement == "rthythm")
-                                    && file.Has_DD == "No" && file.Has_Guitar == "Yes" && !Path.GetFileNameWithoutExtension(xml).ToLower().Contains(".old")
-                                    )
-                                   )
-                                {
-                                    DDAdded = (AddDD(file.Folder_Name, file.Is_Original, xml, platform, chbx_Additional_Manipulations.GetItemChecked(36), chbx_Additional_Manipulations.GetItemChecked(31), "5") == "Yes") ? "No" : "Yes";
-                                    file.Has_BassDD = (DDAdded == "Yes") ? "Yes" : "No";
-                                }
+                                    //ADD DD
+                                    if (
+                                        (false && !Path.GetFileNameWithoutExtension(xml).ToLower().Contains(".old")
+                                        && ((xmlContent.Arrangement.ToLower() == "lead" || xmlContent.Arrangement.ToLower() == "combo" || xmlContent.Arrangement.ToLower() == "rthythm") && file.Has_DD == "No") || (xmlContent.Arrangement.ToLower() == "bass" && file.Has_BassDD == "No")
+                                        )
+                                        || //chbx_Additional_Manipualtions.GetItemChecked(26)
+                                        (false && (xmlContent.Arrangement.ToLower() == "lead" || xmlContent.Arrangement.ToLower() == "combo" || xmlContent.Arrangement.ToLower() == "rthythm")
+                                        && file.Has_DD == "No" && file.Has_Guitar == "Yes" && !Path.GetFileNameWithoutExtension(xml).ToLower().Contains(".old")
+                                        )
+                                       )
+                                    {
+                                        DDAdded = (AddDD(file.Folder_Name, file.Is_Original, xml, platform, chbx_Additional_Manipulations.GetItemChecked(36), chbx_Additional_Manipulations.GetItemChecked(31), "5") == "Yes") ? "No" : "Yes";
+                                        file.Has_BassDD = (DDAdded == "Yes") ? "Yes" : "No";
+                                    }
 
-                            //REMOVE DD
-                            //rtxt_StatisticsOnReadDLCs.Text = "...=.." + xml + "\n\n" + rtxt_StatisticsOnReadDLCs.Text;
-                            //var aa = xml.IndexOf("showlights");
-                            //if (aa<1) && (xml.IndexOf("showlights") <1)
-                            if ((!(chbx_Additional_Manipulations.GetItemChecked(52) && file.Keep_BassDD == "Yes") && xmlContent.Arrangement == "bass" && file.Has_BassDD == "Yes" && !Path.GetFileNameWithoutExtension(xml).ToLower().Contains(".old") && chbx_Additional_Manipulations.GetItemChecked(5))
-                                || (!(chbx_Additional_Manipulations.GetItemChecked(53) && file.Keep_DD=="Yes") && ((xmlContent.Arrangement == "lead" || xmlContent.Arrangement == "combo" || xmlContent.Arrangement == "rthythm"))
-                                  && file.Has_Guitar == "Yes" && !Path.GetFileNameWithoutExtension(xml).ToLower().Contains(".old") && chbx_Additional_Manipulations.GetItemChecked(3))
-                               )
-                            // continue;
-                            {
-                                if (chbx_Additional_Manipulations.GetItemChecked(5) && !chbx_Additional_Manipulations.GetItemChecked(3) && !(xmlContent.Arrangement == "bass")) continue;
-                                bassRemoved = (RemoveDD(file.Folder_Name, file.Is_Original, xml, platform, chbx_Additional_Manipulations.GetItemChecked(36), chbx_Additional_Manipulations.GetItemChecked(31)) == "Yes") ? "No" : "Yes";
-                                file.Has_BassDD = (bassRemoved == "Yes") ? "No" : "Yes";
-                            }
+                                //REMOVE DD
+                                //rtxt_StatisticsOnReadDLCs.Text = "...=.." + xml + "\n\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                //var aa = xml.IndexOf("showlights");
+                                //if (aa<1) && (xml.IndexOf("showlights") <1)
+                                if ((!(chbx_Additional_Manipulations.GetItemChecked(52) && file.Keep_BassDD == "Yes") && xmlContent.Arrangement.ToLower() == "bass" && file.Has_BassDD == "Yes" && !Path.GetFileNameWithoutExtension(xml).ToLower().Contains(".old") && chbx_Additional_Manipulations.GetItemChecked(5))
+                                    || (!(chbx_Additional_Manipulations.GetItemChecked(53) && file.Keep_DD == "Yes") && ((xmlContent.Arrangement.ToLower() == "lead" || xmlContent.Arrangement.ToLower() == "combo" || xmlContent.Arrangement.ToLower() == "rthythm"))
+                                      && file.Has_Guitar == "Yes" && !Path.GetFileNameWithoutExtension(xml).ToLower().Contains(".old") && chbx_Additional_Manipulations.GetItemChecked(3))
+                                   )
+                                // continue;
+                                {
+                                    if (chbx_Additional_Manipulations.GetItemChecked(5) && !chbx_Additional_Manipulations.GetItemChecked(3) && !(xmlContent.Arrangement.ToLower() == "bass")) continue;
+                                    bassRemoved = (RemoveDD(file.Folder_Name, file.Is_Original, xml, platform, chbx_Additional_Manipulations.GetItemChecked(36), chbx_Additional_Manipulations.GetItemChecked(31)) == "Yes") ? "No" : "Yes";
+                                    file.Has_BassDD = (bassRemoved == "Yes") ? "No" : "Yes";
+                                }
                             }
                             catch (Exception ee)
                             {
@@ -4296,7 +4292,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         file.Author = "RepackedBy" + ConfigRepository.Instance()["general_defaultauthor"].ToUpper();
                     if (chbx_Additional_Manipulations.GetItemChecked(54)) file.Is_Beta = "Yes";
 
-                        var norm_path = txt_TempPath.Text + "\\0_repacked\\" + ((file.ToolkitVersion == "") ? "ORIG" : "CDLC") + "_" + data.SongInfo.Artist + "_" + data.SongInfo.SongYear + "_" + data.SongInfo.Album + "_" + data.SongInfo.SongDisplayName;
+                    var norm_path = txt_TempPath.Text + "\\0_repacked\\" + ((file.ToolkitVersion == "") ? "ORIG" : "CDLC") + "_" + data.SongInfo.Artist + "_" + data.SongInfo.SongYear + "_" + data.SongInfo.Album + "_" + data.SongInfo.SongDisplayName;
                     //rtxt_StatisticsOnReadDLCs.Text = "8"+data.PackageVersion+"...manipul" + norm_path + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                     //manipulating the info
                     if (cbx_Activ_Title.Checked)
@@ -4405,7 +4401,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         FN = FN.Replace(" ", "_");
                     }
 
-                    dlcSavePath = txt_TempPath.Text + "\\0_repacked\\" + (chbx_XBOX360.Checked ? "XBOX360" : chbx_PC.Checked ? "PC" : chbx_Mac.Checked? "MAC" :chbx_PS3.Checked ? "PS3":"") + "\\"+FN;
+                    dlcSavePath = txt_TempPath.Text + "\\0_repacked\\" + (chbx_XBOX360.Checked ? "XBOX360" : chbx_PC.Checked ? "PC" : chbx_Mac.Checked ? "MAC" : chbx_PS3.Checked ? "PS3" : "") + "\\" + FN;
                     //rtxt_StatisticsOnReadDLCs.Text = "rez : " + dlcSavePath + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                     //if (GameVersion.RS2014 == GameVersion.RS2012) //old code
                     //{
@@ -4535,7 +4531,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         dest = txt_RocksmithDLCPath.Text;
                         //File.Copy(RocksmithDLCPath + "\\rs1compatibilitydlc" + platfrm + ".psarc", dest + "\\rs1compatibilitydlc" + platfrm + ".psarc.orig", false);
                         File.Copy(source, dest + "\\" + FN + (chbx_PC.Checked ? "_p" : (chbx_Mac.Checked ? "_m" : "") + ".psarc"), true);
-                        
+
                     }
 
                     //Restore the DDremoved copies
@@ -4545,26 +4541,32 @@ namespace RocksmithToolkitGUI.DLCManager
                     {
                         if (bassRemoved == "Yes") file.Has_BassDD = "Yes";
                         foreach (var xml in xmlFiles)
-                        { 
-                            if (!(Path.GetFileNameWithoutExtension(xml).ToLower().Contains("showlights")))
-                                //rtxt_StatisticsOnReadDLCs.Text = "...=.." + xml + "\n\n" + rtxt_StatisticsOnReadDLCs.Text;
-                                if ((Path.GetFileNameWithoutExtension(xml).ToLower().Contains("bass") && file.Has_BassDD == "Yes" && xml.ToLower().Contains(".old") && chbx_Additional_Manipulations.GetItemChecked(5))
-                                || ((Path.GetFileNameWithoutExtension(xml).ToLower().Contains("lead") || Path.GetFileNameWithoutExtension(xml).ToLower().Contains("rhythm") || Path.GetFileNameWithoutExtension(xml).ToLower().Contains("combo"))
-                                   && file.Has_Guitar == "Yes" && xml.ToLower().Contains(".old") && chbx_Additional_Manipulations.GetItemChecked(3)))
-                            // continue;
+                        {
+                            Song2014 xmlContent = null;
+                            try
                             {
-                                if (chbx_Additional_Manipulations.GetItemChecked(5) && !chbx_Additional_Manipulations.GetItemChecked(3) && !Path.GetFileNameWithoutExtension(xml).ToLower().Contains("bass")) continue;
-                                //Save a copy
-                                File.Copy(xml.Replace(".old", ""), xml.Replace(".old", ".woDD"), true);
-                                File.Copy(xml, xml.Replace(".old", ""), true);
-                                var json = "";
-                                if (chbx_Additional_Manipulations.GetItemChecked(36)) //37. Keep the Uncompressed Songs superorganized                 
-                                    json = xml.Replace("EOF", "Toolkit").Replace(".xml", ".json");
-                                else
-                                    json = xml.Replace("songs\\arr", calc_path(Directory.GetFiles(file.Folder_Name, "*.json", SearchOption.AllDirectories)[0])).Replace(".xml", ".json");
+                                xmlContent = Song2014.LoadFromFile(xml);
+                                if ((!(chbx_Additional_Manipulations.GetItemChecked(52) && file.Keep_BassDD == "Yes") && xmlContent.Arrangement.ToLower() == "bass" && file.Has_BassDD == "Yes" && !Path.GetFileNameWithoutExtension(xml).ToLower().Contains(".old") && chbx_Additional_Manipulations.GetItemChecked(5))
+                                    || (!(chbx_Additional_Manipulations.GetItemChecked(53) && file.Keep_DD == "Yes") && ((xmlContent.Arrangement.ToLower() == "lead" || xmlContent.Arrangement.ToLower() == "combo" || xmlContent.Arrangement.ToLower() == "rthythm"))
+                                      && file.Has_Guitar == "Yes" && !Path.GetFileNameWithoutExtension(xml).ToLower().Contains(".old") && chbx_Additional_Manipulations.GetItemChecked(3))
+                                   )
+                                { 
+                                    if (chbx_Additional_Manipulations.GetItemChecked(5) && !chbx_Additional_Manipulations.GetItemChecked(3) && !(xmlContent.Arrangement.ToLower()=="bass")) continue;
+                                    //Save a copy
+                                    File.Copy(xml.Replace(".old", ""), xml.Replace(".old", ".woDD"), true);
+                                    File.Copy(xml, xml.Replace(".old", ""), true);
+                                    var json = "";
+                                    if (chbx_Additional_Manipulations.GetItemChecked(36)) //37. Keep the Uncompressed Songs superorganized                 
+                                        json = xml.Replace("EOF", "Toolkit").Replace(".xml", ".json");
+                                    else
+                                        json = xml.Replace("songs\\arr", calc_path(Directory.GetFiles(file.Folder_Name, "*.json", SearchOption.AllDirectories)[0])).Replace(".xml", ".json");
 
-                                File.Copy(json.Replace(".old", ""), json.Replace(".old", ".woDD"), true);
-                                File.Copy(json, json.Replace(".old", ""), true);
+                                    File.Copy(json.Replace(".old", ""), json.Replace(".old", ".woDD"), true);
+                                    File.Copy(json, json.Replace(".old", ""), true);
+                                }
+                            }
+                            catch (Exception ee)
+                            {
                             }
                         }
                     }
@@ -6062,7 +6064,7 @@ namespace RocksmithToolkitGUI.DLCManager
             else
             {
                 MessageBox.Show("File " + currn + " " + futuren + " too big to rename");
-                return currn;                
+                return currn;
             }
         }
     }

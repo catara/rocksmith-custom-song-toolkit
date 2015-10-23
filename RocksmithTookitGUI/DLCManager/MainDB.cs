@@ -78,8 +78,8 @@ namespace RocksmithToolkitGUI.DLCManager
 
             btn_Copy_old.Text = char.ConvertFromUtf32(8595);
             btn_Copy_old.Enabled = true;
-
-            SearchCmd = "SELECT * FROM Main ORDER BY Artist, Album_Year, Album, Song_Title;";
+            var Fields = "ID, Artist, Song_Title, Track_No, Album, Album_Year, Author, Version, Import_Date, Is_Original, Selected, Tunning, Bass_Picking, Is_Beta, Platform, Has_DD, Bass_Has_DD, Is_Alternate, Is_Multitrack, Is_Broken, MultiTrack_Version, Alternate_Version_No, Groups, Rating, Description, PreviewTime, PreviewLenght, Comments, FilesMissingIssues, DLC_AppID, DLC_Name, Artist_Sort, Song_Title_Sort, AverageTempo, Volume, Preview_Volume, SignatureType, ToolkitVersion, AlbumArtPath, AudioPath, audioPreviewPath, OggPath, oggPreviewPath, AlbumArt_Hash, Audio_Hash, audioPreview_Hash, File_Size, Current_FileName, Original_FileName, Import_Path, Folder_Name, File_Hash, Original_File_Hash, Has_Bass, Has_Guitar, Has_Lead, Has_Rhythm, Has_Combo, Has_Vocals, Has_Bonus_Arrangement, Has_Sections, Has_Cover, Has_Preview, Has_Custom_Tone, Has_Version, Has_Author, Has_Track_No, Has_Been_Corrected, Pack, Available_Old, Available_Duplicate, Tones, Keep_BassDD, Keep_DD, Keep_Original, Show_DD, Original, YouTube_Link, Youtube_Playthrough, CustomForge_Followers, CustomForge_Version, CustomsForge_Link, CustomsForge_Like, CustomsForge_ReleaseNotes, UniqueDLCName, Artist_ShortName, Album_ShortName, DLC, Is_OLD";
+            SearchCmd = "SELECT " + Fields + " FROM Main ORDER BY Artist, Album_Year, Album, Song_Title;";
             Populate(ref DataViewGrid, ref Main);//, ref bsPositions, ref bsBadges);
             DataViewGrid.EditingControlShowing += DataGridView1_EditingControlShowing;
             btn_Search.Enabled = false;
@@ -112,7 +112,7 @@ namespace RocksmithToolkitGUI.DLCManager
             if (ConfigRepository.Instance()["general_defaultauthor"] == "" || ConfigRepository.Instance()["general_defaultauthor"] == "Custom Song Creator") ConfigRepository.Instance()["general_defaultauthor"] = "catara";
             //MessageBox.Show(updateDBb.ToString());
             if (lbl_NoRec.Text != "0 records." && noOfRec > 0)
-                if (!Directory.Exists(DataViewGrid.Rows[0].Cells[22].Value.ToString()) || updateDBb)
+                if (!Directory.Exists(DataViewGrid.Rows[0].Cells["Folder_Name"].Value.ToString()) || updateDBb)
                 {
                     var tmpp = "\\ORIG"; var OLD_Path = ""; var cmd = "";
                     for (var h = 0; h < 2; h++)
@@ -126,8 +126,9 @@ namespace RocksmithToolkitGUI.DLCManager
                                 OleDbDataAdapter dal = new OleDbDataAdapter(SearchCmd1, cnn); //WHERE id=253
                                 dal.Fill(duk, "Main");
 
-                                //dax.Dispose();
-                                OLD_Path = duk.Tables[0].Rows[0].ItemArray[0].ToString().Substring(0, duk.Tables[0].Rows[0].ItemArray[0].ToString().IndexOf(tmpp)) + tmpp;
+                                if (duk.Tables[0].Rows.Count > 0)
+                                    OLD_Path = duk.Tables[0].Rows[0].ItemArray[0].ToString().Substring(0, duk.Tables[0].Rows[0].ItemArray[0].ToString().IndexOf(tmpp)) + tmpp;
+                                if (OLD_Path!="")
                                 if (!Directory.Exists(OLD_Path) || updateDBb)
                                 {
                                     //var cmd = "UPDATE Main SET AlbumArtPath=REPLACE(AlbumArtPath,'" + OLD_Path + "','" + TempPath + tmpp + "'), AudioPath=REPLACE(AudioPath,'" + OLD_Path + "','" + TempPath + tmpp + "')";
@@ -409,9 +410,9 @@ namespace RocksmithToolkitGUI.DLCManager
                     if (DataViewGrid.Rows[i].Cells["Has_DD"].Value.ToString() == "Yes") { numericUpDown1.Enabled = false; chbx_DD.Checked = true; btn_RemoveDD.Enabled = true; btn_AddDD.Enabled = false; }
                     else { chbx_DD.Checked = false; btn_AddDD.Enabled = true; btn_RemoveDD.Enabled = false; } //numericUpDown1.Enabled = true;
                     if (DataViewGrid.Rows[i].Cells["Keep_BassDD"].Value.ToString() == "Yes") { chbx_KeepBassDD.Checked = true; }
-                    else { chbx_KeepBassDD.Checked = false;  }
+                    else { chbx_KeepBassDD.Checked = false; }
                     if (DataViewGrid.Rows[i].Cells["Keep_DD"].Value.ToString() == "Yes") { chbx_KeepDD.Checked = true; }
-                    else { chbx_KeepDD.Checked = false;  }
+                    else { chbx_KeepDD.Checked = false; }
                     if (DataViewGrid.Rows[i].Cells["Selected"].Value.ToString() == "Yes") chbx_Selected.Checked = true;
                     else chbx_Selected.Checked = false;
                     if (DataViewGrid.Rows[i].Cells["Has_Author"].Value.ToString() == "Yes") chbx_Author.Checked = true;
@@ -768,7 +769,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 {
                     MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     MessageBox.Show("-DB Open in Design Mode or Download Connectivity patch @ https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734");
-                    ErrorWindow frm1 = new ErrorWindow("DB Open in Design Mode or Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error when opening the DB",false,false);
+                    ErrorWindow frm1 = new ErrorWindow("DB Open in Design Mode or Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error when opening the DB", false, false);
                     frm1.ShowDialog();
                     return;
                 }
@@ -783,16 +784,16 @@ namespace RocksmithToolkitGUI.DLCManager
                 //da.Fill(ds, "Badge");
             }
             //MessageBox.Show("test");
-            DataGridViewTextBoxColumn ID = new DataGridViewTextBoxColumn { DataPropertyName = "ID", DisplayIndex = 1, Width = 50, HeaderText = "ID " };
-            DataGridViewTextBoxColumn Artist = new DataGridViewTextBoxColumn { DataPropertyName = "Artist", DisplayIndex = 2, HeaderText = "Artist " };
-            DataGridViewTextBoxColumn Song_Title = new DataGridViewTextBoxColumn { DataPropertyName = "Song_Title", DisplayIndex = 3, HeaderText = "Song_Title " };
-            DataGridViewTextBoxColumn Album = new DataGridViewTextBoxColumn { DataPropertyName = "Album", HeaderText = "Album " };
-            DataGridViewTextBoxColumn Album_Year = new DataGridViewTextBoxColumn { DataPropertyName = "Album_Year", HeaderText = "Album_Year " };
-            DataGridViewTextBoxColumn Track_No = new DataGridViewTextBoxColumn { DataPropertyName = "Track_No", HeaderText = "Track_No " };
-            DataGridViewTextBoxColumn Author = new DataGridViewTextBoxColumn { DataPropertyName = "Author", HeaderText = "Author " };
-            DataGridViewTextBoxColumn Version = new DataGridViewTextBoxColumn { DataPropertyName = "Version", HeaderText = "Version " };
-            DataGridViewTextBoxColumn Import_Date = new DataGridViewTextBoxColumn { DataPropertyName = "Import_Date", HeaderText = "Import_Date " };
-            DataGridViewTextBoxColumn Is_Original = new DataGridViewTextBoxColumn { DataPropertyName = "Is_Original", HeaderText = "Is_Original " };
+            DataGridViewTextBoxColumn ID = new DataGridViewTextBoxColumn { DataPropertyName = "ID", DisplayIndex = 0, Width = 50, HeaderText = "ID " };
+            DataGridViewTextBoxColumn Artist = new DataGridViewTextBoxColumn { DataPropertyName = "Artist", DisplayIndex = 1, HeaderText = "Artist " };
+            DataGridViewTextBoxColumn Song_Title = new DataGridViewTextBoxColumn { DataPropertyName = "Song_Title", DisplayIndex = 2, HeaderText = "Song_Title " };
+            DataGridViewTextBoxColumn Album = new DataGridViewTextBoxColumn { DataPropertyName = "Album", DisplayIndex = 3, HeaderText = "Album " };
+            DataGridViewTextBoxColumn Album_Year = new DataGridViewTextBoxColumn { DataPropertyName = "Album_Year", DisplayIndex = 4, HeaderText = "Album_Year " };
+            DataGridViewTextBoxColumn Track_No = new DataGridViewTextBoxColumn { DataPropertyName = "Track_No", DisplayIndex = 5, HeaderText = "Track_No " };
+            DataGridViewTextBoxColumn Author = new DataGridViewTextBoxColumn { DataPropertyName = "Author", DisplayIndex = 6, HeaderText = "Author " };
+            DataGridViewTextBoxColumn Version = new DataGridViewTextBoxColumn { DataPropertyName = "Version", DisplayIndex = 7, HeaderText = "Version " };
+            DataGridViewTextBoxColumn Import_Date = new DataGridViewTextBoxColumn { DataPropertyName = "Import_Date", DisplayIndex = 8, HeaderText = "Import_Date " };
+            DataGridViewTextBoxColumn Is_Original = new DataGridViewTextBoxColumn { DataPropertyName = "Is_Original", DisplayIndex = 9, HeaderText = "Is_Original " };
 
             DataGridViewTextBoxColumn Song_Title_Sort = new DataGridViewTextBoxColumn { DataPropertyName = "Song_Title_Sort", HeaderText = "Song_Title_Sort " };
             DataGridViewTextBoxColumn Artist_Sort = new DataGridViewTextBoxColumn { DataPropertyName = "Artist_Sort", HeaderText = "Artist_Sort " };
@@ -1796,10 +1797,10 @@ namespace RocksmithToolkitGUI.DLCManager
             var bassRemoved = "";
 
             var i = DataViewGrid.SelectedCells[0].RowIndex;
-            if (chbx_RemoveBassDD.Checked && chbx_BassDD.Checked && (!chbx_KeepBassDD.Checked&& !(ConfigRepository.Instance()["dlcm_AdditionalManipul52"] == "Yes")) && (!chbx_KeepDD.Checked && !(ConfigRepository.Instance()["dlcm_AdditionalManipul53"] == "Yes")))
+            if (chbx_RemoveBassDD.Checked && chbx_BassDD.Checked && (!(chbx_KeepBassDD.Checked && ConfigRepository.Instance()["dlcm_AdditionalManipul52"] == "Yes") || !(chbx_KeepDD.Checked && ConfigRepository.Instance()["dlcm_AdditionalManipul53"] == "Yes")))
             {
-                var xmlFiles = Directory.GetFiles(DataViewGrid.Rows[i].Cells[22].Value.ToString(), "*.xml", SearchOption.AllDirectories);
-                Platform platform = DataViewGrid.Rows[i].Cells[22].Value.ToString().GetPlatform();
+                var xmlFiles = Directory.GetFiles(DataViewGrid.Rows[i].Cells["Folder_Name"].Value.ToString(), "*.xml", SearchOption.AllDirectories);
+                Platform platform = DataViewGrid.Rows[i].Cells["Folder_Name"].Value.ToString().GetPlatform();
 
                 foreach (var xml in xmlFiles)
                 {
@@ -1807,9 +1808,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     try
                     {
                         xmlContent = Song2014.LoadFromFile(xml);
-
-                        if (xmlContent.Arrangement == "bass" && !(xml.IndexOf(".old") > 0))// && !(xml.IndexOf("showlights") > 0)
-                        //chbx_Additional_Manipulations.GetItemChecked(3) || chbx_Additional_Manipulations.GetItemChecked(5) || chbx_Additional_Manipulations.GetItemChecked(12) || chbx_Additional_Manipulations.GetItemChecked(26))
+                        if (xmlContent.Arrangement.ToLower() == "bass" && !(xml.IndexOf(".old") > 0))
                         {
                             bassRemoved = (DLCManager.RemoveDD(DataViewGrid.Rows[i].Cells["Folder_Name"].Value.ToString(), chbx_Original.Text, xml, platform, false, false) == "Yes") ? "No" : "Yes";
                         }
@@ -1821,7 +1820,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 }
             }
 
-            string h = GeneratePackage(txt_ID.Text, bassRemoved == "No" ? false:true);
+            string h = GeneratePackage(txt_ID.Text, bassRemoved == "No" ? false : true);
             string copyftp = "";
             pB_ReadDLCs.Increment(1);
             if (chbx_Format.Text == "PS3" && chbx_Copy.Checked)
@@ -1854,19 +1853,26 @@ namespace RocksmithToolkitGUI.DLCManager
                 copyftp = "and " + copyftp + " Copied";
             }
 
-            if (chbx_RemoveBassDD.Checked && chbx_BassDD.Checked)
+            if (chbx_RemoveBassDD.Checked && chbx_BassDD.Checked && !(chbx_KeepBassDD.Checked && ConfigRepository.Instance()["dlcm_AdditionalManipul52"] == "Yes") || !(chbx_KeepDD.Checked && ConfigRepository.Instance()["dlcm_AdditionalManipul53"] == "Yes"))
             {
                 var xmlFilez = Directory.GetFiles(files[0].Folder_Name, "*.old", SearchOption.AllDirectories);
-                //var platforms = files[0].Folder_Name.GetPlatform();
 
                 foreach (var xml in xmlFilez)
-                    if (xml.IndexOf("bass") > 0 && (xml.IndexOf(".old") > 0) && !(xml.IndexOf("showlights") > 0))
-                    //chbx_Additional_Manipulations.GetItemChecked(3) || chbx_Additional_Manipulations.GetItemChecked(5) || chbx_Additional_Manipulations.GetItemChecked(12) || chbx_Additional_Manipulations.GetItemChecked(26))
+                {
+                    Song2014 xmlContent = null;
+                    try
                     {
-                        //if (!File.Exists(xml)) 
-                        File.Copy(xml, xml.Replace(".old", ""), true);
-                        File.Delete(xml);
+                        xmlContent = Song2014.LoadFromFile(xml);
+                        if (xmlContent.Arrangement.ToLower() == "bass" && xml.IndexOf(".old") > 0)
+                        {
+                            File.Copy(xml, xml.Replace(".old", ""), true);
+                            File.Delete(xml);
+                        }
                     }
+                    catch (Exception ee)
+                    {
+                    }
+                }
             }
 
             pB_ReadDLCs.Increment(1);
@@ -1942,7 +1948,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     {
                         if (!File.Exists(dfssdf))
                         {
-                            ErrorWindow frm1 = new ErrorWindow("Please Install Wwise v2014.1.6 build 5318: " + Environment.NewLine  + "A restart is required for the Conversion to WEM process to be succesful,l else the errors can be captured through the Missing Files Query" + Environment.NewLine, "https://www.audiokinetic.com/download/", "Error when Generating a Preview", false, false);
+                            ErrorWindow frm1 = new ErrorWindow("Please Install Wwise v2014.1.6 build 5318: " + Environment.NewLine + "A restart is required for the Conversion to WEM process to be succesful,l else the errors can be captured through the Missing Files Query" + Environment.NewLine, "https://www.audiokinetic.com/download/", "Error when Generating a Preview", false, false);
                             frm1.ShowDialog();
 
                         }
@@ -1960,7 +1966,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             using (FileStream fss = File.OpenRead(tt))
                             {
                                 SHA1 sha = new SHA1Managed();
-                                DataViewGrid.Rows[i].Cells[82].Value = BitConverter.ToString(sha.ComputeHash(fss));
+                                DataViewGrid.Rows[i].Cells["audioPreview_Hash"].Value = BitConverter.ToString(sha.ComputeHash(fss));
                                 fss.Close();
                             }
                         AddPreview = true;
@@ -2210,9 +2216,9 @@ namespace RocksmithToolkitGUI.DLCManager
             //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
             //{
             command.CommandText = "UPDATE Main SET ";
-            command.CommandText += "Selected = @param8 ";            
+            command.CommandText += "Selected = @param8 ";
             command.Parameters.AddWithValue("@param8", "Yes");
-            
+
             var test = "";
             if (chbx_InclBeta.Checked)
             {
@@ -2254,7 +2260,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     OleDbDataAdapter dBs = new OleDbDataAdapter(com, cBn);
                     dBs.Fill(dhs, "Main");
                     dBs.Dispose();
-                    MessageBox.Show("All Filtered songs(" + dhs.Tables[0].Rows.Count + ") in DB have been marked as Selected"+test);
+                    MessageBox.Show("All Filtered songs(" + dhs.Tables[0].Rows.Count + ") in DB have been marked as Selected" + test);
                 }
             }
             catch (Exception ee)
@@ -2304,7 +2310,7 @@ namespace RocksmithToolkitGUI.DLCManager
             Populate(ref DataViewGrid, ref Main);//, ref bsPositions, ref bsBadges);
             DataViewGrid.EditingControlShowing += DataGridView1_EditingControlShowing;
             DataViewGrid.Refresh();
-            MessageBox.Show("All songs in DB have been UNmarked from being Selected"+ test);
+            MessageBox.Show("All songs in DB have been UNmarked from being Selected" + test);
         }
 
         private void cbx_Format_SelectedIndexChanged(object sender, EventArgs e)
@@ -2528,16 +2534,16 @@ namespace RocksmithToolkitGUI.DLCManager
                 data = new DLCPackageData
                 {
                     GameVersion = GameVersion.RS2014,
-                    Pc = chbx_Format.Text == "PC" || file.Platform=="Pc"? true : false, //txt_Platform.Text 
+                    Pc = chbx_Format.Text == "PC" || file.Platform == "Pc" ? true : false, //txt_Platform.Text 
                     Mac = chbx_Format.Text == "Mac" || file.Platform == "Mac" ? true : false,
                     XBox360 = chbx_Format.Text == "XBOX360" || file.Platform == "Xbox360" ? true : false,
                     PS3 = chbx_Format.Text == "PS3" || file.Platform == "Ps3" ? true : false,
                     Name = file.DLC_Name,
                     AppId = file.DLC_AppID,
                     ArtFiles = info.ArtFiles, //not complete
-                    Showlights=true,//info.Showlights, //apparently this infor is not read..also the tone base is removed/not read also
-                    Inlay=info.Inlay,
-                    LyricArtPath=info.LyricArtPath,
+                    Showlights = true,//info.Showlights, //apparently this infor is not read..also the tone base is removed/not read also
+                    Inlay = info.Inlay,
+                    LyricArtPath = info.LyricArtPath,
 
                     //USEFUL CMDs String.IsNullOrEmpty(
                     SongInfo = new RocksmithToolkitLib.DLCPackage.SongInfo
@@ -3002,15 +3008,20 @@ namespace RocksmithToolkitGUI.DLCManager
 
             foreach (var xml in xmlFiles)
             {
-                //var fs = xml.IndexOf("bass");
-                //var tttt = xml.IndexOf(".old");
-                if (xml.IndexOf("bass") > 0 && (xml.IndexOf(".old") <= 0))
-                //chbx_Additional_Manipulations.GetItemChecked(3) || chbx_Additional_Manipulations.GetItemChecked(5) || chbx_Additional_Manipulations.GetItemChecked(12) || chbx_Additional_Manipulations.GetItemChecked(26))
+                Song2014 xmlContent = null;
+                try
                 {
-                    var bassRemoved = (DLCManager.RemoveDD(files[0].Folder_Name, chbx_Original.Checked ? "Yes" : "", xml, platform, false, false) == "Yes") ? "No" : "Yes";
-                    chbx_BassDD.Checked = false;
-                    btn_RemoveBassDD.Enabled = false;
-                    SaveRecord();
+                    xmlContent = Song2014.LoadFromFile(xml);
+                    if (xmlContent.Arrangement.ToLower() == "bass" && xml.IndexOf(".old") <= 0)
+                    {
+                        var bassRemoved = (DLCManager.RemoveDD(files[0].Folder_Name, chbx_Original.Checked ? "Yes" : "", xml, platform, false, false) == "Yes") ? "No" : "Yes";
+                        chbx_BassDD.Checked = false;
+                        btn_RemoveBassDD.Enabled = false;
+                        SaveRecord();
+                    }
+                }
+                catch (Exception ee)
+                {
                 }
             }
         }
@@ -3060,10 +3071,19 @@ namespace RocksmithToolkitGUI.DLCManager
             var platform = files[0].Folder_Name.GetPlatform();
 
             foreach (var xml in xmlFiles)
-                if (xml.IndexOf("showlights") < 1 && xml.IndexOf("vocals") < 1)
+            {
+                Song2014 xmlContent = null;
+                try
                 {
-                    var DDRemoved = (DLCManager.RemoveDD(files[0].Folder_Name, chbx_Original.Checked ? "Yes" : "", xml, platform, false, false) == "Yes") ? "No" : "Yes";
+                    xmlContent = Song2014.LoadFromFile(xml);
+                    if (!(xmlContent.Arrangement.ToLower() == "showlights" || xmlContent.Arrangement.ToLower() == "vocals") || xml.IndexOf(".old") <= 0)
+                    {
+                        var DDRemoved = (DLCManager.RemoveDD(files[0].Folder_Name, chbx_Original.Checked ? "Yes" : "", xml, platform, false, false) == "Yes") ? "No" : "Yes";
+                    }
                 }
+                catch (Exception ee)
+                { }
+            }
             chbx_DD.Checked = false;
             chbx_BassDD.Checked = false;
             SaveRecord();
@@ -3072,7 +3092,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private void btn_OldFolder_Click(object sender, EventArgs e)
         {
             var i = DataViewGrid.SelectedCells[0].RowIndex;
-            string filePath = TempPath + "\\0_old\\" + DataViewGrid.Rows[i].Cells[19].Value.ToString();
+            string filePath = TempPath + "\\0_old\\" + DataViewGrid.Rows[i].Cells["Original_FileName"].Value.ToString();
             //dus.Tables[0].Rows[DataGridView1.SelectedCells[0].RowIndex].ItemArray[19].ToString();// files[0].Original_FileName;
             try
             {
@@ -3618,7 +3638,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     OleDbDataAdapter dBs = new OleDbDataAdapter(com, cBn);
                     dBs.Fill(dhs, "Main");
                     dBs.Dispose();
-                    MessageBox.Show("All NON Filtered songs(" + dhs.Tables[0].Rows.Count + ") in DB have been marked as Selected"+test);
+                    MessageBox.Show("All NON Filtered songs(" + dhs.Tables[0].Rows.Count + ") in DB have been marked as Selected" + test);
                 }
             }
             catch (Exception ee)
@@ -3748,7 +3768,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     OleDbDataAdapter dBs = new OleDbDataAdapter(com, cBn);
                     dBs.Fill(dhs, "Main");
                     dBs.Dispose();
-                    MessageBox.Show("All NON Filtered songs(" + dhs.Tables[0].Rows.Count + ") in DB have been marked as Selected"+test);
+                    MessageBox.Show("All NON Filtered songs(" + dhs.Tables[0].Rows.Count + ") in DB have been marked as Selected" + test);
                 }
             }
             catch (Exception ee)
@@ -3822,7 +3842,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private void btn_EOF_Click(object sender, EventArgs e)
         {
             var i = DataViewGrid.SelectedCells[0].RowIndex;
-            string filePath = DataViewGrid.Rows[i].Cells[22].Value.ToString();
+            string filePath = DataViewGrid.Rows[i].Cells["Folder_Name"].Value.ToString();
 
             try
             {

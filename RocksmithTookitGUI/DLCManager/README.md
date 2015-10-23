@@ -87,14 +87,14 @@ wip:
 
 wd:
 - make Groups as multivalue
-- reorder main db fields
+-- reorder main db fields
+	- size
+	- save /offer the chance to reorder
 - rename the Options and use the xml code inside the tool (removing the 03 14 35 dependency)
 - improve progress bar of repacks
 - enable shortNames and Album correction in Standardization
 - ask if you wanna have the packing folder deleted
 - dont conv Orig
--- Filter is know for giving eerrors after too many runs
-- detection if xml is bass should not happen on the name (multi track have no bass..and so on)
 
 
 ### dev issues:

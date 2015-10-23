@@ -4119,15 +4119,21 @@ namespace RocksmithToolkitGUI.DLCManager
                     {
                         foreach (var xml in xmlFiles)
                         {
-                            if (chbx_Additional_Manipulations.GetItemChecked(12) || chbx_Additional_Manipulations.GetItemChecked(26))
+                            Song2014 xmlContent = null;
+                            try
+                            {
+                                xmlContent = Song2014.LoadFromFile(xml);
+
+
+                                if (chbx_Additional_Manipulations.GetItemChecked(12) || chbx_Additional_Manipulations.GetItemChecked(26))
                                 //ADD DD
                                 if (
                                     (//chbx_Additional_Manipualtions.GetItemChecked(12)
                             false && !Path.GetFileNameWithoutExtension(xml).ToLower().Contains(".old")
-                                    && ((Path.GetFileNameWithoutExtension(xml).ToLower().Contains("lead") || Path.GetFileNameWithoutExtension(xml).ToLower().Contains("combo") || Path.GetFileNameWithoutExtension(xml).ToLower().Contains("rthythm")) && file.Has_DD == "No") || (Path.GetFileNameWithoutExtension(xml).ToLower().Contains("bass") && file.Has_BassDD == "No")
+                                    && ((xmlContent.Arrangement=="Lead" || xmlContent.Arrangement == "combo" || xmlContent.Arrangement == "rthythm") && file.Has_DD == "No") || (xmlContent.Arrangement == "bass" && file.Has_BassDD == "No")
                                     )
                                     || //chbx_Additional_Manipualtions.GetItemChecked(26)
-                            (false && (Path.GetFileNameWithoutExtension(xml).ToLower().Contains("lead") || Path.GetFileNameWithoutExtension(xml).ToLower().Contains("combo") || Path.GetFileNameWithoutExtension(xml).ToLower().Contains("rthythm"))
+                            (false && (xmlContent.Arrangement == "lead" || xmlContent.Arrangement == "combo" || xmlContent.Arrangement == "rthythm")
                                     && file.Has_DD == "No" && file.Has_Guitar == "Yes" && !Path.GetFileNameWithoutExtension(xml).ToLower().Contains(".old")
                                     )
                                    )
@@ -4138,18 +4144,21 @@ namespace RocksmithToolkitGUI.DLCManager
 
                             //REMOVE DD
                             //rtxt_StatisticsOnReadDLCs.Text = "...=.." + xml + "\n\n" + rtxt_StatisticsOnReadDLCs.Text;
-                            var aa = xml.IndexOf("showlights");
-                            if (aa<1) 
-                            if ((!(chbx_Additional_Manipulations.GetItemChecked(52) && file.Keep_BassDD == "Yes") && Path.GetFileNameWithoutExtension(xml).ToLower().Contains("bass") && file.Has_BassDD == "Yes" && !Path.GetFileNameWithoutExtension(xml).ToLower().Contains(".old") && chbx_Additional_Manipulations.GetItemChecked(5))
-                                || (!(chbx_Additional_Manipulations.GetItemChecked(53) && file.Keep_DD=="Yes") && ((Path.GetFileNameWithoutExtension(xml).ToLower().Contains("lead") || Path.GetFileNameWithoutExtension(xml).ToLower().Contains("combo") || Path.GetFileNameWithoutExtension(xml).ToLower().Contains("rthythm")))
+                            //var aa = xml.IndexOf("showlights");
+                            //if (aa<1) && (xml.IndexOf("showlights") <1)
+                            if ((!(chbx_Additional_Manipulations.GetItemChecked(52) && file.Keep_BassDD == "Yes") && xmlContent.Arrangement == "bass" && file.Has_BassDD == "Yes" && !Path.GetFileNameWithoutExtension(xml).ToLower().Contains(".old") && chbx_Additional_Manipulations.GetItemChecked(5))
+                                || (!(chbx_Additional_Manipulations.GetItemChecked(53) && file.Keep_DD=="Yes") && ((xmlContent.Arrangement == "lead" || xmlContent.Arrangement == "combo" || xmlContent.Arrangement == "rthythm"))
                                   && file.Has_Guitar == "Yes" && !Path.GetFileNameWithoutExtension(xml).ToLower().Contains(".old") && chbx_Additional_Manipulations.GetItemChecked(3))
-                               && (xml.IndexOf("showlights") <1))
+                               )
                             // continue;
                             {
-                                if (chbx_Additional_Manipulations.GetItemChecked(5) && !chbx_Additional_Manipulations.GetItemChecked(3) && !Path.GetFileNameWithoutExtension(xml).ToLower().Contains("bass")) continue;
+                                if (chbx_Additional_Manipulations.GetItemChecked(5) && !chbx_Additional_Manipulations.GetItemChecked(3) && !(xmlContent.Arrangement == "bass")) continue;
                                 bassRemoved = (RemoveDD(file.Folder_Name, file.Is_Original, xml, platform, chbx_Additional_Manipulations.GetItemChecked(36), chbx_Additional_Manipulations.GetItemChecked(31)) == "Yes") ? "No" : "Yes";
                                 file.Has_BassDD = (bassRemoved == "Yes") ? "No" : "Yes";
-
+                            }
+                            }
+                            catch (Exception ee)
+                            {
                             }
                             //rtxt_StatisticsOnReadDLCs.Text = "...°.." + xmlFiles.Length + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                         }

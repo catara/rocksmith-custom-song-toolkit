@@ -32,8 +32,7 @@ Main Features:
 ## Known Issues:
 + Import fails randomly...workaround Import again (don't clear the DB)
 + Tool is based on Rocksmith Toolkit 16th Oct version
-+ Filter is know for giving eerrors after too many runs
--- Edit of Arragements and Tones DB can only be done from Access for the moment
+- Edit of Arragements and Tones DB can only be done from Access for the moment
 - Packing of Rocksmith 2014 Retail manipulated files has 1 manual step for RS14 Retail songs
 -- When having GitHub conficting issue
  https://help.github.com/articles/resolving-a-merge-conflict-from-the-command-line/
@@ -57,6 +56,7 @@ n2h:
 -+ small improv: Any change of song in the list should also save :)
 -+ standardiation delete
 -+ third eye investig
+-+ CICAGO 26 25 original SONG FAILS AT PACK
 -+ usa peaches
 
 wip:
@@ -93,6 +93,8 @@ wd:
 - enable shortNames and Album correction in Standardization
 - ask if you wanna have the packing folder deleted
 - dont conv Orig
+-- Filter is know for giving eerrors after too many runs
+- detection if xml is bass should not happen on the name (multi track have no bass..and so on)
 
 
 ### dev issues:

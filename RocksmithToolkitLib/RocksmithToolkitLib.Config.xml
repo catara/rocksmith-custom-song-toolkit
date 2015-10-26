@@ -28,7 +28,7 @@
   <!--bcapi DLCManager-->
   <Config Key="dlcm_AdditionalManipul0" Value="No" />
   <Config Key="dlcm_AdditionalManipul1" Value="No" />
-  <Config Key="dlcm_AdditionalManipul2" Value="No" />
+  <Config Key="dlcm_AdditionalManipul2" Value="Yes" />
   <Config Key="dlcm_AdditionalManipul3" Value="No" />
   <Config Key="dlcm_AdditionalManipul4" Value="No" />
   <Config Key="dlcm_AdditionalManipul5" Value="Yes" />

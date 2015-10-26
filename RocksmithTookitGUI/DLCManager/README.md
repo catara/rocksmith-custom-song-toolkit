@@ -95,7 +95,22 @@ wd:
 - enable shortNames and Album correction in Standardization
 - ask if you wanna have the packing folder deleted
 - dont conv Orig
-
+-- create folders at pack
+ -- clear old,duplicate and replacked...
+-- populate Import Log
+-- indiv pack adds unique id but no mass
+  -- adds id to filename ads well
+-- clear log db
+-- the cure
+-- hearbreaker
+-- audioslave
+--  smashing
+-- renegade
+- changing path
+- alternate 0
+- placebo preview
+- bloohood preview 
+ -- check if preview is too long
 
 ### dev issues:
 + Toolkit version flag does not sync to&from Github: Run RunMeFirst.bat
@@ -121,9 +136,9 @@ wd:
 	0.2.0.10 (05.05) save settings in Toolkit config, getrck no, groups, Add 30 sec preview midsong; close bugs on Conversion to Ps3(nin hell)
 	0.2.0.11 (22.08.2015) remove bug on auto import if original
 	0.2.2.12 (26.09.2015) If importing an original over a alternate the alternate flag should be set no the Alternate
-	wip: 0.2.0.13 (10.10.2015) (95%) full release (anyone can download and use the tool..no bugs..and all un-implemented features disabled) , repack wo bugs, edit screens functional
+	wip: 0.2.0.13 (10.10.2015) (96%) full release (anyone can download and use the tool..no bugs..and all un-implemented features disabled) , repack wo bugs, edit screens functional
 	wip: 0.2.0.14 (03.10.2015) (90%) Remove getlastconversiondate from Duplicates as already coming from the arrangements table
-	wip: 0.2.0.15 (20.10.2015) (60%)  analyse acuracy on conversion to ps3 (1979,7army..)
+	wip: 0.2.0.15 (20.10.2015) (80%)  analyse acuracy on conversion to ps3 (1979,7army..)
 	wip: 0.2.0.16 (20.10.2015) (20%) has_section flag(to be tested with a song missing sections); 
 	wip: 0.2.1 (31.10.2015) (10%) HTML&Excel exports
 	tbr: 0.2.1.1 (15.09.2015) Implement a logic to properly read DLCManager renamed DLCs
@@ -258,8 +273,11 @@ http://customsforge.com/topic/15687-beats-phrases-resynchronizer/
 https://github.com/Lovroman/RS-CDLC-Tagger/
 http://customsforge.com/topic/20334-tool-cdlc-tagger/
 
-- MDB Viewver
+- MDB Viewver - alternative view of mdb container DB
 http://www.alexnolan.net/software/mdb_viewer_plus.htm
+
+-NVORBIS library - reading ogg lenght
+https://nvorbis.codeplex.com/documentation
 
 
 ## Contact

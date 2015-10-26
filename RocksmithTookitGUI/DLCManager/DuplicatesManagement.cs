@@ -672,7 +672,7 @@ namespace RocksmithToolkitGUI.DLCManager
             public string Keep_BassDD { get; set; }
             public string Keep_DD { get; set; }
             public string Keep_Original { get; set; }
-            public string Show_DD { get; set; }
+            public string Song_Lenght { get; set; }
             public string Original { get; set; }
             public string Selected { get; set; }
             public string YouTube_Link { get; set; }
@@ -817,7 +817,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         files[i].Keep_BassDD = dataRow.ItemArray[64].ToString();
                         files[i].Keep_DD = dataRow.ItemArray[65].ToString();
                         files[i].Keep_Original = dataRow.ItemArray[66].ToString();
-                        files[i].Show_DD = dataRow.ItemArray[67].ToString();
+                        files[i].Song_Lenght = dataRow.ItemArray[67].ToString();
                         files[i].Original = dataRow.ItemArray[68].ToString();
                         files[i].Selected = dataRow.ItemArray[69].ToString();
                         files[i].YouTube_Link = dataRow.ItemArray[70].ToString();
@@ -1106,6 +1106,7 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_TitleNew.Text = (datas.SongInfo.SongDisplayName.Replace("(newer)", "").Replace("(older)", "").Replace("a." + txt_AlternateNoNew.Text, "").Replace("v." + txt_VersionNew.Text, "").Replace(txt_AuthorNew.Text, "").Replace("noDD", "").Replace("DD", "").Replace(txt_TuningNew.Text, "")).Replace(txt_AvailTracksNew.Text, "").Replace("  ", " ").Replace("  ", " ").Replace(" [ ]", "").Replace(" []", "");
             //txt_TitleExisting.Text = filed.Song_Title;
             if (txt_TitleExisting.Text == txt_TitleNew.Text) lbl_Title.ForeColor = lbl_Artist.ForeColor;
+            if (chbx_Sort.Checked) syncTitle();
 
         }
 

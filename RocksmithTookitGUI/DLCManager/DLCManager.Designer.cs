@@ -110,6 +110,7 @@
             this.btm_GoTemp = new System.Windows.Forms.Button();
             this.btm_GoDB = new System.Windows.Forms.Button();
             this.btn_Log = new System.Windows.Forms.Button();
+            this.lbl_Log = new System.Windows.Forms.Label();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainBindingSource)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -208,7 +209,7 @@
             // 
             this.btn_Cleanup_MainDB.BackColor = System.Drawing.SystemColors.Control;
             this.btn_Cleanup_MainDB.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Cleanup_MainDB.Location = new System.Drawing.Point(8, 188);
+            this.btn_Cleanup_MainDB.Location = new System.Drawing.Point(8, 189);
             this.btn_Cleanup_MainDB.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.btn_Cleanup_MainDB.Name = "btn_Cleanup_MainDB";
             this.btn_Cleanup_MainDB.Size = new System.Drawing.Size(77, 21);
@@ -288,11 +289,12 @@
             "53. @Pack keep Bass DD if indicated so",
             "54. @Pack keep All DD if indicated so",
             "55. @Pack consider All songs as beta (place them top of the list)",
+            "56. Consider all identical previews vs audio or more than 60% as NO Preview",
             "<IMPORT>",
             "<@Pack>"});
             this.chbx_Additional_Manipulations.Location = new System.Drawing.Point(240, 95);
             this.chbx_Additional_Manipulations.Name = "chbx_Additional_Manipulations";
-            this.chbx_Additional_Manipulations.Size = new System.Drawing.Size(295, 94);
+            this.chbx_Additional_Manipulations.Size = new System.Drawing.Size(295, 79);
             this.chbx_Additional_Manipulations.TabIndex = 321;
             this.chbx_Additional_Manipulations.SelectedIndexChanged += new System.EventHandler(this.chbx_Additional_Manipualtions_SelectedIndexChanged);
             // 
@@ -300,7 +302,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label8.Location = new System.Drawing.Point(5, 345);
+            this.label8.Location = new System.Drawing.Point(4, 345);
             this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(77, 13);
@@ -336,7 +338,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label3.Location = new System.Drawing.Point(5, 279);
+            this.label3.Location = new System.Drawing.Point(4, 281);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(52, 13);
@@ -630,7 +632,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label6.Location = new System.Drawing.Point(6, 325);
+            this.label6.Location = new System.Drawing.Point(4, 325);
             this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(54, 13);
@@ -641,7 +643,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label5.Location = new System.Drawing.Point(6, 303);
+            this.label5.Location = new System.Drawing.Point(5, 303);
             this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(36, 13);
@@ -1089,7 +1091,7 @@
             // 
             this.btn_RePack.BackColor = System.Drawing.SystemColors.Control;
             this.btn_RePack.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_RePack.Location = new System.Drawing.Point(9, 163);
+            this.btn_RePack.Location = new System.Drawing.Point(8, 162);
             this.btn_RePack.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.btn_RePack.Name = "btn_RePack";
             this.btn_RePack.Size = new System.Drawing.Size(77, 23);
@@ -1166,7 +1168,7 @@
             this.chbx_DefaultDB.AutoSize = true;
             this.chbx_DefaultDB.Checked = true;
             this.chbx_DefaultDB.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chbx_DefaultDB.Location = new System.Drawing.Point(121, 66);
+            this.chbx_DefaultDB.Location = new System.Drawing.Point(127, 67);
             this.chbx_DefaultDB.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.chbx_DefaultDB.Name = "chbx_DefaultDB";
             this.chbx_DefaultDB.Size = new System.Drawing.Size(100, 17);
@@ -1243,10 +1245,23 @@
             this.btn_Log.UseVisualStyleBackColor = false;
             this.btn_Log.Click += new System.EventHandler(this.btn_Log_Click);
             // 
+            // lbl_Log
+            // 
+            this.lbl_Log.AutoEllipsis = true;
+            this.lbl_Log.BackColor = System.Drawing.Color.Transparent;
+            this.lbl_Log.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.lbl_Log.Location = new System.Drawing.Point(85, 384);
+            this.lbl_Log.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbl_Log.Name = "lbl_Log";
+            this.lbl_Log.Size = new System.Drawing.Size(341, 12);
+            this.lbl_Log.TabIndex = 346;
+            this.lbl_Log.Text = "0/0";
+            // 
             // DLCManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.lbl_Log);
             this.Controls.Add(this.btn_Log);
             this.Controls.Add(this.btm_GoDB);
             this.Controls.Add(this.btm_GoTemp);
@@ -1415,5 +1430,6 @@
         private System.Windows.Forms.Button btm_GoTemp;
         private System.Windows.Forms.Button btm_GoDB;
         private System.Windows.Forms.Button btn_Log;
+        private System.Windows.Forms.Label lbl_Log;
     }
 }

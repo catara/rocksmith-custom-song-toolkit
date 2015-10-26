@@ -443,6 +443,8 @@ namespace RocksmithToolkitGUI.DLCManager
                 chbx_HomeDBG.Visible = true;
                 chbx_WorkDGB.Visible = true;
                 chbx_HomeDGBVM.Visible = true;
+                chbx_Additional_Manipulations.Visible = true;
+                lbl_Log.Visible = true;
                 rtxt_StatisticsOnReadDLCs.Visible = true;
                 chbx_DefaultDB.Checked = false; x3 = chbx_DefaultDB.Checked;
                 chbx_Additional_Manipulations.SetItemCheckState(24, CheckState.Unchecked); x4 = ConfigRepository.Instance()["dlcm_AdditionalManipul24"] == "Yes" ? true : false;
@@ -460,6 +462,8 @@ namespace RocksmithToolkitGUI.DLCManager
                 chbx_HomeDBG.Visible = false;
                 chbx_WorkDGB.Visible = false;
                 chbx_HomeDGBVM.Visible = false;
+                chbx_Additional_Manipulations.Visible = false;
+                lbl_Log.Visible = false;
                 chbx_CleanTemp.Checked = x1;
                 chbx_CleanDB.Checked = x2;
 
@@ -1456,21 +1460,18 @@ namespace RocksmithToolkitGUI.DLCManager
                         dam.Fill(dss, "Arrangements");
                         OleDbDataAdapter dag = new OleDbDataAdapter("DELETE FROM Tones;", cnn);
                         dag.Fill(dss, "Tones");
-                        //if (chbx_Additional_Manipulations.GetItemChecked(55))
-                        //{
                         OleDbDataAdapter dbn = new OleDbDataAdapter("DELETE FROM LogPacking;", cnn);
                         dbn.Fill(dss, "LogPacking");
                         OleDbDataAdapter dbm = new OleDbDataAdapter("DELETE FROM LogPackingError;", cnn);
                         dbm.Fill(dss, "LogPackingError");
-                        OleDbDataAdapter dbg = new OleDbDataAdapter("DELETE FROM LogImport;", cnn);
-                        dbg.Fill(dss, "LogImport");
-                        OleDbDataAdapter dvg = new OleDbDataAdapter("DELETE FROM LogImportError;", cnn);
-                        dvg.Fill(dss, "LogImportError");
+                        OleDbDataAdapter dbg = new OleDbDataAdapter("DELETE FROM LogImporting;", cnn);
+                        dbg.Fill(dss, "LogImporting");
+                        OleDbDataAdapter dvg = new OleDbDataAdapter("DELETE FROM LogImportingError;", cnn);
+                        dvg.Fill(dss, "LogImportingError");
                         dbn.Dispose();
                         dbm.Dispose();
                         dbg.Dispose();
                         dvg.Dispose();
-                        //}
                         dan.Dispose();
                         dam.Dispose();
                         dag.Dispose();
@@ -3617,7 +3618,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                                                 PreviewLenght = duration.ToString();// ConfigRepository.Instance()["dlcm_PreviewLenght"];
                                                             }
                                                     cmd += " , audioPreviewPath=\"" + audioprevpath + ".wem\"";
-                                                    cmd += " , oggPreviewPath=\"" + audioprevpath + ".ogg\" , PreviewLenght=\"" + (PreviewLenght.Split(':'))[2] + "\"";// previewN + "\"";
+                                                    cmd += " , oggPreviewPath=\"" + audioprevpath + ".ogg\" , PreviewLenght=\"" + (PreviewLenght.IndexOf(":")>0 ? (PreviewLenght.Split(':'))[2] : PreviewLenght) + "\"";// previewN + "\"";
                                                 }
                                                 //rtxt_StatisticsOnReadDLCs.Text = "3" + "..." + rtxt_StatisticsOnReadDLCs.Text;
                                                 cmd += " , Folder_Name=\"" + norm_path + "\"";
@@ -3705,6 +3706,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //Cleanup
             if (chbx_Additional_Manipulations.GetItemChecked(24)) //25. Use translation tables for naming standardization
             {
+                lbl_Log.Text = "Applying Standardizations";
                 Translation_And_Correction((chbx_DefaultDB.Checked == true ? MyAppWD : txt_DBFolder.Text));
             }
 
@@ -4282,14 +4284,14 @@ namespace RocksmithToolkitGUI.DLCManager
                     var recalc_Preview = false;
                     if (chbx_Additional_Manipulations.GetItemChecked(55))
                     {
-
                         //Gather song Lenght
-                        using (var vorbis = new NVorbis.VorbisReader(info.OggPreviewPath))
+                        using (var vorbis = new NVorbis.VorbisReader(file.oggPreviewPath))
                         {
                             duration = vorbis.TotalTime.ToString();
                         }
                         string[] timepieces = duration.Split(':');
-                        if (timepieces[0] != "00" && timepieces[1] != "00") recalc_Preview = true;//&& timepieces[2].ToInt32() > file.PreviewLenght.ToInt32()) ;
+                        if (timepieces[0] != "00" && timepieces[1] != "00")
+                            recalc_Preview = true;//&& timepieces[2].ToInt32() > file.PreviewLenght.ToInt32()) ;
                     }
                     //Set Preview
                     if (chbx_Additional_Manipulations.GetItemChecked(9) && info.OggPreviewPath == null || (chbx_Additional_Manipulations.GetItemChecked(55) && (file.AudioPreview_Hash == file.Audio_Hash || file.Song_Lenght == file.PreviewLenght || recalc_Preview)))

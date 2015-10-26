@@ -95,22 +95,9 @@ wd:
 - enable shortNames and Album correction in Standardization
 - ask if you wanna have the packing folder deleted
 - dont conv Orig
--- create folders at pack
- -- clear old,duplicate and replacked...
--- populate Import Log
--- indiv pack adds unique id but no mass
-  -- adds id to filename ads well
--- clear log db
--- the cure
--- hearbreaker
--- audioslave
---  smashing
--- renegade
 - changing path
 - alternate 0
-- placebo preview
-- bloohood preview 
- -- check if preview is too long
+
 
 ### dev issues:
 + Toolkit version flag does not sync to&from Github: Run RunMeFirst.bat

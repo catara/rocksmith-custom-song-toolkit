@@ -97,7 +97,7 @@
   <Config Key="dlcm_chbx_PS3" Value="Yes" />;
   <Config Key="dlcm_chbx_XBOX360" Value="No" />;
   <Config Key="dlcm_DBFolder" Value="C:\GitHub\tmp" />;
-  <Config Key="dlcm_File_Name" Value="&#60;Beta&#62;&#60;Broken&#62;&#60;CDLC&#62;-&#60;Artist&#62;-&#60;Year&#62;-&#60;Album&#62;&#60;Track No.&#62;-&#60;Title&#62;-&#60;DD&#62;-&#60;Avail. Tracks&#62;-&#60;QAs&#62;-v&#60;Version&#62;-&#60;Bass_HasDD&#62;" />;
+  <Config Key="dlcm_File_Name" Value="&#60;Beta&#62;&#60;Broken&#62;&#60;CDLC&#62;-&#60;Artist&#62;-&#60;Year&#62;-&#60;Album&#62;&#60;Track No.&#62;-&#60;Title&#62;-&#60;DD&#62;-&#60;Avail. Tracks&#62;-v&#60;Version&#62;-&#60;Bass_HasDD&#62;" />;
   <Config Key="dlcm_RocksmithDLCPath" Value="C:\GitHub\tmp\to import" />;
   <Config Key="dlcm_TempPath" Value="C:\GitHub\tmp\0" />;
   <Config Key="dlcm_Title" Value="&#60;Title&#62;" />;

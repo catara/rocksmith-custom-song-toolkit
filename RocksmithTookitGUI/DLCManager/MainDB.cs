@@ -744,7 +744,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 }
             else MessageBox.Show("Add a search criteria");
             //SearchON = true;
-            btn_Search.Enabled = false;
+            //btn_Search.Enabled = false;
             btn_SearchReset.Text = "Exit Search";
         }
 

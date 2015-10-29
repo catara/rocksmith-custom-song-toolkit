@@ -32,14 +32,19 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DLCManager));
             this.cbx_Export = new System.Windows.Forms.ComboBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.chbx_XBOX360 = new System.Windows.Forms.CheckBox();
+            this.chbx_Mac = new System.Windows.Forms.CheckBox();
             this.rbtn_Population_Groups = new System.Windows.Forms.RadioButton();
+            this.chbx_PS3 = new System.Windows.Forms.CheckBox();
+            this.cbx_Groups = new System.Windows.Forms.ComboBox();
+            this.mainBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.chbx_PC = new System.Windows.Forms.CheckBox();
+            this.btn_Cleanup_MainDB = new System.Windows.Forms.Button();
+            this.btn_RePack = new System.Windows.Forms.Button();
             this.rbtn_Population_All = new System.Windows.Forms.RadioButton();
             this.rbtn_Population_Selected = new System.Windows.Forms.RadioButton();
-            this.mainBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.Export_To = new System.Windows.Forms.Button();
             this.chbx_Rebuild = new System.Windows.Forms.CheckBox();
-            this.btn_Cleanup_MainDB = new System.Windows.Forms.Button();
-            this.cbx_Groups = new System.Windows.Forms.ComboBox();
             this.chbx_Additional_Manipulations = new System.Windows.Forms.CheckedListBox();
             this.label8 = new System.Windows.Forms.Label();
             this.btn_Preview_Artist_Sort = new System.Windows.Forms.Button();
@@ -90,26 +95,20 @@
             this.btn_TempPath = new System.Windows.Forms.Button();
             this.lbl_TempFolders = new System.Windows.Forms.Label();
             this.lbl_PreviewText = new System.Windows.Forms.Label();
-            this.chbx_XBOX360 = new System.Windows.Forms.CheckBox();
-            this.chbx_Mac = new System.Windows.Forms.CheckBox();
-            this.chbx_PS3 = new System.Windows.Forms.CheckBox();
-            this.chbx_PC = new System.Windows.Forms.CheckBox();
-            this.btn_RePack = new System.Windows.Forms.Button();
             this.helpProvider1 = new System.Windows.Forms.HelpProvider();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.btn_ApplyStandardization = new System.Windows.Forms.Button();
             this.btn_LoadRetailSongs = new System.Windows.Forms.Button();
             this.btn_Standardization = new System.Windows.Forms.Button();
+            this.chbx_DefaultDB = new System.Windows.Forms.CheckBox();
+            this.button5 = new System.Windows.Forms.Button();
             this.chbx_WorkDGB = new System.Windows.Forms.CheckBox();
             this.chbx_HomeDBG = new System.Windows.Forms.CheckBox();
-            this.chbx_DefaultDB = new System.Windows.Forms.CheckBox();
             this.chbx_HomeDGBVM = new System.Windows.Forms.CheckBox();
-            this.button5 = new System.Windows.Forms.Button();
             this.btn_GoImport = new System.Windows.Forms.Button();
             this.btm_GoTemp = new System.Windows.Forms.Button();
             this.btm_GoDB = new System.Windows.Forms.Button();
             this.btn_Log = new System.Windows.Forms.Button();
-            this.lbl_Log = new System.Windows.Forms.Label();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -144,6 +143,26 @@
             this.panel2.Size = new System.Drawing.Size(297, 67);
             this.panel2.TabIndex = 204;
             // 
+            // chbx_XBOX360
+            // 
+            this.chbx_XBOX360.AutoSize = true;
+            this.chbx_XBOX360.Location = new System.Drawing.Point(130, 4);
+            this.chbx_XBOX360.Name = "chbx_XBOX360";
+            this.chbx_XBOX360.Size = new System.Drawing.Size(73, 17);
+            this.chbx_XBOX360.TabIndex = 23;
+            this.chbx_XBOX360.Text = "XBOX360";
+            this.chbx_XBOX360.UseVisualStyleBackColor = true;
+            // 
+            // chbx_Mac
+            // 
+            this.chbx_Mac.AutoSize = true;
+            this.chbx_Mac.Location = new System.Drawing.Point(84, 4);
+            this.chbx_Mac.Name = "chbx_Mac";
+            this.chbx_Mac.Size = new System.Drawing.Size(47, 17);
+            this.chbx_Mac.TabIndex = 22;
+            this.chbx_Mac.Text = "Mac";
+            this.chbx_Mac.UseVisualStyleBackColor = true;
+            // 
             // rbtn_Population_Groups
             // 
             this.rbtn_Population_Groups.AutoSize = true;
@@ -154,6 +173,70 @@
             this.rbtn_Population_Groups.Text = "Group";
             this.rbtn_Population_Groups.UseVisualStyleBackColor = true;
             this.rbtn_Population_Groups.CheckedChanged += new System.EventHandler(this.rbtn_Population_Groups_CheckedChanged);
+            // 
+            // chbx_PS3
+            // 
+            this.chbx_PS3.AutoSize = true;
+            this.chbx_PS3.Checked = true;
+            this.chbx_PS3.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chbx_PS3.Location = new System.Drawing.Point(41, 4);
+            this.chbx_PS3.Name = "chbx_PS3";
+            this.chbx_PS3.Size = new System.Drawing.Size(46, 17);
+            this.chbx_PS3.TabIndex = 21;
+            this.chbx_PS3.Text = "PS3";
+            this.chbx_PS3.UseVisualStyleBackColor = true;
+            // 
+            // cbx_Groups
+            // 
+            this.cbx_Groups.DataSource = this.mainBindingSource;
+            this.cbx_Groups.Enabled = false;
+            this.cbx_Groups.FormattingEnabled = true;
+            this.cbx_Groups.Location = new System.Drawing.Point(157, 21);
+            this.cbx_Groups.Name = "cbx_Groups";
+            this.cbx_Groups.Size = new System.Drawing.Size(134, 21);
+            this.cbx_Groups.TabIndex = 28;
+            this.cbx_Groups.DropDown += new System.EventHandler(this.cbx_Groups_DropDown);
+            // 
+            // mainBindingSource
+            // 
+            this.mainBindingSource.DataMember = "Main";
+            this.mainBindingSource.CurrentChanged += new System.EventHandler(this.mainBindingSource_CurrentChanged);
+            // 
+            // chbx_PC
+            // 
+            this.chbx_PC.AutoSize = true;
+            this.chbx_PC.Location = new System.Drawing.Point(4, 4);
+            this.chbx_PC.Name = "chbx_PC";
+            this.chbx_PC.Size = new System.Drawing.Size(40, 17);
+            this.chbx_PC.TabIndex = 20;
+            this.chbx_PC.Text = "PC";
+            this.chbx_PC.UseVisualStyleBackColor = true;
+            // 
+            // btn_Cleanup_MainDB
+            // 
+            this.btn_Cleanup_MainDB.BackColor = System.Drawing.SystemColors.Control;
+            this.btn_Cleanup_MainDB.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Cleanup_MainDB.Location = new System.Drawing.Point(2, 37);
+            this.btn_Cleanup_MainDB.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
+            this.btn_Cleanup_MainDB.Name = "btn_Cleanup_MainDB";
+            this.btn_Cleanup_MainDB.Size = new System.Drawing.Size(77, 24);
+            this.btn_Cleanup_MainDB.TabIndex = 15;
+            this.btn_Cleanup_MainDB.Text = "Remove";
+            this.btn_Cleanup_MainDB.UseVisualStyleBackColor = false;
+            this.btn_Cleanup_MainDB.Click += new System.EventHandler(this.btn_Cleanup_MainDB_Click);
+            // 
+            // btn_RePack
+            // 
+            this.btn_RePack.BackColor = System.Drawing.SystemColors.Control;
+            this.btn_RePack.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_RePack.Location = new System.Drawing.Point(81, 37);
+            this.btn_RePack.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
+            this.btn_RePack.Name = "btn_RePack";
+            this.btn_RePack.Size = new System.Drawing.Size(77, 24);
+            this.btn_RePack.TabIndex = 14;
+            this.btn_RePack.Text = "RePack";
+            this.btn_RePack.UseVisualStyleBackColor = false;
+            this.btn_RePack.Click += new System.EventHandler(this.btn_RePack_Click);
             // 
             // rbtn_Population_All
             // 
@@ -177,11 +260,6 @@
             this.rbtn_Population_Selected.TabStop = true;
             this.rbtn_Population_Selected.Text = "Selected";
             this.rbtn_Population_Selected.UseVisualStyleBackColor = true;
-            // 
-            // mainBindingSource
-            // 
-            this.mainBindingSource.DataMember = "Main";
-            this.mainBindingSource.CurrentChanged += new System.EventHandler(this.mainBindingSource_CurrentChanged);
             // 
             // Export_To
             // 
@@ -209,55 +287,31 @@
             this.chbx_Rebuild.UseVisualStyleBackColor = true;
             this.chbx_Rebuild.Visible = false;
             // 
-            // btn_Cleanup_MainDB
-            // 
-            this.btn_Cleanup_MainDB.BackColor = System.Drawing.SystemColors.Control;
-            this.btn_Cleanup_MainDB.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Cleanup_MainDB.Location = new System.Drawing.Point(2, 37);
-            this.btn_Cleanup_MainDB.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
-            this.btn_Cleanup_MainDB.Name = "btn_Cleanup_MainDB";
-            this.btn_Cleanup_MainDB.Size = new System.Drawing.Size(77, 24);
-            this.btn_Cleanup_MainDB.TabIndex = 15;
-            this.btn_Cleanup_MainDB.Text = "Remove";
-            this.btn_Cleanup_MainDB.UseVisualStyleBackColor = false;
-            this.btn_Cleanup_MainDB.Click += new System.EventHandler(this.btn_Cleanup_MainDB_Click);
-            // 
-            // cbx_Groups
-            // 
-            this.cbx_Groups.DataSource = this.mainBindingSource;
-            this.cbx_Groups.Enabled = false;
-            this.cbx_Groups.FormattingEnabled = true;
-            this.cbx_Groups.Location = new System.Drawing.Point(157, 21);
-            this.cbx_Groups.Name = "cbx_Groups";
-            this.cbx_Groups.Size = new System.Drawing.Size(134, 21);
-            this.cbx_Groups.TabIndex = 28;
-            this.cbx_Groups.DropDown += new System.EventHandler(this.cbx_Groups_DropDown);
-            // 
             // chbx_Additional_Manipulations
             // 
             this.chbx_Additional_Manipulations.CheckOnClick = true;
             this.chbx_Additional_Manipulations.FormattingEnabled = true;
             this.chbx_Additional_Manipulations.Items.AddRange(new object[] {
-            "1. @Packing Add Increment to all songs Title",
-            "2. @Packing Add Increment to all songs Title per artist",
-            "3. @Packing Make all DLC IDs unique(&save)",
-            "4. @Packing Remove DD",
-            "<5. Import and remove DD only for Bass>",
-            "6. @Packing Remove DD only for Bass Guitar",
-            "<7. Remove the 4sec of the Preview song>",
-            "8. @Pack skipp Broken songs",
-            "9. @Pack Name to cross-platform Compatible Filenames",
-            "10. @Pack Add Preview if missing 00:30 for 30sec",
+            "01. @Pack Add Increment to all songs Title",
+            "02. @Pack Add Increment to all songs Title per artist",
+            "03. @Pack Make all DLC IDs unique(&save)",
+            "04. @Pack Remove DD",
+            "05. Import and remove DD only for Bass>",
+            "06. @Pack Remove DD only for Bass Guitar",
+            "07. Remove the 4sec of the Preview song>",
+            "08. @Pack skipp Broken songs",
+            "09. @Pack Name to cross-platform Compatible Filenames",
+            "10. @Pack Add Preview if missing 00:30 for 30sec (&save)",
             "11. @Pack Make all DLC IDs unique",
-            "<12. @PackAdd DD (5 Levels)>",
+            "12. @PackAdd DD (5 Levels)>",
             "13. Add DD (5 Levels) when missing",
             "14. Import all Duplicates as Alternates",
             "15. Import any Custom as Alternate if an Original exists",
             "16. Move the Imported files to temp/0_old",
             "17. Import with Artist/Title same as Artist/Title Sort",
             "18. Repack with Artist/Title same as Artist/Title Sort",
-            "<19. Import without The/Die at the beginning of Artist/Title Sort>",
-            "<20. Pack without The/Die at the beginning of Artist/Title Sort>",
+            "19. Import without The/Die at the beginning of Artist/Title Sort>",
+            "20. Pack without The/Die at the beginning of Artist/Title Sort>",
             "21. Import with the The/Die at the end of Artist/Title Sort",
             "22. Pack with The/Die at the end of Artist/Title Sort",
             "23. Import with the The/Die only at the end of Artist Sort",
@@ -265,7 +319,7 @@
             "25. @Import Use translation tables for naming standardization",
             "26. If Original don\'t add QAs(NOs;DLC/ORIG;etc.)",
             "27. When packing Add 5 Levels of DD only to Guitar tracks",
-            "<28. Convert and Transfer/FTP>",
+            "28. Convert and Transfer/FTP>",
             "29. If Original don\'t add QAs(NOs;DLC/ORIG;etc.) except for File Names",
             "30. When NOT importing a Duplicate Move it to _duplicate",
             "31. When NOT importing a broken song Move it to _broken",
@@ -283,22 +337,23 @@
             "43. Save Log After Import (DLCManager INSIDE folder)",
             "44. @Import Set the DLCID autom",
             "45. @Pack Set the DLCID autom",
-            "<46. Convert Originals>",
+            "46. Convert Originals>",
             "47. Duplicate Mangement, Title added info is inbetween []",
             "48. Add New Toolkit v. and RePackedByAuthor",
-            "49. @Pack try to get Track No again ",
+            "49. @Pack try to get Track No again (&don\'t save)",
             "50. @Pack Also Copy/FTP",
             "51. @Import place \"obvious\" duplicates at the end of the Process",
             "52. @Import Overrite the XML",
             "53. @Pack keep Bass DD if indicated so",
             "54. @Pack keep All DD if indicated so",
             "55. @Pack consider All songs as beta (place them top of the list)",
-            "56. Consider all identical previews vs audio",
-            "<IMPORT>",
-            "<@Pack>"});
+            "56. Gen Preview if Preview=Audio or Preview is longer than a min",
+            "98. @IMPORT>",
+            "99. @Pack>"});
             this.chbx_Additional_Manipulations.Location = new System.Drawing.Point(243, 360);
             this.chbx_Additional_Manipulations.Name = "chbx_Additional_Manipulations";
             this.chbx_Additional_Manipulations.Size = new System.Drawing.Size(295, 109);
+            this.chbx_Additional_Manipulations.Sorted = true;
             this.chbx_Additional_Manipulations.TabIndex = 29;
             this.chbx_Additional_Manipulations.Visible = false;
             this.chbx_Additional_Manipulations.SelectedIndexChanged += new System.EventHandler(this.chbx_Additional_Manipualtions_SelectedIndexChanged);
@@ -1033,61 +1088,6 @@
             this.lbl_PreviewText.Text = "File name Beta(0) CDLC/ORIG-Artist-Year-Album-TrackNo(if existing)-Title-TrackAva" +
     "il(LRBVS)-Version_PltfrmSpcfcs.psarc";
             // 
-            // chbx_XBOX360
-            // 
-            this.chbx_XBOX360.AutoSize = true;
-            this.chbx_XBOX360.Location = new System.Drawing.Point(130, 4);
-            this.chbx_XBOX360.Name = "chbx_XBOX360";
-            this.chbx_XBOX360.Size = new System.Drawing.Size(73, 17);
-            this.chbx_XBOX360.TabIndex = 23;
-            this.chbx_XBOX360.Text = "XBOX360";
-            this.chbx_XBOX360.UseVisualStyleBackColor = true;
-            // 
-            // chbx_Mac
-            // 
-            this.chbx_Mac.AutoSize = true;
-            this.chbx_Mac.Location = new System.Drawing.Point(84, 4);
-            this.chbx_Mac.Name = "chbx_Mac";
-            this.chbx_Mac.Size = new System.Drawing.Size(47, 17);
-            this.chbx_Mac.TabIndex = 22;
-            this.chbx_Mac.Text = "Mac";
-            this.chbx_Mac.UseVisualStyleBackColor = true;
-            // 
-            // chbx_PS3
-            // 
-            this.chbx_PS3.AutoSize = true;
-            this.chbx_PS3.Checked = true;
-            this.chbx_PS3.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chbx_PS3.Location = new System.Drawing.Point(41, 4);
-            this.chbx_PS3.Name = "chbx_PS3";
-            this.chbx_PS3.Size = new System.Drawing.Size(46, 17);
-            this.chbx_PS3.TabIndex = 21;
-            this.chbx_PS3.Text = "PS3";
-            this.chbx_PS3.UseVisualStyleBackColor = true;
-            // 
-            // chbx_PC
-            // 
-            this.chbx_PC.AutoSize = true;
-            this.chbx_PC.Location = new System.Drawing.Point(4, 4);
-            this.chbx_PC.Name = "chbx_PC";
-            this.chbx_PC.Size = new System.Drawing.Size(40, 17);
-            this.chbx_PC.TabIndex = 20;
-            this.chbx_PC.Text = "PC";
-            this.chbx_PC.UseVisualStyleBackColor = true;
-            // 
-            // btn_RePack
-            // 
-            this.btn_RePack.BackColor = System.Drawing.SystemColors.Control;
-            this.btn_RePack.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_RePack.Location = new System.Drawing.Point(81, 37);
-            this.btn_RePack.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
-            this.btn_RePack.Name = "btn_RePack";
-            this.btn_RePack.Size = new System.Drawing.Size(77, 24);
-            this.btn_RePack.TabIndex = 14;
-            this.btn_RePack.Text = "RePack";
-            this.btn_RePack.UseVisualStyleBackColor = false;
-            this.btn_RePack.Click += new System.EventHandler(this.btn_RePack_Click);
-            // 
             // btn_ApplyStandardization
             // 
             this.btn_ApplyStandardization.BackColor = System.Drawing.SystemColors.Control;
@@ -1129,6 +1129,33 @@
             this.btn_Standardization.UseVisualStyleBackColor = false;
             this.btn_Standardization.Click += new System.EventHandler(this.btn_Standardization_Click);
             // 
+            // chbx_DefaultDB
+            // 
+            this.chbx_DefaultDB.AutoSize = true;
+            this.chbx_DefaultDB.Checked = true;
+            this.chbx_DefaultDB.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chbx_DefaultDB.Location = new System.Drawing.Point(408, 117);
+            this.chbx_DefaultDB.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
+            this.chbx_DefaultDB.Name = "chbx_DefaultDB";
+            this.chbx_DefaultDB.Size = new System.Drawing.Size(100, 17);
+            this.chbx_DefaultDB.TabIndex = 19;
+            this.chbx_DefaultDB.Text = "Use Default DB";
+            this.toolTip1.SetToolTip(this.chbx_DefaultDB, "Uses the Default DB stored in the App folder");
+            this.chbx_DefaultDB.UseVisualStyleBackColor = true;
+            this.chbx_DefaultDB.CheckedChanged += new System.EventHandler(this.chbx_DefaultDB_CheckedChanged);
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(408, 65);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(127, 23);
+            this.button5.TabIndex = 12;
+            this.button5.Text = "Open Retail DB";
+            this.toolTip1.SetToolTip(this.button5, "Screen to manage the Game Default Screens for RS1Retail, RS1DLC, or RS2014 Retail" +
+        " packs, Crossplatform songs.");
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
             // chbx_WorkDGB
             // 
             this.chbx_WorkDGB.AutoSize = true;
@@ -1153,21 +1180,6 @@
             this.chbx_HomeDBG.Visible = false;
             this.chbx_HomeDBG.CheckedChanged += new System.EventHandler(this.chbx_HomeDBG_CheckedChanged);
             // 
-            // chbx_DefaultDB
-            // 
-            this.chbx_DefaultDB.AutoSize = true;
-            this.chbx_DefaultDB.Checked = true;
-            this.chbx_DefaultDB.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chbx_DefaultDB.Location = new System.Drawing.Point(408, 117);
-            this.chbx_DefaultDB.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
-            this.chbx_DefaultDB.Name = "chbx_DefaultDB";
-            this.chbx_DefaultDB.Size = new System.Drawing.Size(100, 17);
-            this.chbx_DefaultDB.TabIndex = 19;
-            this.chbx_DefaultDB.Text = "Use Default DB";
-            this.toolTip1.SetToolTip(this.chbx_DefaultDB, "Uses the Default DB stored in the App folder");
-            this.chbx_DefaultDB.UseVisualStyleBackColor = true;
-            this.chbx_DefaultDB.CheckedChanged += new System.EventHandler(this.chbx_DefaultDB_CheckedChanged);
-            // 
             // chbx_HomeDGBVM
             // 
             this.chbx_HomeDGBVM.AutoSize = true;
@@ -1179,18 +1191,6 @@
             this.chbx_HomeDGBVM.UseVisualStyleBackColor = true;
             this.chbx_HomeDGBVM.Visible = false;
             this.chbx_HomeDGBVM.CheckedChanged += new System.EventHandler(this.chbx_HomeDGBVM_CheckedChanged);
-            // 
-            // button5
-            // 
-            this.button5.Location = new System.Drawing.Point(408, 65);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(127, 23);
-            this.button5.TabIndex = 12;
-            this.button5.Text = "Open Retail DB";
-            this.toolTip1.SetToolTip(this.button5, "Screen to manage the Game Default Screens for RS1Retail, RS1DLC, or RS2014 Retail" +
-        " packs, Crossplatform songs.");
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // btn_GoImport
             // 
@@ -1238,24 +1238,11 @@
             this.btn_Log.UseVisualStyleBackColor = false;
             this.btn_Log.Click += new System.EventHandler(this.btn_Log_Click);
             // 
-            // lbl_Log
-            // 
-            this.lbl_Log.AutoEllipsis = true;
-            this.lbl_Log.BackColor = System.Drawing.Color.Transparent;
-            this.lbl_Log.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.lbl_Log.Location = new System.Drawing.Point(87, 310);
-            this.lbl_Log.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lbl_Log.Name = "lbl_Log";
-            this.lbl_Log.Size = new System.Drawing.Size(341, 12);
-            this.lbl_Log.TabIndex = 346;
-            this.lbl_Log.Text = "0/0";
-            // 
             // DLCManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.panel2);
-            this.Controls.Add(this.lbl_Log);
             this.Controls.Add(this.btn_Log);
             this.Controls.Add(this.btm_GoDB);
             this.Controls.Add(this.btm_GoTemp);
@@ -1415,6 +1402,5 @@
         private System.Windows.Forms.Button btm_GoTemp;
         private System.Windows.Forms.Button btm_GoDB;
         private System.Windows.Forms.Button btn_Log;
-        private System.Windows.Forms.Label lbl_Log;
     }
 }

@@ -2585,7 +2585,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     Volume = Convert.ToSingle(file.Volume),
                     PreviewVolume = Convert.ToSingle(file.Preview_Volume),
                     SignatureType = info.SignatureType,
-                    PackageVersion = file.Version
+                    PackageVersion = file.ToolkitVersion//Version
                 };
 
                 //get track no

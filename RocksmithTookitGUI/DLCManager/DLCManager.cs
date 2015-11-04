@@ -4449,11 +4449,11 @@ namespace RocksmithToolkitGUI.DLCManager
                     data = new DLCPackageData
                     {
                         GameVersion = GameVersion.RS2014,
-                        Pc = chbx_PC.Text == "PC" || file.Platform == "Pc" ? true : false, //txt_Platform.Text 
-                        Mac = chbx_Mac.Text == "Mac" || file.Platform == "Mac" ? true : false,
-                        XBox360 = chbx_XBOX360.Text == "XBOX360" || file.Platform == "XBox360" ? true : false,
-                        PS3 = chbx_PS3.Text == "PS3" || file.Platform == "Ps3" ? true : false,
-                        Name = file.DLC_Name,
+                        Pc = false,// chbx_PC.Checked, //txt_Platform.Text 
+                        Mac = false,//chbx_Mac.Text == "Mac" || file.Platform == "Mac" ? true : false,
+                    XBox360 = false,//chbx_XBOX360.Text == "XBOX360" || file.Platform == "XBox360" ? true : false,
+                    PS3 = false,//chbx_PS3.Text == "PS3" || file.Platform == "Ps3" ? true : false,
+                    Name = file.DLC_Name,
                         AppId = file.DLC_AppID,
                         ArtFiles = info.ArtFiles,
                         Showlights = true,//info.Showlights, //apparently this infor is not read..also the tone base is removed/not read also
@@ -4530,7 +4530,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     //rtxt_StatisticsOnReadDLCs.Text = "...manipl" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                     if (chbx_Additional_Manipulations.GetItemChecked(2))
                         //"3. Make all DLC IDs unique (&save)"
-                        if (file.UniqueDLCName != null) data.Name = file.UniqueDLCName;
+                        if (file.UniqueDLCName != null && file.UniqueDLCName != "") data.Name = file.UniqueDLCName;
                         else
                         {
                             Random random = new Random();
@@ -4539,7 +4539,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
                             {
                                 DataSet dis = new DataSet();
-                                cmd += "UPDATE Main SET UniqueDLCName=" + data.Name + " WHERE ID=" + file.ID;
+                                cmd = "UPDATE Main SET UniqueDLCName=\"" + data.Name + "\" WHERE ID=" + file.ID;
                                 OleDbDataAdapter das = new OleDbDataAdapter(cmd, cnn);
                                 das.Fill(dis, "Main");
                                 das.Dispose();
@@ -4630,6 +4630,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     if (chbx_PC.Checked)
                         try
                         {
+                        data.Pc = true;
                             bwRGenerate.ReportProgress(progress, "Generating PC package");
                             RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate(dlcSavePath, data, new Platform(GamePlatform.Pc, CurrentGameVersion));
                             progress += step;
@@ -4643,7 +4644,8 @@ namespace RocksmithToolkitGUI.DLCManager
                     if (chbx_Mac.Checked)
                         try
                         {
-                            bwRGenerate.ReportProgress(progress, "Generating Mac package");
+                        data.Mac = true;
+                        bwRGenerate.ReportProgress(progress, "Generating Mac package");
                             RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate(dlcSavePath, data, new Platform(GamePlatform.Mac, CurrentGameVersion));
                             progress += step;
                             bwRGenerate.ReportProgress(progress);
@@ -4656,7 +4658,8 @@ namespace RocksmithToolkitGUI.DLCManager
                     if (chbx_XBOX360.Checked)
                         try
                         {
-                            bwRGenerate.ReportProgress(progress, "Generating XBox 360 package");
+                        data.XBox360 = true;
+                        bwRGenerate.ReportProgress(progress, "Generating XBox 360 package");
                             RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate(dlcSavePath, data, new Platform(GamePlatform.XBox360, CurrentGameVersion));
                             progress += step;
                             bwRGenerate.ReportProgress(progress);
@@ -4669,6 +4672,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     if (chbx_PS3.Checked)
                         try
                         {
+                        data.PS3 = true;
                             bwRGenerate.ReportProgress(progress, "Generating PS3 package");
                             RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate(dlcSavePath, data, new Platform(GamePlatform.PS3, CurrentGameVersion));
                             progress += step;
@@ -4704,13 +4708,14 @@ namespace RocksmithToolkitGUI.DLCManager
                     }
                     else if ((chbx_PC.Checked || chbx_Mac.Checked) && chbx_Additional_Manipulations.GetItemChecked(49))
                     {
-                        var source = dlcSavePath + (chbx_PC.Checked ? "_p" : (chbx_Mac.Checked ? "_m" : "") + ".psarc");
+                        var source =  (chbx_PC.Checked ? "_p" : (chbx_Mac.Checked ? "_m" : "")) + ".psarc";
                         var dest = "";
                         //if (txt_RocksmithDLCPath.Text.IndexOf("Rocksmith\\DLC") > 0)
                         //{
                         dest = txt_RocksmithDLCPath.Text;
                         //File.Copy(RocksmithDLCPath + "\\rs1compatibilitydlc" + platfrm + ".psarc", dest + "\\rs1compatibilitydlc" + platfrm + ".psarc.orig", false);
-                        File.Copy(source, dest + "\\" + FN + (chbx_PC.Checked ? "_p" : (chbx_Mac.Checked ? "_m" : "") + ".psarc"), true);
+                        if (File.Exists(dlcSavePath + source))
+                        File.Copy(dlcSavePath + source, dest + "\\" + FN +source, true);
 
                     }
 

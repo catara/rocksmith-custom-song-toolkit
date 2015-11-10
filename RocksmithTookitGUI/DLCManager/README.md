@@ -13,15 +13,15 @@
 
 
 
-# Roksmith DLC Library Manager v0.2.0.12 (beta version)
+# Roksmith DLC Library Manager v0.2.0.13 (beta version)
 Main Features:
 - Gather all DLCs metadata into 1 Microsoft Access DB
-	- Manage Duplicates
+	- Manage Duplicates @Import and After
 	- Edit Individual metadata fields
 	- Fix Songs without
 		- Preview
 		- Cover
-	- Listen to songs Audio
+	- Listen to songs Audio/Preview
 - Mass Modify songdetails/metadata @repack per each Rocksmith song: e.g. Album Field: <Broken><Year> - <Album> - r<Rating> - <Avail. Instr.> - <DD> - <Tuning>
 	- Copies songs/packs directly to the PS3 by means of FTP
 - Mass add/remove DD @repack (inc. Bass only option)(incl. Official DLCs)
@@ -30,16 +30,7 @@ Main Features:
 
 
 ## Known Issues:
-+ Import fails randomly...workaround Import again (don't clear the DB)
-+ Tool is based on Rocksmith Toolkit 16th Oct version
-- Edit of Arragements and Tones DB can only be done from Access for the moment
-- Packing of Rocksmith 2014 Retail manipulated files has 1 manual step for RS14 Retail songs
--- When having GitHub conficting issue
- https://help.github.com/articles/resolving-a-merge-conflict-from-the-command-line/
- git status
- edit in notepad 
- git add xxx.xxx
- git commit
+-+ Packing of Rocksmith 2014 Retail manipulated files has 1 manual step for RS14 Retail songs
 
 ## ToDos/bugs:
 n2h:
@@ -56,8 +47,8 @@ n2h:
 -+ small improv: Any change of song in the list should also save :)
 -+ standardiation delete
 -+ third eye investig
--+ CICAGO 26 25 original SONG FAILS AT PACK
--+ usa peaches
+-+ CICAGO 26 25 original SONG FAILS AT PACK 
+-+ usa peaches long naming fails at packing
 
 wip:
 - feat:		 Alternate No for duplicates logic
@@ -83,10 +74,6 @@ wip:
  -- add cancelation button
  -- progress bar update
 - duplicate window should return last maximum conv date and save it 
-
-
-wd:
-- make Groups as multivalue
 -- reorder main db fields
 	- size
 	- save /offer the chance to reorder
@@ -98,10 +85,22 @@ wd:
 - changing path
 - alternate 0
 
+wd:
+-- make Groups as multivalue
++ Import fails randomly...workaround Import again (don't clear the DB)
++ Tool is based on Rocksmith Toolkit 16th Oct version
++ Edit of Arragements and Tones DB can only be done from Access for the moment
 
-### dev issues:
+
+### Dev Tips:
 + Toolkit version flag does not sync to&from Github: Run RunMeFirst.bat
 + activate debug: set RocksmithToolkitGUI Folder as Start-up project
++ When having GitHub conficting issue
+ https://help.github.com/articles/resolving-a-merge-conflict-from-the-command-line/
+ git status
+ edit in notepad 
+ git add xxx.xxx
+ git commit
 
 # Version History(release date):
 	0.1(12.08.2014) prototype, 
@@ -122,13 +121,14 @@ wd:
 	0.2.0.9 (30.04) Implement FTP to PS3 (also as a copy to any other location)
 	0.2.0.10 (05.05) save settings in Toolkit config, getrck no, groups, Add 30 sec preview midsong; close bugs on Conversion to Ps3(nin hell)
 	0.2.0.11 (22.08.2015) remove bug on auto import if original
-	0.2.2.12 (26.09.2015) If importing an original over a alternate the alternate flag should be set no the Alternate
-	wip: 0.2.0.13 (10.10.2015) (96%) full release (anyone can download and use the tool..no bugs..and all un-implemented features disabled) , repack wo bugs, edit screens functional
-	wip: 0.2.0.14 (03.10.2015) (90%) Remove getlastconversiondate from Duplicates as already coming from the arrangements table
-	wip: 0.2.0.15 (20.10.2015) (80%)  analyse acuracy on conversion to ps3 (1979,7army..)
-	wip: 0.2.0.16 (20.10.2015) (20%) has_section flag(to be tested with a song missing sections); 
-	wip: 0.2.1 (31.10.2015) (10%) HTML&Excel exports
-	tbr: 0.2.1.1 (15.09.2015) Implement a logic to properly read DLCManager renamed DLCs
+	0.2.0.12 (26.09.2015) If importing an original over a alternate the alternate flag should be set no the Alternate
+	0.2.0.13 (12.11.2015) Finally implement Arrangements and Tones and song Groups
+	wip: 0.2.0.14 (10.12.2015) (96%) full release (anyone can download and use the tool..no bugs..and all un-implemented features disabled), repack wo bugs, edit screens functional
+	wip: 0.2.0.15 (03.12.2015) (90%) Remove getlastconversiondate from Duplicates as already coming from the arrangements table
+	wip: 0.2.0.16 (20.12.2015) (80%)  analyse acuracy on conversion to ps3 (1979,7army..)
+	wip: 0.2.0.17 (20.12.2015) (20%) has_section flag(to be tested with a song missing sections); 
+	wip: 0.2.1 (31.01.2016) (10%) HTML&Excel exports
+	tbr: 0.2.1.1 (15.01.2016) Implement a logic to properly read DLCManager renamed DLCs
 	tbr: 0.3.1 move Import DB to Main.DB or at least use an official data source as DB source to also be able to edit from the grid
 	tbr: 0.3.2 ?move Access code to project? or from hardcoded to views	
 	wip: 0.3.3 (03.10.2015) (10%) use parameterized SQL everywhere (&/ integrate template DB into project or a SQL DB)

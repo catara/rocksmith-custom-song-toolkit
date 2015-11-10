@@ -191,7 +191,7 @@
             this.cbx_Groups.DataSource = this.mainBindingSource;
             this.cbx_Groups.Enabled = false;
             this.cbx_Groups.FormattingEnabled = true;
-            this.cbx_Groups.Location = new System.Drawing.Point(157, 21);
+            this.cbx_Groups.Location = new System.Drawing.Point(154, 21);
             this.cbx_Groups.Name = "cbx_Groups";
             this.cbx_Groups.Size = new System.Drawing.Size(134, 21);
             this.cbx_Groups.TabIndex = 28;
@@ -232,7 +232,7 @@
             this.btn_RePack.Location = new System.Drawing.Point(81, 37);
             this.btn_RePack.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.btn_RePack.Name = "btn_RePack";
-            this.btn_RePack.Size = new System.Drawing.Size(77, 24);
+            this.btn_RePack.Size = new System.Drawing.Size(73, 24);
             this.btn_RePack.TabIndex = 14;
             this.btn_RePack.Text = "RePack";
             this.btn_RePack.UseVisualStyleBackColor = false;

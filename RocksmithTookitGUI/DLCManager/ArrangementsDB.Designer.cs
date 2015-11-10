@@ -31,6 +31,8 @@
             this.button1 = new System.Windows.Forms.Button();
             this.DataGridView1 = new System.Windows.Forms.DataGridView();
             this.Panel1 = new System.Windows.Forms.Panel();
+            this.btn_OpenJSON = new System.Windows.Forms.Button();
+            this.btn_OpenXML = new System.Windows.Forms.Button();
             this.btn_Close = new System.Windows.Forms.Button();
             this.txt_RouteMask = new RocksmithToolkitGUI.CueTextBox();
             this.txt_TuningPitch = new RocksmithToolkitGUI.CueTextBox();
@@ -45,20 +47,15 @@
             this.txt_String5 = new RocksmithToolkitGUI.CueTextBox();
             this.txt_String1 = new RocksmithToolkitGUI.CueTextBox();
             this.txt_ID = new RocksmithToolkitGUI.CueTextBox();
-            this.chbx_Save_All = new System.Windows.Forms.CheckBox();
             this.chbx_BassDD = new System.Windows.Forms.CheckBox();
             this.button8 = new System.Windows.Forms.Button();
-            this.button10 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btn_RemoveDD = new System.Windows.Forms.Button();
+            this.btn_AddDD = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.txt_lastConversionDateTime = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_BassPicking = new RocksmithToolkitGUI.CueTextBox();
             this.txt_ArrangementType = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_ToneBase = new RocksmithToolkitGUI.CueTextBox();
             this.cueTextBox2 = new RocksmithToolkitGUI.CueTextBox();
             this.txt_Tuning_Speed = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_Rating = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_Tunning = new RocksmithToolkitGUI.CueTextBox();
             this.txt_ScrollSpeed = new RocksmithToolkitGUI.CueTextBox();
             this.chbx_Bonus = new System.Windows.Forms.CheckBox();
             this.chbx_Broken = new System.Windows.Forms.CheckBox();
@@ -67,10 +64,31 @@
             this.txt_CDLC_ID = new RocksmithToolkitGUI.CueTextBox();
             this.txt_Arrangement_Name = new RocksmithToolkitGUI.CueTextBox();
             this.CheckBox1 = new System.Windows.Forms.CheckBox();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
+            this.lbl_NoRec = new System.Windows.Forms.Label();
+            this.chbx_AutoSave = new System.Windows.Forms.CheckBox();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.chbx_ToneBase = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.chbx_BassPicking = new System.Windows.Forms.ComboBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.chbx_Tunning = new System.Windows.Forms.ComboBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.txt_Rating = new System.Windows.Forms.NumericUpDown();
+            this.label11 = new System.Windows.Forms.Label();
+            this.txt_Description = new System.Windows.Forms.RichTextBox();
+            this.chbx_HasSection = new System.Windows.Forms.CheckBox();
+            this.label12 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridView1)).BeginInit();
             this.Panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txt_Rating)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
@@ -91,12 +109,39 @@
             this.DataGridView1.Name = "DataGridView1";
             this.DataGridView1.Size = new System.Drawing.Size(1177, 172);
             this.DataGridView1.TabIndex = 38;
+            this.DataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick_2);
             this.DataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick_2);
+            this.DataGridView1.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick_2);
+            this.DataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick_2);
+            this.DataGridView1.CellLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellLeave);
+            this.DataGridView1.SelectionChanged += new System.EventHandler(this.DataGridView1_SelectionChanged);
             // 
             // Panel1
             // 
-            this.Panel1.Controls.Add(this.button4);
-            this.Panel1.Controls.Add(this.button5);
+            this.Panel1.Controls.Add(this.label12);
+            this.Panel1.Controls.Add(this.chbx_HasSection);
+            this.Panel1.Controls.Add(this.label10);
+            this.Panel1.Controls.Add(this.txt_Rating);
+            this.Panel1.Controls.Add(this.label11);
+            this.Panel1.Controls.Add(this.txt_Description);
+            this.Panel1.Controls.Add(this.chbx_Tunning);
+            this.Panel1.Controls.Add(this.label9);
+            this.Panel1.Controls.Add(this.chbx_BassPicking);
+            this.Panel1.Controls.Add(this.label8);
+            this.Panel1.Controls.Add(this.label7);
+            this.Panel1.Controls.Add(this.label6);
+            this.Panel1.Controls.Add(this.label5);
+            this.Panel1.Controls.Add(this.label4);
+            this.Panel1.Controls.Add(this.chbx_ToneBase);
+            this.Panel1.Controls.Add(this.label3);
+            this.Panel1.Controls.Add(this.label2);
+            this.Panel1.Controls.Add(this.label1);
+            this.Panel1.Controls.Add(this.numericUpDown1);
+            this.Panel1.Controls.Add(this.chbx_AutoSave);
+            this.Panel1.Controls.Add(this.btn_RemoveDD);
+            this.Panel1.Controls.Add(this.lbl_NoRec);
+            this.Panel1.Controls.Add(this.btn_OpenJSON);
+            this.Panel1.Controls.Add(this.btn_OpenXML);
             this.Panel1.Controls.Add(this.btn_Close);
             this.Panel1.Controls.Add(this.txt_RouteMask);
             this.Panel1.Controls.Add(this.txt_TuningPitch);
@@ -111,20 +156,14 @@
             this.Panel1.Controls.Add(this.txt_String5);
             this.Panel1.Controls.Add(this.txt_String1);
             this.Panel1.Controls.Add(this.txt_ID);
-            this.Panel1.Controls.Add(this.chbx_Save_All);
             this.Panel1.Controls.Add(this.chbx_BassDD);
             this.Panel1.Controls.Add(this.button8);
-            this.Panel1.Controls.Add(this.button10);
-            this.Panel1.Controls.Add(this.button2);
+            this.Panel1.Controls.Add(this.btn_AddDD);
             this.Panel1.Controls.Add(this.button3);
             this.Panel1.Controls.Add(this.txt_lastConversionDateTime);
-            this.Panel1.Controls.Add(this.txt_BassPicking);
             this.Panel1.Controls.Add(this.txt_ArrangementType);
-            this.Panel1.Controls.Add(this.txt_ToneBase);
             this.Panel1.Controls.Add(this.cueTextBox2);
             this.Panel1.Controls.Add(this.txt_Tuning_Speed);
-            this.Panel1.Controls.Add(this.txt_Rating);
-            this.Panel1.Controls.Add(this.txt_Tunning);
             this.Panel1.Controls.Add(this.txt_ScrollSpeed);
             this.Panel1.Controls.Add(this.chbx_Bonus);
             this.Panel1.Controls.Add(this.chbx_Broken);
@@ -139,14 +178,34 @@
             this.Panel1.Size = new System.Drawing.Size(1177, 114);
             this.Panel1.TabIndex = 40;
             // 
+            // btn_OpenJSON
+            // 
+            this.btn_OpenJSON.Location = new System.Drawing.Point(40, 47);
+            this.btn_OpenJSON.Name = "btn_OpenJSON";
+            this.btn_OpenJSON.Size = new System.Drawing.Size(44, 38);
+            this.btn_OpenJSON.TabIndex = 277;
+            this.btn_OpenJSON.Text = "Open JSON";
+            this.btn_OpenJSON.UseVisualStyleBackColor = true;
+            this.btn_OpenJSON.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // btn_OpenXML
+            // 
+            this.btn_OpenXML.Location = new System.Drawing.Point(90, 47);
+            this.btn_OpenXML.Name = "btn_OpenXML";
+            this.btn_OpenXML.Size = new System.Drawing.Size(41, 38);
+            this.btn_OpenXML.TabIndex = 276;
+            this.btn_OpenXML.Text = "Open XML";
+            this.btn_OpenXML.UseVisualStyleBackColor = true;
+            this.btn_OpenXML.Click += new System.EventHandler(this.btn_OpenXML_Click);
+            // 
             // btn_Close
             // 
             this.btn_Close.BackColor = System.Drawing.Color.LightSteelBlue;
             this.btn_Close.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Close.Location = new System.Drawing.Point(1062, 48);
+            this.btn_Close.Location = new System.Drawing.Point(1100, 86);
             this.btn_Close.Margin = new System.Windows.Forms.Padding(2);
             this.btn_Close.Name = "btn_Close";
-            this.btn_Close.Size = new System.Drawing.Size(72, 20);
+            this.btn_Close.Size = new System.Drawing.Size(72, 25);
             this.btn_Close.TabIndex = 273;
             this.btn_Close.Text = "Close";
             this.btn_Close.UseVisualStyleBackColor = false;
@@ -155,9 +214,10 @@
             // txt_RouteMask
             // 
             this.txt_RouteMask.Cue = "Route Mask";
+            this.txt_RouteMask.Enabled = false;
             this.txt_RouteMask.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_RouteMask.ForeColor = System.Drawing.Color.Gray;
-            this.txt_RouteMask.Location = new System.Drawing.Point(888, 67);
+            this.txt_RouteMask.Location = new System.Drawing.Point(804, 85);
             this.txt_RouteMask.Name = "txt_RouteMask";
             this.txt_RouteMask.Size = new System.Drawing.Size(107, 20);
             this.txt_RouteMask.TabIndex = 133;
@@ -165,9 +225,10 @@
             // txt_TuningPitch
             // 
             this.txt_TuningPitch.Cue = "Tuning Pitch";
+            this.txt_TuningPitch.Enabled = false;
             this.txt_TuningPitch.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_TuningPitch.ForeColor = System.Drawing.Color.Gray;
-            this.txt_TuningPitch.Location = new System.Drawing.Point(373, 89);
+            this.txt_TuningPitch.Location = new System.Drawing.Point(747, 11);
             this.txt_TuningPitch.Name = "txt_TuningPitch";
             this.txt_TuningPitch.Size = new System.Drawing.Size(56, 20);
             this.txt_TuningPitch.TabIndex = 132;
@@ -273,6 +334,7 @@
             // txt_ID
             // 
             this.txt_ID.Cue = "ID";
+            this.txt_ID.Enabled = false;
             this.txt_ID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_ID.ForeColor = System.Drawing.Color.Gray;
             this.txt_ID.Location = new System.Drawing.Point(191, 89);
@@ -280,64 +342,55 @@
             this.txt_ID.Size = new System.Drawing.Size(45, 20);
             this.txt_ID.TabIndex = 121;
             // 
-            // chbx_Save_All
-            // 
-            this.chbx_Save_All.AutoSize = true;
-            this.chbx_Save_All.Enabled = false;
-            this.chbx_Save_All.Location = new System.Drawing.Point(883, 39);
-            this.chbx_Save_All.Name = "chbx_Save_All";
-            this.chbx_Save_All.Size = new System.Drawing.Size(37, 17);
-            this.chbx_Save_All.TabIndex = 120;
-            this.chbx_Save_All.Text = "All";
-            this.chbx_Save_All.UseVisualStyleBackColor = true;
-            // 
             // chbx_BassDD
             // 
             this.chbx_BassDD.AutoSize = true;
             this.chbx_BassDD.Enabled = false;
-            this.chbx_BassDD.Location = new System.Drawing.Point(888, 91);
+            this.chbx_BassDD.Location = new System.Drawing.Point(876, 7);
             this.chbx_BassDD.Name = "chbx_BassDD";
-            this.chbx_BassDD.Size = new System.Drawing.Size(80, 17);
+            this.chbx_BassDD.Size = new System.Drawing.Size(68, 17);
             this.chbx_BassDD.TabIndex = 119;
-            this.chbx_BassDD.Text = "<Bass DD>";
+            this.chbx_BassDD.Text = "Bass DD";
             this.chbx_BassDD.UseVisualStyleBackColor = true;
             // 
             // button8
             // 
             this.button8.ForeColor = System.Drawing.Color.Green;
-            this.button8.Location = new System.Drawing.Point(883, 8);
+            this.button8.Location = new System.Drawing.Point(1016, 86);
             this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(84, 26);
+            this.button8.Size = new System.Drawing.Size(84, 25);
             this.button8.TabIndex = 118;
             this.button8.Text = "Save";
             this.button8.UseVisualStyleBackColor = true;
             this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
-            // button10
+            // btn_RemoveDD
             // 
-            this.button10.Enabled = false;
-            this.button10.Location = new System.Drawing.Point(1001, 73);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(133, 26);
-            this.button10.TabIndex = 116;
-            this.button10.Text = "Remove BassDD";
-            this.button10.UseVisualStyleBackColor = true;
+            this.btn_RemoveDD.Enabled = false;
+            this.btn_RemoveDD.Location = new System.Drawing.Point(1019, 64);
+            this.btn_RemoveDD.Name = "btn_RemoveDD";
+            this.btn_RemoveDD.Size = new System.Drawing.Size(133, 20);
+            this.btn_RemoveDD.TabIndex = 116;
+            this.btn_RemoveDD.Text = "Remove BassDD";
+            this.btn_RemoveDD.UseVisualStyleBackColor = true;
+            this.btn_RemoveDD.Click += new System.EventHandler(this.button10_Click);
             // 
-            // button2
+            // btn_AddDD
             // 
-            this.button2.Enabled = false;
-            this.button2.Location = new System.Drawing.Point(1053, 20);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(81, 26);
-            this.button2.TabIndex = 115;
-            this.button2.Text = "Add DD";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btn_AddDD.Enabled = false;
+            this.btn_AddDD.Location = new System.Drawing.Point(1019, 42);
+            this.btn_AddDD.Name = "btn_AddDD";
+            this.btn_AddDD.Size = new System.Drawing.Size(81, 21);
+            this.btn_AddDD.TabIndex = 115;
+            this.btn_AddDD.Text = "Add DD";
+            this.btn_AddDD.UseVisualStyleBackColor = true;
+            this.btn_AddDD.Click += new System.EventHandler(this.btn_AddDD_Click);
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(40, -2);
+            this.button3.Location = new System.Drawing.Point(40, 6);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(120, 35);
+            this.button3.Size = new System.Drawing.Size(91, 40);
             this.button3.TabIndex = 114;
             this.button3.Text = "Open DB in M$ Access";
             this.button3.UseVisualStyleBackColor = true;
@@ -348,80 +401,43 @@
             this.txt_lastConversionDateTime.Cue = "lastConversionDateTime";
             this.txt_lastConversionDateTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_lastConversionDateTime.ForeColor = System.Drawing.Color.Gray;
-            this.txt_lastConversionDateTime.Location = new System.Drawing.Point(242, 89);
+            this.txt_lastConversionDateTime.Location = new System.Drawing.Point(329, 89);
             this.txt_lastConversionDateTime.Name = "txt_lastConversionDateTime";
-            this.txt_lastConversionDateTime.Size = new System.Drawing.Size(113, 20);
+            this.txt_lastConversionDateTime.Size = new System.Drawing.Size(100, 20);
             this.txt_lastConversionDateTime.TabIndex = 113;
-            // 
-            // txt_BassPicking
-            // 
-            this.txt_BassPicking.Cue = "Bass Picking";
-            this.txt_BassPicking.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_BassPicking.ForeColor = System.Drawing.Color.Gray;
-            this.txt_BassPicking.Location = new System.Drawing.Point(735, 82);
-            this.txt_BassPicking.Name = "txt_BassPicking";
-            this.txt_BassPicking.Size = new System.Drawing.Size(107, 20);
-            this.txt_BassPicking.TabIndex = 112;
             // 
             // txt_ArrangementType
             // 
+            this.txt_ArrangementType.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.txt_ArrangementType.Cue = "Arrangement Type";
+            this.txt_ArrangementType.Enabled = false;
             this.txt_ArrangementType.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_ArrangementType.ForeColor = System.Drawing.Color.Gray;
-            this.txt_ArrangementType.Location = new System.Drawing.Point(616, 82);
+            this.txt_ArrangementType.Location = new System.Drawing.Point(242, 3);
             this.txt_ArrangementType.Name = "txt_ArrangementType";
             this.txt_ArrangementType.Size = new System.Drawing.Size(113, 20);
             this.txt_ArrangementType.TabIndex = 111;
-            // 
-            // txt_ToneBase
-            // 
-            this.txt_ToneBase.Cue = "Tone Base";
-            this.txt_ToneBase.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_ToneBase.ForeColor = System.Drawing.Color.Gray;
-            this.txt_ToneBase.Location = new System.Drawing.Point(497, 82);
-            this.txt_ToneBase.Name = "txt_ToneBase";
-            this.txt_ToneBase.Size = new System.Drawing.Size(113, 20);
-            this.txt_ToneBase.TabIndex = 110;
             // 
             // cueTextBox2
             // 
             this.cueTextBox2.Cue = "ScrollSpeed";
             this.cueTextBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.cueTextBox2.ForeColor = System.Drawing.Color.Gray;
-            this.cueTextBox2.Location = new System.Drawing.Point(497, 60);
+            this.cueTextBox2.Location = new System.Drawing.Point(747, 85);
             this.cueTextBox2.Name = "cueTextBox2";
-            this.cueTextBox2.Size = new System.Drawing.Size(56, 20);
+            this.cueTextBox2.Size = new System.Drawing.Size(51, 20);
             this.cueTextBox2.TabIndex = 109;
             // 
             // txt_Tuning_Speed
             // 
             this.txt_Tuning_Speed.Cue = "Tuning Speed";
+            this.txt_Tuning_Speed.Enabled = false;
             this.txt_Tuning_Speed.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_Tuning_Speed.ForeColor = System.Drawing.Color.Gray;
             this.txt_Tuning_Speed.Location = new System.Drawing.Point(435, 86);
             this.txt_Tuning_Speed.Name = "txt_Tuning_Speed";
             this.txt_Tuning_Speed.Size = new System.Drawing.Size(56, 20);
             this.txt_Tuning_Speed.TabIndex = 108;
-            // 
-            // txt_Rating
-            // 
-            this.txt_Rating.Cue = "Rating";
-            this.txt_Rating.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_Rating.ForeColor = System.Drawing.Color.Gray;
-            this.txt_Rating.Location = new System.Drawing.Point(435, 60);
-            this.txt_Rating.Name = "txt_Rating";
-            this.txt_Rating.Size = new System.Drawing.Size(56, 20);
-            this.txt_Rating.TabIndex = 107;
-            // 
-            // txt_Tunning
-            // 
-            this.txt_Tunning.Cue = "Tunning";
-            this.txt_Tunning.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_Tunning.ForeColor = System.Drawing.Color.Gray;
-            this.txt_Tunning.Location = new System.Drawing.Point(435, 34);
-            this.txt_Tunning.Name = "txt_Tunning";
-            this.txt_Tunning.Size = new System.Drawing.Size(113, 20);
-            this.txt_Tunning.TabIndex = 106;
             // 
             // txt_ScrollSpeed
             // 
@@ -454,15 +470,16 @@
             this.chbx_Broken.TabIndex = 102;
             this.chbx_Broken.Text = "Broken";
             this.chbx_Broken.UseVisualStyleBackColor = true;
+            this.chbx_Broken.Visible = false;
             // 
             // txt_XMLFilePath
             // 
             this.txt_XMLFilePath.Cue = "XMLFilePath";
-            this.txt_XMLFilePath.Enabled = false;
             this.txt_XMLFilePath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_XMLFilePath.ForeColor = System.Drawing.Color.Gray;
             this.txt_XMLFilePath.Location = new System.Drawing.Point(191, 65);
             this.txt_XMLFilePath.Name = "txt_XMLFilePath";
+            this.txt_XMLFilePath.ReadOnly = true;
             this.txt_XMLFilePath.Size = new System.Drawing.Size(222, 20);
             this.txt_XMLFilePath.TabIndex = 69;
             this.txt_XMLFilePath.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -470,11 +487,11 @@
             // txt_SNGFilePath
             // 
             this.txt_SNGFilePath.Cue = "SNGFilePath";
-            this.txt_SNGFilePath.Enabled = false;
             this.txt_SNGFilePath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_SNGFilePath.ForeColor = System.Drawing.Color.Gray;
             this.txt_SNGFilePath.Location = new System.Drawing.Point(191, 42);
             this.txt_SNGFilePath.Name = "txt_SNGFilePath";
+            this.txt_SNGFilePath.ReadOnly = true;
             this.txt_SNGFilePath.Size = new System.Drawing.Size(222, 20);
             this.txt_SNGFilePath.TabIndex = 68;
             this.txt_SNGFilePath.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -486,17 +503,18 @@
             this.txt_CDLC_ID.ForeColor = System.Drawing.Color.Gray;
             this.txt_CDLC_ID.Location = new System.Drawing.Point(191, 22);
             this.txt_CDLC_ID.Name = "txt_CDLC_ID";
-            this.txt_CDLC_ID.Size = new System.Drawing.Size(56, 20);
+            this.txt_CDLC_ID.ReadOnly = true;
+            this.txt_CDLC_ID.Size = new System.Drawing.Size(45, 20);
             this.txt_CDLC_ID.TabIndex = 67;
             // 
             // txt_Arrangement_Name
             // 
-            this.txt_Arrangement_Name.Cue = "Arrangement Name";
+            this.txt_Arrangement_Name.Cue = "Arrangements ID";
             this.txt_Arrangement_Name.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_Arrangement_Name.ForeColor = System.Drawing.Color.Gray;
             this.txt_Arrangement_Name.Location = new System.Drawing.Point(191, 5);
             this.txt_Arrangement_Name.Name = "txt_Arrangement_Name";
-            this.txt_Arrangement_Name.Size = new System.Drawing.Size(222, 20);
+            this.txt_Arrangement_Name.Size = new System.Drawing.Size(45, 20);
             this.txt_Arrangement_Name.TabIndex = 66;
             // 
             // CheckBox1
@@ -511,25 +529,227 @@
             this.CheckBox1.Text = "Show only MessageBox";
             this.CheckBox1.UseVisualStyleBackColor = true;
             // 
-            // button4
+            // lbl_NoRec
             // 
-            this.button4.Enabled = false;
-            this.button4.Location = new System.Drawing.Point(40, 34);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(120, 35);
-            this.button4.TabIndex = 277;
-            this.button4.Text = "Open JSON";
-            this.button4.UseVisualStyleBackColor = true;
+            this.lbl_NoRec.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_NoRec.Location = new System.Drawing.Point(253, 28);
+            this.lbl_NoRec.Name = "lbl_NoRec";
+            this.lbl_NoRec.Size = new System.Drawing.Size(68, 12);
+            this.lbl_NoRec.TabIndex = 278;
+            this.lbl_NoRec.Text = " Records";
             // 
-            // button5
+            // chbx_AutoSave
             // 
-            this.button5.Enabled = false;
-            this.button5.Location = new System.Drawing.Point(40, 74);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(120, 35);
-            this.button5.TabIndex = 276;
-            this.button5.Text = "Open XML";
-            this.button5.UseVisualStyleBackColor = true;
+            this.chbx_AutoSave.AutoSize = true;
+            this.chbx_AutoSave.Checked = true;
+            this.chbx_AutoSave.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chbx_AutoSave.Location = new System.Drawing.Point(940, 91);
+            this.chbx_AutoSave.Name = "chbx_AutoSave";
+            this.chbx_AutoSave.Size = new System.Drawing.Size(73, 17);
+            this.chbx_AutoSave.TabIndex = 101;
+            this.chbx_AutoSave.Text = "AutoSave";
+            this.chbx_AutoSave.UseVisualStyleBackColor = true;
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Enabled = false;
+            this.numericUpDown1.Location = new System.Drawing.Point(1105, 42);
+            this.numericUpDown1.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
+            this.numericUpDown1.Maximum = new decimal(new int[] {
+            8,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(46, 20);
+            this.numericUpDown1.TabIndex = 327;
+            this.numericUpDown1.Value = new decimal(new int[] {
+            4,
+            0,
+            0,
+            0});
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(801, 69);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(65, 13);
+            this.label1.TabIndex = 328;
+            this.label1.Text = "Route Mask";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(156, 45);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(30, 13);
+            this.label2.TabIndex = 329;
+            this.label2.Text = "SNG";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(156, 68);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(29, 13);
+            this.label3.TabIndex = 330;
+            this.label3.Text = "XML";
+            // 
+            // chbx_ToneBase
+            // 
+            this.chbx_ToneBase.FormattingEnabled = true;
+            this.chbx_ToneBase.Location = new System.Drawing.Point(497, 85);
+            this.chbx_ToneBase.Name = "chbx_ToneBase";
+            this.chbx_ToneBase.Size = new System.Drawing.Size(121, 21);
+            this.chbx_ToneBase.TabIndex = 331;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(167, 93);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(18, 13);
+            this.label4.TabIndex = 332;
+            this.label4.Text = "ID";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(137, 24);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(49, 13);
+            this.label5.TabIndex = 333;
+            this.label5.Text = "CDLC ID";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(358, 11);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(71, 13);
+            this.label6.TabIndex = 334;
+            this.label6.Text = "Scrool Speed";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(514, 15);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(34, 13);
+            this.label7.TabIndex = 335;
+            this.label7.Text = "String";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(137, 8);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(50, 13);
+            this.label8.TabIndex = 336;
+            this.label8.Text = "No. Ordr.";
+            // 
+            // chbx_BassPicking
+            // 
+            this.chbx_BassPicking.FormattingEnabled = true;
+            this.chbx_BassPicking.Items.AddRange(new object[] {
+            "",
+            "Picked",
+            "Not Picked"});
+            this.chbx_BassPicking.Location = new System.Drawing.Point(624, 85);
+            this.chbx_BassPicking.Name = "chbx_BassPicking";
+            this.chbx_BassPicking.Size = new System.Drawing.Size(121, 21);
+            this.chbx_BassPicking.TabIndex = 337;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(242, 92);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(81, 13);
+            this.label9.TabIndex = 338;
+            this.label9.Text = "Last Conv Time";
+            // 
+            // chbx_Tunning
+            // 
+            this.chbx_Tunning.FormattingEnabled = true;
+            this.chbx_Tunning.Items.AddRange(new object[] {
+            "",
+            "Picked",
+            "Not Picked"});
+            this.chbx_Tunning.Location = new System.Drawing.Point(427, 33);
+            this.chbx_Tunning.Name = "chbx_Tunning";
+            this.chbx_Tunning.Size = new System.Drawing.Size(121, 21);
+            this.chbx_Tunning.TabIndex = 339;
+            // 
+            // label10
+            // 
+            this.label10.Location = new System.Drawing.Point(455, 62);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(78, 18);
+            this.label10.TabIndex = 342;
+            this.label10.Text = "/5 CDLC stars";
+            // 
+            // txt_Rating
+            // 
+            this.txt_Rating.Location = new System.Drawing.Point(428, 59);
+            this.txt_Rating.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
+            this.txt_Rating.Maximum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.txt_Rating.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.txt_Rating.Name = "txt_Rating";
+            this.txt_Rating.Size = new System.Drawing.Size(26, 20);
+            this.txt_Rating.TabIndex = 343;
+            this.txt_Rating.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(950, 5);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(63, 13);
+            this.label11.TabIndex = 341;
+            this.label11.Text = "Description:";
+            // 
+            // txt_Description
+            // 
+            this.txt_Description.Location = new System.Drawing.Point(1019, 6);
+            this.txt_Description.Name = "txt_Description";
+            this.txt_Description.Size = new System.Drawing.Size(155, 32);
+            this.txt_Description.TabIndex = 340;
+            this.txt_Description.Text = "";
+            // 
+            // chbx_HasSection
+            // 
+            this.chbx_HasSection.AutoSize = true;
+            this.chbx_HasSection.Enabled = false;
+            this.chbx_HasSection.Location = new System.Drawing.Point(876, 24);
+            this.chbx_HasSection.Name = "chbx_HasSection";
+            this.chbx_HasSection.Size = new System.Drawing.Size(89, 17);
+            this.chbx_HasSection.TabIndex = 344;
+            this.chbx_HasSection.Text = "Has Sections";
+            this.chbx_HasSection.UseVisualStyleBackColor = true;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.ForeColor = System.Drawing.Color.DarkRed;
+            this.label12.Location = new System.Drawing.Point(818, 44);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(171, 13);
+            this.label12.TabIndex = 345;
+            this.label12.Text = "Information not user @repack YET";
             // 
             // ArrangementsDB
             // 
@@ -545,6 +765,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.DataGridView1)).EndInit();
             this.Panel1.ResumeLayout(false);
             this.Panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txt_Rating)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -560,20 +782,15 @@
         private CueTextBox txt_CDLC_ID;
         private CueTextBox txt_Arrangement_Name;
         private CueTextBox txt_ArrangementType;
-        private CueTextBox txt_ToneBase;
         private CueTextBox cueTextBox2;
         private CueTextBox txt_Tuning_Speed;
-        private CueTextBox txt_Rating;
-        private CueTextBox txt_Tunning;
         private CueTextBox txt_ScrollSpeed;
         private System.Windows.Forms.CheckBox chbx_Bonus;
         private System.Windows.Forms.CheckBox chbx_Broken;
         private CueTextBox txt_lastConversionDateTime;
-        private CueTextBox txt_BassPicking;
-        private System.Windows.Forms.Button button10;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btn_RemoveDD;
+        private System.Windows.Forms.Button btn_AddDD;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.CheckBox chbx_Save_All;
         private System.Windows.Forms.CheckBox chbx_BassDD;
         private System.Windows.Forms.Button button8;
         private CueTextBox txt_ID;
@@ -590,7 +807,28 @@
         private CueTextBox txt_TuningPitch;
         private CueTextBox txt_RouteMask;
         private System.Windows.Forms.Button btn_Close;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button btn_OpenJSON;
+        private System.Windows.Forms.Button btn_OpenXML;
+        private System.Windows.Forms.Label lbl_NoRec;
+        private System.Windows.Forms.CheckBox chbx_AutoSave;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.ComboBox chbx_ToneBase;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.ComboBox chbx_Tunning;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.ComboBox chbx_BassPicking;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.NumericUpDown txt_Rating;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.RichTextBox txt_Description;
+        private System.Windows.Forms.CheckBox chbx_HasSection;
+        private System.Windows.Forms.Label label12;
     }
 }

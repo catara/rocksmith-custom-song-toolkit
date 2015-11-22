@@ -125,7 +125,7 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_Album_Correction.Text = DataGridView1.Rows[i].Cells[5].Value.ToString();
             //txt_AlbumArtPath_Correction.Text = DataGridView1.Rows[i].Cells[5].Value.ToString();
 
-           if (txt_AlbumArtPath_Correction.Text != "") picbx_AlbumArtPath.ImageLocation = txt_AlbumArtPath.Text.Replace(".dds", ".png");
+           //if (txt_AlbumArtPath_Correction.Text != "") picbx_AlbumArtPath.ImageLocation = txt_AlbumArtPath.Text.Replace(".dds", ".png");
 
         }
 
@@ -141,7 +141,7 @@ namespace RocksmithToolkitGUI.DLCManager
             DataGridView1.Rows[i].Cells[3].Value = txt_Artist_Correction.Text;
             //DataGridView1.Rows[i].Cells[3].Value = txt_Album.Text;
             DataGridView1.Rows[i].Cells[5].Value = txt_Album_Correction.Text;
-            DataGridView1.Rows[i].Cells[6].Value = txt_AlbumArtPath_Correction.Text;
+           // DataGridView1.Rows[i].Cells[6].Value = txt_AlbumArtPath_Correction.Text;
 
             //var DB_Path = "../../../../tmp\\Files.accdb;";
             var connection = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path); //+ ";Persist Security Info=False"

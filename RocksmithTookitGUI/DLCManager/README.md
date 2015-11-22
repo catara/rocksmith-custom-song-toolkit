@@ -43,12 +43,12 @@ n2h:
 -+ small improv: add the proper lasconvdate in the db 
   - make sure its read only once when imported and not anzmore in the duplication management section
 -+ at pack mark as selected - Conflicting with Select functionality (is this useful? :) )
--+ vs blue maybe also yes blue
--+ small improv: Any change of song in the list should also save :)
+-+ vs blue maybe also yes blue (blu happens also when small 1bite amybe 2 diff in filesize
 -+ standardiation delete
 -+ third eye investig
 -+ CICAGO 26 25 original SONG FAILS AT PACK 
 -+ usa peaches long naming fails at packing
+-+ some songs have preview in minutes (preview rename thing) recalculated at repack
 
 wip:
 - feat:		 Alternate No for duplicates logic
@@ -64,12 +64,11 @@ wip:
 - make a custom song out of retail
 - finish arrangement (demo with the hives overdrive sall the time :) )
 - remove commented out code 
-- duplicate import should save the names of the files in a multivalue(;) field :)
-  - save also hash not to ask again for duplciates if already decided as duplicate
-- if i delete a foolder do i get a warning in the maintenance check ?
+- duplicate import should save the names of the files in a separate table :)
+  - save also hash not to ask again for duplicates if already decided as duplicate
+- if i delete a folder do i get a warning in the maintenance check ?
   - check for json existance as well. Maybe
 - ignore Multitracks as duplicates
-- add date as duplication text
 - increase the no of threads
  -- add cancelation button
  -- progress bar update
@@ -84,12 +83,14 @@ wip:
 - dont conv Orig
 - changing path
 - alternate 0
+- why all songs have 30sec preview :)
+- some songs dont repack
+- i had to apply a fix for 311 down in
+- remove all dd in Cache/Retails screen
+- finish profiles
+- fix filter in CAche
 
 wd:
--- make Groups as multivalue
-+ Import fails randomly...workaround Import again (don't clear the DB)
-+ Tool is based on Rocksmith Toolkit 16th Oct version
-+ Edit of Arragements and Tones DB can only be done from Access for the moment
 
 
 ### Dev Tips:

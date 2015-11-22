@@ -58,6 +58,7 @@ namespace RocksmithToolkitGUI.DLCManager
         public string unpackedDir { get; set; }
         public string Is_MultiTracks { get; set; }
         public string MultiTrack_Versions { get; set; }
+        public string FileDate { get; set; }
         public bool IgnoreRest { get; set; }
 
         //public bool newold { get; set; }
@@ -72,7 +73,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         //}
 
-        public Duplicates_Management(DLCManager.Files filed, DLCPackageData datas, string author, string tkversion, string dD, string bass, string guitar, string combo, string rhythm, string lead, string vocal, string tunnings, int i, int norows, string original_FileName, string art_hash, string audio_hash, string audioPreview_hash, List<string> alist, List<string> blist, string DBPath, List<string> clist, List<string> dlist, bool newold, string Is_Original, string altvert, string txt_RocksmithDLCPath, bool AllowEncript, bool AllowORIGDelete, string FileSize, string unpackedDir, string Is_MultiTrack, string MultiTrack_Version)//string Is_MultiTracking, string Multitracking, 
+        public Duplicates_Management(DLCManager.Files filed, DLCPackageData datas, string author, string tkversion, string dD, string bass, string guitar, string combo, string rhythm, string lead, string vocal, string tunnings, int i, int norows, string original_FileName, string art_hash, string audio_hash, string audioPreview_hash, List<string> alist, List<string> blist, string DBPath, List<string> clist, List<string> dlist, bool newold, string Is_Original, string altvert, string txt_RocksmithDLCPath, bool AllowEncript, bool AllowORIGDelete, string FileSize, string unpackedDir, string Is_MultiTrack, string MultiTrack_Version, string FileDate)//string Is_MultiTracking, string Multitracking, 
         //file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, Tunings, b, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist, DB_Path, clist, dlist, newold, Is_Original, altver
         {
             //Text = text;
@@ -103,7 +104,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.newold = newold;
             this.Is_Original = Is_Original;
             this.altver = altvert;
-            //this.Is_MultiTracking = Is_MultiTracking;
+            this.FileDate = FileDate;
             //this.MultiTracking = MultiTracking;
             this.txt_RocksmithDLCPath = txt_RocksmithDLCPath;
             //this.AllowEncript = AllowEncript;
@@ -239,6 +240,10 @@ namespace RocksmithToolkitGUI.DLCManager
             if (FileSize != filed.File_Size) { lbl_Size.ForeColor = lbl_Reference.ForeColor; }
             txt_SizeNew.Text = FileSize.ToInt32().ToString("###,###,###");
             txt_SizeExisting.Text = filed.File_Size.ToInt32().ToString("###,###,###");
+            ////FileSize
+            //if (FileSize != filed.File_Creation_Date) { lbl_Size.ForeColor = lbl_Reference.ForeColor; }
+            //txt_SizeNew.Text = FileSize.ToInt32().ToString("###,###,###");
+            //txt_SizeExisting.Text = filed.File_Size.ToInt32().ToString("###,###,###");
 
 
             if (datas.SongInfo.SongDisplayName != filed.Song_Title) { lbl_Title.ForeColor = lbl_Reference.ForeColor; }//btn_TitleExisting.Enabled = true; btn_TitleNew.Enabled = true; }
@@ -275,6 +280,8 @@ namespace RocksmithToolkitGUI.DLCManager
             else if (datas.PackageVersion == "" && "" == filed.Version) lbl_Version.Text = "";
             txt_VersionNew.Text = datas.PackageVersion;
             txt_VersionExisting.Text = filed.Version;
+            txt_FileDateNew.Text = datas.PackageVersion;
+            txt_FileDateExisting.Text = filed.File_Creation_Date;
 
             if (dD != filed.Has_DD) lbl_DD.ForeColor = lbl_Reference.ForeColor;
             else if (dD == "" && "" == filed.Has_DD) lbl_DD.Text = "";
@@ -667,8 +674,8 @@ namespace RocksmithToolkitGUI.DLCManager
             public string CustomForge_Followers { get; set; }
             public string CustomForge_Version { get; set; }
             public string FilesMissingIssues { get; set; }
-            public string Show_Alternate_Version { get; set; }
-            public string Show_MultiTrack_Details { get; set; }
+            public string Duplicates { get; set; }
+            public string Pack { get; set; }
             public string Keep_BassDD { get; set; }
             public string Keep_DD { get; set; }
             public string Keep_Original { get; set; }
@@ -692,8 +699,10 @@ namespace RocksmithToolkitGUI.DLCManager
             public string Has_Bonus_Arrangement { get; set; }
             public string Artist_ShortName { get; set; }
             public string Album_ShortName { get; set; }
-            public string Available_Duplicate { get; set; }
             public string Available_Old { get; set; }
+            public string Available_Duplicate { get; set; }
+            public string Has_Been_Corrected { get; set; }
+            public string File_Creation_Date { get; set; }
         }
         public Files[] files = new Files[10000];
         private DLCManager.Files filed;
@@ -812,8 +821,8 @@ namespace RocksmithToolkitGUI.DLCManager
                         files[i].CustomForge_Followers = dataRow.ItemArray[59].ToString();
                         files[i].CustomForge_Version = dataRow.ItemArray[60].ToString();
                         files[i].FilesMissingIssues = dataRow.ItemArray[61].ToString();
-                        files[i].Show_Alternate_Version = dataRow.ItemArray[62].ToString();
-                        files[i].Show_MultiTrack_Details = dataRow.ItemArray[63].ToString();
+                        files[i].Duplicates = dataRow.ItemArray[62].ToString();
+                        files[i].Pack = dataRow.ItemArray[63].ToString();
                         files[i].Keep_BassDD = dataRow.ItemArray[64].ToString();
                         files[i].Keep_DD = dataRow.ItemArray[65].ToString();
                         files[i].Keep_Original = dataRow.ItemArray[66].ToString();
@@ -837,8 +846,10 @@ namespace RocksmithToolkitGUI.DLCManager
                         files[i].Has_Bonus_Arrangement = dataRow.ItemArray[84].ToString();
                         files[i].Artist_ShortName = dataRow.ItemArray[85].ToString();
                         files[i].Album_ShortName = dataRow.ItemArray[86].ToString();
-                        files[i].Available_Duplicate = dataRow.ItemArray[87].ToString();
-                        files[i].Available_Old = dataRow.ItemArray[88].ToString();
+                        files[i].Available_Old = dataRow.ItemArray[87].ToString();
+                        files[i].Available_Duplicate = dataRow.ItemArray[88].ToString();
+                        files[i].Has_Been_Corrected = dataRow.ItemArray[89].ToString();
+                        files[i].File_Creation_Date = dataRow.ItemArray[90].ToString();
                         i++;
                     }
                     //Closing Connection

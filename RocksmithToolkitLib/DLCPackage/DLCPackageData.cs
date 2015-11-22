@@ -636,7 +636,7 @@ namespace RocksmithToolkitLib.DLCPackage
             if (!String.IsNullOrEmpty(audioPreviewPath))
             {
                 var newPreviewFileName = Path.Combine(Path.GetDirectoryName(audioPath), String.Format("{0}_preview{1}", Path.GetFileNameWithoutExtension(audioPath), Path.GetExtension(audioPath)));
-                File.Move(audioPreviewPath, newPreviewFileName);
+                if (!File.Exists(newPreviewFileName)) File.Move(audioPreviewPath, newPreviewFileName); //bcapi as some original create an error here
                 data.OggPreviewPath = newPreviewFileName;
             }
 

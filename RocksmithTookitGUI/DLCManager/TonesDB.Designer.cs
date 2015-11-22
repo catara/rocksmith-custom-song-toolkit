@@ -30,6 +30,21 @@
         {
             this.DataGridView1 = new System.Windows.Forms.DataGridView();
             this.Panel1 = new System.Windows.Forms.Panel();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.txt_Description = new System.Windows.Forms.RichTextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txt_Volume = new System.Windows.Forms.NumericUpDown();
+            this.cueTextBox1 = new RocksmithToolkitGUI.CueTextBox();
+            this.chbx_AutoSave = new System.Windows.Forms.CheckBox();
             this.button1 = new System.Windows.Forms.Button();
             this.btn_Close = new System.Windows.Forms.Button();
             this.txt_lastConversionDateTime = new RocksmithToolkitGUI.CueTextBox();
@@ -50,21 +65,6 @@
             this.button3 = new System.Windows.Forms.Button();
             this.chbx_Broken = new System.Windows.Forms.CheckBox();
             this.CheckBox1 = new System.Windows.Forms.CheckBox();
-            this.chbx_AutoSave = new System.Windows.Forms.CheckBox();
-            this.cueTextBox1 = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_Volume = new System.Windows.Forms.NumericUpDown();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.txt_Description = new System.Windows.Forms.RichTextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridView1)).BeginInit();
             this.Panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txt_Volume)).BeginInit();
@@ -79,7 +79,6 @@
             this.DataGridView1.Size = new System.Drawing.Size(989, 149);
             this.DataGridView1.TabIndex = 38;
             this.DataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick_1);
-            this.DataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick_1);
             this.DataGridView1.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick_1);
             this.DataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick_1);
             this.DataGridView1.CellLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellLeave);
@@ -128,6 +127,156 @@
             this.Panel1.Size = new System.Drawing.Size(989, 114);
             this.Panel1.TabIndex = 41;
             // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.ForeColor = System.Drawing.Color.DarkRed;
+            this.label12.Location = new System.Drawing.Point(524, 101);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(193, 15);
+            this.label12.TabIndex = 348;
+            this.label12.Text = "Information not user @repack YET";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(595, 85);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(75, 15);
+            this.label6.TabIndex = 347;
+            this.label6.Text = "CabinetType";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(595, 59);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(101, 15);
+            this.label7.TabIndex = 346;
+            this.label7.Text = "CabinetPedalKey";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(595, 31);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(115, 15);
+            this.label8.TabIndex = 345;
+            this.label8.Text = "CabinetKnobValues";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(595, 6);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(97, 15);
+            this.label9.TabIndex = 344;
+            this.label9.Text = "CabinetCategory";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(205, 25);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(72, 15);
+            this.label11.TabIndex = 343;
+            this.label11.Text = "Description:";
+            // 
+            // txt_Description
+            // 
+            this.txt_Description.Location = new System.Drawing.Point(227, 39);
+            this.txt_Description.Name = "txt_Description";
+            this.txt_Description.Size = new System.Drawing.Size(136, 67);
+            this.txt_Description.TabIndex = 342;
+            this.txt_Description.Text = "";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(369, 84);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(84, 15);
+            this.label5.TabIndex = 335;
+            this.label5.Text = "AmpPedalKey";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(369, 58);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(98, 15);
+            this.label4.TabIndex = 334;
+            this.label4.Text = "AmpKnobValues";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(369, 30);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(80, 15);
+            this.label2.TabIndex = 333;
+            this.label2.Text = "AmpCategory";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(369, 5);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(58, 15);
+            this.label1.TabIndex = 332;
+            this.label1.Text = "AmpType";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(124, 67);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(49, 15);
+            this.label3.TabIndex = 331;
+            this.label3.Text = "Volume";
+            // 
+            // txt_Volume
+            // 
+            this.txt_Volume.DecimalPlaces = 2;
+            this.txt_Volume.Location = new System.Drawing.Point(166, 66);
+            this.txt_Volume.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
+            this.txt_Volume.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            -2147483648});
+            this.txt_Volume.Name = "txt_Volume";
+            this.txt_Volume.Size = new System.Drawing.Size(60, 20);
+            this.txt_Volume.TabIndex = 326;
+            this.txt_Volume.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            -2147483648});
+            // 
+            // cueTextBox1
+            // 
+            this.cueTextBox1.Cue = "lastConversionDateTime";
+            this.cueTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.cueTextBox1.ForeColor = System.Drawing.Color.Gray;
+            this.cueTextBox1.Location = new System.Drawing.Point(823, 27);
+            this.cueTextBox1.Name = "cueTextBox1";
+            this.cueTextBox1.Size = new System.Drawing.Size(113, 23);
+            this.cueTextBox1.TabIndex = 276;
+            this.cueTextBox1.Visible = false;
+            // 
+            // chbx_AutoSave
+            // 
+            this.chbx_AutoSave.AutoSize = true;
+            this.chbx_AutoSave.Checked = true;
+            this.chbx_AutoSave.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chbx_AutoSave.Location = new System.Drawing.Point(822, 70);
+            this.chbx_AutoSave.Name = "chbx_AutoSave";
+            this.chbx_AutoSave.Size = new System.Drawing.Size(80, 19);
+            this.chbx_AutoSave.TabIndex = 275;
+            this.chbx_AutoSave.Text = "AutoSave";
+            this.chbx_AutoSave.UseVisualStyleBackColor = true;
+            // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(3, 42);
@@ -157,7 +306,7 @@
             this.txt_lastConversionDateTime.ForeColor = System.Drawing.Color.Gray;
             this.txt_lastConversionDateTime.Location = new System.Drawing.Point(823, 3);
             this.txt_lastConversionDateTime.Name = "txt_lastConversionDateTime";
-            this.txt_lastConversionDateTime.Size = new System.Drawing.Size(113, 20);
+            this.txt_lastConversionDateTime.Size = new System.Drawing.Size(113, 23);
             this.txt_lastConversionDateTime.TabIndex = 139;
             this.txt_lastConversionDateTime.Visible = false;
             // 
@@ -236,7 +385,7 @@
             this.txt_Keyy.ForeColor = System.Drawing.Color.Gray;
             this.txt_Keyy.Location = new System.Drawing.Point(143, 44);
             this.txt_Keyy.Name = "txt_Keyy";
-            this.txt_Keyy.Size = new System.Drawing.Size(56, 20);
+            this.txt_Keyy.Size = new System.Drawing.Size(56, 23);
             this.txt_Keyy.TabIndex = 130;
             // 
             // chbx_Custom
@@ -245,7 +394,7 @@
             this.chbx_Custom.Enabled = false;
             this.chbx_Custom.Location = new System.Drawing.Point(823, 51);
             this.chbx_Custom.Name = "chbx_Custom";
-            this.chbx_Custom.Size = new System.Drawing.Size(61, 17);
+            this.chbx_Custom.Size = new System.Drawing.Size(71, 19);
             this.chbx_Custom.TabIndex = 128;
             this.chbx_Custom.Text = "Custom";
             this.chbx_Custom.UseVisualStyleBackColor = true;
@@ -258,7 +407,7 @@
             this.txt_ID.ForeColor = System.Drawing.Color.Gray;
             this.txt_ID.Location = new System.Drawing.Point(143, 89);
             this.txt_ID.Name = "txt_ID";
-            this.txt_ID.Size = new System.Drawing.Size(45, 20);
+            this.txt_ID.Size = new System.Drawing.Size(45, 23);
             this.txt_ID.TabIndex = 127;
             // 
             // txt_CDLC_ID
@@ -269,7 +418,7 @@
             this.txt_CDLC_ID.ForeColor = System.Drawing.Color.Gray;
             this.txt_CDLC_ID.Location = new System.Drawing.Point(143, 22);
             this.txt_CDLC_ID.Name = "txt_CDLC_ID";
-            this.txt_CDLC_ID.Size = new System.Drawing.Size(56, 20);
+            this.txt_CDLC_ID.Size = new System.Drawing.Size(56, 23);
             this.txt_CDLC_ID.TabIndex = 126;
             // 
             // txt_Tone_Name
@@ -280,7 +429,7 @@
             this.txt_Tone_Name.ForeColor = System.Drawing.Color.Gray;
             this.txt_Tone_Name.Location = new System.Drawing.Point(143, 1);
             this.txt_Tone_Name.Name = "txt_Tone_Name";
-            this.txt_Tone_Name.Size = new System.Drawing.Size(222, 20);
+            this.txt_Tone_Name.Size = new System.Drawing.Size(222, 23);
             this.txt_Tone_Name.TabIndex = 125;
             // 
             // button8
@@ -310,7 +459,7 @@
             this.chbx_Broken.Enabled = false;
             this.chbx_Broken.Location = new System.Drawing.Point(835, 90);
             this.chbx_Broken.Name = "chbx_Broken";
-            this.chbx_Broken.Size = new System.Drawing.Size(60, 17);
+            this.chbx_Broken.Size = new System.Drawing.Size(68, 19);
             this.chbx_Broken.TabIndex = 121;
             this.chbx_Broken.Text = "Broken";
             this.chbx_Broken.UseVisualStyleBackColor = true;
@@ -323,160 +472,10 @@
             this.CheckBox1.Location = new System.Drawing.Point(-153, 96);
             this.CheckBox1.Margin = new System.Windows.Forms.Padding(2);
             this.CheckBox1.Name = "CheckBox1";
-            this.CheckBox1.Size = new System.Drawing.Size(139, 17);
+            this.CheckBox1.Size = new System.Drawing.Size(160, 19);
             this.CheckBox1.TabIndex = 34;
             this.CheckBox1.Text = "Show only MessageBox";
             this.CheckBox1.UseVisualStyleBackColor = true;
-            // 
-            // chbx_AutoSave
-            // 
-            this.chbx_AutoSave.AutoSize = true;
-            this.chbx_AutoSave.Checked = true;
-            this.chbx_AutoSave.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chbx_AutoSave.Location = new System.Drawing.Point(822, 70);
-            this.chbx_AutoSave.Name = "chbx_AutoSave";
-            this.chbx_AutoSave.Size = new System.Drawing.Size(73, 17);
-            this.chbx_AutoSave.TabIndex = 275;
-            this.chbx_AutoSave.Text = "AutoSave";
-            this.chbx_AutoSave.UseVisualStyleBackColor = true;
-            // 
-            // cueTextBox1
-            // 
-            this.cueTextBox1.Cue = "lastConversionDateTime";
-            this.cueTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.cueTextBox1.ForeColor = System.Drawing.Color.Gray;
-            this.cueTextBox1.Location = new System.Drawing.Point(823, 27);
-            this.cueTextBox1.Name = "cueTextBox1";
-            this.cueTextBox1.Size = new System.Drawing.Size(113, 20);
-            this.cueTextBox1.TabIndex = 276;
-            this.cueTextBox1.Visible = false;
-            // 
-            // txt_Volume
-            // 
-            this.txt_Volume.DecimalPlaces = 2;
-            this.txt_Volume.Location = new System.Drawing.Point(166, 66);
-            this.txt_Volume.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
-            this.txt_Volume.Minimum = new decimal(new int[] {
-            100,
-            0,
-            0,
-            -2147483648});
-            this.txt_Volume.Name = "txt_Volume";
-            this.txt_Volume.Size = new System.Drawing.Size(60, 20);
-            this.txt_Volume.TabIndex = 326;
-            this.txt_Volume.Value = new decimal(new int[] {
-            100,
-            0,
-            0,
-            -2147483648});
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(124, 67);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(42, 13);
-            this.label3.TabIndex = 331;
-            this.label3.Text = "Volume";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(369, 5);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(52, 13);
-            this.label1.TabIndex = 332;
-            this.label1.Text = "AmpType";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(369, 30);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(70, 13);
-            this.label2.TabIndex = 333;
-            this.label2.Text = "AmpCategory";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(369, 58);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(85, 13);
-            this.label4.TabIndex = 334;
-            this.label4.Text = "AmpKnobValues";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(369, 84);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(73, 13);
-            this.label5.TabIndex = 335;
-            this.label5.Text = "AmpPedalKey";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(205, 25);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(63, 13);
-            this.label11.TabIndex = 343;
-            this.label11.Text = "Description:";
-            // 
-            // txt_Description
-            // 
-            this.txt_Description.Location = new System.Drawing.Point(227, 39);
-            this.txt_Description.Name = "txt_Description";
-            this.txt_Description.Size = new System.Drawing.Size(136, 67);
-            this.txt_Description.TabIndex = 342;
-            this.txt_Description.Text = "";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(595, 85);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(67, 13);
-            this.label6.TabIndex = 347;
-            this.label6.Text = "CabinetType";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(595, 59);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(88, 13);
-            this.label7.TabIndex = 346;
-            this.label7.Text = "CabinetPedalKey";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(595, 31);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(100, 13);
-            this.label8.TabIndex = 345;
-            this.label8.Text = "CabinetKnobValues";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(595, 6);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(85, 13);
-            this.label9.TabIndex = 344;
-            this.label9.Text = "CabinetCategory";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.ForeColor = System.Drawing.Color.DarkRed;
-            this.label12.Location = new System.Drawing.Point(524, 101);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(171, 13);
-            this.label12.TabIndex = 348;
-            this.label12.Text = "Information not user @repack YET";
             // 
             // TonesDB
             // 

@@ -406,7 +406,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.label11.AutoSize = true;
             this.label11.Location = new System.Drawing.Point(639, 17);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(48, 15);
+            this.label11.Size = new System.Drawing.Size(42, 13);
             this.label11.TabIndex = 389;
             this.label11.Text = "Version";
             // 
@@ -438,7 +438,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_Playthough.ForeColor = System.Drawing.Color.Gray;
             this.txt_Playthough.Location = new System.Drawing.Point(214, 17);
             this.txt_Playthough.Name = "txt_Playthough";
-            this.txt_Playthough.Size = new System.Drawing.Size(40, 23);
+            this.txt_Playthough.Size = new System.Drawing.Size(40, 20);
             this.txt_Playthough.TabIndex = 386;
             this.txt_Playthough.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -447,7 +447,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.label10.AutoSize = true;
             this.label10.Location = new System.Drawing.Point(151, 20);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(72, 15);
+            this.label10.Size = new System.Drawing.Size(63, 13);
             this.label10.TabIndex = 387;
             this.label10.Text = "Playthrough";
             // 
@@ -491,7 +491,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.label9.AutoSize = true;
             this.label9.Location = new System.Drawing.Point(524, 20);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(60, 15);
+            this.label9.Size = new System.Drawing.Size(51, 13);
             this.label9.TabIndex = 383;
             this.label9.Text = "Followers";
             // 
@@ -570,7 +570,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.label59.AutoSize = true;
             this.label59.Location = new System.Drawing.Point(737, 16);
             this.label59.Name = "label59";
-            this.label59.Size = new System.Drawing.Size(88, 15);
+            this.label59.Size = new System.Drawing.Size(77, 13);
             this.label59.TabIndex = 328;
             this.label59.Text = "Release Notes";
             // 
@@ -593,7 +593,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_YouTube_Link.ForeColor = System.Drawing.Color.Gray;
             this.txt_YouTube_Link.Location = new System.Drawing.Point(83, 16);
             this.txt_YouTube_Link.Name = "txt_YouTube_Link";
-            this.txt_YouTube_Link.Size = new System.Drawing.Size(40, 23);
+            this.txt_YouTube_Link.Size = new System.Drawing.Size(40, 20);
             this.txt_YouTube_Link.TabIndex = 314;
             this.txt_YouTube_Link.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -604,7 +604,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_CustomsForge_Link.ForeColor = System.Drawing.Color.Gray;
             this.txt_CustomsForge_Link.Location = new System.Drawing.Point(364, 14);
             this.txt_CustomsForge_Link.Name = "txt_CustomsForge_Link";
-            this.txt_CustomsForge_Link.Size = new System.Drawing.Size(45, 23);
+            this.txt_CustomsForge_Link.Size = new System.Drawing.Size(45, 20);
             this.txt_CustomsForge_Link.TabIndex = 316;
             this.txt_CustomsForge_Link.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -613,7 +613,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.lbfl_YouTube_Link.AutoSize = true;
             this.lbfl_YouTube_Link.Location = new System.Drawing.Point(26, 19);
             this.lbfl_YouTube_Link.Name = "lbfl_YouTube_Link";
-            this.lbfl_YouTube_Link.Size = new System.Drawing.Size(56, 15);
+            this.lbfl_YouTube_Link.Size = new System.Drawing.Size(51, 13);
             this.lbfl_YouTube_Link.TabIndex = 322;
             this.lbfl_YouTube_Link.Text = "YouTube";
             // 
@@ -622,7 +622,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.label33.AutoSize = true;
             this.label33.Location = new System.Drawing.Point(291, 18);
             this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(87, 15);
+            this.label33.Size = new System.Drawing.Size(74, 13);
             this.label33.TabIndex = 321;
             this.label33.Text = "CustomsForge";
             // 
@@ -631,7 +631,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.label32.AutoSize = true;
             this.label32.Location = new System.Drawing.Point(436, 18);
             this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(30, 15);
+            this.label32.Size = new System.Drawing.Size(27, 13);
             this.label32.TabIndex = 320;
             this.label32.Text = "Like";
             // 
@@ -682,7 +682,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(350, 185);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(39, 13);
+            this.label3.Size = new System.Drawing.Size(28, 9);
             this.label3.TabIndex = 324;
             this.label3.Text = "Group:";
             // 
@@ -805,7 +805,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_Platform.ForeColor = System.Drawing.Color.Gray;
             this.txt_Platform.Location = new System.Drawing.Point(435, 116);
             this.txt_Platform.Name = "txt_Platform";
-            this.txt_Platform.Size = new System.Drawing.Size(51, 23);
+            this.txt_Platform.Size = new System.Drawing.Size(51, 20);
             this.txt_Platform.TabIndex = 327;
             // 
             // groupBox6
@@ -833,7 +833,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_CopyOriginal.Enabled = false;
             this.chbx_CopyOriginal.Location = new System.Drawing.Point(94, 64);
             this.chbx_CopyOriginal.Name = "chbx_CopyOriginal";
-            this.chbx_CopyOriginal.Size = new System.Drawing.Size(48, 19);
+            this.chbx_CopyOriginal.Size = new System.Drawing.Size(42, 17);
             this.chbx_CopyOriginal.TabIndex = 327;
             this.chbx_CopyOriginal.Text = "Old";
             this.chbx_CopyOriginal.UseVisualStyleBackColor = true;
@@ -845,7 +845,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_RemoveBassDD.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chbx_RemoveBassDD.Location = new System.Drawing.Point(71, 49);
             this.chbx_RemoveBassDD.Name = "chbx_RemoveBassDD";
-            this.chbx_RemoveBassDD.Size = new System.Drawing.Size(93, 19);
+            this.chbx_RemoveBassDD.Size = new System.Drawing.Size(82, 17);
             this.chbx_RemoveBassDD.TabIndex = 331;
             this.chbx_RemoveBassDD.Text = "wo BassDD";
             this.chbx_RemoveBassDD.UseVisualStyleBackColor = true;
@@ -907,7 +907,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_Copy.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chbx_Copy.Location = new System.Drawing.Point(4, 48);
             this.chbx_Copy.Name = "chbx_Copy";
-            this.chbx_Copy.Size = new System.Drawing.Size(80, 19);
+            this.chbx_Copy.Size = new System.Drawing.Size(71, 17);
             this.chbx_Copy.TabIndex = 326;
             this.chbx_Copy.Text = "and Copy";
             this.chbx_Copy.UseVisualStyleBackColor = true;
@@ -919,7 +919,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_FTPPath.ForeColor = System.Drawing.Color.Gray;
             this.txt_FTPPath.Location = new System.Drawing.Point(58, 83);
             this.txt_FTPPath.Name = "txt_FTPPath";
-            this.txt_FTPPath.Size = new System.Drawing.Size(64, 23);
+            this.txt_FTPPath.Size = new System.Drawing.Size(64, 20);
             this.txt_FTPPath.TabIndex = 308;
             this.txt_FTPPath.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -941,7 +941,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_UniqueID.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chbx_UniqueID.Location = new System.Drawing.Point(4, 65);
             this.chbx_UniqueID.Name = "chbx_UniqueID";
-            this.chbx_UniqueID.Size = new System.Drawing.Size(111, 19);
+            this.chbx_UniqueID.Size = new System.Drawing.Size(96, 17);
             this.chbx_UniqueID.TabIndex = 329;
             this.chbx_UniqueID.Text = "FixedUniqueID";
             this.chbx_UniqueID.UseVisualStyleBackColor = true;
@@ -976,7 +976,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_Bass.Enabled = false;
             this.chbx_Bass.Location = new System.Drawing.Point(68, 36);
             this.chbx_Bass.Name = "chbx_Bass";
-            this.chbx_Bass.Size = new System.Drawing.Size(56, 19);
+            this.chbx_Bass.Size = new System.Drawing.Size(49, 17);
             this.chbx_Bass.TabIndex = 75;
             this.chbx_Bass.Text = "Bass";
             this.chbx_Bass.UseVisualStyleBackColor = true;
@@ -987,7 +987,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_Lead.Enabled = false;
             this.chbx_Lead.Location = new System.Drawing.Point(6, 17);
             this.chbx_Lead.Name = "chbx_Lead";
-            this.chbx_Lead.Size = new System.Drawing.Size(57, 19);
+            this.chbx_Lead.Size = new System.Drawing.Size(50, 17);
             this.chbx_Lead.TabIndex = 74;
             this.chbx_Lead.Text = "Lead";
             this.chbx_Lead.UseVisualStyleBackColor = true;
@@ -998,7 +998,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_Combo.Enabled = false;
             this.chbx_Combo.Location = new System.Drawing.Point(68, 17);
             this.chbx_Combo.Name = "chbx_Combo";
-            this.chbx_Combo.Size = new System.Drawing.Size(69, 19);
+            this.chbx_Combo.Size = new System.Drawing.Size(59, 17);
             this.chbx_Combo.TabIndex = 76;
             this.chbx_Combo.Text = "Combo";
             this.chbx_Combo.UseVisualStyleBackColor = true;
@@ -1010,7 +1010,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_Rhythm.Enabled = false;
             this.chbx_Rhythm.Location = new System.Drawing.Point(6, 36);
             this.chbx_Rhythm.Name = "chbx_Rhythm";
-            this.chbx_Rhythm.Size = new System.Drawing.Size(71, 19);
+            this.chbx_Rhythm.Size = new System.Drawing.Size(62, 17);
             this.chbx_Rhythm.TabIndex = 77;
             this.chbx_Rhythm.Text = "Rhythm";
             this.chbx_Rhythm.UseVisualStyleBackColor = true;
@@ -1024,7 +1024,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_BassPicking.ForeColor = System.Drawing.Color.Gray;
             this.txt_BassPicking.Location = new System.Drawing.Point(112, 36);
             this.txt_BassPicking.Name = "txt_BassPicking";
-            this.txt_BassPicking.Size = new System.Drawing.Size(37, 19);
+            this.txt_BassPicking.Size = new System.Drawing.Size(37, 17);
             this.txt_BassPicking.TabIndex = 96;
             // 
             // txt_Tuning
@@ -1034,7 +1034,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_Tuning.ForeColor = System.Drawing.Color.Gray;
             this.txt_Tuning.Location = new System.Drawing.Point(6, 53);
             this.txt_Tuning.Name = "txt_Tuning";
-            this.txt_Tuning.Size = new System.Drawing.Size(75, 23);
+            this.txt_Tuning.Size = new System.Drawing.Size(75, 20);
             this.txt_Tuning.TabIndex = 78;
             // 
             // groupBox4
@@ -1094,7 +1094,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_KeepDD.AutoSize = true;
             this.chbx_KeepDD.Location = new System.Drawing.Point(148, 40);
             this.chbx_KeepDD.Name = "chbx_KeepDD";
-            this.chbx_KeepDD.Size = new System.Drawing.Size(18, 17);
+            this.chbx_KeepDD.Size = new System.Drawing.Size(15, 14);
             this.chbx_KeepDD.TabIndex = 330;
             this.chbx_KeepDD.UseVisualStyleBackColor = true;
             // 
@@ -1104,7 +1104,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_KeepBassDD.Enabled = false;
             this.chbx_KeepBassDD.Location = new System.Drawing.Point(100, 18);
             this.chbx_KeepBassDD.Name = "chbx_KeepBassDD";
-            this.chbx_KeepBassDD.Size = new System.Drawing.Size(18, 17);
+            this.chbx_KeepBassDD.Size = new System.Drawing.Size(15, 14);
             this.chbx_KeepBassDD.TabIndex = 329;
             this.toolTip1.SetToolTip(this.chbx_KeepBassDD, "Keep Bass DD at pack");
             this.chbx_KeepBassDD.UseVisualStyleBackColor = true;
@@ -1127,7 +1127,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_Lyrics.Enabled = false;
             this.chbx_Lyrics.Location = new System.Drawing.Point(76, 116);
             this.chbx_Lyrics.Name = "chbx_Lyrics";
-            this.chbx_Lyrics.Size = new System.Drawing.Size(60, 19);
+            this.chbx_Lyrics.Size = new System.Drawing.Size(53, 17);
             this.chbx_Lyrics.TabIndex = 327;
             this.chbx_Lyrics.Text = "Lyrics";
             this.chbx_Lyrics.UseVisualStyleBackColor = true;
@@ -1138,7 +1138,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_TrackNo.Enabled = false;
             this.chbx_TrackNo.Location = new System.Drawing.Point(76, 78);
             this.chbx_TrackNo.Name = "chbx_TrackNo";
-            this.chbx_TrackNo.Size = new System.Drawing.Size(81, 19);
+            this.chbx_TrackNo.Size = new System.Drawing.Size(74, 17);
             this.chbx_TrackNo.TabIndex = 326;
             this.chbx_TrackNo.Text = "Track No.";
             this.chbx_TrackNo.UseVisualStyleBackColor = true;
@@ -1173,7 +1173,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_DD.Enabled = false;
             this.chbx_DD.Location = new System.Drawing.Point(6, 39);
             this.chbx_DD.Name = "chbx_DD";
-            this.chbx_DD.Size = new System.Drawing.Size(47, 19);
+            this.chbx_DD.Size = new System.Drawing.Size(42, 17);
             this.chbx_DD.TabIndex = 45;
             this.chbx_DD.Text = "DD";
             this.chbx_DD.UseVisualStyleBackColor = true;
@@ -1202,7 +1202,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_Original.AutoSize = true;
             this.chbx_Original.Location = new System.Drawing.Point(6, 97);
             this.chbx_Original.Name = "chbx_Original";
-            this.chbx_Original.Size = new System.Drawing.Size(66, 19);
+            this.chbx_Original.Size = new System.Drawing.Size(58, 17);
             this.chbx_Original.TabIndex = 44;
             this.chbx_Original.Text = "Official";
             this.chbx_Original.UseVisualStyleBackColor = true;
@@ -1213,7 +1213,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_Sections.Enabled = false;
             this.chbx_Sections.Location = new System.Drawing.Point(76, 97);
             this.chbx_Sections.Name = "chbx_Sections";
-            this.chbx_Sections.Size = new System.Drawing.Size(76, 19);
+            this.chbx_Sections.Size = new System.Drawing.Size(67, 17);
             this.chbx_Sections.TabIndex = 48;
             this.chbx_Sections.Text = "Sections";
             this.chbx_Sections.UseVisualStyleBackColor = true;
@@ -1224,7 +1224,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_Preview.Enabled = false;
             this.chbx_Preview.Location = new System.Drawing.Point(6, 116);
             this.chbx_Preview.Name = "chbx_Preview";
-            this.chbx_Preview.Size = new System.Drawing.Size(72, 19);
+            this.chbx_Preview.Size = new System.Drawing.Size(64, 17);
             this.chbx_Preview.TabIndex = 57;
             this.chbx_Preview.Text = "Preview";
             this.chbx_Preview.UseVisualStyleBackColor = true;
@@ -1235,7 +1235,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_Author.Enabled = false;
             this.chbx_Author.Location = new System.Drawing.Point(6, 58);
             this.chbx_Author.Name = "chbx_Author";
-            this.chbx_Author.Size = new System.Drawing.Size(64, 19);
+            this.chbx_Author.Size = new System.Drawing.Size(57, 17);
             this.chbx_Author.TabIndex = 314;
             this.chbx_Author.Text = "Author";
             this.chbx_Author.UseVisualStyleBackColor = true;
@@ -1258,7 +1258,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_BassDD.Enabled = false;
             this.chbx_BassDD.Location = new System.Drawing.Point(6, 19);
             this.chbx_BassDD.Name = "chbx_BassDD";
-            this.chbx_BassDD.Size = new System.Drawing.Size(77, 19);
+            this.chbx_BassDD.Size = new System.Drawing.Size(68, 17);
             this.chbx_BassDD.TabIndex = 99;
             this.chbx_BassDD.Text = "Bass DD";
             this.chbx_BassDD.UseVisualStyleBackColor = true;
@@ -1269,7 +1269,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_Bonus.Enabled = false;
             this.chbx_Bonus.Location = new System.Drawing.Point(76, 59);
             this.chbx_Bonus.Name = "chbx_Bonus";
-            this.chbx_Bonus.Size = new System.Drawing.Size(64, 19);
+            this.chbx_Bonus.Size = new System.Drawing.Size(56, 17);
             this.chbx_Bonus.TabIndex = 101;
             this.chbx_Bonus.Text = "Bonus";
             this.chbx_Bonus.UseVisualStyleBackColor = true;
@@ -1280,7 +1280,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_Cover.Enabled = false;
             this.chbx_Cover.Location = new System.Drawing.Point(6, 78);
             this.chbx_Cover.Name = "chbx_Cover";
-            this.chbx_Cover.Size = new System.Drawing.Size(60, 19);
+            this.chbx_Cover.Size = new System.Drawing.Size(54, 17);
             this.chbx_Cover.TabIndex = 105;
             this.chbx_Cover.Text = "Cover";
             this.chbx_Cover.UseVisualStyleBackColor = true;
@@ -1331,7 +1331,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_Avail_Duplicate.Enabled = false;
             this.chbx_Avail_Duplicate.Location = new System.Drawing.Point(7, 64);
             this.chbx_Avail_Duplicate.Name = "chbx_Avail_Duplicate";
-            this.chbx_Avail_Duplicate.Size = new System.Drawing.Size(112, 19);
+            this.chbx_Avail_Duplicate.Size = new System.Drawing.Size(100, 17);
             this.chbx_Avail_Duplicate.TabIndex = 111;
             this.chbx_Avail_Duplicate.Text = "Duplicate Avail.";
             this.chbx_Avail_Duplicate.UseVisualStyleBackColor = true;
@@ -1354,7 +1354,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_Avail_Old.Enabled = false;
             this.chbx_Avail_Old.Location = new System.Drawing.Point(7, 18);
             this.chbx_Avail_Old.Name = "chbx_Avail_Old";
-            this.chbx_Avail_Old.Size = new System.Drawing.Size(100, 19);
+            this.chbx_Avail_Old.Size = new System.Drawing.Size(88, 17);
             this.chbx_Avail_Old.TabIndex = 112;
             this.chbx_Avail_Old.Text = "Old Available";
             this.chbx_Avail_Old.UseVisualStyleBackColor = true;
@@ -1366,7 +1366,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_Has_Been_Corrected.Enabled = false;
             this.chbx_Has_Been_Corrected.Location = new System.Drawing.Point(7, 40);
             this.chbx_Has_Been_Corrected.Name = "chbx_Has_Been_Corrected";
-            this.chbx_Has_Been_Corrected.Size = new System.Drawing.Size(139, 19);
+            this.chbx_Has_Been_Corrected.Size = new System.Drawing.Size(122, 17);
             this.chbx_Has_Been_Corrected.TabIndex = 274;
             this.chbx_Has_Been_Corrected.Text = "Has Been Corrected";
             this.chbx_Has_Been_Corrected.UseVisualStyleBackColor = true;
@@ -1406,7 +1406,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_ID.ForeColor = System.Drawing.Color.Gray;
             this.txt_ID.Location = new System.Drawing.Point(32, 89);
             this.txt_ID.Name = "txt_ID";
-            this.txt_ID.Size = new System.Drawing.Size(52, 23);
+            this.txt_ID.Size = new System.Drawing.Size(52, 20);
             this.txt_ID.TabIndex = 95;
             // 
             // chbx_InclBeta
@@ -1415,7 +1415,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_InclBeta.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chbx_InclBeta.Location = new System.Drawing.Point(71, 36);
             this.chbx_InclBeta.Name = "chbx_InclBeta";
-            this.chbx_InclBeta.Size = new System.Drawing.Size(73, 17);
+            this.chbx_InclBeta.Size = new System.Drawing.Size(55, 14);
             this.chbx_InclBeta.TabIndex = 381;
             this.chbx_InclBeta.Text = "Incl. Beta";
             this.chbx_InclBeta.UseVisualStyleBackColor = true;
@@ -1447,7 +1447,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.label12.AutoSize = true;
             this.label12.Location = new System.Drawing.Point(11, 92);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(25, 15);
+            this.label12.Size = new System.Drawing.Size(24, 13);
             this.label12.TabIndex = 378;
             this.label12.Text = "ID :";
             // 
@@ -1479,7 +1479,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_MultiTrack.AutoSize = true;
             this.chbx_MultiTrack.Location = new System.Drawing.Point(131, 82);
             this.chbx_MultiTrack.Name = "chbx_MultiTrack";
-            this.chbx_MultiTrack.Size = new System.Drawing.Size(73, 19);
+            this.chbx_MultiTrack.Size = new System.Drawing.Size(64, 17);
             this.chbx_MultiTrack.TabIndex = 376;
             this.chbx_MultiTrack.Text = "MultiTrk";
             this.chbx_MultiTrack.UseVisualStyleBackColor = true;
@@ -1499,9 +1499,9 @@ namespace RocksmithToolkitGUI.DLCManager
             // chbx_Broken
             // 
             this.chbx_Broken.AutoSize = true;
-            this.chbx_Broken.Location = new System.Drawing.Point(131, 32);
+            this.chbx_Broken.Location = new System.Drawing.Point(131, 33);
             this.chbx_Broken.Name = "chbx_Broken";
-            this.chbx_Broken.Size = new System.Drawing.Size(68, 19);
+            this.chbx_Broken.Size = new System.Drawing.Size(60, 17);
             this.chbx_Broken.TabIndex = 53;
             this.chbx_Broken.Text = "Broken";
             this.chbx_Broken.UseVisualStyleBackColor = true;
@@ -1509,9 +1509,9 @@ namespace RocksmithToolkitGUI.DLCManager
             // chbx_Selected
             // 
             this.chbx_Selected.AutoSize = true;
-            this.chbx_Selected.Location = new System.Drawing.Point(131, 48);
+            this.chbx_Selected.Location = new System.Drawing.Point(131, 49);
             this.chbx_Selected.Name = "chbx_Selected";
-            this.chbx_Selected.Size = new System.Drawing.Size(77, 19);
+            this.chbx_Selected.Size = new System.Drawing.Size(68, 17);
             this.chbx_Selected.TabIndex = 64;
             this.chbx_Selected.Text = "Selected";
             this.chbx_Selected.UseVisualStyleBackColor = true;
@@ -1521,16 +1521,16 @@ namespace RocksmithToolkitGUI.DLCManager
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(4, 14);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(37, 15);
+            this.label1.Size = new System.Drawing.Size(32, 13);
             this.label1.TabIndex = 276;
             this.label1.Text = "Filter:";
             // 
             // chbx_Beta
             // 
             this.chbx_Beta.AutoSize = true;
-            this.chbx_Beta.Location = new System.Drawing.Point(131, 66);
+            this.chbx_Beta.Location = new System.Drawing.Point(131, 65);
             this.chbx_Beta.Name = "chbx_Beta";
-            this.chbx_Beta.Size = new System.Drawing.Size(54, 19);
+            this.chbx_Beta.Size = new System.Drawing.Size(48, 17);
             this.chbx_Beta.TabIndex = 82;
             this.chbx_Beta.Text = "Beta";
             this.chbx_Beta.UseVisualStyleBackColor = true;
@@ -1738,7 +1738,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_AverageTempo.ForeColor = System.Drawing.Color.Gray;
             this.txt_AverageTempo.Location = new System.Drawing.Point(225, 16);
             this.txt_AverageTempo.Name = "txt_AverageTempo";
-            this.txt_AverageTempo.Size = new System.Drawing.Size(44, 23);
+            this.txt_AverageTempo.Size = new System.Drawing.Size(44, 20);
             this.txt_AverageTempo.TabIndex = 90;
             this.txt_AverageTempo.TextChanged += new System.EventHandler(this.txt_AverageTempo_TextChanged);
             // 
@@ -1750,7 +1750,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.checkBox2.Enabled = false;
             this.checkBox2.Location = new System.Drawing.Point(219, 40);
             this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(76, 19);
+            this.checkBox2.Size = new System.Drawing.Size(68, 17);
             this.checkBox2.TabIndex = 291;
             this.checkBox2.Text = "AutoPlay";
             this.checkBox2.UseVisualStyleBackColor = true;
@@ -1765,7 +1765,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_OggPath.Name = "txt_OggPath";
             this.txt_OggPath.ReadOnly = true;
             this.txt_OggPath.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
-            this.txt_OggPath.Size = new System.Drawing.Size(99, 23);
+            this.txt_OggPath.Size = new System.Drawing.Size(99, 20);
             this.txt_OggPath.TabIndex = 312;
             this.txt_OggPath.Visible = false;
             // 
@@ -1797,7 +1797,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_OggPreviewPath.Name = "txt_OggPreviewPath";
             this.txt_OggPreviewPath.ReadOnly = true;
             this.txt_OggPreviewPath.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
-            this.txt_OggPreviewPath.Size = new System.Drawing.Size(99, 23);
+            this.txt_OggPreviewPath.Size = new System.Drawing.Size(99, 20);
             this.txt_OggPreviewPath.TabIndex = 313;
             this.txt_OggPreviewPath.Visible = false;
             // 
@@ -1829,7 +1829,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(204, 137);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(72, 15);
+            this.label2.Size = new System.Drawing.Size(63, 13);
             this.label2.TabIndex = 277;
             this.label2.Text = "Description:";
             // 
@@ -1868,7 +1868,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_AlbumArtPath.Name = "txt_AlbumArtPath";
             this.txt_AlbumArtPath.ReadOnly = true;
             this.txt_AlbumArtPath.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
-            this.txt_AlbumArtPath.Size = new System.Drawing.Size(113, 23);
+            this.txt_AlbumArtPath.Size = new System.Drawing.Size(113, 20);
             this.txt_AlbumArtPath.TabIndex = 107;
             this.txt_AlbumArtPath.Visible = false;
             // 
@@ -1890,7 +1890,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_Artist_ShortName.ForeColor = System.Drawing.Color.Gray;
             this.txt_Artist_ShortName.Location = new System.Drawing.Point(435, 3);
             this.txt_Artist_ShortName.Name = "txt_Artist_ShortName";
-            this.txt_Artist_ShortName.Size = new System.Drawing.Size(51, 23);
+            this.txt_Artist_ShortName.Size = new System.Drawing.Size(51, 20);
             this.txt_Artist_ShortName.TabIndex = 104;
             // 
             // txt_Album_ShortName
@@ -1900,7 +1900,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_Album_ShortName.ForeColor = System.Drawing.Color.Gray;
             this.txt_Album_ShortName.Location = new System.Drawing.Point(367, 91);
             this.txt_Album_ShortName.Name = "txt_Album_ShortName";
-            this.txt_Album_ShortName.Size = new System.Drawing.Size(62, 23);
+            this.txt_Album_ShortName.Size = new System.Drawing.Size(62, 20);
             this.txt_Album_ShortName.TabIndex = 103;
             // 
             // chbx_AutoSave
@@ -1910,7 +1910,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_AutoSave.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chbx_AutoSave.Location = new System.Drawing.Point(950, 64);
             this.chbx_AutoSave.Name = "chbx_AutoSave";
-            this.chbx_AutoSave.Size = new System.Drawing.Size(80, 19);
+            this.chbx_AutoSave.Size = new System.Drawing.Size(73, 17);
             this.chbx_AutoSave.TabIndex = 100;
             this.chbx_AutoSave.Text = "AutoSave";
             this.chbx_AutoSave.UseVisualStyleBackColor = true;
@@ -1922,7 +1922,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_Album_Year.ForeColor = System.Drawing.Color.Gray;
             this.txt_Album_Year.Location = new System.Drawing.Point(435, 92);
             this.txt_Album_Year.Name = "txt_Album_Year";
-            this.txt_Album_Year.Size = new System.Drawing.Size(51, 23);
+            this.txt_Album_Year.Size = new System.Drawing.Size(51, 20);
             this.txt_Album_Year.TabIndex = 98;
             // 
             // picbx_AlbumArtPath
@@ -1953,7 +1953,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_APP_ID.ForeColor = System.Drawing.Color.Gray;
             this.txt_APP_ID.Location = new System.Drawing.Point(367, 116);
             this.txt_APP_ID.Name = "txt_APP_ID";
-            this.txt_APP_ID.Size = new System.Drawing.Size(62, 23);
+            this.txt_APP_ID.Size = new System.Drawing.Size(62, 20);
             this.txt_APP_ID.TabIndex = 80;
             // 
             // txt_DLC_ID
@@ -1963,7 +1963,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_DLC_ID.ForeColor = System.Drawing.Color.Gray;
             this.txt_DLC_ID.Location = new System.Drawing.Point(207, 114);
             this.txt_DLC_ID.Name = "txt_DLC_ID";
-            this.txt_DLC_ID.Size = new System.Drawing.Size(156, 23);
+            this.txt_DLC_ID.Size = new System.Drawing.Size(156, 20);
             this.txt_DLC_ID.TabIndex = 79;
             // 
             // txt_Version
@@ -1973,7 +1973,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_Version.ForeColor = System.Drawing.Color.Gray;
             this.txt_Version.Location = new System.Drawing.Point(504, 47);
             this.txt_Version.Name = "txt_Version";
-            this.txt_Version.Size = new System.Drawing.Size(42, 23);
+            this.txt_Version.Size = new System.Drawing.Size(42, 20);
             this.txt_Version.TabIndex = 73;
             // 
             // txt_Author
@@ -1983,7 +1983,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_Author.ForeColor = System.Drawing.Color.Gray;
             this.txt_Author.Location = new System.Drawing.Point(491, 25);
             this.txt_Author.Name = "txt_Author";
-            this.txt_Author.Size = new System.Drawing.Size(156, 23);
+            this.txt_Author.Size = new System.Drawing.Size(156, 20);
             this.txt_Author.TabIndex = 72;
             this.txt_Author.TextChanged += new System.EventHandler(this.txt_Author_TextChanged);
             this.txt_Author.Leave += new System.EventHandler(this.txt_Author_Leave);
@@ -1995,7 +1995,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_Album.ForeColor = System.Drawing.Color.Gray;
             this.txt_Album.Location = new System.Drawing.Point(207, 91);
             this.txt_Album.Name = "txt_Album";
-            this.txt_Album.Size = new System.Drawing.Size(156, 23);
+            this.txt_Album.Size = new System.Drawing.Size(156, 20);
             this.txt_Album.TabIndex = 69;
             // 
             // txt_Title_Sort
@@ -2005,7 +2005,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_Title_Sort.ForeColor = System.Drawing.Color.Gray;
             this.txt_Title_Sort.Location = new System.Drawing.Point(207, 69);
             this.txt_Title_Sort.Name = "txt_Title_Sort";
-            this.txt_Title_Sort.Size = new System.Drawing.Size(222, 23);
+            this.txt_Title_Sort.Size = new System.Drawing.Size(222, 20);
             this.txt_Title_Sort.TabIndex = 68;
             // 
             // txt_Title
@@ -2015,7 +2015,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_Title.ForeColor = System.Drawing.Color.Gray;
             this.txt_Title.Location = new System.Drawing.Point(207, 47);
             this.txt_Title.Name = "txt_Title";
-            this.txt_Title.Size = new System.Drawing.Size(222, 23);
+            this.txt_Title.Size = new System.Drawing.Size(222, 20);
             this.txt_Title.TabIndex = 67;
             this.txt_Title.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_Artist_KeyPress);
             // 
@@ -2026,7 +2026,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_Artist_Sort.ForeColor = System.Drawing.Color.Gray;
             this.txt_Artist_Sort.Location = new System.Drawing.Point(207, 25);
             this.txt_Artist_Sort.Name = "txt_Artist_Sort";
-            this.txt_Artist_Sort.Size = new System.Drawing.Size(222, 23);
+            this.txt_Artist_Sort.Size = new System.Drawing.Size(222, 20);
             this.txt_Artist_Sort.TabIndex = 66;
             // 
             // txt_Artist
@@ -2036,7 +2036,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_Artist.ForeColor = System.Drawing.Color.Gray;
             this.txt_Artist.Location = new System.Drawing.Point(207, 3);
             this.txt_Artist.Name = "txt_Artist";
-            this.txt_Artist.Size = new System.Drawing.Size(222, 23);
+            this.txt_Artist.Size = new System.Drawing.Size(222, 20);
             this.txt_Artist.TabIndex = 65;
             this.txt_Artist.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_Artist_KeyPress);
             // 
@@ -2084,7 +2084,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_Alternate.AutoSize = true;
             this.chbx_Alternate.Location = new System.Drawing.Point(551, 51);
             this.chbx_Alternate.Name = "chbx_Alternate";
-            this.chbx_Alternate.Size = new System.Drawing.Size(77, 19);
+            this.chbx_Alternate.Size = new System.Drawing.Size(68, 17);
             this.chbx_Alternate.TabIndex = 46;
             this.chbx_Alternate.Text = "Alternate";
             this.chbx_Alternate.UseVisualStyleBackColor = true;
@@ -2137,7 +2137,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.CheckBox1.Location = new System.Drawing.Point(-153, 96);
             this.CheckBox1.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.CheckBox1.Name = "CheckBox1";
-            this.CheckBox1.Size = new System.Drawing.Size(160, 19);
+            this.CheckBox1.Size = new System.Drawing.Size(139, 17);
             this.CheckBox1.TabIndex = 34;
             this.CheckBox1.Text = "Show only MessageBox";
             this.CheckBox1.UseVisualStyleBackColor = true;

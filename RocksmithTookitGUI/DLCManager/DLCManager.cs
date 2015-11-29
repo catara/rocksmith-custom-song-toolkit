@@ -439,18 +439,19 @@ namespace RocksmithToolkitGUI.DLCManager
                 txt_RocksmithDLCPath.Text = "c:\\GitHub\\tmp\\to import"; x6 = ConfigRepository.Instance()["dlcm_RocksmithDLCPath"]; ;
                 txt_DBFolder.Text = "C:\\GitHub\\tmp"; x7 = ConfigRepository.Instance()["dlcm_DBFolder"];
                 txt_TempPath.Text = "C:\\GitHub\\tmp\\0"; x8 = ConfigRepository.Instance()["dlcm_TempPath"];
-                x1 = chbx_CleanTemp.Checked; chbx_CleanTemp.Checked = true;
-                x2 = chbx_CleanDB.Checked; chbx_CleanDB.Checked = true;
+                //x1 = chbx_CleanTemp.Checked; chbx_CleanTemp.Checked = true;
+                //x2 = chbx_CleanDB.Checked; chbx_CleanDB.Checked = true;
                 chbx_HomeDBG.Visible = true;
                 chbx_WorkDGB.Visible = true;
                 chbx_HomeDGBVM.Visible = true;
                 chbx_Additional_Manipulations.Visible = true;
                 //lbl_Log.Visible = true;
                 rtxt_StatisticsOnReadDLCs.Visible = true;
-                chbx_DefaultDB.Checked = false; x3 = chbx_DefaultDB.Checked;
-                chbx_Additional_Manipulations.SetItemCheckState(24, CheckState.Unchecked); x4 = ConfigRepository.Instance()["dlcm_AdditionalManipul24"] == "Yes" ? true : false;
-                chbx_Additional_Manipulations.SetItemCheckState(15, CheckState.Unchecked); x5 = ConfigRepository.Instance()["dlcm_AdditionalManipul15"] == "Yes" ? true : false;
-                chbx_Additional_Manipulations.SetItemCheckState(49, CheckState.Unchecked); x9 = ConfigRepository.Instance()["dlcm_AdditionalManipul49"] == "Yes" ? true : false;
+                //chbx_DefaultDB.Checked = false; 
+                //x3 = chbx_DefaultDB.Checked;
+                //chbx_Additional_Manipulations.SetItemCheckState(24, CheckState.Unchecked); x4 = ConfigRepository.Instance()["dlcm_AdditionalManipul24"] == "Yes" ? true : false;
+                //chbx_Additional_Manipulations.SetItemCheckState(15, CheckState.Unchecked); x5 = ConfigRepository.Instance()["dlcm_AdditionalManipul15"] == "Yes" ? true : false;
+                //chbx_Additional_Manipulations.SetItemCheckState(49, CheckState.Unchecked); x9 = ConfigRepository.Instance()["dlcm_AdditionalManipul49"] == "Yes" ? true : false;
 
                 chbx_CleanTemp.Visible = true;
                 chbx_CleanDB.Visible = true;
@@ -490,25 +491,25 @@ namespace RocksmithToolkitGUI.DLCManager
             }
             else
             {
-                //chbx_CleanTemp.Checked = false;
-                //chbx_CleanDB.Checked = false;
-                //txt_RocksmithDLCPath.Text = "";
-                //txt_DBFolder.Text = "";
-                //txt_TempPath.Text = "";
-                //txt_TempPath.Text = "";
-                chbx_HomeDBG.Visible = false;
-                chbx_WorkDGB.Visible = false;
-                chbx_HomeDGBVM.Visible = false;
+                ////chbx_CleanTemp.Checked = false;
+                ////chbx_CleanDB.Checked = false;
+                ////txt_RocksmithDLCPath.Text = "";
+                ////txt_DBFolder.Text = "";
+                ////txt_TempPath.Text = "";
+                ////txt_TempPath.Text = "";
+                //chbx_HomeDBG.Visible = false;
+                //chbx_WorkDGB.Visible = false;
+                //chbx_HomeDGBVM.Visible = false;
                 chbx_Additional_Manipulations.Visible = false;
-                //lbl_Log.Visible = false;
-                chbx_CleanTemp.Checked = x1;
-                chbx_CleanDB.Checked = x2;
+                ////lbl_Log.Visible = false;
+                //chbx_CleanTemp.Checked = x1;
+                //chbx_CleanDB.Checked = x2;
 
                 rtxt_StatisticsOnReadDLCs.Visible = false;
 
-                chbx_Additional_Manipulations.SetItemCheckState(24, x4 ? CheckState.Checked : CheckState.Unchecked);
-                chbx_Additional_Manipulations.SetItemCheckState(15, x5 ? CheckState.Checked : CheckState.Unchecked);
-                chbx_Additional_Manipulations.SetItemCheckState(49, x9 ? CheckState.Checked : CheckState.Unchecked);
+                //chbx_Additional_Manipulations.SetItemCheckState(24, x4 ? CheckState.Checked : CheckState.Unchecked);
+                //chbx_Additional_Manipulations.SetItemCheckState(15, x5 ? CheckState.Checked : CheckState.Unchecked);
+                //chbx_Additional_Manipulations.SetItemCheckState(49, x9 ? CheckState.Checked : CheckState.Unchecked);
 
                 if (x6 != null) txt_RocksmithDLCPath.Text = x6;
                 if (x8 != null) txt_DBFolder.Text = x7;
@@ -1668,7 +1669,10 @@ namespace RocksmithToolkitGUI.DLCManager
 
                         var ff = "-";
                         ff = System.DateTime.Now.ToString();
-                        var tz = doz.Tables[0].Rows.Count == 0 ? "0" : doz.Tables[0].Rows[0].ItemArray[0].ToString();
+                        var tz="0";
+                        var noOfRec = doz.Tables[0].Rows.Count;
+                        if (noOfRec > 0) tz = doz.Tables[0].Rows[0].ItemArray[0].ToString();
+                        if (tz == "")    tz = "1";
 
                         updatecmd = "INSERT INTO Import (FullPath, Path, FileName, FileCreationDate, FileHash, FileSize, ImportDate, Pack) VALUES (\"" + s + "\",\"";
                         updatecmd += fi.DirectoryName + "\",\"" + fi.Name + "\",\"" + fi.CreationTime + "\",\"" + FileHash + "\",\"" + fi.Length + "\",\"" + ff + "\",\"" + tz + "\");";
@@ -1793,7 +1797,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     tst = tft + noOfRec + "/" + (noOfRec + m) + " already imported"; rtxt_StatisticsOnReadDLCs.Text = tst + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                     pB_ReadDLCs.CreateGraphics().DrawString(tst, new Font("Arial", (float)6, FontStyle.Bold), Brushes.Blue, new PointF(pB_ReadDLCs.Width / 2 - 10, pB_ReadDLCs.Height / 2 - 7));
 
-                    cmd = @"SELECT i.FullPath, i.Path, i.FileName, i.FileHash, i.FileSize, i.ImportDate, i.Pack, i.CreationDate
+                    cmd = @"SELECT i.FullPath, i.Path, i.FileName, i.FileHash, i.FileSize, i.ImportDate, i.Pack, i.FileCreationDate
                                 FROM Import as i
                                 LEFT JOIN Main as m on m.File_Hash = i.FileHash OR m.Original_File_Hash = i.FileHash
                                 WHERE m.ID is NULL;";
@@ -1855,12 +1859,13 @@ namespace RocksmithToolkitGUI.DLCManager
                                     var packid = randomp.Next(0, 100000);
 
                                     var FullPath = ds.Tables[0].Rows[i].ItemArray[0].ToString();
-                                    tst = (j == 0 ? (i + 1) : dupliPrcs) + "/" + (j == 0 ? noOfRec : dupliNo) + " " + FullPath;
-                                    rtxt_StatisticsOnReadDLCs.Text = tst + "\n\n" + rtxt_StatisticsOnReadDLCs.Text; //tst = tst; 
-
+                                    tst = (j == 0 ? "" : "Duplicates: ") + (j == 0 ? (i + 1) : dupliPrcs) + "/" + (j == 0 ? noOfRec : dupliNo);
+                                    rtxt_StatisticsOnReadDLCs.Text = tst + " " + FullPath +"\n\n" + rtxt_StatisticsOnReadDLCs.Text; //tst = tst; 
+                                    //var gh = tst.Replace(Path.GetDirectoryName(tst), "");
+                                    //var td = Path.GetDirectoryName(tst);
                                     //Add text over progress bar
                                     //pB_ReadDLCs.BeginInvoke(new Action(() => pB_ReadDLCs.Value = i));
-                                    pB_ReadDLCs.CreateGraphics().DrawString(tst, new Font("Arial", (float)6, FontStyle.Bold), Brushes.Blue, new PointF(pB_ReadDLCs.Width / 2 - 10, pB_ReadDLCs.Height / 2 - 7));
+                                    pB_ReadDLCs.CreateGraphics().DrawString(tst + " " + FullPath.Replace(Path.GetDirectoryName(FullPath) + "\\", ""), new Font("Arial", (float)6, FontStyle.Bold), Brushes.Blue, new PointF(pB_ReadDLCs.Width / 2 - 10, pB_ReadDLCs.Height / 2 - 7));
 
                                     UpdatePackingLog("LogImporting", DB_Path, packid, FullPath, tst);
                                     errr = false;
@@ -2313,8 +2318,9 @@ namespace RocksmithToolkitGUI.DLCManager
                                             if (tkversion.Length == 0)
                                                 tkversion = ReadPackageOLDToolkitVersion(versionFile[0]);
                                         }
-                                        if (author == "" && tkversion != "") { author = "Custom Song Creator"; Has_author = "No"; }
+                                        if (author == "" && tkversion != "") { author = ""; Has_author = "No"; }
                                         else Has_author = "Yes";
+                                        author = author.Replace("Custom Song Creator", "");
 
                                         //rtxt_StatisticsOnReadDLCs.Text = vpos + "===" + txt.Length+ "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                         if (versionFile.Length <= 0) Is_Original = "Yes";
@@ -2593,7 +2599,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                                         {
                                                             dupliSongs[i] = 1; duplit = true; dupliNo++; break;
                                                         }
-                                                        else artist = AssessConflict(file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, Tunings, b, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist, DB_Path, clist, dlist, newold, Is_Original, altver, fsz, unpackedDir, Is_MultiTrack, MultiTrack_Version, ds.Tables[0].Rows[i].ItemArray[7].ToString());
+                                                        else artist = AssessConflict(file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, Tunings, b, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist, DB_Path, clist, dlist, newold, Is_Original, altver, fsz, unpackedDir, Is_MultiTrack, MultiTrack_Version, ds.Tables[0].Rows[i].ItemArray[7].ToString(), tst);
                                                     else
                                                     {
                                                         if (file.Version.ToInt32() > info.PackageVersion.ToInt32()) artist = "Update";
@@ -2603,13 +2609,13 @@ namespace RocksmithToolkitGUI.DLCManager
                                                             {
                                                                 dupliSongs[i] = 1; duplit = true; dupliNo++; break;
                                                             }
-                                                            else artist = AssessConflict(file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, Tunings, b, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist, DB_Path, clist, dlist, newold, Is_Original, altver, fsz, unpackedDir, Is_MultiTrack, MultiTrack_Version, ds.Tables[0].Rows[i].ItemArray[7].ToString());
+                                                            else artist = AssessConflict(file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, Tunings, b, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist, DB_Path, clist, dlist, newold, Is_Original, altver, fsz, unpackedDir, Is_MultiTrack, MultiTrack_Version, ds.Tables[0].Rows[i].ItemArray[7].ToString(), tst);
                                                         if (file.Version.ToInt32() == info.PackageVersion.ToInt32())
                                                             if (chbx_Additional_Manipulations.GetItemChecked(50) && j == 0)
                                                             {
                                                                 dupliSongs[i] = 1; duplit = true; dupliNo++; break;
                                                             }
-                                                            else artist = AssessConflict(file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, Tunings, b, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist, DB_Path, clist, dlist, newold, Is_Original, altver, fsz, unpackedDir, Is_MultiTrack, MultiTrack_Version, ds.Tables[0].Rows[i].ItemArray[7].ToString());
+                                                            else artist = AssessConflict(file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, Tunings, b, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist, DB_Path, clist, dlist, newold, Is_Original, altver, fsz, unpackedDir, Is_MultiTrack, MultiTrack_Version, ds.Tables[0].Rows[i].ItemArray[7].ToString(), tst);
                                                         else { artist = "Ignore"; rtxt_StatisticsOnReadDLCs.Text = "IGNORED" + "\n" + rtxt_StatisticsOnReadDLCs.Text; }
                                                         // assess=alternate, update or ignore//as maybe a new package(ing) is desired to be inserted in the DB
                                                     }
@@ -2621,7 +2627,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                                     {
                                                         dupliSongs[i] = 1; duplit = true; dupliNo++; break;
                                                     }
-                                                    else artist = AssessConflict(file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, Tunings, b, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist, DB_Path, clist, dlist, newold, Is_Original, altver, fsz, unpackedDir, Is_MultiTrack, MultiTrack_Version, ds.Tables[0].Rows[i].ItemArray[7].ToString());
+                                                    else artist = AssessConflict(file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, Tunings, b, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist, DB_Path, clist, dlist, newold, Is_Original, altver, fsz, unpackedDir, Is_MultiTrack, MultiTrack_Version, ds.Tables[0].Rows[i].ItemArray[7].ToString(), tst);
                                                 //rtxt_StatisticsOnReadDLCs.Text = "7 "+b + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                                 //Exit condition
 
@@ -4058,19 +4064,19 @@ namespace RocksmithToolkitGUI.DLCManager
             return Toolkit_version;
         }
 
-        public string AssessConflict(Files filed, DLCPackageData datas, string Fauthor, string tkversion, string DD, string Bass, string Guitar, string Combo, string Rhythm, string Lead, string Vocalss, string tunnings, int i, int norows, string original_FileName, string art_hash, string audio_hash, string audioPreview_hash, List<string> alist, List<string> blist, string dbpathh, List<string> clist, List<string> dlist, bool newold, string Is_Original, string altver, string fsz, string unpackedDir, string Is_MultiTrack, string MultiTrack_Version, string FileDate)
+        public string AssessConflict(Files filed, DLCPackageData datas, string Fauthor, string tkversion, string DD, string Bass, string Guitar, string Combo, string Rhythm, string Lead, string Vocalss, string tunnings, int i, int norows, string original_FileName, string art_hash, string audio_hash, string audioPreview_hash, List<string> alist, List<string> blist, string dbpathh, List<string> clist, List<string> dlist, bool newold, string Is_Original, string altver, string fsz, string unpackedDir, string Is_MultiTrack, string MultiTrack_Version, string FileDate, string title_duplic)
         {
             //rtxt_StatisticsOnReadDLCs = chbx_Additional_Manipualtions.SelectedValue + "\n" + rtxt_StatisticsOnReadDLCs;
             //rtxt_StatisticsOnReadDLCs.Text = "dashes: " + art_hash + " - " + audio_hash + " - " + audioPreview_hash + "\n" + rtxt_StatisticsOnReadDLCs.Text;
             //rtxt_StatisticsOnReadDLCs.Text = "dasheD: " + filed.art_Hash + " - " + filed.audio_Hash + " - " + filed.audioPreview_Hash + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-            if (chbx_Additional_Manipulations.GetItemChecked(13) || (chbx_Additional_Manipulations.GetItemChecked(14) && (tkversion == "" || (tkversion != "" && filed.Is_Original == "Yes"))))
+            if (chbx_Additional_Manipulations.GetItemChecked(13) || (chbx_Additional_Manipulations.GetItemChecked(14) && (tkversion == "" || (tkversion != "" && filed.Is_Original == "Yes"))) || (chbx_Additional_Manipulations.GetItemChecked(56) && (filed.Is_Multitrack=="Yes" || Is_MultiTrack=="Yes")))
                 //"14. Import all as Alternates" 15. Import any Custom as Alternate if an Original exists
                 return "Alternate";
             else
             {
                 //Duplicates frm = new Duplicates(txt_DBFolder.Text, filed, datas, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, tunnings, i, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist);
                 //frm.Show();
-                Duplicates_Management frm1 = new Duplicates_Management(filed, datas, Fauthor, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, tunnings, i, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist, (chbx_DefaultDB.Checked == true ? MyAppWD : txt_DBFolder.Text), clist, dlist, newold, Is_Original, altver, txt_RocksmithDLCPath.Text, chbx_Additional_Manipulations.GetItemChecked(39), chbx_Additional_Manipulations.GetItemChecked(40), fsz, unpackedDir, Is_MultiTrack, MultiTrack_Version, FileDate);
+                frm_Duplicates_Management frm1 = new frm_Duplicates_Management(filed, datas, Fauthor, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, tunnings, i, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist, (chbx_DefaultDB.Checked == true ? MyAppWD : txt_DBFolder.Text), clist, dlist, newold, Is_Original, altver, txt_RocksmithDLCPath.Text, chbx_Additional_Manipulations.GetItemChecked(39), chbx_Additional_Manipulations.GetItemChecked(40), fsz, unpackedDir, Is_MultiTrack, MultiTrack_Version, FileDate,title_duplic);
                 //frm1.Show();
                 frm1.ShowDialog();
                 //rtxt_StatisticsOnReadDLCs.Text = original_FileName+"-s..." + "\n" + rtxt_StatisticsOnReadDLCs.Text;
@@ -6386,6 +6392,10 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void chbx_Configurations_SelectedIndexChanged(object sender, EventArgs e)
         {
+
+            x4 = ConfigRepository.Instance()["dlcm_AdditionalManipul24"] == "Yes" ? true : false;
+            x5 = ConfigRepository.Instance()["dlcm_AdditionalManipul15"] == "Yes" ? true : false;
+            x9 = ConfigRepository.Instance()["dlcm_AdditionalManipul49"] == "Yes" ? true : false;
             if (chbx_Configurations.SelectedIndex == 0)
             {
                 txt_RocksmithDLCPath.Text = "C:\\GitHub\\tmp\\";
@@ -6393,7 +6403,10 @@ namespace RocksmithToolkitGUI.DLCManager
                 txt_TempPath.Text = "C:\\GitHub\\tmp\\0";
                 chbx_CleanTemp.Checked = false;
                 chbx_CleanDB.Checked = false;
-                chbx_Additional_Manipulations.SetItemCheckState(49, CheckState.Checked);
+                //chbx_Additional_Manipulations.SetItemCheckState(49, CheckState.Checked);
+                chbx_Additional_Manipulations.SetItemCheckState(24, x4 ? CheckState.Checked : CheckState.Unchecked);
+                chbx_Additional_Manipulations.SetItemCheckState(15, x5 ? CheckState.Checked : CheckState.Unchecked);
+                chbx_Additional_Manipulations.SetItemCheckState(49, x9 ? CheckState.Checked : CheckState.Unchecked);
             }
             if (chbx_Configurations.SelectedIndex == 1)
             {
@@ -6402,7 +6415,10 @@ namespace RocksmithToolkitGUI.DLCManager
                 txt_TempPath.Text = "C:\\GitHub\\TempLib\\0";
                 chbx_CleanTemp.Checked = true;
                 chbx_CleanDB.Checked = true;
-                chbx_Additional_Manipulations.SetItemCheckState(49, CheckState.Checked);
+                chbx_Additional_Manipulations.SetItemCheckState(24, CheckState.Unchecked);
+                chbx_Additional_Manipulations.SetItemCheckState(15, CheckState.Unchecked);
+                chbx_Additional_Manipulations.SetItemCheckState(49, CheckState.Unchecked);
+
             }
             if (chbx_Configurations.SelectedIndex == 2)
             {

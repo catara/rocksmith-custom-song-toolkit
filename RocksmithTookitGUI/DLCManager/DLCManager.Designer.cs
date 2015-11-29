@@ -149,7 +149,7 @@
             this.chbx_XBOX360.AutoSize = true;
             this.chbx_XBOX360.Location = new System.Drawing.Point(130, 4);
             this.chbx_XBOX360.Name = "chbx_XBOX360";
-            this.chbx_XBOX360.Size = new System.Drawing.Size(83, 19);
+            this.chbx_XBOX360.Size = new System.Drawing.Size(73, 17);
             this.chbx_XBOX360.TabIndex = 23;
             this.chbx_XBOX360.Text = "XBOX360";
             this.chbx_XBOX360.UseVisualStyleBackColor = true;
@@ -159,7 +159,7 @@
             this.chbx_Mac.AutoSize = true;
             this.chbx_Mac.Location = new System.Drawing.Point(84, 4);
             this.chbx_Mac.Name = "chbx_Mac";
-            this.chbx_Mac.Size = new System.Drawing.Size(53, 19);
+            this.chbx_Mac.Size = new System.Drawing.Size(47, 17);
             this.chbx_Mac.TabIndex = 22;
             this.chbx_Mac.Text = "Mac";
             this.chbx_Mac.UseVisualStyleBackColor = true;
@@ -169,7 +169,7 @@
             this.rbtn_Population_Groups.AutoSize = true;
             this.rbtn_Population_Groups.Location = new System.Drawing.Point(100, 22);
             this.rbtn_Population_Groups.Name = "rbtn_Population_Groups";
-            this.rbtn_Population_Groups.Size = new System.Drawing.Size(62, 19);
+            this.rbtn_Population_Groups.Size = new System.Drawing.Size(54, 17);
             this.rbtn_Population_Groups.TabIndex = 27;
             this.rbtn_Population_Groups.Text = "Group";
             this.rbtn_Population_Groups.UseVisualStyleBackColor = true;
@@ -182,7 +182,7 @@
             this.chbx_PS3.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chbx_PS3.Location = new System.Drawing.Point(41, 4);
             this.chbx_PS3.Name = "chbx_PS3";
-            this.chbx_PS3.Size = new System.Drawing.Size(52, 19);
+            this.chbx_PS3.Size = new System.Drawing.Size(46, 17);
             this.chbx_PS3.TabIndex = 21;
             this.chbx_PS3.Text = "PS3";
             this.chbx_PS3.UseVisualStyleBackColor = true;
@@ -208,7 +208,7 @@
             this.chbx_PC.AutoSize = true;
             this.chbx_PC.Location = new System.Drawing.Point(4, 4);
             this.chbx_PC.Name = "chbx_PC";
-            this.chbx_PC.Size = new System.Drawing.Size(45, 19);
+            this.chbx_PC.Size = new System.Drawing.Size(40, 17);
             this.chbx_PC.TabIndex = 20;
             this.chbx_PC.Text = "PC";
             this.chbx_PC.UseVisualStyleBackColor = true;
@@ -245,7 +245,7 @@
             this.rbtn_Population_All.Location = new System.Drawing.Point(67, 22);
             this.rbtn_Population_All.Margin = new System.Windows.Forms.Padding(0);
             this.rbtn_Population_All.Name = "rbtn_Population_All";
-            this.rbtn_Population_All.Size = new System.Drawing.Size(41, 19);
+            this.rbtn_Population_All.Size = new System.Drawing.Size(36, 17);
             this.rbtn_Population_All.TabIndex = 26;
             this.rbtn_Population_All.Text = "All";
             this.rbtn_Population_All.UseVisualStyleBackColor = true;
@@ -256,7 +256,7 @@
             this.rbtn_Population_Selected.Checked = true;
             this.rbtn_Population_Selected.Location = new System.Drawing.Point(4, 22);
             this.rbtn_Population_Selected.Name = "rbtn_Population_Selected";
-            this.rbtn_Population_Selected.Size = new System.Drawing.Size(76, 19);
+            this.rbtn_Population_Selected.Size = new System.Drawing.Size(67, 17);
             this.rbtn_Population_Selected.TabIndex = 25;
             this.rbtn_Population_Selected.TabStop = true;
             this.rbtn_Population_Selected.Text = "Selected";
@@ -280,9 +280,9 @@
             // 
             this.chbx_Rebuild.AutoSize = true;
             this.chbx_Rebuild.Enabled = false;
-            this.chbx_Rebuild.Location = new System.Drawing.Point(434, 475);
+            this.chbx_Rebuild.Location = new System.Drawing.Point(487, 459);
             this.chbx_Rebuild.Name = "chbx_Rebuild";
-            this.chbx_Rebuild.Size = new System.Drawing.Size(72, 19);
+            this.chbx_Rebuild.Size = new System.Drawing.Size(62, 17);
             this.chbx_Rebuild.TabIndex = 324;
             this.chbx_Rebuild.Text = "Rebuild";
             this.chbx_Rebuild.UseVisualStyleBackColor = true;
@@ -349,6 +349,7 @@
             "54. @Pack keep All DD if indicated so",
             "55. @Pack consider All songs as beta (place them top of the list)",
             "56. Gen Preview if Preview=Audio or Preview is longer than a min",
+            "57. Duplicate manag ignores Multitracks",
             "98. @IMPORT>",
             "99. @Pack>"});
             this.chbx_Additional_Manipulations.Location = new System.Drawing.Point(239, 196);
@@ -366,7 +367,7 @@
             this.lbl_Mask.Location = new System.Drawing.Point(6, 441);
             this.lbl_Mask.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_Mask.Name = "lbl_Mask";
-            this.lbl_Mask.Size = new System.Drawing.Size(86, 15);
+            this.lbl_Mask.Size = new System.Drawing.Size(77, 13);
             this.lbl_Mask.TabIndex = 319;
             this.lbl_Mask.Text = "Mask Preview:";
             this.lbl_Mask.Visible = false;
@@ -391,7 +392,7 @@
             this.cbx_Activ_Artist_Sort.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbx_Activ_Artist_Sort.Location = new System.Drawing.Point(507, 376);
             this.cbx_Activ_Artist_Sort.Name = "cbx_Activ_Artist_Sort";
-            this.cbx_Activ_Artist_Sort.Size = new System.Drawing.Size(18, 17);
+            this.cbx_Activ_Artist_Sort.Size = new System.Drawing.Size(15, 14);
             this.cbx_Activ_Artist_Sort.TabIndex = 44;
             this.cbx_Activ_Artist_Sort.UseVisualStyleBackColor = true;
             this.cbx_Activ_Artist_Sort.Visible = false;
@@ -404,7 +405,7 @@
             this.lbl_Artist_Sort.Location = new System.Drawing.Point(6, 377);
             this.lbl_Artist_Sort.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_Artist_Sort.Name = "lbl_Artist_Sort";
-            this.lbl_Artist_Sort.Size = new System.Drawing.Size(58, 15);
+            this.lbl_Artist_Sort.Size = new System.Drawing.Size(52, 13);
             this.lbl_Artist_Sort.TabIndex = 316;
             this.lbl_Artist_Sort.Text = "Artist Sort";
             this.lbl_Artist_Sort.Visible = false;
@@ -443,7 +444,7 @@
             "<Avail. Tracks>",
             "<Bass_HasDD>",
             "<Timestamp>"});
-            this.cbx_Artist_Sort.Location = new System.Drawing.Point(400, 372);
+            this.cbx_Artist_Sort.Location = new System.Drawing.Point(399, 374);
             this.cbx_Artist_Sort.Name = "cbx_Artist_Sort";
             this.cbx_Artist_Sort.Size = new System.Drawing.Size(105, 21);
             this.cbx_Artist_Sort.TabIndex = 43;
@@ -532,7 +533,7 @@
             this.cbx_Activ_File_Name.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbx_Activ_File_Name.Location = new System.Drawing.Point(507, 422);
             this.cbx_Activ_File_Name.Name = "cbx_Activ_File_Name";
-            this.cbx_Activ_File_Name.Size = new System.Drawing.Size(18, 17);
+            this.cbx_Activ_File_Name.Size = new System.Drawing.Size(15, 14);
             this.cbx_Activ_File_Name.TabIndex = 52;
             this.cbx_Activ_File_Name.UseVisualStyleBackColor = true;
             this.cbx_Activ_File_Name.Visible = false;
@@ -545,7 +546,7 @@
             this.cbx_Activ_Album.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbx_Activ_Album.Location = new System.Drawing.Point(507, 399);
             this.cbx_Activ_Album.Name = "cbx_Activ_Album";
-            this.cbx_Activ_Album.Size = new System.Drawing.Size(18, 17);
+            this.cbx_Activ_Album.Size = new System.Drawing.Size(15, 14);
             this.cbx_Activ_Album.TabIndex = 48;
             this.cbx_Activ_Album.UseVisualStyleBackColor = true;
             this.cbx_Activ_Album.Visible = false;
@@ -558,7 +559,7 @@
             this.cbx_Activ_Artist.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbx_Activ_Artist.Location = new System.Drawing.Point(507, 355);
             this.cbx_Activ_Artist.Name = "cbx_Activ_Artist";
-            this.cbx_Activ_Artist.Size = new System.Drawing.Size(18, 17);
+            this.cbx_Activ_Artist.Size = new System.Drawing.Size(15, 14);
             this.cbx_Activ_Artist.TabIndex = 40;
             this.cbx_Activ_Artist.UseVisualStyleBackColor = true;
             this.cbx_Activ_Artist.Visible = false;
@@ -571,7 +572,7 @@
             this.cbx_Activ_Title_Sort.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbx_Activ_Title_Sort.Location = new System.Drawing.Point(507, 333);
             this.cbx_Activ_Title_Sort.Name = "cbx_Activ_Title_Sort";
-            this.cbx_Activ_Title_Sort.Size = new System.Drawing.Size(18, 17);
+            this.cbx_Activ_Title_Sort.Size = new System.Drawing.Size(15, 14);
             this.cbx_Activ_Title_Sort.TabIndex = 36;
             this.cbx_Activ_Title_Sort.UseVisualStyleBackColor = true;
             this.cbx_Activ_Title_Sort.Visible = false;
@@ -584,7 +585,7 @@
             this.cbx_Activ_Title.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbx_Activ_Title.Location = new System.Drawing.Point(507, 312);
             this.cbx_Activ_Title.Name = "cbx_Activ_Title";
-            this.cbx_Activ_Title.Size = new System.Drawing.Size(18, 17);
+            this.cbx_Activ_Title.Size = new System.Drawing.Size(15, 14);
             this.cbx_Activ_Title.TabIndex = 32;
             this.cbx_Activ_Title.UseVisualStyleBackColor = true;
             this.cbx_Activ_Title.Visible = false;
@@ -597,7 +598,7 @@
             this.lbl_Artist.Location = new System.Drawing.Point(7, 355);
             this.lbl_Artist.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_Artist.Name = "lbl_Artist";
-            this.lbl_Artist.Size = new System.Drawing.Size(33, 15);
+            this.lbl_Artist.Size = new System.Drawing.Size(30, 13);
             this.lbl_Artist.TabIndex = 303;
             this.lbl_Artist.Text = "Artist";
             this.lbl_Artist.Visible = false;
@@ -636,7 +637,7 @@
             "<Avail. Tracks>",
             "<Bass_HasDD>",
             "<Timestamp>"});
-            this.cbx_Artist.Location = new System.Drawing.Point(400, 351);
+            this.cbx_Artist.Location = new System.Drawing.Point(399, 352);
             this.cbx_Artist.Name = "cbx_Artist";
             this.cbx_Artist.Size = new System.Drawing.Size(105, 21);
             this.cbx_Artist.TabIndex = 39;
@@ -687,7 +688,7 @@
             "<Avail. Tracks>",
             "<Bass_HasDD>",
             "<Timestamp>"});
-            this.cbx_Title.Location = new System.Drawing.Point(400, 308);
+            this.cbx_Title.Location = new System.Drawing.Point(399, 308);
             this.cbx_Title.Name = "cbx_Title";
             this.cbx_Title.Size = new System.Drawing.Size(105, 21);
             this.cbx_Title.TabIndex = 31;
@@ -711,7 +712,7 @@
             this.lbl_File_Name.Location = new System.Drawing.Point(6, 421);
             this.lbl_File_Name.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_File_Name.Name = "lbl_File_Name";
-            this.lbl_File_Name.Size = new System.Drawing.Size(64, 15);
+            this.lbl_File_Name.Size = new System.Drawing.Size(54, 13);
             this.lbl_File_Name.TabIndex = 297;
             this.lbl_File_Name.Text = "File Name";
             this.lbl_File_Name.Visible = false;
@@ -723,7 +724,7 @@
             this.lbl_Album.Location = new System.Drawing.Point(7, 399);
             this.lbl_Album.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_Album.Name = "lbl_Album";
-            this.lbl_Album.Size = new System.Drawing.Size(42, 15);
+            this.lbl_Album.Size = new System.Drawing.Size(36, 13);
             this.lbl_Album.TabIndex = 296;
             this.lbl_Album.Text = "Album";
             this.lbl_Album.Visible = false;
@@ -735,7 +736,7 @@
             this.lbl_Title_Sort.Location = new System.Drawing.Point(7, 333);
             this.lbl_Title_Sort.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_Title_Sort.Name = "lbl_Title_Sort";
-            this.lbl_Title_Sort.Size = new System.Drawing.Size(55, 15);
+            this.lbl_Title_Sort.Size = new System.Drawing.Size(49, 13);
             this.lbl_Title_Sort.TabIndex = 295;
             this.lbl_Title_Sort.Text = "Title Sort";
             this.lbl_Title_Sort.Visible = false;
@@ -775,9 +776,9 @@
             "<Bass_HasDD>",
             "<Timestamp>",
             "<Space>"});
-            this.cbx_File_Name.Location = new System.Drawing.Point(401, 418);
+            this.cbx_File_Name.Location = new System.Drawing.Point(399, 418);
             this.cbx_File_Name.Name = "cbx_File_Name";
-            this.cbx_File_Name.Size = new System.Drawing.Size(104, 21);
+            this.cbx_File_Name.Size = new System.Drawing.Size(105, 21);
             this.cbx_File_Name.TabIndex = 51;
             this.cbx_File_Name.Visible = false;
             this.cbx_File_Name.SelectedIndexChanged += new System.EventHandler(this.cbx_File_Name_SelectedIndexChanged);
@@ -827,7 +828,7 @@
             "<Avail. Tracks>",
             "<Bass_HasDD>",
             "<Timestamp>"});
-            this.cbx_Album.Location = new System.Drawing.Point(400, 395);
+            this.cbx_Album.Location = new System.Drawing.Point(399, 396);
             this.cbx_Album.Name = "cbx_Album";
             this.cbx_Album.Size = new System.Drawing.Size(105, 21);
             this.cbx_Album.TabIndex = 47;
@@ -878,7 +879,7 @@
             "<Avail. Tracks>",
             "<Bass_HasDD>",
             "<Timestamp>"});
-            this.cbx_Title_Sort.Location = new System.Drawing.Point(400, 330);
+            this.cbx_Title_Sort.Location = new System.Drawing.Point(399, 330);
             this.cbx_Title_Sort.Name = "cbx_Title_Sort";
             this.cbx_Title_Sort.Size = new System.Drawing.Size(105, 21);
             this.cbx_Title_Sort.TabIndex = 35;
@@ -902,7 +903,7 @@
             this.lbl_Title.Location = new System.Drawing.Point(7, 313);
             this.lbl_Title.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_Title.Name = "lbl_Title";
-            this.lbl_Title.Size = new System.Drawing.Size(30, 15);
+            this.lbl_Title.Size = new System.Drawing.Size(27, 13);
             this.lbl_Title.TabIndex = 300;
             this.lbl_Title.Text = "Title";
             this.lbl_Title.Visible = false;
@@ -912,7 +913,7 @@
             this.chbx_DebugB.AutoSize = true;
             this.chbx_DebugB.Location = new System.Drawing.Point(312, 4);
             this.chbx_DebugB.Name = "chbx_DebugB";
-            this.chbx_DebugB.Size = new System.Drawing.Size(82, 19);
+            this.chbx_DebugB.Size = new System.Drawing.Size(75, 17);
             this.chbx_DebugB.TabIndex = 16;
             this.chbx_DebugB.Text = "Advanced";
             this.toolTip1.SetToolTip(this.chbx_DebugB, "Activates a series of Fields, Options, Log screens.\r\nDisables also:\r\n25. Import U" +
@@ -949,7 +950,7 @@
             this.label1.Location = new System.Drawing.Point(5, 49);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(90, 15);
+            this.label1.Size = new System.Drawing.Size(79, 13);
             this.label1.TabIndex = 274;
             this.label1.Text = "DB Folder Path";
             // 
@@ -992,7 +993,7 @@
             this.chbx_CleanTemp.Location = new System.Drawing.Point(312, 25);
             this.chbx_CleanTemp.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.chbx_CleanTemp.Name = "chbx_CleanTemp";
-            this.chbx_CleanTemp.Size = new System.Drawing.Size(99, 19);
+            this.chbx_CleanTemp.Size = new System.Drawing.Size(85, 17);
             this.chbx_CleanTemp.TabIndex = 17;
             this.chbx_CleanTemp.Text = "Clean Folder";
             this.toolTip1.SetToolTip(this.chbx_CleanTemp, "Cleans the Temp, Old, Duplicate, Repacked Folders");
@@ -1016,7 +1017,7 @@
             this.chbx_CleanDB.Location = new System.Drawing.Point(312, 47);
             this.chbx_CleanDB.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.chbx_CleanDB.Name = "chbx_CleanDB";
-            this.chbx_CleanDB.Size = new System.Drawing.Size(87, 19);
+            this.chbx_CleanDB.Size = new System.Drawing.Size(76, 17);
             this.chbx_CleanDB.TabIndex = 18;
             this.chbx_CleanDB.Text = "Clean DBs";
             this.toolTip1.SetToolTip(this.chbx_CleanDB, "Cleans Main & Log, DBs");
@@ -1078,7 +1079,7 @@
             this.lbl_RocksmithDLCPath.Location = new System.Drawing.Point(5, 4);
             this.lbl_RocksmithDLCPath.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_RocksmithDLCPath.Name = "lbl_RocksmithDLCPath";
-            this.lbl_RocksmithDLCPath.Size = new System.Drawing.Size(113, 15);
+            this.lbl_RocksmithDLCPath.Size = new System.Drawing.Size(98, 13);
             this.lbl_RocksmithDLCPath.TabIndex = 259;
             this.lbl_RocksmithDLCPath.Text = "Importing DLC path";
             // 
@@ -1100,7 +1101,7 @@
             this.lbl_TempFolders.Location = new System.Drawing.Point(4, 26);
             this.lbl_TempFolders.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_TempFolders.Name = "lbl_TempFolders";
-            this.lbl_TempFolders.Size = new System.Drawing.Size(105, 15);
+            this.lbl_TempFolders.Size = new System.Drawing.Size(91, 13);
             this.lbl_TempFolders.TabIndex = 258;
             this.lbl_TempFolders.Text = "Temp Folder Path";
             // 
@@ -1161,12 +1162,10 @@
             // chbx_DefaultDB
             // 
             this.chbx_DefaultDB.AutoSize = true;
-            this.chbx_DefaultDB.Checked = true;
-            this.chbx_DefaultDB.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chbx_DefaultDB.Location = new System.Drawing.Point(312, 68);
             this.chbx_DefaultDB.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.chbx_DefaultDB.Name = "chbx_DefaultDB";
-            this.chbx_DefaultDB.Size = new System.Drawing.Size(110, 19);
+            this.chbx_DefaultDB.Size = new System.Drawing.Size(97, 17);
             this.chbx_DefaultDB.TabIndex = 19;
             this.chbx_DefaultDB.Text = "Use DefaultDB";
             this.toolTip1.SetToolTip(this.chbx_DefaultDB, "Uses the Default DB stored in the App folder");
@@ -1191,7 +1190,7 @@
             this.chbx_WorkDGB.AutoSize = true;
             this.chbx_WorkDGB.Location = new System.Drawing.Point(434, 458);
             this.chbx_WorkDGB.Name = "chbx_WorkDGB";
-            this.chbx_WorkDGB.Size = new System.Drawing.Size(57, 19);
+            this.chbx_WorkDGB.Size = new System.Drawing.Size(52, 17);
             this.chbx_WorkDGB.TabIndex = 60;
             this.chbx_WorkDGB.Text = "Work";
             this.chbx_WorkDGB.UseVisualStyleBackColor = true;
@@ -1201,9 +1200,9 @@
             // chbx_HomeDBG
             // 
             this.chbx_HomeDBG.AutoSize = true;
-            this.chbx_HomeDBG.Location = new System.Drawing.Point(490, 473);
+            this.chbx_HomeDBG.Location = new System.Drawing.Point(434, 479);
             this.chbx_HomeDBG.Name = "chbx_HomeDBG";
-            this.chbx_HomeDBG.Size = new System.Drawing.Size(63, 19);
+            this.chbx_HomeDBG.Size = new System.Drawing.Size(54, 17);
             this.chbx_HomeDBG.TabIndex = 58;
             this.chbx_HomeDBG.Text = "Home";
             this.chbx_HomeDBG.UseVisualStyleBackColor = true;
@@ -1215,7 +1214,7 @@
             this.chbx_HomeDGBVM.AutoSize = true;
             this.chbx_HomeDGBVM.Location = new System.Drawing.Point(434, 441);
             this.chbx_HomeDGBVM.Name = "chbx_HomeDGBVM";
-            this.chbx_HomeDGBVM.Size = new System.Drawing.Size(81, 19);
+            this.chbx_HomeDGBVM.Size = new System.Drawing.Size(70, 17);
             this.chbx_HomeDGBVM.TabIndex = 59;
             this.chbx_HomeDGBVM.Text = "HomeVM";
             this.chbx_HomeDGBVM.UseVisualStyleBackColor = true;

@@ -1631,7 +1631,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                         if (!File.Exists(ms1) && (ms3.LastIndexOf("showlights") < 1)) vFilesMissingIssues += " SNG " + ms3 + "; "; //showlights
                                         if (!File.Exists(ms2)) vFilesMissingIssues += " XML " + ms3 + "; ";
                                         //var tones = dms.Tables[0].Rows[i].ItemArray[78].ToString();//not done                                        
-                                        pB_ReadDLCs.Increment(1);
+                                        
                                     }
                                     catch (Exception ee)
                                     {
@@ -1642,6 +1642,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                         //continue;
                                     }
                                 }
+                                pB_ReadDLCs.Increment(1);
                                 var old = TempPath + "\\0_old\\" + OrigFileName;
                                 //var duplicate = dms.Tables[0].Rows[i].ItemArray[78].ToString();//not done
                                 if (!File.Exists(AlbumArtPath) && hasCov == "Yes") vFilesMissingIssues += " AlbumArtPath; ";
@@ -1675,7 +1676,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 case "Main_NoPreviewFile":
                     SearchCmd += "audioPreviewPath = ''";
                     break;
-                case "Uploaded Last":
+                case "Imported Last":
                     var SearchCmd3 = "SELECT top 1 Pack FROM Main order by ID DESC;";// ORDER BY Pack,Import_Date DESC "SELECT MAX(ID),Import_Date FROM Main;";// WHERE Import_Date=''";
                     DataSet dds = new DataSet();
                     //var DB_Path = "";
@@ -1686,6 +1687,8 @@ namespace RocksmithToolkitGUI.DLCManager
                         {
                             OleDbDataAdapter dan = new OleDbDataAdapter(SearchCmd3, cnn);
                             dan.Fill(dds, "Main");
+                            var noOfRec = dds.Tables[0].Rows.Count;
+                            if (noOfRec > 0)
                             SearchCmd += "Pack='" + dds.Tables[0].Rows[0].ItemArray[0].ToString() + "'";//Import_Date > .Replace(" AM", "").Replace(" PM", "")
                         }
                     }
@@ -1698,7 +1701,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         //continue;
                     }
                     break;
-                case "Uploaded LastMonth":
+                case "Imported Current Month":
                     var SearchCmd4 = "SELECT Import_Date FROM Main ORDER BY Import_Date DESC;";// "SELECT MAX(ID),Import_Date FROM Main;";// WHERE Import_Date=''";
                     DataSet djs = new DataSet();
                     //var DB_Path = "";
@@ -1732,6 +1735,8 @@ namespace RocksmithToolkitGUI.DLCManager
                         {
                             OleDbDataAdapter dan = new OleDbDataAdapter(SearchCmd6, cnn);
                             dan.Fill(dzs, "Main");
+                            var noOfRec = dzs.Tables[0].Rows.Count;
+                            if (noOfRec>0)
                             SearchCmd += "CSTR(ID) in (SELECT CDLC_ID FROM LogPacking WHERE Pack='" + dzs.Tables[0].Rows[0].ItemArray[0].ToString() + "')";//Import_Date > .Replace(" AM", "").Replace(" PM", "")
                         }
                     }

@@ -35,7 +35,6 @@ Main Features:
 ## ToDos/bugs:
 n2h:
 -+ with or without u still doesnt have the right alternate no when importing vs an existing song= a2....maybe OK :)
--+ some tracks no don't get read/picked cause" (1) "
 -+ small bug: on inserting a new standardization 
 -+ small feature: when opening MainDB and detecting directory check runs, if next directory exists (give a change to empty the db then if possible)
 -- cannot find sick sick sic (override)
@@ -89,9 +88,16 @@ wip:
 - remove all dd in Cache/Retails screen
 - finish profiles
 - fix filter in CAche
+- duplicate management..on change..check and color
 
 wd:
-
+-+ some tracks no don't get read/picked cause" (1) " when importing other formats this should be ok
+- it's my life..breaks because of the aphostrofe'
+-- make date bigger
+-- remove author if custom
+-- bring in no of duplicates in title
+- if cover was from someone else please compare against that (save old cover)
+-- if multitrack dont bring in the duplicate
 
 ### Dev Tips:
 + Toolkit version flag does not sync to&from Github: Run RunMeFirst.bat

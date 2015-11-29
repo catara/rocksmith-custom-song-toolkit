@@ -22,7 +22,7 @@ using Ookii.Dialogs; //cue text
 
 namespace RocksmithToolkitGUI.DLCManager
 {
-    public partial class Duplicates_Management : Form
+    public partial class frm_Duplicates_Management : Form
     {
         public string Description { get; set; }
         public string Comment { get; set; }
@@ -60,6 +60,7 @@ namespace RocksmithToolkitGUI.DLCManager
         public string MultiTrack_Versions { get; set; }
         public string FileDate { get; set; }
         public bool IgnoreRest { get; set; }
+        public string title_duplic { get; set; }
 
         //public bool newold { get; set; }
         //public string clist { get; set; }
@@ -73,7 +74,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         //}
 
-        public Duplicates_Management(DLCManager.Files filed, DLCPackageData datas, string author, string tkversion, string dD, string bass, string guitar, string combo, string rhythm, string lead, string vocal, string tunnings, int i, int norows, string original_FileName, string art_hash, string audio_hash, string audioPreview_hash, List<string> alist, List<string> blist, string DBPath, List<string> clist, List<string> dlist, bool newold, string Is_Original, string altvert, string txt_RocksmithDLCPath, bool AllowEncript, bool AllowORIGDelete, string FileSize, string unpackedDir, string Is_MultiTrack, string MultiTrack_Version, string FileDate)//string Is_MultiTracking, string Multitracking, 
+        public frm_Duplicates_Management(DLCManager.Files filed, DLCPackageData datas, string author, string tkversion, string dD, string bass, string guitar, string combo, string rhythm, string lead, string vocal, string tunnings, int i, int norows, string original_FileName, string art_hash, string audio_hash, string audioPreview_hash, List<string> alist, List<string> blist, string DBPath, List<string> clist, List<string> dlist, bool newold, string Is_Original, string altvert, string txt_RocksmithDLCPath, bool AllowEncript, bool AllowORIGDelete, string FileSize, string unpackedDir, string Is_MultiTrack, string MultiTrack_Version, string FileDate, string title_duplic)//string Is_MultiTracking, string Multitracking, 
         //file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, Tunings, b, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist, DB_Path, clist, dlist, newold, Is_Original, altver
         {
             //Text = text;
@@ -105,6 +106,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.Is_Original = Is_Original;
             this.altver = altvert;
             this.FileDate = FileDate;
+            this.title_duplic = title_duplic;
             //this.MultiTracking = MultiTracking;
             this.txt_RocksmithDLCPath = txt_RocksmithDLCPath;
             //this.AllowEncript = AllowEncript;
@@ -280,7 +282,7 @@ namespace RocksmithToolkitGUI.DLCManager
             else if (datas.PackageVersion == "" && "" == filed.Version) lbl_Version.Text = "";
             txt_VersionNew.Text = datas.PackageVersion;
             txt_VersionExisting.Text = filed.Version;
-            txt_FileDateNew.Text = datas.PackageVersion;
+            txt_FileDateNew.Text = FileDate;
             txt_FileDateExisting.Text = filed.File_Creation_Date;
 
             if (dD != filed.Has_DD) lbl_DD.ForeColor = lbl_Reference.ForeColor;
@@ -608,6 +610,8 @@ namespace RocksmithToolkitGUI.DLCManager
             lbl_DateNew.Text = LastConvDate_new.ToString();
             lbl_DateExisting.Text = LastConvDate_exis.ToString();
             if (LastConvDate_new.ToString() == LastConvDate_exis.ToString()) lbl_tonediff.Visible = true;
+
+            this.Text = "Duplicate Management " + title_duplic;
         }
 
         public class Files
@@ -1112,9 +1116,9 @@ namespace RocksmithToolkitGUI.DLCManager
             // //txt_TitleNew.Text = txt_TitleNew.Text.Replace(" (older)", "");
             // txt_TitleNew.Text = txt_TitleNew.Text.Replace(" (newer)", "");
             //// txt_TitleExisting.Text = txt_TitleExisting.Text.Replace(" (older)", "");
-            txt_TitleExisting.Text = (txt_TitleExisting.Text.Replace("(newer)", "").Replace("(older)", "").Replace("a." + txt_AlternateNoExisting.Text, "").Replace("v." + txt_VersionExisting.Text, "").Replace(txt_AuthorExisting.Text, "").Replace("noDD", "").Replace("DD", "").Replace(txt_TuningExisting.Text, "")).Replace(txt_AvailTracksExisting.Text, "").Replace("  ", " ").Replace("  ", " ").Replace(" [ ]", "").Replace(" []", "");
+            txt_TitleExisting.Text = (txt_TitleExisting.Text.Replace("(newer)", "").Replace("(older)", "").Replace("a." + txt_AlternateNoExisting.Text, "").Replace("v." + txt_VersionExisting.Text, "").Replace(txt_AuthorExisting.Text == "" ? "--?" : txt_AuthorExisting.Text, "").Replace("noDD", "").Replace("DD", "").Replace(txt_TuningExisting.Text, "")).Replace(txt_AvailTracksExisting.Text, "").Replace("  ", " ").Replace("  ", " ").Replace(" [ ]", "").Replace(" []", "");
 
-            txt_TitleNew.Text = (datas.SongInfo.SongDisplayName.Replace("(newer)", "").Replace("(older)", "").Replace("a." + txt_AlternateNoNew.Text, "").Replace("v." + txt_VersionNew.Text, "").Replace(txt_AuthorNew.Text, "").Replace("noDD", "").Replace("DD", "").Replace(txt_TuningNew.Text, "")).Replace(txt_AvailTracksNew.Text, "").Replace("  ", " ").Replace("  ", " ").Replace(" [ ]", "").Replace(" []", "");
+            txt_TitleNew.Text = (datas.SongInfo.SongDisplayName.Replace("(newer)", "").Replace("(older)", "").Replace("a." + txt_AlternateNoNew.Text, "").Replace("v." + txt_VersionNew.Text, "").Replace(txt_AuthorNew.Text == "" ? "--?" : txt_AuthorNew.Text, "").Replace("noDD", "").Replace("DD", "").Replace(txt_TuningNew.Text, "")).Replace(txt_AvailTracksNew.Text, "").Replace("  ", " ").Replace("  ", " ").Replace(" [ ]", "").Replace(" []", "");
             //txt_TitleExisting.Text = filed.Song_Title;
             if (txt_TitleExisting.Text == txt_TitleNew.Text) lbl_Title.ForeColor = lbl_Artist.ForeColor;
             if (chbx_Sort.Checked) syncTitle();
@@ -1330,8 +1334,8 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btn_AddAuthor_Click(object sender, EventArgs e)
         {
-            txt_TitleNew.Text = (txt_TitleNew.Text.Replace(" " + txt_AuthorNew.Text, "").Replace("]", "") + (txt_TitleNew.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + (txt_AuthorNew.Text).Replace("Custom Song Creator", "") + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " ").Replace(" ]", "]").Replace("[]", "");
-            txt_TitleExisting.Text = (txt_TitleExisting.Text.Replace(" " + txt_AuthorExisting.Text, "").Replace("]", "") + (txt_TitleExisting.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + (txt_AuthorExisting.Text).Replace("Custom Song Creator", "") + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " ").Replace(" ]", "]").Replace("[]", "");
+            if (txt_AuthorNew.Text.Length > 0) txt_TitleNew.Text = (txt_TitleNew.Text.Replace(" " + txt_AuthorNew.Text, "").Replace("]", "") + (txt_TitleNew.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + (txt_AuthorNew.Text).Replace("Custom Song Creator", "") + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " ").Replace(" ]", "]").Replace("[]", "");
+            if (txt_AuthorExisting.Text.Length > 0) txt_TitleExisting.Text = (txt_TitleExisting.Text.Replace(" " + txt_AuthorExisting.Text, "").Replace("]", "") + (txt_TitleExisting.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + (txt_AuthorExisting.Text).Replace("Custom Song Creator", "") + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " ").Replace(" ]", "]").Replace("[]", "");
             if (txt_TitleExisting.Text == txt_TitleNew.Text) lbl_Title.ForeColor = lbl_Reference.ForeColor;
             else lbl_Title.ForeColor = lbl_Artist.ForeColor;
             if (chbx_Sort.Checked) syncTitle();
@@ -1501,6 +1505,7 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             txt_TitleSortExisting.Text = txt_TitleExisting.Text;
             txt_TitleSortNew.Text = txt_TitleNew.Text;
+            if (txt_TitleSortExisting.Text == txt_TitleSortNew.Text) lbl_TitleSort.ForeColor = lbl_diffCount.ForeColor;
         }
 
         private void button6_Click_3(object sender, EventArgs e)
@@ -1511,6 +1516,7 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             txt_ArtistSortExisting.Text = txt_ArtistExisting.Text;
             txt_ArtistSortNew.Text = txt_ArtistNew.Text;
+            if (txt_ArtistSortExisting.Text == txt_ArtistSortNew.Text) lbl_ArtistSort.ForeColor = lbl_diffCount.ForeColor;
         }
 
         private void chbx_Autosave_CheckedChanged(object sender, EventArgs e)

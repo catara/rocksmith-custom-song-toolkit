@@ -1,5 +1,5 @@
 ﻿## Roksmith DLC Library Manager v0.2.0.13
-(beta version; branch of CSC)
+*(beta version; branch of CSC)*
 # App Description: MASS Manipulation of Rocksmith DLC Library 
 		e.g. 1. in Rocksmith, in the Library, each song's Album, to contain a personal rating, if it has DD, instr. avail
 		e.g. 2. in Rocksmith, in the Library, each song to be sorted by Album(Year) and Track No
@@ -13,18 +13,19 @@
 		- Preview
 		- Cover
 	- Listen to songs Audio/Preview
-- Mass Modify songdetails/metadata @repack per each Rocksmith song: e.g. Album Field: <Broken><Year> - <Album> - r<Rating> - <Avail. Instr.> - <DD> - <Tuning>
+- Mass Modify songdetails/metadata @repack per each Rocksmith song
+	*e.g. Album Field: "<Broken><Year> - <Album> - r<Rating> - <Avail. Instr.> - <DD> - <Tuning>"
 	- Copies songs/packs directly to the PS3 by means of FTP
 - Mass add/remove DD @repack (inc. Bass only option)(incl. Official DLCs)
 - Mass rename songs(Standardization) e.g. Black Keys->The Black Keys and maintain changes in a local DB
 - Manipulates the Retail songs list of Rocksmith (Rocksmith 2014 disc, or Rocksmith 2012 DLC, or Rocksmith 2012 Import disc for PC & Mac & PS3)
 
-<img src="/RocksmithTookitGUI/DLCManager/Screenshot1.png" alt="Rksmith DLC Library Manager Import&Pack" width="400px"/>
-<img src="/RocksmithTookitGUI/DLCManager/Screenshot2.png" alt="Song Metadata DB Screen" width="400px"/>
-<img src="/RocksmithTookitGUI/DLCManager/Screenshot3.png" alt="Song Metadata Standardization Screen" width="400px"/>
-<img src="/RocksmithTookitGUI/DLCManager/Screenshot4.png" alt="Rocksmith Retail Manipulation Scree" width="400px"/>
-<img src="/RocksmithTookitGUI/DLCManager/Screenshot5.png" alt="Duplicate Management Import Screen" width="400px"/>
-<img src="/RocksmithTookitGUI/DLCManager/Screenshot6.png" alt="Rocksmith EndScreen Sample" width="400px"/>
+<img src="/RocksmithTookitGUI/DLCManager/Screenshot1.png" alt="Rksmith DLC Library Manager Import&Pack"/> //width="400px"/
+<img src="/RocksmithTookitGUI/DLCManager/Screenshot2.png" alt="Song Metadata DB Screen"/>
+<img src="/RocksmithTookitGUI/DLCManager/Screenshot3.png" alt="Song Metadata Standardization Screen"/>
+<img src="/RocksmithTookitGUI/DLCManager/Screenshot4.png" alt="Rocksmith Retail Manipulation Scree"/>
+<img src="/RocksmithTookitGUI/DLCManager/Screenshot5.png" alt="Duplicate Management Import Screen"/>
+<img src="/RocksmithTookitGUI/DLCManager/Screenshot6.png" alt="Rocksmith EndScreen Sample"/>
 
 
 ## Known Issues:
@@ -248,13 +249,13 @@ dlcpackagedata
 			+ Remove DD (arragement dependent..e.g. only bass)
 
 ## Disclaimer:
-This program is maintained by catara, and it's a fork of the Rocksmith Custom Song Project(http://www.rscustom.net/), and is not affiliated with Ubisoft®
-and/or the Rocksmith™ team.  This program is for personal or educational use only and
-may not be sold or purchased.  Any activities that may negatively effect
-the original authors, Ubisosft® or Steam content in anyway are not condoned
-or supported.  Rocksmith users should remember to support Ubisoft® and
-Steam by purchasing original game content and software releases so that
-these companies may continue making products that we enjoy.  
+*This program is maintained by catara, and it's a fork of the Rocksmith Custom Song Project(http://www.rscustom.net/), and is not affiliated with Ubisoft®
+*and/or the Rocksmith™ team.  This program is for personal or educational use only and*
+*may not be sold or purchased.  Any activities that may negatively effect*
+*the original authors, Ubisosft® or Steam content in anyway are not condoned*
+*or supported.  Rocksmith users should remember to support Ubisoft® and*
+*Steam by purchasing original game content and software releases so that*
+*these companies may continue making products that we enjoy.*
 
 Additioanlly, No modification have been applied to Rocksmith Custom Song Project sourcecode (besides new UI tab).
   Except:

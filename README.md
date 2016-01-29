@@ -1,4 +1,5 @@
-## Roksmith DLC Library Manager v0.2.0.13 (beta version; branch of CSC)
+## Roksmith DLC Library Manager v0.2.0.13
+(beta version; branch of CSC)
 #Main Features:
 - Gather all DLCs metadata into 1 Microsoft Access DB
 	- Manage Duplicates @Import and After

@@ -1,10 +1,9 @@
-﻿<img src="/RocksmithTookitGUI/DLCManager/Screenshot1.png" alt="Rksmith DLC Library Manager Import&Pack" width="200px" height="250px"/>
-![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManager/Screenshot1.png?raw=true "Rksmith DLC Library Manager Import&Pack" =250x){:height="250px" width="250px"}
-![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManager/Screenshot2.png?raw=true "Song Metadata DB Screen" =250x){:height="250px" width="250px"}
-![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManager/Screenshot3.png?raw=true "Song Metadata Standardization Screen" =250x){:height="250px" width="250px"}
-![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManager/Screenshot4.png?raw=true "Rocksmith Retail Manipulation Screen" =250x){:height="250px" width="250px"}
-![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManager/Screenshot5.png?raw=true "Duplicate Management" =250x){:height="250px" width="250px"}
-![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManager/Screenshot6.png?raw=true "Rocksmith Sample" =250x){:height="250px" width="250px"}
+﻿<img src="/RocksmithTookitGUI/DLCManager/Screenshot1.png" alt="Rksmith DLC Library Manager Import&Pack" width="400px"/>
+<img src="/RocksmithTookitGUI/DLCManager/Screenshot2.png" alt="Song Metadata DB Screen" width="400px"/>
+<img src="/RocksmithTookitGUI/DLCManager/Screenshot3.png" alt="Song Metadata Standardization Screen" width="400px"/>
+<img src="/RocksmithTookitGUI/DLCManager/Screenshot4.png" alt="Rocksmith Retail Manipulation Scree" width="400px"/>
+<img src="/RocksmithTookitGUI/DLCManager/Screenshot5.png" alt="RDuplicate Management" width="400px"/>
+<img src="/RocksmithTookitGUI/DLCManager/Screenshot6.png" alt="Rocksmith EndScreenSample" width="400px"/>
 
 ## App Description: MASS Manipulation of Rocksmith DLC Library 
 		e.g. 1. in Rocksmith in the Library, each songs Album, to contain a personal rating, if it has DD, instr. avail

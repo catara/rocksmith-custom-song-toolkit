@@ -1,22 +1,18 @@
-﻿//# Rksmith DLC Library Manager _!_Latest release](http://img.shields.io/github/release/catara/rocksmith-custom-song-toolkit.svg)](https://github.com/catara/rocksmith-custom-song-toolkit/releases/)
-
-
-
-![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManager/Screenshot1.JPG?raw=true "Rksmith DLC Library Manager Import&Pack")
-![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManagerScreenshot2.JPG?raw=true "Song Metadata DB Screen")
-![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManagerScreenshot3.JPG?raw=true "Song Metadata Standardization Screen")
-![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManagerScreenshot4.JPG?raw=true "Rocksmith Retail Manipulation Screen")
-![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManagerScreenshot4.JPG?raw=true "Duplicate Management")
-![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManagerScreenshot4.JPG?raw=true "Rocksmith Sample")
+﻿![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManager/Screenshot1.png?raw=true "Rksmith DLC Library Manager Import&Pack")
+![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManager/Screenshot2.png?raw=true "Song Metadata DB Screen")
+![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManager/Screenshot3.png?raw=true "Song Metadata Standardization Screen")
+![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManager/Screenshot4.png?raw=true "Rocksmith Retail Manipulation Screen")
+![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManager/Screenshot5.png?raw=true "Duplicate Management")
+![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManager/Screenshot6.png?raw=true "Rocksmith Sample")
 
 ## App Description: MASS Manipulation of Rocksmith DLC Library 
-e.g. 1. in Rocksmith in the Library, each songs Album, to contain a personal rating, if it has DD, instr. avail
-e.g. 2. in Rocksmith in the Library, each song to be sorted by Album(Year) and Track No
-e.g. 3. Eliminate all the songs you dont like/want to see, from the Play A Song Menu for RS14, RS12 & RS12 DLC
+		e.g. 1. in Rocksmith in the Library, each songs Album, to contain a personal rating, if it has DD, instr. avail
+		e.g. 2. in Rocksmith in the Library, each song to be sorted by Album(Year) and Track No
+		e.g. 3. Eliminate all the songs you dont like/want to see, from the Play A Song Menu for RS14, RS12 & RS12 DLC
 
 
 
-## Roksmith DLC Library Manager v0.2.0.13 (beta version branch of CSC)
+## Roksmith DLC Library Manager v0.2.0.13 (beta version; branch of CSC)
 #Main Features:
 - Gather all DLCs metadata into 1 Microsoft Access DB
 	- Manage Duplicates @Import and After
@@ -171,14 +167,14 @@ dlcpackagedata
 				(fork of rocksmith-custom-song-toolkit)
 # Document purpose: To describe the functionailities and the way to change, the NEW tab that enable MASS Manipulation of Rocksmith DLC Library
 					(DLC folder; including customs(CDLC), DLCs and songs embeded in the ready to ship version of Rocksmith 2014) 
-## Legend:
+# Legend:
 - to be implemented
 + done
 _ future release
 -- WIP
 {} old unimplemented feature
 
-#### IDE-Setup <old>
+# IDE-Setup <old>
 1. Download Git Client and Visual Studio 2013 Desktop Edition
 2. Update Visual Studio, SQL, download HELP, and FORM-Controls-Object reference
 3.0 Create a new Folder DLCManager
@@ -195,62 +191,62 @@ _ future release
 10. copy missing dlls from...a prev version !?
 
 # Main Features:
-+1. Ability to Generate a Database with all DLC
-	Design description:
-		+ Read a preset folder and generate a list of DLCs
-			+ Save a hash id for each file to record version change/need to decompress 
-				{+ Initially the filesize stamp will be used}
-		+ Decompress all
-		+ Read(parse) the info file and populate a DB
-			+ If hash already exiting in DB don't populate Main DB
-			+If doesn't Exist check and then not/save it as New/Alternate
-			_ Add Audit trail DB for not importing old versions anymore
-		_ (future)Build CDLC(single container) of official RS2012 songs
-		+ Determine if no ORIGINAL, RS1DLC, DLC, CDLC, Bass, Rhythm, Lead, Vocals, Sections
+		+1. Ability to Generate a Database with all DLC
+			Design description:
+				+ Read a preset folder and generate a list of DLCs
+					+ Save a hash id for each file to record version change/need to decompress 
+						{+ Initially the filesize stamp will be used}
+				+ Decompress all
+				+ Read(parse) the info file and populate a DB
+					+ If hash already exiting in DB don't populate Main DB
+					+If doesn't Exist check and then not/save it as New/Alternate
+					_ Add Audit trail DB for not importing old versions anymore
+				_ (future)Build CDLC(single container) of official RS2012 songs
+				+ Determine if no ORIGINAL, RS1DLC, DLC, CDLC, Bass, Rhythm, Lead, Vocals, Sections
 
-+2. Ability to change metadata
-	+ Name
-		+ Add Album, Year, Version, Custom fields(Avail Instruments,Alternate Version, Multitrack)
-		+ Add Description (e.g. Bass only, too acoutic)
-		+ Keep&Add Comments
-		+ Keep&Add Rating (i.e. 1/10)
-		+ Keep&Add Album Order No.
-		+ Keep&Add Multitrack info
-		+ Keep&Add Grouping info (e.g. custom groups to be packaged out)
-		+ Keep&Add Beta/WIP tag
-			+ These songs appear at the top of the sorted list as they will have 0 in front of the name (0Nirvana - Bleach - School v0.1 beta)
-	+ File & Song Name standardization
-	Design description:
-		+ UI for Automated and Manual operations
-		- Any changed file can be easily reverted back to the original setting
-		+ Repack the changed files
+		+2. Ability to change metadata
+			+ Name
+				+ Add Album, Year, Version, Custom fields(Avail Instruments,Alternate Version, Multitrack)
+				+ Add Description (e.g. Bass only, too acoutic)
+				+ Keep&Add Comments
+				+ Keep&Add Rating (i.e. 1/10)
+				+ Keep&Add Album Order No.
+				+ Keep&Add Multitrack info
+				+ Keep&Add Grouping info (e.g. custom groups to be packaged out)
+				+ Keep&Add Beta/WIP tag
+					+ These songs appear at the top of the sorted list as they will have 0 in front of the name (0Nirvana - Bleach - School v0.1 beta)
+			+ File & Song Name standardization
+			Design description:
+				+ UI for Automated and Manual operations
+				- Any changed file can be easily reverted back to the original setting
+				+ Repack the changed files
 
--3. Ability to watch out for new Downloaded DLC and repackage them with:
-	+ New App ID
-	+ Convert to Mac & PS3
-	+ FTP to PS3
-
-
-+4. Ability to Repack all DLCs
-	-- ?Original files changed should also be packaged?
-		-- Ability to package songs by Groups(e.g. party songs, great bass, rating 10) :)
+		-3. Ability to watch out for new Downloaded DLC and repackage them with:
+			+ New App ID
+			+ Convert to Mac & PS3
+			+ FTP to PS3
 
 
-_5. Future features
-	-- Read the customforge.net website (Parse costonsforge.com and enrich the DB/Library w playthrough videos, yb preview, update required, release notes....)
-		- Reconcile the version no
-		- Keep Download links
-	-- Help manage and create MultiTracks
-		- Based on a original track plus audicity track create a new version
-	-- Manage Official DLCs
-		- Ability to create a package out of a list of Official DLCs
-			-- Initially all DCLS will be manually matched & hardcoded as to the audio file name and the song title
-		+ Hide specific Official songs from view/Main screen
-	+ Flag files with no bass, no sections, no lyrics, no preview, no DD, riff repeater..
-		-- FIX when possible
-	+ Show duplicates and solve conflicts
-	+ Audio Preview full track&preview track
-	+ Remove DD (arragement dependent..e.g. only bass)
+		+4. Ability to Repack all DLCs
+			-- ?Original files changed should also be packaged?
+				-- Ability to package songs by Groups(e.g. party songs, great bass, rating 10) :)
+
+
+		_5. Future features
+			-- Read the customforge.net website (Parse costonsforge.com and enrich the DB/Library w playthrough videos, yb preview, update required, release notes....)
+				- Reconcile the version no
+				- Keep Download links
+			-- Help manage and create MultiTracks
+				- Based on a original track plus audicity track create a new version
+			-- Manage Official DLCs
+				- Ability to create a package out of a list of Official DLCs
+					-- Initially all DCLS will be manually matched & hardcoded as to the audio file name and the song title
+				+ Hide specific Official songs from view/Main screen
+			+ Flag files with no bass, no sections, no lyrics, no preview, no DD, riff repeater..
+				-- FIX when possible
+			+ Show duplicates and solve conflicts
+			+ Audio Preview full track&preview track
+			+ Remove DD (arragement dependent..e.g. only bass)
 
 ## Disclaimer:
 This program is maintained by catara, and it's a fork of the Rocksmith Custom Song Project(http://www.rscustom.net/), and is not affiliated with Ubisoft®
@@ -272,34 +268,40 @@ All claims and liabilities of any misuse of the programs
 of this folder should be directed to the respective developer.
 
 
-- psarc.exe decompress packs and WEM
-?aldotools?
+		- psarc.exe decompress packs and WEM
+		?aldotools?
 
-- oggdec.exe - play ogg
-http://www.rarewares.org/ogg-oggdec.php
+		- oggdec.exe - play ogg
+		http://www.rarewares.org/ogg-oggdec.php
 
-- edattool.exe -- encript PS3 Retail DLCs packs
-http://www.aldostools.org/ps3tools.html
+		- edattool.exe -- encript PS3 Retail DLCs packs
+		http://www.aldostools.org/ps3tools.html
 
-- audiocrossreference.exe not actively used; but contained in the package (possible usage in decompressing PS3 WEM or in the future to Match Songs ws ecripted Audio Filenames, currently hardcoded)
-https://sites.google.com/site/cozy1cgi/
+		- audiocrossreference.exe not actively used; but contained in the package (possible usage in decompressing PS3 WEM or in the future to Match Songs ws ecripted Audio Filenames, currently hardcoded)
+		https://sites.google.com/site/cozy1cgi/
 
-- Beats & Phrases Resynchronizer by Svengraph
-http://customsforge.com/topic/15687-beats-phrases-resynchronizer/
+		- Beats & Phrases Resynchronizer by Svengraph
+		http://customsforge.com/topic/15687-beats-phrases-resynchronizer/
 
-- Cover Manipualtions
-https://github.com/Lovroman/RS-CDLC-Tagger/
-http://customsforge.com/topic/20334-tool-cdlc-tagger/
+		- Cover Manipualtions
+		https://github.com/Lovroman/RS-CDLC-Tagger/
+		http://customsforge.com/topic/20334-tool-cdlc-tagger/
 
-- MDB Viewver - alternative view of mdb container DB
-http://www.alexnolan.net/software/mdb_viewer_plus.htm
+		- MDB Viewver - alternative view of mdb container DB
+		http://www.alexnolan.net/software/mdb_viewer_plus.htm
 
--NVORBIS library - reading ogg lenght
-https://nvorbis.codeplex.com/documentation
+		-NVORBIS library - reading ogg lenght
+		https://nvorbis.codeplex.com/documentation
 
+		-DevOnly additional software
+			EOF v1.8b (c)2008-2010 T³ Software eof1.8RC10(r1337)
+			UltraStar Creator
 
 ## Contact
 
 mailto:bogdan@capi.ro  
 http://capi.ro/  
 https://github.com/catara/rocksmith-custom-song-toolkit
+
+# Rksmith DLC Library Manager [![Latest release](http://img.shields.io/github/release/catara/rocksmith-custom-song-toolkit.svg)](https://github.com/catara/rocksmith-custom-song-toolkit/releases/)
+

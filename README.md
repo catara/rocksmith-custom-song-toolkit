@@ -1,9 +1,9 @@
-![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManager/Screenshot1.JPG?raw=true "Rksmith DLC Library Manager Import&Pack")
-![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManagerScreenshot2.JPG?raw=true "Song Metadata DB Screen")
-![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManagerScreenshot3.JPG?raw=true "Song Metadata Standardization Screen")
-![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManagerScreenshot4.JPG?raw=true "Rocksmith Retail Manipulation Screen")
-![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManagerScreenshot4.JPG?raw=true "Duplicate Management")
-![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManagerScreenshot4.JPG?raw=true "Rocksmith Sample")
+![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManager/Screenshot1.png?raw=true "Rksmith DLC Library Manager Import&Pack")
+![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManager/Screenshot2.png?raw=true "Song Metadata DB Screen")
+![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManager/Screenshot3.png?raw=true "Song Metadata Standardization Screen")
+![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManager/Screenshot4.png?raw=true "Rocksmith Retail Manipulation Screen")
+![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManager/Screenshot5.png?raw=true "Duplicate Management")
+![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManager/Screenshot6.png?raw=true "Rocksmith Sample")
 
 
 ## Roksmith DLC Library Manager v0.2.0.13 (beta version; branch of CSC)

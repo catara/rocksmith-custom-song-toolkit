@@ -367,6 +367,12 @@ namespace RocksmithToolkitGUI.DLCManager
             //if (ConfigRepository.Instance()["dlcm_AdditionalManipul60"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(60, CheckState.Checked);
             //else chbx_Additional_Manipulations.SetItemCheckState(60, CheckState.Unchecked);
 
+            chbx_Configurations.Items[0] = ConfigRepository.Instance()["dlcm_Prof1"];
+            chbx_Configurations.Items[1] = ConfigRepository.Instance()["dlcm_Prof2"];
+            chbx_Configurations.Items[2] = ConfigRepository.Instance()["dlcm_Prof3"];
+            chbx_Configurations.Items[3] = ConfigRepository.Instance()["dlcm_Prof4"];
+            chbx_Configurations.Items[4] = ConfigRepository.Instance()["dlcm_Prof5"];
+
             // Generate package worker
             //rtxt_StatisticsOnReadDLCs.Text = "genz : " + "\n" + rtxt_StatisticsOnReadDLCs.Text;
             bwRGenerate.DoWork += new DoWorkEventHandler(GeneratePackage);
@@ -649,6 +655,38 @@ namespace RocksmithToolkitGUI.DLCManager
             //ConfigRepository.Instance()["dlcm_AdditionalManipul58"] = chbx_Additional_Manipulations.GetItemChecked(58) ? "Yes" : "No";
             //ConfigRepository.Instance()["dlcm_AdditionalManipul59"] = chbx_Additional_Manipulations.GetItemChecked(59) ? "Yes" : "No";
             //ConfigRepository.Instance()["dlcm_AdditionalManipul60"] = chbx_Additional_Manipulations.GetItemChecked(60) ? "Yes" : "No";
+
+            //Save Profiles
+            if (chbx_Configurations.SelectedIndex == 0)
+            {
+                ConfigRepository.Instance()["dlcm_RocksmithDLCPath1"] = txt_RocksmithDLCPath.Text;
+                ConfigRepository.Instance()["dlcm_TempPath1"] = txt_DBFolder.Text;
+                ConfigRepository.Instance()["dlcm_DBFolder1"] = txt_TempPath.Text;
+            }
+            else if (chbx_Configurations.SelectedIndex == 1)
+            {
+                ConfigRepository.Instance()["dlcm_RocksmithDLCPath2"] = txt_RocksmithDLCPath.Text;
+                ConfigRepository.Instance()["dlcm_TempPath2"] = txt_DBFolder.Text;
+                ConfigRepository.Instance()["dlcm_DBFolder2"] = txt_TempPath.Text;
+            }
+            else if (chbx_Configurations.SelectedIndex == 2)
+            {
+                ConfigRepository.Instance()["dlcm_RocksmithDLCPath3"] = txt_RocksmithDLCPath.Text;
+                ConfigRepository.Instance()["dlcm_TempPath3"] = txt_DBFolder.Text;
+                ConfigRepository.Instance()["dlcm_DBFolder3"] = txt_TempPath.Text;
+            }
+            else if (chbx_Configurations.SelectedIndex == 3)
+            {
+                ConfigRepository.Instance()["dlcm_RocksmithDLCPath4"] = txt_RocksmithDLCPath.Text;
+                ConfigRepository.Instance()["dlcm_TempPath4"] = txt_DBFolder.Text;
+                ConfigRepository.Instance()["dlcm_DBFolder4"] = txt_TempPath.Text;
+            }
+            else if (chbx_Configurations.SelectedIndex == 4)
+            {
+                ConfigRepository.Instance()["dlcm_RocksmithDLCPath5"] = txt_RocksmithDLCPath.Text;
+                ConfigRepository.Instance()["dlcm_TempPath5"] = txt_DBFolder.Text;
+                ConfigRepository.Instance()["dlcm_DBFolder5"] = txt_TempPath.Text;
+            }
         }
 
         private void cbx_Activ_Title_CheckedChanged(object sender, EventArgs e)
@@ -1149,6 +1187,8 @@ namespace RocksmithToolkitGUI.DLCManager
             {
                 MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 MessageBox.Show("Can not open Main DB connection in SQLAccess ! " + DB_Path + "-" + cmd);
+                ErrorWindow frm1 = new ErrorWindow("an not open Main DB connection in SQLAccess. Try to Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error when opening the DB", false, false);
+                frm1.ShowDialog();
             }
             //rtxt_StatisticsOnReadDLCs.Text = "rning " + "\n" + rtxt_StatisticsOnReadDLCs.Text;
             return MaximumSize;//files[10000];
@@ -1601,6 +1641,9 @@ namespace RocksmithToolkitGUI.DLCManager
                 // sufficient for this demonstration. 
                 // Your application may require different behavior.
                 Console.WriteLine(ee.Message);
+                ErrorWindow frm1 = new ErrorWindow("DB Open in Design Mode or Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error @Import", false, false);
+                frm1.ShowDialog();
+                return;
                 rtxt_StatisticsOnReadDLCs.Text = "Error cleaning Cleaned" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                 //continue;
             }
@@ -1636,7 +1679,10 @@ namespace RocksmithToolkitGUI.DLCManager
                         // Your application may require different behavior.
                         Console.WriteLine(ee.Message);
                         rtxt_StatisticsOnReadDLCs.Text = "error at import" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                        continue;
+                        ErrorWindow frm1 = new ErrorWindow("DB Open in Design Mode or Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error when opening the DB", false, false);
+                        frm1.ShowDialog();
+                        return;
+                        //continue;
                     }
                     //- To remove usage of ee and loading
                     Console.WriteLine("{0} : {1} : {2}", fi.Name, fi.Directory, loading);
@@ -4763,6 +4809,11 @@ namespace RocksmithToolkitGUI.DLCManager
                         }
                         catch (Exception ex)
                         {
+                            if (ex.Message.IndexOf("No JDK or JRE") > 0)//Help\\WwiseHelp_en.chm"))//
+                            {
+                                ErrorWindow frm1 = new ErrorWindow("Please Install Java" + Environment.NewLine + "A restart is required" + Environment.NewLine, "http://www.java.com/en/download/win10.jsp", "Error at Packing", false, false);
+                                frm1.ShowDialog();
+                            }
                             UpdatePackingLog("LogPackingError", DBc_Path, packid, file.ID, ex.ToString());
                             errorsFound.AppendLine(String.Format("Error 0 generate PC package: {0}{1}{0}{2}{0}", Environment.NewLine, ex.Message, ex.StackTrace));
                         }
@@ -4778,6 +4829,11 @@ namespace RocksmithToolkitGUI.DLCManager
                         }
                         catch (Exception ex)
                         {
+                            if (ex.Message.IndexOf("No JDK or JRE") > 0)//Help\\WwiseHelp_en.chm"))//
+                            {
+                                ErrorWindow frm1 = new ErrorWindow("Please Install Java" + Environment.NewLine + "A restart is required" + Environment.NewLine, "http://www.java.com/en/download/win10.jsp", "Error at Packing", false, false);
+                                frm1.ShowDialog();
+                            }
                             UpdatePackingLog("LogPackingError", DBc_Path, packid, file.ID, ex.ToString());
                             errorsFound.AppendLine(String.Format("Error 1 generate Mac package: {0}{1}{0}{2}{0}", Environment.NewLine, ex.Message, ex.StackTrace));
                         }
@@ -4793,6 +4849,11 @@ namespace RocksmithToolkitGUI.DLCManager
                         }
                         catch (Exception ex)
                         {
+                            if (ex.Message.IndexOf("No JDK or JRE") > 0)//Help\\WwiseHelp_en.chm"))//
+                            {
+                                ErrorWindow frm1 = new ErrorWindow("Please Install Java" + Environment.NewLine + "A restart is required" + Environment.NewLine, "http://www.java.com/en/download/win10.jsp", "Error at Packing", false, false);
+                                frm1.ShowDialog();
+                            }
                             UpdatePackingLog("LogPackingError", DBc_Path, packid, file.ID, ex.ToString());
                             errorsFound.AppendLine(String.Format("Error generate XBox 360 package: {0}{1}{0}{2}{0}", Environment.NewLine, ex.Message, ex.StackTrace));
                         }
@@ -4808,6 +4869,11 @@ namespace RocksmithToolkitGUI.DLCManager
                         }
                         catch (Exception ex)
                         {
+                            if (ex.Message.IndexOf("No JDK or JRE") > 0)//Help\\WwiseHelp_en.chm"))//
+                            {
+                                ErrorWindow frm1 = new ErrorWindow("Please Install Java" + Environment.NewLine + "A restart is required" + Environment.NewLine, "http://www.java.com/en/download/win10.jsp", "Error at Packing", false, false);
+                                frm1.ShowDialog();
+                            }
                             errorsFound.AppendLine(String.Format("Error 2generate PS3 package: {0}{1}. {0}PS3 package require 'JAVA x86' (32 bits) installed on your machine to generate properly.{0}", Environment.NewLine, ex.StackTrace));
                             //ErrorWindow frm1 = new ErrorWindow("Error 2generate PS3 package: {0}" + ex.StackTrace + ". {0}PS3 package require 'JAVA x86' (32 bits) installed on your machine to generate properly. " + Environment.NewLine, "http://www.java.com/");
                             //frm1.ShowDialog();
@@ -6398,36 +6464,33 @@ namespace RocksmithToolkitGUI.DLCManager
             x9 = ConfigRepository.Instance()["dlcm_AdditionalManipul49"] == "Yes" ? true : false;
             if (chbx_Configurations.SelectedIndex == 0)
             {
-                txt_RocksmithDLCPath.Text = "C:\\GitHub\\tmp\\";
-                txt_DBFolder.Text = "C:\\GitHub\\tmp\\";
-                txt_TempPath.Text = "C:\\GitHub\\tmp\\0";
-                chbx_CleanTemp.Checked = false;
-                chbx_CleanDB.Checked = false;
-                //chbx_Additional_Manipulations.SetItemCheckState(49, CheckState.Checked);
-                chbx_Additional_Manipulations.SetItemCheckState(24, x4 ? CheckState.Checked : CheckState.Unchecked);
-                chbx_Additional_Manipulations.SetItemCheckState(15, x5 ? CheckState.Checked : CheckState.Unchecked);
-                chbx_Additional_Manipulations.SetItemCheckState(49, x9 ? CheckState.Checked : CheckState.Unchecked);
+                txt_RocksmithDLCPath.Text = ConfigRepository.Instance()["dlcm_RocksmithDLCPath1"];
+                txt_DBFolder.Text = ConfigRepository.Instance()["dlcm_TempPath1"];
+                txt_TempPath.Text = ConfigRepository.Instance()["dlcm_DBFolder1"];
             }
-            if (chbx_Configurations.SelectedIndex == 1)
+            else if (chbx_Configurations.SelectedIndex == 1)
             {
-                txt_RocksmithDLCPath.Text = "C:\\GitHub\\TempLib\\";
-                txt_DBFolder.Text = "C:\\GitHub\\TempLib\\";
-                txt_TempPath.Text = "C:\\GitHub\\TempLib\\0";
-                chbx_CleanTemp.Checked = true;
-                chbx_CleanDB.Checked = true;
-                chbx_Additional_Manipulations.SetItemCheckState(24, CheckState.Unchecked);
-                chbx_Additional_Manipulations.SetItemCheckState(15, CheckState.Unchecked);
-                chbx_Additional_Manipulations.SetItemCheckState(49, CheckState.Unchecked);
-
+                txt_RocksmithDLCPath.Text = ConfigRepository.Instance()["dlcm_RocksmithDLCPath2"];
+                txt_DBFolder.Text = ConfigRepository.Instance()["dlcm_TempPath2"];
+                txt_TempPath.Text = ConfigRepository.Instance()["dlcm_DBFolder2"];
             }
-            if (chbx_Configurations.SelectedIndex == 2)
+            else if (chbx_Configurations.SelectedIndex == 2)
             {
-                txt_RocksmithDLCPath.Text = "D:\\Spiele\\Steam\\steamapps\\common\\Rocksmith2014\\dlc";
-                txt_DBFolder.Text = "C:\\GitHub\\tmp\\";
-                txt_TempPath.Text = "C:\\GitHub\\tmp\\0";
-                chbx_CleanTemp.Checked = false;
-                chbx_CleanDB.Checked = false;
-                chbx_Additional_Manipulations.SetItemCheckState(49, CheckState.Checked);
+                txt_RocksmithDLCPath.Text = ConfigRepository.Instance()["dlcm_RocksmithDLCPath3"];
+                txt_DBFolder.Text = ConfigRepository.Instance()["dlcm_TempPath3"];
+                txt_TempPath.Text = ConfigRepository.Instance()["dlcm_DBFolder3"];
+            }
+            else if (chbx_Configurations.SelectedIndex == 3)
+            {
+                txt_RocksmithDLCPath.Text = ConfigRepository.Instance()["dlcm_RocksmithDLCPath4"];
+                txt_DBFolder.Text = ConfigRepository.Instance()["dlcm_TempPath4"];
+                txt_TempPath.Text = ConfigRepository.Instance()["dlcm_DBFolder4"];
+            }
+            else if (chbx_Configurations.SelectedIndex == 4)
+            {
+                txt_RocksmithDLCPath.Text = ConfigRepository.Instance()["dlcm_RocksmithDLCPath5"];
+                txt_DBFolder.Text = ConfigRepository.Instance()["dlcm_TempPath5"];
+                txt_TempPath.Text = ConfigRepository.Instance()["dlcm_DBFolder5"];
             }
         }
     }

@@ -73,17 +73,18 @@ namespace RocksmithToolkitGUI.DLCManager
             this.lbl_Link.AutoSize = true;
             this.lbl_Link.Location = new System.Drawing.Point(65, 60);
             this.lbl_Link.Name = "lbl_Link";
-            this.lbl_Link.Size = new System.Drawing.Size(55, 13);
+            this.lbl_Link.Size = new System.Drawing.Size(72, 17);
             this.lbl_Link.TabIndex = 2;
             this.lbl_Link.TabStop = true;
             this.lbl_Link.Text = "linkLabel1";
+            this.lbl_Link.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lbl_Link_LinkClicked);
             // 
             // lbl_Message
             // 
             this.lbl_Message.AutoSize = true;
             this.lbl_Message.Location = new System.Drawing.Point(34, 28);
             this.lbl_Message.Name = "lbl_Message";
-            this.lbl_Message.Size = new System.Drawing.Size(35, 13);
+            this.lbl_Message.Size = new System.Drawing.Size(46, 17);
             this.lbl_Message.TabIndex = 3;
             this.lbl_Message.Text = "label1";
             // 
@@ -128,6 +129,12 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             IgnoreSong = true;
             this.Hide();
+        }
+
+        private void lbl_Link_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            // Send the URL to the operating system.
+            Process.Start(lbl_Link.Text as string);
         }
     }
 } 

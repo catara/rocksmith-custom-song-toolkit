@@ -170,60 +170,70 @@ namespace RocksmithToolkitGUI.DLCManager
                 //Create Groups list Dropbox
                 DataSet ds = new DataSet();
                 var norec = 0;
-                using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                try
                 {
-                    string SearchCmd = "SELECT DISTINCT Groups FROM Groups WHERE Type=\"Retail\";";
-                    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
-                    da.Fill(ds, "Main");
-                    norec = ds.Tables[0].Rows.Count;
-
-                    if (norec > 0)
+                    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
                     {
-                        //remove items
-                        if (chbx_Group.Items.Count > 0)
+                        string SearchCmd = "SELECT DISTINCT Groups FROM Groups WHERE Type=\"Retail\";";
+                        OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
+                        da.Fill(ds, "Main");
+                        norec = ds.Tables[0].Rows.Count;
+
+                        if (norec > 0)
                         {
-                            chbx_Group.DataSource = null;
-                            for (int k = chbx_Group.Items.Count - 1; k >= 0; --k)
+                            //remove items
+                            if (chbx_Group.Items.Count > 0)
                             {
-                                chbx_Group.Items.RemoveAt(k);
-                                chbx_AllGroups.Items.RemoveAt(k);
+                                chbx_Group.DataSource = null;
+                                for (int k = chbx_Group.Items.Count - 1; k >= 0; --k)
+                                {
+                                    chbx_Group.Items.RemoveAt(k);
+                                    chbx_AllGroups.Items.RemoveAt(k);
+                                }
+                            }
+                            //add items
+                            for (int j = 0; j < norec; j++)
+                            {
+                                chbx_Group.Items.Add(ds.Tables[0].Rows[j][0].ToString());
+                                chbx_AllGroups.Items.Add(ds.Tables[0].Rows[j][0].ToString());
                             }
                         }
-                        //add items
-                        for (int j = 0; j < norec; j++)
+
+                        DataSet dds = new DataSet();
+                        //Create Groups list MultiCheckbox
+                        using (OleDbConnection con = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
                         {
-                            chbx_Group.Items.Add(ds.Tables[0].Rows[j][0].ToString());
-                            chbx_AllGroups.Items.Add(ds.Tables[0].Rows[j][0].ToString());
+                            string SearchCmds = "SELECT DISTINCT Groups FROM Groups WHERE Type=\"Retail\" AND CDLC_ID=\"" + DataGridView1.Rows[DataGridView1.SelectedCells[0].RowIndex].Cells["ID"].Value.ToString() + "\";";
+                            OleDbDataAdapter dfa = new OleDbDataAdapter(SearchCmds, con); //WHERE id=253
+                            dfa.Fill(dds, "Main");
+                            var nocrec = dds.Tables[0].Rows.Count;
+
+                            if (nocrec > 0)
+                                for (int l = 0; l < norec; l++)
+                                    for (int j = 0; j < nocrec; j++)
+                                    // if (ds.Tables[0].Rows[j][0].ToString() == ds.Tables[0].Rows[l][0].ToString())
+                                    //  chbx_AllGroups.SetSelected(j, true);
+                                    {
+                                        int index = chbx_AllGroups.Items.IndexOf(ds.Tables[0].Rows[j][0].ToString());
+                                        chbx_AllGroups.SetItemChecked(index, true);
+                                    }
+                            //(ds.Tables[0].Rows[l][0].ToString()); 
+
                         }
                     }
 
-                    DataSet dds = new DataSet();
-                    //Create Groups list MultiCheckbox
-                    using (OleDbConnection con = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-                    {
-                        string SearchCmds = "SELECT DISTINCT Groups FROM Groups WHERE Type=\"Retail\" AND CDLC_ID=\"" + DataGridView1.Rows[DataGridView1.SelectedCells[0].RowIndex].Cells["ID"].Value.ToString() + "\";";
-                        OleDbDataAdapter dfa = new OleDbDataAdapter(SearchCmds, con); //WHERE id=253
-                        dfa.Fill(dds, "Main");
-                        var nocrec = dds.Tables[0].Rows.Count;
-
-                        if (nocrec > 0)
-                            for (int l = 0; l < norec; l++)
-                                for (int j = 0; j < nocrec; j++)
-                                // if (ds.Tables[0].Rows[j][0].ToString() == ds.Tables[0].Rows[l][0].ToString())
-                                //  chbx_AllGroups.SetSelected(j, true);
-                                {
-                                    int index = chbx_AllGroups.Items.IndexOf(ds.Tables[0].Rows[j][0].ToString());
-                                    chbx_AllGroups.SetItemChecked(index, true);
-                                }
-                        //(ds.Tables[0].Rows[l][0].ToString()); 
-
-                    }
+                    //if (txt_Arrangements.Text != "") 
+                    picbx_AlbumArtPath.ImageLocation = txt_AlbumArtPath.Text;//.Replace(".dds", ".png");
+                    if (chbx_Autosave.Checked) SaveOK = true;
+                    else SaveOK = false;
                 }
-
-                //if (txt_Arrangements.Text != "") 
-                picbx_AlbumArtPath.ImageLocation = txt_AlbumArtPath.Text;//.Replace(".dds", ".png");
-                if (chbx_Autosave.Checked) SaveOK = true;
-                else SaveOK = false;
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    ErrorWindow frm1 = new ErrorWindow("DB Open in Design Mode or Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error when opening the Retail DB", false, false);
+                    frm1.ShowDialog();
+                    return;
+                }
             }
         }
 

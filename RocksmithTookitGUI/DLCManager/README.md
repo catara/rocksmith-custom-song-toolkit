@@ -92,12 +92,16 @@ wip:
 
 wd:
 -+ some tracks no don't get read/picked cause" (1) " when importing other formats this should be ok
-- it's my life..breaks because of the aphostrofe'
--- make date bigger
+-- duplic manag make date bigger
+-- duplic manag make date readonly
+-- when opening no java...
 -- remove author if custom
 -- bring in no of duplicates in title
-- if cover was from someone else please compare against that (save old cover)
 -- if multitrack dont bring in the duplicate
+-+ generate a garageband
+- author still in
+- it's my life..breaks because of the aphostrofe'
+- if cover was from someone else please compare against that (save old cover)
 
 ### Dev Tips:
 + Toolkit version flag does not sync to&from Github: Run RunMeFirst.bat

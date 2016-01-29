@@ -195,6 +195,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.CheckBox1 = new System.Windows.Forms.CheckBox();
             this.DataViewGrid = new System.Windows.Forms.DataGridView();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.btn_GarageBand = new System.Windows.Forms.Button();
             this.Panel1.SuspendLayout();
             this.groupBox7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
@@ -285,7 +286,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // btn_GroupsAdd
             // 
             this.btn_GroupsAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_GroupsAdd.Location = new System.Drawing.Point(349, 217);
+            this.btn_GroupsAdd.Location = new System.Drawing.Point(347, 217);
             this.btn_GroupsAdd.Name = "btn_GroupsAdd";
             this.btn_GroupsAdd.Size = new System.Drawing.Size(21, 20);
             this.btn_GroupsAdd.TabIndex = 334;
@@ -296,7 +297,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // btn_GroupsRemove
             // 
             this.btn_GroupsRemove.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_GroupsRemove.Location = new System.Drawing.Point(370, 217);
+            this.btn_GroupsRemove.Location = new System.Drawing.Point(368, 217);
             this.btn_GroupsRemove.Name = "btn_GroupsRemove";
             this.btn_GroupsRemove.Size = new System.Drawing.Size(21, 20);
             this.btn_GroupsRemove.TabIndex = 333;
@@ -720,7 +721,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // chbx_Group
             // 
             this.chbx_Group.FormattingEnabled = true;
-            this.chbx_Group.Location = new System.Drawing.Point(349, 194);
+            this.chbx_Group.Location = new System.Drawing.Point(345, 194);
             this.chbx_Group.Name = "chbx_Group";
             this.chbx_Group.Size = new System.Drawing.Size(44, 21);
             this.chbx_Group.TabIndex = 323;
@@ -1630,6 +1631,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btn_GarageBand);
             this.groupBox1.Controls.Add(this.txt_Volume);
             this.groupBox1.Controls.Add(this.txt_Preview_Volume);
             this.groupBox1.Controls.Add(this.btn_AddPreview);
@@ -1727,7 +1729,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_PlayPreview.Name = "btn_PlayPreview";
             this.btn_PlayPreview.Size = new System.Drawing.Size(62, 21);
             this.btn_PlayPreview.TabIndex = 88;
-            this.btn_PlayPreview.Text = "PlayPreview";
+            this.btn_PlayPreview.Text = "Preview";
             this.btn_PlayPreview.UseVisualStyleBackColor = true;
             this.btn_PlayPreview.Click += new System.EventHandler(this.btm_PlayPreview_Click);
             // 
@@ -1736,9 +1738,9 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_AverageTempo.Cue = "Avg. Tempo";
             this.txt_AverageTempo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_AverageTempo.ForeColor = System.Drawing.Color.Gray;
-            this.txt_AverageTempo.Location = new System.Drawing.Point(225, 16);
+            this.txt_AverageTempo.Location = new System.Drawing.Point(220, 14);
             this.txt_AverageTempo.Name = "txt_AverageTempo";
-            this.txt_AverageTempo.Size = new System.Drawing.Size(44, 20);
+            this.txt_AverageTempo.Size = new System.Drawing.Size(34, 20);
             this.txt_AverageTempo.TabIndex = 90;
             this.txt_AverageTempo.TextChanged += new System.EventHandler(this.txt_AverageTempo_TextChanged);
             // 
@@ -2187,6 +2189,20 @@ namespace RocksmithToolkitGUI.DLCManager
             this.toolTip1.ToolTipTitle = "test";
             this.toolTip1.Popup += new System.Windows.Forms.PopupEventHandler(this.toolTip1_Popup);
             // 
+            // btn_GarageBand
+            // 
+            this.btn_GarageBand.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_GarageBand.Location = new System.Drawing.Point(259, 14);
+            this.btn_GarageBand.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
+            this.btn_GarageBand.Name = "btn_GarageBand";
+            this.btn_GarageBand.Size = new System.Drawing.Size(29, 21);
+            this.btn_GarageBand.TabIndex = 333;
+            this.btn_GarageBand.Text = "GB";
+            this.toolTip1.SetToolTip(this.btn_GarageBand, "Generates a GarageBand compatible AudioFile to load as a additional track to the " +
+        "intruments and mic tracks.");
+            this.btn_GarageBand.UseVisualStyleBackColor = true;
+            this.btn_GarageBand.Click += new System.EventHandler(this.button6_Click_2);
+            // 
             // MainDB
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2385,5 +2401,6 @@ namespace RocksmithToolkitGUI.DLCManager
         private CheckedListBox chbx_AllGroups;
         private Button btn_GroupsAdd;
         private Button btn_GroupsRemove;
+        private Button btn_GarageBand;
     }
 }

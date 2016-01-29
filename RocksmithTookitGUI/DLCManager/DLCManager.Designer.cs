@@ -1275,8 +1275,7 @@
             "AltDevHome",
             "Mac",
             "PC",
-            "DevVirtualMachine",
-            "Debug"});
+            "DevVirtualMachine"});
             this.chbx_Configurations.Location = new System.Drawing.Point(381, 3);
             this.chbx_Configurations.Name = "chbx_Configurations";
             this.chbx_Configurations.Size = new System.Drawing.Size(153, 21);

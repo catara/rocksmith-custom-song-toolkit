@@ -1,9 +1,9 @@
-﻿![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManager/Screenshot1.png?raw=true "Rksmith DLC Library Manager Import&Pack")
-![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManager/Screenshot2.png?raw=true "Song Metadata DB Screen")
-![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManager/Screenshot3.png?raw=true "Song Metadata Standardization Screen")
-![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManager/Screenshot4.png?raw=true "Rocksmith Retail Manipulation Screen")
-![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManager/Screenshot5.png?raw=true "Duplicate Management")
-![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManager/Screenshot6.png?raw=true "Rocksmith Sample")
+﻿![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManager/Screenshot1.png?raw=true "Rksmith DLC Library Manager Import&Pack" =250x)
+![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManager/Screenshot2.png?raw=true "Song Metadata DB Screen" =250x)
+![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManager/Screenshot3.png?raw=true "Song Metadata Standardization Screen" =250x)
+![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManager/Screenshot4.png?raw=true "Rocksmith Retail Manipulation Screen" =250x)
+![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManager/Screenshot5.png?raw=true "Duplicate Management" =250x)
+![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManager/Screenshot6.png?raw=true "Rocksmith Sample" =250x)
 
 ## App Description: MASS Manipulation of Rocksmith DLC Library 
 		e.g. 1. in Rocksmith in the Library, each songs Album, to contain a personal rating, if it has DD, instr. avail
@@ -12,7 +12,8 @@
 
 
 
-## Roksmith DLC Library Manager v0.2.0.13 (beta version; branch of CSC)
+## Roksmith DLC Library Manager v0.2.0.13
+(beta version; branch of CSC)
 #Main Features:
 - Gather all DLCs metadata into 1 Microsoft Access DB
 	- Manage Duplicates @Import and After
@@ -82,29 +83,29 @@
 ## WiP:
 -+ some tracks no don't get read/picked cause" (1) " when importing other formats this should be ok
 -+ generate a garageband
-- author still in
-- it's my life..breaks because of the aphostrofe'
-- if cover was from someone else please compare against that (save old cover)
-- update to wise 2015 (messages&testing)
-- fopen ticket for the dlcpackagedata crash for 311 down in
-- why all songs have 30sec preview :)
-- some songs dont repack
-- i had to apply a fix for 311 down in
-- remove all dd in Cache/Retails screen
-- finish profiles
-- fix filter in CAche
-- duplicate management..on change..check and color
+- [ ] author still in
+- [ ] it's my life..breaks because of the aphostrofe'
+- [ ] if cover was from someone else please compare against that (save old cover)
+- [ ] update to wise 2015 (messages&testing)
+- [ ] fopen ticket for the dlcpackagedata crash for 311 down in
+- [ ] why all songs have 30sec preview :)
+- [ ] some songs dont repack
+- [ ] i had to apply a fix for 311 down in
+- [ ] remove all dd in Cache/Retails screen
+- [ ] finish profiles
+- [ ] fix filter in CAche
+- [ ] duplicate management..on change..check and color
 
 done:
 (next release)
 
-(prev release; but maybe not thrurally tested)
--- duplic manag make date bigger
--- duplic manag make date readonly
--- when opening no java...
--- remove author if custom
--- bring in no of duplicates in title
--- if multitrack dont bring in the duplicate
+(prev release; but maybe not thurally tested)
+- [x] duplic manag make date bigger
+- [x] duplic manag make date readonly
+- [x] when opening no java...
+- [x] remove author if custom
+- [x] bring in no of duplicates in title
+- [x] if multitrack dont bring in the duplicate
 
 - diff between master and branch
 DLCManager folder
@@ -162,17 +163,17 @@ dlcpackagedata
 
 
 
-# Date: 10.10.2015
-# Document Name: Rocksmith DLC Management tool README
-				(fork of rocksmith-custom-song-toolkit)
-# Document purpose: To describe the functionailities and the way to change, the NEW tab that enable MASS Manipulation of Rocksmith DLC Library
-					(DLC folder; including customs(CDLC), DLCs and songs embeded in the ready to ship version of Rocksmith 2014) 
-# Legend:
-- to be implemented
-+ done
-_ future release
--- WIP
-{} old unimplemented feature
+		# Date: 10.10.2015
+		# Document Name: Rocksmith DLC Management tool README
+						(fork of rocksmith-custom-song-toolkit)
+		# Document purpose: To describe the functionailities and the way to change, the NEW tab that enable MASS Manipulation of Rocksmith DLC Library
+							(DLC folder; including customs(CDLC), DLCs and songs embeded in the ready to ship version of Rocksmith 2014) 
+		# Legend:
+		- to be implemented
+		+ done
+		_ future release
+		-- WIP
+		{} old unimplemented feature
 
 # IDE-Setup <old>
 1. Download Git Client and Visual Studio 2013 Desktop Edition

@@ -1,21 +1,23 @@
-﻿# Rksmith DLC Library Manager [![Latest release](http://img.shields.io/github/release/catara/rocksmith-custom-song-toolkit.svg)](https://github.com/catara/rocksmith-custom-song-toolkit/releases/)
+﻿//# Rksmith DLC Library Manager _!_Latest release](http://img.shields.io/github/release/catara/rocksmith-custom-song-toolkit.svg)](https://github.com/catara/rocksmith-custom-song-toolkit/releases/)
 
 
 
-![Rksmith DLC Library Manager](/Screenshot1.JPG?raw=true "Rksmith DLC Library Manager")
-![Rksmith DLC Library Manager](/Screenshot2.JPG?raw=true "MainDB")
-![Rksmith DLC Library Manager](/Screenshot3.JPG?raw=true "Autocorrect")
-![Rksmith DLC Library Manager](/Screenshot4.JPG?raw=true "Rocksmith Sample")
+![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManager/Screenshot1.JPG?raw=true "Rksmith DLC Library Manager Import&Pack")
+![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManagerScreenshot2.JPG?raw=true "Song Metadata DB Screen")
+![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManagerScreenshot3.JPG?raw=true "Song Metadata Standardization Screen")
+![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManagerScreenshot4.JPG?raw=true "Rocksmith Retail Manipulation Screen")
+![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManagerScreenshot4.JPG?raw=true "Duplicate Management")
+![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManagerScreenshot4.JPG?raw=true "Rocksmith Sample")
 
 ## App Description: MASS Manipulation of Rocksmith DLC Library 
-            e.g. 1. in Rocksmith in the Library, each songs Album, to contain a personal rating, if it has DD, instr. avail
-            e.g. 2. in Rocksmith in the Library, each song to be sorted by Album(Year) and Track No
-			e.g. 3. Eliminate all the songs you dont like/want to see, from the Play A Song Menu for RS14, RS12 & RS12 DLC
+e.g. 1. in Rocksmith in the Library, each songs Album, to contain a personal rating, if it has DD, instr. avail
+e.g. 2. in Rocksmith in the Library, each song to be sorted by Album(Year) and Track No
+e.g. 3. Eliminate all the songs you dont like/want to see, from the Play A Song Menu for RS14, RS12 & RS12 DLC
 
 
 
-# Roksmith DLC Library Manager v0.2.0.13 (beta version)
-Main Features:
+## Roksmith DLC Library Manager v0.2.0.13 (beta version branch of CSC)
+#Main Features:
 - Gather all DLCs metadata into 1 Microsoft Access DB
 	- Manage Duplicates @Import and After
 	- Edit Individual metadata fields
@@ -34,7 +36,6 @@ Main Features:
 -+ Packing of Rocksmith 2014 Retail manipulated files has 1 manual step for RS14 Retail songs
 
 ## ToDos/bugs:
-n2h:
 -+ with or without u still doesnt have the right alternate no when importing vs an existing song= a2....maybe OK :)
 -+ small bug: on inserting a new standardization 
 -+ small feature: when opening MainDB and detecting directory check runs, if next directory exists (give a change to empty the db then if possible)
@@ -49,8 +50,6 @@ n2h:
 -+ CICAGO 26 25 original SONG FAILS AT PACK 
 -+ usa peaches long naming fails at packing
 -+ some songs have preview in minutes (preview rename thing) recalculated at repack
-
-wip:
 - feat:		 Alternate No for duplicates logic
 - feat:		 Include Standardization names into duplication checks
 - big feature: get the volume of the audio file and then compare against the rest or a norm
@@ -83,6 +82,15 @@ wip:
 - dont conv Orig
 - changing path
 - alternate 0
+
+## WiP:
+-+ some tracks no don't get read/picked cause" (1) " when importing other formats this should be ok
+-+ generate a garageband
+- author still in
+- it's my life..breaks because of the aphostrofe'
+- if cover was from someone else please compare against that (save old cover)
+- update to wise 2015 (messages&testing)
+- fopen ticket for the dlcpackagedata crash for 311 down in
 - why all songs have 30sec preview :)
 - some songs dont repack
 - i had to apply a fix for 311 down in
@@ -91,21 +99,23 @@ wip:
 - fix filter in CAche
 - duplicate management..on change..check and color
 
-wd:
--+ some tracks no don't get read/picked cause" (1) " when importing other formats this should be ok
+done:
+(next release)
+
+(prev release; but maybe not thrurally tested)
 -- duplic manag make date bigger
 -- duplic manag make date readonly
 -- when opening no java...
 -- remove author if custom
 -- bring in no of duplicates in title
 -- if multitrack dont bring in the duplicate
--+ generate a garageband
-- author still in
-- it's my life..breaks because of the aphostrofe'
-- if cover was from someone else please compare against that (save old cover)
 
 - diff between master and branch
+DLCManager folder
 .xml
+mainform.cs
+mainfor.designer
+gui.csprj
 dlcpackagedata
                 var newPreviewFileName = Path.Combine(Path.GetDirectoryName(audioPath), String.Format("{0}_preview{1}", Path.GetFileNameWithoutExtension(audioPath), Path.GetExtension(audioPath)));
                 if (!File.Exists(newPreviewFileName)) File.Move(audioPreviewPath, newPreviewFileName); //bcapi as some original create an error here
@@ -143,16 +153,16 @@ dlcpackagedata
 	0.2.0.11 (22.08.2015) remove bug on auto import if original
 	0.2.0.12 (26.09.2015) If importing an original over a alternate the alternate flag should be set no the Alternate
 	0.2.0.13 (12.11.2015) Finally implement Arrangements and Tones and song Groups
-	wip: 0.2.0.14 (10.12.2015) (96%) full release (anyone can download and use the tool..no bugs..and all un-implemented features disabled), repack wo bugs, edit screens functional
-	wip: 0.2.0.15 (03.12.2015) (90%) Remove getlastconversiondate from Duplicates as already coming from the arrangements table
-	wip: 0.2.0.16 (20.12.2015) (80%)  analyse acuracy on conversion to ps3 (1979,7army..)
-	wip: 0.2.0.17 (20.12.2015) (20%) has_section flag(to be tested with a song missing sections); 
-	wip: 0.2.1 (31.01.2016) (10%) HTML&Excel exports
-	tbr: 0.2.1.1 (15.01.2016) Implement a logic to properly read DLCManager renamed DLCs
+	wip: 0.2.0.14 (10.02.2016) (96%) full release (anyone can download and use the tool..no bugs..and all un-implemented features disabled), repack wo bugs, edit screens functional
+	wip: 0.2.0.15 (03.03.2016) (90%) Remove getlastconversiondate from Duplicates as already coming from the arrangements table
+	wip: 0.2.0.16 (20.03.2016) (80%)  analyse acuracy on conversion to ps3 (1979,7army..)
+	wip: 0.2.0.17 (20.03.2016) (20%) has_section flag(to be tested with a song missing sections); 
+	wip: 0.2.1 (31.04.2016) (10%) HTML&Excel exports
+	tbr: 0.2.1.1 (15.05.2016) Implement a logic to properly read DLCManager renamed DLCs
 	tbr: 0.3.1 move Import DB to Main.DB or at least use an official data source as DB source to also be able to edit from the grid
 	tbr: 0.3.2 ?move Access code to project? or from hardcoded to views	
-	wip: 0.3.3 (03.10.2015) (10%) use parameterized SQL everywhere (&/ integrate template DB into project or a SQL DB)
-	wip: 0.4 (21.10.2015) (85%) Redesign MainDB+Edit Screens
+	wip: 0.3.3 (03.10.2016) (10%) use parameterized SQL everywhere (&/ integrate template DB into project or a SQL DB)
+	wip: 0.4 (21.10.2016) (85%) Redesign MainDB+Edit Screens
 
 
 
@@ -252,7 +262,8 @@ Steam by purchasing original game content and software releases so that
 these companies may continue making products that we enjoy.  
 
 Additioanlly, No modification have been applied to Rocksmith Custom Song Project sourcecode (besides new UI tab).
-  - 1fix for PS3 conversion (#273 on github)
+  Except:
+  -  1 fix for 311 Down In dlcpackagedata crash
 
 This software makes use of Applications not made
 by developers who are part of this project.

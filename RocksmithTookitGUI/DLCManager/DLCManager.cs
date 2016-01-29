@@ -1940,7 +1940,13 @@ namespace RocksmithToolkitGUI.DLCManager
                                     var Available_Old = "No";
                                     if (!chbx_Additional_Manipulations.GetItemChecked(38)) //39. Use only unpacked songs already in the 0/dlcpacks folder
                                     {
-
+                                        if (!File.Exists(ConfigRepository.Instance()["general_wwisepath"] + "\\Authoring\\Win32\\Release\\bin\\Wwise.exe"))//Help\\WwiseHelp_en.chm"))//
+                                        {
+                                            ErrorWindow frm1 = new ErrorWindow("Please Install Wwise v2014.1.6 build 5318with Authorithy binaries : " + Environment.NewLine + "A restart is required for the Conversion to WEM, process to be succesfull, else the errors can be captured through the Missing Files Query" + Environment.NewLine, "https://www.audiokinetic.com/download/", "Error at WEM Creation", true, true);
+                                            frm1.ShowDialog();
+                                            if (frm1.IgnoreSong) break;
+                                            if (frm1.StopImport) { j = 10; break; }
+                                        }
                                         try
                                         {
                                             // UNPACK

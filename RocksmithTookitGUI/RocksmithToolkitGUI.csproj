@@ -934,6 +934,12 @@
     <Content Include="DLCManager\external_tools\UltraStar Creator\usc.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="DLCManager\Screenshot1.png" />
+    <Content Include="DLCManager\Screenshot2.png" />
+    <Content Include="DLCManager\Screenshot3.png" />
+    <Content Include="DLCManager\Screenshot4.png" />
+    <Content Include="DLCManager\Screenshot5.png" />
+    <Content Include="DLCManager\Screenshot6.png" />
     <Content Include="songcreator.ico" />
     <Content Include="DLCManager\external_tools\audiocrossreference.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

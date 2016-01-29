@@ -171,7 +171,7 @@ namespace RocksmithToolkitGUI
             tabControl1.TabPages.Remove(GeneralConfigTab);
         }
 
-<<<<<<< HEAD
+//<<<<<<< HEAD
         //bcapi
         private void dLCLibraryManagerToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -192,11 +192,11 @@ namespace RocksmithToolkitGUI
                 tabControl1.TabPages.Add(DLCManagerTab);
         }
 
-        private void dlcConverterControl_Load(object sender, EventArgs e)
-        {
+        //private void dlcConverterControl_Load(object sender, EventArgs e)
+        //{
 
-        }
-=======
+        //}
+//=======
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             // cleanup temp folder garbage carefully
@@ -217,6 +217,6 @@ namespace RocksmithToolkitGUI
         }
 
 
->>>>>>> refs/remotes/rscustom/master
+//>>>>>>> refs/remotes/rscustom/master
     }
 }

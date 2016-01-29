@@ -208,11 +208,11 @@ namespace RocksmithToolkitLib.DLCPackage
                 // write changes to xml arrangement (w/o comments)
                 using (var stream = File.Open(xmlSongFile, FileMode.Create))
                     song.Serialize(stream);
-<<<<<<< HEAD
+//<<<<<<< HEAD
                
-=======
+//=======
 
->>>>>>> refs/remotes/rscustom/master
+//>>>>>>> refs/remotes/rscustom/master
                 // write comments back to xml now so they are available for debugging
                 if (this.ArrangementType == ArrangementType.Guitar || this.ArrangementType == ArrangementType.Bass)
                     Song2014.WriteXmlComments(xmlSongFile, this.XmlComments, false);

@@ -132,7 +132,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     var sel = "SELECT max(Alternate_Version_No) FROM Main WHERE(LCASE(Artist) =LCASE(\"" + datas.SongInfo.Artist + "\") AND LCASE(Album)=LCASE(\"" + datas.SongInfo.Album + "\") AND ";
                     sel += "(LCASE(Song_Title)=LCASE(\"" + datas.SongInfo.SongDisplayName + "\") OR ";
                     sel += "LCASE(Song_Title) like \"%" + datas.SongInfo.SongDisplayName.ToLower() + "%\" OR ";
-                    sel += "LCASE(Song_Title_Sort) =LCASE(\"" + datas.SongInfo.SongDisplayNameSort + "\"))) OR LCASE(DLC_Name)=LCASE(\"" + datas.Name + "\");";
+                    sel += "LCASE(Song_Title_Sort) =LCASE(\"" + datas.SongInfo.SongDisplayNameSort + "\"))) OR LCASE(DLC_Name)=LCASE(\"" + datas.DLCKey + "\");";
                     //Get last inserted ID
                     //rtxt_StatisticsOnReadDLCs.Text = sel + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                     DataSet dds = new DataSet();
@@ -290,9 +290,9 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_DDNew.Text = dD;
             txt_DDExisting.Text = filed.Has_DD;
 
-            if (datas.Name != filed.DLC_Name) lbl_DLCID.ForeColor = lbl_Reference.ForeColor;
-            else if (datas.Name == "" && "" == filed.DLC_Name) lbl_DLCID.Text = "";
-            txt_DLCIDNew.Text = datas.Name;
+            if (datas.DLCKey != filed.DLC_Name) lbl_DLCID.ForeColor = lbl_Reference.ForeColor;
+            else if (datas.DLCKey == "" && "" == filed.DLC_Name) lbl_DLCID.Text = "";
+            txt_DLCIDNew.Text = datas.DLCKey;
             txt_DLCIDExisting.Text = filed.DLC_Name;
 
             if (Is_Original != filed.Is_Original) lbl_IsOriginal.ForeColor = lbl_Reference.ForeColor;

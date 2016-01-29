@@ -526,14 +526,14 @@
         private System.Windows.Forms.TabPage cdlcConverterTab;
         private CDLC2Tab.CDLC2Tab cdlC2Tab1;
         private OggConverter.OggConverter oggConverter1;
-<<<<<<< HEAD
+//<<<<<<< HEAD
         private System.Windows.Forms.ToolStripMenuItem dLCLibraryManagerToolStripMenuItem;
         private DLCManager.DLCManager dlcManager1;
         private System.Windows.Forms.TabPage DLCManagerTab;
 
-=======
+//=======
         private DLCInlayCreator.DLCInlayCreator dlcInlayCreator1;
->>>>>>> refs/remotes/rscustom/master
+//>>>>>>> refs/remotes/rscustom/master
     }
 }
 

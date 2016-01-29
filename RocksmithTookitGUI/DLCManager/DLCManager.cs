@@ -49,7 +49,7 @@ namespace RocksmithToolkitGUI.DLCManager
         //int norows = 0;
         string Groupss = "";
         DLCPackageData data;
-        bool x1, x2, x3, x4, x5, x9;
+        bool x4, x5, x9;// x1, x2, x3,
         string x6, x7, x8;
 
         internal static string AppWD = AppDomain.CurrentDomain.BaseDirectory + "DLCManager\\external_tools"; //when removing DDC
@@ -1944,9 +1944,9 @@ namespace RocksmithToolkitGUI.DLCManager
                                         {
                                             // UNPACK
                                             if (chbx_Additional_Manipulations.GetItemChecked(51))
-                                                unpackedDir = Packer.Unpack(FullPath, Temp_Path_Import, true, true, true, null);
+                                                unpackedDir = Packer.Unpack(FullPath, Temp_Path_Import,  true, true, null);//true,
                                             else
-                                                unpackedDir = Packer.Unpack(FullPath, Temp_Path_Import, true, true, false, null);
+                                                unpackedDir = Packer.Unpack(FullPath, Temp_Path_Import,  true, false, null);//true,
                                             //packagePlatform = FullPath.GetPlatform();
                                         }
                                         catch (Exception ex)
@@ -2532,7 +2532,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                         sel += "(LCASE(Song_Title) = LCASE(\"" + info.SongInfo.SongDisplayName + "\") ";
                                         sel += "OR LCASE(Song_Title) like \"%" + info.SongInfo.SongDisplayName.ToLower() + "%\" ";
                                         //sel += "OR (\"%LCASE(Song_Title)%\" like LCASE(\"" + info.SongInfo.SongDisplayName + "\") ";
-                                        sel += "OR LCASE(Song_Title_Sort) =LCASE(\"" + info.SongInfo.SongDisplayNameSort + "\")) OR LCASE(DLC_Name)=LCASE(\"" + info.Name + "\") ORDER BY Is_Original ASC";
+                                        sel += "OR LCASE(Song_Title_Sort) =LCASE(\"" + info.SongInfo.SongDisplayNameSort + "\")) OR LCASE(DLC_Name)=LCASE(\"" + info.DLCKey + "\") ORDER BY Is_Original ASC";
                                         //Read from DB
                                         int norows = 0;
                                         norows = SQLAccess(sel);
@@ -2584,7 +2584,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                                     dax.Dispose();
 
                                                     //Add also a random DLCName if any of the Alternates has the same DLC Name ssame as the original
-                                                    var sel3 = "UPDATE Main SET DLC_Name = DLC_Name+\"" + random.Next(0, 100000) + "\" WHERE ID in (" + sel.Replace("*", "ID") + ") and LCASE(DLC_Name) = \"" + info.Name.ToLower() + "\"";
+                                                    var sel3 = "UPDATE Main SET DLC_Name = DLC_Name+\"" + random.Next(0, 100000) + "\" WHERE ID in (" + sel.Replace("*", "ID") + ") and LCASE(DLC_Name) = \"" + info.DLCKey.ToLower() + "\"";
                                                     //rtxt_StatisticsOnReadDLCs.Text =  random.Next(0, 100000) + "-"+sel3 + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                                     DataSet dxf = new DataSet();
                                                     OleDbDataAdapter dbx = new OleDbDataAdapter(sel3, cnn);
@@ -2603,7 +2603,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                                     sel = "SELECT max(Alternate_Version_No) FROM Main WHERE(LCASE(Artist) =LCASE(\"" + info.SongInfo.Artist + "\") AND LCASE(Album)=LCASE(\"" + info.SongInfo.Album + "\") AND ";
                                                     sel += "(LCASE(Song_Title)=LCASE(\"" + info.SongInfo.SongDisplayName + "\") OR ";
                                                     sel += "LCASE(Song_Title) like \"%" + info.SongInfo.SongDisplayName.ToLower() + "%\" OR ";
-                                                    sel += "LCASE(Song_Title_Sort) =LCASE(\"" + info.SongInfo.SongDisplayNameSort + "\"))) OR LCASE(DLC_Name)=LCASE(\"" + info.Name + "\");";
+                                                    sel += "LCASE(Song_Title_Sort) =LCASE(\"" + info.SongInfo.SongDisplayNameSort + "\"))) OR LCASE(DLC_Name)=LCASE(\"" + info.DLCKey + "\");";
                                                     //Get last inserted ID
                                                     //rtxt_StatisticsOnReadDLCs.Text = sel + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                                     DataSet dds = new DataSet();
@@ -2638,9 +2638,9 @@ namespace RocksmithToolkitGUI.DLCManager
                                                 Album = "";
                                                 PackageVersion = "";
 
-                                                if ((author.ToLower() == file.Author.ToLower() && author != "" && file.Author != "" && file.Author != "Custom Song Creator" && author != "Custom Song Creator") || (file.DLC_Name == info.Name))
+                                                if ((author.ToLower() == file.Author.ToLower() && author != "" && file.Author != "" && file.Author != "Custom Song Creator" && author != "Custom Song Creator") || (file.DLC_Name == info.DLCKey))
                                                 {
-                                                    if (file.DLC_Name.ToLower() == info.Name.ToLower())
+                                                    if (file.DLC_Name.ToLower() == info.DLCKey.ToLower())
                                                         if (chbx_Additional_Manipulations.GetItemChecked(50) && j == 0)
                                                         {
                                                             dupliSongs[i] = 1; duplit = true; dupliNo++; break;
@@ -2689,7 +2689,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                                     alt = "1";
                                                     //txt = (info.PackageVersion != null ? "No" : "Yes");
                                                     //rtxt_StatisticsOnReadDLCs.Text = "\n" + "-" + "\n-" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                                                    if (Namee != "") info.Name = Namee;
+                                                    if (Namee != "") info.DLCKey = Namee;
                                                     if (SongDisplayName != "") info.SongInfo.SongDisplayName = SongDisplayName;
                                                     if (Title_Sort != "") info.SongInfo.SongDisplayNameSort = Title_Sort;
                                                     if (ArtistSort != "") info.SongInfo.ArtistSort = ArtistSort;
@@ -2729,7 +2729,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                                     //    //rtxt_StatisticsOnReadDLCs.Text = alt + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                                     //}
 
-                                                    if (file.DLC_Name.ToLower() == info.Name.ToLower()) info.Name = random.Next(0, 100000) + info.Name;
+                                                    if (file.DLC_Name.ToLower() == info.DLCKey.ToLower()) info.DLCKey = random.Next(0, 100000) + info.DLCKey;
                                                     if (file.Song_Title.ToLower() == info.SongInfo.SongDisplayName.ToLower() && Is_Original == "No") info.SongInfo.SongDisplayName += " a." + (alt.ToInt32() + 1).ToString() + ((author == null || author == "Custom Song Creator") ? "" : " " + author);// ;//random.Next(0, 100000).ToString()
                                                     //if (file.Song_Title_Sort == info.SongInfo.SongDisplayNameSort) info.SongInfo.SongDisplayNameSort += random.Next(0, 100000);
 
@@ -2738,11 +2738,11 @@ namespace RocksmithToolkitGUI.DLCManager
 
 
                                                 //Doublechecking that no DLC Name is the same (last import 1500 songs generate once such exception :) )
-                                                var SearchCmd = "SELECT * FROM Main WHERE DLC_Name='" + info.Name + "'";
+                                                var SearchCmd = "SELECT * FROM Main WHERE DLC_Name='" + info.DLCKey + "'";
                                                 DataSet dms = new DataSet();
                                                 OleDbDataAdapter dan = new OleDbDataAdapter(SearchCmd, cnn);
                                                 dan.Fill(dms, "Main");
-                                                if (dms.Tables[0].Rows.Count > 1) info.Name = random.Next(0, 100000) + info.Name;
+                                                if (dms.Tables[0].Rows.Count > 1) info.DLCKey = random.Next(0, 100000) + info.DLCKey;
 
 
 
@@ -3055,7 +3055,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                                 command.Parameters.AddWithValue("@param16", info.SongInfo.AverageTempo);
                                                 command.Parameters.AddWithValue("@param17", info.Volume);
                                                 command.Parameters.AddWithValue("@param18", info.PreviewVolume);
-                                                command.Parameters.AddWithValue("@param19", info.Name);
+                                                command.Parameters.AddWithValue("@param19", info.DLCKey);
                                                 command.Parameters.AddWithValue("@param20", AppIdD);
                                                 command.Parameters.AddWithValue("@param21", info.AlbumArtPath ?? DBNull.Value.ToString());
                                                 command.Parameters.AddWithValue("@param22", info.OggPath);
@@ -3276,7 +3276,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                                 command.Parameters.AddWithValue("@param16", info.SongInfo.AverageTempo);
                                                 command.Parameters.AddWithValue("@param17", info.Volume);
                                                 command.Parameters.AddWithValue("@param18", info.PreviewVolume);
-                                                command.Parameters.AddWithValue("@param19", info.Name);
+                                                command.Parameters.AddWithValue("@param19", info.DLCKey);
                                                 command.Parameters.AddWithValue("@param20", AppIdD);
                                                 command.Parameters.AddWithValue("@param21", info.AlbumArtPath ?? DBNull.Value.ToString());
                                                 command.Parameters.AddWithValue("@param22", info.OggPath);
@@ -3971,7 +3971,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     sel = "SELECT max(Alternate_Version_No) FROM Main WHERE(LCASE(Artist) =LCASE(\"" + data.SongInfo.Artist + "\") AND LCASE(Album)=LCASE(\"" + data.SongInfo.Album + "\") AND ";
                     sel += "(LCASE(Song_Title)=LCASE(\"" + data.SongInfo.SongDisplayName + "\") OR ";
                     sel += "LCASE(Song_Title) like \"%" + data.SongInfo.SongDisplayName.ToLower() + "%\" OR ";
-                    sel += "LCASE(Song_Title_Sort) =LCASE(\"" + data.SongInfo.SongDisplayNameSort + "\"))) OR LCASE(DLC_Name)=LCASE(\"" + data.Name + "\");";
+                    sel += "LCASE(Song_Title_Sort) =LCASE(\"" + data.SongInfo.SongDisplayNameSort + "\"))) OR LCASE(DLC_Name)=LCASE(\"" + data.DLCKey + "\");";
                     //Get last inserted ID
                     //rtxt_StatisticsOnReadDLCs.Text = sel + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                     DataSet dds = new DataSet();
@@ -4622,7 +4622,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         Mac = false,//chbx_Mac.Text == "Mac" || file.Platform == "Mac" ? true : false,
                         XBox360 = false,//chbx_XBOX360.Text == "XBOX360" || file.Platform == "XBox360" ? true : false,
                         PS3 = false,//chbx_PS3.Text == "PS3" || file.Platform == "Ps3" ? true : false,
-                        Name = file.DLC_Name,
+                        DLCKey = file.DLC_Name,
                         AppId = file.DLC_AppID,
                         ArtFiles = info.ArtFiles,
                         Showlights = true,//info.Showlights, //apparently this infor is not read..also the tone base is removed/not read also
@@ -4679,7 +4679,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
                     //rtxt_StatisticsOnReadDLCs.Text = "...nipul" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                     if (chbx_Additional_Manipulations.GetItemChecked(0)) //"1. Add Increment to all Titles"
-                        data.Name = i + data.Name;
+                        data.DLCKey = i + data.DLCKey;
 
                     //rtxt_StatisticsOnReadDLCs.Text = "...mpl" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                     artist = "";
@@ -4699,16 +4699,16 @@ namespace RocksmithToolkitGUI.DLCManager
                     //rtxt_StatisticsOnReadDLCs.Text = "...manipl" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                     if (chbx_Additional_Manipulations.GetItemChecked(2))
                         //"3. Make all DLC IDs unique (&save)"
-                        if (file.UniqueDLCName != null && file.UniqueDLCName != "") data.Name = file.UniqueDLCName;
+                        if (file.UniqueDLCName != null && file.UniqueDLCName != "") data.DLCKey = file.UniqueDLCName;
                         else
                         {
                             Random random = new Random();
-                            data.Name = random.Next(0, 100000) + data.Name;
+                            data.DLCKey = random.Next(0, 100000) + data.DLCKey;
                             var DB_Path = (chbx_DefaultDB.Checked == true ? MyAppWD : txt_DBFolder.Text) + "\\Files.accdb;";
                             using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
                             {
                                 DataSet dis = new DataSet();
-                                cmd = "UPDATE Main SET UniqueDLCName=\"" + data.Name + "\" WHERE ID=" + file.ID;
+                                cmd = "UPDATE Main SET UniqueDLCName=\"" + data.DLCKey + "\" WHERE ID=" + file.ID;
                                 OleDbDataAdapter das = new OleDbDataAdapter(cmd, cnn);
                                 das.Fill(dis, "Main");
                                 das.Dispose();
@@ -5379,7 +5379,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                 if (File.Exists(pathDLC + "\\cache.psarc"))
                                 {
 
-                                    unpackedDir = Packer.Unpack(pathDLC + "\\cache.psarc", txt_TempPath.Text + "\\0_dlcpacks\\temp", false, false, false); //Unpack cache.psarc for RS14 Official Retails songs rePACKING
+                                    unpackedDir = Packer.Unpack(pathDLC + "\\cache.psarc", txt_TempPath.Text + "\\0_dlcpacks\\temp", false, false); //, falseUnpack cache.psarc for RS14 Official Retails songs rePACKING
 
                                     //check if platform is correctly identified, &if NOT, correct it
                                     var startI = new ProcessStartInfo();
@@ -5428,7 +5428,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                 //Process SONGS.PSARC
                                 rtxt_StatisticsOnReadDLCs.Text = "Unpacking songs.psarc.... " + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                 //if (platformDLCP == "PS3")
-                                unpackedDir = Packer.Unpack(inputFilePath, txt_TempPath.Text + "\\0_dlcpacks\\temp", false, false, false);
+                                unpackedDir = Packer.Unpack(inputFilePath, txt_TempPath.Text + "\\0_dlcpacks\\temp", false, false);//, false
                                 //else unpackedDir = Packer.Unpack(inputFilePath, txt_TempPath.Text + "\\0_dlcpacks\\manipulated", true, false, false);
 
 
@@ -5464,7 +5464,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                     //else unpackedDir = Packer.Unpack(inputFilePath, txt_TempPath.Text + "\\0_dlcpacks\\manipulated", true, false, false);
                                 }
                                 //elseif (platformDLCP == "PS3") ;//unpackedDir = Packer.Unpack(inputFilePath, txt_TempPath.Text + "\\0_dlcpacks\\manipulated", false, false, false);
-                                else unpackedDir = Packer.Unpack(inputFilePath, txt_TempPath.Text + "\\0_dlcpacks\\temp", true, false, false);
+                                else unpackedDir = Packer.Unpack(inputFilePath, txt_TempPath.Text + "\\0_dlcpacks\\temp", true, false);//false
 
                                 if (Directory.Exists(unpackedDir + "\\songs\\bin\\macos"))
                                 {
@@ -5503,7 +5503,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         {
                             try // UNPACK
                             {
-                                unpackedDir = Packer.Unpack(inputFilePath, txt_TempPath.Text + "\\0_dlcpacks", false, false, false).Replace(".psarc", ""); ;
+                                unpackedDir = Packer.Unpack(inputFilePath, txt_TempPath.Text + "\\0_dlcpacks", false, false).Replace(".psarc", ""); //, false;
                             }
                             catch (Exception ex)
                             {
@@ -5578,7 +5578,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                     }
                                     unpackedDir = txt_TempPath.Text + "\\0_dlcpacks\\rs1compatibilitydisc_PS3";
                                 }
-                                else unpackedDir = Packer.Unpack(inputFilePath, txt_TempPath.Text + "\\0_dlcpacks", true, false, false);
+                                else unpackedDir = Packer.Unpack(inputFilePath, txt_TempPath.Text + "\\0_dlcpacks", true, false);//, false)
                             }
                             catch (Exception ex)
                             {

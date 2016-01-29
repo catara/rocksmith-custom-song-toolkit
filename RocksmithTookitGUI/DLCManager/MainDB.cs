@@ -2657,7 +2657,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     Mac = chbx_Format.Text == "Mac" || file.Platform == "Mac" ? true : false,
                     XBox360 = chbx_Format.Text == "XBOX360" || file.Platform == "Xbox360" ? true : false,
                     PS3 = chbx_Format.Text == "PS3" || file.Platform == "Ps3" ? true : false,
-                    Name = file.DLC_Name,
+                    DLCKey = file.DLC_Name,
                     AppId = file.DLC_AppID,
                     ArtFiles = info.ArtFiles, //not complete
                     Showlights = true,//info.Showlights, //apparently this infor is not read..also the tone base is removed/not read also
@@ -2824,8 +2824,8 @@ namespace RocksmithToolkitGUI.DLCManager
                 //else
                 {
                     Random random = new Random();
-                    data.Name = random.Next(0, 100000) + data.Name;
-                    norm_path += data.Name;
+                    data.DLCKey = random.Next(0, 100000) + data.DLCKey;
+                    norm_path += data.DLCKey;
                     //repacked_Path + "\\" + Manipulate_strings(ConfigRepository.Instance()["dlcm_File_Name"], 0, false, false, bassRemoved);
 
                     //var k = DataViewGrid.SelectedCells[0].RowIndex;

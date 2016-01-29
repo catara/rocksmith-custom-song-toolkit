@@ -470,7 +470,7 @@ namespace RocksmithToolkitLib.Xml
                 String5 = stringArray[5];
         }
 
-        [Obsolete("Depricated, please use regular ToArray() funtion.", true)]
+        [Obsolete("Deprecated, please use regular ToArray() function.", true)]
         public Int16[] ToShortArray()
         {
             return ToArray();
@@ -481,10 +481,7 @@ namespace RocksmithToolkitLib.Xml
             return new Int16[] { String0, String1, String2, String3, String4, String5 };
         }
 
-        /// <summary>
-        /// Returns tuning strings array ommiting last 2 strings.
-        /// </summary>
-        /// <returns>The bass array.</returns>
+        [Obsolete("Deprecated, please use regular ToArray() function.", true)]
         public Int16[] ToBassArray()
         {
             return new Int16[] { String0, String1, String2, String3, 0, 0 };
@@ -511,11 +508,11 @@ namespace RocksmithToolkitLib.Xml
             unchecked
             {
                 var hashCode = String0.GetHashCode();
-                hashCode = (hashCode*397) ^ String1.GetHashCode();
-                hashCode = (hashCode*397) ^ String2.GetHashCode();
-                hashCode = (hashCode*397) ^ String3.GetHashCode();
-                hashCode = (hashCode*397) ^ String4.GetHashCode();
-                hashCode = (hashCode*397) ^ String5.GetHashCode();
+                hashCode = (hashCode * 397) ^ String1.GetHashCode();
+                hashCode = (hashCode * 397) ^ String2.GetHashCode();
+                hashCode = (hashCode * 397) ^ String3.GetHashCode();
+                hashCode = (hashCode * 397) ^ String4.GetHashCode();
+                hashCode = (hashCode * 397) ^ String5.GetHashCode();
                 return hashCode;
             }
         }
@@ -555,13 +552,14 @@ namespace RocksmithToolkitLib.Xml
             var phrases = new SongPhrase[phraseList.Count];
             for (int i = 0; i < phraseList.Count; i++)
             {
-                var phrase = new SongPhrase();
-                //phrase.Disparity = 0;
-                //phrase.Ignore = 0;
-                phrase.MaxDifficulty = phraseList[i].MaxDifficulty;
-                phrase.Name = phraseList[i].Name;
-                phrase.Solo = (byte)(phraseList[i].Name.ToLower().Contains("solo") ? 1 : 0);
-                phrases[i] = phrase;
+                phrases[i] = new SongPhrase
+                {
+                    //Disparity = 0;
+                    //Ignore = 0;
+                    MaxDifficulty = phraseList[i].MaxDifficulty,
+                    Name = phraseList[i].Name,
+                    Solo = (byte)(phraseList[i].Name.ToLower().Contains("solo") ? 1 : 0)
+                };
             }
             return phrases;
         }
@@ -571,13 +569,14 @@ namespace RocksmithToolkitLib.Xml
             var phrases = new SongPhrase[sngPhraseSection.Count];
             for (int i = 0; i < sngPhraseSection.Count; i++)
             {
-                var phrase = new SongPhrase();
-                phrase.Disparity = sngPhraseSection.Phrases[i].Disparity;
-                phrase.Ignore = sngPhraseSection.Phrases[i].Ignore;
-                phrase.MaxDifficulty = sngPhraseSection.Phrases[i].MaxDifficulty;
-                phrase.Name = sngPhraseSection.Phrases[i].Name.ToNullTerminatedAscii();
-                phrase.Solo = sngPhraseSection.Phrases[i].Solo;
-                phrases[i] = phrase;
+                phrases[i] = new SongPhrase
+                {
+                    Disparity = sngPhraseSection.Phrases[i].Disparity,
+                    Ignore = sngPhraseSection.Phrases[i].Ignore,
+                    MaxDifficulty = sngPhraseSection.Phrases[i].MaxDifficulty,
+                    Name = sngPhraseSection.Phrases[i].Name.ToNullTerminatedAscii(),
+                    Solo = sngPhraseSection.Phrases[i].Solo
+                };
             }
             return phrases;
         }
@@ -626,13 +625,14 @@ namespace RocksmithToolkitLib.Xml
             var phraseProperties = new SongPhraseProperty[phraseExtraInfoByLevelSection.Count];
             for (var i = 0; i < phraseExtraInfoByLevelSection.Count; i++)
             {
-                var spp = new SongPhraseProperty();
-                spp.PhraseId = phraseExtraInfoByLevelSection.PhraseExtraInfoByLevel[i].PhraseId;
-                spp.Redundant = phraseExtraInfoByLevelSection.PhraseExtraInfoByLevel[i].Redundant;
-                spp.LevelJump = phraseExtraInfoByLevelSection.PhraseExtraInfoByLevel[i].LevelJump;
-                spp.Empty = phraseExtraInfoByLevelSection.PhraseExtraInfoByLevel[i].Empty;
-                spp.Difficulty = phraseExtraInfoByLevelSection.PhraseExtraInfoByLevel[i].Difficulty;
-                phraseProperties[i] = spp;
+                phraseProperties[i] = new SongPhraseProperty
+                {
+                    PhraseId = phraseExtraInfoByLevelSection.PhraseExtraInfoByLevel[i].PhraseId,
+                    Redundant = phraseExtraInfoByLevelSection.PhraseExtraInfoByLevel[i].Redundant,
+                    LevelJump = phraseExtraInfoByLevelSection.PhraseExtraInfoByLevel[i].LevelJump,
+                    Empty = phraseExtraInfoByLevelSection.PhraseExtraInfoByLevel[i].Empty,
+                    Difficulty = phraseExtraInfoByLevelSection.PhraseExtraInfoByLevel[i].Difficulty
+                };
             }
             return phraseProperties;
         }

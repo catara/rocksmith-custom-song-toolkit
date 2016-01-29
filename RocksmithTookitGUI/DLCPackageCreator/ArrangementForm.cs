@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
 using System.IO;
+using System.Xml.Linq;
 using RocksmithToolkitLib.DLCPackage;
 using RocksmithToolkitLib.DLCPackage.AggregateGraph;
 using RocksmithToolkitLib.DLCPackage.Manifest2014.Tone;
@@ -25,6 +26,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
         private GameVersion currentGameVersion;
         public bool EditMode = false;
         private bool bassFix = false;
+        private ToolTip tt = new ToolTip();
 
         public Arrangement Arrangement
         {
@@ -39,7 +41,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 //Song XML File
                 XmlFilePath.Text = _arrangement.SongXml.File;
 
-                //Arrangment Information
+                //Arrangement Information
                 arrangementTypeCombo.SelectedItem = _arrangement.ArrangementType;
                 arrangementNameCombo.SelectedItem = _arrangement.Name;
                 if (!String.IsNullOrEmpty(_arrangement.Tuning))
@@ -284,7 +286,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
 
             // TODO: figure out logic behind unexpected LINQ behaviors
             // tuningComboBox list is being updated with custom tuning info
-            // so refilling the combobox is required to produce the expected results
+            // so refilling the combo-box is required to produce the expected results
             // for now using old fashioned non-LINQ method
             FillTuningCombo(selectedType, currentGameVersion);
 
@@ -424,11 +426,19 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             // If have ToneBase and ToneB is setup it's because auto tone are setup in EoF, so, disable edit to prevent errors.
             disableTonesCheckbox.Checked = (!String.IsNullOrEmpty(arr.ToneBase) && !String.IsNullOrEmpty(arr.ToneB));
             if (disableTonesCheckbox.Checked && !EditMode)
-                disableTonesCheckbox.Enabled = false;
+            {
+                // disableTonesCheckbox.Enabled = false;
+                tt.IsBalloon = true;
+                tt.AutoPopDelay = 9000; // tt remains visible if the point is stationary
+                tt.InitialDelay = 100; // time that passes before tt appears
+                tt.ReshowDelay = 100; // time before next tt window appears
+                tt.ShowAlways = true; // force tt display even if parent is not active
+                tt.SetToolTip(disableTonesCheckbox, "For Toolkit Expert Use Only");
+            }
         }
 
         private void SequencialToneComboEnabling()
-        {//TODO: handle not one-by-one enabilng disabling tone slots and use data from enabled one, confused about this one.
+        {//TODO: handle not one-by-one enabling disabling tone slots and use data from enabled one, confused about this one.
             if (currentGameVersion != GameVersion.RS2012)
             {
                 toneBCombo.Enabled = !String.IsNullOrEmpty((string)toneACombo.SelectedItem) && toneACombo.SelectedIndex > 0;
@@ -504,7 +514,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                     {
                         MessageBox.Show(@"Unable to get information from XML arrangement:  " + Environment.NewLine +
                             Path.GetFileName(xmlFilePath) + Environment.NewLine +
-                            @"It may not be a valid arrangment or " + Environment.NewLine +
+                            @"It may not be a valid arrangement or " + Environment.NewLine +
                             @"your version of the EOF may be out of date." + Environment.NewLine +
                             ex.Message, DLCPackageCreator.MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return false;
@@ -585,20 +595,20 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                                 arrangementNameCombo.SelectedItem = ArrangementName.Rhythm;
                                 if (currentGameVersion != GameVersion.RS2012) RouteMask = RouteMask.Rhythm;
                             }
-
                         }
                         else if (arr.Contains("bass"))
                         {
                             arrangementTypeCombo.SelectedItem = ArrangementType.Bass;
-
-                            //SetTuningCombo(xmlSong.Tuning, true);
                             Picked.Checked = Equals(xmlSong.ArrangementProperties.BassPick, 1);
+
                             if (currentGameVersion != GameVersion.RS2012)
                             {
                                 RouteMask = RouteMask.Bass;
-                                //Low tuning fix for bass, If lowstring is B and bass fix not applied
+                                //Low tuning fix for bass, If lowest string is B and bass fix not applied
                                 if (xmlSong.Tuning.String0 < -4 && this.frequencyTB.Text == "440")
-                                    bassFix |= MessageBox.Show("Your tuning is too low, would you like to apply \"Low Tuning Fix?\"\n" + "Note, that this won't work if you re-save arangement in EOF.\n", "Low Tuning Fix Required!", MessageBoxButtons.YesNo) == DialogResult.Yes;
+                                    bassFix |= MessageBox.Show("The bass tuning may be too low.  Apply Low Bass Tuning Fix?" + Environment.NewLine +
+                                                               "Note: The fix will revert if bass arrangement is re-saved in EOF.  ",
+                                                               "Warning ... Low Bass Tuning", MessageBoxButtons.YesNo) == DialogResult.Yes;
                             }
                         }
                     }
@@ -612,15 +622,31 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                         Arrangement.ToneC = xmlSong.ToneC;
                         Arrangement.ToneD = xmlSong.ToneD;
                         Arrangement.ToneMultiplayer = null;
-
                         SetupTones(Arrangement);
 
-                        //Apply bass Fix, refactor me. 
+                        // Fix Low Bass Tuning
                         if (bassFix)
                         {
                             bassFix = false;
                             Arrangement.SongXml.File = XmlFilePath.Text;
-                            parentControl.ApplyBassFix(Arrangement);
+
+                            if (Arrangement.TuningStrings == null)
+                            {
+                                // need to load tuning here from the xml arrangement
+                                Arrangement.TuningStrings = new TuningStrings();
+                                Arrangement.TuningStrings = xmlSong.Tuning;
+                            }
+
+                            if (!TuningFrequency.ApplyBassFix(Arrangement))
+                                MessageBox.Show("This bass arrangement is already at 220Hz pitch.  ", DLCPackageCreator.MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            else
+                            {
+                                var commentsList = Arrangement.XmlComments.ToList();
+                                commentsList.Add(new XComment("Low Bass Tuning Fixed"));
+                                Arrangement.XmlComments = commentsList;
+                            }
+
+                            xmlSong.Tuning = Arrangement.TuningStrings;
                         }
                     }
 
@@ -647,27 +673,31 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                     }
 
                     if (foundTuning == -1 && selectedType != ArrangementType.Bass)
-                        ShowTuningForm(selectedType, new TuningDefinition { Tuning = xmlSong.Tuning, Custom = true, GameVersion = currentGameVersion });
-                    else
                     {
-                        if (selectedType == ArrangementType.Bass)
-                        {
-                            MessageBox.Show(@"Remember to set the correct tuning using Edit for" + Environment.NewLine +
-                                @"Bass Arrangement: " + Path.GetFileName(xmlFilePath),
-                                DLCPackageCreator.MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        tuningComboBox.SelectedIndex = 0;
+                        ShowTuningForm(selectedType, new TuningDefinition { Tuning = xmlSong.Tuning, Custom = true, GameVersion = currentGameVersion });
+                    }
 
-                            tuningComboBox.SelectedIndex = 0;
-                        }
-                        else
-                            tuningComboBox.SelectedIndex = foundTuning;
+                    // E Standard, Drop D, and Open E tuning are now the same for both guitar and bass
+                    if (foundTuning == -1 && selectedType == ArrangementType.Bass)
+                    {
+                        tuningComboBox.SelectedIndex = 0;
+                        MessageBox.Show("Toolkit was not able to automatically set tuning for" + Environment.NewLine +
+                                        "Bass Arrangement: " + Path.GetFileName(xmlFilePath) + Environment.NewLine +
+                                        "Use the tuning selector dropdown or Tuning Editor" + Environment.NewLine +
+                                        "to customize bass tuning (as defined for six strings).  ", DLCPackageCreator.MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
 
                     tuningComboBox.Refresh();
-
                     Arrangement.Tuning = tuningComboBox.SelectedItem.ToString();
                     Arrangement.TuningStrings = xmlSong.Tuning;
                     Arrangement.CapoFret = xmlSong.Capo;
                     frequencyTB.Text = Arrangement.TuningPitch.ToString();
+
+                    // bastard bass hack
+                    if (Arrangement.Tuning.ToLower().Contains("fixed"))
+                        frequencyTB.Text = "220";
+
                     UpdateCentOffset();
 
                     // save converted RS1 to RS2014 Song2014 XML
@@ -690,7 +720,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             {
                 MessageBox.Show(@"Unable to get information from XML arrangement:  " + Environment.NewLine +
                     Path.GetFileName(xmlFilePath) + Environment.NewLine +
-                    @"It may not be a valide arrangment or " + Environment.NewLine +
+                    @"It may not be a valid arrangement or " + Environment.NewLine +
                     @"your version of the EOF may be out of date." + Environment.NewLine +
                     ex.Message, DLCPackageCreator.MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
@@ -732,6 +762,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             Arrangement.SongXml.File = xmlfilepath;
 
             // SONG INFO
+            // TODO: get song info from json or hsan file (would be better than from xml)
             if (!ReferenceEquals(xmlSong, null))
             {
                 if (String.IsNullOrEmpty(parentControl.SongTitle)) parentControl.SongTitle = xmlSong.Title ?? String.Empty;
@@ -741,7 +772,17 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 if (String.IsNullOrEmpty(parentControl.ArtistSort)) parentControl.ArtistSort = xmlSong.ArtistNameSort.GetValidSortName() ?? parentControl.Artist.GetValidSortName();
                 if (String.IsNullOrEmpty(parentControl.Album)) parentControl.Album = xmlSong.AlbumName ?? String.Empty;
                 if (String.IsNullOrEmpty(parentControl.AlbumYear)) parentControl.AlbumYear = xmlSong.AlbumYear ?? String.Empty;
-                if (String.IsNullOrEmpty(parentControl.DLCName)) parentControl.DLCName = parentControl.Artist.Acronym() + parentControl.SongTitleSort;
+                if (String.IsNullOrEmpty(parentControl.DLCKey)) parentControl.DLCKey = String.Format("{0}{1}", parentControl.Artist.Acronym(), parentControl.SongTitle).GetValidDlcKey(parentControl.SongTitle);
+
+                if (String.IsNullOrEmpty(parentControl.AlbumSort))
+                {
+                    // substitute package author for AlbumSort
+                    var useDefaultAuthor = ConfigRepository.Instance().GetBoolean("creator_usedefaultauthor");
+                    if (useDefaultAuthor && currentGameVersion == GameVersion.RS2014)
+                        parentControl.AlbumSort = ConfigRepository.Instance()["general_defaultauthor"].Trim().GetValidSortName();
+                    else
+                        parentControl.AlbumSort = xmlSong.AlbumNameSort.GetValidSortName() ?? parentControl.Album.GetValidSortName();
+                }
             }
 
             //Arrangment Information

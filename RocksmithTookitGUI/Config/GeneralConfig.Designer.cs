@@ -28,8 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.general_usebeta = new System.Windows.Forms.CheckBox();
             this.gbCreator = new System.Windows.Forms.GroupBox();
+            this.creator_usedefaultauthor = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.creator_scrollspeed = new RocksmithToolkitGUI.DLCPackageCreator.NumericUpDownFixed();
             this.label1 = new System.Windows.Forms.Label();
@@ -70,6 +72,7 @@
             this.label8 = new System.Windows.Forms.Label();
             this.converter_source = new System.Windows.Forms.ComboBox();
             this.closeConfigButton = new System.Windows.Forms.Button();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.gbCreator.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.creator_scrollspeed)).BeginInit();
@@ -95,6 +98,7 @@
             // 
             // gbCreator
             // 
+            this.gbCreator.Controls.Add(this.creator_usedefaultauthor);
             this.gbCreator.Controls.Add(this.groupBox1);
             this.gbCreator.Controls.Add(this.label3);
             this.gbCreator.Controls.Add(this.creator_useacronyms);
@@ -109,6 +113,21 @@
             this.gbCreator.TabIndex = 0;
             this.gbCreator.TabStop = false;
             this.gbCreator.Text = "DLC Creator";
+            // 
+            // creator_usedefaultauthor
+            // 
+            this.creator_usedefaultauthor.AutoSize = true;
+            this.creator_usedefaultauthor.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.creator_usedefaultauthor.Location = new System.Drawing.Point(298, 63);
+            this.creator_usedefaultauthor.Name = "creator_usedefaultauthor";
+            this.creator_usedefaultauthor.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.creator_usedefaultauthor.Size = new System.Drawing.Size(209, 17);
+            this.creator_usedefaultauthor.TabIndex = 46;
+            this.creator_usedefaultauthor.Text = "Album Sort defaults to Package Author";
+            this.toolTip.SetToolTip(this.creator_usedefaultauthor, "If check the configuration Package Author\r\nwill be used by default for the Album " +
+                    "Sort\r\ntextbox field in the Creator GUI.");
+            this.creator_usedefaultauthor.UseVisualStyleBackColor = true;
+            this.creator_usedefaultauthor.Leave += new System.EventHandler(this.ConfigurationChanged);
             // 
             // groupBox1
             // 
@@ -207,6 +226,7 @@
             this.creator_structured.Size = new System.Drawing.Size(158, 17);
             this.creator_structured.TabIndex = 12;
             this.creator_structured.Text = "Import Structured Packages";
+            this.toolTip.SetToolTip(this.creator_structured, "If checked creates user friendly\r\nEOF and Toolkit artifact folders.");
             this.creator_structured.UseVisualStyleBackColor = true;
             this.creator_structured.Leave += new System.EventHandler(this.ConfigurationChanged);
             // 
@@ -224,6 +244,7 @@
             // general_defaultappid_RS2012
             // 
             this.general_defaultappid_RS2012.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.general_defaultappid_RS2012.DropDownWidth = 320;
             this.general_defaultappid_RS2012.ForeColor = System.Drawing.SystemColors.ControlText;
             this.general_defaultappid_RS2012.Location = new System.Drawing.Point(122, 16);
             this.general_defaultappid_RS2012.Margin = new System.Windows.Forms.Padding(2);
@@ -273,7 +294,7 @@
             // 
             // general_wwisepath
             // 
-            this.general_wwisepath.Cue = "Wwise v2013.2.x build 48xx path (must be this build series)";
+            this.general_wwisepath.Cue = "Wwise v2013.2.x v2014.1.x or 2015.1.x build series";
             this.general_wwisepath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.general_wwisepath.ForeColor = System.Drawing.Color.Gray;
             this.general_wwisepath.Location = new System.Drawing.Point(122, 160);
@@ -348,7 +369,7 @@
             // 
             // general_rs2014path
             // 
-            this.general_rs2014path.Cue = "Rocksmith 2014 path";
+            this.general_rs2014path.Cue = "Rocksmith 2014 Path";
             this.general_rs2014path.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.general_rs2014path.ForeColor = System.Drawing.Color.Gray;
             this.general_rs2014path.Location = new System.Drawing.Point(122, 136);
@@ -364,13 +385,13 @@
             this.label11.Location = new System.Drawing.Point(11, 139);
             this.label11.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(111, 13);
+            this.label11.Size = new System.Drawing.Size(112, 13);
             this.label11.TabIndex = 50;
-            this.label11.Text = "Rocksmith 2014 path:";
+            this.label11.Text = "Rocksmith 2014 Path:";
             // 
             // general_rs1path
             // 
-            this.general_rs1path.Cue = "Rocksmith path";
+            this.general_rs1path.Cue = "Rocksmith Path";
             this.general_rs1path.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.general_rs1path.ForeColor = System.Drawing.Color.Gray;
             this.general_rs1path.Location = new System.Drawing.Point(122, 110);
@@ -386,9 +407,9 @@
             this.label10.Location = new System.Drawing.Point(11, 112);
             this.label10.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(84, 13);
+            this.label10.Size = new System.Drawing.Size(85, 13);
             this.label10.TabIndex = 48;
-            this.label10.Text = "Rocksmith path:";
+            this.label10.Text = "Rocksmith Path:";
             // 
             // label9
             // 
@@ -403,7 +424,7 @@
             // 
             // general_defaultauthor
             // 
-            this.general_defaultauthor.Cue = "Author";
+            this.general_defaultauthor.Cue = "Package Author (Charter)";
             this.general_defaultauthor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.general_defaultauthor.ForeColor = System.Drawing.Color.Gray;
             this.general_defaultauthor.Location = new System.Drawing.Point(122, 67);
@@ -426,6 +447,7 @@
             // general_defaultappid_RS2014
             // 
             this.general_defaultappid_RS2014.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.general_defaultappid_RS2014.DropDownWidth = 320;
             this.general_defaultappid_RS2014.ForeColor = System.Drawing.SystemColors.ControlText;
             this.general_defaultappid_RS2014.Location = new System.Drawing.Point(122, 41);
             this.general_defaultappid_RS2014.Margin = new System.Windows.Forms.Padding(2);
@@ -613,13 +635,20 @@
             // 
             this.closeConfigButton.BackColor = System.Drawing.Color.LightSteelBlue;
             this.closeConfigButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.closeConfigButton.Location = new System.Drawing.Point(404, 435);
+            this.closeConfigButton.Location = new System.Drawing.Point(402, 435);
             this.closeConfigButton.Name = "closeConfigButton";
             this.closeConfigButton.Size = new System.Drawing.Size(116, 29);
             this.closeConfigButton.TabIndex = 0;
             this.closeConfigButton.Text = "Close";
             this.closeConfigButton.UseVisualStyleBackColor = false;
             this.closeConfigButton.Click += new System.EventHandler(this.closeConfigButton_Click);
+            // 
+            // toolTip
+            // 
+            this.toolTip.AutomaticDelay = 100;
+            this.toolTip.AutoPopDelay = 8000;
+            this.toolTip.InitialDelay = 100;
+            this.toolTip.ReshowDelay = 100;
             // 
             // GeneralConfig
             // 
@@ -630,7 +659,7 @@
             this.Controls.Add(this.gbGeneral);
             this.Controls.Add(this.gbCreator);
             this.Name = "GeneralConfig";
-            this.Size = new System.Drawing.Size(521, 505);
+            this.Size = new System.Drawing.Size(521, 477);
             this.gbCreator.ResumeLayout(false);
             this.gbCreator.PerformLayout();
             this.groupBox1.ResumeLayout(false);
@@ -693,5 +722,7 @@
         private System.Windows.Forms.Button WwisePathButton;
         private CueTextBox general_wwisepath;
         private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.CheckBox creator_usedefaultauthor;
+        private System.Windows.Forms.ToolTip toolTip;
     }
 }

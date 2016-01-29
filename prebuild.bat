@@ -3,10 +3,14 @@ setlocal enabledelayedexpansion
 
 if errorlevel 1 goto BuildEventFailed
 
+set batchpath=%~dp0
+echo Current batch path: %batchpath%
+cd %batchpath%
+
 set solution=%~1
 set toolkitver=%~2
-::echo Solution Path: %solution%
-::echo Toolkit Version Path: %toolkitver%
+echo Solution Path from Command Line: %solution%
+echo Toolkit Version Path from Command Line: %toolkitver%
 
 if "%solution%"=="" (
 set solution=.\
@@ -21,10 +25,10 @@ set toolkitverdist=%toolkitver%_dist
 echo solution %solution%
 echo toolkitver %toolkitver%
 echo toolkitverdist %toolkitverdist%
-::echo Copying %toolkitverdist% 
-::echo To %toolkitver%
-::Copy /v %toolkitverdist% %toolkitver%
+echo Copying %toolkitverdist% 
+echo To %toolkitver%
 
+copy %toolkitverdist% %toolkitver%
 
 echo Checking .git\HEAD exists ...
 :: fancy way to get to git commit version which
@@ -35,7 +39,11 @@ if exist %solution%\.git\HEAD (
 	set /p head=<"%solution%\.git\HEAD"
 	if "!head:~0,4!" == "ref:" (
 		set master=.git\!head:~5!
+<<<<<<< HEAD
  		if exist "%solution%\.git\!head:~5!" set /p commit=<"%solution%\.git\!head:~5!"
+=======
+		if exist "%solution%\.git\!head:~5!" set /p commit=<"%solution%\.git\!head:~5!"
+>>>>>>> refs/remotes/rscustom/master
 	) else (
 		set commit=!head!
 	)
@@ -43,8 +51,13 @@ if exist %solution%\.git\HEAD (
 		echo Found commit: !commit!
 		set newrev=!commit:~0,8!
 		echo newrev !newrev!
+<<<<<<< HEAD
                 for %%a in (%solution%!master!) do set newrevdate=%%~ta
                 echo newrevdate !newrevdate!
+=======
+				for %%a in (%solution%!master!) do set newrevdate=%%~ta
+				echo newrevdate !newrevdate!
+>>>>>>> refs/remotes/rscustom/master
 	) else echo Unable to find commit ...
 )
 

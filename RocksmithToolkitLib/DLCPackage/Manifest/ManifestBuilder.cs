@@ -23,7 +23,7 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest
             Manifest = new Manifest();
         }
 
-        public string GenerateManifest(string dlcName, IList<Arrangement> arrangements, SongInfo songInfo, Platform platform)
+        public string GenerateManifest(string dlcKey, IList<Arrangement> arrangements, SongInfo songInfo, Platform platform)
         {
             var manifest = Manifest;
             manifest.Entries = new Dictionary<string, Dictionary<string, Attributes>>();
@@ -43,6 +43,7 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest
 
                 var attribute = new Attributes();
                 attribute.AlbumArt = String.Format("urn:llid:{0}", AggregateGraph.AlbumArt.LLID);
+                // TODO: add better AlbumNameSort feature
                 attribute.AlbumNameSort = attribute.AlbumName = songInfo.Album;
                 attribute.ArrangementName = x.Name.ToString();
                 attribute.ArtistName = songInfo.Artist;
@@ -56,7 +57,7 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest
                 attribute.DisplayName = songInfo.SongDisplayName;
                 attribute.DLCPreview = false;
                 attribute.EffectChainMultiplayerName = string.Empty;
-                attribute.EffectChainName = isVocal ? "" : (dlcName + "_" + x.ToneBase == null ? "Default" : x.ToneBase.Replace(' ', '_'));
+                attribute.EffectChainName = isVocal ? "" : (dlcKey + "_" + x.ToneBase == null ? "Default" : x.ToneBase.Replace(' ', '_'));
                 attribute.EventFirstTimeSortOrder = 9999;
                 attribute.ExclusiveBuild = new List<object>();
                 attribute.FirstArrangementInSong = false;
@@ -86,8 +87,8 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest
                 attribute.Sections = new List<Section>();
                 attribute.Shipping = true;
                 attribute.SongAsset = String.Format("urn:llid:{0}", x.SongFile.LLID);
-                attribute.SongEvent = String.Format("Play_{0}", dlcName);
-                attribute.SongKey = dlcName;
+                attribute.SongEvent = String.Format("Play_{0}", dlcKey);
+                attribute.SongKey = dlcKey;
                 attribute.SongLength = 0;
                 attribute.SongName = songInfo.SongDisplayName;
                 attribute.SongNameSort = songInfo.SongDisplayNameSort;

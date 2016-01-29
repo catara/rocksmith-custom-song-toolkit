@@ -22,7 +22,7 @@ namespace RocksmithToolkitGUI.DLCConverter
 {
     public partial class DLCConverter : UserControl
     {
-        private const string MESSAGEBOX_CAPTION = "DLC Converter";
+        private const string MESSAGEBOX_CAPTION = "CDLC Converter";
         private BackgroundWorker bwConvert;
         private StringBuilder errorsFound;
 
@@ -39,7 +39,7 @@ namespace RocksmithToolkitGUI.DLCConverter
         {
             if (platformSourceCombo.Items.Count > 0)
                 SourcePlatform = new Platform(platformSourceCombo.SelectedItem.ToString(), GameVersion.RS2014.ToString());
-            else 
+            else
                 SourcePlatform = new Platform(GamePlatform.None, GameVersion.None);
         }
 
@@ -50,7 +50,7 @@ namespace RocksmithToolkitGUI.DLCConverter
         {
             if (platformTargetCombo.Items.Count > 0)
                 TargetPlatform = new Platform(platformTargetCombo.SelectedItem.ToString(), GameVersion.RS2014.ToString());
-            else 
+            else
                 TargetPlatform = new Platform(GamePlatform.None, GameVersion.None);
         }
 
@@ -74,7 +74,7 @@ namespace RocksmithToolkitGUI.DLCConverter
                 platformTargetCombo.DataSource = targetPlatform;
                 platformTargetCombo.SelectedItem = ConfigRepository.Instance()["converter_target"];
 
-                // Fill App ID
+                // Fill AppID
                 PopulateAppIdCombo(GameVersion.RS2014); //Supported game version
                 AppIdVisibilty();
             } catch { /*For mono compatibility*/ }
@@ -103,7 +103,7 @@ namespace RocksmithToolkitGUI.DLCConverter
                         );
                     else
                         MessageBox.Show(
-                            String.Format("DLC was converted from '{2}' to '{3}' with erros. See below: {0}{1}{0}", Environment.NewLine, errorsFound.ToString(), SourcePlatform.platform, TargetPlatform.platform), MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning
+                            String.Format("DLC was converted from '{2}' to '{3}' with errors. See below: {0}{1}{0}", Environment.NewLine, errorsFound.ToString(), SourcePlatform.platform, TargetPlatform.platform), MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning
                         );
                     convertButton.Enabled = true;
                     Parent.Focus();

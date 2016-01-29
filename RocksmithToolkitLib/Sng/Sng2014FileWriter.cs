@@ -39,6 +39,7 @@ namespace RocksmithToolkitLib.Sng2014HSL
                 songXml.Tuning.String4,
                 songXml.Tuning.String5,
             };
+
             parseEbeats(songXml, sngFile);
             parsePhrases(songXml, sngFile);
             parseChords(songXml, sngFile, tuning, songXml.Arrangement == "Bass");
@@ -190,8 +191,7 @@ namespace RocksmithToolkitLib.Sng2014HSL
             sng.Metadata.Part = xml.Part;
             sng.Metadata.SongLength = xml.SongLength;
             sng.Metadata.StringCount = 6;
-            sng.Metadata.Tuning = new Int16[sng.Metadata.StringCount];
-            sng.Metadata.Tuning = tuning;
+            sng.Metadata.Tuning = tuning ?? new Int16[sng.Metadata.StringCount];
             // calculated when parsing arrangements
             sng.Metadata.Unk11_FirstNoteTime = first_note_time;
             sng.Metadata.Unk12_FirstNoteTime = first_note_time;
@@ -309,7 +309,7 @@ namespace RocksmithToolkitLib.Sng2014HSL
                         break;
                     }
                 }
-                // TODO need to figure out which masks are not applied
+                // TODO: need to figure out which masks are not applied
                 c.NoteMask[i] = parseNoteMask(n, false);
                 c.BendData[i] = new BendData();
                 c.BendData[i].BendData32 = parseBendData(n, false);
@@ -422,7 +422,7 @@ namespace RocksmithToolkitLib.Sng2014HSL
             {
                 var nld = xml.NewLinkedDiff[i];
                 var n = new NLinkedDifficulty();
-                // TODO Ratio attribute unused?
+                // TODO: Ratio attribute unused?
                 n.LevelBreak = nld.LevelBreak;
                 n.PhraseCount = nld.PhraseCount;
                 n.NLD_Phrase = new Int32[n.PhraseCount];
@@ -502,7 +502,7 @@ namespace RocksmithToolkitLib.Sng2014HSL
                 }
                 catch (Exception)
                 {
-                    throw new InvalidDataException(@"There is tone name error in XML Arrangment: " + xml.Arrangement + "  " + tn.Name + " is not properly defined." + "Use EOF to reauthor custom tones or Notepad to attempt manual repair." );
+                    throw new InvalidDataException(@"There is tone name error in XML Arrangement: " + xml.Arrangement + "  " + tn.Name + " is not properly defined." + "Use EOF to re-author custom tones or Notepad to attempt manual repair." );
                 }
             }
         }
@@ -653,7 +653,7 @@ namespace RocksmithToolkitLib.Sng2014HSL
             if (note.Harmonic != 0)
                 mask |= CON.NOTE_MASK_HARMONIC;
 
-            // TODO seems to have no effect
+            // TODO: seems to have no effect
             // hopo = 0
 
             if (single && note.Ignore != 0)
@@ -679,7 +679,7 @@ namespace RocksmithToolkitLib.Sng2014HSL
             if (note.HarmonicPinch != 0)
                 mask |= CON.NOTE_MASK_PINCHHARMONIC;
 
-            // TODO seems to have no effect
+            // TODO: seems to have no effect
             // pickDirection = 0
 
             if (note.RightHand != -1)
@@ -720,7 +720,7 @@ namespace RocksmithToolkitLib.Sng2014HSL
             n.SlideTo = unchecked((Byte)note.SlideTo);
             n.SlideUnpitchTo = unchecked((Byte)note.SlideUnpitchTo);
             n.LeftHand = unchecked((Byte)note.LeftHand);
-            // bvibrato and rchords8 are using 0 value but without TAP mask
+            // 'bvibrato' and 'rchords8' are using 0 value but without TAP mask
             if (note.Tap != 0)
                 n.Tap = unchecked((Byte)note.Tap);
             else
@@ -760,7 +760,7 @@ namespace RocksmithToolkitLib.Sng2014HSL
                 n.NoteMask |= CON.NOTE_MASK_IGNORE;
             if (chord.PalmMute != 0)
                 n.NoteMask |= CON.NOTE_MASK_PALMMUTE;
-            // TODO does not seem to have a mask or any effect
+            // TODO: does not seem to have a mask or any effect
             // if (chord.Hopo != 0)
             //     n.NoteMask |= ;
 
@@ -885,9 +885,9 @@ namespace RocksmithToolkitLib.Sng2014HSL
                     else
                         // last phrase iteration = noguitar/end
                         anchor.EndBeatTime = xml.PhraseIterations[xml.PhraseIterations.Length - 1].Time;
-                    // TODO not 100% clear
+                    // TODO: not 100% clear
                     // times will be updated later
-                    // these garbage values are only in interactive lessons?
+                    // these "garbage" values are everywhere!
                     //anchor.Unk3_FirstNoteTime = (float) 3.4028234663852886e+38;
                     //anchor.Unk4_LastNoteTime = (float) 1.1754943508222875e-38;
                     anchor.FretId = (byte)level.Anchors[j].Fret;
@@ -910,18 +910,18 @@ namespace RocksmithToolkitLib.Sng2014HSL
                 // Fingerprints2 is for handshapes with "arp" displayName
                 a.Fingerprints2 = new FingerprintSection();
 
-                List<Fingerprint> fp1 = new List<Fingerprint>();
-                List<Fingerprint> fp2 = new List<Fingerprint>();
+                var fp1 = new List<Fingerprint>();
+                var fp2 = new List<Fingerprint>();
                 foreach (var h in level.HandShapes)
                 {
-                    var fp = new Fingerprint();
-                    fp.ChordId = h.ChordId;
-                    fp.StartTime = h.StartTime;
-                    fp.EndTime = h.EndTime;
-                    // TODO not always StartTime
+                    if (h.ChordId < 0) continue;
+                    var fp = new Fingerprint
+                    {
+                        ChordId = h.ChordId, StartTime = h.StartTime, EndTime = h.EndTime
+                    // TODO: not always StartTime
                     //fp.Unk3_FirstNoteTime = fp.StartTime;
                     //fp.Unk4_LastNoteTime = fp.StartTime;
-                    if (fp.ChordId < 0) continue;
+                    };
 
                     if (xml.ChordTemplates[fp.ChordId].DisplayName.EndsWith("arp"))
                         fp2.Add(fp);
@@ -1016,12 +1016,12 @@ namespace RocksmithToolkitLib.Sng2014HSL
 
                 foreach (var n in notes)
                 {
-                    for (Int16 id = 0; id < fp1.Count; id++)
+                    for (Int16 id = 0; id < fp1.Count; id++) //FingerPrints 1st level (common handshapes?)
                         if (n.Time >= fp1[id].StartTime && n.Time < fp1[id].EndTime)
                         {
                             n.FingerPrintId[0] = id;
-                            // add STRUM to chords
-                            if (fp1[id].StartTime == n.Time && n.ChordId != -1)
+                            // add STRUM to chords if highDensity = 0
+                            if (n.ChordId != -1 && (n.NoteMask & CON.NOTE_MASK_HIGHDENSITY) != CON.NOTE_MASK_HIGHDENSITY)
                                 n.NoteMask |= CON.NOTE_MASK_STRUM;
                             if (fp1[id].Unk3_FirstNoteTime == 0)
                                 fp1[id].Unk3_FirstNoteTime = n.Time;
@@ -1032,7 +1032,7 @@ namespace RocksmithToolkitLib.Sng2014HSL
                             fp1[id].Unk4_LastNoteTime = n.Time + sustain;
                             break;
                         }
-                    for (Int16 id = 0; id < fp2.Count; id++)
+                    for (Int16 id = 0; id < fp2.Count; id++) //FingerPrints 2nd level (used for -arp(eggio) handshapes)
                         if (n.Time >= fp2[id].StartTime && n.Time < fp2[id].EndTime)
                         {
                             n.FingerPrintId[1] = id;
@@ -1066,7 +1066,7 @@ namespace RocksmithToolkitLib.Sng2014HSL
                         }
                 }
 
-                // initialize times for empty anchors, based on lrocknroll
+                // initialize times for empty anchors, based on 'lrocknroll'
                 foreach (var anchor in a.Anchors.Anchors)
                     if (anchor.Unk3_FirstNoteTime == 0)
                     {
@@ -1112,13 +1112,13 @@ namespace RocksmithToolkitLib.Sng2014HSL
                     if (n.Time != p.Time) prvnote = 1;
                     else
                     {
-                        for (int x = 1; x < (a.Notes.Notes.Length); x++) //search up till the begining of iteration 
+                        for (int x = 1; x < (a.Notes.Notes.Length); x++) //search up till the beginning of iteration 
                         {
-                            if (j - x < 1) //dont search past the first note in iteration
+                            if (j - x < 1) //don't search past the first note in iteration
                             {
                                 prvnote = x;
                                 x = a.Notes.Notes.Length + 2;
-                                break; // stop searching for a match we reached the begining
+                                break; // stop searching for a match we reached the beginning
                             }
                             var prv = a.Notes.Notes[j - x]; // get the info for the note we are checking against
                             if (prv.Time != n.Time)
@@ -1129,14 +1129,14 @@ namespace RocksmithToolkitLib.Sng2014HSL
                                     //check if its a chord
                                     prvnote = x;
                                     x = a.Notes.Notes.Length + 2;
-                                    break; //stop here, its a chord so dont need to check the strings
+                                    break; //stop here, its a chord so don't need to check the strings
                                 }
                                 if (prv.StringIndex == n.StringIndex)
                                 {
                                     //check to see if we are looking at the same string
                                     prvnote = x;
                                     x = a.Notes.Notes.Length + 2;
-                                    break; //stop here we found the same string, at a differnt timestamp, thats not a chord
+                                    break; //stop here we found the same string, at a different timestamp, thats not a chord
                                 }
                             }
                         }

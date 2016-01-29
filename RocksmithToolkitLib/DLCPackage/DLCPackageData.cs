@@ -33,11 +33,12 @@ namespace RocksmithToolkitLib.DLCPackage
         public bool PS3 { get; set; }
         public bool Showlights { get; set; }
         public string AppId { get; set; }
-        public string Name { get; set; }
+        public string DLCKey { get; set; } // aka SongKey
         public SongInfo SongInfo { get; set; }
         public string AlbumArtPath { get; set; }
         public string OggPath { get; set; }
         public string OggPreviewPath { get; set; }
+        public decimal OggQuality { get; set; }
         public List<Arrangement> Arrangements { get; set; }
         public float Volume { get; set; }
         public PackageMagic SignatureType { get; set; }
@@ -104,7 +105,7 @@ namespace RocksmithToolkitLib.DLCPackage
             data.SongInfo.SongYear = (attr.FirstOrDefault().SongYear == 0 ? 2012 : attr.FirstOrDefault().SongYear);
             data.SongInfo.Artist = attr.FirstOrDefault().ArtistName;
             data.SongInfo.ArtistSort = attr.FirstOrDefault().ArtistNameSort;
-            data.Name = attr.FirstOrDefault().SongKey;
+            data.DLCKey = attr.FirstOrDefault().SongKey;
 
             //Load tone manifest, even poorly formed tone_bass.manifest.json
             var toneManifestJson = Directory.GetFiles(unpackedDir, "*tone*.manifest.json", SearchOption.AllDirectories);
@@ -144,9 +145,9 @@ namespace RocksmithToolkitLib.DLCPackage
             data.Tones = tones;
 
             // Load AggregateGraph.nt 
-            var songDir = Path.Combine(unpackedDir, data.Name);
+            var songDir = Path.Combine(unpackedDir, data.DLCKey);
             if (targetPlatform.platform == GamePlatform.XBox360)
-                songDir = Path.Combine(unpackedDir, "Root", data.Name);
+                songDir = Path.Combine(unpackedDir, "Root", data.DLCKey);
 
             var aggFile = Directory.GetFiles(songDir, "*.nt", SearchOption.TopDirectoryOnly)[0];
             var aggGraphData = AggregateGraph.AggregateGraph.ReadFromFile(aggFile);
@@ -167,7 +168,7 @@ namespace RocksmithToolkitLib.DLCPackage
 
             foreach (var xmlFile in xmlFiles)
             {
-                if (xmlFile.ToLower().Contains("metadata")) // skip DeadFox file
+                if (xmlFile.ToLower().Contains("metadata"))
                     continue;
 
                 // some poorly formed RS1 CDLC use just "vocal"
@@ -283,7 +284,7 @@ namespace RocksmithToolkitLib.DLCPackage
                     }
                     else
                     {
-                        // default to Lead arrangment
+                        // default to Lead arrangement
                         attr2014.ArrangementName = "Lead";
                         attr2014.ArrangementType = (int)ArrangementType.Guitar;
                         attr2014.ArrangementProperties.RouteMask = (int)RouteMask.Lead;
@@ -291,7 +292,7 @@ namespace RocksmithToolkitLib.DLCPackage
                         attr2014.ArrangementProperties.PathRhythm = 0;
                         attr2014.ArrangementProperties.PathBass = 0;
 
-                        Console.WriteLine("RS1->RS2 CDLC Conversion defaulted to 'Lead' arrangment");
+                        Console.WriteLine("RS1->RS2 CDLC Conversion defaulted to 'Lead' arrangement");
                     }
 
                     if (convert) // RS1 -> RS2 magic
@@ -344,8 +345,8 @@ namespace RocksmithToolkitLib.DLCPackage
                     }
                     catch (Exception ex)
                     {
-                        // mainly for the benifit of convert2012 CLI users
-                        Console.WriteLine(@"This CDLC could not be auto converted." + Environment.NewLine + "You can still try manually adding the arrangements and assests." + Environment.NewLine + ex.Message);
+                        // mainly for the benefit of convert2012 CLI users
+                        Console.WriteLine(@"This CDLC could not be auto converted." + Environment.NewLine + "You can still try manually adding the arrangements and assets." + Environment.NewLine + ex.Message);
                     }
                 }
             }
@@ -423,7 +424,7 @@ namespace RocksmithToolkitLib.DLCPackage
                     data.PackageVersion = GeneralExtensions.ReadPackageVersion(versionFile[0]);
                 else data.PackageVersion = "1";
             }
-            catch {}
+            catch { }
 
             if (convert)
                 data.Tones = null;
@@ -474,7 +475,7 @@ namespace RocksmithToolkitLib.DLCPackage
                     if (data.SongInfo == null)
                     {
                         // Fill Package Data
-                        data.Name = attr.DLCKey;
+                        data.DLCKey = attr.DLCKey;
                         data.Volume = (attr.SongVolume == 0 ? -12 : attr.SongVolume); //FIXME: too low song volume issue, revert to -6 to fix.
                         data.PreviewVolume = (attr.PreviewVolume ?? data.Volume);
 
@@ -484,10 +485,11 @@ namespace RocksmithToolkitLib.DLCPackage
                             SongDisplayName = attr.SongName,
                             SongDisplayNameSort = attr.SongNameSort,
                             Album = attr.AlbumName,
+                            AlbumSort = attr.AlbumNameSort,
                             SongYear = attr.SongYear ?? 0,
                             Artist = attr.ArtistName,
                             ArtistSort = attr.ArtistNameSort,
-                            AverageTempo = (int) attr.SongAverageTempo
+                            AverageTempo = (int)attr.SongAverageTempo
                         };
                     }
 
@@ -524,8 +526,8 @@ namespace RocksmithToolkitLib.DLCPackage
                         Name = attr.JapaneseVocal == true ? ArrangementName.JVocals : ArrangementName.Vocals,
                         ArrangementType = ArrangementType.Vocal,
                         ScrollSpeed = 20,
-                        SongXml = new SongXML {File = xmlFile},
-                        SongFile = new SongFile {File = ""},
+                        SongXml = new SongXML { File = xmlFile },
+                        SongFile = new SongFile { File = "" },
                         CustomFont = attr.JapaneseVocal == true
                     };
 
@@ -707,7 +709,7 @@ namespace RocksmithToolkitLib.DLCPackage
                 songVersion = fileNameParts[2];
             SongName = attr.FullName.Split('_')[0];
 
-            //Create dir sruct
+            //Create dir struct
             var outdir = Path.Combine(Path.GetDirectoryName(unpackedDir), String.Format("{0}_{1}_{2}", attr.ArtistName.GetValidSortName(), attr.SongName.GetValidSortName(), songVersion).Replace(" ", "-"));
             var eofdir = Path.Combine(outdir, EOF);
             var kitdir = Path.Combine(outdir, KIT);

@@ -13,7 +13,6 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest2014.Header
         public static readonly string URN_TEMPLATE = "urn:{0}:{1}:{2}";
         public static readonly string URN_TEMPLATE_SHORT = "urn:{0}:{1}";
 
-
         [JsonIgnore]
         internal bool IsVocal = false;
         [JsonIgnore]
@@ -28,7 +27,7 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest2014.Header
         public decimal CapoFret { get; set; }
         public double? CentOffset { get; set; }
         public bool DLC { get; set; }
-        public string DLCKey { get; set; }
+        public string DLCKey { get; set; } // <=> SongKey
         public double? DNA_Chords { get; set; }
         public double? DNA_Riffs { get; set; }
         public double? DNA_Solo { get; set; }
@@ -42,7 +41,6 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest2014.Header
         public double? NotesEasy { get; set; }
         public double? NotesHard { get; set; }
         public double? NotesMedium { get; set; }
-        public string PersistentID { get; set; }
         public int? Representative { get; set; } // Header only
         public int? RouteMask { get; set; } // Header only
         public bool Shipping { get; set; }
@@ -51,12 +49,13 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest2014.Header
         public double? SongDiffHard { get; set; }
         public double? SongDiffMed { get; set; }
         public double? SongDifficulty { get; set; }
-        public string SongKey { get; set; }
+        public string SongKey { get; set; } // <=> DLCKey
         public double? SongLength { get; set; }
         public string SongName { get; set; }
         public string SongNameSort { get; set; }
         public int? SongYear { get; set; }
         public TuningStrings Tuning { get; set; }
+        public string PersistentID { get; set; }
 
         public AttributesHeader2014() { }
 
@@ -74,7 +73,7 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest2014.Header
 
             IsVocal = arrangement.ArrangementType == Sng.ArrangementType.Vocal;
             SongContent = (IsVocal) ? null : Song2014.LoadFromFile(arrangement.SongXml.File);
-            var dlcName = info.Name.ToLower();
+            var dlcName = info.DLCKey.ToLower();
 
             var albumUrn = String.Format(URN_TEMPLATE, TagValue.Image.GetDescription(), TagValue.DDS.GetDescription(), String.Format("album_{0}", dlcName));
             var jsonUrn = String.Format(URN_TEMPLATE, TagValue.Database.GetDescription(), TagValue.JsonDB.GetDescription(), String.Format("{0}_{1}", dlcName, arrangementFileName));
@@ -84,17 +83,18 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest2014.Header
             JapaneseVocal |= arrangement.Name == Sng.ArrangementName.JVocals;
             ArrangementName = IsVocal ? Sng.ArrangementName.Vocals.ToString() : arrangement.Name.ToString(); //HACK: weird vocals stuff
             DLC = true;
-            DLCKey = info.Name;
+            DLCKey = info.DLCKey;
             LeaderboardChallengeRating = 0;
             ManifestUrn = jsonUrn;
             MasterID_RDV = arrangement.MasterId;
             PersistentID = arrangement.Id.ToString().Replace("-", "").ToUpper();
             Shipping = true;
             SKU = "RS2";
-            SongKey = info.Name;
+            SongKey = info.DLCKey; // proof same same
 
             if (!IsVocal)
             {
+                // TODO: add better AlbumNameSort feature
                 AlbumName = AlbumNameSort = info.SongInfo.Album;
                 ArtistName = info.SongInfo.Artist;
                 CentOffset = (!arrangement.TuningPitch.Equals(0)) ? TuningFrequency.Frequency2Cents(arrangement.TuningPitch) : 0.0;
@@ -112,7 +112,7 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest2014.Header
                 Representative = Convert.ToInt32(!arrangement.BonusArr);
                 RouteMask = (int)arrangement.RouteMask;
 
-                // TODO use ManifestFunctions.GetSongDifficulty() method (fix generation alghorythm)
+                // TODO: use ManifestFunctions.GetSongDifficulty() method (fix generation algorithm)
                 SongDiffEasy = SongContent.SongLength / NotesEasy;
                 SongDiffMed = SongContent.SongLength / NotesMedium;
                 SongDiffHard = SongContent.SongLength / NotesHard;

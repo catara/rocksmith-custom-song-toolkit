@@ -66,7 +66,7 @@ namespace RocksmithToolkitLib.DLCPackage
         // DLC ID
         public Guid Id { get; set; }
         public int MasterId { get; set; }
-        // Motronome
+        // Metronome
         public Metronome Metronome { get; set; }
         // preserve EOF and DDS comments
         [IgnoreDataMember] // required for SaveTemplate feature to work
@@ -99,7 +99,7 @@ namespace RocksmithToolkitLib.DLCPackage
                     break;
                 case ArrangementName.Bass:
                     this.ArrangementType = Sng.ArrangementType.Bass;
-                    // TODO: trying to fix bass tuning issue
+                    // bass tuning uses guitar tuning for fewer issues
                     tuning = TuningDefinitionRepository.Instance().Select(song.Tuning, GameVersion.RS2014);
                     // tuning = TuningDefinitionRepository.Instance().SelectForBass(song.Tuning, GameVersion.RS2014);
                     break;
@@ -108,6 +108,7 @@ namespace RocksmithToolkitLib.DLCPackage
                     break;
             }
 
+            // unknown tuning
             if (tuning == null)
             {
                 tuning = new TuningDefinition();
@@ -115,7 +116,9 @@ namespace RocksmithToolkitLib.DLCPackage
                 tuning.Custom = true;
                 tuning.GameVersion = GameVersion.RS2014;
                 tuning.Tuning = song.Tuning;
-                TuningDefinitionRepository.Instance().Add(tuning, true);
+                // only add guitar arrangement tunings to the TuningDefinitionRepository  (these will be used for bass tuning)
+                if (ArrangementType == ArrangementType.Guitar)
+                    TuningDefinitionRepository.Instance().Add(tuning, true);
             }
 
             this.Tuning = tuning.UIName;
@@ -156,7 +159,7 @@ namespace RocksmithToolkitLib.DLCPackage
                     // fix for tone.id (may not be needed/used by game)
                     Int32 toneId = 0;
 
-                    // cleanup the xml arrangment file too
+                    // cleanup the xml arrangement file too
                     if (jsonTone.Name.ToLower() == attr.Tone_Base.ToLower())
                         this.ToneBase = song.ToneBase = attr.Tone_Base;
                     if (attr.Tone_A != null && jsonTone.Name.ToLower() == attr.Tone_A.ToLower())
@@ -199,13 +202,17 @@ namespace RocksmithToolkitLib.DLCPackage
                         }
 
                     if (song.Tones == null && toneId > 0)
-                        throw new InvalidDataException("Custom tones were not set properly in EOF" + Environment.NewLine + "Please reauthor XML arrangement in EOF and fix custom tone consistency.");
+                        throw new InvalidDataException("Custom tones were not set properly in EOF" + Environment.NewLine + "Please re-author XML arrangement in EOF and fix custom tone consistency.");
                 }
 
                 // write changes to xml arrangement (w/o comments)
                 using (var stream = File.Open(xmlSongFile, FileMode.Create))
                     song.Serialize(stream);
+<<<<<<< HEAD
                
+=======
+
+>>>>>>> refs/remotes/rscustom/master
                 // write comments back to xml now so they are available for debugging
                 if (this.ArrangementType == ArrangementType.Guitar || this.ArrangementType == ArrangementType.Bass)
                     Song2014.WriteXmlComments(xmlSongFile, this.XmlComments, false);

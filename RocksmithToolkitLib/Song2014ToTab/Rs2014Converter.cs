@@ -32,7 +32,7 @@ namespace RocksmithToolkitLib.Song2014ToTab
             {
                 var outputDir = Path.GetDirectoryName(outputPath);
                 var outputFile = String.Format("{0}_{1}", rs2014Song.Title, rs2014Song.Arrangement);
-                outputFile = String.Format("{0}{1}", outputFile.GetValidName(false, true).ToLower(), "_rs2014.xml");
+                outputFile = String.Format("{0}{1}", outputFile.GetValidName(false, true).ToLower().GetValidFileName(), "_rs2014.xml");
                 outputPath = Path.Combine(outputDir, outputFile);
             }
 
@@ -391,7 +391,7 @@ namespace RocksmithToolkitLib.Song2014ToTab
 
         /// <summary>
         /// extract Song2014 from PSARC file for a specific
-        /// songId (short song title) and arrangement (lead, rythum, bass)
+        /// songId (short song title) and arrangement (lead, rhythm, bass)
         /// defaults to the first songId and arrangement if not specified
         /// </summary>
         /// <param name="inputFilePath"></param>
@@ -429,7 +429,7 @@ namespace RocksmithToolkitLib.Song2014ToTab
                 }
             }
 
-            // push Song2014 into memory for this arragement
+            // push Song2014 into memory for this arrangement
             Song2014 arrSong2014 = browser.GetArrangement(songId, arrangement);
             Console.WriteLine("Pushed To Memory: [{0}] {{{1}}}", songId, arrangement);
 

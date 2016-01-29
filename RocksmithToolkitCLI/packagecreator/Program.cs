@@ -70,7 +70,7 @@ namespace packagecreator
                 ShowHelpfulError(String.Format("{0} is not a valid platform.", platformString));
                 arguments.Platform.platform = GamePlatform.None;
             }
-            arguments.Platform.platform = p;
+            else arguments.Platform.platform = p;
         }
 
         private static void SetVersion(this Arguments arguments, string versionString)
@@ -82,7 +82,7 @@ namespace packagecreator
                 ShowHelpfulError(String.Format("{0} is not a valid game version.", versionString));
                 arguments.Platform.version = GameVersion.None;
             }
-            arguments.Platform.version = v;
+            else arguments.Platform.version = v;
         }
 
         /// <summary>
@@ -148,7 +148,7 @@ namespace packagecreator
 
                     if (arguments.Package)
                     {
-                        if (!arguments.Input[0].IsDirectory() || (arguments.Input == null && arguments.Input.Length <= 0))
+                        if ((arguments.Input == null && arguments.Input.Length <= 0) || !arguments.Input[0].IsDirectory())
                         {
                             ShowHelpfulError("Must specify and 'input' directory.");
                             return 1;
@@ -185,13 +185,13 @@ namespace packagecreator
                         DLCPackageData packageData = DLCPackageData.LoadFromFolder(srcDirs[i], arguments.Platform, arguments.Platform);
                         packageData.AppId = arguments.AppId;
                         packageData.PackageVersion = arguments.Revision;
-                        packageData.Name = Path.GetFileName(srcDirs[i]).GetValidName();
+                        packageData.DLCKey = Path.GetFileName(srcDirs[i]).GetValidName();
                         packageData.Volume = packageData.Volume == 0 ? Convert.ToInt16(arguments.Decibels) : packageData.Volume;
                         packageData.PreviewVolume = packageData.PreviewVolume == 0 ? Convert.ToInt16(arguments.Decibels) : packageData.PreviewVolume;
 
                         // check Album Artwork
                         if (arguments.Platform.version == GameVersion.RS2014)
-                            CheckAlbumArt(srcDirs[i], packageData.Name);
+                            CheckAlbumArt(srcDirs[i], packageData.DLCKey);
 
                         // generate CDLC file name
                         var artist = packageData.SongInfo.ArtistSort;

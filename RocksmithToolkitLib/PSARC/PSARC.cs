@@ -28,7 +28,7 @@ namespace RocksmithToolkitLib.PSARC
             {
                 MagicNumber = 1347633490; //'PSAR'
                 VersionNumber = 65540; //1.4
-                CompressionMethod = 2053925218; //'zlib' (also avalible 'lzma')
+                CompressionMethod = 2053925218; //'zlib' (also available 'lzma')
                 TOCEntrySize = 30;//bytes
                 //NumFiles = 0;
                 BlockSizeAlloc = 65536; //Decompression buffer size = 64kb
@@ -86,7 +86,7 @@ namespace RocksmithToolkitLib.PSARC
             if (_writer != null) _writer.Dispose();
         }
         #endregion
-        #region Helpers Inflator/Deflator
+        #region Helpers Inflater/Deflater
 
         public string ErrMSG;
 
@@ -178,7 +178,7 @@ namespace RocksmithToolkitLib.PSARC
         public void InflateEntries()
         {
             foreach (var current in _toc)
-            {// We really can use Parrallel here.
+            {// We really can use Parallel here.
                 InflateEntry(current);
             }
         }
@@ -311,7 +311,7 @@ namespace RocksmithToolkitLib.PSARC
             AddEntry(entry);
         }
         public void AddEntry(Entry entry)
-        {//important hierachy
+        {//important hierarchy
             _toc.Add(entry);
             entry.Id = this.TOC.Count - 1;
         }
@@ -466,13 +466,13 @@ namespace RocksmithToolkitLib.PSARC
             {
                 switch (bNum)
                 {
-                    case 2:
+                    case 2://16bit
                         _writer.Write((ushort)zLen);
                         break;
-                    case 3:
+                    case 3://24bit
                         _writer.WriteUInt24(zLen);
                         break;
-                    case 4:
+                    case 4://32bit
                         _writer.Write(zLen);
                         break;
                 }
@@ -481,7 +481,7 @@ namespace RocksmithToolkitLib.PSARC
 
             // Write zData
             var ndx = 0; // for debugging
-            var step = Math.Round(1.0 / (this.TOC.Count + 2) * 100, 3);
+            var step = Math.Round(1D / (this.TOC.Count + 2) * 100, 3);
             double progress = 0;
             GlobalExtension.ShowProgress("Writing Zipped Data ...");
 
@@ -507,15 +507,15 @@ namespace RocksmithToolkitLib.PSARC
                     // quick copy header from input stream
                     var buffer = new byte[32];
                     encStream.Write(buffer, 0, inputStream.Read(buffer, 0, buffer.Length));
-                    encStream.Position = 32; //sainty check ofc
+                    encStream.Position = 32; //sanity check ofc
                     inputStream.Flush();
 
                     int tocSize = (int)_header.TotalTOCSize - 32;
                     int decSize = 0;
-                    buffer = new byte[1024 * 16]; // more effecient use of memory
+                    buffer = new byte[1024 * 16]; // more efficient use of memory
 
-                    ndx = 0; // for debuging
-                    step = Math.Round(1.0 / ((tocSize / buffer.Length) + 2) * 100, 3);
+                    ndx = 0; // for debugging
+                    step = Math.Round(1D / (((double)tocSize / buffer.Length) + 2) * 100, 3);
                     progress = 0;
                     GlobalExtension.ShowProgress("Writing Encrypted Data ...");
 
@@ -543,7 +543,7 @@ namespace RocksmithToolkitLib.PSARC
                 inputStream.Flush();
                 inputStream.Position = 0;
             }
-            GlobalExtension.HideProgress();
+            //GlobalExtension.HideProgress();
         }
 
         #endregion

@@ -76,7 +76,7 @@ namespace RocksmithToolkitLib.Extensions
             var cmdArgs = String.Format(" --unpack --input=\"{0}\" --platform={2} --version=RS2014 --output=\"{1}\"", sourcePath, destinationPath, targetPlatform);
             GeneralExtensions.RunExternalExecutable(APP_PACKER, true, true, true, cmdArgs);
         }
-        //TODO:faster to use dircet lib calls?? If this works lib calls will too.
+        //TODO: faster to use direct lib calls?? If this works lib calls will too.
         public static void RepackPsarc(string sourcePath, string destinationPath, string targetPlatform)
         {
             var cmdArgs = String.Format(" --pack --input=\"{0}\" --platform={2} --version=RS2014 --output=\"{1}\"", sourcePath, destinationPath, targetPlatform);
@@ -151,7 +151,7 @@ namespace RocksmithToolkitLib.Extensions
         public static void Wav2Wem(string wwiseCLIPath, string wwiseTemplateDir)
         {
             var templatePath = Path.Combine(wwiseTemplateDir, "Template.wproj");
-            var cmdArgs = String.Format(" \"{0}\" -GenerateSoundBanks", templatePath);
+            var cmdArgs = String.Format(" \"{0}\" -GenerateSoundBanks -Platform Windows", templatePath);
 
             GeneralExtensions.RunExternalExecutable(wwiseCLIPath, true, false, true, cmdArgs);
         }

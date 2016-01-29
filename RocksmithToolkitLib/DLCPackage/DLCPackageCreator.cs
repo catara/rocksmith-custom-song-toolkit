@@ -250,7 +250,7 @@ namespace RocksmithToolkitLib.DLCPackage
             if (Path.GetFileName(songFileName).Contains(" "))
                 songFileName = Path.Combine(Path.GetDirectoryName(songFileName), Path.GetFileName(songFileName).Replace(" ", "_"));
 
-            // Cleaning work dir, beware ther is .psarcthat we need.
+            // Cleaning work dir, beware there is .psarcthat we need.
             var junkFiles = Directory.EnumerateFiles(PS3_WORKDIR, "*.*").Where(e => !e.EndsWith(".psarc"));
             foreach (var junk in junkFiles)
                 File.Delete(junk);
@@ -294,7 +294,7 @@ namespace RocksmithToolkitLib.DLCPackage
                     DirectoryExtension.Move(PS3_WORKDIR, String.Format("{0}_PS3", songFileName));
             }
 
-            if (encryptResult.IndexOf("No JDK or JRE is intsalled on your machine") > 0)
+            if (encryptResult.IndexOf("No JDK or JRE is installed on your machine") > 0)
                 throw new InvalidOperationException("You need install Java SE 7 (x86) or higher on your machine. The Java path should be in PATH Environment Variable:" + Environment.NewLine + Environment.NewLine + encryptResult);
 
             if (encryptResult.IndexOf("Encrypt all EDAT files successfully") < 0)
@@ -310,7 +310,7 @@ namespace RocksmithToolkitLib.DLCPackage
         private static void GenerateRS2014SongPsarc(Stream output, DLCPackageData info, Platform platform, int pnum = -1)
         {
             // TODO: Benchmark processes and optimize speed
-            dlcName = info.Name.ToLower();
+            dlcName = info.DLCKey.ToLower();
             packPsarc = new PSARC.PSARC();
 
             // Stream objects
@@ -403,7 +403,7 @@ namespace RocksmithToolkitLib.DLCPackage
                 using (var xblockStream = new MemoryStream())
                 {
                     // TOOLKIT VERSION
-                    GenerateToolkitVersion(toolkitVersionStream, info.PackageVersion);
+                    GenerateToolkitVersion(toolkitVersionStream, packageVersion: info.PackageVersion);
                     packPsarc.AddEntry("toolkit.version", toolkitVersionStream);
 
                     // APP ID
@@ -424,7 +424,7 @@ namespace RocksmithToolkitLib.DLCPackage
 
                     // SOUNDBANK
                     var soundbankFileName = String.Format("song_{0}", dlcName);
-                    var audioFileNameId = SoundBankGenerator2014.GenerateSoundBank(info.Name, soundStream, soundbankStream, info.Volume, platform);
+                    var audioFileNameId = SoundBankGenerator2014.GenerateSoundBank(info.DLCKey, soundStream, soundbankStream, info.Volume, platform);
                     packPsarc.AddEntry(String.Format("audio/{0}/{1}.bnk", platform.GetPathName()[0].ToLower(), soundbankFileName), soundbankStream);
                     packPsarc.AddEntry(String.Format("audio/{0}/{1}.wem", platform.GetPathName()[0].ToLower(), audioFileNameId), soundStream);
 
@@ -433,9 +433,9 @@ namespace RocksmithToolkitLib.DLCPackage
                     dynamic audioPreviewFileNameId;
                     var previewVolume = (float)(info.PreviewVolume ?? info.Volume);
                     if (File.Exists(previewAudioFile))
-                        audioPreviewFileNameId = SoundBankGenerator2014.GenerateSoundBank(info.Name + "_Preview", soundPreviewStream, soundbankPreviewStream, previewVolume, platform, true);
+                        audioPreviewFileNameId = SoundBankGenerator2014.GenerateSoundBank(info.DLCKey + "_Preview", soundPreviewStream, soundbankPreviewStream, previewVolume, platform, true);
                     else
-                        audioPreviewFileNameId = SoundBankGenerator2014.GenerateSoundBank(info.Name + "_Preview", soundPreviewStream, soundbankPreviewStream, info.Volume, platform, true, true);
+                        audioPreviewFileNameId = SoundBankGenerator2014.GenerateSoundBank(info.DLCKey + "_Preview", soundPreviewStream, soundbankPreviewStream, info.Volume, platform, true, true);
                     packPsarc.AddEntry(String.Format("audio/{0}/{1}.bnk", platform.GetPathName()[0].ToLower(), soundbankPreviewFileName), soundbankPreviewStream);
                     if (!soundPreviewStream.Equals(soundStream)) packPsarc.AddEntry(String.Format("audio/{0}/{1}.wem", platform.GetPathName()[0].ToLower(), audioPreviewFileNameId), soundPreviewStream);
 
@@ -766,10 +766,10 @@ namespace RocksmithToolkitLib.DLCPackage
                         packPsarc.AddEntry("APP_ID", appIdStream);
                     }
 
-                    packageListWriter.WriteLine(info.Name);
+                    packageListWriter.WriteLine(info.DLCKey);
 
                     GenerateSongPsarcRS1(songPsarcStream, info, platform);
-                    string songFileName = String.Format("{0}.psarc", info.Name);
+                    string songFileName = String.Format("{0}.psarc", info.DLCKey);
                     packPsarc.AddEntry(songFileName, songPsarcStream);
                     songPsarcStream.WriteTmpFile(songFileName, platform);
 
@@ -780,7 +780,7 @@ namespace RocksmithToolkitLib.DLCPackage
                         // TODO: generate single tone.manifest.json file that has multiple tones
                         // currently generating multiple tone.manifest.json files
                         toneStreams.Add(tonePsarcStream);
-                        var toneKey = info.Name + "_" + tone.Name == null ? "Default" : tone.Name.Replace(' ', '_');
+                        var toneKey = info.DLCKey + "_" + tone.Name == null ? "Default" : tone.Name.Replace(' ', '_');
                         GenerateTonePsarc(tonePsarcStream, toneKey, tone);
                         string toneEntry = String.Format("DLC_Tone_{0}.psarc", toneKey);
                         packPsarc.AddEntry(toneEntry, tonePsarcStream);
@@ -817,7 +817,7 @@ namespace RocksmithToolkitLib.DLCPackage
 
         private static void GenerateSongPsarcRS1(Stream output, DLCPackageData info, Platform platform)
         {
-            var soundBankName = String.Format("Song_{0}", info.Name);
+            var soundBankName = String.Format("Song_{0}", info.DLCKey);
 
             try
             {
@@ -888,34 +888,34 @@ namespace RocksmithToolkitLib.DLCPackage
                         manifestBuilder.AggregateGraph.SongFiles.Add(x.SongFile);
                         manifestBuilder.AggregateGraph.SongXMLs.Add(x.SongXml);
                     }
-                    manifestBuilder.AggregateGraph.XBlock = new XBlockFile { File = info.Name + ".xblock" };
-                    manifestBuilder.AggregateGraph.Write(info.Name, platform.GetPathName(), platform, aggregateGraphStream);
+                    manifestBuilder.AggregateGraph.XBlock = new XBlockFile { File = info.DLCKey + ".xblock" };
+                    manifestBuilder.AggregateGraph.Write(info.DLCKey, platform.GetPathName(), platform, aggregateGraphStream);
                     aggregateGraphStream.Flush();
                     aggregateGraphStream.Seek(0, SeekOrigin.Begin);
 
                     {
-                        var manifestData = manifestBuilder.GenerateManifest(info.Name, info.Arrangements, info.SongInfo, platform);
+                        var manifestData = manifestBuilder.GenerateManifest(info.DLCKey, info.Arrangements, info.SongInfo, platform);
                         var writer = new StreamWriter(manifestStream);
                         writer.Write(manifestData);
                         writer.Flush();
                         manifestStream.Seek(0, SeekOrigin.Begin);
                     }
 
-                    GameXblock<Entity>.Generate(info.Name, manifestBuilder.Manifest, manifestBuilder.AggregateGraph, xblockStream);
+                    GameXblock<Entity>.Generate(info.DLCKey, manifestBuilder.Manifest, manifestBuilder.AggregateGraph, xblockStream);
                     xblockStream.Flush();
                     xblockStream.Seek(0, SeekOrigin.Begin);
 
-                    var soundFileName = SoundBankGenerator.GenerateSoundBank(info.Name, soundStream, soundbankStream, info.Volume, platform);
+                    var soundFileName = SoundBankGenerator.GenerateSoundBank(info.DLCKey, soundStream, soundbankStream, info.Volume, platform);
                     soundbankStream.Flush();
                     soundbankStream.Seek(0, SeekOrigin.Begin);
 
-                    GenerateSongPackageId(packageIdStream, info.Name);
+                    GenerateSongPackageId(packageIdStream, info.DLCKey);
 
                     var songPsarc = new PSARC.PSARC();
                     songPsarc.AddEntry("PACKAGE_ID", packageIdStream);
                     songPsarc.AddEntry("AggregateGraph.nt", aggregateGraphStream);
                     songPsarc.AddEntry("Manifests/songs.manifest.json", manifestStream);
-                    songPsarc.AddEntry(String.Format("Exports/Songs/{0}.xblock", info.Name), xblockStream);
+                    songPsarc.AddEntry(String.Format("Exports/Songs/{0}.xblock", info.DLCKey), xblockStream);
                     songPsarc.AddEntry(String.Format("Audio/{0}/{1}.bnk", platform.GetPathName()[0], soundBankName), soundbankStream);
                     songPsarc.AddEntry(String.Format("Audio/{0}/{1}.ogg", platform.GetPathName()[0], soundFileName), soundStream);
                     songPsarc.AddEntry(String.Format("GRAssets/AlbumArt/{0}.dds", manifestBuilder.AggregateGraph.AlbumArt.Name), albumArtStream);
@@ -1006,22 +1006,23 @@ namespace RocksmithToolkitLib.DLCPackage
                 GeneralExtensions.RunExternalExecutable("nvdxt.exe", true, true, true, String.Format(args, item.sourceFile, item.destinationFile, item.sizeX, item.sizeY));
         }
 
-        private static void GenerateToolkitVersion(Stream output, string version = null)
+        public static void GenerateToolkitVersion(Stream output, string packageAuthor = null, string packageVersion = null)
         {
-            var author = ConfigRepository.Instance()["general_defaultauthor"];
+            if (String.IsNullOrEmpty(packageAuthor))
+                packageAuthor = ConfigRepository.Instance()["general_defaultauthor"];
 
             var writer = new StreamWriter(output);
-            writer.WriteLine(String.Format("Toolkit version: {0}", ToolkitVersion.version));
-            if (!String.IsNullOrEmpty(author))
-                writer.WriteLine(String.Format("Package Author: {0}", author));
-            if (!String.IsNullOrEmpty(version))
-                writer.Write(String.Format("Package Version: {0}", version));
+            writer.WriteLine("Toolkit version: {0}", ToolkitVersion.version);
+            if (!String.IsNullOrEmpty(packageAuthor))
+                writer.WriteLine("Package Author: {0}", packageAuthor);
+            if (!String.IsNullOrEmpty(packageVersion))
+                writer.Write("Package Version: {0}", packageVersion);
 
             writer.Flush();
             output.Seek(0, SeekOrigin.Begin);
         }
 
-        private static void GenerateAppId(Stream output, string appId, Platform platform)
+        public static void GenerateAppId(Stream output, string appId, Platform platform)
         {
             var writer = new StreamWriter(output);
             var defaultAppId = (platform.version == GameVersion.RS2012) ? "206113" : "248750";

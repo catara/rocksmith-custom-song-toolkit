@@ -22,7 +22,6 @@ using RocksmithToolkitLib.Xml;
 using Control = System.Windows.Forms.Control;
 using ProgressBarStyle = System.Windows.Forms.ProgressBarStyle;
 
-
 namespace RocksmithToolkitGUI.DLCPackageCreator
 {
     public partial class DLCPackageCreator : UserControl
@@ -33,12 +32,8 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
         private string dlcSavePath;
         private bool userChangedInputControls;
         // prevents multiple tool tip appearance and gives better action
-//<<<<<<< HEAD
-//        private ToolTip tt = new ToolTip();       
-//=======
         private ToolTip tt = new ToolTip();
         private string dlcKeyOrg; // used to preserve original
-//>>>>>>> refs/remotes/rscustom/master
 
         #region Properties
 
@@ -245,17 +240,11 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
         public DLCPackageCreator()
         {
             InitializeComponent();
-//<<<<<<< HEAD
-//#if (!DEBUG)
-//            chkShowlights.Visible = false;
-//#endif
-//=======
 
 #if (!DEBUG)
             chkShowlights.Visible = false;
 #endif
 
-//>>>>>>> refs/remotes/rscustom/master
             arrangementLB.AllowDrop = true;
             audioQualityBox.MouseEnter += audioQualityBox_MouseEnter;
             rbConvert.MouseEnter += rbConvert_MouseEnter;
@@ -434,11 +423,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             // showlights cause in game hanging for some RS1-RS2 conversions
             packageData.Showlights = chkShowlights.Checked;
 
-//<<<<<<< HEAD
-//            //Generate metronome arrangemnts here
-//=======
             //Generate metronome arrangements here
-//>>>>>>> refs/remotes/rscustom/master
             var mArr = new List<Arrangement>();
             foreach (var arr in packageData.Arrangements)
             {

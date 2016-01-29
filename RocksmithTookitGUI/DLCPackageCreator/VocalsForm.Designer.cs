@@ -153,6 +153,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             this.Text = "Vocals Form";
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
         private System.Windows.Forms.CheckBox isCustomCB;
         private System.Windows.Forms.Button sngpathFD;

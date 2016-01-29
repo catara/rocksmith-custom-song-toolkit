@@ -15,6 +15,7 @@ using RocksmithToolkitLib.DLCPackage;
 using RocksmithToolkitLib.Sng;
 using RocksmithToolkitLib.Xml; //For DD
 using RocksmithToolkitLib.DLCPackage.Manifest; //For DD
+using RocksmithToolkitLib.DLCPackage.Manifest.Functions;
 using RocksmithToolkitLib.DLCPackage.Manifest2014;
 using System.IO;
 using System.Data.OleDb;
@@ -2209,7 +2210,8 @@ namespace RocksmithToolkitGUI.DLCManager
                                                 {
                                                     if (Path.GetFileNameWithoutExtension(fl).ToLower().Contains("bass") || Path.GetFileNameWithoutExtension(fl).ToLower().Contains("lead") || Path.GetFileNameWithoutExtension(fl).ToLower().Contains("rhythm") || Path.GetFileNameWithoutExtension(fl).ToLower().Contains("combo"))
                                                     {
-                                                        Attributes2014 attr = Manifest2014<Attributes2014>.LoadFromFile(fl).Entries.ToArray()[0].Value.ToArray()[0].Value;
+                                                        //Attributes2014 attr = Manifest2014<Attributes2014>.LoadFromFile(fl).Entries.ToArray()[0].Value.ToArray()[0].Value;
+                                                        var attr = Manifest2014<Attributes2014>.LoadFromFile(fl).Entries.First().Value.First().Value;
                                                         manifestFunctions.GenerateSectionData(attr, xmlContent);
                                                         if (attr.Sections.Count == 0) sect1on = "No";
                                                         clist.Add(attr.LastConversionDateTime);

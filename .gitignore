@@ -120,5 +120,4 @@ RevisionLog.txt
 __pycache__/
 *.py[cod]
 *.egg
-
 *.userprefs

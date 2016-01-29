@@ -88,20 +88,6 @@ namespace RocksmithToolkitGUI.DLCPackerUnpacker
                 errMsg = actionMsg + " is complete with the following errors:" + Environment.NewLine +
                          errMsg + Environment.NewLine;
 
-//<<<<<<< HEAD
-//            using (var sfd = new SaveFileDialog())
-//            {
-//                if (sfd.ShowDialog() != DialogResult.OK)
-//                    return;
-//                saveFileName = sfd.FileName;
-//            }
-      
-//            GlobalExtension.UpdateProgress = this.updateProgress;
-//            GlobalExtension.CurrentOperationLabel = this.currentOperationLabel;
-//            Thread.Sleep(100); // give Globals a chance to initialize
-//            GlobalExtension.ShowProgress("Packing archive ...");            
-//            Application.DoEvents();
-//=======
             errMsg += "Would you like to open the destination path?  ";
 
             if (MessageBox.Show(errMsg, MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
@@ -113,7 +99,6 @@ namespace RocksmithToolkitGUI.DLCPackerUnpacker
             // looks for long endings first and then short endings
             var endings = new string[] { "_p_Pc", "_m_Mac", "_ps3_PS3", "_xbox_XBox360", "_Pc", "_Mac", "_PS3", "_XBox360" };
             string[] extensions = { "_p.psarc", "_m.psarc", "_ps3.psarc.edat", "_xbox", "_p.psarc", "_m.psarc", "_ps3.psarc.edat", "_xbox" };
-//>>>>>>> refs/remotes/rscustom/master
 
             // reuse sanitized folder name as default file name if possible
             var destFileName = Path.GetFileName(srcPath);

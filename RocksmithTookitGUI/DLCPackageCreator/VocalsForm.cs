@@ -71,6 +71,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             var name = (TextBox)sender;
             ArtPath = name.Text;
         }
+
         void IsCustomCB_CheckedChanged(object sender, EventArgs e)
         {
             IsCustom = isCustomCB.Checked;

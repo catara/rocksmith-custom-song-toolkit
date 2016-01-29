@@ -2,9 +2,10 @@
 
 
 
-# Rksmith DLC Library Manager [![Latest release](http://img.shields.io/github/release/catara/rocksmith-custom-song-toolkit.svg)](https://github.com/catara/rocksmith-custom-song-toolkit/releases/)
-
-
+![Rksmith DLC Library Manager](/Screenshot1.JPG?raw=true "Rksmith DLC Library Manager")
+![Rksmith DLC Library Manager](/Screenshot2.JPG?raw=true "MainDB")
+![Rksmith DLC Library Manager](/Screenshot3.JPG?raw=true "Autocorrect")
+![Rksmith DLC Library Manager](/Screenshot4.JPG?raw=true "Rocksmith Sample")
 
 ## App Description: MASS Manipulation of Rocksmith DLC Library 
             e.g. 1. in Rocksmith in the Library, each songs Album, to contain a personal rating, if it has DD, instr. avail
@@ -102,6 +103,14 @@ wd:
 - author still in
 - it's my life..breaks because of the aphostrofe'
 - if cover was from someone else please compare against that (save old cover)
+
+- diff between master and branch
+.xml
+dlcpackagedata
+                var newPreviewFileName = Path.Combine(Path.GetDirectoryName(audioPath), String.Format("{0}_preview{1}", Path.GetFileNameWithoutExtension(audioPath), Path.GetExtension(audioPath)));
+                if (!File.Exists(newPreviewFileName)) File.Move(audioPreviewPath, newPreviewFileName); //bcapi as some original create an error here
+                //old File.Move(audioPreviewPath, newPreviewFileName);
+                data.OggPreviewPath = newPreviewFileName;
 
 ### Dev Tips:
 + Toolkit version flag does not sync to&from Github: Run RunMeFirst.bat

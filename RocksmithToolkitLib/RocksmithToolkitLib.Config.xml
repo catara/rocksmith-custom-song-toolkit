@@ -24,7 +24,7 @@
   <Config Key="cgm_inlayname" Value="Default Inlay" />
   <Config Key="cgm_24frets" Value="false" />
   <Config Key="cgm_coloredinlay" Value="true" />
-  <!--<Config Key="first_time" Value="true" /> determine if we launched toolkit at first time-->
+<!--<Config Key="first_time" Value="true" /> determine if we launched toolkit at first time-->
 
   <!--bcapi DLCManager-->
   <Config Key="dlcm_AdditionalManipul0" Value="No" />
@@ -101,7 +101,7 @@
   <Config Key="dlcm_Prof1" Value="Home" />;
   <Config Key="dlcm_DBFolder1" Value="C:\GitHub\tmp" />;
   <Config Key="dlcm_RocksmithDLCPath1" Value="C:\GitHub\tmp\to import" />;
-  <Config Key="dlcm_TempPath1" Value="C:\GitHub\tmp\0" />;  
+  <Config Key="dlcm_TempPath1" Value="C:\GitHub\tmp\0" />;
   <Config Key="dlcm_Prof2" Value="VM" />;
   <Config Key="dlcm_DBFolder2" Value="C:\GitHub\tmp" />;
   <Config Key="dlcm_RocksmithDLCPath2" Value="C:\GitHub\tmp\to import" />;
@@ -144,4 +144,5 @@
   <Config Key="dlcm_DupliM_Sync" Value="Yes" />;
   <Config Key="dlcm_DupliM_Sync" Value="Yes" />;
   <Config Key="dlcm_DefaultDB" Value="No" />;
+  <!--bcapi DLCManager-->
 </ArrayOfConfig>

@@ -205,30 +205,26 @@ namespace RocksmithToolkitLib.Sng2014HSL
         }
 
         public void Read(EndianBinaryReader r) {
-            //if (r.BaseStream.Length > 0)
-            //{
-                this.BPMs = new BpmSection(); this.BPMs.read(r);
-                this.Phrases = new PhraseSection(); this.Phrases.read(r);
-                this.Chords = new ChordSection(); this.Chords.read(r);
-                this.ChordNotes = new ChordNotesSection(); this.ChordNotes.read(r);
-                this.Vocals = new VocalSection(); this.Vocals.read(r);
-                if (this.Vocals.Count > 0)
-                {
-                    this.SymbolsHeader = new SymbolsHeaderSection(); this.SymbolsHeader.read(r);
-                    this.SymbolsTexture = new SymbolsTextureSection(); this.SymbolsTexture.read(r);
-                    this.SymbolsDefinition = new SymbolDefinitionSection(); this.SymbolsDefinition.read(r);
-                }
-                this.PhraseIterations = new PhraseIterationSection(); this.PhraseIterations.read(r);
-                this.PhraseExtraInfo = new PhraseExtraInfoByLevelSection(); this.PhraseExtraInfo.read(r);
-                this.NLD = new NLinkedDifficultySection(); this.NLD.read(r);
-                this.Actions = new ActionSection(); this.Actions.read(r);
-                this.Events = new EventSection(); this.Events.read(r);
-                this.Tones = new ToneSection(); this.Tones.read(r);
-                this.DNAs = new DnaSection(); this.DNAs.read(r);
-                this.Sections = new SectionSection(); this.Sections.read(r);
-                this.Arrangements = new ArrangementSection(); this.Arrangements.read(r);
-                this.Metadata = new Metadata(); this.Metadata.read(r);
-            //}
+            this.BPMs = new BpmSection(); this.BPMs.read(r);
+            this.Phrases = new PhraseSection(); this.Phrases.read(r);
+            this.Chords = new ChordSection(); this.Chords.read(r);
+            this.ChordNotes = new ChordNotesSection(); this.ChordNotes.read(r);
+            this.Vocals = new VocalSection(); this.Vocals.read(r);
+            if (this.Vocals.Count > 0) {
+                this.SymbolsHeader = new SymbolsHeaderSection(); this.SymbolsHeader.read(r);
+                this.SymbolsTexture = new SymbolsTextureSection(); this.SymbolsTexture.read(r);
+                this.SymbolsDefinition = new SymbolDefinitionSection(); this.SymbolsDefinition.read(r);
+            }
+            this.PhraseIterations = new PhraseIterationSection(); this.PhraseIterations.read(r);
+            this.PhraseExtraInfo = new PhraseExtraInfoByLevelSection(); this.PhraseExtraInfo.read(r);
+            this.NLD = new NLinkedDifficultySection(); this.NLD.read(r);
+            this.Actions = new ActionSection(); this.Actions.read(r);
+            this.Events = new EventSection(); this.Events.read(r);
+            this.Tones = new ToneSection(); this.Tones.read(r);
+            this.DNAs = new DnaSection(); this.DNAs.read(r);
+            this.Sections = new SectionSection(); this.Sections.read(r);
+            this.Arrangements = new ArrangementSection(); this.Arrangements.read(r);
+            this.Metadata = new Metadata(); this.Metadata.read(r);
         }
 
         public void Write(EndianBinaryWriter w) {

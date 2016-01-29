@@ -39,11 +39,7 @@ if exist %solution%\.git\HEAD (
 	set /p head=<"%solution%\.git\HEAD"
 	if "!head:~0,4!" == "ref:" (
 		set master=.git\!head:~5!
-<<<<<<< HEAD
- 		if exist "%solution%\.git\!head:~5!" set /p commit=<"%solution%\.git\!head:~5!"
-=======
 		if exist "%solution%\.git\!head:~5!" set /p commit=<"%solution%\.git\!head:~5!"
->>>>>>> refs/remotes/rscustom/master
 	) else (
 		set commit=!head!
 	)
@@ -51,13 +47,8 @@ if exist %solution%\.git\HEAD (
 		echo Found commit: !commit!
 		set newrev=!commit:~0,8!
 		echo newrev !newrev!
-<<<<<<< HEAD
-                for %%a in (%solution%!master!) do set newrevdate=%%~ta
-                echo newrevdate !newrevdate!
-=======
 				for %%a in (%solution%!master!) do set newrevdate=%%~ta
 				echo newrevdate !newrevdate!
->>>>>>> refs/remotes/rscustom/master
 	) else echo Unable to find commit ...
 )
 
@@ -89,7 +80,7 @@ echo Moving tempfile.txt to new %toolkitver% ...
 move /y tempfile.txt "%toolkitver%"
 echo Done
 
-::pause
+pause
 
 endlocal
 exit /b 0

@@ -1,4 +1,5 @@
-﻿![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManager/Screenshot1.png?raw=true "Rksmith DLC Library Manager Import&Pack" =250x){:height="250px" width="250px"}
+﻿<img src="/RocksmithTookitGUI/DLCManager/Screenshot1.png" alt="Rksmith DLC Library Manager Import&Pack" style="width: 200px; height:250px"/>
+![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManager/Screenshot1.png?raw=true "Rksmith DLC Library Manager Import&Pack" =250x){:height="250px" width="250px"}
 ![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManager/Screenshot2.png?raw=true "Song Metadata DB Screen" =250x){:height="250px" width="250px"}
 ![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManager/Screenshot3.png?raw=true "Song Metadata Standardization Screen" =250x){:height="250px" width="250px"}
 ![Rksmith DLC Library Manager](/RocksmithTookitGUI/DLCManager/Screenshot4.png?raw=true "Rocksmith Retail Manipulation Screen" =250x){:height="250px" width="250px"}

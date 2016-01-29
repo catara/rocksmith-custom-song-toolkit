@@ -5,15 +5,14 @@
 <img src="/RocksmithTookitGUI/DLCManager/Screenshot5.png" alt="RDuplicate Management" width="400px"/>
 <img src="/RocksmithTookitGUI/DLCManager/Screenshot6.png" alt="Rocksmith EndScreenSample" width="400px"/>
 
-## App Description: MASS Manipulation of Rocksmith DLC Library 
-		e.g. 1. in Rocksmith in the Library, each songs Album, to contain a personal rating, if it has DD, instr. avail
-		e.g. 2. in Rocksmith in the Library, each song to be sorted by Album(Year) and Track No
-		e.g. 3. Eliminate all the songs you dont like/want to see, from the Play A Song Menu for RS14, RS12 & RS12 DLC
-
-
 
 ## Roksmith DLC Library Manager v0.2.0.13
 (beta version; branch of CSC)
+# App Description: MASS Manipulation of Rocksmith DLC Library 
+		e.g. 1. in Rocksmith, in the Library, each song's Album, to contain a personal rating, if it has DD, instr. avail
+		e.g. 2. in Rocksmith, in the Library, each song to be sorted by Album(Year) and Track No
+		e.g. 3. Eliminate all the songs you dont like/want to see, from the Play A Song Menu for RS14, RS12 & RS12 DLC
+
 #Main Features:
 - Gather all DLCs metadata into 1 Microsoft Access DB
 	- Manage Duplicates @Import and After

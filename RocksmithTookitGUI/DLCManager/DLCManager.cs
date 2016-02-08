@@ -359,8 +359,8 @@ namespace RocksmithToolkitGUI.DLCManager
             else chbx_Additional_Manipulations.SetItemCheckState(55, CheckState.Unchecked);
             if (ConfigRepository.Instance()["dlcm_AdditionalManipul56"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(56, CheckState.Checked);
             else chbx_Additional_Manipulations.SetItemCheckState(56, CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul57"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(57, CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(57, CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul57"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(57, CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(57, CheckState.Unchecked);
             //if (ConfigRepository.Instance()["dlcm_AdditionalManipul58"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(58, CheckState.Checked);
             //else chbx_Additional_Manipulations.SetItemCheckState(58, CheckState.Unchecked);
             //if (ConfigRepository.Instance()["dlcm_AdditionalManipul59"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(59, CheckState.Checked);
@@ -652,7 +652,7 @@ namespace RocksmithToolkitGUI.DLCManager
             ConfigRepository.Instance()["dlcm_AdditionalManipul54"] = chbx_Additional_Manipulations.GetItemChecked(54) ? "Yes" : "No";
             ConfigRepository.Instance()["dlcm_AdditionalManipul55"] = chbx_Additional_Manipulations.GetItemChecked(55) ? "Yes" : "No";
             ConfigRepository.Instance()["dlcm_AdditionalManipul56"] = chbx_Additional_Manipulations.GetItemChecked(56) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul57"] = chbx_Additional_Manipulations.GetItemChecked(57) ? "Yes" : "No";
+            ConfigRepository.Instance()["dlcm_AdditionalManipul57"] = chbx_Additional_Manipulations.GetItemChecked(57) ? "Yes" : "No";
             //ConfigRepository.Instance()["dlcm_AdditionalManipul58"] = chbx_Additional_Manipulations.GetItemChecked(58) ? "Yes" : "No";
             //ConfigRepository.Instance()["dlcm_AdditionalManipul59"] = chbx_Additional_Manipulations.GetItemChecked(59) ? "Yes" : "No";
             //ConfigRepository.Instance()["dlcm_AdditionalManipul60"] = chbx_Additional_Manipulations.GetItemChecked(60) ? "Yes" : "No";
@@ -1940,7 +1940,8 @@ namespace RocksmithToolkitGUI.DLCManager
                                     var Available_Old = "No";
                                     if (!chbx_Additional_Manipulations.GetItemChecked(38)) //39. Use only unpacked songs already in the 0/dlcpacks folder
                                     {
-                                        if (!File.Exists(ConfigRepository.Instance()["general_wwisepath"] + "\\Authoring\\Win32\\Release\\bin\\Wwise.exe"))//Help\\WwiseHelp_en.chm"))//
+                                        var fgf = ConfigRepository.Instance()["general_wwisepath"] + "\\Authoring\\Win32\\Release\\bin\\Wwise.exe";
+                                        if (!File.Exists(fgf))//Help\\WwiseHelp_en.chm"))//
                                         {
                                             ErrorWindow frm1 = new ErrorWindow("Please Install Wwise v2014.1.6 build 5318with Authorithy binaries : " + Environment.NewLine + "A restart is required for the Conversion to WEM, process to be succesfull, else the errors can be captured through the Missing Files Query" + Environment.NewLine, "https://www.audiokinetic.com/download/", "Error at WEM Creation", true, true);
                                             frm1.ShowDialog();
@@ -2067,7 +2068,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                         DLCPackageData info = null;
                                         try
                                         {
-                                            info = DLCPackageData.LoadFromFolder(unpackedDir, packagePlatform);
+                                            info = DLCPackageData.LoadFromFolder(unpackedDir, packagePlatform); //Generating preview with different name
                                         }
                                         catch (Exception ee)
                                         {
@@ -2374,7 +2375,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                         }
                                         if (author == "" && tkversion != "") { author = ""; Has_author = "No"; }
                                         else Has_author = "Yes";
-                                        author = author.Replace("Custom Song Creator", "");
+                                        if (chbx_Additional_Manipulations.GetItemChecked(57)) author = author.Replace("Custom Song Creator", "");
 
                                         //rtxt_StatisticsOnReadDLCs.Text = vpos + "===" + txt.Length+ "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                         if (versionFile.Length <= 0) Is_Original = "Yes";
@@ -2489,7 +2490,8 @@ namespace RocksmithToolkitGUI.DLCManager
 
                                         try
                                         {
-                                            using (FileStream fs = File.OpenRead(AlbumArtPath))
+                                            if (AlbumArtPath!="")
+                                                using (FileStream fs = File.OpenRead(AlbumArtPath))
                                             {
                                                 SHA1 sha = new SHA1Managed();
                                                 art_hash = BitConverter.ToString(sha.ComputeHash(fs));//MessageBox.Show(FileHash+"-"+ss);
@@ -2854,13 +2856,13 @@ namespace RocksmithToolkitGUI.DLCManager
 
                                             //Set Preview
 
-                                            if (chbx_Additional_Manipulations.GetItemChecked(34) && info.OggPreviewPath == null || (chbx_Additional_Manipulations.GetItemChecked(55) && (audio_hash == audioPreview_hash || recalc_Preview)))
+                                            if (chbx_Additional_Manipulations.GetItemChecked(34) && info.OggPreviewPath == null || (chbx_Additional_Manipulations.GetItemChecked(55) && ((audio_hash!="" && audio_hash == audioPreview_hash) || recalc_Preview)))
                                             {
                                                 rtxt_StatisticsOnReadDLCs.Text = "Trying to add preview as missing.\n" + rtxt_StatisticsOnReadDLCs.Text;
                                                 var startInfo = new ProcessStartInfo();
                                                 startInfo.FileName = Path.Combine(AppWD, "oggcut.exe");
                                                 startInfo.WorkingDirectory = AppWD;// Path.GetDirectoryName();
-                                                var t = info.OggPath.Replace(".wem", "_fixed.ogg"); ;//"C:\\GitHub\\tmp\\0\\0_dlcpacks\\rs1compatibilitydisc_PS3\\audio\\ps3\\149627248.ogg";//txt_TempPath.Text + "\\0_dlcpacks\\rs1compatibilitydlc.psarc";
+                                                var t = info.OggPath.Replace(".wem", "_fixed.ogg"); //"C:\\GitHub\\tmp\\0\\0_dlcpacks\\rs1compatibilitydisc_PS3\\audio\\ps3\\149627248.ogg";//txt_TempPath.Text + "\\0_dlcpacks\\rs1compatibilitydlc.psarc";
                                                 var tt = t.Replace("_fixed.ogg", "_preview.ogg");
                                                 var times = ConfigRepository.Instance()["dlcm_PreviewStart"]; //00:30
                                                 string[] timepieces = times.Split(':');
@@ -2889,13 +2891,17 @@ namespace RocksmithToolkitGUI.DLCManager
                                                             info.OggPreviewPath = tt.Replace(".ogg", ".wem");
                                                             //2info.= tt.Replace();
 
-                                                            if (File.Exists(tt))
-                                                                using (FileStream fss = File.OpenRead(tt))
+                                                            if (File.Exists(info.OggPreviewPath))
+                                                                using (FileStream fss = File.OpenRead(info.OggPreviewPath))
                                                                 {
                                                                     SHA1 sha = new SHA1Managed();
                                                                     audioPreview_hash = BitConverter.ToString(sha.ComputeHash(fss));
                                                                     fss.Close();
                                                                 }
+                                                            else
+                                                            {
+                                                                info.OggPreviewPath = "";
+                                                            }
                                                             PreviewTime = ConfigRepository.Instance()["dlcm_PreviewStart"];
                                                             PreviewLenght = ConfigRepository.Instance()["dlcm_PreviewLenght"];
                                                         }
@@ -3044,7 +3050,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                                 command.CommandText += "Song_Lenght = @param69, ";
                                                 command.CommandText += "File_Creation_Date = @param70 ";
                                                 command.CommandText += "WHERE ID = " + IDD;
-
+                                                
                                                 command.Parameters.AddWithValue("@param1", import_path);
                                                 command.Parameters.AddWithValue("@param2", original_FileName);
                                                 command.Parameters.AddWithValue("@param3", original_FileName);
@@ -3075,7 +3081,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                                 command.Parameters.AddWithValue("@param28", ((Combo != "") ? Combo : "No"));
                                                 command.Parameters.AddWithValue("@param29", ((Vocalss != "") ? Vocalss : "No"));
                                                 command.Parameters.AddWithValue("@param30", sect1on);
-                                                command.Parameters.AddWithValue("@param31", ((info.AlbumArtPath != "") ? "Yes" : "No"));
+                                                command.Parameters.AddWithValue("@param31", ((info.AlbumArtPath == "" || info.AlbumArtPath == null) ? "No" : "Yes"));
                                                 command.Parameters.AddWithValue("@param32", ((info.OggPreviewPath != null) ? "Yes" : "No"));
                                                 command.Parameters.AddWithValue("@param33", Tones_Custom);
                                                 command.Parameters.AddWithValue("@param34", DD);
@@ -3085,7 +3091,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                                 command.Parameters.AddWithValue("@param38", PluckedType);
                                                 command.Parameters.AddWithValue("@param39", ((Is_Original == "Yes") ? "ORIG" : "CDLC"));
                                                 command.Parameters.AddWithValue("@param40", info.SignatureType);
-                                                command.Parameters.AddWithValue("@param41", ((author != "") ? author : (tkversion != "" ? "Custom Song Creator" : "")));
+                                                command.Parameters.AddWithValue("@param41", ((author != "") ? author : (tkversion != "" && !chbx_Additional_Manipulations.GetItemChecked(57) ? "Custom Song Creator" : "")));//
                                                 command.Parameters.AddWithValue("@param42", tkversion);
                                                 command.Parameters.AddWithValue("@param43", Is_Original);
                                                 command.Parameters.AddWithValue("@param44", ((alt == "" || alt == null) ? "No" : "Yes"));
@@ -3265,7 +3271,6 @@ namespace RocksmithToolkitGUI.DLCManager
                                                 command.CommandText += ",@param70" + ")"; //,@param33,@param44,@param44,@param45,@param46,@param47,@param48,@param49
 
 
-
                                                 command.Parameters.AddWithValue("@param1", import_path);
                                                 command.Parameters.AddWithValue("@param2", original_FileName);
                                                 command.Parameters.AddWithValue("@param3", original_FileName);
@@ -3296,7 +3301,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                                 command.Parameters.AddWithValue("@param28", ((Combo != "") ? Combo : "No"));
                                                 command.Parameters.AddWithValue("@param29", ((Vocalss != "") ? Vocalss : "No"));
                                                 command.Parameters.AddWithValue("@param30", sect1on);
-                                                command.Parameters.AddWithValue("@param31", ((info.AlbumArtPath != "") ? "Yes" : "No"));
+                                                command.Parameters.AddWithValue("@param31", ((info.AlbumArtPath == "" || info.AlbumArtPath == null) ? "No" : "Yes"));
                                                 command.Parameters.AddWithValue("@param32", ((info.OggPreviewPath != null) ? "Yes" : "No"));
                                                 command.Parameters.AddWithValue("@param33", Tones_Custom);
                                                 command.Parameters.AddWithValue("@param34", DD);
@@ -3306,7 +3311,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                                 command.Parameters.AddWithValue("@param38", PluckedType);
                                                 command.Parameters.AddWithValue("@param39", ((Is_Original == "Yes") ? "ORIG" : "CDLC"));
                                                 command.Parameters.AddWithValue("@param40", info.SignatureType);
-                                                command.Parameters.AddWithValue("@param41", ((author != "") ? author : (tkversion != "" ? "Custom Song Creator" : "")));
+                                                command.Parameters.AddWithValue("@param41", ((author != "") ? author : (tkversion != ""&& !chbx_Additional_Manipulations.GetItemChecked(57) ? "Custom Song Creator": "")));//
                                                 command.Parameters.AddWithValue("@param42", tkversion);
                                                 command.Parameters.AddWithValue("@param43", Is_Original);
                                                 command.Parameters.AddWithValue("@param44", ((alt == "" || alt == null) ? "No" : "Yes"));
@@ -6427,6 +6432,45 @@ namespace RocksmithToolkitGUI.DLCManager
             }
         }
 
+        private void btn_ProfilesSave_Click(object sender, EventArgs e)
+        {
+            if (chbx_Configurations.SelectedIndex == 0)
+            {
+                ConfigRepository.Instance()["dlcm_RocksmithDLCPath1"]=txt_RocksmithDLCPath.Text;
+                ConfigRepository.Instance()["dlcm_DBFolder1"]= txt_DBFolder.Text;
+                ConfigRepository.Instance()["dlcm_TempPath1"]=txt_TempPath.Text;
+                ConfigRepository.Instance()["dlcm_Prof1"] = chbx_Configurations.Text;
+            }
+            else if (chbx_Configurations.SelectedIndex == 1)
+            {
+                ConfigRepository.Instance()["dlcm_RocksmithDLCPath2"] = txt_RocksmithDLCPath.Text;
+                ConfigRepository.Instance()["dlcm_DBFolder2"] = txt_DBFolder.Text;
+                ConfigRepository.Instance()["dlcm_TempPath2"]=txt_TempPath.Text;
+                ConfigRepository.Instance()["dlcm_Prof2"] = chbx_Configurations.Text;
+            }
+            else if (chbx_Configurations.SelectedIndex == 2)
+            {
+                ConfigRepository.Instance()["dlcm_RocksmithDLCPath3"] = txt_RocksmithDLCPath.Text;
+                ConfigRepository.Instance()["dlcm_DBFolder3"] = txt_DBFolder.Text;
+                ConfigRepository.Instance()["dlcm_TempPath3"]=txt_TempPath.Text;
+                ConfigRepository.Instance()["dlcm_Prof3"] = chbx_Configurations.Text;
+            }
+            else if (chbx_Configurations.SelectedIndex == 3)
+            {
+                ConfigRepository.Instance()["dlcm_RocksmithDLCPath4"] = txt_RocksmithDLCPath.Text;
+                ConfigRepository.Instance()["dlcm_DBFolder4"] = txt_DBFolder.Text;
+                ConfigRepository.Instance()["dlcm_TempPath4"]=txt_TempPath.Text;
+                ConfigRepository.Instance()["dlcm_Prof4"] = chbx_Configurations.Text;
+            }
+            else if (chbx_Configurations.SelectedIndex == 4)
+            {
+                ConfigRepository.Instance()["dlcm_RocksmithDLCPath5"] = txt_RocksmithDLCPath.Text;
+                ConfigRepository.Instance()["dlcm_DBFolder5"] = txt_DBFolder.Text;
+                ConfigRepository.Instance()["dlcm_TempPath5"]=txt_TempPath.Text;
+                ConfigRepository.Instance()["dlcm_Prof5"] = chbx_Configurations.Text;
+            }
+        }
+
         private void btm_GoDB_Click(object sender, EventArgs e)
         {
             string t = txt_DBFolder.Text;
@@ -6473,32 +6517,32 @@ namespace RocksmithToolkitGUI.DLCManager
             if (chbx_Configurations.SelectedIndex == 0)
             {
                 txt_RocksmithDLCPath.Text = ConfigRepository.Instance()["dlcm_RocksmithDLCPath1"];
-                txt_DBFolder.Text = ConfigRepository.Instance()["dlcm_TempPath1"];
-                txt_TempPath.Text = ConfigRepository.Instance()["dlcm_DBFolder1"];
+                txt_DBFolder.Text = ConfigRepository.Instance()["dlcm_DBFolder1"];
+                txt_TempPath.Text = ConfigRepository.Instance()["dlcm_TempPath1"];
             }
             else if (chbx_Configurations.SelectedIndex == 1)
             {
                 txt_RocksmithDLCPath.Text = ConfigRepository.Instance()["dlcm_RocksmithDLCPath2"];
-                txt_DBFolder.Text = ConfigRepository.Instance()["dlcm_TempPath2"];
-                txt_TempPath.Text = ConfigRepository.Instance()["dlcm_DBFolder2"];
+                txt_DBFolder.Text = ConfigRepository.Instance()["dlcm_DBFolder2"];
+                txt_TempPath.Text = ConfigRepository.Instance()["dlcm_TempPath2"];
             }
             else if (chbx_Configurations.SelectedIndex == 2)
             {
                 txt_RocksmithDLCPath.Text = ConfigRepository.Instance()["dlcm_RocksmithDLCPath3"];
-                txt_DBFolder.Text = ConfigRepository.Instance()["dlcm_TempPath3"];
-                txt_TempPath.Text = ConfigRepository.Instance()["dlcm_DBFolder3"];
+                txt_DBFolder.Text = ConfigRepository.Instance()["dlcm_DBFolder3"];
+                txt_TempPath.Text = ConfigRepository.Instance()["dlcm_TempPath3"];
             }
             else if (chbx_Configurations.SelectedIndex == 3)
             {
                 txt_RocksmithDLCPath.Text = ConfigRepository.Instance()["dlcm_RocksmithDLCPath4"];
-                txt_DBFolder.Text = ConfigRepository.Instance()["dlcm_TempPath4"];
-                txt_TempPath.Text = ConfigRepository.Instance()["dlcm_DBFolder4"];
+                txt_DBFolder.Text = ConfigRepository.Instance()["dlcm_DBFolder4"];
+                txt_TempPath.Text = ConfigRepository.Instance()["dlcm_TempPath4"];
             }
             else if (chbx_Configurations.SelectedIndex == 4)
             {
                 txt_RocksmithDLCPath.Text = ConfigRepository.Instance()["dlcm_RocksmithDLCPath5"];
-                txt_DBFolder.Text = ConfigRepository.Instance()["dlcm_TempPath5"];
-                txt_TempPath.Text = ConfigRepository.Instance()["dlcm_DBFolder5"];
+                txt_DBFolder.Text = ConfigRepository.Instance()["dlcm_DBFolder5"];
+                txt_TempPath.Text = ConfigRepository.Instance()["dlcm_TempPath5"];
             }
         }
     }

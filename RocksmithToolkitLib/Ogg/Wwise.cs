@@ -107,15 +107,25 @@ namespace RocksmithToolkitLib.Ogg
             var cache = Path.Combine(templateDir, ".cache");
             if (Directory.Exists(cache))
             {
-                Directory.Delete(cache, true);
-                // WwiseCLI requires full .cache path be present??? Usually not.
-                Directory.CreateDirectory(Path.Combine(templateDir, ".cache\\Windows\\SFX"));
+                try //bcapi 
+                {
+                    Directory.Delete(cache, true);
+                    // WwiseCLI requires full .cache path be present??? Usually not.
+                    Directory.CreateDirectory(Path.Combine(templateDir, ".cache\\Windows\\SFX"));
+                }
+                catch (Exception ex) //bcapi 
+                { }
             }
 
             // cleanup gives new hex value to WEM files
             var bnk = Path.Combine(templateDir, "GeneratedSoundBanks");
             if (Directory.Exists(bnk))
-                Directory.Delete(bnk, true);
+                try //bcapi 
+                {
+                    Directory.Delete(bnk, true);
+                }
+                catch (Exception ex) //bcapi 
+                { }
 
             var dirName = Path.GetDirectoryName(sourcePath);
             var fileName = Path.GetFileNameWithoutExtension(sourcePath);

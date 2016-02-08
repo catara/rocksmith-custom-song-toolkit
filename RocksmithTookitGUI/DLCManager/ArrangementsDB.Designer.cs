@@ -183,9 +183,9 @@
             this.label12.ForeColor = System.Drawing.Color.DarkRed;
             this.label12.Location = new System.Drawing.Point(805, 44);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(193, 15);
+            this.label12.Size = new System.Drawing.Size(183, 13);
             this.label12.TabIndex = 345;
-            this.label12.Text = "Information not user @repack YET";
+            this.label12.Text = "Updated info not used @repack YET";
             // 
             // chbx_HasSection
             // 
@@ -193,7 +193,7 @@
             this.chbx_HasSection.Enabled = false;
             this.chbx_HasSection.Location = new System.Drawing.Point(873, 24);
             this.chbx_HasSection.Name = "chbx_HasSection";
-            this.chbx_HasSection.Size = new System.Drawing.Size(101, 19);
+            this.chbx_HasSection.Size = new System.Drawing.Size(89, 17);
             this.chbx_HasSection.TabIndex = 344;
             this.chbx_HasSection.Text = "Has Sections";
             this.chbx_HasSection.UseVisualStyleBackColor = true;
@@ -234,7 +234,7 @@
             this.label11.AutoSize = true;
             this.label11.Location = new System.Drawing.Point(948, 5);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(72, 15);
+            this.label11.Size = new System.Drawing.Size(63, 13);
             this.label11.TabIndex = 341;
             this.label11.Text = "Description:";
             // 
@@ -263,7 +263,7 @@
             this.label9.AutoSize = true;
             this.label9.Location = new System.Drawing.Point(239, 92);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(91, 15);
+            this.label9.Size = new System.Drawing.Size(81, 13);
             this.label9.TabIndex = 338;
             this.label9.Text = "Last Conv Time";
             // 
@@ -284,7 +284,7 @@
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(137, 8);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(56, 15);
+            this.label8.Size = new System.Drawing.Size(50, 13);
             this.label8.TabIndex = 336;
             this.label8.Text = "No. Ordr.";
             // 
@@ -293,7 +293,7 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(511, 12);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(39, 15);
+            this.label7.Size = new System.Drawing.Size(34, 13);
             this.label7.TabIndex = 335;
             this.label7.Text = "String";
             // 
@@ -302,7 +302,7 @@
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(358, 11);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(81, 15);
+            this.label6.Size = new System.Drawing.Size(71, 13);
             this.label6.TabIndex = 334;
             this.label6.Text = "Scrool Speed";
             // 
@@ -311,7 +311,7 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(137, 24);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(54, 15);
+            this.label5.Size = new System.Drawing.Size(49, 13);
             this.label5.TabIndex = 333;
             this.label5.Text = "CDLC ID";
             // 
@@ -320,7 +320,7 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(167, 93);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(19, 15);
+            this.label4.Size = new System.Drawing.Size(18, 13);
             this.label4.TabIndex = 332;
             this.label4.Text = "ID";
             // 
@@ -337,7 +337,7 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(156, 68);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(33, 15);
+            this.label3.Size = new System.Drawing.Size(29, 13);
             this.label3.TabIndex = 330;
             this.label3.Text = "XML";
             // 
@@ -346,7 +346,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(156, 45);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(33, 15);
+            this.label2.Size = new System.Drawing.Size(30, 13);
             this.label2.TabIndex = 329;
             this.label2.Text = "SNG";
             // 
@@ -355,7 +355,7 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(805, 69);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(73, 15);
+            this.label1.Size = new System.Drawing.Size(65, 13);
             this.label1.TabIndex = 328;
             this.label1.Text = "Route Mask";
             // 
@@ -385,7 +385,7 @@
             this.chbx_AutoSave.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chbx_AutoSave.Location = new System.Drawing.Point(936, 91);
             this.chbx_AutoSave.Name = "chbx_AutoSave";
-            this.chbx_AutoSave.Size = new System.Drawing.Size(80, 19);
+            this.chbx_AutoSave.Size = new System.Drawing.Size(73, 17);
             this.chbx_AutoSave.TabIndex = 101;
             this.chbx_AutoSave.Text = "AutoSave";
             this.chbx_AutoSave.UseVisualStyleBackColor = true;
@@ -451,7 +451,7 @@
             this.txt_RouteMask.ForeColor = System.Drawing.Color.Gray;
             this.txt_RouteMask.Location = new System.Drawing.Point(804, 85);
             this.txt_RouteMask.Name = "txt_RouteMask";
-            this.txt_RouteMask.Size = new System.Drawing.Size(107, 23);
+            this.txt_RouteMask.Size = new System.Drawing.Size(107, 20);
             this.txt_RouteMask.TabIndex = 133;
             // 
             // txt_TuningPitch
@@ -462,7 +462,7 @@
             this.txt_TuningPitch.ForeColor = System.Drawing.Color.Gray;
             this.txt_TuningPitch.Location = new System.Drawing.Point(747, 8);
             this.txt_TuningPitch.Name = "txt_TuningPitch";
-            this.txt_TuningPitch.Size = new System.Drawing.Size(56, 23);
+            this.txt_TuningPitch.Size = new System.Drawing.Size(56, 20);
             this.txt_TuningPitch.TabIndex = 132;
             // 
             // chbx_ToneD
@@ -505,7 +505,7 @@
             this.txt_String0.ForeColor = System.Drawing.Color.Gray;
             this.txt_String0.Location = new System.Drawing.Point(550, 9);
             this.txt_String0.Name = "txt_String0";
-            this.txt_String0.Size = new System.Drawing.Size(27, 23);
+            this.txt_String0.Size = new System.Drawing.Size(27, 20);
             this.txt_String0.TabIndex = 127;
             // 
             // txt_String2
@@ -516,7 +516,7 @@
             this.txt_String2.ForeColor = System.Drawing.Color.Gray;
             this.txt_String2.Location = new System.Drawing.Point(616, 9);
             this.txt_String2.Name = "txt_String2";
-            this.txt_String2.Size = new System.Drawing.Size(27, 23);
+            this.txt_String2.Size = new System.Drawing.Size(27, 20);
             this.txt_String2.TabIndex = 126;
             // 
             // txt_String3
@@ -527,7 +527,7 @@
             this.txt_String3.ForeColor = System.Drawing.Color.Gray;
             this.txt_String3.Location = new System.Drawing.Point(649, 9);
             this.txt_String3.Name = "txt_String3";
-            this.txt_String3.Size = new System.Drawing.Size(27, 23);
+            this.txt_String3.Size = new System.Drawing.Size(27, 20);
             this.txt_String3.TabIndex = 125;
             // 
             // txt_String4
@@ -538,7 +538,7 @@
             this.txt_String4.ForeColor = System.Drawing.Color.Gray;
             this.txt_String4.Location = new System.Drawing.Point(682, 9);
             this.txt_String4.Name = "txt_String4";
-            this.txt_String4.Size = new System.Drawing.Size(27, 23);
+            this.txt_String4.Size = new System.Drawing.Size(27, 20);
             this.txt_String4.TabIndex = 124;
             // 
             // txt_String5
@@ -549,7 +549,7 @@
             this.txt_String5.ForeColor = System.Drawing.Color.Gray;
             this.txt_String5.Location = new System.Drawing.Point(715, 9);
             this.txt_String5.Name = "txt_String5";
-            this.txt_String5.Size = new System.Drawing.Size(27, 23);
+            this.txt_String5.Size = new System.Drawing.Size(27, 20);
             this.txt_String5.TabIndex = 123;
             // 
             // txt_String1
@@ -560,7 +560,7 @@
             this.txt_String1.ForeColor = System.Drawing.Color.Gray;
             this.txt_String1.Location = new System.Drawing.Point(583, 9);
             this.txt_String1.Name = "txt_String1";
-            this.txt_String1.Size = new System.Drawing.Size(27, 23);
+            this.txt_String1.Size = new System.Drawing.Size(27, 20);
             this.txt_String1.TabIndex = 122;
             // 
             // txt_ID
@@ -571,7 +571,7 @@
             this.txt_ID.ForeColor = System.Drawing.Color.Gray;
             this.txt_ID.Location = new System.Drawing.Point(191, 89);
             this.txt_ID.Name = "txt_ID";
-            this.txt_ID.Size = new System.Drawing.Size(45, 23);
+            this.txt_ID.Size = new System.Drawing.Size(45, 20);
             this.txt_ID.TabIndex = 121;
             // 
             // chbx_BassDD
@@ -580,7 +580,7 @@
             this.chbx_BassDD.Enabled = false;
             this.chbx_BassDD.Location = new System.Drawing.Point(873, 7);
             this.chbx_BassDD.Name = "chbx_BassDD";
-            this.chbx_BassDD.Size = new System.Drawing.Size(77, 19);
+            this.chbx_BassDD.Size = new System.Drawing.Size(68, 17);
             this.chbx_BassDD.TabIndex = 119;
             this.chbx_BassDD.Text = "Bass DD";
             this.chbx_BassDD.UseVisualStyleBackColor = true;
@@ -624,7 +624,7 @@
             this.txt_lastConversionDateTime.ForeColor = System.Drawing.Color.Gray;
             this.txt_lastConversionDateTime.Location = new System.Drawing.Point(331, 89);
             this.txt_lastConversionDateTime.Name = "txt_lastConversionDateTime";
-            this.txt_lastConversionDateTime.Size = new System.Drawing.Size(100, 23);
+            this.txt_lastConversionDateTime.Size = new System.Drawing.Size(100, 20);
             this.txt_lastConversionDateTime.TabIndex = 113;
             // 
             // txt_ArrangementType
@@ -636,7 +636,7 @@
             this.txt_ArrangementType.ForeColor = System.Drawing.Color.Gray;
             this.txt_ArrangementType.Location = new System.Drawing.Point(242, 3);
             this.txt_ArrangementType.Name = "txt_ArrangementType";
-            this.txt_ArrangementType.Size = new System.Drawing.Size(113, 23);
+            this.txt_ArrangementType.Size = new System.Drawing.Size(113, 20);
             this.txt_ArrangementType.TabIndex = 111;
             // 
             // cueTextBox2
@@ -646,7 +646,7 @@
             this.cueTextBox2.ForeColor = System.Drawing.Color.Gray;
             this.cueTextBox2.Location = new System.Drawing.Point(747, 85);
             this.cueTextBox2.Name = "cueTextBox2";
-            this.cueTextBox2.Size = new System.Drawing.Size(51, 23);
+            this.cueTextBox2.Size = new System.Drawing.Size(51, 20);
             this.cueTextBox2.TabIndex = 109;
             // 
             // txt_Tuning_Speed
@@ -657,7 +657,7 @@
             this.txt_Tuning_Speed.ForeColor = System.Drawing.Color.Gray;
             this.txt_Tuning_Speed.Location = new System.Drawing.Point(435, 86);
             this.txt_Tuning_Speed.Name = "txt_Tuning_Speed";
-            this.txt_Tuning_Speed.Size = new System.Drawing.Size(56, 23);
+            this.txt_Tuning_Speed.Size = new System.Drawing.Size(56, 20);
             this.txt_Tuning_Speed.TabIndex = 108;
             // 
             // txt_ScrollSpeed
@@ -667,7 +667,7 @@
             this.txt_ScrollSpeed.ForeColor = System.Drawing.Color.Gray;
             this.txt_ScrollSpeed.Location = new System.Drawing.Point(437, 8);
             this.txt_ScrollSpeed.Name = "txt_ScrollSpeed";
-            this.txt_ScrollSpeed.Size = new System.Drawing.Size(56, 23);
+            this.txt_ScrollSpeed.Size = new System.Drawing.Size(56, 20);
             this.txt_ScrollSpeed.TabIndex = 105;
             // 
             // chbx_Bonus
@@ -676,7 +676,7 @@
             this.chbx_Bonus.Enabled = false;
             this.chbx_Bonus.Location = new System.Drawing.Point(808, 8);
             this.chbx_Bonus.Name = "chbx_Bonus";
-            this.chbx_Bonus.Size = new System.Drawing.Size(64, 19);
+            this.chbx_Bonus.Size = new System.Drawing.Size(56, 17);
             this.chbx_Bonus.TabIndex = 104;
             this.chbx_Bonus.Text = "Bonus";
             this.chbx_Bonus.UseVisualStyleBackColor = true;
@@ -687,7 +687,7 @@
             this.chbx_Broken.Enabled = false;
             this.chbx_Broken.Location = new System.Drawing.Point(808, 24);
             this.chbx_Broken.Name = "chbx_Broken";
-            this.chbx_Broken.Size = new System.Drawing.Size(68, 19);
+            this.chbx_Broken.Size = new System.Drawing.Size(60, 17);
             this.chbx_Broken.TabIndex = 102;
             this.chbx_Broken.Text = "Broken";
             this.chbx_Broken.UseVisualStyleBackColor = true;
@@ -701,7 +701,7 @@
             this.txt_XMLFilePath.Location = new System.Drawing.Point(191, 65);
             this.txt_XMLFilePath.Name = "txt_XMLFilePath";
             this.txt_XMLFilePath.ReadOnly = true;
-            this.txt_XMLFilePath.Size = new System.Drawing.Size(222, 23);
+            this.txt_XMLFilePath.Size = new System.Drawing.Size(222, 20);
             this.txt_XMLFilePath.TabIndex = 69;
             this.txt_XMLFilePath.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -713,7 +713,7 @@
             this.txt_SNGFilePath.Location = new System.Drawing.Point(191, 42);
             this.txt_SNGFilePath.Name = "txt_SNGFilePath";
             this.txt_SNGFilePath.ReadOnly = true;
-            this.txt_SNGFilePath.Size = new System.Drawing.Size(222, 23);
+            this.txt_SNGFilePath.Size = new System.Drawing.Size(222, 20);
             this.txt_SNGFilePath.TabIndex = 68;
             this.txt_SNGFilePath.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -725,7 +725,7 @@
             this.txt_CDLC_ID.Location = new System.Drawing.Point(191, 22);
             this.txt_CDLC_ID.Name = "txt_CDLC_ID";
             this.txt_CDLC_ID.ReadOnly = true;
-            this.txt_CDLC_ID.Size = new System.Drawing.Size(45, 23);
+            this.txt_CDLC_ID.Size = new System.Drawing.Size(45, 20);
             this.txt_CDLC_ID.TabIndex = 67;
             // 
             // txt_Arrangement_Name
@@ -735,7 +735,7 @@
             this.txt_Arrangement_Name.ForeColor = System.Drawing.Color.Gray;
             this.txt_Arrangement_Name.Location = new System.Drawing.Point(191, 5);
             this.txt_Arrangement_Name.Name = "txt_Arrangement_Name";
-            this.txt_Arrangement_Name.Size = new System.Drawing.Size(45, 23);
+            this.txt_Arrangement_Name.Size = new System.Drawing.Size(45, 20);
             this.txt_Arrangement_Name.TabIndex = 66;
             // 
             // CheckBox1
@@ -745,7 +745,7 @@
             this.CheckBox1.Location = new System.Drawing.Point(-153, 96);
             this.CheckBox1.Margin = new System.Windows.Forms.Padding(2);
             this.CheckBox1.Name = "CheckBox1";
-            this.CheckBox1.Size = new System.Drawing.Size(160, 19);
+            this.CheckBox1.Size = new System.Drawing.Size(139, 17);
             this.CheckBox1.TabIndex = 34;
             this.CheckBox1.Text = "Show only MessageBox";
             this.CheckBox1.UseVisualStyleBackColor = true;

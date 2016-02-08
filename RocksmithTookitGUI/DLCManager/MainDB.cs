@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
 //bcapi
 using System.Data.OleDb;
-using RocksmithToolkitGUI;
 //using RocksmithToolkitGUI.OggConverter;//convert ogg to wem
 using RocksmithToolkitLib.Ogg;//convert ogg to wem
 using RocksmithToolkitLib.Xml; //For xml read library
@@ -20,11 +18,13 @@ using Ookii.Dialogs; //cue text
 using System.Net; //4ftp
 using RocksmithToolkitLib.DLCPackage; //4packing
 using RocksmithToolkitLib;//4REPACKING
-using RocksmithToolkitGUI.DLCManager;//4 using then
-using System.Collections;//webparsing
 using System.Collections.Specialized;//webparsing
 using System.Security.Cryptography; //For File hash
-using NVorbis;
+//using Newtonsoft.Json;
+//using SpotifyAPI.Web.Enums;
+//using SpotifyAPI.Web;
+//using SpotifyAPI.Web.Models;
+using System.Threading;
 
 namespace RocksmithToolkitGUI.DLCManager
 {
@@ -436,7 +436,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     if (DataViewGrid.Rows[i].Cells["Has_Author"].Value.ToString() == "Yes") chbx_Author.Checked = true;
                     else chbx_Author.Checked = false;
                     if (DataViewGrid.Rows[i].Cells["Bass_Has_DD"].Value.ToString() == "Yes") { chbx_BassDD.Checked = true; btn_RemoveBassDD.Enabled = true; chbx_KeepBassDD.Enabled = true; chbx_RemoveBassDD.Enabled = true; }
-                    else { chbx_BassDD.Checked = false; btn_RemoveBassDD.Enabled = false; chbx_RemoveBassDD.Enabled = false; txt_BassPicking.Text = ""; }
+                    else { chbx_BassDD.Checked = false; btn_RemoveBassDD.Enabled = false; chbx_RemoveBassDD.Enabled = false;  }//txt_BassPicking.Text = "";
                     if (DataViewGrid.Rows[i].Cells["Has_Bonus_Arrangement"].Value.ToString() == "Yes") chbx_Bonus.Checked = true;
                     else chbx_Bonus.Checked = false;
                     chbx_Avail_Old.Checked = false;
@@ -760,9 +760,9 @@ namespace RocksmithToolkitGUI.DLCManager
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        MessageBox.Show("Can not open Main DB connection in Edit Main screen ! " + DB_Path + "-" + command.CommandText);
-                        throw;
+                        // MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Can not open Main DB connection in Edit Main screen ! " + DB_Path + "-" + command.CommandText + ex.Message);
+                        //throw;
                     }
                     finally
                     {
@@ -787,6 +787,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 ////}
             }
             GroupChanged = false;
+            Update_Selected();
         }
 
         private void btn_Search_Click(object sender, EventArgs e)
@@ -841,28 +842,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     return;
                 }
                 da.Dispose();
-                OleDbDataAdapter dsa = new OleDbDataAdapter("SELECT * FROM Main WHERE Selected=\"Yes\"", cn);
-                //MessageBox.Show("pop" + noOfRec.ToString() + SearchCmd);
-
-                try
-                {
-                    dsa.Fill(dssx2, "Main");
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    MessageBox.Show("-DB Open in Design Mode or Download Connectivity patch @ https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734");
-                    ErrorWindow frm1 = new ErrorWindow("DB Open in Design Mode or Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error when opening the DB", false, false);
-                    frm1.ShowDialog();
-                    return;
-                }
-                dsa.Dispose();
-                cn.Dispose();
-                noOfRec = dssx.Tables[0].Rows.Count;
-                //lbl_NoRec.Text = noOfRec.ToString() + " records.";
-                var noOfSelRec = dssx2.Tables[0].Rows.Count;
-                // dssx.Clear();
-                lbl_NoRec.Text = noOfSelRec.ToString() + "/" + noOfRec.ToString() + " records.";
+                Update_Selected();
                 //MessageBox.Show("pop" + noOfRec.ToString() + S, Width = 50 earchCmd);
                 //da = new OleDbDataAdapter("SELECT Identifier,ContactPosition FROM PositionType;", cn);
                 //da.Fill(ds, "PositionType");
@@ -1102,6 +1082,58 @@ namespace RocksmithToolkitGUI.DLCManager
             //DataGridView.ExpandColumns();
 
 
+        }
+        void Update_Selected()
+        {
+
+            DataSet dsz1 = new DataSet();
+            DataSet dsz2 = new DataSet();
+
+            using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            {
+                OleDbDataAdapter dsa = new OleDbDataAdapter(SearchCmd, cn);
+                //MessageBox.Show("pop" + noOfRec.ToString() + SearchCmd);
+
+                try
+                {
+                    dsa.Fill(dsz1, "Main");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("-DB Open in Design Mode or Download Connectivity patch @ https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734");
+                    ErrorWindow frm1 = new ErrorWindow("DB Open in Design Mode or Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error when opening the DB", false, false);
+                    frm1.ShowDialog();
+                    return;
+                }
+                dsa.Dispose();
+                noOfRec = dsz1.Tables[0].Rows.Count;
+
+                var SearchCmd22 = SearchCmd;
+                if (SearchCmd22.IndexOf(" WHERE") > 0)
+                    SearchCmd22 = SearchCmd22.Replace("FROM Main WHERE", "FROM Main WHERE Selected=\"Yes\" AND ");
+                else
+                    SearchCmd22 = SearchCmd22.Replace("FROM Main ", "FROM Main WHERE Selected=\"Yes\""); 
+                OleDbDataAdapter dca = new OleDbDataAdapter(SearchCmd22, cn);
+                //MessageBox.Show("pop" + noOfRec.ToString() + SearchCmd);
+
+                try
+                {
+                    dca.Fill(dsz2, "Main");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("-DB Open in Design Mode or Download Connectivity patch @ https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734");
+                    ErrorWindow frm1 = new ErrorWindow("DB Open in Design Mode or Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error when opening the DB", false, false);
+                    frm1.ShowDialog();
+                    return;
+                }
+                var noOfSelRec = dsz2.Tables[0].Rows.Count;
+                dca.Dispose();
+                cn.Dispose();
+                lbl_NoRec.Text = noOfSelRec.ToString() + "/" + noOfRec.ToString() + " records.";
+            }
         }
 
         public class Files
@@ -1399,21 +1431,21 @@ namespace RocksmithToolkitGUI.DLCManager
             }
             else
                 if (SearchON) //|| (SearchON && SearchExit))
-                {
+            {
 
 
-                    ////SearchCmd = "SELECT * FROM Main WHERE " + (txt_Artist.Text != "" ? " Artist Like '%" + txt_Artist.Text + "%'" : "") + (txt_Artist.Text != "" ? (txt_Title.Text != "" ? " AND " : "") : "") + (txt_Title.Text != "" ? " Song_Title Like '%" + txt_Title.Text + "%'" : "") + " ORDER BY Artist, Album_Year, Album, Song_Title ;";
-                    SearchCmd = "SELECT * FROM Main ORDER BY Artist, Album_Year, Album, Song_Title;";
-                    dssx.Dispose();
-                    Populate(ref DataViewGrid, ref Main);//, ref bsPositions, ref bsBadges);
-                    DataViewGrid.EditingControlShowing += DataGridView1_EditingControlShowing;
-                    DataViewGrid.Refresh();
-                    btn_SearchReset.Text = "Start Search";
-                    btn_Search.Enabled = false;
+                ////SearchCmd = "SELECT * FROM Main WHERE " + (txt_Artist.Text != "" ? " Artist Like '%" + txt_Artist.Text + "%'" : "") + (txt_Artist.Text != "" ? (txt_Title.Text != "" ? " AND " : "") : "") + (txt_Title.Text != "" ? " Song_Title Like '%" + txt_Title.Text + "%'" : "") + " ORDER BY Artist, Album_Year, Album, Song_Title ;";
+                SearchCmd = "SELECT * FROM Main ORDER BY Artist, Album_Year, Album, Song_Title;";
+                dssx.Dispose();
+                Populate(ref DataViewGrid, ref Main);//, ref bsPositions, ref bsBadges);
+                DataViewGrid.EditingControlShowing += DataGridView1_EditingControlShowing;
+                DataViewGrid.Refresh();
+                btn_SearchReset.Text = "Start Search";
+                btn_Search.Enabled = false;
 
-                    SearchON = false;
-                    SearchExit = false;
-                }
+                SearchON = false;
+                SearchExit = false;
+            }
         }
 
         private void btn_Close_Click(object sender, EventArgs e)
@@ -1631,7 +1663,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                         if (!File.Exists(ms1) && (ms3.LastIndexOf("showlights") < 1)) vFilesMissingIssues += " SNG " + ms3 + "; "; //showlights
                                         if (!File.Exists(ms2)) vFilesMissingIssues += " XML " + ms3 + "; ";
                                         //var tones = dms.Tables[0].Rows[i].ItemArray[78].ToString();//not done                                        
-                                        
+
                                     }
                                     catch (Exception ee)
                                     {
@@ -1689,7 +1721,8 @@ namespace RocksmithToolkitGUI.DLCManager
                             dan.Fill(dds, "Main");
                             var noOfRec = dds.Tables[0].Rows.Count;
                             if (noOfRec > 0)
-                            SearchCmd += "Pack='" + dds.Tables[0].Rows[0].ItemArray[0].ToString() + "'";//Import_Date > .Replace(" AM", "").Replace(" PM", "")
+                                SearchCmd += "Pack='" + dds.Tables[0].Rows[0].ItemArray[0].ToString() + "'";//Import_Date > .Replace(" AM", "").Replace(" PM", "")
+                            else SearchCmd += "1 = 2";
                         }
                     }
                     catch (System.IO.FileNotFoundException ee)
@@ -1712,7 +1745,9 @@ namespace RocksmithToolkitGUI.DLCManager
                         {
                             OleDbDataAdapter dan = new OleDbDataAdapter(SearchCmd4, cnn);
                             dan.Fill(djs, "Main");
-                            SearchCmd += "Import_Date > '" + djs.Tables[0].Rows[0].ItemArray[0].ToString().Substring(0, 10) + "'";
+                            if (noOfRec > 0)
+                                SearchCmd += "Import_Date > '" + djs.Tables[0].Rows[0].ItemArray[0].ToString().Substring(0, 10) + "'";
+                            else SearchCmd += "1 = 2";
                         }
                     }
                     catch (System.IO.FileNotFoundException ee)
@@ -1736,8 +1771,9 @@ namespace RocksmithToolkitGUI.DLCManager
                             OleDbDataAdapter dan = new OleDbDataAdapter(SearchCmd6, cnn);
                             dan.Fill(dzs, "Main");
                             var noOfRec = dzs.Tables[0].Rows.Count;
-                            if (noOfRec>0)
-                            SearchCmd += "CSTR(ID) in (SELECT CDLC_ID FROM LogPacking WHERE Pack='" + dzs.Tables[0].Rows[0].ItemArray[0].ToString() + "')";//Import_Date > .Replace(" AM", "").Replace(" PM", "")
+                            if (noOfRec > 0)
+                                SearchCmd += "CSTR(ID) in (SELECT CDLC_ID FROM LogPacking WHERE Pack='" + dzs.Tables[0].Rows[0].ItemArray[0].ToString() + "')";//Import_Date > .Replace(" AM", "").Replace(" PM", "")
+                            else SearchCmd += "1 = 2";
                         }
                     }
                     catch (System.IO.FileNotFoundException ee)
@@ -1750,26 +1786,29 @@ namespace RocksmithToolkitGUI.DLCManager
                     }
                     break;
                 case "Packing Errors":
-                    var SearchCmd7 = "SELECT top 1 ErrorPack FROM LogPackingError order by ID DESC;";// ORDER BY Pack,Import_Date DESC "SELECT MAX(ID),Import_Date FROM Main;";// WHERE Import_Date=''";
+                    var SearchCmd7 = "SELECT top 1 Pack FROM LogPackingError order by ID DESC;";// ORDER BY Pack,Import_Date DESC "SELECT MAX(ID),Import_Date FROM Main;";// WHERE Import_Date=''";
                     DataSet dks = new DataSet();
                     //var DB_Path = "";
                     //DB_Path = (chbx_DefaultDB.Checked == true ? MyAppWD : txt_DBFolder.Text) + "\\Files.accdb;";
-                    try
+                    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
                     {
-                        using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                        try
                         {
                             OleDbDataAdapter dan = new OleDbDataAdapter(SearchCmd7, cnn);
                             dan.Fill(dks, "Main");
-                            SearchCmd += "CSTR(ID) in (SELECT CDLC_ID FROM LogPackingError WHERE ErrorPack='" + dks.Tables[0].Rows[0].ItemArray[0].ToString() + "')";
+                            var noOfRec = dks.Tables[0].Rows.Count;
+                            if (noOfRec > 0)
+                                SearchCmd += "CSTR(ID) in (SELECT CDLC_ID FROM LogPackingError WHERE Pack='" + dks.Tables[0].Rows[0].ItemArray[0].ToString() + "')";
+                            else SearchCmd += "1 = 2";
                         }
-                    }
-                    catch (System.IO.FileNotFoundException ee)
-                    {
-                        // To inform the user and continue is 
-                        // sufficient for this demonstration. 
-                        // Your application may require different behavior.
-                        Console.WriteLine(ee.Message);
-                        //continue;
+                        catch (System.IO.FileNotFoundException ee)
+                        {
+                            // To inform the user and continue is 
+                            // sufficient for this demonstration. 
+                            // Your application may require different behavior.
+                            Console.WriteLine(ee.Message);
+                            //continue;
+                        }
                     }
                     break;
                 case "Same DLCName":
@@ -2982,7 +3021,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     }
                     catch (Exception ex)
                     {
-                        if (ex.Message.IndexOf("No JDK or JRE")>0)//Help\\WwiseHelp_en.chm"))//
+                        if (ex.Message.IndexOf("No JDK or JRE") > 0)//Help\\WwiseHelp_en.chm"))//
                         {
                             ErrorWindow frm1 = new ErrorWindow("Please Install Java" + Environment.NewLine + "A restart is required" + Environment.NewLine, "http://www.java.com/en/download/win10.jsp", "Error at Packing", false, false);
                             frm1.ShowDialog();
@@ -3386,7 +3425,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         }
 
-        private void button7_Click(object sender, EventArgs e)
+        private void btn_Duplicate_Click(object sender, EventArgs e)
         {
             //1. Copy Files
             var i = DataViewGrid.SelectedCells[0].RowIndex;
@@ -3412,11 +3451,12 @@ namespace RocksmithToolkitGUI.DLCManager
                 max += 1;
             }
             string t = filePath + max.ToString();
+            string source_dir = @filePath;
+            string destination_dir = @t;
+            var fold = "";
+            var fold2 = "";
             try //Copy dir
             {
-                string source_dir = @filePath;
-                string destination_dir = @t;
-
                 // substring is to remove destination_dir absolute path (E:\).
 
                 // Create subdirectory structure in destination    
@@ -3431,19 +3471,33 @@ namespace RocksmithToolkitGUI.DLCManager
                 {
                     File.Copy(file_name, destination_dir + file_name.Substring(source_dir.Length), true);
                 }
+
+                //copy old
+                if (DataViewGrid.Rows[i].Cells["Available_Old"].Value.ToString() == "Yes")
+                {
+                    fold = TempPath + "\\0_old\\" + DataViewGrid.Rows[i].Cells["Original_FileName"].Value.ToString();
+                    fold2 = Path.GetFileNameWithoutExtension(fold) + "" + max.ToString();
+                    File.Copy(fold, fold2.Replace(fold, fold2), true);
+                }
                 //Directory.Delete(source_dir, true); DONT DELETE
 
             }
             catch (Exception ee)
             {
                 //rtxt_StatisticsOnReadDLCs.Text = "FAILED3 .." + "\n" + rtxt_StatisticsOnReadDLCs.Text;//ee.Message + "----" +
+                MessageBox.Show("FAILED To copy Files" + ee.Message + "----");
                 Console.WriteLine(ee.Message);
             }
 
             //2. Copy Records
             try //Copy dir
             {
-                var cmd = "INSERT into Main (Song_Title, Song_Title_Sort, Album, Artist, Artist_Sort, Album_Year, AverageTempo, Volume, Preview_Volume, AlbumArtPath, AudioPath, audioPreviewPath, Track_No, Author, Version, DLC_Name, DLC_AppID, Current_FileName, Original_FileName, Import_Path, Import_Date, Folder_Name, File_Size, File_Hash, Original_File_Hash, Is_Original, Is_OLD, Is_Beta, Is_Alternate, Is_Multitrack, Is_Broken, MultiTrack_Version, Alternate_Version_No, DLC, Has_Bass, Has_Guitar, Has_Lead, Has_Rhythm, Has_Combo, Has_Vocals, Has_Sections, Has_Cover, Has_Preview, Has_Custom_Tone, Has_DD, Has_Version, Tunning, Bass_Picking, Tones, Groups, Rating, Description, Comments, Has_Track_No, Platform, PreviewTime, PreviewLenght, Youtube_Playthrough, CustomForge_Followers, CustomForge_Version, FilesMissingIssues, Duplicates, Pack, Keep_BassDD, Keep_DD, Keep_Original, Song_Lenght, Original, Selected, YouTube_Link, CustomsForge_Link, CustomsForge_Like, CustomsForge_ReleaseNotes, SignatureType, ToolkitVersion, Has_Author, OggPath, oggPreviewPath, UniqueDLCName, AlbumArt_Hash, Audio_Hash, audioPreview_Hash, Bass_Has_DD, Has_Bonus_Arrangement, Artist_ShortName, Album_ShortName, Available_Old, Available_Duplicate, Has_Been_Corrected, File_Creation_Date) SELECT Song_Title+\" alt" + max.ToString() + "\", Song_Title_Sort+\" alt" + max.ToString() + "\", Album, Artist, Artist_Sort, Album_Year, AverageTempo, Volume, Preview_Volume, AlbumArtPath, AudioPath, audioPreviewPath, Track_No, Author, Version, DLC_Name+\"" + max.ToString() + "\", DLC_AppID, Current_FileName, Original_FileName, Import_Path, Import_Date, Folder_Name+\"" + max.ToString() + "\", File_Size, File_Hash, Original_File_Hash, Is_Original, Is_OLD, Is_Beta, Is_Alternate, Is_Multitrack, Is_Broken, MultiTrack_Version, " + max.ToString() + ", DLC, Has_Bass, Has_Guitar, Has_Lead, Has_Rhythm, Has_Combo, Has_Vocals, Has_Sections, Has_Cover, Has_Preview, Has_Custom_Tone, Has_DD, Has_Version, Tunning, Bass_Picking, Tones, Groups, Rating, Description+\" duplicate\", Comments, Has_Track_No, Platform, PreviewTime, PreviewLenght, Youtube_Playthrough, CustomForge_Followers, CustomForge_Version, FilesMissingIssues, Duplicates, Pack, Keep_BassDD, Keep_DD, Keep_Original, Song_Lenght, Original, Selected, YouTube_Link, CustomsForge_Link, CustomsForge_Like, CustomsForge_ReleaseNotes, SignatureType, ToolkitVersion, Has_Author, OggPath, oggPreviewPath, UniqueDLCName, AlbumArt_Hash, Audio_Hash, audioPreview_Hash, Bass_Has_DD, Has_Bonus_Arrangement, Artist_ShortName, Album_ShortName, Available_Old, Available_Duplicate, Has_Been_Corrected, File_Creation_Date FROM Main  WHERE ID = " + txt_ID.Text;
+                var AlbumArtPath = DataViewGrid.Rows[i].Cells["AlbumArtPath"].Value.ToString().Replace(source_dir, destination_dir);
+                var AudioPath = DataViewGrid.Rows[i].Cells["AudioPath"].Value.ToString().Replace(source_dir, destination_dir);
+                var audioPreviewPath = DataViewGrid.Rows[i].Cells["audioPreviewPath"].Value.ToString().Replace(source_dir, destination_dir);
+                var OggPath = DataViewGrid.Rows[i].Cells["OggPath"].Value.ToString().Replace(source_dir, destination_dir);
+                var oggPreviewPath = DataViewGrid.Rows[i].Cells["oggPreviewPath"].Value.ToString().Replace(source_dir, destination_dir);
+                var cmd = "INSERT into Main (Song_Title, Song_Title_Sort, Album, Artist, Artist_Sort, Album_Year, AverageTempo, Volume, Preview_Volume, AlbumArtPath, AudioPath, audioPreviewPath, Track_No, Author, Version, DLC_Name, DLC_AppID, Current_FileName, Original_FileName, Import_Path, Import_Date, Folder_Name, File_Size, File_Hash, Original_File_Hash, Is_Original, Is_OLD, Is_Beta, Is_Alternate, Is_Multitrack, Is_Broken, MultiTrack_Version, Alternate_Version_No, DLC, Has_Bass, Has_Guitar, Has_Lead, Has_Rhythm, Has_Combo, Has_Vocals, Has_Sections, Has_Cover, Has_Preview, Has_Custom_Tone, Has_DD, Has_Version, Tunning, Bass_Picking, Tones, Groups, Rating, Description, Comments, Has_Track_No, Platform, PreviewTime, PreviewLenght, Youtube_Playthrough, CustomForge_Followers, CustomForge_Version, FilesMissingIssues, Duplicates, Pack, Keep_BassDD, Keep_DD, Keep_Original, Song_Lenght, Original, Selected, YouTube_Link, CustomsForge_Link, CustomsForge_Like, CustomsForge_ReleaseNotes, SignatureType, ToolkitVersion, Has_Author, OggPath, oggPreviewPath, UniqueDLCName, AlbumArt_Hash, Audio_Hash, audioPreview_Hash, Bass_Has_DD, Has_Bonus_Arrangement, Artist_ShortName, Album_ShortName, Available_Old, Available_Duplicate, Has_Been_Corrected, File_Creation_Date) SELECT Song_Title+\" alt" + max.ToString() + "\", Song_Title_Sort+\" alt" + max.ToString() + "\", Album, Artist, Artist_Sort, Album_Year, AverageTempo, Volume, Preview_Volume, \"" + AlbumArtPath + "\", \"" + AudioPath + "\", \"" + audioPreviewPath + "\", Track_No, Author, Version, DLC_Name+\"" + max.ToString() + "\", DLC_AppID, Current_FileName, \"" + fold2.Replace(fold, fold2) + "\", Import_Path, Import_Date, Folder_Name+\"" + max.ToString() + "\", File_Size, File_Hash, Original_File_Hash, Is_Original, Is_OLD, Is_Beta, \"" + "Yes" + "\", Is_Multitrack, Is_Broken, MultiTrack_Version, " + max.ToString() + ", DLC, Has_Bass, Has_Guitar, Has_Lead, Has_Rhythm, Has_Combo, Has_Vocals, Has_Sections, Has_Cover, Has_Preview, Has_Custom_Tone, Has_DD, Has_Version, Tunning, Bass_Picking, Tones, Groups, Rating, Description+\" duplicate\", Comments, Has_Track_No, Platform, PreviewTime, PreviewLenght, Youtube_Playthrough, CustomForge_Followers, CustomForge_Version, FilesMissingIssues, Duplicates, Pack, Keep_BassDD, Keep_DD, Keep_Original, Song_Lenght, Original, Selected, YouTube_Link, CustomsForge_Link, CustomsForge_Like, CustomsForge_ReleaseNotes, SignatureType, ToolkitVersion, Has_Author, \"" + OggPath + "\", \"" + oggPreviewPath + "\", UniqueDLCName, AlbumArt_Hash, Audio_Hash, audioPreview_Hash, Bass_Has_DD, Has_Bonus_Arrangement, Artist_ShortName, Album_ShortName, Available_Old, Available_Duplicate, Has_Been_Corrected, File_Creation_Date FROM Main  WHERE ID = " + txt_ID.Text;
                 DataSet dsz = new DataSet();
                 using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
                 {
@@ -3464,8 +3518,9 @@ namespace RocksmithToolkitGUI.DLCManager
                 }
                 var CDLC_ID = dus.Tables[0].Rows[0].ItemArray[0].ToString();
 
-
-                cmd = "INSERT into Arrangements (Arrangement_Name, CDLC_ID, Bonus, SNGFilePath, XMLFilePath, XMLFile_Hash, ScrollSpeed, Tunning, Rating, PlayThoughYBLink, CustomsForge_Link, ArrangementSort, TuningPitch, ToneBase, Idd, MasterId, ArrangementType, String0, String1, String2, String3, String4, String5, PluckedType, RouteMask, XMLFileName, XMLFileLLID, XMLFileUUID, SNGFileName, SNGFileLLID, SNGFileUUID, ToneMultiplayer, ToneA, ToneB, ToneC, ToneD, lastConversionDateTime, SNGFileHash, Has_Sections, Comments) SELECT Arrangement_Name, " + CDLC_ID + ", Bonus, SNGFilePath, XMLFilePath, XMLFile_Hash, ScrollSpeed, Tunning, Rating, PlayThoughYBLink, CustomsForge_Link, ArrangementSort, TuningPitch, ToneBase, Idd, MasterId, ArrangementType, String0, String1, String2, String3, String4, String5, PluckedType, RouteMask, XMLFileName, XMLFileLLID, XMLFileUUID, SNGFileName, SNGFileLLID, SNGFileUUID, ToneMultiplayer, ToneA, ToneB, ToneC, ToneD, lastConversionDateTime, SNGFileHash, Has_Sections, Comments FROM Arrangements WHERE CDLC_ID = " + txt_ID.Text;
+                //var SNGFilePath = ""; SNGFilePath = SNGFilePath.Replace(source_dir, destination_dir);//= REPLACE(OggPath, left(OggPath, instr(OggPath, '" + tmpp + "') - 1), '" + TempPath + tmpp + "')
+                //var XMLFilePath = ""; XMLFilePath = XMLFilePath.Replace(source_dir, destination_dir);
+                cmd = "INSERT into Arrangements (Arrangement_Name, CDLC_ID, Bonus, SNGFilePath, XMLFilePath, XMLFile_Hash, ScrollSpeed, Tunning, Rating, PlayThoughYBLink, CustomsForge_Link, ArrangementSort, TuningPitch, ToneBase, Idd, MasterId, ArrangementType, String0, String1, String2, String3, String4, String5, PluckedType, RouteMask, XMLFileName, XMLFileLLID, XMLFileUUID, SNGFileName, SNGFileLLID, SNGFileUUID, ToneMultiplayer, ToneA, ToneB, ToneC, ToneD, lastConversionDateTime, SNGFileHash, Has_Sections, Comments) SELECT Arrangement_Name, " + CDLC_ID + ", Bonus, '" + destination_dir + "\\manifests\\'+right(SNGFilePath,len(SNGFilePath)-instr(SNGFilePath, 'manifests')-9), '" + destination_dir + "\\songs\\arr\\'+right(XMLFilePath,len(XMLFilePath)-instr(XMLFilePath, '\\songs\\arr\\')-10), XMLFile_Hash, ScrollSpeed, Tunning, Rating, PlayThoughYBLink, CustomsForge_Link, ArrangementSort, TuningPitch, ToneBase, Idd, MasterId, ArrangementType, String0, String1, String2, String3, String4, String5, PluckedType, RouteMask, XMLFileName, XMLFileLLID, XMLFileUUID, SNGFileName, SNGFileLLID, SNGFileUUID, ToneMultiplayer, ToneA, ToneB, ToneC, ToneD, lastConversionDateTime, SNGFileHash, Has_Sections, Comments FROM Arrangements WHERE CDLC_ID = " + txt_ID.Text;
                 DataSet dgz = new DataSet();
                 using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
                 {
@@ -3493,6 +3548,7 @@ namespace RocksmithToolkitGUI.DLCManager
             catch (Exception ee)
             {
                 //rtxt_StatisticsOnReadDLCs.Text = "FAILED3 .." + "\n" + rtxt_StatisticsOnReadDLCs.Text;//ee.Message + "----" +
+                MessageBox.Show("FAILED To copy REcords" + ee.Message + "----");
                 Console.WriteLine(ee.Message);
             }
         }
@@ -3610,8 +3666,161 @@ namespace RocksmithToolkitGUI.DLCManager
 
         }
 
+        //public class AutorizationCodeAuth
+        //{
+        //    public delegate void OnResponseReceived(AutorizationCodeAuthResponse response);
+
+        //    private SimpleHttpServer _httpServer;
+        //    private Thread _httpThread;
+        //    public String ClientId { get; set; }
+        //    public String RedirectUri { get; set; }
+        //    public String State { get; set; }
+        //    public Scope Scope { get; set; }
+        //    public Boolean ShowDialog { get; set; }
+
+        //    /// <summary>
+        //    ///     Will be fired once the user authenticated
+        //    /// </summary>
+        //    public event OnResponseReceived OnResponseReceivedEvent;
+
+        //    /// <summary>
+        //    ///     Start the auth process (Make sure the internal HTTP-Server ist started)
+        //    /// </summary>
+        //    public void DoAuth()
+        //    {
+        //        String uri = GetUri();
+        //        Process.Start(uri);
+        //    }
+
+        //    /// <summary>
+        //    ///     Refreshes auth by providing the clientsecret (Don't use this if you're on a client)
+        //    /// </summary>
+        //    /// <param name="refreshToken">The refresh-token of the earlier gathered token</param>
+        //    /// <param name="clientSecret">Your Client-Secret, don't provide it if this is running on a client!</param>
+        //    public Token RefreshToken(string refreshToken, string clientSecret)
+        //    {
+        //        using (WebClient wc = new WebClient())
+        //        {
+        //            wc.Proxy = null;
+        //            wc.Headers.Add("Authorization",
+        //                "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes(ClientId + ":" + clientSecret)));
+        //            NameValueCollection col = new NameValueCollection
+        //        {
+        //            {"grant_type", "refresh_token"},
+        //            {"refresh_token", refreshToken}
+        //        };
+
+        //            String response;
+        //            try
+        //            {
+        //                byte[] data = wc.UploadValues("https://accounts.spotify.com/api/token", "POST", col);
+        //                response = Encoding.UTF8.GetString(data);
+        //            }
+        //            catch (WebException e)
+        //            {
+        //                using (StreamReader reader = new StreamReader(e.Response.GetResponseStream()))
+        //                {
+        //                    response = reader.ReadToEnd();
+        //                }
+        //            }
+        //            return JsonConvert.DeserializeObject<Token>(response);
+        //        }
+        //    }
+
+        //    private String GetUri()
+        //    {
+        //        StringBuilder builder = new StringBuilder("https://accounts.spotify.com/authorize/?");
+        //        builder.Append("client_id=" + ClientId);
+        //        builder.Append("&response_type=code");
+        //        builder.Append("&redirect_uri=" + RedirectUri);
+        //        builder.Append("&state=" + State);
+        //        builder.Append("&scope=" + Scope.GetStringAttribute(" "));
+        //        builder.Append("&show_dialog=" + ShowDialog);
+        //        return builder.ToString();
+        //    }
+
+        //    /// <summary>
+        //    ///     Start the internal HTTP-Server
+        //    /// </summary>
+        //    public void StartHttpServer(int port = 80)
+        //    {
+        //        _httpServer = new SimpleHttpServer(port, AuthType.Authorization);
+        //        _httpServer.OnAuth += HttpServerOnOnAuth;
+
+        //        _httpThread = new Thread(_httpServer.Listen);
+        //        _httpThread.Start();
+        //    }
+
+        //    private void HttpServerOnOnAuth(AuthEventArgs e)
+        //    {
+        //        OnResponseReceivedEvent?.Invoke(new AutorizationCodeAuthResponse()
+        //        {
+        //            Code = e.Code,
+        //            State = e.State,
+        //            Error = e.Error
+        //        });
+        //    }
+
+        //    /// <summary>
+        //    ///     This will stop the internal HTTP-Server (Should be called after you got the Token)
+        //    /// </summary>
+        //    public void StopHttpServer()
+        //    {
+        //        _httpServer = null;
+        //    }
+
+        //    /// <summary>
+        //    ///     Exchange a code for a Token (Don't use this if you're on a client)
+        //    /// </summary>
+        //    /// <param name="34392dbf46d04a94b778de26f2324472">The gathered code from the response</param>
+        //    /// <param name="7e940a33ba274f5a88fe9ef7934b74d4">Your Client-Secret, don't provide it if this is running on a client!</param>
+        //    /// <returns></returns>
+        //    public Token ExchangeAuthCode(String code, String clientSecret)
+        //    {
+        //        using (WebClient wc = new WebClient())
+        //        {
+        //            wc.Proxy = null;
+
+        //            NameValueCollection col = new NameValueCollection
+        //        {
+        //            {"grant_type", "authorization_code"},
+        //            {"code", code},
+        //            {"redirect_uri", RedirectUri},
+        //            {"client_id", "34392dbf46d04a94b778de26f2324472"},//ClientId
+        //            {"client_secret", "7e940a33ba274f5a88fe9ef7934b74d4"}//clientSecret
+        //        };
+
+        //            String response;
+        //            try
+        //            {
+        //                byte[] data = wc.UploadValues("https://accounts.spotify.com/api/token", "POST", col);
+        //                response = Encoding.UTF8.GetString(data);
+        //            }
+        //            catch (WebException e)
+        //            {
+        //                using (StreamReader reader = new StreamReader(e.Response.GetResponseStream()))
+        //                {
+        //                    response = reader.ReadToEnd();
+        //                }
+        //            }
+        //            return JsonConvert.DeserializeObject<Token>(response);
+        //        }
+        //    }
+        //}
+
+        //public struct AutorizationCodeAuthResponse
+        //{
+        //    public String Code { get; set; }
+        //    public String State { get; set; }
+        //    public String Error { get; set; }
+        //}
+
+
         public static int GetTrackNo(string Artist, string Album, string Title)
         {
+            //StartHttpServer();
+            //_auth.StartHttpServer(8000);
+            //_auth.DoAuth();
             var a1 = "";
             try
             {
@@ -3861,39 +4070,47 @@ namespace RocksmithToolkitGUI.DLCManager
         private void btn_Copy_old_Click(object sender, EventArgs e)
         {
             pB_ReadDLCs.Value = 0;
-            try
-            {
-                var com = "SELECT * FROM Main";
-                com += " WHERE ID IN (" + SearchCmd.Replace("*", "ID").Replace(";", "") + ")";
-                DataSet dhs = new DataSet();
-                using (OleDbConnection cBn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-                {// 1. If hash already exists do not insert
+            using (OleDbConnection cBn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            {// 1. If hash already exists do not insert
+                try
+                {
+                    var com = "SELECT * FROM Main";
+                    com += " WHERE ID IN (" + SearchCmd.Replace("*", "ID").Replace(";", "") + ")";
+                    DataSet dhs = new DataSet();
+
                     OleDbDataAdapter dBs = new OleDbDataAdapter(com, cBn);
                     dBs.Fill(dhs, "Main");
                     dBs.Dispose();
                     noOfRec = dhs.Tables[0].Rows.Count;
+                    var dest = "";
                     pB_ReadDLCs.Maximum = noOfRec;
                     for (var i = 0; i <= noOfRec - 1; i++)
                     {
-                        string filePath = TempPath + "\\0_old\\" + dhs.Tables[0].Rows[i].ItemArray[19];
-                        var dest = RocksmithDLCPath + "\\..\\" + dhs.Tables[0].Rows[i].ItemArray[19];
-                        try
+                        string filePath = TempPath + "\\0_old\\" + dhs.Tables[0].Rows[i].ItemArray[19];//Original_FileName
+                        dest = RocksmithDLCPath + "\\" + dhs.Tables[0].Rows[i].ItemArray[19];//..\\
+                        var eef = dhs.Tables[0].Rows[i].ItemArray[87].ToString();
+                        if (eef == "Yes")//OLd available
                         {
-                            File.Copy(filePath, dest, true);
-                        }
-                        catch (System.IO.FileNotFoundException ee)
-                        {
-                            Console.WriteLine(ee.Message);
-                            MessageBox.Show(filePath + "----" + dest + "Error at copy OLD " + ee);
+                            try
+                            {
+                                File.Copy(filePath, dest, true);
+                            }
+                            catch (System.IO.FileNotFoundException ee)
+                            {
+                                Console.WriteLine(ee.Message);
+                                MessageBox.Show(filePath + "----" + dest + "Error at copy OLD " + ee);
+                            }
                         }
                         pB_ReadDLCs.Value++;
                     }
+                    MessageBox.Show(noOfRec + " Files Copied to " + RocksmithDLCPath + "\\");
                 }
-            }
-            catch (Exception ee)
-            {
-                Console.WriteLine(ee.Message);
-                MessageBox.Show("Error at copy OLD " + ee);
+
+                catch (Exception ee)
+                {
+                    Console.WriteLine(ee.Message);
+                    MessageBox.Show("Error at copy OLD " + ee);
+                }
             }
         }
 
@@ -4197,5 +4414,6 @@ namespace RocksmithToolkitGUI.DLCManager
                     }
                 }
         }
+
     }
 }

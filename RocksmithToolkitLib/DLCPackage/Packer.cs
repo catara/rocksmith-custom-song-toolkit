@@ -119,7 +119,7 @@ namespace RocksmithToolkitLib.DLCPackage
             if (decodeAudio)
             {
                 GlobalExtension.ShowProgress("Decoding Audio ...", 50);
-                var audioFiles = Directory.EnumerateFiles(unpackedDir, "*.*", SearchOption.AllDirectories).Where(s => s.EndsWith(".ogg") || s.EndsWith(".wem"));
+                var audioFiles = Directory.EnumerateFiles(unpackedDir, "*.*", SearchOption.AllDirectories).Where(s => s.EndsWith(".wem"));//bcapi s.EndsWith(".ogg") || 
                 foreach (var file in audioFiles)
                 {
                     var outputAudioFileName = Path.Combine(Path.GetDirectoryName(file), String.Format("{0}_fixed{1}", Path.GetFileNameWithoutExtension(file), ".ogg"));

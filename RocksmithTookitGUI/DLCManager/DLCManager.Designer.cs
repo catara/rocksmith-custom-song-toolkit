@@ -110,6 +110,7 @@
             this.btm_GoDB = new System.Windows.Forms.Button();
             this.btn_Log = new System.Windows.Forms.Button();
             this.chbx_Configurations = new System.Windows.Forms.ComboBox();
+            this.btn_ProfilesSave = new System.Windows.Forms.Button();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -350,6 +351,7 @@
             "55. @Pack consider All songs as beta (place them top of the list)",
             "56. Gen Preview if Preview=Audio or Preview is longer than a min",
             "57. Duplicate manag ignores Multitracks",
+            "58. Don\'t save Author when generic (i.e. Custom Soing Creator)",
             "98. @IMPORT>",
             "99. @Pack>"});
             this.chbx_Additional_Manipulations.Location = new System.Drawing.Point(239, 196);
@@ -1276,17 +1278,29 @@
             "Mac",
             "PC",
             "DevVirtualMachine"});
-            this.chbx_Configurations.Location = new System.Drawing.Point(381, 3);
+            this.chbx_Configurations.Location = new System.Drawing.Point(384, 3);
             this.chbx_Configurations.Name = "chbx_Configurations";
-            this.chbx_Configurations.Size = new System.Drawing.Size(153, 21);
+            this.chbx_Configurations.Size = new System.Drawing.Size(126, 21);
             this.chbx_Configurations.TabIndex = 325;
             this.chbx_Configurations.Text = "Select Profile";
             this.chbx_Configurations.SelectedIndexChanged += new System.EventHandler(this.chbx_Configurations_SelectedIndexChanged);
+            // 
+            // btn_ProfilesSave
+            // 
+            this.btn_ProfilesSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_ProfilesSave.Location = new System.Drawing.Point(513, 4);
+            this.btn_ProfilesSave.Name = "btn_ProfilesSave";
+            this.btn_ProfilesSave.Size = new System.Drawing.Size(21, 20);
+            this.btn_ProfilesSave.TabIndex = 386;
+            this.btn_ProfilesSave.Text = "+";
+            this.btn_ProfilesSave.UseVisualStyleBackColor = true;
+            this.btn_ProfilesSave.Click += new System.EventHandler(this.btn_ProfilesSave_Click);
             // 
             // DLCManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btn_ProfilesSave);
             this.Controls.Add(this.chbx_Configurations);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.btn_Log);
@@ -1449,5 +1463,6 @@
         private System.Windows.Forms.Button btm_GoDB;
         private System.Windows.Forms.Button btn_Log;
         private System.Windows.Forms.ComboBox chbx_Configurations;
+        private System.Windows.Forms.Button btn_ProfilesSave;
     }
 }

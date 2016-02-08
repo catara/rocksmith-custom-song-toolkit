@@ -46,59 +46,67 @@
 -+ CICAGO 26 25 original SONG FAILS AT PACK 
 -+ usa peaches long naming fails at packing
 -+ some songs have preview in minutes (preview rename thing) recalculated at repack
-- feat:		 Alternate No for duplicates logic
-- feat:		 Include Standardization names into duplication checks
-- big feature: get the volume of the audio file and then compare against the rest or a norm
-- medium feature: add DLCs into cache.psarc to speed up the game startup
-- big feature - For the tagging add the info to the Preview Image/Album Art
-- audioslave sections missing maybe cause its an original and i used my own logic to strip the DD
-- save error log separately
-  - save constantly not only at the end
-  - smart dEbug OUTPUTING function...
+- [ ] feat:		 Alternate No for duplicates logic
+- [ ] feat:		 Include Standardization names into duplication checks
+- [ ] big feature: get the volume of the audio file and then compare against the rest or a norm
+- [ ] medium feature: add DLCs into cache.psarc to speed up the game startup
+- [ ] big feature - For the tagging add the info to the Preview Image/Album Art
+- [ ] audioslave sections missing maybe cause its an original and i used my own logic to strip the DD
+- [ ] save error log separately
+  - [ ] save constantly not only at the end
+  - [ ] smart dEbug OUTPUTING function...
   -+ save in the db as well
-- make a custom song out of retail
-- finish arrangement (demo with the hives overdrive sall the time :) )
-- remove commented out code 
-- duplicate import should save the names of the files in a separate table :)
-  - save also hash not to ask again for duplicates if already decided as duplicate
-- if i delete a folder do i get a warning in the maintenance check ?
-  - check for json existance as well. Maybe
-- ignore Multitracks as duplicates
-- increase the no of threads
- -- add cancelation button
- -- progress bar update
-- duplicate window should return last maximum conv date and save it 
--- reorder main db fields
-	- size
-	- save /offer the chance to reorder
-- rename the Options and use the xml code inside the tool (removing the 03 14 35 dependency)
-- improve progress bar of repacks
-- enable shortNames and Album correction in Standardization
-- ask if you wanna have the packing folder deleted
-- dont conv Orig
-- changing path
-- alternate 0
+- [ ] make a custom song out of retail
+- [ ] finish arrangement (demo with the hives overdrive sall the time :) )
+- [ ] remove commented out code 
+- [ ] duplicate import should save the names of the files in a separate table :)
+  - [ ] save also hash not to ask again for duplicates if already decided as duplicate
+- [ ] if i delete a folder do i get a warning in the maintenance check ?
+  - [ ] check for json existance as well. Maybe
+- [ ] increase the no of threads
+ -- [ ] add cancelation button
+ -- [ ] progress bar update
+- [ ] duplicate window should return last maximum conv date and save it 
+-- [ ] reorder main db fields
+	- [ ] size
+	- [ ] save /offer the chance to reorder
+- [ ] rename the Options and use the xml code inside the tool (removing the 03 14 35 dependency)
+- [ ] improve progress bar of repacks
+- [ ] enable shortNames and Album correction in Standardization
+- [ ] ask if you wanna have the packing folder deleted
+- [ ] dont conv Orig
+- [ ] changing path
+- [ ] alternate 0
 
 ## WiP:
--+ some tracks no don't get read/picked cause" (1) " when importing other formats this should be ok
--+ generate a garageband
-- [ ] author still in
+- [+] some tracks no don't get read/picked cause" (1) " when importing other formats this should be ok
+- [+] generate a garageband
 - [ ] it's my life..breaks because of the aphostrofe'
 - [ ] if cover was from someone else please compare against that (save old cover)
 - [ ] update to wise 2015 (messages&testing)
-- [ ] fopen ticket for the dlcpackagedata crash for 311 down in
+- [ ] open ticket for the dlcpackagedata crash for 311 down in
 - [ ] why all songs have 30sec preview :)
 - [ ] some songs dont repack
-- [ ] i had to apply a fix for 311 down in
 - [ ] remove all dd in Cache/Retails screen
-- [ ] finish profiles
+- [+] finish profiles (load Saved Profile names)
 - [ ] fix filter in CAche
-- [ ] duplicate management..on change..check and color
+- [ ] duplicate management..on change..check and green color
+- [ ] Check Packer.cs bug
+- [ ] Update to latest Master (template broken revert will gen DLCName change back from dlckey)
+- [ ] Spotify old API is dead, use a new way to... (bring also cover)
+- [ ] How many audioslave bring themback alive foler r?
+- [ ] Minerva gives a wwise error check on a repaired hdd...check and open a tix
 
 done:
 (next release)
+- [x] fix duplicate song for all the connected files at DB level. Copied OLD file as well.
+- [x] Update Selectd stats after Save
+- [?] Bass Picked changes when moving up and down in MainDB
+- [x] Custom song creators only saved if Advanced option set
+- [x] Fix for unnecessary preview creation for songs wo Albumart
+- [x] Fix no album art detection
 
-(prev release; but maybe not thurally tested)
+(prev release; but maybe not thuroughly tested)
 - [x] duplic manag make date bigger
 - [x] duplic manag make date readonly
 - [x] when opening no java...

@@ -40,9 +40,9 @@ namespace RocksmithToolkitGUI.DLCManager
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.Panel1 = new System.Windows.Forms.Panel();
             this.btn_GroupsAdd = new System.Windows.Forms.Button();
             this.btn_GroupsRemove = new System.Windows.Forms.Button();
@@ -150,6 +150,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.cmb_Filter = new System.Windows.Forms.ComboBox();
             this.btn_Prev = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btn_GarageBand = new System.Windows.Forms.Button();
             this.txt_Volume = new System.Windows.Forms.NumericUpDown();
             this.txt_Preview_Volume = new System.Windows.Forms.NumericUpDown();
             this.btn_AddPreview = new System.Windows.Forms.Button();
@@ -195,7 +196,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.CheckBox1 = new System.Windows.Forms.CheckBox();
             this.DataViewGrid = new System.Windows.Forms.DataGridView();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.btn_GarageBand = new System.Windows.Forms.Button();
             this.Panel1.SuspendLayout();
             this.groupBox7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
@@ -975,7 +975,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.chbx_Bass.AutoSize = true;
             this.chbx_Bass.Enabled = false;
-            this.chbx_Bass.Location = new System.Drawing.Point(68, 36);
+            this.chbx_Bass.Location = new System.Drawing.Point(66, 36);
             this.chbx_Bass.Name = "chbx_Bass";
             this.chbx_Bass.Size = new System.Drawing.Size(49, 17);
             this.chbx_Bass.TabIndex = 75;
@@ -997,7 +997,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.chbx_Combo.AutoSize = true;
             this.chbx_Combo.Enabled = false;
-            this.chbx_Combo.Location = new System.Drawing.Point(68, 17);
+            this.chbx_Combo.Location = new System.Drawing.Point(66, 17);
             this.chbx_Combo.Name = "chbx_Combo";
             this.chbx_Combo.Size = new System.Drawing.Size(59, 17);
             this.chbx_Combo.TabIndex = 76;
@@ -1023,7 +1023,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_BassPicking.Enabled = false;
             this.txt_BassPicking.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F);
             this.txt_BassPicking.ForeColor = System.Drawing.Color.Gray;
-            this.txt_BassPicking.Location = new System.Drawing.Point(112, 36);
+            this.txt_BassPicking.Location = new System.Drawing.Point(116, 34);
             this.txt_BassPicking.Name = "txt_BassPicking";
             this.txt_BassPicking.Size = new System.Drawing.Size(37, 17);
             this.txt_BassPicking.TabIndex = 96;
@@ -1304,12 +1304,12 @@ namespace RocksmithToolkitGUI.DLCManager
             // btn_Copy_old
             // 
             this.btn_Copy_old.Enabled = false;
-            this.btn_Copy_old.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Copy_old.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_Copy_old.Location = new System.Drawing.Point(110, 18);
             this.btn_Copy_old.Name = "btn_Copy_old";
-            this.btn_Copy_old.Size = new System.Drawing.Size(17, 14);
+            this.btn_Copy_old.Size = new System.Drawing.Size(23, 14);
             this.btn_Copy_old.TabIndex = 328;
-            this.btn_Copy_old.Text = "->";
+            this.btn_Copy_old.Text = "++";
             this.toolTip1.SetToolTip(this.btn_Copy_old, "Copy all OLD files for the Selected Filter into root of Import folder");
             this.btn_Copy_old.UseVisualStyleBackColor = true;
             this.btn_Copy_old.Click += new System.EventHandler(this.btn_Copy_old_Click);
@@ -1650,6 +1650,20 @@ namespace RocksmithToolkitGUI.DLCManager
             this.groupBox1.TabIndex = 325;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Audio Section";
+            // 
+            // btn_GarageBand
+            // 
+            this.btn_GarageBand.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_GarageBand.Location = new System.Drawing.Point(259, 14);
+            this.btn_GarageBand.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
+            this.btn_GarageBand.Name = "btn_GarageBand";
+            this.btn_GarageBand.Size = new System.Drawing.Size(29, 21);
+            this.btn_GarageBand.TabIndex = 333;
+            this.btn_GarageBand.Text = "GB";
+            this.toolTip1.SetToolTip(this.btn_GarageBand, "Generates a GarageBand compatible AudioFile to load as a additional track to the " +
+        "intruments and mic tracks.");
+            this.btn_GarageBand.UseVisualStyleBackColor = true;
+            this.btn_GarageBand.Click += new System.EventHandler(this.button6_Click_2);
             // 
             // txt_Volume
             // 
@@ -2051,7 +2065,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_Duplicate.TabIndex = 58;
             this.btn_Duplicate.Text = "Duplicate";
             this.btn_Duplicate.UseVisualStyleBackColor = true;
-            this.btn_Duplicate.Click += new System.EventHandler(this.button7_Click);
+            this.btn_Duplicate.Click += new System.EventHandler(this.btn_Duplicate_Click);
             // 
             // btn_SearchReset
             // 
@@ -2147,33 +2161,33 @@ namespace RocksmithToolkitGUI.DLCManager
             // DataViewGrid
             // 
             this.DataViewGrid.AllowUserToOrderColumns = true;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DataViewGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DataViewGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.DataViewGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.DataViewGrid.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.DataViewGrid.DefaultCellStyle = dataGridViewCellStyle5;
             this.DataViewGrid.Location = new System.Drawing.Point(0, -1);
             this.DataViewGrid.Name = "DataViewGrid";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DataViewGrid.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DataViewGrid.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.DataViewGrid.Size = new System.Drawing.Size(1106, 352);
             this.DataViewGrid.TabIndex = 2;
             this.DataViewGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick_1);
@@ -2188,20 +2202,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.toolTip1.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             this.toolTip1.ToolTipTitle = "test";
             this.toolTip1.Popup += new System.Windows.Forms.PopupEventHandler(this.toolTip1_Popup);
-            // 
-            // btn_GarageBand
-            // 
-            this.btn_GarageBand.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_GarageBand.Location = new System.Drawing.Point(259, 14);
-            this.btn_GarageBand.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
-            this.btn_GarageBand.Name = "btn_GarageBand";
-            this.btn_GarageBand.Size = new System.Drawing.Size(29, 21);
-            this.btn_GarageBand.TabIndex = 333;
-            this.btn_GarageBand.Text = "GB";
-            this.toolTip1.SetToolTip(this.btn_GarageBand, "Generates a GarageBand compatible AudioFile to load as a additional track to the " +
-        "intruments and mic tracks.");
-            this.btn_GarageBand.UseVisualStyleBackColor = true;
-            this.btn_GarageBand.Click += new System.EventHandler(this.button6_Click_2);
             // 
             // MainDB
             // 

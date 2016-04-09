@@ -4405,6 +4405,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //else if (rbtn_Population_All.Checked) ;
             else if (rbtn_Population_Groups.Checked) cmd += "WHERE cstr(ID) IN (SELECT CDLC_ID FROM Groups WHERE Type=\"DLC\" AND Groups=\"" + Groupss + "\")"; ;
 
+            string copyftp = "";
             cmd += " ORDER BY Artist";
             //Read from DB
             var norows = 0;
@@ -4475,6 +4476,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                 //rtxt_StatisticsOnReadDLCs.Text = "...=.." + xml + "\n\n" + rtxt_StatisticsOnReadDLCs.Text;
                                 //var aa = xml.IndexOf("showlights");
                                 //if (aa<1) && (xml.IndexOf("showlights") <1)
+                                if (file.Has_BassDD == "Yes")
                                 if ((!(chbx_Additional_Manipulations.GetItemChecked(52) && file.Keep_BassDD == "Yes") && xmlContent.Arrangement.ToLower() == "bass" && file.Has_BassDD == "Yes" && !Path.GetFileNameWithoutExtension(xml).ToLower().Contains(".old") && chbx_Additional_Manipulations.GetItemChecked(5))
                                     || (!(chbx_Additional_Manipulations.GetItemChecked(53) && file.Keep_DD == "Yes") && ((xmlContent.Arrangement.ToLower() == "lead" || xmlContent.Arrangement.ToLower() == "combo" || xmlContent.Arrangement.ToLower() == "rthythm"))
                                       && file.Has_Guitar == "Yes" && !Path.GetFileNameWithoutExtension(xml).ToLower().Contains(".old") && chbx_Additional_Manipulations.GetItemChecked(3))
@@ -4904,13 +4906,15 @@ namespace RocksmithToolkitGUI.DLCManager
                     //copyftp
 
                     string txt_FTPPat = "";
+
                     if (chbx_PS3.Checked && chbx_Additional_Manipulations.GetItemChecked(49))
                     {
 
                         if (ConfigRepository.Instance()["dlcm_FTP"] == "EU") txt_FTPPat = ConfigRepository.Instance()["dlcm_FTP1"];
                         else txt_FTPPat = ConfigRepository.Instance()["dlcm_FTP2"];
-                        MainDB.FTPFile(txt_FTPPat, dlcSavePath + "_ps3.psarc.edat", txt_TempPath.Text, "");
+                        var a=MainDB.FTPFile(txt_FTPPat, dlcSavePath + "_ps3.psarc.edat", txt_TempPath.Text, "");
                         //rtxt_StatisticsOnReadDLCs.Text = " and FTPed" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                        copyftp = " and " + a + " FTPed";
                     }
                     else if ((chbx_PC.Checked || chbx_Mac.Checked) && chbx_Additional_Manipulations.GetItemChecked(49))
                     {
@@ -4921,8 +4925,15 @@ namespace RocksmithToolkitGUI.DLCManager
                         dest = txt_RocksmithDLCPath.Text;
                         //File.Copy(RocksmithDLCPath + "\\rs1compatibilitydlc" + platfrm + ".psarc", dest + "\\rs1compatibilitydlc" + platfrm + ".psarc.orig", false);
                         if (File.Exists(dlcSavePath + source))
-                            File.Copy(dlcSavePath + source, dest + "\\" + FN + source, true);
-
+                            try
+                            {
+                                File.Copy(dlcSavePath + source, dest + "\\" + FN + source, true);
+                            }
+                            catch (Exception ee)
+                            {
+                                copyftp = "Not";
+                            }
+                        copyftp = "and " + copyftp + " Copied";
                     }
 
                     //Restore the DDremoved copies
@@ -4967,7 +4978,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 //MessageBox.Show("tst");
             }
             //bcapirtxt_StatisticsOnReadDLCs.Text = "\n...Repack done.." + rtxt_StatisticsOnReadDLCs.Text;
-            MessageBox.Show("Repack done");
+            MessageBox.Show("Repack done"+ copyftp);
         }
 
         static void UpdatePackingLog(string DB, string DBc_Path, int packid, string dlcID, string ex)

@@ -104,7 +104,7 @@
   <Config Key="dlcm_TempPath1" Value="C:\GitHub\tmp\0" />;
   <Config Key="dlcm_Prof2" Value="VM" />;
   <Config Key="dlcm_DBFolder2" Value="C:\GitHub\tmp" />;
-  <Config Key="dlcm_RocksmithDLCPath2" Value="C:\GitHub\tmp\to import" />;
+  <Config Key="dlcm_RocksmithDLCPath2" Value="E:\Users\bogdan\Library\Application Support\Steam\steamapps\common\Rocksmith2014\dlc" />;
   <Config Key="dlcm_TempPath2" Value="C:\GitHub\tmp\0" />;
   <Config Key="dlcm_Prof3" Value="Mac" />;
   <Config Key="dlcm_DBFolder3" Value="C:\GitHub\tmp" />;
@@ -114,9 +114,10 @@
   <Config Key="dlcm_DBFolder4" Value="C:\GitHub\tmp" />;
   <Config Key="dlcm_RocksmithDLCPath4" Value="C:\Program Files (x86)\Steam\steamapps\common\Rocksmith2014\dlc" />;
   <Config Key="dlcm_TempPath4" Value="C:\GitHub\tmp\0" />;
-  <Config Key="dlcm_Prof5" Value="Home" />;
-  <Config Key="dlcm_DBFolder5" Value="C:\GitHub\tmp" />;
-  <Config Key="dlcm_RocksmithDLCPath5" Value="C:\GitHub\tmp\to import" />;
+  <Config Key="dlcm_Prof5" Value="HFS" />;
+  <Config Key="dlcm_DBFolder5" Value="E:\Users\bogdan\GitHub\tmp" />;
+  <Config Key="dlcm_RocksmithDLCPath5" Value="E:\Users\bogdan\GitHub\tmp\to import" />;
+  <Config Key="dlcm_TempPath5" Value="E:\Users\bogdan\GitHub\tmp\0" />
   <Config Key="dlcm_DBFolder" Value="C:\GitHub\tmp" />;
   <Config Key="dlcm_RocksmithDLCPath" Value="C:\GitHub\tmp\to import" />;
   <Config Key="dlcm_TempPath" Value="C:\GitHub\tmp\0" />;

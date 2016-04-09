@@ -441,9 +441,6 @@
     <None Include="DLCManager\external_tools\packed_codebooks_aoTuV_603.bin">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="DLCManager\external_tools\SpotifyAPI-NET_2.7.0\SpotifyAPI.dll.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="DLCManager\README.md" />
     <None Include="App.config" />
     <None Include="NLog.config">
@@ -899,21 +896,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="DLCManager\external_tools\oggCut.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\SpotifyAPI-NET_2.7.0\Newtonsoft.Json.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\SpotifyAPI-NET_2.7.0\Newtonsoft.Json.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\SpotifyAPI-NET_2.7.0\SpotifyAPI.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\SpotifyAPI-NET_2.7.0\SpotifyAPI.pdb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\SpotifyAPI-NET_2.7.0\SpotifyAPI.XML">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="DLCManager\external_tools\UltraStar Creator\bass.dll">

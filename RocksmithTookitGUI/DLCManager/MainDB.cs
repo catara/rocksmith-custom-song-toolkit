@@ -24,6 +24,7 @@ using System.Security.Cryptography; //For File hash
 //using SpotifyAPI.Web.Enums;
 //using SpotifyAPI.Web;
 //using SpotifyAPI.Web.Models;
+
 using System.Threading;
 
 namespace RocksmithToolkitGUI.DLCManager
@@ -3815,9 +3816,121 @@ namespace RocksmithToolkitGUI.DLCManager
         //    public String Error { get; set; }
         //}
 
-
         public static int GetTrackNo(string Artist, string Album, string Title)
         {
+            //txt_Track_No.Text = (GetTrackNo(txt_Artist.Text, txt_Album.Text, txt_Title.Text)).ToString();
+            string uriString = "https://api.spotify.com/v1/search";// "?q=panick%20switch&type=track
+            string keywordString = "album%3A"+Album.Replace(" ", " +").ToLower() + "+artist%3A" + Artist.Replace(" ", " +").ToLower() + "+"+Title.Replace(" ", "+").ToLower() + "&offset=0&limit=20&type=track"; //"discorg.com:\"" + txt_Artist.Text + "\" \"" + txt_Album.Text + "\" \"" + txt_Title.Text + "\" \"track\""; //"www.metrolyrics.com:" + 
+            //txt_Artist.Text + "\" \"" + txt_Album.Text + "\" \"" + 
+            WebClient webClient = new WebClient();
+
+            NameValueCollection nameValueCollection = new NameValueCollection();
+            nameValueCollection.Add("query", keywordString);
+            var a1 = ""; var ab = "";
+            var albump = 0;
+            var artistp = 0;
+            var tracknop = 0;
+            try
+            {
+                webClient.QueryString.Add(nameValueCollection);
+                var aa = (webClient.DownloadString(uriString));
+                ab = aa;
+                //if ( (aa.ToLower()).IndexOf(", <b>"+ txt_Title.Text.ToLower() ) >0 ) a1 = aa.Substring(((aa.ToLower()).IndexOf(", <b>"+txt_Title.Text.ToLower())) -1, 1);//<b>+ txt_Title.Text
+                albump = (aa.ToLower()).IndexOf(Album.ToLower());
+                if (albump > 0) aa = aa.Substring(albump, aa.Length - albump);
+                artistp = (aa.ToLower()).IndexOf(Artist.ToLower());
+                if (artistp > 0) aa = aa.Substring(artistp, aa.Length - artistp);
+                tracknop = (aa.ToLower()).IndexOf("track_number");
+                if (tracknop > 0) a1 = aa.Substring(tracknop + 15, 2);//<b>+ txt_Title.Text
+
+                //if (IsNumbers(a1)) return a1.ToInt32();
+                //else return 0;
+                //var a2 = aa.Substring(((aa.ToLower()).IndexOf("track_number")) + 15, 2);
+                //var a3 = aa.Substring(((aa.ToLower()).IndexOf("track")) + 7, 1);
+                //var a4 = aa.Substring(((aa.ToLower()).IndexOf("track")) + 8, 1) + aa;
+
+                //DLCManager.
+                //txt_debug.Text += keywordString + "\n" + a1 + "\n---------------------------------\n " + ab;// + "\n " + a3 + "\n " + a4;
+            }
+            catch (Exception ee)
+            {
+                //MessageBox.Show("FAILED To get track" + ee.Message + "----");
+                Console.WriteLine(ee.Message);
+            }
+            a1 = a1.Trim();
+            if (a1 == "" && Album != "")
+            {
+                a1 = GetTrackNo(Artist, "", Title).ToString();
+            }
+            if (a1 == "" && Artist != "")
+            {
+                a1 = GetTrackNo("", "", Title).ToString();
+            }
+            if (IsNumbers(a1)) return a1.ToInt32();
+            else return 0;
+            //return a1.Trim().ToInt32();
+        }
+
+
+        public int GetTrackNo1(string Artist, string Album, string Title)
+        {
+            //txt_Track_No.Text = (GetTrackNo(txt_Artist.Text, txt_Album.Text, txt_Title.Text)).ToString();
+            string uriString = "https://api.spotify.com/v1/search";// "?q=panick%20switch&type=track
+            string keywordString = Title.Replace(" ","%20").ToLower() + "&type=track"; //"discorg.com:\"" + txt_Artist.Text + "\" \"" + txt_Album.Text + "\" \"" + txt_Title.Text + "\" \"track\""; //"www.metrolyrics.com:" + 
+            //txt_Artist.Text + "\" \"" + txt_Album.Text + "\" \"" + 
+            WebClient webClient = new WebClient();
+
+            NameValueCollection nameValueCollection = new NameValueCollection();
+            nameValueCollection.Add("q", keywordString);
+            var a1 = "";var ab="";
+            var albump=0;
+            var artistp = 0;
+            var tracknop = 0;
+            try
+            { 
+                webClient.QueryString.Add(nameValueCollection);
+                var aa = (webClient.DownloadString(uriString));
+                ab = aa;
+                //if ( (aa.ToLower()).IndexOf(", <b>"+ txt_Title.Text.ToLower() ) >0 ) a1 = aa.Substring(((aa.ToLower()).IndexOf(", <b>"+txt_Title.Text.ToLower())) -1, 1);//<b>+ txt_Title.Text
+                albump = (aa.ToLower()).IndexOf(Album.ToLower());
+                if (albump>0) aa = aa.Substring(albump, aa.Length-albump);
+                artistp = (aa.ToLower()).IndexOf(Artist.ToLower());
+                if (artistp > 0) aa = aa.Substring(artistp, aa.Length - artistp);
+                tracknop = (aa.ToLower()).IndexOf("track_number");
+                if (tracknop > 0) a1 = aa.Substring(tracknop + 15, 2);//<b>+ txt_Title.Text
+
+                //if (IsNumbers(a1)) return a1.ToInt32();
+                //else return 0;
+                //var a2 = aa.Substring(((aa.ToLower()).IndexOf("track_number")) + 15, 2);
+                //var a3 = aa.Substring(((aa.ToLower()).IndexOf("track")) + 7, 1);
+                //var a4 = aa.Substring(((aa.ToLower()).IndexOf("track")) + 8, 1) + aa;
+
+                //DLCManager.
+                txt_debug.Text += keywordString + "s\n" + a1 + "\n---------------------------------\n " + ab;// + "\n " + a3 + "\n " + a4;
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show("FAILED To get track" + ee.Message + "----");
+                Console.WriteLine(ee.Message);
+            }
+            a1 = a1.Trim();
+            if (a1 == "" && Album != "")
+            {
+                a1 = GetTrackNo1(Artist, "", Title).ToString();
+            }
+            if (a1 == "" && Artist != "")
+            {
+                a1 = GetTrackNo1("", "", Title).ToString();
+            }
+            if (IsNumbers(a1)) return a1.ToInt32();
+            else return 0;
+            //return a1.Trim().ToInt32();
+        }
+
+        public static int GetTrackNo_old(string Artist, string Album, string Title)
+        {
+
+
             //StartHttpServer();
             //_auth.StartHttpServer(8000);
             //_auth.DoAuth();
@@ -3918,6 +4031,7 @@ namespace RocksmithToolkitGUI.DLCManager
             if (txt_Title.Text.IndexOf("]") > 0) CleanTitle += txt_Title.Text.Substring(txt_Title.Text.IndexOf("]"), txt_Title.Text.Length - txt_Title.Text.IndexOf("]"));
             else if (txt_Title.Text.IndexOf("[") == 0 || txt_Title.Text.Substring(0, 1) != "[") CleanTitle = txt_Title.Text;
 
+            //string z = (GetTrackNo(txt_Artist.Text, txt_Album.Text, CleanTitle)).ToString();
             string z = (GetTrackNo(txt_Artist.Text, txt_Album.Text, CleanTitle)).ToString();
             txt_Track_No.Text = z == "0" && txt_Track_No.Text != "" ? txt_Track_No.Text : z;
             var i = DataViewGrid.SelectedCells[0].RowIndex;
@@ -4401,7 +4515,7 @@ namespace RocksmithToolkitGUI.DLCManager
             startInfo.WorkingDirectory = AppWD;// Path.GetDirectoryName();
             var t = txt_OggPath.Text;//"C:\\GitHub\\tmp\\0\\0_dlcpacks\\rs1compatibilitydisc_PS3\\audio\\ps3\\149627248.ogg";//txt_TempPath.Text + "\\0_dlcpacks\\rs1compatibilitydlc.psarc";
             var tt = t.Replace(".ogg", ".wav");
-            startInfo.Arguments = String.Format(" -w {0} {1}",
+            startInfo.Arguments = String.Format(" -w \"{0}\" \"{1}\"",
                                                 tt, t);
             startInfo.UseShellExecute = true; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
 
@@ -4411,6 +4525,17 @@ namespace RocksmithToolkitGUI.DLCManager
                     DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 60 * 1); //wait 1min
                     if (DDC.ExitCode == 0)
                     {
+                        //var i = DataViewGrid.SelectedCells[0].RowIndex;
+                        string filePath = tt.Substring(0,tt.LastIndexOf("\\")); ;// DataViewGrid.Rows[i].Cells["Folder_Name"].Value.ToString();
+                        try
+                        {
+                            Process process = Process.Start(@filePath);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Can not open Garagebnad ready Song Folder in Exporer ! ");
+                        }
                     }
                 }
         }

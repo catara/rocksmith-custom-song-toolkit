@@ -93,18 +93,15 @@
 - [ ] duplicate management..on change..check and green color
 - [ ] Check Packer.cs bug
 - [ ] Update to latest Master (template broken revert will gen DLCName change back from dlckey)
-- [ ] Spotify old API is dead, use a new way to... (bring also cover)
+- [+] Spotify old API is dead, use a new way to... (bring also cover)
 - [ ] How many audioslave bring themback alive foler r?
 - [ ] Minerva gives a wwise error check on a repaired hdd...check and open a tix
+- [ ] Filter by group
 
 done:
 (next release)
-- [x] fix duplicate song for all the connected files at DB level. Copied OLD file as well.
-- [x] Update Selectd stats after Save
-- [?] Bass Picked changes when moving up and down in MainDB
-- [x] Custom song creators only saved if Advanced option set
-- [x] Fix for unnecessary preview creation for songs wo Albumart
-- [x] Fix no album art detection
+- [ ] Remove BassDD only if DD exits
+- [ ] Add trully FPT to mass pack
 
 (prev release; but maybe not thuroughly tested)
 - [x] duplic manag make date bigger
@@ -113,6 +110,12 @@ done:
 - [x] remove author if custom
 - [x] bring in no of duplicates in title
 - [x] if multitrack dont bring in the duplicate
+- [x] fix duplicate song for all the connected files at DB level. Copied OLD file as well.
+- [x] Update Selectd stats after Save
+- [?] Bass Picked changes when moving up and down in MainDB
+- [x] Custom song creators only saved if Advanced option set
+- [x] Fix for unnecessary preview creation for songs wo Albumart
+- [x] Fix no album art detection
 
 - diff between master and branch
 DLCManager folder
@@ -157,12 +160,12 @@ dlcpackagedata
 	0.2.0.11 (22.08.2015) remove bug on auto import if original
 	0.2.0.12 (26.09.2015) If importing an original over a alternate the alternate flag should be set no the Alternate
 	0.2.0.13 (12.11.2015) Finally implement Arrangements and Tones and song Groups
-	wip: 0.2.0.14 (10.02.2016) (96%) full release (anyone can download and use the tool..no bugs..and all un-implemented features disabled), repack wo bugs, edit screens functional
-	wip: 0.2.0.15 (03.03.2016) (90%) Remove getlastconversiondate from Duplicates as already coming from the arrangements table
-	wip: 0.2.0.16 (20.03.2016) (80%)  analyse acuracy on conversion to ps3 (1979,7army..)
-	wip: 0.2.0.17 (20.03.2016) (20%) has_section flag(to be tested with a song missing sections); 
-	wip: 0.2.1 (31.04.2016) (10%) HTML&Excel exports
-	tbr: 0.2.1.1 (15.05.2016) Implement a logic to properly read DLCManager renamed DLCs
+	wip: 0.2.0.14 (10.05.2016) (96%) full release (anyone can download and use the tool..no bugs..and all un-implemented features disabled), repack wo bugs, edit screens functional
+	wip: 0.2.0.15 (03.06.2016) (90%) Remove getlastconversiondate from Duplicates as already coming from the arrangements table
+	wip: 0.2.0.16 (20.06.2016) (80%)  analyse acuracy on conversion to ps3 (1979,7army..)
+	wip: 0.2.0.17 (20.06.2016) (20%) has_section flag(to be tested with a song missing sections); 
+	wip: 0.2.1 (31.07.2016) (10%) HTML&Excel exports
+	tbr: 0.2.1.1 (15.07.2016) Implement a logic to properly read DLCManager renamed DLCs
 	tbr: 0.3.1 move Import DB to Main.DB or at least use an official data source as DB source to also be able to edit from the grid
 	tbr: 0.3.2 ?move Access code to project? or from hardcoded to views	
 	wip: 0.3.3 (03.10.2016) (10%) use parameterized SQL everywhere (&/ integrate template DB into project or a SQL DB)

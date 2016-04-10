@@ -108,7 +108,7 @@ namespace RocksmithToolkitLib.Extensions
         public static Stream StripIllegalXMLChars(this string filePath)
         {
             string tmpContents = File.ReadAllText(filePath);
-            string pattern = @"[\x01-\x08\x0B-\x0C\x0E-\x1F\x7F-\x84\x86-\x9F]";// XML1.1
+            const string pattern = @"[\x01-\x08\x0B-\x0C\x0E-\x1F\x7F-\x84\x86-\x9F]"; // XML1.1
 
             tmpContents = Regex.Replace(tmpContents, pattern, "", RegexOptions.IgnoreCase);
 
@@ -156,8 +156,30 @@ namespace RocksmithToolkitLib.Extensions
                 if (dlcKey == songTitle.Replace(" ", ""))
                     dlcKey = dlcKey + "Song";
             }
-            return dlcKey;
+            // limit length to 30
+            return dlcKey.Substring(0, Math.Min(30, dlcKey.Length));
         }
+
+        public static string GetValidYear(this string value)
+        {
+            // check for valid four digit song year 
+            if (!Regex.IsMatch(value, "^(19[0-9][0-9]|20[0-1][0-9])"))
+                value = ""; // clear if not valid
+
+            return value;
+        }
+
+        public static string GetValidTempo(this string value)
+        {
+            float tempo = 0;
+            float.TryParse(value.Trim(), out tempo);
+            int bpm = (int)Math.Round(tempo);
+            // check for valid tempo
+            if (bpm > 0 && bpm < 300)
+                return bpm.ToString();
+
+            return "";
+       }
 
         public static string GetValidSortName(this string value)
         {
@@ -165,9 +187,9 @@ namespace RocksmithToolkitLib.Extensions
                 return value;
 
             if (value.ToUpperInvariant().StartsWith("THE "))
-                return value.Remove(0, 4).GetValidName(true);
+                return value.Remove(0, 4).GetValidName(true, true);
 
-            return value.GetValidName(true);
+            return value.GetValidName(true, true);
         }
 
         public static string GetValidFileName(this string value)
@@ -196,6 +218,10 @@ namespace RocksmithToolkitLib.Extensions
                 Regex rgx2 = new Regex(@"^[\d]*\s*");
                 if (!allowStartsWithNumber)
                     name = rgx2.Replace(name, "");
+
+                // prevent names from starting with special characters -_* etc
+                Regex rgx3 = new Regex("^[^A-Za-z0-9]*");
+                     name = rgx3.Replace(name, "");
 
                 if (frets24)
                 {
@@ -256,6 +282,12 @@ namespace RocksmithToolkitLib.Extensions
             if (!Acronym)
                 return String.Format(Format, Artist.GetValidName(true, true), Title.GetValidName(true, true), Version).Replace(" ", "-");
             return String.Format(Format, Artist.Acronym(), Title.GetValidName(true, true), Version).Replace(" ", "-");
+        }
+
+        public static bool IsAppId6Digits(this string value)
+        {
+            // check for valid six digit AppID that begins with 2 , e.g. 248750
+            return Regex.IsMatch(value, "^[2]\\d{5}$");  // "^[0-9]{6}$");
         }
 
         public static bool IsValidPSARC(this string fileName)

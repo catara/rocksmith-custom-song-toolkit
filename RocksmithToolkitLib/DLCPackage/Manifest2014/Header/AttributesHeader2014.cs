@@ -8,6 +8,7 @@ using RocksmithToolkitLib.Extensions;
 
 namespace RocksmithToolkitLib.DLCPackage.Manifest2014.Header
 {
+    [Serializable]
     public class AttributesHeader2014
     {
         public static readonly string URN_TEMPLATE = "urn:{0}:{1}:{2}";
@@ -73,7 +74,7 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest2014.Header
 
             IsVocal = arrangement.ArrangementType == Sng.ArrangementType.Vocal;
             SongContent = (IsVocal) ? null : Song2014.LoadFromFile(arrangement.SongXml.File);
-            var dlcName = info.DLCKey.ToLower();
+            var dlcName = info.Name.ToLower();
 
             var albumUrn = String.Format(URN_TEMPLATE, TagValue.Image.GetDescription(), TagValue.DDS.GetDescription(), String.Format("album_{0}", dlcName));
             var jsonUrn = String.Format(URN_TEMPLATE, TagValue.Database.GetDescription(), TagValue.JsonDB.GetDescription(), String.Format("{0}_{1}", dlcName, arrangementFileName));
@@ -83,14 +84,14 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest2014.Header
             JapaneseVocal |= arrangement.Name == Sng.ArrangementName.JVocals;
             ArrangementName = IsVocal ? Sng.ArrangementName.Vocals.ToString() : arrangement.Name.ToString(); //HACK: weird vocals stuff
             DLC = true;
-            DLCKey = info.DLCKey;
+            DLCKey = info.Name;
             LeaderboardChallengeRating = 0;
             ManifestUrn = jsonUrn;
             MasterID_RDV = arrangement.MasterId;
             PersistentID = arrangement.Id.ToString().Replace("-", "").ToUpper();
             Shipping = true;
             SKU = "RS2";
-            SongKey = info.DLCKey; // proof same same
+            SongKey = info.Name; // proof same same
 
             if (!IsVocal)
             {

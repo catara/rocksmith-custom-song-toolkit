@@ -26,6 +26,7 @@ namespace RocksmithToolkitGUI
         public MainForm(string[] args)
         {
             InitializeComponent();
+            this.Shown += MainForm_Shown;
 
             var ci = new CultureInfo("en-US");
             var thread = System.Threading.Thread.CurrentThread;
@@ -56,6 +57,7 @@ namespace RocksmithToolkitGUI
             get { return base.Text; }
             set { base.Text = value; }
         }
+
         //TODO: keep tabs data please.
         private void MainForm_Load(object sender, EventArgs e)
         {
@@ -92,22 +94,22 @@ namespace RocksmithToolkitGUI
             switch (e.KeyCode)
             {
                 case Keys.O: //<< Open Template
-                    dlcPackageCreatorControl.dlcLoadButton_Click();
+                    dlcPackageCreator1.dlcLoadButton_Click();
                     break;
                 case Keys.S: //<< Save Template
-                    dlcPackageCreatorControl.SaveTemplateFile();
+                    dlcPackageCreator1.SaveTemplateFile();
                     break;
                 case Keys.I: //<< Import Template
-                    dlcPackageCreatorControl.dlcImportButton_Click();
+                    dlcPackageCreator1.dlcImportButton_Click();
                     break;
                 case Keys.G: //<< Generate Package
-                    dlcPackageCreatorControl.dlcGenerateButton_Click();
+                    dlcPackageCreator1.dlcGenerateButton_Click();
                     break;
                 case Keys.A: //<< Add Arrangement
-                    dlcPackageCreatorControl.arrangementAddButton_Click();
+                    dlcPackageCreator1.arrangementAddButton_Click();
                     break;
                 case Keys.T: //<< Add Tone
-                    dlcPackageCreatorControl.toneAddButton_Click();
+                    dlcPackageCreator1.toneAddButton_Click();
                     break;
             }
         }
@@ -156,6 +158,9 @@ namespace RocksmithToolkitGUI
         {
             configurationToolStripMenuItem.Enabled = false;
 
+            // Save Data
+            //GeneralConfigTab.cachedTabs = tabControl1.TabPages;
+
             // Remove all tabs
             tabControl1.TabPages.Clear();
 
@@ -202,20 +207,49 @@ namespace RocksmithToolkitGUI
             // cleanup temp folder garbage carefully
 #if !DEBUG
             var di = new DirectoryInfo(Path.GetTempPath());
- 
+
             // confirm this is the 'Local Settings\Temp' directory
             if (di.Parent != null)
                 if (di.Parent.Name == "Local Settings" && di.Name == "Temp")
                 {
                     foreach (FileInfo file in di.GetFiles())
-                        file.Delete();
+                        try
+                        {
+                            file.Delete();
+                        }
+                        catch { /*Don't worry just skip locked file*/ }
 
                     foreach (DirectoryInfo dir in di.GetDirectories())
-                        dir.Delete(true);
+                        try
+                        {
+                            dir.Delete(true);
+                        }
+                        catch { /*Don't worry just skip locked directory*/ }
                 }
 #endif
         }
 
+        private void MainForm_Shown(object sender, EventArgs e)
+        {
+            this.Refresh();
+
+            // don't bug the Developers when in debug mode ;)
+#if !DEBUG
+            // check for first run //Check if author set at least, then it's not a first run tho, but let it show msg anyways...
+            bool firstRun = ConfigRepository.Instance().GetBoolean("general_firstrun");
+            if (!firstRun) return;
+            MessageBox.Show(new Form { TopMost = true },
+                "    Welcome to the Song Creator Toolkit for Rocksmith." + Environment.NewLine +
+                "          Commonly known as, 'the toolkit'." + Environment.NewLine + Environment.NewLine +
+                "It looks like this may be your first time running the toolkit.  " + Environment.NewLine +
+                "  Please fill in the Configuration menu with your selections.", "Song Creator Toolkit for Rocksmith ... First Run",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            ShowConfigScreen();
+            BringToFront();
+#endif
+
+        }
 
 //>>>>>>> refs/remotes/rscustom/master
     }

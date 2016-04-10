@@ -84,7 +84,7 @@ namespace RocksmithToolkitLib.DLCPackage.Showlight
         {
             var shlFile = Path.Combine(Path.GetDirectoryName(arrangement.SongXml.File),
                 arrangement.SongXml.Name + "_showlights.xml");
-            var shlCommon = Path.Combine(Path.GetDirectoryName(shlFile), info.DLCKey + "_showlights.xml");
+            var shlCommon = Path.Combine(Path.GetDirectoryName(shlFile), info.Name + "_showlights.xml");
             if (!File.Exists(shlCommon))
             {
                 //Generate
@@ -94,7 +94,7 @@ namespace RocksmithToolkitLib.DLCPackage.Showlight
             GetShowlights(shlCommon);
         }
 
-        public void Serialize(Stream stream)
+        public void Serialize(Stream stream, bool omitXmlDeclaration = false)
         {
             var ns = new XmlSerializerNamespaces();
             ns.Add("", "");
@@ -103,8 +103,8 @@ namespace RocksmithToolkitLib.DLCPackage.Showlight
             Count = ShowlightList.Count;
             using (var writer = System.Xml.XmlWriter.Create(stream, new System.Xml.XmlWriterSettings
             {
-                Indent = true,
-                OmitXmlDeclaration = false,
+                Indent = true,                
+                OmitXmlDeclaration = omitXmlDeclaration,
                 Encoding = new UTF8Encoding(false)
             }))
             {

@@ -30,7 +30,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>none</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <ErrorReport>prompt</ErrorReport>
@@ -88,6 +88,7 @@
     <Compile Include="AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Config\Globals.cs" />
     <Compile Include="DLCInlayCreator\IntroScreensCreator.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -981,6 +982,10 @@
     <PostBuildEvent Condition=" '$(OS)' == 'Unix' ">
       /bin/cp -Rf "$(SolutionDir)Third-party Apps" "$(TargetDir)"
     </PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /s /Y "$(SolutionDir)Third-party Apps"
+</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

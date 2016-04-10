@@ -23,17 +23,18 @@ using Tone = RocksmithToolkitLib.DLCPackage.Manifest.Tone.Tone;
 
 namespace RocksmithToolkitLib.DLCPackage
 {
-    public class DLCPackageData
-    {
-        public GameVersion GameVersion;
 
+    public class DLCPackageData
+    { 
+        // DO NOT change variable names ... hidden dependancies
+        public GameVersion GameVersion;
         public bool Pc { get; set; }
         public bool Mac { get; set; }
         public bool XBox360 { get; set; }
         public bool PS3 { get; set; }
         public bool Showlights { get; set; }
         public string AppId { get; set; }
-        public string DLCKey { get; set; } // aka SongKey
+        public string Name { get; set; } // aka DLCKey <=> SongKey //TODO: implement deserialize here, with workaround for DLCKey=Name and rename Name to DLCKey finnaly!
         public SongInfo SongInfo { get; set; }
         public string AlbumArtPath { get; set; }
         public string OggPath { get; set; }
@@ -43,6 +44,25 @@ namespace RocksmithToolkitLib.DLCPackage
         public float Volume { get; set; }
         public PackageMagic SignatureType { get; set; }
         public string PackageVersion { get; set; }
+
+        // loads the old toolkit version info from template (if any)
+        // writes current toolkit version to package template file
+        private string _version;
+        public string Version
+        {
+            get
+            {
+                if (_version == null)
+                    _version = String.Format("Toolkit Version {0}", ToolkitVersion.version);
+                return _version;
+            }
+            set
+            {
+                if (value == null)
+                    _version = String.Format("Toolkit Version {0}", ToolkitVersion.version);
+                _version = value;
+            }
+        }
 
         private List<XBox360License> xbox360Licenses;
         public List<XBox360License> XBox360Licenses
@@ -105,7 +125,7 @@ namespace RocksmithToolkitLib.DLCPackage
             data.SongInfo.SongYear = (attr.FirstOrDefault().SongYear == 0 ? 2012 : attr.FirstOrDefault().SongYear);
             data.SongInfo.Artist = attr.FirstOrDefault().ArtistName;
             data.SongInfo.ArtistSort = attr.FirstOrDefault().ArtistNameSort;
-            data.DLCKey = attr.FirstOrDefault().SongKey;
+            data.Name = attr.FirstOrDefault().SongKey;
 
             //Load tone manifest, even poorly formed tone_bass.manifest.json
             var toneManifestJson = Directory.GetFiles(unpackedDir, "*tone*.manifest.json", SearchOption.AllDirectories);
@@ -145,9 +165,9 @@ namespace RocksmithToolkitLib.DLCPackage
             data.Tones = tones;
 
             // Load AggregateGraph.nt 
-            var songDir = Path.Combine(unpackedDir, data.DLCKey);
+            var songDir = Path.Combine(unpackedDir, data.Name);
             if (targetPlatform.platform == GamePlatform.XBox360)
-                songDir = Path.Combine(unpackedDir, "Root", data.DLCKey);
+                songDir = Path.Combine(unpackedDir, "Root", data.Name);
 
             var aggFile = Directory.GetFiles(songDir, "*.nt", SearchOption.TopDirectoryOnly)[0];
             var aggGraphData = AggregateGraph.AggregateGraph.ReadFromFile(aggFile);
@@ -196,7 +216,7 @@ namespace RocksmithToolkitLib.DLCPackage
                     if (result.Tones.Count != 1)
                         throw new DataException("Invalid RS1 CDLC Tones Data");
 
-                    var arrangement = attr.First(s => s.SongXml.ToLower().Contains(result.LLID));
+                    var arrangement = attr.First(s => s.SongXml.ToLower().Contains(result.LLID));//FIXME: Sequence contains no matching element issue
                     var tone = tones.First(t => t.Key == result.Tones[0]);
 
                     using (var obj1 = new Rs1Converter())
@@ -475,7 +495,7 @@ namespace RocksmithToolkitLib.DLCPackage
                     if (data.SongInfo == null)
                     {
                         // Fill Package Data
-                        data.DLCKey = attr.DLCKey;
+                        data.Name = attr.DLCKey;
                         data.Volume = (attr.SongVolume == 0 ? -12 : attr.SongVolume); //FIXME: too low song volume issue, revert to -6 to fix.
                         data.PreviewVolume = (attr.PreviewVolume ?? data.Volume);
 

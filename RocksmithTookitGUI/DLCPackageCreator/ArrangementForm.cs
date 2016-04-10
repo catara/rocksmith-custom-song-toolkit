@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.IO;
 using System.Xml.Linq;
+using RocksmithToolkitGUI.Config;
 using RocksmithToolkitLib.DLCPackage;
 using RocksmithToolkitLib.DLCPackage.AggregateGraph;
 using RocksmithToolkitLib.DLCPackage.Manifest2014.Tone;
@@ -111,11 +112,11 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             Console.WriteLine("Debug");
         }
 
-        public ArrangementForm(Arrangement arrangement, DLCPackageCreator control, GameVersion gameVersion)
+        public ArrangementForm(Arrangement arrangement, DLCPackageCreator control, GameVersion gameVersion) // , string projectDir = "")
         {
             InitializeComponent();
-            currentGameVersion = gameVersion == GameVersion.RS2012 ? GameVersion.RS2012 : GameVersion.RS2014;
 
+            currentGameVersion = gameVersion == GameVersion.RS2012 ? GameVersion.RS2012 : GameVersion.RS2014;
             FillTuningCombo(arrangement.ArrangementType, currentGameVersion);
 
             foreach (var val in Enum.GetValues(typeof(ArrangementType)))
@@ -473,14 +474,15 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
         {
             using (var ofd = new OpenFileDialog())
             {
+                ofd.InitialDirectory = Globals.DefaultProjectDir;
                 ofd.Filter = "Rocksmith Song Xml Files (*.xml)|*.xml";
                 if (ofd.ShowDialog() != DialogResult.OK)
                 {
                     return;
                 }
 
-                XmlFilePath.Text = ofd.FileName;
-                string xmlFilePath = XmlFilePath.Text;
+                string xmlFilePath = XmlFilePath.Text = ofd.FileName;
+                Globals.DefaultProjectDir = Path.GetDirectoryName(xmlFilePath);
                 LoadXmlArrangement(xmlFilePath);
             }
         }
@@ -752,6 +754,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             }
 
             LoadArrangementData(xmlfilepath);
+            Globals.DefaultProjectDir = Path.GetDirectoryName(xmlfilepath);
             DialogResult = DialogResult.OK;
             Close();
         }
@@ -765,6 +768,8 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             // TODO: get song info from json or hsan file (would be better than from xml)
             if (!ReferenceEquals(xmlSong, null))
             {
+                var defaultAuthor = ConfigRepository.Instance()["general_defaultauthor"].Trim();
+
                 if (String.IsNullOrEmpty(parentControl.SongTitle)) parentControl.SongTitle = xmlSong.Title ?? String.Empty;
                 if (String.IsNullOrEmpty(parentControl.SongTitleSort)) parentControl.SongTitleSort = xmlSong.SongNameSort.GetValidSortName() ?? parentControl.SongTitle.GetValidSortName();
                 if (String.IsNullOrEmpty(parentControl.AverageTempo)) parentControl.AverageTempo = Math.Round(xmlSong.AverageTempo).ToString() ?? String.Empty;
@@ -772,14 +777,16 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 if (String.IsNullOrEmpty(parentControl.ArtistSort)) parentControl.ArtistSort = xmlSong.ArtistNameSort.GetValidSortName() ?? parentControl.Artist.GetValidSortName();
                 if (String.IsNullOrEmpty(parentControl.Album)) parentControl.Album = xmlSong.AlbumName ?? String.Empty;
                 if (String.IsNullOrEmpty(parentControl.AlbumYear)) parentControl.AlbumYear = xmlSong.AlbumYear ?? String.Empty;
-                if (String.IsNullOrEmpty(parentControl.DLCKey)) parentControl.DLCKey = String.Format("{0}{1}", parentControl.Artist.Acronym(), parentControl.SongTitle).GetValidDlcKey(parentControl.SongTitle);
+                // using first three letters of defaultAuthor to make DLCKey unique
+                if (String.IsNullOrEmpty(parentControl.DLCKey)) parentControl.DLCKey = String.Format("{0}{1}{2}", 
+                   defaultAuthor.Substring(0, Math.Min(3, defaultAuthor.Length)), parentControl.Artist.Acronym(), parentControl.SongTitle).GetValidDlcKey(parentControl.SongTitle); 
 
                 if (String.IsNullOrEmpty(parentControl.AlbumSort))
                 {
-                    // substitute package author for AlbumSort
+                    // use default author for AlbumSort or generate
                     var useDefaultAuthor = ConfigRepository.Instance().GetBoolean("creator_usedefaultauthor");
-                    if (useDefaultAuthor && currentGameVersion == GameVersion.RS2014)
-                        parentControl.AlbumSort = ConfigRepository.Instance()["general_defaultauthor"].Trim().GetValidSortName();
+                    if (useDefaultAuthor) // && currentGameVersion == GameVersion.RS2014)
+                        parentControl.AlbumSort = defaultAuthor.GetValidSortName();
                     else
                         parentControl.AlbumSort = xmlSong.AlbumNameSort.GetValidSortName() ?? parentControl.Album.GetValidSortName();
                 }
@@ -884,7 +891,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
         private void vocalEdit_Click(object sender, EventArgs e)
         {//TODO: wrong behaviour with this warning message
             if (!String.IsNullOrEmpty(parentControl.LyricArtPath) && String.IsNullOrEmpty(Arrangement.FontSng))
-                MessageBox.Show("FYI, there is alredy defined one custom font.\r\n", DLCPackageCreator.MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("FYI, there is already defined one custom font.\r\n", DLCPackageCreator.MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
             using (var form = new VocalsForm(Arrangement.FontSng, parentControl.LyricArtPath, Arrangement.CustomFont))
             {

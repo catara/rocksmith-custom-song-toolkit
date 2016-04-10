@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using NDesk.Options;
 using RocksmithToolkitLib;
 using RocksmithToolkitLib.DLCPackage;
@@ -43,12 +44,12 @@ namespace packagecreator
             return new OptionSet
             {
                 { "p|PackageCreator", "Usage: Drag/Drop a root directory " +
-                  "that contains songname subfolders that each contain CDLC ready files onto the executable application icon:\r\n" +                 
+                  "that contains songname subfolders that each contain CDLC ready files onto the executable application icon:\r\n" +
                   "RS2014 *.json [lead, rhythm, combos, bass]\r\n"+
                   "RS2014 *.xml [lead, rhythm, combos, bass]\r\n"+
                   "RS2014 Vocals.xml and Vocals.json (optional)\r\nAlbumArt256.dds\r\n" + 
-                  "Wwise 2013 Audio.wem\r\nWwise 2013 Audio_preview.wem\r\n", v => { if (v != null) outputArguments.Package = true; }},                
-                { "-|--------------", "Alternate Command Line Usage is shown below:\r\n", v => { if (v != null) outputArguments.Package = true; }},                
+                  "Wwise 2013 Audio.wem\r\nWwise 2013 Audio_preview.wem\r\n", v => { if (v != null) outputArguments.Package = true; }},
+                { "-|--------------", "Alternate Command Line Usage is shown below:\r\n", v => { if (v != null) outputArguments.Package = true; }},
                 { "h|?|help", "Show this help message and exit", v => outputArguments.ShowHelp = v != null },
                 { "i|input=", "Input directory (multiple allowed, use ; to split paths)", v => outputArguments.Input = v.Split( new[]{';'}, 2) },
                 { "o|output=", "Output directory", v => outputArguments.Output = v },
@@ -185,13 +186,13 @@ namespace packagecreator
                         DLCPackageData packageData = DLCPackageData.LoadFromFolder(srcDirs[i], arguments.Platform, arguments.Platform);
                         packageData.AppId = arguments.AppId;
                         packageData.PackageVersion = arguments.Revision;
-                        packageData.DLCKey = Path.GetFileName(srcDirs[i]).GetValidName();
+                        packageData.Name = Path.GetFileName(srcDirs[i]).GetValidName();
                         packageData.Volume = packageData.Volume == 0 ? Convert.ToInt16(arguments.Decibels) : packageData.Volume;
                         packageData.PreviewVolume = packageData.PreviewVolume == 0 ? Convert.ToInt16(arguments.Decibels) : packageData.PreviewVolume;
 
                         // check Album Artwork
                         if (arguments.Platform.version == GameVersion.RS2014)
-                            CheckAlbumArt(srcDirs[i], packageData.DLCKey);
+                            CheckAlbumArt(srcDirs[i], packageData.Name);
 
                         // generate CDLC file name
                         var artist = packageData.SongInfo.ArtistSort;

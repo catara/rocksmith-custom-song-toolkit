@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using Ookii.Dialogs;
 using RocksmithToolkitLib;
 using RocksmithToolkitLib.Extensions;
-using RocksmithToolkitLib.DLCPackage;
 
 namespace RocksmithToolkitGUI.Config
 {
@@ -29,11 +27,15 @@ namespace RocksmithToolkitGUI.Config
                 PopulateAppIdCombo(general_defaultappid_RS2012, GameVersion.RS2012);
                 PopulateAppIdCombo(general_defaultappid_RS2014, GameVersion.RS2014);
                 PopulateEnumCombo(general_defaultgameversion, typeof(GameVersion));
+                PopulateEnumCombo(general_defaultplatform, typeof(GamePlatform));
                 PopulateEnumCombo(converter_source, typeof(GamePlatform));
                 PopulateEnumCombo(converter_target, typeof(GamePlatform));
                 PopulateRampUp();
                 PopulateConfigDDC();
                 LoadAndSetupConfiguration(this.Controls);
+                // hide First Run
+                if (ConfigRepository.Instance()["general_firstrun"] == "false")
+                    lblFirstRun.Visible = false;
             }
             catch { /*For mono compatibility*/ }
             loading = false;
@@ -158,42 +160,101 @@ namespace RocksmithToolkitGUI.Config
 
         private void closeConfigButton_Click(object sender, EventArgs e)
         {
+            ConfigRepository.Instance()["general_firstrun"] = "false";
             ((MainForm)ParentForm).ReloadControls();
         }
 
-        private void rs1PathButton_Click(object sender, EventArgs e)
+        private void btnRs1Path_Click(object sender, EventArgs e)
         {
             using (var fbd = new VistaFolderBrowserDialog())
             {
+                fbd.SelectedPath = general_rs1path.Name;
+                fbd.Description = "Select Rocksmith 2012 executable root installation folder.";
+
                 if (fbd.ShowDialog() != DialogResult.OK)
                     return;
+
                 var rs1Path = fbd.SelectedPath;
                 general_rs1path.Text = rs1Path;
                 ConfigRepository.Instance()[general_rs1path.Name] = rs1Path;
             }
         }
 
-        private void rs2014PathButton_Click(object sender, EventArgs e)
+        private void btnRs2014Path_Click(object sender, EventArgs e)
         {
             using (var fbd = new VistaFolderBrowserDialog())
             {
+                fbd.SelectedPath = general_rs2014path.Name;
+                fbd.Description = "Select Rocksmith 2014 executable root installation folder.";
+
                 if (fbd.ShowDialog() != DialogResult.OK)
                     return;
+
                 var rs2014Path = fbd.SelectedPath;
                 general_rs2014path.Text = rs2014Path;
                 ConfigRepository.Instance()[general_rs2014path.Name] = rs2014Path;
             }
         }
 
-        private void WwisePathButton_Click(object sender, EventArgs e)
+        private void btnWwisePath_Click(object sender, EventArgs e)
         {
             using (var fbd = new VistaFolderBrowserDialog())
             {
+                fbd.SelectedPath = general_wwisepath.Name;
+                fbd.Description = "Select Wwise CLI installation folder.";
+
                 if (fbd.ShowDialog() != DialogResult.OK)
                     return;
+
                 var wwisePath = fbd.SelectedPath;
                 general_wwisepath.Text = wwisePath;
                 ConfigRepository.Instance()[general_wwisepath.Name] = wwisePath;
+            }
+        }
+
+        private void btnProjectDir_Click(object sender, EventArgs e)
+        {
+            using (var fbd = new VistaFolderBrowserDialog())
+            {
+                fbd.SelectedPath = creator_defaultproject.Name;
+                fbd.Description = "Select Default Project Folder for the CDLC Creator";
+                if (fbd.ShowDialog() != DialogResult.OK)
+                    return;
+
+                var projectDir = fbd.SelectedPath;
+                creator_defaultproject.Text = projectDir;
+                ConfigRepository.Instance()[creator_defaultproject.Name] = projectDir;
+            }
+        }
+
+        private void btnTonePath_Click(object sender, EventArgs e)
+        {
+            using (var ofd = new OpenFileDialog())
+            {
+                ofd.InitialDirectory = creator_defaulttone.Name;
+                ofd.Title = "Select Default Tone for the CDLC Creator";
+                ofd.Filter = CurrentOFDFilter;
+
+                if (ofd.ShowDialog() != DialogResult.OK)
+                    return;
+
+                var tonePath = ofd.FileName;
+                creator_defaulttone.Text = tonePath;
+                ConfigRepository.Instance()[creator_defaulttone.Name] = tonePath;
+            }
+        }
+
+        private string CurrentOFDFilter
+        {
+            get
+            {
+                switch (general_defaultgameversion.SelectedItem.ToString())
+                {
+                    case "RS2014":
+                        return "Rocksmith 2014 Tone Template(*.tone2014.xml)|*.tone2014.xml|All XML Files (*.xml)|*.xml";
+                    default:
+                        return "Rocksmith Tone Template (*.tone.xml)|*.tone.xml|All XML Files (*.xml)|*.xml";
+                }
             }
         }
 

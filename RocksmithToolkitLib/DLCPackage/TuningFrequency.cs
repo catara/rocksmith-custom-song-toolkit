@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using Newtonsoft.Json.Linq;
 using RocksmithToolkitLib.Sng;
+using RocksmithToolkitLib.SngToTab;
 using RocksmithToolkitLib.Xml;
 
 namespace RocksmithToolkitLib.DLCPackage
@@ -132,11 +135,13 @@ namespace RocksmithToolkitLib.DLCPackage
             File.Delete(arr.SongXml.File);
             using (var stream = File.OpenWrite(arr.SongXml.File))
             {
-                songXml.Serialize(stream);
+                songXml.Serialize(stream, true);
             }
 
             return true;
         }
+
+ 
 
     }
 }

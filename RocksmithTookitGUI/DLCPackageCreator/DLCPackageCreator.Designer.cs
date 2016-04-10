@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DLCPackageCreator));
             this.albumArtButton = new System.Windows.Forms.Button();
             this.dlcGenerateButton = new System.Windows.Forms.Button();
             this.openAudioButton = new System.Windows.Forms.Button();
@@ -48,8 +49,8 @@
             this.platformXBox360 = new System.Windows.Forms.CheckBox();
             this.platformPS3 = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.RS2012 = new System.Windows.Forms.RadioButton();
-            this.RS2014 = new System.Windows.Forms.RadioButton();
+            this.rbRs2012 = new System.Windows.Forms.RadioButton();
+            this.rbRs2014 = new System.Windows.Forms.RadioButton();
             this.gbPlatofmr = new System.Windows.Forms.GroupBox();
             this.platformMAC = new System.Windows.Forms.CheckBox();
             this.gbFiles = new System.Windows.Forms.GroupBox();
@@ -79,7 +80,7 @@
             this.YearTB = new RocksmithToolkitGUI.CueTextBox();
             this.AverageTempoTB = new RocksmithToolkitGUI.CueTextBox();
             this.songVolumeBox = new RocksmithToolkitGUI.DLCPackageCreator.NumericUpDownFixed();
-            this.AppIdTB = new RocksmithToolkitGUI.CueTextBox();
+            this.AppIdTB = new System.Windows.Forms.TextBox();
             this.SongDisplayNameSortTB = new RocksmithToolkitGUI.CueTextBox();
             this.ArtistSortTB = new RocksmithToolkitGUI.CueTextBox();
             this.gbGameVersion = new System.Windows.Forms.GroupBox();
@@ -268,8 +269,6 @@
             // platformPC
             // 
             this.platformPC.AutoSize = true;
-            this.platformPC.Checked = true;
-            this.platformPC.CheckState = System.Windows.Forms.CheckState.Checked;
             this.platformPC.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.platformPC.ForeColor = System.Drawing.SystemColors.ControlText;
             this.platformPC.Location = new System.Drawing.Point(8, 17);
@@ -316,33 +315,31 @@
             this.label3.TabIndex = 63;
             this.label3.Text = "dB";
             // 
-            // RS2012
+            // rbRs2012
             // 
-            this.RS2012.AutoSize = true;
-            this.RS2012.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RS2012.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.RS2012.Location = new System.Drawing.Point(8, 17);
-            this.RS2012.Name = "RS2012";
-            this.RS2012.Size = new System.Drawing.Size(75, 17);
-            this.RS2012.TabIndex = 1;
-            this.RS2012.Text = "Rocksmith";
-            this.RS2012.UseVisualStyleBackColor = true;
-            this.RS2012.CheckedChanged += new System.EventHandler(this.GameVersion_CheckedChanged);
+            this.rbRs2012.AutoSize = true;
+            this.rbRs2012.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rbRs2012.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.rbRs2012.Location = new System.Drawing.Point(8, 17);
+            this.rbRs2012.Name = "rbRs2012";
+            this.rbRs2012.Size = new System.Drawing.Size(75, 17);
+            this.rbRs2012.TabIndex = 1;
+            this.rbRs2012.Text = "Rocksmith";
+            this.rbRs2012.UseVisualStyleBackColor = true;
             // 
-            // RS2014
+            // rbRs2014
             // 
-            this.RS2014.AutoSize = true;
-            this.RS2014.Checked = true;
-            this.RS2014.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RS2014.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.RS2014.Location = new System.Drawing.Point(88, 17);
-            this.RS2014.Name = "RS2014";
-            this.RS2014.Size = new System.Drawing.Size(102, 17);
-            this.RS2014.TabIndex = 2;
-            this.RS2014.TabStop = true;
-            this.RS2014.Text = "Rocksmith 2014";
-            this.RS2014.UseVisualStyleBackColor = true;
-            this.RS2014.CheckedChanged += new System.EventHandler(this.GameVersion_CheckedChanged);
+            this.rbRs2014.AutoSize = true;
+            this.rbRs2014.Checked = true;
+            this.rbRs2014.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rbRs2014.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.rbRs2014.Location = new System.Drawing.Point(88, 17);
+            this.rbRs2014.Name = "rbRs2014";
+            this.rbRs2014.Size = new System.Drawing.Size(102, 17);
+            this.rbRs2014.TabIndex = 2;
+            this.rbRs2014.TabStop = true;
+            this.rbRs2014.Text = "Rocksmith 2014";
+            this.rbRs2014.UseVisualStyleBackColor = true;
             // 
             // gbPlatofmr
             // 
@@ -585,15 +582,15 @@
             // 
             this.DlcKeyTB.BackColor = System.Drawing.Color.Snow;
             this.DlcKeyTB.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.DlcKeyTB.Cue = "Spawned DLC Key";
+            this.DlcKeyTB.Cue = "DLC Key";
             this.DlcKeyTB.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.DlcKeyTB.ForeColor = System.Drawing.Color.Gray;
-            this.DlcKeyTB.Location = new System.Drawing.Point(359, -2);
+            this.DlcKeyTB.Location = new System.Drawing.Point(303, -2);
             this.DlcKeyTB.Name = "DlcKeyTB";
-            this.DlcKeyTB.Size = new System.Drawing.Size(131, 13);
+            this.DlcKeyTB.Size = new System.Drawing.Size(187, 13);
             this.DlcKeyTB.TabIndex = 7;
             this.DlcKeyTB.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.toolTip.SetToolTip(this.DlcKeyTB, "DLC Key");
+            this.toolTip.SetToolTip(this.DlcKeyTB, resources.GetString("DlcKeyTB.ToolTip"));
             // 
             // AlbumSortTB
             // 
@@ -773,15 +770,14 @@
             // AppIdTB
             // 
             this.AppIdTB.BackColor = System.Drawing.SystemColors.Window;
-            this.AppIdTB.Cue = "App ID";
             this.AppIdTB.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.AppIdTB.ForeColor = System.Drawing.Color.Gray;
             this.AppIdTB.Location = new System.Drawing.Point(139, 69);
             this.AppIdTB.Name = "AppIdTB";
             this.AppIdTB.Size = new System.Drawing.Size(49, 20);
             this.AppIdTB.TabIndex = 16;
-            this.toolTip.SetToolTip(this.AppIdTB, "App ID");
-            this.AppIdTB.TextChanged += new System.EventHandler(this.AppIdTB_TextChanged);
+            this.toolTip.SetToolTip(this.AppIdTB, "Specify any valid App ID\r\nby typing it into this box");
+            this.AppIdTB.Validating += new System.ComponentModel.CancelEventHandler(this.AppIdTB_Validating);
             // 
             // SongDisplayNameSortTB
             // 
@@ -811,8 +807,8 @@
             // gbGameVersion
             // 
             this.gbGameVersion.Controls.Add(this.rbConvert);
-            this.gbGameVersion.Controls.Add(this.RS2014);
-            this.gbGameVersion.Controls.Add(this.RS2012);
+            this.gbGameVersion.Controls.Add(this.rbRs2014);
+            this.gbGameVersion.Controls.Add(this.rbRs2012);
             this.gbGameVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gbGameVersion.ForeColor = System.Drawing.Color.IndianRed;
             this.gbGameVersion.Location = new System.Drawing.Point(3, 0);
@@ -833,7 +829,6 @@
             this.rbConvert.TabIndex = 3;
             this.rbConvert.Text = "Convert";
             this.rbConvert.UseVisualStyleBackColor = true;
-            this.rbConvert.CheckedChanged += new System.EventHandler(this.GameVersion_CheckedChanged);
             // 
             // dlcImportButton
             // 
@@ -872,6 +867,7 @@
             // 
             this.toolTip.AutoPopDelay = 9000;
             this.toolTip.InitialDelay = 100;
+            this.toolTip.IsBalloon = true;
             this.toolTip.ReshowDelay = 100;
             // 
             // DLCPackageCreator
@@ -927,7 +923,7 @@
         private System.Windows.Forms.Button dlcSaveButton;
         private System.Windows.Forms.Button dlcLoadButton;
         private CueTextBox AverageTempoTB;
-        private CueTextBox AppIdTB;
+        private System.Windows.Forms.TextBox AppIdTB;
         private System.Windows.Forms.ComboBox cmbAppIds;
         private System.Windows.Forms.Button toneRemoveButton;
         private System.Windows.Forms.Button toneAddButton;
@@ -942,8 +938,8 @@
         private CueTextBox ArtistSortTB;
         private NumericUpDownFixed songVolumeBox;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.RadioButton RS2012;
-        private System.Windows.Forms.RadioButton RS2014;
+        private System.Windows.Forms.RadioButton rbRs2012;
+        private System.Windows.Forms.RadioButton rbRs2014;
         private System.Windows.Forms.GroupBox gbPlatofmr;
         private System.Windows.Forms.CheckBox platformMAC;
         private System.Windows.Forms.GroupBox gbFiles;

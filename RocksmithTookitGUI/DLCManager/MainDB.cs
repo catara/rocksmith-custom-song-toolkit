@@ -2697,7 +2697,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     Mac = chbx_Format.Text == "Mac" || file.Platform == "Mac" ? true : false,
                     XBox360 = chbx_Format.Text == "XBOX360" || file.Platform == "Xbox360" ? true : false,
                     PS3 = chbx_Format.Text == "PS3" || file.Platform == "Ps3" ? true : false,
-                    DLCKey = file.DLC_Name,
+                    Name = file.DLC_Name,
                     AppId = file.DLC_AppID,
                     ArtFiles = info.ArtFiles, //not complete
                     Showlights = true,//info.Showlights, //apparently this infor is not read..also the tone base is removed/not read also
@@ -2864,8 +2864,8 @@ namespace RocksmithToolkitGUI.DLCManager
                 //else
                 {
                     Random random = new Random();
-                    data.DLCKey = random.Next(0, 100000) + data.DLCKey;
-                    norm_path += data.DLCKey;
+                    data.Name = random.Next(0, 100000) + data.Name;
+                    norm_path += data.Name;
                     //repacked_Path + "\\" + Manipulate_strings(ConfigRepository.Instance()["dlcm_File_Name"], 0, false, false, bassRemoved);
 
                     //var k = DataViewGrid.SelectedCells[0].RowIndex;
@@ -3820,7 +3820,11 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             //txt_Track_No.Text = (GetTrackNo(txt_Artist.Text, txt_Album.Text, txt_Title.Text)).ToString();
             string uriString = "https://api.spotify.com/v1/search";// "?q=panick%20switch&type=track
-            string keywordString = "album%3A"+Album.Replace(" ", " +").ToLower() + "+artist%3A" + Artist.Replace(" ", " +").ToLower() + "+"+Title.Replace(" ", "+").ToLower() + "&offset=0&limit=20&type=track"; //"discorg.com:\"" + txt_Artist.Text + "\" \"" + txt_Album.Text + "\" \"" + txt_Title.Text + "\" \"track\""; //"www.metrolyrics.com:" + 
+            string keywordString="";
+           if (Artist !="" && Album !="" && Title!="") keywordString = "album%3A"+Album.Replace(" ", " +").ToLower() + "+artist%3A" + Artist.Replace(" ", " +").ToLower() + "+"+Title.Replace(" ", "+").ToLower() + "&offset=0&limit=20&type=track"; //"discorg.com:\"" + txt_Artist.Text + "\" \"" + txt_Album.Text + "\" \"" + txt_Title.Text + "\" \"track\""; //"www.metrolyrics.com:" + 
+            if (Album == "" && Artist != "" && Title != "") keywordString = "artist%3A" + Artist.Replace(" ", " +").ToLower() + "+" + Title.Replace(" ", "+").ToLower() + "&offset=0&limit=20&type=track"; //"discorg.com:\"" + txt_Artist.Text + "\" \"" + txt_Album.Text + "\" \"" + txt_Title.Text + "\" \"track\""; //"www.metrolyrics.com:" + 
+            if (Artist == "" && Album == "" && Title != "") keywordString = Title.Replace(" ", "+").ToLower() + "&offset=0&limit=20&type=track"; //"discorg.com:\"" + txt_Artist.Text + "\" \"" + txt_Album.Text + "\" \"" + txt_Title.Text + "\" \"track\""; //"www.metrolyrics.com:" + 
+
             //txt_Artist.Text + "\" \"" + txt_Album.Text + "\" \"" + 
             WebClient webClient = new WebClient();
 

@@ -13,6 +13,7 @@
 		- Preview
 		- Cover
 	- Listen to songs Audio/Preview
+	- Gathers Track No. from Spotify
 - Mass Modify songdetails/metadata @repack per each Rocksmith song
 	*e.g. Album Field: "<Broken><Year> - <Album> - r<Rating> - <Avail. Instr.> - <DD> - <Tuning>"
 	- Copies songs/packs directly to the PS3 by means of FTP
@@ -32,7 +33,6 @@
 -+ Packing of Rocksmith 2014 Retail manipulated files has 1 manual step for RS14 Retail songs
 
 ## ToDos/bugs:
--+ with or without u still doesnt have the right alternate no when importing vs an existing song= a2....maybe OK :)
 -+ small bug: on inserting a new standardization 
 -+ small feature: when opening MainDB and detecting directory check runs, if next directory exists (give a change to empty the db then if possible)
 -- cannot find sick sick sic (override)
@@ -42,8 +42,6 @@
 -+ at pack mark as selected - Conflicting with Select functionality (is this useful? :) )
 -+ vs blue maybe also yes blue (blu happens also when small 1bite amybe 2 diff in filesize
 -+ standardiation delete
--+ third eye investig
--+ CICAGO 26 25 original SONG FAILS AT PACK 
 -+ usa peaches long naming fails at packing
 -+ some songs have preview in minutes (preview rename thing) recalculated at repack
 - [ ] feat:		 Alternate No for duplicates logic
@@ -77,31 +75,37 @@
 - [ ] dont conv Orig
 - [ ] changing path
 - [ ] alternate 0
+	-+ with or without u still doesnt have the right alternate no when importing vs an existing song= a2....maybe OK :)
 
 ## WiP:
 - [+] some tracks no don't get read/picked cause" (1) " when importing other formats this should be ok
 - [+] generate a garageband
-- [ ] it's my life..breaks because of the aphostrofe'
 - [ ] if cover was from someone else please compare against that (save old cover)
 - [ ] update to wise 2015 (messages&testing)
-- [ ] open ticket for the dlcpackagedata crash for 311 down in
-- [ ] why all songs have 30sec preview :)
 - [ ] some songs dont repack
 - [ ] remove all dd in Cache/Retails screen
-- [+] finish profiles (load Saved Profile names)
 - [ ] fix filter in CAche
 - [ ] duplicate management..on change..check and green color
 - [ ] Check Packer.cs bug
-- [ ] Update to latest Master (template broken revert will gen DLCName change back from dlckey)
-- [+] Spotify old API is dead, use a new way to... (bring also cover)
-- [ ] How many audioslave bring themback alive foler r?
-- [ ] Minerva gives a wwise error check on a repaired hdd...check and open a tix
-- [ ] Filter by group
+- [ ] Bring year and picture from Spotify
+- [ ] save when exit searchwhen clickin g ona  song disable Search
+- [ ] after selecting deselect incl. Beta
+- [ ] group display with issues
+- [ ] Add Lyrics
+- [ ] add group to Beta
+- [ ] delete all duplicates at Standardization
+- [+] why all songs have 30sec preview :)
+-+ third eye investig
+- [ ] muse uprising songs have preview lenght in minutes
+
+
+official bugs:
+- [ ] CICAGO 26 25 original SONG FAILS AT PACK
+- [ ] open ticket for the dlcpackagedata crash for 311 down in
+- [+] finish profiles (load Saved Profile names)
 
 done:
 (next release)
-- [ ] Remove BassDD only if DD exits
-- [ ] Add trully FPT to mass pack
 
 (prev release; but maybe not thuroughly tested)
 - [x] duplic manag make date bigger
@@ -116,6 +120,25 @@ done:
 - [x] Custom song creators only saved if Advanced option set
 - [x] Fix for unnecessary preview creation for songs wo Albumart
 - [x] Fix no album art detection
+- [x] Remove BassDD only if DD exits
+- [x] Add trully FPT to mass pack
+- [x] Update to latest Master (template broken revert will gen DLCName change back from dlckey)
+- [x] Spotify old API is dead, use a new way to... (bring also cover)
+- [x] save track at repack
+- [x] replace () w [] (ADD that to alt.;)
+- [x] when in filter select none looks weird
+- [x] it's my life..breaks because of the aphostrofe' (update log issue)(update duplication)
+- [x] Filter by group
+- [x] How many audioslave bring themback alive foler r? duplicate song issue? (old duplicqwrtes not deleted maybe)
+- [x] Minerva gives a wwise error check on a repaired hdd...check and open a tix (no issue lately)
+- [x] add incl group
+- [x] at search when chicking it changes from exit to search
+- [x] multitrack dont get their track no if they have (no guitar removed) as assumgly they stilla re searched witrh full name 
+- [x] alternate doesnt go into title sort
+- [x] trim SONG details
+- [x] original bass remove fails on billy weathers  (fix)
+- [x] beta does not apear on originals or indiv repack(mqiandb)(non issue-added save at repack)
+
 
 - diff between master and branch
 DLCManager folder

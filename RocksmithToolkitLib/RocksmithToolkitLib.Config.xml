@@ -100,7 +100,7 @@
   <Config Key="dlcm_AdditionalManipul61" Value="Yes" />
   <Config Key="dlcm_Album" Value="&#60;Broken&#62;&#60;Year&#62; - &#60;Album&#62; - &#60;Rating&#62; - &#60;Avail. Instr.&#62; - &#60;DD&#62; - &#60;Tuning&#62;" />;
   <Config Key="dlcm_Artist" Value="&#60;Artist&#62;-&#60;CDLC&#62;-&#60;Avail. Tracks&#62;-&#60;DD&#62;-&#60;QAs&#62;-&#60;Bass_HasDD&#62;" />;
-  <Config Key="dlcm_Artist_Sort" Value="&#60;Beta&#62;&#60;Artist&#62;" />;
+  <Config Key="dlcm_Artist_Sort" Value="&#60;Beta&#62;&#60;Group&#62;&#60;Artist&#62;" />;
   <Config Key="dlcm_cbx_Groups" Value="" />;
   <Config Key="dlcm_chbx_Mac" Value="No" />;
   <Config Key="dlcm_chbx_PC" Value="No" />;

@@ -60,7 +60,7 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             //DataAccess da = new DataAccess();
             //MessageBox.Show("test0");
-            SearchCmd="SELECT * from Cache AS O";
+            SearchCmd = "SELECT * from Cache AS O";
             Populate(ref DataGridView1, ref Main);//, ref bsPositions, ref bsBadges);
             DataGridView1.EditingControlShowing += DataGridView1_EditingControlShowing;
             chbx_Autosave.Checked = ConfigRepository.Instance()["dlcm_Autosave"] == "Yes" ? true : false;
@@ -245,116 +245,118 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             int i;
             DataSet dis = new DataSet();
-
-            i = DataGridView1.SelectedCells[0].RowIndex;
-            //nud_RemoveSlide.Value = i;
-            //DataGridView1.Rows[i].Cells[0].Value = txt_I.Text;
-            //DataGridView1.Rows[i].Cells[1].Value = txt_Artist.Text;
-            //DataGridView1.Rows[i].Cells[3].Value = txt_ArtistSort.Text;
-            //DataGridView1.Rows[i].Cells[3].Value = txt_Album.Text;
-            if (chbx_Removed.Checked == true) DataGridView1.Rows[i].Cells[8].Value = "Yes";
-            else DataGridView1.Rows[i].Cells[8].Value = "No";
-            if (chbx_Selected.Checked == true) DataGridView1.Rows[i].Cells[16].Value = "Yes";
-            else DataGridView1.Rows[i].Cells[16].Value = "No";
-            DataGridView1.Rows[i].Cells[10].Value = rtxt_Comments.Text;
-
-            //Save Groups
-            if (GroupChanged)
+            if (DataGridView1.SelectedCells.Count > 0 && txt_ID.Text != "")
             {
-                var cmdDel = "DELETE FROM Groups WHERE ";
+                i = DataGridView1.SelectedCells[0].RowIndex;
+                //nud_RemoveSlide.Value = i;
+                //DataGridView1.Rows[i].Cells[0].Value = txt_I.Text;
+                //DataGridView1.Rows[i].Cells[1].Value = txt_Artist.Text;
+                //DataGridView1.Rows[i].Cells[3].Value = txt_ArtistSort.Text;
+                //DataGridView1.Rows[i].Cells[3].Value = txt_Album.Text;
+                if (chbx_Removed.Checked == true) DataGridView1.Rows[i].Cells[8].Value = "Yes";
+                else DataGridView1.Rows[i].Cells[8].Value = "No";
+                if (chbx_Selected.Checked == true) DataGridView1.Rows[i].Cells[16].Value = "Yes";
+                else DataGridView1.Rows[i].Cells[16].Value = "No";
+                DataGridView1.Rows[i].Cells[10].Value = rtxt_Comments.Text;
 
-                DataSet dsz = new DataSet();
-                DataSet ddz = new DataSet();
-                for (int j = 0; j < chbx_AllGroups.Items.Count; j++)
+                //Save Groups
+                if (GroupChanged)
                 {
-                    using (OleDbConnection cmb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-                    {
-                        DataSet dooz = new DataSet();
-                        string updatecmd = "SELECT ID FROM Groups WHERE Type=\"Retail\" AND CDLC_ID=\"" + txt_ID.Text + "\" AND Groups=\"" + chbx_AllGroups.Items[j] + "\";";
-                        OleDbDataAdapter dbf = new OleDbDataAdapter(updatecmd, cmb);
-                        dbf.Fill(dooz, "Groups");
-                        dbf.Dispose();
-                        var cmd = "INSERT INTO Groups(CDLC_ID,Groups,Type) VALUES";
+                    var cmdDel = "DELETE FROM Groups WHERE ";
 
-                        var rr = dooz.Tables[0].Rows.Count;
-                        if (chbx_AllGroups.GetItemChecked(j) && rr == 0)
+                    DataSet dsz = new DataSet();
+                    DataSet ddz = new DataSet();
+                    for (int j = 0; j < chbx_AllGroups.Items.Count; j++)
+                    {
+                        using (OleDbConnection cmb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
                         {
-                            cmd += "(\"" + txt_ID.Text + "\",\"" + chbx_AllGroups.Items[j] + "\",\"Retail\")";
-                            OleDbDataAdapter dab = new OleDbDataAdapter(cmd, cmb);
-                            dab.Fill(dsz, "Groups");
-                            dab.Dispose();
+                            DataSet dooz = new DataSet();
+                            string updatecmd = "SELECT ID FROM Groups WHERE Type=\"Retail\" AND CDLC_ID=\"" + txt_ID.Text + "\" AND Groups=\"" + chbx_AllGroups.Items[j] + "\";";
+                            OleDbDataAdapter dbf = new OleDbDataAdapter(updatecmd, cmb);
+                            dbf.Fill(dooz, "Groups");
+                            dbf.Dispose();
+                            var cmd = "INSERT INTO Groups(CDLC_ID,Groups,Type) VALUES";
+
+                            var rr = dooz.Tables[0].Rows.Count;
+                            if (chbx_AllGroups.GetItemChecked(j) && rr == 0)
+                            {
+                                cmd += "(\"" + txt_ID.Text + "\",\"" + chbx_AllGroups.Items[j] + "\",\"Retail\")";
+                                OleDbDataAdapter dab = new OleDbDataAdapter(cmd, cmb);
+                                dab.Fill(dsz, "Groups");
+                                dab.Dispose();
+                            }
+                            else if (rr > 0 && !chbx_AllGroups.GetItemChecked(j)) cmdDel += "(Type=\"Retail\" AND CDLC_ID=\"" + txt_ID.Text + "\" AND Groups=\"" + chbx_AllGroups.Items[j] + "\") OR ";
                         }
-                        else if (rr > 0 && !chbx_AllGroups.GetItemChecked(j)) cmdDel += "(Type=\"Retail\" AND CDLC_ID=\"" + txt_ID.Text + "\" AND Groups=\"" + chbx_AllGroups.Items[j] + "\") OR ";
                     }
-                }
-                cmdDel += ";";
-                cmdDel = cmdDel.Replace(" OR ;", ";");
-                //cmd += ";";
-                //cmd = cmd.Replace(",;", ";");
-                using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-                {
-                    //if (cmd != "INSERT INTO Groups(CDLC_ID,Groups) VALUES")
-                    //{
-                    //    OleDbDataAdapter dab = new OleDbDataAdapter(cmd, cnb);
-                    //  dab.Fill(dsz, "Groups");
-                    //    dab.Dispose();
-                    //}
-                    if (cmdDel != "DELETE FROM Groups WHERE ;")
+                    cmdDel += ";";
+                    cmdDel = cmdDel.Replace(" OR ;", ";");
+                    //cmd += ";";
+                    //cmd = cmd.Replace(",;", ";");
+                    using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
                     {
-                        OleDbDataAdapter dac = new OleDbDataAdapter(cmdDel, cnb);
-                        dac.Fill(ddz, "Groups");
-                        dac.Dispose();
+                        //if (cmd != "INSERT INTO Groups(CDLC_ID,Groups) VALUES")
+                        //{
+                        //    OleDbDataAdapter dab = new OleDbDataAdapter(cmd, cnb);
+                        //  dab.Fill(dsz, "Groups");
+                        //    dab.Dispose();
+                        //}
+                        if (cmdDel != "DELETE FROM Groups WHERE ;")
+                        {
+                            OleDbDataAdapter dac = new OleDbDataAdapter(cmdDel, cnb);
+                            dac.Fill(ddz, "Groups");
+                            dac.Dispose();
+                        }
                     }
                 }
-            }
-            //var DB_Path = "../../../../tmp\\Files.accdb;";
-            var connection = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path); //+ ";Persist Security Info=False"
-            var command = connection.CreateCommand();
-            //dssx = DataGridView1;
-            using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-            {
-                //OleDbCommand command = new OleDbCommand();
-                //Update StadardizationDB
-                //SqlCommand cmds = new SqlCommand(sqlCmd, conn2);
-                command.CommandText = "UPDATE Cache SET ";
-                command.CommandText += "Removed = @param8, ";
-                command.CommandText += "Selected = @param9, ";
-                command.CommandText += "Comments = @param10 ";
-                //command.CommandText += "AlbumArtPath_Correction = @param6 ";
-                command.CommandText += "WHERE ID = " + txt_ID.Text;
+                //var DB_Path = "../../../../tmp\\Files.accdb;";
+                var connection = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path); //+ ";Persist Security Info=False"
+                var command = connection.CreateCommand();
+                //dssx = DataGridView1;
+                using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                {
+                    //OleDbCommand command = new OleDbCommand();
+                    //Update StadardizationDB
+                    //SqlCommand cmds = new SqlCommand(sqlCmd, conn2);
+                    command.CommandText = "UPDATE Cache SET ";
+                    command.CommandText += "Removed = @param8, ";
+                    command.CommandText += "Selected = @param9, ";
+                    command.CommandText += "Comments = @param10 ";
+                    //command.CommandText += "AlbumArtPath_Correction = @param6 ";
+                    command.CommandText += "WHERE ID = " + txt_ID.Text;
 
-                command.Parameters.AddWithValue("@param8", DataGridView1.Rows[i].Cells[8].Value.ToString() ?? DBNull.Value.ToString());
-                command.Parameters.AddWithValue("@param9", DataGridView1.Rows[i].Cells[16].Value.ToString() ?? DBNull.Value.ToString());
-                command.Parameters.AddWithValue("@param10", DataGridView1.Rows[i].Cells[10].Value.ToString() ?? DBNull.Value.ToString());
-                try
-                {
-                    command.CommandType = CommandType.Text;
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    MessageBox.Show("Can not open Cache DB connection in Cache Edit screen ! " + DB_Path + "-" + command.CommandText);
+                    command.Parameters.AddWithValue("@param8", DataGridView1.Rows[i].Cells[8].Value.ToString() ?? DBNull.Value.ToString());
+                    command.Parameters.AddWithValue("@param9", DataGridView1.Rows[i].Cells[16].Value.ToString() ?? DBNull.Value.ToString());
+                    command.Parameters.AddWithValue("@param10", DataGridView1.Rows[i].Cells[10].Value.ToString() ?? DBNull.Value.ToString());
+                    try
+                    {
+                        command.CommandType = CommandType.Text;
+                        connection.Open();
+                        command.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Can not open Cache DB connection in Cache Edit screen ! " + DB_Path + "-" + command.CommandText);
 
-                    throw;
+                        throw;
+                    }
+                    finally
+                    {
+                        if (connection != null) connection.Close();
+                    }
+                    ////OleDbDataAdapter das = new OleDbDataAdapter(command.CommandText, cnn);
+                    //MessageBox.Show("Default Menu song Availability Saved");
+                    //das.SelectCommand.CommandText = "SELECT * FROM Tones";
+                    //// das.Update(dssx, "Tones");
                 }
-                finally
-                {
-                    if (connection != null) connection.Close();
-                }
-                ////OleDbDataAdapter das = new OleDbDataAdapter(command.CommandText, cnn);
-                //MessageBox.Show("Default Menu song Availability Saved");
-                //das.SelectCommand.CommandText = "SELECT * FROM Tones";
-                //// das.Update(dssx, "Tones");
+                GroupChanged = false;
             }
-            GroupChanged = false;
         }
 
         public void Populate(ref DataGridView DataGridView, ref BindingSource bs) //, ref BindingSource bsPositions, ref BindingSource bsBadges
         {
 
-
+            SearchCmd = SearchCmd.Replace("WHERE  ORDER", "ORDER");
             //DB_Path = "../../../../tmp\\Files.accdb;";
             using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
             {
@@ -1631,7 +1633,7 @@ namespace RocksmithToolkitGUI.DLCManager
             MessageBox.Show("All songs in DB have been UNmarked from being Selected");
         }
 
-        private void chbx_Group_SelectedValueChanged(object sender, EventArgs e)
+        private void cmb_Filter_SelectedValueChanged(object sender, EventArgs e)//chbx_Group_SelectedValueChanged
         {
 
             //MessageBox.Show(cmb_Filter.Text.ToString() + SearchCmd);
@@ -1640,7 +1642,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
             switch (Filtertxt)
             {
-                
+
                 case "Pc":
                     SearchCmd += "Platform = 'Pc'";
                     break;
@@ -1686,6 +1688,68 @@ namespace RocksmithToolkitGUI.DLCManager
                 MessageBox.Show(ee.Message + "Can't run Filter ! " + SearchCmd);
                 //MessageBox.Show(ee.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void chbx_Selected_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void chbx_Selected_CheckStateChanged(object sender, EventArgs e)
+        {
+            if (chbx_Selected.Checked) chbx_Removed.Checked = false;
+            else chbx_Removed.Checked = true;
+        }
+
+        private void txt_Album_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmb_Filter_SelectedValueChanged1(object sender, EventArgs e)
+        {
+            //MessageBox.Show(cmb_Filter.Text.ToString() + SearchCmd);
+            SearchCmd = "SELECT * FROM Cache u WHERE ";
+            var Filtertxt = cmb_Filter.Text;//cmb_Filter.SelectedValue.ToString();
+
+            switch (Filtertxt)
+            {
+                case "Mac":
+                    SearchCmd += "Has_Cover <> 'Yes'";// + (txt_Artist.Text != "" ? " Artist Like '%" + txt_Artist.Text + "%'" : "") + (txt_Artist.Text != "" ? (txt_Title.Text != "" ? " AND " : "") : "") + (txt_Title.Text != "" ? " Song_Title Like '%" + txt_Title.Text + "%'" : "") + " ORDER BY Artist, Album_Year, Album, Song_Title ;";
+                    break;
+                case "PS3":
+                    SearchCmd += "Has_Cover <> 'Yes'";// + (txt_Artist.Text != "" ? " Artist Like '%" + txt_Artist.Text + "%'" : "") + (txt_Artist.Text != "" ? (txt_Title.Text != "" ? " AND " : "") : "") + (txt_Title.Text != "" ? " Song_Title Like '%" + txt_Title.Text + "%'" : "") + " ORDER BY Artist, Album_Year, Album, Song_Title ;";
+                    break;
+                case "XBOX":
+                    SearchCmd += "Has_Cover <> 'Yes'";// + (txt_Artist.Text != "" ? " Artist Like '%" + txt_Artist.Text + "%'" : "") + (txt_Artist.Text != "" ? (txt_Title.Text != "" ? " AND " : "") : "") + (txt_Title.Text != "" ? " Song_Title Like '%" + txt_Title.Text + "%'" : "") + " ORDER BY Artist, Album_Year, Album, Song_Title ;";
+                    break;
+                case "PC":
+                    SearchCmd += "Has_Cover <> 'Yes'";
+                    break;
+                default:
+                    break;
+            }
+
+            SearchCmd += " ORDER BY Artist, Album_Year, Album, Song_Title ";
+            //MessageBox.Show(Filtertxt + SearchCmd);
+            try
+            {
+                this.DataGridView1.DataSource = null; //Then clear the rows:
+
+                this.DataGridView1.Rows.Clear();//                Then set the data source to the new list:
+
+                //this.dataGridView.DataSource = this.GetNewValues();
+                dssx.Dispose();
+                Populate(ref DataGridView1, ref Main);//, ref bsPositions, ref bsBadges);
+                DataGridView1.EditingControlShowing += DataGridView1_EditingControlShowing;
+                DataGridView1.Refresh();
+            }
+            catch (System.IO.FileNotFoundException ee)
+            {
+                MessageBox.Show(ee.Message + "Can't run Filter ! " + SearchCmd);
+                //MessageBox.Show(ee.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
         }
     }
 }

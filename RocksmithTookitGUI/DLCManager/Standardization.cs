@@ -34,6 +34,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private BindingSource Main = new BindingSource();
         private readonly string MESSAGEBOX_CAPTION = "StandardizationDB";
+        public bool SaveOK = false;
         //private object cbx_Lead;
         //public DataAccess da = new DataAccess();
         //bcapi
@@ -117,6 +118,25 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void DataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
+            //int i;
+            //i = DataGridView1.SelectedCells[0].RowIndex;
+            //txt_ID.Text = DataGridView1.Rows[i].Cells[0].Value.ToString();
+            //txt_Artist.Text = DataGridView1.Rows[i].Cells[2].Value.ToString();
+            //txt_Artist_Correction.Text = DataGridView1.Rows[i].Cells[3].Value.ToString();
+            //txt_Album.Text = DataGridView1.Rows[i].Cells[4].Value.ToString();
+            //txt_Album_Correction.Text = DataGridView1.Rows[i].Cells[5].Value.ToString();
+            //txt_AlbumArtPath_Correction.Text = DataGridView1.Rows[i].Cells[5].Value.ToString();
+
+            //if (txt_AlbumArtPath_Correction.Text != "") picbx_AlbumArtPath.ImageLocation = txt_AlbumArtPath.Text.Replace(".dds", ".png");
+            var line = -1;
+            line = DataGridView1.SelectedCells[0].RowIndex;
+            if (line > -1) ChangeRow();
+            // pB_ReadDLCs.Value = 0;
+
+        }
+
+        public void ChangeRow()
+        {
             int i;
             i = DataGridView1.SelectedCells[0].RowIndex;
             txt_ID.Text = DataGridView1.Rows[i].Cells[0].Value.ToString();
@@ -124,9 +144,17 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_Artist_Correction.Text = DataGridView1.Rows[i].Cells[3].Value.ToString();
             txt_Album.Text = DataGridView1.Rows[i].Cells[4].Value.ToString();
             txt_Album_Correction.Text = DataGridView1.Rows[i].Cells[5].Value.ToString();
-            //txt_AlbumArtPath_Correction.Text = DataGridView1.Rows[i].Cells[5].Value.ToString();
+            txt_AlbumArtPath_Correction.Text = DataGridView1.Rows[i].Cells[5].Value.ToString();
 
             if (txt_AlbumArtPath_Correction.Text != "") picbx_AlbumArtPath.ImageLocation = txt_AlbumArtPath.Text.Replace(".dds", ".png");
+
+
+            //ImageSource imageSource = new BitmapImage(new Uri("C:\\Temp\\music_edit.png"));
+            //txt_Description.Text = txt_AlbumArtPath.Text.Replace(".dds", ".png");
+            // picbx_AlbumArtPath.ImageLocation = txt_AlbumArtPath.Text.Replace(".dds", ".png");
+
+            if (chbx_AutoSave.Checked) SaveOK = true;
+            else SaveOK = false;
 
         }
 
@@ -163,7 +191,9 @@ namespace RocksmithToolkitGUI.DLCManager
                 DataGridViewTextBoxColumn Album_Correction = new DataGridViewTextBoxColumn { DataPropertyName = "Album_Correction", HeaderText = "Album_Correction ", Width = 185 };
                 DataGridViewTextBoxColumn AlbumArtPath_Correction = new DataGridViewTextBoxColumn { DataPropertyName = "AlbumArtPath_Correction", HeaderText = "AlbumArtPath_Correction ", Width = 495 };
 
-                DataGridView1.AutoGenerateColumns = false;
+                // DataGridView1.AutoGenerateColumns = false;
+                DataGridView.AutoResizeColumns();
+                bs.ResetBindings(false);
 
                 DataGridView1.Columns.AddRange(new DataGridViewColumn[]
                     {
@@ -178,7 +208,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 );
 
                 dssx.Tables["Standardization"].AcceptChanges();
-                bs.ResetBindings(false);
+                //   bs.ResetBindings(false);
                 bs.DataSource = dssx.Tables["Standardization"];
                 DataGridView1.DataSource = null;
                 DataGridView1.DataSource = bs;

@@ -61,6 +61,7 @@ namespace RocksmithToolkitGUI.DLCManager
         public string FileDate { get; set; }
         public bool IgnoreRest { get; set; }
         public string title_duplic { get; set; }
+        public string original_Platform { get; set; }
 
         //public bool newold { get; set; }
         //public string clist { get; set; }
@@ -74,7 +75,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         //}
 
-        public frm_Duplicates_Management(DLCManager.Files filed, DLCPackageData datas, string author, string tkversion, string dD, string bass, string guitar, string combo, string rhythm, string lead, string vocal, string tunnings, int i, int norows, string original_FileName, string art_hash, string audio_hash, string audioPreview_hash, List<string> alist, List<string> blist, string DBPath, List<string> clist, List<string> dlist, bool newold, string Is_Original, string altvert, string txt_RocksmithDLCPath, bool AllowEncript, bool AllowORIGDelete, string FileSize, string unpackedDir, string Is_MultiTrack, string MultiTrack_Version, string FileDate, string title_duplic)//string Is_MultiTracking, string Multitracking, 
+        public frm_Duplicates_Management(DLCManager.Files filed, DLCPackageData datas, string author, string tkversion, string dD, string bass, string guitar, string combo, string rhythm, string lead, string vocal, string tunnings, int i, int norows, string original_FileName, string art_hash, string audio_hash, string audioPreview_hash, List<string> alist, List<string> blist, string DBPath, List<string> clist, List<string> dlist, bool newold, string Is_Original, string altvert, string txt_RocksmithDLCPath, bool AllowEncript, bool AllowORIGDelete, string FileSize, string unpackedDir, string Is_MultiTrack, string MultiTrack_Version, string FileDate, string title_duplic, string original_Platform)//string Is_MultiTracking, string Multitracking, 
         //file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, Tunings, b, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist, DB_Path, clist, dlist, newold, Is_Original, altver
         {
             //Text = text;
@@ -115,6 +116,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.unpackedDir = unpackedDir;
             this.Is_MultiTracks = Is_MultiTrack;
             this.MultiTrack_Versions = MultiTrack_Version;
+            this.original_Platform = original_Platform;
             InitializeComponent();
             //MessageBox.Show(DB_Path);
             //DB_Path = text;
@@ -267,6 +269,11 @@ namespace RocksmithToolkitGUI.DLCManager
             else if (original_FileName == "" && "" == filed.Original_FileName) lbl_FileName.Text = "";
             txt_FileNameNew.Text = original_FileName;
             txt_FileNameExisting.Text = filed.Original_FileName;
+
+            if (original_FileName != filed.Original_FileName) { txt_PlatformNew.ForeColor = Color.Red; txt_PlatformExisting.ForeColor = Color.Red; }
+            //else if (original_FileName == "" && "" == filed.Original_Platform) txt_PlatformNew.ForeColor= Color.Red;
+            txt_PlatformNew.Text = original_Platform;
+            txt_PlatformExisting.Text = filed.Platform;//.original_Platform;
 
             if (author != filed.Author) { lbl_Author.ForeColor = lbl_FileName.ForeColor; btn_AuthorExisting.Enabled = true; btn_AuthorNew.Enabled = true; }
             else if (author == "" && "" == filed.Author) lbl_Author.Text = "";

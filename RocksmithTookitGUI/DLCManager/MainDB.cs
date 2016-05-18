@@ -21,12 +21,15 @@ using RocksmithToolkitLib;//4REPACKING
 using System.Collections.Specialized;//webparsing
 using System.Security.Cryptography; //For File hash
 using System.Data.SqlClient;
+using RocksmithToolkitLib.DLCPackage.AggregateGraph;
+using RocksmithToolkitGUI.DLCPackageCreator;
 //using Newtonsoft.Json;
 //using SpotifyAPI.Web.Enums;
 //using SpotifyAPI.Web;
 //using SpotifyAPI.Web.Models;
 
 using System.Threading;
+using RocksmithToolkitLib.Sng;
 
 namespace RocksmithToolkitGUI.DLCManager
 {
@@ -2409,7 +2412,12 @@ namespace RocksmithToolkitGUI.DLCManager
             //    }
             //}
 
+            if  (chbx_Group.Text == "" && chbx_InclGroups.Checked) 
+                    {
+                MessageBox.Show("Select a Group from the DROPDOWN to Mass-apply.", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
+                return;
+            }
             var cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path); //+ ";Persist Security Info=False"
             var command = cnn.CreateCommand();
             //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
@@ -2426,6 +2434,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 command.Parameters.AddWithValue("@param9", "Yes");
                 test = " or Beta";
             }
+
             //command.CommandText += " WHERE ID IN (" + SearchCmd.Replace("*", "ID").Replace(";", "") + ")";
             if (SearchCmd.IndexOf("ID, Artist") > 0) command.CommandText += " WHERE ID IN ( SELECT ID FROM Main ORDER BY Artist, Album_Year, Album, Track_No, Song_Title)";
             else
@@ -2779,7 +2788,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     Name = file.DLC_Name,
                     AppId = file.DLC_AppID,
                     ArtFiles = info.ArtFiles, //not complete
-                    Showlights = true,//info.Showlights, //apparently this infor is not read..also the tone base is removed/not read also
+                    Showlights = true,//info.Showlights, //apparently this info is not read..also the tone base is removed/not read also
                     Inlay = info.Inlay,
                     LyricArtPath = info.LyricArtPath,
 
@@ -2808,14 +2817,15 @@ namespace RocksmithToolkitGUI.DLCManager
                 };
 
                 //Add Tones
-                var cmds = "SELECT * FROM Tones WHERE CDLC_ID=" + txt_DLC_ID.Text + ";";
+                var cmds = "SELECT * FROM Tones WHERE CDLC_ID=" + txt_ID.Text + ";";
+                DataSet dfs = new DataSet();
                 var norec = 0;
                 using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
                 {
                     try
                     {
                         OleDbDataAdapter da = new OleDbDataAdapter(cmds, cn);
-                        da.Fill(dssx, "Tones");
+                        da.Fill(dfs, "Tones");
                     }
                     catch (Exception ex)
                     {
@@ -2824,36 +2834,130 @@ namespace RocksmithToolkitGUI.DLCManager
 
                     foreach (var arg in info.TonesRS2014)//, Type
                     {
-                        norec = dssx.Tables[0].Rows.Count;
+                        norec = dfs.Tables[0].Rows.Count;
                         for (int j = 0; j < norec; j++)
                         {
-                            // data.Tones2014[j].ToneA=dssx.Tables[0].Rows[j].ItemArray[0].ToString();
+                            data.TonesRS2014[j].Name = dfs.Tables[0].Rows[j].ItemArray[1].ToString();
+                            data.TonesRS2014[j].Volume = dfs.Tables[0].Rows[j].ItemArray[3].ToString().ToInt32();
+                            data.TonesRS2014[j].Key = dfs.Tables[0].Rows[j].ItemArray[4].ToString();
+                            data.TonesRS2014[j].IsCustom = dfs.Tables[0].Rows[j].ItemArray[5].ToString() =="True"? true: false;
+                            data.TonesRS2014[j].SortOrder = dfs.Tables[0].Rows[j].ItemArray[11].ToString().ToInt32();
+                            data.TonesRS2014[j].NameSeparator = dfs.Tables[0].Rows[j].ItemArray[12].ToString();
+                            //dictionary types not saved in the DB yet
+                            //data.TonesRS2014[j].GearList.PostPedal1 = dfs.Tables[0].Rows[14].ItemArray[0].ToString().ToInt32();
+                            //data.TonesRS2014[j].GearList.PostPedal2 = dfs.Tables[0].Rows[15].ItemArray[0].ToString();
+                            //data.TonesRS2014[j].GearList.PostPedal3 = dfs.Tables[0].Rows[16].ItemArray[0].ToString();
+                            //data.TonesRS2014[j].GearList.PostPedal4 = dfs.Tables[0].Rows[17].ItemArray[0].ToString();
+                            //data.TonesRS2014[j].GearList.PrePedal1 = dfs.Tables[0].Rows[18].ItemArray[0].ToString().ToInt32();
+                            //data.TonesRS2014[j].GearList.PrePedal2 = dfs.Tables[0].Rows[19].ItemArray[0].ToString();
+                            //data.TonesRS2014[j].GearList.PrePedal3 = dfs.Tables[0].Rows[20].ItemArray[0].ToString();
+                            //data.TonesRS2014[j].GearList.PrePedal4 = dfs.Tables[0].Rows[21].ItemArray[0].ToString();
+                            //data.TonesRS2014[j].GearList.Rack1 = dfs.Tables[0].Rows[22].ItemArray[0].ToString().ToInt32();
+                            //data.TonesRS2014[j].GearList.Rack2 = dfs.Tables[0].Rows[23].ItemArray[0].ToString();
+                            //data.TonesRS2014[j].GearList.Rack3 = dfs.Tables[0].Rows[24].ItemArray[0].ToString();
+                            //data.TonesRS2014[j].GearList.Rack4 = dfs.Tables[0].Rows[25].ItemArray[0].ToString();
+                            //data.TonesRS2014[j].GearList.Amp.Type = dfs.Tables[0].Rows[26].ItemArray[0].ToString();
+                            data.TonesRS2014[j].GearList.Amp.Category = dfs.Tables[0].Rows[j].ItemArray[27].ToString();
+                           // data.TonesRS2014[j].GearList.Amp.KnobValues =  dfs.Tables[0].Rows[28].ItemArray[0].ToString().ToInt32();
+                            data.TonesRS2014[j].GearList.Amp.PedalKey = dfs.Tables[0].Rows[j].ItemArray[29].ToString();
+                            data.TonesRS2014[j].GearList.Cabinet.Category = dfs.Tables[0].Rows[j].ItemArray[30].ToString();
+                           // data.TonesRS2014[j].GearList.Cabinet.KnobValues =  dfs.Tables[0].Rows[31].ItemArray[0].ToString().ToInt32();
+                            data.TonesRS2014[j].GearList.Cabinet.PedalKey = dfs.Tables[0].Rows[j].ItemArray[32].ToString();
+                            data.TonesRS2014[j].GearList.Cabinet.Type = dfs.Tables[0].Rows[j].ItemArray[33].ToString();
+
                         }
                     }
                 }
 
 
                 //Add Arrangements
-                cmds = "SELECT * FROM Arrangements WHERE CDLC_ID=" + txt_DLC_ID.Text + ";";
+                cmds = "SELECT * FROM Arrangements WHERE CDLC_ID=" + txt_ID.Text + ";";
                 norec = 0;
+                DataSet ds = new DataSet();
+                string sds = "";
                 using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
                 {
                     try
                     {
                         OleDbDataAdapter da = new OleDbDataAdapter(cmds, cn);
-                        da.Fill(dssx, "Arrangements");
+                        da.Fill(ds, "Arrangements");
                     }
                     catch (Exception ex)
                     {
 
                     }
 
-                    foreach (var arg in info.Arrangements)//, Type
+                    norec = ds.Tables[0].Rows.Count;
+                    if (info.Arrangements.Capacity < norec )
+                    data.Arrangements.Add(new Arrangement
                     {
-                        norec = dssx.Tables[0].Rows.Count;
+                        Name = ArrangementName.Vocals,
+                        ArrangementType = ArrangementType.Vocal,
+                        ScrollSpeed = 20,
+                        //SongXml = new SongXML { File = xmlFile },
+                        //SongFile = new SongFile { File = "" },
+                        CustomFont = false
+                    });
+                    //norec += 1;
+
+                    foreach (var arg in info.Arrangements)//, Type
+                    {                       
                         for (int j = 0; j < norec; j++)
                         {
-                            // data.Arrangements[j].ToneA=dssx.Tables[0].Rows[j].ItemArray[0].ToString();
+                            //if (j == data.Arrangements.Count) {
+                            //    //mArr.Add(GenMetronomeArr(data.Arrangements));
+                            //    //mArr[0].SongXml.File = "1";
+                            //    //var mArr = new List<Arrangement>();
+                            //    //data.Arrangements.Capacity = 5;
+                            //    //data.Arrangements.Add(data.Arrangements[j]);
+                            //    // Add Vocal Arrangement
+                            //    data.Arrangements.Add(new Arrangement
+                            //    {
+                            //        Name = ArrangementName.Vocals,
+                            //        ArrangementType = ArrangementType.Vocal,
+                            //        ScrollSpeed = 20,
+                            //        //SongXml = new SongXML { File = xmlFile },
+                            //        //SongFile = new SongFile { File = "" },
+                            //        CustomFont = false
+                            //    });
+                            //    norec += 1;
+                            //}
+                            sds = ds.Tables[0].Rows[j].ItemArray[1].ToString();
+                            //data.Arrangements[j].Name = ds.Tables[0].Rows[j].ItemArray[1].ToString() == "Bass" ? RocksmithToolkitLib.Sng.ArrangementName.Bass : ds.Tables[0].Rows[j].ItemArray[1].ToString() == "Lead" ? RocksmithToolkitLib.Sng.ArrangementName.Lead : ds.Tables[0].Rows[j].ItemArray[1].ToString() == "Vocals" ? RocksmithToolkitLib.Sng.ArrangementName.Vocals : ds.Tables[0].Rows[j].ItemArray[1].ToString() == "Rhythm" ? RocksmithToolkitLib.Sng.ArrangementName.Rhythm : ds.Tables[0].Rows[j].ItemArray[12].ToString() == "ShowLights" ? RocksmithToolkitLib.Sng.ArrangementName.ShowLights : RocksmithToolkitLib.Sng.ArrangementName.Combo;
+                            data.Arrangements[j].Name = (sds == "3") ? RocksmithToolkitLib.Sng.ArrangementName.Bass : (sds == "0") ? RocksmithToolkitLib.Sng.ArrangementName.Lead : (sds == "4") ? RocksmithToolkitLib.Sng.ArrangementName.Vocals : (sds == "1") ? RocksmithToolkitLib.Sng.ArrangementName.Rhythm : sds == "6" ? RocksmithToolkitLib.Sng.ArrangementName.ShowLights : RocksmithToolkitLib.Sng.ArrangementName.Combo;
+                            data.Arrangements[j].BonusArr = ds.Tables[0].Rows[j].ItemArray[3].ToString()=="false" ? false : true ;
+                            sds=ds.Tables[0].Rows[j].ItemArray[4].ToString();
+                            data.Arrangements[j].SongFile = new SongFile { File = ds.Tables[0].Rows[j].ItemArray[4].ToString() }; // if (File.Exists(sds))
+                            data.Arrangements[j].SongXml = new SongXML { File = ds.Tables[0].Rows[j].ItemArray[5].ToString() };
+                            data.Arrangements[j].ScrollSpeed = ds.Tables[0].Rows[j].ItemArray[7].ToString().ToInt32();
+                            data.Arrangements[j].Tuning = ds.Tables[0].Rows[j].ItemArray[8].ToString();
+                            data.Arrangements[j].ArrangementSort = ds.Tables[0].Rows[j].ItemArray[12].ToString().ToInt32();
+                            data.Arrangements[j].TuningPitch = ds.Tables[0].Rows[j].ItemArray[13].ToString().ToInt32();
+                            data.Arrangements[j].ToneBase = ds.Tables[0].Rows[j].ItemArray[14].ToString();
+                            //data.Arrangements[j].Id = ds.Tables[0].Rows[15].ItemArray[0].ToString().ToInt16();
+                            data.Arrangements[j].MasterId = ds.Tables[0].Rows[j].ItemArray[16].ToString().ToInt32();
+                            data.Arrangements[j].ArrangementType = ds.Tables[0].Rows[j].ItemArray[17].ToString() == "Bass" ? RocksmithToolkitLib.Sng.ArrangementType.Bass : ds.Tables[0].Rows[j].ItemArray[17].ToString() == "Guitar" ? RocksmithToolkitLib.Sng.ArrangementType.Guitar : ds.Tables[0].Rows[j].ItemArray[17].ToString() == "Vocal" ? RocksmithToolkitLib.Sng.ArrangementType.Vocal : RocksmithToolkitLib.Sng.ArrangementType.ShowLight;
+                            //RocksmithToolkitLib.Sng.ArrangementType.Bass ds.Tables[0].Rows[17].ItemArray[0].ToString();
+                            //data.Arrangements[j].TuningStrings.String0 = ds.Tables[0].Rows[18].ItemArray[0].ToInt32();
+                            //data.Arrangements[j].TuningStrings.String1 = ds.Tables[0].Rows[19].ItemArray[0].ToString();
+                            //data.Arrangements[j].TuningStrings.String2 = ds.Tables[0].Rows[20].ItemArray[0].ToString();
+                            //data.Arrangements[j].TuningStrings.String3 = ds.Tables[0].Rows[21].ItemArray[0].ToString();
+                            //data.Arrangements[j].TuningStrings.String4 = ds.Tables[0].Rows[22].ItemArray[0].ToString();
+                            //data.Arrangements[j].TuningStrings.String5 = ds.Tables[0].Rows[23].ItemArray[0].ToString();
+                            data.Arrangements[j].PluckedType = ds.Tables[0].Rows[j].ItemArray[24].ToString()=="Plucked" ? RocksmithToolkitLib.Sng.PluckedType.Picked: RocksmithToolkitLib.Sng.PluckedType.NotPicked;
+                            data.Arrangements[j].RouteMask = ds.Tables[0].Rows[j].ItemArray[25].ToString()=="Bass" ? RouteMask.Bass: ds.Tables[0].Rows[j].ItemArray[25].ToString() == "Lead"? RouteMask.Lead: ds.Tables[0].Rows[j].ItemArray[25].ToString()== "Rhythm" ? RouteMask.Rhythm : ds.Tables[0].Rows[j].ItemArray[25].ToString() == "None" ? RouteMask.None: RouteMask.Any;
+                           // data.Arrangements[j].SongXml.Name = ds.Tables[0].Rows[26].ItemArray[0].ToString();
+                            //data.Arrangements[j].SongXml.LLID = ds.Tables[0].Rows[27].ItemArray[0].ToInt32().ToInt32();
+                            //data.Arrangements[j].SongXml.UUID = ds.Tables[0].Rows[28].ItemArray[0].ToString().ToInt32();
+                            //data.Arrangements[j].SongFile.Name = ds.Tables[0].Rows[29].ItemArray[0].ToString();
+                            //data.Arrangements[j].SongFile.LLID = ds.Tables[0].Rows[30].ItemArray[0].ToString().ToInt32();
+                            //data.Arrangements[j].SongFile.UUID = ds.Tables[0].Rows[31].ItemArray[0].ToString();
+                            data.Arrangements[j].ToneMultiplayer = ds.Tables[0].Rows[j].ItemArray[32].ToString();
+                            data.Arrangements[j].ToneA = ds.Tables[0].Rows[j].ItemArray[33].ToString();
+                            data.Arrangements[j].ToneB = ds.Tables[0].Rows[j].ItemArray[34].ToString();
+                            data.Arrangements[j].ToneC = ds.Tables[0].Rows[j].ItemArray[35].ToString();
+                            data.Arrangements[j].ToneD = ds.Tables[0].Rows[j].ItemArray[36].ToString();
+
                         }
                     }
                 }
@@ -3129,6 +3233,61 @@ namespace RocksmithToolkitGUI.DLCManager
             pB_ReadDLCs.Increment(1);
             return dlcSavePath;
             MessageBox.Show("Repack done");
+        }
+
+        //private Arrangement GenMetronomeArr(List<Arrangement> arrangements)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        public Arrangement GenMetronomeArr(Arrangement arr)
+        {
+            var mArr = GeneralExtensions.Copy(arr);
+            var songXml = Song2014.LoadFromFile(mArr.SongXml.File);
+            var newXml = Path.GetTempFileName();
+            mArr.SongXml = new RocksmithToolkitLib.DLCPackage.AggregateGraph.SongXML { File = newXml };
+            mArr.SongFile = new RocksmithToolkitLib.DLCPackage.AggregateGraph.SongFile { File = "" };
+            mArr.ClearCache();
+            mArr.BonusArr = true;
+            mArr.Id = IdGenerator.Guid();
+            mArr.MasterId = RandomGenerator.NextInt();
+            mArr.Metronome = Metronome.Itself;
+            songXml.ArrangementProperties.Metronome = (int)Metronome.Itself;
+
+            var ebeats = songXml.Ebeats;
+            var songEvents = new RocksmithToolkitLib.Xml.SongEvent[ebeats.Length];
+            for (var i = 0; i < ebeats.Length; i++)
+            {
+                songEvents[i] = new RocksmithToolkitLib.Xml.SongEvent
+                {
+                    Code = ebeats[i].Measure == -1 ? "B1" : "B0",
+                    Time = ebeats[i].Time
+                };
+            }
+            songXml.Events = songXml.Events.Union(songEvents, new EqSEvent()).OrderBy(x => x.Time).ToArray();
+            using (var stream = File.OpenWrite(mArr.SongXml.File))
+            {
+                songXml.Serialize(stream, true);
+            }
+            return mArr;
+        }
+
+        private class EqSEvent : IEqualityComparer<RocksmithToolkitLib.Xml.SongEvent>
+        {
+            public bool Equals(RocksmithToolkitLib.Xml.SongEvent x, RocksmithToolkitLib.Xml.SongEvent y)
+            {
+                if (x == null)
+                    return y == null;
+
+                return x.Code == y.Code && x.Time.Equals(y.Time);
+            }
+
+            public int GetHashCode(RocksmithToolkitLib.Xml.SongEvent obj)
+            {
+                if (ReferenceEquals(obj, null))
+                    return 0;
+                return obj.Code.GetHashCode() | obj.Time.GetHashCode();
+            }
         }
 
         public string Manipulate_strings(string words, int k, bool ifn, bool orig_flag, bool bassRemoved)
@@ -4497,7 +4656,7 @@ namespace RocksmithToolkitGUI.DLCManager
             var startInfo = new ProcessStartInfo();
             startInfo.FileName = xx;
             startInfo.WorkingDirectory = AppWD.Replace("external_tools", "");// Path.GetDirectoryName();
-            startInfo.Arguments = String.Format(" " + txt_OggPath.Text);
+            startInfo.Arguments = String.Format(" \"" + txt_OggPath.Text+"\"");
             startInfo.UseShellExecute = true; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
 
             if (File.Exists(xx) && File.Exists(DB_Path))
@@ -4522,7 +4681,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
             var i = DataViewGrid.SelectedCells[0].RowIndex;
             string link = "https://www.google.com/#q=" + DataViewGrid.Rows[i].Cells["Artist"].Value.ToString() + "+" + DataViewGrid.Rows[i].Cells["Song_Title"].Value.ToString() + "+" + "Lyrics";
-            MessageBox.Show("1. Download Lyrics"+ link + " \n2. Tab lyrics to the songs time signature\n3.Transform tabbed lyrics to Rocksmith Format(Import - Adjust and Save)\n4. When done press Import lyrics", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            MessageBox.Show("1. Google the Lyrics e.g."+ link + " \n2. Use Ultrastar Creator Tab lyrics to the songs time signature\n3. Using EditorOnFire Transform tabbed lyrics to Rocksmith Format(Import - Adjust and Save)\n4. When done press Import lyrics by using Change Lyrics button", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
 
             try
@@ -4555,8 +4714,8 @@ namespace RocksmithToolkitGUI.DLCManager
             var startInfo = new ProcessStartInfo();
             startInfo.FileName = xx;
             startInfo.WorkingDirectory = AppWD.Replace("external_tools", "");// Path.GetDirectoryName();
-            startInfo.Arguments = String.Format(" " + txt_OggPath.Text);
-            startInfo.UseShellExecute = true; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
+            startInfo.Arguments = String.Format(" \"" + txt_OggPath.Text+"\"");
+            startInfo.UseShellExecute = false; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
 
             if (File.Exists(xx) && File.Exists(DB_Path))
                 using (var DDC = new Process())
@@ -4706,7 +4865,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     if (chbx_Lyrics.Checked)
                         sql = "UPDATE Arrangements SET XMLFilePath=\"" + temppath + "\" WHERE ArrangementType=\"Vocal\" AND CDLC_ID=" + txt_ID.Text + ";";
                     else
-                        sql = "INSERT INTO Arrangements (Arrangement_Name,CDLC_ID, ArrangementType, Bonus, ArrangementSort, TuningPitch, RouteMask, Has_Sections, XMLFilePath) VALUES(\"8\", " + txt_ID.Text + ", \"Vocal\", \"false\", \"0\", \"0\", \"None\",\"No\",\""+ temppath+"\")";
+                        sql = "INSERT INTO Arrangements (Arrangement_Name,CDLC_ID, ArrangementType, Bonus, ArrangementSort, TuningPitch, RouteMask, Has_Sections, XMLFilePath) VALUES(\"4\", " + txt_ID.Text + ", \"Vocal\", \"false\", \"0\", \"0\", \"None\",\"No\",\""+ temppath+"\")";
 
                     OleDbDataAdapter dag = new OleDbDataAdapter(sql, cnn7); //WHERE id=253
                     DataSet dsr = new DataSet();

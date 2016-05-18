@@ -78,7 +78,6 @@
 	-+ with or without u still doesnt have the right alternate no when importing vs an existing song= a2....maybe OK :)
 
 ## WiP:
-- [+] some tracks no don't get read/picked cause" (1) " when importing other formats this should be ok
 - [+] generate a garageband
 - [ ] if cover was from someone else please compare against that (save old cover)
 - [ ] update to wise 2015 (messages&testing)
@@ -91,13 +90,13 @@
 - [ ] save when exit searchwhen clickin g ona  song disable Search
 - [ ] after selecting deselect incl. Beta
 - [ ] group display with issues
-- [ ] Add Lyrics
 - [ ] add group to Beta
-- [ ] delete all duplicates at Standardization
+- [+] delete all duplicates at Standardization
 - [+] why all songs have 30sec preview :)
 -+ third eye investig
 - [ ] muse uprising songs have preview lenght in minutes
-
+- [ ] fix importing own songs, eg. ana
+- [ ] add sections (bored to death; Renabled BPR program)
 
 official bugs:
 - [ ] CICAGO 26 25 original SONG FAILS AT PACK
@@ -106,6 +105,12 @@ official bugs:
 
 done:
 (next release)
+- [+] some tracks no don't get read/picked cause" (1) " when importing other formats this should be ok
+- [x] fixed remove dd on some originals
+- [+] started to add details tones&arrangements from db at pack
+- [x] Add Lyrics simple steps
+- [+] Start thinking of importing other platforms(duplicate window platform indicator)
+
 
 (prev release; but maybe not thuroughly tested)
 - [x] duplic manag make date bigger

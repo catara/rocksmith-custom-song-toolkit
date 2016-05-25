@@ -154,6 +154,8 @@
   <Config Key="dlcm_DupliM_Sync" Value="Yes" />;
   <Config Key="dlcm_DupliM_Sync" Value="Yes" />;
   <Config Key="dlcm_DefaultDB" Value="No" />;
+  <Config Key="dlcm_EoFPath" Value="C:\\GitHub\\rocksmith-custom-song-toolkit\\RocksmithTookitGUI\\DLCManager\\external_tools\\eof1.8RC10(r1337)" />;
+  <Config Key="dlcm_UltraStarCreator" Value="C:\\GitHub\rocksmith-custom-song-toolkit\\RocksmithTookitGUI\\DLCManager\\external_tools\\UltraStar Creator" />;
 
   <Config Key="cgm_coloredinlay" Value="true" />
 </ArrayOfConfig>

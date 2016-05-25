@@ -60,18 +60,18 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void DataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
-            if (true) //(DataGridView1.CurrentCell.IsComboBoxCell())
-            {
-                if (DataGridView1.Columns[DataGridView1.CurrentCell.ColumnIndex].Name == "ContactsColumn")
-                {
-                    ComboBox cb = e.Control as ComboBox;
-                    if (cb != null)
-                    {
-                        cb.SelectionChangeCommitted -= _SelectionChangeCommitted;
-                        cb.SelectionChangeCommitted += _SelectionChangeCommitted;
-                    }
-                }
-            }
+            //if (true) //(DataGridView1.CurrentCell.IsComboBoxCell())
+            //{
+            //    if (DataGridView1.Columns[DataGridView1.CurrentCell.ColumnIndex].Name == "ContactsColumn")
+            //    {
+            //        ComboBox cb = e.Control as ComboBox;
+            //        if (cb != null)
+            //        {
+            //            cb.SelectionChangeCommitted -= _SelectionChangeCommitted;
+            //            cb.SelectionChangeCommitted += _SelectionChangeCommitted;
+            //        }
+            //    }
+            //}
         }
 
         private void _SelectionChangeCommitted(object sender, EventArgs e)
@@ -191,11 +191,15 @@ namespace RocksmithToolkitGUI.DLCManager
                 DataGridViewTextBoxColumn Album_Correction = new DataGridViewTextBoxColumn { DataPropertyName = "Album_Correction", HeaderText = "Album_Correction ", Width = 185 };
                 DataGridViewTextBoxColumn AlbumArtPath_Correction = new DataGridViewTextBoxColumn { DataPropertyName = "AlbumArtPath_Correction", HeaderText = "AlbumArtPath_Correction ", Width = 495 };
 
-                // DataGridView1.AutoGenerateColumns = false;
-                DataGridView.AutoResizeColumns();
-                bs.ResetBindings(false);
+                //// DataGridView1.AutoGenerateColumns = false;
+                //DataGridView.AutoResizeColumns();
+                //bs.ResetBindings(false);
 
-                DataGridView1.Columns.AddRange(new DataGridViewColumn[]
+                //DataGridView1.Columns.AddRange(new DataGridViewColumn[]
+                //    {
+                DataGridView.AutoGenerateColumns = false;
+
+                DataGridView.Columns.AddRange(new DataGridViewColumn[]
                     {
                         ID,
                         Suspect,
@@ -210,9 +214,9 @@ namespace RocksmithToolkitGUI.DLCManager
                 dssx.Tables["Standardization"].AcceptChanges();
                 //   bs.ResetBindings(false);
                 bs.DataSource = dssx.Tables["Standardization"];
-                DataGridView1.DataSource = null;
+                //DataGridView1.DataSource = null;
                 DataGridView1.DataSource = bs;
-                DataGridView1.Refresh();
+                //DataGridView1./*Refresh*/();
                 dssx.Dispose();
                 //DataGridView.ExpandColumns();
             }

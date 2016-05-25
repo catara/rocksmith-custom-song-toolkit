@@ -105,11 +105,6 @@ official bugs:
 
 done:
 (next release)
-- [+] some tracks no don't get read/picked cause" (1) " when importing other formats this should be ok
-- [x] fixed remove dd on some originals
-- [+] started to add details tones&arrangements from db at pack
-- [x] Add Lyrics simple steps
-- [+] Start thinking of importing other platforms(duplicate window platform indicator)
 
 
 (prev release; but maybe not thuroughly tested)
@@ -143,6 +138,15 @@ done:
 - [x] trim SONG details
 - [x] original bass remove fails on billy weathers  (fix)
 - [x] beta does not apear on originals or indiv repack(mqiandb)(non issue-added save at repack)
+- [x] some tracks no don't get read/picked cause" (1) " when importing other formats this should be ok
+- [x] fixed remove dd on some originals
+- [+] started to add details tones&arrangements from db at pack
+- [x] Add Lyrics simple steps
+- [x] Start thinking of importing other platforms(duplicate window platform indicator)
+- [x] fix multiplatofrm import as folder created is always pc_ iggy pop lust for life
+- [x] add exbox and mac to missing paths AudioP = songshsanP.Replace("\\manifests\\songs_rs1disc\\songs_rs1disc.hsan", "\\audio\\" + (platformDLCP == "PS3" ? platformDLCP : (platformDLCP == "Pc" ? "windows" : platformDLCP)) + "\\") + AudioP1 + (platformDLCP == "PS3" ? ".ogg" : "_fixed.ogg");
+- [x] add external software registry paths
+- [x] fixed reorder issue in Standardiyation
 
 
 - diff between master and branch
@@ -333,8 +337,8 @@ of this folder should be directed to the respective developer.
 		https://nvorbis.codeplex.com/documentation
 
 		-DevOnly additional software
-			EOF v1.8b (c)2008-2010 T³ Software eof1.8RC10(r1337)
-			UltraStar Creator
+			EOF v1.8b (c)2008-2010 T³ Software eof1.8RC11(5-19-2016) http://ignition.customsforge.com/eof http://customsforge.com/topic/1529-latest-eof-releases-5-19-2016/page-86
+			UltraStar Creator 1.2 https://sourceforge.net/projects/usc/
 
 ## Contact
 

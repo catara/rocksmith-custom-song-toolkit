@@ -2894,9 +2894,12 @@ namespace RocksmithToolkitGUI.DLCManager
                         Name = ArrangementName.Vocals,
                         ArrangementType = ArrangementType.Vocal,
                         ScrollSpeed = 20,
-                        //SongXml = new SongXML { File = xmlFile },
-                        //SongFile = new SongFile { File = "" },
-                        CustomFont = false
+                        
+                        Id = IdGenerator.Guid(),
+                        MasterId = RandomGenerator.NextInt(),
+                    //SongXml = new SongXML { File = xmlFile },
+                    //SongFile = new SongFile { File = "" },
+                    CustomFont = false
                     });
                     //norec += 1;
 
@@ -2927,7 +2930,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             data.Arrangements[j].Name = (sds == "3") ? RocksmithToolkitLib.Sng.ArrangementName.Bass : (sds == "0") ? RocksmithToolkitLib.Sng.ArrangementName.Lead : (sds == "4") ? RocksmithToolkitLib.Sng.ArrangementName.Vocals : (sds == "1") ? RocksmithToolkitLib.Sng.ArrangementName.Rhythm : sds == "6" ? RocksmithToolkitLib.Sng.ArrangementName.ShowLights : RocksmithToolkitLib.Sng.ArrangementName.Combo;
                             data.Arrangements[j].BonusArr = ds.Tables[0].Rows[j].ItemArray[3].ToString()=="false" ? false : true ;
                             sds=ds.Tables[0].Rows[j].ItemArray[4].ToString();
-                            data.Arrangements[j].SongFile = new SongFile { File = ds.Tables[0].Rows[j].ItemArray[4].ToString() }; // if (File.Exists(sds))
+                            data.Arrangements[j].SongFile = new SongFile { File = ds.Tables[0].Rows[j].ItemArray[4].ToString()=="" ? ds.Tables[0].Rows[j].ItemArray[5].ToString().Replace(".xml",".json"): ds.Tables[0].Rows[j].ItemArray[4].ToString() }; // if (File.Exists(sds))
                             data.Arrangements[j].SongXml = new SongXML { File = ds.Tables[0].Rows[j].ItemArray[5].ToString() };
                             data.Arrangements[j].ScrollSpeed = ds.Tables[0].Rows[j].ItemArray[7].ToString().ToInt32();
                             data.Arrangements[j].Tuning = ds.Tables[0].Rows[j].ItemArray[8].ToString();
@@ -2935,7 +2938,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             data.Arrangements[j].TuningPitch = ds.Tables[0].Rows[j].ItemArray[13].ToString().ToInt32();
                             data.Arrangements[j].ToneBase = ds.Tables[0].Rows[j].ItemArray[14].ToString();
                             //data.Arrangements[j].Id = ds.Tables[0].Rows[15].ItemArray[0].ToString().ToInt16();
-                            data.Arrangements[j].MasterId = ds.Tables[0].Rows[j].ItemArray[16].ToString().ToInt32();
+                            data.Arrangements[j].MasterId = (ds.Tables[0].Rows[j].ItemArray[16].ToString().ToInt32() == 0 ? data.Arrangements[j].MasterId : ds.Tables[0].Rows[j].ItemArray[16].ToString().ToInt32());
                             data.Arrangements[j].ArrangementType = ds.Tables[0].Rows[j].ItemArray[17].ToString() == "Bass" ? RocksmithToolkitLib.Sng.ArrangementType.Bass : ds.Tables[0].Rows[j].ItemArray[17].ToString() == "Guitar" ? RocksmithToolkitLib.Sng.ArrangementType.Guitar : ds.Tables[0].Rows[j].ItemArray[17].ToString() == "Vocal" ? RocksmithToolkitLib.Sng.ArrangementType.Vocal : RocksmithToolkitLib.Sng.ArrangementType.ShowLight;
                             //RocksmithToolkitLib.Sng.ArrangementType.Bass ds.Tables[0].Rows[17].ItemArray[0].ToString();
                             //data.Arrangements[j].TuningStrings.String0 = ds.Tables[0].Rows[18].ItemArray[0].ToInt32();
@@ -4651,7 +4654,10 @@ namespace RocksmithToolkitGUI.DLCManager
             }
 
             //var DB_Path = (chbx_DefaultDB.Checked == true ? MyAppWD : txt_DBFolder.Text) + "\\Files.accdb";
-            var xx = Path.Combine(AppWD, "eof1.8RC10(r1337)\\eof.exe");
+            var paath=ConfigRepository.Instance()["dlcm_EoFPath"];
+            var xx = "";
+            if (Directory.Exists(paath)) xx = paath;
+            else    xx= Path.Combine(AppWD, "eof1.8RC11\\eof.exe");
 
             var startInfo = new ProcessStartInfo();
             startInfo.FileName = xx;
@@ -4709,7 +4715,11 @@ namespace RocksmithToolkitGUI.DLCManager
 
             //3. Open Ultrastar pointing at the Song Ogg
             //var DB_Path = (chbx_DefaultDB.Checked == true ? MyAppWD : txt_DBFolder.Text) + "\\Files.accdb";
-            var xx = Path.Combine(AppWD, "UltraStar Creator\\usc.exe");
+            //var xx = Path.Combine(AppWD, "UltraStar Creator\\usc.exe");
+            var paath = ConfigRepository.Instance()["dlcm_UltraStarCreator"];
+            var xx = "";
+            if (Directory.Exists(paath)) xx = paath;
+            else xx = Path.Combine(AppWD, "UltraStar Creator\\usc.exe");
 
             var startInfo = new ProcessStartInfo();
             startInfo.FileName = xx;

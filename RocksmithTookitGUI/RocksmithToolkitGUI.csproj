@@ -962,6 +962,9 @@
     <Content Include="DLCManager\Screenshot4.png" />
     <Content Include="DLCManager\Screenshot5.png" />
     <Content Include="DLCManager\Screenshot6.png" />
+    <Content Include="ReleaseNotes.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="songcreator.ico" />
     <Content Include="DLCManager\external_tools\audiocrossreference.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

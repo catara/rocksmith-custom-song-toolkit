@@ -1,4 +1,4 @@
-﻿## Roksmith DLC Library Manager v0.2.0.13
+﻿## Roksmith DLC Library Manager v0.3
 *(beta version; branch of CSC)*
 # App Description: MASS Manipulation of Rocksmith DLC Library 
 		e.g. 1. in Rocksmith, in the Library, each song's Album, to contain a personal rating, if it has DD, instr. avail
@@ -12,12 +12,14 @@
 	- Fix Songs without
 		- Preview
 		- Cover
+		- Lyrics (NEW)
 	- Listen to songs Audio/Preview
 	- Gathers Track No. from Spotify
 - Mass Modify songdetails/metadata @repack per each Rocksmith song
 	*e.g. Album Field: "<Broken><Year> - <Album> - r<Rating> - <Avail. Instr.> - <DD> - <Tuning>"
 	- Copies songs/packs directly to the PS3 by means of FTP
 - Mass add/remove DD @repack (inc. Bass only option)(incl. Official DLCs)
+- Setlists (NEW)
 - Mass rename songs(Standardization) e.g. Black Keys->The Black Keys and maintain changes in a local DB
 - Manipulates the Retail songs list of Rocksmith (Rocksmith 2014 disc, or Rocksmith 2012 DLC, or Rocksmith 2012 Import disc for PC & Mac & PS3)
 
@@ -55,7 +57,6 @@
   - [ ] smart dEbug OUTPUTING function...
   -+ save in the db as well
 - [ ] make a custom song out of retail
-- [ ] finish arrangement (demo with the hives overdrive sall the time :) )
 - [ ] remove commented out code 
 - [ ] duplicate import should save the names of the files in a separate table :)
   - [ ] save also hash not to ask again for duplicates if already decided as duplicate
@@ -90,22 +91,23 @@
 - [ ] save when exit searchwhen clickin g ona  song disable Search
 - [ ] after selecting deselect incl. Beta
 - [ ] group display with issues
-- [ ] add group to Beta
+- [+] add group to Beta
 - [+] delete all duplicates at Standardization
 - [+] why all songs have 30sec preview :)
 -+ third eye investig
 - [ ] muse uprising songs have preview lenght in minutes
 - [ ] fix importing own songs, eg. ana
 - [ ] add sections (bored to death; Renabled BPR program)
+- [+] finish profiles (load Saved Profile names)
+
 
 official bugs:
 - [ ] CICAGO 26 25 original SONG FAILS AT PACK
 - [ ] open ticket for the dlcpackagedata crash for 311 down in
-- [+] finish profiles (load Saved Profile names)
 
 done:
 (next release)
-
+- [ ] finish arrangement (demo with the hives overdrive sall the time :) )
 
 (prev release; but maybe not thuroughly tested)
 - [x] duplic manag make date bigger
@@ -191,21 +193,21 @@ dlcpackagedata
 	0.2.0.10 (05.05) save settings in Toolkit config, getrck no, groups, Add 30 sec preview midsong; close bugs on Conversion to Ps3(nin hell)
 	0.2.0.11 (22.08.2015) remove bug on auto import if original
 	0.2.0.12 (26.09.2015) If importing an original over a alternate the alternate flag should be set no the Alternate
-	0.2.0.13 (12.11.2015) Finally implement Arrangements and Tones and song Groups
-	wip: 0.2.0.14 (10.05.2016) (96%) full release (anyone can download and use the tool..no bugs..and all un-implemented features disabled), repack wo bugs, edit screens functional
-	wip: 0.2.0.15 (03.06.2016) (90%) Remove getlastconversiondate from Duplicates as already coming from the arrangements table
-	wip: 0.2.0.16 (20.06.2016) (80%)  analyse acuracy on conversion to ps3 (1979,7army..)
-	wip: 0.2.0.17 (20.06.2016) (20%) has_section flag(to be tested with a song missing sections); 
-	wip: 0.2.1 (31.07.2016) (10%) HTML&Excel exports
-	tbr: 0.2.1.1 (15.07.2016) Implement a logic to properly read DLCManager renamed DLCs
-	tbr: 0.3.1 move Import DB to Main.DB or at least use an official data source as DB source to also be able to edit from the grid
-	tbr: 0.3.2 ?move Access code to project? or from hardcoded to views	
-	wip: 0.3.3 (03.10.2016) (10%) use parameterized SQL everywhere (&/ integrate template DB into project or a SQL DB)
+	0.2.0.13 (12.11.2015) Finally implement Arrangements and Tones and song Groups	
+	0.2.0.14 (20.06.2016) analyse acuracy on conversion to ps3 (1979,7army..)
+	0.3 (10.05.2016) full release (anyone can download and use the tool..no bugs..and all un-implemented features disabled), repack wo bugs, edit screens functional
+	wip: 0.3.0.1 (03.06.2016) (90%) Remove getlastconversiondate from Duplicates as already coming from the arrangements table
+	wip: 0.3.0.2 (20.06.2016) (20%) has_section flag(to be tested with a song missing sections); 
+	wip: 0.3.1 (31.07.2016) (10%) HTML&Excel exports
+	tbr: 0.3.1.1 (15.07.2016) Implement a logic to properly read DLCManager renamed DLCs
+	tbr: 0.3.2 move Import DB to Main.DB or at least use an official data source as DB source to also be able to edit from the grid
+	tbr: 0.3.3 ?move Access code to project? or from hardcoded to views	
+	wip: 0.3.4 (03.10.2016) (10%) use parameterized SQL everywhere (&/ integrate template DB into project or a SQL DB)
 	wip: 0.4 (21.10.2016) (85%) Redesign MainDB+Edit Screens
 
 
 
-		# Date: 10.10.2015
+		# Date: 126.05.2016
 		# Document Name: Rocksmith DLC Management tool README
 						(fork of rocksmith-custom-song-toolkit)
 		# Document purpose: To describe the functionailities and the way to change, the NEW tab that enable MASS Manipulation of Rocksmith DLC Library

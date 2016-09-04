@@ -40,9 +40,9 @@ namespace RocksmithToolkitGUI.DLCManager
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.Panel1 = new System.Windows.Forms.Panel();
             this.btn_ChangeLyrics = new System.Windows.Forms.Button();
             this.btn_Artist2SortA = new System.Windows.Forms.Button();
@@ -85,7 +85,8 @@ namespace RocksmithToolkitGUI.DLCManager
             this.bth_GetTrackNo = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.chbx_CopyOriginal = new System.Windows.Forms.CheckBox();
+            this.chbx_DupliGTrack = new System.Windows.Forms.CheckBox();
+            this.chbx_CopyOld = new System.Windows.Forms.CheckBox();
             this.chbx_RemoveBassDD = new System.Windows.Forms.CheckBox();
             this.pB_ReadDLCs = new System.Windows.Forms.ProgressBar();
             this.chbx_PreSavedFTP = new System.Windows.Forms.ComboBox();
@@ -836,7 +837,8 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // groupBox6
             // 
-            this.groupBox6.Controls.Add(this.chbx_CopyOriginal);
+            this.groupBox6.Controls.Add(this.chbx_DupliGTrack);
+            this.groupBox6.Controls.Add(this.chbx_CopyOld);
             this.groupBox6.Controls.Add(this.chbx_RemoveBassDD);
             this.groupBox6.Controls.Add(this.pB_ReadDLCs);
             this.groupBox6.Controls.Add(this.chbx_PreSavedFTP);
@@ -855,24 +857,38 @@ namespace RocksmithToolkitGUI.DLCManager
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Package and Copy";
             // 
-            // chbx_CopyOriginal
+            // chbx_DupliGTrack
             // 
-            this.chbx_CopyOriginal.AutoSize = true;
-            this.chbx_CopyOriginal.Enabled = false;
-            this.chbx_CopyOriginal.Location = new System.Drawing.Point(145, 107);
-            this.chbx_CopyOriginal.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.chbx_CopyOriginal.Name = "chbx_CopyOriginal";
-            this.chbx_CopyOriginal.Size = new System.Drawing.Size(59, 24);
-            this.chbx_CopyOriginal.TabIndex = 327;
-            this.chbx_CopyOriginal.Text = "Old";
-            this.chbx_CopyOriginal.UseVisualStyleBackColor = true;
+            this.chbx_DupliGTrack.AutoSize = true;
+            this.chbx_DupliGTrack.Location = new System.Drawing.Point(122, 95);
+            this.chbx_DupliGTrack.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.chbx_DupliGTrack.Name = "chbx_DupliGTrack";
+            this.chbx_DupliGTrack.Size = new System.Drawing.Size(70, 24);
+            this.chbx_DupliGTrack.TabIndex = 332;
+            this.chbx_DupliGTrack.Text = "L->R";
+            this.toolTip1.SetToolTip(this.chbx_DupliGTrack, "Duplicates one of the Guitar Tracks into the missing one, to eliminate the change" +
+        " of track type in Game.");
+            this.chbx_DupliGTrack.UseVisualStyleBackColor = true;
+            // 
+            // chbx_CopyOld
+            // 
+            this.chbx_CopyOld.AutoSize = true;
+            this.chbx_CopyOld.Enabled = false;
+            this.chbx_CopyOld.Location = new System.Drawing.Point(6, 116);
+            this.chbx_CopyOld.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.chbx_CopyOld.Name = "chbx_CopyOld";
+            this.chbx_CopyOld.Size = new System.Drawing.Size(59, 24);
+            this.chbx_CopyOld.TabIndex = 327;
+            this.chbx_CopyOld.Text = "Old";
+            this.toolTip1.SetToolTip(this.chbx_CopyOld, "Copy / Convert directly the original (no DLC Manager Manipulation)");
+            this.chbx_CopyOld.UseVisualStyleBackColor = true;
             // 
             // chbx_RemoveBassDD
             // 
             this.chbx_RemoveBassDD.AutoSize = true;
             this.chbx_RemoveBassDD.Checked = true;
             this.chbx_RemoveBassDD.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chbx_RemoveBassDD.Location = new System.Drawing.Point(106, 71);
+            this.chbx_RemoveBassDD.Location = new System.Drawing.Point(6, 94);
             this.chbx_RemoveBassDD.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.chbx_RemoveBassDD.Name = "chbx_RemoveBassDD";
             this.chbx_RemoveBassDD.Size = new System.Drawing.Size(119, 24);
@@ -941,9 +957,9 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_Copy.Location = new System.Drawing.Point(6, 70);
             this.chbx_Copy.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.chbx_Copy.Name = "chbx_Copy";
-            this.chbx_Copy.Size = new System.Drawing.Size(102, 24);
+            this.chbx_Copy.Size = new System.Drawing.Size(82, 24);
             this.chbx_Copy.TabIndex = 326;
-            this.chbx_Copy.Text = "and Copy";
+            this.chbx_Copy.Text = "&&Copy";
             this.chbx_Copy.UseVisualStyleBackColor = true;
             // 
             // btn_SteamDLCFolder
@@ -962,7 +978,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_UniqueID.AutoSize = true;
             this.chbx_UniqueID.Checked = true;
             this.chbx_UniqueID.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chbx_UniqueID.Location = new System.Drawing.Point(6, 106);
+            this.chbx_UniqueID.Location = new System.Drawing.Point(90, 72);
             this.chbx_UniqueID.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.chbx_UniqueID.Name = "chbx_UniqueID";
             this.chbx_UniqueID.Size = new System.Drawing.Size(141, 24);
@@ -1963,14 +1979,15 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // btn_SearchReset
             // 
-            this.btn_SearchReset.Location = new System.Drawing.Point(652, 82);
+            this.btn_SearchReset.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_SearchReset.Location = new System.Drawing.Point(652, 90);
             this.btn_SearchReset.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btn_SearchReset.Name = "btn_SearchReset";
-            this.btn_SearchReset.Size = new System.Drawing.Size(76, 55);
+            this.btn_SearchReset.Size = new System.Drawing.Size(76, 45);
             this.btn_SearchReset.TabIndex = 56;
-            this.btn_SearchReset.Text = "Start Search";
+            this.btn_SearchReset.Text = "Reset";
             this.btn_SearchReset.UseVisualStyleBackColor = true;
-            this.btn_SearchReset.Click += new System.EventHandler(this.button6_Click);
+            this.btn_SearchReset.Click += new System.EventHandler(this.btn_SearchReset_Click);
             // 
             // txt_Description
             // 
@@ -1983,6 +2000,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // btn_Search
             // 
+            this.btn_Search.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_Search.Location = new System.Drawing.Point(652, 38);
             this.btn_Search.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btn_Search.Name = "btn_Search";
@@ -2064,39 +2082,37 @@ namespace RocksmithToolkitGUI.DLCManager
             // DataViewGrid
             // 
             this.DataViewGrid.AllowUserToOrderColumns = true;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DataViewGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DataViewGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.DataViewGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.DataViewGrid.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.DataViewGrid.DefaultCellStyle = dataGridViewCellStyle2;
             this.DataViewGrid.Location = new System.Drawing.Point(0, -2);
             this.DataViewGrid.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.DataViewGrid.Name = "DataViewGrid";
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DataViewGrid.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DataViewGrid.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.DataViewGrid.Size = new System.Drawing.Size(1659, 542);
             this.DataViewGrid.TabIndex = 2;
             this.DataViewGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick_1);
-            this.DataViewGrid.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick_1);
-            this.DataViewGrid.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick_1);
             this.DataViewGrid.CellLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellLeave);
             this.DataViewGrid.SelectionChanged += new System.EventHandler(this.ChangeEdit);
             // 
@@ -2414,6 +2430,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1668, 985);
             this.Controls.Add(this.Panel1);
@@ -2547,7 +2564,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private Button btn_AddDD;
         private Button btn_RemoveDD;
         private ComboBox chbx_PreSavedFTP;
-        private CheckBox chbx_CopyOriginal;
+        private CheckBox chbx_CopyOld;
         private CheckBox chbx_Copy;
         private GroupBox groupBox6;
         private Button btn_Debug;
@@ -2615,5 +2632,6 @@ namespace RocksmithToolkitGUI.DLCManager
         private CheckBox chbx_InclGroups;
         private Button btn_ChangeLyrics;
         private CueTextBox txt_Lyrics;
+        private CheckBox chbx_DupliGTrack;
     }
 }

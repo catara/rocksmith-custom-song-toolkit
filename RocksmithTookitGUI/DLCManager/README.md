@@ -35,31 +35,22 @@
 -+ Packing of Rocksmith 2014 Retail manipulated files has 1 manual step for RS14 Retail songs
 
 ## ToDos/bugs:
--+ small bug: on inserting a new standardization 
 -+ small feature: when opening MainDB and detecting directory check runs, if next directory exists (give a change to empty the db then if possible)
--- cannot find sick sick sic (override)
-  -? consistency check function
 -+ small improv: add the proper lasconvdate in the db 
   - make sure its read only once when imported and not anzmore in the duplication management section
 -+ at pack mark as selected - Conflicting with Select functionality (is this useful? :) )
 -+ vs blue maybe also yes blue (blu happens also when small 1bite amybe 2 diff in filesize
--+ standardiation delete
--+ usa peaches long naming fails at packing
--+ some songs have preview in minutes (preview rename thing) recalculated at repack
 - [ ] feat:		 Alternate No for duplicates logic
 - [ ] feat:		 Include Standardization names into duplication checks
 - [ ] big feature: get the volume of the audio file and then compare against the rest or a norm
 - [ ] medium feature: add DLCs into cache.psarc to speed up the game startup
 - [ ] big feature - For the tagging add the info to the Preview Image/Album Art
-- [ ] audioslave sections missing maybe cause its an original and i used my own logic to strip the DD
 - [ ] save error log separately
   - [ ] save constantly not only at the end
   - [ ] smart dEbug OUTPUTING function...
   -+ save in the db as well
 - [ ] make a custom song out of retail
 - [ ] remove commented out code 
-- [ ] duplicate import should save the names of the files in a separate table :)
-  - [ ] save also hash not to ask again for duplicates if already decided as duplicate
 - [ ] if i delete a folder do i get a warning in the maintenance check ?
   - [ ] check for json existance as well. Maybe
 - [ ] increase the no of threads
@@ -71,35 +62,24 @@
 	- [ ] save /offer the chance to reorder
 - [ ] rename the Options and use the xml code inside the tool (removing the 03 14 35 dependency)
 - [ ] improve progress bar of repacks
-- [ ] enable shortNames and Album correction in Standardization
 - [ ] ask if you wanna have the packing folder deleted
-- [ ] dont conv Orig
 - [ ] changing path
 - [ ] alternate 0
 	-+ with or without u still doesnt have the right alternate no when importing vs an existing song= a2....maybe OK :)
+- add info box with folders sizes
+
 
 ## WiP:
 - [+] generate a garageband
 - [ ] if cover was from someone else please compare against that (save old cover)
-- [ ] update to wise 2015 (messages&testing)
-- [ ] some songs dont repack
-- [ ] remove all dd in Cache/Retails screen
-- [ ] fix filter in CAche
+- [+] remove all dd in Cache/Retails screen
 - [ ] duplicate management..on change..check and green color
 - [ ] Check Packer.cs bug
 - [ ] Bring year and picture from Spotify
-- [ ] save when exit searchwhen clickin g ona  song disable Search
-- [ ] after selecting deselect incl. Beta
-- [ ] group display with issues
-- [+] add group to Beta
-- [+] delete all duplicates at Standardization
-- [+] why all songs have 30sec preview :)
 -+ third eye investig
 - [ ] muse uprising songs have preview lenght in minutes
 - [ ] fix importing own songs, eg. ana
-- [ ] add sections (bored to death; Renabled BPR program)
 - [+] finish profiles (load Saved Profile names)
-
 
 official bugs:
 - [ ] CICAGO 26 25 original SONG FAILS AT PACK
@@ -107,7 +87,48 @@ official bugs:
 
 done:
 (next release)
-- [ ] finish arrangement (demo with the hives overdrive sall the time :) )
+- [ ] finish arrangement (demo with the hives overdrive all the time :) )
+- [x] save when exit search 
+	- [x] when clicking on a song disable Search
+- [+] delete all duplicates at Standardization
+	- [+] small bug: on inserting a new standardization
+- [ ] cannot find sick sick sic (override)
+- [ ] audioslave sections missing maybe cause its an original and i used my own logic to strip the DD
+- [+] add group to Beta
+- [ ] usa peaches long naming fails at packing (shortes folder the random id)
+- [ ] standardiation delete
+- [x] duplicate import should save the names of the files in a separate table :) (not req)
+	- [x] save also hash not to ask again for duplicates if already decided as duplicate (all imported are saved and so checked for hexa code)
+- [ ] enable shortNames and Album correction in Standardization
+- [ ] fix filter in CAche
+- [ ] after selecting deselect incl. Beta
+- [+] group display with issues
+- [ ] update to wise 2015 (messages&testing)
+- [+] some songs dont repack
+- [+] dont conv Orig
+- [+] some songs have preview in minutes (preview rename thing) recalculated at repack
+	- [+] why all songs have 30sec preview :)
+- [ ] duplicate lead to Rhythm
+- [x] Fix for Copy Selection Old
+- [ ] add simple logic to add sections
+	- [ ] check and fix the Sections flag
+	- [+] add sections (bored to death; Renabled BPR program)
+- [ ] delete lib (gather lib from ps3-ftp/mac/pc 1. save 2. copy new)
+- ignore and del 4k/no psarc files
+- progress bar on possible duplicate import is too short
+- copy name fails title sort in duplicate banagement
+- populate new tone fields
+- add read library option
+- prepare the rebuild option
+-- are duplicate decompressed folder deleted?
+- redo save track at pack with update function
+[+] wrap u0p the audit trail...only at succesfull import u update the table
+	[+] at deletion please remove from imported audit trail
+[+] duplicate also shows in winmerge Tones
+[+] fix stop import from duplicate screen
+[-] cacke give errors
+- fix som wm dupli buttons not being ensabled
+-- improve the overlay
 
 (prev release; but maybe not thuroughly tested)
 - [x] duplic manag make date bigger

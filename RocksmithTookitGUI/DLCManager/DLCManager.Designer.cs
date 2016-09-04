@@ -43,8 +43,8 @@
             this.btn_RePack = new System.Windows.Forms.Button();
             this.rbtn_Population_All = new System.Windows.Forms.RadioButton();
             this.rbtn_Population_Selected = new System.Windows.Forms.RadioButton();
-            this.Export_To = new System.Windows.Forms.Button();
             this.chbx_Rebuild = new System.Windows.Forms.CheckBox();
+            this.Export_To = new System.Windows.Forms.Button();
             this.chbx_Additional_Manipulations = new System.Windows.Forms.CheckedListBox();
             this.lbl_Mask = new System.Windows.Forms.Label();
             this.btn_Preview_Artist_Sort = new System.Windows.Forms.Button();
@@ -90,7 +90,7 @@
             this.rtxt_StatisticsOnReadDLCs = new System.Windows.Forms.RichTextBox();
             this.pB_ReadDLCs = new System.Windows.Forms.ProgressBar();
             this.btn_PopulateDB = new System.Windows.Forms.Button();
-            this.btn_DecompressAll = new System.Windows.Forms.Button();
+            this.btn_OpenMainDB = new System.Windows.Forms.Button();
             this.lbl_RocksmithDLCPath = new System.Windows.Forms.Label();
             this.btn_TempPath = new System.Windows.Forms.Button();
             this.lbl_TempFolders = new System.Windows.Forms.Label();
@@ -102,9 +102,7 @@
             this.btn_Standardization = new System.Windows.Forms.Button();
             this.chbx_DefaultDB = new System.Windows.Forms.CheckBox();
             this.button5 = new System.Windows.Forms.Button();
-            this.chbx_WorkDGB = new System.Windows.Forms.CheckBox();
-            this.chbx_HomeDBG = new System.Windows.Forms.CheckBox();
-            this.chbx_HomeDGBVM = new System.Windows.Forms.CheckBox();
+            this.btn_OpenGame = new System.Windows.Forms.Button();
             this.btn_GoImport = new System.Windows.Forms.Button();
             this.btm_GoTemp = new System.Windows.Forms.Button();
             this.btm_GoDB = new System.Windows.Forms.Button();
@@ -141,6 +139,7 @@
             this.panel2.Controls.Add(this.btn_RePack);
             this.panel2.Controls.Add(this.rbtn_Population_All);
             this.panel2.Controls.Add(this.rbtn_Population_Selected);
+            this.panel2.Controls.Add(this.chbx_Rebuild);
             this.panel2.Location = new System.Drawing.Point(10, 103);
             this.panel2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panel2.Name = "panel2";
@@ -272,6 +271,19 @@
             this.rbtn_Population_Selected.Text = "Selected";
             this.rbtn_Population_Selected.UseVisualStyleBackColor = true;
             // 
+            // chbx_Rebuild
+            // 
+            this.chbx_Rebuild.AutoSize = true;
+            this.chbx_Rebuild.Location = new System.Drawing.Point(239, 66);
+            this.chbx_Rebuild.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.chbx_Rebuild.Name = "chbx_Rebuild";
+            this.chbx_Rebuild.Size = new System.Drawing.Size(89, 24);
+            this.chbx_Rebuild.TabIndex = 324;
+            this.chbx_Rebuild.Text = "Rebuild";
+            this.chbx_Rebuild.UseVisualStyleBackColor = true;
+            this.chbx_Rebuild.Visible = false;
+            this.chbx_Rebuild.CheckedChanged += new System.EventHandler(this.chbx_Rebuild_CheckedChanged);
+            // 
             // Export_To
             // 
             this.Export_To.BackColor = System.Drawing.SystemColors.Control;
@@ -286,19 +298,6 @@
             this.Export_To.UseVisualStyleBackColor = false;
             this.Export_To.Click += new System.EventHandler(this.Export_To_Click);
             // 
-            // chbx_Rebuild
-            // 
-            this.chbx_Rebuild.AutoSize = true;
-            this.chbx_Rebuild.Enabled = false;
-            this.chbx_Rebuild.Location = new System.Drawing.Point(730, 706);
-            this.chbx_Rebuild.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.chbx_Rebuild.Name = "chbx_Rebuild";
-            this.chbx_Rebuild.Size = new System.Drawing.Size(89, 24);
-            this.chbx_Rebuild.TabIndex = 324;
-            this.chbx_Rebuild.Text = "Rebuild";
-            this.chbx_Rebuild.UseVisualStyleBackColor = true;
-            this.chbx_Rebuild.Visible = false;
-            // 
             // chbx_Additional_Manipulations
             // 
             this.chbx_Additional_Manipulations.CheckOnClick = true;
@@ -308,22 +307,22 @@
             "02. @Pack Add Increment to all songs Title per artist",
             "03. @Pack Make all DLC IDs unique(&save)",
             "04. @Pack Remove DD",
-            "05. Import and remove DD only for Bass>",
+            "05. <Import and remove DD only for Bass>",
             "06. @Pack Remove DD only for Bass Guitar",
-            "07. Remove the 4sec of the Preview song>",
+            "07. <Remove the 4sec of the Preview song>",
             "08. @Pack skipp Broken songs",
             "09. @Pack Name to cross-platform Compatible Filenames",
             "10. @Pack Add Preview if missing 00:30 for 30sec (&save)",
             "11. @Pack Make all DLC IDs unique",
-            "12. @PackAdd DD (5 Levels)>",
+            "12. <@PackAdd DD (5 Levels)>",
             "13. Add DD (5 Levels) when missing",
             "14. Import all Duplicates as Alternates",
             "15. Import any Custom as Alternate if an Original exists",
             "16. Move the Imported files to temp/0_old",
             "17. Import with Artist/Title same as Artist/Title Sort",
             "18. Repack with Artist/Title same as Artist/Title Sort",
-            "19. Import without The/Die at the beginning of Artist/Title Sort>",
-            "20. Pack without The/Die at the beginning of Artist/Title Sort>",
+            "19. <Import without The/Die at the beginning of Artist/Title Sort>",
+            "20. <Pack without The/Die at the beginning of Artist/Title Sort>",
             "21. Import with the The/Die at the end of Artist/Title Sort",
             "22. Pack with The/Die at the end of Artist/Title Sort",
             "23. Import with the The/Die only at the end of Artist Sort",
@@ -331,7 +330,7 @@
             "25. @Import Use translation tables for naming standardization",
             "26. If Original don\'t add QAs(NOs;DLC/ORIG;etc.)",
             "27. When packing Add 5 Levels of DD only to Guitar tracks",
-            "28. Convert and Transfer/FTP>",
+            "28. Convert and Transfer/FTP",
             "29. If Original don\'t add QAs(NOs;DLC/ORIG;etc.) except for File Names",
             "30. When NOT importing a Duplicate Move it to _duplicate",
             "31. When NOT importing a broken song Move it to _broken",
@@ -349,7 +348,7 @@
             "43. Save Log After Import (DLCManager INSIDE folder)",
             "44. @Import Set the DLCID autom",
             "45. @Pack Set the DLCID autom",
-            "46. Convert Originals>",
+            "46. <Convert Originals>",
             "47. Duplicate Mangement, Title added info is inbetween []",
             "48. Add New Toolkit v. and RePackedByAuthor",
             "49. @Import Remove Multitrack inf from Title",
@@ -364,6 +363,9 @@
             "58. Don\'t save Author when generic (i.e. Custom Song Creator)",
             "59. @Pack try to get Track No again (&don\'t save)",
             "60. @Pack try to get Track No again (&save)",
+            "61. @Rebuild don\'t overwrite Standard Song Info (Tit,Art,Alb,Prw,Aut,Des,Com)",
+            "62. @Rebuild don\'t overwrite Standard Song Info (Cover,Year)",
+            "63. <@Pack duplicate singleTracks L->R / R->L>",
             "98. @IMPORT>",
             "99. @Pack>"});
             this.chbx_Additional_Manipulations.Location = new System.Drawing.Point(358, 302);
@@ -1078,19 +1080,19 @@
             this.btn_PopulateDB.UseVisualStyleBackColor = false;
             this.btn_PopulateDB.Click += new System.EventHandler(this.btn_PopulateDB_Click);
             // 
-            // btn_DecompressAll
+            // btn_OpenMainDB
             // 
-            this.btn_DecompressAll.BackColor = System.Drawing.SystemColors.MenuHighlight;
-            this.btn_DecompressAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_DecompressAll.Location = new System.Drawing.Point(632, 40);
-            this.btn_DecompressAll.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btn_DecompressAll.Name = "btn_DecompressAll";
-            this.btn_DecompressAll.Size = new System.Drawing.Size(170, 54);
-            this.btn_DecompressAll.TabIndex = 10;
-            this.btn_DecompressAll.Text = "Open MainDB";
-            this.toolTip1.SetToolTip(this.btn_DecompressAll, "Main DB Listing All ");
-            this.btn_DecompressAll.UseVisualStyleBackColor = false;
-            this.btn_DecompressAll.Click += new System.EventHandler(this.btn_DecompressAll_Click);
+            this.btn_OpenMainDB.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            this.btn_OpenMainDB.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_OpenMainDB.Location = new System.Drawing.Point(632, 40);
+            this.btn_OpenMainDB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btn_OpenMainDB.Name = "btn_OpenMainDB";
+            this.btn_OpenMainDB.Size = new System.Drawing.Size(97, 54);
+            this.btn_OpenMainDB.TabIndex = 10;
+            this.btn_OpenMainDB.Text = "Open MainDB";
+            this.toolTip1.SetToolTip(this.btn_OpenMainDB, "Main DB Listing All ");
+            this.btn_OpenMainDB.UseVisualStyleBackColor = false;
+            this.btn_OpenMainDB.Click += new System.EventHandler(this.btn_DecompressAll_Click);
             // 
             // lbl_RocksmithDLCPath
             // 
@@ -1168,7 +1170,7 @@
             this.btn_Standardization.Location = new System.Drawing.Point(630, 138);
             this.btn_Standardization.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btn_Standardization.Name = "btn_Standardization";
-            this.btn_Standardization.Size = new System.Drawing.Size(171, 68);
+            this.btn_Standardization.Size = new System.Drawing.Size(99, 78);
             this.btn_Standardization.TabIndex = 11;
             this.btn_Standardization.Text = "Open StandardizationDB";
             this.toolTip1.SetToolTip(this.btn_Standardization, "Here you can decide what Standardizations you want to apply to Artist Names, Albu" +
@@ -1192,10 +1194,10 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(468, 140);
+            this.button5.Location = new System.Drawing.Point(736, 138);
             this.button5.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(135, 68);
+            this.button5.Size = new System.Drawing.Size(67, 78);
             this.button5.TabIndex = 12;
             this.button5.Text = "Open RetailDB";
             this.toolTip1.SetToolTip(this.button5, "Screen to manage the Game Default Screens for RS1Retail, RS1DLC, or RS2014 Retail" +
@@ -1203,44 +1205,19 @@
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
-            // chbx_WorkDGB
+            // btn_OpenGame
             // 
-            this.chbx_WorkDGB.AutoSize = true;
-            this.chbx_WorkDGB.Location = new System.Drawing.Point(651, 705);
-            this.chbx_WorkDGB.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.chbx_WorkDGB.Name = "chbx_WorkDGB";
-            this.chbx_WorkDGB.Size = new System.Drawing.Size(72, 24);
-            this.chbx_WorkDGB.TabIndex = 60;
-            this.chbx_WorkDGB.Text = "Work";
-            this.chbx_WorkDGB.UseVisualStyleBackColor = true;
-            this.chbx_WorkDGB.Visible = false;
-            this.chbx_WorkDGB.CheckedChanged += new System.EventHandler(this.chbx_WorkDGB_CheckedChanged);
-            // 
-            // chbx_HomeDBG
-            // 
-            this.chbx_HomeDBG.AutoSize = true;
-            this.chbx_HomeDBG.Location = new System.Drawing.Point(651, 737);
-            this.chbx_HomeDBG.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.chbx_HomeDBG.Name = "chbx_HomeDBG";
-            this.chbx_HomeDBG.Size = new System.Drawing.Size(78, 24);
-            this.chbx_HomeDBG.TabIndex = 58;
-            this.chbx_HomeDBG.Text = "Home";
-            this.chbx_HomeDBG.UseVisualStyleBackColor = true;
-            this.chbx_HomeDBG.Visible = false;
-            this.chbx_HomeDBG.CheckedChanged += new System.EventHandler(this.chbx_HomeDBG_CheckedChanged);
-            // 
-            // chbx_HomeDGBVM
-            // 
-            this.chbx_HomeDGBVM.AutoSize = true;
-            this.chbx_HomeDGBVM.Location = new System.Drawing.Point(651, 678);
-            this.chbx_HomeDGBVM.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.chbx_HomeDGBVM.Name = "chbx_HomeDGBVM";
-            this.chbx_HomeDGBVM.Size = new System.Drawing.Size(102, 24);
-            this.chbx_HomeDGBVM.TabIndex = 59;
-            this.chbx_HomeDGBVM.Text = "HomeVM";
-            this.chbx_HomeDGBVM.UseVisualStyleBackColor = true;
-            this.chbx_HomeDGBVM.Visible = false;
-            this.chbx_HomeDGBVM.CheckedChanged += new System.EventHandler(this.chbx_HomeDGBVM_CheckedChanged);
+            this.btn_OpenGame.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            this.btn_OpenGame.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_OpenGame.Location = new System.Drawing.Point(736, 40);
+            this.btn_OpenGame.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btn_OpenGame.Name = "btn_OpenGame";
+            this.btn_OpenGame.Size = new System.Drawing.Size(66, 54);
+            this.btn_OpenGame.TabIndex = 387;
+            this.btn_OpenGame.Text = "Open Game";
+            this.toolTip1.SetToolTip(this.btn_OpenGame, "Main DB Listing All ");
+            this.btn_OpenGame.UseVisualStyleBackColor = false;
+            this.btn_OpenGame.Click += new System.EventHandler(this.btn_OpenGame_Click);
             // 
             // btn_GoImport
             // 
@@ -1324,6 +1301,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btn_OpenGame);
             this.Controls.Add(this.btn_ProfilesSave);
             this.Controls.Add(this.chbx_Configurations);
             this.Controls.Add(this.panel2);
@@ -1333,15 +1311,11 @@
             this.Controls.Add(this.btn_GoImport);
             this.Controls.Add(this.btn_LoadRetailSongs);
             this.Controls.Add(this.button5);
-            this.Controls.Add(this.chbx_HomeDGBVM);
             this.Controls.Add(this.chbx_DefaultDB);
-            this.Controls.Add(this.chbx_HomeDBG);
-            this.Controls.Add(this.chbx_WorkDGB);
             this.Controls.Add(this.btn_ApplyStandardization);
             this.Controls.Add(this.btn_Standardization);
             this.Controls.Add(this.cbx_Export);
             this.Controls.Add(this.Export_To);
-            this.Controls.Add(this.chbx_Rebuild);
             this.Controls.Add(this.chbx_Additional_Manipulations);
             this.Controls.Add(this.lbl_Mask);
             this.Controls.Add(this.btn_Preview_Artist_Sort);
@@ -1387,7 +1361,7 @@
             this.Controls.Add(this.rtxt_StatisticsOnReadDLCs);
             this.Controls.Add(this.pB_ReadDLCs);
             this.Controls.Add(this.btn_PopulateDB);
-            this.Controls.Add(this.btn_DecompressAll);
+            this.Controls.Add(this.btn_OpenMainDB);
             this.Controls.Add(this.lbl_RocksmithDLCPath);
             this.Controls.Add(this.btn_TempPath);
             this.Controls.Add(this.lbl_TempFolders);
@@ -1461,7 +1435,7 @@
         private System.Windows.Forms.RichTextBox rtxt_StatisticsOnReadDLCs;
         private System.Windows.Forms.ProgressBar pB_ReadDLCs;
         private System.Windows.Forms.Button btn_PopulateDB;
-        private System.Windows.Forms.Button btn_DecompressAll;
+        private System.Windows.Forms.Button btn_OpenMainDB;
         private System.Windows.Forms.Label lbl_RocksmithDLCPath;
         private System.Windows.Forms.Button btn_TempPath;
         private System.Windows.Forms.Label lbl_TempFolders;
@@ -1475,12 +1449,7 @@
         private System.Windows.Forms.HelpProvider helpProvider1;
         private System.Windows.Forms.Button btn_Standardization;
         private System.Windows.Forms.Button btn_ApplyStandardization;
-        private System.Windows.Forms.CheckBox chbx_WorkDGB;
-        private System.Windows.Forms.CheckBox chbx_HomeDBG;
         private System.Windows.Forms.CheckBox chbx_DefaultDB;
-        //private DefaultDBDataSet defaultDBDataSet;
-        //private DefaultDBDataSetTableAdapters.MainTableAdapter mainTableAdapter;
-        private System.Windows.Forms.CheckBox chbx_HomeDGBVM;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button btn_LoadRetailSongs;
         private System.Windows.Forms.Button btn_GoImport;
@@ -1489,5 +1458,6 @@
         private System.Windows.Forms.Button btn_Log;
         private System.Windows.Forms.ComboBox chbx_Configurations;
         private System.Windows.Forms.Button btn_ProfilesSave;
+        private System.Windows.Forms.Button btn_OpenGame;
     }
 }

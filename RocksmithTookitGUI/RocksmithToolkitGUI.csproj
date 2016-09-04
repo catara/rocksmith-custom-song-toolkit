@@ -41,7 +41,8 @@
     <ApplicationIcon>songcreator.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ICSharpCode.SharpZipLib">
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\ZLib\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="NDesk.Options">
@@ -334,6 +335,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DLCPackageCreator\DLCPackageCreator.resx">
       <DependentUpon>DLCPackageCreator.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="DLCPackageCreator\ToneControl.resx">
       <DependentUpon>ToneControl.cs</DependentUpon>
@@ -683,6 +685,7 @@
     <None Include="Resources\flipXc.png" />
     <None Include="Resources\flipYc.png" />
     <None Include="Resources\music_edit.png" />
+<<<<<<< HEAD
     <Content Include="DLCManager\external_tools\bpr_v0.3\bpr.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1587,6 +1590,15 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+=======
+    <Content Include="..\VersionInfo.txt">
+      <Link>VersionInfo.txt</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="songcreator.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+>>>>>>> refs/remotes/rscustom/master
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -443,7 +443,10 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
 
                 sfd.FileName = GeneralExtensions.GetShortName("{0}_{1}_{2}", ArtistSort, SongTitleSort, packageVersion, ConfigRepository.Instance().GetBoolean("creator_useacronyms"));
                 sfd.Filter = CurrentRocksmithTitle + " CDLC (*.*)|*.*";
-                if (sfd.ShowDialog() != DialogResult.OK) return;
+  
+                if (sfd.ShowDialog(this) != DialogResult.OK) // 'this' ensures sfd is topmost
+                    return;
+
                 dlcSavePath = sfd.FileName;
             }
 
@@ -657,10 +660,30 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 if (!String.IsNullOrEmpty(arr.FontSng))
                     arr.FontSng = arr.FontSng.RelativeTo(BasePath);
             }
-
-            using (var stm = XmlWriter.Create(dlcSavePath, new XmlWriterSettings { CheckCharacters = true, Indent = true }))
+            try
             {
-                new DataContractSerializer(typeof(DLCPackageData)).WriteObject(stm, packageData);
+                using (
+                    var stm = XmlWriter.Create(dlcSavePath,
+                        new XmlWriterSettings {CheckCharacters = true, Indent = true}))
+                {
+                    new DataContractSerializer(typeof (DLCPackageData)).WriteObject(stm, packageData);
+                }
+            }
+            catch
+            {
+                //Re-absolutize the paths
+                foreach (var arr in packageData.Arrangements)
+                {
+                    if (!String.IsNullOrEmpty(arr.SongXml.File))
+                        arr.SongXml.File = arr.SongXml.File.AbsoluteTo(BasePath);
+                    if (!String.IsNullOrEmpty(arr.SongFile.File))
+                        arr.SongFile.File = arr.SongFile.File.AbsoluteTo(BasePath);
+                    if (!String.IsNullOrEmpty(arr.FontSng))
+                        arr.FontSng = arr.FontSng.AbsoluteTo(BasePath);
+                }
+
+                if (!String.IsNullOrEmpty(packageData.LyricArtPath))
+                    packageData.LyricArtPath = packageData.LyricArtPath.AbsoluteTo(BasePath);
             }
 
             //Re-absolutize the paths
@@ -1303,11 +1326,49 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 songXml.AverageTempo = info.SongInfo.AverageTempo;
                 songXml.Title = info.SongInfo.SongDisplayName;
                 songXml.Tuning = arr.TuningStrings;
+                //TODO: before this, check somewhere if autotone present, like update arrangement info in GetPackageData section.
+                bool updTones = songXml.Tones != null;
                 if (!String.IsNullOrEmpty(arr.ToneBase)) songXml.ToneBase = arr.ToneBase;
-                if (!String.IsNullOrEmpty(arr.ToneA)) songXml.ToneA = arr.ToneA;
-                if (!String.IsNullOrEmpty(arr.ToneB)) songXml.ToneB = arr.ToneB;
-                if (!String.IsNullOrEmpty(arr.ToneC)) songXml.ToneC = arr.ToneC;
-                if (!String.IsNullOrEmpty(arr.ToneD)) songXml.ToneD = arr.ToneD;
+                if (!String.IsNullOrEmpty(arr.ToneA)) {
+                    if (updTones)
+                    foreach (var t in songXml.Tones)
+                        if (t.Name == songXml.ToneA)
+                        {
+                            t.Name = arr.ToneA;
+                            t.Id = 0;
+                        }
+                    songXml.ToneA = arr.ToneA;
+                }
+                if (!String.IsNullOrEmpty(arr.ToneB)) {
+                    if (updTones)
+                    foreach (var t in songXml.Tones)
+                        if (t.Name == songXml.ToneB)
+                        {
+                            t.Name = arr.ToneB;
+                            t.Id = 1;
+                        }
+                    songXml.ToneB = arr.ToneB;
+                }
+                if (!String.IsNullOrEmpty(arr.ToneC)) {
+                    if (updTones)
+                    foreach (var t in songXml.Tones)
+                        if (t.Name == songXml.ToneC)
+                        {
+                            t.Name = arr.ToneC;
+                            t.Id = 2;
+                        }
+                    songXml.ToneC = arr.ToneC;
+                }
+                if (!String.IsNullOrEmpty(arr.ToneD)) {
+                    if (updTones)
+                    foreach (var t in songXml.Tones)
+                        if (t.Name == songXml.ToneD)
+                        {
+                            t.Name = arr.ToneD;
+                            t.Id = 3;
+                        }
+                    songXml.ToneD = arr.ToneD;
+                }
 
                 using (var stream = File.Open(arr.SongXml.File, FileMode.Create))
                     songXml.Serialize(stream, true);
@@ -1539,7 +1600,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                             {
                                 foreach (var xmlTone in songXml.Tones)
                                 {
-                                    if (xmlTone.Name.ToLower() == toneName.ToLower() || toneName.ToLower().Contains(xmlTone.Name.ToLower()))
+                                    if (xmlTone.Name.ToLower() == toneName.ToLower() || toneName.ToLower().EndsWith(xmlTone.Name.ToLower())) //todo: SAMENAME tone fix?
                                     {
                                         xmlTone.Name = tone.Name;
                                         xmlTone.Id = toneId;
@@ -1979,7 +2040,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             tb.Text = tb.Text.Trim().GetValidSortName();
             userChangedInputControls = true;
         }
-        //should be readonly tho
+
         private void ValidateTempo(object sender, CancelEventArgs e)
         {
             var tb = sender as TextBox;

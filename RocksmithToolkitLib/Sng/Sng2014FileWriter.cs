@@ -31,14 +31,21 @@ namespace RocksmithToolkitLib.Sng2014HSL
 
         public void ReadSong(Song2014 songXml, Sng2014File sngFile)
         {
-            Int16[] tuning = {
-                songXml.Tuning.String0,
-                songXml.Tuning.String1,
-                songXml.Tuning.String2,
-                songXml.Tuning.String3,
-                songXml.Tuning.String4,
-                songXml.Tuning.String5,
-            };
+            // fix for 'Object reference not set to an instance of an object' error
+            Int16[] tuning = { 0, 0, 0, 0, 0, 0 };
+            try
+            {
+                tuning[0] = songXml.Tuning.String0;
+                tuning[1] = songXml.Tuning.String1;
+                tuning[2] = songXml.Tuning.String2;
+                tuning[3] = songXml.Tuning.String3;
+                tuning[4] = songXml.Tuning.String4;
+                tuning[5] = songXml.Tuning.String5;
+            }
+            catch
+            {
+                // just ignore any error and use any tuning that is available from XML file
+            }
 
             parseEbeats(songXml, sngFile);
             parsePhrases(songXml, sngFile);
@@ -131,6 +138,22 @@ namespace RocksmithToolkitLib.Sng2014HSL
             return max;
         }
 
+        /// <summary>
+        /// Counts total ignore statuses for notes and chords.
+        /// </summary>
+        /// <param name="xml"></param>
+        /// <returns></returns>
+        private Int32 getIngoreCount(Song2014 xml)
+        {
+            var ctr = 0;
+            foreach (var l in xml.Levels)
+            {
+                ctr += l.Notes.Count(x => x.Ignore == 1);
+                ctr += l.Chords.Count(x => x.Ignore == 1);
+            }
+            return ctr;
+        }
+
         // Easy, Medium, Hard = 0, 1, 2
         public int[] NoteCount { get; set; }
         private int getNoteCount(Sng2014File sng, int Level)
@@ -181,7 +204,7 @@ namespace RocksmithToolkitLib.Sng2014HSL
 
             sng.Metadata.MaxDifficulty = getMaxDifficulty(xml);
             sng.Metadata.MaxNotesAndChords = NoteCount[2];
-            sng.Metadata.MaxNotesAndChords_Real = sng.Metadata.MaxNotesAndChords;//num unique notes+not ignored
+            sng.Metadata.MaxNotesAndChords_Real = sng.Metadata.MaxNotesAndChords - getIngoreCount(xml); //num "unique notes - ignored"
             sng.Metadata.PointsPerNote = sng.Metadata.MaxScore / sng.Metadata.MaxNotesAndChords;
 
             sng.Metadata.FirstBeatLength = xml.Ebeats[1].Time - xml.Ebeats[0].Time;
@@ -261,7 +284,11 @@ namespace RocksmithToolkitLib.Sng2014HSL
             {
                 var chord = xml.ChordTemplates[i];
                 var c = new Chord();
-                // TODO: skip if DisplayName == null
+
+                // fix for 'Object reference not set to an instance of an object' error
+                if (chord.DisplayName == null)
+                    chord.DisplayName = String.Empty;
+
                 if (chord.DisplayName.EndsWith("arp"))
                     c.Mask |= CON.CHORD_MASK_ARPEGGIO;
                 else if (chord.DisplayName.EndsWith("nop"))
@@ -415,7 +442,12 @@ namespace RocksmithToolkitLib.Sng2014HSL
         private void parseNLD(Song2014 xml, Sng2014File sng)
         {
             sng.NLD = new NLinkedDifficultySection();
-            sng.NLD.Count = xml.NewLinkedDiff.Length;
+            // fix for 'Object reference not set to an instance of an object' error
+            if (xml.NewLinkedDiff == null)
+                sng.NLD.Count = 0; // TODO: throw error here to reauthor in EOF
+            else
+                sng.NLD.Count = xml.NewLinkedDiff.Length;
+
             sng.NLD.NLinkedDifficulties = new NLinkedDifficulty[sng.NLD.Count];
 
             for (int i = 0; i < sng.NLD.Count; i++)
@@ -469,21 +501,20 @@ namespace RocksmithToolkitLib.Sng2014HSL
 
         private void parseTones(Song2014 xml, Sng2014File sng)
         {
+            //even if no tone changes, write section size (of 4 bytes)
             sng.Tones = new ToneSection();
-            if (xml.Tones != null)
-                sng.Tones.Count = xml.Tones.Length;
-            else
-                sng.Tones.Count = 0;
-
+            sng.Tones.Count = xml.Tones == null ? 0 : xml.Tones.Length;
             sng.Tones.Tones = new Tone[sng.Tones.Count];
             for (int i = 0; i < sng.Tones.Count; i++)
             {
                 var tn = xml.Tones[i];
-                var t = new Tone();
-                t.Time = tn.Time;
+                var t = new Tone { Time = tn.Time };
 
                 try
                 {
+                    if (String.IsNullOrEmpty(xml.ToneBase))
+                        throw new InvalidDataException("ToneBase must be defined.");
+
                     // fix for undefined tone name (tone name should be shorter)
                     if (xml.ToneBase.ToLower().Contains(tn.Name.ToLower()))
                         t.ToneId = 0;
@@ -502,9 +533,11 @@ namespace RocksmithToolkitLib.Sng2014HSL
                 }
                 catch (Exception)
                 {
-                    throw new InvalidDataException(@"There is tone name error in XML Arrangement: " + xml.Arrangement + "  " + tn.Name + " is not properly defined." + "Use EOF to re-author custom tones or Notepad to attempt manual repair." );
+                    throw new InvalidDataException("There is tone name error in XML Arrangement: " + xml.Arrangement + "  " + tn.Name + " is not properly defined." + "Use EOF to re-author custom tones or Notepad to attempt manual repair.");
                 }
             }
+
+            // TODO: confirm that tonebase is set to one of the multi tones in case user didn't do it in EOF
         }
 
         private static void parseVocals(Vocals xml, Sng2014File sng)
@@ -917,10 +950,12 @@ namespace RocksmithToolkitLib.Sng2014HSL
                     if (h.ChordId < 0) continue;
                     var fp = new Fingerprint
                     {
-                        ChordId = h.ChordId, StartTime = h.StartTime, EndTime = h.EndTime
-                    // TODO: not always StartTime
-                    //fp.Unk3_FirstNoteTime = fp.StartTime;
-                    //fp.Unk4_LastNoteTime = fp.StartTime;
+                        ChordId = h.ChordId,
+                        StartTime = h.StartTime,
+                        EndTime = h.EndTime
+                        // TODO: not always StartTime
+                        //fp.Unk3_FirstNoteTime = fp.StartTime;
+                        //fp.Unk4_LastNoteTime = fp.StartTime;
                     };
 
                     if (xml.ChordTemplates[fp.ChordId].DisplayName.EndsWith("arp"))

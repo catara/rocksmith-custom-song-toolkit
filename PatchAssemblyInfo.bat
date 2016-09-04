@@ -1,7 +1,3 @@
-REM this line goes in RocksmithToolkitLib Pre-Build
-REM CALL "$(SolutionDir)prebuild.bat" "$(SolutionDir)" "$(ProjectDir)ToolkitVersion.cs"
-
-
 @echo off
 setlocal enabledelayedexpansion
 
@@ -16,13 +12,16 @@ set toolkitver=%~2
 echo Solution Path from Command Line: %solution%
 echo Toolkit Version Path from Command Line: %toolkitver%
 
+REM args for testing
 if "%solution%"=="" (
 set solution=.\
 )
 
+REM args for testing
 if "%toolkitver%"=="" (
 rem set toolkitver=.\RocksmithToolkitLib\ToolkitVersion.cs
 rem set toolkitver=.\RocksmithToolkitLib\Properties\AssemblyInfo.cs
+rem set toolkitver=.\RocksmithToolkitUpdater\Properties\AssemblyInfo.cs
 set toolkitver=.\RocksmithTookitGUI\Properties\AssemblyInfo.cs
 )
 
@@ -37,9 +36,9 @@ echo To %toolkitver%
 copy %toolkitverdist% %toolkitver%
 
 echo Checking .git\HEAD exists ...
-:: fancy way to get to git commit version which
-:: is located in .git\refs\heads\master file
+:: get git commit version from .git\refs\heads\master file
 :: github commit version script
+
 if exist %solution%\.git\HEAD (
 	echo Reading .git\HEAD ...
 	set /p head=<"%solution%\.git\HEAD"
@@ -88,10 +87,9 @@ move /y tempfile.txt "%toolkitver%"
 
 echo Creating VersionInfo.txt ...
 echo %newrev% > VersionInfo.txt
-
 echo Done
 
-pause
+::pause
 
 endlocal
 exit /b 0

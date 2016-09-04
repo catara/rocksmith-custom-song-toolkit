@@ -36,7 +36,16 @@ namespace RocksmithToolkitGUI
             if (args.Length > 0 && File.Exists(args[0]))
                 LoadTemplate(args[0]);
 
-            this.Text = String.Format("Custom Song Creator Toolkit (v{0} beta)", ToolkitVersion.version);
+            InitMainForm();
+        }
+
+        private void InitMainForm()
+        {
+            // comment out as necessary when issuing new release version
+            // update (remove beta) from AssemblyInfo.cs in GUI, Lib and Updater
+            this.Text = String.Format("Rocksmith Custom Song Toolkit (v{0} beta)", ToolkitVersion.version);
+            //this.Text = String.Format("Rocksmith Custom Song Toolkit (v{0})", ToolkitVersion.version);
+
             if (Environment.OSVersion.Platform == PlatformID.MacOSX)
             {// Disable updates for Mac (speedup) -1.5 seconds here
                 updateButton.Enabled = false;
@@ -172,8 +181,9 @@ namespace RocksmithToolkitGUI
         public void ReloadControls()
         {
             this.Controls.Clear();
-            InitializeComponent();
+            InitializeComponent();            
             tabControl1.TabPages.Remove(GeneralConfigTab);
+            InitMainForm();
         }
 
 //<<<<<<< HEAD

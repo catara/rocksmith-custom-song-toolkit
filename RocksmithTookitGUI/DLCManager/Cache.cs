@@ -1751,6 +1751,12 @@ namespace RocksmithToolkitGUI.DLCManager
             }
 
         }
+
+        private void chbx_PreSavedFTP_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (chbx_PreSavedFTP.Text == "EU") txt_FTPPath.Text = ConfigRepository.Instance()["dlcm_FTP1"];//"ftp://192.168.1.12/" + "dev_hdd0/game/BLUS31182/USRDIR/DLC/";
+            else txt_FTPPath.Text = ConfigRepository.Instance()["dlcm_FTP2"];//"ftp://192.168.1.12/" + "dev_hdd0/game/BLES01862/USRDIR/DLC/";
+        }
     }
 }
 

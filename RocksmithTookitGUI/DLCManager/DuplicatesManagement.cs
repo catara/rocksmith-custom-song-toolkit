@@ -1006,7 +1006,7 @@ namespace RocksmithToolkitGUI.DLCManager
         }
         public void exit()
         {
-            Author = (txt_AuthorNew.Text == "" ? "Custom Song Creator" : txt_AuthorNew.Text);
+            Author = (txt_AuthorNew.Text == "" ? (ConfigRepository.Instance()["dlcm_AdditionalManipul47"] =="Yes"? "Custom Song Creator":"") : txt_AuthorNew.Text);
             Version = (txt_VersionNew.Text == "" ? "1" : txt_VersionNew.Text);
             DLCID = txt_DLCIDNew.Text;
             Title = txt_TitleNew.Text;

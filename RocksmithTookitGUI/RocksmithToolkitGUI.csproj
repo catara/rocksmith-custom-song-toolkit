@@ -685,7 +685,6 @@
     <None Include="Resources\flipXc.png" />
     <None Include="Resources\flipYc.png" />
     <None Include="Resources\music_edit.png" />
-<<<<<<< HEAD
     <Content Include="DLCManager\external_tools\bpr_v0.3\bpr.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1562,9 +1561,6 @@
     <Content Include="DLCManager\Screenshot4.png" />
     <Content Include="DLCManager\Screenshot5.png" />
     <Content Include="DLCManager\Screenshot6.png" />
-    <Content Include="ReleaseNotes.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="songcreator.ico" />
     <Content Include="DLCManager\external_tools\audiocrossreference.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1590,7 +1586,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
-=======
     <Content Include="..\VersionInfo.txt">
       <Link>VersionInfo.txt</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -1598,7 +1593,6 @@
     <Content Include="songcreator.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
->>>>>>> refs/remotes/rscustom/master
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

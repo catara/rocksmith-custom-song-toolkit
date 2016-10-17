@@ -1,4 +1,4 @@
-﻿## Roksmith DLC Library Manager v0.3
+﻿## Roksmith DLC Library Manager v0.4
 *(beta version; branch of CSC)*
 # App Description: MASS Manipulation of Rocksmith DLC Library 
 		e.g. 1. in Rocksmith, in the Library, each song's Album, to contain a personal rating, if it has DD, instr. avail
@@ -20,6 +20,7 @@
 	- Copies songs/packs directly to the PS3 by means of FTP
 - Mass add/remove DD @repack (inc. Bass only option)(incl. Official DLCs)
 - Setlists (NEW)
+- Read Current Game Library and match it to the DLCManager Library (incl. PS3) (NEW)
 - Mass rename songs(Standardization) e.g. Black Keys->The Black Keys and maintain changes in a local DB
 - Manipulates the Retail songs list of Rocksmith (Rocksmith 2014 disc, or Rocksmith 2012 DLC, or Rocksmith 2012 Import disc for PC & Mac & PS3)
 
@@ -63,8 +64,8 @@
 - [ ] rename the Options and use the xml code inside the tool (removing the 03 14 35 dependency)
 - [ ] improve progress bar of repacks
 - [ ] ask if you wanna have the packing folder deleted
-- [ ] changing path
-- [ ] alternate 0
+- [ ] fix/check changing path of library
+- [ ] alternate 0 improve
 	-+ with or without u still doesnt have the right alternate no when importing vs an existing song= a2....maybe OK :)
 - add info box with folders sizes
 
@@ -79,15 +80,17 @@
 -+ third eye investig
 - [ ] muse uprising songs have preview lenght in minutes
 - [ ] fix importing own songs, eg. ana
-- [+] finish profiles (load Saved Profile names)
 
 official bugs:
 - [ ] CICAGO 26 25 original SONG FAILS AT PACK
 - [ ] open ticket for the dlcpackagedata crash for 311 down in
+- cake song fails at import
 
 done:
 (next release)
 - [ ] finish arrangement (demo with the hives overdrive all the time :) )
+- [+] finish profiles (load Saved Profile names)
+	- check they are saved at close
 - [x] save when exit search 
 	- [x] when clicking on a song disable Search
 - [+] delete all duplicates at Standardization
@@ -96,9 +99,11 @@ done:
 - [ ] audioslave sections missing maybe cause its an original and i used my own logic to strip the DD
 - [+] add group to Beta
 - [ ] usa peaches long naming fails at packing (shortes folder the random id)
-- [ ] standardiation delete
+  - ps3 long names sogs(149char)(cannot be read)
+- [ ] standardiation delete does not refresh
 - [x] duplicate import should save the names of the files in a separate table :) (not req)
 	- [x] save also hash not to ask again for duplicates if already decided as duplicate (all imported are saved and so checked for hexa code)
+- [ ] enable Cover correction in Standardization
 - [ ] enable shortNames and Album correction in Standardization
 - [ ] fix filter in CAche
 - [ ] after selecting deselect incl. Beta
@@ -113,22 +118,29 @@ done:
 - [ ] add simple logic to add sections
 	- [ ] check and fix the Sections flag
 	- [+] add sections (bored to death; Renabled BPR program)
-- [ ] delete lib (gather lib from ps3-ftp/mac/pc 1. save 2. copy new)
+[-] delete lib (gather lib from ps3-ftp/mac/pc 1. save 2. copy new)
 - ignore and del 4k/no psarc files
 - progress bar on possible duplicate import is too short
 - copy name fails title sort in duplicate banagement
 - populate new tone fields
-- add read library option
-- prepare the rebuild option
+[+] add read library option
+-- prepare the rebuild option
 -- are duplicate decompressed folder deleted?
 - redo save track at pack with update function
-[+] wrap u0p the audit trail...only at succesfull import u update the table
+[+] wrap up the audit trail...only at succesfull import u update the table
 	[+] at deletion please remove from imported audit trail
 [+] duplicate also shows in winmerge Tones
 [+] fix stop import from duplicate screen
 [-] cacke give errors
-- fix som wm dupli buttons not being ensabled
+- fix som wm dupli buttons not being enabled
 -- improve the overlay
+[-] fix for import unique hash foar any
+[-] fix for rebuild missing file
+[-] disable old and L->r
+[+] add unique key for each packed&imported thing so to read libs
+	[+] use also name as identifier
+[+] profiles should be a table
+	[-] all options should be a table
 
 (prev release; but maybe not thuroughly tested)
 - [x] duplic manag make date bigger

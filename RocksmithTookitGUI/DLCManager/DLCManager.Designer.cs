@@ -109,6 +109,7 @@
             this.btn_Log = new System.Windows.Forms.Button();
             this.chbx_Configurations = new System.Windows.Forms.ComboBox();
             this.btn_ProfilesSave = new System.Windows.Forms.Button();
+            this.btn_ProfileRemove = new System.Windows.Forms.Button();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -366,6 +367,7 @@
             "61. @Rebuild don\'t overwrite Standard Song Info (Tit,Art,Alb,Prw,Aut,Des,Com)",
             "62. @Rebuild don\'t overwrite Standard Song Info (Cover,Year)",
             "63. <@Pack duplicate singleTracks L->R / R->L>",
+            "64 @Pack Remove Remote File if GameData has been read",
             "98. @IMPORT>",
             "99. @Pack>"});
             this.chbx_Additional_Manipulations.Location = new System.Drawing.Point(358, 302);
@@ -1074,7 +1076,7 @@
             this.btn_PopulateDB.Location = new System.Drawing.Point(632, 97);
             this.btn_PopulateDB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btn_PopulateDB.Name = "btn_PopulateDB";
-            this.btn_PopulateDB.Size = new System.Drawing.Size(170, 38);
+            this.btn_PopulateDB.Size = new System.Drawing.Size(171, 38);
             this.btn_PopulateDB.TabIndex = 13;
             this.btn_PopulateDB.Text = "Import DLCs";
             this.btn_PopulateDB.UseVisualStyleBackColor = false;
@@ -1087,7 +1089,7 @@
             this.btn_OpenMainDB.Location = new System.Drawing.Point(632, 40);
             this.btn_OpenMainDB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btn_OpenMainDB.Name = "btn_OpenMainDB";
-            this.btn_OpenMainDB.Size = new System.Drawing.Size(97, 54);
+            this.btn_OpenMainDB.Size = new System.Drawing.Size(171, 54);
             this.btn_OpenMainDB.TabIndex = 10;
             this.btn_OpenMainDB.Text = "Open MainDB";
             this.toolTip1.SetToolTip(this.btn_OpenMainDB, "Main DB Listing All ");
@@ -1140,12 +1142,13 @@
             // btn_ApplyStandardization
             // 
             this.btn_ApplyStandardization.BackColor = System.Drawing.SystemColors.Control;
-            this.btn_ApplyStandardization.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_ApplyStandardization.Location = new System.Drawing.Point(606, 146);
+            this.btn_ApplyStandardization.Font = new System.Drawing.Font("Microsoft Sans Serif", 5.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_ApplyStandardization.Location = new System.Drawing.Point(577, 141);
             this.btn_ApplyStandardization.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btn_ApplyStandardization.Name = "btn_ApplyStandardization";
-            this.btn_ApplyStandardization.Size = new System.Drawing.Size(21, 22);
+            this.btn_ApplyStandardization.Size = new System.Drawing.Size(21, 75);
             this.btn_ApplyStandardization.TabIndex = 61;
+            this.btn_ApplyStandardization.Text = "Apply";
             this.toolTip1.SetToolTip(this.btn_ApplyStandardization, "Apply Standardization Rules");
             this.btn_ApplyStandardization.UseVisualStyleBackColor = false;
             this.btn_ApplyStandardization.Click += new System.EventHandler(this.button1_Click);
@@ -1153,12 +1156,13 @@
             // btn_LoadRetailSongs
             // 
             this.btn_LoadRetailSongs.BackColor = System.Drawing.SystemColors.Control;
-            this.btn_LoadRetailSongs.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_LoadRetailSongs.Location = new System.Drawing.Point(606, 185);
+            this.btn_LoadRetailSongs.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_LoadRetailSongs.Location = new System.Drawing.Point(708, 141);
             this.btn_LoadRetailSongs.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btn_LoadRetailSongs.Name = "btn_LoadRetailSongs";
-            this.btn_LoadRetailSongs.Size = new System.Drawing.Size(21, 22);
+            this.btn_LoadRetailSongs.Size = new System.Drawing.Size(21, 75);
             this.btn_LoadRetailSongs.TabIndex = 62;
+            this.btn_LoadRetailSongs.Text = "Load";
             this.toolTip1.SetToolTip(this.btn_LoadRetailSongs, "Load Retail files: Disc Songs, DLC Songs, RS1DLC Songs");
             this.btn_LoadRetailSongs.UseVisualStyleBackColor = false;
             this.btn_LoadRetailSongs.Click += new System.EventHandler(this.btn_LoadRetailSongs_Click);
@@ -1167,7 +1171,7 @@
             // 
             this.btn_Standardization.BackColor = System.Drawing.SystemColors.Control;
             this.btn_Standardization.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Standardization.Location = new System.Drawing.Point(630, 138);
+            this.btn_Standardization.Location = new System.Drawing.Point(603, 138);
             this.btn_Standardization.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btn_Standardization.Name = "btn_Standardization";
             this.btn_Standardization.Size = new System.Drawing.Size(99, 78);
@@ -1209,7 +1213,7 @@
             // 
             this.btn_OpenGame.BackColor = System.Drawing.SystemColors.MenuHighlight;
             this.btn_OpenGame.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_OpenGame.Location = new System.Drawing.Point(736, 40);
+            this.btn_OpenGame.Location = new System.Drawing.Point(636, 678);
             this.btn_OpenGame.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btn_OpenGame.Name = "btn_OpenGame";
             this.btn_OpenGame.Size = new System.Drawing.Size(66, 54);
@@ -1217,6 +1221,7 @@
             this.btn_OpenGame.Text = "Open Game";
             this.toolTip1.SetToolTip(this.btn_OpenGame, "Main DB Listing All ");
             this.btn_OpenGame.UseVisualStyleBackColor = false;
+            this.btn_OpenGame.Visible = false;
             this.btn_OpenGame.Click += new System.EventHandler(this.btn_OpenGame_Click);
             // 
             // btn_GoImport
@@ -1280,15 +1285,16 @@
             this.chbx_Configurations.Location = new System.Drawing.Point(576, 5);
             this.chbx_Configurations.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.chbx_Configurations.Name = "chbx_Configurations";
-            this.chbx_Configurations.Size = new System.Drawing.Size(187, 28);
+            this.chbx_Configurations.Size = new System.Drawing.Size(153, 28);
             this.chbx_Configurations.TabIndex = 325;
             this.chbx_Configurations.Text = "Select Profile";
+            this.chbx_Configurations.DropDown += new System.EventHandler(this.chbx_Configurations_DropDown);
             this.chbx_Configurations.SelectedIndexChanged += new System.EventHandler(this.chbx_Configurations_SelectedIndexChanged);
             // 
             // btn_ProfilesSave
             // 
             this.btn_ProfilesSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_ProfilesSave.Location = new System.Drawing.Point(770, 6);
+            this.btn_ProfilesSave.Location = new System.Drawing.Point(736, 4);
             this.btn_ProfilesSave.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btn_ProfilesSave.Name = "btn_ProfilesSave";
             this.btn_ProfilesSave.Size = new System.Drawing.Size(32, 31);
@@ -1297,10 +1303,23 @@
             this.btn_ProfilesSave.UseVisualStyleBackColor = true;
             this.btn_ProfilesSave.Click += new System.EventHandler(this.btn_ProfilesSave_Click);
             // 
+            // btn_ProfileRemove
+            // 
+            this.btn_ProfileRemove.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_ProfileRemove.Location = new System.Drawing.Point(771, 4);
+            this.btn_ProfileRemove.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btn_ProfileRemove.Name = "btn_ProfileRemove";
+            this.btn_ProfileRemove.Size = new System.Drawing.Size(32, 31);
+            this.btn_ProfileRemove.TabIndex = 388;
+            this.btn_ProfileRemove.Text = "-";
+            this.btn_ProfileRemove.UseVisualStyleBackColor = true;
+            this.btn_ProfileRemove.Click += new System.EventHandler(this.btn_GroupsRemove_Click);
+            // 
             // DLCManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btn_ProfileRemove);
             this.Controls.Add(this.btn_OpenGame);
             this.Controls.Add(this.btn_ProfilesSave);
             this.Controls.Add(this.chbx_Configurations);
@@ -1459,5 +1478,6 @@
         private System.Windows.Forms.ComboBox chbx_Configurations;
         private System.Windows.Forms.Button btn_ProfilesSave;
         private System.Windows.Forms.Button btn_OpenGame;
+        private System.Windows.Forms.Button btn_ProfileRemove;
     }
 }

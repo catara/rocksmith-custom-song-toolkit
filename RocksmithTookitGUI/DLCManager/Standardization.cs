@@ -35,8 +35,6 @@ namespace RocksmithToolkitGUI.DLCManager
         private BindingSource Main = new BindingSource();
         private readonly string MESSAGEBOX_CAPTION = "StandardizationDB";
         public bool SaveOK = false;
-        //private object cbx_Lead;
-        //public DataAccess da = new DataAccess();
         //bcapi
         public string DB_Path = "";
         public string TempPath = "";
@@ -44,57 +42,20 @@ namespace RocksmithToolkitGUI.DLCManager
         public DataSet dssx = new DataSet();
         public bool AllowORIGDeleteb = false;
         public bool AllowEncriptb = false;
-        //public OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn);
-
-        //private BindingSource bsPositions = new BindingSource();
-        //private BindingSource bsBadges = new BindingSource();
 
         private void Standardization_Load(object sender, EventArgs e)
         {
-            //DataAccess da = new DataAccess();
-            //MessageBox.Show("test0");
-            Populate(ref DataGridView1, ref Main);//, ref bsPositions, ref bsBadges);
+            Populate(ref DataGridView1, ref Main);
             DataGridView1.EditingControlShowing += DataGridView1_EditingControlShowing;
             chbx_AutoSave.Checked = ConfigRepository.Instance()["dlcm_Autosave"] == "Yes" ? true : false;
         }
 
         private void DataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
-            //if (true) //(DataGridView1.CurrentCell.IsComboBoxCell())
-            //{
-            //    if (DataGridView1.Columns[DataGridView1.CurrentCell.ColumnIndex].Name == "ContactsColumn")
-            //    {
-            //        ComboBox cb = e.Control as ComboBox;
-            //        if (cb != null)
-            //        {
-            //            cb.SelectionChangeCommitted -= _SelectionChangeCommitted;
-            //            cb.SelectionChangeCommitted += _SelectionChangeCommitted;
-            //        }
-            //    }
-            //}
         }
 
         private void _SelectionChangeCommitted(object sender, EventArgs e)
         {
-            //if (CheckBox1.Checked)
-            //{
-            //    MessageBox.Show(((DataGridViewComboBoxEditingControl)sender).Text);
-            //}
-            //else
-            //{
-            //if (bsPositions.Current != null)
-            //{
-            //    Int32 Index = bsPositions.Find("ContactPosition", ((DataGridViewComboBoxEditingControl)sender).Text);
-
-            //    if (Index != -1)
-            //    {
-            //        bsBadges.Position = Index;
-            //        DataGridView1.CurrentRow.Cells[DataGridView1.Columns["BadgeColumn"].Index].Value =
-            //            (
-            //                (DataRowView)bsBadges.Current).Row.Field<string>("Badge");
-            //    }
-            //}
-            //}
         }
 
         private void DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -104,7 +65,6 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void button1_Click(object sender, EventArgs e)
         {
-            // DB_Path = DB_Path + "\\Files.accdb"; //DLCManager.txt_DBFolder.Text
             try
             {
                 Process process = Process.Start(@DB_Path);
@@ -118,21 +78,9 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void DataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
-            //int i;
-            //i = DataGridView1.SelectedCells[0].RowIndex;
-            //txt_ID.Text = DataGridView1.Rows[i].Cells[0].Value.ToString();
-            //txt_Artist.Text = DataGridView1.Rows[i].Cells[2].Value.ToString();
-            //txt_Artist_Correction.Text = DataGridView1.Rows[i].Cells[3].Value.ToString();
-            //txt_Album.Text = DataGridView1.Rows[i].Cells[4].Value.ToString();
-            //txt_Album_Correction.Text = DataGridView1.Rows[i].Cells[5].Value.ToString();
-            //txt_AlbumArtPath_Correction.Text = DataGridView1.Rows[i].Cells[5].Value.ToString();
-
-            //if (txt_AlbumArtPath_Correction.Text != "") picbx_AlbumArtPath.ImageLocation = txt_AlbumArtPath.Text.Replace(".dds", ".png");
             var line = -1;
             line = DataGridView1.SelectedCells[0].RowIndex;
             if (line > -1) ChangeRow();
-            // pB_ReadDLCs.Value = 0;
-
         }
 
         public void ChangeRow()
@@ -147,12 +95,6 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_AlbumArtPath_Correction.Text = DataGridView1.Rows[i].Cells[5].Value.ToString();
 
             if (txt_AlbumArtPath_Correction.Text != "") picbx_AlbumArtPath.ImageLocation = txt_AlbumArtPath.Text.Replace(".dds", ".png");
-
-
-            //ImageSource imageSource = new BitmapImage(new Uri("C:\\Temp\\music_edit.png"));
-            //txt_Description.Text = txt_AlbumArtPath.Text.Replace(".dds", ".png");
-            // picbx_AlbumArtPath.ImageLocation = txt_AlbumArtPath.Text.Replace(".dds", ".png");
-
             if (chbx_AutoSave.Checked) SaveOK = true;
             else SaveOK = false;
 
@@ -163,26 +105,21 @@ namespace RocksmithToolkitGUI.DLCManager
             SaveRecord();
         }
 
-        public void Populate(ref DataGridView DataGridView, ref BindingSource bs) //, ref BindingSource bsPositions, ref BindingSource bsBadges
+        public void Populate(ref DataGridView DataGridView, ref BindingSource bs)
         {
             bs.DataSource = null;
             dssx.Dispose();
-
-            //DB_Path = "../../../../tmp\\Files.accdb;";
             try
             {
                 using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
                 {
-                    OleDbDataAdapter da = new OleDbDataAdapter("SELECT ID, (SELECT IIF(count(*)>1,\"Yes\",\"\") as Suspect from Standardization AS O WHERE LCASE(S.Artist)=LCASE(O.Artist) and LCASE(S.Album)=LCASE(O.Album)) as Suspect, Artist, Artist_Correction, Album, Album_Correction, AlbumArt_Correction FROM Standardization as S ORDER BY Artist, Album;", cn);
+                    dssx.Clear();
+                    var cmd = "SELECT ID, (SELECT IIF(count(*)>1,\"Yes\",\"\") as Suspect from Standardization AS O WHERE LCASE(S.Artist)=LCASE(O.Artist) and LCASE(S.Artist_Correction)=LCASE(O.Artist_Correction) and LCASE(S.Album_Correction)=LCASE(O.Album_Correction) and LCASE(S.Album)=LCASE(O.Album)) as Suspect, Artist, Artist_Correction, Album, Album_Correction, AlbumArt_Correction FROM Standardization as S ORDER BY Artist, Album, Artist_Correction, Album_Correction;";
+                    OleDbDataAdapter da = new OleDbDataAdapter(cmd, cn);
                     da.Fill(dssx, "Standardization");
                     var noOfRec = dssx.Tables[0].Rows.Count;
                     lbl_NoRec.Text = noOfRec.ToString() + " records.";
-                    //da = new OleDbDataAdapter("SELECT Identifier,ContactPosition FROM PositionType;", cn);
-                    //da.Fill(ds, "PositionType");
-                    //da = new OleDbDataAdapter("SELECT Identifier, Badge FROM Badge", cn);
-                    //da.Fill(ds, "Badge");
                 }
-                //MessageBox.Show("test");
                 DataGridViewTextBoxColumn ID = new DataGridViewTextBoxColumn { DataPropertyName = "ID", HeaderText = "ID ", Width = 40 };
                 DataGridViewTextBoxColumn Suspect = new DataGridViewTextBoxColumn { DataPropertyName = "Suspect", HeaderText = "Suspect ", Width = 40 };
                 DataGridViewTextBoxColumn Artist = new DataGridViewTextBoxColumn { DataPropertyName = "Artist", HeaderText = "Artist ", Width = 185 };
@@ -191,12 +128,6 @@ namespace RocksmithToolkitGUI.DLCManager
                 DataGridViewTextBoxColumn Album_Correction = new DataGridViewTextBoxColumn { DataPropertyName = "Album_Correction", HeaderText = "Album_Correction ", Width = 185 };
                 DataGridViewTextBoxColumn AlbumArtPath_Correction = new DataGridViewTextBoxColumn { DataPropertyName = "AlbumArtPath_Correction", HeaderText = "AlbumArtPath_Correction ", Width = 495 };
 
-                //// DataGridView1.AutoGenerateColumns = false;
-                //DataGridView.AutoResizeColumns();
-                //bs.ResetBindings(false);
-
-                //DataGridView1.Columns.AddRange(new DataGridViewColumn[]
-                //    {
                 DataGridView.AutoGenerateColumns = false;
 
                 DataGridView.Columns.AddRange(new DataGridViewColumn[]
@@ -211,19 +142,18 @@ namespace RocksmithToolkitGUI.DLCManager
                     }
                 );
 
+                bs.ResetBindings(false);
                 dssx.Tables["Standardization"].AcceptChanges();
-                //   bs.ResetBindings(false);
                 bs.DataSource = dssx.Tables["Standardization"];
-                //DataGridView1.DataSource = null;
+                DataGridView.DataSource = null;
                 DataGridView1.DataSource = bs;
-                //DataGridView1./*Refresh*/();
+                DataGridView1.Refresh();
                 dssx.Dispose();
-                //DataGridView.ExpandColumns();
+
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                //MessageBox.Show("-DB Open in Design Mode or Download Connectivity patch @ https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734");
                 ErrorWindow frm1 = new ErrorWindow("DB Open in Design Mode or Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error when opening the Standardization DB", false, false);
                 frm1.ShowDialog();
                 return;
@@ -422,30 +352,20 @@ namespace RocksmithToolkitGUI.DLCManager
             DataSet dis = new DataSet();
 
             i = DataGridView1.SelectedCells[0].RowIndex;
-
-            //DataGridView1.Rows[i].Cells[0].Value = txt_ID.Text;
-            //DataGridView1.Rows[i].Cells[1].Value = txt_Artist.Text;
             DataGridView1.Rows[i].Cells[3].Value = txt_Artist_Correction.Text;
-            //DataGridView1.Rows[i].Cells[3].Value = txt_Album.Text;
             DataGridView1.Rows[i].Cells[5].Value = txt_Album_Correction.Text;
             DataGridView1.Rows[i].Cells[6].Value = txt_AlbumArtPath_Correction.Text;
 
-            //var DB_Path = "../../../../tmp\\Files.accdb;";
-            var connection = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path); //+ ";Persist Security Info=False"
+            var connection = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path);
             var command = connection.CreateCommand();
-            //dssx = DataGridView1;
             using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
             {
-                //OleDbCommand command = new OleDbCommand();
-                //Update StadardizationDB
-                //SqlCommand cmds = new SqlCommand(sqlCmd, conn2);
                 command.CommandText = "UPDATE Standardization SET ";
 
                 command.CommandText += "Artist_Correction = @param3, ";
-                command.CommandText += "Album_Correction = @param5 ";
-                //command.CommandText += "AlbumArtPath_Correction = @param6 ";
+                command.CommandText += "Album_Correction = @param5, ";
+                command.CommandText += "AlbumArt_Correction = @param6 ";
                 command.CommandText += "WHERE ID = " + txt_ID.Text;
-
                 command.Parameters.AddWithValue("@param3", DataGridView1.Rows[i].Cells[3].Value.ToString() ?? DBNull.Value.ToString());
                 command.Parameters.AddWithValue("@param5", DataGridView1.Rows[i].Cells[5].Value.ToString() ?? DBNull.Value.ToString());
                 command.Parameters.AddWithValue("@param6", DataGridView1.Rows[i].Cells[6].Value.ToString() ?? DBNull.Value.ToString());
@@ -459,29 +379,22 @@ namespace RocksmithToolkitGUI.DLCManager
                 {
                     MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     MessageBox.Show("Can not open Standardization DB connection in Standardization Edit screen ! " + DB_Path + "-" + command.CommandText);
-
                     throw;
                 }
                 finally
                 {
                     if (connection != null) connection.Close();
                 }
-                ////OleDbDataAdapter das = new OleDbDataAdapter(command.CommandText, cnn);
                 if (!chbx_AutoSave.Checked) MessageBox.Show("Song Details Correction Saved");
-                //das.SelectCommand.CommandText = "SELECT * FROM Tones";
-                //// das.Update(dssx, "Tones");
             }
-
-
         }
 
         private void btn_Delete_Click(object sender, EventArgs e)
         {
-            var cmd = "DELETE FROM Standardization WHERE ID IN (" + txt_ID.Text + ")";
+            var cmd = "DELETE * FROM Standardization WHERE ID IN (" + txt_ID.Text + ")";
             using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
             {
                 DataSet dhs = new DataSet();
-                //var rr = cmd.Replace("DELETE FROM Main WHERE ID IN (", "SELECT * FROM Main WHERE ID IN (");
                 OleDbDataAdapter dhx = new OleDbDataAdapter(cmd, cnn);
                 dhx.Fill(dhs, "Standardization");
                 dhx.Dispose();
@@ -489,41 +402,37 @@ namespace RocksmithToolkitGUI.DLCManager
 
 
             //redresh 
-            Populate(ref DataGridView1, ref Main);//, ref bsPositions, ref bsBadges);
+            Populate(ref DataGridView1, ref Main);
             DataGridView1.EditingControlShowing += DataGridView1_EditingControlShowing;
             DataGridView1.Refresh();
 
-            ////advance or step back in the song list
-            //if (DataGridView1.Rows.Count > 1)
-            //{
-            //    var prev = DataGridView1.SelectedCells[0].RowIndex; //nud_RemoveSlide.Value;
-            //    if (DataGridView1.Rows.Count == prev + 2)
-            //        if (prev == 0) return;
-            //        else
-            //        {
-            //            int rowindex;
-            //            DataGridViewRow row;
-            //            var i = DataGridView1.SelectedCells[0].RowIndex;
-            //            rowindex = i;// DataGridView1.SelectedRows[0].Index;
-            //            DataGridView1.Rows[rowindex - 1].Selected = true;
-            //            DataGridView1.Rows[rowindex].Selected = false;
-            //            //if (prev>txt_Counter.Text.ToInt32())
-            //            row = DataGridView1.Rows[rowindex - 1];
-            //        }
-            //    else
-            //    {
-            //        int rowindex;
-            //        DataGridViewRow row;
-            //        var i = DataGridView1.SelectedCells[0].RowIndex;
-            //        rowindex = i;// DataGridView1.SelectedRows[0].Index;
-            //        DataGridView1.Rows[rowindex + 1].Selected = true;
-            //        DataGridView1.Rows[rowindex].Selected = false;
-            //        //if (prev>txt_Counter.Text.ToInt32())
-            //        row = DataGridView1.Rows[rowindex + 1];
-            //    }
-            //}
-
-
+            //advance or step back in the song list
+            if (DataGridView1.Rows.Count > 1)
+            {
+                var prev = DataGridView1.SelectedCells[0].RowIndex;
+                if (DataGridView1.Rows.Count == prev + 2)
+                    if (prev == 0) return;
+                    else
+                    {
+                        int rowindex;
+                        DataGridViewRow row;
+                        i = DataGridView1.SelectedCells[0].RowIndex;
+                        rowindex = i;
+                        DataGridView1.Rows[rowindex - 1].Selected = true;
+                        DataGridView1.Rows[rowindex].Selected = false;
+                        row = DataGridView1.Rows[rowindex - 1];
+                    }
+                else
+                {
+                    int rowindex;
+                    DataGridViewRow row;
+                    i = DataGridView1.SelectedCells[0].RowIndex;
+                    rowindex = i;
+                    DataGridView1.Rows[rowindex + 1].Selected = true;
+                    DataGridView1.Rows[rowindex].Selected = false;
+                    row = DataGridView1.Rows[rowindex + 1];
+                }
+            }            
         }
     }
 }

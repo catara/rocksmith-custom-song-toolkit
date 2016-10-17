@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -147,7 +148,8 @@ namespace RocksmithToolkitLib.Xml
          * "B0", "High pitch tick"
          * "B1", "Low pitch tick"
          * 
-         * E is for Emotions? or it's generic event?
+         * E is for Crowd emotion control
+         * "e0", "Crowd waving hands like in The Sky is crying.
          * "E1", "Crowd happy" //Meet the band event
          * "E3", "Crowd wild"
          * "E13", "Crowd extra wild?" // usually at the end of the song
@@ -222,7 +224,7 @@ namespace RocksmithToolkitLib.Xml
                 Part = sngData.Metadata.Part;
                 SongLength = sngData.Metadata.SongLength;
                 Tuning = new TuningStrings(sngData.Metadata.Tuning);
-                Capo = (byte) ((sngData.Metadata.CapoFretId == 0xFF) ? 0x00 : sngData.Metadata.CapoFretId);
+                Capo = (byte)((sngData.Metadata.CapoFretId == 0xFF) ? 0x00 : sngData.Metadata.CapoFretId);
                 LastConversionDateTime = sngData.Metadata.LastConversionDateTime.ToNullTerminatedAscii();
             }
 
@@ -264,7 +266,7 @@ namespace RocksmithToolkitLib.Xml
             Ebeats = SongEbeat.Parse(sngData.BPMs);
             StartBeat = sngData.BPMs.BPMs[0].Time;
             Events = SongEvent.Parse(sngData.Events);
-            Levels = SongLevel2014.Parse(sngData);
+            Levels = SongLevel2014.Parse(sngData); 
 
             //Not used in RS2014 customs at this time. Need to check official files
             NewLinkedDiff = SongNewLinkedDiff.Parse(sngData.NLD);
@@ -1047,6 +1049,7 @@ namespace RocksmithToolkitLib.Xml
                 var chord = new SongChord2014();
                 chord.ChordId = notesSection.Notes[i].ChordId;
                 chord.Time = notesSection.Notes[i].Time;
+                // Debug.WriteLine("Song2014 chord.ChordId = " + chord.ChordId);
 
                 // TECHNIQUES
                 chord.parseChordMask(notesSection.Notes[i], notesSection.Notes[i].NoteMask);

@@ -9,6 +9,7 @@ using CFSM.ImageTools;
 using RocksmithToolkitLib.DLCPackage.Manifest2014;
 using RocksmithToolkitLib.DLCPackage.Manifest2014.Header;
 using RocksmithToolkitLib.DLCPackage.Manifest2014.Tone;
+using RocksmithToolkitLib.XmlRepository;
 using X360.IO;
 using X360.Other;
 using X360.STFS;
@@ -406,7 +407,8 @@ namespace RocksmithToolkitLib.DLCPackage
                 using (var xblockStream = new MemoryStream())
                 {
                     // TOOLKIT VERSION
-                    GenerateToolkitVersion(toolkitVersionStream, packageVersion: info.PackageVersion);
+                    var stopHere = info;
+                    GenerateToolkitVersion(toolkitVersionStream, packageVersion: info.PackageVersion, packageComment: info.PackageComment);
                     packPsarc.AddEntry("toolkit.version", toolkitVersionStream);
 
                     // APP ID
@@ -434,11 +436,8 @@ namespace RocksmithToolkitLib.DLCPackage
                     // SOUNDBANK PREVIEW
                     var soundbankPreviewFileName = String.Format("song_{0}_preview", dlcName);
                     dynamic audioPreviewFileNameId;
-                    var previewVolume = (float)(info.PreviewVolume ?? info.Volume);
-                    if (File.Exists(previewAudioFile))
-                        audioPreviewFileNameId = SoundBankGenerator2014.GenerateSoundBank(info.Name + "_Preview", soundPreviewStream, soundbankPreviewStream, previewVolume, platform, true);
-                    else
-                        audioPreviewFileNameId = SoundBankGenerator2014.GenerateSoundBank(info.Name + "_Preview", soundPreviewStream, soundbankPreviewStream, info.Volume, platform, true, true);
+                    var previewVolume = info.PreviewVolume ?? info.Volume;
+                    audioPreviewFileNameId = SoundBankGenerator2014.GenerateSoundBank(info.Name + "_Preview", soundPreviewStream, soundbankPreviewStream, previewVolume, platform, true, !(File.Exists(previewAudioFile)));
                     packPsarc.AddEntry(String.Format("audio/{0}/{1}.bnk", platform.GetPathName()[0].ToLower(), soundbankPreviewFileName), soundbankPreviewStream);
                     if (!soundPreviewStream.Equals(soundStream)) packPsarc.AddEntry(String.Format("audio/{0}/{1}.wem", platform.GetPathName()[0].ToLower(), audioPreviewFileNameId), soundPreviewStream);
 
@@ -1041,7 +1040,7 @@ namespace RocksmithToolkitLib.DLCPackage
             }
         }
 
-        public static void GenerateToolkitVersion(Stream output, string packageAuthor = null, string packageVersion = null)
+        public static void GenerateToolkitVersion(Stream output, string packageAuthor = null, string packageVersion = null, string packageComment = null)
         {
             if (String.IsNullOrEmpty(packageAuthor))
                 packageAuthor = ConfigRepository.Instance()["general_defaultauthor"];
@@ -1051,7 +1050,9 @@ namespace RocksmithToolkitLib.DLCPackage
             if (!String.IsNullOrEmpty(packageAuthor))
                 writer.WriteLine("Package Author: {0}", packageAuthor);
             if (!String.IsNullOrEmpty(packageVersion))
-                writer.Write("Package Version: {0}", packageVersion);
+                writer.WriteLine("Package Version: {0}", packageVersion);
+            if (!String.IsNullOrEmpty(packageComment))
+                writer.Write("Package Comment: {0}", packageComment);
 
             writer.Flush();
             output.Seek(0, SeekOrigin.Begin);

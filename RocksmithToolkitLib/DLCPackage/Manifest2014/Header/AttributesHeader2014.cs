@@ -5,6 +5,7 @@ using RocksmithToolkitLib.DLCPackage.AggregateGraph2014;
 using RocksmithToolkitLib.Sng;
 using RocksmithToolkitLib.Xml;
 using RocksmithToolkitLib.Extensions;
+using RocksmithToolkitLib.XmlRepository;
 
 namespace RocksmithToolkitLib.DLCPackage.Manifest2014.Header
 {
@@ -114,6 +115,8 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest2014.Header
             RouteMask = (int)arrangement.RouteMask;
 
             // TODO: use ManifestFunctions.GetSongDifficulty() method (fix generation algorithm)
+            // TODO: round to 9 decimal places and improve calculation
+            // TODO: fix SongDiff calculations
             SongDiffEasy = SongContent.SongLength / NotesEasy;
             SongDiffMed = SongContent.SongLength / NotesMedium;
             SongDiffHard = SongContent.SongLength / NotesHard;

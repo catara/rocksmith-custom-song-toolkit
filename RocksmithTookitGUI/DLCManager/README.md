@@ -35,11 +35,15 @@
 ## Known Issues:
 -+ Packing of Rocksmith 2014 Retail manipulated files has 1 manual step for RS14 Retail songs
 
+# Official tool / MAster Branch bugs:
+- [ ] CICAGO 26 25 original SONG FAILS AT PACK
+- [ ] open ticket for the dlcpackagedata crash for 311 down in
+- [ ] song fails at import
+
 ## ToDos/bugs:
 -+ small feature: when opening MainDB and detecting directory check runs, if next directory exists (give a change to empty the db then if possible)
 -+ small improv: add the proper lasconvdate in the db 
   - make sure its read only once when imported and not anzmore in the duplication management section
--+ at pack mark as selected - Conflicting with Select functionality (is this useful? :) )
 -+ vs blue maybe also yes blue (blu happens also when small 1bite amybe 2 diff in filesize
 - [ ] feat:		 Alternate No for duplicates logic
 - [ ] feat:		 Include Standardization names into duplication checks
@@ -47,15 +51,15 @@
 - [ ] medium feature: add DLCs into cache.psarc to speed up the game startup
 - [ ] big feature - For the tagging add the info to the Preview Image/Album Art
 - [ ] save error log separately
-  - [ ] save constantly not only at the end
-  - [ ] smart dEbug OUTPUTING function...
-  -+ save in the db as well
+  [ ] save constantly not only at the end
+  [ ] smart dEbug OUTPUTING function...
+  [+] save in the db as well
 - [ ] make a custom song out of retail
 - [ ] remove commented out code 
 - [ ] if i delete a folder do i get a warning in the maintenance check ?
   - [ ] check for json existance as well. Maybe
 - [ ] increase the no of threads
- -- [ ] add cancelation button
+ -- [x] add cancelation button
  -- [ ] progress bar update
 - [ ] duplicate window should return last maximum conv date and save it 
 -- [ ] reorder main db fields
@@ -71,43 +75,40 @@
 
 
 ## WiP:
-- [+] generate a garageband
-- [ ] if cover was from someone else please compare against that (save old cover)
-- [+] remove all dd in Cache/Retails screen
-- [ ] duplicate management..on change..check and green color
-- [ ] Check Packer.cs bug
-- [ ] Bring year and picture from Spotify
--+ third eye investig
-- [ ] muse uprising songs have preview lenght in minutes
-- [ ] fix importing own songs, eg. ana
-
-official bugs:
-- [ ] CICAGO 26 25 original SONG FAILS AT PACK
-- [ ] open ticket for the dlcpackagedata crash for 311 down in
-- cake song fails at import
+[+] generate a garageband
+[ ] if cover was from someone else please compare against that (save old cover)
+[+] remove all dd in Cache/Retails screen
+[ ] duplicate management..on change..check and green color
+[ ] Check Packer.cs bug
+[ ] Bring year and picture from Spotify
+[+] third eye investig
+[ ] muse uprising songs have preview lenght in minutes
+[ ] fix importing own songs, eg. ana
+[+] at pack mark as selected - Conflicting with Select functionality (is this useful? :) )
+	[] Create a new filter Deselect LAst PAcked 
 
 done:
 (next release)
 - [ ] finish arrangement (demo with the hives overdrive all the time :) )
-- [+] finish profiles (load Saved Profile names)
+- [x] finish profiles (load Saved Profile names)
 	- check they are saved at close
 - [x] save when exit search 
 	- [x] when clicking on a song disable Search
-- [+] delete all duplicates at Standardization
+- [x] delete all duplicates at Standardization
 	- [+] small bug: on inserting a new standardization
 - [ ] cannot find sick sick sic (override)
 - [ ] audioslave sections missing maybe cause its an original and i used my own logic to strip the DD
 - [+] add group to Beta
 - [ ] usa peaches long naming fails at packing (shortes folder the random id)
   - ps3 long names sogs(149char)(cannot be read)
-- [ ] standardiation delete does not refresh
+- [x] standardiation delete does not refresh
 - [x] duplicate import should save the names of the files in a separate table :) (not req)
 	- [x] save also hash not to ask again for duplicates if already decided as duplicate (all imported are saved and so checked for hexa code)
-- [ ] enable Cover correction in Standardization
-- [ ] enable shortNames and Album correction in Standardization
+- [x] enable Cover correction in Standardization
+- [x] enable shortNames and Album correction in Standardization
 - [ ] fix filter in CAche
 - [ ] after selecting deselect incl. Beta
-- [+] group display with issues
+- [x] group display with issues
 - [ ] update to wise 2015 (messages&testing)
 - [+] some songs dont repack
 - [+] dont conv Orig
@@ -123,23 +124,23 @@ done:
 - progress bar on possible duplicate import is too short
 - copy name fails title sort in duplicate banagement
 - populate new tone fields
-[+] add read library option
+[x] add read library option
 -- prepare the rebuild option
 -- are duplicate decompressed folder deleted?
-- redo save track at pack with update function
-[+] wrap up the audit trail...only at succesfull import u update the table
+[-] redo save track at pack with update function
+[x] wrap up the audit trail...only at succesfull import u update the table
 	[+] at deletion please remove from imported audit trail
-[+] duplicate also shows in winmerge Tones
-[+] fix stop import from duplicate screen
-[-] cacke give errors
+[x] duplicate also shows in winmerge Tones
+[x] fix stop import from duplicate screen
+[x] cacke give errors
 - fix som wm dupli buttons not being enabled
 -- improve the overlay
-[-] fix for import unique hash foar any
+[-] fix for import unique hash for any
 [-] fix for rebuild missing file
 [-] disable old and L->r
-[+] add unique key for each packed&imported thing so to read libs
+[x] add unique key for each packed&imported thing so to read libs
 	[+] use also name as identifier
-[+] profiles should be a table
+[x] profiles should be a table
 	[-] all options should be a table
 
 (prev release; but maybe not thuroughly tested)

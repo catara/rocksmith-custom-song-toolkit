@@ -104,7 +104,7 @@ namespace RocksmithToolkitGUI.DLCManager
         public void ChangeRow()
         {
 
-            var norec = 0;
+           // var norec = 0;
             //DataSet ds = new DataSet();
             //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
             //{
@@ -438,13 +438,13 @@ namespace RocksmithToolkitGUI.DLCManager
 
         public void Populate(ref DataGridView DataGridView, ref BindingSource bs) //, ref BindingSource bsPositions, ref BindingSource bsBadges
         {
-
-            using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-            {
-                var cmd = "SELECT * FROM Tones WHERE CDLC_ID=" + CDLCID + ";";
-                OleDbDataAdapter da = new OleDbDataAdapter(cmd, cn);
-                da.Fill(dssx, "Tones");
-            }
+            dssx = DLCManager.SelectFromDB("Tones", "SELECT * FROM Tones WHERE CDLC_ID=" + CDLCID + ";");
+            //using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //{
+            //    var cmd = "SELECT * FROM Tones WHERE CDLC_ID=" + CDLCID + ";";
+            //    OleDbDataAdapter da = new OleDbDataAdapter(cmd, cn);
+            //    da.Fill(dssx, "Tones");
+            //}
             DataGridViewTextBoxColumn ID = new DataGridViewTextBoxColumn { DataPropertyName = "ID", HeaderText = "ID " };
             DataGridViewTextBoxColumn Tone_Name = new DataGridViewTextBoxColumn { DataPropertyName = "Tone_Name", HeaderText = "Tone_Name " };
             DataGridViewTextBoxColumn CDLC_ID = new DataGridViewTextBoxColumn { DataPropertyName = "CDLC_ID", HeaderText = "CDLC_ID " };
@@ -561,9 +561,39 @@ namespace RocksmithToolkitGUI.DLCManager
             bs.DataSource = dssx.Tables["Tones"];
             DataGridView.DataSource = bs;
             //DataGridView.ExpandColumns();
+
+            //advance or step back in the song list
+            int i = 0;
+            if (DataGridView.Rows.Count > 1)
+            {
+                var prev = DataGridView.SelectedCells[0].RowIndex;
+                if (DataGridView.Rows.Count == prev + 2)
+                    if (prev == 0) return;
+                    else
+                    {
+                        int rowindex;
+                        DataGridViewRow row;
+                        i = DataGridView.SelectedCells[0].RowIndex;
+                        rowindex = i;
+                        DataGridView.Rows[rowindex - 1].Selected = true;
+                        DataGridView.Rows[rowindex].Selected = false;
+                        row = DataGridView.Rows[rowindex - 1];
+                    }
+                else
+                {
+                    int rowindex;
+                    DataGridViewRow row;
+                    i = DataGridView.SelectedCells[0].RowIndex;
+                    rowindex = i;
+                    DataGridView.Rows[rowindex + 1].Selected = true;
+                    DataGridView.Rows[rowindex].Selected = false;
+                    row = DataGridView.Rows[rowindex + 1];
+                }
+            }
+            ChangeRow();
         }
 
-        public class Files
+        private class Files
         {
             public string ID { get; set; }
             public string Tone_Name { get; set; }
@@ -603,7 +633,7 @@ namespace RocksmithToolkitGUI.DLCManager
             public string lastConverjsonDateTime { get; set; }
             public string Comments { get; set; }
         }
-        public Files[] files = new Files[10000];
+        private Files[] files = new Files[10000];
         //Generic procedure to read and parse Tones.DB (&others..soon)
         public int SQLAccess(string cmd)
         {
@@ -613,14 +643,15 @@ namespace RocksmithToolkitGUI.DLCManager
             var MaximumSize = 0;
 
             //rtxt_StatisticsOnReadDLCs.Text += "\n  ee= ";
-            try
-            {
-                MessageBox.Show(DB_Path);
-                using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-                {
-                    DataSet dus = new DataSet();
-                    OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
-                    dax.Fill(dus, "Tones");
+            DataSet dus = new DataSet(); dus = DLCManager.SelectFromDB("Tones", cmd);
+            //try
+            //{
+            //    MessageBox.Show(DB_Path);
+            //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //    {
+            //        DataSet dus = new DataSet();
+            //        OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
+            //        dax.Fill(dus, "Tones");
 
                     var i = 0;
                     //rtxt_StatisticsOnReadDLCs.Text += "\n  54= " +dus.Tables[0].Rows.Count;
@@ -670,18 +701,18 @@ namespace RocksmithToolkitGUI.DLCManager
                         i++;
                     }
                     //Closing Connection
-                    dax.Dispose();
-                    cnn.Close();
+                    //dax.Dispose();
+                    //cnn.Close();
                     //rtxt_StatisticsOnReadDLCs.Text += i;
                     //var ex = 0;
-                }
-            }
-            catch (System.IO.FileNotFoundException ee)
-            {
-                MessageBox.Show(ee.Message + "Can not open Tones DB connection ! ");
-                //MessageBox.Show(ee.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            //rtxt_StatisticsOnReadDLCs.Text += "\n  max rows" + MaximumSize;
+                //}
+            //}
+            //catch (System.IO.FileNotFoundException ee)
+            //{
+            //    MessageBox.Show(ee.Message + "Can not open Tones DB connection ! ");
+            //    //MessageBox.Show(ee.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
+            ////rtxt_StatisticsOnReadDLCs.Text += "\n  max rows" + MaximumSize;
             return MaximumSize;//files[10000];
         }
 

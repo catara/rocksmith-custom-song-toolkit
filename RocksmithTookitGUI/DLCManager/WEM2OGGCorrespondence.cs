@@ -20,7 +20,7 @@ namespace RocksmithToolkitGUI.DLCManager
 {
     public partial class WEM2OGGCorrespondence : Form
     {
-        public WEM2OGGCorrespondence(string txt_DBFolder, string txt_TempPath, string txt_RocksmithDLCPath, bool AllowEncript, bool AllowORIGDelete)
+        public WEM2OGGCorrespondence(string txt_DBFolder, string txt_TempPath, string txt_RocksmithDLCPath)
         { 
             InitializeComponent();
             //MessageBox.Show("test0");
@@ -189,17 +189,17 @@ namespace RocksmithToolkitGUI.DLCManager
     public void Populate(ref DataGridView DataGridView, ref BindingSource bs) //, ref BindingSource bsPositions, ref BindingSource bsBadges
     {
 
-
-        //DB_Path = "../../../../tmp\\Files.accdb;";
-        using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-        {
-            OleDbDataAdapter da = new OleDbDataAdapter("SELECT ID, (SELECT IIF(count(*)>1,\"Yes\",\"\") as Suspect from Standardization AS O WHERE LCASE(S.Artist)=LCASE(O.Artist) and LCASE(S.Album)=LCASE(O.Album)) as Suspect, Artist, Artist_Correction, Album, Album_Correction, AlbumArt_Correction FROM Standardization as S ORDER BY Artist, Album;", cn);
-            da.Fill(dssx, "Standardization");
-            //da = new OleDbDataAdapter("SELECT Identifier,ContactPosition FROM PositionType;", cn);
-            //da.Fill(ds, "PositionType");
-            //da = new OleDbDataAdapter("SELECT Identifier, Badge FROM Badge", cn);
-            //da.Fill(ds, "Badge");
-        }
+            DataSet dooz = new DataSet(); dooz = DLCManager.SelectFromDB("Standardization", "SELECT ID, (SELECT IIF(count(*)>1,\"Yes\",\"\") as Suspect from Standardization AS O WHERE LCASE(S.Artist)=LCASE(O.Artist) and LCASE(S.Album)=LCASE(O.Album)) as Suspect, Artist, Artist_Correction, Album, Album_Correction, AlbumArt_Correction FROM Standardization as S ORDER BY Artist, Album;");
+            //DB_Path = "../../../../tmp\\Files.accdb;";
+            //using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //{
+            //    OleDbDataAdapter da = new OleDbDataAdapter("SELECT ID, (SELECT IIF(count(*)>1,\"Yes\",\"\") as Suspect from Standardization AS O WHERE LCASE(S.Artist)=LCASE(O.Artist) and LCASE(S.Album)=LCASE(O.Album)) as Suspect, Artist, Artist_Correction, Album, Album_Correction, AlbumArt_Correction FROM Standardization as S ORDER BY Artist, Album;", cn);
+            //    da.Fill(dssx, "Standardization");
+            //    //da = new OleDbDataAdapter("SELECT Identifier,ContactPosition FROM PositionType;", cn);
+            //    //da.Fill(ds, "PositionType");
+            //    //da = new OleDbDataAdapter("SELECT Identifier, Badge FROM Badge", cn);
+            //    //da.Fill(ds, "Badge");
+            //}
             //MessageBox.Show("test");
             DataGridViewTextBoxColumn ID = new DataGridViewTextBoxColumn { DataPropertyName = "ID", HeaderText = "ID ", Width = 40 };
             DataGridViewTextBoxColumn Suspect = new DataGridViewTextBoxColumn { DataPropertyName = "Suspect", HeaderText = "Suspect ", Width = 40 };
@@ -255,10 +255,40 @@ namespace RocksmithToolkitGUI.DLCManager
 
         bs.DataSource = dssx.Tables["Standardization"];
         DataGridView.DataSource = bs;
-        //DataGridView.ExpandColumns();
-    }
+            //DataGridView.ExpandColumns();
 
-    public class Files
+            //advance or step back in the song list
+            int i = 0;
+            if (DataGridView.Rows.Count > 1)
+            {
+                var prev = DataGridView.SelectedCells[0].RowIndex;
+                if (DataGridView.Rows.Count == prev + 2)
+                    if (prev == 0) return;
+                    else
+                    {
+                        int rowindex;
+                        DataGridViewRow row;
+                        i = DataGridView.SelectedCells[0].RowIndex;
+                        rowindex = i;
+                        DataGridView.Rows[rowindex - 1].Selected = true;
+                        DataGridView.Rows[rowindex].Selected = false;
+                        row = DataGridView.Rows[rowindex - 1];
+                    }
+                else
+                {
+                    int rowindex;
+                    DataGridViewRow row;
+                    i = DataGridView.SelectedCells[0].RowIndex;
+                    rowindex = i;
+                    DataGridView.Rows[rowindex + 1].Selected = true;
+                    DataGridView.Rows[rowindex].Selected = false;
+                    row = DataGridView.Rows[rowindex + 1];
+                }
+            }
+            //ChangeRow();
+        }
+
+    private class Files
     {
             public string ID { get; set; }
             public string Artist { get; set; }
@@ -268,7 +298,7 @@ namespace RocksmithToolkitGUI.DLCManager
             public string AlbumArtPath_Correction { get; set; }
     }
 
-    public Files[] files = new Files[10000];
+    private Files[] files = new Files[10000];
     
     //Generic procedure to read and parse Standardization.DB (&others..soon)
     public int SQLAccess(string cmd)
@@ -277,16 +307,16 @@ namespace RocksmithToolkitGUI.DLCManager
         //Files[] files = new Files[10000];
 
         var MaximumSize = 0;
-
+            DataSet dus = new DataSet(); dus = DLCManager.SelectFromDB("Groups", cmd);
         //rtxt_StatisticsOnReadDLCs.Text += "\n  ee= ";
-        try
-        {
-            MessageBox.Show(DB_Path);
-            using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.Jet.OLEDB.12.0;Data Source=" + DB_Path))
-            {
-                DataSet dus = new DataSet();
-                OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
-                dax.Fill(dus, "Standardization");
+        //try
+        //{
+        //    MessageBox.Show(DB_Path);
+        //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.Jet.OLEDB.12.0;Data Source=" + DB_Path))
+        //    {
+        //        DataSet dus = new DataSet();
+        //        OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
+        //        dax.Fill(dus, "Standardization");
 
                 var i = 0;
                 //rtxt_StatisticsOnReadDLCs.Text += "\n  54= " +dus.Tables[0].Rows.Count;
@@ -305,17 +335,17 @@ namespace RocksmithToolkitGUI.DLCManager
                     i++;
                 }
                 //Closing Connection
-                dax.Dispose();
-                cnn.Close();
-                //rtxt_StatisticsOnReadDLCs.Text += i;
-                //var ex = 0;
-            }
-        }
-        catch (System.IO.FileNotFoundException ee)
-        {
-            MessageBox.Show(ee.Message + "Can not open Standardization DB connection ! ");
-            //MessageBox.Show(ee.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
+
+      //  }        //        dax.Dispose();
+        //        cnn.Close();
+        //        //rtxt_StatisticsOnReadDLCs.Text += i;
+        //        //var ex = 0;
+        //    }
+        //}
+        //catch (System.IO.FileNotFoundException ee)
+        //{
+        //    MessageBox.Show(ee.Message + "Can not open Standardization DB connection ! ");
+        //    //MessageBox.Show(ee.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
         //rtxt_StatisticsOnReadDLCs.Text += "\n  max rows" + MaximumSize;
         return MaximumSize;//files[10000];
     }
@@ -360,54 +390,59 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btn_CopyArtist2ArtistSort_Click(object sender, EventArgs e)
         {
-            var cmd1 = "";
-            //DB_Path = DB_Path.Replace("dlc\\Files.accdb","dlc");
-            try
-            {
-                using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path.Replace("\\Files.accdb;", "")))
-                {
-                    DataSet dus = new DataSet();
-                    cmd1 = "UPDATE Main SET Artist_Sort = Artist";
-                    OleDbDataAdapter das = new OleDbDataAdapter(cmd1, cnn);
-                    das.Fill(dus, "Main");
-                    das.Dispose();
-                }
-            }
-            catch (System.IO.FileNotFoundException ee)
-            {
-                // To inform the user and continue is 
-                // sufficient for this demonstration. 
-                // Your application may require different behavior.
-                Console.WriteLine(ee.Message);
-                //continue;
-            }
-            MessageBox.Show("ArtistSort is now the same as Artist");
+            //var cmd1 = "";
+            ////DB_Path = DB_Path.Replace("dlc\\Files.accdb","dlc");
+            //try
+            //{
+            //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path.Replace("\\Files.accdb;", "")))
+            //    {
+            //        DataSet dus = new DataSet();
+            //        cmd1 = "UPDATE Main SET Artist_Sort = Artist";
+            //        OleDbDataAdapter das = new OleDbDataAdapter(cmd1, cnn);
+            //        das.Fill(dus, "Main");
+            //        das.Dispose();
+            //    }
+            //}
+            //catch (System.IO.FileNotFoundException ee)
+            //{
+            //    
+            //    
+            //    
+            //    Console.WriteLine(ee.Message);
+            //    //continue;
+            //}
+            //MessageBox.Show("ArtistSort is now the same as Artist");
         }
 
         private void btn_CopyTitle2TitleSort_Click(object sender, EventArgs e)
         {
-            var cmd1 = "";
-            //var DB_Path = DB_Path + "\\Files.accdb";
-            try
-            {
-                using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-                {
-                    DataSet dus = new DataSet();
-                    cmd1 = "UPDATE Main SET Song_Title_Sort = Song_Title";
-                    OleDbDataAdapter das = new OleDbDataAdapter(cmd1, cnn);
-                    das.Fill(dus, "Main");
-                    das.Dispose();
-                }
-            }
-            catch (System.IO.FileNotFoundException ee)
-            {
-                // To inform the user and continue is 
-                // sufficient for this demonstration. 
-                // Your application may require different behavior.
-                Console.WriteLine(ee.Message);
-                //continue;
-            }
-            MessageBox.Show("TitleSort is now the same as Title");
+            //var cmd1 = "";
+            ////var DB_Path = DB_Path + "\\Files.accdb";
+            //try
+            //{
+            //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //    {
+            //        DataSet dus = new DataSet();
+            //        cmd1 = "UPDATE Main SET Song_Title_Sort = Song_Title";
+            //        OleDbDataAdapter das = new OleDbDataAdapter(cmd1, cnn);
+            //        das.Fill(dus, "Main");
+            //        das.Dispose();
+            //    }
+            //}
+            //catch (System.IO.FileNotFoundException ee)
+            //{
+            //    
+            //    
+            //    
+            //    Console.WriteLine(ee.Message);
+            //    //continue;
+            //}
+            //MessageBox.Show("TitleSort is now the same as Title");
+        }
+
+        private void txt_Album_Correction_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 } 

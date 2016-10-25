@@ -32,6 +32,7 @@ using System.Drawing;
 
 using System.Threading;
 using RocksmithToolkitLib.Sng;
+using RocksmithToolkitLib.XmlRepository;
 
 namespace RocksmithToolkitGUI.DLCManager
 {
@@ -118,7 +119,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //    string SearchCmd = "SELECT DISTINCT Groups FROM Groups WHERE Type=\"DLC\";";
             //    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
             //    da.Fill(dsn, "Main");
-            DataSet dsn = new DataSet(); dsn = DLCManager.SelectFromDB("Main", "SELECT DISTINCT Groups FROM Groups WHERE Type =\"DLC\";");
+            DataSet dsn = new DataSet(); dsn = DLCManager.SelectFromDB("Groups", "SELECT DISTINCT Groups FROM Groups WHERE Type =\"DLC\";");
             norec = dsn.Tables[0].Rows.Count;
 
             if (norec > 0)
@@ -162,88 +163,93 @@ namespace RocksmithToolkitGUI.DLCManager
                     var tmpp = "\\ORIG"; var OLD_Path = ""; var cmd = "";
                     for (var h = 0; h < 2; h++)
                     {
-                        try
-                        {
-                            using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                        //try
+                        //{
+                        //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                        //    {
+                        //var SearchCmd1 = "SELECT top 1 AlbumArtPath, audioPreviewPath, OggPath, oggPreviewPath FROM Main WHERE AudioPath LIKE '%" + tmpp + "%' AND audioPreviewPath is not null and oggPreviewPath is not null;";
+                        //DataSet duk = new DataSet();
+                        //OleDbDataAdapter dal = new OleDbDataAdapter(SearchCmd1, cnn); //WHERE id=253
+                        //dal.Fill(duk, "Main");
+                        DataSet duk = new DataSet(); duk = DLCManager.SelectFromDB("Main", "SELECT top 1 AlbumArtPath, audioPreviewPath, OggPath, oggPreviewPath FROM Main WHERE AudioPath LIKE '%" + tmpp + "%' AND audioPreviewPath is not null and oggPreviewPath is not null;");
+
+                        if (duk.Tables[0].Rows.Count > 0)
+                            OLD_Path = duk.Tables[0].Rows[0].ItemArray[0].ToString().Substring(0, duk.Tables[0].Rows[0].ItemArray[0].ToString().IndexOf(tmpp)) + tmpp;
+                        if (OLD_Path != "")
+                            if (!Directory.Exists(OLD_Path) || updateDBb)
                             {
-                                var SearchCmd1 = "SELECT top 1 AlbumArtPath, audioPreviewPath, OggPath, oggPreviewPath FROM Main WHERE AudioPath LIKE '%" + tmpp + "%' AND audioPreviewPath is not null and oggPreviewPath is not null;";
-                                DataSet duk = new DataSet();
-                                OleDbDataAdapter dal = new OleDbDataAdapter(SearchCmd1, cnn); //WHERE id=253
-                                dal.Fill(duk, "Main");
+                                //var cmd = "UPDATE Main SET AlbumArtPath=REPLACE(AlbumArtPath,'" + OLD_Path + "','" + TempPath + tmpp + "'), AudioPath=REPLACE(AudioPath,'" + OLD_Path + "','" + TempPath + tmpp + "')";
+                                //cmd += ", audioPreviewPath=REPLACE(audioPreviewPath,'" + OLD_Path + "','" + TempPath + tmpp + "'), Folder_Name=REPLACE(Folder_Name,'" + OLD_Path + "','" + TempPath + tmpp + "');";
+                                cmd = "UPDATE Main SET AlbumArtPath=REPLACE(AlbumArtPath, left(AlbumArtPath,instr(AlbumArtPath, '" + tmpp + "')-1),'" + TempPath + "'), AudioPath=REPLACE(AudioPath,left(AudioPath,instr(AudioPath, '" + tmpp + "')-1),'" + TempPath + "')";
+                                cmd += ", Folder_Name=REPLACE(Folder_Name, left(Folder_Name,instr(Folder_Name, '" + tmpp + "')-1),'" + TempPath + "')";
+                                cmd += " WHERE instr(AlbumArtPath, '" + tmpp + "')>0";
+                                //txt_Description.Text = cmd;
+                                //MessageBox.Show(duk.Tables[0].Rows[0].ItemArray[0].ToString());
+                                DialogResult result1 = MessageBox.Show("DB Repository has been moved from " + OLD_Path + "\n\n to " + TempPath + tmpp + "\n\n-" + cmd, MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                                if (result1 == DialogResult.Yes)  //|| updateDBb
+                                                                  //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                                {
+                                    DataSet dus = new DataSet(); dus = DLCManager.UpdateDB("Main", cmd + ";");
+                                    //DataSet dus = new DataSet();
+                                    //OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
+                                    //dax.Fill(dus, "Main");
+                                    //dax.Dispose();
+                                    // MessageBox.Show("Main table has been updated", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                                if (duk.Tables[0].Rows.Count > 0)
-                                    OLD_Path = duk.Tables[0].Rows[0].ItemArray[0].ToString().Substring(0, duk.Tables[0].Rows[0].ItemArray[0].ToString().IndexOf(tmpp)) + tmpp;
-                                if (OLD_Path != "")
-                                    if (!Directory.Exists(OLD_Path) || updateDBb)
-                                    {
-                                        //var cmd = "UPDATE Main SET AlbumArtPath=REPLACE(AlbumArtPath,'" + OLD_Path + "','" + TempPath + tmpp + "'), AudioPath=REPLACE(AudioPath,'" + OLD_Path + "','" + TempPath + tmpp + "')";
-                                        //cmd += ", audioPreviewPath=REPLACE(audioPreviewPath,'" + OLD_Path + "','" + TempPath + tmpp + "'), Folder_Name=REPLACE(Folder_Name,'" + OLD_Path + "','" + TempPath + tmpp + "');";
-                                        cmd = "UPDATE Main SET AlbumArtPath=REPLACE(AlbumArtPath, left(AlbumArtPath,instr(AlbumArtPath, '" + tmpp + "')-1),'" + TempPath + "'), AudioPath=REPLACE(AudioPath,left(AudioPath,instr(AudioPath, '" + tmpp + "')-1),'" + TempPath + "')";
-                                        cmd += ", Folder_Name=REPLACE(Folder_Name, left(Folder_Name,instr(Folder_Name, '" + tmpp + "')-1),'" + TempPath + "')";
-                                        cmd += " WHERE instr(AlbumArtPath, '" + tmpp + "')>0";
-                                        //txt_Description.Text = cmd;
-                                        //MessageBox.Show(duk.Tables[0].Rows[0].ItemArray[0].ToString());
-                                        DialogResult result1 = MessageBox.Show("DB Repository has been moved from " + OLD_Path + "\n\n to " + TempPath + tmpp + "\n\n-" + cmd, MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                                        if (result1 == DialogResult.Yes)  //|| updateDBb
-                                        //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-                                        {
-                                            DataSet dus = new DataSet();
-                                            OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
-                                            dax.Fill(dus, "Main");
-                                            dax.Dispose();
-                                            // MessageBox.Show("Main table has been updated", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    DataSet ds = new DataSet();
+                                    OLD_Path = duk.Tables[0].Rows[0].ItemArray[2].ToString().Substring(0, duk.Tables[0].Rows[0].ItemArray[2].ToString().IndexOf(tmpp)) + tmpp;
+                                    cmd = "UPDATE Main SET OggPath=REPLACE(OggPath, left(OggPath,instr(OggPath, '" + tmpp + "')-1),'" + TempPath + tmpp + "') WHERE OggPath IS NOT NULL AND instr(OggPath, '" + tmpp + "')>0";
+                                    ds = DLCManager.UpdateDB("Main", cmd + ";");
+                                    //OleDbDataAdapter dac = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
+                                    //// MessageBox.Show(cmd + "\n" + OLD_Path + "\n" + TempPath + tmpp);
+                                    //dac.Fill(ds, "Main");
+                                    //dac.Dispose();
 
-                                            DataSet ds = new DataSet();
-                                            OLD_Path = duk.Tables[0].Rows[0].ItemArray[2].ToString().Substring(0, duk.Tables[0].Rows[0].ItemArray[2].ToString().IndexOf(tmpp)) + tmpp;
-                                            cmd = "UPDATE Main SET OggPath=REPLACE(OggPath, left(OggPath,instr(OggPath, '" + tmpp + "')-1),'" + TempPath + tmpp + "') WHERE OggPath IS NOT NULL AND instr(OggPath, '" + tmpp + "')>0";
-                                            OleDbDataAdapter dac = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
-                                            // MessageBox.Show(cmd + "\n" + OLD_Path + "\n" + TempPath + tmpp);
-                                            dac.Fill(ds, "Main");
-                                            dac.Dispose();
+                                    //tmpp = "\\ORIG";
+                                    //MessageBox.Show(duk.Tables[0].Rows[0].ItemArray[3].ToString());
+                                    OLD_Path = duk.Tables[0].Rows[0].ItemArray[3].ToString().Substring(0, duk.Tables[0].Rows[0].ItemArray[3].ToString().IndexOf(tmpp)) + tmpp;
+                                    cmd = "UPDATE Main SET oggPreviewPath=REPLACE(oggPreviewPath, left(oggPreviewPath,instr(oggPreviewPath, '" + tmpp + "')-1),'" + TempPath + tmpp + "'), audioPreviewPath=REPLACE(audioPreviewPath, left(audioPreviewPath,instr(audioPreviewPath, '" + tmpp + "')-1),'" + TempPath + "') WHERE oggPreviewPath IS NOT NULL AND instr(oggPreviewPath, '" + tmpp + "')>0";
+                                    ds = DLCManager.UpdateDB("Main", cmd + ";");
+                                    //OleDbDataAdapter daH = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
+                                    ////MessageBox.Show("3");
+                                    //daH.Fill(ds, "Main");
+                                    //daH.Dispose();
+                                    MessageBox.Show("Main table has been updated", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                                            //tmpp = "\\ORIG";
-                                            //MessageBox.Show(duk.Tables[0].Rows[0].ItemArray[3].ToString());
-                                            OLD_Path = duk.Tables[0].Rows[0].ItemArray[3].ToString().Substring(0, duk.Tables[0].Rows[0].ItemArray[3].ToString().IndexOf(tmpp)) + tmpp;
-                                            cmd = "UPDATE Main SET oggPreviewPath=REPLACE(oggPreviewPath, left(oggPreviewPath,instr(oggPreviewPath, '" + tmpp + "')-1),'" + TempPath + tmpp + "'), audioPreviewPath=REPLACE(audioPreviewPath, left(audioPreviewPath,instr(audioPreviewPath, '" + tmpp + "')-1),'" + TempPath + "') WHERE oggPreviewPath IS NOT NULL AND instr(oggPreviewPath, '" + tmpp + "')>0";
-                                            OleDbDataAdapter daH = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
-                                            //MessageBox.Show("3");
-                                            daH.Fill(ds, "Main");
-                                            daH.Dispose();
-                                            MessageBox.Show("Main table has been updated", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                                            //OLD_Path = DataGridView1.Rows[0].Cells[].Value.ToString().Substring(0, DataGridView1.Rows[0].Cells[77].Value.ToString().IndexOf("\\0\\")) + "\\0"; //files[0].Folder_Name.Replace
-                                            cmd = "UPDATE Arrangements SET SNGFilePath=REPLACE(SNGFilePath, left(SNGFilePath,instr(SNGFilePath, '" + tmpp + "')-1),'" + TempPath + tmpp + "'), XMLFilePath=REPLACE(XMLFilePath, left(XMLFilePath,instr(XMLFilePath, '" + tmpp + "')-1),'" + TempPath + tmpp + "') WHERE instr(XMLFilePath, '" + tmpp + "')>0";
-                                            OleDbDataAdapter daN = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
-                                            //MessageBox.Show(cmd);
-                                            daN.Fill(ds, "Arrangements");
-                                            daN.Dispose();
-                                            MessageBox.Show("Arrangements table has been updated", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                        }
-                                        else
-                                        {
-                                            MessageBox.Show("Issues with Temp Folder and DB Reporsitory");
-                                            return;
-                                        }
-                                    }
-                                cnn.Close();
+                                    //OLD_Path = DataGridView1.Rows[0].Cells[].Value.ToString().Substring(0, DataGridView1.Rows[0].Cells[77].Value.ToString().IndexOf("\\0\\")) + "\\0"; //files[0].Folder_Name.Replace
+                                    cmd = "UPDATE Arrangements SET SNGFilePath=REPLACE(SNGFilePath, left(SNGFilePath,instr(SNGFilePath, '" + tmpp + "')-1),'" + TempPath + tmpp + "'), XMLFilePath=REPLACE(XMLFilePath, left(XMLFilePath,instr(XMLFilePath, '" + tmpp + "')-1),'" + TempPath + tmpp + "') WHERE instr(XMLFilePath, '" + tmpp + "')>0";
+                                    ds = DLCManager.UpdateDB("Main", cmd + ";");
+                                    //OleDbDataAdapter daN = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
+                                    ////MessageBox.Show(cmd);
+                                    //daN.Fill(ds, "Arrangements");
+                                    //daN.Dispose();
+                                    MessageBox.Show("Arrangements table has been updated", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Issues with Temp Folder and DB Reporsitory");
+                                    return;
+                                }
                             }
-                            DataViewGrid.Rows[0].Selected = true;
-                            DataViewGrid.Rows[1].Selected = true;
-                            DataGridViewRow row;
-                            var i = DataViewGrid.SelectedCells[0].RowIndex;
-                            int rowindex = i;// DataGridView1.SelectedRows[0].Index;
-                            DataViewGrid.Rows[0].Selected = true;
-                            DataViewGrid.Rows[rowindex].Selected = false;
-                            DataViewGrid.Rows[0].Selected = true;
-                            //if (prev>txt_Counter.Text.ToInt32())
-                            row = DataViewGrid.Rows[0];
-                            //     btn_SearchReset.Text = "Start Search";
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            MessageBox.Show("Can not open Main DB connection to Update DB Reporsitory ! " + DB_Path + "-" + cmd);
-                        }
+                        //    cnn.Close();
+                        //}
+                        DataViewGrid.Rows[0].Selected = true;
+                        DataViewGrid.Rows[1].Selected = true;
+                        DataGridViewRow row;
+                        var i = DataViewGrid.SelectedCells[0].RowIndex;
+                        int rowindex = i;// DataGridView1.SelectedRows[0].Index;
+                        DataViewGrid.Rows[0].Selected = true;
+                        DataViewGrid.Rows[rowindex].Selected = false;
+                        DataViewGrid.Rows[0].Selected = true;
+                        //if (prev>txt_Counter.Text.ToInt32())
+                        row = DataViewGrid.Rows[0];
+                        //     btn_SearchReset.Text = "Start Search";
+                        //}
+                        //catch (Exception ex)
+                        //{
+                        //    MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        //    MessageBox.Show("Can not open Main DB connection to Update DB Reporsitory ! " + DB_Path + "-" + cmd);
+                        //}
                         tmpp = "\\CDLC";
 
                     }
@@ -420,189 +426,194 @@ namespace RocksmithToolkitGUI.DLCManager
             if (DataViewGrid.SelectedCells.Count > 0 && DataViewGrid.Rows[DataViewGrid.SelectedCells[0].RowIndex].Cells["ID"].ToString() != "")
             {
                 //Create Groups list Dropbox
-                DataSet ds = new DataSet();
+
                 var norec = 0;
-                using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                //{
+                //    string SearchCmd = "SELECT DISTINCT Groups FROM Groups WHERE Type=\"DLC\";";
+                //    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
+                //    da.Fill(ds, "Main");
+                //    norec = ds.Tables[0].Rows.Count;
+                DataSet ds = new DataSet(); ds = DLCManager.SelectFromDB("Groups", "SELECT DISTINCT Groups FROM Groups WHERE Type=\"DLC\";");
+
+                if (norec > 0)
                 {
-                    string SearchCmd = "SELECT DISTINCT Groups FROM Groups WHERE Type=\"DLC\";";
-                    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
-                    da.Fill(ds, "Main");
-                    norec = ds.Tables[0].Rows.Count;
-
-                    if (norec > 0)
+                    //remove items
+                    if (chbx_Group.Items.Count > 0)
                     {
-                        //remove items
-                        if (chbx_Group.Items.Count > 0)
+                        chbx_Group.DataSource = null;
+                        for (int k = chbx_Group.Items.Count - 1; k >= 0; --k)
                         {
-                            chbx_Group.DataSource = null;
-                            for (int k = chbx_Group.Items.Count - 1; k >= 0; --k)
-                            {
-                                chbx_Group.Items.RemoveAt(k);
-                                chbx_AllGroups.Items.RemoveAt(k);
-                            }
-                        }
-                        //add items
-                        for (int j = 0; j < norec; j++)
-                        {
-                            chbx_Group.Items.Add(ds.Tables[0].Rows[j][0].ToString());
-                            chbx_AllGroups.Items.Add(ds.Tables[0].Rows[j][0].ToString());
+                            chbx_Group.Items.RemoveAt(k);
+                            chbx_AllGroups.Items.RemoveAt(k);
                         }
                     }
-
-                    DataSet dds = new DataSet();
-                    //Create Groups list MultiCheckbox
-                    using (OleDbConnection con = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                    //add items
+                    for (int j = 0; j < norec; j++)
                     {
-                        string SearchCmds = "SELECT DISTINCT Groups FROM Groups WHERE Type=\"DLC\" AND CDLC_ID=\"" + DataViewGrid.Rows[DataViewGrid.SelectedCells[0].RowIndex].Cells["ID"].Value.ToString() + "\";";
-                        OleDbDataAdapter dfa = new OleDbDataAdapter(SearchCmds, con); //WHERE id=253
-                        dfa.Fill(dds, "Main");
-                        var nocrec = dds.Tables[0].Rows.Count;
-
-                        if (nocrec > 0)
-                            //for (int l = 0; l < norec; l++)
-                            for (int j = 0; j < nocrec; j++)
-                            //  if (dds.Tables[0].Rows[j][0].ToString() == ds.Tables[0].Rows[l][0].ToString())
-                            //  chbx_AllGroups.SetSelected(j, true);
-                            {
-                                int index = chbx_AllGroups.Items.IndexOf(dds.Tables[0].Rows[j][0].ToString());
-                                chbx_AllGroups.SetItemChecked(index, true);
-                            }
-                        //(ds.Tables[0].Rows[l][0].ToString()); 
-
+                        chbx_Group.Items.Add(ds.Tables[0].Rows[j][0].ToString());
+                        chbx_AllGroups.Items.Add(ds.Tables[0].Rows[j][0].ToString());
                     }
-
-                    i = DataViewGrid.SelectedCells[0].RowIndex;
-                    txt_ID.Text = DataViewGrid.Rows[i].Cells["ID"].Value.ToString();
-                    txt_Title.Text = DataViewGrid.Rows[i].Cells["Song_Title"].Value.ToString();
-                    txt_Title_Sort.Text = DataViewGrid.Rows[i].Cells["Song_Title_Sort"].Value.ToString();
-                    txt_Album.Text = DataViewGrid.Rows[i].Cells["Album"].Value.ToString();
-                    txt_Artist.Text = DataViewGrid.Rows[i].Cells["Artist"].Value.ToString();
-                    txt_Artist_Sort.Text = DataViewGrid.Rows[i].Cells["Artist_Sort"].Value.ToString();
-                    txt_Album_Year.Text = DataViewGrid.Rows[i].Cells["Album_Year"].Value.ToString();
-                    txt_AverageTempo.Text = DataViewGrid.Rows[i].Cells["AverageTempo"].Value.ToString();
-                    txt_Volume.Text = (DataViewGrid.Rows[i].Cells["Volume"].Value.ToString());
-                    txt_Preview_Volume.Text = (DataViewGrid.Rows[i].Cells["Preview_Volume"].Value.ToString());
-                    txt_AlbumArtPath.Text = DataViewGrid.Rows[i].Cells["AlbumArtPath"].Value.ToString();
-                    txt_Track_No.Text = DataViewGrid.Rows[i].Cells["Track_No"].Value.ToString();
-                    txt_Author.Text = DataViewGrid.Rows[i].Cells["Author"].Value.ToString();
-                    txt_Version.Text = DataViewGrid.Rows[i].Cells["Version"].Value.ToString();
-                    txt_DLC_ID.Text = DataViewGrid.Rows[i].Cells["DLC_Name"].Value.ToString();
-                    txt_APP_ID.Text = DataViewGrid.Rows[i].Cells["DLC_AppID"].Value.ToString();//SelectedIndex
-                    txt_MultiTrackType.Text = DataViewGrid.Rows[i].Cells["MultiTrack_Version"].Value.ToString();// != "" ? txt_MultiTrackType.FindString(DataViewGrid.Rows[i].Cells[32].Value.ToString()) : 5;
-                    txt_Alt_No.Text = DataViewGrid.Rows[i].Cells["Alternate_Version_No"].Value.ToString();
-                    txt_Tuning.Text = DataViewGrid.Rows[i].Cells["Tunning"].Value.ToString();
-                    txt_BassPicking.Text = DataViewGrid.Rows[i].Cells["Bass_Picking"].Value.ToString();
-                    txt_RemotePath.Text = DataViewGrid.Rows[i].Cells["FilesMissingIssues"].Value.ToString();
-                    //chbx_Group.Text = DataViewGrid.Rows[i].Cells["Groups"].Value.ToString();
-                    txt_Rating.Text = DataViewGrid.Rows[i].Cells["Rating"].Value.ToString();
-                    txt_Description.Text = DataViewGrid.Rows[i].Cells["Description"].Value.ToString();
-                    txt_Platform.Text = DataViewGrid.Rows[i].Cells["Platform"].Value.ToString();
-                    if (DataViewGrid.Rows[i].Cells["PreviewTime"].Value.ToString() == "") txt_PreviewStart.Value = Convert.ToDateTime("00:00");
-                    else txt_PreviewStart.Value = Convert.ToDateTime("00:" + DataViewGrid.Rows[i].Cells["PreviewTime"].Value.ToString());
-                    if (DataViewGrid.Rows[i].Cells["PreviewLenght"].Value.ToString() == "") txt_PreviewEnd.Value = 30;
-                    else txt_PreviewEnd.Text = DataViewGrid.Rows[i].Cells["PreviewLenght"].Value.ToString();
-                    txt_YouTube_Link.Text = DataViewGrid.Rows[i].Cells["YouTube_Link"].Value.ToString();
-                    btn_Youtube.Enabled = DataViewGrid.Rows[i].Cells["YouTube_Link"].Value.ToString() == "" ? false : true;
-                    txt_CustomsForge_Link.Text = DataViewGrid.Rows[i].Cells["CustomsForge_Link"].Value.ToString();
-                    btn_CustomForge_Link.Enabled = DataViewGrid.Rows[i].Cells["CustomsForge_Link"].Value.ToString() == "" ? false : true;
-                    txt_CustomsForge_Like.Text = DataViewGrid.Rows[i].Cells["CustomsForge_Like"].Value.ToString();
-                    //txt_CustomsForge_Like.Enabled = DataViewGrid.Rows[i].Cells[72].Value.ToString() == "" ? false : true;
-                    txt_CustomsForge_ReleaseNotes.Text = DataViewGrid.Rows[i].Cells["CustomsForge_ReleaseNotes"].Value.ToString();
-                    //txt_CustomsForge_ReleaseNotes.Enabled = DataViewGrid.Rows[i].Cells[73].Value.ToString() == "" ? false : true;
-
-                    txt_OggPath.Text = DataViewGrid.Rows[i].Cells["OggPath"].Value.ToString();//.Replace(".ogg", "_fixed.ogg");
-                    txt_OggPreviewPath.Text = DataViewGrid.Rows[i].Cells["OggPreviewPath"].Value.ToString();//.Replace(".ogg", "_fixed.ogg");
-
-                    txt_Artist_ShortName.Text = DataViewGrid.Rows[i].Cells["Artist_ShortName"].Value.ToString();
-                    txt_Album_ShortName.Text = DataViewGrid.Rows[i].Cells["Artist_ShortName"].Value.ToString();
-
-                    //txt_Volume.Text = DataGridView1.Rows[i].Cells[86].Value.ToString();
-                    //txt_Preview_Volume.Text = DataGridView1.Rows[i].Cells[9].Value.ToString();
-
-                    if (DataViewGrid.Rows[i].Cells["Is_Original"].Value.ToString() == "Yes") { chbx_Original.Checked = true; chbx_Original.ForeColor = btn_Debug.ForeColor; }
-                    else { chbx_Original.Checked = false; chbx_Original.ForeColor = btn_Duplicate.ForeColor; }
-                    if (DataViewGrid.Rows[i].Cells["Is_Beta"].Value.ToString() == "Yes") chbx_Beta.Checked = true;
-                    else chbx_Beta.Checked = false;
-                    if (DataViewGrid.Rows[i].Cells["Is_Alternate"].Value.ToString() == "Yes") { chbx_Alternate.Checked = true; txt_Alt_No.Enabled = true; }
-                    else { chbx_Alternate.Checked = false; txt_Alt_No.Enabled = false; }
-                    if (DataViewGrid.Rows[i].Cells["Is_Multitrack"].Value.ToString() == "Yes") { chbx_MultiTrack.Checked = true; txt_MultiTrackType.Enabled = true; }
-                    else { chbx_MultiTrack.Checked = false; txt_MultiTrackType.Enabled = false; }
-                    if (DataViewGrid.Rows[i].Cells["Is_Broken"].Value.ToString() == "Yes") chbx_Broken.Checked = true;
-                    else chbx_Broken.Checked = false;
-                    if (DataViewGrid.Rows[i].Cells["Has_Bass"].Value.ToString() == "Yes") chbx_Bass.Checked = true;
-                    else chbx_Bass.Checked = false;
-                    if (DataViewGrid.Rows[i].Cells["Has_Lead"].Value.ToString() == "Yes") chbx_Lead.Checked = true;
-                    else chbx_Lead.Checked = false;
-                    if (DataViewGrid.Rows[i].Cells["Has_Combo"].Value.ToString() == "Yes") chbx_Combo.Checked = true;
-                    else chbx_Combo.Checked = false;
-                    if (DataViewGrid.Rows[i].Cells["Has_Rhythm"].Value.ToString() == "Yes") chbx_Rhythm.Checked = true;
-                    else chbx_Rhythm.Checked = false;
-                    if (DataViewGrid.Rows[i].Cells["Has_Vocals"].Value.ToString() == "Yes") { chbx_Lyrics.Checked = true; btn_CreateLyrics.Enabled = false; }
-                    else { chbx_Lyrics.Checked = false; btn_CreateLyrics.Enabled = true; }
-                    if (DataViewGrid.Rows[i].Cells["Has_Sections"].Value.ToString() == "Yes") chbx_Sections.Checked = true;
-                    else chbx_Sections.Checked = false;
-                    if (DataViewGrid.Rows[i].Cells["Has_Cover"].Value.ToString() == "Yes") chbx_Cover.Checked = true;
-                    else chbx_Cover.Checked = false;
-                    if (DataViewGrid.Rows[i].Cells["Has_Preview"].Value.ToString() == "Yes") { chbx_Preview.Checked = true; btn_PlayPreview.Enabled = true; }
-                    else { chbx_Preview.Checked = false; btn_PlayPreview.Enabled = false; }
-                    if (DataViewGrid.Rows[i].Cells["Has_DD"].Value.ToString() == "Yes") { txt_AddDD.Enabled = false; chbx_DD.Checked = true; btn_RemoveDD.Enabled = true; btn_AddDD.Enabled = false; }
-                    else { chbx_DD.Checked = false; btn_AddDD.Enabled = true; btn_RemoveDD.Enabled = false; } //numericUpDown1.Enabled = true;
-                    if (DataViewGrid.Rows[i].Cells["Keep_BassDD"].Value.ToString() == "Yes") { chbx_KeepBassDD.Checked = true; }
-                    else { chbx_KeepBassDD.Checked = false; }
-                    if (DataViewGrid.Rows[i].Cells["Keep_DD"].Value.ToString() == "Yes") { chbx_KeepDD.Checked = true; }
-                    else { chbx_KeepDD.Checked = false; }
-                    if (DataViewGrid.Rows[i].Cells["Selected"].Value.ToString() == "Yes") chbx_Selected.Checked = true;
-                    else chbx_Selected.Checked = false;
-                    if (DataViewGrid.Rows[i].Cells["Has_Author"].Value.ToString() == "Yes") chbx_Author.Checked = true;
-                    else chbx_Author.Checked = false;
-                    if (DataViewGrid.Rows[i].Cells["Bass_Has_DD"].Value.ToString() == "Yes") { chbx_BassDD.Checked = true; btn_RemoveBassDD.Enabled = true; chbx_KeepBassDD.Enabled = true; chbx_RemoveBassDD.Enabled = true; }
-                    else { chbx_BassDD.Checked = false; btn_RemoveBassDD.Enabled = false; chbx_RemoveBassDD.Enabled = false; }//txt_BassPicking.Text = "";
-                    if (DataViewGrid.Rows[i].Cells["Has_Bonus_Arrangement"].Value.ToString() == "Yes") chbx_Bonus.Checked = true;
-                    else chbx_Bonus.Checked = false;
-                    chbx_Avail_Old.Checked = false;
-                    if (DataViewGrid.Rows[i].Cells["Available_Old"].Value.ToString() == "Yes") { chbx_Avail_Old.Checked = true; btn_OldFolder.Enabled = true; chbx_CopyOld.Enabled = true; }
-                    else { chbx_Avail_Old.Checked = false; btn_OldFolder.Enabled = false; chbx_CopyOld.Enabled = false; }
-                    chbx_Avail_Duplicate.Checked = false;
-                    if (DataViewGrid.Rows[i].Cells["Available_Duplicate"].Value.ToString() == "Yes") { chbx_Avail_Duplicate.Checked = true; btn_DuplicateFolder.Enabled = true; }
-                    else { chbx_Avail_Duplicate.Checked = false; btn_DuplicateFolder.Enabled = false; }
-                    if (DataViewGrid.Rows[i].Cells["Has_Been_Corrected"].Value.ToString() == "Yes") chbx_Has_Been_Corrected.Checked = true;
-                    else chbx_Has_Been_Corrected.Checked = false;
-
-                    //Lyrics
-                    using (OleDbConnection cnn7 = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-                    {
-                        string SearchCmdz = "SELECT XMLFilePath FROM Arrangements WHERE ArrangementType=\"Vocal\" AND CDLC_ID=" + txt_ID.Text + ";";
-                        OleDbDataAdapter dag = new OleDbDataAdapter(SearchCmdz, cnn7); //WHERE id=253
-                        DataSet dsr = new DataSet();
-                        dag.Fill(dsr, "Main");
-                        if (dsr.Tables[0].Rows.Count > 0) txt_Lyrics.Text = dsr.Tables[0].Rows[0].ItemArray[0].ToString();
-                        else txt_Lyrics.Text = "";
-                    }
-
-                    if (DataViewGrid.Rows[i].Cells["Has_Rhythm"].Value.ToString() != "Yes" && DataViewGrid.Rows[i].Cells["Has_Lead"].Value.ToString() == "Yes") { chbx_DupliGTrack.Enabled = true; chbx_DupliGTrack.Text = "L->R"; }
-                    if (DataViewGrid.Rows[i].Cells["Has_Rhythm"].Value.ToString() == "Yes" && DataViewGrid.Rows[i].Cells["Has_Lead"].Value.ToString() != "Yes") { chbx_DupliGTrack.Enabled = true; chbx_DupliGTrack.Text = "R->L"; }
-
-
-                    //ImageSource imageSource = new BitmapImage(new Uri("C:\\Temp\\music_edit.png"));
-                    //txt_Description.Text = txt_AlbumArtPath.Text.Replace(".dds", ".png");
-                    picbx_AlbumArtPath.ImageLocation = txt_AlbumArtPath.Text.Replace(".dds", ".png");
-                    btn_Delete.Enabled = true;
-                    btn_Duplicate.Enabled = true;
-                    btn_Package.Enabled = true;
-                    btn_ChangeCover.Enabled = true;
-                    btn_AddPreview.Enabled = true;
-                    btn_SelectPreview.Enabled = true;
-                    btn_PlayAudio.Enabled = true;
-                    //btn_PlayPreview.Enabled = true;
-                    //btn_Search.Enabled = false;
-                    btn_Save.Enabled = true;
-                    txt_Artist_Sort.Enabled = true;
-                    txt_Album.Enabled = true;
-                    txt_Title_Sort.Enabled = true;
-
-                    cnn.Close();
-                    //chbx_Group.Items.Add("");
                 }
+
+                //DataSet dds = new DataSet();
+                //Create Groups list MultiCheckbox
+                //using (OleDbConnection con = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                //{
+                //    string SearchCmds = "SELECT DISTINCT Groups FROM Groups WHERE Type=\"DLC\" AND CDLC_ID=\"" + DataViewGrid.Rows[DataViewGrid.SelectedCells[0].RowIndex].Cells["ID"].Value.ToString() + "\";";
+                //    OleDbDataAdapter dfa = new OleDbDataAdapter(SearchCmds, con); //WHERE id=253
+                //    dfa.Fill(dds, "Main");
+                DataSet dds = new DataSet(); dds = DLCManager.SelectFromDB("Groups", "SELECT DISTINCT Groups FROM Groups WHERE Type=\"DLC\" AND CDLC_ID=\"" + DataViewGrid.Rows[DataViewGrid.SelectedCells[0].RowIndex].Cells["ID"].Value.ToString() + "\";");
+
+                var nocrec = dds.Tables[0].Rows.Count;
+
+                if (nocrec > 0)
+                    //for (int l = 0; l < norec; l++)
+                    for (int j = 0; j < nocrec; j++)
+                    //  if (dds.Tables[0].Rows[j][0].ToString() == ds.Tables[0].Rows[l][0].ToString())
+                    //  chbx_AllGroups.SetSelected(j, true);
+                    {
+                        int index = chbx_AllGroups.Items.IndexOf(dds.Tables[0].Rows[j][0].ToString());
+                        chbx_AllGroups.SetItemChecked(index, true);
+                    }
+                //(ds.Tables[0].Rows[l][0].ToString()); 
+
+                //}
+
+                i = DataViewGrid.SelectedCells[0].RowIndex;
+                txt_ID.Text = DataViewGrid.Rows[i].Cells["ID"].Value.ToString();
+                txt_Title.Text = DataViewGrid.Rows[i].Cells["Song_Title"].Value.ToString();
+                txt_Title_Sort.Text = DataViewGrid.Rows[i].Cells["Song_Title_Sort"].Value.ToString();
+                txt_Album.Text = DataViewGrid.Rows[i].Cells["Album"].Value.ToString();
+                txt_Artist.Text = DataViewGrid.Rows[i].Cells["Artist"].Value.ToString();
+                txt_Artist_Sort.Text = DataViewGrid.Rows[i].Cells["Artist_Sort"].Value.ToString();
+                txt_Album_Year.Text = DataViewGrid.Rows[i].Cells["Album_Year"].Value.ToString();
+                txt_AverageTempo.Text = DataViewGrid.Rows[i].Cells["AverageTempo"].Value.ToString();
+                txt_Volume.Text = (DataViewGrid.Rows[i].Cells["Volume"].Value.ToString());
+                txt_Preview_Volume.Text = (DataViewGrid.Rows[i].Cells["Preview_Volume"].Value.ToString());
+                txt_AlbumArtPath.Text = DataViewGrid.Rows[i].Cells["AlbumArtPath"].Value.ToString();
+                txt_Track_No.Text = DataViewGrid.Rows[i].Cells["Track_No"].Value.ToString();
+                txt_Author.Text = DataViewGrid.Rows[i].Cells["Author"].Value.ToString();
+                txt_Version.Text = DataViewGrid.Rows[i].Cells["Version"].Value.ToString();
+                txt_DLC_ID.Text = DataViewGrid.Rows[i].Cells["DLC_Name"].Value.ToString();
+                txt_APP_ID.Text = DataViewGrid.Rows[i].Cells["DLC_AppID"].Value.ToString();//SelectedIndex
+                txt_MultiTrackType.Text = DataViewGrid.Rows[i].Cells["MultiTrack_Version"].Value.ToString();// != "" ? txt_MultiTrackType.FindString(DataViewGrid.Rows[i].Cells[32].Value.ToString()) : 5;
+                txt_Alt_No.Text = DataViewGrid.Rows[i].Cells["Alternate_Version_No"].Value.ToString();
+                txt_Tuning.Text = DataViewGrid.Rows[i].Cells["Tunning"].Value.ToString();
+                txt_BassPicking.Text = DataViewGrid.Rows[i].Cells["Bass_Picking"].Value.ToString();
+                txt_RemotePath.Text = DataViewGrid.Rows[i].Cells["FilesMissingIssues"].Value.ToString();
+                //chbx_Group.Text = DataViewGrid.Rows[i].Cells["Groups"].Value.ToString();
+                txt_Rating.Text = DataViewGrid.Rows[i].Cells["Rating"].Value.ToString();
+                txt_Description.Text = DataViewGrid.Rows[i].Cells["Description"].Value.ToString();
+                txt_Platform.Text = DataViewGrid.Rows[i].Cells["Platform"].Value.ToString();
+                if (DataViewGrid.Rows[i].Cells["PreviewTime"].Value.ToString() == "") txt_PreviewStart.Value = Convert.ToDateTime("00:00");
+                else txt_PreviewStart.Value = Convert.ToDateTime("00:" + DataViewGrid.Rows[i].Cells["PreviewTime"].Value.ToString());
+                if (DataViewGrid.Rows[i].Cells["PreviewLenght"].Value.ToString() == "") txt_PreviewEnd.Value = 30;
+                else txt_PreviewEnd.Text = DataViewGrid.Rows[i].Cells["PreviewLenght"].Value.ToString();
+                txt_YouTube_Link.Text = DataViewGrid.Rows[i].Cells["YouTube_Link"].Value.ToString();
+                btn_Youtube.Enabled = DataViewGrid.Rows[i].Cells["YouTube_Link"].Value.ToString() == "" ? false : true;
+                txt_CustomsForge_Link.Text = DataViewGrid.Rows[i].Cells["CustomsForge_Link"].Value.ToString();
+                btn_CustomForge_Link.Enabled = DataViewGrid.Rows[i].Cells["CustomsForge_Link"].Value.ToString() == "" ? false : true;
+                txt_CustomsForge_Like.Text = DataViewGrid.Rows[i].Cells["CustomsForge_Like"].Value.ToString();
+                //txt_CustomsForge_Like.Enabled = DataViewGrid.Rows[i].Cells[72].Value.ToString() == "" ? false : true;
+                txt_CustomsForge_ReleaseNotes.Text = DataViewGrid.Rows[i].Cells["CustomsForge_ReleaseNotes"].Value.ToString();
+                //txt_CustomsForge_ReleaseNotes.Enabled = DataViewGrid.Rows[i].Cells[73].Value.ToString() == "" ? false : true;
+
+                txt_OggPath.Text = DataViewGrid.Rows[i].Cells["OggPath"].Value.ToString();//.Replace(".ogg", "_fixed.ogg");
+                txt_OggPreviewPath.Text = DataViewGrid.Rows[i].Cells["OggPreviewPath"].Value.ToString();//.Replace(".ogg", "_fixed.ogg");
+
+                txt_Artist_ShortName.Text = DataViewGrid.Rows[i].Cells["Artist_ShortName"].Value.ToString();
+                txt_Album_ShortName.Text = DataViewGrid.Rows[i].Cells["Artist_ShortName"].Value.ToString();
+
+                //txt_Volume.Text = DataGridView1.Rows[i].Cells[86].Value.ToString();
+                //txt_Preview_Volume.Text = DataGridView1.Rows[i].Cells[9].Value.ToString();
+
+                if (DataViewGrid.Rows[i].Cells["Is_Original"].Value.ToString() == "Yes") { chbx_Original.Checked = true; chbx_Original.ForeColor = btn_Debug.ForeColor; }
+                else { chbx_Original.Checked = false; chbx_Original.ForeColor = btn_Duplicate.ForeColor; }
+                if (DataViewGrid.Rows[i].Cells["Is_Beta"].Value.ToString() == "Yes") chbx_Beta.Checked = true;
+                else chbx_Beta.Checked = false;
+                if (DataViewGrid.Rows[i].Cells["Is_Alternate"].Value.ToString() == "Yes") { chbx_Alternate.Checked = true; txt_Alt_No.Enabled = true; }
+                else { chbx_Alternate.Checked = false; txt_Alt_No.Enabled = false; }
+                if (DataViewGrid.Rows[i].Cells["Is_Multitrack"].Value.ToString() == "Yes") { chbx_MultiTrack.Checked = true; txt_MultiTrackType.Enabled = true; }
+                else { chbx_MultiTrack.Checked = false; txt_MultiTrackType.Enabled = false; }
+                if (DataViewGrid.Rows[i].Cells["Is_Broken"].Value.ToString() == "Yes") chbx_Broken.Checked = true;
+                else chbx_Broken.Checked = false;
+                if (DataViewGrid.Rows[i].Cells["Has_Bass"].Value.ToString() == "Yes") chbx_Bass.Checked = true;
+                else chbx_Bass.Checked = false;
+                if (DataViewGrid.Rows[i].Cells["Has_Lead"].Value.ToString() == "Yes") chbx_Lead.Checked = true;
+                else chbx_Lead.Checked = false;
+                if (DataViewGrid.Rows[i].Cells["Has_Combo"].Value.ToString() == "Yes") chbx_Combo.Checked = true;
+                else chbx_Combo.Checked = false;
+                if (DataViewGrid.Rows[i].Cells["Has_Rhythm"].Value.ToString() == "Yes") chbx_Rhythm.Checked = true;
+                else chbx_Rhythm.Checked = false;
+                if (DataViewGrid.Rows[i].Cells["Has_Vocals"].Value.ToString() == "Yes") { chbx_Lyrics.Checked = true; btn_CreateLyrics.Enabled = false; }
+                else { chbx_Lyrics.Checked = false; btn_CreateLyrics.Enabled = true; }
+                if (DataViewGrid.Rows[i].Cells["Has_Sections"].Value.ToString() == "Yes") chbx_Sections.Checked = true;
+                else chbx_Sections.Checked = false;
+                if (DataViewGrid.Rows[i].Cells["Has_Cover"].Value.ToString() == "Yes") chbx_Cover.Checked = true;
+                else chbx_Cover.Checked = false;
+                if (DataViewGrid.Rows[i].Cells["Has_Preview"].Value.ToString() == "Yes") { chbx_Preview.Checked = true; btn_PlayPreview.Enabled = true; }
+                else { chbx_Preview.Checked = false; btn_PlayPreview.Enabled = false; }
+                if (DataViewGrid.Rows[i].Cells["Has_DD"].Value.ToString() == "Yes") { txt_AddDD.Enabled = false; chbx_DD.Checked = true; btn_RemoveDD.Enabled = true; btn_AddDD.Enabled = false; }
+                else { chbx_DD.Checked = false; btn_AddDD.Enabled = true; btn_RemoveDD.Enabled = false; } //numericUpDown1.Enabled = true;
+                if (DataViewGrid.Rows[i].Cells["Keep_BassDD"].Value.ToString() == "Yes") { chbx_KeepBassDD.Checked = true; }
+                else { chbx_KeepBassDD.Checked = false; }
+                if (DataViewGrid.Rows[i].Cells["Keep_DD"].Value.ToString() == "Yes") { chbx_KeepDD.Checked = true; }
+                else { chbx_KeepDD.Checked = false; }
+                if (DataViewGrid.Rows[i].Cells["Selected"].Value.ToString() == "Yes") chbx_Selected.Checked = true;
+                else chbx_Selected.Checked = false;
+                if (DataViewGrid.Rows[i].Cells["Has_Author"].Value.ToString() == "Yes") chbx_Author.Checked = true;
+                else chbx_Author.Checked = false;
+                if (DataViewGrid.Rows[i].Cells["Bass_Has_DD"].Value.ToString() == "Yes") { chbx_BassDD.Checked = true; btn_RemoveBassDD.Enabled = true; chbx_KeepBassDD.Enabled = true; chbx_RemoveBassDD.Enabled = true; }
+                else { chbx_BassDD.Checked = false; btn_RemoveBassDD.Enabled = false; chbx_RemoveBassDD.Enabled = false; }//txt_BassPicking.Text = "";
+                if (DataViewGrid.Rows[i].Cells["Has_Bonus_Arrangement"].Value.ToString() == "Yes") chbx_Bonus.Checked = true;
+                else chbx_Bonus.Checked = false;
+                chbx_Avail_Old.Checked = false;
+                if (DataViewGrid.Rows[i].Cells["Available_Old"].Value.ToString() == "Yes") { chbx_Avail_Old.Checked = true; btn_OldFolder.Enabled = true; chbx_CopyOld.Enabled = true; }
+                else { chbx_Avail_Old.Checked = false; btn_OldFolder.Enabled = false; chbx_CopyOld.Enabled = false; }
+                chbx_Avail_Duplicate.Checked = false;
+                if (DataViewGrid.Rows[i].Cells["Available_Duplicate"].Value.ToString() == "Yes") { chbx_Avail_Duplicate.Checked = true; btn_DuplicateFolder.Enabled = true; }
+                else { chbx_Avail_Duplicate.Checked = false; btn_DuplicateFolder.Enabled = false; }
+                if (DataViewGrid.Rows[i].Cells["Has_Been_Corrected"].Value.ToString() == "Yes") chbx_Has_Been_Corrected.Checked = true;
+                else chbx_Has_Been_Corrected.Checked = false;
+
+                //Lyrics
+                using (OleDbConnection cnn7 = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                {
+                    //string SearchCmdz = "SELECT XMLFilePath FROM Arrangements WHERE ArrangementType=\"Vocal\" AND CDLC_ID=" + txt_ID.Text + ";";
+                    //OleDbDataAdapter dag = new OleDbDataAdapter(SearchCmdz, cnn7); //WHERE id=253
+                    //DataSet dsr = new DataSet();
+                    //dag.Fill(dsr, "Main");
+                    DataSet dsr = new DataSet(); dsr = DLCManager.SelectFromDB("Arrangements", "SELECT XMLFilePath FROM Arrangements WHERE ArrangementType=\"Vocal\" AND CDLC_ID=" + txt_ID.Text + ";");
+                    var rec = dsr.Tables[0].Rows.Count;
+                    if (rec > 0) txt_Lyrics.Text = dsr.Tables[0].Rows[0].ItemArray[0].ToString();
+                    else txt_Lyrics.Text = "";
+                }
+
+                if (DataViewGrid.Rows[i].Cells["Has_Rhythm"].Value.ToString() != "Yes" && DataViewGrid.Rows[i].Cells["Has_Lead"].Value.ToString() == "Yes") { chbx_DupliGTrack.Enabled = true; chbx_DupliGTrack.Text = "L->R"; }
+                if (DataViewGrid.Rows[i].Cells["Has_Rhythm"].Value.ToString() == "Yes" && DataViewGrid.Rows[i].Cells["Has_Lead"].Value.ToString() != "Yes") { chbx_DupliGTrack.Enabled = true; chbx_DupliGTrack.Text = "R->L"; }
+
+
+                //ImageSource imageSource = new BitmapImage(new Uri("C:\\Temp\\music_edit.png"));
+                //txt_Description.Text = txt_AlbumArtPath.Text.Replace(".dds", ".png");
+                picbx_AlbumArtPath.ImageLocation = txt_AlbumArtPath.Text.Replace(".dds", ".png");
+                btn_Delete.Enabled = true;
+                btn_Duplicate.Enabled = true;
+                btn_Package.Enabled = true;
+                btn_ChangeCover.Enabled = true;
+                btn_AddPreview.Enabled = true;
+                btn_SelectPreview.Enabled = true;
+                btn_PlayAudio.Enabled = true;
+                //btn_PlayPreview.Enabled = true;
+                //btn_Search.Enabled = false;
+                btn_Save.Enabled = true;
+                txt_Artist_Sort.Enabled = true;
+                txt_Album.Enabled = true;
+                txt_Title_Sort.Enabled = true;
+
+                //    cnn.Close();
+                //    //chbx_Group.Items.Add("");
+                //}
 
 
                 if (chbx_AutoSave.Checked) { SaveOK = true; SaveRecord(); }
@@ -709,37 +720,40 @@ namespace RocksmithToolkitGUI.DLCManager
                 //Save Groups
                 if (GroupChanged)
                 {
-                    var cmdDel = "DELETE FROM Groups WHERE Type=\"DLC\" AND CDLC_ID=\"" + txt_ID.Text + "\"";
-                    DataSet dbz = new DataSet();
-                    using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-                    {
-                        OleDbDataAdapter dac = new OleDbDataAdapter(cmdDel, cnb);
-                        dac.Fill(dbz, "Groups");
-                        dac.Dispose();
-                    }
+                    DLCManager.DeleteFromDB("Groups", "DELETE FROM Groups WHERE Type=\"DLC\" AND CDLC_ID=\"" + txt_ID.Text + "\"");
+                    //DataSet dbz = new DataSet();
+                    //using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                    //{
+                    //    OleDbDataAdapter dac = new OleDbDataAdapter(cmdDel, cnb);
+                    //    dac.Fill(dbz, "Groups");
+                    //    dac.Dispose();
+                    //}
 
-                    DataSet dsz = new DataSet();
-                    DataSet ddz = new DataSet();
+                    //DataSet dsz = new DataSet();
+                    //DataSet ddz = new DataSet();
                     for (int j = 0; j < chbx_AllGroups.Items.Count; j++)
                     {
-                        using (OleDbConnection cmb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-                        {
-                            //DataSet dooz = new DataSet();
-                            //string updatecmd = "SELECT ID FROM Groups WHERE Type=\"DLC\" AND CDLC_ID=\"" + txt_ID.Text + "\" AND Groups=\"" + chbx_AllGroups.Items[j] + "\";";
-                            //OleDbDataAdapter dbf = new OleDbDataAdapter(updatecmd, cmb);
-                            //dbf.Fill(dooz, "Groups");
-                            //dbf.Dispose();
+                        //using (OleDbConnection cmb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                        //{
+                        //DataSet dooz = new DataSet();
+                        //string updatecmd = "SELECT ID FROM Groups WHERE Type=\"DLC\" AND CDLC_ID=\"" + txt_ID.Text + "\" AND Groups=\"" + chbx_AllGroups.Items[j] + "\";";
+                        //OleDbDataAdapter dbf = new OleDbDataAdapter(updatecmd, cmb);
+                        //dbf.Fill(dooz, "Groups");
+                        //dbf.Dispose();
 
-                            var cmd = "INSERT INTO Groups(CDLC_ID,Groups,Type) VALUES";
-                            // var rr = dooz.Tables[0].Rows.Count;&& rr == 0
-                            if (chbx_AllGroups.GetItemChecked(j))
-                            {
-                                cmd += "(\"" + txt_ID.Text + "\",\"" + chbx_AllGroups.Items[j] + "\",\"DLC\")";
-                                OleDbDataAdapter dab = new OleDbDataAdapter(cmd, cmb);
-                                dab.Fill(dsz, "Groups");
-                                dab.Dispose();
-                            }
+                        //var cmd = "INSERT INTO Groups(CDLC_ID,Groups,Type) VALUES";
+                        // var rr = dooz.Tables[0].Rows.Count;&& rr == 0
+                        if (chbx_AllGroups.GetItemChecked(j))
+                        {
+                            //    cmd += "(\"" + txt_ID.Text + "\",\"" + chbx_AllGroups.Items[j] + "\",\"DLC\")";
+                            var insertcmdd = "CDLC_ID, Groups, Type";
+                            var insertvalues = "\"" + txt_ID.Text + "\",\"" + chbx_AllGroups.Items[j] + "\",\"DLC\"";
+                            DLCManager.InsertIntoDBwValues("Groups", insertcmdd, insertvalues);
+                            //OleDbDataAdapter dab = new OleDbDataAdapter(cmd, cmb);
+                            //dab.Fill(dsz, "Groups");
+                            //dab.Dispose();
                         }
+                        //}
                     }
                     GroupChanged = false;
                 }
@@ -919,24 +933,25 @@ namespace RocksmithToolkitGUI.DLCManager
             lbl_NoRec.Text = " songs.";
             bs.DataSource = null;
             dssx.Dispose();
-            using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-            {
-                OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cn);
-                dssx.Clear();
-                try
-                {
-                    da.Fill(dssx, "Main");
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    ErrorWindow frm1 = new ErrorWindow("DB Open in Design Mode or Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error when opening the DB", false, false);
-                    frm1.ShowDialog();
-                    return;
-                }
-                da.Dispose();
-                Update_Selected();
-            }
+            dssx = DLCManager.SelectFromDB("Main", SearchCmd);
+            //using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //{
+            //    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cn);
+            //    dssx.Clear();
+            //    try
+            //    {
+            //        da.Fill(dssx, "Main");
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //        ErrorWindow frm1 = new ErrorWindow("DB Open in Design Mode or Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error when opening the DB", false, false);
+            //        frm1.ShowDialog();
+            //        return;
+            //    }
+            //    da.Dispose();
+            Update_Selected();
+            //}
             DataGridViewTextBoxColumn ID = new DataGridViewTextBoxColumn { DataPropertyName = "ID", DisplayIndex = 0, Width = 50, HeaderText = "ID " };
             DataGridViewTextBoxColumn Artist = new DataGridViewTextBoxColumn { DataPropertyName = "Artist", DisplayIndex = 1, HeaderText = "Artist " };
             DataGridViewTextBoxColumn Song_Title = new DataGridViewTextBoxColumn { DataPropertyName = "Song_Title", DisplayIndex = 2, HeaderText = "Song_Title " };
@@ -1074,57 +1089,59 @@ namespace RocksmithToolkitGUI.DLCManager
         void Update_Selected()
         {
 
-            DataSet dsz1 = new DataSet();
-            DataSet dsz2 = new DataSet();
+            //DataSet dsz1 = new DataSet();
+            //DataSet dsz2 = new DataSet();
 
-            using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //{
+            //    OleDbDataAdapter dsa = new OleDbDataAdapter(SearchCmd, cn);
+            //    try
+            //    {
+            //        dsa.Fill(dsz1, "Main");
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //        MessageBox.Show("-DB Open in Design Mode or Download Connectivity patch @ https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734");
+            //        ErrorWindow frm1 = new ErrorWindow("DB Open in Design Mode or Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error when opening the DB", false, false);
+            //        frm1.ShowDialog();
+            //        return;
+            //    }
+            //    dsa.Dispose();
+            DataSet dsz1 = new DataSet(); dsz1 = DLCManager.SelectFromDB("Main", SearchCmd);
+            noOfRec = dsz1.Tables[0].Rows.Count;
+
+            var SearchCmd22 = SearchCmd;
+            if (SearchCmd22.IndexOf("u WHERE") > 0)
             {
-                OleDbDataAdapter dsa = new OleDbDataAdapter(SearchCmd, cn);
-                try
-                {
-                    dsa.Fill(dsz1, "Main");
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    MessageBox.Show("-DB Open in Design Mode or Download Connectivity patch @ https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734");
-                    ErrorWindow frm1 = new ErrorWindow("DB Open in Design Mode or Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error when opening the DB", false, false);
-                    frm1.ShowDialog();
-                    return;
-                }
-                dsa.Dispose();
-                noOfRec = dsz1.Tables[0].Rows.Count;
-
-                var SearchCmd22 = SearchCmd;
-                if (SearchCmd22.IndexOf("u WHERE") > 0)
-                {
-                    SearchCmd22 = SearchCmd22.Replace("FROM Main u WHERE", "FROM Main u WHERE (Selected=\"Yes\") AND (");
-                    SearchCmd22 = SearchCmd22.Replace("ORDER BY", ") ORDER BY");
-                }
-                else
-                    SearchCmd22 = SearchCmd22.Replace("FROM Main u", "FROM Main u WHERE Selected=\"Yes\" ");
-                OleDbDataAdapter dca = new OleDbDataAdapter(SearchCmd22, cn);
-
-                try
-                {
-                    dca.Fill(dsz2, "Main");
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    MessageBox.Show("-DB Open in Design Mode or Download Connectivity patch @ https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734");
-                    ErrorWindow frm1 = new ErrorWindow("DB Open in Design Mode or Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error when opening the DB", false, false);
-                    frm1.ShowDialog();
-                    return;
-                }
-                var noOfSelRec = dsz2.Tables[0].Rows.Count;
-                dca.Dispose();
-                cn.Dispose();
-                lbl_NoRec.Text = noOfSelRec.ToString() + "/" + noOfRec.ToString() + " records.";
+                SearchCmd22 = SearchCmd22.Replace("FROM Main u WHERE", "FROM Main u WHERE (Selected=\"Yes\") AND (");
+                SearchCmd22 = SearchCmd22.Replace("ORDER BY", ") ORDER BY");
             }
+            else
+                SearchCmd22 = SearchCmd22.Replace("FROM Main u", "FROM Main u WHERE Selected=\"Yes\" ");
+            DataSet dsz2 = new DataSet(); dsz2 = DLCManager.SelectFromDB("Main", SearchCmd22);
+            //OleDbDataAdapter dca = new OleDbDataAdapter(SearchCmd22, cn);
+
+            //try
+            //{
+            //    dca.Fill(dsz2, "Main");
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    MessageBox.Show("-DB Open in Design Mode or Download Connectivity patch @ https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734");
+            //    ErrorWindow frm1 = new ErrorWindow("DB Open in Design Mode or Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error when opening the DB", false, false);
+            //    frm1.ShowDialog();
+            //    return;
+            //}
+            var noOfSelRec = dsz2.Tables[0].Rows.Count;
+            //dca.Dispose();
+            //cn.Dispose();
+            lbl_NoRec.Text = noOfSelRec.ToString() + "/" + noOfRec.ToString() + " records.";
+            //}
         }
 
-        public class Files
+        private class Files
         {
             public string ID { get; set; }
             public string Song_Title { get; set; }
@@ -1218,7 +1235,7 @@ namespace RocksmithToolkitGUI.DLCManager
             public string Has_Been_Corrected { get; set; }
             public string File_Creation_Date { get; set; }
         }
-        public Files[] files = new Files[10000];
+        private Files[] files = new Files[10000];
         //Generic procedure to read and parse Main.DB (&others..soon)
         public int SQLAccess(string cmd)
         {
@@ -1228,128 +1245,128 @@ namespace RocksmithToolkitGUI.DLCManager
             var MaximumSize = 0;
 
             //rtxt_StatisticsOnReadDLCs.Text += "\n  ee= ";
-            try
+            //try
+            //{
+            //    //MessageBox.Show(DB_Path);                
+            //    using (OleDbConnection cnn2 = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //    {
+            //        DataSet dus = new DataSet();
+            //        OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn2); //WHERE id=253
+            //        dax.Fill(dus, "Main");
+            DataSet dus = new DataSet(); dus = DLCManager.SelectFromDB("Main", cmd);
+            var i = 0;
+            //rtxt_StatisticsOnReadDLCs.Text += "\n  54= " +dus.Tables[0].Rows.Count;
+            MaximumSize = dus.Tables[0].Rows.Count;
+            foreach (DataRow dataRow in dus.Tables[0].Rows)
             {
-                //MessageBox.Show(DB_Path);                
-                using (OleDbConnection cnn2 = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-                {
-                    DataSet dus = new DataSet();
-                    OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn2); //WHERE id=253
-                    dax.Fill(dus, "Main");
+                files[i] = new Files();
 
-                    var i = 0;
-                    //rtxt_StatisticsOnReadDLCs.Text += "\n  54= " +dus.Tables[0].Rows.Count;
-                    MaximumSize = dus.Tables[0].Rows.Count;
-                    foreach (DataRow dataRow in dus.Tables[0].Rows)
-                    {
-                        files[i] = new Files();
-
-                        //rtxt_StatisticsOnReadDLCs.Text += "\n  a= " + i + MaximumSize+dataRow.ItemArray[0].ToString();
-                        files[i].ID = dataRow.ItemArray[0].ToString();
-                        files[i].Song_Title = dataRow.ItemArray[1].ToString();
-                        files[i].Song_Title_Sort = dataRow.ItemArray[2].ToString();
-                        files[i].Album = dataRow.ItemArray[3].ToString();
-                        files[i].Artist = dataRow.ItemArray[4].ToString();
-                        files[i].Artist_Sort = dataRow.ItemArray[5].ToString();
-                        files[i].Album_Year = dataRow.ItemArray[6].ToString();
-                        files[i].AverageTempo = dataRow.ItemArray[7].ToString();
-                        files[i].Volume = dataRow.ItemArray[8].ToString();
-                        files[i].Preview_Volume = dataRow.ItemArray[9].ToString();
-                        files[i].AlbumArtPath = dataRow.ItemArray[10].ToString();
-                        files[i].AudioPath = dataRow.ItemArray[11].ToString();
-                        files[i].audioPreviewPath = dataRow.ItemArray[12].ToString();
-                        files[i].Track_No = dataRow.ItemArray[13].ToString();
-                        files[i].Author = dataRow.ItemArray[14].ToString();
-                        files[i].Version = dataRow.ItemArray[15].ToString();
-                        files[i].DLC_Name = dataRow.ItemArray[16].ToString();
-                        files[i].DLC_AppID = dataRow.ItemArray[17].ToString();
-                        files[i].Current_FileName = dataRow.ItemArray[18].ToString();
-                        files[i].Original_FileName = dataRow.ItemArray[19].ToString();
-                        files[i].Import_Path = dataRow.ItemArray[20].ToString();
-                        files[i].Import_Date = dataRow.ItemArray[21].ToString();
-                        files[i].Folder_Name = dataRow.ItemArray[22].ToString();
-                        files[i].File_Size = dataRow.ItemArray[23].ToString();
-                        files[i].File_Hash = dataRow.ItemArray[24].ToString();
-                        files[i].Original_File_Hash = dataRow.ItemArray[25].ToString();
-                        files[i].Is_Original = dataRow.ItemArray[26].ToString();
-                        files[i].Is_OLD = dataRow.ItemArray[27].ToString();
-                        files[i].Is_Beta = dataRow.ItemArray[28].ToString();
-                        files[i].Is_Alternate = dataRow.ItemArray[29].ToString();
-                        files[i].Is_Multitrack = dataRow.ItemArray[30].ToString();
-                        files[i].Is_Broken = dataRow.ItemArray[31].ToString();
-                        files[i].MultiTrack_Version = dataRow.ItemArray[32].ToString();
-                        files[i].Alternate_Version_No = dataRow.ItemArray[33].ToString();
-                        files[i].DLC = dataRow.ItemArray[34].ToString();
-                        files[i].Has_Bass = dataRow.ItemArray[35].ToString();
-                        files[i].Has_Guitar = dataRow.ItemArray[36].ToString();
-                        files[i].Has_Lead = dataRow.ItemArray[37].ToString();
-                        files[i].Has_Rhythm = dataRow.ItemArray[38].ToString();
-                        files[i].Has_Combo = dataRow.ItemArray[39].ToString();
-                        files[i].Has_Vocals = dataRow.ItemArray[40].ToString();
-                        files[i].Has_Sections = dataRow.ItemArray[41].ToString();
-                        files[i].Has_Cover = dataRow.ItemArray[42].ToString();
-                        files[i].Has_Preview = dataRow.ItemArray[43].ToString();
-                        files[i].Has_Custom_Tone = dataRow.ItemArray[44].ToString();
-                        files[i].Has_DD = dataRow.ItemArray[45].ToString();
-                        files[i].Has_Version = dataRow.ItemArray[46].ToString();
-                        files[i].Tunning = dataRow.ItemArray[47].ToString();
-                        files[i].Bass_Picking = dataRow.ItemArray[48].ToString();
-                        files[i].Tones = dataRow.ItemArray[49].ToString();
-                        files[i].Groups = dataRow.ItemArray[50].ToString();
-                        files[i].Rating = dataRow.ItemArray[51].ToString();
-                        files[i].Description = dataRow.ItemArray[52].ToString();
-                        files[i].Comments = dataRow.ItemArray[53].ToString();
-                        files[i].Has_Track_No = dataRow.ItemArray[54].ToString();
-                        files[i].Platform = dataRow.ItemArray[55].ToString();
-                        files[i].PreviewTime = dataRow.ItemArray[56].ToString();
-                        files[i].PreviewLenght = dataRow.ItemArray[57].ToString();
-                        files[i].Temp = dataRow.ItemArray[58].ToString();
-                        files[i].CustomForge_Followers = dataRow.ItemArray[59].ToString();
-                        files[i].CustomForge_Version = dataRow.ItemArray[60].ToString();
-                        files[i].FilesMissingIssues = dataRow.ItemArray[61].ToString();
-                        files[i].Duplicates = dataRow.ItemArray[62].ToString();
-                        files[i].Pack = dataRow.ItemArray[63].ToString();
-                        files[i].Keep_BassDD = dataRow.ItemArray[64].ToString();
-                        files[i].Keep_DD = dataRow.ItemArray[65].ToString();
-                        files[i].Keep_Original = dataRow.ItemArray[66].ToString();
-                        files[i].Song_Lenght = dataRow.ItemArray[67].ToString();
-                        files[i].Original = dataRow.ItemArray[68].ToString();
-                        files[i].Selected = dataRow.ItemArray[69].ToString();
-                        files[i].YouTube_Link = dataRow.ItemArray[70].ToString();
-                        files[i].CustomsForge_Link = dataRow.ItemArray[71].ToString();
-                        files[i].CustomsForge_Like = dataRow.ItemArray[72].ToString();
-                        files[i].CustomsForge_ReleaseNotes = dataRow.ItemArray[73].ToString();
-                        files[i].SignatureType = dataRow.ItemArray[74].ToString();
-                        files[i].ToolkitVersion = dataRow.ItemArray[75].ToString();
-                        files[i].Has_Author = dataRow.ItemArray[76].ToString();
-                        files[i].OggPath = dataRow.ItemArray[77].ToString();
-                        files[i].oggPreviewPath = dataRow.ItemArray[78].ToString();
-                        files[i].UniqueDLCName = dataRow.ItemArray[79].ToString();
-                        files[i].AlbumArt_Hash = dataRow.ItemArray[80].ToString();
-                        files[i].Audio_Hash = dataRow.ItemArray[81].ToString();
-                        files[i].audioPreview_Hash = dataRow.ItemArray[82].ToString();
-                        files[i].Has_BassDD = dataRow.ItemArray[83].ToString();
-                        files[i].Has_Bonus_Arrangement = dataRow.ItemArray[84].ToString();
-                        files[i].Artist_ShortName = dataRow.ItemArray[85].ToString();
-                        files[i].Album_ShortName = dataRow.ItemArray[86].ToString();
-                        files[i].Available_Old = dataRow.ItemArray[87].ToString();
-                        files[i].Available_Duplicate = dataRow.ItemArray[88].ToString();
-                        files[i].Has_Been_Corrected = dataRow.ItemArray[89].ToString();
-                        files[i].File_Creation_Date = dataRow.ItemArray[90].ToString();
-                        i++;
-                    }
-                    //Closing Connection
-                    dax.Dispose();
-                    cnn2.Close();
-                    //rtxt_StatisticsOnReadDLCs.Text += i;
-                    //var ex = 0;
-                }
+                //rtxt_StatisticsOnReadDLCs.Text += "\n  a= " + i + MaximumSize+dataRow.ItemArray[0].ToString();
+                files[i].ID = dataRow.ItemArray[0].ToString();
+                files[i].Song_Title = dataRow.ItemArray[1].ToString();
+                files[i].Song_Title_Sort = dataRow.ItemArray[2].ToString();
+                files[i].Album = dataRow.ItemArray[3].ToString();
+                files[i].Artist = dataRow.ItemArray[4].ToString();
+                files[i].Artist_Sort = dataRow.ItemArray[5].ToString();
+                files[i].Album_Year = dataRow.ItemArray[6].ToString();
+                files[i].AverageTempo = dataRow.ItemArray[7].ToString();
+                files[i].Volume = dataRow.ItemArray[8].ToString();
+                files[i].Preview_Volume = dataRow.ItemArray[9].ToString();
+                files[i].AlbumArtPath = dataRow.ItemArray[10].ToString();
+                files[i].AudioPath = dataRow.ItemArray[11].ToString();
+                files[i].audioPreviewPath = dataRow.ItemArray[12].ToString();
+                files[i].Track_No = dataRow.ItemArray[13].ToString();
+                files[i].Author = dataRow.ItemArray[14].ToString();
+                files[i].Version = dataRow.ItemArray[15].ToString();
+                files[i].DLC_Name = dataRow.ItemArray[16].ToString();
+                files[i].DLC_AppID = dataRow.ItemArray[17].ToString();
+                files[i].Current_FileName = dataRow.ItemArray[18].ToString();
+                files[i].Original_FileName = dataRow.ItemArray[19].ToString();
+                files[i].Import_Path = dataRow.ItemArray[20].ToString();
+                files[i].Import_Date = dataRow.ItemArray[21].ToString();
+                files[i].Folder_Name = dataRow.ItemArray[22].ToString();
+                files[i].File_Size = dataRow.ItemArray[23].ToString();
+                files[i].File_Hash = dataRow.ItemArray[24].ToString();
+                files[i].Original_File_Hash = dataRow.ItemArray[25].ToString();
+                files[i].Is_Original = dataRow.ItemArray[26].ToString();
+                files[i].Is_OLD = dataRow.ItemArray[27].ToString();
+                files[i].Is_Beta = dataRow.ItemArray[28].ToString();
+                files[i].Is_Alternate = dataRow.ItemArray[29].ToString();
+                files[i].Is_Multitrack = dataRow.ItemArray[30].ToString();
+                files[i].Is_Broken = dataRow.ItemArray[31].ToString();
+                files[i].MultiTrack_Version = dataRow.ItemArray[32].ToString();
+                files[i].Alternate_Version_No = dataRow.ItemArray[33].ToString();
+                files[i].DLC = dataRow.ItemArray[34].ToString();
+                files[i].Has_Bass = dataRow.ItemArray[35].ToString();
+                files[i].Has_Guitar = dataRow.ItemArray[36].ToString();
+                files[i].Has_Lead = dataRow.ItemArray[37].ToString();
+                files[i].Has_Rhythm = dataRow.ItemArray[38].ToString();
+                files[i].Has_Combo = dataRow.ItemArray[39].ToString();
+                files[i].Has_Vocals = dataRow.ItemArray[40].ToString();
+                files[i].Has_Sections = dataRow.ItemArray[41].ToString();
+                files[i].Has_Cover = dataRow.ItemArray[42].ToString();
+                files[i].Has_Preview = dataRow.ItemArray[43].ToString();
+                files[i].Has_Custom_Tone = dataRow.ItemArray[44].ToString();
+                files[i].Has_DD = dataRow.ItemArray[45].ToString();
+                files[i].Has_Version = dataRow.ItemArray[46].ToString();
+                files[i].Tunning = dataRow.ItemArray[47].ToString();
+                files[i].Bass_Picking = dataRow.ItemArray[48].ToString();
+                files[i].Tones = dataRow.ItemArray[49].ToString();
+                files[i].Groups = dataRow.ItemArray[50].ToString();
+                files[i].Rating = dataRow.ItemArray[51].ToString();
+                files[i].Description = dataRow.ItemArray[52].ToString();
+                files[i].Comments = dataRow.ItemArray[53].ToString();
+                files[i].Has_Track_No = dataRow.ItemArray[54].ToString();
+                files[i].Platform = dataRow.ItemArray[55].ToString();
+                files[i].PreviewTime = dataRow.ItemArray[56].ToString();
+                files[i].PreviewLenght = dataRow.ItemArray[57].ToString();
+                files[i].Temp = dataRow.ItemArray[58].ToString();
+                files[i].CustomForge_Followers = dataRow.ItemArray[59].ToString();
+                files[i].CustomForge_Version = dataRow.ItemArray[60].ToString();
+                files[i].FilesMissingIssues = dataRow.ItemArray[61].ToString();
+                files[i].Duplicates = dataRow.ItemArray[62].ToString();
+                files[i].Pack = dataRow.ItemArray[63].ToString();
+                files[i].Keep_BassDD = dataRow.ItemArray[64].ToString();
+                files[i].Keep_DD = dataRow.ItemArray[65].ToString();
+                files[i].Keep_Original = dataRow.ItemArray[66].ToString();
+                files[i].Song_Lenght = dataRow.ItemArray[67].ToString();
+                files[i].Original = dataRow.ItemArray[68].ToString();
+                files[i].Selected = dataRow.ItemArray[69].ToString();
+                files[i].YouTube_Link = dataRow.ItemArray[70].ToString();
+                files[i].CustomsForge_Link = dataRow.ItemArray[71].ToString();
+                files[i].CustomsForge_Like = dataRow.ItemArray[72].ToString();
+                files[i].CustomsForge_ReleaseNotes = dataRow.ItemArray[73].ToString();
+                files[i].SignatureType = dataRow.ItemArray[74].ToString();
+                files[i].ToolkitVersion = dataRow.ItemArray[75].ToString();
+                files[i].Has_Author = dataRow.ItemArray[76].ToString();
+                files[i].OggPath = dataRow.ItemArray[77].ToString();
+                files[i].oggPreviewPath = dataRow.ItemArray[78].ToString();
+                files[i].UniqueDLCName = dataRow.ItemArray[79].ToString();
+                files[i].AlbumArt_Hash = dataRow.ItemArray[80].ToString();
+                files[i].Audio_Hash = dataRow.ItemArray[81].ToString();
+                files[i].audioPreview_Hash = dataRow.ItemArray[82].ToString();
+                files[i].Has_BassDD = dataRow.ItemArray[83].ToString();
+                files[i].Has_Bonus_Arrangement = dataRow.ItemArray[84].ToString();
+                files[i].Artist_ShortName = dataRow.ItemArray[85].ToString();
+                files[i].Album_ShortName = dataRow.ItemArray[86].ToString();
+                files[i].Available_Old = dataRow.ItemArray[87].ToString();
+                files[i].Available_Duplicate = dataRow.ItemArray[88].ToString();
+                files[i].Has_Been_Corrected = dataRow.ItemArray[89].ToString();
+                files[i].File_Creation_Date = dataRow.ItemArray[90].ToString();
+                i++;
             }
-            catch (System.IO.FileNotFoundException ee)
-            {
-                MessageBox.Show(ee.Message + "Can not open Main DB connection ! ");
-                //MessageBox.Show(ee.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            //Closing Connection
+            //        dax.Dispose();
+            //        cnn2.Close();
+            //        //rtxt_StatisticsOnReadDLCs.Text += i;
+            //        //var ex = 0;
+            //    }
+            //}
+            //catch (System.IO.FileNotFoundException ee)
+            //{
+            //    MessageBox.Show(ee.Message + "Can not open Main DB connection ! ");
+            //    //MessageBox.Show(ee.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
             //rtxt_StatisticsOnReadDLCs.Text += "\n  max rows" + MaximumSize;
             return MaximumSize;//files[10000];
         }
@@ -1430,38 +1447,6 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void cmb_Filter_SelectedValueChanged(object sender, EventArgs e)
         {
-            //No Guitar
-            //No Preview
-            //No Section
-            //No Vocals
-            //No Track No.
-            //No Version
-            //No Author
-            //No Bass DD
-            //No Bass
-            //No DD
-            //With DD
-            //Alternate
-            //Beta
-            //Broken
-            //Selected
-            //With Bonus
-            //Original
-            //CDLC
-            //Drop D
-            //E Standard
-            //Eb Standard
-            //Other Tunings
-            //Pc
-            //PS3
-            //Mac
-            //XBOX360
-            //0ALL
-            //Track No. 1
-            //DLCID diff than Default
-            //Autom gen Preview
-            //With Duplicates
-
             chbx_Replace.Enabled = false;
             //MessageBox.Show(cmb_Filter.Text.ToString() + SearchCmd);
             SearchCmd = "SELECT * FROM Main u WHERE ";
@@ -1578,203 +1563,207 @@ namespace RocksmithToolkitGUI.DLCManager
                     SearchCmd += "Available_Old <> 'Yes'";
                     break;
                 case "Main_FilesMissingIssues":
-                    var SearchCmd2 = "SELECT * FROM Main;";// "SELECT MAX(ID),Import_Date FROM Main;";// WHERE Import_Date=''";
-
+                    //var SearchCmd2 = "SELECT * FROM Main;";// "SELECT MAX(ID),Import_Date FROM Main;";// WHERE Import_Date=''"
                     //var DB_Path = "";
                     //DB_Path = (chbx_DefaultDB.Checked == true ? MyAppWD : txt_DBFolder.Text) + "\\Files.accdb;";
-                    try
+                    //try
+                    //{
+                    //    using (OleDbConnection cnn2 = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                    //    {
+                    //        DataSet dms = new DataSet();
+
+                    //        OleDbDataAdapter dan = new OleDbDataAdapter(SearchCmd2, cnn2);
+                    //        dan.Fill(dms, "Main");
+                    DataSet dms = new DataSet(); dms = DLCManager.SelectFromDB("Main", "SELECT * FROM Main;");
+                    var noOfRec = dms.Tables[0].Rows.Count;
+                    var vFilesMissingIssues = "";
+                    pB_ReadDLCs.Value = 0;
+                    pB_ReadDLCs.Maximum = noOfRec;// *2;
+                    pB_ReadDLCs.Increment(1);
+                    for (var i = 0; i < noOfRec; i++)
                     {
-                        using (OleDbConnection cnn2 = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                        vFilesMissingIssues = "";
+                        //DataSet dss = new DataSet();
+                        //DataSet dcs = new DataSet();
+
+                        var ID = dms.Tables[0].Rows[i].ItemArray[0].ToString();
+                        var AlbumArtPath = dms.Tables[0].Rows[i].ItemArray[10].ToString();
+                        var AudioPath = dms.Tables[0].Rows[i].ItemArray[11].ToString();
+                        var AudioPreviewPath = dms.Tables[0].Rows[i].ItemArray[12].ToString();
+                        var OggPath = dms.Tables[0].Rows[i].ItemArray[77].ToString();
+                        var OggPreviewPath = dms.Tables[0].Rows[i].ItemArray[78].ToString();
+                        var OrigFileName = dms.Tables[0].Rows[i].ItemArray[19].ToString();
+                        var hasOld = dms.Tables[0].Rows[i].ItemArray[87].ToString();
+                        var hasPrev = dms.Tables[0].Rows[i].ItemArray[43].ToString();
+                        var hasCov = dms.Tables[0].Rows[i].ItemArray[42].ToString();
+                        //var SearchCmd9 = "SELECT * FROM Arrangements WHERE CDLC_ID=" + ID + ";";
+                        //OleDbDataAdapter dbn = new OleDbDataAdapter(SearchCmd9, cnn2);
+                        //dbn.Fill(dss, "Arrangements");
+                        DataSet dss = new DataSet(); dss = DLCManager.SelectFromDB("Arrangements", "SELECT * FROM Arrangements WHERE CDLC_ID=" + ID + ";");
+
+                        var noOfArr = 0;
+                        noOfArr = dss.Tables[0].Rows.Count;
+                        if (noOfArr == 0) vFilesMissingIssues = "No Arrangements!!!";
+                        for (var k = 0; k < noOfArr; k++)//, Type
                         {
-                            DataSet dms = new DataSet();
-
-                            OleDbDataAdapter dan = new OleDbDataAdapter(SearchCmd2, cnn2);
-                            dan.Fill(dms, "Main");
-                            var noOfRec = dms.Tables[0].Rows.Count;
-                            var vFilesMissingIssues = "";
-                            pB_ReadDLCs.Value = 0;
-                            pB_ReadDLCs.Maximum = noOfRec;// *2;
-                            pB_ReadDLCs.Increment(1);
-                            for (var i = 0; i < noOfRec; i++)
+                            try
                             {
-                                vFilesMissingIssues = "";
-                                DataSet dss = new DataSet();
-                                DataSet dcs = new DataSet();
-
-                                var ID = dms.Tables[0].Rows[i].ItemArray[0].ToString();
-                                var AlbumArtPath = dms.Tables[0].Rows[i].ItemArray[10].ToString();
-                                var AudioPath = dms.Tables[0].Rows[i].ItemArray[11].ToString();
-                                var AudioPreviewPath = dms.Tables[0].Rows[i].ItemArray[12].ToString();
-                                var OggPath = dms.Tables[0].Rows[i].ItemArray[77].ToString();
-                                var OggPreviewPath = dms.Tables[0].Rows[i].ItemArray[78].ToString();
-                                var OrigFileName = dms.Tables[0].Rows[i].ItemArray[19].ToString();
-                                var hasOld = dms.Tables[0].Rows[i].ItemArray[87].ToString();
-                                var hasPrev = dms.Tables[0].Rows[i].ItemArray[43].ToString();
-                                var hasCov = dms.Tables[0].Rows[i].ItemArray[42].ToString();
-                                var SearchCmd9 = "SELECT * FROM Arrangements WHERE CDLC_ID=" + ID + ";";
-                                OleDbDataAdapter dbn = new OleDbDataAdapter(SearchCmd9, cnn2);
-                                dbn.Fill(dss, "Arrangements");
-                                var noOfArr = 0;
-                                noOfArr = dss.Tables[0].Rows.Count;
-                                if (noOfArr == 0) vFilesMissingIssues = "No Arrangements!!!";
-                                for (var k = 0; k < noOfArr; k++)//, Type
-                                {
-                                    try
-                                    {
-                                        var ms1 = dss.Tables[0].Rows[k].ItemArray[4].ToString();//.ItemArray[4].ToString();
-                                        var ms2 = dss.Tables[0].Rows[k].ItemArray[5].ToString();//.ItemArray[4].ToString();
-                                        var ms3 = dss.Tables[0].Rows[k].ItemArray[26].ToString();
-                                        if (!File.Exists(ms1) && (ms3.LastIndexOf("showlights") < 1)) vFilesMissingIssues += " SNG " + ms3 + "; "; //showlights
-                                        if (!File.Exists(ms2)) vFilesMissingIssues += " XML " + ms3 + "; ";
-                                        //var tones = dms.Tables[0].Rows[i].ItemArray[78].ToString();//not done                                        
-
-                                    }
-                                    catch (Exception ee)
-                                    {
-                                        // To inform the user and continue is 
-                                        // sufficient for this demonstration. 
-                                        // Your application may require different behavior.
-                                        Console.WriteLine(ee.Message);
-                                        //continue;
-                                    }
-                                }
-                                pB_ReadDLCs.Increment(1);
-                                var old = TempPath + "\\0_old\\" + OrigFileName;
-                                //var duplicate = dms.Tables[0].Rows[i].ItemArray[78].ToString();//not done
-                                if (!File.Exists(AlbumArtPath) && hasCov == "Yes") vFilesMissingIssues += " AlbumArtPath; ";
-                                if (!File.Exists(AudioPath)) vFilesMissingIssues += " AudioPath; ";
-                                if (!File.Exists(AudioPreviewPath) && hasPrev == "Yes") vFilesMissingIssues += " AudioPreviewPath; ";
-                                if (!File.Exists(OggPath)) vFilesMissingIssues += " OggPath; ";
-                                if (!File.Exists(OggPreviewPath)) vFilesMissingIssues += " OggPreviewPath; ";
-                                if (!File.Exists(old) && hasOld == "Yes") vFilesMissingIssues += " old; ";
-                                //if (!File.Exists(OggPath)) vFilesMissingIssues += "OggPath";
-                                var sel2 = "Update Main Set FilesMissingIssues = '" + vFilesMissingIssues + "' WHERE ID=" + ID + ";";
-                                //rtxt_StatisticsOnReadDLCs.Text = max.ToString()+"-"+sel2 + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                                DataSet dxr = new DataSet();
-                                OleDbDataAdapter dax = new OleDbDataAdapter(sel2, cnn2);
-                                if (vFilesMissingIssues != "")
-                                    dax.Fill(dxr, "Main");
-                                dax.Dispose();
+                                var ms1 = dss.Tables[0].Rows[k].ItemArray[4].ToString();//.ItemArray[4].ToString();
+                                var ms2 = dss.Tables[0].Rows[k].ItemArray[5].ToString();//.ItemArray[4].ToString();
+                                var ms3 = dss.Tables[0].Rows[k].ItemArray[26].ToString();
+                                if (!File.Exists(ms1) && (ms3.LastIndexOf("showlights") < 1)) vFilesMissingIssues += " SNG " + ms3 + "; "; //showlights
+                                if (!File.Exists(ms2)) vFilesMissingIssues += " XML " + ms3 + "; ";
+                                //var tones = dms.Tables[0].Rows[i].ItemArray[78].ToString();//not done   
                             }
-                            //dbn.Dispose();
-                            //dan.Dispose();
+                            catch (Exception ee)
+                            { Console.WriteLine(ee.Message); }
                         }
+                        pB_ReadDLCs.Increment(1);
+                        var old = TempPath + "\\0_old\\" + OrigFileName;
+                        //var duplicate = dms.Tables[0].Rows[i].ItemArray[78].ToString();//not done
+                        if (!File.Exists(AlbumArtPath) && hasCov == "Yes") vFilesMissingIssues += " AlbumArtPath; ";
+                        if (!File.Exists(AudioPath)) vFilesMissingIssues += " AudioPath; ";
+                        if (!File.Exists(AudioPreviewPath) && hasPrev == "Yes") vFilesMissingIssues += " AudioPreviewPath; ";
+                        if (!File.Exists(OggPath)) vFilesMissingIssues += " OggPath; ";
+                        if (!File.Exists(OggPreviewPath)) vFilesMissingIssues += " OggPreviewPath; ";
+                        if (!File.Exists(old) && hasOld == "Yes") vFilesMissingIssues += " old; ";
+                        //if (!File.Exists(OggPath)) vFilesMissingIssues += "OggPath";
+                        DataSet dxr = new DataSet(); if (vFilesMissingIssues != "") dxr = DLCManager.UpdateDB("Main", "Update Main Set FilesMissingIssues = '" + vFilesMissingIssues + "' WHERE ID=" + ID + ";");
+                        // var sel2 = "Update Main Set FilesMissingIssues = '" + vFilesMissingIssues + "' WHERE ID=" + ID + ";";
+                        //rtxt_StatisticsOnReadDLCs.Text = max.ToString()+"-"+sel2 + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                        //DataSet dxr = new DataSet();
+                        //OleDbDataAdapter dax = new OleDbDataAdapter(sel2, cnn2);
+
+                        //    dax.Fill(dxr, "Main");
+                        //dax.Dispose();
                     }
-                    catch (Exception ee)
-                    {
-                        // To inform the user and continue is 
-                        // sufficient for this demonstration. 
-                        // Your application may require different behavior.
-                        Console.WriteLine(ee.Message);
-                    }
+                    //dbn.Dispose();
+                    //dan.Dispose();
+                    //}
+                    //}
+                    //catch (Exception ee)
+                    //{
+                    //    
+                    //    
+                    //    
+                    //    Console.WriteLine(ee.Message);
+                    //}
                     SearchCmd += "FilesMissingIssues <> ''";
                     break;
                 case "Main_NoPreviewFile":
                     SearchCmd += "audioPreviewPath = ''";
                     break;
                 case "Imported Last":
-                    var SearchCmd3 = "SELECT top 1 Pack FROM Main order by ID DESC;";// ORDER BY Pack,Import_Date DESC "SELECT MAX(ID),Import_Date FROM Main;";// WHERE Import_Date=''";
-                    DataSet dds = new DataSet();
-                    //var DB_Path = "";
-                    //DB_Path = (chbx_DefaultDB.Checked == true ? MyAppWD : txt_DBFolder.Text) + "\\Files.accdb;";
-                    try
-                    {
-                        using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-                        {
-                            OleDbDataAdapter dan = new OleDbDataAdapter(SearchCmd3, cnn);
-                            dan.Fill(dds, "Main");
-                            var noOfRec = dds.Tables[0].Rows.Count;
-                            if (noOfRec > 0)
-                                SearchCmd += "Pack='" + dds.Tables[0].Rows[0].ItemArray[0].ToString() + "'";//Import_Date > .Replace(" AM", "").Replace(" PM", "")
-                            else SearchCmd += "1 = 2";
-                        }
-                    }
-                    catch (System.IO.FileNotFoundException ee)
-                    {
-                        // To inform the user and continue is 
-                        // sufficient for this demonstration. 
-                        // Your application may require different behavior.
-                        Console.WriteLine(ee.Message);
-                        //continue;
-                    }
+                    //var SearchCmd3 = "SELECT top 1 Pack FROM Main order by ID DESC;";// ORDER BY Pack,Import_Date DESC "SELECT MAX(ID),Import_Date FROM Main;";// WHERE Import_Date=''";
+                                                                                     // DataSet dds = new DataSet();
+                                                                                     //var DB_Path = "";
+                                                                                     //DB_Path = (chbx_DefaultDB.Checked == true ? MyAppWD : txt_DBFolder.Text) + "\\Files.accdb;";
+                                                                                     //try
+                                                                                     //{
+                                                                                     //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                                                                                     //    {
+                                                                                     //        OleDbDataAdapter dan = new OleDbDataAdapter(SearchCmd3, cnn);
+                                                                                     //        dan.Fill(dds, "Main");
+                    DataSet dds = new DataSet(); dds = DLCManager.SelectFromDB("Main", "SELECT top 1 Pack FROM Main order by ID DESC;");
+                    noOfRec = dds.Tables[0].Rows.Count;
+                    if (noOfRec > 0)
+                        SearchCmd += "Pack='" + dds.Tables[0].Rows[0].ItemArray[0].ToString() + "'";//Import_Date > .Replace(" AM", "").Replace(" PM", "")
+                    else SearchCmd += "1 = 2";
+                    //    }
+                    //}
+                    //catch (System.IO.FileNotFoundException ee)
+                    //{
+                    //    
+                    //    
+                    //    
+                    //    Console.WriteLine(ee.Message);
+                    //    //continue;
+                    //}
                     break;
                 case "Imported Current Month":
-                    var SearchCmd4 = "SELECT Import_Date FROM Main ORDER BY Import_Date DESC;";// "SELECT MAX(ID),Import_Date FROM Main;";// WHERE Import_Date=''";
-                    DataSet djs = new DataSet();
+                    //var SearchCmd4 = "SELECT Import_Date FROM Main ORDER BY Import_Date DESC;";// "SELECT MAX(ID),Import_Date FROM Main;";// WHERE Import_Date=''";
+                    //DataSet djs = new DataSet();
                     DateTime date = DateTime.Today;
                     var firstDayOfMonth = new DateTime(date.Year, date.Month, 1);
+                    //var /*noOfRec*/ = 0;
                     //var DB_Path = "";
                     //DB_Path = (chbx_DefaultDB.Checked == true ? MyAppWD : txt_DBFolder.Text) + "\\Files.accdb;";
-                    try
-                    {
-                        using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-                        {
-                            OleDbDataAdapter dan = new OleDbDataAdapter(SearchCmd4, cnn);
-                            dan.Fill(djs, "Main");
-                            if (noOfRec > 0) SearchCmd += "Import_Date > '" + firstDayOfMonth.ToShortDateString() + "'";// djs.Tables[0].Rows[0].ItemArray[0].ToString().Substring(0, 10) + "'";
-                            else SearchCmd += "1 = 2";
-                        }
-                    }
-                    catch (System.IO.FileNotFoundException ee)
-                    {
-                        // To inform the user and continue is 
-                        // sufficient for this demonstration. 
-                        // Your application may require different behavior.
-                        Console.WriteLine(ee.Message);
-                        //continue;
-                    }
+                    //try
+                    //{
+                    //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                    //    {
+                    //        OleDbDataAdapter dan = new OleDbDataAdapter(SearchCmd4, cnn);
+                    //        dan.Fill(djs, "Main");
+                    DataSet djs = new DataSet(); djs = DLCManager.SelectFromDB("Main", "SELECT Import_Date FROM Main ORDER BY Import_Date DESC;");
+                    noOfRec= djs.Tables[0].Rows.Count;
+                    if (noOfRec > 0) SearchCmd += "Import_Date > '" + firstDayOfMonth.ToShortDateString() + "'";// djs.Tables[0].Rows[0].ItemArray[0].ToString().Substring(0, 10) + "'";
+                    else SearchCmd += "1 = 2";
+                    //    }
+                    //}
+                    //catch (System.IO.FileNotFoundException ee)
+                    //{
+                    //    
+                    //    
+                    //    
+                    //    Console.WriteLine(ee.Message);
+                    //    //continue;
+                    //}
                     break;
                 case "Packed Last":
-                    var SearchCmd6 = "SELECT top 1 Pack FROM LogPacking order by ID DESC;";// ORDER BY Pack,Import_Date DESC "SELECT MAX(ID),Import_Date FROM Main;";// WHERE Import_Date=''";
-                    DataSet dzs = new DataSet();
+                    //var SearchCmd6 = /*"SELECT top 1 Pack FROM LogPacking order by ID DESC;"*/;// ORDER BY Pack,Import_Date DESC "SELECT MAX(ID),Import_Date FROM Main;";// WHERE Import_Date=''";
+                    //DataSet dzs = new DataSet();
                     //var DB_Path = "";
                     //DB_Path = (chbx_DefaultDB.Checked == true ? MyAppWD : txt_DBFolder.Text) + "\\Files.accdb;";
-                    try
-                    {
-                        using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-                        {
-                            OleDbDataAdapter dan = new OleDbDataAdapter(SearchCmd6, cnn);
-                            dan.Fill(dzs, "Main");
-                            var noOfRec = dzs.Tables[0].Rows.Count;
+                    //try
+                    //{
+                    //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                    //    {
+                    //        OleDbDataAdapter dan = new OleDbDataAdapter(SearchCmd6, cnn);
+
+                    //        dan.Fill(dzs, "Main");
+                    DataSet dzs = new DataSet(); dzs = DLCManager.SelectFromDB("LogPacking", "SELECT top 1 Pack FROM LogPacking order by ID DESC;");
+                            noOfRec = dzs.Tables[0].Rows.Count;
                             if (noOfRec > 0)
                                 SearchCmd += "CSTR(ID) in (SELECT CDLC_ID FROM LogPacking WHERE Pack='" + dzs.Tables[0].Rows[0].ItemArray[0].ToString() + "')";//Import_Date > .Replace(" AM", "").Replace(" PM", "")
                             else SearchCmd += "1 = 2";
-                        }
-                    }
-                    catch (System.IO.FileNotFoundException ee)
-                    {
-                        // To inform the user and continue is 
-                        // sufficient for this demonstration. 
-                        // Your application may require different behavior.
-                        Console.WriteLine(ee.Message);
-                        //continue;
-                    }
+                    //    }
+                    //}
+                    //catch (System.IO.FileNotFoundException ee)
+                    //{
+                    //    
+                    //    
+                    //    
+                    //    Console.WriteLine(ee.Message);
+                    //    //continue;
+                    //}
                     break;
                 case "Packing Errors":
-                    var SearchCmd7 = "SELECT top 1 Pack FROM LogPackingError order by ID DESC;";// ORDER BY Pack,Import_Date DESC "SELECT MAX(ID),Import_Date FROM Main;";// WHERE Import_Date=''";
-                    DataSet dks = new DataSet();
-                    //var DB_Path = "";
-                    //DB_Path = (chbx_DefaultDB.Checked == true ? MyAppWD : txt_DBFolder.Text) + "\\Files.accdb;";
-                    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-                    {
-                        try
-                        {
-                            OleDbDataAdapter dan = new OleDbDataAdapter(SearchCmd7, cnn);
-                            dan.Fill(dks, "Main");
-                            var noOfRec = dks.Tables[0].Rows.Count;
+                    //var SearchCmd7 = "SELECT top 1 Pack FROM LogPackingError order by ID DESC;";// ORDER BY Pack,Import_Date DESC "SELECT MAX(ID),Import_Date FROM Main;";// WHERE Import_Date=''";
+                                                                                                //DataSet dks = new DataSet();
+                                                                                                ////var DB_Path = "";
+                                                                                                ////DB_Path = (chbx_DefaultDB.Checked == true ? MyAppWD : txt_DBFolder.Text) + "\\Files.accdb;";
+                                                                                                //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                                                                                                //{
+                                                                                                //    try
+                                                                                                //    {
+                                                                                                //OleDbDataAdapter dan = new OleDbDataAdapter(SearchCmd7, cnn);
+                                                                                                //dan.Fill(dks, "Main");
+                    DataSet dks = new DataSet(); dks = DLCManager.SelectFromDB("LogPackingError", "SELECT top 1 Pack FROM LogPackingError order by ID DESC;");
+
+                    noOfRec = dks.Tables[0].Rows.Count;
                             if (noOfRec > 0)
                                 SearchCmd += "CSTR(ID) in (SELECT CDLC_ID FROM LogPackingError WHERE Pack='" + dks.Tables[0].Rows[0].ItemArray[0].ToString() + "')";
                             else SearchCmd += "1 = 2";
-                        }
-                        catch (System.IO.FileNotFoundException ee)
-                        {
-                            // To inform the user and continue is 
-                            // sufficient for this demonstration. 
-                            // Your application may require different behavior.
-                            Console.WriteLine(ee.Message);
-                            //continue;
-                        }
-                    }
+                    //    }
+                    //    catch (System.IO.FileNotFoundException ee)
+                    //    {
+                    //        
+                    //        
+                    //        
+                    //        Console.WriteLine(ee.Message);
+                    //        //continue;
+                    //    }
+                    //}
                     break;
                 case "Same DLCName":
                     var SearchCmd5 = "SELECT n.ID as IDs FROM Main AS m LEFT JOIN Main AS n ON (m.ID <> n.ID) AND (n.DLC_Name = m.DLC_Name)";
@@ -1885,14 +1874,14 @@ namespace RocksmithToolkitGUI.DLCManager
                                         {
                                             System.IO.FileInfo fi = null; //calc file size
                                             try { fi = new System.IO.FileInfo(tt); }
-                                            catch (Exception ee) { ErrorWindow frm1 = new ErrorWindow("DB Open in Design Mode or Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error when opening the DB", false, false); }
+                                            catch (Exception ee) { Console.Write(ee); ErrorWindow frm1 = new ErrorWindow("DB Open in Design Mode or Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error when opening the DB", false, false); }
 
                                             var fnn = t;
-                                            string updatecmdA = "CopyPath, PackPath, FileName, PackDate, FileHash, FileSize, DLC_ID, DLC_Name";
+                                            string insertcmdA = "CopyPath, PackPath, FileName, PackDate, FileHash, FileSize, DLC_ID, DLC_Name";
                                             var fnnon = Path.GetFileName(fnn);
                                             var packn = fnn.Substring(0, fnn.IndexOf(fnnon));
-                                            var udatevA = "\"" + t + "\",\"" + packn + "\",\"" + fnnon + "\",\"" + DateTime.Today.ToString() + "\",\"" + FileHash + "\",\"" + fi.Length + "\"," + fxd.Tables[0].Rows[0].ItemArray[0].ToString() + ",\"" + info.Name + "\"";
-                                            DLCManager.InsertIntoDBwValues("Pack_AuditTrail", updatecmdA, udatevA);
+                                            var insertA = "\"" + t + "\",\"" + packn + "\",\"" + fnnon + "\",\"" + DateTime.Today.ToString() + "\",\"" + FileHash + "\",\"" + fi.Length + "\"," + fxd.Tables[0].Rows[0].ItemArray[0].ToString() + ",\"" + info.Name + "\"";
+                                            DLCManager.InsertIntoDBwValues("Pack_AuditTrail", insertcmdA, insertA);
                                             found += fxd.Tables[0].Rows[0].ItemArray[0].ToString() + "\";\"";
                                             //var sel2 = "Update Main Set FilesMissingIssues = \"" + Path.GetFileName(t) + "\" WHERE ID=" + fxd.Tables[0].Rows[0].ItemArray[0].ToString() + ";";
                                             //rtxt_StatisticsOnReadDLCs.Text = max.ToString()+"-"+sel2 + "\n" + rtxt_StatisticsOnReadDLCs.Text;
@@ -1958,14 +1947,14 @@ namespace RocksmithToolkitGUI.DLCManager
                                         //calc file size
                                         System.IO.FileInfo fi = null;
                                         try { fi = new System.IO.FileInfo(tt); }
-                                        catch (System.IO.FileNotFoundException ee) { ErrorWindow frm1 = new ErrorWindow("DB Open in Design Mode or Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error when opening the DB", false, false); frm1.ShowDialog(); }
+                                        catch (System.IO.FileNotFoundException ee) { Console.Write(ee); ErrorWindow frm1 = new ErrorWindow("DB Open in Design Mode or Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error when opening the DB", false, false); frm1.ShowDialog(); }
 
                                         var fnn = t;
-                                        string updatecmdA = "CopyPath, PackPath, FileName, PackDate, FileHash, FileSize, DLC_ID, DLC_Name";
+                                        string insertcmdA = "CopyPath, PackPath, FileName, PackDate, FileHash, FileSize, DLC_ID, DLC_Name";
                                         var fnnon = Path.GetFileName(fnn);
                                         var packn = fnn.Substring(0, fnn.IndexOf(fnnon));
-                                        var udatevA = "\"" + t + "\",\"" + packn + "\",\"" + fnnon + "\",\"" + DateTime.Today.ToString() + "\",\"" + FileHash + "\",\"" + fi.Length + "\"," + fxd.Tables[0].Rows[0].ItemArray[0].ToString() + ",\"" + song.Identifier + "\"";
-                                        DLCManager.InsertIntoDBwValues("Pack_AuditTrail", updatecmdA, udatevA);
+                                        var insertA = "\"" + t + "\",\"" + packn + "\",\"" + fnnon + "\",\"" + DateTime.Today.ToString() + "\",\"" + FileHash + "\",\"" + fi.Length + "\"," + fxd.Tables[0].Rows[0].ItemArray[0].ToString() + ",\"" + song.Identifier + "\"";
+                                        DLCManager.InsertIntoDBwValues("Pack_AuditTrail", insertcmdA, insertA);
                                         found += fxd.Tables[0].Rows[0].ItemArray[0].ToString() + "\";\"";
                                         //var sel2 = "Update Main Set FilesMissingIssues = \"" + Path.GetFileName(t) + "\" WHERE ID=" + fxd.Tables[0].Rows[0].ItemArray[0].ToString() + ";";
                                         //rtxt_StatisticsOnReadDLCs.Text = max.ToString()+"-"+sel2 + "\n" + rtxt_StatisticsOnReadDLCs.Text;
@@ -2142,7 +2131,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     }
                     catch (Exception ee)
                     {
-
+                        Console.Write(ee);
                     }
                 }
             }
@@ -2180,7 +2169,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 }
                 catch (Exception ee)
                 {
-                    copyftp = "Not";
+                    copyftp = "Not"; Console.Write(ee);
                 }
                 copyftp = "and " + copyftp + " Copied";
             }
@@ -2205,6 +2194,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     }
                     catch (Exception ee)
                     {
+                        Console.Write(ee);
                     }
                 }
             }
@@ -2219,14 +2209,8 @@ namespace RocksmithToolkitGUI.DLCManager
             }
             catch (System.IO.FileNotFoundException ee)
             {
-                // To inform the user and continue is 
-                // sufficient for this demonstration. 
-                // Your application may require different behavior.
-                Console.WriteLine(ee.Message);
                 ErrorWindow frm1 = new ErrorWindow("DB Open in Design Mode or Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error when opening the DB", false, false);
-                frm1.ShowDialog();
-                //                        return;
-                //continue;
+                frm1.ShowDialog(); Console.Write(ee);
             }
 
             //Generating the HASH code
@@ -2255,10 +2239,10 @@ namespace RocksmithToolkitGUI.DLCManager
             if (norec == 0)
             {
                 var j = DataViewGrid.SelectedCells[0].RowIndex;
-                string updatecmdA = "CopyPath, PackPath, FileName, PackDate, FileHash, FileSize, DLC_ID, DLC_Name";
-                var udatevA = "\"" + dest + "\",\"" + source + "\",\"" + DataViewGrid.Rows[j].Cells["Original_FileName"].Value + "\",\"" + DateTime.Today.ToString() + "\",\"" + FileHash + "\",\"" + fi.Length + "\"," + DataViewGrid.Rows[j].Cells["ID"].Value + ",\"" + DataViewGrid.Rows[j].Cells["DLC_Name"].Value + "\"";
+                string insertcmdA = "CopyPath, PackPath, FileName, PackDate, FileHash, FileSize, DLC_ID, DLC_Name";
+                var insertA = "\"" + dest + "\",\"" + source + "\",\"" + DataViewGrid.Rows[j].Cells["Original_FileName"].Value + "\",\"" + DateTime.Today.ToString() + "\",\"" + FileHash + "\",\"" + fi.Length + "\"," + DataViewGrid.Rows[j].Cells["ID"].Value + ",\"" + DataViewGrid.Rows[j].Cells["DLC_Name"].Value + "\"";
                 //var udatevA = "Select " + "'" + dest + "," + source + "," + DataViewGrid.Rows[i].Cells["Original_FileName"] + "," + fi.Length + "" + FileHash + "," + DataViewGrid.Rows[i].Cells["ID"] + "," + DataViewGrid.Rows[i].Cells["DLC_Name"] + "'" + " FROM Pack_AuditTrail WHERE FileHash<>'" + FileHash + "'"; ;
-                DLCManager.InsertIntoDBwValues("Pack_AuditTrail", updatecmdA, udatevA);
+                DLCManager.InsertIntoDBwValues("Pack_AuditTrail", insertcmdA, insertA);
             }
             //  }
             pB_ReadDLCs.Increment(1);
@@ -2321,24 +2305,26 @@ namespace RocksmithToolkitGUI.DLCManager
                 return response.StatusDescription;
             }
             catch (Exception ex)
-            { }
-            //request.Method = WebRequestMethods.Ftp.DeleteFile;
-            //FtpWebResponse response = (FtpWebResponse)request.GetResponse();
-            //Console.WriteLine("Delete status: {0}", response.StatusDescription);
+            {
+                Console.Write(ex);
+            }
+                //request.Method = WebRequestMethods.Ftp.DeleteFile;
+                //FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+                //Console.WriteLine("Delete status: {0}", response.StatusDescription);
 
 
-            //string[] directories = new string[10000];
-            //var i = 0;
-            //string line = streamReader.ReadLine();
-            //while (!string.IsNullOrEmpty(line))
-            //{
-            //    directories[i] = (Path.GetFileName(line)).Substring(3, Path.GetFileName(line).Length - 3);
-            //    if (line.IndexOf("psarc") > 0) i++;
-            //    line = streamReader.ReadLine();
-            //}
+                //string[] directories = new string[10000];
+                //var i = 0;
+                //string line = streamReader.ReadLine();
+                //while (!string.IsNullOrEmpty(line))
+                //{
+                //    directories[i] = (Path.GetFileName(line)).Substring(3, Path.GetFileName(line).Length - 3);
+                //    if (line.IndexOf("psarc") > 0) i++;
+                //    line = streamReader.ReadLine();
+                //}
 
-            //streamReader.Close();
-            return "nok";
+                //streamReader.Close();
+                return "nok";
         }
 
         public static string CopyFTPFile(string filen, string localf, string FTPPath)//string filel, , string TempPat, string SearchCm)
@@ -2352,7 +2338,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 //System.IO.StreamReader streamReader = new System.IO.StreamReader(response.GetResponseStream());
                 System.IO.BinaryReader bbinaryReader = new System.IO.BinaryReader(response.GetResponseStream());
                 string[] directories = new string[10000];//= new List<string>();
-                var i = 0;
+                //var i = 0;
                 //string line = bbinaryReader.ReadLine();
                 //while (!string.IsNullOrEmpty(line))
                 //{
@@ -2389,7 +2375,7 @@ namespace RocksmithToolkitGUI.DLCManager
             }
             catch (Exception ex)
             {
-                return "nok";
+                Console.Write(ex); return "nok";
             }
         }
         public static string FTPFile(string filel, string filen, string TempPat, string SearchCm)
@@ -2421,14 +2407,14 @@ namespace RocksmithToolkitGUI.DLCManager
                 }
                 catch (Exception ee)
                 {
-                    return "Not ";
+                    Console.Write(ee); return "Not "; 
                     //MessageBox.Show(ee.Message + "PS3 is down :(! " + SearchCm);
                     //MessageBox.Show(ee.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ee)
             {
-                return "Not ";
+                Console.Write(ee); return "Not ";
                 //MessageBox.Show(ee.Message + "PS3 is down :(! " + SearchCm);
                 //MessageBox.Show(ee.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -2731,13 +2717,13 @@ namespace RocksmithToolkitGUI.DLCManager
             command.CommandText += "Selected = @param8 ";
             command.Parameters.AddWithValue("@param8", "Yes");
 
-            var test = "";
+           // var test = "";
 
             if (chbx_InclBeta.Checked)
             {
                 command.CommandText += ",Is_Beta = @param9 ";
                 command.Parameters.AddWithValue("@param9", "Yes");
-                test = " or Beta";
+                //test = " or Beta";
             }
 
             //command.CommandText += " WHERE ID IN (" + SearchCmd.Replace("*", "ID").Replace(";", "") + ")";
@@ -2769,59 +2755,65 @@ namespace RocksmithToolkitGUI.DLCManager
             if (chbx_InclGroups.Checked)
             {
                 var cmd = "DELETE FROM Groups WHERE Type=\"DLC\" AND Groups= \"" + chbx_Group.Text + "\" LEFT JOIN Main on Main.ID=Groups.CDLC_ID and Main.Selected='Yes'";
-                try
-                {
-                    using (OleDbConnection cns = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-                    {
-                        DataSet dhs = new DataSet();
 
-                        OleDbDataAdapter dhx = new OleDbDataAdapter(cmd, cns);
-                        dhx.Fill(dhs, "Groups");
-                        dhx.Dispose();
-                    }
-                    cmd = "INSERT into Groups (CDLC_ID, Groups, Type) VALUES (\"" + txt_ID.Text + "\",\"" + chbx_Group.Text + "\",\"DLC\");";
-                    DataSet dsz = new DataSet();
-                    using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-                    {
-                        OleDbDataAdapter dab = new OleDbDataAdapter(cmd, cnb);
-                        dab.Fill(dsz, "Groups");
-                        dab.Dispose();
-                    }
+                //try
+                //{
+                //    using (OleDbConnection cns = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                //    {
+                //        DataSet dhs = new DataSet();
 
-                }
-                catch (Exception ex)
-                {
-                    //MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    //MessageBox.Show("Can not Delete Song folder ! ");
-                }
+                //        OleDbDataAdapter dhx = new OleDbDataAdapter(cmd, cns);
+                //        dhx.Fill(dhs, "Groups");
+                //        dhx.Dispose();
+                //    }
+                DLCManager.DeleteFromDB("Groups", cmd);
+                    //cmd = "INSERT into Groups (CDLC_ID, Groups, Type) VALUES (\"" + txt_ID.Text + "\",\"" + chbx_Group.Text + "\",\"DLC\");";
+                var insertcmdd = "CDLC_ID, Groups, Type";
+                var insertvalues = "\"" + txt_ID.Text + "\",\"" + chbx_Group.Text + "\",\"DLC\"";
+                DLCManager.InsertIntoDBwValues("Groups", insertcmdd, insertvalues);
+                //    DataSet dsz = new DataSet();
+                //    using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                //    {
+                //        OleDbDataAdapter dab = new OleDbDataAdapter(cmd, cnb);
+                //        dab.Fill(dsz, "Groups");
+                //        dab.Dispose();
+                //    }
+
+                //}
+                //catch (Exception ex)
+                //{
+                //    //MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //    //MessageBox.Show("Can not Delete Song folder ! ");
+                //}
             }
 
             Populate(ref DataViewGrid, ref Main);//, ref bsPositions, ref bsBadges);
             DataViewGrid.EditingControlShowing += DataGridView1_EditingControlShowing;
             DataViewGrid.Refresh();
-            try
-            {
+            //try
+            //{
                 var com = "Select * FROM Main";
 
                 if (SearchCmd.IndexOf("ID, Artist") > 0) com += " WHERE ID IN ( SELECT ID FROM Main ORDER BY Artist, Album_Year, Album, Track_No, Song_Title)";
                 else
                     com += " WHERE ID IN (" + SearchCmd.Replace("*", "ID").Replace(";", "").Replace(SearchFields, "ID") + ")";
-                DataSet dhs = new DataSet();
-                using (OleDbConnection cBn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-                {// 1. If hash already exists do not insert
-                    OleDbDataAdapter dBs = new OleDbDataAdapter(com, cBn);
-                    dBs.Fill(dhs, "Main");
-                    dBs.Dispose();
-                    MessageBox.Show("All Filtered songs(" + dhs.Tables[0].Rows.Count + ") in DB have been marked as Selected" + test);
-                }
-            }
-            catch (Exception ee)
-            {
-                Console.WriteLine(ee.Message);
-                MessageBox.Show("Error at select filtered " + ee);
-            }
+                DataSet dhs = new DataSet(); dhs = DLCManager.SelectFromDB("Main", com);
+            //    DataSet dhs = new DataSet();
+            //    using (OleDbConnection cBn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //    {// 1. If hash already exists do not insert
+            //        OleDbDataAdapter dBs = new OleDbDataAdapter(com, cBn);
+            //        dBs.Fill(dhs, "Main");
+            //        dBs.Dispose();
+            //        MessageBox.Show("All Filtered songs(" + dhs.Tables[0].Rows.Count + ") in DB have been marked as Selected" + test);
+            //    }
+            //}
+            //catch (Exception ee)
+            //{
+            //    Console.WriteLine(ee.Message);
+            //    MessageBox.Show("Error at select filtered " + ee);
+            //}
 
-        }
+            }
 
         private void btn_SelectNone_Click(object sender, EventArgs e)
         {
@@ -3122,22 +3114,24 @@ namespace RocksmithToolkitGUI.DLCManager
                 };
 
                 //Add Tones
-                var cmds = "SELECT * FROM Tones WHERE CDLC_ID=" + txt_ID.Text + ";";
-                DataSet dfs = new DataSet();
+                //var cmds = "SELECT * FROM Tones WHERE CDLC_ID=" + txt_ID.Text + ";";
+                //DataSet dfs = new DataSet();
+                //var norec = 0;
+                //using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                //{
+                //    try
+                //    {
+                //        OleDbDataAdapter da = new OleDbDataAdapter(cmds, cn);
+                //        da.Fill(dfs, "Tones");
+                //    }
+                //    catch (Exception ex)
+                //    {
+
+                //    }
                 var norec = 0;
-                using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-                {
-                    try
-                    {
-                        OleDbDataAdapter da = new OleDbDataAdapter(cmds, cn);
-                        da.Fill(dfs, "Tones");
-                    }
-                    catch (Exception ex)
-                    {
+                DataSet dfs = new DataSet(); dfs = DLCManager.SelectFromDB("Tones", "SELECT * FROM Tones WHERE CDLC_ID=" + txt_ID.Text + ";");
 
-                    }
-
-                    foreach (var arg in info.TonesRS2014)//, Type
+                foreach (var arg in info.TonesRS2014)//, Type
                     {
                         norec = dfs.Tables[0].Rows.Count;
                         for (int j = 0; j < norec; j++)
@@ -3171,28 +3165,29 @@ namespace RocksmithToolkitGUI.DLCManager
                             data.TonesRS2014[j].GearList.Cabinet.Type = dfs.Tables[0].Rows[j].ItemArray[33].ToString();
 
                         }
-                    }
+                    //}
                 }
 
 
                 //Add Arrangements
-                cmds = "SELECT * FROM Arrangements WHERE CDLC_ID=" + txt_ID.Text + ";";
+                //cmds = "SELECT * FROM Arrangements WHERE CDLC_ID=" + txt_ID.Text + ";";
                 norec = 0;
-                DataSet ds = new DataSet();
+                //DataSet ds = new DataSet();
                 string sds = "";
-                using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-                {
-                    try
-                    {
-                        OleDbDataAdapter da = new OleDbDataAdapter(cmds, cn);
-                        da.Fill(ds, "Arrangements");
-                    }
-                    catch (Exception ex)
-                    {
+                //using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                //{
+                //    try
+                //    {
+                //        OleDbDataAdapter da = new OleDbDataAdapter(cmds, cn);
+                //        da.Fill(ds, "Arrangements");
+                //    }
+                //    catch (Exception ex)
+                //    {
 
-                    }
+                //    }
+                DataSet ds = new DataSet(); ds = DLCManager.SelectFromDB("Arrangements", "SELECT * FROM Arrangements WHERE CDLC_ID = " + txt_ID.Text + "; ");
 
-                    norec = ds.Tables[0].Rows.Count;
+                norec = ds.Tables[0].Rows.Count;
                     if (info.Arrangements.Capacity < norec)
                         data.Arrangements.Add(new Arrangement
                         {
@@ -3268,7 +3263,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
                         }
                     }
-                }
+                //}
 
                 //get track no
                 if (ConfigRepository.Instance()["dlcm_AdditionalManipul48"] == "Yes")
@@ -3548,9 +3543,9 @@ namespace RocksmithToolkitGUI.DLCManager
             //}
             //catch (System.IO.FileNotFoundException ee)
             //{
-            //    // To inform the user and continue is 
-            //    // sufficient for this demonstration. 
-            //    // Your application may require different behavior.
+            //    
+            //    
+            //    
             //    Console.WriteLine(ee.Message);
             //    ErrorWindow frm1 = new ErrorWindow("DB Open in Design Mode or Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error when opening the DB", false, false);
             //    frm1.ShowDialog();
@@ -3571,7 +3566,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //DLCManager.InsertIntoDBwValues("Pack_AuditTrail", updatecmdA, udatevA);
             pB_ReadDLCs.Increment(1);
             return dlcSavePath;
-            MessageBox.Show("Repack done");
+            //MessageBox.Show("Repack done");
         }
 
         //private Arrangement GenMetronomeArr(List<Arrangement> arrangements)
@@ -3836,6 +3831,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 }
                 catch (Exception ee)
                 {
+                    Console.Write(ee);
                 }
             }
         }
@@ -3896,7 +3892,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     }
                 }
                 catch (Exception ee)
-                { }
+                { Console.Write(ee); }
             }
             chbx_DD.Checked = false;
             chbx_BassDD.Checked = false;
@@ -4081,46 +4077,57 @@ namespace RocksmithToolkitGUI.DLCManager
                 var audioPreviewPath = DataViewGrid.Rows[i].Cells["audioPreviewPath"].Value.ToString().Replace(source_dir, destination_dir);
                 var OggPath = DataViewGrid.Rows[i].Cells["OggPath"].Value.ToString().Replace(source_dir, destination_dir);
                 var oggPreviewPath = DataViewGrid.Rows[i].Cells["oggPreviewPath"].Value.ToString().Replace(source_dir, destination_dir);
-                var cmd = "INSERT into Main (Song_Title, Song_Title_Sort, Album, Artist, Artist_Sort, Album_Year, AverageTempo, Volume, Preview_Volume, AlbumArtPath, AudioPath, audioPreviewPath, Track_No, Author, Version, DLC_Name, DLC_AppID, Current_FileName, Original_FileName, Import_Path, Import_Date, Folder_Name, File_Size, File_Hash, Original_File_Hash, Is_Original, Is_OLD, Is_Beta, Is_Alternate, Is_Multitrack, Is_Broken, MultiTrack_Version, Alternate_Version_No, DLC, Has_Bass, Has_Guitar, Has_Lead, Has_Rhythm, Has_Combo, Has_Vocals, Has_Sections, Has_Cover, Has_Preview, Has_Custom_Tone, Has_DD, Has_Version, Tunning, Bass_Picking, Tones, Groups, Rating, Description, Comments, Has_Track_No, Platform, PreviewTime, PreviewLenght, Youtube_Playthrough, CustomForge_Followers, CustomForge_Version, FilesMissingIssues, Duplicates, Pack, Keep_BassDD, Keep_DD, Keep_Original, Song_Lenght, Original, Selected, YouTube_Link, CustomsForge_Link, CustomsForge_Like, CustomsForge_ReleaseNotes, SignatureType, ToolkitVersion, Has_Author, OggPath, oggPreviewPath, UniqueDLCName, AlbumArt_Hash, Audio_Hash, audioPreview_Hash, Bass_Has_DD, Has_Bonus_Arrangement, Artist_ShortName, Album_ShortName, Available_Old, Available_Duplicate, Has_Been_Corrected, File_Creation_Date) SELECT Song_Title+\" alt" + max.ToString() + "\", Song_Title_Sort+\" alt" + max.ToString() + "\", Album, Artist, Artist_Sort, Album_Year, AverageTempo, Volume, Preview_Volume, \"" + AlbumArtPath + "\", \"" + AudioPath + "\", \"" + audioPreviewPath + "\", Track_No, Author, Version, DLC_Name+\"" + max.ToString() + "\", DLC_AppID, Current_FileName, \"" + fold2.Replace(fold, fold2) + "\", Import_Path, Import_Date, Folder_Name+\"" + max.ToString() + "\", File_Size, File_Hash, Original_File_Hash, Is_Original, Is_OLD, Is_Beta, \"" + "Yes" + "\", Is_Multitrack, Is_Broken, MultiTrack_Version, " + max.ToString() + ", DLC, Has_Bass, Has_Guitar, Has_Lead, Has_Rhythm, Has_Combo, Has_Vocals, Has_Sections, Has_Cover, Has_Preview, Has_Custom_Tone, Has_DD, Has_Version, Tunning, Bass_Picking, Tones, Groups, Rating, Description+\" duplicate\", Comments, Has_Track_No, Platform, PreviewTime, PreviewLenght, Youtube_Playthrough, CustomForge_Followers, CustomForge_Version, FilesMissingIssues, Duplicates, Pack, Keep_BassDD, Keep_DD, Keep_Original, Song_Lenght, Original, Selected, YouTube_Link, CustomsForge_Link, CustomsForge_Like, CustomsForge_ReleaseNotes, SignatureType, ToolkitVersion, Has_Author, \"" + OggPath + "\", \"" + oggPreviewPath + "\", UniqueDLCName, AlbumArt_Hash, Audio_Hash, audioPreview_Hash, Bass_Has_DD, Has_Bonus_Arrangement, Artist_ShortName, Album_ShortName, Available_Old, Available_Duplicate, Has_Been_Corrected, File_Creation_Date FROM Main  WHERE ID = " + txt_ID.Text;
-                DataSet dsz = new DataSet();
-                using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-                {
-                    OleDbDataAdapter dab = new OleDbDataAdapter(cmd, cnb);
-                    dab.Fill(dsz, "Main");
-                    dab.Dispose();
-                }
+                //var cmd = "INSERT into Main (Song_Title, Song_Title_Sort, Album, Artist, Artist_Sort, Album_Year, AverageTempo, Volume, Preview_Volume, AlbumArtPath, AudioPath, audioPreviewPath, Track_No, Author, Version, DLC_Name, DLC_AppID, Current_FileName, Original_FileName, Import_Path, Import_Date, Folder_Name, File_Size, File_Hash, Original_File_Hash, Is_Original, Is_OLD, Is_Beta, Is_Alternate, Is_Multitrack, Is_Broken, MultiTrack_Version, Alternate_Version_No, DLC, Has_Bass, Has_Guitar, Has_Lead, Has_Rhythm, Has_Combo, Has_Vocals, Has_Sections, Has_Cover, Has_Preview, Has_Custom_Tone, Has_DD, Has_Version, Tunning, Bass_Picking, Tones, Groups, Rating, Description, Comments, Has_Track_No, Platform, PreviewTime, PreviewLenght, Youtube_Playthrough, CustomForge_Followers, CustomForge_Version, FilesMissingIssues, Duplicates, Pack, Keep_BassDD, Keep_DD, Keep_Original, Song_Lenght, Original, Selected, YouTube_Link, CustomsForge_Link, CustomsForge_Like, CustomsForge_ReleaseNotes, SignatureType, ToolkitVersion, Has_Author, OggPath, oggPreviewPath, UniqueDLCName, AlbumArt_Hash, Audio_Hash, audioPreview_Hash, Bass_Has_DD, Has_Bonus_Arrangement, Artist_ShortName, Album_ShortName, Available_Old, Available_Duplicate, Has_Been_Corrected, File_Creation_Date)" _
+                    //& "SELECT Song_Title+\" alt" + max.ToString() + "\", Song_Title_Sort+\" alt" + max.ToString() + "\", Album, Artist, Artist_Sort, Album_Year, AverageTempo, Volume, Preview_Volume, \"" + AlbumArtPath + "\", \"" + AudioPath + "\", \"" + audioPreviewPath + "\", Track_No, Author, Version, DLC_Name+\"" + max.ToString() + "\", DLC_AppID, Current_FileName, \"" + fold2.Replace(fold, fold2) + "\", Import_Path, Import_Date, Folder_Name+\"" + max.ToString() + "\", File_Size, File_Hash, Original_File_Hash, Is_Original, Is_OLD, Is_Beta, \"" + "Yes" + "\", Is_Multitrack, Is_Broken, MultiTrack_Version, " + max.ToString() + ", DLC, Has_Bass, Has_Guitar, Has_Lead, Has_Rhythm, Has_Combo, Has_Vocals, Has_Sections, Has_Cover, Has_Preview, Has_Custom_Tone, Has_DD, Has_Version, Tunning, Bass_Picking, Tones, Groups, Rating, Description+\" duplicate\", Comments, Has_Track_No, Platform, PreviewTime, PreviewLenght, Youtube_Playthrough, CustomForge_Followers, CustomForge_Version, FilesMissingIssues, Duplicates, Pack, Keep_BassDD, Keep_DD, Keep_Original, Song_Lenght, Original, Selected, YouTube_Link, CustomsForge_Link, CustomsForge_Like, CustomsForge_ReleaseNotes, SignatureType, ToolkitVersion, Has_Author, \"" + OggPath + "\", \"" + oggPreviewPath + "\", UniqueDLCName, AlbumArt_Hash, Audio_Hash, audioPreview_Hash, Bass_Has_DD, Has_Bonus_Arrangement, Artist_ShortName, Album_ShortName, Available_Old, Available_Duplicate, Has_Been_Corrected, File_Creation_Date FROM Main  WHERE ID = " + txt_ID.Text;
+                //DataSet dsz = new DataSet();
+                //using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                //{
+                //    OleDbDataAdapter dab = new OleDbDataAdapter(cmd, cnb);
+                //    dab.Fill(dsz, "Main");
+                //    dab.Dispose();
+                //}
+                var insertcmdd = "Song_Title, Song_Title_Sort, Album, Artist, Artist_Sort, Album_Year, AverageTempo, Volume, Preview_Volume, AlbumArtPath, AudioPath, audioPreviewPath, Track_No, Author, Version, DLC_Name, DLC_AppID, Current_FileName, Original_FileName, Import_Path, Import_Date, Folder_Name, File_Size, File_Hash, Original_File_Hash, Is_Original, Is_OLD, Is_Beta, Is_Alternate, Is_Multitrack, Is_Broken, MultiTrack_Version, Alternate_Version_No, DLC, Has_Bass, Has_Guitar, Has_Lead, Has_Rhythm, Has_Combo, Has_Vocals, Has_Sections, Has_Cover, Has_Preview, Has_Custom_Tone, Has_DD, Has_Version, Tunning, Bass_Picking, Tones, Groups, Rating, Description, Comments, Has_Track_No, Platform, PreviewTime, PreviewLenght, Youtube_Playthrough, CustomForge_Followers, CustomForge_Version, FilesMissingIssues, Duplicates, Pack, Keep_BassDD, Keep_DD, Keep_Original, Song_Lenght, Original, Selected, YouTube_Link, CustomsForge_Link, CustomsForge_Like, CustomsForge_ReleaseNotes, SignatureType, ToolkitVersion, Has_Author, OggPath, oggPreviewPath, UniqueDLCName, AlbumArt_Hash, Audio_Hash, audioPreview_Hash, Bass_Has_DD, Has_Bonus_Arrangement, Artist_ShortName, Album_ShortName, Available_Old, Available_Duplicate, Has_Been_Corrected, File_Creation_Date";
+                var insertvalues = "SELECT Song_Title+\" alt" + max.ToString() + "\", Song_Title_Sort+\" alt" + max.ToString() + "\", Album, Artist, Artist_Sort, Album_Year, AverageTempo, Volume, Preview_Volume, \"" + AlbumArtPath + "\", \"" + AudioPath + "\", \"" + audioPreviewPath + "\", Track_No, Author, Version, DLC_Name+\"" + max.ToString() + "\", DLC_AppID, Current_FileName, \"" + fold2.Replace(fold, fold2) + "\", Import_Path, Import_Date, Folder_Name+\"" + max.ToString() + "\", File_Size, File_Hash, Original_File_Hash, Is_Original, Is_OLD, Is_Beta, \"" + "Yes" + "\", Is_Multitrack, Is_Broken, MultiTrack_Version, " + max.ToString() + ", DLC, Has_Bass, Has_Guitar, Has_Lead, Has_Rhythm, Has_Combo, Has_Vocals, Has_Sections, Has_Cover, Has_Preview, Has_Custom_Tone, Has_DD, Has_Version, Tunning, Bass_Picking, Tones, Groups, Rating, Description+\" duplicate\", Comments, Has_Track_No, Platform, PreviewTime, PreviewLenght, Youtube_Playthrough, CustomForge_Followers, CustomForge_Version, FilesMissingIssues, Duplicates, Pack, Keep_BassDD, Keep_DD, Keep_Original, Song_Lenght, Original, Selected, YouTube_Link, CustomsForge_Link, CustomsForge_Like, CustomsForge_ReleaseNotes, SignatureType, ToolkitVersion, Has_Author, \"" + OggPath + "\", \"" + oggPreviewPath + "\", UniqueDLCName, AlbumArt_Hash, Audio_Hash, audioPreview_Hash, Bass_Has_DD, Has_Bonus_Arrangement, Artist_ShortName, Album_ShortName, Available_Old, Available_Duplicate, Has_Been_Corrected, File_Creation_Date FROM Main  WHERE ID = " + txt_ID.Text;
+                DLCManager.InsertIntoDBwValues("Main", insertcmdd, insertvalues);
 
 
                 //getting ID
-                DataSet dus = new DataSet();
-                cmd = "SELECT ID FROM Main WHERE Song_Title=\"" + txt_Title.Text + " alt" + max.ToString() + "\"";
-                using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-                {
-                    OleDbDataAdapter dad = new OleDbDataAdapter(cmd, cnb);
-                    dad.Fill(dus, "Main");
-                    dad.Dispose();
-                }
+                //DataSet dus = new DataSet();
+                //cmd = "SELECT ID FROM Main WHERE Song_Title=\"" + txt_Title.Text + " alt" + max.ToString() + "\"";
+                //using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                //{
+                //    OleDbDataAdapter dad = new OleDbDataAdapter(cmd, cnb);
+                //    dad.Fill(dus, "Main");
+                //    dad.Dispose();
+                //}
+                DataSet dus = new DataSet(); dus = DLCManager.SelectFromDB("Main", "SELECT ID FROM Main WHERE Song_Title=\"" + txt_Title.Text + " alt" + max.ToString() + "\"");
                 var CDLC_ID = dus.Tables[0].Rows[0].ItemArray[0].ToString();
 
                 //var SNGFilePath = ""; SNGFilePath = SNGFilePath.Replace(source_dir, destination_dir);//= REPLACE(OggPath, left(OggPath, instr(OggPath, '" + tmpp + "') - 1), '" + TempPath + tmpp + "')
                 //var XMLFilePath = ""; XMLFilePath = XMLFilePath.Replace(source_dir, destination_dir);
-                cmd = "INSERT into Arrangements (Arrangement_Name, CDLC_ID, Bonus, SNGFilePath, XMLFilePath, XMLFile_Hash, ScrollSpeed, Tunning, Rating, PlayThoughYBLink, CustomsForge_Link, ArrangementSort, TuningPitch, ToneBase, Idd, MasterId, ArrangementType, String0, String1, String2, String3, String4, String5, PluckedType, RouteMask, XMLFileName, XMLFileLLID, XMLFileUUID, SNGFileName, SNGFileLLID, SNGFileUUID, ToneMultiplayer, ToneA, ToneB, ToneC, ToneD, lastConversionDateTime, SNGFileHash, Has_Sections, Comments) SELECT Arrangement_Name, " + CDLC_ID + ", Bonus, \"" + destination_dir + "\\manifests\\\"+right(SNGFilePath,len(SNGFilePath)-instr(SNGFilePath, 'manifests')-9), \"" + destination_dir + "\\songs\\arr\\\"+right(XMLFilePath,len(XMLFilePath)-instr(XMLFilePath, '\\songs\\arr\\')-10), XMLFile_Hash, ScrollSpeed, Tunning, Rating, PlayThoughYBLink, CustomsForge_Link, ArrangementSort, TuningPitch, ToneBase, Idd, MasterId, ArrangementType, String0, String1, String2, String3, String4, String5, PluckedType, RouteMask, XMLFileName, XMLFileLLID, XMLFileUUID, SNGFileName, SNGFileLLID, SNGFileUUID, ToneMultiplayer, ToneA, ToneB, ToneC, ToneD, lastConversionDateTime, SNGFileHash, Has_Sections, Comments FROM Arrangements WHERE CDLC_ID = " + txt_ID.Text;
-                DataSet dgz = new DataSet();
-                using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-                {
-                    OleDbDataAdapter dah = new OleDbDataAdapter(cmd, cnb);
-                    dah.Fill(dgz, "Arrangements");
-                    dah.Dispose();
-                }
+                 insertcmdd = "Arrangement_Name, CDLC_ID, Bonus, SNGFilePath, XMLFilePath, XMLFile_Hash, ScrollSpeed, Tunning, Rating, PlayThoughYBLink, CustomsForge_Link, ArrangementSort, TuningPitch, ToneBase, Idd, MasterId, ArrangementType, String0, String1, String2, String3, String4, String5, PluckedType, RouteMask, XMLFileName, XMLFileLLID, XMLFileUUID, SNGFileName, SNGFileLLID, SNGFileUUID, ToneMultiplayer, ToneA, ToneB, ToneC, ToneD, lastConversionDateTime, SNGFileHash, Has_Sections, Comments";
+                 insertvalues = "SELECT Arrangement_Name, " + CDLC_ID + ", Bonus, \"" + destination_dir + "\\manifests\\\"+right(SNGFilePath,len(SNGFilePath)-instr(SNGFilePath, 'manifests')-9), \"" + destination_dir + "\\songs\\arr\\\"+right(XMLFilePath,len(XMLFilePath)-instr(XMLFilePath, '\\songs\\arr\\')-10), XMLFile_Hash, ScrollSpeed, Tunning, Rating, PlayThoughYBLink, CustomsForge_Link, ArrangementSort, TuningPitch, ToneBase, Idd, MasterId, ArrangementType, String0, String1, String2, String3, String4, String5, PluckedType, RouteMask, XMLFileName, XMLFileLLID, XMLFileUUID, SNGFileName, SNGFileLLID, SNGFileUUID, ToneMultiplayer, ToneA, ToneB, ToneC, ToneD, lastConversionDateTime, SNGFileHash, Has_Sections, Comments FROM Arrangements WHERE CDLC_ID = " + txt_ID.Text;
+                DLCManager.InsertIntoDBwValues("Arrangements", insertcmdd, insertvalues);
+                //cmd = "INSERT into Arrangements (Arrangement_Name, CDLC_ID, Bonus, SNGFilePath, XMLFilePath, XMLFile_Hash, ScrollSpeed, Tunning, Rating, PlayThoughYBLink, CustomsForge_Link, ArrangementSort, TuningPitch, ToneBase, Idd, MasterId, ArrangementType, String0, String1, String2, String3, String4, String5, PluckedType, RouteMask, XMLFileName, XMLFileLLID, XMLFileUUID, SNGFileName, SNGFileLLID, SNGFileUUID, ToneMultiplayer, ToneA, ToneB, ToneC, ToneD, lastConversionDateTime, SNGFileHash, Has_Sections, Comments) SELECT Arrangement_Name, " + CDLC_ID + ", Bonus, \"" + destination_dir + "\\manifests\\\"+right(SNGFilePath,len(SNGFilePath)-instr(SNGFilePath, 'manifests')-9), \"" + destination_dir + "\\songs\\arr\\\"+right(XMLFilePath,len(XMLFilePath)-instr(XMLFilePath, '\\songs\\arr\\')-10), XMLFile_Hash, ScrollSpeed, Tunning, Rating, PlayThoughYBLink, CustomsForge_Link, ArrangementSort, TuningPitch, ToneBase, Idd, MasterId, ArrangementType, String0, String1, String2, String3, String4, String5, PluckedType, RouteMask, XMLFileName, XMLFileLLID, XMLFileUUID, SNGFileName, SNGFileLLID, SNGFileUUID, ToneMultiplayer, ToneA, ToneB, ToneC, ToneD, lastConversionDateTime, SNGFileHash, Has_Sections, Comments FROM Arrangements WHERE CDLC_ID = " + txt_ID.Text;
+                //DataSet dgz = new DataSet();
+                //using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                //{
+                //    OleDbDataAdapter dah = new OleDbDataAdapter(cmd, cnb);
+                //    dah.Fill(dgz, "Arrangements");
+                //    dah.Dispose();
+                //}
 
-                cmd = "INSERT into Tones (Tone_Name, CDLC_ID, Volume, Keyy, Is_Custom, GearList, AmpRack, Pedals, Description, Favorite, SortOrder, NameSeparator, Cabinet, PostPedal1, PostPedal2, PostPedal3, PostPedal4, PrePedal1, PrePedal2, PrePedal3, PrePedal4, Rack1, Rack2, Rack3, Rack4, AmpType, AmpCategory, AmpKnobValues, AmpPedalKey, CabinetCategory, CabinetKnobValues, CabinetPedalKey, CabinetType, lastConversionDateTime, lastConverjsonDateTime) SELECT Tone_Name, " + CDLC_ID + ", Volume, Keyy, Is_Custom, GearList, AmpRack, Pedals, Description, Favorite, SortOrder, NameSeparator, Cabinet, PostPedal1, PostPedal2, PostPedal3, PostPedal4, PrePedal1, PrePedal2, PrePedal3, PrePedal4, Rack1, Rack2, Rack3, Rack4, AmpType, AmpCategory, AmpKnobValues, AmpPedalKey, CabinetCategory, CabinetKnobValues, CabinetPedalKey, CabinetType, lastConversionDateTime, lastConverjsonDateTime FROM Tones WHERE CDLC_ID = " + txt_ID.Text;
-                DataSet djz = new DataSet();
-                using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-                {
-                    OleDbDataAdapter djb = new OleDbDataAdapter(cmd, cnb);
-                    djb.Fill(djz, "Tones");
-                    djb.Dispose();
-                }
+                //cmd = "INSERT into Tones (Tone_Name, CDLC_ID, Volume, Keyy, Is_Custom, GearList, AmpRack, Pedals, Description, Favorite, SortOrder, NameSeparator, Cabinet, PostPedal1, PostPedal2, PostPedal3, PostPedal4, PrePedal1, PrePedal2, PrePedal3, PrePedal4, Rack1, Rack2, Rack3, Rack4, AmpType, AmpCategory, AmpKnobValues, AmpPedalKey, CabinetCategory, CabinetKnobValues, CabinetPedalKey, CabinetType, lastConversionDateTime, lastConverjsonDateTime) SELECT Tone_Name, " + CDLC_ID + ", Volume, Keyy, Is_Custom, GearList, AmpRack, Pedals, Description, Favorite, SortOrder, NameSeparator, Cabinet, PostPedal1, PostPedal2, PostPedal3, PostPedal4, PrePedal1, PrePedal2, PrePedal3, PrePedal4, Rack1, Rack2, Rack3, Rack4, AmpType, AmpCategory, AmpKnobValues, AmpPedalKey, CabinetCategory, CabinetKnobValues, CabinetPedalKey, CabinetType, lastConversionDateTime, lastConverjsonDateTime FROM Tones WHERE CDLC_ID = " + txt_ID.Text;
+                //DataSet djz = new DataSet();
+                //using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                //{
+                //    OleDbDataAdapter djb = new OleDbDataAdapter(cmd, cnb);
+                //    djb.Fill(djz, "Tones");
+                //    djb.Dispose();
+                //}
+                insertcmdd = "Tone_Name, CDLC_ID, Volume, Keyy, Is_Custom, GearList, AmpRack, Pedals, Description, Favorite, SortOrder, NameSeparator, Cabinet, PostPedal1, PostPedal2, PostPedal3, PostPedal4, PrePedal1, PrePedal2, PrePedal3, PrePedal4, Rack1, Rack2, Rack3, Rack4, AmpType, AmpCategory, AmpKnobValues, AmpPedalKey, CabinetCategory, CabinetKnobValues, CabinetPedalKey, CabinetType, lastConversionDateTime, lastConverjsonDateTime";
+                insertvalues = "SELECT Tone_Name, " + CDLC_ID + ", Volume, Keyy, Is_Custom, GearList, AmpRack, Pedals, Description, Favorite, SortOrder, NameSeparator, Cabinet, PostPedal1, PostPedal2, PostPedal3, PostPedal4, PrePedal1, PrePedal2, PrePedal3, PrePedal4, Rack1, Rack2, Rack3, Rack4, AmpType, AmpCategory, AmpKnobValues, AmpPedalKey, CabinetCategory, CabinetKnobValues, CabinetPedalKey, CabinetType, lastConversionDateTime, lastConverjsonDateTime FROM Tones WHERE CDLC_ID = " + txt_ID.Text; ;
+                DLCManager.InsertIntoDBwValues("Tones", insertcmdd, insertvalues);
 
                 MessageBox.Show("Record has been duplicated");
 
@@ -4146,7 +4153,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 var duration = vorbis.TotalTime;
 
                 var buffer = new float[16384];
-                int count;
+               // int count;
                 //while ((count = vorbis.ReadSamples(buffer, 0, buffer.Length)) > 0)
                 //{
                 // Do stuff with the samples returned...
@@ -4246,8 +4253,6 @@ namespace RocksmithToolkitGUI.DLCManager
 
             //DLCManager.
             txt_debug.Text += keywordString + "s\n" + a1 + "\n\n " + a2 + "\n " + a3 + "\n " + a4;
-
-
         }
 
         //public class AutorizationCodeAuth
@@ -4691,7 +4696,9 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btn_DefaultCover_Click(object sender, EventArgs e)
         {
-            Standardization.MakeCover(DB_Path, txt_AlbumArtPath.Text, txt_Artist.Text, txt_Album.Text);
+            var cmd1 = "UPDATE Standardization SET AlbumArt_Correction = \"" + txt_AlbumArtPath.Text + "\" WHERE Artist=\"" + txt_Artist.Text + "\" and Album=\"" + txt_Album.Text + "\"";
+           DataSet dgt = DLCManager.UpdateDB("Main", cmd1 + ";");
+            Standardization.MakeCover();// DB_Path, txt_AlbumArtPath.Text, txt_Artist.Text, txt_Album.Text);
         }
 
         private void btn_AddSections_Click(object sender, EventArgs e)
@@ -4749,41 +4756,42 @@ namespace RocksmithToolkitGUI.DLCManager
             Populate(ref DataViewGrid, ref Main);//, ref bsPositions, ref bsBadges);
             DataViewGrid.EditingControlShowing += DataGridView1_EditingControlShowing;
             DataViewGrid.Refresh();
-            try
-            {
-                var com = "Select * FROM Main";
-                com += " WHERE ID Not IN (" + SearchCmd.Replace("*", "ID").Replace(";", "").Replace(SearchFields, "ID") + ")";
-                DataSet dhs = new DataSet();
-                using (OleDbConnection cBn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-                {// 1. If hash already exists do not insert
-                    OleDbDataAdapter dBs = new OleDbDataAdapter(com, cBn);
-                    dBs.Fill(dhs, "Main");
-                    dBs.Dispose();
-                    MessageBox.Show("All NON Filtered songs(" + dhs.Tables[0].Rows.Count + ") in DB have been marked as Selected" + test);
-                }
-            }
-            catch (Exception ee)
-            {
-                Console.WriteLine(ee.Message);
-                MessageBox.Show("Error at select inverted " + ee);
-            }
+            //try
+            //{
+                //var com = "/*Select * FROM Main WHERE ID Not IN (" + SearchCmd.Replace("*", "ID").Replace(";", "").Replace(SearchFields, "ID") + ")"*/;
+            //DataSet dhs = new DataSet();
+            //using (OleDbConnection cBn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //{// 1. If hash already exists do not insert
+            //    OleDbDataAdapter dBs = new OleDbDataAdapter(com, cBn);
+            //    dBs.Fill(dhs, "Main");
+            //    dBs.Dispose();
+            DataSet dhs = new DataSet(); dhs = DLCManager.SelectFromDB("Main", "Select * FROM Main WHERE ID Not IN(" + SearchCmd.Replace(" * ", "ID").Replace("; ", "").Replace(SearchFields, "ID") + ")");
+            MessageBox.Show("All NON Filtered songs(" + dhs.Tables[0].Rows.Count + ") in DB have been marked as Selected" + test);
+            //    }
+            //}
+            //catch (Exception ee)
+            //{
+            //    Console.WriteLine(ee.Message);
+            //    MessageBox.Show("Error at select inverted " + ee);
+            //}
+            
         }
 
         private void btn_Copy_old_Click(object sender, EventArgs e)
         {
             pB_ReadDLCs.Value = 0;
-            using (OleDbConnection cBn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-            {// 1. If hash already exists do not insert
-                try
-                {
-                    var com = "SELECT * FROM Main";
-                    com += " WHERE ID IN (" + SearchCmd.Replace("*", "ID").Replace(";", "").Replace(SearchFields, "ID") + ")";
-                    DataSet dhs = new DataSet();
+            //using (OleDbConnection cBn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //{// 1. If hash already exists do not insert
+            //    try
+            //    {
+            //        var com = "SELECT * FROM Main WHERE ID IN (" + SearchCmd.Replace("*", "ID").Replace(";", "").Replace(SearchFields, "ID") + ")";
+            //        DataSet dhs = new DataSet();
 
-                    OleDbDataAdapter dBs = new OleDbDataAdapter(com, cBn);
-                    dBs.Fill(dhs, "Main");
-                    dBs.Dispose();
-                    noOfRec = dhs.Tables[0].Rows.Count;
+            //        OleDbDataAdapter dBs = new OleDbDataAdapter(com, cBn);
+            //        dBs.Fill(dhs, "Main");
+            //        dBs.Dispose();
+            DataSet dhs = new DataSet(); dhs = DLCManager.SelectFromDB("Main", "SELECT * FROM Main WHERE ID IN (" + SearchCmd.Replace("*", "ID").Replace(";", "").Replace(SearchFields, "ID") + ")");
+            noOfRec = dhs.Tables[0].Rows.Count;
                     var dest = "";
                     pB_ReadDLCs.Maximum = noOfRec;
                     for (var i = 0; i <= noOfRec - 1; i++)
@@ -4806,14 +4814,14 @@ namespace RocksmithToolkitGUI.DLCManager
                         pB_ReadDLCs.Value++;
                     }
                     MessageBox.Show(noOfRec + " Files Copied to " + RocksmithDLCPath + "\\");
-                }
+            //    }
 
-                catch (Exception ee)
-                {
-                    Console.WriteLine(ee.Message);
-                    MessageBox.Show("Error at copy OLD " + ee);
-                }
-            }
+            //    catch (Exception ee)
+            //    {
+            //        Console.WriteLine(ee.Message);
+            //        MessageBox.Show("Error at copy OLD " + ee);
+            //    }
+            //}
         }
 
         private void btn_SelectInverted_Click(object sender, EventArgs e)
@@ -4887,24 +4895,26 @@ namespace RocksmithToolkitGUI.DLCManager
             Populate(ref DataViewGrid, ref Main);//, ref bsPositions, ref bsBadges);
             DataViewGrid.EditingControlShowing += DataGridView1_EditingControlShowing;
             DataViewGrid.Refresh();
-            try
-            {
-                var com = "Select * FROM Main";
-                com += " WHERE ID Not IN (" + SearchCmd.Replace("*", "ID").Replace(";", "").Replace(SearchFields, "ID") + ")";
-                DataSet dhs = new DataSet();
-                using (OleDbConnection cBn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-                {// 1. If hash already exists do not insert
-                    OleDbDataAdapter dBs = new OleDbDataAdapter(com, cBn);
-                    dBs.Fill(dhs, "Main");
-                    dBs.Dispose();
-                    MessageBox.Show("All NON Filtered songs(" + dhs.Tables[0].Rows.Count + ") in DB have been marked as Selected" + test);
-                }
-            }
-            catch (Exception ee)
-            {
-                Console.WriteLine(ee.Message);
-                MessageBox.Show("Error at select inverted " + ee);
-            }
+
+            DataSet dhs = new DataSet(); dhs = DLCManager.SelectFromDB("Main", "Select * FROM Main WHERE ID Not IN (" + SearchCmd.Replace("*", "ID").Replace(";", "").Replace(SearchFields, "ID") + ")");
+            MessageBox.Show("All NON Filtered songs(" + dhs.Tables[0].Rows.Count + ") in DB have been marked as Selected" + test);
+            //try
+            //{
+            //    var com = "Select * FROM Main WHERE ID Not IN (" + SearchCmd.Replace("*", "ID").Replace(";", "").Replace(SearchFields, "ID") + ")";
+            //    DataSet dhs = new DataSet();
+            //    using (OleDbConnection cBn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //    {// 1. If hash already exists do not insert
+            //        OleDbDataAdapter dBs = new OleDbDataAdapter(com, cBn);
+            //        dBs.Fill(dhs, "Main");
+            //        dBs.Dispose();
+            //        MessageBox.Show("All NON Filtered songs(" + dhs.Tables[0].Rows.Count + ") in DB have been marked as Selected" + test);
+            //    }
+            //}
+            //catch (Exception ee)
+            //{
+            //    Console.WriteLine(ee.Message);
+            //    MessageBox.Show("Error at select inverted " + ee);
+            //}
         }
 
         private void txt_Artist_KeyPress(object sender, KeyPressEventArgs e)
@@ -4948,24 +4958,24 @@ namespace RocksmithToolkitGUI.DLCManager
             Populate(ref DataViewGrid, ref Main);//, ref bsPositions, ref bsBadges);
             DataViewGrid.EditingControlShowing += DataGridView1_EditingControlShowing;
             DataViewGrid.Refresh();
-            try
-            {
-                var com = "Select * FROM Main";
-                com += " WHERE ID IN (" + SearchCmd.Replace("*", "ID").Replace(";", "").Replace(SearchFields, "ID") + ")";
-                DataSet dhs = new DataSet();
-                using (OleDbConnection cBn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-                {// 1. If hash already exists do not insert
-                    OleDbDataAdapter dBs = new OleDbDataAdapter(com, cBn);
-                    dBs.Fill(dhs, "Main");
-                    dBs.Dispose();
-                    MessageBox.Show("All Filtered songs(" + dhs.Tables[0].Rows.Count + ") in DB have been marked as Beta");
-                }
-            }
-            catch (Exception ee)
-            {
-                Console.WriteLine(ee.Message);
-                MessageBox.Show("Error at select filtered " + ee);
-            }
+            //try
+            //{
+            //    var com = "Select * FROM Main" WHERE ID IN (" + SearchCmd.Replace("*", "ID").Replace(";", "").Replace(SearchFields, "ID") + ")";
+            //    DataSet dhs = new DataSet();
+            //    using (OleDbConnection cBn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //    {// 1. If hash already exists do not insert
+            //        OleDbDataAdapter dBs = new OleDbDataAdapter(com, cBn);
+            //        dBs.Fill(dhs, "Main");
+            //        dBs.Dispose();
+            DataSet dhs = new DataSet(); dhs = DLCManager.SelectFromDB("Main", "Select * FROM Main WHERE ID IN(" + SearchCmd.Replace(" * ", "ID").Replace("; ", "").Replace(SearchFields, "ID") + ")");
+            MessageBox.Show("All Filtered songs(" + dhs.Tables[0].Rows.Count + ") in DB have been marked as Beta");
+            //    }
+            //}
+            //catch (Exception ee)
+            //{
+            //    Console.WriteLine(ee.Message);
+            //    MessageBox.Show("Error at select filtered " + ee);
+            //}
         }
 
         private void btn_EOF_Click(object sender, EventArgs e)
@@ -5091,23 +5101,24 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btn_GroupsRemove_Click(object sender, EventArgs e)
         {
-            var cmd = "DELETE FROM Groups WHERE Type=\"DLC\" AND Groups= \"" + chbx_Group.Text + "\"";
-            try
-            {
-                using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-                {
-                    DataSet dhs = new DataSet();
+            DLCManager.DeleteFromDB("Groups", "DELETE FROM Groups WHERE Type=\"DLC\" AND Groups= \"" + chbx_Group.Text + "\"");
+            //var cmd = "DELETE FROM Groups WHERE Type=\"DLC\" AND Groups= \"" + chbx_Group.Text + "\"";
+            //try
+            //{
+            //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //    {
+            //        DataSet dhs = new DataSet();
 
-                    OleDbDataAdapter dhx = new OleDbDataAdapter(cmd, cnn);
-                    dhx.Fill(dhs, "Groups");
-                    dhx.Dispose();
-                }
-            }
-            catch (Exception ex)
-            {
-                //MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                //MessageBox.Show("Can not Delete Song folder ! ");
-            }
+            //        OleDbDataAdapter dhx = new OleDbDataAdapter(cmd, cnn);
+            //        dhx.Fill(dhs, "Groups");
+            //        dhx.Dispose();
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    //MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    //MessageBox.Show("Can not Delete Song folder ! ");
+            //}
             GroupChanged = true;
             ChangeRow();
         }
@@ -5195,22 +5206,45 @@ namespace RocksmithToolkitGUI.DLCManager
                     return;
                 temppath = fbd.FileName;
 
-                using (OleDbConnection cnn7 = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                //using (OleDbConnection cnn7 = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                //{
+               // var sql = "";
+                DataSet dsr = new DataSet();
+                if (chbx_Lyrics.Checked)
+                    dsr = DLCManager.UpdateDB("Arrangements", "UPDATE Arrangements SET XMLFilePath=\"" + temppath + "\" WHERE ArrangementType=\"Vocal\" AND CDLC_ID=" + txt_ID.Text + ";");
+                else
                 {
-                    var sql = "";
-                    if (chbx_Lyrics.Checked)
-                        sql = "UPDATE Arrangements SET XMLFilePath=\"" + temppath + "\" WHERE ArrangementType=\"Vocal\" AND CDLC_ID=" + txt_ID.Text + ";";
-                    else
-                        sql = "INSERT INTO Arrangements (Arrangement_Name,CDLC_ID, ArrangementType, Bonus, ArrangementSort, TuningPitch, RouteMask, Has_Sections, XMLFilePath) VALUES(\"4\", " + txt_ID.Text + ", \"Vocal\", \"false\", \"0\", \"0\", \"None\",\"No\",\"" + temppath + "\")";
-
-                    OleDbDataAdapter dag = new OleDbDataAdapter(sql, cnn7); //WHERE id=253
-                    DataSet dsr = new DataSet();
-                    dag.Fill(dsr, "Main");
-                    txt_Lyrics.Text = temppath;
-                    chbx_Lyrics.Checked = true;
-                    SaveRecord();
+                    //sql = "INSERT INTO Arrangements () VALUES(\"4\", " + txt_ID.Text + ", \"Vocal\", \"false\", \"0\", \"0\", \"None\",\"No\",\"" + temppath + "\")";
+                    var insertcmdd = "Arrangement_Name,CDLC_ID, ArrangementType, Bonus, ArrangementSort, TuningPitch, RouteMask, Has_Sections, XMLFilePath";
+                    var insertvalues = "\"4\", " + txt_ID.Text + ", \"Vocal\", \"false\", \"0\", \"0\", \"None\",\"No\",\"" + temppath + "\"";
+                    DLCManager.InsertIntoDBwValues("Arrangements", insertcmdd, insertvalues);
                 }
+
+                //OleDbDataAdapter dag = new OleDbDataAdapter(sql, cnn7); //WHERE id=253
+
+                //dag.Fill(dsr, "Main");
+                txt_Lyrics.Text = temppath;
+                chbx_Lyrics.Checked = true;
+                SaveRecord();
+                //}
             }
+        }
+
+        private void DataViewGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void btn_ApplyShortNames_Click(object sender, EventArgs e)
+        {
+            var cmd1 = "UPDATE Standardization SET Artist_Short = \"" + txt_Artist_ShortName + "\" WHERE Artist=\"" + txt_Artist.Text+ "\"";
+            DataSet dus = DLCManager.UpdateDB("Main", cmd1 + ";");
+        }
+
+        private void btn_ApplyAlbumSortNames_Click(object sender, EventArgs e)
+        {
+            var cmd1 = "UPDATE Standardization SET Album_Short = \"" + txt_Album_ShortName + "\" WHERE Artist=\"" + txt_Artist.Text + "\" AND Album=\""+txt_Album.Text+"\"";
+            DataSet dus = DLCManager.UpdateDB("Main", cmd1 + ";");
         }
     }
 }

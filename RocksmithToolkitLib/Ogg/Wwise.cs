@@ -126,7 +126,7 @@ namespace RocksmithToolkitLib.Ogg
                     Directory.CreateDirectory(Path.Combine(templateDir, ".cache\\Windows\\SFX"));
                 }
                 catch (Exception ex) //bcapi 
-                { }
+                { Console.Write(ex); }
             }
 
             // cleanup gives new hex value to WEM files
@@ -137,7 +137,7 @@ namespace RocksmithToolkitLib.Ogg
                     Directory.Delete(bnk, true);
                 }
                 catch (Exception ex) //bcapi 
-                { }
+                { Console.Write(ex); }
 
             var dirName = Path.GetDirectoryName(sourcePath);
             var fileName = Path.GetFileNameWithoutExtension(sourcePath);

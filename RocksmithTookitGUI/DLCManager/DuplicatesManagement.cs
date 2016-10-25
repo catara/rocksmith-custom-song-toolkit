@@ -18,6 +18,7 @@ using System.Security.Cryptography; //For File hash
 using RocksmithToolkitLib.Extensions; //dds
 using System.Globalization;
 using Ookii.Dialogs; //cue text
+using RocksmithToolkitLib.XmlRepository;
 //using RocksmithToolkitLib.Extensions; //most likely cue text
 
 namespace RocksmithToolkitGUI.DLCManager
@@ -127,35 +128,35 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             var a = "";
             //Get the higgest Alternate Number
-            try
-            {
-                using (OleDbConnection con = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-                {
+            //try
+            //{
+            //    using (OleDbConnection con = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                //{
                     var sel = "SELECT max(Alternate_Version_No) FROM Main WHERE(LCASE(Artist) =LCASE(\"" + datas.SongInfo.Artist + "\") AND LCASE(Album)=LCASE(\"" + datas.SongInfo.Album + "\") AND ";
                     sel += "(LCASE(Song_Title)=LCASE(\"" + datas.SongInfo.SongDisplayName + "\") OR ";
                     sel += "LCASE(Song_Title) like \"%" + datas.SongInfo.SongDisplayName.ToLower() + "%\" OR ";
                     sel += "LCASE(Song_Title_Sort) =LCASE(\"" + datas.SongInfo.SongDisplayNameSort + "\"))) OR LCASE(DLC_Name)=LCASE(\"" + datas.Name + "\");";
                     //Get last inserted ID
                     //rtxt_StatisticsOnReadDLCs.Text = sel + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                    DataSet dds = new DataSet();
-                    OleDbDataAdapter dda = new OleDbDataAdapter(sel, con);
-                    dda.Fill(dds, "Main");
-                    dda.Dispose();
+                    DataSet dds = new DataSet(); dds = DLCManager.SelectFromDB("Main", sel);
+                    //OleDbDataAdapter dda = new OleDbDataAdapter(sel, con);
+                    //dda.Fill(dds, "Main");
+                    //dda.Dispose();
 
                     var altver = dds.Tables[0].Rows[0].ItemArray[0].ToString();
                     if (Is_Original == "No") a = (altver.ToInt32() + 1).ToString(); //Add Alternative_Version_No
                     //rtxt_StatisticsOnReadDLCs.Text = alt + "\n" + rtxt_StatisticsOnReadDLCs.Text;
 
-                }
-            }
-            catch (System.IO.FileNotFoundException ee)
-            {
-                // To inform the user and continue is 
-                // sufficient for this demonstration. 
-                // Your application may require different behavior.
-                Console.WriteLine(ee.Message);
-                //continue;
-            }
+            //    }
+            //}
+            //catch (System.IO.FileNotFoundException ee)
+            //{
+            //    
+            //    
+            //    
+            //    Console.WriteLine(ee.Message);
+            //    //continue;
+            //}
 
             return a;
         }
@@ -376,9 +377,9 @@ namespace RocksmithToolkitGUI.DLCManager
             //text += ((filed.AudioPreview_Hash == audioPreview_hash) ? "" : "\n14/14+ Diff Preview File: Yes");//  + audioPreview_hash + "->" + filed.audioPreview_Hash
 
             //files hash
-            DataSet ds = new DataSet();
+            //DataSet ds = new DataSet();
             i = 0;
-            DB_Path = DB_Path + "\\Files.accdb;";
+            //DB_Path = DB_Path + "\\Files.accdb;";
             string jsonHash = "";
             //bool diffjson;// = true;
             string XmlHash = "";
@@ -399,17 +400,18 @@ namespace RocksmithToolkitGUI.DLCManager
             string txtnew = "";
             string txtold = "";
             //MessageBox.Show(DB_Path);
-            try
-            {
-                using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-                {
-                    var cmd = "SELECT * FROM Arrangements WHERE CDLC_ID=" + filed.ID.ToString() + ";";//\"\"
-                    OleDbDataAdapter daa = new OleDbDataAdapter(cmd, cnn);
-                    //as i LEFT JOIN Main as m on m.File_Hash = i.FileHash OR m.Original_File_Hash = i.FileHash WHERE m.ID is NULL;", cnn);
-                    //MessageBox.Show("0");
-                    daa.Fill(ds, "Arrangements");
-                    daa.Dispose();
-                    var noOfRec = 0;
+            //try
+            //{
+            //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //    {
+            //        var cmd = "SELECT * FROM Arrangements WHERE CDLC_ID=" + filed.ID.ToString() + ";";//\"\"
+            //        OleDbDataAdapter daa = new OleDbDataAdapter(cmd, cnn);
+            //        //as i LEFT JOIN Main as m on m.File_Hash = i.FileHash OR m.Original_File_Hash = i.FileHash WHERE m.ID is NULL;", cnn);
+            //        //MessageBox.Show("0");
+            //        daa.Fill(ds, "Arrangements");
+            //        daa.Dispose();
+            DataSet ds = new DataSet(); ds = DLCManager.SelectFromDB("Arrangements", "SELECT * FROM Arrangements WHERE CDLC_ID=" + filed.ID.ToString() + ";");
+            var noOfRec = 0;
                     //MessageBox.Show("0.1");
                     noOfRec = ds.Tables[0].Rows.Count;//ds.Tables[0].Rows[0].ItemArray[0].ToString();
                     //rtxt_StatisticsOnReadDLCs.Text = noOfRec + "Assesment Arrangement hash file" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
@@ -441,8 +443,8 @@ namespace RocksmithToolkitGUI.DLCManager
                                 jsonFile = ds.Tables[0].Rows[i].ItemArray[4].ToString(); //json.filepath
                                 jsonHash = ds.Tables[0].Rows[i].ItemArray[38].ToString(); // XmlHash      
                                 var xx = Directory.GetFiles(arg.SongXml.File.Replace("\\songs\\arr\\" + arg.SongXml.Name + ".xml", ""), "*.json", SearchOption.AllDirectories)[0];
-                                if (1 == 2) //37. Keep the Uncompressed Songs superorganized   chbx_Additional_Manipulations.GetItemChecked(36)                             
-                                    arg.SongFile.File = (arg.SongXml.File.Replace(".xml", ".json").Replace("\\EOF\\", "\\Toolkit\\"));
+                                if (ConfigRepository.Instance()["dlcm_AdditionalManipul36"] == "Yes") //37. Keep the Uncompressed Songs superorganized   chbx_Additional_Manipulations.GetItemChecked(36)                             
+                            arg.SongFile.File = (arg.SongXml.File.Replace(".xml", ".json").Replace("\\EOF\\", "\\Toolkit\\"));
                                 else
                                     arg.SongFile.File = arg.SongXml.File.Replace(".xml", ".json").Replace("\\songs\\arr", "\\" + DLCManager.calc_path(xx));
 
@@ -485,8 +487,8 @@ namespace RocksmithToolkitGUI.DLCManager
                                     {
                                         bassxml = "";
                                         lbl_XMLBass.Visible = true;
-                                        if ((lastConversionDateTime_cur == "" && "" == lastConversionDateTime_exist)) ;
-                                        else if (lastConversionDateTime_cur != lastConversionDateTime_exist || XmlHash != alist[k]) { lbl_XMLBass.ForeColor = lbl_Reference.ForeColor; btn_WM_Bass.Enabled = true; }
+                                        if (!(lastConversionDateTime_cur == "" && "" == lastConversionDateTime_exist)) 
+                                        if (lastConversionDateTime_cur != lastConversionDateTime_exist || XmlHash != alist[k]) { lbl_XMLBass.ForeColor = lbl_Reference.ForeColor; btn_WM_Bass.Enabled = true; }
                                         txt_XMLBassNew.Text = lastConversionDateTime_cur;
                                         txt_XMLBassExisting.Text = lastConversionDateTime_exist;
                                         bassxml = "\"" + arg.SongXml.File + "\"" + " " + "\"" + XmlFile + "\"";
@@ -496,8 +498,8 @@ namespace RocksmithToolkitGUI.DLCManager
                                     {
                                         leadxml = "";
                                         lbl_XMLLead.Visible = true;
-                                        if ((lastConversionDateTime_cur == "" && "" == lastConversionDateTime_exist)) ;
-                                        else if (lastConversionDateTime_cur != lastConversionDateTime_exist || XmlHash != alist[k]) { lbl_XMLLead.ForeColor = lbl_Reference.ForeColor; btn_WM_Leads.Enabled = true; }
+                                        if (!(lastConversionDateTime_cur == "" && "" == lastConversionDateTime_exist)) 
+                                            if (lastConversionDateTime_cur != lastConversionDateTime_exist || XmlHash != alist[k]) { lbl_XMLLead.ForeColor = lbl_Reference.ForeColor; btn_WM_Leads.Enabled = true; }
                                         txt_XMLLeadNew.Text = lastConversionDateTime_cur;
                                         txt_XMLLeadExisting.Text = lastConversionDateTime_exist;
                                         leadxml = "\"" + arg.SongXml.File + "\"" + " " + "\"" + XmlFile + "\"";
@@ -507,8 +509,8 @@ namespace RocksmithToolkitGUI.DLCManager
                                     {
                                         comboxml = "";
                                         lbl_XMLCombo.Visible = true;
-                                        if ((lastConversionDateTime_cur == "" && "" == lastConversionDateTime_exist)) ;
-                                        else if (lastConversionDateTime_cur != lastConversionDateTime_exist || XmlHash != alist[k]) { lbl_XMLCombo.ForeColor = lbl_Reference.ForeColor; btn_WM_Combo.Enabled = true; }
+                                        if (!(lastConversionDateTime_cur == "" && "" == lastConversionDateTime_exist)) 
+                                         if (lastConversionDateTime_cur != lastConversionDateTime_exist || XmlHash != alist[k]) { lbl_XMLCombo.ForeColor = lbl_Reference.ForeColor; btn_WM_Combo.Enabled = true; }
                                         txt_XMLComboNew.Text = lastConversionDateTime_cur;
                                         txt_XMLComboExisting.Text = lastConversionDateTime_exist;
                                         leadxml = "\"" + arg.SongXml.File + "\"" + " " + "\"" + XmlFile + "\"";
@@ -518,8 +520,8 @@ namespace RocksmithToolkitGUI.DLCManager
                                     {
                                         rhythmxml = "";
                                         lbl_XMLRhythm.Visible = true;
-                                        if ((lastConversionDateTime_cur == "" && "" == lastConversionDateTime_exist)) ;
-                                        else if (lastConversionDateTime_cur != lastConversionDateTime_exist || XmlHash != alist[k]) { lbl_XMLRhythm.ForeColor = lbl_Reference.ForeColor; btn_WM_Rhythm.Enabled = true; }
+                                        if (!(lastConversionDateTime_cur == "" && "" == lastConversionDateTime_exist)) 
+                                         if (lastConversionDateTime_cur != lastConversionDateTime_exist || XmlHash != alist[k]) { lbl_XMLRhythm.ForeColor = lbl_Reference.ForeColor; btn_WM_Rhythm.Enabled = true; }
                                         txt_XMLRhythmNew.Text = lastConversionDateTime_cur;
                                         txt_XMLRhythmExisting.Text = lastConversionDateTime_exist;
                                         rhythmxml = "\"" + arg.SongXml.File + "\"" + " " + "\"" + XmlFile + "\"";
@@ -534,7 +536,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                         //txt_XMLVocalExisting.Text = lastConversionDateTime_exist;lbl_XMLVocal.ForeColor = lbl_Reference.ForeColor;
                                         lbl_Vocals.Visible = true;
                                         if (XmlHash != alist[k]) { lbl_Vocals.ForeColor = lbl_Reference.ForeColor; }
-                                        else if (XmlHash == "" && "" == alist[k]) ;
+                                        //else if (XmlHash == "" && "" == alist[k]) ;
                                         //var r = blist[k];
                                     }
 
@@ -542,8 +544,8 @@ namespace RocksmithToolkitGUI.DLCManager
                                     {
                                         bassjson = "";
                                         lbl_JSONBass.Visible = true;
-                                        if ((lastConverjsonDateTime_cur == "" && "" == lastConverjsonDateTime_exist)) ;
-                                        else if (lastConverjsonDateTime_cur != lastConverjsonDateTime_exist || jsonHash != blist[k]) { lbl_JSONBass.ForeColor = lbl_Reference.ForeColor; btn_TN_Rhythm.Enabled = true; }
+                                        if (!(lastConverjsonDateTime_cur == "" && "" == lastConverjsonDateTime_exist)) 
+                                         if (lastConverjsonDateTime_cur != lastConverjsonDateTime_exist || jsonHash != blist[k]) { lbl_JSONBass.ForeColor = lbl_Reference.ForeColor; btn_TN_Rhythm.Enabled = true; }
                                         txt_JSONBassNew.Text = lastConverjsonDateTime_cur;
                                         txt_JSONBassExisting.Text = lastConverjsonDateTime_exist;
                                         bassjson = "\"" + arg.SongFile.File + "\"" + " " + "\"" + jsonFile + "\"";
@@ -553,8 +555,8 @@ namespace RocksmithToolkitGUI.DLCManager
                                     {
                                         lbl_JSONLead.Visible = true;
                                         leadjson = "";
-                                        if ((lastConverjsonDateTime_cur == "" && "" == lastConverjsonDateTime_exist)) ;
-                                        else if (lastConverjsonDateTime_cur != lastConverjsonDateTime_exist || jsonHash != blist[k]) { lbl_JSONLead.ForeColor = lbl_Reference.ForeColor; btn_TN_Rhythm.Enabled = true; }
+                                        if (!(lastConverjsonDateTime_cur == "" && "" == lastConverjsonDateTime_exist)) 
+                                         if (lastConverjsonDateTime_cur != lastConverjsonDateTime_exist || jsonHash != blist[k]) { lbl_JSONLead.ForeColor = lbl_Reference.ForeColor; btn_TN_Rhythm.Enabled = true; }
                                         txt_JSONLeadNew.Text = lastConverjsonDateTime_cur;
                                         txt_JSONLeadExisting.Text = lastConverjsonDateTime_exist;
                                         leadjson = "\"" + arg.SongFile.File + "\"" + " " + "\"" + jsonFile + "\"";
@@ -564,8 +566,8 @@ namespace RocksmithToolkitGUI.DLCManager
                                     {
                                         combojson = "";
                                         lbl_JSONCombo.Visible = true;
-                                        if ((lastConverjsonDateTime_cur == "" && "" == lastConverjsonDateTime_exist)) ;
-                                        else if (lastConverjsonDateTime_cur != lastConverjsonDateTime_exist || jsonHash != blist[k]) { lbl_JSONCombo.ForeColor = lbl_Reference.ForeColor; btn_TN_Rhythm.Enabled = true; }
+                                        if (!(lastConverjsonDateTime_cur == "" && "" == lastConverjsonDateTime_exist)) 
+                                         if (lastConverjsonDateTime_cur != lastConverjsonDateTime_exist || jsonHash != blist[k]) { lbl_JSONCombo.ForeColor = lbl_Reference.ForeColor; btn_TN_Rhythm.Enabled = true; }
                                         txt_JSONComboNew.Text = lastConverjsonDateTime_cur;
                                         txt_JSONComboExisting.Text = lastConverjsonDateTime_exist;
                                         combojson = "\"" + arg.SongFile.File + "\"" + " " + "\"" + jsonFile + "\"";
@@ -575,8 +577,8 @@ namespace RocksmithToolkitGUI.DLCManager
                                     {
                                         rhythmjson = "";
                                         lbl_JSONRhythm.Visible = true;
-                                        if ((lastConverjsonDateTime_cur == "" && "" == lastConverjsonDateTime_exist)) ;
-                                        else if (lastConverjsonDateTime_cur != lastConverjsonDateTime_exist || jsonHash != blist[k]) { lbl_JSONRhythm.ForeColor = lbl_Reference.ForeColor; btn_TN_Rhythm.Enabled = true; }
+                                        if (!(lastConverjsonDateTime_cur == "" && "" == lastConverjsonDateTime_exist)) 
+                                         if (lastConverjsonDateTime_cur != lastConverjsonDateTime_exist || jsonHash != blist[k]) { lbl_JSONRhythm.ForeColor = lbl_Reference.ForeColor; btn_TN_Rhythm.Enabled = true; }
                                         txt_JSONRhythmNew.Text = lastConverjsonDateTime_cur;
                                         txt_JSONRhythmExisting.Text = lastConverjsonDateTime_exist;
                                         rhythmjson = "\"" + arg.SongFile.File + "\"" + " " + "\"" + jsonFile + "\"";
@@ -591,7 +593,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                         //txt_JSONVocalNew.Text = lastConverjsonDateTime_cur;
                                         //txt_JSONVocalExisting.Text = lastConverjsonDateTime_exist;lbl_JSONVocal.ForeColor = lbl_Reference.ForeColor; 
                                         if (jsonHash != blist[k]) { lbl_Vocals.ForeColor = lbl_Reference.ForeColor; btn_WM_Vocals.Enabled = true; }
-                                        else if (jsonHash == "" && "" == blist[k]) ;
+                                       // else if (jsonHash == "" && "" == blist[k]) ;
                                         vocaljson = "\"" + arg.SongFile.File + "\"" + " " + "\"" + jsonFile + "\"";
 
                                     }
@@ -644,13 +646,13 @@ namespace RocksmithToolkitGUI.DLCManager
                         }
 
                     }
-                }
-            }
-            catch (System.IO.FileNotFoundException ee)
-            {
-                //rtxt_StatisticsOnReadDLCs.Text = "Error at last conversion" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                Console.WriteLine(ee.Message);
-            }
+                //}
+            //}
+            //catch (System.IO.FileNotFoundException ee)
+            //{
+            //    //rtxt_StatisticsOnReadDLCs.Text = "Error at last conversion" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+            //    Console.WriteLine(ee.Message);
+            //}
 
             //files size//files dates
             //DialogResult result1 = MessageBox.Show(text + "\n\nChose:\n\n1. Update\n2. Alternate\n3. Ignore", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
@@ -667,7 +669,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.Text = "Duplicate Management " + title_duplic;
         }
 
-        public class Files
+        private class Files
         {
             public string ID { get; set; }
             public string Song_Title { get; set; }
@@ -761,7 +763,7 @@ namespace RocksmithToolkitGUI.DLCManager
             public string Has_Been_Corrected { get; set; }
             public string File_Creation_Date { get; set; }
         }
-        public Files[] files = new Files[10000];
+        private Files[] files = new Files[10000];
         private DLCManager.Files filed;
         private DLCPackageData datas;
         private string author;
@@ -799,16 +801,17 @@ namespace RocksmithToolkitGUI.DLCManager
             var MaximumSize = 0;
 
             //rtxt_StatisticsOnReadDLCs.Text += "\n  ee= ";
-            try
-            {
-                //MessageBox.Show(DB_Path);
-                using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-                {
-                    DataSet dus = new DataSet();
-                    OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
-                    dax.Fill(dus, "Main");
-                    dax.Dispose();
-                    var i = 0;
+            //try
+            //{
+            //    //MessageBox.Show(DB_Path);
+            //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //    {
+            //        DataSet dus = new DataSet();
+            //        OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
+            //        dax.Fill(dus, "Main");
+            //        dax.Dispose();
+            DataSet dus = new DataSet(); dus = DLCManager.SelectFromDB("Main", cmd);
+            var i = 0;
                     //rtxt_StatisticsOnReadDLCs.Text += "\n  54= " +dus.Tables[0].Rows.Count;
                     MaximumSize = dus.Tables[0].Rows.Count;
                     foreach (DataRow dataRow in dus.Tables[0].Rows)
@@ -909,18 +912,18 @@ namespace RocksmithToolkitGUI.DLCManager
                         files[i].File_Creation_Date = dataRow.ItemArray[90].ToString();
                         i++;
                     }
-                    //Closing Connection
-                    dax.Dispose();
-                    cnn.Close();
-                    //rtxt_StatisticsOnReadDLCs.Text += i;
-                    //var ex = 0;
-                }
-            }
-            catch (System.IO.FileNotFoundException ee)
-            {
-                MessageBox.Show(ee.Message + "Can not open Main DB connection ! ");
-                //MessageBox.Show(ee.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            //        //Closing Connection
+            //        dax.Dispose();
+            //        cnn.Close();
+            //        //rtxt_StatisticsOnReadDLCs.Text += i;
+            //        //var ex = 0;
+            //    }
+            //}
+            //catch (System.IO.FileNotFoundException ee)
+            //{
+            //    MessageBox.Show(ee.Message + "Can not open Main DB connection ! ");
+            //    //MessageBox.Show(ee.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
             //rtxt_StatisticsOnReadDLCs.Text += "\n  max rows" + MaximumSize;
             return MaximumSize;//files[10000];
         }
@@ -1036,29 +1039,31 @@ namespace RocksmithToolkitGUI.DLCManager
 
             //Delete old arrangements and tones
             //Clean CachetDB
-            DataSet dss = new DataSet();
-            try
-            {
-                using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-                {
+            //DataSet dss = new DataSet();
+            //try
+            //{
+            //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //    {
                     if (Asses == "Update")
                     {
-                        OleDbDataAdapter dan = new OleDbDataAdapter("DELETE FROM Tones WHERE CDLC_ID=" + lbl_IDExisting.Text, cnn);
-                        dan.Fill(dss, "Cache");
-                        dan.Dispose();
-                        OleDbDataAdapter das = new OleDbDataAdapter("DELETE FROM Arrangements WHERE CDLC_ID=" + lbl_IDExisting.Text, cnn);
-                        das.Fill(dss, "Cache");
-                        das.Dispose();
+                        DLCManager.DeleteFromDB("Tones", "DELETE FROM Tones WHERE CDLC_ID=" + lbl_IDExisting.Text);
+                        DLCManager.DeleteFromDB("Arrangements", "DELETE FROM Arrangements WHERE CDLC_ID=" + lbl_IDExisting.Text);
+                        //OleDbDataAdapter dan = new OleDbDataAdapter("DELETE FROM Tones WHERE CDLC_ID=" + lbl_IDExisting.Text, cnn);
+                        //dan.Fill(dss, "Cache");
+                        //dan.Dispose();
+                        //OleDbDataAdapter das = new OleDbDataAdapter("DELETE FROM Arrangements WHERE CDLC_ID=" + lbl_IDExisting.Text, cnn);
+                        //das.Fill(dss, "Cache");
+                        //das.Dispose();
                     }
-                }
-            }
-            catch (System.IO.FileNotFoundException ee)
-            {
-                // To inform the user and continue is 
-                // sufficient for this demonstration. 
-                // Your application may require different behavior.
-                Console.WriteLine(ee.Message);
-            }
+            //    }
+            //}
+            //catch (System.IO.FileNotFoundException ee)
+            //{
+            //    
+            //    
+            //    
+            //    Console.WriteLine(ee.Message);
+            //}
 
         }
 
@@ -1079,11 +1084,11 @@ namespace RocksmithToolkitGUI.DLCManager
             //if (filed.Artist != datas.SongInfo.Artist) ar = datas.SongInfo.Artist;
             var alt = chbx_IsAlternateExisting.Checked ? txt_AlternateNoExisting.Value.ToString() : null;
 
-            try
-            {
-                //MessageBox.Show(DB_Path);
-                using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-                {
+            //try
+            //{
+            //    //MessageBox.Show(DB_Path);
+            //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //    {
                     sel = "UPDATE Main SET Artist=\"" + ar + "\", Artist_Sort=\"" + txt_ArtistSortExisting.Text + "\", Album=\"" + al + "\", Song_Title=\"" + txt_TitleExisting.Text;
                     sel += "\", Song_Title_Sort=\"" + txt_TitleSortExisting.Text + "\", Author=\"" + (txt_AuthorExisting.Text == "" ? "Custom Song Creator" : txt_AuthorExisting.Text);
                     sel += "\", Version=\"" + (txt_VersionExisting.Text == "" ? "1" : txt_VersionExisting.Text) + "\", DLC_Name=\"" + txt_DLCIDExisting.Text + "\",";
@@ -1096,19 +1101,19 @@ namespace RocksmithToolkitGUI.DLCManager
                     //sel += "\", AlbumArt_Hash = \"" + (rbtn_CoverNew.Checked ? art_hash : filed.AlbumArt_Hash);
                     sel += " WHERE ID=" + lbl_IDExisting.Text;
                     //txt_Description.Text = sel;
-                    DataSet ddr = new DataSet();
-                    OleDbDataAdapter dat = new OleDbDataAdapter(sel, cnn);
+                    DataSet ddr = new DataSet(); ddr = DLCManager.UpdateDB("Main", sel + ";");
+                    //OleDbDataAdapter dat = new OleDbDataAdapter(sel, cnn);
 
-                    dat.Fill(ddr, "Main");
-                    dat.Dispose();
+                    //dat.Fill(ddr, "Main");
+                    //dat.Dispose();
                     //MessageBox.Show(DB_Path);
-                }
-            }
-            catch (System.IO.FileNotFoundException ee)
-            {
-                MessageBox.Show(ee.Message + "Can not open Main DB connection ! " + sel);
-                //MessageBox.Show(ee.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            //    }
+            //}
+            //catch (System.IO.FileNotFoundException ee)
+            //{
+            //    MessageBox.Show(ee.Message + "Can not open Main DB connection ! " + sel);
+            //    //MessageBox.Show(ee.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
             if (!chbx_Autosave.Checked) MessageBox.Show("Existing Record updated");
 
         }

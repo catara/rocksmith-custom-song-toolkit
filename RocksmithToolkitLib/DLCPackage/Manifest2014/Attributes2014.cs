@@ -156,6 +156,7 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest2014
             //Chords TODO: create me
             try
             {
+                // Commented out to check if this is cause of repeating chord display in game
                 manifestFunctions.GenerateChords(this, SongContent);
             }
             catch (Exception ex)
@@ -167,7 +168,7 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest2014
             // not source of 100% bug
             try
             {
-                   manifestFunctions.GenerateTechniques(this, SongContent);
+                manifestFunctions.GenerateTechniques(this, SongContent);
             }
             catch (Exception ex)
             {

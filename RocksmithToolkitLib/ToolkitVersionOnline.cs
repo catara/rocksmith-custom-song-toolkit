@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Windows.Forms;
 using Newtonsoft.Json;
 using RocksmithToolkitLib.XmlRepository;
 

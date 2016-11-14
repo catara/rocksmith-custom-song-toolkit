@@ -1,5 +1,5 @@
-﻿## Roksmith DLC Library Manager v0.4
-*(beta version; branch of CSC)*
+﻿## Rocksmith DLC Library Manager v0.4
+*(beta version-unreleased to the masses; branch of CSC)*
 # App Description: MASS Manipulation of Rocksmith DLC Library 
 		e.g. 1. in Rocksmith, in the Library, each song's Album, to contain a personal rating, if it has DD, instr. avail
 		e.g. 2. in Rocksmith, in the Library, each song to be sorted by Album(Year) and Track No
@@ -24,7 +24,7 @@
 - Mass rename songs(Standardization) e.g. Black Keys->The Black Keys and maintain changes in a local DB
 - Manipulates the Retail songs list of Rocksmith (Rocksmith 2014 disc, or Rocksmith 2012 DLC, or Rocksmith 2012 Import disc for PC & Mac & PS3)
 
-<img src="/RocksmithTookitGUI/DLCManager/Screenshot1.png" alt="Rksmith DLC Library Manager Import&Pack"/> //width="400px"/
+<img src="/RocksmithTookitGUI/DLCManager/Screenshot1.png" alt="Rocksmith DLC Library Manager Import&Pack"/> //width="400px"/
 <img src="/RocksmithTookitGUI/DLCManager/Screenshot2.png" alt="Song Metadata DB Screen"/>
 <img src="/RocksmithTookitGUI/DLCManager/Screenshot3.png" alt="Song Metadata Standardization Screen"/>
 <img src="/RocksmithTookitGUI/DLCManager/Screenshot4.png" alt="Rocksmith Retail Manipulation Scree"/>
@@ -53,14 +53,12 @@
 - [ ] save error log separately
   [ ] save constantly not only at the end
   [ ] smart dEbug OUTPUTING function...
-  [+] save in the db as well
 - [ ] make a custom song out of retail
 - [ ] remove commented out code 
 - [ ] if i delete a folder do i get a warning in the maintenance check ?
   - [ ] check for json existance as well. Maybe
 - [ ] increase the no of threads
- -- [x] add cancelation button
- -- [ ] progress bar update
+  -- [ ] progress bar update
 - [ ] duplicate window should return last maximum conv date and save it 
 -- [ ] reorder main db fields
 	- [ ] size
@@ -75,22 +73,25 @@
 
 
 ## WiP:
-[+] generate a garageband
+[-] generate a garageband _(curently the mp3 is converted to wav for GB Import)
 [ ] if cover was from someone else please compare against that (save old cover)
 [+] remove all dd in Cache/Retails screen
-[ ] duplicate management..on change..check and green color
 [ ] Check Packer.cs bug
 [ ] Bring year and picture from Spotify
 [+] third eye investig
 [ ] muse uprising songs have preview lenght in minutes
 [ ] fix importing own songs, eg. ana
 [+] at pack mark as selected - Conflicting with Select functionality (is this useful? :) )
-	[] Create a new filter Deselect LAst PAcked 
+[ ] Create a new filter Deselect LAst PAcked 
 
 done:
 (next release)
-- [ ] finish arrangement (demo with the hives overdrive all the time :) )
-- [x] finish profiles (load Saved Profile names)
+[x] add cancelation button
+[x] duplicate management..on change..check and green color
+[+] save in the db as well
+- stadardization still fedup adding duplicates
+[ ] finish arrangement (demo with the hives overdrive all the time :) )
+[x] finish profiles (load Saved Profile names)
 	- check they are saved at close
 - [x] save when exit search 
 	- [x] when clicking on a song disable Search
@@ -106,7 +107,7 @@ done:
 	- [x] save also hash not to ask again for duplicates if already decided as duplicate (all imported are saved and so checked for hexa code)
 - [x] enable Cover correction in Standardization
 - [x] enable shortNames and Album correction in Standardization
-- [ ] fix filter in CAche
+- [x] fix filter in CAche
 - [ ] after selecting deselect incl. Beta
 - [x] group display with issues
 - [ ] update to wise 2015 (messages&testing)
@@ -122,7 +123,7 @@ done:
 [-] delete lib (gather lib from ps3-ftp/mac/pc 1. save 2. copy new)
 - ignore and del 4k/no psarc files
 - progress bar on possible duplicate import is too short
-- copy name fails title sort in duplicate banagement
+[x] copy name fails title sort in duplicate management
 - populate new tone fields
 [x] add read library option
 -- prepare the rebuild option
@@ -133,15 +134,31 @@ done:
 [x] duplicate also shows in winmerge Tones
 [x] fix stop import from duplicate screen
 [x] cacke give errors
-- fix som wm dupli buttons not being enabled
+[x]  fix some dupli buttons not being enabled
 -- improve the overlay
-[-] fix for import unique hash for any
+[+] fix for import unique hash for any
 [-] fix for rebuild missing file
 [-] disable old and L->r
 [x] add unique key for each packed&imported thing so to read libs
 	[+] use also name as identifier
 [x] profiles should be a table
 	[-] all options should be a table
+- sandard double counted songs 7981
+[x] duplic add numeric text box
+[x] tarck no Issues (all rhcp r 9)(fixed)
+[x] bass removed twice creates issues at packing(code cleanup)
+[x] dupli buttons dont deactivate after copy
+backing is not recognized
+[x] vs pixel to r8 on cover
+custom song creator still there after save
+capture live flag? as track no fails
+[x] date bigger
+[x] crashes if i go on new rec in the maindblist
+add copy last and initial to mass copy
+[x] if multi info only in file name is not detected
+add bonus in the tytle
+a3 fails
+update DB
 
 (prev release; but maybe not thuroughly tested)
 - [x] duplic manag make date bigger
@@ -230,18 +247,18 @@ dlcpackagedata
 	0.2.0.13 (12.11.2015) Finally implement Arrangements and Tones and song Groups	
 	0.2.0.14 (20.06.2016) analyse acuracy on conversion to ps3 (1979,7army..)
 	0.3 (10.05.2016) full release (anyone can download and use the tool..no bugs..and all un-implemented features disabled), repack wo bugs, edit screens functional
-	wip: 0.3.0.1 (03.06.2016) (90%) Remove getlastconversiondate from Duplicates as already coming from the arrangements table
-	wip: 0.3.0.2 (20.06.2016) (20%) has_section flag(to be tested with a song missing sections); 
-	wip: 0.3.1 (31.07.2016) (10%) HTML&Excel exports
-	tbr: 0.3.1.1 (15.07.2016) Implement a logic to properly read DLCManager renamed DLCs
-	tbr: 0.3.2 move Import DB to Main.DB or at least use an official data source as DB source to also be able to edit from the grid
-	tbr: 0.3.3 ?move Access code to project? or from hardcoded to views	
-	wip: 0.3.4 (03.10.2016) (10%) use parameterized SQL everywhere (&/ integrate template DB into project or a SQL DB)
-	wip: 0.4 (21.10.2016) (85%) Redesign MainDB+Edit Screens
+	0.4 (21.11.2016) Major improvements	
+	wip: 0.4.0.1 (03.06.2016) (90%) Remove getlastconversiondate from Duplicates as already coming from the arrangements table
+	wip: 0.4.0.2 (20.06.2016) (20%) has_section flag(to be tested with a song missing sections); 
+	wip: 0.4.1 (31.07.2016) (10%) HTML&Excel exports
+	tbr: 0.4.1.1 (15.07.2016) Implement a logic to properly read DLCManager renamed DLCs
+	tbr: 0.4.2 move Import DB to Main.DB or at least use an official data source as DB source to also be able to edit from the grid
+	tbr: 0.4.3 ?move Access code to project? or from hardcoded to views	
+	wip: 0.4.4 (03.10.2016) (10%) use parameterized SQL everywhere (&/ integrate template DB into project or a SQL DB)
 
 
 
-		# Date: 126.05.2016
+		# Date: 12.01.2016
 		# Document Name: Rocksmith DLC Management tool README
 						(fork of rocksmith-custom-song-toolkit)
 		# Document purpose: To describe the functionailities and the way to change, the NEW tab that enable MASS Manipulation of Rocksmith DLC Library

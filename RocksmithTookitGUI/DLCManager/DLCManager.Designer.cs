@@ -375,7 +375,8 @@
             "61. @Rebuild don\'t overwrite Standard Song Info (Tit,Art,Alb,Prw,Aut,Des,Com)",
             "62. @Rebuild don\'t overwrite Standard Song Info (Cover,Year)",
             "63. <@Pack duplicate singleTracks L->R / R->L>",
-            "64 @Pack Remove Remote File if GameData has been read",
+            "64. @Pack Remove Remote File if GameData has been read",
+            "65. @Pack ONLY Copy/FTP the Last Packed song",
             "98. @IMPORT>",
             "99. @Pack>"});
             this.chbx_Additional_Manipulations.Location = new System.Drawing.Point(358, 302);

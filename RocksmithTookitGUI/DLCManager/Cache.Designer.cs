@@ -52,7 +52,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_AutoPlay = new System.Windows.Forms.CheckBox();
             this.btn_FTP = new System.Windows.Forms.Button();
             this.pB_ReadDLCs = new System.Windows.Forms.ProgressBar();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btn_OpenCorrespondence = new System.Windows.Forms.Button();
             this.btn_OpeHSAN = new System.Windows.Forms.Button();
             this.chbx_Autosave = new System.Windows.Forms.CheckBox();
             this.btn_ExpandSelCrossP = new System.Windows.Forms.Button();
@@ -324,17 +324,17 @@ namespace RocksmithToolkitGUI.DLCManager
             this.pB_ReadDLCs.Step = 1;
             this.pB_ReadDLCs.TabIndex = 293;
             // 
-            // button2
+            // btn_OpenCorrespondence
             // 
-            this.button2.BackColor = System.Drawing.SystemColors.Info;
-            this.button2.Enabled = false;
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(2, 922);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(165, 74);
-            this.button2.TabIndex = 302;
-            this.button2.Text = "Open WEM2OGG Corespondence DB";
-            this.button2.UseVisualStyleBackColor = false;
+            this.btn_OpenCorrespondence.BackColor = System.Drawing.SystemColors.Info;
+            this.btn_OpenCorrespondence.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_OpenCorrespondence.Location = new System.Drawing.Point(2, 922);
+            this.btn_OpenCorrespondence.Name = "btn_OpenCorrespondence";
+            this.btn_OpenCorrespondence.Size = new System.Drawing.Size(165, 74);
+            this.btn_OpenCorrespondence.TabIndex = 302;
+            this.btn_OpenCorrespondence.Text = "Open WEM2OGG Corespondence DB";
+            this.btn_OpenCorrespondence.UseVisualStyleBackColor = false;
+            this.btn_OpenCorrespondence.Click += new System.EventHandler(this.btn_OpenCorrespondence_Click);
             // 
             // btn_OpeHSAN
             // 
@@ -584,6 +584,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.cmb_Filter.FormattingEnabled = true;
             this.cmb_Filter.Items.AddRange(new object[] {
+            "0ALL",
             "PC",
             "Mac",
             "PS3",
@@ -843,7 +844,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.Controls.Add(this.btn_ExpandSelCrossP);
             this.Controls.Add(this.chbx_Autosave);
             this.Controls.Add(this.btn_OpeHSAN);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.btn_OpenCorrespondence);
             this.Controls.Add(this.txt_AudioPreviewPath);
             this.Controls.Add(this.txt_AudioPath);
             this.Controls.Add(this.pB_ReadDLCs);
@@ -926,7 +927,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private System.Windows.Forms.ProgressBar pB_ReadDLCs;
         private CueTextBox txt_AudioPreviewPath;
         private CueTextBox txt_AudioPath;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btn_OpenCorrespondence;
         private System.Windows.Forms.Button btn_OpeHSAN;
         private System.Windows.Forms.CheckBox chbx_Autosave;
         private System.Windows.Forms.Button btn_ExpandSelCrossP;

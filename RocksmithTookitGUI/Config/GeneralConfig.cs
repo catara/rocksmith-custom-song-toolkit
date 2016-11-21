@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.IO;
 using Ookii.Dialogs;
 using RocksmithToolkitLib;
 using RocksmithToolkitLib.Extensions;
+using RocksmithToolkitLib.XmlRepository;
 
 namespace RocksmithToolkitGUI.Config
 {
@@ -45,7 +47,7 @@ namespace RocksmithToolkitGUI.Config
         {
             var tb = sender as TextBox;
             if (tb != null)
-                tb.Text = tb.Text.Trim().GetValidSortName();
+                tb.Text = tb.Text.Trim().GetValidSortableName();
         }
 
         private void LoadAndSetupConfiguration(ControlCollection controls)

@@ -6,7 +6,7 @@ using System.Xml.Serialization;
 using System.Windows.Forms;
 using RocksmithToolkitLib.Extensions;
 
-namespace RocksmithToolkitLib {
+namespace RocksmithToolkitLib.XmlRepository {
     public abstract class XmlRepository<T> {
         #region Events
 
@@ -116,8 +116,13 @@ namespace RocksmithToolkitLib {
             List = Activator.CreateInstance<List<T>>();
             Load();
 
-            // Merge source to destination
-            List = List.Union(sourceRepoList, Comparer).ToList();
+            // TODO: here is where xml with different elements do not merge 
+            // Merge source to destination (only if same elements)
+            // List = List.Union(sourceRepoList, Comparer).ToList();
+
+            // TODO: so testing this code to see if it works with different elements
+            // Merge source to destination (even if different elements)
+            List = List.Union(sourceRepoList).ToList();
 
             // Save
             Save();

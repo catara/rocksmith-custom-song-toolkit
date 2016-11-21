@@ -102,7 +102,6 @@
             this.btn_Standardization = new System.Windows.Forms.Button();
             this.chbx_DefaultDB = new System.Windows.Forms.CheckBox();
             this.button5 = new System.Windows.Forms.Button();
-            this.btn_OpenGame = new System.Windows.Forms.Button();
             this.btn_GoImport = new System.Windows.Forms.Button();
             this.btm_GoTemp = new System.Windows.Forms.Button();
             this.btm_GoDB = new System.Windows.Forms.Button();
@@ -127,6 +126,7 @@
             this.cbx_Export.Size = new System.Drawing.Size(90, 28);
             this.cbx_Export.TabIndex = 57;
             this.cbx_Export.Text = "Excel";
+            this.cbx_Export.SelectedIndexChanged += new System.EventHandler(this.cbx_Export_SelectedIndexChanged);
             // 
             // panel2
             // 
@@ -146,6 +146,7 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(446, 111);
             this.panel2.TabIndex = 204;
+            this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
             // 
             // chbx_XBOX360
             // 
@@ -157,6 +158,7 @@
             this.chbx_XBOX360.TabIndex = 23;
             this.chbx_XBOX360.Text = "XBOX360";
             this.chbx_XBOX360.UseVisualStyleBackColor = true;
+            this.chbx_XBOX360.CheckedChanged += new System.EventHandler(this.chbx_XBOX360_CheckedChanged);
             // 
             // chbx_Mac
             // 
@@ -168,6 +170,7 @@
             this.chbx_Mac.TabIndex = 22;
             this.chbx_Mac.Text = "Mac";
             this.chbx_Mac.UseVisualStyleBackColor = true;
+            this.chbx_Mac.CheckedChanged += new System.EventHandler(this.chbx_Mac_CheckedChanged);
             // 
             // rbtn_Population_Groups
             // 
@@ -193,6 +196,7 @@
             this.chbx_PS3.TabIndex = 21;
             this.chbx_PS3.Text = "PS3";
             this.chbx_PS3.UseVisualStyleBackColor = true;
+            this.chbx_PS3.CheckedChanged += new System.EventHandler(this.chbx_PS3_CheckedChanged);
             // 
             // cbx_Groups
             // 
@@ -205,6 +209,7 @@
             this.cbx_Groups.Size = new System.Drawing.Size(199, 28);
             this.cbx_Groups.TabIndex = 28;
             this.cbx_Groups.DropDown += new System.EventHandler(this.cbx_Groups_DropDown);
+            this.cbx_Groups.SelectedIndexChanged += new System.EventHandler(this.cbx_Groups_SelectedIndexChanged);
             // 
             // mainBindingSource
             // 
@@ -221,6 +226,7 @@
             this.chbx_PC.TabIndex = 20;
             this.chbx_PC.Text = "PC";
             this.chbx_PC.UseVisualStyleBackColor = true;
+            this.chbx_PC.CheckedChanged += new System.EventHandler(this.chbx_PC_CheckedChanged);
             // 
             // btn_Cleanup_MainDB
             // 
@@ -258,6 +264,7 @@
             this.rbtn_Population_All.TabIndex = 26;
             this.rbtn_Population_All.Text = "All";
             this.rbtn_Population_All.UseVisualStyleBackColor = true;
+            this.rbtn_Population_All.CheckedChanged += new System.EventHandler(this.rbtn_Population_All_CheckedChanged);
             // 
             // rbtn_Population_Selected
             // 
@@ -271,6 +278,7 @@
             this.rbtn_Population_Selected.TabStop = true;
             this.rbtn_Population_Selected.Text = "Selected";
             this.rbtn_Population_Selected.UseVisualStyleBackColor = true;
+            this.rbtn_Population_Selected.CheckedChanged += new System.EventHandler(this.rbtn_Population_Selected_CheckedChanged);
             // 
             // chbx_Rebuild
             // 
@@ -352,7 +360,7 @@
             "46. <Convert Originals>",
             "47. Duplicate Mangement, Title added info is inbetween []",
             "48. Add New Toolkit v. and RePackedByAuthor",
-            "49. @Import Remove Multitrack inf from Title",
+            "49. @Import Remove Multitrack/Live info from Title",
             "50. @Pack Also Copy/FTP",
             "51. @Import place \"obvious\" duplicates at the end of the Process",
             "52. @Import Overrite the XML",
@@ -367,7 +375,10 @@
             "61. @Rebuild don\'t overwrite Standard Song Info (Tit,Art,Alb,Prw,Aut,Des,Com)",
             "62. @Rebuild don\'t overwrite Standard Song Info (Cover,Year)",
             "63. <@Pack duplicate singleTracks L->R / R->L>",
-            "64 @Pack Remove Remote File if GameData has been read",
+            "64. @Pack Remove Remote File if GameData has been read",
+            "65. @Pack ONLY Copy/FTP the Last Packed song",
+            "66. @Pack ONLY Copy/FTP the Initially Imported song",
+            "67. Duplicate manag ignores Live Songs",
             "98. @IMPORT>",
             "99. @Pack>"});
             this.chbx_Additional_Manipulations.Location = new System.Drawing.Point(358, 302);
@@ -389,6 +400,7 @@
             this.lbl_Mask.TabIndex = 319;
             this.lbl_Mask.Text = "Mask Preview:";
             this.lbl_Mask.Visible = false;
+            this.lbl_Mask.Click += new System.EventHandler(this.lbl_Mask_Click);
             // 
             // btn_Preview_Artist_Sort
             // 
@@ -427,6 +439,7 @@
             this.lbl_Artist_Sort.TabIndex = 316;
             this.lbl_Artist_Sort.Text = "Artist Sort";
             this.lbl_Artist_Sort.Visible = false;
+            this.lbl_Artist_Sort.Click += new System.EventHandler(this.lbl_Artist_Sort_Click);
             // 
             // cbx_Artist_Sort
             // 
@@ -461,7 +474,8 @@
             "<lastConversionDateTime>",
             "<Avail. Tracks>",
             "<Bass_HasDD>",
-            "<Timestamp>"});
+            "<Timestamp>",
+            "<Live>"});
             this.cbx_Artist_Sort.Location = new System.Drawing.Point(598, 575);
             this.cbx_Artist_Sort.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cbx_Artist_Sort.Name = "cbx_Artist_Sort";
@@ -479,6 +493,7 @@
             this.txt_Artist_Sort.TabIndex = 42;
             this.txt_Artist_Sort.Text = "<Beta><Artist>";
             this.txt_Artist_Sort.Visible = false;
+            this.txt_Artist_Sort.TextChanged += new System.EventHandler(this.txt_Artist_Sort_TextChanged);
             // 
             // btn_Preview_File_Name
             // 
@@ -625,6 +640,7 @@
             this.lbl_Artist.TabIndex = 303;
             this.lbl_Artist.Text = "Artist";
             this.lbl_Artist.Visible = false;
+            this.lbl_Artist.Click += new System.EventHandler(this.lbl_Artist_Click);
             // 
             // cbx_Artist
             // 
@@ -659,7 +675,8 @@
             "<lastConversionDateTime>",
             "<Avail. Tracks>",
             "<Bass_HasDD>",
-            "<Timestamp>"});
+            "<Timestamp>",
+            "<Live>"});
             this.cbx_Artist.Location = new System.Drawing.Point(598, 542);
             this.cbx_Artist.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cbx_Artist.Name = "cbx_Artist";
@@ -677,6 +694,7 @@
             this.txt_Artist.TabIndex = 38;
             this.txt_Artist.Text = "<Artist>-<CDLC>-<Avail. Tracks>-<DD>-<QAs>-<Bass_HasDD>";
             this.txt_Artist.Visible = false;
+            this.txt_Artist.TextChanged += new System.EventHandler(this.txt_Artist_TextChanged);
             // 
             // cbx_Title
             // 
@@ -711,7 +729,8 @@
             "<lastConversionDateTime>",
             "<Avail. Tracks>",
             "<Bass_HasDD>",
-            "<Timestamp>"});
+            "<Timestamp>",
+            "<Live>"});
             this.cbx_Title.Location = new System.Drawing.Point(598, 474);
             this.cbx_Title.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cbx_Title.Name = "cbx_Title";
@@ -729,6 +748,7 @@
             this.txt_Title.TabIndex = 30;
             this.txt_Title.Text = "<Title>";
             this.txt_Title.Visible = false;
+            this.txt_Title.TextChanged += new System.EventHandler(this.txt_Title_TextChanged);
             // 
             // lbl_File_Name
             // 
@@ -740,6 +760,7 @@
             this.lbl_File_Name.TabIndex = 297;
             this.lbl_File_Name.Text = "File Name";
             this.lbl_File_Name.Visible = false;
+            this.lbl_File_Name.Click += new System.EventHandler(this.lbl_File_Name_Click);
             // 
             // lbl_Album
             // 
@@ -751,6 +772,7 @@
             this.lbl_Album.TabIndex = 296;
             this.lbl_Album.Text = "Album";
             this.lbl_Album.Visible = false;
+            this.lbl_Album.Click += new System.EventHandler(this.lbl_Album_Click);
             // 
             // lbl_Title_Sort
             // 
@@ -762,6 +784,7 @@
             this.lbl_Title_Sort.TabIndex = 295;
             this.lbl_Title_Sort.Text = "Title Sort";
             this.lbl_Title_Sort.Visible = false;
+            this.lbl_Title_Sort.Click += new System.EventHandler(this.lbl_Title_Sort_Click);
             // 
             // cbx_File_Name
             // 
@@ -797,7 +820,7 @@
             "<Avail. Tracks>",
             "<Bass_HasDD>",
             "<Timestamp>",
-            "<Space>"});
+            "<Live>"});
             this.cbx_File_Name.Location = new System.Drawing.Point(598, 643);
             this.cbx_File_Name.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cbx_File_Name.Name = "cbx_File_Name";
@@ -816,6 +839,7 @@
             this.txt_File_Name.Text = "<Beta><Broken><CDLC>-<Artist>-<Year>-<Album><Track No.>-<Title>-<DD>-<Avail. Trac" +
     "ks>-<QAs>-v<Version>-<Bass_HasDD>";
             this.txt_File_Name.Visible = false;
+            this.txt_File_Name.TextChanged += new System.EventHandler(this.txt_File_Name_TextChanged);
             // 
             // cbx_Album
             // 
@@ -850,7 +874,8 @@
             "<lastConversionDateTime>",
             "<Avail. Tracks>",
             "<Bass_HasDD>",
-            "<Timestamp>"});
+            "<Timestamp>",
+            "<Live>"});
             this.cbx_Album.Location = new System.Drawing.Point(598, 609);
             this.cbx_Album.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cbx_Album.Name = "cbx_Album";
@@ -868,6 +893,7 @@
             this.txt_Album.TabIndex = 46;
             this.txt_Album.Text = "<Broken><Year> - <Album> - r<Rating> - <Avail. Instr.> - <DD> - <Tuning>";
             this.txt_Album.Visible = false;
+            this.txt_Album.TextChanged += new System.EventHandler(this.txt_Album_TextChanged);
             // 
             // cbx_Title_Sort
             // 
@@ -902,7 +928,8 @@
             "<lastConversionDateTime>",
             "<Avail. Tracks>",
             "<Bass_HasDD>",
-            "<Timestamp>"});
+            "<Timestamp>",
+            "<Live>"});
             this.cbx_Title_Sort.Location = new System.Drawing.Point(598, 508);
             this.cbx_Title_Sort.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cbx_Title_Sort.Name = "cbx_Title_Sort";
@@ -920,6 +947,7 @@
             this.txt_Title_Sort.TabIndex = 34;
             this.txt_Title_Sort.Text = "<Year><Album><Track No.><Title>";
             this.txt_Title_Sort.Visible = false;
+            this.txt_Title_Sort.TextChanged += new System.EventHandler(this.txt_Title_Sort_TextChanged);
             // 
             // lbl_Title
             // 
@@ -931,6 +959,7 @@
             this.lbl_Title.TabIndex = 300;
             this.lbl_Title.Text = "Title";
             this.lbl_Title.Visible = false;
+            this.lbl_Title.Click += new System.EventHandler(this.lbl_Title_Click);
             // 
             // chbx_DebugB
             // 
@@ -977,6 +1006,7 @@
             this.label1.Size = new System.Drawing.Size(118, 20);
             this.label1.TabIndex = 274;
             this.label1.Text = "DB Folder Path";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // btn_Close
             // 
@@ -1000,6 +1030,7 @@
             this.txt_RocksmithDLCPath.TabIndex = 2;
             this.toolTip1.SetToolTip(this.txt_RocksmithDLCPath, "Import Location.\r\nIf it is the Rocksmith Location then Files will be moved out an" +
         "d only replaced with Manged version at Repack.");
+            this.txt_RocksmithDLCPath.TextChanged += new System.EventHandler(this.txt_RocksmithDLCPath_TextChanged);
             // 
             // txt_TempPath
             // 
@@ -1023,6 +1054,7 @@
             this.toolTip1.SetToolTip(this.chbx_CleanTemp, "Cleans the Temp, Old, Duplicate, Repacked Folders");
             this.chbx_CleanTemp.UseVisualStyleBackColor = true;
             this.chbx_CleanTemp.Visible = false;
+            this.chbx_CleanTemp.CheckedChanged += new System.EventHandler(this.chbx_CleanTemp_CheckedChanged);
             // 
             // btn_SteamDLCFolder
             // 
@@ -1058,6 +1090,7 @@
             this.rtxt_StatisticsOnReadDLCs.TabIndex = 264;
             this.rtxt_StatisticsOnReadDLCs.Text = "";
             this.rtxt_StatisticsOnReadDLCs.Visible = false;
+            this.rtxt_StatisticsOnReadDLCs.TextChanged += new System.EventHandler(this.rtxt_StatisticsOnReadDLCs_TextChanged);
             // 
             // pB_ReadDLCs
             // 
@@ -1068,6 +1101,7 @@
             this.pB_ReadDLCs.Size = new System.Drawing.Size(790, 31);
             this.pB_ReadDLCs.Step = 1;
             this.pB_ReadDLCs.TabIndex = 263;
+            this.pB_ReadDLCs.Click += new System.EventHandler(this.pB_ReadDLCs_Click);
             // 
             // btn_PopulateDB
             // 
@@ -1105,6 +1139,7 @@
             this.lbl_RocksmithDLCPath.Size = new System.Drawing.Size(148, 20);
             this.lbl_RocksmithDLCPath.TabIndex = 259;
             this.lbl_RocksmithDLCPath.Text = "Importing DLC path";
+            this.lbl_RocksmithDLCPath.Click += new System.EventHandler(this.lbl_RocksmithDLCPath_Click);
             // 
             // btn_TempPath
             // 
@@ -1126,6 +1161,7 @@
             this.lbl_TempFolders.Size = new System.Drawing.Size(135, 20);
             this.lbl_TempFolders.TabIndex = 258;
             this.lbl_TempFolders.Text = "Temp Folder Path";
+            this.lbl_TempFolders.Click += new System.EventHandler(this.lbl_TempFolders_Click);
             // 
             // lbl_PreviewText
             // 
@@ -1138,6 +1174,11 @@
             this.lbl_PreviewText.Text = "File name Beta(0) CDLC/ORIG-Artist-Year-Album-TrackNo(if existing)-Title-TrackAva" +
     "il(LRBVS)-Version_PltfrmSpcfcs.psarc";
             this.lbl_PreviewText.Visible = false;
+            this.lbl_PreviewText.Click += new System.EventHandler(this.lbl_PreviewText_Click);
+            // 
+            // toolTip1
+            // 
+            this.toolTip1.Popup += new System.Windows.Forms.PopupEventHandler(this.toolTip1_Popup);
             // 
             // btn_ApplyStandardization
             // 
@@ -1208,21 +1249,6 @@
         " packs, Crossplatform songs.");
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
-            // 
-            // btn_OpenGame
-            // 
-            this.btn_OpenGame.BackColor = System.Drawing.SystemColors.MenuHighlight;
-            this.btn_OpenGame.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_OpenGame.Location = new System.Drawing.Point(636, 678);
-            this.btn_OpenGame.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btn_OpenGame.Name = "btn_OpenGame";
-            this.btn_OpenGame.Size = new System.Drawing.Size(66, 54);
-            this.btn_OpenGame.TabIndex = 387;
-            this.btn_OpenGame.Text = "Open Game";
-            this.toolTip1.SetToolTip(this.btn_OpenGame, "Main DB Listing All ");
-            this.btn_OpenGame.UseVisualStyleBackColor = false;
-            this.btn_OpenGame.Visible = false;
-            this.btn_OpenGame.Click += new System.EventHandler(this.btn_OpenGame_Click);
             // 
             // btn_GoImport
             // 
@@ -1320,7 +1346,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.btn_ProfileRemove);
-            this.Controls.Add(this.btn_OpenGame);
             this.Controls.Add(this.btn_ProfilesSave);
             this.Controls.Add(this.chbx_Configurations);
             this.Controls.Add(this.panel2);
@@ -1477,7 +1502,6 @@
         private System.Windows.Forms.Button btn_Log;
         private System.Windows.Forms.ComboBox chbx_Configurations;
         private System.Windows.Forms.Button btn_ProfilesSave;
-        private System.Windows.Forms.Button btn_OpenGame;
         private System.Windows.Forms.Button btn_ProfileRemove;
     }
 }

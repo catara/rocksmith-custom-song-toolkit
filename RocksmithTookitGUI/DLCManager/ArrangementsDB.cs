@@ -128,26 +128,27 @@ namespace RocksmithToolkitGUI.DLCManager
             lbl_NoRec.Text = " songs.";
             bs.DataSource = null;
             dssx.Dispose();
-            var cmd = "SELECT * FROM Arrangements WHERE CDLC_ID=" + CDLCID + ";";
-            using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-            {
-                try
-                {
-                    OleDbDataAdapter da = new OleDbDataAdapter(cmd, cn);
-                    da.Fill(dssx, "Arrangements");
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    MessageBox.Show("-DB Open in Design Mode or Download Connectivity patch @ https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734");
-                    ErrorWindow frm1 = new ErrorWindow("DB Open in Design Mode or Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error when opening the DB", false, false);
-                    frm1.ShowDialog();
-                    return;
-                }
-                cn.Dispose();
-                noOfRec = dssx.Tables[0].Rows.Count;
+            //var cmd = "SELECT * FROM Arrangements WHERE CDLC_ID=" + CDLCID + ";";
+            //using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //{
+            //    try
+            //    {
+            //        OleDbDataAdapter da = new OleDbDataAdapter(cmd, cn);
+            //        da.Fill(dssx, "Arrangements");
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //        MessageBox.Show("-DB Open in Design Mode or Download Connectivity patch @ https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734");
+            //        ErrorWindow frm1 = new ErrorWindow("DB Open in Design Mode or Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error when opening the DB", false, false);
+            //        frm1.ShowDialog();
+            //        return;
+            //    }
+            //cn.Dispose();
+            dssx = DLCManager.SelectFromDB("Arrangements", "SELECT * FROM Arrangements WHERE CDLC_ID=" + CDLCID + ";");
+            noOfRec = dssx.Tables[0].Rows.Count;
                 lbl_NoRec.Text = noOfRec.ToString() + " records.";
-            }
+            //}
             //MessageBox.Show("test");
             DataGridViewTextBoxColumn ID = new DataGridViewTextBoxColumn { DataPropertyName = "ID", HeaderText = "ID " };
             DataGridViewTextBoxColumn Arrangement_Name = new DataGridViewTextBoxColumn { DataPropertyName = "Arrangement_Name", HeaderText = "Arrangement_Name " };
@@ -271,9 +272,39 @@ namespace RocksmithToolkitGUI.DLCManager
             bs.DataSource = dssx.Tables["Arrangements"];
             DataGridView.DataSource = bs;
             //DataGridView.ExpandColumns();
+
+            //advance or step back in the song list
+            int i = 0;
+            if (DataGridView.Rows.Count > 1)
+            {
+                var prev = DataGridView.SelectedCells[0].RowIndex;
+                if (DataGridView.Rows.Count == prev + 2)
+                    if (prev == 0) return;
+                    else
+                    {
+                        int rowindex;
+                        DataGridViewRow row;
+                        i = DataGridView.SelectedCells[0].RowIndex;
+                        rowindex = i;
+                        DataGridView.Rows[rowindex - 1].Selected = true;
+                        DataGridView.Rows[rowindex].Selected = false;
+                        row = DataGridView.Rows[rowindex - 1];
+                    }
+                else
+                {
+                    int rowindex;
+                    DataGridViewRow row;
+                    i = DataGridView.SelectedCells[0].RowIndex;
+                    rowindex = i;
+                    DataGridView.Rows[rowindex + 1].Selected = true;
+                    DataGridView.Rows[rowindex].Selected = false;
+                    row = DataGridView.Rows[rowindex + 1];
+                }
+            }
+            ChangeRow();
         }
 
-        public class Files
+        private class Files
         {
             public string ID { get; set; }
             public string Arrangement_Name { get; set; }
@@ -318,7 +349,7 @@ namespace RocksmithToolkitGUI.DLCManager
             public string Comments { get; set; }
         }
 
-        public Files[] files = new Files[10000];
+        private Files[] files = new Files[10000];
         //Generic procedure to read and parse Main.DB (&others..soon)
         public int SQLAccess(string cmd)
         {
@@ -328,16 +359,16 @@ namespace RocksmithToolkitGUI.DLCManager
             var MaximumSize = 0;
 
             //rtxt_StatisticsOnReadDLCs.Text += "\n  ee= ";
-            try
-            {
-                //MessageBox.Show(DB_Path);
-                using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-                {
-                    DataSet dus = new DataSet();
-                    OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
-                    dax.Fill(dus, "Arrangements");
-
-                    var i = 0;
+            //try
+            //{
+            //    //MessageBox.Show(DB_Path);
+            //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //    {
+            //        DataSet dus = new DataSet();
+            //        OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
+            //        dax.Fill(dus, "Arrangements");
+            DataSet dus = new DataSet();dus = DLCManager.SelectFromDB("Arrangements", cmd);
+            var i = 0;
                     //rtxt_StatisticsOnReadDLCs.Text += "\n  54= " +dus.Tables[0].Rows.Count;
                     MaximumSize = dus.Tables[0].Rows.Count;
                     foreach (DataRow dataRow in dus.Tables[0].Rows)
@@ -389,17 +420,17 @@ namespace RocksmithToolkitGUI.DLCManager
                         i++;
                     }
                     //Closing Connection
-                    dax.Dispose();
-                    cnn.Close();
-                    //rtxt_StatisticsOnReadDLCs.Text += i;
-                    //var ex = 0;
-                }
-            }
-            catch (System.IO.FileNotFoundException ee)
-            {
-                MessageBox.Show(ee.Message + "Can not open Arrangements DB connection ! ");
-                //MessageBox.Show(ee.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+                    dus.Dispose();
+            //        cnn.Close();
+            //        //rtxt_StatisticsOnReadDLCs.Text += i;
+            //        //var ex = 0;
+            //    }
+            //}
+            //catch (System.IO.FileNotFoundException ee)
+            //{
+            //    MessageBox.Show(ee.Message + "Can not open Arrangements DB connection ! ");
+            //    //MessageBox.Show(ee.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
             //rtxt_StatisticsOnReadDLCs.Text += "\n  max rows" + MaximumSize;
             return MaximumSize;//files[10000];
         }
@@ -415,13 +446,14 @@ namespace RocksmithToolkitGUI.DLCManager
         {
 
             var norec = 0;
-            DataSet ds = new DataSet();
-            using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-            {
-                string SearchCmd = "SELECT DISTINCT ToneA FROM Arrangements;";
-                OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
-                da.Fill(ds, "Arrangements");
-                norec = ds.Tables[0].Rows.Count;
+            //DataSet ds = new DataSet();
+            //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //{
+            //    string SearchCmd = "SELECT DISTINCT ToneA FROM Arrangements;";
+            //    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
+            //    da.Fill(ds, "Arrangements");
+            DataSet ds = new DataSet(); ds = DLCManager.SelectFromDB("Arrangements", "SELECT DISTINCT ToneA FROM Arrangements;");
+            norec = ds.Tables[0].Rows.Count;
 
                 if (norec > 0)
                 {
@@ -441,14 +473,16 @@ namespace RocksmithToolkitGUI.DLCManager
                     for (int j = 0; j < norec; j++)
                         chbx_ToneA.Items.Add(ds.Tables[0].Rows[j][0].ToString());
                 }
-            }
-            DataSet dIs = new DataSet();
-            using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-            {
-                string SearchCmd = "SELECT DISTINCT ToneB FROM Arrangements;";
-                OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
-                da.Fill(dIs, "Arrangements");
-                norec = dIs.Tables[0].Rows.Count;
+            ds.Dispose();
+        //}
+        //DataSet dIs = new DataSet();
+        //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+        //{
+        //    string SearchCmd = "SELECT DISTINCT ToneB FROM Arrangements;";
+        //    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
+        //    da.Fill(dIs, "Arrangements");
+        DataSet dIs = new DataSet(); dIs = DLCManager.SelectFromDB("Arrangements", "SELECT DISTINCT ToneB FROM Arrangements;");
+            norec = dIs.Tables[0].Rows.Count;
 
                 if (norec > 0)
                 {
@@ -468,14 +502,16 @@ namespace RocksmithToolkitGUI.DLCManager
                     for (int j = 0; j < norec; j++)
                         chbx_ToneB.Items.Add(dIs.Tables[0].Rows[j][0].ToString());
                 }
-            }
-            DataSet dfs = new DataSet();
-            using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-            {
-                string SearchCmd = "SELECT DISTINCT ToneC FROM Arrangements;";
-                OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
-                da.Fill(dfs, "Arrangements");
-                norec = dfs.Tables[0].Rows.Count;
+            dIs.Dispose();
+        //}
+        //DataSet dfs = new DataSet();
+        //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+        //{
+        //    string SearchCmd = "SELECT DISTINCT ToneC FROM Arrangements;";
+        //    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
+        //    da.Fill(dfs, "Arrangements");
+        DataSet dfs = new DataSet(); dfs = DLCManager.SelectFromDB("Arrangements", "SELECT DISTINCT ToneC FROM Arrangements;");
+            norec = dfs.Tables[0].Rows.Count;
 
                 if (norec > 0)
                 {
@@ -495,14 +531,16 @@ namespace RocksmithToolkitGUI.DLCManager
                     for (int j = 0; j < norec; j++)
                         chbx_ToneC.Items.Add(dfs.Tables[0].Rows[j][0].ToString());
                 }
-            }
-            DataSet dHs = new DataSet();
-            using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-            {
-                string SearchCmd = "SELECT DISTINCT ToneD FROM Arrangements;";
-                OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
-                da.Fill(dHs, "Arrangements");
-                norec = dHs.Tables[0].Rows.Count;
+            dfs.Dispose();
+        //}
+        //DataSet dHs = new DataSet();
+        //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+        //{
+        //    string SearchCmd = "SELECT DISTINCT ToneD FROM Arrangements;";
+        //    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
+        //    da.Fill(dHs, "Arrangements");
+        DataSet dHs = new DataSet(); dHs = DLCManager.SelectFromDB("Arrangements", "SELECT DISTINCT ToneD FROM Arrangements;");
+            norec = dHs.Tables[0].Rows.Count;
 
                 if (norec > 0)
                 {
@@ -522,13 +560,16 @@ namespace RocksmithToolkitGUI.DLCManager
                     for (int j = 0; j < norec; j++)
                         chbx_ToneD.Items.Add(dHs.Tables[0].Rows[j][0].ToString());
                 }
-            }
-            DataSet dxs = new DataSet();
-            using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-            {
-                string SearchCmd = "SELECT DISTINCT ToneBase FROM Arrangements;";
-                OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
-                da.Fill(dxs, "Arrangements");
+            dHs.Dispose();
+        //}
+
+        DataSet dxs = new DataSet(); dxs = DLCManager.SelectFromDB("Arrangements", "SELECT DISTINCT ToneBase FROM Arrangements;");
+            //DataSet dxs = new DataSet();
+            //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //{
+            //    string SearchCmd = "SELECT DISTINCT ToneBase FROM Arrangements;";
+            //    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
+            //    da.Fill(dxs, "Arrangements");
                 norec = dxs.Tables[0].Rows.Count;
 
                 if (norec > 0)
@@ -549,14 +590,15 @@ namespace RocksmithToolkitGUI.DLCManager
                     for (int j = 0; j < norec; j++)
                         chbx_ToneBase.Items.Add(dxs.Tables[0].Rows[j][0].ToString());
                 }
-            }
-            DataSet dks = new DataSet();
-            using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-            {
-                string SearchCmd = "SELECT DISTINCT Tunning FROM Arrangements;";
-                OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
-                da.Fill(dks, "Arrangements");
-                norec = dks.Tables[0].Rows.Count;
+            //}
+            //DataSet dks = new DataSet();
+            //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //{
+            //    string SearchCmd = "SELECT DISTINCT Tunning FROM Arrangements;";
+            //    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
+            //    da.Fill(dks, "Arrangements");
+            DataSet dks = new DataSet(); dks = DLCManager.SelectFromDB("Arrangements", "SELECT DISTINCT Tunning FROM Arrangements;");
+            norec = dks.Tables[0].Rows.Count;
 
                 if (norec > 0)
                 {
@@ -576,7 +618,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     for (int j = 0; j < norec; j++)
                         chbx_Tunning.Items.Add(dks.Tables[0].Rows[j][0].ToString());
                 }
-            }
+            //}
 
             int i;
             i = DataGridView1.SelectedCells[0].RowIndex;
@@ -785,6 +827,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 if (!chbx_AutoSave.Checked) MessageBox.Show("Arrangement Saved");
                 //das.SelectCommand.CommandText = "SELECT * FROM Main";
                 //// das.Update(dssx, "Main");
+                dis.Dispose();
             }
         }
 
@@ -831,7 +874,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     }
                 }
                 catch (Exception ee)
-                { }
+                { Console.Write(ee); }
             }
             MessageBox.Show("DD Removed");
             chbx_BassDD.Checked = false;

@@ -14,7 +14,7 @@ namespace RocksmithToolkitLib.Sng
     public enum ArrangementName { Lead = 0/* Single notes */, Rhythm /* Chords */, Combo /* Combo */, Bass, Vocals, JVocals, ShowLights };
     public enum ArrangementType { Guitar, Bass, Vocal, ShowLight };
     public enum InstrumentTuning { [Description("E Standard")] Standard, [Description("Drop D")] DropD, [Description("Eb")] EFlat, [Description("Open G")] OpenG };
-    public enum PluckedType { NotPicked, Picked };
+    public enum PluckedType { NotPicked = 0, Picked = 1 };
     public enum Metronome { None, Itself, Generate };
 
     public static class InstrumentTuningExtensions
@@ -820,7 +820,7 @@ namespace RocksmithToolkitLib.Sng
         private static void WriteRocksmithSngLevelHandShapes(EndianBinaryWriter w, SongHandShape[] handShapes, Xml.SongLevel level, float songLength)
         {
             // sample section begins @ 328,356 in NumberThirteen_Combo.sng
-            //  sample section begins @ 4,300 in TCPowerChords_Lead.sng   
+            // sample section begins @ 4,300 in TCPowerChords_Lead.sng   
 
             if (handShapes == null || handShapes.Length == 0)
             {

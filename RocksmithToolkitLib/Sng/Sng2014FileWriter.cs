@@ -516,15 +516,16 @@ namespace RocksmithToolkitLib.Sng2014HSL
                         throw new InvalidDataException("ToneBase must be defined.");
 
                     // fix for undefined tone name (tone name should be shorter)
-                    if (xml.ToneBase.ToLower().Contains(tn.Name.ToLower()))
+                    if (xml.ToneBase.ToLower() == tn.Name.ToLower())
                         t.ToneId = 0;
-                    if (xml.ToneA.ToLower().Contains(tn.Name.ToLower()))
+
+                    if (xml.ToneA.ToLower() == tn.Name.ToLower())
                         t.ToneId = 0;
-                    else if (xml.ToneB.ToLower().Contains(tn.Name.ToLower()))
+                    else if (xml.ToneB.ToLower() == tn.Name.ToLower())
                         t.ToneId = 1;
-                    else if (xml.ToneC.ToLower().Contains(tn.Name.ToLower()))
+                    else if (xml.ToneC.ToLower() == tn.Name.ToLower())
                         t.ToneId = 2;
-                    else if (xml.ToneD.ToLower().Contains(tn.Name.ToLower()))
+                    else if (xml.ToneD.ToLower() == tn.Name.ToLower())
                         t.ToneId = 3;
                     else
                         throw new InvalidDataException("Undefined tone name: " + tn.Name);
@@ -992,7 +993,9 @@ namespace RocksmithToolkitLib.Sng2014HSL
                     for (int j = 0; j < xml.PhraseIterations.Length; j++)
                     {
                         var piter = xml.PhraseIterations[j];
-                        if (piter.Time > note.Time)
+
+                        // attmpt to fix 100 % bug issue and improve mastery
+                        if (piter.Time > note.Time && j > 0)
                         {
                             if (note.Ignore == 0)
                                 ++a.NotesInIteration1[j - 1];
@@ -1022,11 +1025,14 @@ namespace RocksmithToolkitLib.Sng2014HSL
                     for (int j = 0; j < xml.PhraseIterations.Length; j++)
                     {
                         var piter = xml.PhraseIterations[j];
-                        if (chord.Time >= piter.Time && piter.Time >= chord.Time)
+
+                        // this is attmpt to fix 100% bug issue and improve mastery
+                        if (piter.Time > chord.Time && j > 0)
                         {
                             if (chord.Ignore == 0)
-                                ++a.NotesInIteration1[j];
-                            ++a.NotesInIteration2[j]; // j-1 not safe with j=0
+                                ++a.NotesInIteration1[j - 1];
+
+                                ++a.NotesInIteration2[j - 1];
                             break;
                         }
                     }

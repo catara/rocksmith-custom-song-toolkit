@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using System.Reflection;
 using System.Windows.Forms;
 using System.Diagnostics;
 using RocksmithToolkitLib;
@@ -7,6 +8,8 @@ using System.IO;
 using System.Net;
 using System.ComponentModel;
 using System.Globalization;
+using RocksmithToolkitLib.Extensions;
+using RocksmithToolkitLib.XmlRepository;
 
 namespace RocksmithToolkitGUI
 {
@@ -37,6 +40,7 @@ namespace RocksmithToolkitGUI
                 LoadTemplate(args[0]);
 
             InitMainForm();
+            ShowHelpForm();
         }
 
         private void InitMainForm()
@@ -181,12 +185,11 @@ namespace RocksmithToolkitGUI
         public void ReloadControls()
         {
             this.Controls.Clear();
-            InitializeComponent();            
+            InitializeComponent();
             tabControl1.TabPages.Remove(GeneralConfigTab);
             InitMainForm();
         }
 
-//<<<<<<< HEAD
         //bcapi
         private void dLCLibraryManagerToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -197,7 +200,7 @@ namespace RocksmithToolkitGUI
         {
             //manageToolStripMenuItem.Enabled = false;
             //bcapi (temp)Renaming this Fork
-            this.Text = String.Format("bcapi's v0.3 Custom Song Creator Toolkit (v{0} beta)", ToolkitVersion.version);
+            this.Text = String.Format("bcapi's v0.4 Custom Song Creator Toolkit (v{0} beta)", ToolkitVersion.version);
 
             // Remove all tabs
             tabControl1.TabPages.Clear();
@@ -207,12 +210,7 @@ namespace RocksmithToolkitGUI
                 tabControl1.TabPages.Add(DLCManagerTab);
         }
 
-        //private void dlcConverterControl_Load(object sender, EventArgs e)
-        //{
-
-        //}
-//=======
-        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             // cleanup temp folder garbage carefully
 #if !DEBUG
@@ -260,7 +258,18 @@ namespace RocksmithToolkitGUI
 #endif
 
         }
-
-//>>>>>>> refs/remotes/rscustom/master
+        private void ShowHelpForm()
+        {
+            Assembly assembly = Assembly.GetExecutingAssembly();          
+            using (Stream streamBetaInfo = assembly.GetManifestResourceStream("RocksmithToolkitGUI.Resources.BetaInfo.rtf"))
+            {
+                using (var helpViewer = new HelpForm())
+                {
+                    helpViewer.Text = String.Format("{0}", "TOOLKIT BETA RELEASE MESSAGE ...");
+                    helpViewer.PopulateRichText(streamBetaInfo);
+                    helpViewer.ShowDialog();
+                }
+            }
+        }
     }
 }

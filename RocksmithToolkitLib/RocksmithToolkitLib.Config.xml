@@ -4,8 +4,8 @@
   <Config Key="general_firstrun" Value="true" />
   <Config Key="general_usebeta" Value="true" />
   <Config Key="general_replacerepo" Value="false" />
-  <Config Key="general_urllastestrelease" Value="http://www.rscustom.net/builds/latest" />
-  <Config Key="general_urllastestbuild" Value="http://www.rscustom.net/builds/latest_test" />
+  <Config Key="general_urllastestrelease" Value="https://www.rscustom.net/builds/latest" />
+  <Config Key="general_urllastestbuild" Value="https://www.rscustom.net/builds/latest_test" />
   <Config Key="general_defaultappid_RS2012" Value="206102"  />
   <Config Key="general_defaultappid_RS2014" Value="248750"  />
   <Config Key="general_defaultauthor" Value="Custom Song Creator" />
@@ -24,11 +24,12 @@
   <!-- converter config key count = 2 -->"
   <Config Key="converter_source" Value="Pc" />
   <Config Key="converter_target" Value="XBox360" />
-  <!-- ddc config key count = 4 -->"
+  <!-- ddc config key count = 5 -->"
   <Config Key="ddc_config" Value="ddc_default" />
   <Config Key="ddc_rampup" Value="ddc_default" />
   <Config Key="ddc_phraselength" Value="4" />
-  <Config Key="ddc_removesustain" Value="false" />
+  <Config Key="ddc_removesustain" Value="false" />  
+  <Config Key="ddc_autogen" Value="false" />
   <!-- inlay 3 items TODO: add these -->"
   <Config Key="cgm_inlayname" Value="Default Inlay" />
   <Config Key="cgm_24frets" Value="false" />
@@ -100,10 +101,10 @@
   <Config Key="dlcm_AdditionalManipul61" Value="Yes" />
   <Config Key="dlcm_AdditionalManipul62" Value="Yes" />
   <Config Key="dlcm_AdditionalManipul63" Value="Yes" />
-  <Config Key="dlcm_AdditionalManipul65" Value="Yes" />
+  <Config Key="dlcm_AdditionalManipul64" Value="No" />
+  <Config Key="dlcm_AdditionalManipul65" Value="No" />
   <Config Key="dlcm_AdditionalManipul66" Value="Yes" />
   <Config Key="dlcm_AdditionalManipul67" Value="Yes" />
-  <Config Key="dlcm_AdditionalManipul68" Value="Yes" />
   <Config Key="dlcm_Album" Value="&#60;Broken&#62;&#60;Year&#62; - &#60;Album&#62; - &#60;Rating&#62; - &#60;Avail. Instr.&#62; - &#60;DD&#62; - &#60;Tuning&#62;-&#60;Group&#62;" />;
   <Config Key="dlcm_Artist" Value="&#60;Artist&#62;-&#60;CDLC&#62;-&#60;Avail. Tracks&#62;-&#60;DD&#62;-&#60;QAs&#62;-&#60;Bass_HasDD&#62;" />;
   <Config Key="dlcm_Artist_Sort" Value="&#60;Beta&#62;&#60;Group&#62;&#60;Artist&#62;" />;
@@ -113,31 +114,11 @@
   <Config Key="dlcm_chbx_PS3" Value="Yes" />;
   <Config Key="dlcm_chbx_XBOX360" Value="No" />;
   <Config Key="dlcm_Prof" Value="0" />;
-  <Config Key="dlcm_Prof1" Value="Home" />;
-  <Config Key="dlcm_DBFolder1" Value="C:\GitHub\tmp" />;
-  <Config Key="dlcm_RocksmithDLCPath1" Value="C:\GitHub\tmp\to import" />;
-  <Config Key="dlcm_TempPath1" Value="C:\GitHub\tmp\0" />;
-  <Config Key="dlcm_Prof2" Value="VM" />;
-  <Config Key="dlcm_DBFolder2" Value="C:\GitHub\tmp" />;
-  <Config Key="dlcm_RocksmithDLCPath2" Value="E:\Users\bogdan\Library\Application Support\Steam\steamapps\common\Rocksmith2014\dlc" />;
-  <Config Key="dlcm_TempPath2" Value="C:\GitHub\tmp\0" />;
-  <Config Key="dlcm_Prof3" Value="Mac" />;
-  <Config Key="dlcm_DBFolder3" Value="C:\GitHub\tmp" />;
-  <Config Key="dlcm_RocksmithDLCPath3" Value="E:\Users\bogdan\Library\Application Support\Steam\steamapps\common\Rocksmith2014\dlc" />;
-  <Config Key="dlcm_TempPath3" Value="C:\GitHub\tmp\0" />;
-  <Config Key="dlcm_Prof4" Value="PC" />;
-  <Config Key="dlcm_DBFolder4" Value="C:\GitHub\tmp" />;
-  <Config Key="dlcm_RocksmithDLCPath4" Value="C:\Program Files (x86)\Steam\steamapps\common\Rocksmith2014\dlc" />;
-  <Config Key="dlcm_TempPath4" Value="C:\GitHub\tmp\0" />;
-  <Config Key="dlcm_Prof5" Value="HFS" />;
-  <Config Key="dlcm_DBFolder5" Value="E:\Users\bogdan\GitHub\tmp" />;
-  <Config Key="dlcm_RocksmithDLCPath5" Value="E:\Users\bogdan\GitHub\tmp\to import" />;
-  <Config Key="dlcm_TempPath5" Value="E:\Users\bogdan\GitHub\tmp\0" />
   <Config Key="dlcm_DBFolder" Value="C:\GitHub\tmp" />;
   <Config Key="dlcm_RocksmithDLCPath" Value="C:\GitHub\tmp\to import" />;
   <Config Key="dlcm_TempPath" Value="C:\GitHub\tmp\0" />;
-  <Config Key="dlcm_File_Name" Value="&#60;Beta&#62;&#60;Broken&#62;&#60;CDLC&#62;-&#60;Artist&#62;-&#60;Year&#62;-&#60;Album&#62;&#60;Track No.&#62;-&#60;Title&#62;-&#60;DD&#62;-&#60;Avail. Tracks&#62;-v&#60;Version&#62;-&#60;Bass_HasDD&#62;" />;
-  <Config Key="dlcm_Title" Value="&#60;Title&#62;" />;
+  <Config Key="dlcm_File_Name" Value="&#60;Beta&#62;&#60;Broken&#62;&#60;CDLC&#62;-&#60;Artist Short&#62;-&#60;Year&#62;-&#60;Album Short&#62;&#60;Track No.&#62;-&#60;Title&#62;&#60;Live&#62;-&#60;DD&#62;-&#60;Avail. Tracks&#62;-v&#60;Version&#62;-&#60;Bass_HasDD&#62;&#60;QA&#62;&#60;Bonus&#62;" />;
+  <Config Key="dlcm_Title" Value="&#60;Title&#62;&#60;QA&#62;&#60;Bonus&#62;&#60;Live&#62;" />;
   <Config Key="dlcm_Title_sort" Value="&#60;Year&#62;&#60;Album&#62;&#60;Track No.&#62;&#60;Title&#62;" />;
   <Config Key="dlcm_FTP" Value="EU" />;
   <Config Key="dlcm_FTP1" Value="ftp://192.168.1.12/dev_hdd0/game/BLES01862/USRDIR/DLC/" />;
@@ -147,11 +128,11 @@
   <Config Key="dlcm_andCopy" Value="Yes" />;
   <Config Key="dlcm_CopyOld" Value="Yes" />;
   <Config Key="dlcm_DupliGTrack" Value="Yes" />;
-  <Config Key="dlcm_PathForBRM" Value="c:\GitHub\" />;
+  <Config Key="dlcm_PathForBRM" Value="C:\\GitHub\rocksmith-custom-song-toolkit\\RocksmithTookitGUI\\DLCManager\\external_tools\\" />;
   <Config Key="dlcm_PreviewLenght" Value="30" />;
   <Config Key="dlcm_PreviewStart" Value="00:30" />;
   <Config Key="dlcm_Debug" Value="No" />;
-  <Config Key="dlcm_LogPath" Value="C:\GitHub\tmp\to import\Log" />;
+  <Config Key="dlcm_LogPath" Value="C:\\GitHub\tmp\to import\Log" />;
   <Config Key="dlcm_Activ_Title" Value="Yes" />;
   <Config Key="dlcm_Activ_TitleSort" Value="Yes" />;
   <Config Key="dlcm_Activ_Artist" Value="Yes" />;
@@ -160,11 +141,12 @@
   <Config Key="dlcm_Activ_FileName" Value="Yes" />;
   <Config Key="dlcm_Autosave" Value="Yes" />;
   <Config Key="dlcm_DupliM_Sync" Value="Yes" />;
-  <Config Key="dlcm_DupliM_Sync" Value="Yes" />;
+  <Config Key="dlcm_Replace" Value="Yes" />;
+  <Config Key="dlcm_Last_Packed" Value="Yes" />;
   <Config Key="dlcm_DefaultDB" Value="No" />;
   <Config Key="dlcm_EoFPath" Value="C:\\GitHub\\rocksmith-custom-song-toolkit\\RocksmithTookitGUI\\DLCManager\\external_tools\\eof1.8RC10(r1337)" />;
   <Config Key="dlcm_UltraStarCreator" Value="C:\\GitHub\rocksmith-custom-song-toolkit\\RocksmithTookitGUI\\DLCManager\\external_tools\\UltraStar Creator" />;
   <Config Key="dlcm_WinMerge" Value="C:\\GitHub\rocksmith-custom-song-toolkit\\RocksmithTookitGUI\\DLCManager\\external_tools\\WinMerge" />;
 
-  <Config Key="cgm_coloredinlay" Value="true" />
+<Config Key="cgm_coloredinlay" Value="true" />
 </ArrayOfConfig>

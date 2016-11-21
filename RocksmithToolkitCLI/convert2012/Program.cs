@@ -9,6 +9,7 @@ using RocksmithToolkitLib.Extensions;
 using RocksmithToolkitLib.Ogg;
 using RocksmithToolkitLib.Sng;
 using RocksmithToolkitLib.Xml;
+using RocksmithToolkitLib.XmlRepository;
 
 namespace convert2012
 {
@@ -87,7 +88,7 @@ namespace convert2012
 
                     // Repack
                     var cdlcVersion = "c1"; // conversion 1
-                    var cdlcFileName = GeneralExtensions.GetShortName("{0}_{1}_{2}", info.SongInfo.Artist, info.SongInfo.SongDisplayName, cdlcVersion, ConfigRepository.Instance().GetBoolean("creator_useacronyms"));
+                    var cdlcFileName = StringExtensions.GetValidShortFileName(info.SongInfo.Artist, info.SongInfo.SongDisplayName, cdlcVersion, ConfigRepository.Instance().GetBoolean("creator_useacronyms"));
                     var cdlcSavePath = Path.Combine(cdlcSaveDir, cdlcFileName);
                     Console.WriteLine(@"Repacking as RS2014 CDLC: " + cdlcFileName + @".psarc");
                     Console.WriteLine("");
@@ -114,12 +115,12 @@ namespace convert2012
 
         public static void UpdateXml(Arrangement arr, DLCPackageData info)
         {
-            // update xml with user modified DLCPackageData info
-            var songXml = Song2014.LoadFromFile(arr.SongXml.File);
             arr.SongFile = new RocksmithToolkitLib.DLCPackage.AggregateGraph.SongFile { File = "" };
             arr.Id = IdGenerator.Guid();
             arr.MasterId = RandomGenerator.NextInt();
 
+            // update xml with user modified DLCPackageData info
+            var songXml = Song2014.LoadFromFile(arr.SongXml.File);
             songXml.AlbumName = info.SongInfo.Album;
             songXml.AlbumYear = info.SongInfo.SongYear.ToString();
             songXml.ArtistName = info.SongInfo.Artist;
@@ -132,11 +133,8 @@ namespace convert2012
             songXml.ToneC = arr.ToneC;
             songXml.ToneD = arr.ToneD;
 
-            File.Delete(arr.SongXml.File);
-            using (var stream = File.OpenWrite(arr.SongXml.File))
-            {
+            using (var stream = File.Open(arr.SongXml.File, FileMode.Create))
                 songXml.Serialize(stream, true);
-            }
         }
 
         private static DLCPackageData ConvertAudio(DLCPackageData info)
@@ -210,7 +208,7 @@ namespace convert2012
                 DLCPackageCreator.ToDDS(ddsFiles);
 
                 var albumArtDir = Path.GetDirectoryName(albumArtPath);
-                var albumArtName = String.Format("album_{0}", info.Name.ToLower().Replace("_", "").GetValidName());
+                var albumArtName = String.Format("album_{0}", info.Name.ToLower().Replace("_", "").GetValidFileName());
                 var ddsPartialPath = Path.Combine(albumArtDir, albumArtName);
 
                 foreach (var dds in ddsFiles)

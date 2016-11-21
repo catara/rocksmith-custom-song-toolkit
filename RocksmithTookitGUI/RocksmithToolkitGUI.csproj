@@ -90,6 +90,7 @@
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Config\Globals.cs" />
+    <Compile Include="DDC\SettingsDDC.cs" />
     <Compile Include="DLCInlayCreator\IntroScreensCreator.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -107,12 +108,6 @@
     </Compile>
     <Compile Include="DLCManager\ArrangementsDB.Designer.cs">
       <DependentUpon>ArrangementsDB.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DLCManager\Game.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="DLCManager\Game.Designer.cs">
-      <DependentUpon>Game.cs</DependentUpon>
     </Compile>
     <Compile Include="DLCManager\Cache.cs">
       <SubType>Form</SubType>
@@ -293,18 +288,17 @@
     </Compile>
     <EmbeddedResource Include="AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="DLCInlayCreator\IntroScreensCreator.resx">
       <DependentUpon>IntroScreensCreator.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CDLC2Tab\SongInfoForm.resx">
       <DependentUpon>SongInfoForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="DLCManager\ArrangementsDB.resx">
       <DependentUpon>ArrangementsDB.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DLCManager\Game.resx">
-      <DependentUpon>Game.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DLCManager\Cache.resx">
       <DependentUpon>Cache.cs</DependentUpon>
@@ -404,6 +398,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CDLC2Tab\CDLC2Tab.resx">
       <DependentUpon>CDLC2Tab.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="ZiggyProEditorConverter\ZpeConverter.resx">
       <DependentUpon>ZpeConverter.cs</DependentUpon>
@@ -652,6 +647,10 @@
     <ProjectReference Include="..\RocksmithToolkitCLI\packer\packer.csproj">
       <Project>{822D185A-28A3-4AE0-A811-800E968AA2E7}</Project>
       <Name>packer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RocksmithToolkitCLI\remastered\remastered.csproj">
+      <Project>{88A34EB4-10FE-495C-9A54-97DBBBA37D2D}</Project>
+      <Name>remastered</Name>
     </ProjectReference>
     <ProjectReference Include="..\RocksmithToolkitCLI\sng2014\sng2014.csproj">
       <Project>{8FDBC548-DEBF-46D6-A933-33C8D72F33AB}</Project>
@@ -1590,6 +1589,7 @@
       <Link>VersionInfo.txt</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="Resources\BetaInfo.rtf" />
     <Content Include="songcreator.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -15,6 +15,7 @@ using RocksmithToolkitLib.DLCPackage.Manifest2014;
 using RocksmithToolkitLib.Sng;
 using RocksmithToolkitLib.Sng2014HSL;
 using RocksmithToolkitLib.Xml;
+using RocksmithToolkitLib.XmlRepository;
 
 namespace RocksmithToolkitLib.DLCPackage
 {
@@ -41,6 +42,7 @@ namespace RocksmithToolkitLib.DLCPackage
         public SongFile SongFile { get; set; }
         public SongXML SongXml { get; set; }
         // Song Information
+        public SongArrangementProperties2014 ArrangementPropeties { get; set; }
         public ArrangementType ArrangementType { get; set; }
         public int ArrangementSort { get; set; }
         public ArrangementName Name { get; set; }
@@ -56,7 +58,7 @@ namespace RocksmithToolkitLib.DLCPackage
         public Sng2014File Sng2014 { get; set; }
         // Gameplay Path
         public RouteMask RouteMask { get; set; }
-        public bool BonusArr { get; set; } // = false;
+        public bool BonusArr { get; set; }
         // Tone Selector
         public string ToneBase { get; set; }
         public string ToneMultiplayer { get; set; }
@@ -95,6 +97,7 @@ namespace RocksmithToolkitLib.DLCPackage
             Debug.Assert(attr.ArrangementType != null, "Missing information from manifest (ArrangementType)");
             SetArrType(attr.ArrangementType);
 
+            this.ArrangementPropeties = attr.ArrangementProperties;
             this.ArrangementSort = attr.ArrangementSort;
             this.Name = (ArrangementName)Enum.Parse(typeof(ArrangementName), attr.ArrangementName);
             this.ScrollSpeed = Convert.ToInt32(attr.DynamicVisualDensity.Last() * 10);
@@ -105,6 +108,7 @@ namespace RocksmithToolkitLib.DLCPackage
             this.ToneMultiplayer = attr.Tone_Multiplayer;
             this.Id = Guid.Parse(attr.PersistentID);
             this.MasterId = attr.MasterID_RDV;
+            
 
             //Filter out showlights\vocals
             if (ArrangementType != ArrangementType.Guitar && ArrangementType != ArrangementType.Bass)
@@ -186,11 +190,11 @@ namespace RocksmithToolkitLib.DLCPackage
                 }
 
                 // write changes to xml arrangement (w/o comments)
-                using (var stream = File.Open(xmlSongFile, FileMode.Create))
+                 using (var stream = File.Open(xmlSongFile, FileMode.Create))
                     song.Serialize(stream, true);
 
                 // write comments back to xml now so they are available for debugging (used for Guitar and Bass)
-                Song2014.WriteXmlComments(xmlSongFile, XmlComments, false);
+                Song2014.WriteXmlComments(xmlSongFile, XmlComments, writeNewVers: false);
             }
         }
 

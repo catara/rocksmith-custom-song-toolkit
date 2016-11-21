@@ -10,6 +10,7 @@ using NUnit.Framework;
 using RocksmithToolkitLib.Sng;
 using RocksmithToolkitLib.Xml;
 using RocksmithToolkitLib.DLCPackage.Showlight;
+using RocksmithToolkitLib.XmlRepository;
 
 namespace RocksmithToolkitLibTest
 {

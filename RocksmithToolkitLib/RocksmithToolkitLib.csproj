@@ -77,11 +77,23 @@
     <Compile Include="DLCPackage\Manifest\Tone\Tone.cs" />
     <Compile Include="DLCPackage\Showlight\Showlights.cs" />
     <Compile Include="DLCPackage\XBlock\XblockX.cs" />
+    <Compile Include="Extensions\BetterDialog2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extensions\BetterDialog2.designer.cs">
+      <DependentUpon>BetterDialog2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\ExternalApps.cs" />
     <Compile Include="Extensions\GlobalExtension.cs" />
     <Compile Include="Extensions\JitVersionInfo.cs" />
     <Compile Include="Extensions\MemoryStreamExtension.cs" />
     <Compile Include="Ogg\Wwise.cs" />
+    <Compile Include="PsarcLoader\Entry.cs" />
+    <Compile Include="PsarcLoader\PSARC.cs" />
+    <Compile Include="PsarcLoader\PsarcExtensions.cs" />
+    <Compile Include="PsarcLoader\PsarcLoader.cs" />
+    <Compile Include="PsarcLoader\PsarcPackager.cs" />
     <Compile Include="SngToTab\Sng2Tab.cs" />
     <Compile Include="Sng\Constants.cs" />
     <Compile Include="Song2014ToTab\Gp5Converter.cs" />
@@ -217,6 +229,9 @@
     <None Include="Resources\PC_soundbank.bnk" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Extensions\BetterDialog2.resx">
+      <DependentUpon>BetterDialog2.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -233,6 +248,7 @@
     <Content Include="DF_DDSImage.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="PsarcLoader\ReadMe.txt" />
     <Content Include="RocksmithToolkitLib.Config.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>

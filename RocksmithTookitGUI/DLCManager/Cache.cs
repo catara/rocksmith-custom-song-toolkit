@@ -19,6 +19,7 @@ using System.Data.SqlClient;
 using System.Net; //4ftp
 using RocksmithToolkitLib;//config
 using RocksmithToolkitLib.DLCPackage; //4packing
+using RocksmithToolkitLib.XmlRepository;
 
 namespace RocksmithToolkitGUI.DLCManager
 {
@@ -168,16 +169,17 @@ namespace RocksmithToolkitGUI.DLCManager
                 else if (DataGridView1.Rows[i].Cells[16].Value.ToString() == "No") chbx_Selected.Checked = false;
 
                 //Create Groups list Dropbox
-                DataSet ds = new DataSet();
+                //DataSet ds = new DataSet();
                 var norec = 0;
-                try
-                {
-                    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-                    {
-                        string SearchCmd = "SELECT DISTINCT Groups FROM Groups WHERE Type=\"Retail\";";
-                        OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
-                        da.Fill(ds, "Main");
-                        norec = ds.Tables[0].Rows.Count;
+                //try
+                //{
+                //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                //    {
+                //        string SearchCmd = "SELECT DISTINCT Groups FROM Groups WHERE Type=\"Retail\";";
+                //        OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
+                //        da.Fill(ds, "Main");
+                DataSet ds = new DataSet(); ds = DLCManager.SelectFromDB("Main", "SELECT DISTINCT Groups FROM Groups WHERE Type=\"Retail\";");
+                norec = ds.Tables[0].Rows.Count;
 
                         if (norec > 0)
                         {
@@ -199,14 +201,15 @@ namespace RocksmithToolkitGUI.DLCManager
                             }
                         }
 
-                        DataSet dds = new DataSet();
-                        //Create Groups list MultiCheckbox
-                        using (OleDbConnection con = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-                        {
-                            string SearchCmds = "SELECT DISTINCT Groups FROM Groups WHERE Type=\"Retail\" AND CDLC_ID=\"" + DataGridView1.Rows[DataGridView1.SelectedCells[0].RowIndex].Cells["ID"].Value.ToString() + "\";";
-                            OleDbDataAdapter dfa = new OleDbDataAdapter(SearchCmds, con); //WHERE id=253
-                            dfa.Fill(dds, "Main");
-                            var nocrec = dds.Tables[0].Rows.Count;
+                DataSet dds = new DataSet(); dds = DLCManager.SelectFromDB("Main", "SELECT DISTINCT Groups FROM Groups WHERE Type=\"Retail\" AND CDLC_ID=\"" + DataGridView1.Rows[DataGridView1.SelectedCells[0].RowIndex].Cells["ID"].Value.ToString() + "\";");
+                //DataSet dds = new DataSet();
+                ////Create Groups list MultiCheckbox
+                //using (OleDbConnection con = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                //{
+                //    string SearchCmds = "SELECT DISTINCT Groups FROM Groups WHERE Type=\"Retail\" AND CDLC_ID=\"" + DataGridView1.Rows[DataGridView1.SelectedCells[0].RowIndex].Cells["ID"].Value.ToString() + "\";";
+                //    OleDbDataAdapter dfa = new OleDbDataAdapter(SearchCmds, con); //WHERE id=253
+                //    dfa.Fill(dds, "Main");
+                var nocrec = dds.Tables[0].Rows.Count;
 
                             if (nocrec > 0)
                                 for (int l = 0; l < norec; l++)
@@ -219,21 +222,21 @@ namespace RocksmithToolkitGUI.DLCManager
                                     }
                             //(ds.Tables[0].Rows[l][0].ToString()); 
 
-                        }
-                    }
+                    //    }
+                    //}
 
                     //if (txt_Arrangements.Text != "") 
                     picbx_AlbumArtPath.ImageLocation = txt_AlbumArtPath.Text;//.Replace(".dds", ".png");
                     if (chbx_Autosave.Checked) SaveOK = true;
                     else SaveOK = false;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    ErrorWindow frm1 = new ErrorWindow("DB Open in Design Mode or Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error when opening the Retail DB", false, false);
-                    frm1.ShowDialog();
-                    return;
-                }
+                //}
+                //catch (Exception ex)
+                //{
+                //    MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //    ErrorWindow frm1 = new ErrorWindow("DB Open in Design Mode or Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error when opening the Retail DB", false, false);
+                //    frm1.ShowDialog();
+                //    return;
+                //}
             }
         }
 
@@ -264,49 +267,53 @@ namespace RocksmithToolkitGUI.DLCManager
                 {
                     var cmdDel = "DELETE FROM Groups WHERE ";
 
-                    DataSet dsz = new DataSet();
-                    DataSet ddz = new DataSet();
+                    //DataSet dsz = new DataSet();
+                    //DataSet ddz = new DataSet();
                     for (int j = 0; j < chbx_AllGroups.Items.Count; j++)
                     {
-                        using (OleDbConnection cmb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-                        {
-                            DataSet dooz = new DataSet();
-                            string updatecmd = "SELECT ID FROM Groups WHERE Type=\"Retail\" AND CDLC_ID=\"" + txt_ID.Text + "\" AND Groups=\"" + chbx_AllGroups.Items[j] + "\";";
-                            OleDbDataAdapter dbf = new OleDbDataAdapter(updatecmd, cmb);
-                            dbf.Fill(dooz, "Groups");
-                            dbf.Dispose();
-                            var cmd = "INSERT INTO Groups(CDLC_ID,Groups,Type) VALUES";
+                        //using (OleDbConnection cmb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                        //{
+                        //    DataSet dooz = new DataSet();
+                        //    string updatecmd = "SELECT ID FROM Groups WHERE Type=\"Retail\" AND CDLC_ID=\"" + txt_ID.Text + "\" AND Groups=\"" + chbx_AllGroups.Items[j] + "\";";
+                        //    OleDbDataAdapter dbf = new OleDbDataAdapter(updatecmd, cmb);
+                        //    dbf.Fill(dooz, "Groups");
+                        //    dbf.Dispose();
+                        DataSet dooz = new DataSet(); dooz = DLCManager.SelectFromDB("Groups", "SELECT ID FROM Groups WHERE Type=\"Retail\" AND CDLC_ID=\"" + txt_ID.Text + "\" AND Groups=\"" + chbx_AllGroups.Items[j] + "\";");
+                        //var cmd = "INSERT INTO Groups(CDLC_ID,Groups,Type) VALUES";
 
                             var rr = dooz.Tables[0].Rows.Count;
                             if (chbx_AllGroups.GetItemChecked(j) && rr == 0)
                             {
-                                cmd += "(\"" + txt_ID.Text + "\",\"" + chbx_AllGroups.Items[j] + "\",\"Retail\")";
-                                OleDbDataAdapter dab = new OleDbDataAdapter(cmd, cmb);
-                                dab.Fill(dsz, "Groups");
-                                dab.Dispose();
-                            }
+                             //   cmd += "(\"" + txt_ID.Text + "\",\"" + chbx_AllGroups.Items[j] + "\",\"Retail\")";
+                            var insertcmdd = "CDLC_ID, Groups, Type";
+                            var insertvalues = "\"" + txt_ID.Text + "\",\"" + chbx_AllGroups.Items[j] + "\",\"Retail\"";
+                            DLCManager.InsertIntoDBwValues("Groups", insertcmdd, insertvalues);
+                            //OleDbDataAdapter dab = new OleDbDataAdapter(cmd, cmb);
+                            //dab.Fill(dsz, "Groups");
+                            //dab.Dispose();
+                        }
                             else if (rr > 0 && !chbx_AllGroups.GetItemChecked(j)) cmdDel += "(Type=\"Retail\" AND CDLC_ID=\"" + txt_ID.Text + "\" AND Groups=\"" + chbx_AllGroups.Items[j] + "\") OR ";
                         }
-                    }
+                    //}
                     cmdDel += ";";
                     cmdDel = cmdDel.Replace(" OR ;", ";");
                     //cmd += ";";
                     //cmd = cmd.Replace(",;", ";");
-                    using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-                    {
-                        //if (cmd != "INSERT INTO Groups(CDLC_ID,Groups) VALUES")
-                        //{
-                        //    OleDbDataAdapter dab = new OleDbDataAdapter(cmd, cnb);
-                        //  dab.Fill(dsz, "Groups");
-                        //    dab.Dispose();
+                    //using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                    //{
+                    //if (cmd != "INSERT INTO Groups(CDLC_ID,Groups) VALUES")
+                    //{
+                    //    OleDbDataAdapter dab = new OleDbDataAdapter(cmd, cnb);
+                    //  dab.Fill(dsz, "Groups");
+                    //    dab.Dispose();
+                    //}
+                    if (cmdDel != "DELETE FROM Groups WHERE ;") DLCManager.DeleteFromDB("Groups", cmdDel);                        //{
+                        //    //OleDbDataAdapter dac = new OleDbDataAdapter(cmdDel, cnb);
+                        //    //dac.Fill(ddz, "Groups");
+                        //    //dac.Dispose();
+
                         //}
-                        if (cmdDel != "DELETE FROM Groups WHERE ;")
-                        {
-                            OleDbDataAdapter dac = new OleDbDataAdapter(cmdDel, cnb);
-                            dac.Fill(ddz, "Groups");
-                            dac.Dispose();
-                        }
-                    }
+                    //}
                 }
                 //var DB_Path = "../../../../tmp\\Files.accdb;";
                 var connection = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path); //+ ";Persist Security Info=False"
@@ -357,17 +364,18 @@ namespace RocksmithToolkitGUI.DLCManager
         {
 
             SearchCmd = SearchCmd.Replace("WHERE  ORDER", "ORDER");
+             dssx = DLCManager.SelectFromDB("Cache", SearchCmd);
             //DB_Path = "../../../../tmp\\Files.accdb;";
-            using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-            {
-                OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cn);
-                da.Fill(dssx, "Cache");
-                dssx.Dispose();
-                //da = new OleDbDataAdapter("SELECT Identifier,ContactPosition FROM PositionType;", cn);
-                //da.Fill(ds, "PositionType");
-                //da = new OleDbDataAdapter("SELECT Identifier, Badge FROM Badge", cn);
-                //da.Fill(ds, "Badge");
-            }
+            //using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //{
+            //    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cn);
+            //    da.Fill(dssx, "Cache");
+            //    dssx.Dispose();
+            //    //da = new OleDbDataAdapter("SELECT Identifier,ContactPosition FROM PositionType;", cn);
+            //    //da.Fill(ds, "PositionType");
+            //    //da = new OleDbDataAdapter("SELECT Identifier, Badge FROM Badge", cn);
+            //    //da.Fill(ds, "Badge");
+            //}
             //MessageBox.Show("test");
             DataGridViewTextBoxColumn ID = new DataGridViewTextBoxColumn { DataPropertyName = "ID", HeaderText = "ID ", Width = 50 };
             DataGridViewTextBoxColumn Identifier = new DataGridViewTextBoxColumn { DataPropertyName = "Identifier", HeaderText = "Identifier ", Width = 70 };
@@ -443,23 +451,52 @@ namespace RocksmithToolkitGUI.DLCManager
             bs.DataSource = dssx.Tables["Cache"];
             DataGridView.DataSource = bs;
             dssx.Dispose();
-            using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            DataSet dooz = new DataSet(); dooz = DLCManager.SelectFromDB("Groups", "SELECT * from Cache AS O WHERE Removed=\"No\"");
+            //using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //{
+            //    OleDbDataAdapter da = new OleDbDataAdapter("SELECT * from Cache AS O WHERE Removed=\"No\"", cn);
+            //    da.Fill(dssx, "Cache");
+            //    dssx.Dispose();
+            //    //da = new OleDbDataAdapter("SELECT Identifier,ContactPosition FROM PositionType;", cn);
+            //    //da.Fill(ds, "PositionType");
+            //    //da = new OleDbDataAdapter("SELECT Identifier, Badge FROM Badge", cn);
+            //    //da.Fill(ds, "Badge");
+            //}
+            lbl_NoRec.Text = noOfRec.ToString() + "/" + (dooz.Tables[0].Rows.Count - noOfRec).ToString() + " records.";
+
+            //advance or step back in the song list
+            int i = 0;
+            if (DataGridView.Rows.Count > 1)
             {
-                OleDbDataAdapter da = new OleDbDataAdapter("SELECT * from Cache AS O WHERE Removed=\"No\"", cn);
-                da.Fill(dssx, "Cache");
-                dssx.Dispose();
-                //da = new OleDbDataAdapter("SELECT Identifier,ContactPosition FROM PositionType;", cn);
-                //da.Fill(ds, "PositionType");
-                //da = new OleDbDataAdapter("SELECT Identifier, Badge FROM Badge", cn);
-                //da.Fill(ds, "Badge");
+                var prev = DataGridView.SelectedCells[0].RowIndex;
+                if (DataGridView.Rows.Count == prev + 2)
+                    if (prev == 0) return;
+                    else
+                    {
+                        int rowindex;
+                        DataGridViewRow row;
+                        i = DataGridView.SelectedCells[0].RowIndex;
+                        rowindex = i;
+                        DataGridView.Rows[rowindex - 1].Selected = true;
+                        DataGridView.Rows[rowindex].Selected = false;
+                        row = DataGridView.Rows[rowindex - 1];
+                    }
+                else
+                {
+                    int rowindex;
+                    DataGridViewRow row;
+                    i = DataGridView.SelectedCells[0].RowIndex;
+                    rowindex = i;
+                    DataGridView.Rows[rowindex + 1].Selected = true;
+                    DataGridView.Rows[rowindex].Selected = false;
+                    row = DataGridView.Rows[rowindex + 1];
+                }
             }
-            lbl_NoRec.Text = noOfRec.ToString() + "/" + (dssx.Tables[0].Rows.Count - noOfRec).ToString() + " records.";
-
-
+            ChangeRow();
             //DataGridView.ExpandColumns();
         }
 
-        public class Files
+        private class Files
         {
             public string ID { get; set; }
             public string Identifier { get; set; }
@@ -480,7 +517,7 @@ namespace RocksmithToolkitGUI.DLCManager
             public string Selected { get; set; }
         }
 
-        public Files[] files = new Files[10000];
+        private Files[] files = new Files[10000];
 
         //Generic procedure to read and parse Cache.DB (&others..soon)
         public int SQLAccess(string cmd)
@@ -490,15 +527,16 @@ namespace RocksmithToolkitGUI.DLCManager
 
             var MaximumSize = 0;
 
-            //rtxt_StatisticsOnReadDLCs.Text += "\n  ee= ";
-            try
-            {
+            ////rtxt_StatisticsOnReadDLCs.Text += "\n  ee= ";
+            //try
+            //{
                 MessageBox.Show(DB_Path);
-                using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.Jet.OLEDB.12.0;Data Source=" + DB_Path))
-                {
-                    DataSet dus = new DataSet();
-                    OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
-                    dax.Fill(dus, "Cache");
+                DataSet dus = new DataSet(); dus = DLCManager.SelectFromDB("Groups", cmd);
+                //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.Jet.OLEDB.12.0;Data Source=" + DB_Path))
+                //{
+                //    DataSet dus = new DataSet();
+                //    OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
+                //    dax.Fill(dus, "Cache");
 
                     var i = 0;
                     //rtxt_StatisticsOnReadDLCs.Text += "\n  54= " +dus.Tables[0].Rows.Count;
@@ -528,18 +566,18 @@ namespace RocksmithToolkitGUI.DLCManager
                             files[i].Selected = dataRow.ItemArray[16].ToString();
                             i++;
                         }
-                    //Closing Connection
-                    dax.Dispose();
-                    cnn.Close();
-                    //rtxt_StatisticsOnReadDLCs.Text += i;
-                    //var ex = 0;
-                }
-            }
-            catch (System.IO.FileNotFoundException ee)
-            {
-                MessageBox.Show(ee.Message + "Can not open Cache DB connection ! ");
-                //MessageBox.Show(ee.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            //        //Closing Connection
+            //        dax.Dispose();
+            //        cnn.Close();
+            //        //rtxt_StatisticsOnReadDLCs.Text += i;
+            //        //var ex = 0;
+            //    }
+            //}
+            //catch (System.IO.FileNotFoundException ee)
+            //{
+            //    MessageBox.Show(ee.Message + "Can not open Cache DB connection ! ");
+            //    //MessageBox.Show(ee.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
             //rtxt_StatisticsOnReadDLCs.Text += "\n  max rows" + MaximumSize;
             return MaximumSize;//files[10000];
         }
@@ -564,12 +602,12 @@ namespace RocksmithToolkitGUI.DLCManager
         }
         public void generatehsan()
         {
-            DataSet drsx = new DataSet();
-            using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-            {
-                OleDbDataAdapter da = new OleDbDataAdapter("SELECT DISTINCT SongsHSANPath, PSARCName, Platform from Cache AS O;", cn);
-                da.Fill(drsx, "Cache");
-                pB_ReadDLCs.Value = 0;
+            DataSet drsx = new DataSet(); drsx = DLCManager.SelectFromDB("Cache", "SELECT DISTINCT SongsHSANPath, PSARCName, Platform from Cache AS O;");
+            //using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //{
+            //    OleDbDataAdapter da = new OleDbDataAdapter("SELECT DISTINCT SongsHSANPath, PSARCName, Platform from Cache AS O;", cn);
+            //    da.Fill(drsx, "Cache");
+            pB_ReadDLCs.Value = 0;
                 if (drsx.Tables[0].Rows.Count != 0)
                     pB_ReadDLCs.Maximum = 2 * drsx.Tables[0].Rows.Count;
                 foreach (DataRow dataRow in drsx.Tables[0].Rows)
@@ -638,7 +676,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             //if (DDC.ExitCode > 0) rtxt_StatisticsOnReadDLCs.Text = "Issues when packing rs1dlc DLC pack !" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                         }
                         //manual workaround for wrongly packing the files
-                        MessageBox.Show("For CACHE.PSCARC-RS2014 as the Toolkit cannot pack with \"NO compression\" and PSARC.EXE(2011 version) cannot pack correctly,\n a manual workaround exists:\n1. Download&install TotalCommander http://ghisler.com/download.htm \n2. Download the psarc plugin 2013 http://www.totalcmd.net/plugring/PSARC.html \n3. While in TC open the zip archive with the plugin&install the plugin\n\n4. Enter the manipulated/cache.psarc and Pack with External No Compression LZMA\n(take out the _PS3/_Pc/_Mac from the name\n5. Copy in the Game(not DLC) DIR", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("For CACHE.psarcC-RS2014 as the Toolkit cannot pack with \"NO compression\" and PSARC.EXE(2011 version) cannot pack correctly,\n a manual workaround exists:\n1. Download&install TotalCommander http://ghisler.com/download.htm \n2. Download the psarc plugin 2013 http://www.totalcmd.net/plugring/PSARC.html \n3. While in TC open the zip archive with the plugin&install the plugin\n\n4. Enter the manipulated/cache.psarc and Pack with External No Compression LZMA\n(take out the _PS3/_Pc/_Mac from the name\n5. Copy in the Game(not DLC) DIR", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                         //rename the songs_rs1dlc folder to songs to enable the read of Browser function to work                                
                         //renamedir(unpackedDir + "\\manifests\\songs", unpackedDir + "\\manifests\\songs_rs1dlc");
@@ -819,7 +857,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         }
                     }
                 }
-            }
+          //  }
             MessageBox.Show("Songs Removed from the Shipped version of the game");
         }
 
@@ -845,7 +883,7 @@ namespace RocksmithToolkitGUI.DLCManager
             textfile = "{";
             textfile += "\n    \"Entries\" : {";
             var IDD = "";
-            var cmd = "";
+            //var cmd = "";
             line = fxml.ReadLine(); line = fxml.ReadLine();
             //Read and Save Header
             while ((line = fxml.ReadLine()) != null)
@@ -860,21 +898,23 @@ namespace RocksmithToolkitGUI.DLCManager
                     songkey = "";
                     songkey = ((line.Trim().ToLower()).Replace("\"songkey\" : \"", "").Replace("\"", "")).Replace(",", "");
 
-                    cmd = "SELECT Removed from Cache AS O WHERE LCASE(Identifier)=\"" + songkey + "\"";
-                    using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-                    {
-                        DataSet disx = new DataSet();
-                        OleDbDataAdapter da = new OleDbDataAdapter(cmd, cn);
-                        da.Fill(disx, "Cache");
-                        //rtxt_StatisticsOnReadDLCs.Text = "Processing: " + dssx.Tables[0].Rows.Count + " " + songkey + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                        if (disx.Tables[0].Rows.Count > 0) IDD = disx.Tables[0].Rows[0].ItemArray[0].ToString();
+                    DataSet disx = new DataSet(); disx = DLCManager.SelectFromDB("Groups", "SELECT Removed from Cache AS O WHERE LCASE(Identifier)=\"" + songkey + "\"");
+                    //cmd = "SELECT Removed from Cache AS O WHERE LCASE(Identifier)=\"" + songkey + "\"";
+                    //using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                    //{
+                    //    DataSet disx = new DataSet();
+                    //    OleDbDataAdapter da = new OleDbDataAdapter(cmd, cn);
+                    //    da.Fill(disx, "Cache");
+                    //rtxt_StatisticsOnReadDLCs.Text = "Processing: " + dssx.Tables[0].Rows.Count + " " + songkey + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                    var rec = disx.Tables[0].Rows.Count;
+                    if (rec> 0) IDD = disx.Tables[0].Rows[0].ItemArray[0].ToString();
                         else
-                        {
+                        //{
                             IDD = "No";
                             //rtxt_StatisticsOnReadDLCs.Text = "Removing: " + songkey + " " + dssx.Tables[0].Rows.Count  + " " + cmd + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                        }
-                        disx.Dispose();
-                    }
+                        //}
+                    //    disx.Dispose();
+                    //}
                 }
 
                 lastline = false;
@@ -948,7 +988,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         command.CommandType = CommandType.Text;
                         connection.Open();
                         command.ExecuteNonQuery();
-                        connection.Close();
+                        //connection.Close();
                         command.Dispose(); command = connection.CreateCommand();
                         command.CommandText = "UPDATE Cache SET ";
                         command.CommandText += "Removed = @param38, Selected = @param39 WHERE Removed='Maybe' ";
@@ -959,7 +999,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             command.CommandType = CommandType.Text;
                             connection.Open();
                             command.ExecuteNonQuery();
-                            connection.Close();
+                            //connection.Close();
                         }
                         catch (Exception ex)
                         {
@@ -1216,7 +1256,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                 command.CommandType = CommandType.Text;
                                 connection.Open();
                                 command.ExecuteNonQuery();
-                                connection.Close();
+                                //connection.Close();
                                 command.Dispose(); command = connection.CreateCommand();
 
                             }
@@ -1228,7 +1268,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             }
                             finally
                             {
-                                if (connection != null) connection.Close();
+                                //if (connection != null) connection.Close();
                             }
                         }
                     }
@@ -1387,37 +1427,41 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btn_GroupsAdd_Click(object sender, EventArgs e)
         {
-            var cmd = "INSERT into Groups (CDLC_ID, Groups, Type) VALUES (\"" + txt_ID.Text + "\",\"" + chbx_Group.Text + "\",\"Retail\");";
-            DataSet dsz = new DataSet();
-            using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-            {
-                OleDbDataAdapter dab = new OleDbDataAdapter(cmd, cnb);
-                dab.Fill(dsz, "Groups");
-                dab.Dispose();
-            }
+            //var cmd = "INSERT into Groups (CDLC_ID, Groups, Type) VALUES (\"" + txt_ID.Text + "\",\"" + chbx_Group.Text + "\",\"Retail\");";
+            //DataSet dsz = new DataSet();
+            //using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //{
+            //    OleDbDataAdapter dab = new OleDbDataAdapter(cmd, cnb);
+            //    dab.Fill(dsz, "Groups");
+            //    dab.Dispose();
+            //}
+            var insertcmdd = "CDLC_ID, Groups, Type";
+            var insertvalues = "\"" + txt_ID.Text + "\",\"" + chbx_Group.Text + "\",\"Retail\"";
+            DLCManager.InsertIntoDBwValues("Groups", insertcmdd, insertvalues);
             GroupChanged = true;
             ChangeRow();
         }
 
         private void btn_GroupsRemove_Click(object sender, EventArgs e)
         {
-            var cmd = "DELETE FROM Groups WHERE Type=\"Retail\" AND Groups= \"" + chbx_Group.Text + "\"";
-            try
-            {
-                using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-                {
-                    DataSet dhs = new DataSet();
+            //var cmd = "DELETE FROM Groups WHERE Type=\"Retail\" AND Groups= \"" + chbx_Group.Text + "\"";
+            //try
+            //{
+            //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //    {
+            //        DataSet dhs = new DataSet();
 
-                    OleDbDataAdapter dhx = new OleDbDataAdapter(cmd, cnn);
-                    dhx.Fill(dhs, "Groups");
-                    dhx.Dispose();
-                }
-            }
-            catch (Exception ex)
-            {
-                //MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                //MessageBox.Show("Can not Delete Song folder ! ");
-            }
+            //        OleDbDataAdapter dhx = new OleDbDataAdapter(cmd, cnn);
+            //        dhx.Fill(dhs, "Groups");
+            //        dhx.Dispose();
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    //MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    //MessageBox.Show("Can not Delete Song folder ! ");
+            //}
+            DLCManager.DeleteFromDB("Groups", "DELETE FROM Groups WHERE Type=\"Retail\" AND Groups= \"" + chbx_Group.Text + "\"");
             GroupChanged = true;
             ChangeRow();
         }
@@ -1427,36 +1471,38 @@ namespace RocksmithToolkitGUI.DLCManager
             if (chbx_Group.Text != null || chbx_Group.Text != "")
             {
                 //var cmd = "UPDATE Removed=\"Yes\" FROM Groups WHERE Type=\"Retail\" AND Groups= \"" + chbx_Group.Text + "\"";
-                var cmd = "DELETE FROM Groups WHERE Type=\"Retail\" AND Groups= \"" + chbx_Group.Text + "\"";
-                try
-                {
-                    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-                    {
-                        DataSet dhs = new DataSet();
+                //var cmd = "DELETE FROM Groups WHERE Type=\"Retail\" AND Groups= \"" + chbx_Group.Text + "\"";
+                //try
+                //{
+                //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                //    {
+                //        DataSet dhs = new DataSet();
 
-                        OleDbDataAdapter dhx = new OleDbDataAdapter(cmd, cnn);
-                        dhx.Fill(dhs, "Groups");
-                        dhx.Dispose();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    //MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    //MessageBox.Show("Can not Delete Song folder ! ");
-                }
+                //        OleDbDataAdapter dhx = new OleDbDataAdapter(cmd, cnn);
+                //        dhx.Fill(dhs, "Groups");
+                //        dhx.Dispose();
+                //    }
+                //}
+                //catch (Exception ex)
+                //{
+                //    //MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //    //MessageBox.Show("Can not Delete Song folder ! ");
+                //}
 
-                //calc how many rows are filled with values
-                DataSet dssx = new DataSet();
-                using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-                {
-                    OleDbDataAdapter da = new OleDbDataAdapter("SELECT * from Cache AS O", cn);
-                    da.Fill(dssx, "Cache");
-                    dssx.Dispose();
-                    //da = new OleDbDataAdapter("SELECT Identifier,ContactPosition FROM PositionType;", cn);
-                    //da.Fill(ds, "PositionType");
-                    //da = new OleDbDataAdapter("SELECT Identifier, Badge FROM Badge", cn);
-                    //da.Fill(ds, "Badge");
-                }
+                ////calc how many rows are filled with values
+                //DataSet dssx = new DataSet();
+                //using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                //{
+                //    OleDbDataAdapter da = new OleDbDataAdapter("SELECT * from Cache AS O", cn);
+                //    da.Fill(dssx, "Cache");
+                //    dssx.Dispose();
+                //    //da = new OleDbDataAdapter("SELECT Identifier,ContactPosition FROM PositionType;", cn);
+                //    //da.Fill(ds, "PositionType");
+                //    //da = new OleDbDataAdapter("SELECT Identifier, Badge FROM Badge", cn);
+                //    //da.Fill(ds, "Badge");
+                //}
+                DLCManager.DeleteFromDB("Groups", "DELETE FROM Groups WHERE Type=\"Retail\" AND Groups= \"" + chbx_Group.Text + "\"");
+                DataSet ds = new DataSet(); ds = DLCManager.SelectFromDB("Cache", "SELECT * from Cache AS O");
                 var recs = dssx.Tables[0].Rows.Count;
                 pB_ReadDLCs.Value = 0;
                 if (recs != 0)
@@ -1465,14 +1511,17 @@ namespace RocksmithToolkitGUI.DLCManager
                 for (var i = 0; i < recs; i++)
                 {
                     string IDD = DataGridView1.Rows[i].Cells["ID"].Value.ToString();
-                    cmd = "INSERT into Groups (CDLC_ID, Groups, Type) VALUES (\"" + IDD + "\",\"" + chbx_Group.Text + "\",\"Retail\");";
-                    if (DataGridView1.Rows[i].Cells["Removed"].Value.ToString() != "Yes")
-                        using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-                        {
-                            OleDbDataAdapter dab = new OleDbDataAdapter(cmd, cnb);
-                            dab.Fill(dsz, "Groups");
-                            dab.Dispose();
-                        }
+                    //cmd = "INSERT into Groups (CDLC_ID, Groups, Type) VALUES (\"" + IDD + "\",\"" + chbx_Group.Text + "\",\"Retail\");";
+                    //if (DataGridView1.Rows[i].Cells["Removed"].Value.ToString() != "Yes")
+                    //    using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                    //    {
+                    //        OleDbDataAdapter dab = new OleDbDataAdapter(cmd, cnb);
+                    //        dab.Fill(dsz, "Groups");
+                    //        dab.Dispose();
+                    //    }
+                    var insertcmdd = "CDLC_ID, Groups, Type";
+                    var insertvalues = "\"" + IDD + "\",\"" + chbx_Group.Text + "\",\"Retail\"";
+                    DLCManager.InsertIntoDBwValues("Groups", insertcmdd, insertvalues);
 
                     pB_ReadDLCs.Increment(2);
                 }
@@ -1501,29 +1550,31 @@ namespace RocksmithToolkitGUI.DLCManager
                     }
                     catch (Exception ex)
                     {
+                        Console.Write(ex);
                         //MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         //MessageBox.Show("Can not Delete Song folder ! ");
                     }
                 }
 
 
-                var cmd = "UPDATE Cache SET Removed=\"No\",Selected=\"Yes\" WHERE cstr(ID) IN (SELECT CDLC_ID From Groups WHERE Groups=\"" + chbx_Group.Text + "\")";
-                try
-                {
-                    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-                    {
-                        DataSet dhs = new DataSet();
+                //var cmd = "UPDATE Cache SET Removed=\"No\",Selected=\"Yes\" WHERE cstr(ID) IN (SELECT CDLC_ID From Groups WHERE Groups=\"" + chbx_Group.Text + "\")";
+                //try
+                //{
+                //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                //    {
+                //        DataSet dhs = new DataSet();
 
-                        OleDbDataAdapter dhx = new OleDbDataAdapter(cmd, cnn);
-                        dhx.Fill(dhs, "Cache");
-                        dhx.Dispose();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    //MessageBox.Show("Can not Delete Song folder ! ");
-                }
+                //        OleDbDataAdapter dhx = new OleDbDataAdapter(cmd, cnn);
+                //        dhx.Fill(dhs, "Cache");
+                //        dhx.Dispose();
+                //    }
+                //}
+                //catch (Exception ex)
+                //{
+                //    MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //    //MessageBox.Show("Can not Delete Song folder ! ");
+                //}
+                DataSet dhs = new DataSet(); dhs = DLCManager.UpdateDB("Cache", "UPDATE Cache SET Removed=\"No\",Selected=\"Yes\" WHERE cstr(ID) IN (SELECT CDLC_ID From Groups WHERE Groups=\"" + chbx_Group.Text + "\")");
             }
             Populate(ref DataGridView1, ref Main);//, ref bsPositions, ref bsBadges);
             DataGridView1.EditingControlShowing += DataGridView1_EditingControlShowing;
@@ -1578,23 +1629,24 @@ namespace RocksmithToolkitGUI.DLCManager
             DataGridView1.Refresh();
 
 
-            var com = "SELECT * FROM Cache";
-            try
-            {
-                DataSet dhs = new DataSet();
-                using (OleDbConnection cBn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-                {// 1. If hash already exists do not insert
-                    OleDbDataAdapter dBs = new OleDbDataAdapter(com, cBn);
-                    dBs.Fill(dhs, "Main");
-                    dBs.Dispose();
-                    MessageBox.Show("All Filtered songs(" + dhs.Tables[0].Rows.Count + ") in DB have been marked as Selected and Unmarked as Removed :)");
-                }
-            }
-            catch (Exception ee)
-            {
-                Console.WriteLine(ee.Message);
-                MessageBox.Show("Error at select filtered " + ee);
-            }
+            //var com = "SELECT * FROM Cache";
+            //try
+            //{
+            //    DataSet dhs = new DataSet();
+            //    using (OleDbConnection cBn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //    {// 1. If hash already exists do not insert
+            //        OleDbDataAdapter dBs = new OleDbDataAdapter(com, cBn);
+            //        dBs.Fill(dhs, "Main");
+            //        dBs.Dispose();
+            //        MessageBox.Show("All Filtered songs(" + dhs.Tables[0].Rows.Count + ") in DB have been marked as Selected and Unmarked as Removed :)");
+            //    }
+            //}
+            //catch (Exception ee)
+            //{
+            //    Console.WriteLine(ee.Message);
+            //    MessageBox.Show("Error at select filtered " + ee);
+            //}
+            DataSet dxr = new DataSet(); dxr = DLCManager.UpdateDB("Cache", "SELECT * FROM Cache");
         }
 
         private void btn_SelectNone_Click(object sender, EventArgs e)
@@ -1614,7 +1666,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 command.CommandType = CommandType.Text;
                 cnn.Open();
                 command.ExecuteNonQuery();
-                cnn.Close();
+                //cnn.Close();
                 command.Dispose();
             }
             catch (Exception ex)
@@ -1625,11 +1677,12 @@ namespace RocksmithToolkitGUI.DLCManager
             }
             finally
             {
-                if (cnn != null) cnn.Close();
+                //if (cnn != null) cnn.Close();
             }
             Populate(ref DataGridView1, ref Main);//, ref bsPositions, ref bsBadges);
             DataGridView1.EditingControlShowing += DataGridView1_EditingControlShowing;
             DataGridView1.Refresh();
+            cnn.Dispose();
             MessageBox.Show("All songs in DB have been UNmarked from being Selected");
         }
 
@@ -1642,7 +1695,10 @@ namespace RocksmithToolkitGUI.DLCManager
 
             switch (Filtertxt)
             {
-
+                //0ALL
+                case "0ALL":
+                    SearchCmd = SearchCmd.Replace(" WHERE ", "");
+                    break;
                 case "Pc":
                     SearchCmd += "Platform = 'Pc'";
                     break;
@@ -1655,15 +1711,11 @@ namespace RocksmithToolkitGUI.DLCManager
                 case "XBOX360":
                     SearchCmd += "Platform = 'XBOX360'";
                     break;
-                //0ALL
-                case "0ALL":
-                    SearchCmd = SearchCmd.Replace(" WHERE ", "");
-                    break;
                 case "Removed":
-                    SearchCmd = "Removed = 'Yes'";
+                    SearchCmd += "Removed = 'Yes'";
                     break;
                 case "Selected":
-                    SearchCmd = "Selected = 'Yes'";
+                    SearchCmd += "Selected = 'Yes'";
                     break;
                 default:
                     break;
@@ -1671,23 +1723,23 @@ namespace RocksmithToolkitGUI.DLCManager
 
             SearchCmd += " ORDER BY ID";
             //MessageBox.Show(Filtertxt + SearchCmd);
-            try
-            {
+            //try
+            //{
                 //this.DataGridView1.DataSource = null; //Then clear the rows:
 
                 //this.DataGridView1.Rows.Clear();//                Then set the data source to the new list:
 
                 //this.dataGridView.DataSource = this.GetNewValues();
-                dssx.Dispose();
+                //dssx.Dispose();
                 Populate(ref DataGridView1, ref Main);//, ref bsPositions, ref bsBadges);
                 DataGridView1.EditingControlShowing += DataGridView1_EditingControlShowing;
-                DataGridView1.Refresh();
-            }
-            catch (System.IO.FileNotFoundException ee)
-            {
-                MessageBox.Show(ee.Message + "Can't run Filter ! " + SearchCmd);
-                //MessageBox.Show(ee.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            //    DataGridView1.Refresh();
+            //}
+            //catch (System.IO.FileNotFoundException ee)
+            //{
+            //    MessageBox.Show(ee.Message + "Can't run Filter ! " + SearchCmd);
+            //    //MessageBox.Show(ee.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
         }
 
         private void chbx_Selected_Click(object sender, EventArgs e)
@@ -1732,8 +1784,8 @@ namespace RocksmithToolkitGUI.DLCManager
 
             SearchCmd += " ORDER BY Artist, Album_Year, Album, Song_Title ";
             //MessageBox.Show(Filtertxt + SearchCmd);
-            try
-            {
+            //try
+            //{
                 this.DataGridView1.DataSource = null; //Then clear the rows:
 
                 this.DataGridView1.Rows.Clear();//                Then set the data source to the new list:
@@ -1743,12 +1795,12 @@ namespace RocksmithToolkitGUI.DLCManager
                 Populate(ref DataGridView1, ref Main);//, ref bsPositions, ref bsBadges);
                 DataGridView1.EditingControlShowing += DataGridView1_EditingControlShowing;
                 DataGridView1.Refresh();
-            }
-            catch (System.IO.FileNotFoundException ee)
-            {
-                MessageBox.Show(ee.Message + "Can't run Filter ! " + SearchCmd);
-                //MessageBox.Show(ee.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            //}
+            //catch (System.IO.FileNotFoundException ee)
+            //{
+            //    MessageBox.Show(ee.Message + "Can't run Filter ! " + SearchCmd);
+            //    //MessageBox.Show(ee.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
 
         }
 
@@ -1756,6 +1808,13 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             if (chbx_PreSavedFTP.Text == "EU") txt_FTPPath.Text = ConfigRepository.Instance()["dlcm_FTP1"];//"ftp://192.168.1.12/" + "dev_hdd0/game/BLUS31182/USRDIR/DLC/";
             else txt_FTPPath.Text = ConfigRepository.Instance()["dlcm_FTP2"];//"ftp://192.168.1.12/" + "dev_hdd0/game/BLES01862/USRDIR/DLC/";
+        }
+
+        private void btn_OpenCorrespondence_Click(object sender, EventArgs e)
+        {
+            //txt_Description.Text = DB_Path;
+            WEM2OGGCorrespondence frm = new WEM2OGGCorrespondence(DB_Path.Replace("\\Files.accdb", ""), TempPath, RocksmithDLCPath);
+            frm.Show();
         }
     }
 }

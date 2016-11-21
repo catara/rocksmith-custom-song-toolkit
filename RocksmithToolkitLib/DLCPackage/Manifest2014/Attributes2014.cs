@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using RocksmithToolkitLib.DLCPackage.AggregateGraph2014;
 using RocksmithToolkitLib.DLCPackage.Manifest;
@@ -20,7 +21,8 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest2014
         /// </summary>
         public int? ArrangementType { get; set; }
         public string BlockAsset { get; set; }
-        public Dictionary<string, Dictionary<string, object>> Chords { get; set; } //Problem in 3rd sublevel that can be a list or not
+        // ODLC may contain errors in Chords data (seeing too many Chords in some JSON files) 
+        public Dictionary<string, Dictionary<string, List<int>>> Chords { get; set; }
         public List<ChordTemplate> ChordTemplates { get; set; }
         public List<float> DynamicVisualDensity { get; set; }
         public string FullName { get; set; }
@@ -128,11 +130,6 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest2014
             else
                 ArrangementType = (int)arrangement.Name;
 
-            //Chords        -- //TODO: MISSING GENERATE
-
-            ChordTemplates = new List<ChordTemplate>();
-            manifestFunctions.GenerateChordTemplateData(this, SongContent);
-
             LastConversionDateTime = SongContent.LastConversionDateTime;
             MaxPhraseDifficulty = manifestFunctions.GetMaxDifficulty(SongContent);
 
@@ -153,12 +150,30 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest2014
 
             //SongPartition  -- Generated in DLCPackageCreator after this constructor
 
+            ChordTemplates = new List<ChordTemplate>();
+            manifestFunctions.GenerateChordTemplateData(this, SongContent);
+
+            //Chords TODO: create me
+            try
+            {
+                // Commented out to check if this is cause of repeating chord display in game
+                manifestFunctions.GenerateChords(this, SongContent);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("GenerateChords: " + ex.Message);
+            }
+
             //Techniques TODO: improve me
+            // not source of 100% bug
             try
             {
                 manifestFunctions.GenerateTechniques(this, SongContent);
             }
-            catch { }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("GenerateTechniques: " + ex.Message);
+            }
 
             //Fix for Dead tones
             var it = info.TonesRS2014;

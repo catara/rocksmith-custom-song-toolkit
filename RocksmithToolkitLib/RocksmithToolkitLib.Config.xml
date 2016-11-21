@@ -101,8 +101,8 @@
   <Config Key="dlcm_AdditionalManipul61" Value="Yes" />
   <Config Key="dlcm_AdditionalManipul62" Value="Yes" />
   <Config Key="dlcm_AdditionalManipul63" Value="Yes" />
-  <Config Key="dlcm_AdditionalManipul64" Value="Yes" />
-  <Config Key="dlcm_AdditionalManipul65" Value="Yes" />
+  <Config Key="dlcm_AdditionalManipul64" Value="No" />
+  <Config Key="dlcm_AdditionalManipul65" Value="No" />
   <Config Key="dlcm_AdditionalManipul66" Value="Yes" />
   <Config Key="dlcm_AdditionalManipul67" Value="Yes" />
   <Config Key="dlcm_Album" Value="&#60;Broken&#62;&#60;Year&#62; - &#60;Album&#62; - &#60;Rating&#62; - &#60;Avail. Instr.&#62; - &#60;DD&#62; - &#60;Tuning&#62;-&#60;Group&#62;" />;
@@ -117,8 +117,8 @@
   <Config Key="dlcm_DBFolder" Value="C:\GitHub\tmp" />;
   <Config Key="dlcm_RocksmithDLCPath" Value="C:\GitHub\tmp\to import" />;
   <Config Key="dlcm_TempPath" Value="C:\GitHub\tmp\0" />;
-  <Config Key="dlcm_File_Name" Value="&#60;Beta&#62;&#60;Broken&#62;&#60;CDLC&#62;-&#60;Artist Short&#62;-&#60;Year&#62;-&#60;Album Short&#62;&#60;Track No.&#62;-&#60;Title&#62;-&#60;DD&#62;-&#60;Avail. Tracks&#62;-v&#60;Version&#62;-&#60;Bass_HasDD&#62;" />;
-  <Config Key="dlcm_Title" Value="&#60;Title&#62;" />;
+  <Config Key="dlcm_File_Name" Value="&#60;Beta&#62;&#60;Broken&#62;&#60;CDLC&#62;-&#60;Artist Short&#62;-&#60;Year&#62;-&#60;Album Short&#62;&#60;Track No.&#62;-&#60;Title&#62;&#60;Live&#62;-&#60;DD&#62;-&#60;Avail. Tracks&#62;-v&#60;Version&#62;-&#60;Bass_HasDD&#62;&#60;QA&#62;&#60;Bonus&#62;" />;
+  <Config Key="dlcm_Title" Value="&#60;Title&#62;&#60;QA&#62;&#60;Bonus&#62;&#60;Live&#62;" />;
   <Config Key="dlcm_Title_sort" Value="&#60;Year&#62;&#60;Album&#62;&#60;Track No.&#62;&#60;Title&#62;" />;
   <Config Key="dlcm_FTP" Value="EU" />;
   <Config Key="dlcm_FTP1" Value="ftp://192.168.1.12/dev_hdd0/game/BLES01862/USRDIR/DLC/" />;

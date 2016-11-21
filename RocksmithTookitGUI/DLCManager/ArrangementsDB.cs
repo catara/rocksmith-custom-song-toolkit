@@ -420,7 +420,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         i++;
                     }
                     //Closing Connection
-                    //dax.Dispose();
+                    dus.Dispose();
             //        cnn.Close();
             //        //rtxt_StatisticsOnReadDLCs.Text += i;
             //        //var ex = 0;
@@ -473,14 +473,15 @@ namespace RocksmithToolkitGUI.DLCManager
                     for (int j = 0; j < norec; j++)
                         chbx_ToneA.Items.Add(ds.Tables[0].Rows[j][0].ToString());
                 }
-            //}
-            //DataSet dIs = new DataSet();
-            //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-            //{
-            //    string SearchCmd = "SELECT DISTINCT ToneB FROM Arrangements;";
-            //    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
-            //    da.Fill(dIs, "Arrangements");
-            DataSet dIs = new DataSet(); dIs = DLCManager.SelectFromDB("Arrangements", "SELECT DISTINCT ToneB FROM Arrangements;");
+            ds.Dispose();
+        //}
+        //DataSet dIs = new DataSet();
+        //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+        //{
+        //    string SearchCmd = "SELECT DISTINCT ToneB FROM Arrangements;";
+        //    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
+        //    da.Fill(dIs, "Arrangements");
+        DataSet dIs = new DataSet(); dIs = DLCManager.SelectFromDB("Arrangements", "SELECT DISTINCT ToneB FROM Arrangements;");
             norec = dIs.Tables[0].Rows.Count;
 
                 if (norec > 0)
@@ -501,14 +502,15 @@ namespace RocksmithToolkitGUI.DLCManager
                     for (int j = 0; j < norec; j++)
                         chbx_ToneB.Items.Add(dIs.Tables[0].Rows[j][0].ToString());
                 }
-            //}
-            //DataSet dfs = new DataSet();
-            //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-            //{
-            //    string SearchCmd = "SELECT DISTINCT ToneC FROM Arrangements;";
-            //    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
-            //    da.Fill(dfs, "Arrangements");
-            DataSet dfs = new DataSet(); dfs = DLCManager.SelectFromDB("Arrangements", "SELECT DISTINCT ToneC FROM Arrangements;");
+            dIs.Dispose();
+        //}
+        //DataSet dfs = new DataSet();
+        //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+        //{
+        //    string SearchCmd = "SELECT DISTINCT ToneC FROM Arrangements;";
+        //    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
+        //    da.Fill(dfs, "Arrangements");
+        DataSet dfs = new DataSet(); dfs = DLCManager.SelectFromDB("Arrangements", "SELECT DISTINCT ToneC FROM Arrangements;");
             norec = dfs.Tables[0].Rows.Count;
 
                 if (norec > 0)
@@ -529,14 +531,15 @@ namespace RocksmithToolkitGUI.DLCManager
                     for (int j = 0; j < norec; j++)
                         chbx_ToneC.Items.Add(dfs.Tables[0].Rows[j][0].ToString());
                 }
-            //}
-            //DataSet dHs = new DataSet();
-            //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-            //{
-            //    string SearchCmd = "SELECT DISTINCT ToneD FROM Arrangements;";
-            //    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
-            //    da.Fill(dHs, "Arrangements");
-            DataSet dHs = new DataSet(); dHs = DLCManager.SelectFromDB("Arrangements", "SELECT DISTINCT ToneD FROM Arrangements;");
+            dfs.Dispose();
+        //}
+        //DataSet dHs = new DataSet();
+        //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+        //{
+        //    string SearchCmd = "SELECT DISTINCT ToneD FROM Arrangements;";
+        //    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
+        //    da.Fill(dHs, "Arrangements");
+        DataSet dHs = new DataSet(); dHs = DLCManager.SelectFromDB("Arrangements", "SELECT DISTINCT ToneD FROM Arrangements;");
             norec = dHs.Tables[0].Rows.Count;
 
                 if (norec > 0)
@@ -557,9 +560,10 @@ namespace RocksmithToolkitGUI.DLCManager
                     for (int j = 0; j < norec; j++)
                         chbx_ToneD.Items.Add(dHs.Tables[0].Rows[j][0].ToString());
                 }
-            //}
+            dHs.Dispose();
+        //}
 
-            DataSet dxs = new DataSet(); dxs = DLCManager.SelectFromDB("Arrangements", "SELECT DISTINCT ToneBase FROM Arrangements;");
+        DataSet dxs = new DataSet(); dxs = DLCManager.SelectFromDB("Arrangements", "SELECT DISTINCT ToneBase FROM Arrangements;");
             //DataSet dxs = new DataSet();
             //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
             //{
@@ -823,6 +827,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 if (!chbx_AutoSave.Checked) MessageBox.Show("Arrangement Saved");
                 //das.SelectCommand.CommandText = "SELECT * FROM Main";
                 //// das.Update(dssx, "Main");
+                dis.Dispose();
             }
         }
 

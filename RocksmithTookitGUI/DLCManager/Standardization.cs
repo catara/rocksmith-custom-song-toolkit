@@ -493,8 +493,8 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void DataGridView1_CellLeave(object sender, DataGridViewCellEventArgs e)
         {
-            if (chbx_AutoSave.Checked && (txt_Artist_Correction.Text != "" || txt_Album_Correction.Text != "" || txt_Year_Correction.Text != "" || txt_AlbumArt_Correction.Text != "" || txt_Artist_Short.Text != "" || txt_Album_Short.Text != "")) SaveRecord();//&& SaveOK
-            else;
+            //if (chbx_AutoSave.Checked && (txt_Artist_Correction.Text != "" || txt_Album_Correction.Text != "" || txt_Year_Correction.Text != "" || txt_AlbumArt_Correction.Text != "" || txt_Artist_Short.Text != "" || txt_Album_Short.Text != "")) SaveRecord();//&& SaveOK
+            //else;
         }
 
         private void SaveRecord()

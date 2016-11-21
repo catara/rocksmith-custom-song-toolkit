@@ -150,15 +150,27 @@ done:
 [x] dupli buttons dont deactivate after copy
 backing is not recognized
 [x] vs pixel to r8 on cover
-custom song creator still there after save
+[x] custom song creator still there after save
 capture live flag? as track no fails
+- add live in Duplicate
+- conmsider likve when searching for the track NO
+- swich from missing files to remote path
 [x] date bigger
 [x] crashes if i go on new rec in the maindblist
 add copy last and initial to mass copy
 [x] if multi info only in file name is not detected
-add bonus in the tytle
-a3 fails
-update DB
+[x] add bonus in the title
+[x] a3 fails
+[x] vocals is not acti dupli wannabeLA
+[x] update DB
+check help that crashed at infi.nhame (broken now)
+[x] at save dupli is off
+[x] qa still doesnt says novales (was not in the xml)
+- Repack only repack Initial or LAst only one platform 
+- Repack only copy and ftp,  Initial or LAst only one platform 
+- TEst Live Removal
+- duplicate shjould also compare multitrack version and live_details
+- alt 1 ahead of a.
 
 (prev release; but maybe not thuroughly tested)
 - [x] duplic manag make date bigger

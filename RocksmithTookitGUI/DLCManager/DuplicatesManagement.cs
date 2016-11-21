@@ -241,6 +241,15 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_MultiTrackExisting.Enabled = filed.Is_Multitrack == "Yes" ? true : false;
             txt_MultiTrackExisting.Text = (filed.MultiTrack_Version == "") ? "" : filed.MultiTrack_Version;
 
+            //Live Track
+            chbx_LiveNew.Checked = Is_MultiTracks == "Yes" ? true : false;
+            txt_LiveDetailsNew.Enabled = Is_MultiTracks == "Yes" ? true : false;
+            txt_LiveDetailsNew.Text = (MultiTrack_Versions == "") ? "" : MultiTrack_Versions;
+
+            chbx_LiveExisting.Checked = filed.Is_Live == "Yes" ? true : false;
+            txt_LiveDetailsExisting.Enabled = filed.Is_Live == "Yes" ? true : false;
+            txt_LiveDetailsExisting.Text = (filed.Live_Details == "") ? "" : filed.Live_Details;
+
             Art_Hash = filed.AlbumArt_Hash;
 
             txt_YouTube_LinkExisting.Text = filed.YouTube_Link;
@@ -534,6 +543,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                 //else if (lastConversionDateTime_cur != lastConversionDateTime_exist) { lbl_XMLVocal.ForeColor = lbl_Reference.ForeColor; lbl_Vocals.ForeColor = lbl_Reference.ForeColor; }                                            
                                 //txt_XMLVocalNew.Text = lastConversionDateTime_cur;
                                 //txt_XMLVocalExisting.Text = lastConversionDateTime_exist;lbl_XMLVocal.ForeColor = lbl_Reference.ForeColor;
+                                if (jsonHash != blist[k]) { lbl_Vocals.ForeColor = lbl_Reference.ForeColor; btn_WM_Vocals.Enabled = true; }
                                 lbl_Vocals.Visible = true;
                                 if (XmlHash != alist[k]) { lbl_Vocals.ForeColor = lbl_Reference.ForeColor; }
                                 //else if (XmlHash == "" && "" == alist[k]) ;
@@ -669,101 +679,102 @@ namespace RocksmithToolkitGUI.DLCManager
             this.Text = "Duplicate Management " + title_duplic;
         }
 
-        private class Files
-        {
-            public string ID { get; set; }
-            public string Song_Title { get; set; }
-            public string Song_Title_Sort { get; set; }
-            public string Album { get; set; }
-            public string Artist { get; set; }
-            public string Artist_Sort { get; set; }
-            public string Album_Year { get; set; }
-            public string AverageTempo { get; set; }
-            public string Volume { get; set; }
-            public string Preview_Volume { get; set; }
-            public string AlbumArtPath { get; set; }
-            public string AudioPath { get; set; }
-            public string audioPreviewPath { get; set; }
-            public string Track_No { get; set; }
-            public string Author { get; set; }
-            public string Version { get; set; }
-            public string DLC_Name { get; set; }
-            public string DLC_AppID { get; set; }
-            public string Current_FileName { get; set; }
-            public string Original_FileName { get; set; }
-            public string Import_Path { get; set; }
-            public string Import_Date { get; set; }
-            public string Folder_Name { get; set; }
-            public string File_Size { get; set; }
-            public string File_Hash { get; set; }
-            public string Original_File_Hash { get; set; }
-            public string Is_Original { get; set; }
-            public string Is_OLD { get; set; }
-            public string Is_Beta { get; set; }
-            public string Is_Alternate { get; set; }
-            public string Is_Multitrack { get; set; }
-            public string Is_Broken { get; set; }
-            public string MultiTrack_Version { get; set; }
-            public string Alternate_Version_No { get; set; }
-            public string DLC { get; set; }
-            public string Has_Bass { get; set; }
-            public string Has_Guitar { get; set; }
-            public string Has_Lead { get; set; }
-            public string Has_Rhythm { get; set; }
-            public string Has_Combo { get; set; }
-            public string Has_Vocals { get; set; }
-            public string Has_Sections { get; set; }
-            public string Has_Cover { get; set; }
-            public string Has_Preview { get; set; }
-            public string Has_Custom_Tone { get; set; }
-            public string Has_DD { get; set; }
-            public string Has_Version { get; set; }
-            public string Tunning { get; set; }
-            public string Bass_Picking { get; set; }
-            public string Tones { get; set; }
-            public string Group { get; set; }
-            public string Rating { get; set; }
-            public string Description { get; set; }
-            public string Comments { get; set; }
-            public string Has_Track_No { get; set; }
-            public string Platform { get; set; }
-            public string PreviewTime { get; set; }
-            public string PreviewLenght { get; set; }
-            public string Youtube_Playthrough { get; set; }
-            public string CustomForge_Followers { get; set; }
-            public string CustomForge_Version { get; set; }
-            public string FilesMissingIssues { get; set; }
-            public string Duplicates { get; set; }
-            public string Pack { get; set; }
-            public string Keep_BassDD { get; set; }
-            public string Keep_DD { get; set; }
-            public string Keep_Original { get; set; }
-            public string Song_Lenght { get; set; }
-            public string Original { get; set; }
-            public string Selected { get; set; }
-            public string YouTube_Link { get; set; }
-            public string CustomsForge_Link { get; set; }
-            public string CustomsForge_Like { get; set; }
-            public string CustomsForge_ReleaseNotes { get; set; }
-            public string SignatureType { get; set; }
-            public string ToolkitVersion { get; set; }
-            public string Has_Author { get; set; }
-            public string OggPath { get; set; }
-            public string oggPreviewPath { get; set; }
-            public string UniqueDLCName { get; set; }
-            public string AlbumArt_Hash { get; set; }
-            public string Audio_Hash { get; set; }
-            public string audioPreview_Hash { get; set; }
-            public string Bass_Has_DD { get; set; }
-            public string Has_Bonus_Arrangement { get; set; }
-            public string Artist_ShortName { get; set; }
-            public string Album_ShortName { get; set; }
-            public string Available_Old { get; set; }
-            public string Available_Duplicate { get; set; }
-            public string Has_Been_Corrected { get; set; }
-            public string File_Creation_Date { get; set; }
-        }
-        private Files[] files = new Files[10000];
+        //private class Files
+        //{
+        //    public string ID { get; set; }
+        //    public string Song_Title { get; set; }
+        //    public string Song_Title_Sort { get; set; }
+        //    public string Album { get; set; }
+        //    public string Artist { get; set; }
+        //    public string Artist_Sort { get; set; }
+        //    public string Album_Year { get; set; }
+        //    public string AverageTempo { get; set; }
+        //    public string Volume { get; set; }
+        //    public string Preview_Volume { get; set; }
+        //    public string AlbumArtPath { get; set; }
+        //    public string AudioPath { get; set; }
+        //    public string audioPreviewPath { get; set; }
+        //    public string Track_No { get; set; }
+        //    public string Author { get; set; }
+        //    public string Version { get; set; }
+        //    public string DLC_Name { get; set; }
+        //    public string DLC_AppID { get; set; }
+        //    public string Current_FileName { get; set; }
+        //    public string Original_FileName { get; set; }
+        //    public string Import_Path { get; set; }
+        //    public string Import_Date { get; set; }
+        //    public string Folder_Name { get; set; }
+        //    public string File_Size { get; set; }
+        //    public string File_Hash { get; set; }
+        //    public string Original_File_Hash { get; set; }
+        //    public string Is_Original { get; set; }
+        //    public string Is_OLD { get; set; }
+        //    public string Is_Beta { get; set; }
+        //    public string Is_Alternate { get; set; }
+        //    public string Is_Multitrack { get; set; }
+        //    public string Is_Broken { get; set; }
+        //    public string MultiTrack_Version { get; set; }
+        //    public string Alternate_Version_No { get; set; }
+        //    public string DLC { get; set; }
+        //    public string Has_Bass { get; set; }
+        //    public string Has_Guitar { get; set; }
+        //    public string Has_Lead { get; set; }
+        //    public string Has_Rhythm { get; set; }
+        //    public string Has_Combo { get; set; }
+        //    public string Has_Vocals { get; set; }
+        //    public string Has_Sections { get; set; }
+        //    public string Has_Cover { get; set; }
+        //    public string Has_Preview { get; set; }
+        //    public string Has_Custom_Tone { get; set; }
+        //    public string Has_DD { get; set; }
+        //    public string Has_Version { get; set; }
+        //    public string Tunning { get; set; }
+        //    public string Bass_Picking { get; set; }
+        //    public string Tones { get; set; }
+        //    public string Group { get; set; }
+        //    public string Rating { get; set; }
+        //    public string Description { get; set; }
+        //    public string Comments { get; set; }
+        //    public string Has_Track_No { get; set; }
+        //    public string Platform { get; set; }
+        //    public string PreviewTime { get; set; }
+        //    public string PreviewLenght { get; set; }
+        //    public string Youtube_Playthrough { get; set; }
+        //    public string CustomForge_Followers { get; set; }
+        //    public string CustomForge_Version { get; set; }
+        //    public string FilesMissingIssues { get; set; }
+        //    public string Duplicates { get; set; }
+        //    public string Pack { get; set; }
+        //    public string Keep_BassDD { get; set; }
+        //    public string Keep_DD { get; set; }
+        //    public string Keep_Original { get; set; }
+        //    public string Song_Lenght { get; set; }
+        //    public string Original { get; set; }
+        //    public string Selected { get; set; }
+        //    public string YouTube_Link { get; set; }
+        //    public string CustomsForge_Link { get; set; }
+        //    public string CustomsForge_Like { get; set; }
+        //    public string CustomsForge_ReleaseNotes { get; set; }
+        //    public string SignatureType { get; set; }
+        //    public string ToolkitVersion { get; set; }
+        //    public string Has_Author { get; set; }
+        //    public string OggPath { get; set; }
+        //    public string oggPreviewPath { get; set; }
+        //    public string UniqueDLCName { get; set; }
+        //    public string AlbumArt_Hash { get; set; }
+        //    public string Audio_Hash { get; set; }
+        //    public string audioPreview_Hash { get; set; }
+        //    public string Bass_Has_DD { get; set; }
+        //    public string Has_Bonus_Arrangement { get; set; }
+        //    public string Artist_ShortName { get; set; }
+        //    public string Album_ShortName { get; set; }
+        //    public string Available_Old { get; set; }
+        //    public string Available_Duplicate { get; set; }
+        //    public string Has_Been_Corrected { get; set; }
+        //    public string File_Creation_Date { get; set; }
+        //}
+        //private Files[] files = new Files[10000];
+        public DLCManager.Files[] files = new DLCManager.Files[10000];
         private DLCManager.Files filed;
         private DLCPackageData datas;
         private string author;
@@ -793,140 +804,140 @@ namespace RocksmithToolkitGUI.DLCManager
 
 
         //Generic procedure to read and parse Main.DB (&others..soon)
-        public int SQLAccess(string cmd)
-        {
-            //var DB_Path = txt_DBFolder.Text + "\\Files.mdb;";
-            //Files[] files = new Files[10000];
+        //public int SQLAccess(string cmd)
+        //{
+        //    //var DB_Path = txt_DBFolder.Text + "\\Files.mdb;";
+        //    //Files[] files = new Files[10000];
 
-            var MaximumSize = 0;
+        //    var MaximumSize = 0;
 
-            //rtxt_StatisticsOnReadDLCs.Text += "\n  ee= ";
-            //try
-            //{
-            //    //MessageBox.Show(DB_Path);
-            //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-            //    {
-            //        DataSet dus = new DataSet();
-            //        OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
-            //        dax.Fill(dus, "Main");
-            //        dax.Dispose();
-            DataSet dus = new DataSet(); dus = DLCManager.SelectFromDB("Main", cmd);
-            var i = 0;
-            //rtxt_StatisticsOnReadDLCs.Text += "\n  54= " +dus.Tables[0].Rows.Count;
-            MaximumSize = dus.Tables[0].Rows.Count;
-            foreach (DataRow dataRow in dus.Tables[0].Rows)
-            {
-                files[i] = new Files();
+        //    //rtxt_StatisticsOnReadDLCs.Text += "\n  ee= ";
+        //    //try
+        //    //{
+        //    //    //MessageBox.Show(DB_Path);
+        //    //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+        //    //    {
+        //    //        DataSet dus = new DataSet();
+        //    //        OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
+        //    //        dax.Fill(dus, "Main");
+        //    //        dax.Dispose();
+        //    DataSet dus = new DataSet(); dus = DLCManager.SelectFromDB("Main", cmd);
+        //    var i = 0;
+        //    //rtxt_StatisticsOnReadDLCs.Text += "\n  54= " +dus.Tables[0].Rows.Count;
+        //    MaximumSize = dus.Tables[0].Rows.Count;
+        //    foreach (DataRow dataRow in dus.Tables[0].Rows)
+        //    {
+        //        files[i] = new Files();
 
-                //rtxt_StatisticsOnReadDLCs.Text += "\n  a= " + i + MaximumSize+dataRow.ItemArray[0].ToString();
-                files[i].ID = dataRow.ItemArray[0].ToString();
-                files[i].Song_Title = dataRow.ItemArray[1].ToString();
-                files[i].Song_Title_Sort = dataRow.ItemArray[2].ToString();
-                files[i].Album = dataRow.ItemArray[3].ToString();
-                files[i].Artist = dataRow.ItemArray[4].ToString();
-                files[i].Artist_Sort = dataRow.ItemArray[5].ToString();
-                files[i].Album_Year = dataRow.ItemArray[6].ToString();
-                files[i].AverageTempo = dataRow.ItemArray[7].ToString();
-                files[i].Volume = dataRow.ItemArray[8].ToString();
-                files[i].Preview_Volume = dataRow.ItemArray[9].ToString();
-                files[i].AlbumArtPath = dataRow.ItemArray[10].ToString();
-                files[i].AudioPath = dataRow.ItemArray[11].ToString();
-                files[i].audioPreviewPath = dataRow.ItemArray[12].ToString();
-                files[i].Track_No = dataRow.ItemArray[13].ToString();
-                files[i].Author = dataRow.ItemArray[14].ToString();
-                files[i].Version = dataRow.ItemArray[15].ToString();
-                files[i].DLC_Name = dataRow.ItemArray[16].ToString();
-                files[i].DLC_AppID = dataRow.ItemArray[17].ToString();
-                files[i].Current_FileName = dataRow.ItemArray[18].ToString();
-                files[i].Original_FileName = dataRow.ItemArray[19].ToString();
-                files[i].Import_Path = dataRow.ItemArray[20].ToString();
-                files[i].Import_Date = dataRow.ItemArray[21].ToString();
-                files[i].Folder_Name = dataRow.ItemArray[22].ToString();
-                files[i].File_Size = dataRow.ItemArray[23].ToString();
-                files[i].File_Hash = dataRow.ItemArray[24].ToString();
-                files[i].Original_File_Hash = dataRow.ItemArray[25].ToString();
-                files[i].Is_Original = dataRow.ItemArray[26].ToString();
-                files[i].Is_OLD = dataRow.ItemArray[27].ToString();
-                files[i].Is_Beta = dataRow.ItemArray[28].ToString();
-                files[i].Is_Alternate = dataRow.ItemArray[29].ToString();
-                files[i].Is_Multitrack = dataRow.ItemArray[30].ToString();
-                files[i].Is_Broken = dataRow.ItemArray[31].ToString();
-                files[i].MultiTrack_Version = dataRow.ItemArray[32].ToString();
-                files[i].Alternate_Version_No = dataRow.ItemArray[33].ToString();
-                files[i].DLC = dataRow.ItemArray[34].ToString();
-                files[i].Has_Bass = dataRow.ItemArray[35].ToString();
-                files[i].Has_Guitar = dataRow.ItemArray[36].ToString();
-                files[i].Has_Lead = dataRow.ItemArray[37].ToString();
-                files[i].Has_Rhythm = dataRow.ItemArray[38].ToString();
-                files[i].Has_Combo = dataRow.ItemArray[39].ToString();
-                files[i].Has_Vocals = dataRow.ItemArray[40].ToString();
-                files[i].Has_Sections = dataRow.ItemArray[41].ToString();
-                files[i].Has_Cover = dataRow.ItemArray[42].ToString();
-                files[i].Has_Preview = dataRow.ItemArray[43].ToString();
-                files[i].Has_Custom_Tone = dataRow.ItemArray[44].ToString();
-                files[i].Has_DD = dataRow.ItemArray[45].ToString();
-                files[i].Has_Version = dataRow.ItemArray[46].ToString();
-                files[i].Tunning = dataRow.ItemArray[47].ToString();
-                files[i].Bass_Picking = dataRow.ItemArray[48].ToString();
-                files[i].Tones = dataRow.ItemArray[49].ToString();
-                files[i].Group = dataRow.ItemArray[50].ToString();
-                files[i].Rating = dataRow.ItemArray[51].ToString();
-                files[i].Description = dataRow.ItemArray[52].ToString();
-                files[i].Comments = dataRow.ItemArray[53].ToString();
-                files[i].Has_Track_No = dataRow.ItemArray[54].ToString();
-                files[i].Platform = dataRow.ItemArray[55].ToString();
-                files[i].PreviewTime = dataRow.ItemArray[56].ToString();
-                files[i].PreviewLenght = dataRow.ItemArray[57].ToString();
-                files[i].Youtube_Playthrough = dataRow.ItemArray[58].ToString();
-                files[i].CustomForge_Followers = dataRow.ItemArray[59].ToString();
-                files[i].CustomForge_Version = dataRow.ItemArray[60].ToString();
-                files[i].FilesMissingIssues = dataRow.ItemArray[61].ToString();
-                files[i].Duplicates = dataRow.ItemArray[62].ToString();
-                files[i].Pack = dataRow.ItemArray[63].ToString();
-                files[i].Keep_BassDD = dataRow.ItemArray[64].ToString();
-                files[i].Keep_DD = dataRow.ItemArray[65].ToString();
-                files[i].Keep_Original = dataRow.ItemArray[66].ToString();
-                files[i].Song_Lenght = dataRow.ItemArray[67].ToString();
-                files[i].Original = dataRow.ItemArray[68].ToString();
-                files[i].Selected = dataRow.ItemArray[69].ToString();
-                files[i].YouTube_Link = dataRow.ItemArray[70].ToString();
-                files[i].CustomsForge_Link = dataRow.ItemArray[71].ToString();
-                files[i].CustomsForge_Like = dataRow.ItemArray[72].ToString();
-                files[i].CustomsForge_ReleaseNotes = dataRow.ItemArray[73].ToString();
-                files[i].SignatureType = dataRow.ItemArray[74].ToString();
-                files[i].ToolkitVersion = dataRow.ItemArray[75].ToString();
-                files[i].Has_Author = dataRow.ItemArray[76].ToString();
-                files[i].OggPath = dataRow.ItemArray[77].ToString();
-                files[i].oggPreviewPath = dataRow.ItemArray[78].ToString();
-                files[i].UniqueDLCName = dataRow.ItemArray[79].ToString();
-                files[i].AlbumArt_Hash = dataRow.ItemArray[80].ToString();
-                files[i].Audio_Hash = dataRow.ItemArray[81].ToString();
-                files[i].audioPreview_Hash = dataRow.ItemArray[82].ToString();
-                files[i].Bass_Has_DD = dataRow.ItemArray[83].ToString();
-                files[i].Has_Bonus_Arrangement = dataRow.ItemArray[84].ToString();
-                files[i].Artist_ShortName = dataRow.ItemArray[85].ToString();
-                files[i].Album_ShortName = dataRow.ItemArray[86].ToString();
-                files[i].Available_Old = dataRow.ItemArray[87].ToString();
-                files[i].Available_Duplicate = dataRow.ItemArray[88].ToString();
-                files[i].Has_Been_Corrected = dataRow.ItemArray[89].ToString();
-                files[i].File_Creation_Date = dataRow.ItemArray[90].ToString();
-                i++;
-            }
-            //        //Closing Connection
-            //        dax.Dispose();
-            //        cnn.Close();
-            //        //rtxt_StatisticsOnReadDLCs.Text += i;
-            //        //var ex = 0;
-            //    }
-            //}
-            //catch (System.IO.FileNotFoundException ee)
-            //{
-            //    MessageBox.Show(ee.Message + "Can not open Main DB connection ! ");
-            //    //MessageBox.Show(ee.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
-            //rtxt_StatisticsOnReadDLCs.Text += "\n  max rows" + MaximumSize;
-            return MaximumSize;//files[10000];
-        }
+        //        //rtxt_StatisticsOnReadDLCs.Text += "\n  a= " + i + MaximumSize+dataRow.ItemArray[0].ToString();
+        //        files[i].ID = dataRow.ItemArray[0].ToString();
+        //        files[i].Song_Title = dataRow.ItemArray[1].ToString();
+        //        files[i].Song_Title_Sort = dataRow.ItemArray[2].ToString();
+        //        files[i].Album = dataRow.ItemArray[3].ToString();
+        //        files[i].Artist = dataRow.ItemArray[4].ToString();
+        //        files[i].Artist_Sort = dataRow.ItemArray[5].ToString();
+        //        files[i].Album_Year = dataRow.ItemArray[6].ToString();
+        //        files[i].AverageTempo = dataRow.ItemArray[7].ToString();
+        //        files[i].Volume = dataRow.ItemArray[8].ToString();
+        //        files[i].Preview_Volume = dataRow.ItemArray[9].ToString();
+        //        files[i].AlbumArtPath = dataRow.ItemArray[10].ToString();
+        //        files[i].AudioPath = dataRow.ItemArray[11].ToString();
+        //        files[i].audioPreviewPath = dataRow.ItemArray[12].ToString();
+        //        files[i].Track_No = dataRow.ItemArray[13].ToString();
+        //        files[i].Author = dataRow.ItemArray[14].ToString();
+        //        files[i].Version = dataRow.ItemArray[15].ToString();
+        //        files[i].DLC_Name = dataRow.ItemArray[16].ToString();
+        //        files[i].DLC_AppID = dataRow.ItemArray[17].ToString();
+        //        files[i].Current_FileName = dataRow.ItemArray[18].ToString();
+        //        files[i].Original_FileName = dataRow.ItemArray[19].ToString();
+        //        files[i].Import_Path = dataRow.ItemArray[20].ToString();
+        //        files[i].Import_Date = dataRow.ItemArray[21].ToString();
+        //        files[i].Folder_Name = dataRow.ItemArray[22].ToString();
+        //        files[i].File_Size = dataRow.ItemArray[23].ToString();
+        //        files[i].File_Hash = dataRow.ItemArray[24].ToString();
+        //        files[i].Original_File_Hash = dataRow.ItemArray[25].ToString();
+        //        files[i].Is_Original = dataRow.ItemArray[26].ToString();
+        //        files[i].Is_OLD = dataRow.ItemArray[27].ToString();
+        //        files[i].Is_Beta = dataRow.ItemArray[28].ToString();
+        //        files[i].Is_Alternate = dataRow.ItemArray[29].ToString();
+        //        files[i].Is_Multitrack = dataRow.ItemArray[30].ToString();
+        //        files[i].Is_Broken = dataRow.ItemArray[31].ToString();
+        //        files[i].MultiTrack_Version = dataRow.ItemArray[32].ToString();
+        //        files[i].Alternate_Version_No = dataRow.ItemArray[33].ToString();
+        //        files[i].DLC = dataRow.ItemArray[34].ToString();
+        //        files[i].Has_Bass = dataRow.ItemArray[35].ToString();
+        //        files[i].Has_Guitar = dataRow.ItemArray[36].ToString();
+        //        files[i].Has_Lead = dataRow.ItemArray[37].ToString();
+        //        files[i].Has_Rhythm = dataRow.ItemArray[38].ToString();
+        //        files[i].Has_Combo = dataRow.ItemArray[39].ToString();
+        //        files[i].Has_Vocals = dataRow.ItemArray[40].ToString();
+        //        files[i].Has_Sections = dataRow.ItemArray[41].ToString();
+        //        files[i].Has_Cover = dataRow.ItemArray[42].ToString();
+        //        files[i].Has_Preview = dataRow.ItemArray[43].ToString();
+        //        files[i].Has_Custom_Tone = dataRow.ItemArray[44].ToString();
+        //        files[i].Has_DD = dataRow.ItemArray[45].ToString();
+        //        files[i].Has_Version = dataRow.ItemArray[46].ToString();
+        //        files[i].Tunning = dataRow.ItemArray[47].ToString();
+        //        files[i].Bass_Picking = dataRow.ItemArray[48].ToString();
+        //        files[i].Tones = dataRow.ItemArray[49].ToString();
+        //        files[i].Group = dataRow.ItemArray[50].ToString();
+        //        files[i].Rating = dataRow.ItemArray[51].ToString();
+        //        files[i].Description = dataRow.ItemArray[52].ToString();
+        //        files[i].Comments = dataRow.ItemArray[53].ToString();
+        //        files[i].Has_Track_No = dataRow.ItemArray[54].ToString();
+        //        files[i].Platform = dataRow.ItemArray[55].ToString();
+        //        files[i].PreviewTime = dataRow.ItemArray[56].ToString();
+        //        files[i].PreviewLenght = dataRow.ItemArray[57].ToString();
+        //        files[i].Youtube_Playthrough = dataRow.ItemArray[58].ToString();
+        //        files[i].CustomForge_Followers = dataRow.ItemArray[59].ToString();
+        //        files[i].CustomForge_Version = dataRow.ItemArray[60].ToString();
+        //        files[i].FilesMissingIssues = dataRow.ItemArray[61].ToString();
+        //        files[i].Duplicates = dataRow.ItemArray[62].ToString();
+        //        files[i].Pack = dataRow.ItemArray[63].ToString();
+        //        files[i].Keep_BassDD = dataRow.ItemArray[64].ToString();
+        //        files[i].Keep_DD = dataRow.ItemArray[65].ToString();
+        //        files[i].Keep_Original = dataRow.ItemArray[66].ToString();
+        //        files[i].Song_Lenght = dataRow.ItemArray[67].ToString();
+        //        files[i].Original = dataRow.ItemArray[68].ToString();
+        //        files[i].Selected = dataRow.ItemArray[69].ToString();
+        //        files[i].YouTube_Link = dataRow.ItemArray[70].ToString();
+        //        files[i].CustomsForge_Link = dataRow.ItemArray[71].ToString();
+        //        files[i].CustomsForge_Like = dataRow.ItemArray[72].ToString();
+        //        files[i].CustomsForge_ReleaseNotes = dataRow.ItemArray[73].ToString();
+        //        files[i].SignatureType = dataRow.ItemArray[74].ToString();
+        //        files[i].ToolkitVersion = dataRow.ItemArray[75].ToString();
+        //        files[i].Has_Author = dataRow.ItemArray[76].ToString();
+        //        files[i].OggPath = dataRow.ItemArray[77].ToString();
+        //        files[i].oggPreviewPath = dataRow.ItemArray[78].ToString();
+        //        files[i].UniqueDLCName = dataRow.ItemArray[79].ToString();
+        //        files[i].AlbumArt_Hash = dataRow.ItemArray[80].ToString();
+        //        files[i].Audio_Hash = dataRow.ItemArray[81].ToString();
+        //        files[i].audioPreview_Hash = dataRow.ItemArray[82].ToString();
+        //        files[i].Bass_Has_DD = dataRow.ItemArray[83].ToString();
+        //        files[i].Has_Bonus_Arrangement = dataRow.ItemArray[84].ToString();
+        //        files[i].Artist_ShortName = dataRow.ItemArray[85].ToString();
+        //        files[i].Album_ShortName = dataRow.ItemArray[86].ToString();
+        //        files[i].Available_Old = dataRow.ItemArray[87].ToString();
+        //        files[i].Available_Duplicate = dataRow.ItemArray[88].ToString();
+        //        files[i].Has_Been_Corrected = dataRow.ItemArray[89].ToString();
+        //        files[i].File_Creation_Date = dataRow.ItemArray[90].ToString();
+        //        i++;
+        //    }
+        //    //        //Closing Connection
+        //    //        dax.Dispose();
+        //    //        cnn.Close();
+        //    //        //rtxt_StatisticsOnReadDLCs.Text += i;
+        //    //        //var ex = 0;
+        //    //    }
+        //    //}
+        //    //catch (System.IO.FileNotFoundException ee)
+        //    //{
+        //    //    MessageBox.Show(ee.Message + "Can not open Main DB connection ! ");
+        //    //    //MessageBox.Show(ee.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //    //}
+        //    //rtxt_StatisticsOnReadDLCs.Text += "\n  max rows" + MaximumSize;
+        //    return MaximumSize;//files[10000];
+        //}
 
         public string GetTExtFromFile(string ss)
         {
@@ -1255,26 +1266,6 @@ namespace RocksmithToolkitGUI.DLCManager
 
         }
 
-        private void txt_JSONVocalNew_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txt_JSONVocalExisting_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txt_XMLVocalExisting_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txt_XMLVocalNew_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void btn_TitleNew_Click(object sender, EventArgs e)
         {
             if (txt_TitleNew.Text.IndexOf("(newer)") > 0) txt_TitleNew.Text = txt_TitleExisting.Text.Replace("(newer)", "(older)");
@@ -1453,11 +1444,6 @@ namespace RocksmithToolkitGUI.DLCManager
             lbl_AlbumArt.ForeColor = lbl_diffCount.ForeColor;
 
             dupliID = lbl_IDExisting.Text;
-        }
-
-        private void txt_MultiTrackNew_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void btn_AddAuthor_Click(object sender, EventArgs e)

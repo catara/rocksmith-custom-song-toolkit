@@ -360,7 +360,7 @@
             "46. <Convert Originals>",
             "47. Duplicate Mangement, Title added info is inbetween []",
             "48. Add New Toolkit v. and RePackedByAuthor",
-            "49. @Import Remove Multitrack inf from Title",
+            "49. @Import Remove Multitrack/Live info from Title",
             "50. @Pack Also Copy/FTP",
             "51. @Import place \"obvious\" duplicates at the end of the Process",
             "52. @Import Overrite the XML",
@@ -377,6 +377,8 @@
             "63. <@Pack duplicate singleTracks L->R / R->L>",
             "64. @Pack Remove Remote File if GameData has been read",
             "65. @Pack ONLY Copy/FTP the Last Packed song",
+            "66. @Pack ONLY Copy/FTP the Initially Imported song",
+            "67. Duplicate manag ignores Live Songs",
             "98. @IMPORT>",
             "99. @Pack>"});
             this.chbx_Additional_Manipulations.Location = new System.Drawing.Point(358, 302);
@@ -472,7 +474,8 @@
             "<lastConversionDateTime>",
             "<Avail. Tracks>",
             "<Bass_HasDD>",
-            "<Timestamp>"});
+            "<Timestamp>",
+            "<Live>"});
             this.cbx_Artist_Sort.Location = new System.Drawing.Point(598, 575);
             this.cbx_Artist_Sort.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cbx_Artist_Sort.Name = "cbx_Artist_Sort";
@@ -672,7 +675,8 @@
             "<lastConversionDateTime>",
             "<Avail. Tracks>",
             "<Bass_HasDD>",
-            "<Timestamp>"});
+            "<Timestamp>",
+            "<Live>"});
             this.cbx_Artist.Location = new System.Drawing.Point(598, 542);
             this.cbx_Artist.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cbx_Artist.Name = "cbx_Artist";
@@ -725,7 +729,8 @@
             "<lastConversionDateTime>",
             "<Avail. Tracks>",
             "<Bass_HasDD>",
-            "<Timestamp>"});
+            "<Timestamp>",
+            "<Live>"});
             this.cbx_Title.Location = new System.Drawing.Point(598, 474);
             this.cbx_Title.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cbx_Title.Name = "cbx_Title";
@@ -814,7 +819,8 @@
             "<lastConversionDateTime>",
             "<Avail. Tracks>",
             "<Bass_HasDD>",
-            "<Timestamp>"});
+            "<Timestamp>",
+            "<Live>"});
             this.cbx_File_Name.Location = new System.Drawing.Point(598, 643);
             this.cbx_File_Name.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cbx_File_Name.Name = "cbx_File_Name";
@@ -868,7 +874,8 @@
             "<lastConversionDateTime>",
             "<Avail. Tracks>",
             "<Bass_HasDD>",
-            "<Timestamp>"});
+            "<Timestamp>",
+            "<Live>"});
             this.cbx_Album.Location = new System.Drawing.Point(598, 609);
             this.cbx_Album.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cbx_Album.Name = "cbx_Album";
@@ -921,7 +928,8 @@
             "<lastConversionDateTime>",
             "<Avail. Tracks>",
             "<Bass_HasDD>",
-            "<Timestamp>"});
+            "<Timestamp>",
+            "<Live>"});
             this.cbx_Title_Sort.Location = new System.Drawing.Point(598, 508);
             this.cbx_Title_Sort.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cbx_Title_Sort.Name = "cbx_Title_Sort";

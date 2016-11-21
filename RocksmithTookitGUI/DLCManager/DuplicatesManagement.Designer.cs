@@ -220,6 +220,8 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_Artist2SortA = new System.Windows.Forms.Button();
             this.chbx_Autosave = new System.Windows.Forms.CheckBox();
             this.chbx_Sort = new System.Windows.Forms.CheckBox();
+            this.txt_VersionExisting = new System.Windows.Forms.NumericUpDown();
+            this.txt_VersionNew = new System.Windows.Forms.NumericUpDown();
             this.txt_PlatformNew = new RocksmithToolkitGUI.CueTextBox();
             this.txt_PlatformExisting = new RocksmithToolkitGUI.CueTextBox();
             this.txt_FileDateNew = new RocksmithToolkitGUI.CueTextBox();
@@ -248,8 +250,10 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_ArtistSortNew = new RocksmithToolkitGUI.CueTextBox();
             this.txt_TitleExisting = new RocksmithToolkitGUI.CueTextBox();
             this.txt_TitleNew = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_VersionExisting = new System.Windows.Forms.NumericUpDown();
-            this.txt_VersionNew = new System.Windows.Forms.NumericUpDown();
+            this.chbx_LiveExisting = new System.Windows.Forms.CheckBox();
+            this.txt_LiveDetailsExisting = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_LiveDetailsNew = new RocksmithToolkitGUI.CueTextBox();
+            this.chbx_LiveNew = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPathNew)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPathExisting)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -1740,7 +1744,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_MultiTrackNew.Name = "txt_MultiTrackNew";
             this.txt_MultiTrackNew.Size = new System.Drawing.Size(96, 28);
             this.txt_MultiTrackNew.TabIndex = 374;
-            this.txt_MultiTrackNew.SelectedIndexChanged += new System.EventHandler(this.txt_MultiTrackNew_SelectedIndexChanged);
             // 
             // txt_MultiTrackExisting
             // 
@@ -2378,13 +2381,12 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_UseBrakets.AutoSize = true;
             this.chbx_UseBrakets.Checked = true;
             this.chbx_UseBrakets.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chbx_UseBrakets.Enabled = false;
             this.chbx_UseBrakets.Location = new System.Drawing.Point(756, 512);
             this.chbx_UseBrakets.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.chbx_UseBrakets.Name = "chbx_UseBrakets";
-            this.chbx_UseBrakets.Size = new System.Drawing.Size(400, 24);
+            this.chbx_UseBrakets.Size = new System.Drawing.Size(412, 24);
             this.chbx_UseBrakets.TabIndex = 395;
-            this.chbx_UseBrakets.Text = "At Save Use Brackets for Additional Title added info";
+            this.chbx_UseBrakets.Text = "Use Brackets for Additional Title/Metadata added info";
             this.chbx_UseBrakets.UseVisualStyleBackColor = true;
             // 
             // btn_AddAlternate
@@ -2470,6 +2472,30 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_Sort.TabIndex = 402;
             this.chbx_Sort.Text = "Title and Artist sync with Sort";
             this.chbx_Sort.UseVisualStyleBackColor = true;
+            // 
+            // txt_VersionExisting
+            // 
+            this.txt_VersionExisting.Location = new System.Drawing.Point(448, 412);
+            this.txt_VersionExisting.Maximum = new decimal(new int[] {
+            9,
+            0,
+            0,
+            0});
+            this.txt_VersionExisting.Name = "txt_VersionExisting";
+            this.txt_VersionExisting.Size = new System.Drawing.Size(66, 26);
+            this.txt_VersionExisting.TabIndex = 405;
+            // 
+            // txt_VersionNew
+            // 
+            this.txt_VersionNew.Location = new System.Drawing.Point(347, 411);
+            this.txt_VersionNew.Maximum = new decimal(new int[] {
+            9,
+            0,
+            0,
+            0});
+            this.txt_VersionNew.Name = "txt_VersionNew";
+            this.txt_VersionNew.Size = new System.Drawing.Size(66, 26);
+            this.txt_VersionNew.TabIndex = 406;
             // 
             // txt_PlatformNew
             // 
@@ -2825,29 +2851,55 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_TitleNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txt_TitleNew.TextChanged += new System.EventHandler(this.ExistingChanged);
             // 
-            // txt_VersionExisting
+            // chbx_LiveExisting
             // 
-            this.txt_VersionExisting.Location = new System.Drawing.Point(448, 412);
-            this.txt_VersionExisting.Maximum = new decimal(new int[] {
-            9,
-            0,
-            0,
-            0});
-            this.txt_VersionExisting.Name = "txt_VersionExisting";
-            this.txt_VersionExisting.Size = new System.Drawing.Size(66, 26);
-            this.txt_VersionExisting.TabIndex = 405;
+            this.chbx_LiveExisting.AutoSize = true;
+            this.chbx_LiveExisting.Checked = true;
+            this.chbx_LiveExisting.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chbx_LiveExisting.Location = new System.Drawing.Point(662, 452);
+            this.chbx_LiveExisting.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.chbx_LiveExisting.Name = "chbx_LiveExisting";
+            this.chbx_LiveExisting.Size = new System.Drawing.Size(63, 24);
+            this.chbx_LiveExisting.TabIndex = 407;
+            this.chbx_LiveExisting.Text = "Live";
+            this.chbx_LiveExisting.UseVisualStyleBackColor = true;
             // 
-            // txt_VersionNew
+            // txt_LiveDetailsExisting
             // 
-            this.txt_VersionNew.Location = new System.Drawing.Point(347, 411);
-            this.txt_VersionNew.Maximum = new decimal(new int[] {
-            9,
-            0,
-            0,
-            0});
-            this.txt_VersionNew.Name = "txt_VersionNew";
-            this.txt_VersionNew.Size = new System.Drawing.Size(66, 26);
-            this.txt_VersionNew.TabIndex = 406;
+            this.txt_LiveDetailsExisting.Cue = "Live Details Existing";
+            this.txt_LiveDetailsExisting.Enabled = false;
+            this.txt_LiveDetailsExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_LiveDetailsExisting.ForeColor = System.Drawing.Color.Gray;
+            this.txt_LiveDetailsExisting.Location = new System.Drawing.Point(723, 450);
+            this.txt_LiveDetailsExisting.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txt_LiveDetailsExisting.Name = "txt_LiveDetailsExisting";
+            this.txt_LiveDetailsExisting.Size = new System.Drawing.Size(134, 26);
+            this.txt_LiveDetailsExisting.TabIndex = 408;
+            // 
+            // txt_LiveDetailsNew
+            // 
+            this.txt_LiveDetailsNew.Cue = "Live Details New";
+            this.txt_LiveDetailsNew.Enabled = false;
+            this.txt_LiveDetailsNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_LiveDetailsNew.ForeColor = System.Drawing.Color.Gray;
+            this.txt_LiveDetailsNew.Location = new System.Drawing.Point(7, 457);
+            this.txt_LiveDetailsNew.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txt_LiveDetailsNew.Name = "txt_LiveDetailsNew";
+            this.txt_LiveDetailsNew.Size = new System.Drawing.Size(134, 26);
+            this.txt_LiveDetailsNew.TabIndex = 410;
+            // 
+            // chbx_LiveNew
+            // 
+            this.chbx_LiveNew.AutoSize = true;
+            this.chbx_LiveNew.Checked = true;
+            this.chbx_LiveNew.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chbx_LiveNew.Location = new System.Drawing.Point(145, 457);
+            this.chbx_LiveNew.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.chbx_LiveNew.Name = "chbx_LiveNew";
+            this.chbx_LiveNew.Size = new System.Drawing.Size(63, 24);
+            this.chbx_LiveNew.TabIndex = 409;
+            this.chbx_LiveNew.Text = "Live";
+            this.chbx_LiveNew.UseVisualStyleBackColor = true;
             // 
             // frm_Duplicates_Management
             // 
@@ -2855,7 +2907,11 @@ namespace RocksmithToolkitGUI.DLCManager
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(1199, 1028);
+            this.ClientSize = new System.Drawing.Size(1251, 1028);
+            this.Controls.Add(this.txt_LiveDetailsNew);
+            this.Controls.Add(this.chbx_LiveNew);
+            this.Controls.Add(this.txt_LiveDetailsExisting);
+            this.Controls.Add(this.chbx_LiveExisting);
             this.Controls.Add(this.txt_VersionNew);
             this.Controls.Add(this.txt_VersionExisting);
             this.Controls.Add(this.txt_PlatformNew);
@@ -3206,5 +3262,9 @@ namespace RocksmithToolkitGUI.DLCManager
         private Button btn_WM_Vocals;
         private NumericUpDown txt_VersionExisting;
         private NumericUpDown txt_VersionNew;
+        private CheckBox chbx_LiveExisting;
+        private CueTextBox txt_LiveDetailsExisting;
+        private CueTextBox txt_LiveDetailsNew;
+        private CheckBox chbx_LiveNew;
     }
 }

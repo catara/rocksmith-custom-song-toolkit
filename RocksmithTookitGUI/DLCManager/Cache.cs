@@ -1682,6 +1682,7 @@ namespace RocksmithToolkitGUI.DLCManager
             Populate(ref DataGridView1, ref Main);//, ref bsPositions, ref bsBadges);
             DataGridView1.EditingControlShowing += DataGridView1_EditingControlShowing;
             DataGridView1.Refresh();
+            cnn.Dispose();
             MessageBox.Show("All songs in DB have been UNmarked from being Selected");
         }
 

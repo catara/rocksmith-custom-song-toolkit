@@ -104,7 +104,7 @@
   <Config Key="dlcm_AdditionalManipul64" Value="No" />
   <Config Key="dlcm_AdditionalManipul65" Value="No" />
   <Config Key="dlcm_AdditionalManipul66" Value="Yes" />
-  <Config Key="dlcm_AdditionalManipul67" Value="Yes" />
+  <Config Key="dlcm_AdditionalManipul67" Value="No" />
   <Config Key="dlcm_Album" Value="&#60;Broken&#62;&#60;Year&#62; - &#60;Album&#62; - &#60;Rating&#62; - &#60;Avail. Instr.&#62; - &#60;DD&#62; - &#60;Tuning&#62;-&#60;Group&#62;" />;
   <Config Key="dlcm_Artist" Value="&#60;Artist&#62;-&#60;CDLC&#62;-&#60;Avail. Tracks&#62;-&#60;DD&#62;-&#60;QAs&#62;-&#60;Bass_HasDD&#62;" />;
   <Config Key="dlcm_Artist_Sort" Value="&#60;Beta&#62;&#60;Group&#62;&#60;Artist&#62;" />;
@@ -132,7 +132,8 @@
   <Config Key="dlcm_PreviewLenght" Value="30" />;
   <Config Key="dlcm_PreviewStart" Value="00:30" />;
   <Config Key="dlcm_Debug" Value="No" />;
-  <Config Key="dlcm_LogPath" Value="C:\\GitHub\tmp\to import\Log" />;
+  <Config Key="dlcm_DebugProfile" Value="Temp" />;
+  <Config Key="dlcm_LogPath" Value="C:\GitHub\tmp\to import\Log" />;
   <Config Key="dlcm_Activ_Title" Value="Yes" />;
   <Config Key="dlcm_Activ_TitleSort" Value="Yes" />;
   <Config Key="dlcm_Activ_Artist" Value="Yes" />;

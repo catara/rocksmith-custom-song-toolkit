@@ -140,23 +140,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_GoToExisting = new System.Windows.Forms.Button();
             this.btn_AddAge = new System.Windows.Forms.Button();
             this.lbl_Existing = new System.Windows.Forms.Label();
-            this.txt_JSONLeadExisting = new RocksmithToolkitGUI.CueTextBox();
             this.lbl_New = new System.Windows.Forms.Label();
-            this.txt_XMLLeadNew = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_XMLLeadExisting = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_XMLBassNew = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_XMLBassExisting = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_XMLComboNew = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_XMLComboExisting = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_XMLRhythmNew = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_XMLRhythmExisting = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_JSONLeadNew = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_JSONBassNew = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_JSONBassExisting = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_JSONComboNew = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_JSONComboExisting = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_JSONRhythmNew = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_JSONRhythmExisting = new RocksmithToolkitGUI.CueTextBox();
             this.chbx_IsAlternateExisting = new System.Windows.Forms.CheckBox();
             this.txt_AlternateNoExisting = new System.Windows.Forms.NumericUpDown();
             this.txt_AlternateNoNew = new System.Windows.Forms.NumericUpDown();
@@ -175,35 +159,17 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_PlayAudioExisting = new System.Windows.Forms.Button();
             this.btn_AddDD = new System.Windows.Forms.Button();
             this.btn_AddTracks = new System.Windows.Forms.Button();
-            this.txt_DDNew = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_DDExisting = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_AvailTracksNew = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_AvailTracksExisting = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_AudioNew = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_AudioExisting = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_PreviewNew = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_PreviewExisting = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_VocalsNew = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_VocalsExisting = new RocksmithToolkitGUI.CueTextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.button5 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.lbl_CustomsForge_ReleaseNotes = new System.Windows.Forms.Label();
-            this.txt_CustomsForge_ReleaseNotesNew = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_CustomsForge_ReleaseNotesExisting = new RocksmithToolkitGUI.CueTextBox();
             this.label59 = new System.Windows.Forms.Label();
-            this.txt_YouTube_LinkNew = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_CustomsForge_LinkExisting = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_YouTube_LinkExisting = new RocksmithToolkitGUI.CueTextBox();
             this.lbl_CustomsForge_Like = new System.Windows.Forms.Label();
-            this.txt_CustomsForge_LinkNew = new RocksmithToolkitGUI.CueTextBox();
             this.lbl_CustomsForge_LinkNew = new System.Windows.Forms.Label();
             this.lbl_YouTube_LinkNew = new System.Windows.Forms.Label();
-            this.txt_CustomsForge_LikeNew = new RocksmithToolkitGUI.CueTextBox();
             this.lbfl_YouTube_Link = new System.Windows.Forms.Label();
-            this.txt_CustomsForge_LikeExisting = new RocksmithToolkitGUI.CueTextBox();
             this.label33 = new System.Windows.Forms.Label();
             this.label32 = new System.Windows.Forms.Label();
             this.btn_AddTunning = new System.Windows.Forms.Button();
@@ -220,14 +186,53 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_Artist2SortA = new System.Windows.Forms.Button();
             this.chbx_Autosave = new System.Windows.Forms.CheckBox();
             this.chbx_Sort = new System.Windows.Forms.CheckBox();
-            this.txt_VersionExisting = new System.Windows.Forms.NumericUpDown();
-            this.txt_VersionNew = new System.Windows.Forms.NumericUpDown();
+            this.chbx_LiveExisting = new System.Windows.Forms.CheckBox();
+            this.chbx_LiveNew = new System.Windows.Forms.CheckBox();
+            this.btn_AddPlatform = new System.Windows.Forms.Button();
+            this.txt_VersionExisting = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_VersionNew = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_LiveDetailsNew = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_LiveDetailsExisting = new RocksmithToolkitGUI.CueTextBox();
             this.txt_PlatformNew = new RocksmithToolkitGUI.CueTextBox();
             this.txt_PlatformExisting = new RocksmithToolkitGUI.CueTextBox();
             this.txt_FileDateNew = new RocksmithToolkitGUI.CueTextBox();
             this.txt_FileDateExisting = new RocksmithToolkitGUI.CueTextBox();
             this.txt_SizeExisting = new RocksmithToolkitGUI.CueTextBox();
             this.txt_SizeNew = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_CustomsForge_ReleaseNotesNew = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_CustomsForge_ReleaseNotesExisting = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_YouTube_LinkNew = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_CustomsForge_LinkExisting = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_YouTube_LinkExisting = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_CustomsForge_LinkNew = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_CustomsForge_LikeNew = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_CustomsForge_LikeExisting = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_DDNew = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_DDExisting = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_AvailTracksNew = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_AvailTracksExisting = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_AudioNew = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_AudioExisting = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_PreviewNew = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_PreviewExisting = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_VocalsNew = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_VocalsExisting = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_JSONLeadExisting = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_XMLLeadNew = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_XMLLeadExisting = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_XMLBassNew = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_XMLBassExisting = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_XMLComboNew = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_XMLComboExisting = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_XMLRhythmNew = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_XMLRhythmExisting = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_JSONLeadNew = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_JSONBassNew = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_JSONBassExisting = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_JSONComboNew = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_JSONComboExisting = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_JSONRhythmNew = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_JSONRhythmExisting = new RocksmithToolkitGUI.CueTextBox();
             this.txt_AlbumExisting = new RocksmithToolkitGUI.CueTextBox();
             this.txt_ArtistExisting = new RocksmithToolkitGUI.CueTextBox();
             this.txt_AlbumNew = new RocksmithToolkitGUI.CueTextBox();
@@ -250,10 +255,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_ArtistSortNew = new RocksmithToolkitGUI.CueTextBox();
             this.txt_TitleExisting = new RocksmithToolkitGUI.CueTextBox();
             this.txt_TitleNew = new RocksmithToolkitGUI.CueTextBox();
-            this.chbx_LiveExisting = new System.Windows.Forms.CheckBox();
-            this.txt_LiveDetailsExisting = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_LiveDetailsNew = new RocksmithToolkitGUI.CueTextBox();
-            this.chbx_LiveNew = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPathNew)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPathExisting)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -261,8 +262,6 @@ namespace RocksmithToolkitGUI.DLCManager
             ((System.ComponentModel.ISupportInitialize)(this.txt_AlternateNoNew)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.txt_VersionExisting)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txt_VersionNew)).BeginInit();
             this.SuspendLayout();
             // 
             // label16
@@ -1448,18 +1447,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.lbl_Existing.TabIndex = 391;
             this.lbl_Existing.Text = "newer";
             // 
-            // txt_JSONLeadExisting
-            // 
-            this.txt_JSONLeadExisting.Cue = "JSON Lead Existing";
-            this.txt_JSONLeadExisting.Enabled = false;
-            this.txt_JSONLeadExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_JSONLeadExisting.ForeColor = System.Drawing.Color.Gray;
-            this.txt_JSONLeadExisting.Location = new System.Drawing.Point(410, 215);
-            this.txt_JSONLeadExisting.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.txt_JSONLeadExisting.Name = "txt_JSONLeadExisting";
-            this.txt_JSONLeadExisting.Size = new System.Drawing.Size(172, 26);
-            this.txt_JSONLeadExisting.TabIndex = 253;
-            // 
             // lbl_New
             // 
             this.lbl_New.AutoSize = true;
@@ -1470,194 +1457,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.lbl_New.Size = new System.Drawing.Size(46, 22);
             this.lbl_New.TabIndex = 390;
             this.lbl_New.Text = "older";
-            // 
-            // txt_XMLLeadNew
-            // 
-            this.txt_XMLLeadNew.Cue = "XML Lead New";
-            this.txt_XMLLeadNew.Enabled = false;
-            this.txt_XMLLeadNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_XMLLeadNew.ForeColor = System.Drawing.Color.Gray;
-            this.txt_XMLLeadNew.Location = new System.Drawing.Point(200, 72);
-            this.txt_XMLLeadNew.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.txt_XMLLeadNew.Name = "txt_XMLLeadNew";
-            this.txt_XMLLeadNew.Size = new System.Drawing.Size(172, 26);
-            this.txt_XMLLeadNew.TabIndex = 240;
-            this.txt_XMLLeadNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // txt_XMLLeadExisting
-            // 
-            this.txt_XMLLeadExisting.Cue = "XML Lead Existing";
-            this.txt_XMLLeadExisting.Enabled = false;
-            this.txt_XMLLeadExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_XMLLeadExisting.ForeColor = System.Drawing.Color.Gray;
-            this.txt_XMLLeadExisting.Location = new System.Drawing.Point(410, 72);
-            this.txt_XMLLeadExisting.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.txt_XMLLeadExisting.Name = "txt_XMLLeadExisting";
-            this.txt_XMLLeadExisting.Size = new System.Drawing.Size(172, 26);
-            this.txt_XMLLeadExisting.TabIndex = 241;
-            // 
-            // txt_XMLBassNew
-            // 
-            this.txt_XMLBassNew.Cue = "XML Bass New";
-            this.txt_XMLBassNew.Enabled = false;
-            this.txt_XMLBassNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_XMLBassNew.ForeColor = System.Drawing.Color.Gray;
-            this.txt_XMLBassNew.Location = new System.Drawing.Point(200, 108);
-            this.txt_XMLBassNew.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.txt_XMLBassNew.Name = "txt_XMLBassNew";
-            this.txt_XMLBassNew.Size = new System.Drawing.Size(172, 26);
-            this.txt_XMLBassNew.TabIndex = 244;
-            this.txt_XMLBassNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // txt_XMLBassExisting
-            // 
-            this.txt_XMLBassExisting.Cue = "XML Bass Existing";
-            this.txt_XMLBassExisting.Enabled = false;
-            this.txt_XMLBassExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_XMLBassExisting.ForeColor = System.Drawing.Color.Gray;
-            this.txt_XMLBassExisting.Location = new System.Drawing.Point(410, 108);
-            this.txt_XMLBassExisting.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.txt_XMLBassExisting.Name = "txt_XMLBassExisting";
-            this.txt_XMLBassExisting.Size = new System.Drawing.Size(172, 26);
-            this.txt_XMLBassExisting.TabIndex = 245;
-            // 
-            // txt_XMLComboNew
-            // 
-            this.txt_XMLComboNew.Cue = "XML Combo New";
-            this.txt_XMLComboNew.Enabled = false;
-            this.txt_XMLComboNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_XMLComboNew.ForeColor = System.Drawing.Color.Gray;
-            this.txt_XMLComboNew.Location = new System.Drawing.Point(200, 143);
-            this.txt_XMLComboNew.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.txt_XMLComboNew.Name = "txt_XMLComboNew";
-            this.txt_XMLComboNew.Size = new System.Drawing.Size(172, 26);
-            this.txt_XMLComboNew.TabIndex = 246;
-            this.txt_XMLComboNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // txt_XMLComboExisting
-            // 
-            this.txt_XMLComboExisting.Cue = "XML Combo Existing";
-            this.txt_XMLComboExisting.Enabled = false;
-            this.txt_XMLComboExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_XMLComboExisting.ForeColor = System.Drawing.Color.Gray;
-            this.txt_XMLComboExisting.Location = new System.Drawing.Point(410, 143);
-            this.txt_XMLComboExisting.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.txt_XMLComboExisting.Name = "txt_XMLComboExisting";
-            this.txt_XMLComboExisting.Size = new System.Drawing.Size(172, 26);
-            this.txt_XMLComboExisting.TabIndex = 247;
-            // 
-            // txt_XMLRhythmNew
-            // 
-            this.txt_XMLRhythmNew.Cue = "XML Rhythm New";
-            this.txt_XMLRhythmNew.Enabled = false;
-            this.txt_XMLRhythmNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_XMLRhythmNew.ForeColor = System.Drawing.Color.Gray;
-            this.txt_XMLRhythmNew.Location = new System.Drawing.Point(200, 181);
-            this.txt_XMLRhythmNew.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.txt_XMLRhythmNew.Name = "txt_XMLRhythmNew";
-            this.txt_XMLRhythmNew.Size = new System.Drawing.Size(172, 26);
-            this.txt_XMLRhythmNew.TabIndex = 248;
-            this.txt_XMLRhythmNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // txt_XMLRhythmExisting
-            // 
-            this.txt_XMLRhythmExisting.Cue = "XML Rhythm Existing";
-            this.txt_XMLRhythmExisting.Enabled = false;
-            this.txt_XMLRhythmExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_XMLRhythmExisting.ForeColor = System.Drawing.Color.Gray;
-            this.txt_XMLRhythmExisting.Location = new System.Drawing.Point(410, 181);
-            this.txt_XMLRhythmExisting.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.txt_XMLRhythmExisting.Name = "txt_XMLRhythmExisting";
-            this.txt_XMLRhythmExisting.Size = new System.Drawing.Size(172, 26);
-            this.txt_XMLRhythmExisting.TabIndex = 249;
-            // 
-            // txt_JSONLeadNew
-            // 
-            this.txt_JSONLeadNew.Cue = "JSON Lead New";
-            this.txt_JSONLeadNew.Enabled = false;
-            this.txt_JSONLeadNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_JSONLeadNew.ForeColor = System.Drawing.Color.Gray;
-            this.txt_JSONLeadNew.Location = new System.Drawing.Point(200, 215);
-            this.txt_JSONLeadNew.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.txt_JSONLeadNew.Name = "txt_JSONLeadNew";
-            this.txt_JSONLeadNew.Size = new System.Drawing.Size(172, 26);
-            this.txt_JSONLeadNew.TabIndex = 252;
-            this.txt_JSONLeadNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // txt_JSONBassNew
-            // 
-            this.txt_JSONBassNew.Cue = "JSON Bass New";
-            this.txt_JSONBassNew.Enabled = false;
-            this.txt_JSONBassNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_JSONBassNew.ForeColor = System.Drawing.Color.Gray;
-            this.txt_JSONBassNew.Location = new System.Drawing.Point(200, 252);
-            this.txt_JSONBassNew.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.txt_JSONBassNew.Name = "txt_JSONBassNew";
-            this.txt_JSONBassNew.Size = new System.Drawing.Size(172, 26);
-            this.txt_JSONBassNew.TabIndex = 254;
-            this.txt_JSONBassNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // txt_JSONBassExisting
-            // 
-            this.txt_JSONBassExisting.Cue = "Artist Sort Existing";
-            this.txt_JSONBassExisting.Enabled = false;
-            this.txt_JSONBassExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_JSONBassExisting.ForeColor = System.Drawing.Color.Gray;
-            this.txt_JSONBassExisting.Location = new System.Drawing.Point(410, 252);
-            this.txt_JSONBassExisting.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.txt_JSONBassExisting.Name = "txt_JSONBassExisting";
-            this.txt_JSONBassExisting.Size = new System.Drawing.Size(172, 26);
-            this.txt_JSONBassExisting.TabIndex = 255;
-            // 
-            // txt_JSONComboNew
-            // 
-            this.txt_JSONComboNew.Cue = "JSON Combo New";
-            this.txt_JSONComboNew.Enabled = false;
-            this.txt_JSONComboNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_JSONComboNew.ForeColor = System.Drawing.Color.Gray;
-            this.txt_JSONComboNew.Location = new System.Drawing.Point(200, 289);
-            this.txt_JSONComboNew.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.txt_JSONComboNew.Name = "txt_JSONComboNew";
-            this.txt_JSONComboNew.Size = new System.Drawing.Size(172, 26);
-            this.txt_JSONComboNew.TabIndex = 256;
-            this.txt_JSONComboNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // txt_JSONComboExisting
-            // 
-            this.txt_JSONComboExisting.Cue = "JSON Combo Existing";
-            this.txt_JSONComboExisting.Enabled = false;
-            this.txt_JSONComboExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_JSONComboExisting.ForeColor = System.Drawing.Color.Gray;
-            this.txt_JSONComboExisting.Location = new System.Drawing.Point(410, 289);
-            this.txt_JSONComboExisting.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.txt_JSONComboExisting.Name = "txt_JSONComboExisting";
-            this.txt_JSONComboExisting.Size = new System.Drawing.Size(172, 26);
-            this.txt_JSONComboExisting.TabIndex = 257;
-            // 
-            // txt_JSONRhythmNew
-            // 
-            this.txt_JSONRhythmNew.Cue = "JSON Rhythm New";
-            this.txt_JSONRhythmNew.Enabled = false;
-            this.txt_JSONRhythmNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_JSONRhythmNew.ForeColor = System.Drawing.Color.Gray;
-            this.txt_JSONRhythmNew.Location = new System.Drawing.Point(200, 324);
-            this.txt_JSONRhythmNew.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.txt_JSONRhythmNew.Name = "txt_JSONRhythmNew";
-            this.txt_JSONRhythmNew.Size = new System.Drawing.Size(172, 26);
-            this.txt_JSONRhythmNew.TabIndex = 259;
-            this.txt_JSONRhythmNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // txt_JSONRhythmExisting
-            // 
-            this.txt_JSONRhythmExisting.Cue = "JSON Rhythm Existing";
-            this.txt_JSONRhythmExisting.Enabled = false;
-            this.txt_JSONRhythmExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_JSONRhythmExisting.ForeColor = System.Drawing.Color.Gray;
-            this.txt_JSONRhythmExisting.Location = new System.Drawing.Point(410, 324);
-            this.txt_JSONRhythmExisting.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.txt_JSONRhythmExisting.Name = "txt_JSONRhythmExisting";
-            this.txt_JSONRhythmExisting.Size = new System.Drawing.Size(172, 26);
-            this.txt_JSONRhythmExisting.TabIndex = 260;
             // 
             // chbx_IsAlternateExisting
             // 
@@ -1927,6 +1726,592 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_AddTracks.UseVisualStyleBackColor = false;
             this.btn_AddTracks.Click += new System.EventHandler(this.btn_AddInstruments_Click);
             // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.button5);
+            this.groupBox4.Controls.Add(this.button4);
+            this.groupBox4.Controls.Add(this.button3);
+            this.groupBox4.Controls.Add(this.button2);
+            this.groupBox4.Controls.Add(this.lbl_CustomsForge_ReleaseNotes);
+            this.groupBox4.Controls.Add(this.txt_CustomsForge_ReleaseNotesNew);
+            this.groupBox4.Controls.Add(this.txt_CustomsForge_ReleaseNotesExisting);
+            this.groupBox4.Controls.Add(this.label59);
+            this.groupBox4.Controls.Add(this.txt_YouTube_LinkNew);
+            this.groupBox4.Controls.Add(this.txt_CustomsForge_LinkExisting);
+            this.groupBox4.Controls.Add(this.txt_YouTube_LinkExisting);
+            this.groupBox4.Controls.Add(this.lbl_CustomsForge_Like);
+            this.groupBox4.Controls.Add(this.txt_CustomsForge_LinkNew);
+            this.groupBox4.Controls.Add(this.lbl_CustomsForge_LinkNew);
+            this.groupBox4.Controls.Add(this.lbl_YouTube_LinkNew);
+            this.groupBox4.Controls.Add(this.txt_CustomsForge_LikeNew);
+            this.groupBox4.Controls.Add(this.lbfl_YouTube_Link);
+            this.groupBox4.Controls.Add(this.txt_CustomsForge_LikeExisting);
+            this.groupBox4.Controls.Add(this.label33);
+            this.groupBox4.Controls.Add(this.label32);
+            this.groupBox4.Location = new System.Drawing.Point(668, 827);
+            this.groupBox4.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox4.Size = new System.Drawing.Size(483, 186);
+            this.groupBox4.TabIndex = 380;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "CustomsForge Details";
+            // 
+            // button5
+            // 
+            this.button5.Enabled = false;
+            this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button5.Location = new System.Drawing.Point(483, 122);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(27, 26);
+            this.button5.TabIndex = 369;
+            this.button5.Text = ">";
+            this.button5.UseVisualStyleBackColor = true;
+            // 
+            // button4
+            // 
+            this.button4.Enabled = false;
+            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button4.Location = new System.Drawing.Point(483, 89);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(27, 26);
+            this.button4.TabIndex = 368;
+            this.button4.Text = ">";
+            this.button4.UseVisualStyleBackColor = true;
+            // 
+            // button3
+            // 
+            this.button3.Enabled = false;
+            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button3.Location = new System.Drawing.Point(483, 52);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(27, 26);
+            this.button3.TabIndex = 367;
+            this.button3.Text = ">";
+            this.button3.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.Enabled = false;
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.Location = new System.Drawing.Point(483, 13);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(27, 26);
+            this.button2.TabIndex = 366;
+            this.button2.Text = ">";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // lbl_CustomsForge_ReleaseNotes
+            // 
+            this.lbl_CustomsForge_ReleaseNotes.AutoSize = true;
+            this.lbl_CustomsForge_ReleaseNotes.ForeColor = System.Drawing.Color.DarkGreen;
+            this.lbl_CustomsForge_ReleaseNotes.Location = new System.Drawing.Point(305, 125);
+            this.lbl_CustomsForge_ReleaseNotes.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_CustomsForge_ReleaseNotes.Name = "lbl_CustomsForge_ReleaseNotes";
+            this.lbl_CustomsForge_ReleaseNotes.Size = new System.Drawing.Size(32, 20);
+            this.lbl_CustomsForge_ReleaseNotes.TabIndex = 329;
+            this.lbl_CustomsForge_ReleaseNotes.Text = "Vs.";
+            // 
+            // label59
+            // 
+            this.label59.AutoSize = true;
+            this.label59.Location = new System.Drawing.Point(55, 127);
+            this.label59.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label59.Name = "label59";
+            this.label59.Size = new System.Drawing.Size(114, 20);
+            this.label59.TabIndex = 328;
+            this.label59.Text = "Release Notes";
+            // 
+            // lbl_CustomsForge_Like
+            // 
+            this.lbl_CustomsForge_Like.AutoSize = true;
+            this.lbl_CustomsForge_Like.ForeColor = System.Drawing.Color.DarkGreen;
+            this.lbl_CustomsForge_Like.Location = new System.Drawing.Point(306, 90);
+            this.lbl_CustomsForge_Like.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_CustomsForge_Like.Name = "lbl_CustomsForge_Like";
+            this.lbl_CustomsForge_Like.Size = new System.Drawing.Size(32, 20);
+            this.lbl_CustomsForge_Like.TabIndex = 325;
+            this.lbl_CustomsForge_Like.Text = "Vs.";
+            // 
+            // lbl_CustomsForge_LinkNew
+            // 
+            this.lbl_CustomsForge_LinkNew.AutoSize = true;
+            this.lbl_CustomsForge_LinkNew.ForeColor = System.Drawing.Color.DarkGreen;
+            this.lbl_CustomsForge_LinkNew.Location = new System.Drawing.Point(306, 53);
+            this.lbl_CustomsForge_LinkNew.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_CustomsForge_LinkNew.Name = "lbl_CustomsForge_LinkNew";
+            this.lbl_CustomsForge_LinkNew.Size = new System.Drawing.Size(32, 20);
+            this.lbl_CustomsForge_LinkNew.TabIndex = 324;
+            this.lbl_CustomsForge_LinkNew.Text = "Vs.";
+            // 
+            // lbl_YouTube_LinkNew
+            // 
+            this.lbl_YouTube_LinkNew.AutoSize = true;
+            this.lbl_YouTube_LinkNew.ForeColor = System.Drawing.Color.DarkGreen;
+            this.lbl_YouTube_LinkNew.Location = new System.Drawing.Point(306, 15);
+            this.lbl_YouTube_LinkNew.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_YouTube_LinkNew.Name = "lbl_YouTube_LinkNew";
+            this.lbl_YouTube_LinkNew.Size = new System.Drawing.Size(32, 20);
+            this.lbl_YouTube_LinkNew.TabIndex = 323;
+            this.lbl_YouTube_LinkNew.Text = "Vs.";
+            // 
+            // lbfl_YouTube_Link
+            // 
+            this.lbfl_YouTube_Link.AutoSize = true;
+            this.lbfl_YouTube_Link.Location = new System.Drawing.Point(55, 17);
+            this.lbfl_YouTube_Link.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbfl_YouTube_Link.Name = "lbfl_YouTube_Link";
+            this.lbfl_YouTube_Link.Size = new System.Drawing.Size(74, 20);
+            this.lbfl_YouTube_Link.TabIndex = 322;
+            this.lbfl_YouTube_Link.Text = "YouTube";
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Location = new System.Drawing.Point(55, 55);
+            this.label33.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(114, 20);
+            this.label33.TabIndex = 321;
+            this.label33.Text = "CustomsForge";
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Location = new System.Drawing.Point(57, 92);
+            this.label32.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(38, 20);
+            this.label32.TabIndex = 320;
+            this.label32.Text = "Like";
+            // 
+            // btn_AddTunning
+            // 
+            this.btn_AddTunning.BackColor = System.Drawing.SystemColors.Control;
+            this.btn_AddTunning.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_AddTunning.Location = new System.Drawing.Point(626, 493);
+            this.btn_AddTunning.Name = "btn_AddTunning";
+            this.btn_AddTunning.Size = new System.Drawing.Size(21, 23);
+            this.btn_AddTunning.TabIndex = 387;
+            this.btn_AddTunning.Text = "+";
+            this.btn_AddTunning.UseVisualStyleBackColor = false;
+            this.btn_AddTunning.Click += new System.EventHandler(this.btn_AddTunning_Click);
+            // 
+            // btn_AddVersion1
+            // 
+            this.btn_AddVersion1.BackColor = System.Drawing.SystemColors.Control;
+            this.btn_AddVersion1.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_AddVersion1.Location = new System.Drawing.Point(518, 415);
+            this.btn_AddVersion1.Name = "btn_AddVersion1";
+            this.btn_AddVersion1.Size = new System.Drawing.Size(21, 23);
+            this.btn_AddVersion1.TabIndex = 388;
+            this.btn_AddVersion1.Text = "+";
+            this.btn_AddVersion1.UseVisualStyleBackColor = false;
+            this.btn_AddVersion1.Click += new System.EventHandler(this.btn_AddVersion_Click);
+            // 
+            // btn_AddAuthor
+            // 
+            this.btn_AddAuthor.BackColor = System.Drawing.SystemColors.Control;
+            this.btn_AddAuthor.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_AddAuthor.Location = new System.Drawing.Point(685, 378);
+            this.btn_AddAuthor.Name = "btn_AddAuthor";
+            this.btn_AddAuthor.Size = new System.Drawing.Size(21, 23);
+            this.btn_AddAuthor.TabIndex = 389;
+            this.btn_AddAuthor.Text = "+";
+            this.btn_AddAuthor.UseVisualStyleBackColor = false;
+            this.btn_AddAuthor.Click += new System.EventHandler(this.btn_AddAuthor_Click);
+            // 
+            // lblSoye
+            // 
+            this.lblSoye.AutoSize = true;
+            this.lblSoye.Location = new System.Drawing.Point(162, 567);
+            this.lblSoye.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblSoye.Name = "lblSoye";
+            this.lblSoye.Size = new System.Drawing.Size(69, 20);
+            this.lblSoye.TabIndex = 392;
+            this.lblSoye.Text = "File Size";
+            // 
+            // lbl_Size
+            // 
+            this.lbl_Size.AutoSize = true;
+            this.lbl_Size.ForeColor = System.Drawing.Color.DarkGreen;
+            this.lbl_Size.Location = new System.Drawing.Point(414, 567);
+            this.lbl_Size.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_Size.Name = "lbl_Size";
+            this.lbl_Size.Size = new System.Drawing.Size(32, 20);
+            this.lbl_Size.TabIndex = 393;
+            this.lbl_Size.Text = "Vs.";
+            // 
+            // lbl_Multitrack
+            // 
+            this.lbl_Multitrack.AutoSize = true;
+            this.lbl_Multitrack.ForeColor = System.Drawing.Color.DarkGreen;
+            this.lbl_Multitrack.Location = new System.Drawing.Point(415, 456);
+            this.lbl_Multitrack.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_Multitrack.Name = "lbl_Multitrack";
+            this.lbl_Multitrack.Size = new System.Drawing.Size(32, 20);
+            this.lbl_Multitrack.TabIndex = 394;
+            this.lbl_Multitrack.Text = "Vs.";
+            // 
+            // chbx_UseBrakets
+            // 
+            this.chbx_UseBrakets.AutoSize = true;
+            this.chbx_UseBrakets.Checked = true;
+            this.chbx_UseBrakets.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chbx_UseBrakets.Location = new System.Drawing.Point(756, 512);
+            this.chbx_UseBrakets.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.chbx_UseBrakets.Name = "chbx_UseBrakets";
+            this.chbx_UseBrakets.Size = new System.Drawing.Size(412, 24);
+            this.chbx_UseBrakets.TabIndex = 395;
+            this.chbx_UseBrakets.Text = "Use Brackets for Additional Title/Metadata added info";
+            this.chbx_UseBrakets.UseVisualStyleBackColor = true;
+            // 
+            // btn_AddAlternate
+            // 
+            this.btn_AddAlternate.BackColor = System.Drawing.SystemColors.Control;
+            this.btn_AddAlternate.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_AddAlternate.Location = new System.Drawing.Point(675, 301);
+            this.btn_AddAlternate.Name = "btn_AddAlternate";
+            this.btn_AddAlternate.Size = new System.Drawing.Size(21, 23);
+            this.btn_AddAlternate.TabIndex = 396;
+            this.btn_AddAlternate.Text = "+";
+            this.btn_AddAlternate.UseVisualStyleBackColor = false;
+            this.btn_AddAlternate.Click += new System.EventHandler(this.button6_Click_2);
+            // 
+            // btn_StopImport
+            // 
+            this.btn_StopImport.Location = new System.Drawing.Point(982, 781);
+            this.btn_StopImport.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btn_StopImport.Name = "btn_StopImport";
+            this.btn_StopImport.Size = new System.Drawing.Size(180, 54);
+            this.btn_StopImport.TabIndex = 397;
+            this.btn_StopImport.Text = "Stop the Import";
+            this.btn_StopImport.UseVisualStyleBackColor = true;
+            this.btn_StopImport.Click += new System.EventHandler(this.btn_StopImport_Click);
+            // 
+            // chbx_DeleteTemp
+            // 
+            this.chbx_DeleteTemp.AutoSize = true;
+            this.chbx_DeleteTemp.Enabled = false;
+            this.chbx_DeleteTemp.Location = new System.Drawing.Point(732, 801);
+            this.chbx_DeleteTemp.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.chbx_DeleteTemp.Name = "chbx_DeleteTemp";
+            this.chbx_DeleteTemp.Size = new System.Drawing.Size(245, 24);
+            this.chbx_DeleteTemp.TabIndex = 398;
+            this.chbx_DeleteTemp.Text = "Delete Sikipped Songs Temp ";
+            this.chbx_DeleteTemp.UseVisualStyleBackColor = true;
+            // 
+            // btn_Title2SortT
+            // 
+            this.btn_Title2SortT.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Title2SortT.Location = new System.Drawing.Point(841, 155);
+            this.btn_Title2SortT.Name = "btn_Title2SortT";
+            this.btn_Title2SortT.Size = new System.Drawing.Size(27, 26);
+            this.btn_Title2SortT.TabIndex = 400;
+            this.btn_Title2SortT.Text = ">";
+            this.btn_Title2SortT.UseVisualStyleBackColor = true;
+            this.btn_Title2SortT.Click += new System.EventHandler(this.btn_Title2SortT_Click);
+            // 
+            // btn_Artist2SortA
+            // 
+            this.btn_Artist2SortA.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Artist2SortA.Location = new System.Drawing.Point(842, 83);
+            this.btn_Artist2SortA.Name = "btn_Artist2SortA";
+            this.btn_Artist2SortA.Size = new System.Drawing.Size(27, 26);
+            this.btn_Artist2SortA.TabIndex = 401;
+            this.btn_Artist2SortA.Text = ">";
+            this.btn_Artist2SortA.UseVisualStyleBackColor = true;
+            this.btn_Artist2SortA.Click += new System.EventHandler(this.button6_Click_3);
+            // 
+            // chbx_Autosave
+            // 
+            this.chbx_Autosave.AutoSize = true;
+            this.chbx_Autosave.Checked = true;
+            this.chbx_Autosave.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chbx_Autosave.Location = new System.Drawing.Point(1054, 52);
+            this.chbx_Autosave.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.chbx_Autosave.Name = "chbx_Autosave";
+            this.chbx_Autosave.Size = new System.Drawing.Size(105, 24);
+            this.chbx_Autosave.TabIndex = 346;
+            this.chbx_Autosave.Text = "AutoSave";
+            this.chbx_Autosave.UseVisualStyleBackColor = true;
+            this.chbx_Autosave.CheckedChanged += new System.EventHandler(this.chbx_Autosave_CheckedChanged);
+            // 
+            // chbx_Sort
+            // 
+            this.chbx_Sort.AutoSize = true;
+            this.chbx_Sort.Checked = true;
+            this.chbx_Sort.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chbx_Sort.Location = new System.Drawing.Point(782, 47);
+            this.chbx_Sort.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.chbx_Sort.Name = "chbx_Sort";
+            this.chbx_Sort.Size = new System.Drawing.Size(238, 24);
+            this.chbx_Sort.TabIndex = 402;
+            this.chbx_Sort.Text = "Title and Artist sync with Sort";
+            this.chbx_Sort.UseVisualStyleBackColor = true;
+            // 
+            // chbx_LiveExisting
+            // 
+            this.chbx_LiveExisting.AutoSize = true;
+            this.chbx_LiveExisting.Checked = true;
+            this.chbx_LiveExisting.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chbx_LiveExisting.Location = new System.Drawing.Point(662, 453);
+            this.chbx_LiveExisting.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.chbx_LiveExisting.Name = "chbx_LiveExisting";
+            this.chbx_LiveExisting.Size = new System.Drawing.Size(63, 24);
+            this.chbx_LiveExisting.TabIndex = 407;
+            this.chbx_LiveExisting.Text = "Live";
+            this.chbx_LiveExisting.UseVisualStyleBackColor = true;
+            this.chbx_LiveExisting.CheckedChanged += new System.EventHandler(this.chbx_LiveExisting_CheckedChanged);
+            // 
+            // chbx_LiveNew
+            // 
+            this.chbx_LiveNew.AutoSize = true;
+            this.chbx_LiveNew.Checked = true;
+            this.chbx_LiveNew.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chbx_LiveNew.Location = new System.Drawing.Point(145, 456);
+            this.chbx_LiveNew.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.chbx_LiveNew.Name = "chbx_LiveNew";
+            this.chbx_LiveNew.Size = new System.Drawing.Size(63, 24);
+            this.chbx_LiveNew.TabIndex = 409;
+            this.chbx_LiveNew.Text = "Live";
+            this.chbx_LiveNew.UseVisualStyleBackColor = true;
+            this.chbx_LiveNew.CheckedChanged += new System.EventHandler(this.chbx_LiveNew_CheckedChanged);
+            // 
+            // btn_AddPlatform
+            // 
+            this.btn_AddPlatform.BackColor = System.Drawing.SystemColors.Control;
+            this.btn_AddPlatform.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_AddPlatform.Location = new System.Drawing.Point(701, 338);
+            this.btn_AddPlatform.Name = "btn_AddPlatform";
+            this.btn_AddPlatform.Size = new System.Drawing.Size(21, 23);
+            this.btn_AddPlatform.TabIndex = 411;
+            this.btn_AddPlatform.Text = "+";
+            this.btn_AddPlatform.UseVisualStyleBackColor = false;
+            this.btn_AddPlatform.Click += new System.EventHandler(this.btn_AddPlatform_Click_1);
+            // 
+            // txt_VersionExisting
+            // 
+            this.txt_VersionExisting.Cue = "Version Existing";
+            this.txt_VersionExisting.Enabled = false;
+            this.txt_VersionExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_VersionExisting.ForeColor = System.Drawing.Color.Gray;
+            this.txt_VersionExisting.Location = new System.Drawing.Point(448, 411);
+            this.txt_VersionExisting.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txt_VersionExisting.Name = "txt_VersionExisting";
+            this.txt_VersionExisting.Size = new System.Drawing.Size(62, 26);
+            this.txt_VersionExisting.TabIndex = 412;
+            this.txt_VersionExisting.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txt_VersionNew
+            // 
+            this.txt_VersionNew.Cue = "Version New";
+            this.txt_VersionNew.Enabled = false;
+            this.txt_VersionNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_VersionNew.ForeColor = System.Drawing.Color.Gray;
+            this.txt_VersionNew.Location = new System.Drawing.Point(344, 411);
+            this.txt_VersionNew.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txt_VersionNew.Name = "txt_VersionNew";
+            this.txt_VersionNew.Size = new System.Drawing.Size(62, 26);
+            this.txt_VersionNew.TabIndex = 409;
+            this.txt_VersionNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txt_LiveDetailsNew
+            // 
+            this.txt_LiveDetailsNew.Cue = "Live Details New";
+            this.txt_LiveDetailsNew.Enabled = false;
+            this.txt_LiveDetailsNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_LiveDetailsNew.ForeColor = System.Drawing.Color.Gray;
+            this.txt_LiveDetailsNew.Location = new System.Drawing.Point(7, 455);
+            this.txt_LiveDetailsNew.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txt_LiveDetailsNew.Name = "txt_LiveDetailsNew";
+            this.txt_LiveDetailsNew.Size = new System.Drawing.Size(134, 26);
+            this.txt_LiveDetailsNew.TabIndex = 410;
+            // 
+            // txt_LiveDetailsExisting
+            // 
+            this.txt_LiveDetailsExisting.Cue = "Live Details Existing";
+            this.txt_LiveDetailsExisting.Enabled = false;
+            this.txt_LiveDetailsExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_LiveDetailsExisting.ForeColor = System.Drawing.Color.Gray;
+            this.txt_LiveDetailsExisting.Location = new System.Drawing.Point(723, 450);
+            this.txt_LiveDetailsExisting.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txt_LiveDetailsExisting.Name = "txt_LiveDetailsExisting";
+            this.txt_LiveDetailsExisting.Size = new System.Drawing.Size(134, 26);
+            this.txt_LiveDetailsExisting.TabIndex = 408;
+            // 
+            // txt_PlatformNew
+            // 
+            this.txt_PlatformNew.Cue = "Platform New";
+            this.txt_PlatformNew.Enabled = false;
+            this.txt_PlatformNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_PlatformNew.ForeColor = System.Drawing.Color.Gray;
+            this.txt_PlatformNew.Location = new System.Drawing.Point(170, 338);
+            this.txt_PlatformNew.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txt_PlatformNew.Name = "txt_PlatformNew";
+            this.txt_PlatformNew.Size = new System.Drawing.Size(62, 26);
+            this.txt_PlatformNew.TabIndex = 403;
+            this.txt_PlatformNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txt_PlatformExisting
+            // 
+            this.txt_PlatformExisting.Cue = "Platform Existing";
+            this.txt_PlatformExisting.Enabled = false;
+            this.txt_PlatformExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_PlatformExisting.ForeColor = System.Drawing.Color.Gray;
+            this.txt_PlatformExisting.Location = new System.Drawing.Point(628, 338);
+            this.txt_PlatformExisting.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txt_PlatformExisting.Name = "txt_PlatformExisting";
+            this.txt_PlatformExisting.Size = new System.Drawing.Size(66, 26);
+            this.txt_PlatformExisting.TabIndex = 404;
+            // 
+            // txt_FileDateNew
+            // 
+            this.txt_FileDateNew.Cue = "Date File";
+            this.txt_FileDateNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.2F);
+            this.txt_FileDateNew.ForeColor = System.Drawing.Color.Gray;
+            this.txt_FileDateNew.Location = new System.Drawing.Point(190, 413);
+            this.txt_FileDateNew.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txt_FileDateNew.Name = "txt_FileDateNew";
+            this.txt_FileDateNew.ReadOnly = true;
+            this.txt_FileDateNew.Size = new System.Drawing.Size(150, 24);
+            this.txt_FileDateNew.TabIndex = 404;
+            this.txt_FileDateNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txt_FileDateExisting
+            // 
+            this.txt_FileDateExisting.Cue = "DateFile";
+            this.txt_FileDateExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.2F);
+            this.txt_FileDateExisting.ForeColor = System.Drawing.Color.Gray;
+            this.txt_FileDateExisting.Location = new System.Drawing.Point(542, 413);
+            this.txt_FileDateExisting.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txt_FileDateExisting.Name = "txt_FileDateExisting";
+            this.txt_FileDateExisting.ReadOnly = true;
+            this.txt_FileDateExisting.Size = new System.Drawing.Size(150, 24);
+            this.txt_FileDateExisting.TabIndex = 403;
+            // 
+            // txt_SizeExisting
+            // 
+            this.txt_SizeExisting.Cue = "Size Existing";
+            this.txt_SizeExisting.Enabled = false;
+            this.txt_SizeExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_SizeExisting.ForeColor = System.Drawing.Color.Gray;
+            this.txt_SizeExisting.Location = new System.Drawing.Point(448, 563);
+            this.txt_SizeExisting.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txt_SizeExisting.Name = "txt_SizeExisting";
+            this.txt_SizeExisting.Size = new System.Drawing.Size(172, 26);
+            this.txt_SizeExisting.TabIndex = 391;
+            // 
+            // txt_SizeNew
+            // 
+            this.txt_SizeNew.Cue = "Size New";
+            this.txt_SizeNew.Enabled = false;
+            this.txt_SizeNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_SizeNew.ForeColor = System.Drawing.Color.Gray;
+            this.txt_SizeNew.Location = new System.Drawing.Point(236, 563);
+            this.txt_SizeNew.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txt_SizeNew.Name = "txt_SizeNew";
+            this.txt_SizeNew.Size = new System.Drawing.Size(172, 26);
+            this.txt_SizeNew.TabIndex = 390;
+            this.txt_SizeNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txt_CustomsForge_ReleaseNotesNew
+            // 
+            this.txt_CustomsForge_ReleaseNotesNew.Cue = "ReleaseNotes New";
+            this.txt_CustomsForge_ReleaseNotesNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_CustomsForge_ReleaseNotesNew.ForeColor = System.Drawing.Color.Gray;
+            this.txt_CustomsForge_ReleaseNotesNew.Location = new System.Drawing.Point(167, 123);
+            this.txt_CustomsForge_ReleaseNotesNew.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txt_CustomsForge_ReleaseNotesNew.Name = "txt_CustomsForge_ReleaseNotesNew";
+            this.txt_CustomsForge_ReleaseNotesNew.Size = new System.Drawing.Size(133, 26);
+            this.txt_CustomsForge_ReleaseNotesNew.TabIndex = 326;
+            this.txt_CustomsForge_ReleaseNotesNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txt_CustomsForge_ReleaseNotesExisting
+            // 
+            this.txt_CustomsForge_ReleaseNotesExisting.Cue = "ReleaseNotes Existing";
+            this.txt_CustomsForge_ReleaseNotesExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_CustomsForge_ReleaseNotesExisting.ForeColor = System.Drawing.Color.Gray;
+            this.txt_CustomsForge_ReleaseNotesExisting.Location = new System.Drawing.Point(340, 121);
+            this.txt_CustomsForge_ReleaseNotesExisting.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txt_CustomsForge_ReleaseNotesExisting.Name = "txt_CustomsForge_ReleaseNotesExisting";
+            this.txt_CustomsForge_ReleaseNotesExisting.Size = new System.Drawing.Size(133, 26);
+            this.txt_CustomsForge_ReleaseNotesExisting.TabIndex = 327;
+            this.txt_CustomsForge_ReleaseNotesExisting.TextChanged += new System.EventHandler(this.ExistingChanged);
+            // 
+            // txt_YouTube_LinkNew
+            // 
+            this.txt_YouTube_LinkNew.Cue = "YouTube Link New";
+            this.txt_YouTube_LinkNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_YouTube_LinkNew.ForeColor = System.Drawing.Color.Gray;
+            this.txt_YouTube_LinkNew.Location = new System.Drawing.Point(167, 12);
+            this.txt_YouTube_LinkNew.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txt_YouTube_LinkNew.Name = "txt_YouTube_LinkNew";
+            this.txt_YouTube_LinkNew.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
+            this.txt_YouTube_LinkNew.Size = new System.Drawing.Size(133, 26);
+            this.txt_YouTube_LinkNew.TabIndex = 314;
+            this.txt_YouTube_LinkNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txt_CustomsForge_LinkExisting
+            // 
+            this.txt_CustomsForge_LinkExisting.Cue = "CustomsForge Existing";
+            this.txt_CustomsForge_LinkExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_CustomsForge_LinkExisting.ForeColor = System.Drawing.Color.Gray;
+            this.txt_CustomsForge_LinkExisting.Location = new System.Drawing.Point(340, 49);
+            this.txt_CustomsForge_LinkExisting.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txt_CustomsForge_LinkExisting.Name = "txt_CustomsForge_LinkExisting";
+            this.txt_CustomsForge_LinkExisting.Size = new System.Drawing.Size(133, 26);
+            this.txt_CustomsForge_LinkExisting.TabIndex = 317;
+            this.txt_CustomsForge_LinkExisting.TextChanged += new System.EventHandler(this.ExistingChanged);
+            // 
+            // txt_YouTube_LinkExisting
+            // 
+            this.txt_YouTube_LinkExisting.Cue = "YouTube Link Existing";
+            this.txt_YouTube_LinkExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_YouTube_LinkExisting.ForeColor = System.Drawing.Color.Gray;
+            this.txt_YouTube_LinkExisting.Location = new System.Drawing.Point(340, 10);
+            this.txt_YouTube_LinkExisting.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txt_YouTube_LinkExisting.Name = "txt_YouTube_LinkExisting";
+            this.txt_YouTube_LinkExisting.Size = new System.Drawing.Size(133, 26);
+            this.txt_YouTube_LinkExisting.TabIndex = 315;
+            this.txt_YouTube_LinkExisting.TextChanged += new System.EventHandler(this.ExistingChanged);
+            // 
+            // txt_CustomsForge_LinkNew
+            // 
+            this.txt_CustomsForge_LinkNew.Cue = "CustomsForge New";
+            this.txt_CustomsForge_LinkNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_CustomsForge_LinkNew.ForeColor = System.Drawing.Color.Gray;
+            this.txt_CustomsForge_LinkNew.Location = new System.Drawing.Point(167, 51);
+            this.txt_CustomsForge_LinkNew.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txt_CustomsForge_LinkNew.Name = "txt_CustomsForge_LinkNew";
+            this.txt_CustomsForge_LinkNew.Size = new System.Drawing.Size(133, 26);
+            this.txt_CustomsForge_LinkNew.TabIndex = 316;
+            this.txt_CustomsForge_LinkNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txt_CustomsForge_LikeNew
+            // 
+            this.txt_CustomsForge_LikeNew.Cue = "Like New";
+            this.txt_CustomsForge_LikeNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_CustomsForge_LikeNew.ForeColor = System.Drawing.Color.Gray;
+            this.txt_CustomsForge_LikeNew.Location = new System.Drawing.Point(167, 87);
+            this.txt_CustomsForge_LikeNew.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txt_CustomsForge_LikeNew.Name = "txt_CustomsForge_LikeNew";
+            this.txt_CustomsForge_LikeNew.Size = new System.Drawing.Size(133, 26);
+            this.txt_CustomsForge_LikeNew.TabIndex = 318;
+            this.txt_CustomsForge_LikeNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txt_CustomsForge_LikeExisting
+            // 
+            this.txt_CustomsForge_LikeExisting.Cue = "Like Existing";
+            this.txt_CustomsForge_LikeExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_CustomsForge_LikeExisting.ForeColor = System.Drawing.Color.Gray;
+            this.txt_CustomsForge_LikeExisting.Location = new System.Drawing.Point(340, 85);
+            this.txt_CustomsForge_LikeExisting.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txt_CustomsForge_LikeExisting.Name = "txt_CustomsForge_LikeExisting";
+            this.txt_CustomsForge_LikeExisting.Size = new System.Drawing.Size(133, 26);
+            this.txt_CustomsForge_LikeExisting.TabIndex = 319;
+            this.txt_CustomsForge_LikeExisting.TextChanged += new System.EventHandler(this.ExistingChanged);
+            // 
             // txt_DDNew
             // 
             this.txt_DDNew.Cue = "DD New";
@@ -2052,525 +2437,205 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_VocalsExisting.Size = new System.Drawing.Size(66, 26);
             this.txt_VocalsExisting.TabIndex = 340;
             // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.button5);
-            this.groupBox4.Controls.Add(this.button4);
-            this.groupBox4.Controls.Add(this.button3);
-            this.groupBox4.Controls.Add(this.button2);
-            this.groupBox4.Controls.Add(this.lbl_CustomsForge_ReleaseNotes);
-            this.groupBox4.Controls.Add(this.txt_CustomsForge_ReleaseNotesNew);
-            this.groupBox4.Controls.Add(this.txt_CustomsForge_ReleaseNotesExisting);
-            this.groupBox4.Controls.Add(this.label59);
-            this.groupBox4.Controls.Add(this.txt_YouTube_LinkNew);
-            this.groupBox4.Controls.Add(this.txt_CustomsForge_LinkExisting);
-            this.groupBox4.Controls.Add(this.txt_YouTube_LinkExisting);
-            this.groupBox4.Controls.Add(this.lbl_CustomsForge_Like);
-            this.groupBox4.Controls.Add(this.txt_CustomsForge_LinkNew);
-            this.groupBox4.Controls.Add(this.lbl_CustomsForge_LinkNew);
-            this.groupBox4.Controls.Add(this.lbl_YouTube_LinkNew);
-            this.groupBox4.Controls.Add(this.txt_CustomsForge_LikeNew);
-            this.groupBox4.Controls.Add(this.lbfl_YouTube_Link);
-            this.groupBox4.Controls.Add(this.txt_CustomsForge_LikeExisting);
-            this.groupBox4.Controls.Add(this.label33);
-            this.groupBox4.Controls.Add(this.label32);
-            this.groupBox4.Location = new System.Drawing.Point(668, 827);
-            this.groupBox4.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBox4.Size = new System.Drawing.Size(483, 186);
-            this.groupBox4.TabIndex = 380;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "CustomsForge Details";
-            // 
-            // button5
-            // 
-            this.button5.Enabled = false;
-            this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button5.Location = new System.Drawing.Point(483, 122);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(27, 26);
-            this.button5.TabIndex = 369;
-            this.button5.Text = ">";
-            this.button5.UseVisualStyleBackColor = true;
-            // 
-            // button4
-            // 
-            this.button4.Enabled = false;
-            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button4.Location = new System.Drawing.Point(483, 89);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(27, 26);
-            this.button4.TabIndex = 368;
-            this.button4.Text = ">";
-            this.button4.UseVisualStyleBackColor = true;
-            // 
-            // button3
-            // 
-            this.button3.Enabled = false;
-            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.Location = new System.Drawing.Point(483, 52);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(27, 26);
-            this.button3.TabIndex = 367;
-            this.button3.Text = ">";
-            this.button3.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.Enabled = false;
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(483, 13);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(27, 26);
-            this.button2.TabIndex = 366;
-            this.button2.Text = ">";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // lbl_CustomsForge_ReleaseNotes
-            // 
-            this.lbl_CustomsForge_ReleaseNotes.AutoSize = true;
-            this.lbl_CustomsForge_ReleaseNotes.ForeColor = System.Drawing.Color.DarkGreen;
-            this.lbl_CustomsForge_ReleaseNotes.Location = new System.Drawing.Point(305, 125);
-            this.lbl_CustomsForge_ReleaseNotes.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbl_CustomsForge_ReleaseNotes.Name = "lbl_CustomsForge_ReleaseNotes";
-            this.lbl_CustomsForge_ReleaseNotes.Size = new System.Drawing.Size(32, 20);
-            this.lbl_CustomsForge_ReleaseNotes.TabIndex = 329;
-            this.lbl_CustomsForge_ReleaseNotes.Text = "Vs.";
-            // 
-            // txt_CustomsForge_ReleaseNotesNew
-            // 
-            this.txt_CustomsForge_ReleaseNotesNew.Cue = "ReleaseNotes New";
-            this.txt_CustomsForge_ReleaseNotesNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_CustomsForge_ReleaseNotesNew.ForeColor = System.Drawing.Color.Gray;
-            this.txt_CustomsForge_ReleaseNotesNew.Location = new System.Drawing.Point(167, 123);
-            this.txt_CustomsForge_ReleaseNotesNew.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.txt_CustomsForge_ReleaseNotesNew.Name = "txt_CustomsForge_ReleaseNotesNew";
-            this.txt_CustomsForge_ReleaseNotesNew.Size = new System.Drawing.Size(133, 26);
-            this.txt_CustomsForge_ReleaseNotesNew.TabIndex = 326;
-            this.txt_CustomsForge_ReleaseNotesNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // txt_CustomsForge_ReleaseNotesExisting
-            // 
-            this.txt_CustomsForge_ReleaseNotesExisting.Cue = "ReleaseNotes Existing";
-            this.txt_CustomsForge_ReleaseNotesExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_CustomsForge_ReleaseNotesExisting.ForeColor = System.Drawing.Color.Gray;
-            this.txt_CustomsForge_ReleaseNotesExisting.Location = new System.Drawing.Point(340, 121);
-            this.txt_CustomsForge_ReleaseNotesExisting.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.txt_CustomsForge_ReleaseNotesExisting.Name = "txt_CustomsForge_ReleaseNotesExisting";
-            this.txt_CustomsForge_ReleaseNotesExisting.Size = new System.Drawing.Size(133, 26);
-            this.txt_CustomsForge_ReleaseNotesExisting.TabIndex = 327;
-            this.txt_CustomsForge_ReleaseNotesExisting.TextChanged += new System.EventHandler(this.ExistingChanged);
-            // 
-            // label59
-            // 
-            this.label59.AutoSize = true;
-            this.label59.Location = new System.Drawing.Point(55, 127);
-            this.label59.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label59.Name = "label59";
-            this.label59.Size = new System.Drawing.Size(114, 20);
-            this.label59.TabIndex = 328;
-            this.label59.Text = "Release Notes";
-            // 
-            // txt_YouTube_LinkNew
-            // 
-            this.txt_YouTube_LinkNew.Cue = "YouTube Link New";
-            this.txt_YouTube_LinkNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_YouTube_LinkNew.ForeColor = System.Drawing.Color.Gray;
-            this.txt_YouTube_LinkNew.Location = new System.Drawing.Point(167, 12);
-            this.txt_YouTube_LinkNew.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.txt_YouTube_LinkNew.Name = "txt_YouTube_LinkNew";
-            this.txt_YouTube_LinkNew.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
-            this.txt_YouTube_LinkNew.Size = new System.Drawing.Size(133, 26);
-            this.txt_YouTube_LinkNew.TabIndex = 314;
-            this.txt_YouTube_LinkNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // txt_CustomsForge_LinkExisting
-            // 
-            this.txt_CustomsForge_LinkExisting.Cue = "CustomsForge Existing";
-            this.txt_CustomsForge_LinkExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_CustomsForge_LinkExisting.ForeColor = System.Drawing.Color.Gray;
-            this.txt_CustomsForge_LinkExisting.Location = new System.Drawing.Point(340, 49);
-            this.txt_CustomsForge_LinkExisting.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.txt_CustomsForge_LinkExisting.Name = "txt_CustomsForge_LinkExisting";
-            this.txt_CustomsForge_LinkExisting.Size = new System.Drawing.Size(133, 26);
-            this.txt_CustomsForge_LinkExisting.TabIndex = 317;
-            this.txt_CustomsForge_LinkExisting.TextChanged += new System.EventHandler(this.ExistingChanged);
-            // 
-            // txt_YouTube_LinkExisting
-            // 
-            this.txt_YouTube_LinkExisting.Cue = "YouTube Link Existing";
-            this.txt_YouTube_LinkExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_YouTube_LinkExisting.ForeColor = System.Drawing.Color.Gray;
-            this.txt_YouTube_LinkExisting.Location = new System.Drawing.Point(340, 10);
-            this.txt_YouTube_LinkExisting.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.txt_YouTube_LinkExisting.Name = "txt_YouTube_LinkExisting";
-            this.txt_YouTube_LinkExisting.Size = new System.Drawing.Size(133, 26);
-            this.txt_YouTube_LinkExisting.TabIndex = 315;
-            this.txt_YouTube_LinkExisting.TextChanged += new System.EventHandler(this.ExistingChanged);
-            // 
-            // lbl_CustomsForge_Like
-            // 
-            this.lbl_CustomsForge_Like.AutoSize = true;
-            this.lbl_CustomsForge_Like.ForeColor = System.Drawing.Color.DarkGreen;
-            this.lbl_CustomsForge_Like.Location = new System.Drawing.Point(306, 90);
-            this.lbl_CustomsForge_Like.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbl_CustomsForge_Like.Name = "lbl_CustomsForge_Like";
-            this.lbl_CustomsForge_Like.Size = new System.Drawing.Size(32, 20);
-            this.lbl_CustomsForge_Like.TabIndex = 325;
-            this.lbl_CustomsForge_Like.Text = "Vs.";
-            // 
-            // txt_CustomsForge_LinkNew
-            // 
-            this.txt_CustomsForge_LinkNew.Cue = "CustomsForge New";
-            this.txt_CustomsForge_LinkNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_CustomsForge_LinkNew.ForeColor = System.Drawing.Color.Gray;
-            this.txt_CustomsForge_LinkNew.Location = new System.Drawing.Point(167, 51);
-            this.txt_CustomsForge_LinkNew.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.txt_CustomsForge_LinkNew.Name = "txt_CustomsForge_LinkNew";
-            this.txt_CustomsForge_LinkNew.Size = new System.Drawing.Size(133, 26);
-            this.txt_CustomsForge_LinkNew.TabIndex = 316;
-            this.txt_CustomsForge_LinkNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // lbl_CustomsForge_LinkNew
-            // 
-            this.lbl_CustomsForge_LinkNew.AutoSize = true;
-            this.lbl_CustomsForge_LinkNew.ForeColor = System.Drawing.Color.DarkGreen;
-            this.lbl_CustomsForge_LinkNew.Location = new System.Drawing.Point(306, 53);
-            this.lbl_CustomsForge_LinkNew.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbl_CustomsForge_LinkNew.Name = "lbl_CustomsForge_LinkNew";
-            this.lbl_CustomsForge_LinkNew.Size = new System.Drawing.Size(32, 20);
-            this.lbl_CustomsForge_LinkNew.TabIndex = 324;
-            this.lbl_CustomsForge_LinkNew.Text = "Vs.";
-            // 
-            // lbl_YouTube_LinkNew
-            // 
-            this.lbl_YouTube_LinkNew.AutoSize = true;
-            this.lbl_YouTube_LinkNew.ForeColor = System.Drawing.Color.DarkGreen;
-            this.lbl_YouTube_LinkNew.Location = new System.Drawing.Point(306, 15);
-            this.lbl_YouTube_LinkNew.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbl_YouTube_LinkNew.Name = "lbl_YouTube_LinkNew";
-            this.lbl_YouTube_LinkNew.Size = new System.Drawing.Size(32, 20);
-            this.lbl_YouTube_LinkNew.TabIndex = 323;
-            this.lbl_YouTube_LinkNew.Text = "Vs.";
-            // 
-            // txt_CustomsForge_LikeNew
-            // 
-            this.txt_CustomsForge_LikeNew.Cue = "Like New";
-            this.txt_CustomsForge_LikeNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_CustomsForge_LikeNew.ForeColor = System.Drawing.Color.Gray;
-            this.txt_CustomsForge_LikeNew.Location = new System.Drawing.Point(167, 87);
-            this.txt_CustomsForge_LikeNew.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.txt_CustomsForge_LikeNew.Name = "txt_CustomsForge_LikeNew";
-            this.txt_CustomsForge_LikeNew.Size = new System.Drawing.Size(133, 26);
-            this.txt_CustomsForge_LikeNew.TabIndex = 318;
-            this.txt_CustomsForge_LikeNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // lbfl_YouTube_Link
-            // 
-            this.lbfl_YouTube_Link.AutoSize = true;
-            this.lbfl_YouTube_Link.Location = new System.Drawing.Point(55, 17);
-            this.lbfl_YouTube_Link.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbfl_YouTube_Link.Name = "lbfl_YouTube_Link";
-            this.lbfl_YouTube_Link.Size = new System.Drawing.Size(74, 20);
-            this.lbfl_YouTube_Link.TabIndex = 322;
-            this.lbfl_YouTube_Link.Text = "YouTube";
-            // 
-            // txt_CustomsForge_LikeExisting
-            // 
-            this.txt_CustomsForge_LikeExisting.Cue = "Like Existing";
-            this.txt_CustomsForge_LikeExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_CustomsForge_LikeExisting.ForeColor = System.Drawing.Color.Gray;
-            this.txt_CustomsForge_LikeExisting.Location = new System.Drawing.Point(340, 85);
-            this.txt_CustomsForge_LikeExisting.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.txt_CustomsForge_LikeExisting.Name = "txt_CustomsForge_LikeExisting";
-            this.txt_CustomsForge_LikeExisting.Size = new System.Drawing.Size(133, 26);
-            this.txt_CustomsForge_LikeExisting.TabIndex = 319;
-            this.txt_CustomsForge_LikeExisting.TextChanged += new System.EventHandler(this.ExistingChanged);
-            // 
-            // label33
-            // 
-            this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(55, 55);
-            this.label33.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(114, 20);
-            this.label33.TabIndex = 321;
-            this.label33.Text = "CustomsForge";
-            // 
-            // label32
-            // 
-            this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(57, 92);
-            this.label32.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(38, 20);
-            this.label32.TabIndex = 320;
-            this.label32.Text = "Like";
-            // 
-            // btn_AddTunning
-            // 
-            this.btn_AddTunning.BackColor = System.Drawing.SystemColors.Control;
-            this.btn_AddTunning.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_AddTunning.Location = new System.Drawing.Point(626, 493);
-            this.btn_AddTunning.Name = "btn_AddTunning";
-            this.btn_AddTunning.Size = new System.Drawing.Size(21, 23);
-            this.btn_AddTunning.TabIndex = 387;
-            this.btn_AddTunning.Text = "+";
-            this.btn_AddTunning.UseVisualStyleBackColor = false;
-            this.btn_AddTunning.Click += new System.EventHandler(this.btn_AddTunning_Click);
-            // 
-            // btn_AddVersion1
-            // 
-            this.btn_AddVersion1.BackColor = System.Drawing.SystemColors.Control;
-            this.btn_AddVersion1.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_AddVersion1.Location = new System.Drawing.Point(518, 415);
-            this.btn_AddVersion1.Name = "btn_AddVersion1";
-            this.btn_AddVersion1.Size = new System.Drawing.Size(21, 23);
-            this.btn_AddVersion1.TabIndex = 388;
-            this.btn_AddVersion1.Text = "+";
-            this.btn_AddVersion1.UseVisualStyleBackColor = false;
-            this.btn_AddVersion1.Click += new System.EventHandler(this.btn_AddVersion_Click);
-            // 
-            // btn_AddAuthor
-            // 
-            this.btn_AddAuthor.BackColor = System.Drawing.SystemColors.Control;
-            this.btn_AddAuthor.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_AddAuthor.Location = new System.Drawing.Point(685, 378);
-            this.btn_AddAuthor.Name = "btn_AddAuthor";
-            this.btn_AddAuthor.Size = new System.Drawing.Size(21, 23);
-            this.btn_AddAuthor.TabIndex = 389;
-            this.btn_AddAuthor.Text = "+";
-            this.btn_AddAuthor.UseVisualStyleBackColor = false;
-            this.btn_AddAuthor.Click += new System.EventHandler(this.btn_AddAuthor_Click);
-            // 
-            // lblSoye
-            // 
-            this.lblSoye.AutoSize = true;
-            this.lblSoye.Location = new System.Drawing.Point(162, 567);
-            this.lblSoye.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblSoye.Name = "lblSoye";
-            this.lblSoye.Size = new System.Drawing.Size(69, 20);
-            this.lblSoye.TabIndex = 392;
-            this.lblSoye.Text = "File Size";
-            // 
-            // lbl_Size
-            // 
-            this.lbl_Size.AutoSize = true;
-            this.lbl_Size.ForeColor = System.Drawing.Color.DarkGreen;
-            this.lbl_Size.Location = new System.Drawing.Point(414, 567);
-            this.lbl_Size.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbl_Size.Name = "lbl_Size";
-            this.lbl_Size.Size = new System.Drawing.Size(32, 20);
-            this.lbl_Size.TabIndex = 393;
-            this.lbl_Size.Text = "Vs.";
-            // 
-            // lbl_Multitrack
-            // 
-            this.lbl_Multitrack.AutoSize = true;
-            this.lbl_Multitrack.ForeColor = System.Drawing.Color.DarkGreen;
-            this.lbl_Multitrack.Location = new System.Drawing.Point(415, 456);
-            this.lbl_Multitrack.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbl_Multitrack.Name = "lbl_Multitrack";
-            this.lbl_Multitrack.Size = new System.Drawing.Size(32, 20);
-            this.lbl_Multitrack.TabIndex = 394;
-            this.lbl_Multitrack.Text = "Vs.";
-            // 
-            // chbx_UseBrakets
-            // 
-            this.chbx_UseBrakets.AutoSize = true;
-            this.chbx_UseBrakets.Checked = true;
-            this.chbx_UseBrakets.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chbx_UseBrakets.Location = new System.Drawing.Point(756, 512);
-            this.chbx_UseBrakets.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.chbx_UseBrakets.Name = "chbx_UseBrakets";
-            this.chbx_UseBrakets.Size = new System.Drawing.Size(412, 24);
-            this.chbx_UseBrakets.TabIndex = 395;
-            this.chbx_UseBrakets.Text = "Use Brackets for Additional Title/Metadata added info";
-            this.chbx_UseBrakets.UseVisualStyleBackColor = true;
-            // 
-            // btn_AddAlternate
-            // 
-            this.btn_AddAlternate.BackColor = System.Drawing.SystemColors.Control;
-            this.btn_AddAlternate.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_AddAlternate.Location = new System.Drawing.Point(668, 301);
-            this.btn_AddAlternate.Name = "btn_AddAlternate";
-            this.btn_AddAlternate.Size = new System.Drawing.Size(21, 23);
-            this.btn_AddAlternate.TabIndex = 396;
-            this.btn_AddAlternate.Text = "+";
-            this.btn_AddAlternate.UseVisualStyleBackColor = false;
-            this.btn_AddAlternate.Click += new System.EventHandler(this.button6_Click_2);
-            // 
-            // btn_StopImport
-            // 
-            this.btn_StopImport.Location = new System.Drawing.Point(982, 781);
-            this.btn_StopImport.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btn_StopImport.Name = "btn_StopImport";
-            this.btn_StopImport.Size = new System.Drawing.Size(180, 54);
-            this.btn_StopImport.TabIndex = 397;
-            this.btn_StopImport.Text = "Stop the Import";
-            this.btn_StopImport.UseVisualStyleBackColor = true;
-            this.btn_StopImport.Click += new System.EventHandler(this.btn_StopImport_Click);
-            // 
-            // chbx_DeleteTemp
-            // 
-            this.chbx_DeleteTemp.AutoSize = true;
-            this.chbx_DeleteTemp.Enabled = false;
-            this.chbx_DeleteTemp.Location = new System.Drawing.Point(732, 801);
-            this.chbx_DeleteTemp.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.chbx_DeleteTemp.Name = "chbx_DeleteTemp";
-            this.chbx_DeleteTemp.Size = new System.Drawing.Size(245, 24);
-            this.chbx_DeleteTemp.TabIndex = 398;
-            this.chbx_DeleteTemp.Text = "Delete Sikipped Songs Temp ";
-            this.chbx_DeleteTemp.UseVisualStyleBackColor = true;
-            // 
-            // btn_Title2SortT
-            // 
-            this.btn_Title2SortT.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Title2SortT.Location = new System.Drawing.Point(841, 155);
-            this.btn_Title2SortT.Name = "btn_Title2SortT";
-            this.btn_Title2SortT.Size = new System.Drawing.Size(27, 26);
-            this.btn_Title2SortT.TabIndex = 400;
-            this.btn_Title2SortT.Text = ">";
-            this.btn_Title2SortT.UseVisualStyleBackColor = true;
-            this.btn_Title2SortT.Click += new System.EventHandler(this.btn_Title2SortT_Click);
-            // 
-            // btn_Artist2SortA
-            // 
-            this.btn_Artist2SortA.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Artist2SortA.Location = new System.Drawing.Point(842, 83);
-            this.btn_Artist2SortA.Name = "btn_Artist2SortA";
-            this.btn_Artist2SortA.Size = new System.Drawing.Size(27, 26);
-            this.btn_Artist2SortA.TabIndex = 401;
-            this.btn_Artist2SortA.Text = ">";
-            this.btn_Artist2SortA.UseVisualStyleBackColor = true;
-            this.btn_Artist2SortA.Click += new System.EventHandler(this.button6_Click_3);
-            // 
-            // chbx_Autosave
-            // 
-            this.chbx_Autosave.AutoSize = true;
-            this.chbx_Autosave.Checked = true;
-            this.chbx_Autosave.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chbx_Autosave.Location = new System.Drawing.Point(1054, 52);
-            this.chbx_Autosave.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.chbx_Autosave.Name = "chbx_Autosave";
-            this.chbx_Autosave.Size = new System.Drawing.Size(105, 24);
-            this.chbx_Autosave.TabIndex = 346;
-            this.chbx_Autosave.Text = "AutoSave";
-            this.chbx_Autosave.UseVisualStyleBackColor = true;
-            this.chbx_Autosave.CheckedChanged += new System.EventHandler(this.chbx_Autosave_CheckedChanged);
-            // 
-            // chbx_Sort
-            // 
-            this.chbx_Sort.AutoSize = true;
-            this.chbx_Sort.Checked = true;
-            this.chbx_Sort.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chbx_Sort.Location = new System.Drawing.Point(782, 47);
-            this.chbx_Sort.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.chbx_Sort.Name = "chbx_Sort";
-            this.chbx_Sort.Size = new System.Drawing.Size(238, 24);
-            this.chbx_Sort.TabIndex = 402;
-            this.chbx_Sort.Text = "Title and Artist sync with Sort";
-            this.chbx_Sort.UseVisualStyleBackColor = true;
-            // 
-            // txt_VersionExisting
-            // 
-            this.txt_VersionExisting.Location = new System.Drawing.Point(448, 412);
-            this.txt_VersionExisting.Maximum = new decimal(new int[] {
-            9,
-            0,
-            0,
-            0});
-            this.txt_VersionExisting.Name = "txt_VersionExisting";
-            this.txt_VersionExisting.Size = new System.Drawing.Size(66, 26);
-            this.txt_VersionExisting.TabIndex = 405;
-            // 
-            // txt_VersionNew
-            // 
-            this.txt_VersionNew.Location = new System.Drawing.Point(347, 411);
-            this.txt_VersionNew.Maximum = new decimal(new int[] {
-            9,
-            0,
-            0,
-            0});
-            this.txt_VersionNew.Name = "txt_VersionNew";
-            this.txt_VersionNew.Size = new System.Drawing.Size(66, 26);
-            this.txt_VersionNew.TabIndex = 406;
-            // 
-            // txt_PlatformNew
-            // 
-            this.txt_PlatformNew.Cue = "Platform New";
-            this.txt_PlatformNew.Enabled = false;
-            this.txt_PlatformNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_PlatformNew.ForeColor = System.Drawing.Color.Gray;
-            this.txt_PlatformNew.Location = new System.Drawing.Point(170, 338);
-            this.txt_PlatformNew.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.txt_PlatformNew.Name = "txt_PlatformNew";
-            this.txt_PlatformNew.Size = new System.Drawing.Size(62, 26);
-            this.txt_PlatformNew.TabIndex = 403;
-            this.txt_PlatformNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // txt_PlatformExisting
-            // 
-            this.txt_PlatformExisting.Cue = "Platform Existing";
-            this.txt_PlatformExisting.Enabled = false;
-            this.txt_PlatformExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_PlatformExisting.ForeColor = System.Drawing.Color.Gray;
-            this.txt_PlatformExisting.Location = new System.Drawing.Point(628, 338);
-            this.txt_PlatformExisting.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.txt_PlatformExisting.Name = "txt_PlatformExisting";
-            this.txt_PlatformExisting.Size = new System.Drawing.Size(66, 26);
-            this.txt_PlatformExisting.TabIndex = 404;
-            // 
-            // txt_FileDateNew
-            // 
-            this.txt_FileDateNew.Cue = "Date File";
-            this.txt_FileDateNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.2F);
-            this.txt_FileDateNew.ForeColor = System.Drawing.Color.Gray;
-            this.txt_FileDateNew.Location = new System.Drawing.Point(190, 413);
-            this.txt_FileDateNew.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.txt_FileDateNew.Name = "txt_FileDateNew";
-            this.txt_FileDateNew.ReadOnly = true;
-            this.txt_FileDateNew.Size = new System.Drawing.Size(150, 24);
-            this.txt_FileDateNew.TabIndex = 404;
-            this.txt_FileDateNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // txt_FileDateExisting
-            // 
-            this.txt_FileDateExisting.Cue = "DateFile";
-            this.txt_FileDateExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.2F);
-            this.txt_FileDateExisting.ForeColor = System.Drawing.Color.Gray;
-            this.txt_FileDateExisting.Location = new System.Drawing.Point(542, 413);
-            this.txt_FileDateExisting.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.txt_FileDateExisting.Name = "txt_FileDateExisting";
-            this.txt_FileDateExisting.ReadOnly = true;
-            this.txt_FileDateExisting.Size = new System.Drawing.Size(150, 24);
-            this.txt_FileDateExisting.TabIndex = 403;
-            // 
-            // txt_SizeExisting
-            // 
-            this.txt_SizeExisting.Cue = "Size Existing";
-            this.txt_SizeExisting.Enabled = false;
-            this.txt_SizeExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_SizeExisting.ForeColor = System.Drawing.Color.Gray;
-            this.txt_SizeExisting.Location = new System.Drawing.Point(448, 563);
-            this.txt_SizeExisting.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.txt_SizeExisting.Name = "txt_SizeExisting";
-            this.txt_SizeExisting.Size = new System.Drawing.Size(172, 26);
-            this.txt_SizeExisting.TabIndex = 391;
-            // 
-            // txt_SizeNew
-            // 
-            this.txt_SizeNew.Cue = "Size New";
-            this.txt_SizeNew.Enabled = false;
-            this.txt_SizeNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_SizeNew.ForeColor = System.Drawing.Color.Gray;
-            this.txt_SizeNew.Location = new System.Drawing.Point(236, 563);
-            this.txt_SizeNew.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.txt_SizeNew.Name = "txt_SizeNew";
-            this.txt_SizeNew.Size = new System.Drawing.Size(172, 26);
-            this.txt_SizeNew.TabIndex = 390;
-            this.txt_SizeNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // txt_JSONLeadExisting
+            // 
+            this.txt_JSONLeadExisting.Cue = "JSON Lead Existing";
+            this.txt_JSONLeadExisting.Enabled = false;
+            this.txt_JSONLeadExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_JSONLeadExisting.ForeColor = System.Drawing.Color.Gray;
+            this.txt_JSONLeadExisting.Location = new System.Drawing.Point(410, 215);
+            this.txt_JSONLeadExisting.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txt_JSONLeadExisting.Name = "txt_JSONLeadExisting";
+            this.txt_JSONLeadExisting.Size = new System.Drawing.Size(172, 26);
+            this.txt_JSONLeadExisting.TabIndex = 253;
+            // 
+            // txt_XMLLeadNew
+            // 
+            this.txt_XMLLeadNew.Cue = "XML Lead New";
+            this.txt_XMLLeadNew.Enabled = false;
+            this.txt_XMLLeadNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_XMLLeadNew.ForeColor = System.Drawing.Color.Gray;
+            this.txt_XMLLeadNew.Location = new System.Drawing.Point(200, 72);
+            this.txt_XMLLeadNew.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txt_XMLLeadNew.Name = "txt_XMLLeadNew";
+            this.txt_XMLLeadNew.Size = new System.Drawing.Size(172, 26);
+            this.txt_XMLLeadNew.TabIndex = 240;
+            this.txt_XMLLeadNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txt_XMLLeadExisting
+            // 
+            this.txt_XMLLeadExisting.Cue = "XML Lead Existing";
+            this.txt_XMLLeadExisting.Enabled = false;
+            this.txt_XMLLeadExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_XMLLeadExisting.ForeColor = System.Drawing.Color.Gray;
+            this.txt_XMLLeadExisting.Location = new System.Drawing.Point(410, 72);
+            this.txt_XMLLeadExisting.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txt_XMLLeadExisting.Name = "txt_XMLLeadExisting";
+            this.txt_XMLLeadExisting.Size = new System.Drawing.Size(172, 26);
+            this.txt_XMLLeadExisting.TabIndex = 241;
+            // 
+            // txt_XMLBassNew
+            // 
+            this.txt_XMLBassNew.Cue = "XML Bass New";
+            this.txt_XMLBassNew.Enabled = false;
+            this.txt_XMLBassNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_XMLBassNew.ForeColor = System.Drawing.Color.Gray;
+            this.txt_XMLBassNew.Location = new System.Drawing.Point(200, 108);
+            this.txt_XMLBassNew.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txt_XMLBassNew.Name = "txt_XMLBassNew";
+            this.txt_XMLBassNew.Size = new System.Drawing.Size(172, 26);
+            this.txt_XMLBassNew.TabIndex = 244;
+            this.txt_XMLBassNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txt_XMLBassExisting
+            // 
+            this.txt_XMLBassExisting.Cue = "XML Bass Existing";
+            this.txt_XMLBassExisting.Enabled = false;
+            this.txt_XMLBassExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_XMLBassExisting.ForeColor = System.Drawing.Color.Gray;
+            this.txt_XMLBassExisting.Location = new System.Drawing.Point(410, 108);
+            this.txt_XMLBassExisting.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txt_XMLBassExisting.Name = "txt_XMLBassExisting";
+            this.txt_XMLBassExisting.Size = new System.Drawing.Size(172, 26);
+            this.txt_XMLBassExisting.TabIndex = 245;
+            // 
+            // txt_XMLComboNew
+            // 
+            this.txt_XMLComboNew.Cue = "XML Combo New";
+            this.txt_XMLComboNew.Enabled = false;
+            this.txt_XMLComboNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_XMLComboNew.ForeColor = System.Drawing.Color.Gray;
+            this.txt_XMLComboNew.Location = new System.Drawing.Point(200, 143);
+            this.txt_XMLComboNew.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txt_XMLComboNew.Name = "txt_XMLComboNew";
+            this.txt_XMLComboNew.Size = new System.Drawing.Size(172, 26);
+            this.txt_XMLComboNew.TabIndex = 246;
+            this.txt_XMLComboNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txt_XMLComboExisting
+            // 
+            this.txt_XMLComboExisting.Cue = "XML Combo Existing";
+            this.txt_XMLComboExisting.Enabled = false;
+            this.txt_XMLComboExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_XMLComboExisting.ForeColor = System.Drawing.Color.Gray;
+            this.txt_XMLComboExisting.Location = new System.Drawing.Point(410, 143);
+            this.txt_XMLComboExisting.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txt_XMLComboExisting.Name = "txt_XMLComboExisting";
+            this.txt_XMLComboExisting.Size = new System.Drawing.Size(172, 26);
+            this.txt_XMLComboExisting.TabIndex = 247;
+            // 
+            // txt_XMLRhythmNew
+            // 
+            this.txt_XMLRhythmNew.Cue = "XML Rhythm New";
+            this.txt_XMLRhythmNew.Enabled = false;
+            this.txt_XMLRhythmNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_XMLRhythmNew.ForeColor = System.Drawing.Color.Gray;
+            this.txt_XMLRhythmNew.Location = new System.Drawing.Point(200, 181);
+            this.txt_XMLRhythmNew.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txt_XMLRhythmNew.Name = "txt_XMLRhythmNew";
+            this.txt_XMLRhythmNew.Size = new System.Drawing.Size(172, 26);
+            this.txt_XMLRhythmNew.TabIndex = 248;
+            this.txt_XMLRhythmNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txt_XMLRhythmExisting
+            // 
+            this.txt_XMLRhythmExisting.Cue = "XML Rhythm Existing";
+            this.txt_XMLRhythmExisting.Enabled = false;
+            this.txt_XMLRhythmExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_XMLRhythmExisting.ForeColor = System.Drawing.Color.Gray;
+            this.txt_XMLRhythmExisting.Location = new System.Drawing.Point(410, 181);
+            this.txt_XMLRhythmExisting.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txt_XMLRhythmExisting.Name = "txt_XMLRhythmExisting";
+            this.txt_XMLRhythmExisting.Size = new System.Drawing.Size(172, 26);
+            this.txt_XMLRhythmExisting.TabIndex = 249;
+            // 
+            // txt_JSONLeadNew
+            // 
+            this.txt_JSONLeadNew.Cue = "JSON Lead New";
+            this.txt_JSONLeadNew.Enabled = false;
+            this.txt_JSONLeadNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_JSONLeadNew.ForeColor = System.Drawing.Color.Gray;
+            this.txt_JSONLeadNew.Location = new System.Drawing.Point(200, 215);
+            this.txt_JSONLeadNew.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txt_JSONLeadNew.Name = "txt_JSONLeadNew";
+            this.txt_JSONLeadNew.Size = new System.Drawing.Size(172, 26);
+            this.txt_JSONLeadNew.TabIndex = 252;
+            this.txt_JSONLeadNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txt_JSONBassNew
+            // 
+            this.txt_JSONBassNew.Cue = "JSON Bass New";
+            this.txt_JSONBassNew.Enabled = false;
+            this.txt_JSONBassNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_JSONBassNew.ForeColor = System.Drawing.Color.Gray;
+            this.txt_JSONBassNew.Location = new System.Drawing.Point(200, 252);
+            this.txt_JSONBassNew.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txt_JSONBassNew.Name = "txt_JSONBassNew";
+            this.txt_JSONBassNew.Size = new System.Drawing.Size(172, 26);
+            this.txt_JSONBassNew.TabIndex = 254;
+            this.txt_JSONBassNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txt_JSONBassExisting
+            // 
+            this.txt_JSONBassExisting.Cue = "Artist Sort Existing";
+            this.txt_JSONBassExisting.Enabled = false;
+            this.txt_JSONBassExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_JSONBassExisting.ForeColor = System.Drawing.Color.Gray;
+            this.txt_JSONBassExisting.Location = new System.Drawing.Point(410, 252);
+            this.txt_JSONBassExisting.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txt_JSONBassExisting.Name = "txt_JSONBassExisting";
+            this.txt_JSONBassExisting.Size = new System.Drawing.Size(172, 26);
+            this.txt_JSONBassExisting.TabIndex = 255;
+            // 
+            // txt_JSONComboNew
+            // 
+            this.txt_JSONComboNew.Cue = "JSON Combo New";
+            this.txt_JSONComboNew.Enabled = false;
+            this.txt_JSONComboNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_JSONComboNew.ForeColor = System.Drawing.Color.Gray;
+            this.txt_JSONComboNew.Location = new System.Drawing.Point(200, 289);
+            this.txt_JSONComboNew.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txt_JSONComboNew.Name = "txt_JSONComboNew";
+            this.txt_JSONComboNew.Size = new System.Drawing.Size(172, 26);
+            this.txt_JSONComboNew.TabIndex = 256;
+            this.txt_JSONComboNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txt_JSONComboExisting
+            // 
+            this.txt_JSONComboExisting.Cue = "JSON Combo Existing";
+            this.txt_JSONComboExisting.Enabled = false;
+            this.txt_JSONComboExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_JSONComboExisting.ForeColor = System.Drawing.Color.Gray;
+            this.txt_JSONComboExisting.Location = new System.Drawing.Point(410, 289);
+            this.txt_JSONComboExisting.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txt_JSONComboExisting.Name = "txt_JSONComboExisting";
+            this.txt_JSONComboExisting.Size = new System.Drawing.Size(172, 26);
+            this.txt_JSONComboExisting.TabIndex = 257;
+            // 
+            // txt_JSONRhythmNew
+            // 
+            this.txt_JSONRhythmNew.Cue = "JSON Rhythm New";
+            this.txt_JSONRhythmNew.Enabled = false;
+            this.txt_JSONRhythmNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_JSONRhythmNew.ForeColor = System.Drawing.Color.Gray;
+            this.txt_JSONRhythmNew.Location = new System.Drawing.Point(200, 324);
+            this.txt_JSONRhythmNew.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txt_JSONRhythmNew.Name = "txt_JSONRhythmNew";
+            this.txt_JSONRhythmNew.Size = new System.Drawing.Size(172, 26);
+            this.txt_JSONRhythmNew.TabIndex = 259;
+            this.txt_JSONRhythmNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txt_JSONRhythmExisting
+            // 
+            this.txt_JSONRhythmExisting.Cue = "JSON Rhythm Existing";
+            this.txt_JSONRhythmExisting.Enabled = false;
+            this.txt_JSONRhythmExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_JSONRhythmExisting.ForeColor = System.Drawing.Color.Gray;
+            this.txt_JSONRhythmExisting.Location = new System.Drawing.Point(410, 324);
+            this.txt_JSONRhythmExisting.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txt_JSONRhythmExisting.Name = "txt_JSONRhythmExisting";
+            this.txt_JSONRhythmExisting.Size = new System.Drawing.Size(172, 26);
+            this.txt_JSONRhythmExisting.TabIndex = 260;
             // 
             // txt_AlbumExisting
             // 
@@ -2851,56 +2916,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_TitleNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txt_TitleNew.TextChanged += new System.EventHandler(this.ExistingChanged);
             // 
-            // chbx_LiveExisting
-            // 
-            this.chbx_LiveExisting.AutoSize = true;
-            this.chbx_LiveExisting.Checked = true;
-            this.chbx_LiveExisting.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chbx_LiveExisting.Location = new System.Drawing.Point(662, 452);
-            this.chbx_LiveExisting.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.chbx_LiveExisting.Name = "chbx_LiveExisting";
-            this.chbx_LiveExisting.Size = new System.Drawing.Size(63, 24);
-            this.chbx_LiveExisting.TabIndex = 407;
-            this.chbx_LiveExisting.Text = "Live";
-            this.chbx_LiveExisting.UseVisualStyleBackColor = true;
-            // 
-            // txt_LiveDetailsExisting
-            // 
-            this.txt_LiveDetailsExisting.Cue = "Live Details Existing";
-            this.txt_LiveDetailsExisting.Enabled = false;
-            this.txt_LiveDetailsExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_LiveDetailsExisting.ForeColor = System.Drawing.Color.Gray;
-            this.txt_LiveDetailsExisting.Location = new System.Drawing.Point(723, 450);
-            this.txt_LiveDetailsExisting.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.txt_LiveDetailsExisting.Name = "txt_LiveDetailsExisting";
-            this.txt_LiveDetailsExisting.Size = new System.Drawing.Size(134, 26);
-            this.txt_LiveDetailsExisting.TabIndex = 408;
-            // 
-            // txt_LiveDetailsNew
-            // 
-            this.txt_LiveDetailsNew.Cue = "Live Details New";
-            this.txt_LiveDetailsNew.Enabled = false;
-            this.txt_LiveDetailsNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_LiveDetailsNew.ForeColor = System.Drawing.Color.Gray;
-            this.txt_LiveDetailsNew.Location = new System.Drawing.Point(7, 457);
-            this.txt_LiveDetailsNew.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.txt_LiveDetailsNew.Name = "txt_LiveDetailsNew";
-            this.txt_LiveDetailsNew.Size = new System.Drawing.Size(134, 26);
-            this.txt_LiveDetailsNew.TabIndex = 410;
-            // 
-            // chbx_LiveNew
-            // 
-            this.chbx_LiveNew.AutoSize = true;
-            this.chbx_LiveNew.Checked = true;
-            this.chbx_LiveNew.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chbx_LiveNew.Location = new System.Drawing.Point(145, 457);
-            this.chbx_LiveNew.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.chbx_LiveNew.Name = "chbx_LiveNew";
-            this.chbx_LiveNew.Size = new System.Drawing.Size(63, 24);
-            this.chbx_LiveNew.TabIndex = 409;
-            this.chbx_LiveNew.Text = "Live";
-            this.chbx_LiveNew.UseVisualStyleBackColor = true;
-            // 
             // frm_Duplicates_Management
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -2908,12 +2923,13 @@ namespace RocksmithToolkitGUI.DLCManager
             this.AutoScroll = true;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1251, 1028);
+            this.Controls.Add(this.txt_VersionExisting);
+            this.Controls.Add(this.txt_VersionNew);
+            this.Controls.Add(this.btn_AddPlatform);
             this.Controls.Add(this.txt_LiveDetailsNew);
             this.Controls.Add(this.chbx_LiveNew);
             this.Controls.Add(this.txt_LiveDetailsExisting);
             this.Controls.Add(this.chbx_LiveExisting);
-            this.Controls.Add(this.txt_VersionNew);
-            this.Controls.Add(this.txt_VersionExisting);
             this.Controls.Add(this.txt_PlatformNew);
             this.Controls.Add(this.txt_PlatformExisting);
             this.Controls.Add(this.txt_FileDateNew);
@@ -3042,8 +3058,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.groupBox3.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.txt_VersionExisting)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txt_VersionNew)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -3260,11 +3274,12 @@ namespace RocksmithToolkitGUI.DLCManager
         private Button btn_TN_Bass;
         private Button btn_TN_Lead;
         private Button btn_WM_Vocals;
-        private NumericUpDown txt_VersionExisting;
-        private NumericUpDown txt_VersionNew;
         private CheckBox chbx_LiveExisting;
         private CueTextBox txt_LiveDetailsExisting;
         private CueTextBox txt_LiveDetailsNew;
         private CheckBox chbx_LiveNew;
+        private Button btn_AddPlatform;
+        private CueTextBox txt_VersionNew;
+        private CueTextBox txt_VersionExisting;
     }
 }

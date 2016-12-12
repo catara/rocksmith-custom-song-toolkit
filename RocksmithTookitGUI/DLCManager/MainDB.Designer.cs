@@ -59,6 +59,9 @@ namespace RocksmithToolkitGUI.DLCManager
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.Panel1 = new System.Windows.Forms.Panel();
+            this.cueTextBox1 = new RocksmithToolkitGUI.CueTextBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.txt_Description = new System.Windows.Forms.RichTextBox();
             this.btn_ApplyAlbumSortNames = new System.Windows.Forms.Button();
             this.btn_ApplyArtistShortNames = new System.Windows.Forms.Button();
             this.txt_Track_No = new System.Windows.Forms.NumericUpDown();
@@ -157,7 +160,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_OggPreviewPath = new RocksmithToolkitGUI.CueTextBox();
             this.btn_SelectPreview = new System.Windows.Forms.Button();
             this.btn_OpenRetail = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
             this.btn_Close = new System.Windows.Forms.Button();
             this.btn_OpenStandardization = new System.Windows.Forms.Button();
             this.txt_AlbumArtPath = new RocksmithToolkitGUI.CueTextBox();
@@ -179,7 +181,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_Artist = new RocksmithToolkitGUI.CueTextBox();
             this.btn_Duplicate = new System.Windows.Forms.Button();
             this.btn_SearchReset = new System.Windows.Forms.Button();
-            this.txt_Description = new System.Windows.Forms.RichTextBox();
             this.btn_Search = new System.Windows.Forms.Button();
             this.chbx_Alternate = new System.Windows.Forms.CheckBox();
             this.btn_Delete = new System.Windows.Forms.Button();
@@ -187,6 +188,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_Tones = new System.Windows.Forms.Button();
             this.btn_Arrangements = new System.Windows.Forms.Button();
             this.CheckBox1 = new System.Windows.Forms.CheckBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.btn_Beta = new System.Windows.Forms.Button();
@@ -212,6 +214,10 @@ namespace RocksmithToolkitGUI.DLCManager
             this.label33 = new System.Windows.Forms.Label();
             this.label32 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.btn_Remove_All_Packed = new System.Windows.Forms.Button();
+            this.cmb_Packed = new System.Windows.Forms.ComboBox();
+            this.txt_CoundofPacked = new System.Windows.Forms.NumericUpDown();
+            this.btn_Remove_Packed = new System.Windows.Forms.Button();
             this.txt_FilesMissingIssues = new RocksmithToolkitGUI.CueTextBox();
             this.txt_RemotePath = new RocksmithToolkitGUI.CueTextBox();
             this.btn_RemoveAllRemoteSongs = new System.Windows.Forms.Button();
@@ -241,6 +247,7 @@ namespace RocksmithToolkitGUI.DLCManager
             ((System.ComponentModel.ISupportInitialize)(this.txt_Followers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txt_CustomsForge_Like)).BeginInit();
             this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txt_CoundofPacked)).BeginInit();
             this.SuspendLayout();
             // 
             // DataViewGrid
@@ -338,7 +345,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_Copy_old.Name = "btn_Copy_old";
             this.btn_Copy_old.Size = new System.Drawing.Size(34, 22);
             this.btn_Copy_old.TabIndex = 328;
-            this.btn_Copy_old.Text = "++";
+            this.btn_Copy_old.Text = "Copy";
             this.toolTip1.SetToolTip(this.btn_Copy_old, "Copy all OLD files for the Selected Filter into root of Import folder");
             this.btn_Copy_old.UseVisualStyleBackColor = true;
             this.btn_Copy_old.Click += new System.EventHandler(this.btn_Copy_old_Click);
@@ -430,12 +437,12 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_UniqueID.AutoSize = true;
             this.chbx_UniqueID.Checked = true;
             this.chbx_UniqueID.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chbx_UniqueID.Location = new System.Drawing.Point(89, 72);
+            this.chbx_UniqueID.Location = new System.Drawing.Point(91, 71);
             this.chbx_UniqueID.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.chbx_UniqueID.Name = "chbx_UniqueID";
-            this.chbx_UniqueID.Size = new System.Drawing.Size(160, 24);
+            this.chbx_UniqueID.Size = new System.Drawing.Size(135, 24);
             this.chbx_UniqueID.TabIndex = 329;
-            this.chbx_UniqueID.Text = "UniqueDLCName";
+            this.chbx_UniqueID.Text = "UniqueDLCID";
             this.toolTip1.SetToolTip(this.chbx_UniqueID, "Replace the Unique ID with the last saved at conversion/packaging");
             this.chbx_UniqueID.UseVisualStyleBackColor = true;
             // 
@@ -453,6 +460,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.Panel1);
+            this.tabPage1.Controls.Add(this.label2);
             this.tabPage1.Location = new System.Drawing.Point(4, 29);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -463,6 +471,9 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // Panel1
             // 
+            this.Panel1.Controls.Add(this.cueTextBox1);
+            this.Panel1.Controls.Add(this.label13);
+            this.Panel1.Controls.Add(this.txt_Description);
             this.Panel1.Controls.Add(this.btn_ApplyAlbumSortNames);
             this.Panel1.Controls.Add(this.btn_ApplyArtistShortNames);
             this.Panel1.Controls.Add(this.txt_Track_No);
@@ -494,7 +505,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.Panel1.Controls.Add(this.groupBox2);
             this.Panel1.Controls.Add(this.groupBox1);
             this.Panel1.Controls.Add(this.btn_OpenRetail);
-            this.Panel1.Controls.Add(this.label2);
             this.Panel1.Controls.Add(this.btn_Close);
             this.Panel1.Controls.Add(this.btn_OpenStandardization);
             this.Panel1.Controls.Add(this.txt_AlbumArtPath);
@@ -516,7 +526,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.Panel1.Controls.Add(this.txt_Artist);
             this.Panel1.Controls.Add(this.btn_Duplicate);
             this.Panel1.Controls.Add(this.btn_SearchReset);
-            this.Panel1.Controls.Add(this.txt_Description);
             this.Panel1.Controls.Add(this.btn_Search);
             this.Panel1.Controls.Add(this.chbx_Alternate);
             this.Panel1.Controls.Add(this.btn_Delete);
@@ -530,6 +539,41 @@ namespace RocksmithToolkitGUI.DLCManager
             this.Panel1.Name = "Panel1";
             this.Panel1.Size = new System.Drawing.Size(1658, 394);
             this.Panel1.TabIndex = 4;
+            // 
+            // cueTextBox1
+            // 
+            this.cueTextBox1.Cue = "Missing Files Issues List";
+            this.cueTextBox1.Enabled = false;
+            this.cueTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.cueTextBox1.ForeColor = System.Drawing.Color.Gray;
+            this.cueTextBox1.HideSelection = false;
+            this.cueTextBox1.Location = new System.Drawing.Point(750, 366);
+            this.cueTextBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.cueTextBox1.Name = "cueTextBox1";
+            this.cueTextBox1.ReadOnly = true;
+            this.cueTextBox1.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
+            this.cueTextBox1.Size = new System.Drawing.Size(276, 26);
+            this.cueTextBox1.TabIndex = 409;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Location = new System.Drawing.Point(492, 369);
+            this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(90, 20);
+            this.label13.TabIndex = 408;
+            this.label13.Text = "Comments:";
+            // 
+            // txt_Description
+            // 
+            this.txt_Description.Location = new System.Drawing.Point(588, 342);
+            this.txt_Description.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txt_Description.Name = "txt_Description";
+            this.txt_Description.Size = new System.Drawing.Size(155, 47);
+            this.txt_Description.TabIndex = 334;
+            this.txt_Description.Text = "";
             // 
             // btn_ApplyAlbumSortNames
             // 
@@ -577,7 +621,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_ChangeLyrics.Location = new System.Drawing.Point(900, 337);
             this.btn_ChangeLyrics.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btn_ChangeLyrics.Name = "btn_ChangeLyrics";
-            this.btn_ChangeLyrics.Size = new System.Drawing.Size(120, 34);
+            this.btn_ChangeLyrics.Size = new System.Drawing.Size(120, 28);
             this.btn_ChangeLyrics.TabIndex = 404;
             this.btn_ChangeLyrics.Text = "Change Lyrics";
             this.btn_ChangeLyrics.UseVisualStyleBackColor = true;
@@ -622,7 +666,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // btn_GroupsAdd
             // 
             this.btn_GroupsAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_GroupsAdd.Location = new System.Drawing.Point(521, 315);
+            this.btn_GroupsAdd.Location = new System.Drawing.Point(370, 211);
             this.btn_GroupsAdd.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btn_GroupsAdd.Name = "btn_GroupsAdd";
             this.btn_GroupsAdd.Size = new System.Drawing.Size(32, 31);
@@ -634,7 +678,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // btn_GroupsRemove
             // 
             this.btn_GroupsRemove.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_GroupsRemove.Location = new System.Drawing.Point(553, 315);
+            this.btn_GroupsRemove.Location = new System.Drawing.Point(402, 211);
             this.btn_GroupsRemove.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btn_GroupsRemove.Name = "btn_GroupsRemove";
             this.btn_GroupsRemove.Size = new System.Drawing.Size(32, 31);
@@ -647,10 +691,10 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.chbx_AllGroups.CheckOnClick = true;
             this.chbx_AllGroups.FormattingEnabled = true;
-            this.chbx_AllGroups.Location = new System.Drawing.Point(310, 293);
+            this.chbx_AllGroups.Location = new System.Drawing.Point(310, 280);
             this.chbx_AllGroups.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.chbx_AllGroups.Name = "chbx_AllGroups";
-            this.chbx_AllGroups.Size = new System.Drawing.Size(202, 88);
+            this.chbx_AllGroups.Size = new System.Drawing.Size(270, 88);
             this.chbx_AllGroups.Sorted = true;
             this.chbx_AllGroups.TabIndex = 382;
             this.chbx_AllGroups.SelectedValueChanged += new System.EventHandler(this.chbx_AllGroups_SelectedValueChanged);
@@ -724,7 +768,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(519, 290);
+            this.label3.Location = new System.Drawing.Point(306, 214);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(58, 20);
@@ -766,10 +810,10 @@ namespace RocksmithToolkitGUI.DLCManager
             // chbx_Group
             // 
             this.chbx_Group.FormattingEnabled = true;
-            this.chbx_Group.Location = new System.Drawing.Point(520, 347);
+            this.chbx_Group.Location = new System.Drawing.Point(310, 247);
             this.chbx_Group.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.chbx_Group.Name = "chbx_Group";
-            this.chbx_Group.Size = new System.Drawing.Size(225, 28);
+            this.chbx_Group.Size = new System.Drawing.Size(270, 28);
             this.chbx_Group.TabIndex = 323;
             this.chbx_Group.SelectedIndexChanged += new System.EventHandler(this.chbx_Group_SelectedIndexChanged);
             // 
@@ -1097,7 +1141,6 @@ namespace RocksmithToolkitGUI.DLCManager
             // chbx_Is_Live
             // 
             this.chbx_Is_Live.AutoSize = true;
-            this.chbx_Is_Live.Enabled = false;
             this.chbx_Is_Live.Location = new System.Drawing.Point(9, 199);
             this.chbx_Is_Live.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.chbx_Is_Live.Name = "chbx_Is_Live";
@@ -1647,7 +1690,8 @@ namespace RocksmithToolkitGUI.DLCManager
             "Any DLCManager generated Preview",
             "With Duplicates",
             "Main_NoOLD",
-            "Main_FilesMissingIssues",
+            "Main_Find_FilesMissingIssues",
+            "Main_Show_FilesMissingIssues",
             "Imported Last",
             "Imported Current Month",
             "Packed Last",
@@ -1736,10 +1780,10 @@ namespace RocksmithToolkitGUI.DLCManager
             // btn_AddPreview
             // 
             this.btn_AddPreview.Enabled = false;
-            this.btn_AddPreview.Location = new System.Drawing.Point(318, 86);
+            this.btn_AddPreview.Location = new System.Drawing.Point(312, 86);
             this.btn_AddPreview.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btn_AddPreview.Name = "btn_AddPreview";
-            this.btn_AddPreview.Size = new System.Drawing.Size(114, 34);
+            this.btn_AddPreview.Size = new System.Drawing.Size(120, 32);
             this.btn_AddPreview.TabIndex = 94;
             this.btn_AddPreview.Text = "Add Preview";
             this.btn_AddPreview.UseVisualStyleBackColor = true;
@@ -1856,10 +1900,10 @@ namespace RocksmithToolkitGUI.DLCManager
             // btn_SelectPreview
             // 
             this.btn_SelectPreview.Enabled = false;
-            this.btn_SelectPreview.Location = new System.Drawing.Point(170, 86);
+            this.btn_SelectPreview.Location = new System.Drawing.Point(162, 86);
             this.btn_SelectPreview.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btn_SelectPreview.Name = "btn_SelectPreview";
-            this.btn_SelectPreview.Size = new System.Drawing.Size(142, 34);
+            this.btn_SelectPreview.Size = new System.Drawing.Size(147, 32);
             this.btn_SelectPreview.TabIndex = 315;
             this.btn_SelectPreview.Text = "Change Preview";
             this.btn_SelectPreview.UseVisualStyleBackColor = true;
@@ -1877,16 +1921,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_OpenRetail.Text = "Open Retail DB";
             this.btn_OpenRetail.UseVisualStyleBackColor = false;
             this.btn_OpenRetail.Click += new System.EventHandler(this.btn_OpenCache);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(306, 223);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(93, 20);
-            this.label2.TabIndex = 277;
-            this.label2.Text = "Description:";
             // 
             // btn_Close
             // 
@@ -2136,15 +2170,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_SearchReset.UseVisualStyleBackColor = true;
             this.btn_SearchReset.Click += new System.EventHandler(this.btn_SearchReset_Click);
             // 
-            // txt_Description
-            // 
-            this.txt_Description.Location = new System.Drawing.Point(310, 247);
-            this.txt_Description.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.txt_Description.Name = "txt_Description";
-            this.txt_Description.Size = new System.Drawing.Size(276, 44);
-            this.txt_Description.TabIndex = 54;
-            this.txt_Description.Text = "";
-            // 
             // btn_Search
             // 
             this.btn_Search.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -2226,6 +2251,16 @@ namespace RocksmithToolkitGUI.DLCManager
             this.CheckBox1.Text = "Show only MessageBox";
             this.CheckBox1.UseVisualStyleBackColor = true;
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(823, -40);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(93, 20);
+            this.label2.TabIndex = 277;
+            this.label2.Text = "Description:";
+            // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.groupBox7);
@@ -2261,11 +2296,11 @@ namespace RocksmithToolkitGUI.DLCManager
             this.groupBox7.Controls.Add(this.lbfl_YouTube_Link);
             this.groupBox7.Controls.Add(this.label33);
             this.groupBox7.Controls.Add(this.label32);
-            this.groupBox7.Location = new System.Drawing.Point(5, 8);
+            this.groupBox7.Location = new System.Drawing.Point(4, 8);
             this.groupBox7.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBox7.Size = new System.Drawing.Size(1640, 300);
+            this.groupBox7.Size = new System.Drawing.Size(1640, 389);
             this.groupBox7.TabIndex = 382;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "CustomsForge Details";
@@ -2273,7 +2308,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // btn_Beta
             // 
             this.btn_Beta.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Beta.Location = new System.Drawing.Point(403, 87);
+            this.btn_Beta.Location = new System.Drawing.Point(511, 22);
             this.btn_Beta.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btn_Beta.Name = "btn_Beta";
             this.btn_Beta.Size = new System.Drawing.Size(84, 34);
@@ -2457,7 +2492,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_debug.Location = new System.Drawing.Point(246, 94);
             this.txt_debug.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txt_debug.Name = "txt_debug";
-            this.txt_debug.Size = new System.Drawing.Size(154, 53);
+            this.txt_debug.Size = new System.Drawing.Size(1386, 285);
             this.txt_debug.TabIndex = 328;
             this.txt_debug.Text = "";
             this.txt_debug.Visible = false;
@@ -2487,7 +2522,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // btn_Debug
             // 
             this.btn_Debug.ForeColor = System.Drawing.Color.DarkRed;
-            this.btn_Debug.Location = new System.Drawing.Point(403, 120);
+            this.btn_Debug.Location = new System.Drawing.Point(233, 55);
             this.btn_Debug.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btn_Debug.Name = "btn_Debug";
             this.btn_Debug.Size = new System.Drawing.Size(87, 35);
@@ -2553,6 +2588,10 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.btn_Remove_All_Packed);
+            this.tabPage3.Controls.Add(this.cmb_Packed);
+            this.tabPage3.Controls.Add(this.txt_CoundofPacked);
+            this.tabPage3.Controls.Add(this.btn_Remove_Packed);
             this.tabPage3.Controls.Add(this.txt_FilesMissingIssues);
             this.tabPage3.Controls.Add(this.txt_RemotePath);
             this.tabPage3.Controls.Add(this.btn_RemoveAllRemoteSongs);
@@ -2565,9 +2604,63 @@ namespace RocksmithToolkitGUI.DLCManager
             this.tabPage3.Text = "GameData";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // btn_Remove_All_Packed
+            // 
+            this.btn_Remove_All_Packed.Location = new System.Drawing.Point(225, 134);
+            this.btn_Remove_All_Packed.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btn_Remove_All_Packed.Name = "btn_Remove_All_Packed";
+            this.btn_Remove_All_Packed.Size = new System.Drawing.Size(210, 32);
+            this.btn_Remove_All_Packed.TabIndex = 342;
+            this.btn_Remove_All_Packed.Text = "Remove All Packed Songs";
+            this.btn_Remove_All_Packed.UseVisualStyleBackColor = true;
+            // 
+            // cmb_Packed
+            // 
+            this.cmb_Packed.FormattingEnabled = true;
+            this.cmb_Packed.Location = new System.Drawing.Point(280, 95);
+            this.cmb_Packed.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.cmb_Packed.Name = "cmb_Packed";
+            this.cmb_Packed.Size = new System.Drawing.Size(620, 28);
+            this.cmb_Packed.TabIndex = 341;
+            // 
+            // txt_CoundofPacked
+            // 
+            this.txt_CoundofPacked.Enabled = false;
+            this.txt_CoundofPacked.Location = new System.Drawing.Point(225, 95);
+            this.txt_CoundofPacked.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txt_CoundofPacked.Maximum = new decimal(new int[] {
+            9,
+            0,
+            0,
+            0});
+            this.txt_CoundofPacked.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.txt_CoundofPacked.Name = "txt_CoundofPacked";
+            this.txt_CoundofPacked.Size = new System.Drawing.Size(48, 26);
+            this.txt_CoundofPacked.TabIndex = 340;
+            this.txt_CoundofPacked.Value = new decimal(new int[] {
+            9,
+            0,
+            0,
+            0});
+            // 
+            // btn_Remove_Packed
+            // 
+            this.btn_Remove_Packed.Location = new System.Drawing.Point(7, 94);
+            this.btn_Remove_Packed.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btn_Remove_Packed.Name = "btn_Remove_Packed";
+            this.btn_Remove_Packed.Size = new System.Drawing.Size(210, 72);
+            this.btn_Remove_Packed.TabIndex = 338;
+            this.btn_Remove_Packed.Text = "Remove All but the Curently Selected Packed Song";
+            this.btn_Remove_Packed.UseVisualStyleBackColor = true;
+            // 
             // txt_FilesMissingIssues
             // 
-            this.txt_FilesMissingIssues.Cue = "Missing Files";
+            this.txt_FilesMissingIssues.Cue = "Missing Files Issues List";
+            this.txt_FilesMissingIssues.Enabled = false;
             this.txt_FilesMissingIssues.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_FilesMissingIssues.ForeColor = System.Drawing.Color.Gray;
             this.txt_FilesMissingIssues.HideSelection = false;
@@ -2576,7 +2669,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_FilesMissingIssues.Name = "txt_FilesMissingIssues";
             this.txt_FilesMissingIssues.ReadOnly = true;
             this.txt_FilesMissingIssues.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
-            this.txt_FilesMissingIssues.Size = new System.Drawing.Size(146, 26);
+            this.txt_FilesMissingIssues.Size = new System.Drawing.Size(675, 26);
             this.txt_FilesMissingIssues.TabIndex = 336;
             // 
             // txt_RemotePath
@@ -2590,7 +2683,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_RemotePath.Name = "txt_RemotePath";
             this.txt_RemotePath.ReadOnly = true;
             this.txt_RemotePath.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
-            this.txt_RemotePath.Size = new System.Drawing.Size(146, 26);
+            this.txt_RemotePath.Size = new System.Drawing.Size(675, 26);
             this.txt_RemotePath.TabIndex = 335;
             // 
             // btn_RemoveAllRemoteSongs
@@ -2629,6 +2722,7 @@ namespace RocksmithToolkitGUI.DLCManager
             ((System.ComponentModel.ISupportInitialize)(this.DataViewGrid)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
             this.Panel1.ResumeLayout(false);
             this.Panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txt_Track_No)).EndInit();
@@ -2660,6 +2754,7 @@ namespace RocksmithToolkitGUI.DLCManager
             ((System.ComponentModel.ISupportInitialize)(this.txt_CustomsForge_Like)).EndInit();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txt_CoundofPacked)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2794,7 +2889,6 @@ namespace RocksmithToolkitGUI.DLCManager
         private CueTextBox txt_Artist;
         private Button btn_Duplicate;
         private Button btn_SearchReset;
-        private RichTextBox txt_Description;
         private Button btn_Search;
         private CheckBox chbx_Alternate;
         private Button btn_Delete;
@@ -2838,5 +2932,12 @@ namespace RocksmithToolkitGUI.DLCManager
         private CueTextBox txt_Live_Details;
         private CheckBox chbx_Is_Live;
         private CueTextBox txt_FilesMissingIssues;
+        private Button btn_Remove_All_Packed;
+        private ComboBox cmb_Packed;
+        private NumericUpDown txt_CoundofPacked;
+        private Button btn_Remove_Packed;
+        private Label label13;
+        private RichTextBox txt_Description;
+        private CueTextBox cueTextBox1;
     }
 }

@@ -378,7 +378,8 @@
             "64. @Pack Remove Remote File if GameData has been read",
             "65. @Pack ONLY Copy/FTP the Last Packed song",
             "66. @Pack ONLY Copy/FTP the Initially Imported song",
-            "67. Duplicate manag ignores Live Songs",
+            "67. Duplicate manag. ignores Live Songs",
+            "68. Import duplicates (hash)",
             "98. @IMPORT>",
             "99. @Pack>"});
             this.chbx_Additional_Manipulations.Location = new System.Drawing.Point(358, 302);
@@ -1316,6 +1317,7 @@
             this.chbx_Configurations.Text = "Select Profile";
             this.chbx_Configurations.DropDown += new System.EventHandler(this.chbx_Configurations_DropDown);
             this.chbx_Configurations.SelectedIndexChanged += new System.EventHandler(this.chbx_Configurations_SelectedIndexChanged);
+            this.chbx_Configurations.TextChanged += new System.EventHandler(this.chbx_Configurations_TextChanged);
             // 
             // btn_ProfilesSave
             // 

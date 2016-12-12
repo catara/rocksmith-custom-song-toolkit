@@ -496,7 +496,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //DataGridView.ExpandColumns();
         }
 
-        private class Files
+        private class CacheRecs
         {
             public string ID { get; set; }
             public string Identifier { get; set; }
@@ -517,7 +517,7 @@ namespace RocksmithToolkitGUI.DLCManager
             public string Selected { get; set; }
         }
 
-        private Files[] files = new Files[10000];
+        private CacheRecs[] files = new CacheRecs[10000];
 
         //Generic procedure to read and parse Cache.DB (&others..soon)
         public int SQLAccess(string cmd)
@@ -544,7 +544,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     if (MaximumSize > 0)
                         foreach (DataRow dataRow in dus.Tables[0].Rows)
                         {
-                            files[i] = new Files();
+                            files[i] = new CacheRecs();
 
                             //rtxt_StatisticsOnReadDLCs.Text += "\n  a= " + i + MaximumSize+dataRow.ItemArray[0].ToString();
                             files[i].ID = dataRow.ItemArray[0].ToString();

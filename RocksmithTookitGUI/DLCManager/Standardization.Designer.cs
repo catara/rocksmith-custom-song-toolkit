@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using RocksmithToolkitLib.DLCPackage;
+using static RocksmithToolkitGUI.DLCManager.GenericFunctions;
 
 namespace RocksmithToolkitGUI.DLCManager
 {
@@ -462,7 +463,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private CueTextBox txt_Artist;
         private CueTextBox txt_Album_Correction;
         private CueTextBox txt_AlbumArt_Correction;
-        private DLCManager.Files filed;
+        //private DLCManager.MainDBfields filed;
         private DLCPackageData datas;
         private string author;
         private string tkversion;
@@ -482,7 +483,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private List<string> alist;
         private List<string> blist;
 
-        public Standardization(string txt_DBFolder, DLCManager.Files filed, DLCPackageData datas, string author, string tkversion, string dD, string bass, string guitar, string combo, string rhythm, string lead, string tunnings, int i, int norows, string original_FileName, string art_hash, string audio_hash, string audioPreview_hash, List<string> alist, List<string> blist, string txt_TempPath, string txt_RocksmithDLCPath, bool AllowEncript, bool AllowORIGDelete)
+        internal Standardization(string txt_DBFolder, MainDBfields filed, DLCPackageData datas, string author, string tkversion, string dD, string bass, string guitar, string combo, string rhythm, string lead, string tunnings, int i, int norows, string original_FileName, string art_hash, string audio_hash, string audioPreview_hash, List<string> alist, List<string> blist, string txt_TempPath, string txt_RocksmithDLCPath, bool AllowEncript, bool AllowORIGDelete)
             : this(txt_DBFolder, txt_TempPath, txt_RocksmithDLCPath, AllowEncript, AllowORIGDelete)
         {
             this.filed = filed;
@@ -522,5 +523,6 @@ namespace RocksmithToolkitGUI.DLCManager
         private CueTextBox txt_Album_Short;
         private System.Windows.Forms.RichTextBox txt_Comments;
         private System.Windows.Forms.ProgressBar pB_ReadDLCs;
+        private MainDBfields filed;
     }
 }

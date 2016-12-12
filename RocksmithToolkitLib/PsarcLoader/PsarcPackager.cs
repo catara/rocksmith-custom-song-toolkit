@@ -16,7 +16,7 @@ namespace RocksmithToolkitLib.PsarcLoader
             _deleteOnClose = deleteOnClose;
         }
 
-        public DLCPackageData ReadPackage(string inputPath)
+        public DLCPackageData ReadPackage(string inputPath, bool ignoreMultitoneEx = false)
         {
             // UNPACK
             packageDir = Packer.Unpack(inputPath, Path.GetTempPath(), true);
@@ -27,7 +27,7 @@ namespace RocksmithToolkitLib.PsarcLoader
             // LOAD DATA
             DLCPackageData info = new DLCPackageData();
             var packagePlatform = inputPath.GetPlatform();
-            info = DLCPackageData.LoadFromFolder(packageDir, packagePlatform, packagePlatform);
+            info = DLCPackageData.LoadFromFolder(packageDir, packagePlatform, packagePlatform, ignoreMultitoneEx);
             var foundShowlights = Directory.EnumerateFiles(packageDir, "*_showlights.xml", SearchOption.AllDirectories).Any();
 
             // toolkit will generate showlights if none was found

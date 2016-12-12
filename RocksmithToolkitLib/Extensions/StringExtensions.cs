@@ -221,12 +221,12 @@ namespace RocksmithToolkitLib.Extensions
             float.TryParse(value.Trim(), out tempo);
             int bpm = (int)Math.Round(tempo);
             // check for valid tempo
-            if (bpm > 0 && bpm < 300)
+            if (bpm > 0 && bpm < 999)  // allow insane tempo
                 return bpm.ToString();
 
+            return "120"; // default tempo 
             // force user to make entry rather than defaulting
-            // return "120"; // default tempo 
-            return "";
+            // return "";
         }
 
         public static string GetValidVersion(this string value)
@@ -242,7 +242,7 @@ namespace RocksmithToolkitLib.Extensions
         public static string GetValidYear(this string value)
         {
             // check for valid four digit song year 
-            if (!Regex.IsMatch(value, "^(19[0-9][0-9]|20[0-1][0-9])"))
+            if (!Regex.IsMatch(value, "^(15[0-9][0-9]|16[0-9][0-9]|17[0-9][0-9]|18[0-9][0-9]|19[0-9][0-9]|20[0-1][0-9])"))
                 value = ""; // clear if not valid
 
             return value;
@@ -252,7 +252,7 @@ namespace RocksmithToolkitLib.Extensions
         {
             if (String.IsNullOrEmpty(GetValidAppIdSixDigits(value)))
                 return false;
- 
+
             return true;
         }
 

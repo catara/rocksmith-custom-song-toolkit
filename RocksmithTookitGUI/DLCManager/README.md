@@ -1,4 +1,4 @@
-﻿## Rocksmith DLC Library Manager v0.4
+﻿## Rocksmith DLC Library Manager v0.5
 *(beta version-unreleased to the masses; branch of CSC)*
 # App Description: MASS Manipulation of Rocksmith DLC Library 
 		e.g. 1. in Rocksmith, in the Library, each song's Album, to contain a personal rating, if it has DD, instr. avail
@@ -7,7 +7,7 @@
 
 #Main Features:
 - Gather all DLCs metadata into 1 Microsoft Access DB
-	- Manage Duplicates @Import and After
+	- Manage Duplicates @Import and After (NEW keep trace of them and recall them if needed)
 	- Edit Individual metadata fields
 	- Fix Songs without
 		- Preview
@@ -50,11 +50,7 @@
 [ ] big feature: get the volume of the audio file and then compare against the rest or a norm
 [ ] medium feature: add DLCs into cache.psarc to speed up the game startup
 [ ] big feature [ ]For the tagging add the info to the Preview Image/Album Art
-[ ] save error log separately
-  [ ] save constantly not only at the end
-  [ ] smart dEbug OUTPUTING function...
 [ ] make a custom song out of retail
-[ ] remove commented out code 
 [ ] if i delete a folder do i get a warning in the maintenance check ?
   [ ] check for json existance as well. Maybe
 [ ] increase the no of threads
@@ -67,7 +63,7 @@
 [ ] improve progress bar of repacks
 [ ] ask if you wanna have the packing folder deleted
 [ ] fix/check changing path of library
-[ ]add info box with folders sizes
+[ ] add info box with folders sizes
 
 
 ## WiP:
@@ -81,11 +77,9 @@
 [ ] consider live when searching for the track NO or dont :)
 [ ] Repack only repack Initial or LAst only one platform 
 [ ] Repack only copy and ftp,  Initial or LAst only one platform 
-[ ]  Selecting a witha  new name should ask if you wanna rename
 [-] all options should be a table
 [ ] finish arrangement (demo with the hives overdrive all the time :) )
 [ ] add checks to packed..remember to ask if they wanna clean ups or notification 
-[ ] astronaut does not pick the file version
 [ ] add ps3 as a duplicate
 [ ] cause it doesnt pick up version it cannot diff shiro astronau
 [ ] other platforms do not have official flag correctly detected
@@ -94,7 +88,21 @@
 [ ] add bonus into in lyrics
 [ ] add time stamps in logging to improve performance
 [ ] duplicate lead to Rhythm
-[ ] duplicate should go into packed audit trail :) 
+[ ] update readme.md screenshots
+[ ] try db constant connection
+[ ] do i delete things three time, one more redundantly
+[ ] standardise genhash to the already exiusting maindb.GetHashCode
+[ ] copy imported files
+
+[x] clean maindb and others of Comments
+[x] when marking at dupli gne a pack_auditrail
+[x] duplicate should go into packed audit trail :) 
+[x] astronaut does not pick the file version
+[x] remove commented out code
+[x] save error log separately
+[x] save constantly not only at the end
+[x] smart dEbug OUTPUTING function...
+[x] Selecting a witha  new name should ask if you wanna rename
 
 done:
 (next release)
@@ -280,20 +288,20 @@ dlcpackagedata
 	0.2.0.11 (22.08.2015) remove bug on auto import if original
 	0.2.0.12 (26.09.2015) If importing an original over a alternate the alternate flag should be set no the Alternate
 	0.2.0.13 (12.11.2015) Finally implement Arrangements and Tones and song Groups	
-	0.2.0.14 (20.06.2016) analyse acuracy on conversion to ps3 (1979,7army..)
+	0.2.0.14 (20.06.2016) analyse accuracy on conversion to ps3 (1979,7army..)
 	0.3 (10.05.2016) full release (anyone can download and use the tool..no bugs..and all un-implemented features disabled), repack wo bugs, edit screens functional
-	0.4 (21.11.2016) Major improvements	and features 
-	wip: 0.4.0.1 (03.06.2016) (90%) Remove getlastconversiondate from Duplicates as already coming from the arrangements table
-	wip: 0.4.0.2 (20.06.2016) (20%) has_section flag(to be tested with a song missing sections); 
-	wip: 0.4.1 (31.07.2016) (10%) HTML&Excel exports
-	tbr: 0.4.1.1 (15.07.2016) Implement a logic to properly read DLCManager renamed DLCs
-	tbr: 0.4.2 move Import DB to Main.DB or at least use an official data source as DB source to also be able to edit from the grid
-	tbr: 0.4.3 ?move Access code to project? or from hardcoded to views	
-	wip: 0.4.4 (03.10.2016) (10%) use parameterized SQL everywhere (&/ integrate template DB into project or a SQL DB)
+	0.4 (21.11.2016) Major improvements	and features
+	0.5 (15.03.2017) Implement a logic to properly read DLCManager manipulated DLCs
+	wip: 0.5.0.1 (03.06.2017) (90%) Remove getlastconversiondate from Duplicates as already coming from the arrangements table
+	wip: 0.5.0.2 (20.06.2017) (20%) has_section flag(to be tested with a song missing sections); 
+	wip: 0.5.1 (31.07.2017) (10%) HTML&Excel exports
+	tbr: 0.5.2 move Import DB to Main.DB or at least use an official data source as DB source to also be able to edit from the grid
+	tbr: 0.5.3 ?move Access code to project? or from hardcoded to views	
+	wip: 0.5.4 (03.10.2017) (10%) use parameterized SQL everywhere (&/ integrate template DB into project or a SQL DB)
 
 
 
-		# Date: 12.01.2016
+		# Date: 12.03.2017
 		# Document Name: Rocksmith DLC Management tool README
 						(fork of rocksmith-custom-song-toolkit)
 		# Document purpose: To describe the functionailities and the way to change, the NEW tab that enable MASS Manipulation of Rocksmith DLC Library
@@ -330,8 +338,8 @@ dlcpackagedata
 				+ Decompress all
 				+ Read(parse) the info file and populate a DB
 					+ If hash already exiting in DB don't populate Main DB
-					+If doesn't Exist check and then not/save it as New/Alternate
-					_ Add Audit trail DB for not importing old versions anymore
+					+ If doesn't Exist check and then not/save it as New/Alternate
+					+ Add Audit trail DB for not importing old versions anymore
 				_ (future)Build CDLC(single container) of official RS2012 songs
 				+ Determine if no ORIGINAL, RS1DLC, DLC, CDLC, Bass, Rhythm, Lead, Vocals, Sections
 
@@ -349,7 +357,7 @@ dlcpackagedata
 			+ File & Song Name standardization
 			Design description:
 				+ UI for Automated and Manual operations
-				- Any changed file can be easily reverted back to the original setting
+				+ Any changed file can be easily reverted back to the original setting
 				+ Repack the changed files
 
 		-3. Ability to watch out for new Downloaded DLC and repackage them with:
@@ -360,7 +368,7 @@ dlcpackagedata
 
 		+4. Ability to Repack all DLCs
 			-- ?Original files changed should also be packaged?
-				-- Ability to package songs by Groups(e.g. party songs, great bass, rating 10) :)
+				+ Ability to package songs by Groups(e.g. party songs, great bass, rating 10) :)
 
 
 		_5. Future features

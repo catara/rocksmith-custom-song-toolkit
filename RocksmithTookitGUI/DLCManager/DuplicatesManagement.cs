@@ -143,7 +143,7 @@ namespace RocksmithToolkitGUI.DLCManager
             sel += "LCASE(Song_Title_Sort) =LCASE(\"" + datas.SongInfo.SongDisplayNameSort + "\"))) OR LCASE(DLC_Name)=LCASE(\"" + datas.Name + "\");";
             //Get last inserted ID
             //rtxt_StatisticsOnReadDLCs.Text = sel + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-            DataSet dds = new DataSet(); dds = DLCManager.SelectFromDB("Main", sel);
+            DataSet dds = new DataSet(); dds = SelectFromDB("Main", sel);
             //OleDbDataAdapter dda = new OleDbDataAdapter(sel, con);
             //dda.Fill(dds, "Main");
             //dda.Dispose();
@@ -238,7 +238,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
             //Multitrack
             //txt_MultiTrackNew.Text = "";
-            if (Is_MultiTracks != filed.Is_Multitrack || MultiTrack_Versions != filed.MultiTrack_Version || isLive != filed.Is_Live || liveDetails != filed.Live_Details) { lbl_Multitrack.ForeColor = lbl_Reference.ForeColor; }
+             if (Is_MultiTracks != filed.Is_Multitrack || MultiTrack_Versions != filed.MultiTrack_Version || isLive != filed.Is_Live || liveDetails != filed.Live_Details) { lbl_Multitrack.ForeColor = lbl_Reference.ForeColor; }
             else if ((Is_MultiTracks == "" && "" == filed.Is_Multitrack) && (MultiTrack_Versions == "" && "" == filed.MultiTrack_Version) && (isLive == "" && "" == filed.Is_Live) && (liveDetails == "" && "" == filed.Live_Details)) lbl_Multitrack.Text = "";
             chbx_MultiTrackNew.Checked = Is_MultiTracks == "Yes" ? true : false;
             txt_MultiTrackNew.Enabled = Is_MultiTracks == "Yes" ? true : false;
@@ -311,9 +311,9 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_TuningNew.Text = tunnings;
             txt_TuningExisting.Text = filed.Tunning;
 
-            if (datas.PackageVersion != filed.Version) lbl_Version.ForeColor = lbl_Reference.ForeColor;
-            else if (datas.PackageVersion == "" && "" == filed.Version) lbl_Version.Text = "";
-            txt_VersionNew.Text = datas.PackageVersion;
+            if (datas.ToolkitInfo.PackageVersion != filed.Version) lbl_Version.ForeColor = lbl_Reference.ForeColor;
+            else if (datas.ToolkitInfo.PackageVersion == "" && "" == filed.Version) lbl_Version.Text = "";
+            txt_VersionNew.Text = datas.ToolkitInfo.PackageVersion;
             txt_VersionExisting.Text = filed.Version;
             txt_FileDateNew.Text = FileDate;
             txt_FileDateExisting.Text = filed.File_Creation_Date;
@@ -426,7 +426,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //        //MessageBox.Show("0");
             //        daa.Fill(ds, "Arrangements");
             //        daa.Dispose();
-            DataSet ds = new DataSet(); ds = DLCManager.SelectFromDB("Arrangements", "SELECT * FROM Arrangements WHERE CDLC_ID=" + filed.ID.ToString() + ";");
+            DataSet ds = new DataSet(); ds = SelectFromDB("Arrangements", "SELECT * FROM Arrangements WHERE CDLC_ID=" + filed.ID.ToString() + ";");
             var noOfRec = 0;
             //MessageBox.Show("0.1");
             noOfRec = ds.Tables[0].Rows.Count;//ds.Tables[0].Rows[0].ItemArray[0].ToString();
@@ -828,7 +828,7 @@ namespace RocksmithToolkitGUI.DLCManager
         //    //        OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
         //    //        dax.Fill(dus, "Main");
         //    //        dax.Dispose();
-        //    DataSet dus = new DataSet(); dus = DLCManager.SelectFromDB("Main", cmd);
+        //    DataSet dus = new DataSet(); dus = SelectFromDB("Main", cmd);
         //    var i = 0;
         //    //rtxt_StatisticsOnReadDLCs.Text += "\n  54= " +dus.Tables[0].Rows.Count;
         //    MaximumSize = dus.Tables[0].Rows.Count;
@@ -1065,8 +1065,8 @@ namespace RocksmithToolkitGUI.DLCManager
             //    {
             if (Asses == "Update")
             {
-                DLCManager.DeleteFromDB("Tones", "DELETE FROM Tones WHERE CDLC_ID=" + lbl_IDExisting.Text);
-                DLCManager.DeleteFromDB("Arrangements", "DELETE FROM Arrangements WHERE CDLC_ID=" + lbl_IDExisting.Text);
+                DeleteFromDB("Tones", "DELETE FROM Tones WHERE CDLC_ID=" + lbl_IDExisting.Text);
+                DeleteFromDB("Arrangements", "DELETE FROM Arrangements WHERE CDLC_ID=" + lbl_IDExisting.Text);
                 //OleDbDataAdapter dan = new OleDbDataAdapter("DELETE FROM Tones WHERE CDLC_ID=" + lbl_IDExisting.Text, cnn);
                 //dan.Fill(dss, "Cache");
                 //dan.Dispose();
@@ -1121,7 +1121,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //sel += "\", AlbumArt_Hash = \"" + (rbtn_CoverNew.Checked ? art_hash : filed.AlbumArt_Hash);
             sel += " WHERE ID=" + lbl_IDExisting.Text;
             //txt_Description.Text = sel;
-            DataSet ddr = new DataSet(); ddr = DLCManager.UpdateDB("Main", sel + ";");
+            DataSet ddr = new DataSet(); ddr = UpdateDB("Main", sel + ";");
             //OleDbDataAdapter dat = new OleDbDataAdapter(sel, cnn);
 
             //dat.Fill(ddr, "Main");

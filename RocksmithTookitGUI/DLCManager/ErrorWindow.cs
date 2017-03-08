@@ -28,7 +28,7 @@ namespace RocksmithToolkitGUI.DLCManager
             lbl_Message.Text = mss;
             IgnoreSong = false;
             StopImport = false;
-            ErrorWindow.ActiveForm.Text = Title;
+            //ErrorWindow.ActiveForm.Text = Title;
             btn_Close.Visible = stopimport;
             btn_StopImport.Visible = ignoresng;
             //MessageBox.Show("test0");

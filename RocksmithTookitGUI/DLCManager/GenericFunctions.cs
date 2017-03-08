@@ -1,7 +1,11 @@
-﻿using System;
+﻿using RocksmithToolkitLib.XmlRepository;
+using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.OleDb;
+using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -124,7 +128,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //dax.Fill(dus, "Main");
             //dax.Dispose();
             MainDBfields[] query = new MainDBfields[10000];
-            DataSet dus = new DataSet(); dus = DLCManager.SelectFromDB("Main", cmd);
+            DataSet dus = new DataSet(); dus = SelectFromDB("Main", cmd);
 
             var i = 0;
             MaximumSize = dus.Tables[0].Rows.Count;
@@ -233,7 +237,116 @@ namespace RocksmithToolkitGUI.DLCManager
             }
             return query;//files[10000];
         }
+        static public String GetHash(string filename) //static
+        {
+            //Generating the HASH code
+            var FileHash = "";
+            try
+            { if (File.Exists(filename))
+                using (FileStream fs = File.OpenRead(filename))
+                {
+                    SHA1 sha = new SHA1Managed();
+                    FileHash = BitConverter.ToString(sha.ComputeHash(fs));
+                    fs.Close();
+                }
+            }
+            catch (Exception ee){ }
+            return FileHash;
+        }
 
+        static public void DeleteFromDB(string DB, string slct)
+        {
+            var DB_Path = ConfigRepository.Instance()["dlcm_DBFolder"].ToString() + "\\Files.accdb;";// "";
+            using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                try
+                {
+                    DataSet dss = new DataSet();
+                    OleDbDataAdapter dan = new OleDbDataAdapter(slct, cnn);
+                    dan.Fill(dss, "DB");
+                    dan.Dispose();
+                }
+                catch (Exception ee)
+                {
+                    Console.WriteLine(ee.Message);
+                    ErrorWindow frm1 = new ErrorWindow("DB Open in Design Mode or Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error @Import", false, false);
+                    frm1.ShowDialog();
+                    return;
+                }
+        }
+
+        static public void InsertIntoDBwValues(string ftable, string ffields, string fvalues)
+        {
+            var DB_Path = ConfigRepository.Instance()["dlcm_DBFolder"].ToString() + "\\Files.accdb;";
+            //save import table to reference the hashcodes in future imports
+            using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            {
+                try
+                {
+                    DataSet dsm = new DataSet();
+                    string insertcmd;
+                    if (fvalues.ToLower().IndexOf("select") >= 0) insertcmd = "INSERT INTO " + ftable + " (" + ffields + ") " + fvalues + "";
+                    else insertcmd = "INSERT INTO " + ftable + " (" + ffields + ") VALUES (" + fvalues + ");";
+                    OleDbDataAdapter dab = new OleDbDataAdapter(insertcmd, cnb);
+                    dab.Fill(dsm, ftable);
+                    dab.Dispose();
+                }
+                catch (Exception ee)
+                {
+                    Console.WriteLine(ee.Message);
+                    ErrorWindow frm1 = new ErrorWindow(ee + "DB Open in Design Mode or Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734 ", "Error @Import", false, false);
+                    frm1.ShowDialog();
+                    return;
+                }
+            }
+
+        }
+
+        static public DataSet SelectFromDB(string ftable, string fcmds)
+        {
+            var DB_Path = ConfigRepository.Instance()["dlcm_DBFolder"].ToString() + "\\Files.accdb;";
+            DataSet dsm = new DataSet();
+            using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            {
+                try
+                {
+                    OleDbDataAdapter da = new OleDbDataAdapter(fcmds, cnb);
+                    da.Fill(dsm, ftable);
+                    da.Dispose();
+                    return dsm;
+                }
+                catch (Exception ee)
+                {
+                    Console.WriteLine(ee.Message);
+                    ErrorWindow frm1 = new ErrorWindow("DB Open in Design Mode or Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734 ", "Error @Import"+ee , false, false);
+                    frm1.ShowDialog();
+                    return dsm;
+                }
+            }
+        }
+
+        static public DataSet UpdateDB(string ftable, string fcmds)
+        {
+            var DB_Path = ConfigRepository.Instance()["dlcm_DBFolder"].ToString() + "\\Files.accdb;";
+            DataSet dsm = new DataSet();
+
+            OleDbConnection myConn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path);
+            OleDbDataAdapter myDataAdapter = new OleDbDataAdapter();
+            myDataAdapter.SelectCommand = new OleDbCommand(fcmds, myConn);
+            OleDbCommandBuilder custCB = new OleDbCommandBuilder(myDataAdapter);
+            try
+            {
+                myDataAdapter.Fill(dsm, ftable);
+                myConn.Close();
+                return dsm;
+            }
+            catch (Exception ee)
+            {
+                Console.WriteLine(ee.Message);
+                ErrorWindow frm1 = new ErrorWindow(ee + "DB Open in Design Mode or Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734 ", "Error @Import", false, false);
+                frm1.ShowDialog();
+                return dsm;
+            }
+        }
 
     }
 }

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26206.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RocksmithToolkitLibTest", "RocksmithToolkitLibTest\RocksmithToolkitLibTest.csproj", "{1940BBE3-640F-499C-80BC-2291585406D2}"
 EndProject
@@ -51,6 +51,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Third-party Apps", "Third-p
 		Third-party Apps\Wwise2013.tar.bz2 = Third-party Apps\Wwise2013.tar.bz2
 		Third-party Apps\Wwise2014.tar.bz2 = Third-party Apps\Wwise2014.tar.bz2
 		Third-party Apps\Wwise2015.tar.bz2 = Third-party Apps\Wwise2015.tar.bz2
+		RocksmithTookitGUI\bin\Debug\Wwise2016.tar.bz2 = RocksmithTookitGUI\bin\Debug\Wwise2016.tar.bz2
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tool", "tool", "{8BDB8985-CC6B-4479-A9A7-0489836D87CD}"

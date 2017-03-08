@@ -1,0 +1,73 @@
+078: Logging started during program initialization at 03/03/17 01:26:01
+078: EOF v1.8RC12 (3-1-2017)
+078: eof_load_config() entered
+078: set_default_config() entered
+078: eof_controller_read_button_names() entered
+078: eof_controller_read_button_names() entered
+078: 	Importing chord shape definitions
+078: eof_load_chord_shape_definitions() entered
+078: 	53 chord shape definitions imported
+078: eof_set_display_mode() entered
+078: eof_window_create() entered
+078: eof_window_create() entered
+078: eof_window_create() entered
+078: eof_window_create() entered
+078: eof_window_create() entered
+078: eof_load_data() entered
+078: eof_init_colors() entered
+078: eof_switch_out_callback() entered
+078: eof_switch_in_callback() entered
+078: eof_switch_out_callback() entered
+078: create_silence_sample() entered
+078: save_wav() entered
+078: save_wav_fp() entered
+078: eof_switch_in_callback() entered
+078: eof_switch_out_callback() entered
+078: eof_copy_file() entered
+078: eof_switch_in_callback() entered
+078: eof_switch_out_callback() entered
+078: eof_undo_reset() entered
+078: 	Initializing audio
+078: eof_mix_init() entered
+078: eof_switch_in_callback() entered
+078: 	Checking for crash recovery files
+078: 	Entering main program loop
+078: eof_emergency_stop_music() entered
+078: eof_emergency_stop_music() entered
+078: eof_emergency_stop_music() entered
+078: eof_emergency_stop_music() entered
+078: eof_emergency_stop_music() entered
+078: eof_destroy_data() entered
+078: eof_set_display_mode() entered
+078: eof_window_destroy() entered
+078: eof_window_destroy() entered
+078: eof_window_destroy() entered
+078: eof_window_destroy() entered
+078: eof_window_destroy() entered
+078: eof_window_create() entered
+078: eof_window_create() entered
+078: eof_window_create() entered
+078: eof_window_create() entered
+078: eof_window_create() entered
+078: eof_load_data() entered
+078: eof_emergency_stop_music() entered
+078: eof_emergency_stop_music() entered
+078: eof_emergency_stop_music() entered
+078: eof_restore_oggs_helper() entered
+078: eof_exit() entered
+078: eof_save_config() entered
+078: eof_controller_save_config() entered
+078: eof_controller_save_config() entered
+078: eof_mix_exit() entered
+078: eof_destroy_data() entered
+078: eof_destroy_ogg() entered
+078: 	Closing project
+078: eof_destroy_song() entered
+078: eof_destroy_waveform() entered
+078: eof_destroy_spectrogram() entered
+078: eof_window_destroy() entered
+078: eof_window_destroy() entered
+078: eof_window_destroy() entered
+078: eof_window_destroy() entered
+078: eof_window_destroy() entered
+078: Logging stopped during program completion at 03/03/17 01:27:54

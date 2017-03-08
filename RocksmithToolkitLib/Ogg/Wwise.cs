@@ -69,11 +69,11 @@ namespace RocksmithToolkitLib.Ogg
             if (wwiseVersion.StartsWith("2015.1"))
                 Selected = OggFile.WwiseVersion.Wwise2015;
             // add support for new versions here, code is expandable
-            //if (wwiseVersion.StartsWith("201x.x"))
-            //    Selected = OggFile.WwiseVersion.Wwise201x;
+            if (wwiseVersion.StartsWith("2016.2"))
+                Selected = OggFile.WwiseVersion.Wwise2016;
             if (Selected == OggFile.WwiseVersion.None)
                 throw new FileNotFoundException("You have no compatible version of Audiokinetic Wwise installed." +
-                Environment.NewLine + "Install Wwise v2013.2.x or v2014.1.x or even v2015.1.x series if you would like to use" +
+                Environment.NewLine + "Install Wwise v2013.2.x or v2014.1.x or v2015.1.x or even v2016.2.x series if you would like to use" +
                 Environment.NewLine + " the toolkit OGG/WAV audio to Wwise WEM audio auto convert features.");
 
             return pathWwiseCli;
@@ -90,6 +90,7 @@ namespace RocksmithToolkitLib.Ogg
                 case OggFile.WwiseVersion.Wwise2013:
                 case OggFile.WwiseVersion.Wwise2014:
                 case OggFile.WwiseVersion.Wwise2015:
+                case OggFile.WwiseVersion.Wwise2016:
                     ExtractTemplate(Path.Combine(appRootDir, Selected + ".tar.bz2"));
                     break;
                 default:

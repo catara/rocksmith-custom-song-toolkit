@@ -1,5 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Xml.Linq;
+using RocksmithToolkitLib.Extensions;
+using RocksmithToolkitLib.Sng;
 using RocksmithToolkitLib.Xml;
 using RocksmithToolkitLib.XmlRepository;
 
@@ -83,20 +89,22 @@ namespace RocksmithToolkitLib.DLCPackage
             return Frequency2Cents(frequency, out dummy);
         }
 
-        // TODO: apply before generate, like metronome arrangements does
         // only for RS2014
-        public static bool ApplyBassFix(Arrangement arr)
+        public static bool ApplyBassFix(Arrangement arr, bool saveTuningDefinition = false)
         {
-            if (arr.TuningPitch.Equals(220.0))
+            var debubMe = arr;
+
+            // get the latest comments from the XML
+            var xmlComments = Song2014.ReadXmlComments(arr.SongXml.File);
+            var isBassFixed = xmlComments.Any(xComment => xComment.ToString().Contains("Low Bass Tuning Fixed")) || arr.TuningPitch.Equals(220.0);
+
+            if (isBassFixed)
             {
-                // MessageBox.Show("This song is already at 220Hz pitch (bass fixed applied already?)", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
+                Debug.WriteLine("Low bass tuning may already be fixed: " + arr.SongXml.File);
+                // return false;
             }
 
-            Song2014 songXml = Song2014.LoadFromFile(arr.SongXml.File);
-            // Force 220Hz
-            arr.TuningPitch = 220.0;
-            songXml.CentOffset = "-1200.0";
+            // TODO: check guitar compatibility
             // Octave up for each string
             Int16[] strings = arr.TuningStrings.ToArray();
             for (int s = 0; s < strings.Length; s++)
@@ -105,22 +113,41 @@ namespace RocksmithToolkitLib.DLCPackage
                     strings[s] += 12;
             }
 
-            //Detect tuning
-            var tuning = TuningDefinitionRepository.Instance.Detect(new TuningStrings(strings), GameVersion.RS2014, true);
-            arr.Tuning = tuning.UIName = tuning.Name = String.Format("{0} Fixed", tuning.Name);// bastartd bass hack, huh?
-            arr.TuningStrings = songXml.Tuning = tuning.Tuning;
-            TuningDefinitionRepository.Instance.Save(true);
+            // update XML arrangement
+            Song2014 songXml = Song2014.LoadFromFile(arr.SongXml.File);
+            songXml.CentOffset = "-1200.0"; // Force 220Hz
+            songXml.Tuning = new TuningStrings(strings);
 
-            var xmlComments = Song2014.ReadXmlComments(arr.SongXml.File);
+            // bass tuning definition gets auto added/saved to repository
+            if (saveTuningDefinition)
+            {
+                var tuningDef = TuningDefinitionRepository.Instance.Detect(songXml.Tuning, GameVersion.RS2014, false);
+
+                if (!tuningDef.Name.Contains("Fixed"))
+                {
+                    var tuningUiName = String.Format("{0} Fixed", tuningDef.UIName);
+                    var bassTuning = new TuningDefinition
+                        {
+                            Custom = true,
+                            GameVersion = GameVersion.RS2014,
+                            Name = tuningUiName.Replace(" ", ""),
+                            Tuning = songXml.Tuning,
+                            UIName = tuningUiName
+                        };
+
+                    TuningDefinitionRepository.SaveUnique(bassTuning);
+                }
+            }
+
             using (var stream = File.Open(arr.SongXml.File, FileMode.Create))
                 songXml.Serialize(stream, true);
 
-            Song2014.WriteXmlComments(arr.SongXml.File, xmlComments);
+            // write xml comments back to fixed bass arrangement
+            if (!isBassFixed)
+                Song2014.WriteXmlComments(arr.SongXml.File, xmlComments, customComment: "Low Bass Tuning Fixed");
 
             return true;
         }
-
- 
 
     }
 }

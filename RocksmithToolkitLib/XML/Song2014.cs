@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Xml;
 using System.Xml.Linq;
@@ -273,6 +274,7 @@ namespace RocksmithToolkitLib.Xml
             PhraseProperties = SongPhraseProperty.Parse(sngData.PhraseExtraInfo);
             LinkedDiffs = new SongLinkedDiff[0];
             FretHandMuteTemplates = new SongFretHandMuteTemplate[0];
+
             //ddc
             TranscriptionTrack = TranscriptionTrack2014.GetDefault();
         }
@@ -362,6 +364,7 @@ namespace RocksmithToolkitLib.Xml
 
         public static Song2014 LoadFromFile(string xmlSongRS2014File)
         {
+            // TODO: initial default sbyte values that may not be present in XML
             using (var reader = new StreamReader(xmlSongRS2014File))
             {
                 return new XmlStreamingDeserializer<Song2014>(reader).Deserialize();
@@ -558,47 +561,111 @@ namespace RocksmithToolkitLib.Xml
 
     public class SongChordTemplate2014
     {
+        // added default attribute values
+        [XmlIgnore]
+        const sbyte NotSetup = unchecked((sbyte)-1);
+
         [XmlAttribute("displayName")]
         public string DisplayName { get; set; }
 
         [XmlAttribute("chordName")]
         public string ChordName { get; set; }
 
+        private sbyte _fret0 = NotSetup; // sets default value -1
         [XmlAttribute("fret0")]
-        public sbyte Fret0 { get; set; }
+        public sbyte Fret0
+        {
+            get { return _fret0; }
+            set { _fret0 = value; }
+        }
 
+        private sbyte _fret1 = NotSetup; // sets default value -1
         [XmlAttribute("fret1")]
-        public sbyte Fret1 { get; set; }
+        public sbyte Fret1
+        {
+            get { return _fret1; }
+            set { _fret1 = value; }
+        }
 
+        private sbyte _fret2 = NotSetup; // sets default value -1
         [XmlAttribute("fret2")]
-        public sbyte Fret2 { get; set; }
+        public sbyte Fret2
+        {
+            get { return _fret2; }
+            set { _fret2 = value; }
+        }
 
+        private sbyte _fret3 = NotSetup; // sets default value -1
         [XmlAttribute("fret3")]
-        public sbyte Fret3 { get; set; }
+        public sbyte Fret3
+        {
+            get { return _fret3; }
+            set { _fret3 = value; }
+        }
 
+        private sbyte _fret4 = NotSetup; // sets default value -1
         [XmlAttribute("fret4")]
-        public sbyte Fret4 { get; set; }
+        public sbyte Fret4
+        {
+            get { return _fret4; }
+            set { _fret4 = value; }
+        }
 
+        private sbyte _fret5 = NotSetup; // sets default value -1
         [XmlAttribute("fret5")]
-        public sbyte Fret5 { get; set; }
+        public sbyte Fret5
+        {
+            get { return _fret5; }
+            set { _fret5 = value; }
+        }
 
+        private sbyte _finger0 = NotSetup; // sets default value -1
         [XmlAttribute("finger0")]
-        public sbyte Finger0 { get; set; }
+        public sbyte Finger0
+        {
+            get { return _finger0; }
+            set { _finger0 = value; }
+        }
 
+        private sbyte _finger1 = NotSetup; // sets default value -1
         [XmlAttribute("finger1")]
-        public sbyte Finger1 { get; set; }
+        public sbyte Finger1
+        {
+            get { return _finger1; }
+            set { _finger1 = value; }
+        }
 
+        private sbyte _finger2 = NotSetup; // sets default value -1
         [XmlAttribute("finger2")]
-        public sbyte Finger2 { get; set; }
+        public sbyte Finger2
+        {
+            get { return _finger2; }
+            set { _finger2 = value; }
+        }
 
+        private sbyte _finger3 = NotSetup; // sets default value -1
         [XmlAttribute("finger3")]
-        public sbyte Finger3 { get; set; }
+        public sbyte Finger3
+        {
+            get { return _finger3; }
+            set { _finger3 = value; }
+        }
 
+        private sbyte _finger4 = NotSetup; // sets default value -1
         [XmlAttribute("finger4")]
-        public sbyte Finger4 { get; set; }
+        public sbyte Finger4
+        {
+            get { return _finger4; }
+            set { _finger4 = value; }
+        }
 
+        private sbyte _finger5 = NotSetup; // sets default value -1
         [XmlAttribute("finger5")]
-        public sbyte Finger5 { get; set; }
+        public sbyte Finger5
+        {
+            get { return _finger5; }
+            set { _finger5 = value; }
+        }
 
         [XmlIgnore]
         public int? ChordId { get; set; }
@@ -771,6 +838,10 @@ namespace RocksmithToolkitLib.Xml
 
     public class SongNote2014
     {
+        // added default attribute values
+        [XmlIgnore]
+        const sbyte NotSetup = unchecked((sbyte)-1);
+
         [XmlAttribute("time")]
         public Single Time { get; set; }
 
@@ -798,8 +869,13 @@ namespace RocksmithToolkitLib.Xml
         [XmlAttribute("ignore")]
         public Byte Ignore { get; set; }
 
+        private sbyte _leftHand = NotSetup; // sets default value -1
         [XmlAttribute("leftHand")]
-        public SByte LeftHand { get; set; }
+        public sbyte LeftHand
+        {
+            get { return _leftHand; }
+            set { _leftHand = value; }
+        }
 
         [XmlAttribute("mute")]
         public Int32 Mute { get; set; }
@@ -807,17 +883,32 @@ namespace RocksmithToolkitLib.Xml
         [XmlAttribute("palmMute")]
         public Byte PalmMute { get; set; }
 
+        private sbyte _pluck = NotSetup; // sets default value -1
         [XmlAttribute("pluck")]
-        public sbyte Pluck { get; set; }
+        public sbyte Pluck
+        {
+            get { return _pluck; }
+            set { _pluck = value; }
+        }
 
         [XmlAttribute("pullOff")]
         public Byte PullOff { get; set; }
 
+        private sbyte _slap = NotSetup; // sets default value -1
         [XmlAttribute("slap")]
-        public sbyte Slap { get; set; }
+        public sbyte Slap
+        {
+            get { return _slap; }
+            set { _slap = value; }
+        }
 
+        private sbyte _slideTo = NotSetup; // set default value -1
         [XmlAttribute("slideTo")]
-        public sbyte SlideTo { get; set; }
+        public sbyte SlideTo
+        {
+            get { return _slideTo; }
+            set { _slideTo = value; }
+        }
 
         [XmlAttribute("string")]
         public Byte String { get; set; }
@@ -834,11 +925,21 @@ namespace RocksmithToolkitLib.Xml
         [XmlAttribute("pickDirection")]
         public Int32 PickDirection { get; set; }
 
+        private Int32 _rightHand = NotSetup; // set default value -1
         [XmlAttribute("rightHand")]
-        public Int32 RightHand { get; set; }
+        public Int32 RightHand  // WHY isn't this sbyte like LeftHand?
+        {
+            get { return _rightHand; }
+            set { _rightHand = value; }
+        }
 
+        private sbyte _slideUnpitchTo = NotSetup; // set default value -1
         [XmlAttribute("slideUnpitchTo")]
-        public SByte SlideUnpitchTo { get; set; }
+        public sbyte SlideUnpitchTo
+        {
+            get { return _slideUnpitchTo; }
+            set { _slideUnpitchTo = value; }
+        }
 
         [XmlAttribute("tap")]
         public Byte Tap { get; set; }
@@ -1048,8 +1149,13 @@ namespace RocksmithToolkitLib.Xml
         [XmlAttribute("hopo")]
         public Int32 Hopo { get; set; }
 
+        private string _strum = "1";
         [XmlAttribute("strum")]
-        public string Strum { get; set; }
+        public string Strum
+        {
+            get { return _strum; }
+            set { _strum = value; }
+        }
 
         [XmlElement("chordNote")]
         public SongNote2014[] ChordNotes { get; set; }
@@ -1236,7 +1342,7 @@ namespace RocksmithToolkitLib.Xml
         internal static SongTone2014[] Parse(Sng2014HSL.ToneSection toneSection, Attributes2014 attr = null)
         {
             var tones = new SongTone2014[toneSection.Count];
-            
+
             for (var i = 0; i < toneSection.Count; i++)
             {
                 var tone = new SongTone2014

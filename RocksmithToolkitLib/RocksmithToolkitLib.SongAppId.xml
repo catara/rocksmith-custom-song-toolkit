@@ -45,6 +45,7 @@
   <SongAppId Version="RS2012" AppId="222054" Name="Pantera - Cowboys From Hell" />
   <SongAppId Version="RS2012" AppId="222055" Name="Pantera - Domination" />
   <SongAppId Version="RS2012" AppId="222056" Name="Pantera - Walk" />
+  <SongAppId Version="RS2012" AppId="222093" Name="Carry On Wayward Son - Kansas" />
   <SongAppId Version="RS2012" AppId="206150" Name="Pat Benetar - Hit Me With Your Best Shot" />
   <SongAppId Version="RS2012" AppId="222074" Name="Pearl Jam - Alive" />
   <SongAppId Version="RS2012" AppId="206111" Name="Pearl Jam - Black" />
@@ -84,7 +85,7 @@
   <SongAppId Version="RS2012" AppId="206098" Name="Vampire Weekend - Cousins" />
   <SongAppId Version="RS2012" AppId="206165" Name="Whitesnake - Is This Love" />
 
-  <!-- Rocksmith 2014 APP ID -->
+  <!-- Rocksmith 2014 APP ID, Name must contain a single '-' dash to be valid -->
   <SongAppId Version="RS2014" AppId="248750" Name="The Smashing Pumpkins - Cherub Rock" />
   <SongAppId Version="RS2014" AppId="248751" Name="Albert King - The Sky Is Crying" />
   <SongAppId Version="RS2014" AppId="248752" Name="Chicago - 25 Or 6 To 4" />
@@ -93,7 +94,7 @@
   <SongAppId Version="RS2014" AppId="248755" Name="The Hives - Hate To Say I Told You So" />
   <SongAppId Version="RS2014" AppId="248756" Name="Them Crooked Vultures - Mind Eraser, No Chaser" />
   <SongAppId Version="RS2014" AppId="248757" Name="Queens Of The Stone Age - My God Is The Sun" />
-  <SongAppId Version="RS2014" AppId="258341" Name="Rocksmith 2012 Disc Import Pack" />
+  <SongAppId Version="RS2014" AppId="258341" Name="Rocksmith 2012 - Disc Import Pack" />
   <SongAppId Version="RS2014" AppId="258342" Name="The Smashing Pumpkins - Today" />
   <SongAppId Version="RS2014" AppId="258343" Name="The Smashing Pumpkins - Bullet with Butterfly Wings" />
   <SongAppId Version="RS2014" AppId="258344" Name="The Smashing Pumpkins - 1979" />
@@ -698,4 +699,10 @@
   <SongAppId Version="RS2014" AppId="390448" Name="Sister Hazel - All For You" />
   <SongAppId Version="RS2014" AppId="390449" Name="Daryl Hall and John Oates - You Make My Dreams" />
   <SongAppId Version="RS2014" AppId="390450" Name="Valentine's Day Song Pack" />
+  <SongAppId Version="RS2014" AppId="492986" Name="Elvis Presley - Suspicious Minds" />
+  <SongAppId Version="RS2014" AppId="492987" Name="Jackson 5 - I Want You Back" />
+  <SongAppId Version="RS2014" AppId="492988" Name="Bob Marley &amp; The Wailers - Three Little Birds" />
+  <SongAppId Version="RS2014" AppId="492989" Name="Train - Drops of Jupiter" />
+  <SongAppId Version="RS2014" AppId="509630" Name="OutKast - Hey Ya!" />
+  <SongAppId Version="RS2014" AppId="509631" Name="FUN. - Some Nights" />
 </ArrayOfSongAppId>

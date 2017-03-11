@@ -101,7 +101,7 @@ namespace RocksmithToolkitGUI.DLCPackerUnpacker
 
             errMsg += "Would you like to open the destination path?  ";
 
-            if (MessageBox.Show(errMsg, MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+            if (MessageBox.Show(new Form { TopMost = true }, errMsg, MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                 Process.Start(destDirPath);
         }
 
@@ -293,7 +293,10 @@ namespace RocksmithToolkitGUI.DLCPackerUnpacker
                 srcPaths = ofd.FileNames;
             }
 
+            var fixLowBass = ConfigRepository.Instance().GetBoolean("creator_fixlowbass");
+
             ToggleUIControls(false);
+            errorsFound = new StringBuilder();
             GlobalExtension.UpdateProgress = this.pbUpdateProgress;
             GlobalExtension.CurrentOperationLabel = this.lblCurrentOperation;
             Thread.Sleep(100); // give Globals a chance to initialize
@@ -306,7 +309,18 @@ namespace RocksmithToolkitGUI.DLCPackerUnpacker
                 var packagePlatform = srcPath.GetPlatform();
                 var tmpPath = Path.GetTempPath();
                 Application.DoEvents();
-                var unpackedDir = Packer.Unpack(srcPath, tmpPath, overwriteSongXml: true, predefinedPlatform: packagePlatform);
+
+                string unpackedDir;
+                try
+                {
+                    unpackedDir = Packer.Unpack(srcPath, tmpPath, overwriteSongXml: true, predefinedPlatform: packagePlatform);
+                }
+                catch (Exception ex)
+                {
+                    errorsFound.AppendLine(String.Format("Error trying unpack file '{0}': {1}", Path.GetFileName(srcPath), ex.Message));
+                    continue;
+                }
+
                 destPath = Path.Combine(Path.GetDirectoryName(srcPaths[0]), Path.GetFileName(unpackedDir));
 
                 GlobalExtension.ShowProgress(String.Format("Loading '{0}' ...", Path.GetFileName(srcPath)), 40);
@@ -351,19 +365,14 @@ namespace RocksmithToolkitGUI.DLCPackerUnpacker
                     {
                         hasBass = true;
 
-                        if (arr.TuningStrings.String0 < -4 && arr.TuningPitch == 440.0)
+                        if (arr.TuningStrings.String0 < -4 && arr.TuningPitch != 220.0)
                         {
-                            if (!TuningFrequency.ApplyBassFix(arr))
+                            if (!TuningFrequency.ApplyBassFix(arr, fixLowBass))
                             {
                                 if (chkVerbose.Checked)
                                     MessageBox.Show(Path.GetFileName(srcPath) + "  " + Environment.NewLine + "bass arrangement is already at 220Hz pitch.  ", "Error ... Applying Low Bass Tuning Fix", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                                 alreadyFixed = true;
-                            }
-                            else
-                            {
-                                // write xml comments back to fixed bass arrangement
-                                Song2014.WriteXmlComments(arr.SongXml.File, arr.XmlComments, customComment: " Low Bass Tuning Fixed ");
                             }
                         }
                         else
@@ -439,7 +448,10 @@ namespace RocksmithToolkitGUI.DLCPackerUnpacker
 
             sw.Stop();
             GlobalExtension.ShowProgress("Finished applying low bass tuning fix (elapsed time): " + sw.Elapsed, 100);
-            PromptComplete(destPath);
+            if (String.IsNullOrEmpty(destPath))
+                destPath = srcPaths[0];
+
+            PromptComplete(destPath, errMsg: errorsFound.ToString());
             GlobalExtension.Dispose();
             ToggleUIControls(true);
         }

@@ -690,7 +690,7 @@ namespace RocksmithToolkitLib.Xml
         [XmlAttribute("finger5")]
         public Int32 Finger5 { get; set; }
     }
-
+ 
     //TBD
     [XmlType("fretHandMuteTemplate")]
     public class SongFretHandMuteTemplate
@@ -704,8 +704,13 @@ namespace RocksmithToolkitLib.Xml
         [XmlAttribute("time")]
         public Single Time { get; set; }
 
+        private Int16 _measure = -1; // sets default value -1
         [XmlAttribute("measure")]
-        public Int16 Measure { get; set; }
+        public Int16 Measure
+        {
+            get { return _measure; }
+            set { _measure = value; }
+        }
 
         internal static SongEbeat[] Parse(Sng2014HSL.BpmSection bpmSection)
         {

@@ -36,11 +36,9 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public Int32 Count { get; set; }
         public Bpm[] BPMs { get; set; }
 
-        public string[] _order = {
-			"Count",
-			"BPMs"
-		};
+        public string[] _order = {"Count","BPMs"};     
         public string[] order { get { return _order; } }
+  
         public void read(EndianBinaryReader r)
         {
             try
@@ -56,15 +54,13 @@ namespace RocksmithToolkitLib.Sng2014HSL
             }
             catch (Exception ex)
             {
-                // incomplete song information causes exceptions during conversion
+                // incomplete song information may cause exceptions during conversion
                 // such as, "End of Stream reached with 4 bytes left to read" 
-
-                throw new Exception("Corrupt CDLC ... Regenerating with Creator GUI may fix it." + Environment.NewLine +
-                    "Make sure the song information is complete and correct, including Song Year and Avg Tempo information. (HINT)" + Environment.NewLine +
-                    ex.Message + Environment.NewLine + Environment.NewLine);
+                throw new Exception("Corrupt CDLC ... Regenerating or Converting the original with Creator GUI may fix it." + Environment.NewLine + "Make sure the song information is complete and correct, including Song Year and Avg Tempo information. (HINT)" + Environment.NewLine + ex.Message + Environment.NewLine + Environment.NewLine);
             }
         }
     }
+
     public class Phrase
     {
         public Byte Solo { get; set; }

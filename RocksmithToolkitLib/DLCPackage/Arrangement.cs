@@ -6,11 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Xml.Linq;
-using System.Xml.Serialization;
-using Newtonsoft.Json;
-using RocksmithToolkitLib.DLCPackage;
 using RocksmithToolkitLib.DLCPackage.AggregateGraph;
-using RocksmithToolkitLib.DLCPackage.Manifest;
 using RocksmithToolkitLib.DLCPackage.Manifest2014;
 using RocksmithToolkitLib.Sng;
 using RocksmithToolkitLib.Sng2014HSL;
@@ -86,9 +82,11 @@ namespace RocksmithToolkitLib.DLCPackage
         /// </summary>
         /// <param name="attr"></param>
         /// <param name="xmlSongFile"></param>
-        /// <param name="ignoreMultitoneException"> </param>
-        public Arrangement(Attributes2014 attr, string xmlSongFile, bool ignoreMultitoneException = false)
+        /// <param name="fixMultiTone">If set to <c>true</c> fix low bass tuning </param>
+        /// <param name="fixLowBass">If set to <c>true</c> fix multitone exceptions </param>
+        public Arrangement(Attributes2014 attr, string xmlSongFile, bool fixMultiTone = false, bool fixLowBass = false)
         {
+            var isDirty = false;
             var song = Song2014.LoadFromFile(xmlSongFile);
 
             this.SongFile = new SongFile { File = "" };
@@ -113,12 +111,6 @@ namespace RocksmithToolkitLib.DLCPackage
             //Filter out showlights\vocals
             if (ArrangementType != ArrangementType.Guitar && ArrangementType != ArrangementType.Bass)
                 return;
-
-            //Tuning
-            DetectTuning(song);
-            this.CapoFret = attr.CapoFret;
-            if (attr.CentOffset != null)
-                this.TuningPitch = attr.CentOffset.Cents2Frequency();
 
             // save xml comments
             this.XmlComments = Song2014.ReadXmlComments(xmlSongFile);
@@ -185,36 +177,67 @@ namespace RocksmithToolkitLib.DLCPackage
                             }
                         }
 
+
                     // song.Tones => id, name, time to apply tone is missing when song.Tones == null
                     if (song.Tones == null && toneId > 0)
                     {
                         // convert the corrupt multitone to a single tone instead of throwing exception
-                        if (ignoreMultitoneException)
-                            song.Tones = new SongTone2014[0];  // => song.Tones.Length == 0
-                         else
-                            throw new InvalidDataException("Tone data is missing in CDLC and multitones will not change properly in game." + Environment.NewLine +
-                                                           "Please re-author XML arrangements in EOF and repair multitones name and time changes.");
+                        if (fixMultiTone)
+                        {
+                            song.Tones = new SongTone2014[0]; // => song.Tones.Length == 0
+                            isDirty = true;
+                        }
+                        else
+                            throw new InvalidDataException("Tone data is missing in CDLC and multitones will not change properly in game." + Environment.NewLine + "Please re-author XML arrangements in EOF and repair multitones name and time changes.");
                     }
                 }
 
                 // convert corrupt multitone to single tone and/or cleanup/repair old toolkit single tone
                 // ToneA in single tone ODLC is null/empty
-                if ((song.Tones == null || song.Tones.Length == 0) &&
-                    !String.IsNullOrEmpty(song.ToneA))
+                if ((song.Tones == null || song.Tones.Length == 0) && !String.IsNullOrEmpty(song.ToneA))
                 {
                     song.ToneA = song.ToneB = song.ToneC = String.Empty;
                     song.ToneBase = attr.Tone_Base;
                     this.ToneBase = attr.Tone_Base;
                     this.ToneA = this.ToneB = this.ToneC = String.Empty;
+                    isDirty = true;
                 }
 
-                // write changes to xml arrangement (w/o comments)
-                using (var stream = File.Open(xmlSongFile, FileMode.Create))
-                    song.Serialize(stream, true);
+                // set to standard tuning if no tuning exists
+                if (song.Tuning == null)
+                {
+                    song.Tuning = new TuningStrings { String0 = 0, String1 = 0, String2 = 0, String3 = 0, String4 = 0, String5 = 0 };
+                    isDirty = true;
+                }
 
-                // write comments back to xml now so they are available for debugging (used for Guitar and Bass)
-                Song2014.WriteXmlComments(xmlSongFile, XmlComments, writeNewVers: false);
+                this.TuningStrings = song.Tuning;
+
+                // NOTE: any serializing coverts abridged xml to standard xml arrangement
+                // so only serialize if necessary to fix errors
+                if (isDirty)
+                {
+                    using (var stream = File.Open(xmlSongFile, FileMode.Create))
+                        song.Serialize(stream, true);
+
+                    // write comments back to xml now so they are available for debugging (used for Guitar and Bass)
+                    Song2014.WriteXmlComments(xmlSongFile, XmlComments, writeNewVers: false);
+                }
+
+                // do a quick check/repair of low bass tuning, only for RS2014 bass arrangements
+                if (fixLowBass && song.Version == "7" && this.ArrangementType == ArrangementType.Bass)
+                    if (attr.Tuning.String0 < -4 && attr.CentOffset != -1200.0)
+                        if (TuningFrequency.ApplyBassFix(this, fixLowBass))
+                        {
+                            attr.CentOffset = -1200.0; // Force 220Hz
+                            song.Tuning = Song2014.LoadFromFile(xmlSongFile).Tuning;
+                        }
             }
+
+            // Set Final Tuning
+            DetectTuning(song);
+            this.CapoFret = attr.CapoFret;
+            if (attr.CentOffset != null)
+                this.TuningPitch = attr.CentOffset.Cents2Frequency();
         }
 
         /// <summary>

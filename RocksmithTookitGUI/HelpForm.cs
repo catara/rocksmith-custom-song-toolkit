@@ -21,7 +21,7 @@ namespace RocksmithToolkitGUI
             LinkLabel.Link link = new LinkLabel.Link();
             link.LinkData = @"https://www.rscustom.net";
             linkLabel1.Links.Add(link);
-            PopulateRichText();
+            PopulateRichText();            
         }
 
         public void PopulateRichText(Stream streamRtfNotes = null, bool wordWrap = true)
@@ -37,9 +37,6 @@ namespace RocksmithToolkitGUI
                 rtbNotes.LoadFile(streamRtfNotes, RichTextBoxStreamType.RichText);
             }
         }
-
-
-        #region Assembly Attribute Accessors
 
         public string AssemblyTitle
         {
@@ -57,7 +54,6 @@ namespace RocksmithToolkitGUI
                 return System.IO.Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().CodeBase);
             }
         }
-        #endregion
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {

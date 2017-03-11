@@ -40,15 +40,17 @@ namespace RocksmithToolkitGUI
                 LoadTemplate(args[0]);
 
             InitMainForm();
+            // comment out as necessary when issuing new release version
             ShowHelpForm();
         }
 
         private void InitMainForm()
         {
+            // edit version number in AssemblyInfo.cs for GUI, Lib and Updater
+            // edit the hard coded version number in PatchAssemblyVersion.ps1 used by AppVeyor
             // comment out as necessary when issuing new release version
-            // update (remove beta) from AssemblyInfo.cs in GUI, Lib and Updater
             this.Text = String.Format("Rocksmith Custom Song Toolkit (v{0} beta)", ToolkitVersion.version);
-            //this.Text = String.Format("Rocksmith Custom Song Toolkit (v{0})", ToolkitVersion.version);
+            // this.Text = String.Format("Rocksmith Custom Song Toolkit (v{0})", ToolkitVersion.version);
 
             if (Environment.OSVersion.Platform == PlatformID.MacOSX)
             {// Disable updates for Mac (speedup) -1.5 seconds here
@@ -103,26 +105,27 @@ namespace RocksmithToolkitGUI
 
         private void MainForm_KeyDown(object sender, KeyEventArgs e)
         {
+            // hidden easter eggs ...
             if (!e.Control || !e.Shift) return;
             switch (e.KeyCode)
             {
-                case Keys.O: //<< Open Template
-                    dlcPackageCreator1.dlcLoadButton_Click();
+                case Keys.O: //<< Load Template
+                    dlcPackageCreator1.btnTemplateLoad_Click();
                     break;
                 case Keys.S: //<< Save Template
                     dlcPackageCreator1.SaveTemplateFile();
                     break;
-                case Keys.I: //<< Import Template
-                    dlcPackageCreator1.dlcImportButton_Click();
+                case Keys.I: //<< Import Package
+                    dlcPackageCreator1.btnPackageImport_Click();
                     break;
                 case Keys.G: //<< Generate Package
-                    dlcPackageCreator1.dlcGenerateButton_Click();
+                    dlcPackageCreator1.btnPackageGenerate_Click();
                     break;
                 case Keys.A: //<< Add Arrangement
-                    dlcPackageCreator1.arrangementAddButton_Click();
+                    dlcPackageCreator1.btnArrangementAdd_Click();
                     break;
                 case Keys.T: //<< Add Tone
-                    dlcPackageCreator1.toneAddButton_Click();
+                    dlcPackageCreator1.btnToneAdd_Click();
                     break;
             }
         }
@@ -260,11 +263,11 @@ namespace RocksmithToolkitGUI
         }
         private void ShowHelpForm()
         {
-            Assembly assembly = Assembly.GetExecutingAssembly();          
+            Assembly assembly = Assembly.GetExecutingAssembly();
             using (Stream streamBetaInfo = assembly.GetManifestResourceStream("RocksmithToolkitGUI.Resources.BetaInfo.rtf"))
             {
                 using (var helpViewer = new HelpForm())
-                {
+                {                    
                     helpViewer.Text = String.Format("{0}", "TOOLKIT BETA RELEASE MESSAGE ...");
                     helpViewer.PopulateRichText(streamBetaInfo);
                     helpViewer.ShowDialog();

@@ -486,16 +486,16 @@ namespace RocksmithToolkitGUI.DLCManager
                 if (DataViewGrid.Rows[i].Cells["Has_Bonus_Arrangement"].Value.ToString() == "Yes") chbx_Bonus.Checked = true;
                 else chbx_Bonus.Checked = false;
                 chbx_Avail_Old.Checked = false;
-                if (DataViewGrid.Rows[i].Cells["Available_Old"].Value.ToString() == "Yes") { chbx_Avail_Old.Checked = true; btn_OldFolder.Enabled = true; chbx_CopyOld.Enabled = true; }
-                else { chbx_Avail_Old.Checked = false; btn_OldFolder.Enabled = false; chbx_CopyOld.Enabled = false; }
+                if (DataViewGrid.Rows[i].Cells["Available_Old"].Value.ToString() == "Yes") { chbx_Avail_Old.Checked = true; btn_OldFolder.Enabled = true; btn_CopyOld.Enabled = true; chbx_CopyOld.Enabled = true; }
+                else { chbx_Avail_Old.Checked = false; btn_OldFolder.Enabled = false; ; btn_CopyOld.Enabled = false; chbx_CopyOld.Enabled = false; }
                 chbx_Avail_Duplicate.Checked = false;
                 if (DataViewGrid.Rows[i].Cells["Available_Duplicate"].Value.ToString() == "Yes") { chbx_Avail_Duplicate.Checked = true; btn_DuplicateFolder.Enabled = true; }
                 else { chbx_Avail_Duplicate.Checked = false; btn_DuplicateFolder.Enabled = false; }
                 if (DataViewGrid.Rows[i].Cells["Has_Been_Corrected"].Value.ToString() == "Yes") chbx_Has_Been_Corrected.Checked = true;
                 else chbx_Has_Been_Corrected.Checked = false;
-                if (DataViewGrid.Rows[i].Cells["Is_Live"].Value.ToString() == "Yes") chbx_Is_Live.Checked = true;
-                else chbx_Is_Live.Checked = false;
-                tst = "Stop populating multivalue fields... "; timestamp = UpdateLog(timestamp, tst);
+                if (DataViewGrid.Rows[i].Cells["Is_Live"].Value.ToString() == "Yes") { chbx_Is_Live.Checked = true; txt_Live_Details.Enabled = true; }
+                else {chbx_Is_Live.Checked = false; txt_Live_Details.Enabled = true;            }
+            tst = "Stop populating multivalue fields... "; timestamp = UpdateLog(timestamp, tst);
 
                 //Lyrics
                 DataSet dsr = new DataSet(); dsr = SelectFromDB("Arrangements", "SELECT XMLFilePath FROM Arrangements WHERE ArrangementType=\"Vocal\" AND CDLC_ID=" + txt_ID.Text + ";");
@@ -2371,7 +2371,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     while ((line = fxml.ReadLine()) != null)
                     {
 
-                        if (line.Contains("Package Author:")) header += line + System.Environment.NewLine + "Package Author: " + filez.Author;
+                        if (line.Contains("Package Author:")) header += System.Environment.NewLine + "Package Author: " + filez.Author;
                         else header += line + System.Environment.NewLine;
                     }
                     fxml.Close();
@@ -3984,6 +3984,37 @@ namespace RocksmithToolkitGUI.DLCManager
         private void btn_RemoveAllRemoteSongs_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //pB_ReadDLCs.Value = 0;
+            //DataSet dhs = new DataSet(); var cmd = "SELECT * FROM Main WHERE ID IN (" + SearchCmd.Replace("*", "ID").Replace(";", "").Replace(SearchFields, "ID") + ")"; dhs = SelectFromDB("Main", cmd);
+            //noOfRec = dhs.Tables[0].Rows.Count;
+            //var dest = "";
+            //pB_ReadDLCs.Maximum = noOfRec;
+            //for (var i = 0; i <= noOfRec - 1; i++)
+            //{
+            var i = DataViewGrid.SelectedCells[0].RowIndex;
+            var filename = DataViewGrid.Rows[i].Cells["Original_FileName"].Value.ToString();
+            string filePath = TempPath + "\\0_old\\" + filename;
+                var dest = RocksmithDLCPath + "\\" + filename;
+                //var eef = dhs.Tables[0].Rows[i].ItemArray[87].T/*oString();*/
+                if (DataViewGrid.Rows[i].Cells["Available_Old"].Value.ToString() == "Yes")//OLd available
+                {
+                    try
+                    {
+                        File.Copy(filePath, dest, true);
+                    }
+                    catch (Exception ee)
+                    {
+                        Console.WriteLine(ee.Message);
+                        MessageBox.Show(filePath + "----" + dest + "Error at copy OLD " + ee);
+                    }
+                }
+            //    pB_ReadDLCs.Value++;
+            //}
+            MessageBox.Show("Old/Iinitially imported File Copied to " + RocksmithDLCPath + "\\");
         }
     }
 }

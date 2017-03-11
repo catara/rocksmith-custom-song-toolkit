@@ -102,6 +102,17 @@ Profiles should include also Format
 replace all does not exist
 come together lyrics
 each platform should have its own remote location
+delete moves to dupciates but does not add dupli if exists
+delete does not delete the actual files from repack_audittrail
+INCUBUS REDEFINE MULTI SHOWS IN RED AT DUPLICATION MANAGEMENT SCREEN
+year inconsitencies
+fix import current month
+why pack has that weird format
+when repacking groups add group at the beginning of song
+select incl groups has a small error
+standardization still w duplicates
+[x] live details should not be active if the song is not based on a live
+[x] Package Author:  Custom Song Creator Package Author: RepackedBy CATARA
 
 [x] clean maindb and others of Comments
 [x] when marking at dupli gne a pack_auditrail

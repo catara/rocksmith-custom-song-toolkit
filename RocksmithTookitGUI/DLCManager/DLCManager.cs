@@ -155,7 +155,7 @@ namespace RocksmithToolkitGUI.DLCManager
             InitializeComponent();
 
             //Enable Preview generation
-            if (ConfigRepository.Instance()["general_wwisepath"] == "") ConfigRepository.Instance()["general_wwisepath"] = "C:\\Program Files (x86)\\Audiokinetic\\Wwise Wwise v2015.1.9 build 5624";// 2016.2.1.5995";
+            if (ConfigRepository.Instance()["general_wwisepath"] == "") ConfigRepository.Instance()["general_wwisepath"] = "C:\\Program Files (x86)\\Audiokinetic\\Wwise v2015.1.9 build 5624";// 2016.2.1.5995";
             if (ConfigRepository.Instance()["general_rs2014path"] == "") ConfigRepository.Instance()["general_rs2014path"] = "C:\\Program Files (x86)\\Steam\\Apps\\common\\Rocksmith2014";
             if (ConfigRepository.Instance()["general_defaultauthor"] == "") ConfigRepository.Instance()["general_defaultauthor"] = "catara";
 
@@ -2553,7 +2553,8 @@ namespace RocksmithToolkitGUI.DLCManager
                                             wwisePath = Environment.GetEnvironmentVariable("WWISEROOT");
                                         if (wwisePath == "")
                                         {
-                                            ErrorWindow frm1 = new ErrorWindow("Please Install Wwise v2016.2.1.5995 with Authorithy binaries : " + Environment.NewLine + "A restart is required for the Conversion to WEM, process to be succesfull, else the errors can be captured through the Missing Files Query" + Environment.NewLine, "https://www.audiokinetic.com/download/", "Error at WEM Creation", true, true);
+                                            ErrorWindow frm1 = new ErrorWindow("Please Install Wwise v2015.1.9 build 5624 with Authorithy binaries : " + Environment.NewLine + "A restart is required for the Conversion to WEM, process to be succesfull, else the errors can be captured through the Missing Files Query" + Environment.NewLine, "https://www.audiokinetic.com/download/", "Error at WEM Creation", true, true);
+                                            //v2016.2.1.5995 is currently breaking PC cocnversion (not Ps3)
                                             frm1.ShowDialog();
                                             if (frm1.IgnoreSong) return "0";// break;
                                             if (frm1.StopImport) { j = 10; return "0"; }// break; }

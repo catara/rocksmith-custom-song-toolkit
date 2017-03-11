@@ -141,15 +141,16 @@ namespace RocksmithToolkitGUI.DLCManager
             else chbx_RemoveBassDD.Checked = false;
             if (ConfigRepository.Instance()["dlcm_UniqueID"] == "Yes") chbx_UniqueID.Checked = true;
             else chbx_UniqueID.Checked = false;
-            if (ConfigRepository.Instance()["dlcm_DupliGTrack"] == "Yes") chbx_DupliGTrack.Checked = true;
-            else chbx_DupliGTrack.Checked = false;
-            if (ConfigRepository.Instance()["dlcm_CopyOld"] == "Yes") chbx_CopyOld.Checked = true;
-            else chbx_CopyOld.Checked = false;
+            //For the moment don't save these statuses
+            //if (ConfigRepository.Instance()["dlcm_DupliGTrack"] == "Yes") chbx_DupliGTrack.Checked = true;
+            //else chbx_DupliGTrack.Checked = false;
+            //if (ConfigRepository.Instance()["dlcm_CopyOld"] == "Yes") chbx_CopyOld.Checked = true;
+            //else chbx_CopyOld.Checked = false;
+            //chbx_Last_Packed.Checked = ConfigRepository.Instance()["dlcm_Last_Packed"] == "Yes" ? true : false;
+
             if (ConfigRepository.Instance()["dlcm_andCopy"] == "Yes") chbx_Copy.Checked = true;
             else chbx_Copy.Checked = false;
             chbx_AutoSave.Checked = ConfigRepository.Instance()["dlcm_Autosave"] == "Yes" ? true : false;
-
-            chbx_Last_Packed.Checked = ConfigRepository.Instance()["dlcm_Last_Packed"] == "Yes" ? true : false;
             chbx_Replace.Checked = ConfigRepository.Instance()["dlcm_Replace"] == "Yes" ? true : false;
             tst = "Stop reading config data... "; timestamp = UpdateLog(timestamp, tst);
 
@@ -522,7 +523,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 chbx_Last_Packed.Enabled = false;
                 txt_CoundofPacked.Enabled = false;
                 cmb_Packed.Enabled = false;
-                if ((DataViewGrid.Rows[i].Cells["Remote_Path"].Value.ToString()) != "") if (File.Exists(txt_FTPPath.Text+ "\\" + DataViewGrid.Rows[i].Cells["Remote_Path"].Value.ToString())) chbx_Replace.Enabled = true;
+                if ((DataViewGrid.Rows[i].Cells["Remote_Path"].Value.ToString()) != "") if (File.Exists(txt_FTPPath.Text + "\\" + DataViewGrid.Rows[i].Cells["Remote_Path"].Value.ToString())) chbx_Replace.Enabled = true;
                 //Populate all Packed versionsd of the song
                 var tht = "SELECT PackPath+'\\'+FileName FROM Pack_AuditTrail WHERE DLC_ID=" + txt_ID.Text + " ORDER BY ID DESC;";
                 DataSet dvr = new DataSet(); dvr = SelectFromDB("Pack_AuditTrail", tht);
@@ -960,7 +961,7 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             var tst = "Start updatin Selected... "; timestamp = UpdateLog(timestamp, tst);
             var SearchCmd22 = "Select count(ID) " + SearchCmd.Substring(SearchCmd.IndexOf("FROM"), SearchCmd.IndexOf("ORDER BY") - SearchCmd.IndexOf("FROM")) + ";";//.Substring(0, SearchCmd.IndexOf("ORDER BY")) + ";");
-            DataSet dsz1 = new DataSet(); dsz1 = SelectFromDB("Main", SearchCmd22);
+            DataSet dsz1 = new DataSet(); dsz1 = SelectFromDB("Main", SearchCmd22.Replace(",\") ;", ");"));
             tst = "Stop gettin Total... " + SearchCmd22; timestamp = UpdateLog(timestamp, tst);
             var noOfRec = ""; if (dsz1.Tables[0].Rows.Count > 0) noOfRec = dsz1.Tables[0].Rows[0].ItemArray[0].ToString();
 
@@ -1165,6 +1166,9 @@ namespace RocksmithToolkitGUI.DLCManager
                 case "Main_Show_FilesMissingIssues":
                     SearchCmd += "FilesMissingIssues <> ''";
                     break;
+                case "Songs in Rocksmith Lib":
+                    SearchCmd += "Remote_Path <> ''";
+                    break;
                 case "Main_Find_FilesMissingIssues":
                     //cleanup before checks
                     var cmdupd = "UPDATE Main Set FilesMissingIssues =\"\"";
@@ -1303,270 +1307,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     SearchCmd += "ID IN (" + SearchCmd5 + ")";
                     break;
 
-                case "READ GAMEDATA":
-                    // Process the list of files found in the directory.
-                    var pathx = txt_FTPPath.Text;
-                    UpdateDB("Main", "Update Main Set Remote_Path = \"\";");
-                    string[] fileEntries = new string[10000];
-                    if (chbx_Format.Text == "PS3") fileEntries = GetFTPFiles(pathx);
-                    else try { fileEntries = Directory.GetFiles(pathx, "*"+(chbx_Format.Text == "PC" ?"_p.": chbx_Format.Text == "Mac" ? "_m.": chbx_Format.Text == "XBOX360"?"":"") +"psarc*", SearchOption.TopDirectoryOnly); }
-                        catch (Exception ee) { MessageBox.Show(ee.Message); }
-                    var z = 0;
-                    var found = "\"";
-                    var newn = "\"";
-                    var norec = 0;
-                    var t = "";
-                    var j = 0;
-                    if (fileEntries != null)
-                    {
-                        foreach (string fileName in fileEntries)
-                        {
-                            z++;
-                        }
-                        pB_ReadDLCs.Value = 0;
-                        pB_ReadDLCs.Step = 1;
-                        pB_ReadDLCs.Maximum = z;
-                        z = 0;
-                        var tst = "";
-                        //Get (and SAve each New File Name in the FilesMissingIssues filed)
-                        foreach (string fileName in fileEntries)
-                        {
-                            tst = Path.GetFileName(fileName);
-                            pB_ReadDLCs.Increment(50);
-                            pB_ReadDLCs.CreateGraphics().DrawString(tst, new Font("Arial", (float)7, FontStyle.Bold), Brushes.Blue, new PointF(1, pB_ReadDLCs.Height / 4));
-                            if (fileName == null) break;
-                            if (fileName.IndexOf("s1compatibility") > 0)
-                                continue;
-                            z++; Console.WriteLine("---" + fileName);
-
-                            DataSet dfs = new DataSet(); dfs = SelectFromDB("Pack_AuditTrail", "SELECT DLC_ID FROM Pack_AuditTrail WHERE FileName=\"" + Path.GetFileName(fileName) + "\";");
-                            norec = dfs.Tables[0].Rows.Count;
-                            if (norec == 0) newn += fileName + "\";\"";
-                            else
-                            {
-                                var dlcid = dfs.Tables[0].Rows[0].ItemArray[0].ToString();
-                                if (("-" + found).IndexOf(dlcid) <= 0)
-                                {
-                                    found += dfs.Tables[0].Rows[0].ItemArray[0].ToString() + "\";\"";
-                                    DataSet dxr = new DataSet(); dxr = UpdateDB("Main", "Update Main Set Remote_Path = \"" + Path.GetFileName(fileName) + "\" WHERE ID=" + dlcid + ";");
-                                }
-                                else
-                                {
-                                    var fn = "";
-                                    DataSet dfg = new DataSet(); dfg = SelectFromDB("Main", "SELECT ID,Remote_Path FROM Main WHERE ID=" + dlcid + ";");
-                                    DialogResult result1 = MessageBox.Show("Duplicate DLC has been found!\n\nChose which to imediatelly delete:\n\n1. " + dfg.Tables[0].Rows[0].ItemArray[1].ToString() + "\n2. " + Path.GetFileName(fileName) + "\n3. Ignore", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-                                    if (result1 == DialogResult.Yes)
-                                        fn = dfg.Tables[0].Rows[0].ItemArray[1].ToString();
-                                    else if (result1 == DialogResult.No) fn = Path.GetFileName(fileName);
-                                    //else;
-                                    if (result1 == DialogResult.No || result1 == DialogResult.Yes)
-                                    {
-                                        if (chbx_Format.Text == "PS3")
-                                        {
-                                            var FTPPath = "";
-                                            if (ConfigRepository.Instance()["dlcm_FTP"] == "EU") FTPPath = ConfigRepository.Instance()["dlcm_FTP1"];
-                                            else FTPPath = ConfigRepository.Instance()["dlcm_FTP2"];
-                                            MainDB.DeleteFTPFiles(fn, FTPPath);
-                                        }
-                                        else
-                                        {
-                                            try
-                                            {
-                                                if (!File.Exists(txt_FTPPath.Text + "\"" + fn))
-                                                    File.Move(txt_FTPPath.Text + "\\" + fn, txt_FTPPath.Text + "\\" + fn.Replace(".psarc", ".dupli"));
-                                            }
-                                            catch (Exception ex)
-                                            {
-                                                Console.Write(ex);
-                                            }
-
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        found = (found.Length > 2) ? found.Substring(0, found.Length - 2) : "";
-                        var newnn = (newn.Length > 2) ? newn.Substring(0, newn.Length - 2) : "";
-                        pB_ReadDLCs.Value = 0;
-                        pB_ReadDLCs.Maximum = newnn.Split(';').Length;
-                        if (newnn.Length > 0)
-                        {
-                            newn = "";
-                            for (j = 0; j < newnn.Split(';').Length; j++)
-                            {
-                                t = newnn.Split(';')[j].Replace("\"", "");
-
-                                //Copy to decompress/import/FTP
-                                var tt = "";
-                                tt = TempPath + "\\..\\" + t;
-                                string a = "ok";
-                                var platform = tt.GetPlatform();
-                                var platformTXT = tt.GetPlatform().platform.ToString();
-
-                                if (chbx_Format.Text == "PS3" || platformTXT == "PS3")
-                                {
-                                    Console.WriteLine(tt);
-                                    if (!File.Exists(tt))
-                                        if (tt.IndexOf("�") < 1 && tt.IndexOf("?") < 1 && tt.IndexOf("rs1compatibilitydisc.psarc.edat") < 1 && tt != null)
-                                            a = CopyFTPFile(Path.GetFileName(t), tt, txt_FTPPath.Text);
-                                    if (a == "ok")
-                                    {
-                                        var unpackedDir = "";
-                                        DLCPackageData info = null;
-                                        try
-                                        {
-                                            unpackedDir = Packer.Unpack(tt, TempPath, true, true, null);
-                                            info = DLCPackageData.LoadFromFolder(unpackedDir, platform);
-                                            var noreca = 0; var norecb = 0; var norecc = 0; var norecd = 0; var norece = 0; var norecf = 0;
-                                            //Generating the HASH code
-                                            var FileHash = "";
-                                            using (FileStream fs = File.OpenRead(tt))
-                                            {
-                                                SHA1 sha = new SHA1Managed();
-                                                FileHash = BitConverter.ToString(sha.ComputeHash(fs));
-                                                fs.Close();
-                                            }
-                                            DataSet dfa = new DataSet(); dfa = SelectFromDB("Main", "SELECT ID FROM Main WHERE DLC_Name=\"" + info.Name + "\";");//+ song.Identifier + "\";");
-                                            DataSet dfb = new DataSet(); dfb = SelectFromDB("Main", "SELECT ID FROM Main WHERE Song_Title=\"" + info.SongInfo.SongDisplayName + "\";"); //song.Title
-                                            DataSet dfc = new DataSet(); dfc = SelectFromDB("Pack_AuditTrail", "SELECT DLC_ID FROM Pack_AuditTrail WHERE FileHash=\"" + FileHash + "\";");
-                                            DataSet dff = new DataSet(); dff = SelectFromDB("Main", "SELECT ID FROM Main WHERE DLC_Name =\"" + info.Name.Substring(5, info.Name.Length - 5) + "\";");
-                                            DataSet dfd = new DataSet(); dfd = SelectFromDB("Main", "SELECT ID FROM Main WHERE DLC_Name like \"*" + info.Name.Substring(5, info.Name.Length - 5) + "*\";");
-                                            DataSet dfe = new DataSet(); dfe = SelectFromDB("Main", "SELECT ID FROM Main WHERE Song_Title like \"*" + info.SongInfo.SongDisplayName + "*\";");
-                                            noreca = dfa.Tables[0].Rows.Count; norecb = dfb.Tables[0].Rows.Count; norecc = dfc.Tables[0].Rows.Count; norecd = dfd.Tables[0].Rows.Count; norece = dfe.Tables[0].Rows.Count; norecf = dff.Tables[0].Rows.Count;
-                                            DataSet fxd = new DataSet();
-                                            if (norecc == 1) fxd = dfc;
-                                            else if (noreca == 1) fxd = dfa;
-                                            else if (norecb == 1) fxd = dfb;
-                                            else if (norecf == 1) fxd = dff;
-                                            else if (norecd == 1) fxd = dfd;
-                                            else if (norece == 1) fxd = dfe;
-                                            if (noreca == 1 || norecb == 1 || norecc == 1 || norecd == 1 || norece == 1 || norecf == 1)
-                                            {
-                                                System.IO.FileInfo fi = null; //calc file size
-                                                try { fi = new System.IO.FileInfo(tt); }
-                                                catch (Exception ee) { Console.Write(ee); ErrorWindow frm1 = new ErrorWindow("DB Open in Design Mode or Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error when opening the DB", false, false); }
-                                                if (("-" + found).IndexOf(fxd.Tables[0].Rows[0].ItemArray[0].ToString()) <= 0)
-                                                {
-                                                    var fnn = t;
-                                                    string insertcmdA = "CopyPath, PackPath, FileName, PackDate, FileHash, FileSize, DLC_ID, DLC_Name, Platform";
-                                                    var fnnon = Path.GetFileName(fnn);
-                                                    var packn = fnn.Substring(0, fnn.IndexOf(fnnon));
-                                                    var insertA = "\"" + t + "\",\"" + packn + "\",\"" + fnnon + "\",\"" + DateTime.Today.ToString() + "\",\"" + FileHash + "\",\"" + fi.Length + "\"," + fxd.Tables[0].Rows[0].ItemArray[0].ToString() + ",\"" + info.Name + "\",\"" + fnnon.GetPlatform().platform.ToString() + "\"";
-                                                    InsertIntoDBwValues("Pack_AuditTrail", insertcmdA, insertA);
-                                                    found += fxd.Tables[0].Rows[0].ItemArray[0].ToString() + "\";\"";
-                                                    DataSet dxr = new DataSet(); dxr = UpdateDB("Main", "Update Main Set Remote_Path = \"" + Path.GetFileName(t) + "\" WHERE ID=" + fxd.Tables[0].Rows[0].ItemArray[0].ToString() + ";");
-                                                    File.Delete(tt);
-                                                }
-                                                else
-                                                {
-                                                    var fn = "";
-                                                    DataSet dfg = new DataSet(); dfg = SelectFromDB("Main", "SELECT ID,Remote_Path FROM Main WHERE ID=" + fxd.Tables[0].Rows[0].ItemArray[0].ToString() + ";");
-                                                    DialogResult result1 = MessageBox.Show("Duplicate DLC has been found!\n\nChose which to imediatelly delete:\n\n1. " + dfg.Tables[0].Rows[0].ItemArray[1].ToString() + "2. " + Path.GetFileName(t) + "\n3. Ignore", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-                                                    if (result1 == DialogResult.Yes)
-                                                        fn = dfg.Tables[0].Rows[0].ItemArray[1].ToString();
-                                                    else if (result1 == DialogResult.No) fn = Path.GetFileName(t);
-                                                    if (result1 == DialogResult.No || result1 == DialogResult.Yes)
-                                                    {
-                                                        if (chbx_Format.Text == "PS3")
-                                                        {
-                                                            var FTPPath = "";
-                                                            if (ConfigRepository.Instance()["dlcm_FTP"] == "EU") FTPPath = ConfigRepository.Instance()["dlcm_FTP1"];
-                                                            else FTPPath = ConfigRepository.Instance()["dlcm_FTP2"];
-                                                            MainDB.DeleteFTPFiles(fn, FTPPath);
-                                                        }
-                                                        else
-                                                        {
-                                                            try
-                                                            {
-                                                                if (!File.Exists(txt_FTPPath.Text + "\"" + fn))
-                                                                    File.Move(txt_FTPPath.Text + "\"" + fn, txt_FTPPath.Text + "\"" + fn.Replace(".psarc", ".dupli"));
-                                                            }
-                                                            catch (Exception ex)
-                                                            {
-                                                                Console.Write(ex);
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                            else newn += t + "\";";
-                                            try { Directory.Delete(unpackedDir, true); } catch (Exception ee) { MessageBox.Show(ee.Message + unpackedDir); }
-                                        }
-                                        catch (Exception ee) { MessageBox.Show(ee.Message); newn += t + "\";\""; }
-                                        pB_ReadDLCs.Increment(1);
-                                    }
-                                    else newn += t + "\";\"";
-                                }
-                                else
-                                {
-                                    if (!File.Exists(tt)) try { File.Copy(t, tt, true); } catch (Exception ee) { MessageBox.Show(ee.Message); }
-
-                                    //quickly read PSARC for basic data
-                                    var browser = new PsarcBrowser(tt);
-                                    var songList = browser.GetSongList();
-                                    var toolkitInfo = browser.GetToolkitInfo();
-                                    foreach (var song in songList)
-                                    {
-                                        var noreca = 0; var norecb = 0; var norecc = 0; var norecd = 0; var norece = 0; var norecf = 0;
-                                        //Generating the HASH code
-                                        var FileHash = "";
-                                        using (FileStream fs = File.OpenRead(tt))
-                                        {
-                                            SHA1 sha = new SHA1Managed();
-                                            FileHash = BitConverter.ToString(sha.ComputeHash(fs));
-                                            fs.Close();
-                                        }
-                                        DataSet dfa = new DataSet(); dfa = SelectFromDB("Main", "SELECT ID FROM Main WHERE DLC_Name=\"" + song.Identifier + "\";");
-                                        DataSet dfb = new DataSet(); dfb = SelectFromDB("Main", "SELECT ID FROM Main WHERE Song_Title=\"" + song.Title + "\";");
-                                        DataSet dfc = new DataSet(); dfc = SelectFromDB("Pack_AuditTrail", "SELECT DLC_ID FROM Pack_AuditTrail WHERE FileHash=\"" + FileHash + "\";");
-                                        DataSet dff = new DataSet(); dff = SelectFromDB("Main", "SELECT ID FROM Main WHERE DLC_Name =\"" + song.Identifier.Substring(5, song.Identifier.Length - 5) + "\";");
-                                        DataSet dfd = new DataSet(); dfd = SelectFromDB("Main", "SELECT ID FROM Main WHERE DLC_Name like \"*" + song.Identifier.Substring(5, song.Identifier.Length - 5) + "*\";");
-                                        DataSet dfe = new DataSet(); dfe = SelectFromDB("Main", "SELECT ID FROM Main WHERE Song_Title like \"*" + song.Title + "*\";");
-                                        noreca = dfa.Tables[0].Rows.Count; norecb = dfb.Tables[0].Rows.Count; norecc = dfc.Tables[0].Rows.Count; norecd = dfd.Tables[0].Rows.Count; norece = dfe.Tables[0].Rows.Count; norecf = dff.Tables[0].Rows.Count;
-                                        DataSet fxd = new DataSet();
-                                        if (norecc == 1) fxd = dfc;
-                                        else if (noreca == 1) fxd = dfa;
-                                        else if (norecb == 1) fxd = dfb;
-                                        else if (norecf == 1) fxd = dff;
-                                        else if (norecd == 1) fxd = dfd;
-                                        else if (norece == 1) fxd = dfe;
-                                        if (noreca == 1 || norecb == 1 || norecc == 1 || norecd == 1 || norece == 1 || norecf == 1)
-                                        {
-                                            //calc file size
-                                            System.IO.FileInfo fi = null;
-                                            try { fi = new System.IO.FileInfo(tt); }
-                                            catch (System.IO.FileNotFoundException ee) { Console.Write(ee); ErrorWindow frm1 = new ErrorWindow("DB Open in Design Mode or Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error when opening the DB", false, false); frm1.ShowDialog(); }
-
-                                            var fnn = t;
-                                            string insertcmdA = "CopyPath, PackPath, FileName, PackDate, FileHash, FileSize, DLC_ID, DLC_Name, Platform";
-                                            var fnnon = Path.GetFileName(fnn);
-                                            var packn = fnn.Substring(0, fnn.IndexOf(fnnon));
-                                            var insertA = "\"" + t + "\",\"" + packn + "\",\"" + fnnon + "\",\"" + DateTime.Today.ToString() + "\",\"" + FileHash + "\",\"" + fi.Length + "\"," + fxd.Tables[0].Rows[0].ItemArray[0].ToString() + ",\"" + song.Identifier + "\",\"" + fnnon.GetPlatform().platform.ToString() + "\"";
-                                            InsertIntoDBwValues("Pack_AuditTrail", insertcmdA, insertA);
-                                            found += fxd.Tables[0].Rows[0].ItemArray[0].ToString() + "\";\"";
-                                            DataSet dxr = new DataSet(); UpdateDB("Main", "Update Main Set Remote_Path = \"" + Path.GetFileName(t) + "\" WHERE ID=" + fxd.Tables[0].Rows[0].ItemArray[0].ToString() + ";");
-                                            try { File.Delete(tt); } catch (Exception ee) { MessageBox.Show(ee.Message); }
-                                        }
-                                        else newn += t + "\";\"";
-                                    }
-                                    pB_ReadDLCs.Increment(1);
-                                }
-                            }
-                        }
-                        
-
-
-
-                        found = found.Substring(0, found.Length - 2) == ";" ? found.Substring(0, found.Length - 1) : found;
-                        newn = newn.Length > 2 ? newn.Substring(0, newn.Length - 2) : "";
-
-                        SearchCmd = "SELECT * FROM Main u WHERE ";
-                        SearchCmd += "CSTR(u.ID) IN (" + found.Replace(";", ",") + ") ORDER BY Remote_Path";
-                        chbx_Replace.Enabled = true;
-                    }
-                    else SearchCmd = "SELECT * FROM Main u";// 1 =1";
-                    MessageBox.Show("Song Recognized/Read " + found.Split(';').Length + "/" + z + " from " + txt_FTPPath.Text + "\n\nUnrecognized:\n" + newn);
-                    break;
+                //case "READ GAMEDATA":
                 default:
                     break;
             }
@@ -1910,9 +1651,8 @@ namespace RocksmithToolkitGUI.DLCManager
             if (chbx_Format.Text == "PS3" && chbx_Copy.Checked)
             {
                 source = h + (h.IndexOf("_ps3.psarc.edat") > 0 ? "" : "_ps3.psarc.edat");
+                var u = "";if (chbx_Replace.Checked && chbx_Replace.Enabled) u = DeleteFTPFiles(txt_RemotePath.Text, txt_FTPPath.Text);
                 var a = FTPFile(txt_FTPPath.Text, source, TempPath, SearchCmd);
-                var u = "";
-                if (chbx_Replace.Checked && chbx_Replace.Enabled) u = DeleteFTPFiles(txt_RemotePath.Text, txt_FTPPath.Text);
                 copyftp = " and " + a + " FTPed";
             }
             else if ((chbx_Format.Text == "PC" || chbx_Format.Text == "Mac") && chbx_Copy.Checked)
@@ -1921,9 +1661,11 @@ namespace RocksmithToolkitGUI.DLCManager
                 source = h + (h.IndexOf(platfrm + ".psarc") > 0 ? "" : platfrm + ".psarc");
                 dest = RocksmithDLCPath + source.Substring(source.LastIndexOf("\\"));
                 try
-                {
-                    File.Copy(source, dest, true);
+                {                  
+                    var fn = source.Substring(source.IndexOf("PC\\") + 3, source.Length - source.IndexOf("PS3\\") - 3);
+                    DataSet dxr = new DataSet(); dxr = UpdateDB("Main", "Update Main Set Remote_path = \"" + fn + "\";");
                     if (chbx_Replace.Checked && chbx_Replace.Enabled) File.Move(txt_RemotePath.Text, txt_RemotePath.Text.Replace(platfrm + ".psarc", ".old"));
+                    File.Copy(source, dest, true);
                 }
                 catch (Exception ee) { copyftp = "Not"; Console.Write(ee); }
                 copyftp = "and " + copyftp + " Copied";
@@ -2076,6 +1818,9 @@ namespace RocksmithToolkitGUI.DLCManager
                         s.Write(b, 0, b.Length);
                     }
                     FtpWebResponse ftpResp = (FtpWebResponse)request.GetResponse();
+                    DataSet dxr = new DataSet(); var fn = filen.Substring(filen.IndexOf("PS3\\") + 4, filen.Length - filen.IndexOf("PS3\\") - 4);
+                    dxr = UpdateDB("Main", "Update Main Set Remote_path = \""+ fn + "\";");
+
                     return "Truly ";
                 }
                 catch (Exception ee) { Console.Write(ee); return "Not "; }
@@ -3960,6 +3705,285 @@ namespace RocksmithToolkitGUI.DLCManager
 
             //var noOfSelRec = dsz2.Tables[0].Rows.Count;
             //DLCManager.LabelTextt = noOfSelRec.ToString() + "/" + noOfRec.ToString() + " records.";
+        }
+
+        private void btn_ReadGameLibrary_Click(object sender, EventArgs e)
+        {
+            // Process the list of files found in the directory.
+            var pathx = txt_FTPPath.Text;
+            UpdateDB("Main", "Update Main Set Remote_Path = \"\";");
+            string[] fileEntries = new string[10000];
+            if (chbx_Format.Text == "PS3") fileEntries = GetFTPFiles(pathx);
+            else try { fileEntries = Directory.GetFiles(pathx, "*" + (chbx_Format.Text == "PC" ? "_p." : chbx_Format.Text == "Mac" ? "_m." : chbx_Format.Text == "XBOX360" ? "" : "") + "psarc*", SearchOption.TopDirectoryOnly); }
+                catch (Exception ee) { MessageBox.Show(ee.Message); }
+            var z = 0;
+            var found = "\"";
+            var newn = "\"";
+            var norec = 0;
+            var t = "";
+            var j = 0;
+            if (fileEntries != null)
+            {
+                foreach (string fileName in fileEntries)
+                {
+                    z++;
+                }
+                pB_ReadDLCs.Value = 0;
+                pB_ReadDLCs.Step = 1;
+                pB_ReadDLCs.Maximum = z;
+                z = 0;
+                var tst = "";
+                //Get (and SAve each New File Name in the FilesMissingIssues filed)
+                foreach (string fileName in fileEntries)
+                {
+                    tst = Path.GetFileName(fileName);
+                    pB_ReadDLCs.Increment(50);
+                    pB_ReadDLCs.CreateGraphics().DrawString(tst, new Font("Arial", (float)7, FontStyle.Bold), Brushes.Blue, new PointF(1, pB_ReadDLCs.Height / 4));
+                    if (fileName == null) break;
+                    if (fileName.IndexOf("s1compatibility") > 0)
+                        continue;
+                    z++; Console.WriteLine("---" + fileName);
+
+                    DataSet dfs = new DataSet(); dfs = SelectFromDB("Pack_AuditTrail", "SELECT DLC_ID FROM Pack_AuditTrail WHERE FileName=\"" + Path.GetFileName(fileName) + "\";");
+                    norec = dfs.Tables[0].Rows.Count;
+                    if (norec == 0) newn += fileName + "\";\"";
+                    else
+                    {
+                        var dlcid = dfs.Tables[0].Rows[0].ItemArray[0].ToString();
+                        if (("-" + found).IndexOf(dlcid) <= 0)
+                        {
+                            found += dfs.Tables[0].Rows[0].ItemArray[0].ToString() + "\";\"";
+                            DataSet dxr = new DataSet(); dxr = UpdateDB("Main", "Update Main Set Remote_Path = \"" + Path.GetFileName(fileName) + "\" WHERE ID=" + dlcid + ";");
+                        }
+                        else
+                        {
+                            var fn = "";
+                            DataSet dfg = new DataSet(); dfg = SelectFromDB("Main", "SELECT ID,Remote_Path FROM Main WHERE ID=" + dlcid + ";");
+                            DialogResult result1 = MessageBox.Show("Duplicate DLC has been found!\n\nChose which to imediatelly delete:\n\n1. " + dfg.Tables[0].Rows[0].ItemArray[1].ToString() + "\n2. " + Path.GetFileName(fileName) + "\n3. Ignore", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                            if (result1 == DialogResult.Yes)
+                                fn = dfg.Tables[0].Rows[0].ItemArray[1].ToString();
+                            else if (result1 == DialogResult.No) fn = Path.GetFileName(fileName);
+                            //else;
+                            if (result1 == DialogResult.No || result1 == DialogResult.Yes)
+                            {
+                                if (chbx_Format.Text == "PS3")
+                                {
+                                    var FTPPath = "";
+                                    if (ConfigRepository.Instance()["dlcm_FTP"] == "EU") FTPPath = ConfigRepository.Instance()["dlcm_FTP1"];
+                                    else FTPPath = ConfigRepository.Instance()["dlcm_FTP2"];
+                                    MainDB.DeleteFTPFiles(fn, FTPPath);
+                                }
+                                else
+                                {
+                                    try
+                                    {
+                                        if (!File.Exists(txt_FTPPath.Text + "\"" + fn))
+                                            File.Move(txt_FTPPath.Text + "\\" + fn, txt_FTPPath.Text + "\\" + fn.Replace(".psarc", ".dupli"));
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        Console.Write(ex);
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                }
+                found = (found.Length > 2) ? found.Substring(0, found.Length - 2) : "";
+                var newnn = (newn.Length > 2) ? newn.Substring(0, newn.Length - 2) : "";
+                pB_ReadDLCs.Value = 0;
+                pB_ReadDLCs.Maximum = newnn.Split(';').Length;
+                if (newnn.Length > 0)
+                {
+                    newn = "";
+                    for (j = 0; j < newnn.Split(';').Length; j++)
+                    {
+                        t = newnn.Split(';')[j].Replace("\"", "");
+
+                        //Copy to decompress/import/FTP
+                        var tt = "";
+                        tt = TempPath + "\\..\\" + t;
+                        string a = "ok";
+                        var platform = tt.GetPlatform();
+                        var platformTXT = tt.GetPlatform().platform.ToString();
+
+                        if (chbx_Format.Text == "PS3" || platformTXT == "PS3")
+                        {
+                            Console.WriteLine(tt);
+                            if (!File.Exists(tt))
+                                if (tt.IndexOf("�") < 1 && tt.IndexOf("?") < 1 && tt.IndexOf("rs1compatibilitydisc.psarc.edat") < 1 && tt != null)
+                                    a = CopyFTPFile(Path.GetFileName(t), tt, txt_FTPPath.Text);
+                            if (a == "ok")
+                            {
+                                var unpackedDir = "";
+                                DLCPackageData info = null;
+                                try
+                                {
+                                    unpackedDir = Packer.Unpack(tt, TempPath, true, true, null);
+                                    info = DLCPackageData.LoadFromFolder(unpackedDir, platform);
+                                    var noreca = 0; var norecb = 0; var norecc = 0; var norecd = 0; var norece = 0; var norecf = 0;
+                                    //Generating the HASH code
+                                    var FileHash = "";
+                                    using (FileStream fs = File.OpenRead(tt))
+                                    {
+                                        SHA1 sha = new SHA1Managed();
+                                        FileHash = BitConverter.ToString(sha.ComputeHash(fs));
+                                        fs.Close();
+                                    }
+                                    DataSet dfa = new DataSet(); dfa = SelectFromDB("Main", "SELECT ID FROM Main WHERE DLC_Name=\"" + info.Name + "\";");//+ song.Identifier + "\";");
+                                    DataSet dfb = new DataSet(); dfb = SelectFromDB("Main", "SELECT ID FROM Main WHERE Song_Title=\"" + info.SongInfo.SongDisplayName + "\";"); //song.Title
+                                    DataSet dfc = new DataSet(); dfc = SelectFromDB("Pack_AuditTrail", "SELECT DLC_ID FROM Pack_AuditTrail WHERE FileHash=\"" + FileHash + "\";");
+                                    DataSet dff = new DataSet(); dff = SelectFromDB("Main", "SELECT ID FROM Main WHERE DLC_Name =\"" + info.Name.Substring(5, info.Name.Length - 5) + "\";");
+                                    DataSet dfd = new DataSet(); dfd = SelectFromDB("Main", "SELECT ID FROM Main WHERE DLC_Name like \"*" + info.Name.Substring(5, info.Name.Length - 5) + "*\";");
+                                    DataSet dfe = new DataSet(); dfe = SelectFromDB("Main", "SELECT ID FROM Main WHERE Song_Title like \"*" + info.SongInfo.SongDisplayName + "*\";");
+                                    noreca = dfa.Tables[0].Rows.Count; norecb = dfb.Tables[0].Rows.Count; norecc = dfc.Tables[0].Rows.Count; norecd = dfd.Tables[0].Rows.Count; norece = dfe.Tables[0].Rows.Count; norecf = dff.Tables[0].Rows.Count;
+                                    DataSet fxd = new DataSet();
+                                    if (norecc == 1) fxd = dfc;
+                                    else if (noreca == 1) fxd = dfa;
+                                    else if (norecb == 1) fxd = dfb;
+                                    else if (norecf == 1) fxd = dff;
+                                    else if (norecd == 1) fxd = dfd;
+                                    else if (norece == 1) fxd = dfe;
+                                    if (noreca == 1 || norecb == 1 || norecc == 1 || norecd == 1 || norece == 1 || norecf == 1)
+                                    {
+                                        System.IO.FileInfo fi = null; //calc file size
+                                        try { fi = new System.IO.FileInfo(tt); }
+                                        catch (Exception ee) { Console.Write(ee); ErrorWindow frm1 = new ErrorWindow("DB Open in Design Mode or Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error when opening the DB", false, false); }
+                                        if (("-" + found).IndexOf(fxd.Tables[0].Rows[0].ItemArray[0].ToString()) <= 0)
+                                        {
+                                            var fnn = t;
+                                            string insertcmdA = "CopyPath, PackPath, FileName, PackDate, FileHash, FileSize, DLC_ID, DLC_Name, Platform";
+                                            var fnnon = Path.GetFileName(fnn);
+                                            var packn = fnn.Substring(0, fnn.IndexOf(fnnon));
+                                            var insertA = "\"" + t + "\",\"" + packn + "\",\"" + fnnon + "\",\"" + DateTime.Today.ToString() + "\",\"" + FileHash + "\",\"" + fi.Length + "\"," + fxd.Tables[0].Rows[0].ItemArray[0].ToString() + ",\"" + info.Name + "\",\"" + fnnon.GetPlatform().platform.ToString() + "\"";
+                                            InsertIntoDBwValues("Pack_AuditTrail", insertcmdA, insertA);
+                                            found += fxd.Tables[0].Rows[0].ItemArray[0].ToString() + "\";\"";
+                                            DataSet dxr = new DataSet(); dxr = UpdateDB("Main", "Update Main Set Remote_Path = \"" + Path.GetFileName(t) + "\" WHERE ID=" + fxd.Tables[0].Rows[0].ItemArray[0].ToString() + ";");
+                                            File.Delete(tt);
+                                        }
+                                        else
+                                        {
+                                            var fn = "";
+                                            DataSet dfg = new DataSet(); dfg = SelectFromDB("Main", "SELECT ID,Remote_Path FROM Main WHERE ID=" + fxd.Tables[0].Rows[0].ItemArray[0].ToString() + ";");
+                                            DialogResult result1 = MessageBox.Show("Duplicate DLC has been found!\n\nChose which to imediatelly delete:\n\n1. " + dfg.Tables[0].Rows[0].ItemArray[1].ToString() + "2. " + Path.GetFileName(t) + "\n3. Ignore", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                                            if (result1 == DialogResult.Yes)
+                                                fn = dfg.Tables[0].Rows[0].ItemArray[1].ToString();
+                                            else if (result1 == DialogResult.No) fn = Path.GetFileName(t);
+                                            if (result1 == DialogResult.No || result1 == DialogResult.Yes)
+                                            {
+                                                if (chbx_Format.Text == "PS3")
+                                                {
+                                                    var FTPPath = "";
+                                                    if (ConfigRepository.Instance()["dlcm_FTP"] == "EU") FTPPath = ConfigRepository.Instance()["dlcm_FTP1"];
+                                                    else FTPPath = ConfigRepository.Instance()["dlcm_FTP2"];
+                                                    MainDB.DeleteFTPFiles(fn, FTPPath);
+                                                }
+                                                else
+                                                {
+                                                    try
+                                                    {
+                                                        if (!File.Exists(txt_FTPPath.Text + "\"" + fn))
+                                                            File.Move(txt_FTPPath.Text + "\"" + fn, txt_FTPPath.Text + "\"" + fn.Replace(".psarc", ".dupli"));
+                                                    }
+                                                    catch (Exception ex)
+                                                    {
+                                                        Console.Write(ex);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    else newn += t + "\";";
+                                    try { Directory.Delete(unpackedDir, true); } catch (Exception ee) { MessageBox.Show(ee.Message + unpackedDir); }
+                                }
+                                catch (Exception ee) { MessageBox.Show(ee.Message); newn += t + "\";\""; }
+                                pB_ReadDLCs.Increment(1);
+                            }
+                            else newn += t + "\";\"";
+                        }
+                        else
+                        {
+                            if (!File.Exists(tt)) try { File.Copy(t, tt, true); } catch (Exception ee) { MessageBox.Show(ee.Message); }
+
+                            //quickly read PSARC for basic data
+                            var browser = new PsarcBrowser(tt);
+                            var songList = browser.GetSongList();
+                            var toolkitInfo = browser.GetToolkitInfo();
+                            foreach (var song in songList)
+                            {
+                                var noreca = 0; var norecb = 0; var norecc = 0; var norecd = 0; var norece = 0; var norecf = 0;
+                                //Generating the HASH code
+                                var FileHash = "";
+                                using (FileStream fs = File.OpenRead(tt))
+                                {
+                                    SHA1 sha = new SHA1Managed();
+                                    FileHash = BitConverter.ToString(sha.ComputeHash(fs));
+                                    fs.Close();
+                                }
+                                DataSet dfa = new DataSet(); dfa = SelectFromDB("Main", "SELECT ID FROM Main WHERE DLC_Name=\"" + song.Identifier + "\";");
+                                DataSet dfb = new DataSet(); dfb = SelectFromDB("Main", "SELECT ID FROM Main WHERE Song_Title=\"" + song.Title + "\";");
+                                DataSet dfc = new DataSet(); dfc = SelectFromDB("Pack_AuditTrail", "SELECT DLC_ID FROM Pack_AuditTrail WHERE FileHash=\"" + FileHash + "\";");
+                                DataSet dff = new DataSet(); dff = SelectFromDB("Main", "SELECT ID FROM Main WHERE DLC_Name =\"" + song.Identifier.Substring(5, song.Identifier.Length - 5) + "\";");
+                                DataSet dfd = new DataSet(); dfd = SelectFromDB("Main", "SELECT ID FROM Main WHERE DLC_Name like \"*" + song.Identifier.Substring(5, song.Identifier.Length - 5) + "*\";");
+                                DataSet dfe = new DataSet(); dfe = SelectFromDB("Main", "SELECT ID FROM Main WHERE Song_Title like \"*" + song.Title + "*\";");
+                                noreca = dfa.Tables[0].Rows.Count; norecb = dfb.Tables[0].Rows.Count; norecc = dfc.Tables[0].Rows.Count; norecd = dfd.Tables[0].Rows.Count; norece = dfe.Tables[0].Rows.Count; norecf = dff.Tables[0].Rows.Count;
+                                DataSet fxd = new DataSet();
+                                if (norecc == 1) fxd = dfc;
+                                else if (noreca == 1) fxd = dfa;
+                                else if (norecb == 1) fxd = dfb;
+                                else if (norecf == 1) fxd = dff;
+                                else if (norecd == 1) fxd = dfd;
+                                else if (norece == 1) fxd = dfe;
+                                if (noreca == 1 || norecb == 1 || norecc == 1 || norecd == 1 || norece == 1 || norecf == 1)
+                                {
+                                    //calc file size
+                                    System.IO.FileInfo fi = null;
+                                    try { fi = new System.IO.FileInfo(tt); }
+                                    catch (System.IO.FileNotFoundException ee) { Console.Write(ee); ErrorWindow frm1 = new ErrorWindow("DB Open in Design Mode or Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error when opening the DB", false, false); frm1.ShowDialog(); }
+
+                                    var fnn = t;
+                                    string insertcmdA = "CopyPath, PackPath, FileName, PackDate, FileHash, FileSize, DLC_ID, DLC_Name, Platform";
+                                    var fnnon = Path.GetFileName(fnn);
+                                    var packn = fnn.Substring(0, fnn.IndexOf(fnnon));
+                                    var insertA = "\"" + t + "\",\"" + packn + "\",\"" + fnnon + "\",\"" + DateTime.Today.ToString() + "\",\"" + FileHash + "\",\"" + fi.Length + "\"," + fxd.Tables[0].Rows[0].ItemArray[0].ToString() + ",\"" + song.Identifier + "\",\"" + fnnon.GetPlatform().platform.ToString() + "\"";
+                                    InsertIntoDBwValues("Pack_AuditTrail", insertcmdA, insertA);
+                                    found += fxd.Tables[0].Rows[0].ItemArray[0].ToString() + "\";\"";
+                                    DataSet dxr = new DataSet(); UpdateDB("Main", "Update Main Set Remote_Path = \"" + Path.GetFileName(t) + "\" WHERE ID=" + fxd.Tables[0].Rows[0].ItemArray[0].ToString() + ";");
+                                    try { File.Delete(tt); } catch (Exception ee) { MessageBox.Show(ee.Message); }
+                                }
+                                else newn += t + "\";\"";
+                            }
+                            pB_ReadDLCs.Increment(1);
+                        }
+                    }
+                }
+
+
+
+
+                found = found.Substring(0, found.Length - 2) == ";" ? found.Substring(0, found.Length - 1) : found;
+                newn = newn.Length > 2 ? newn.Substring(0, newn.Length - 2) : "";
+
+                SearchCmd = "SELECT * FROM Main u WHERE ";
+                SearchCmd += "CSTR(u.ID) IN (" + found.Replace(";", ",") + ") ORDER BY Remote_Path";
+                chbx_Replace.Enabled = true;
+            }
+            else SearchCmd = "SELECT * FROM Main u";// 1 =1";
+            MessageBox.Show("Song Recognized/Read " + found.Split(';').Length + "/" + z + " from " + txt_FTPPath.Text + "\n\nUnrecognized:\n" + newn);
+            //break;
+
+        }
+
+        private void btn_RemoveRemoteSong_Click(object sender, EventArgs e)
+        {
+
+            DataSet dxr = new DataSet(); dxr = UpdateDB("Main", "Update Main Set Remote_path = \"\";");
+        }
+
+        private void btn_RemoveAllRemoteSongs_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

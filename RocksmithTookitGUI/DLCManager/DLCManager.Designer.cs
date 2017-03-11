@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DLCManager));
             this.cbx_Export = new System.Windows.Forms.ComboBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.btn_RefreshSelected = new System.Windows.Forms.Button();
             this.btm_GoRepack = new System.Windows.Forms.Button();
             this.lbl_NoRec2 = new System.Windows.Forms.Label();
             this.chbx_XBOX360 = new System.Windows.Forms.CheckBox();
@@ -112,7 +113,6 @@
             this.btn_ProfilesSave = new System.Windows.Forms.Button();
             this.btn_ProfileRemove = new System.Windows.Forms.Button();
             this.btn_OpenLogsFolder = new System.Windows.Forms.Button();
-            this.btn_RefreshSelected = new System.Windows.Forms.Button();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -152,6 +152,18 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(596, 138);
             this.panel2.TabIndex = 204;
+            // 
+            // btn_RefreshSelected
+            // 
+            this.btn_RefreshSelected.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_RefreshSelected.Location = new System.Drawing.Point(573, 68);
+            this.btn_RefreshSelected.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btn_RefreshSelected.Name = "btn_RefreshSelected";
+            this.btn_RefreshSelected.Size = new System.Drawing.Size(23, 29);
+            this.btn_RefreshSelected.TabIndex = 391;
+            this.btn_RefreshSelected.Text = "->";
+            this.btn_RefreshSelected.UseVisualStyleBackColor = true;
+            this.btn_RefreshSelected.Click += new System.EventHandler(this.btn_RefreshSelected_Click);
             // 
             // btm_GoRepack
             // 
@@ -306,6 +318,7 @@
             // chbx_Rebuild
             // 
             this.chbx_Rebuild.AutoSize = true;
+            this.chbx_Rebuild.Enabled = false;
             this.chbx_Rebuild.Location = new System.Drawing.Point(320, 83);
             this.chbx_Rebuild.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.chbx_Rebuild.Name = "chbx_Rebuild";
@@ -1375,18 +1388,6 @@
             this.btn_OpenLogsFolder.Text = "Logs Folder";
             this.btn_OpenLogsFolder.UseVisualStyleBackColor = false;
             this.btn_OpenLogsFolder.Click += new System.EventHandler(this.button1_Click_1);
-            // 
-            // btn_RefreshSelected
-            // 
-            this.btn_RefreshSelected.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_RefreshSelected.Location = new System.Drawing.Point(573, 68);
-            this.btn_RefreshSelected.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btn_RefreshSelected.Name = "btn_RefreshSelected";
-            this.btn_RefreshSelected.Size = new System.Drawing.Size(23, 29);
-            this.btn_RefreshSelected.TabIndex = 391;
-            this.btn_RefreshSelected.Text = "->";
-            this.btn_RefreshSelected.UseVisualStyleBackColor = true;
-            this.btn_RefreshSelected.Click += new System.EventHandler(this.btn_RefreshSelected_Click);
             // 
             // DLCManager
             // 

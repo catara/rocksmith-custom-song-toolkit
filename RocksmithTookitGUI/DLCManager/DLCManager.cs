@@ -155,7 +155,7 @@ namespace RocksmithToolkitGUI.DLCManager
             InitializeComponent();
 
             //Enable Preview generation
-            if (ConfigRepository.Instance()["general_wwisepath"] == "") ConfigRepository.Instance()["general_wwisepath"] = "C:\\Program Files (x86)\\Audiokinetic\\Wwise 2016.2.1.5995";
+            if (ConfigRepository.Instance()["general_wwisepath"] == "") ConfigRepository.Instance()["general_wwisepath"] = "C:\\Program Files (x86)\\Audiokinetic\\Wwise Wwise v2015.1.9 build 5624";// 2016.2.1.5995";
             if (ConfigRepository.Instance()["general_rs2014path"] == "") ConfigRepository.Instance()["general_rs2014path"] = "C:\\Program Files (x86)\\Steam\\Apps\\common\\Rocksmith2014";
             if (ConfigRepository.Instance()["general_defaultauthor"] == "") ConfigRepository.Instance()["general_defaultauthor"] = "catara";
 
@@ -4360,10 +4360,12 @@ namespace RocksmithToolkitGUI.DLCManager
                                     try
                                     {
                                         File.Copy(dlcSavePath + source, dest, true);
+                                        DataSet dxr = new DataSet(); dxr = UpdateDB("Main", "Update Main Set Remote_path = \"" + FN+source + "\";");
                                     }
                                     catch (Exception ee)
                                     {
                                         copyftp = "Not "; Console.Write(ee.Message);
+
                                     }
                                 copyftp = "and " + copyftp + "Copied";
                                 if (copyftp != "Not ") counttransf++;

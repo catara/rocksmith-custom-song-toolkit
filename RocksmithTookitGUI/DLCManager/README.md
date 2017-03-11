@@ -86,13 +86,22 @@
 [ ] search using ignition
 [ ] add convert multitone to single tone
 [ ] add bonus into in lyrics
-[ ] add time stamps in logging to improve performance
+
 [ ] duplicate lead to Rhythm
 [ ] update readme.md screenshots
 [ ] try db constant connection
 [ ] do i delete things three time, one more redundantly
 [ ] standardise genhash to the already exiusting maindb.GetHashCode
 [ ] copy imported files
+
+
+copied copie coipied
+overrite rename buttons
+mac fails at readout
+Profiles should include also Format
+replace all does not exist
+come together lyrics
+each platform should have its own remote location
 
 [x] clean maindb and others of Comments
 [x] when marking at dupli gne a pack_auditrail
@@ -103,7 +112,10 @@
 [x] save constantly not only at the end
 [x] smart dEbug OUTPUTING function...
 [x] Selecting a witha  new name should ask if you wanna rename
-
+[x] new filter...show loaded songs
+[x] initial
+[x] at copy save in remote location
+[ ] add time stamps in logging to improve performance
 done:
 (next release)
 [x] add cancelation button

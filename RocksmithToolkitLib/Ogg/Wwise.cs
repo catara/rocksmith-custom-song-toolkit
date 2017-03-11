@@ -54,12 +54,12 @@ namespace RocksmithToolkitLib.Ogg
                 wwisePath = Environment.GetEnvironmentVariable("WWISEROOT");
 
             if (String.IsNullOrEmpty(wwisePath))
-                throw new FileNotFoundException("Could not find Audiokinetic Wwise installation." + Environment.NewLine + "Please confirm that Wwise v2013.2.x v2014.1.x or 2015.1.x series is installed.");
+                throw new FileNotFoundException("Could not find Audiokinetic Wwise installation." + Environment.NewLine + "Please confirm that Wwise v2013.2.x v2014.1.x 2015.1.x or v2016.2.x series is installed.");
 
             Selected = OggFile.WwiseVersion.None;
             var pathWwiseCli = Directory.EnumerateFiles(wwisePath, "WwiseCLI.exe", SearchOption.AllDirectories).FirstOrDefault();
             if (pathWwiseCli == null)
-                throw new FileNotFoundException("Could not find WwiseCLI.exe in " + wwisePath + Environment.NewLine + "Please confirm that Wwise v2013.2.x v2014.1.x or 2015.1.x series is installed.");
+                throw new FileNotFoundException("Could not find WwiseCLI.exe in " + wwisePath + Environment.NewLine + "Please confirm that Wwise v2013.2.x v2014.1.x 2015.1.x or v2016.2.x series is installed.");
 
             var wwiseVersion = FileVersionInfo.GetVersionInfo(pathWwiseCli).ProductVersion;
             if (wwiseVersion.StartsWith("2013.2"))
@@ -70,7 +70,7 @@ namespace RocksmithToolkitLib.Ogg
                 Selected = OggFile.WwiseVersion.Wwise2015;
             // add support for new versions here, code is expandable
             if (wwiseVersion.StartsWith("2016.2"))
-                Selected = OggFile.WwiseVersion.Wwise2016;
+                //Selected = OggFile.WwiseVersion.Wwise2016;
             if (Selected == OggFile.WwiseVersion.None)
                 throw new FileNotFoundException("You have no compatible version of Audiokinetic Wwise installed." +
                 Environment.NewLine + "Install Wwise v2013.2.x or v2014.1.x or v2015.1.x or even v2016.2.x series if you would like to use" +
@@ -90,6 +90,8 @@ namespace RocksmithToolkitLib.Ogg
                 case OggFile.WwiseVersion.Wwise2013:
                 case OggFile.WwiseVersion.Wwise2014:
                 case OggFile.WwiseVersion.Wwise2015:
+                    ExtractTemplate(Path.Combine(appRootDir, Selected + ".tar.bz2"));
+                    break;
                 case OggFile.WwiseVersion.Wwise2016:
                     ExtractTemplate(Path.Combine(appRootDir, Selected + ".tar.bz2"));
                     break;

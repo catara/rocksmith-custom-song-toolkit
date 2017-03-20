@@ -940,7 +940,8 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void DataGridView1_CellLeave(object sender, DataGridViewCellEventArgs e)
         {
-            if (chbx_Autosave.Checked && SaveOK) SaveRecord();
+            if (chbx_Autosave.Checked && SaveOK) { SaveOK = true; SaveRecord(); }
+            else SaveOK = false;
         }
 
         private void btn_InvertAll_Click(object sender, EventArgs e)
@@ -1162,7 +1163,7 @@ namespace RocksmithToolkitGUI.DLCManager
         {   //alternative impl could use http://nvorbis.codeplex.com/documentation
             //txt_VLCPath.Text = "DLCManager\\VLCPortable.exe" + " ";
             var startInfo = new ProcessStartInfo();
-            startInfo.FileName = Path.Combine(AppWD, "oggdec.exe");
+            startInfo.FileName = Path.Combine(AppWD, "oggdec2.exe");
             startInfo.WorkingDirectory = AppWD;// Path.GetDirectoryName();
             var t = txt_AudioPreviewPath.Text;//"C:\\GitHub\\tmp\\0\\0_dlcpacks\\rs1compatibilitydisc_PS3\\audio\\ps3\\149627248.ogg";//txt_TempPath.Text + "\\0_dlcpacks\\rs1compatibilitydlc.psarc";
             startInfo.Arguments = String.Format(" -p {0}",
@@ -1203,7 +1204,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private void btn_PlayAudio_Click(object sender, EventArgs e)
         {
             var startInfo = new ProcessStartInfo();
-            startInfo.FileName = Path.Combine(AppWD, "oggdec.exe");
+            startInfo.FileName = Path.Combine(AppWD, "oggdec2.exe");
             startInfo.WorkingDirectory = AppWD;// Path.GetDirectoryName();
             var t = txt_AudioPath.Text;//"C:\\GitHub\\tmp\\0\\0_dlcpacks\\rs1compatibilitydisc_PS3\\audio\\ps3\\149627248.ogg";//txt_TempPath.Text + "\\0_dlcpacks\\rs1compatibilitydlc.psarc";
             startInfo.Arguments = String.Format(" -p {0}", t);
@@ -1390,7 +1391,7 @@ namespace RocksmithToolkitGUI.DLCManager
             var prev = DataGridView1.SelectedCells[0].RowIndex; //nud_RemoveSlide.Value;
             if (DataGridView1.Rows.Count == prev + 2) return;
 
-            SaveRecord();// ChangeRow();
+            //SaveRecord();// ChangeRow();
 
             int rowindex;
             DataGridViewRow row;
@@ -1411,7 +1412,7 @@ namespace RocksmithToolkitGUI.DLCManager
             var prev = DataGridView1.SelectedCells[0].RowIndex; //nud_RemoveSlide.Value;
             if (prev == 0) return;
 
-            SaveRecord();// ChangeRow();
+            //SaveRecord();// ChangeRow();
 
             int rowindex;
             DataGridViewRow row;

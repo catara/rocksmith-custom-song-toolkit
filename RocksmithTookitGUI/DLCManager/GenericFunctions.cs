@@ -111,6 +111,8 @@ namespace RocksmithToolkitGUI.DLCManager
             public string Is_Live { get; set; }
             public string Live_Details { get; set; }
             public string Remote_Path { get; set; }
+            public string audioBitrate { get; set; }
+            public string audioSampleRate { get; set; }
         }
 
         static public MainDBfields[] GetRecord_s(string cmd) //static
@@ -232,6 +234,8 @@ namespace RocksmithToolkitGUI.DLCManager
                 query[i].Is_Live = dataRow.ItemArray[91].ToString();
                 query[i].Live_Details = dataRow.ItemArray[92].ToString();
                 query[i].Remote_Path = dataRow.ItemArray[93].ToString();
+                query[i].audioBitrate = dataRow.ItemArray[94].ToString();
+                query[i].audioSampleRate = dataRow.ItemArray[95].ToString();
                 i++;
                 query[i] = new MainDBfields();
             }

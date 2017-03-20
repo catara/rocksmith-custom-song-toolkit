@@ -417,6 +417,7 @@
             "67. Duplicate manag. ignores Live Songs",
             "68. Import duplicates (hash)",
             "69. Delete obvious duplicates (hash) during dupli assesment",
+            "70. Compress AudioFiles to 128VBR 44kHz @Pack/Import if bigger than 136k",
             "98. @IMPORT>",
             "99. @Pack>"});
             this.chbx_Additional_Manipulations.Location = new System.Drawing.Point(16, 690);
@@ -1210,8 +1211,8 @@
             this.lbl_PreviewText.Name = "lbl_PreviewText";
             this.lbl_PreviewText.Size = new System.Drawing.Size(896, 67);
             this.lbl_PreviewText.TabIndex = 285;
-            this.lbl_PreviewText.Text = "File name Beta(0) CDLC/ORIG-Artist-Year-Album-TrackNo(if existing)-Title-TrackAva" +
-    "il(LRBVS)-Version_PltfrmSpcfcs.psarc";
+            this.lbl_PreviewText.Text = "FilenameBeta(0)CDLC/ORIG-Artist-Year-Album-TrackNo(ifexisting)-Title-TrackAvail(L" +
+    "RBVS)-Version_PltfrmSpcfcs.psarc";
             this.lbl_PreviewText.Visible = false;
             // 
             // btn_ApplyStandardization

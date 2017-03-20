@@ -148,8 +148,10 @@ namespace RocksmithToolkitLib.Ogg
             var sourcePreviewWave = String.Format("{0}_{1}.wav", dirFileName, "preview");
 
             File.Copy(sourcePath, Path.Combine(orgSfxDir, "Audio.wav"), true);
-            File.Copy(sourcePreviewWave, Path.Combine(orgSfxDir, "Audio_preview.wav"), true);
 
+            try {
+                File.Copy(sourcePreviewWave, Path.Combine(orgSfxDir, "Audio_preview.wav"), true);
+            } catch (Exception ex){ Console.Write(ex); } //bcapi
             return templateDir;
         }
 

@@ -664,7 +664,8 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btn_Close_Click(object sender, EventArgs e)
         {
-            if (chbx_AutoSave.Checked && txt_CDLC_ID.Text != "" && txt_CDLC_ID.Text != null) SaveRecord();
+            if (chbx_AutoSave.Checked && txt_CDLC_ID.Text != "" && txt_CDLC_ID.Text != null) { SaveOK = true; SaveRecord(); }
+            else SaveOK = false;
             this.Close();
         }
 
@@ -687,7 +688,8 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void DataGridView1_CellLeave(object sender, DataGridViewCellEventArgs e)
         {
-            if (chbx_AutoSave.Checked && SaveOK) SaveRecord();
+            if (chbx_AutoSave.Checked && SaveOK) { SaveOK = true; SaveRecord(); }
+            else SaveOK = false;
         }
 
         private void SaveRecord()

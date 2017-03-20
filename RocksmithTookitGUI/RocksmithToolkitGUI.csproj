@@ -425,17 +425,35 @@
     </EmbeddedResource>
     <None Include="DLCManager\external_tools\eof1.8RC12\AVDelay\guitar.ogg" />
     <None Include="DLCManager\external_tools\eof1.8RC12\AVDelay\notes.eof" />
-    <None Include="DLCManager\external_tools\eof1.8RC12\eof.cfg" />
-    <None Include="DLCManager\external_tools\eof1.8RC12\eof.dat" />
-    <None Include="DLCManager\external_tools\eof1.8RC12\EOF1.8RC12.lnk" />
+    <None Include="DLCManager\external_tools\eof1.8RC12\eof.cfg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DLCManager\external_tools\eof1.8RC12\eof.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DLCManager\external_tools\eof1.8RC12\EOF1.8RC12.lnk">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="DLCManager\external_tools\eof1.8RC12\Example Song\guitar.ogg" />
     <None Include="DLCManager\external_tools\eof1.8RC12\Example Song\notes.eof" />
-    <None Include="DLCManager\external_tools\eof1.8RC12\memwatch.log" />
-    <None Include="DLCManager\external_tools\eof1.8RC12\mp3toogg.bat" />
-    <None Include="DLCManager\external_tools\eof1.8RC12\percussion.dat" />
-    <None Include="DLCManager\external_tools\eof1.8RC12\second_of_silence.ogg" />
-    <None Include="DLCManager\external_tools\eof1.8RC12\tutorial.ogg" />
-    <None Include="DLCManager\external_tools\eof1.8RC12\wavtoogg.bat" />
+    <None Include="DLCManager\external_tools\eof1.8RC12\memwatch.log">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DLCManager\external_tools\eof1.8RC12\mp3toogg.bat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DLCManager\external_tools\eof1.8RC12\percussion.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DLCManager\external_tools\eof1.8RC12\second_of_silence.ogg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DLCManager\external_tools\eof1.8RC12\tutorial.ogg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DLCManager\external_tools\eof1.8RC12\wavtoogg.bat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="DLCManager\external_tools\NVorbis.bin.0.8.4\COPYING">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -693,26 +711,67 @@
     <Content Include="DLCManager\external_tools\bpr_v0.3\license.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\alleg44.dll" />
-    <Content Include="DLCManager\external_tools\eof1.8RC12\bgd.dll" />
-    <Content Include="DLCManager\external_tools\eof1.8RC12\check.wav" />
-    <Content Include="DLCManager\external_tools\eof1.8RC12\chordshapes.xml" />
-    <Content Include="DLCManager\external_tools\eof1.8RC12\eof.exe" />
-    <Content Include="DLCManager\external_tools\eof1.8RC12\eof.ico" />
-    <Content Include="DLCManager\external_tools\eof1.8RC12\EOF20.ico" />
-    <Content Include="DLCManager\external_tools\eof1.8RC12\eof_log.txt" />
-    <Content Include="DLCManager\external_tools\eof1.8RC12\GPL_license.txt" />
-    <Content Include="DLCManager\external_tools\eof1.8RC12\history.txt" />
-    <Content Include="DLCManager\external_tools\eof1.8RC12\keys.txt" />
-    <Content Include="DLCManager\external_tools\eof1.8RC12\lame.exe" />
-    <Content Include="DLCManager\external_tools\eof1.8RC12\libfftw3-3.dll" />
-    <Content Include="DLCManager\external_tools\eof1.8RC12\libgcc_s_dw2-1.dll" />
-    <Content Include="DLCManager\external_tools\eof1.8RC12\libogg-0.dll" />
-    <Content Include="DLCManager\external_tools\eof1.8RC12\libsamplerate-0.dll" />
-    <Content Include="DLCManager\external_tools\eof1.8RC12\libstdc++-6.dll" />
-    <Content Include="DLCManager\external_tools\eof1.8RC12\libvorbis-0.dll" />
-    <Content Include="DLCManager\external_tools\eof1.8RC12\libvorbisfile-3.dll" />
-    <Content Include="DLCManager\external_tools\eof1.8RC12\license.txt" />
+    <Content Include="DLCManager\external_tools\D3DX9_42.dll" />
+    <Content Include="DLCManager\external_tools\eof1.8RC12\alleg44.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\eof1.8RC12\bgd.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\eof1.8RC12\check.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\eof1.8RC12\chordshapes.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\eof1.8RC12\eof.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\eof1.8RC12\eof.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\eof1.8RC12\EOF20.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\eof1.8RC12\eof_log.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\eof1.8RC12\GPL_license.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\eof1.8RC12\history.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\eof1.8RC12\keys.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\eof1.8RC12\lame.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\eof1.8RC12\libfftw3-3.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\eof1.8RC12\libgcc_s_dw2-1.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\eof1.8RC12\libogg-0.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\eof1.8RC12\libsamplerate-0.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\eof1.8RC12\libstdc++-6.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\eof1.8RC12\libvorbis-0.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\eof1.8RC12\libvorbisfile-3.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\eof1.8RC12\license.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="DLCManager\external_tools\eof1.8RC12\manual\about.htm" />
     <Content Include="DLCManager\external_tools\eof1.8RC12\manual\cfgimage1.png" />
     <Content Include="DLCManager\external_tools\eof1.8RC12\manual\cfgimage2.png" />
@@ -734,8 +793,12 @@
     <Content Include="DLCManager\external_tools\eof1.8RC12\manual\license.htm" />
     <Content Include="DLCManager\external_tools\eof1.8RC12\manual\logo.png" />
     <Content Include="DLCManager\external_tools\eof1.8RC12\manual\problems.htm" />
-    <Content Include="DLCManager\external_tools\eof1.8RC12\oggCat.exe" />
-    <Content Include="DLCManager\external_tools\eof1.8RC12\oggenc2.exe" />
+    <Content Include="DLCManager\external_tools\eof1.8RC12\oggCat.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\eof1.8RC12\oggenc2.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="DLCManager\external_tools\eof1.8RC12\proguitartutorial\image1.png" />
     <Content Include="DLCManager\external_tools\eof1.8RC12\proguitartutorial\image10.png" />
     <Content Include="DLCManager\external_tools\eof1.8RC12\proguitartutorial\image2.png" />
@@ -748,7 +811,9 @@
     <Content Include="DLCManager\external_tools\eof1.8RC12\proguitartutorial\image9.png" />
     <Content Include="DLCManager\external_tools\eof1.8RC12\proguitartutorial\index.htm" />
     <Content Include="DLCManager\external_tools\eof1.8RC12\proguitartutorial\logo.png" />
-    <Content Include="DLCManager\external_tools\eof1.8RC12\readme.txt" />
+    <Content Include="DLCManager\external_tools\eof1.8RC12\readme.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="DLCManager\external_tools\eof1.8RC12\tutorial\image10.png" />
     <Content Include="DLCManager\external_tools\eof1.8RC12\tutorial\image11.png" />
     <Content Include="DLCManager\external_tools\eof1.8RC12\tutorial\image12.png" />
@@ -828,6 +893,12 @@
     <Content Include="DLCManager\external_tools\oggCut.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="DLCManager\external_tools\oggdec2.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\oggenc.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="DLCManager\external_tools\UltraStar Creator\bass.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -837,10 +908,16 @@
     <Content Include="DLCManager\external_tools\UltraStar Creator\changes.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="DLCManager\external_tools\UltraStar Creator\libgcc_s_dw2-1.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="DLCManager\external_tools\UltraStar Creator\libstdc++-6.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="DLCManager\external_tools\UltraStar Creator\libtag.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\UltraStar Creator\libwinpthread-1.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="DLCManager\external_tools\UltraStar Creator\mingwm10.dll">

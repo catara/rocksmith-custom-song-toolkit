@@ -128,17 +128,17 @@ namespace RocksmithToolkitGUI.DLCManager
             var noOfRec = dssx.Tables[0].Rows.Count;
             lbl_NoRec.Text = noOfRec.ToString() + " records.";
             //}
-            DataGridViewTextBoxColumn ID = new DataGridViewTextBoxColumn { DataPropertyName = "ID", HeaderText = "ID ", Width = 40 };
-            DataGridViewTextBoxColumn Suspect = new DataGridViewTextBoxColumn { DataPropertyName = "Suspect", HeaderText = "Suspect ", Width = 40 };
-            DataGridViewTextBoxColumn Artist = new DataGridViewTextBoxColumn { DataPropertyName = "Artist", HeaderText = "Artist ", Width = 185 };
-            DataGridViewTextBoxColumn Artist_Correction = new DataGridViewTextBoxColumn { DataPropertyName = "Artist_Correction", HeaderText = "Artist_Correction ", Width = 185 };
-            DataGridViewTextBoxColumn Album = new DataGridViewTextBoxColumn { DataPropertyName = "Album", HeaderText = "Album ", Width = 185 };
-            DataGridViewTextBoxColumn Album_Correction = new DataGridViewTextBoxColumn { DataPropertyName = "Album_Correction", HeaderText = "Album_Correction ", Width = 185 };
-            DataGridViewTextBoxColumn AlbumArt_Correction = new DataGridViewTextBoxColumn { DataPropertyName = "AlbumArt_Correction", HeaderText = "AlbumArt_Correction ", Width = 495 };
-            DataGridViewTextBoxColumn Comments = new DataGridViewTextBoxColumn { DataPropertyName = "Comments", HeaderText = "Comments ", Width = 195 };
-            DataGridViewTextBoxColumn Artist_Short = new DataGridViewTextBoxColumn { DataPropertyName = "Artist_Short", HeaderText = "Artist_Short ", Width = 185 };
-            DataGridViewTextBoxColumn Album_Short = new DataGridViewTextBoxColumn { DataPropertyName = "Album_Short", HeaderText = "Album_Short ", Width = 45 };
-            DataGridViewTextBoxColumn Year_Correction = new DataGridViewTextBoxColumn { DataPropertyName = "Year_Correction", HeaderText = "Year_Correction ", Width = 85 };
+            DataGridViewTextBoxColumn ID = new DataGridViewTextBoxColumn { DataPropertyName = "ID", HeaderText = "ID ", Width = 35 };
+            DataGridViewTextBoxColumn Suspect = new DataGridViewTextBoxColumn { DataPropertyName = "Suspect", HeaderText = "Suspect ", Width = 35 };
+            DataGridViewTextBoxColumn Artist = new DataGridViewTextBoxColumn { DataPropertyName = "Artist", HeaderText = "Artist ", Width = 135 };
+            DataGridViewTextBoxColumn Artist_Correction = new DataGridViewTextBoxColumn { DataPropertyName = "Artist_Correction", HeaderText = "Artist_Correction ", Width = 135 };
+            DataGridViewTextBoxColumn Album = new DataGridViewTextBoxColumn { DataPropertyName = "Album", HeaderText = "Album ", Width = 165 };
+            DataGridViewTextBoxColumn Album_Correction = new DataGridViewTextBoxColumn { DataPropertyName = "Album_Correction", HeaderText = "Album_Correction ", Width = 165 };
+            DataGridViewTextBoxColumn AlbumArt_Correction = new DataGridViewTextBoxColumn { DataPropertyName = "AlbumArt_Correction", HeaderText = "AlbumArt_Correction ", Width = 55 };
+            DataGridViewTextBoxColumn Comments = new DataGridViewTextBoxColumn { DataPropertyName = "Comments", HeaderText = "Comments ", Width = 45 };
+            DataGridViewTextBoxColumn Artist_Short = new DataGridViewTextBoxColumn { DataPropertyName = "Artist_Short", HeaderText = "Artist_Short ", Width = 75 };
+            DataGridViewTextBoxColumn Album_Short = new DataGridViewTextBoxColumn { DataPropertyName = "Album_Short", HeaderText = "Album_Short ", Width = 75 };
+            DataGridViewTextBoxColumn Year_Correction = new DataGridViewTextBoxColumn { DataPropertyName = "Year_Correction", HeaderText = "Year_Correction ", Width = 35 };
             DataGridView.AutoGenerateColumns = false;
 
             DataGridView.Columns.AddRange(new DataGridViewColumn[]
@@ -496,6 +496,8 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             //if (chbx_AutoSave.Checked && (txt_Artist_Correction.Text != "" || txt_Album_Correction.Text != "" || txt_Year_Correction.Text != "" || txt_AlbumArt_Correction.Text != "" || txt_Artist_Short.Text != "" || txt_Album_Short.Text != "")) SaveRecord();//&& SaveOK
             //else;
+            if (chbx_AutoSave.Checked && SaveOK) { SaveOK = true; SaveRecord(); }
+            else SaveOK = false;
         }
 
         private void SaveRecord()
@@ -511,13 +513,13 @@ namespace RocksmithToolkitGUI.DLCManager
             //if (txt_AlbumArt_Correction.Text != "")
             DataGridView1.Rows[i].Cells[6].Value = txt_AlbumArt_Correction.Text;
             //if (txt_Comments.Text != "")
-            DataGridView1.Rows[i].Cells[7].Value = txt_Artist_Short.Text;
-            //if (txt_Artist_Short.Text != "")
+            DataGridView1.Rows[i].Cells[7].Value = txt_Comments.Text;
             DataGridView1.Rows[i].Cells[8].Value = txt_Artist_Short.Text;
+            //if (txt_Artist_Short.Text != "")
+            DataGridView1.Rows[i].Cells[9].Value = txt_Artist_Short.Text;
             //if (txt_Year_Correction.Text != "")
-            DataGridView1.Rows[i].Cells[9].Value = txt_Year_Correction.Text;
-            //if (txt_Album_Short.Text != "")
             DataGridView1.Rows[i].Cells[10].Value = txt_Year_Correction.Text;
+            //if (txt_Album_Short.Text != "")
             //Main.EndEdit();
             ////IDataAdapter.Update(dataTable);
             //Main.ResetBindings(false);

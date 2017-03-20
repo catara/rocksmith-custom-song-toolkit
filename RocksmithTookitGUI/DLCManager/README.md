@@ -43,7 +43,7 @@
 ## ToDos/bugs:
 -+ small feature: when opening MainDB and detecting directory check runs, if next directory exists (give a change to empty the db then if possible)
 -+ small improv: add the proper lasconvdate in the db 
-  [ ]make sure its read only once when imported and not anzmore in the duplication management section
+  [ ]make sure its read only once when imported and not anymore in the duplication management section
 -+ vs blue maybe also yes blue (blu happens also when small 1bite amybe 2 diff in filesize
 [ ] feat:		 Alternate No for duplicates logic
 [ ] feat:		 Include Standardization names into duplication checks
@@ -86,34 +86,42 @@
 [ ] search using ignition
 [ ] add convert multitone to single tone
 [ ] add bonus into in lyrics
-
 [ ] duplicate lead to Rhythm
 [ ] update readme.md screenshots
 [ ] try db constant connection
 [ ] do i delete things three time, one more redundantly
 [ ] standardise genhash to the already exiusting maindb.GetHashCode
 [ ] copy imported files
-
-
-copied copie coipied
+copied copied copied
 overrite rename buttons
-mac fails at readout
+mac song gen errors at read dlc library
 Profiles should include also Format
 replace all does not exist
 come together lyrics
 each platform should have its own remote location
-delete moves to dupciates but does not add dupli if exists
+delete moves to duplicates but does not add dupli if exists
 delete does not delete the actual files from repack_audittrail
 INCUBUS REDEFINE MULTI SHOWS IN RED AT DUPLICATION MANAGEMENT SCREEN
-year inconsitencies
+year inconsitencies (check should show these as well)
 fix import current month
-why pack has that weird format
-when repacking groups add group at the beginning of song
+why packID has that weird format
 select incl groups has a small error
 standardization still w duplicates
+find missing..also should check folders
+mantra cannot be imported
+gasoline cannot be packed
+why songs get preview created at pack :)
+filename has [] covering artist name/album
+reset crashes maindb
+check originals vs original dbb
+why do i have duplciates on the ps3
+preview fails
+multiple repacks cannto happen
+
+[x] when repacking groups add group at the beginning of song
 [x] live details should not be active if the song is not based on a live
 [x] Package Author:  Custom Song Creator Package Author: RepackedBy CATARA
-
+[x] remote still doesnt behave like other readonly boxes
 [x] clean maindb and others of Comments
 [x] when marking at dupli gne a pack_auditrail
 [x] duplicate should go into packed audit trail :) 
@@ -126,7 +134,7 @@ standardization still w duplicates
 [x] new filter...show loaded songs
 [x] initial
 [x] at copy save in remote location
-[ ] add time stamps in logging to improve performance
+[x] add time stamps in logging to improve performance
 done:
 (next release)
 [x] add cancelation button
@@ -435,6 +443,9 @@ of this folder should be directed to the respective developer.
 
 		- oggdec.exe - play ogg
 		http://www.rarewares.org/ogg-oggdec.php
+
+		- oggdec.exe - change bitrate of ogg to 128 aw any orig
+		http://www.rarewares.org/ogg-oggenc.php
 
 		- edattool.exe -- encript PS3 Retail DLCs packs
 		http://www.aldostools.org/ps3tools.html

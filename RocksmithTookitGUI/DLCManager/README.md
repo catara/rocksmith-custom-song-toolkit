@@ -100,7 +100,7 @@ replace all does not exist
 come together lyrics
 each platform should have its own remote location
 delete moves to duplicates but does not add dupli if exists
-delete does not delete the actual files from repack_audittrail
+delete does not delete the actual record from repack_audittrail
 INCUBUS REDEFINE MULTI SHOWS IN RED AT DUPLICATION MANAGEMENT SCREEN
 year inconsitencies (check should show these as well)
 fix import current month
@@ -111,12 +111,22 @@ find missing..also should check folders
 mantra cannot be imported
 gasoline cannot be packed
 why songs get preview created at pack :)
-filename has [] covering artist name/album
-reset crashes maindb
+[x] filename has [] covering artist name/album ...no [] separator for FN
+[x] reset crashes maindb..not realy
 check originals vs original dbb
 why do i have duplciates on the ps3
-preview fails
+[x] preview fails
 multiple repacks cannto happen
+[x] convert to 44100... no need as no space is gained
+[x] some songs are messed up on ps3
+log is not last come first entry
+remote path is fedup
+check if filename is the same
+add comment beginning of song in lyrics
+has track no even when 0
+has author mostly yes
+some preview hashtags are blank
+bitrate to cpress maybe a config
 
 [x] when repacking groups add group at the beginning of song
 [x] live details should not be active if the song is not based on a live
@@ -203,7 +213,7 @@ done:
 [ ] usa peaches long naming fails at packing (shortes folder the random id)
   [ ] ps3 long names sogs(149char)(cannot be read)
   [ ] after selecting deselect incl. Beta
-[ ] update to wise 2015 (messages&testing)
+[x] update to wise 2015 (messages&testing)
 [ ] add simple logic to add sections
 	[ ] check and fix the Sections flag
 	[+] add sections (bored to death; Renabled BPR program)

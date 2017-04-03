@@ -622,44 +622,47 @@ namespace RocksmithToolkitGUI.DLCManager
             //}
 
             int i;
-            i = DataGridView1.SelectedCells[0].RowIndex;
-            txt_ID.Text = DataGridView1.Rows[i].Cells["ID"].Value.ToString();
-            txt_Arrangement_Name.Text = DataGridView1.Rows[i].Cells["Arrangement_Name"].Value.ToString();
-            txt_CDLC_ID.Text = DataGridView1.Rows[i].Cells["CDLC_ID"].Value.ToString();
-            txt_SNGFilePath.Text = DataGridView1.Rows[i].Cells["SNGFilePath"].Value.ToString();
-            txt_XMLFilePath.Text = DataGridView1.Rows[i].Cells["XMLFilePath"].Value.ToString();
-            txt_ScrollSpeed.Text = DataGridView1.Rows[i].Cells["ScrollSpeed"].Value.ToString();
-            chbx_Tunning.Text = DataGridView1.Rows[i].Cells["Tunning"].Value.ToString();
-            txt_Rating.Text = DataGridView1.Rows[i].Cells["Rating"].Value.ToString();
-            txt_TuningPitch.Text = DataGridView1.Rows[i].Cells["TuningPitch"].Value.ToString();
-            chbx_ToneBase.Text = DataGridView1.Rows[i].Cells["ToneBase"].Value.ToString();
-            //txt_Idd.Text = DataGridView1.Rows[i].Cells[15].Value.ToString();
-            txt_ArrangementType.Text = DataGridView1.Rows[i].Cells["ArrangementType"].Value.ToString();
-            txt_String0.Text = DataGridView1.Rows[i].Cells["String0"].Value.ToString();
-            txt_String1.Text = DataGridView1.Rows[i].Cells["String1"].Value.ToString();
-            txt_String2.Text = DataGridView1.Rows[i].Cells["String2"].Value.ToString();
-            txt_String3.Text = DataGridView1.Rows[i].Cells["String3"].Value.ToString();
-            txt_String4.Text = DataGridView1.Rows[i].Cells["String4"].Value.ToString();
-            txt_String5.Text = DataGridView1.Rows[i].Cells["String5"].Value.ToString();
-            chbx_BassPicking.Text = DataGridView1.Rows[i].Cells["PluckedType"].Value.ToString();
-            txt_RouteMask.Text = DataGridView1.Rows[i].Cells["RouteMask"].Value.ToString();
-            chbx_ToneA.Text = DataGridView1.Rows[i].Cells["ToneA"].Value.ToString();
-            chbx_ToneB.Text = DataGridView1.Rows[i].Cells["ToneB"].Value.ToString();
-            chbx_ToneC.Text = DataGridView1.Rows[i].Cells["ToneC"].Value.ToString();
-            chbx_ToneD.Text = DataGridView1.Rows[i].Cells["ToneD"].Value.ToString();
-            txt_lastConversionDateTime.Text = DataGridView1.Rows[i].Cells["lastConversionDateTime"].Value.ToString();
-            txt_Description.Text = DataGridView1.Rows[i].Cells["Comments"].Value.ToString();
+            if (DataGridView1.SelectedCells.Count >0)
+            {
+                i = DataGridView1.SelectedCells[0].RowIndex;
+                txt_ID.Text = DataGridView1.Rows[i].Cells["ID"].Value.ToString();
+                txt_Arrangement_Name.Text = DataGridView1.Rows[i].Cells["Arrangement_Name"].Value.ToString();
+                txt_CDLC_ID.Text = DataGridView1.Rows[i].Cells["CDLC_ID"].Value.ToString();
+                txt_SNGFilePath.Text = DataGridView1.Rows[i].Cells["SNGFilePath"].Value.ToString();
+                txt_XMLFilePath.Text = DataGridView1.Rows[i].Cells["XMLFilePath"].Value.ToString();
+                txt_ScrollSpeed.Text = DataGridView1.Rows[i].Cells["ScrollSpeed"].Value.ToString();
+                chbx_Tunning.Text = DataGridView1.Rows[i].Cells["Tunning"].Value.ToString();
+                txt_Rating.Text = DataGridView1.Rows[i].Cells["Rating"].Value.ToString();
+                txt_TuningPitch.Text = DataGridView1.Rows[i].Cells["TuningPitch"].Value.ToString();
+                chbx_ToneBase.Text = DataGridView1.Rows[i].Cells["ToneBase"].Value.ToString();
+                //txt_Idd.Text = DataGridView1.Rows[i].Cells[15].Value.ToString();
+                txt_ArrangementType.Text = DataGridView1.Rows[i].Cells["ArrangementType"].Value.ToString();
+                txt_String0.Text = DataGridView1.Rows[i].Cells["String0"].Value.ToString();
+                txt_String1.Text = DataGridView1.Rows[i].Cells["String1"].Value.ToString();
+                txt_String2.Text = DataGridView1.Rows[i].Cells["String2"].Value.ToString();
+                txt_String3.Text = DataGridView1.Rows[i].Cells["String3"].Value.ToString();
+                txt_String4.Text = DataGridView1.Rows[i].Cells["String4"].Value.ToString();
+                txt_String5.Text = DataGridView1.Rows[i].Cells["String5"].Value.ToString();
+                chbx_BassPicking.Text = DataGridView1.Rows[i].Cells["PluckedType"].Value.ToString();
+                txt_RouteMask.Text = DataGridView1.Rows[i].Cells["RouteMask"].Value.ToString();
+                chbx_ToneA.Text = DataGridView1.Rows[i].Cells["ToneA"].Value.ToString();
+                chbx_ToneB.Text = DataGridView1.Rows[i].Cells["ToneB"].Value.ToString();
+                chbx_ToneC.Text = DataGridView1.Rows[i].Cells["ToneC"].Value.ToString();
+                chbx_ToneD.Text = DataGridView1.Rows[i].Cells["ToneD"].Value.ToString();
+                txt_lastConversionDateTime.Text = DataGridView1.Rows[i].Cells["lastConversionDateTime"].Value.ToString();
+                txt_Description.Text = DataGridView1.Rows[i].Cells["Comments"].Value.ToString();
 
-            if (DataGridView1.Rows[i].Cells["Bonus"].Value.ToString() == "Yes") chbx_Bonus.Checked = true;
-            else chbx_Bonus.Checked = false;
-            if (DataGridView1.Rows[i].Cells["Has_Sections"].Value.ToString() == "Yes") chbx_HasSection.Checked = true;
-            else chbx_HasSection.Checked = false;
+                if (DataGridView1.Rows[i].Cells["Bonus"].Value.ToString() == "Yes") chbx_Bonus.Checked = true;
+                else chbx_Bonus.Checked = false;
+                if (DataGridView1.Rows[i].Cells["Has_Sections"].Value.ToString() == "Yes") chbx_HasSection.Checked = true;
+                else chbx_HasSection.Checked = false;
 
-            if (txt_ArrangementType.Text == "Bass" && !(chbx_BassDD.Checked)) btn_AddDD.Enabled = true;
-            if (txt_ArrangementType.Text == "Bass" && chbx_BassDD.Checked) btn_RemoveDD.Enabled = true;
+                if (txt_ArrangementType.Text == "Bass" && !(chbx_BassDD.Checked)) btn_AddDD.Enabled = true;
+                if (txt_ArrangementType.Text == "Bass" && chbx_BassDD.Checked) btn_RemoveDD.Enabled = true;
 
-            if (chbx_AutoSave.Checked) SaveOK = true;
-            else SaveOK = false;
+                if (chbx_AutoSave.Checked) SaveOK = true;
+                else SaveOK = false;
+            }
         }
 
         private void btn_Close_Click(object sender, EventArgs e)

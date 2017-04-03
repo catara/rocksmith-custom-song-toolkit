@@ -31,16 +31,54 @@ namespace RocksmithToolkitLib.Ogg
 
                 // used to debug library paths
                 // MessageBox.Show("wwiseCLIPath:" + wwiseCLIPath + Environment.NewLine + "wwiseTemplateDir: " + wwiseTemplateDir);
-                
+
                 ExternalApps.Wav2Wem(wwiseCLIPath, wwiseTemplateDir);
                 GetWwiseFiles(destinationPath, wwiseTemplateDir);
             }
             catch (Exception ex)
             {
                 //overridden ex, can't get real ex/msg, use log + throw;
-                throw new Exception("Wwise audio file conversion failed: " + ex.Message);
+                Convert2Wem( wavSourcePath,  destinationPath,  audioQuality);
+                //throw new Exception("Wwise audio file conversion failed: " + ex.Message);
+                //System.Threading.Thread.Sleep(30000);
+                //try
+                //{
+                //    var wwiseCLIPath = GetWwisePath();
+                //    var wwiseTemplateDir = LoadWwiseTemplate(wavSourcePath, audioQuality, wwiseCLIPath);
+                //    ExternalApps.Wav2Wem(wwiseCLIPath, wwiseTemplateDir);
+                //    GetWwiseFiles(destinationPath, wwiseTemplateDir);
+                //}
+                //catch (Exception exf)
+                //{
+                //    //overridden ex, can't get real ex/msg, use log + throw;
+                //    System.Threading.Thread.Sleep(30000);
+                //    try
+                //    {
+                //        var wwiseCLIPath = GetWwisePath();
+                //        var wwiseTemplateDir = LoadWwiseTemplate(wavSourcePath, audioQuality, wwiseCLIPath);
+                //        ExternalApps.Wav2Wem(wwiseCLIPath, wwiseTemplateDir);
+                //        GetWwiseFiles(destinationPath, wwiseTemplateDir);
+                //    }
+                //    catch (Exception exff)
+                //    {
+
+                //        System.Threading.Thread.Sleep(30000);
+                //        try
+                //        {
+                //            var wwiseCLIPath = GetWwisePath();
+                //            var wwiseTemplateDir = LoadWwiseTemplate(wavSourcePath, audioQuality, wwiseCLIPath);
+                //            ExternalApps.Wav2Wem(wwiseCLIPath, wwiseTemplateDir);
+                //            GetWwiseFiles(destinationPath, wwiseTemplateDir);
+                //        }
+                //        catch (Exception excff)
+                //        {
+
+                //            throw new Exception("Wwise audio file conversion failed: " + excff.Message);
+                //        }
+                //    }
+                //    }
             }
-        }
+            }
 
         public static string GetWwisePath()
         {

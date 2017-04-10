@@ -197,6 +197,11 @@
     <Compile Include="DLCPackageCreator\VocalsForm.Designer.cs">
       <DependentUpon>VocalsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="FilesDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FilesDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -459,6 +464,15 @@
     <None Include="DLCManager\external_tools\eof1.8RC12\wavtoogg.bat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="DLCManager\external_tools\CDLCEnabblers\insert_dylib">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="DLCManager\external_tools\CDLCEnabblers\libRSBypass.dylib">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="DLCManager\external_tools\CDLCEnabblers\RUN_PATCH_RS.command">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="DLCManager\external_tools\NVorbis.bin.0.8.4\COPYING">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -617,6 +631,17 @@
     </None>
     <None Include="DLCManager\README.md" />
     <None Include="App.config" />
+    <None Include="FilesDataSet.xsc">
+      <DependentUpon>FilesDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="FilesDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>FilesDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="FilesDataSet.xss">
+      <DependentUpon>FilesDataSet.xsd</DependentUpon>
+    </None>
     <None Include="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
@@ -728,6 +753,9 @@
     </Content>
     <Content Include="DLCManager\external_tools\eof1.8RC12\chordshapes.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\CDLCEnabblers\D3DX9_42.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="DLCManager\external_tools\eof1.8RC12\eof.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1574,6 +1602,9 @@
     </Content>
     <Content Include="DLCManager\external_tools\WinMerge\WinMergeU.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\Files.accdb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="DLCManager\Screenshot1.png" />
     <Content Include="DLCManager\Screenshot2.png" />

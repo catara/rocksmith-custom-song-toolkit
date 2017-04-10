@@ -828,6 +828,14 @@ namespace RocksmithToolkitGUI.DLCManager
                         case "<Live>":
                             fulltxt += ((SongRecord[k].Is_Live == "Yes") ? "-Live " + SongRecord[k].Live_Details : ""); //not yet done for all arrangements
                             break;
+                        case "<CDLC_ID>":
+                            fulltxt += SongRecord[k].ID ; //not yet done for all arrangements
+                            break;
+                        case "<Random5>":
+                            Random randomp = new Random();
+                            int rn = randomp.Next(0, 100000);
+                            fulltxt += rn; //not yet done for all arrangements
+                            break;
                         case "<Artist Short>":
                             fulltxt += SongRecord[k].Artist_ShortName != "" ? SongRecord[k].Artist_ShortName : SongRecord[k].Artist;
                             break;
@@ -1123,19 +1131,6 @@ namespace RocksmithToolkitGUI.DLCManager
 
         }
 
-        public void CleanFolder(string pathfld)
-        {
-            pathfld = pathfld + "\\";
-            System.IO.DirectoryInfo downloadedMessageInfo2 = new DirectoryInfo(pathfld);
-            foreach (FileInfo file in downloadedMessageInfo2.GetFiles())
-            {
-                try { file.Delete(); }
-                catch (Exception ex) { Console.Write(ex); }
-            }
-        }
-
-
-
         public DateTime UpdateLog(DateTime dt, string txt, bool multith)
         {
             DateTime dtt = System.DateTime.Now;
@@ -1277,7 +1272,7 @@ namespace RocksmithToolkitGUI.DLCManager
             var ImportPackNo = "0";
             DataSet doz = new DataSet(); doz = SelectFromDB("Main", "SELECT MAX(s.ID),MAX(s.Pack) FROM Main s;");
             var noOfRecx = doz.Tables[0].Rows.Count;
-            if (noOfRecx > 0) ImportPackNo = doz.Tables[0].Rows[0].ItemArray[1].ToString() + 1;
+            if (noOfRecx > 0) ImportPackNo = (doz.Tables[0].Rows[0].ItemArray[1].ToString().ToInt32() + 1).ToString();
             if (ImportPackNo == "") ImportPackNo = "1";
 
             if (!chbx_Additional_Manipulations.GetItemChecked(38)) //39. Use only unpacked songs already in the 0/0_Import folder folder
@@ -2290,8 +2285,8 @@ namespace RocksmithToolkitGUI.DLCManager
                             artist = "Insert";
 
                             //Generate MAX Alternate NO
-                            DataSet ddzv = new DataSet(); ddzv = SelectFromDB("Main", (sel.Replace(" ORDER BY Is_Original ASC", "")).Replace("SELECT *", "SELECT max(Alternate_Version_No)"));
-
+                            var fdf = (sel.Replace("ORDER BY Is_Original ASC", "")).Replace("SELECT *", "SELECT max(Alternate_Version_No)");
+                            DataSet ddzv = new DataSet(); ddzv = SelectFromDB("Main", (sel.Replace("ORDER BY Is_Original ASC", "")).Replace("SELECT *", "SELECT max(Alternate_Version_No)"));
                             //UPDATE the 1(s) not an alternate already
                             int max = ddzv.Tables[0].Rows[0].ItemArray[0].ToString().ToInt32() + 1;
                             DataSet dxr = new DataSet(); dxr = UpdateDB("Main", "Update Main Set Song_Title = Song_Title +\" a." + max + "\", Song_Title_Sort = Song_Title_Sort+\" a." + max + "\", Is_Alternate = \"Yes\", Alternate_Version_No=" + max + " where ID in (" + sel.Replace("*", "ID") + ") and Is_Alternate=\"No\"" + ";");
@@ -4164,6 +4159,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             tsst = "end set preview ..."; timestamp = UpdateLog(timestamp, tsst, false);
                         }
 
+                        //compress Preview
                         if (chbx_Additional_Manipulations.GetItemChecked(69) && file.audioPreviewPath != null && (bitratep > 136000))
                         { 
                             tsst = "start set preview audio reconv ..."+ bitratep; timestamp = UpdateLog(timestamp, tsst, false);
@@ -5934,7 +5930,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         if (File.Exists(t))
                             using (var DDgC = new Process())
                             {
-                                DDgC.StartInfo = startInfo; DDgC.Start(); DDgC.WaitForExit(1000 * 60 * 1); //wait 1min
+                                DDgC.StartInfo = startInfo; DDgC.Start(); DDgC.WaitForExit(1000 * 190 * 1); //wait 1min
                                 if (DDC.ExitCode == 0)
                                 {
                                     File.Delete(tt);

@@ -113,6 +113,7 @@
             this.btn_ProfilesSave = new System.Windows.Forms.Button();
             this.btn_ProfileRemove = new System.Windows.Forms.Button();
             this.btn_OpenLogsFolder = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -422,7 +423,7 @@
             "68. Delete obvious duplicates (hash) during dupli assesment",
             "69. Compress AudioFiles to 128VBR @Pack/Import if bigger than 136k",
             "70. @Repack pack Preview (bugfix)",
-            "71. @Import/Repack check if Original flag is in the Official list and correct",
+            "71. @Import/Repack check if Original flag is in the Official list and correct>",
             "99. @Pack>",
             "beer"});
             this.chbx_Additional_Manipulations.Location = new System.Drawing.Point(16, 690);
@@ -521,7 +522,9 @@
             "<Avail. Tracks>",
             "<Bass_HasDD>",
             "<Timestamp>",
-            "<Live>"});
+            "<Live>",
+            "<Random5>",
+            "<CDLC_ID>"});
             this.cbx_Artist_Sort.Location = new System.Drawing.Point(796, 502);
             this.cbx_Artist_Sort.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.cbx_Artist_Sort.Name = "cbx_Artist_Sort";
@@ -723,7 +726,9 @@
             "<Avail. Tracks>",
             "<Bass_HasDD>",
             "<Timestamp>",
-            "<Live>"});
+            "<Live>",
+            "<Random5>",
+            "<CDLC_ID>"});
             this.cbx_Artist.Location = new System.Drawing.Point(796, 462);
             this.cbx_Artist.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.cbx_Artist.Name = "cbx_Artist";
@@ -778,7 +783,9 @@
             "<Avail. Tracks>",
             "<Bass_HasDD>",
             "<Timestamp>",
-            "<Live>"});
+            "<Live>",
+            "<Random5>",
+            "<CDLC_ID>"});
             this.cbx_Title.Location = new System.Drawing.Point(796, 377);
             this.cbx_Title.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.cbx_Title.Name = "cbx_Title";
@@ -869,7 +876,9 @@
             "<Avail. Tracks>",
             "<Bass_HasDD>",
             "<Timestamp>",
-            "<Live>"});
+            "<Live>",
+            "<Random5>",
+            "<CDLC_ID>"});
             this.cbx_File_Name.Location = new System.Drawing.Point(796, 588);
             this.cbx_File_Name.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.cbx_File_Name.Name = "cbx_File_Name";
@@ -925,7 +934,9 @@
             "<Avail. Tracks>",
             "<Bass_HasDD>",
             "<Timestamp>",
-            "<Live>"});
+            "<Live>",
+            "<Random5>",
+            "<CDLC_ID>"});
             this.cbx_Album.Location = new System.Drawing.Point(796, 544);
             this.cbx_Album.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.cbx_Album.Name = "cbx_Album";
@@ -980,7 +991,9 @@
             "<Avail. Tracks>",
             "<Bass_HasDD>",
             "<Timestamp>",
-            "<Live>"});
+            "<Live>",
+            "<Random5>",
+            "<CDLC_ID>"});
             this.cbx_Title_Sort.Location = new System.Drawing.Point(796, 419);
             this.cbx_Title_Sort.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.cbx_Title_Sort.Name = "cbx_Title_Sort";
@@ -1395,10 +1408,23 @@
             this.btn_OpenLogsFolder.UseVisualStyleBackColor = false;
             this.btn_OpenLogsFolder.Click += new System.EventHandler(this.button1_Click_1);
             // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.SystemColors.Control;
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Location = new System.Drawing.Point(612, 325);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(158, 41);
+            this.button1.TabIndex = 390;
+            this.button1.Text = "Enable CDCL";
+            this.button1.UseVisualStyleBackColor = false;
+            // 
             // DLCManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.btn_OpenLogsFolder);
             this.Controls.Add(this.btn_ProfileRemove);
             this.Controls.Add(this.btn_ProfilesSave);
@@ -1564,5 +1590,6 @@
         private System.Windows.Forms.Button btn_OpenLogsFolder;
         private System.Windows.Forms.Button btm_GoRepack;
         private System.Windows.Forms.Button btn_RefreshSelected;
+        private System.Windows.Forms.Button button1;
     }
 }

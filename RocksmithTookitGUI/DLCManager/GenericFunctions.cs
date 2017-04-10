@@ -338,6 +338,18 @@ namespace RocksmithToolkitGUI.DLCManager
 
             return txt;
         }
+
+        static public void CleanFolder(string pathfld)
+        {
+            pathfld = pathfld + "\\";
+            System.IO.DirectoryInfo downloadedMessageInfo2 = new DirectoryInfo(pathfld);
+            foreach (FileInfo file in downloadedMessageInfo2.GetFiles())
+            {
+                try { file.Delete(); }
+                catch (Exception ex) { Console.Write(ex); }
+            }
+        }
+
         static public DataSet UpdateDB(string ftable, string fcmds)
         {
             var DB_Path = ConfigRepository.Instance()["dlcm_DBFolder"].ToString() + "\\Files.accdb;";

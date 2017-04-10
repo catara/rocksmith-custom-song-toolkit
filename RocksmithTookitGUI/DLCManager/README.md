@@ -87,10 +87,7 @@
 [ ] add convert multitone to single tone
 [ ] add bonus into in lyrics
 [ ] duplicate lead to Rhythm
-[ ] update readme.md screenshots
-[ ] try db constant connection
 [ ] do i delete things three time, one more redundantly
-[ ] standardise genhash to the already exiusting maindb.GetHashCode
 [ ] copy imported files
 copied copied copied
 overrite rename buttons
@@ -102,31 +99,35 @@ each platform should have its own remote location
 delete moves to duplicates but does not add dupli if exists
 delete does not delete the actual record from repack_audittrail
 INCUBUS REDEFINE MULTI SHOWS IN RED AT DUPLICATION MANAGEMENT SCREEN
-year inconsitencies (check should show these as well)
 fix import current month
-why packID has that weird format
+bitrate to cpress maybe a config
 select incl groups has a small error
 standardization still w duplicates
-find missing..also should check folders
 mantra cannot be imported
 gasoline cannot be packed
-why songs get preview created at pack :)
-[x] filename has [] covering artist name/album ...no [] separator for FN
-[x] reset crashes maindb..not realy
-check originals vs original dbb
-why do i have duplciates on the ps3
-[x] preview fails
-multiple repacks cannto happen
-[x] convert to 44100... no need as no space is gained
-[x] some songs are messed up on ps3
-log is not last come first entry
-remote path is fedup
 check if filename is the same
 add comment beginning of song in lyrics
-has track no even when 0
-has author mostly yes
-some preview hashtags are blank
-bitrate to cpress maybe a config
+why songs get preview created at pack :)
+log is not last come first entry
+check originals vs original dbb
+why do i have duplciates on the ps3
+multiple repacks cannto happen
+[x] standardise genhash to the already exiusting maindb.GetHashCode
+[x] filename has [] covering artist name/album ...no [] separator for FN
+[x] reset crashes maindb..not realy
+[x] preview fails
+[x] convert to 44100... no need as no space is gained
+[x] some songs are messed up on ps3
+[x] remote path is fedup
+[x] has track no even when 0
+[x] has author mostly yes
+[x] some preview hashtags are blank
+[x] add random no in title
+[x] why packID has that weird format
+[x] find missing..also should check folders
+[ ] update readme.md screenshots
+[ ] try db constant connection
+year inconsitencies (check should show these as well)
 
 [x] when repacking groups add group at the beginning of song
 [x] live details should not be active if the song is not based on a live

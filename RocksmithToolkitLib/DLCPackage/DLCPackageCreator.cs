@@ -436,6 +436,7 @@ namespace RocksmithToolkitLib.DLCPackage
                 {
                     // TOOLKIT VERSION
                     var stopHere = info;
+                    GenerateToolkitVersion(toolkitVersionStream, "","","");//bcapi my implementations creates pl: info.ToolkitInfo.PackageAuthor, info.ToolkitInfo.PackageVersion, info.ToolkitInfo.PackageComment);
                     packPsarc.AddEntry("toolkit.version", toolkitVersionStream);
 
                     // APP ID

@@ -44,6 +44,7 @@ namespace RocksmithToolkitLib.DLCPackage
         public float Volume { get; set; }
         public PackageMagic SignatureType { get; set; }
         public ToolkitInfo ToolkitInfo { get; set; }
+        // TODO: remove depricated fields when I'm dead
         [Obsolete("Depricated, please use ToolkitInfo.PackageVersion.", true)]
         public string PackageVersion { get; set; }
         [Obsolete("Depricated, please use ToolkitInfo.PackageComment.", true)]
@@ -551,7 +552,17 @@ namespace RocksmithToolkitLib.DLCPackage
                 }
                 else if (xmlFile.ToLower().Contains("_vocals"))
                 {
-                    var voc = new Arrangement { Name = attr.JapaneseVocal == true ? ArrangementName.JVocals : ArrangementName.Vocals, ArrangementType = ArrangementType.Vocal, ScrollSpeed = 20, SongXml = new SongXML { File = xmlFile }, SongFile = new SongFile { File = "" }, CustomFont = attr.JapaneseVocal == true };
+                    var debugMe = "Confirm XML comments were preserved.";
+                    var voc = new Arrangement
+                        {
+                            Name = attr.JapaneseVocal == true ? ArrangementName.JVocals : ArrangementName.Vocals,
+                            ArrangementType = ArrangementType.Vocal,
+                            ScrollSpeed = 20,
+                            SongXml = new SongXML { File = xmlFile },
+                            SongFile = new SongFile { File = "" },
+                            CustomFont = attr.JapaneseVocal == true,
+                            XmlComments = Song2014.ReadXmlComments(xmlFile)
+                        };
 
                     // Get symbols stuff from _vocals.xml
                     var fontSng = Path.Combine(unpackedDir, xmlName + ".sng");
@@ -568,14 +579,21 @@ namespace RocksmithToolkitLib.DLCPackage
 
                     // Adding Arrangement
                     data.Arrangements.Add(voc);
-                }                    
+                }
             }
 
             //ShowLights XML
             var xmlShowLights = Directory.EnumerateFiles(unpackedDir, "*_showlights.xml", SearchOption.AllDirectories).FirstOrDefault();
             if (!String.IsNullOrEmpty(xmlShowLights))
             {
-                var shl = new Arrangement { ArrangementType = ArrangementType.ShowLight, Name = ArrangementName.ShowLights, SongXml = new SongXML { File = xmlShowLights }, SongFile = new SongFile { File = "" } };
+                var shl = new Arrangement
+                    {
+                        ArrangementType = ArrangementType.ShowLight,
+                        Name = ArrangementName.ShowLights,
+                        SongXml = new SongXML { File = xmlShowLights },
+                        SongFile = new SongFile { File = "" },
+                        XmlComments = Song2014.ReadXmlComments(xmlShowLights)
+                    };
 
                 // Adding ShowLights
                 data.Arrangements.Add(shl);
@@ -687,13 +705,15 @@ namespace RocksmithToolkitLib.DLCPackage
 
         #endregion
 
-        // needs to be called after all packages for platforms are created
+        // TODO: uncommon usage of dispose, took me 10 minutes to figure out where my files gone, aware of this. PS: needs to be called after all packages for platforms are created
         public void CleanCache()
         {
             if (ArtFiles != null)
             {
                 foreach (var file in ArtFiles)
                 {
+                    if (file.sizeY == 0)
+                        continue;
                     try
                     {
                         File.Delete(file.destinationFile);
@@ -752,21 +772,21 @@ namespace RocksmithToolkitLib.DLCPackage
             Directory.CreateDirectory(kitdir);
 
             var xmlFiles = Directory.EnumerateFiles(unpackedDir, "*.xml", SearchOption.AllDirectories).ToArray();
-            var sngFiles = Directory.EnumerateFiles(unpackedDir, "*vocals.sng", SearchOption.AllDirectories).ToArray();
+            // var sngFiles = Directory.EnumerateFiles(unpackedDir, "*vocals.sng", SearchOption.AllDirectories).ToArray();
 
             foreach (var json in jsonFiles)
             {
                 var name = Path.GetFileNameWithoutExtension(json);
                 var xmlFile = xmlFiles.FirstOrDefault(x => Path.GetFileNameWithoutExtension(x) == name);
-                var sngFile = sngFiles.FirstOrDefault(x => Path.GetFileNameWithoutExtension(x) == name);
+                // var sngFile = sngFiles.FirstOrDefault(x => Path.GetFileNameWithoutExtension(x) == name);
 
                 //Move all pair JSON\XML
                 File.Move(json, Path.Combine(kitdir, name + ".json"));
                 File.Move(xmlFile, Path.Combine(eofdir, name + ".xml"));
 
-                if (name.EndsWith("vocals", StringComparison.Ordinal))
-                    if (sngFile != null)
-                        File.Move(sngFile, Path.Combine(kitdir, name + ".sng"));
+                //if (name.EndsWith("vocals", StringComparison.Ordinal))
+                //    if (sngFile != null)
+                //        File.Move(sngFile, Path.Combine(kitdir, name + ".sng"));
             }
 
             // move showlights.xml

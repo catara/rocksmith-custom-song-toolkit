@@ -18,7 +18,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\RocksmithTookitGUI\bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -28,7 +28,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\RocksmithTookitGUI\bin\Release\</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -47,14 +47,7 @@
     <Reference Include="System.Runtime.Serialization">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="X360">
-      <HintPath>..\..\lib\X360\X360.dll</HintPath>
-    </Reference>
     <Reference Include="NDesk.Options">
       <HintPath>..\..\lib\NDesk\NDesk.Options.dll</HintPath>
     </Reference>
@@ -71,6 +64,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="CLI.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

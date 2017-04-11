@@ -11,16 +11,22 @@ namespace RocksmithToolkitLib.Xml
     [XmlRoot("vocals", Namespace = "", IsNullable = false)]
     public class Vocals
     {
-        public Vocals() {}
+        public Vocals() { }
 
-        public Vocals(Sng2014File sngData) {
+        public Vocals(Sng2014File sngData, bool validateLyrics = false)
+        {
             Vocal = new Vocal[sngData.Vocals.Count];
-            for (var i = 0; i < sngData.Vocals.Count; i++) {
+            for (var i = 0; i < sngData.Vocals.Count; i++)
+            {
                 var v = new Vocal();
                 v.Time = sngData.Vocals.Vocals[i].Time;
                 v.Note = sngData.Vocals.Vocals[i].Note;
                 v.Length = sngData.Vocals.Vocals[i].Length;
                 v.Lyric = sngData.Vocals.Vocals[i].Lyric.ToNullTerminatedUTF8();
+
+                if (validateLyrics)
+                    v.Lyric = v.Lyric.GetValidLyric();
+
                 Vocal[i] = v;
             }
             Count = Vocal.Length;
@@ -32,29 +38,35 @@ namespace RocksmithToolkitLib.Xml
         [XmlElement("vocal")]
         public Vocal[] Vocal { get; set; }
 
-        public static Vocals LoadFromFile(string xmlVocalFile) {
-            using (var validXml = xmlVocalFile.StripIllegalXMLChars())
+        public static Vocals LoadFromFile(string xmlVocalsPath)
+        {
+            var xmlVocals = File.ReadAllText(xmlVocalsPath);
+            using (var validXml = xmlVocals.StripIllegalXMLChars())
             using (var reader = new StreamReader(validXml))
             {
                 return new XmlStreamingDeserializer<Vocals>(reader).Deserialize();
             }
         }
 
-        public void Serialize(Stream stream) {
+        public void Serialize(Stream stream)
+        {
             var ns = new XmlSerializerNamespaces();
             ns.Add("", "");
 
-            using (var writer = XmlWriter.Create(stream, new XmlWriterSettings {
+            using (var writer = XmlWriter.Create(stream, new XmlWriterSettings
+            {
                 Indent = true,
                 OmitXmlDeclaration = false,
                 Encoding = new UTF8Encoding(false)
-            })) {
+            }))
+            {
                 new XmlSerializer(typeof(Vocals)).Serialize(writer, this, ns);
             }
 
             stream.Flush();
             stream.Seek(0, SeekOrigin.Begin);
         }
+
     }
 
     [XmlType("vocal")]

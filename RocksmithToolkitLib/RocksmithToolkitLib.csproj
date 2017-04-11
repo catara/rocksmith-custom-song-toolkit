@@ -50,7 +50,6 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Net" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
@@ -224,6 +223,7 @@
     <Compile Include="ZiggyProEditor\Tuning.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="Resources\albumart.dds" />
     <None Include="Resources\Console_soundbank.bnk" />
     <None Include="Resources\pedals2014.json" />
@@ -281,9 +281,6 @@
     <PreBuildEvent Condition=" '$(OS)' == 'Unix' ">
       "$(SolutionDir)prebuild.sh" "$(ProjectDir)" "$(ProjectDir)ToolkitVersion.cs"
     </PreBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup>
-    <PreBuildEvent>CALL "$(SolutionDir)prebuild.bat" "$(SolutionDir)" "$(ProjectDir)ToolkitVersion.cs"</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

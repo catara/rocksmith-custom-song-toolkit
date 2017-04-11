@@ -280,7 +280,9 @@ namespace RocksmithToolkitLib.Xml
         }
 
         /// <summary>
-        /// Reads the xml comments, like EOF and DDC, to keep track of its versions.
+        /// Reads the EOF, toolkit, and DDC xml comments
+        /// Used for traceability of version and revisions
+        /// NOTE: EOF Arrangements and Vocals contain comments
         /// </summary>
         /// <param name="xmlSongRS2014File">Xml file path.</param>
         public static IEnumerable<XComment> ReadXmlComments(string xmlSongRS2014File)
@@ -299,7 +301,7 @@ namespace RocksmithToolkitLib.Xml
         }
 
         /// <summary>
-        /// Write the CST\EOF\DDC xml comments
+        /// Write the CST\EOF\DDC xml arrangement comments
         /// </summary>
         /// <param name="xmlSongFile"></param>
         /// <param name="commentNodes"></param>
@@ -312,11 +314,18 @@ namespace RocksmithToolkitLib.Xml
             var sameComment = false;
             var sameVersion = false;
             var xml = XDocument.Load(xmlSongFile);
-            var rootnode = xml.Element("song");
+            var rootElement = "song";
+
+            if (xmlSongFile.ToLower().Contains("vocals"))
+                rootElement = "vocals";
+            else if (xmlSongFile.ToLower().Contains("showlights"))
+                rootElement = "showlights";
+
+            var rootnode = xml.Element(rootElement);
 
             if (rootnode == null)
                 throw new InvalidDataException(xmlSongFile + Environment.NewLine +
-                    "XML file does not contain 'Song' node.");
+                    "XML file does not contain required root node.");
 
             // remove all xml comments
             xml.DescendantNodes().OfType<XComment>().Remove();
@@ -364,7 +373,6 @@ namespace RocksmithToolkitLib.Xml
 
         public static Song2014 LoadFromFile(string xmlSongRS2014File)
         {
-            // TODO: initial default sbyte values that may not be present in XML
             using (var reader = new StreamReader(xmlSongRS2014File))
             {
                 return new XmlStreamingDeserializer<Song2014>(reader).Deserialize();

@@ -117,6 +117,9 @@ namespace RocksmithToolkitLib.DLCPackage
                     throw new InvalidOperationException("Platform not found :(");
             }
 
+            // ODLC status
+            var isODLC = !Directory.EnumerateFiles(unpackedDir, "toolkit.version", SearchOption.AllDirectories).Any();
+
             // DECODE AUDIO
             if (decodeAudio)
             {
@@ -147,9 +150,8 @@ namespace RocksmithToolkitLib.DLCPackage
                     var xmlEofFile = Path.Combine(Path.GetDirectoryName(sngFile), String.Format("{0}.xml", Path.GetFileNameWithoutExtension(sngFile)));
                     xmlEofFile = xmlEofFile.Replace(String.Format("bin{0}{1}", Path.DirectorySeparatorChar, platform.GetPathName()[1].ToLower()), "arr");
                     var xmlSngFile = xmlEofFile.Replace(".xml", ".sng.xml");
-
                     var arrType = ArrangementType.Guitar;
-
+                    
                     if (Path.GetFileName(xmlSngFile).ToLower().Contains("vocal"))
                         arrType = ArrangementType.Vocal;
 
@@ -193,17 +195,21 @@ namespace RocksmithToolkitLib.DLCPackage
                             Debug.WriteLine("Fixed Tuning Descrepancies: " + xmlEofFile);
                             GlobalExtension.ShowProgress("Fixed tuning descepancies ...");
                         }
-
-                        File.Delete(xmlSngFile);
+                    }
+                    else if (File.Exists(xmlEofFile) && !overwriteSongXml && arrType == ArrangementType.Vocal)
+                    {
+                        // preserves vocal xml comments
                     }
                     else
                     {
-                        if (arrType != ArrangementType.Vocal)
+                        if (!isODLC)
                             Song2014.WriteXmlComments(xmlSngFile, customComment: "Generated from SNG file");
 
                         File.Copy(xmlSngFile, xmlEofFile, true);
-                        File.Delete(xmlSngFile);
                     }
+
+                    if (File.Exists(xmlSngFile))
+                        File.Delete(xmlSngFile);
 
                     progress += step;
                     GlobalExtension.UpdateProgress.Value = (int)progress;
@@ -762,7 +768,9 @@ namespace RocksmithToolkitLib.DLCPackage
             GlobalExtension.ShowProgress("Inflating Entries ...");
 
             foreach (var entry in psarc.TOC)
-            {// custom InflateEntries
+            {
+                // custom InflateEntries
+                var debugMe = "Check the TOC";
                 var fullfilename = Path.Combine(destpath, entry.Name);
 
                 if (Path.GetExtension(entry.Name).ToLower() == ".psarc")

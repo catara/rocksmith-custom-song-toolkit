@@ -27,12 +27,11 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
         public bool EditMode;
         private Arrangement _arrangement;
         private bool _dirty;
+        private bool _fixLowBass;
         private GameVersion _gameVersion;
         private DLCPackageCreator _parentControl;
         private ToolTip _toolTip = new ToolTip();
         private Song2014 _xmlSong;
-        private bool _fixLowBass;
-
 
         public ArrangementForm(DLCPackageCreator control, GameVersion gameVersion)
             : this(new Arrangement
@@ -122,8 +121,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                     btnEditType.Enabled = !guitarebass;
 
                     // Update tuningComboBox
-                    if (guitarebass)
-                        FillTuningCombo(_gameVersion);
+                    FillTuningCombo(_gameVersion);
 
                 }; //END EH arrangementTypeCombo.SelectedValueChanged
 
@@ -221,10 +219,11 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             }
         }
 
-        public bool LoadArrangementData(string xmlfilepath)
+        public void LoadArrangementData(string xmlFilePath)
         {
             //Song XML File
-            Arrangement.SongXml.File = xmlfilepath;
+            Arrangement.SongXml.File = xmlFilePath;
+            Arrangement.XmlComments = Song2014.ReadXmlComments(xmlFilePath);
 
             // Song Info
             if (!ReferenceEquals(_xmlSong, null))
@@ -297,8 +296,6 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 txtMasterId.Focus();
             else
                 Arrangement.MasterId = masterId;
-
-            return true;
         }
 
         public bool LoadXmlArrangement(string xmlFilePath)
@@ -313,32 +310,32 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 SongXml = new SongXML { File = xmlFilePath }
             };
 
+            bool isVocal = false;
+            bool isShowlight = false;
+
             try
             {
-                bool isVocal = false;
-                bool isShowlight = false;
-
-                try
+                _xmlSong = Song2014.LoadFromFile(xmlFilePath);
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException.Message.ToLower().Contains("<vocals"))
+                    isVocal = true;
+                else if (ex.InnerException.Message.ToLower().Contains("<showlights"))
+                    isShowlight = true;
+                else
                 {
-                    _xmlSong = Song2014.LoadFromFile(xmlFilePath);
+                    MessageBox.Show(@"Unable to load XML Arrangement:  " + Environment.NewLine +
+                                    Path.GetFileName(xmlFilePath) + Environment.NewLine +
+                                    @"It may not be a valid Arrangement or " + Environment.NewLine +
+                                    @"your version of the EOF may be out of date." + Environment.NewLine +
+                                    ex.Message, DLCPackageCreator.MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return false;
                 }
-                catch (Exception ex)
-                {
-                    if (ex.InnerException.Message.ToLower().Contains("<vocals"))
-                        isVocal = true;
-                    else if (ex.InnerException.Message.ToLower().Contains("<showlights"))
-                        isShowlight = true;
-                    else
-                    {
-                        MessageBox.Show(@"Unable to get information from XML Arrangement:  " + Environment.NewLine +
-                                        Path.GetFileName(xmlFilePath) + Environment.NewLine +
-                                        @"It may not be a valid Arrangement or " + Environment.NewLine +
-                                        @"your version of the EOF may be out of date." + Environment.NewLine +
-                                        ex.Message, DLCPackageCreator.MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return false;
-                    }
-                }
+            }
 
+            try
+            {
                 // SETUP FIELDS
                 if (isVocal)
                 {
@@ -360,7 +357,8 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                         if (verAttrib <= 6) version = GameVersion.RS2012;
                         else if (verAttrib >= 7) version = GameVersion.RS2014;
                     }
-                    else switch (_gameVersion)
+                    else
+                        switch (_gameVersion)
                         {
                             case GameVersion.RS2012:
                                 // add missing XML elements
@@ -482,6 +480,66 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             return true;
         }
 
+        private bool CheckTuning()
+        {
+            // for now just check bass arrangements
+            if (Arrangement.ArrangementType != ArrangementType.Bass)
+                return true;
+
+            // Error check 220.00 and Fixed
+            TuningDefinition tuning = (TuningDefinition)cmbTuningName.SelectedItem;
+            Arrangement.Tuning = tuning.UIName;
+            Arrangement.TuningStrings = tuning.Tuning;
+            UpdateCentOffset();
+
+            if ((Arrangement.TuningPitch == 220.00 && !Arrangement.Tuning.Contains("Fixed")) ||
+                (Arrangement.TuningPitch != 220.00 && Arrangement.Tuning.Contains("Fixed")))
+            {
+                MessageBox.Show(@"The bass tuning name and frequency are not set correctly." + Environment.NewLine + Environment.NewLine +
+                                @"Tuning name must contain 'Fixed' when frequency is 220Hz" + Environment.NewLine +
+                                @"and name may not contain 'Fixed' if frequency is not 220Hz.", @"Error ... Low Bass Tuning", MessageBoxButtons.OK);
+                return false;
+            }
+
+            return true;
+        }
+
+        private void EditShowlights()
+        {
+            // TODO: future
+            using (var form = new ShowLightsForm(Arrangement.SongXml.File))
+            {
+                if (DialogResult.OK != form.ShowDialog())
+                    return;
+
+                if (!String.IsNullOrEmpty(Arrangement.SongXml.File))
+
+                    if (!String.IsNullOrEmpty(form.ShowLightsPath))
+                        txtXmlPath.Text = form.ShowLightsPath;
+            }
+        }
+
+        private void EditVocals()
+        {
+            // TODO: explain usage of Vocals SNG and DDS files better
+
+            if (!String.IsNullOrEmpty(_parentControl.LyricArtPath) && String.IsNullOrEmpty(Arrangement.FontSng))
+                MessageBox.Show("There is already a custom font defined.\r\n", DLCPackageCreator.MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+            using (var form = new VocalsForm(Arrangement.FontSng, _parentControl.LyricArtPath, Arrangement.CustomFont, Arrangement.SongXml.File))
+            {
+                if (DialogResult.OK != form.ShowDialog())
+                    return;
+
+                Arrangement.FontSng = form.SngPath;
+                _parentControl.LyricArtPath = form.ArtPath;
+                Arrangement.CustomFont = form.IsCustom;
+
+                if (!String.IsNullOrEmpty(form.VocalsPath))
+                    txtXmlPath.Text = form.VocalsPath;
+            }
+        }
+
         private void FillToneCombo(ComboBox combo, IEnumerable<string> toneNames, bool isBase)
         {
             var lastTone = combo.SelectedItem;
@@ -517,20 +575,82 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             cmbTuningName.Refresh();
         }
 
-        private bool IsAlreadyAdded(string xmlPath)
+        private bool FixBassTuning()
+        {
+            // fix old toolkit behavior
+            if (Arrangement.TuningStrings == null)
+            {
+                Arrangement.TuningStrings = new TuningStrings { String0 = 0, String1 = 0, String2 = 0, String3 = 0, String4 = 0, String5 = 0 };
+                return false;
+            }
+
+            if (_gameVersion == GameVersion.RS2012)
+                return false;
+
+            var bassFix = false;
+            //Low tuning fix for bass, If lowest string is B and bass fix not applied 
+            if (Arrangement.TuningStrings.String0 < -4 && Arrangement.TuningPitch != 220.00)
+                if (_fixLowBass)
+                    bassFix = true;
+                else
+                    bassFix |= MessageBox.Show(@"The bass tuning may be too low.  Apply Low Bass Tuning Fix?" + Environment.NewLine + @"Note: The fix may revert if bass Arrangement is re-saved in EOF.  ", @"Warning ... Low Bass Tuning", MessageBoxButtons.YesNo) == DialogResult.Yes;
+
+            // Fix Low Bass Tuning
+            if (bassFix && TuningFrequency.ApplyBassFix(Arrangement, _fixLowBass))
+            {
+                Arrangement.TuningStrings = Song2014.LoadFromFile(Arrangement.SongXml.File).Tuning;
+                Arrangement.TuningPitch = 220.00;
+                txtFrequency.Text = "220.00";
+
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool IsAlreadyAdded(string xmlFilePath)
         {
             for (int i = 0; i < _parentControl.lstArrangements.Items.Count; i++)
             {
                 var selectedArrangement = (Arrangement)_parentControl.lstArrangements.Items[i];
 
-                if (!xmlPath.Equals(selectedArrangement.SongXml.File)) continue;
-                if (xmlPath.Equals(Arrangement.SongXml.File)) continue;
+                if (!xmlFilePath.Equals(selectedArrangement.SongXml.File)) continue;
+                if (xmlFilePath.Equals(Arrangement.SongXml.File)) continue;
                 return true;
             }
             return false;
         }
 
+        private void SelectTuningName()
+        {
+            if (Arrangement.ArrangementType == ArrangementType.Vocal || Arrangement.ArrangementType == ArrangementType.ShowLight)
+                return;
 
+            // find tuning in tuningComboBox list and make selection
+            int foundTuning = -1;
+            for (int tcbIndex = 0; tcbIndex < cmbTuningName.Items.Count; tcbIndex++)
+            {
+                cmbTuningName.SelectedIndex = tcbIndex;
+                TuningDefinition tuning = (TuningDefinition)cmbTuningName.Items[tcbIndex];
+
+                // check both tuning strings and name match
+                if (tuning.Tuning == Arrangement.TuningStrings) // && tuning.UIName == Arrangement.Tuning)
+                {
+                    foundTuning = tcbIndex;
+                    break;
+                }
+            }
+
+            // TODO: testing toolkit's AI
+            // toolkit is pretty smart now so let it automatically set tuning if found
+            // E Standard, Drop D, and Open E tuning are now the same for both guitar and bass
+            if (foundTuning == -1)
+            {
+                cmbTuningName.SelectedIndex = 0;
+                var selectedType = ((ArrangementType)cmbArrangementType.SelectedItem);
+                ShowTuningForm(selectedType, new TuningDefinition(Arrangement.TuningStrings, _gameVersion));
+            }
+        }
 
         private void SequencialToneComboEnabling()
         {//TODO: handle not one-by-one enabling disabling tone slots and use data from enabled one, confused about this one.
@@ -637,10 +757,14 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             }
 
             // get the latest comments from the XML to check if previous bass fixed is valid
-            if (!String.IsNullOrEmpty(Arrangement.SongXml.File))
+            if (!String.IsNullOrEmpty(Arrangement.SongXml.File) && selectedType == ArrangementType.Bass)
             {
+                var debugMe = "";
                 var xmlComments = Song2014.ReadXmlComments(Arrangement.SongXml.File);
                 var isBassFixed = xmlComments.Any(xComment => xComment.ToString().Contains("Low Bass Tuning Fixed")) || Convert.ToDouble(txtFrequency.Text) == 220.00;
+
+                // commented out ... Arrangement.XmlComments may not be populated
+                // var isBassFixed = Arrangement.XmlComments.Any(xComment => xComment.ToString().Contains("Low Bass Tuning Fixed")) || Convert.ToDouble(txtFrequency.Text) == 220.00;
 
                 if (isBassFixed && !tuning.UIName.Contains("Fixed"))
                 {
@@ -648,7 +772,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                     tuning.UIName = String.Format("{0} Fixed", tuning.UIName);
                     tuning.Name = tuning.UIName.ReplaceSpaceWith("");
                     tuning.Custom = true;
-                    // bass tuning definition get auto added to repository
+                    // fixed bass tuning definition is auto added to repository
                     TuningDefinitionRepository.SaveUnique(tuning);
                 }
             }
@@ -808,35 +932,6 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             txtScrollSpeed.Text = String.Format("Scroll speed: {0:#.0}", Math.Truncate((decimal)tbarScrollSpeed.Value) / 10);
         }
 
-        private void btnEditShowlight_Click(object sender, EventArgs e)
-        {
-            // future?
-            using (var form = new ShowLightsForm(Arrangement.SongFile.File))
-            {
-                if (DialogResult.OK != form.ShowDialog())
-                    return;
-                if (!String.IsNullOrEmpty(form.ShowLightsPath))
-                    Arrangement.SongXml.File = txtXmlPath.Text = form.ShowLightsPath;
-            }
-        }
-
-        private void btnEditVocalt_Click(object sender, EventArgs e)
-        {//TODO: wrong behaviour with this warning message
-            if (!String.IsNullOrEmpty(_parentControl.LyricArtPath) && String.IsNullOrEmpty(Arrangement.FontSng))
-                MessageBox.Show("There is already a custom font defined.\r\n", DLCPackageCreator.MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
-            using (var form = new VocalsForm(Arrangement.FontSng, _parentControl.LyricArtPath, Arrangement.CustomFont))
-            {
-                if (DialogResult.OK != form.ShowDialog())
-                {
-                    return;
-                }
-                Arrangement.FontSng = form.SngPath;
-                _parentControl.LyricArtPath = form.ArtPath;
-                Arrangement.CustomFont = form.IsCustom;
-            }
-        }
-
         private void ArrangementForm_Load(object sender, EventArgs e)
         {
             // disallow changing XML file name when in edit mode
@@ -895,16 +990,16 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
 
         private void btnEditType_Click(object sender, EventArgs e)
         {
-            if (Arrangement.ArrangementType == ArrangementType.Vocal) // (ArrangementType)arrangementTypeCombo.SelectedItem)
-                btnEditVocalt_Click(sender, e);
+            if ((ArrangementType)cmbArrangementType.SelectedItem == ArrangementType.Vocal)
+                EditVocals();
 
-            else if (Arrangement.ArrangementType == ArrangementType.ShowLight)
-                btnEditShowlight_Click(sender, e); // bad practice for now
+            else if ((ArrangementType)cmbArrangementType.SelectedItem == ArrangementType.ShowLight)
+                EditShowlights();
 
             else
             {
-                //Extra options like personal Audio file. #multitracks
-                //guitarEdit_Click(sender, e);
+                // TODO: future options like personal Audio file, multitracks, etc.
+                // GuitarEdit();
             }
         }
 
@@ -961,92 +1056,6 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             var bFreq = ((CueTextBox)sender).Name.StartsWith("txtFrequency");
             UpdateCentOffset(bFreq ? "HZ" : "c");
         }
-
-        private bool FixBassTuning()
-        {
-            // fix old toolkit behavior
-            if (Arrangement.TuningStrings == null)
-            {
-                Arrangement.TuningStrings = new TuningStrings { String0 = 0, String1 = 0, String2 = 0, String3 = 0, String4 = 0, String5 = 0 };
-                return false;
-            }
-
-            if (_gameVersion == GameVersion.RS2012)
-                return false;
-
-            var bassFix = false;
-            //Low tuning fix for bass, If lowest string is B and bass fix not applied 
-            if (Arrangement.TuningStrings.String0 < -4 && Arrangement.TuningPitch != 220.00)
-                if (_fixLowBass)
-                    bassFix = true;
-                else
-                    bassFix |= MessageBox.Show(@"The bass tuning may be too low.  Apply Low Bass Tuning Fix?" + Environment.NewLine + @"Note: The fix may revert if bass Arrangement is re-saved in EOF.  ", @"Warning ... Low Bass Tuning", MessageBoxButtons.YesNo) == DialogResult.Yes;
-
-            // Fix Low Bass Tuning
-            if (bassFix && TuningFrequency.ApplyBassFix(Arrangement, _fixLowBass))
-            {
-                Arrangement.TuningStrings = Song2014.LoadFromFile(Arrangement.SongXml.File).Tuning;
-                Arrangement.TuningPitch = 220.00;
-                txtFrequency.Text = "220.00";
-
-                return true;
-            }
-
-            return false;
-        }
-
-        private void SelectTuningName()
-        {
-            // find tuning in tuningComboBox list and make selection
-            int foundTuning = -1;
-            for (int tcbIndex = 0; tcbIndex < cmbTuningName.Items.Count; tcbIndex++)
-            {
-                cmbTuningName.SelectedIndex = tcbIndex;
-                TuningDefinition tuning = (TuningDefinition)cmbTuningName.Items[tcbIndex];
-
-                // check both tuning strings and name match
-                if (tuning.Tuning == Arrangement.TuningStrings) // && tuning.UIName == Arrangement.Tuning)
-                {
-                    foundTuning = tcbIndex;
-                    break;
-                }
-            }
-
-            // TODO: testing toolkit's AI
-            // toolkit is pretty smart now so let it automatically set tuning if found
-            // E Standard, Drop D, and Open E tuning are now the same for both guitar and bass
-            if (foundTuning == -1)
-            {
-                cmbTuningName.SelectedIndex = 0;
-                var selectedType = ((ArrangementType)cmbArrangementType.SelectedItem);
-                ShowTuningForm(selectedType, new TuningDefinition(Arrangement.TuningStrings, _gameVersion));
-            }
-        }
-
-        private bool CheckTuning()
-        {
-            // for now just check bass arrangements
-            if (Arrangement.ArrangementType != ArrangementType.Bass)
-                return true;
-
-            // Error check 220.00 and Fixed
-            TuningDefinition tuning = (TuningDefinition)cmbTuningName.SelectedItem;
-            Arrangement.Tuning = tuning.UIName;
-            Arrangement.TuningStrings = tuning.Tuning;
-            UpdateCentOffset();
-
-            if ((Arrangement.TuningPitch == 220.00 && !Arrangement.Tuning.Contains("Fixed")) ||
-                (Arrangement.TuningPitch != 220.00 && Arrangement.Tuning.Contains("Fixed")))
-            {
-                MessageBox.Show(@"The bass tuning name and frequency are not set correctly." + Environment.NewLine + Environment.NewLine +
-                                @"Tuning name must contain 'Fixed' when frequency is 220Hz" + Environment.NewLine +
-                                @"and name may not contain 'Fixed' if frequency is not 220Hz.", @"Error ... Low Bass Tuning", MessageBoxButtons.OK);
-                return false;
-            }
-
-            return true;
-        }
-
     }
 }
 

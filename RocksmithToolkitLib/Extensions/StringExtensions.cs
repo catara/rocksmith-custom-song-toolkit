@@ -28,14 +28,20 @@ DLC Key, and Tone Key Notes:
   No spaces, no special characters, no puncuation
   All alpha lower, upper, or mixed case are allowed
   All numeric is allowed
- */
+  
+Reserved XML Characters:
+  Double quotes usage must be escaped ==> &quot;
+  Ampersand usage must be escaped ==> &amp;
+*/
 
-// "return value;" is used throughout to aid with debugging
+// "return value;" is used to aid with debugging validation methods
 
 namespace RocksmithToolkitLib.Extensions
 {
     public static class StringExtensions
     {
+        #region Class Methods
+
         /// <summary>
         /// Capitalize the first character without changing the rest of the string
         /// </summary>
@@ -175,6 +181,22 @@ namespace RocksmithToolkitLib.Extensions
                 value = value.Substring(0, 6);
             }
 
+            return value;
+        }
+
+        /// <summary>
+        /// Validate lyric character usage
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static string GetValidLyric(this string value)
+        {
+            // standard ODLC lyric character set
+            //!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_abcdefghijklmnopqrstuvwxyz{|}~¡¢¥¦§¨ª«°²³´•¸¹º»¼½¾¿ÀÁÂÄÅÆÇÈÉÊËÌÎÏÑÒÓÔÖØÙÚÛÜÞßàáâäåæçèéêëìíîïñòóôöøùúûüŒœŠšž„…€™␀★➨
+            string validAlphaNumerics = "a-zA-Z0-9";
+            string validSpecialCharacters = "!\"#$%&'()*+,-./:;<=>?@[\\]^_{|}~¡¢¥¦§¨ª«°²³´•¸¹º»¼½¾¿ÀÁÂÄÅÆÇÈÉÊËÌÎÏÑÒÓÔÖØÙÚÛÜÞßàáâäåæçèéêëìíîïñòóôöøùúûüŒœŠšž€™␀﻿﻿﻿﻿﻿﻿";
+            Regex rgx = new Regex("[^" + validAlphaNumerics + validSpecialCharacters + "]*");
+            value = rgx.Replace(value, "");
             return value;
         }
 
@@ -469,6 +491,12 @@ namespace RocksmithToolkitLib.Extensions
             return result;
         }
 
+        public static string RestoreCRLF(this string value)
+        {
+            // replace single lf with crlf
+            return Regex.Replace(value, @"\r\n?|\n", "\r\n");
+        }
+
         /// <summary>
         /// Moves short words like "The " from the begining of a string to the end ", The" 
         /// </summary>
@@ -500,6 +528,12 @@ namespace RocksmithToolkitLib.Extensions
             return value;
         }
 
+        public static string StripCRLF(this string value, string replacement = "")
+        {
+            // replace single lf and/or crlf
+            return Regex.Replace(value, @"\r\n?|\n", replacement);
+        }
+
         public static string StripDiacritics(this string value)
         {
             // test string = "áéíóúç";
@@ -517,18 +551,16 @@ namespace RocksmithToolkitLib.Extensions
         }
 
         /// <summary>
-        /// Strips non-printable ASCII characters
+        /// Strips non-printable characters and returns valid UTF8 XML
         /// </summary>
-        /// <param name="filePath">Full path to the File</param>
-        public static Stream StripIllegalXMLChars(this string filePath)
+        public static Stream StripIllegalXMLChars(this string value)
         {
-            string tmpContents = File.ReadAllText(filePath);
             const string pattern = @"[\x01-\x08\x0B-\x0C\x0E-\x1F\x7F-\x84\x86-\x9F]"; // XML1.1
+            value = Regex.Replace(value, pattern, "", RegexOptions.IgnoreCase);
 
-            tmpContents = Regex.Replace(tmpContents, pattern, "", RegexOptions.IgnoreCase);
-
-            return new MemoryStream(new UTF8Encoding(false).GetBytes(tmpContents));
+            return new MemoryStream(new UTF8Encoding(false).GetBytes(value));
         }
+
 
         public static string StripLeadingNumbers(this string value)
         {
@@ -589,6 +621,6 @@ namespace RocksmithToolkitLib.Extensions
             return result;
         }
 
-
+        #endregion
     }
 }

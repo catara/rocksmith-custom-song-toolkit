@@ -436,12 +436,6 @@ namespace RocksmithToolkitLib.DLCPackage
                 {
                     // TOOLKIT VERSION
                     var stopHere = info;
-                    //var gg = info.ToolkitInfo.PackageAuthor;
-                    //var hh = info.ToolkitInfo.PackageVersion;
-                    //var ff= info.ToolkitInfo.PackageComment;
-                    GenerateToolkitVersion(toolkitVersionStream, "", "", "");
-                    //GenerateToolkitVersion(toolkitVersionStream, info.ToolkitInfo.PackageAuthor, info.ToolkitInfo.PackageVersion, info.ToolkitInfo.PackageComment);
-
                     packPsarc.AddEntry("toolkit.version", toolkitVersionStream);
 
                     // APP ID

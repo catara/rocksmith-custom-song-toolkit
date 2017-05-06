@@ -65,6 +65,7 @@ namespace RocksmithToolkitGUI.DLCManager
         public string title_duplic { get; set; }
         public string original_Platform { get; set; }
         public string isLive { get; set; }
+        public string isAcoustic { get; set; }
         public string liveDetails { get; set; }
 
         //public bool newold { get; set; }
@@ -79,7 +80,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         //}
 
-        internal frm_Duplicates_Management(GenericFunctions.MainDBfields filed, DLCPackageData datas, string author, string tkversion, string dD, string bass, string guitar, string combo, string rhythm, string lead, string vocal, string tunnings, int i, int norows, string original_FileName, string art_hash, string audio_hash, string audioPreview_hash, List<string> alist, List<string> blist, string DBPath, List<string> clist, List<string> dlist, bool newold, string Is_Original, string altvert, string txt_RocksmithDLCPath, bool AllowEncript, bool AllowORIGDelete, string FileSize, string unpackedDir, string Is_MultiTrack, string MultiTrack_Version, string FileDate, string title_duplic, string original_Platform, string IsLive, string LiveDetails)//string Is_MultiTracking, string Multitracking, 
+        internal frm_Duplicates_Management(GenericFunctions.MainDBfields filed, DLCPackageData datas, string author, string tkversion, string dD, string bass, string guitar, string combo, string rhythm, string lead, string vocal, string tunnings, int i, int norows, string original_FileName, string art_hash, string audio_hash, string audioPreview_hash, List<string> alist, List<string> blist, string DBPath, List<string> clist, List<string> dlist, bool newold, string Is_Original, string altvert, string txt_RocksmithDLCPath, bool AllowEncript, bool AllowORIGDelete, string FileSize, string unpackedDir, string Is_MultiTrack, string MultiTrack_Version, string FileDate, string title_duplic, string original_Platform, string IsLive, string LiveDetails, string IsAcoustic)//string Is_MultiTracking, string Multitracking, 
         //file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, Tunings, b, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist, DB_Path, clist, dlist, newold, Is_Original, altver
         {
             //Text = text;
@@ -123,6 +124,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.original_Platform = original_Platform;
             this.liveDetails = LiveDetails;
             this.isLive = IsLive;
+            this.isAcoustic = IsAcoustic;
             InitializeComponent();
             //MessageBox.Show(DB_Path);
             //DB_Path = text;
@@ -256,6 +258,9 @@ namespace RocksmithToolkitGUI.DLCManager
             chbx_LiveExisting.Checked = filed.Is_Live == "Yes" ? true : false;
             txt_LiveDetailsExisting.Enabled = filed.Is_Live == "Yes" ? true : false;
             txt_LiveDetailsExisting.Text = (filed.Live_Details == "") ? "" : filed.Live_Details;
+
+            chbx_AcousticNew.Checked = isAcoustic == "Yes" ? true : false;
+            chbx_AcousticExisting.Checked = filed.Is_Acoustic == "Yes" ? true : false;
 
             Art_Hash = filed.AlbumArt_Hash;
 
@@ -1052,6 +1057,7 @@ namespace RocksmithToolkitGUI.DLCManager
             ExistingTrackNo = filed.Track_No;
             IgnoreRest = chbx_IgnoreDupli.Checked;
             isLive= chbx_LiveNew.Checked ? "Yes" : "No";
+            isAcoustic = chbx_AcousticNew.Checked ? "Yes" : "No";
 
             ConfigRepository.Instance()["dlcm_DupliM_Sync"] = chbx_Sort.Checked == true ? "Yes" : "No";
             ConfigRepository.Instance()["dlcm_Autosave"] = chbx_Autosave.Checked == true ? "Yes" : "No";
@@ -1109,12 +1115,13 @@ namespace RocksmithToolkitGUI.DLCManager
             //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
             //    {
             sel = "UPDATE Main SET Artist=\"" + ar + "\", Artist_Sort=\"" + txt_ArtistSortExisting.Text + "\", Album=\"" + al + "\", Song_Title=\"" + txt_TitleExisting.Text;
-            sel += "\", Song_Title_Sort=\"" + txt_TitleSortExisting.Text + "\", Author=\"" + (txt_AuthorExisting.Text == "" ? "Custom Song Creator" : txt_AuthorExisting.Text);
+            sel += "\", Song_Title_Sort=\"" + txt_TitleSortExisting.Text + "\", Author=\"" + (txt_AuthorExisting.Text == "" ? (ConfigRepository.Instance()["dlcm_AdditionalManipul47"] == "Yes" ?"":"Custom Song Creator") : txt_AuthorExisting.Text);
             sel += "\", Version=\"" + (txt_VersionExisting.Text == "" ? "1" : txt_VersionExisting.Text) + "\", DLC_Name=\"" + txt_DLCIDExisting.Text + "\",";
             sel += (txt_Description.Text == "" ? "" : " Description = \"" + txt_Description.Text + "\",") + (txt_Comment.Text == "" ? "" : " Comments = \"" + txt_Comment.Text + "\","); //"\"," +
             sel += " Is_Alternate = \"" + (chbx_IsAlternateExisting.Checked ? "Yes" : "No") + "\", Alternate_Version_No = \"" + alt + "\",";// + "\"", AlbumArtPath = \"" + (rbtn_CoverNew.Checked ? picbx_AlbumArtPathNew.ImageLocation : picbx_AlbumArtPathExisting.ImageLocation);// + "\", Is_Original = \"" + (chbx_IsOriginal.Checked ? "Yes" : "No");
             sel += " Is_MultiTrack = \"" + (chbx_MultiTrackExisting.Checked ? "Yes" : "No") + "\", MultiTrack_Version = \"" + (chbx_MultiTrackExisting.Checked ? txt_MultiTrackExisting.Text : "") + "\",";// + "\"", AlbumArtPath = \"" + (rbtn_CoverNew.Checked ? picbx_AlbumArtPathNew.ImageLocation : picbx_AlbumArtPathExisting.ImageLocation);// + "\", Is_Original = \"" + (chbx_IsOriginal.Checked ? "Yes" : "No");
             sel += " Is_Live = \"" + (chbx_LiveExisting.Checked ? "Yes" : "No") + "\", Live_Details = \"" + (chbx_LiveExisting.Checked ? txt_LiveDetailsExisting.Text : "") + "\",";// + "\"", AlbumArtPath = \"" + (rbtn_CoverNew.Checked ? picbx_AlbumArtPathNew.ImageLocation : picbx_AlbumArtPathExisting.ImageLocation);// + "\", Is_Original = \"" + (chbx_IsOriginal.Checked ? "Yes" : "No");
+            sel += " Is_Acoustic = \"" + (chbx_AcousticExisting.Checked ? "Yes" : "No") + "\","; ;
             sel += " AlbumArtPath = \"" + picbx_AlbumArtPathExisting.ImageLocation.Replace(".png", ".dds") + "\", AlbumArt_Hash = \"" + GetHash(picbx_AlbumArtPathExisting.ImageLocation.Replace(".png", ".dds")) + "\",";// + "\"", AlbumArtPath = \"" + (rbtn_CoverNew.Checked ? picbx_AlbumArtPathNew.ImageLocation : picbx_AlbumArtPathExisting.ImageLocation);// + "\", Is_Original = \"" + (chbx_IsOriginal.Checked ? "Yes" : "No");
             sel += " YouTube_Link = \"" + txt_YouTube_LinkExisting.Text + "\", CustomsForge_Link = \"" + txt_CustomsForge_LinkExisting.Text + "\",";
             sel += " CustomsForge_Like = \"" + txt_CustomsForge_LikeExisting.Text + "\", CustomsForge_ReleaseNotes = \"" + txt_CustomsForge_ReleaseNotesExisting.Text + "\"";
@@ -1724,13 +1731,13 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void chbx_LiveExisting_CheckedChanged(object sender, EventArgs e)
         {
-            if (chbx_LiveExisting.Checked) { txt_LiveDetailsExisting.Enabled = true; ExistChng = true; }
+            if (chbx_LiveExisting.Checked || chbx_AcousticExisting.Checked) { txt_LiveDetailsExisting.Enabled = true; ExistChng = true; }
             else txt_LiveDetailsExisting.Enabled = false;
         }
 
         private void chbx_LiveNew_CheckedChanged(object sender, EventArgs e)
         {
-            if (chbx_LiveNew.Checked) { txt_LiveDetailsNew.Enabled = true; ExistChng = true; }
+            if (chbx_LiveNew.Checked || chbx_AcousticNew.Checked) { txt_LiveDetailsNew.Enabled = true; ExistChng = true; }
             else txt_LiveDetailsNew.Enabled = false;
         }
     }

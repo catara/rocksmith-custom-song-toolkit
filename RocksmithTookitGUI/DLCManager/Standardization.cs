@@ -516,7 +516,7 @@ namespace RocksmithToolkitGUI.DLCManager
             DataGridView1.Rows[i].Cells[7].Value = txt_Comments.Text;
             DataGridView1.Rows[i].Cells[8].Value = txt_Artist_Short.Text;
             //if (txt_Artist_Short.Text != "")
-            DataGridView1.Rows[i].Cells[9].Value = txt_Artist_Short.Text;
+            DataGridView1.Rows[i].Cells[9].Value = txt_Album_Short.Text;
             //if (txt_Year_Correction.Text != "")
             DataGridView1.Rows[i].Cells[10].Value = txt_Year_Correction.Text;
             //if (txt_Album_Short.Text != "")

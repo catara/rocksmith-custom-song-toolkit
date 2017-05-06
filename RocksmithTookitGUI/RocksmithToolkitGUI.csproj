@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>RocksmithToolkitGUI</RootNamespace>
     <AssemblyName>RocksmithToolkitGUI</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <StartupObject>RocksmithToolkitGUI.Program</StartupObject>
     <TargetFrameworkProfile />
@@ -41,12 +41,12 @@
     <ApplicationIcon>songcreator.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CFSM.AudioTools, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLCManager\external_tools\remastered\bin\Release\CFSM.AudioTools.dll</HintPath>
+    </Reference>
     <Reference Include="FSharp.Core, Version=4.4.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\FSharp.Core.4.0.1.7-alpha\lib\net40\FSharp.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="HtmlAgilityPack, Version=1.4.9.5, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
-      <HintPath>..\packages\HtmlAgilityPack.1.4.9.5\lib\Net45\HtmlAgilityPack.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, processorArchitecture=MSIL">
@@ -55,6 +55,10 @@
     </Reference>
     <Reference Include="NDesk.Options">
       <HintPath>..\lib\NDesk\NDesk.Options.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLCManager\external_tools\remastered\bin\Release\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NLog">
       <HintPath>..\lib\NLog\NLog.dll</HintPath>
@@ -98,6 +102,10 @@
     </Reference>
     <Reference Include="X360">
       <HintPath>..\lib\X360\X360.dll</HintPath>
+    </Reference>
+    <Reference Include="zlib.net, Version=1.0.3.0, Culture=neutral, PublicKeyToken=47d7877cb3620160">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLCManager\external_tools\remastered\bin\Release\zlib.net.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -145,6 +153,13 @@
     <Compile Include="DLCManager\DuplicatesManagement.Designer.cs">
       <DependentUpon>DuplicatesManagement.cs</DependentUpon>
     </Compile>
+    <Compile Include="DLCManager\external_tools\remastered\Entry.cs" />
+    <Compile Include="DLCManager\external_tools\remastered\Program.cs" />
+    <Compile Include="DLCManager\external_tools\remastered\Properties\Resources.Designer.cs" />
+    <Compile Include="DLCManager\external_tools\remastered\PSARC.cs" />
+    <Compile Include="DLCManager\external_tools\remastered\PsarcBrowser.cs" />
+    <Compile Include="DLCManager\external_tools\remastered\PsarcExtensions.cs" />
+    <Compile Include="DLCManager\external_tools\remastered\PsarcPackager.cs" />
     <Compile Include="DLCManager\GenericFunctions.cs" />
     <Compile Include="DLCManager\MainDB.cs">
       <SubType>Form</SubType>
@@ -333,6 +348,10 @@
     <EmbeddedResource Include="DLCManager\DLCManager.resx">
       <DependentUpon>DLCManager.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DLCManager\external_tools\remastered\obj\Debug\remastered.Properties.Resources.resources" />
+    <EmbeddedResource Include="DLCManager\external_tools\remastered\obj\x86\Debug\remastered.Properties.Resources.resources" />
+    <EmbeddedResource Include="DLCManager\external_tools\remastered\obj\x86\Release\remastered.Properties.Resources.resources" />
+    <EmbeddedResource Include="DLCManager\external_tools\remastered\Properties\Resources.resx" />
     <EmbeddedResource Include="DLCManager\MainDB.resx">
       <DependentUpon>MainDB.cs</DependentUpon>
     </EmbeddedResource>
@@ -428,6 +447,9 @@
     <EmbeddedResource Include="ZiggyProEditorConverter\ZpeConverter.resx">
       <DependentUpon>ZpeConverter.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="DLCManager\external_tools\CDLCEnablers\RUN_PATCH_RS.orig.command">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="DLCManager\external_tools\eof1.8RC12\AVDelay\guitar.ogg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -464,14 +486,14 @@
     <None Include="DLCManager\external_tools\eof1.8RC12\wavtoogg.bat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="DLCManager\external_tools\CDLCEnabblers\insert_dylib">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <None Include="DLCManager\external_tools\CDLCEnablers\insert_dylib">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="DLCManager\external_tools\CDLCEnabblers\libRSBypass.dylib">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <None Include="DLCManager\external_tools\CDLCEnablers\libRSBypass.dylib">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="DLCManager\external_tools\CDLCEnabblers\RUN_PATCH_RS.command">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <None Include="DLCManager\external_tools\CDLCEnablers\RUN_PATCH_RS.command">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="DLCManager\external_tools\NVorbis.bin.0.8.4\COPYING">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -482,6 +504,35 @@
     <None Include="DLCManager\external_tools\packed_codebooks_aoTuV_603.bin">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="DLCManager\external_tools\remastered\.vs\remastered\v15\.suo" />
+    <None Include="DLCManager\external_tools\remastered\bin\Debug\packed_codebooks.bin" />
+    <None Include="DLCManager\external_tools\remastered\bin\Debug\packed_codebooks_aoTuV_603.bin" />
+    <None Include="DLCManager\external_tools\remastered\bin\Release\packed_codebooks.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DLCManager\external_tools\remastered\bin\Release\packed_codebooks_aoTuV_603.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DLCManager\external_tools\remastered\obj\Debug\CoreCompileInputs.cache" />
+    <None Include="DLCManager\external_tools\remastered\obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <None Include="DLCManager\external_tools\remastered\obj\Debug\remastered.csproj.GenerateResource.Cache" />
+    <None Include="DLCManager\external_tools\remastered\obj\Debug\remastered.csprojResolveAssemblyReference.cache" />
+    <None Include="DLCManager\external_tools\remastered\obj\x86\Debug\CoreCompileInputs.cache" />
+    <None Include="DLCManager\external_tools\remastered\obj\x86\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <None Include="DLCManager\external_tools\remastered\obj\x86\Debug\remastered.csproj.GenerateResource.Cache" />
+    <None Include="DLCManager\external_tools\remastered\obj\x86\Debug\remastered.csprojResolveAssemblyReference.cache" />
+    <None Include="DLCManager\external_tools\remastered\obj\x86\Release\CoreCompileInputs.cache" />
+    <None Include="DLCManager\external_tools\remastered\obj\x86\Release\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <None Include="DLCManager\external_tools\remastered\obj\x86\Release\remastered.csproj.GenerateResource.Cache" />
+    <None Include="DLCManager\external_tools\remastered\obj\x86\Release\remastered.csprojResolveAssemblyReference.cache" />
+    <None Include="DLCManager\external_tools\remastered\packed_codebooks.bin" />
+    <None Include="DLCManager\external_tools\remastered\packed_codebooks_aoTuV_603.bin" />
+    <None Include="DLCManager\external_tools\remastered\Program.cs.org" />
+    <None Include="DLCManager\external_tools\remastered\remastered.exe -org -pre.bat" />
+    <None Include="DLCManager\external_tools\remastered\remastered.exe -org.bat" />
+    <None Include="DLCManager\external_tools\remastered\remastered.exe -pre.bat" />
+    <None Include="DLCManager\external_tools\remastered\remastered.exe -ren.bat" />
+    <None Include="DLCManager\external_tools\remastered\remastered.exe.bat" />
     <None Include="DLCManager\external_tools\WinMerge\Docs\WinMerge.chm">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -754,8 +805,8 @@
     <Content Include="DLCManager\external_tools\eof1.8RC12\chordshapes.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="DLCManager\external_tools\CDLCEnabblers\D3DX9_42.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <Content Include="DLCManager\external_tools\CDLCEnablers\D3DX9_42.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="DLCManager\external_tools\eof1.8RC12\eof.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1108,6 +1159,115 @@
     <Content Include="DLCManager\external_tools\oggenc.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="DLCManager\external_tools\remastered.exe" />
+    <Content Include="DLCManager\external_tools\remastered\bin\Debug\CFSM.AudioTools.dll" />
+    <Content Include="DLCManager\external_tools\remastered\bin\Debug\CLI.ico" />
+    <Content Include="DLCManager\external_tools\remastered\bin\Debug\DF_DDSImage.dll" />
+    <Content Include="DLCManager\external_tools\remastered\bin\Debug\ICSharpCode.SharpZipLib.dll" />
+    <Content Include="DLCManager\external_tools\remastered\bin\Debug\MiscUtil.dll" />
+    <Content Include="DLCManager\external_tools\remastered\bin\Debug\MiscUtil.xml" />
+    <Content Include="DLCManager\external_tools\remastered\bin\Debug\NDesk.Options.dll" />
+    <Content Include="DLCManager\external_tools\remastered\bin\Debug\Newtonsoft.Json.dll" />
+    <Content Include="DLCManager\external_tools\remastered\bin\Debug\Newtonsoft.Json.xml" />
+    <Content Include="DLCManager\external_tools\remastered\bin\Debug\remastered.exe" />
+    <Content Include="DLCManager\external_tools\remastered\bin\Debug\remastered.pdb" />
+    <Content Include="DLCManager\external_tools\remastered\bin\Debug\revorb.exe" />
+    <Content Include="DLCManager\external_tools\remastered\bin\Debug\RocksmithToolkitLib.Config.xml" />
+    <Content Include="DLCManager\external_tools\remastered\bin\Debug\RocksmithToolkitLib.dll" />
+    <Content Include="DLCManager\external_tools\remastered\bin\Debug\RocksmithToolkitLib.pdb" />
+    <Content Include="DLCManager\external_tools\remastered\bin\Debug\RocksmithToolkitLib.SongAppId.xml" />
+    <Content Include="DLCManager\external_tools\remastered\bin\Debug\RocksmithToolkitLib.TuningDefinition.xml" />
+    <Content Include="DLCManager\external_tools\remastered\bin\Debug\ww2ogg.exe" />
+    <Content Include="DLCManager\external_tools\remastered\bin\Debug\X360.dll" />
+    <Content Include="DLCManager\external_tools\remastered\bin\Debug\X360.xml" />
+    <Content Include="DLCManager\external_tools\remastered\bin\Debug\zlib.net.dll" />
+    <Content Include="DLCManager\external_tools\remastered\bin\Release\CFSM.AudioTools.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\remastered\bin\Release\CLI.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\remastered\bin\Release\DF_DDSImage.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\remastered\bin\Release\ICSharpCode.SharpZipLib.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\remastered\bin\Release\MiscUtil.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\remastered\bin\Release\MiscUtil.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\remastered\bin\Release\NDesk.Options.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\remastered\bin\Release\Newtonsoft.Json.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\remastered\bin\Release\Newtonsoft.Json.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\remastered\bin\Release\remastered.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\remastered\bin\Release\remastered.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\remastered\bin\Release\revorb.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\remastered\bin\Release\RocksmithToolkitLib.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\remastered\bin\Release\RocksmithToolkitLib.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\remastered\bin\Release\ww2ogg.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\remastered\bin\Release\X360.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\remastered\bin\Release\X360.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\remastered\bin\Release\zlib.net.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\remastered\CFSM.AudioTools.dll" />
+    <Content Include="DLCManager\external_tools\remastered\CLI.ico" />
+    <Content Include="DLCManager\external_tools\remastered\DF_DDSImage.dll" />
+    <Content Include="DLCManager\external_tools\remastered\ICSharpCode.SharpZipLib.dll" />
+    <Content Include="DLCManager\external_tools\remastered\MiscUtil.dll" />
+    <Content Include="DLCManager\external_tools\remastered\MiscUtil.xml" />
+    <Content Include="DLCManager\external_tools\remastered\NDesk.Options.dll" />
+    <Content Include="DLCManager\external_tools\remastered\Newtonsoft.Json.dll" />
+    <Content Include="DLCManager\external_tools\remastered\Newtonsoft.Json.xml" />
+    <Content Include="DLCManager\external_tools\remastered\obj\Debug\remastered.csproj.FileListAbsolute.txt" />
+    <Content Include="DLCManager\external_tools\remastered\obj\Debug\remastered.exe" />
+    <Content Include="DLCManager\external_tools\remastered\obj\Debug\remastered.pdb" />
+    <Content Include="DLCManager\external_tools\remastered\obj\Debug\TempPE\Properties.Resources.Designer.cs.dll" />
+    <Content Include="DLCManager\external_tools\remastered\obj\x86\Debug\remastered.csproj.FileListAbsolute.txt" />
+    <Content Include="DLCManager\external_tools\remastered\obj\x86\Debug\remastered.exe" />
+    <Content Include="DLCManager\external_tools\remastered\obj\x86\Debug\remastered.pdb" />
+    <Content Include="DLCManager\external_tools\remastered\obj\x86\Debug\TempPE\Properties.Resources.Designer.cs.dll" />
+    <Content Include="DLCManager\external_tools\remastered\obj\x86\Release\remastered.csproj.FileListAbsolute.txt" />
+    <Content Include="DLCManager\external_tools\remastered\obj\x86\Release\remastered.exe" />
+    <Content Include="DLCManager\external_tools\remastered\obj\x86\Release\remastered.pdb" />
+    <Content Include="DLCManager\external_tools\remastered\obj\x86\Release\TempPE\Properties.Resources.Designer.cs.dll" />
+    <Content Include="DLCManager\external_tools\remastered\remastered.csproj" />
+    <Content Include="DLCManager\external_tools\remastered\remastered.exe" />
+    <Content Include="DLCManager\external_tools\remastered\remastered.sln" />
+    <Content Include="DLCManager\external_tools\remastered\revorb.exe" />
+    <Content Include="DLCManager\external_tools\remastered\RocksmithToolkitLib.Config.xml" />
+    <Content Include="DLCManager\external_tools\remastered\RocksmithToolkitLib.dll" />
+    <Content Include="DLCManager\external_tools\remastered\RocksmithToolkitLib.pdb" />
+    <Content Include="DLCManager\external_tools\remastered\RocksmithToolkitLib.SongAppId.xml" />
+    <Content Include="DLCManager\external_tools\remastered\ww2ogg.exe" />
+    <Content Include="DLCManager\external_tools\remastered\X360.dll" />
+    <Content Include="DLCManager\external_tools\remastered\X360.xml" />
+    <Content Include="DLCManager\external_tools\remastered\zlib.net.dll" />
     <Content Include="DLCManager\external_tools\UltraStar Creator\bass.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1648,6 +1808,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DLCManager\external_tools\eof1.8RC12\temp\" />
+    <Folder Include="DLCManager\external_tools\remastered\bin\Debug\tmp\" />
+    <Folder Include="DLCManager\external_tools\remastered\Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

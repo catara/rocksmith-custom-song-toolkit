@@ -89,18 +89,28 @@
 [ ] duplicate lead to Rhythm
 [ ] do i delete things three time, one more redundantly
 [ ] copy imported files
+if info in the title dont add
+[-] Enable CDLC
+Repair broken CDLC
+46&2 lyrics from old one
+[x] standardization issues nin short is always on
+[x] search by album/comments/details
+[x] add acoustic
+[x] add acoustic to duplciates
+7033 issues with old file
+
 copied copied copied
 overrite rename buttons
 mac song gen errors at read dlc library
 Profiles should include also Format
 replace all does not exist
-come together lyrics
+[ ] come together lyrics
 each platform should have its own remote location
 delete moves to duplicates but does not add dupli if exists
 delete does not delete the actual record from repack_audittrail
 INCUBUS REDEFINE MULTI SHOWS IN RED AT DUPLICATION MANAGEMENT SCREEN
 fix import current month
-bitrate to cpress maybe a config
+bitrate to compress maybe a config
 select incl groups has a small error
 standardization still w duplicates
 mantra cannot be imported
@@ -112,6 +122,35 @@ log is not last come first entry
 check originals vs original dbb
 why do i have duplciates on the ps3
 multiple repacks cannto happen
+[ ] progress bar on possible duplicate import is too short
+[ ] populate new tone fields
+[-] prepare the rebuild option
+[-] is dupli marked as ignore/ duplicate decompressed folder deleted?
+[-] redo save track at pack with update function
+[-] improve the overlay
+[-] fix for rebuild missing file
+[-] disable old and L->r
+[-] delete lib (gather lib from ps3-ftp/mac/pc 1. save 2. copy new)
+	[ ] Delete All
+[ ] cannot find sick sick sic (override)
+[ ] audioslave sections missing maybe cause its an original and i used my own logic to strip the DD
+[ ] usa peaches long naming fails at packing (shortes folder the random id)
+  [ ] ps3 long names sogs(149char)(cannot be read)
+  [ ] after selecting deselect incl. Beta
+[x] update to wise 2015 (messages&testing)
+[ ] add simple logic to add sections
+	[ ] check and fix the Sections flag
+	[+] add sections (bored to death; Renabled BPR program)
+	[ ] add conter of sections
+[x] ignore and del 4k/no psarc files invalid wil/should be added by nmew validation
+[x] alternate 0 improve
+	[+] with or without u still doesnt have the right alternate no when importing vs an existing song= a2....maybe OK :)
+	[ ]alt 1 ahead of a.
+[x] fix importing own songs, eg. ana
+[ ] standardiation double counted songs 7981
+[ ] stadardization still fedup adding duplicates
+[x] check help that crashed at infi.nhame (broken now) partial file now we do some checks on extension
+[-] add copy last and initial to mass pack
 [x] standardise genhash to the already exiusting maindb.GetHashCode
 [x] filename has [] covering artist name/album ...no [] separator for FN
 [x] reset crashes maindb..not realy
@@ -125,6 +164,7 @@ multiple repacks cannto happen
 [x] add random no in title
 [x] why packID has that weird format
 [x] find missing..also should check folders
+[ ] Add repair option
 [ ] update readme.md screenshots
 [ ] try db constant connection
 year inconsitencies (check should show these as well)
@@ -157,7 +197,7 @@ done:
 	[x] when clicking on a song disable Search
 [x] delete all duplicates at Standardization
 	[+] small bug: on inserting a new standardization
-[+] add group to Beta
+[x] add group to Beta
 [x] standardiation delete does not refresh
 [x] duplicate import should save the names of the files in a separate table :) (not req)
 	[x] save also hash not to ask again for duplicates if already decided as duplicate (all imported are saved and so checked for hexa code)
@@ -201,41 +241,12 @@ done:
 [x] qa still doesnt says novales (was not in the xml)
 [x] TEst Live Removal
 [x] duplicate should also compare multitrack version and live_details
-[+] at pack mark as selected - Conflicting with Select functionality (is this useful? :) )
+[x] at pack mark as selected - Conflicting with Select functionality (is this useful? :) )
 [x] Create a new filter Deselect LAst PAcked. no deen
 [x] Profile Temp is now debug
 [x] Selecting no profile now is not gen error
 [x] fix for import unique hash for any
 [x] Fix for Copy Selection Old
-[-] delete lib (gather lib from ps3-ftp/mac/pc 1. save 2. copy new)
-	[ ] Delete All
-[ ] cannot find sick sick sic (override)
-[ ] audioslave sections missing maybe cause its an original and i used my own logic to strip the DD
-[ ] usa peaches long naming fails at packing (shortes folder the random id)
-  [ ] ps3 long names sogs(149char)(cannot be read)
-  [ ] after selecting deselect incl. Beta
-[x] update to wise 2015 (messages&testing)
-[ ] add simple logic to add sections
-	[ ] check and fix the Sections flag
-	[+] add sections (bored to death; Renabled BPR program)
-	[ ] add conter of sections
-[x] ignore and del 4k/no psarc files invalid wil/should be added by nmew validation
-[ ] progress bar on possible duplicate import is too short
-[ ] populate new tone fields
-[-] prepare the rebuild option
-[-] is dupli marked as ignore/ duplicate decompressed folder deleted?
-[-] redo save track at pack with update function
-[-] improve the overlay
-[-] fix for rebuild missing file
-[-] disable old and L->r
-[x] alternate 0 improve
-	[+] with or without u still doesnt have the right alternate no when importing vs an existing song= a2....maybe OK :)
-	[ ]alt 1 ahead of a.
-[x] fix importing own songs, eg. ana
-[ ] standardiation double counted songs 7981
-[ ] stadardization still fedup adding duplicates
-[x] check help that crashed at infi.nhame (broken now) partial file now we do some checks on extension
-[ ] add copy last and initial to mass copy
 [+] third eye investig
 [x] count the trully ftp
 [x] added vocals hash is missing

@@ -113,7 +113,7 @@
             this.btn_ProfilesSave = new System.Windows.Forms.Button();
             this.btn_ProfileRemove = new System.Windows.Forms.Button();
             this.btn_OpenLogsFolder = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btn_Enable_CDLC = new System.Windows.Forms.Button();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -523,6 +523,7 @@
             "<Bass_HasDD>",
             "<Timestamp>",
             "<Live>",
+            "<Acoustic>",
             "<Random5>",
             "<CDLC_ID>"});
             this.cbx_Artist_Sort.Location = new System.Drawing.Point(796, 502);
@@ -727,6 +728,7 @@
             "<Bass_HasDD>",
             "<Timestamp>",
             "<Live>",
+            "<Acoustic>",
             "<Random5>",
             "<CDLC_ID>"});
             this.cbx_Artist.Location = new System.Drawing.Point(796, 462);
@@ -784,6 +786,7 @@
             "<Bass_HasDD>",
             "<Timestamp>",
             "<Live>",
+            "<Acoustic>",
             "<Random5>",
             "<CDLC_ID>"});
             this.cbx_Title.Location = new System.Drawing.Point(796, 377);
@@ -877,6 +880,7 @@
             "<Bass_HasDD>",
             "<Timestamp>",
             "<Live>",
+            "<Acoustic>",
             "<Random5>",
             "<CDLC_ID>"});
             this.cbx_File_Name.Location = new System.Drawing.Point(796, 588);
@@ -935,6 +939,7 @@
             "<Bass_HasDD>",
             "<Timestamp>",
             "<Live>",
+            "<Acoustic>",
             "<Random5>",
             "<CDLC_ID>"});
             this.cbx_Album.Location = new System.Drawing.Point(796, 544);
@@ -992,6 +997,7 @@
             "<Bass_HasDD>",
             "<Timestamp>",
             "<Live>",
+            "<Acoustic>",
             "<Random5>",
             "<CDLC_ID>"});
             this.cbx_Title_Sort.Location = new System.Drawing.Point(796, 419);
@@ -1093,6 +1099,7 @@
             this.txt_RocksmithDLCPath.TabIndex = 2;
             this.toolTip1.SetToolTip(this.txt_RocksmithDLCPath, "Import Location.\r\nIf it is the Rocksmith Location then Files will be moved out an" +
         "d only replaced with Manged version at Repack.");
+            this.txt_RocksmithDLCPath.TextChanged += new System.EventHandler(this.txt_RocksmithDLCPath_TextChanged);
             // 
             // txt_TempPath
             // 
@@ -1408,23 +1415,24 @@
             this.btn_OpenLogsFolder.UseVisualStyleBackColor = false;
             this.btn_OpenLogsFolder.Click += new System.EventHandler(this.button1_Click_1);
             // 
-            // button1
+            // btn_Enable_CDLC
             // 
-            this.button1.BackColor = System.Drawing.SystemColors.Control;
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(612, 325);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(158, 41);
-            this.button1.TabIndex = 390;
-            this.button1.Text = "Enable CDCL";
-            this.button1.UseVisualStyleBackColor = false;
+            this.btn_Enable_CDLC.BackColor = System.Drawing.SystemColors.Control;
+            this.btn_Enable_CDLC.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Enable_CDLC.Location = new System.Drawing.Point(612, 325);
+            this.btn_Enable_CDLC.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            this.btn_Enable_CDLC.Name = "btn_Enable_CDLC";
+            this.btn_Enable_CDLC.Size = new System.Drawing.Size(158, 41);
+            this.btn_Enable_CDLC.TabIndex = 390;
+            this.btn_Enable_CDLC.Text = "Enable CDCL";
+            this.btn_Enable_CDLC.UseVisualStyleBackColor = false;
+            this.btn_Enable_CDLC.Click += new System.EventHandler(this.btn_Enable_CDLC_Click);
             // 
             // DLCManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btn_Enable_CDLC);
             this.Controls.Add(this.btn_OpenLogsFolder);
             this.Controls.Add(this.btn_ProfileRemove);
             this.Controls.Add(this.btn_ProfilesSave);
@@ -1590,6 +1598,6 @@
         private System.Windows.Forms.Button btn_OpenLogsFolder;
         private System.Windows.Forms.Button btm_GoRepack;
         private System.Windows.Forms.Button btn_RefreshSelected;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btn_Enable_CDLC;
     }
 }

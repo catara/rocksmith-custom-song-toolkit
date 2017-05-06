@@ -30,7 +30,7 @@ namespace remastered
         private static bool optionPre;
         private static bool optionRen;
         private static bool optionSil;
-        private static string platformExt;
+        //private static string platformExt;
         private static StringBuilder sbErrors = new StringBuilder();
         private static string workDirectory;
 
@@ -46,11 +46,11 @@ namespace remastered
             // give the progie some dumby file to work on
             // args = new string[] { "D:\\Temp\\Test\\The_Beatles-NowhereMan_p.psarc" };
             // args = new string[] { "D:\\Temp\\Test\\PeppaPig_p.psarc" };
-            args = new string[] { "D:\\Temp\\test" };
+            args = new string[] { "C:\\temp\\CustomsForgeSongManager","-log=\"C:\\temp\\CustomsForgeSongManager\\BAD\"" };
             // args = new string[] { "-org", "-pre", "D:\\Temp\\Test\\PeppaPig_p.psarc.org" };
-            // args = new string[] { "-pre", "D:\\Temp\\Test\\PeppaPig_p.psarc" };
+             //args = new string[] { "-pre"};//, "D:\\Temp\\Test\\PeppaPig_p.psarc" 
             // args = new string[] { "-ren", "D:\\Temp\\Test\\PeppaPig_p.psarc.org" };
-            // args = new string[] { "-log \"D:\\Temp\\Test\"", "D:\\Temp\\Test\\PeppaPig_p.psarc" };
+            //args = new string[] { "-log \"C:\\temp\\CustomsForgeSongManager\""};
             ShowMessage("Running in Debug Mode ... Help is not available");
 #endif
 
@@ -60,8 +60,8 @@ namespace remastered
             {
                 var helpMsg =
                     "remastered.exe DropletApp for Rocksmith 2014 CDLC" + Environment.NewLine + Environment.NewLine +
-                    " - PC Version: " + ProjectVersion() + Environment.NewLine +
-                    "   Copyright (C) 2016 Toolkit Developers" + Environment.NewLine + Environment.NewLine +
+                    " - PC Version: " + ProjectVersion() +" bcapi"+ Environment.NewLine +
+                    "   Copyright (C) 2016 Toolkit Developers & bcapi" + Environment.NewLine + Environment.NewLine +
                     " - Purpose: Converts CDLC for use with Rocksmith 2014 Remastered Version." + Environment.NewLine +
                     "            Repairs the 100% bug issue and improves mastery function." + Environment.NewLine +
                     "            Original (*.psarc) files will be renamed as (*.psarc.org)." + Environment.NewLine +
@@ -131,7 +131,7 @@ namespace remastered
                         optionLog = true;
                         workDirectory = args[i].Substring(5).Trim().Trim('"');
                         // add the user specified workDirectory to cleanDirectories list
-                        cleanFolders.Add(workDirectory);
+                       // cleanFolders.Add(workDirectory);
                         argsClean = argsClean.Where(x => x != args[i]).ToArray();
                         ShowMessage("CLI option [-log] was found ...");
                         ShowMessage("Custom Log Path: " + workDirectory);
@@ -152,6 +152,14 @@ namespace remastered
                     Console.ReadKey();
                 return 4;
             }
+            //if (optionLog )
+            //{
+            //    ShowMessage("Option log has been used [-log] pointing to " + workDirectory, MessageType.Warning, prefixLine: true, postfixLine: true);
+            //    ShowMessage("Press any key to continue ...");
+            //    if (!optionSil)
+            //        Console.ReadKey();
+            //    // return 4;
+            //}
 
             if (!Directory.Exists(workDirectory))
                 Directory.CreateDirectory(workDirectory);
@@ -165,7 +173,7 @@ namespace remastered
                     ShowMessage("Parsing folder: " + arg, prefixLine: true, postfixLine: true);
 
                     // enumerate files and skip empty folders
-                    var allFiles = Directory.EnumerateFiles(arg, "*", SearchOption.AllDirectories).ToList();
+                    var allFiles = Directory.EnumerateFiles(arg, "*", SearchOption.TopDirectoryOnly).ToList();
                     if (!allFiles.Any())
                         continue;
 
@@ -274,7 +282,7 @@ namespace remastered
             foreach (var extension in extensions)
             {
                 var filter = String.Format("*{0}*", extension);
-                var filterFilePaths = Directory.EnumerateFiles(argFolderPath, filter, SearchOption.AllDirectories).ToList();
+                var filterFilePaths = Directory.EnumerateFiles(argFolderPath, filter, SearchOption.TopDirectoryOnly).ToList();
                 foreach (var filterFilePath in filterFilePaths)
                 {
                     neededCleaning = true;
@@ -354,7 +362,13 @@ namespace remastered
                     ShowMessage(" - Sucessfully created backup ...");
                 }
                 else
-                    ShowMessage(" - Backup already exists ...");
+                {
+                    Random randomp = new Random();
+                    int rn = randomp.Next(0, 100000);
+                    File.SetAttributes(srcFilePath, FileAttributes.Normal);
+                    File.Copy(srcFilePath, orgFilePath + ".."+rn, false);
+                    ShowMessage(" - Sucessfully created duplciate backup ...");
+                }
             }
             catch (Exception ex)
             {
@@ -506,29 +520,29 @@ namespace remastered
                 if (!optionPre)
                 {
                     // add comment to ToolkitInfo to identify CDLC
-                    var arrIdComment = packageData.PackageComment;
+                    var arrIdComment = "";//packageData.PackageComment;
                     if (String.IsNullOrEmpty(arrIdComment))
                         arrIdComment = TKI_ARRID;
                     else if (!arrIdComment.Contains(TKI_ARRID))
                         arrIdComment = arrIdComment + " " + TKI_ARRID;
 
-                    packageData.PackageComment = arrIdComment;
+                    //packageData.PackageComment = arrIdComment;
                 }
 
                 // add comment to ToolkitInfo to identify CDLC
-                var remasterComment = packageData.PackageComment;
+                var remasterComment = "";// packageData.PackageComment;
                 if (String.IsNullOrEmpty(remasterComment))
                     remasterComment = TKI_REMASTER;
                 else if (!remasterComment.Contains(TKI_REMASTER))
                     remasterComment = remasterComment + " " + TKI_REMASTER;
 
-                packageData.PackageComment = remasterComment;
+                //packageData.PackageComment = remasterComment;
 
                 // add default package version if missing
-                if (String.IsNullOrEmpty(packageData.PackageVersion))
-                    packageData.PackageVersion = "1";
-                else
-                    packageData.PackageVersion = packageData.PackageVersion.GetValidVersion();
+                //if (String.IsNullOrEmpty(packageData.PackageVersion))
+                //    packageData.PackageVersion = "1";
+                //else
+                //    packageData.PackageVersion = packageData.PackageVersion.GetValidVersion();
 
                 // validate packageData (important)
                 packageData.Name = packageData.Name.GetValidKey(); // DLC Key                 

@@ -168,6 +168,8 @@ multiple repacks cannto happen
 [ ] update readme.md screenshots
 [ ] try db constant connection
 year inconsitencies (check should show these as well)
+the pretender doesnt register as alternate
+test replace ....
 
 [x] when repacking groups add group at the beginning of song
 [x] live details should not be active if the song is not based on a live

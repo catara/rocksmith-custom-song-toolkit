@@ -1032,7 +1032,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(252, 203);
+            this.button1.Location = new System.Drawing.Point(252, 198);
             this.button1.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(44, 10);
@@ -1043,7 +1043,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // btm_GoTemp
             // 
             this.btm_GoTemp.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btm_GoTemp.Location = new System.Drawing.Point(247, 46);
+            this.btm_GoTemp.Location = new System.Drawing.Point(247, 49);
             this.btm_GoTemp.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btm_GoTemp.Name = "btm_GoTemp";
             this.btm_GoTemp.Size = new System.Drawing.Size(44, 29);
@@ -1096,7 +1096,7 @@ namespace RocksmithToolkitGUI.DLCManager
             "PS3",
             "Mac",
             "XBOX360"});
-            this.chbx_Format.Location = new System.Drawing.Point(134, 36);
+            this.chbx_Format.Location = new System.Drawing.Point(134, 46);
             this.chbx_Format.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.chbx_Format.Name = "chbx_Format";
             this.chbx_Format.Size = new System.Drawing.Size(106, 33);
@@ -1132,12 +1132,13 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // btn_SteamDLCFolder
             // 
-            this.btn_SteamDLCFolder.Location = new System.Drawing.Point(252, 180);
+            this.btn_SteamDLCFolder.Location = new System.Drawing.Point(252, 185);
             this.btn_SteamDLCFolder.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.btn_SteamDLCFolder.Name = "btn_SteamDLCFolder";
-            this.btn_SteamDLCFolder.Size = new System.Drawing.Size(44, 20);
+            this.btn_SteamDLCFolder.Size = new System.Drawing.Size(44, 11);
             this.btn_SteamDLCFolder.TabIndex = 311;
             this.btn_SteamDLCFolder.Text = "...";
+            this.toolTip1.SetToolTip(this.btn_SteamDLCFolder, "Open Steam DLC Folder");
             this.btn_SteamDLCFolder.UseVisualStyleBackColor = true;
             this.btn_SteamDLCFolder.Click += new System.EventHandler(this.btn_SteamDLCFolder_Click);
             // 

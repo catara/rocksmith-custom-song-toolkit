@@ -727,7 +727,6 @@ namespace RocksmithToolkitGUI.DLCManager
         internal static string Manipulate_strings(string words, int k, bool ifn, bool orig_flag, bool bassRemoved, GenericFunctions.MainDBfields[] SongRecord, string sep1, string sep2)
         {
 
-
             //2. Read from DB
             // Parse the text char by char
             // If <> makes sense then bring that info
@@ -757,114 +756,115 @@ namespace RocksmithToolkitGUI.DLCManager
                 if (orig_flag) origQAs = false;
 
                 oldtxt = fulltxt;
+                string tzt = "";
                 if (curtext == ">")
                 {
                     readt = false;
                     switch (curelem)
                     {
                         case "<Artist>":
-                            fulltxt += sep2 + SongRecord[k].Artist + sep1;
+                            tzt = sep2 + SongRecord[k].Artist + sep1;
                             break;
                         case "<Title>":
-                            fulltxt += sep2 + SongRecord[k].Song_Title + sep1;
+                            tzt = sep2 + SongRecord[k].Song_Title + sep1;
                             break;
                         case "<Artist Sort>":
-                            fulltxt += sep2 + SongRecord[k].Artist_Sort + sep1;
+                            tzt = sep2 + SongRecord[k].Artist_Sort + sep1;
                             break;
                         case "<Title Sort>":
-                            fulltxt += sep2 + SongRecord[k].Song_Title_Sort + sep1;
+                            tzt = sep2 + SongRecord[k].Song_Title_Sort + sep1;
                             break;
                         case "<Album>":
-                            fulltxt += sep2 + SongRecord[k].Album + sep1;
+                            tzt = sep2 + SongRecord[k].Album + sep1;
                             break;
                         case "<Version>":
-                            fulltxt += SongRecord[k].Version;
+                            tzt = SongRecord[k].Version;
                             break;
                         case "<DLCName>":
-                            fulltxt += SongRecord[k].DLC_Name;
+                            tzt = SongRecord[k].DLC_Name;
                             break;
                         case "<Track No.>":
-                            fulltxt += ((SongRecord[k].Track_No != "") ? ("-" + SongRecord[k].Track_No) : "");
+                            tzt = ((SongRecord[k].Track_No != "") ? ("-" + SongRecord[k].Track_No) : "");
                             break;
                         case "<Year>":
-                            fulltxt += SongRecord[k].Album_Year;
+                            tzt = SongRecord[k].Album_Year;
                             break;
                         case "<Rating>":
-                            fulltxt += ((SongRecord[k].Rating == "") ? "" : "r." + SongRecord[k].Rating);
+                            tzt = ((SongRecord[k].Rating == "") ? "" : "r." + SongRecord[k].Rating);
                             break;
                         case "<Alt. Vers.>":
-                            fulltxt += SongRecord[k].Alternate_Version_No == "" ? "" : "a." + SongRecord[k].Alternate_Version_No;
+                            tzt = SongRecord[k].Alternate_Version_No == "" ? "" : "a." + SongRecord[k].Alternate_Version_No;
                             break;
                         case "<Descr.>":
-                            fulltxt += SongRecord[k].Description;
+                            tzt = SongRecord[k].Description;
                             break;
                         case "<Comm.>":
-                            fulltxt += SongRecord[k].Comments;
+                            tzt = SongRecord[k].Comments;
                             break;
                         case "<Tuning>":
-                            fulltxt += SongRecord[k].Tunning;
+                            tzt = SongRecord[k].Tunning;
                             break;
                         case "<Instr. Rating.>":
-                            fulltxt += ((SongRecord[k].Has_Guitar == "Yes") ? "G" : "") + "" + ((SongRecord[k].Has_Bass == "Yes") ? "B" : ""); //not yet done for all arrangements
+                            tzt = ((SongRecord[k].Has_Guitar == "Yes") ? "G" : "") + "" + ((SongRecord[k].Has_Bass == "Yes") ? "B" : ""); //not yet done for all arrangements
                             break;
                         case "<MTrack Det.>":
-                            fulltxt += SongRecord[k].MultiTrack_Version == "" ? "" : "-MultiTrack " + SongRecord[k].MultiTrack_Version;//?
+                            tzt = SongRecord[k].MultiTrack_Version == "" ? "" : "-MultiTrack " + SongRecord[k].MultiTrack_Version;//?
                             break;
                         case "<Group>":
-                            fulltxt += SongRecord[k].Groups;
+                            tzt = SongRecord[k].Groups;
                             break;
                         case "<Beta>":
                             fulltxt = ((SongRecord[k].Is_Beta == "Yes") ? "0" : "") + fulltxt;
                             break;
                         case "<Broken>":
-                            fulltxt = ((SongRecord[k].Is_Broken == "Yes") ? "<B>" : "") + fulltxt;
+                            fulltxt = ((SongRecord[k].Is_Broken == "Yes") ? "Brkn-" : "") + fulltxt;
                             break;
                         case "<File Name>":
-                            fulltxt += SongRecord[k].Current_FileName;
+                            tzt = SongRecord[k].Current_FileName;
                             break;
                         case "<Bonus>":
-                            fulltxt += ((SongRecord[k].Has_Bonus_Arrangement == "Yes") ? "Bonus" : ""); //not yet done for all arrangements
+                            tzt = ((SongRecord[k].Has_Bonus_Arrangement == "Yes") ? "wBonus" : ""); //not yet done for all arrangements
                             break;
                         case "<Live>":
-                            fulltxt += ((SongRecord[k].Is_Live == "Yes") ? "-Live " + SongRecord[k].Live_Details : ""); //not yet done for all arrangements
+                            tzt = ((SongRecord[k].Is_Live == "Yes") ? "-Live " + SongRecord[k].Live_Details : ""); //not yet done for all arrangements
                             break;
                         case "<Acoustic>":
-                            fulltxt += ((SongRecord[k].Is_Acoustic == "Yes") ? "-Acoustic " + SongRecord[k].Live_Details : ""); //not yet done for all arrangements
+                            tzt = ((SongRecord[k].Is_Acoustic == "Yes") ? "-Acoustic " + SongRecord[k].Live_Details : ""); //not yet done for all arrangements
                             break;
                         //case "<Live/Acoustic Details>":
-                        //    fulltxt += SongRecord[k].Live_Details; //not yet done for all arrangements
+                        //    tzt =SongRecord[k].Live_Details; //not yet done for all arrangements
                         //    break;
                         case "<CDLC_ID>":
-                            fulltxt += SongRecord[k].ID; //not yet done for all arrangements
+                            tzt = SongRecord[k].ID; //not yet done for all arrangements
                             break;
                         case "<Random5>":
                             Random randomp = new Random();
                             int rn = randomp.Next(0, 100000);
-                            fulltxt += rn; //not yet done for all arrangements
+                            tzt = rn.ToString(); //not yet done for all arrangements
                             break;
                         case "<Artist Short>":
-                            fulltxt += SongRecord[k].Artist_ShortName != "" ? SongRecord[k].Artist_ShortName : SongRecord[k].Artist;
+                            tzt = SongRecord[k].Artist_ShortName != "" ? SongRecord[k].Artist_ShortName : SongRecord[k].Artist;
                             break;
                         case "<Album Short>":
-                            fulltxt += SongRecord[k].Album_ShortName != "" ? SongRecord[k].Album_ShortName : SongRecord[k].Album;
+                            tzt = SongRecord[k].Album_ShortName != "" ? SongRecord[k].Album_ShortName : SongRecord[k].Album;
                             break;
                         case "<Author>":
-                            fulltxt += SongRecord[k].Author;
+                            tzt = SongRecord[k].Author;
                             break;
                         case "<Space>":
-                            fulltxt += " ";
+                            tzt = " ";
                             break;
                         case "<Avail. Tracks>":
-                            fulltxt += ((SongRecord[k].Has_Bass == "Yes") ? "B" : "") + ((SongRecord[k].Has_Lead == "Yes") ? "L" : "") + ((SongRecord[k].Has_Combo == "Yes") ? "C" : "") + ((SongRecord[k].Has_Rhythm == "Yes") ? "R" : "") + ((SongRecord[k].Has_Vocals == "Yes") ? "V" : "");
+                            tzt = ((SongRecord[k].Has_Bass == "Yes") ? "B" : "") + ((SongRecord[k].Has_Lead == "Yes") ? "L" : "") + ((SongRecord[k].Has_Combo == "Yes") ? "C" : "") + ((SongRecord[k].Has_Rhythm == "Yes") ? "R" : "") + ((SongRecord[k].Has_Vocals == "Yes") ? "V" : "");
                             break;
                         case "<Bass_HasDD>":
-                            fulltxt += ((SongRecord[k].Has_BassDD == "No" || bassRemoved) && SongRecord[k].Has_DD == "Yes" ? "NoBDD" : "");
+                            tzt = ((SongRecord[k].Has_BassDD == "No" || bassRemoved) && SongRecord[k].Has_DD == "Yes" ? "NoBDD" : "");
                             break;
                         case "<Avail. Instr.>":
-                            fulltxt += ((SongRecord[k].Has_Bass == "Yes") ? "B" : "") + ((SongRecord[k].Has_Guitar == "Yes") ? "G" : "");
+                            tzt = ((SongRecord[k].Has_Bass == "Yes") ? "B" : "") + ((SongRecord[k].Has_Guitar == "Yes") ? "G" : "");
                             break;
                         case "<Timestamp>":
-                            fulltxt += DateTime.Now.ToString("yyyyMMdd HHmmssfff").Replace(":", "").Replace(" ", "").Replace(".", "");
+                            tzt = DateTime.Now.ToString("yyyyMMdd HHmmssfff").Replace(":", "").Replace(" ", "").Replace(".", "");
                             break;
                         default:
                             if ((origQAs) || (ifn))
@@ -872,26 +872,28 @@ namespace RocksmithToolkitGUI.DLCManager
                                 switch (curelem)
                                 {
                                     case "<DD>":
-                                        fulltxt += SongRecord[k].Has_DD == "Yes" ? "DD" : "noDD";
+                                        tzt = SongRecord[k].Has_DD == "Yes" ? "DD" : "noDD";
                                         break;
                                     case "<CDLC>":
-                                        fulltxt += SongRecord[k].DLC;
+                                        tzt = SongRecord[k].DLC;
                                         break;
                                     case "<QAs>":
-                                        fulltxt += (((SongRecord[k].Has_Cover == "No") || (SongRecord[k].Has_Preview == "No") || (SongRecord[k].Has_Vocals == "No")) ? "NOs-" : "") + ((SongRecord[k].Has_Cover == "Yes") ? "" : "C") + ((SongRecord[k].Has_Preview == "Yes") ? "" : "P") + ((SongRecord[k].Has_Vocals == "Yes") ? "" : "V"); //+((SongRecord[k].Has_Sections == "Yes") ? "" : "S")
+                                        tzt = (((SongRecord[k].Has_Cover == "No") || (SongRecord[k].Has_Preview == "No") || (SongRecord[k].Has_Vocals == "No")) ? "NOs-" : "") + ((SongRecord[k].Has_Cover == "Yes") ? "" : "C") + ((SongRecord[k].Has_Preview == "Yes") ? "" : "P") + ((SongRecord[k].Has_Vocals == "Yes") ? "" : "V"); //+((SongRecord[k].Has_Sections == "Yes") ? "" : "S")
                                         break;
                                     case "<lastConversionDateTime>":
-                                        fulltxt += SongRecord[k].Import_Date; //not yet done
+                                        tzt = SongRecord[k].Import_Date; //not yet done
                                         break;
                                     default: break;
                                 }
                             }
                             break;
                     }
+                    fulltxt = fulltxt.Replace(tzt.Replace("[", "").Replace("]", ""), "") + tzt;
                     if (oldtxt == fulltxt && last_ > 0) fulltxt = fulltxt.Substring(0, last_);
                     last_ = fulltxt.Length;
                 }
             }
+
             if ((sep1 + sep2).Length > 0) return (fulltxt + sep2).Replace(sep1 + sep2, "");
             else return fulltxt;
         }
@@ -1163,6 +1165,7 @@ namespace RocksmithToolkitGUI.DLCManager
             var tst = "Starting... " + startT; timestamp = UpdateLog(timestamp, tst, true);
             //var DB_Path = "";
             // var DB_Path = ConfigRepository.Instance()["dlcm_DBFolder"].ToString() + "\\Files.accdb;";// "";
+            SetImportNo();
             var DB_Path = txt_DBFolder.Text + "\\Files.accdb;";// "";
             var errr = true;
             pB_ReadDLCs.CreateGraphics().DrawString(tst, new Font("Arial", (float)7, FontStyle.Bold), Brushes.Blue, new PointF(1, pB_ReadDLCs.Height / 4));
@@ -1269,7 +1272,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 DeleteFromDB("Import_AuditTrail", "DELETE FROM Import_AuditTrail;");
                 DeleteFromDB("Standardization", "DELETE FROM Standardization;");
                 DeleteFromDB("Cache", "DELETE FROM Cache;");
-                DeleteFromDB("Groups", "DELETE FROM Groups WHERE Type=\"DLC\" or Type=\"Retail\" or;");
+                DeleteFromDB("Groups", "DELETE FROM Groups WHERE Type=\"DLC\" or Type=\"Retail\";");
                 //DeleteFromDB("Cache", "DELETE FROM Cache;");
                 //DeleteFromDB("Cache", "DELETE FROM Cache;");
                 //DeleteFromDB("Cache", "DELETE FROM Cache;");
@@ -1280,7 +1283,8 @@ namespace RocksmithToolkitGUI.DLCManager
 
             int i = 0;
             var ImportPackNo = "0";
-            DataSet doz = new DataSet(); doz = SelectFromDB("Main", "SELECT MAX(s.ID) FROM Main s;");
+            DataSet doz = new DataSet();
+            doz = SelectFromDB("Main", "SELECT MAX(s.ID) FROM Main s;");
             var noOfRecx = doz.Tables[0].Rows.Count;
             int gh = doz.Tables[0].Rows[0].ItemArray[0].ToString().ToInt32();
             if (noOfRecx > 0) ImportPackNo = (gh + 1).ToString();
@@ -2297,7 +2301,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         Platformm = file.Platform;
 
                         //When importing a original when there is already a similar CDLC
-                        if (author == "" && tkversion == "" && chbx_Additional_Manipulations.GetItemChecked(14) && norowsduo > 1 && (file.Is_Original != "Yes"))
+                        if (author == "" && tkversion == "" && chbx_Additional_Manipulations.GetItemChecked(14) && norowsduo >= 1 && (file.Is_Original != "Yes"))
                         {
                             artist = "Insert";
 
@@ -2305,10 +2309,10 @@ namespace RocksmithToolkitGUI.DLCManager
                             var fdf = (sel.Replace("ORDER BY Is_Original ASC", "")).Replace("SELECT *", "SELECT max(Alternate_Version_No)");
                             DataSet ddzv = new DataSet(); ddzv = SelectFromDB("Main", (sel.Replace("ORDER BY Is_Original ASC", "")).Replace("SELECT *", "SELECT max(Alternate_Version_No)"));
                             //UPDATE the 1(s) not an alternate already
-                            int max = ddzv.Tables[0].Rows[0].ItemArray[0].ToString().ToInt32() + 1;
+                            int max = ddzv.Tables[0].Rows[0].ItemArray[0].ToString()!="" ? ddzv.Tables[0].Rows[0].ItemArray[0].ToString().ToInt32() + 1 : 1;
                             DataSet dxr = new DataSet(); dxr = UpdateDB("Main", "Update Main Set Song_Title = Song_Title +\" a." + max + "\", Song_Title_Sort = Song_Title_Sort+\" a." + max + "\", Is_Alternate = \"Yes\", Alternate_Version_No=" + max + " where ID in (" + sel.Replace("*", "ID") + ") and Is_Alternate=\"No\"" + ";");
 
-                            //Add also a random DLCName if any of the Alternates has the same DLC Name ssame as the original
+                            //Add also a random DLCName if any of the Alternates has the same DLC Name as the original
                             DataSet dxf = new DataSet(); dxf = UpdateDB("Main", "UPDATE Main SET DLC_Name = DLC_Name+\"" + random.Next(0, 100000) + "\" WHERE ID in (" + sel.Replace("*", "ID") + ") and LCASE(DLC_Name) = \"" + info.Name.ToLower() + "\"" + ";");
                             break;
                         }
@@ -2324,7 +2328,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         //Get last inserted ID
                         DataSet dds = new DataSet(); dds = SelectFromDB("Main", sel);
 
-                        var altvert = dds.Tables[0].Rows[0].ItemArray[0].ToString().ToInt32() == -1 ? 0 : dds.Tables[0].Rows[0].ItemArray[0].ToString().ToInt32();
+                        var altvert = dds.Tables[0].Rows[0].ItemArray[0].ToString().ToInt32() == -1 ? 1 : dds.Tables[0].Rows[0].ItemArray[0].ToString().ToInt32();
                         if (Is_Original == "No") altver = (altvert + 1).ToString();
 
                         var fsz = ds.Tables[0].Rows[i].ItemArray[4].ToString();
@@ -6131,6 +6135,11 @@ namespace RocksmithToolkitGUI.DLCManager
             else
                 filez = System.IO.Directory.GetFiles(txt_RocksmithDLCPath.Text, "*_p.psarc");
             btn_PopulateDB.Text = "Import " + filez.Count().ToString() + " DLCs";
+        }
+
+        private void btn_CalcNoOfImports_Click(object sender, EventArgs e)
+        {
+            SetImportNo();
         }
     }
 }

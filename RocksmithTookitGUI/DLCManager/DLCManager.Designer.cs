@@ -114,6 +114,7 @@
             this.btn_ProfileRemove = new System.Windows.Forms.Button();
             this.btn_OpenLogsFolder = new System.Windows.Forms.Button();
             this.btn_Enable_CDLC = new System.Windows.Forms.Button();
+            this.btn_CalcNoOfImports = new System.Windows.Forms.Button();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -1428,10 +1429,23 @@
             this.btn_Enable_CDLC.UseVisualStyleBackColor = false;
             this.btn_Enable_CDLC.Click += new System.EventHandler(this.btn_Enable_CDLC_Click);
             // 
+            // btn_CalcNoOfImports
+            // 
+            this.btn_CalcNoOfImports.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_CalcNoOfImports.Location = new System.Drawing.Point(817, 121);
+            this.btn_CalcNoOfImports.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btn_CalcNoOfImports.Name = "btn_CalcNoOfImports";
+            this.btn_CalcNoOfImports.Size = new System.Drawing.Size(23, 29);
+            this.btn_CalcNoOfImports.TabIndex = 392;
+            this.btn_CalcNoOfImports.Text = "->";
+            this.btn_CalcNoOfImports.UseVisualStyleBackColor = true;
+            this.btn_CalcNoOfImports.Click += new System.EventHandler(this.btn_CalcNoOfImports_Click);
+            // 
             // DLCManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btn_CalcNoOfImports);
             this.Controls.Add(this.btn_Enable_CDLC);
             this.Controls.Add(this.btn_OpenLogsFolder);
             this.Controls.Add(this.btn_ProfileRemove);
@@ -1599,5 +1613,6 @@
         private System.Windows.Forms.Button btm_GoRepack;
         private System.Windows.Forms.Button btn_RefreshSelected;
         private System.Windows.Forms.Button btn_Enable_CDLC;
+        private System.Windows.Forms.Button btn_CalcNoOfImports;
     }
 }

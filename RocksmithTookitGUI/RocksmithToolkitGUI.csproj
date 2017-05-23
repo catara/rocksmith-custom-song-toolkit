@@ -97,9 +97,6 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="RocksmithToTabLib">
-      <HintPath>..\lib\RocksmithToTabLib\RocksmithToTabLib.dll</HintPath>
-    </Reference>
     <Reference Include="X360">
       <HintPath>..\lib\X360\X360.dll</HintPath>
     </Reference>
@@ -115,6 +112,7 @@
     <Compile Include="AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="CDLC2Tab\CDLC2Gp5.cs" />
     <Compile Include="Config\Globals.cs" />
     <Compile Include="DDC\SettingsDDC.cs" />
     <Compile Include="DLCInlayCreator\IntroScreensCreator.cs">
@@ -319,10 +317,20 @@
     <Compile Include="CDLC2Tab\CDLC2Tab.Designer.cs">
       <DependentUpon>CDLC2Tab.cs</DependentUpon>
     </Compile>
-    <Compile Include="ZiggyProEditorConverter\ZpeConverter.cs">
+    <Compile Include="ZpeConverter\ZiggyProEditor\Chord.cs" />
+    <Compile Include="ZpeConverter\ZiggyProEditor\Converter.cs" />
+    <Compile Include="ZpeConverter\ZiggyProEditor\Converter2014.cs" />
+    <Compile Include="ZpeConverter\ZiggyProEditor\MetaEvent.cs" />
+    <Compile Include="ZpeConverter\ZiggyProEditor\Note.cs" />
+    <Compile Include="ZpeConverter\ZiggyProEditor\Song.cs" />
+    <Compile Include="ZpeConverter\ZiggyProEditor\Tempo.cs" />
+    <Compile Include="ZpeConverter\ZiggyProEditor\TimeSignature.cs" />
+    <Compile Include="ZpeConverter\ZiggyProEditor\Track.cs" />
+    <Compile Include="ZpeConverter\ZiggyProEditor\Tuning.cs" />
+    <Compile Include="ZpeConverter\ZpeConverter.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ZiggyProEditorConverter\ZpeConverter.designer.cs">
+    <Compile Include="ZpeConverter\ZpeConverter.designer.cs">
       <DependentUpon>ZpeConverter.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="AboutForm.resx">
@@ -444,7 +452,7 @@
       <DependentUpon>CDLC2Tab.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="ZiggyProEditorConverter\ZpeConverter.resx">
+    <EmbeddedResource Include="ZpeConverter\ZpeConverter.resx">
       <DependentUpon>ZpeConverter.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="DLCManager\external_tools\CDLCEnablers\RUN_PATCH_RS.orig.command">
@@ -725,6 +733,7 @@
     <None Include="Resources\pick.png" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <ProjectReference Include="..\RocksmithToolkitCLI\artistfolders\artistfolders.csproj">
       <Project>{E742753F-9DC3-4AB7-B129-DC11EB2302CA}</Project>
       <Name>artistfolders</Name>
@@ -756,10 +765,9 @@
     <ProjectReference Include="..\RocksmithToolkitCLI\xml2sng\xml2sng.csproj">
       <Project>{48703F6C-9F98-4534-AB1D-67856A84D806}</Project>
       <Name>xml2sng</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RocksmithToolkitLib\RocksmithToolkitLib.csproj">
-      <Project>{2231C13A-14F6-478A-96D7-D1D3E1094CD6}</Project>
-      <Name>RocksmithToolkitLib</Name>
+    <ProjectReference Include="..\lib\RocksmithToTabLib\RocksmithToTabLib.csproj">
+      <Project>{A391030A-8289-4B6A-8117-1C7995808AD5}</Project>
+      <Name>RocksmithToTabLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\RocksmithToolkitUpdater\RocksmithToolkitUpdater.csproj">
       <Project>{4404D0DD-017E-4CC5-8302-3C150FDF06E7}</Project>

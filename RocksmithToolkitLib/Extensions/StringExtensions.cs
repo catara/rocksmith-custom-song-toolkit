@@ -32,6 +32,7 @@ DLC Key, and Tone Key Notes:
 Reserved XML Characters:
   Double quotes usage must be escaped ==> &quot;
   Ampersand usage must be escaped ==> &amp;
+  Dash usage must be escaped if not the first/last character ==> &#8211; or use "--"
 */
 
 // "return value;" is used to aid with debugging validation methods
@@ -93,9 +94,9 @@ namespace RocksmithToolkitLib.Extensions
             // may need to be escaped \t\n\f\r#$()*+.?[\^{|  ... '-' needs to be escaped if not at the beginning or end of regex sequence
             // allow use of only these special characters \\-_ /&.:',!?()\"#
             // allow use of alphanumerics a-zA-Z0-9
-            // tested and working ... Üuber!@#$%^&*()_+=-09{}][":';<>.,?/ñice
+            // tested and working ... Üuber!@#$%^&*()_+=-09{}][":';<>.,?/ñice 
 
-            Regex rgx = new Regex("[^a-zA-Z0-9\\-_/&',!.?()\"#\\p{L} ]*");
+            Regex rgx = new Regex("[^a-zA-Z0-9\\-_/&:',!.?()\"#\\p{L} ]*");
             value = rgx.Replace(value, "");
             // commented out because some ODLC have these
             // value = value.StripLeadingSpecialCharacters(); 
@@ -191,10 +192,11 @@ namespace RocksmithToolkitLib.Extensions
         /// <returns></returns>
         public static string GetValidLyric(this string value)
         {
-            // standard ODLC lyric character set
+            // standard ODLC valid lyric character set, i.e., ã can not be used (confirmed by testing)
             //!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_abcdefghijklmnopqrstuvwxyz{|}~¡¢¥¦§¨ª«°²³´•¸¹º»¼½¾¿ÀÁÂÄÅÆÇÈÉÊËÌÎÏÑÒÓÔÖØÙÚÛÜÞßàáâäåæçèéêëìíîïñòóôöøùúûüŒœŠšž„…€™␀★➨
-            string validAlphaNumerics = "a-zA-Z0-9";
             string validSpecialCharacters = "!\"#$%&'()*+,-./:;<=>?@[\\]^_{|}~¡¢¥¦§¨ª«°²³´•¸¹º»¼½¾¿ÀÁÂÄÅÆÇÈÉÊËÌÎÏÑÒÓÔÖØÙÚÛÜÞßàáâäåæçèéêëìíîïñòóôöøùúûüŒœŠšž€™␀﻿﻿﻿﻿﻿﻿";
+            string validAlphaNumerics = "a-zA-Z0-9";
+
             Regex rgx = new Regex("[^" + validAlphaNumerics + validSpecialCharacters + "]*");
             value = rgx.Replace(value, "");
             return value;
@@ -603,8 +605,9 @@ namespace RocksmithToolkitLib.Extensions
 
         public static string StripSpecialCharacters(this string value)
         {
+            // TEST ()½!$€£Test$€£()½!  ()½!Test()½!
             // value = Regex.Replace(value, "[`~#\\$€£*',.;:!?()[]\"{}/]", "");
-            Regex rgx = new Regex("[^a-zA-Z0-9 _#'.]+$"); // only these are acceptable
+            Regex rgx = new Regex("[^a-zA-Z0-9 _#:'.]"); // only these are acceptable
             var result = rgx.Replace(value, "");
             return result;
         }

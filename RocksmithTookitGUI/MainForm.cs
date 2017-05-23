@@ -29,7 +29,8 @@ namespace RocksmithToolkitGUI
         public MainForm(string[] args)
         {
             InitializeComponent();
-            this.Shown += MainForm_Shown;
+            // EH keeps main form responsive/refreshed
+            this.Shown += MainForm_Splash;
 
             var ci = new CultureInfo("en-US");
             var thread = System.Threading.Thread.CurrentThread;
@@ -40,13 +41,11 @@ namespace RocksmithToolkitGUI
                 LoadTemplate(args[0]);
 
             InitMainForm();
-         }
+        }
 
         private void InitMainForm()
         {
-            // comment out when issuing a new release version of toolkit
-            ShowHelpForm();
-            
+
             // edit version number in AssemblyInfo.cs for GUI, Lib and Updater
             // edit the hard coded version number in PatchAssemblyVersion.ps1 used by AppVeyor
             // comment out as necessary when issuing new release version
@@ -164,6 +163,9 @@ namespace RocksmithToolkitGUI
                 u.Init(onlineVersion);
                 u.ShowDialog();
             }
+
+            // reset to display the revision note
+            ConfigRepository.Instance()["general_showrevnote"] = "true";
         }
 
         private void configurationToolStripMenuItem_Click(object sender, EventArgs e)
@@ -216,6 +218,10 @@ namespace RocksmithToolkitGUI
 
          private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            // autosave the dlc.xml template on closing
+            if (dlcPackageCreator1.IsDirty && ConfigRepository.Instance().GetBoolean("creator_autosavetemplate"))
+                dlcPackageCreator1.SaveTemplateFile(dlcPackageCreator1.UnpackedDir, false);
+
             // cleanup temp folder garbage carefully
 #if !DEBUG
             var di = new DirectoryInfo(Path.GetTempPath());
@@ -241,15 +247,23 @@ namespace RocksmithToolkitGUI
 #endif
         }
 
-        private void MainForm_Shown(object sender, EventArgs e)
+        private void MainForm_Splash(object sender, EventArgs e)
         {
+            bool showRevNote = ConfigRepository.Instance().GetBoolean("general_showrevnote");
+            if (showRevNote)
+            {
+                ShowHelpForm();
+                ConfigRepository.Instance()["general_showrevnote"] = "false";
+            }
+
             this.Refresh();
 
             // don't bug the Developers when in debug mode ;)
 #if !DEBUG
             // check for first run //Check if author set at least, then it's not a first run tho, but let it show msg anyways...
             bool firstRun = ConfigRepository.Instance().GetBoolean("general_firstrun");
-            if (!firstRun) return;
+            if (!firstRun)
+                return;
             MessageBox.Show(new Form { TopMost = true },
                 "    Welcome to the Song Creator Toolkit for Rocksmith." + Environment.NewLine +
                 "          Commonly known as, 'the toolkit'." + Environment.NewLine + Environment.NewLine +
@@ -260,7 +274,6 @@ namespace RocksmithToolkitGUI
             ShowConfigScreen();
             BringToFront();
 #endif
-
         }
         private void ShowHelpForm()
         {
@@ -268,7 +281,7 @@ namespace RocksmithToolkitGUI
             using (Stream streamBetaInfo = assembly.GetManifestResourceStream("RocksmithToolkitGUI.Resources.BetaInfo.rtf"))
             {
                 using (var helpViewer = new HelpForm())
-                {                    
+                {
                     helpViewer.Text = String.Format("{0}", "TOOLKIT BETA RELEASE MESSAGE ...");
                     helpViewer.PopulateRichText(streamBetaInfo);
                     helpViewer.ShowDialog();

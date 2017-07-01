@@ -243,7 +243,7 @@
             this.gbPacker.TabIndex = 17;
             this.gbPacker.TabStop = false;
             this.gbPacker.Text = "Packer";
-            this.toolTip.SetToolTip(this.gbPacker, "Use the CDLC Creator tab for\r\nmaking repairs or changes");
+            this.toolTip.SetToolTip(this.gbPacker, "HINT: Use the CDLC Creator tab\r\nfor making repairs or changes");
             // 
             // label1
             // 
@@ -267,7 +267,8 @@
             this.chkUpdateManifest.Size = new System.Drawing.Size(66, 17);
             this.chkUpdateManifest.TabIndex = 5;
             this.chkUpdateManifest.Text = "Manifest";
-            this.toolTip.SetToolTip(this.chkUpdateManifest, "If checked updates existing\r\nManifest files from XML info");
+            this.toolTip.SetToolTip(this.chkUpdateManifest, "If checked regenerates showlights\r\nand updates existing Manifest files\r\nfrom XML " +
+                    "info\r\n");
             this.chkUpdateManifest.UseVisualStyleBackColor = true;
             // 
             // lblCurrentOperation

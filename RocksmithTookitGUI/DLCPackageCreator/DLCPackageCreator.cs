@@ -56,7 +56,6 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             InitializeComponent();
 
 #if (!DEBUG)
-            chkShowlights.Visible = false;
             btnDevUse.Visible = false;
 #endif
 
@@ -1572,8 +1571,8 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             }
 
             // showlights cause in game hanging for some RS1-RS2 conversions
-            // can be disabled here by devs if required
-            packageData.Showlights = chkShowlights.Checked;
+            // and/or can be defaulted to a minimum set by devs if required
+            packageData.DefaultShowlights = chkShowlights.Checked;
 
             //Generate metronome arrangements here
             var mArr = new List<Arrangement>();
@@ -2232,18 +2231,6 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
 
             if (MessageBox.Show("Are you sure to remove the selected arrangement?", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
                 return;
-            //FIXME: bad thing happens here.
-            /*/ regenerate new showlights arrangement
-            if (arrangementLB.SelectedItem.ToString().ToLower().Contains("showlight"))
-            {
-                var packageData = GetPackageData();
-                foreach (var arr in packageData.Arrangements)
-                    if (arr.ArrangementType == ArrangementType.ShowLight)
-                    {
-                        File.Delete(arr.SongXml.File);
-                        arr.SongXml.File = null; // forces regeneration of shl
-                    }
-            }*/
 
             lstArrangements.Items.Remove(lstArrangements.SelectedItem);
             IsDirty = true;

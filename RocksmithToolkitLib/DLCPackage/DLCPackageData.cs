@@ -31,7 +31,7 @@ namespace RocksmithToolkitLib.DLCPackage
         public bool Mac { get; set; }
         public bool XBox360 { get; set; }
         public bool PS3 { get; set; }
-        public bool Showlights { get; set; }
+        public bool DefaultShowlights { get; set; }
         public string AppId { get; set; }
         public string Name { get; set; } // aka DLCKey <=> SongKey //TODO: implement deserialize here, with workaround for DLCKey=Name and rename Name to DLCKey finnaly!
         public SongInfo SongInfo { get; set; }
@@ -100,7 +100,7 @@ namespace RocksmithToolkitLib.DLCPackage
             data.GameVersion = (convert ? GameVersion.RS2014 : GameVersion.RS2012);
             data.SignatureType = PackageMagic.CON;
             // set default volumes
-            data.Volume = -6.5F; // default maybe too quite
+            data.Volume = -7;
             data.PreviewVolume = data.Volume;
 
             //Load song manifest
@@ -502,7 +502,8 @@ namespace RocksmithToolkitLib.DLCPackage
                     {
                         // Fill Package Data
                         data.Name = attr.DLCKey;
-                        data.Volume = (attr.SongVolume == 0 ? -12 : attr.SongVolume); //FIXME: too low song volume issue, revert to -6 to fix.
+                        // made SongVolume nullable type to allow for proper initialization
+                        data.Volume = (attr.SongVolume ?? -7.0F);
                         data.PreviewVolume = (attr.PreviewVolume ?? data.Volume);
 
                         // Fill SongInfo
@@ -564,7 +565,7 @@ namespace RocksmithToolkitLib.DLCPackage
                         };
 
                     // Get symbols stuff from vocals.xml
-                    var fontSng = Path.Combine(unpackedDir, xmlName + ".sng");           
+                    var fontSng = Path.Combine(unpackedDir, xmlName + ".sng");
                     var vocSng = Sng2014FileWriter.ReadVocals(xmlFile);
 
                     // TODO: explain/confirm function/usage of this conditional check
@@ -598,7 +599,6 @@ namespace RocksmithToolkitLib.DLCPackage
 
                 // Adding ShowLights
                 data.Arrangements.Add(shl);
-                data.Showlights = true;
             }
 
             //Get DDS Files

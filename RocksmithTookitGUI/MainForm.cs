@@ -45,12 +45,9 @@ namespace RocksmithToolkitGUI
 
         private void InitMainForm()
         {
-
-            // edit version number in AssemblyInfo.cs for GUI, Lib and Updater
-            // edit the hard coded version number in PatchAssemblyVersion.ps1 used by AppVeyor
-            // comment out as necessary when issuing new release version
-            this.Text = String.Format("Rocksmith Custom Song Toolkit (v{0} beta)", ToolkitVersion.version);
-            // this.Text = String.Format("Rocksmith Custom Song Toolkit (v{0})", ToolkitVersion.version);
+            // NOTE TO DEVS: WHEN ISSUING NEW RELEASE VERION OF TOOLKIT 
+            // Edit 'AssemblyVersion' and 'AssemblyConfiguration' values in the PatchAssemblyVersion.ps1 file 
+            this.Text = String.Format("Rocksmith Custom Song Toolkit (v{0})", ToolkitVersion.version);
 
             if (Environment.OSVersion.Platform == PlatformID.MacOSX)
             {// Disable updates for Mac (speedup) -1.5 seconds here
@@ -80,7 +77,10 @@ namespace RocksmithToolkitGUI
             tabControl1.TabPages.Remove(GeneralConfigTab);
 
             // position main form at top center of screen to avoid having to reposition on low res displays
-            this.Location = new Point((Screen.PrimaryScreen.WorkingArea.Width - this.Width) / 2, 0);
+            if ((Screen.PrimaryScreen.WorkingArea.Height - this.Height) > 0)
+                this.Location = new Point((Screen.PrimaryScreen.WorkingArea.Width - this.Width) / 2, (Screen.PrimaryScreen.WorkingArea.Height - this.Height) / 2);
+            else
+                this.Location = new Point((Screen.PrimaryScreen.WorkingArea.Width - this.Width) / 2, 0);
         }
 
         private void CheckForUpdate(object sender, DoWorkEventArgs e)
@@ -99,7 +99,7 @@ namespace RocksmithToolkitGUI
         private void EnableUpdate(object sender, RunWorkerCompletedEventArgs e)
         {
             if (onlineVersion == null) return;
-            if (ToolkitVersion.commit != "nongit")
+            if (ToolkitVersion.AssemblyInformationVersion != "nongit")
                 updateButton.Visible = updateButton.Enabled = onlineVersion.UpdateAvailable;
         }
 
@@ -166,6 +166,9 @@ namespace RocksmithToolkitGUI
 
             // reset to display the revision note
             ConfigRepository.Instance()["general_showrevnote"] = "true";
+
+            // write new VersionInfo.txt file to toolkit root
+            ToolkitVersion.UpdateVersionInfoFile();
         }
 
         private void configurationToolStripMenuItem_Click(object sender, EventArgs e)
@@ -249,17 +252,19 @@ namespace RocksmithToolkitGUI
 
         private void MainForm_Splash(object sender, EventArgs e)
         {
+#if !DEBUG  // don't bug the Developers when in debug mode ;)
             bool showRevNote = ConfigRepository.Instance().GetBoolean("general_showrevnote");
             if (showRevNote)
             {
-                ShowHelpForm();
+                if (this.Text.ToUpper().Contains("BETA"))
+                    ShowHelpForm();
+
                 ConfigRepository.Instance()["general_showrevnote"] = "false";
             }
 
             this.Refresh();
 
-            // don't bug the Developers when in debug mode ;)
-#if !DEBUG
+
             // check for first run //Check if author set at least, then it's not a first run tho, but let it show msg anyways...
             bool firstRun = ConfigRepository.Instance().GetBoolean("general_firstrun");
             if (!firstRun)

@@ -194,7 +194,7 @@ namespace RocksmithToolkitLib.Extensions
         {
             // standard ODLC valid lyric character set, i.e., ã can not be used (confirmed by testing)
             //!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_abcdefghijklmnopqrstuvwxyz{|}~¡¢¥¦§¨ª«°²³´•¸¹º»¼½¾¿ÀÁÂÄÅÆÇÈÉÊËÌÎÏÑÒÓÔÖØÙÚÛÜÞßàáâäåæçèéêëìíîïñòóôöøùúûüŒœŠšž„…€™␀★➨
-            string validSpecialCharacters = "!\"#$%&'()*+,-./:;<=>?@[\\]^_{|}~¡¢¥¦§¨ª«°²³´•¸¹º»¼½¾¿ÀÁÂÄÅÆÇÈÉÊËÌÎÏÑÒÓÔÖØÙÚÛÜÞßàáâäåæçèéêëìíîïñòóôöøùúûüŒœŠšž€™␀﻿﻿﻿﻿﻿﻿";
+            string validSpecialCharacters = " !\"#$%&'()*+,-./:;<=>?@[\\]^_{|}~¡¢¥¦§¨ª«°²³´•¸¹º»¼½¾¿ÀÁÂÄÅÆÇÈÉÊËÌÎÏÑÒÓÔÖØÙÚÛÜÞßàáâäåæçèéêëìíîïñòóôöøùúûüŒœŠšž€™␀﻿﻿﻿﻿﻿﻿";
             string validAlphaNumerics = "a-zA-Z0-9";
 
             Regex rgx = new Regex("[^" + validAlphaNumerics + validSpecialCharacters + "]*");
@@ -621,6 +621,22 @@ namespace RocksmithToolkitLib.Extensions
         public static string ToNullTerminatedUTF8(this Byte[] bytes)
         {
             var result = Encoding.UTF8.GetString(bytes).TrimEnd('\0');
+            return result;
+        }
+
+        public static string GetStringInBetween(this string strSource, string strBegin, string strEnd)
+        {
+            string result = "";
+            int iIndexOfBegin = strSource.IndexOf(strBegin);
+            if (iIndexOfBegin != -1)
+            {
+                strSource = strSource.Substring(iIndexOfBegin + strBegin.Length);
+                int iEnd = strSource.IndexOf(strEnd);
+                if (iEnd != -1)
+                {
+                    result = strSource.Substring(0, iEnd);
+                }
+            }
             return result;
         }
 

@@ -12,6 +12,7 @@
     <AssemblyName>RocksmithToolkitLib</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <PlatformTarget>x86</PlatformTarget>
@@ -27,6 +28,9 @@
     <WarningLevel>4</WarningLevel>
     <Optimize>true</Optimize>
     <DebugType>none</DebugType>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CFSM.AudioTools">
@@ -251,17 +255,24 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- CUSTOM PREBUILD EVENT - DO NOT MODIFY -->
+  <PropertyGroup>
+    <PreBuildEvent Condition=" '$(OS)' != 'Unix' ">
+      CD $(SolutionDir)
+	  "$(SolutionDir)RocksmithDevBuilder.exe TOOLKITVERS NOWAIT" "$(ProjectDir)ToolkitVersion.cs"
+    </PreBuildEvent>
+    <PreBuildEvent Condition=" '$(OS)' == 'Unix' ">
+      "$(SolutionDir)prebuild.sh" "$(ProjectDir)" "$(ProjectDir)ToolkitVersion.cs"
+    </PreBuildEvent>
+  </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent>
     </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent Condition=" '$(OS)' != 'Unix' ">
-      CALL "$(SolutionDir)prebuild.bat" "$(SolutionDir)" "$(ProjectDir)ToolkitVersion.cs"
-    </PreBuildEvent>
-    <PreBuildEvent Condition=" '$(OS)' == 'Unix' ">
-      "$(SolutionDir)prebuild.sh" "$(ProjectDir)" "$(ProjectDir)ToolkitVersion.cs"
-    </PreBuildEvent>
+    <PreBuildEvent>REM there are some hidden prebuild commands 
+REM for OSX and Linux in the RocksmithToolkitLib.csproj
+REM which calls the 'prebuild.sh' file</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

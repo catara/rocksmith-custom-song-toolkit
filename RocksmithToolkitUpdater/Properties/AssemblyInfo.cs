@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -8,10 +8,9 @@ using System.Resources;
 // associated with an assembly.
 [assembly: AssemblyTitle("RocksmithToolkitUpdater")]
 [assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Rocksmith Custom Song Project")]
 [assembly: AssemblyProduct("RocksmithToolkitUpdater")]
-[assembly: AssemblyCopyright("Copyright © 2016")]
+[assembly: AssemblyCopyright("Copyright © 2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 // Setting ComVisible to false makes the types in this assembly not visible 
@@ -28,9 +27,8 @@ using System.Resources;
 //      Build Number
 //      Revision
 //
-// You can specify all the values or you can default the Build and Revision Numbers 
-// by using the '*' as shown below:
-// [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.8.2.0")]
-[assembly: AssemblyInformationalVersion("837f9cd6")]
+// THESE VALUES ARE PROGRAMMATICALLY GENERATED - DO NOT EDIT
+[assembly: AssemblyVersion("2.8.3.1")]
+[assembly: AssemblyInformationalVersion("ce57ebea")] // gitSubVersion
+[assembly: AssemblyConfiguration("BETA")] // "" blank for RELEASE
 [assembly: NeutralResourcesLanguageAttribute("en")]

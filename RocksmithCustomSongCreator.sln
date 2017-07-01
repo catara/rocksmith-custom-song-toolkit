@@ -33,7 +33,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "artistfolders", "RocksmithT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "convert2012", "RocksmithToolkitCLI\convert2012\convert2012.csproj", "{FE4E3BDA-2942-4009-9F42-07ECEF8DE350}"
 EndProject
-
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tool", "tool", "{8BDB8985-CC6B-4479-A9A7-0489836D87CD}"
 	ProjectSection(SolutionItems) = preProject
 		Third-party Apps\tool\core.jar = Third-party Apps\tool\core.jar

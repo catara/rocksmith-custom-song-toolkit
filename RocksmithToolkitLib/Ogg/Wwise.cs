@@ -110,7 +110,6 @@ namespace RocksmithToolkitLib.Ogg
             Console.WriteLine("64bit = {0}", GeneralExtensions.IsPE64BitType(pathWwiseCli));
 #endif
 
-
             var wwiseVersion = FileVersionInfo.GetVersionInfo(pathWwiseCli).ProductVersion;
             if (wwiseVersion.StartsWith("2013.2"))
                 Selected = OggFile.WwiseVersion.Wwise2013;
@@ -151,9 +150,6 @@ namespace RocksmithToolkitLib.Ogg
                 case OggFile.WwiseVersion.Wwise2013:
                 case OggFile.WwiseVersion.Wwise2014:
                 case OggFile.WwiseVersion.Wwise2015:
-                case OggFile.WwiseVersion.Wwise2016:
-                    ExtractTemplate(Path.Combine(appRootDir, Selected + ".tar.bz2"));
-                    break;
                 case OggFile.WwiseVersion.Wwise2016:
                     ExtractTemplate(Path.Combine(appRootDir, Selected + ".tar.bz2"));
                     break;

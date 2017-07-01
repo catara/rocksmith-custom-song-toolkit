@@ -351,6 +351,7 @@ namespace RocksmithToolkitLib.XML
             var beamNote = rnd.Next(48, 60);  // upper limit is exclusive
             return beamNote;
         }
+
     }
 }
 

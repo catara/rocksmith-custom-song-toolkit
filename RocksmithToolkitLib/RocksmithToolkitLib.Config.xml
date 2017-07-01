@@ -100,8 +100,8 @@
   <Config Key="dlcm_AdditionalManipul55" Value="Yes" />
   <Config Key="dlcm_AdditionalManipul56" Value="Yes" />
   <Config Key="dlcm_AdditionalManipul57" Value="Yes" />
-  <Config Key="dlcm_AdditionalManipul58" Value="Yes" />
-  <Config Key="dlcm_AdditionalManipul59" Value="Yes" />
+  <Config Key="dlcm_AdditionalManipul58" Value="No" />
+  <Config Key="dlcm_AdditionalManipul59" Value="No" />
   <Config Key="dlcm_AdditionalManipul60" Value="Yes" />
   <Config Key="dlcm_AdditionalManipul61" Value="Yes" />
   <Config Key="dlcm_AdditionalManipul62" Value="Yes" />

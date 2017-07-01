@@ -140,13 +140,13 @@ namespace RocksmithToolkitGUI.DLCManager
             //    catch (Exception ex)
             //    {
             //        MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //        MessageBox.Show("-DB Open in Design Mode or Download Connectivity patch @ https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734");
-            //        ErrorWindow frm1 = new ErrorWindow("DB Open in Design Mode or Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error when opening the DB", false, false);
+            //        MessageBox.Show("-DB Open in Design Mode, or Missing, or you need to Download Connectivity patch @ https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734");
+            //        ErrorWindow frm1 = new ErrorWindow("DB Open in Design Mode, or Missing, or you need to Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error when opening the DB", false, false);
             //        frm1.ShowDialog();
             //        return;
             //    }
             //cn.Dispose();
-            dssx = SelectFromDB("Arrangements", "SELECT * FROM Arrangements WHERE CDLC_ID=" + CDLCID + ";");
+            dssx = SelectFromDB("Arrangements", "SELECT * FROM Arrangements WHERE CDLC_ID=" + CDLCID + ";", "");
             noOfRec = dssx.Tables[0].Rows.Count;
                 lbl_NoRec.Text = noOfRec.ToString() + " records.";
             //}
@@ -368,7 +368,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //        DataSet dus = new DataSet();
             //        OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
             //        dax.Fill(dus, "Arrangements");
-            DataSet dus = new DataSet();dus = SelectFromDB("Arrangements", cmd);
+            DataSet dus = new DataSet();dus = SelectFromDB("Arrangements", cmd, "");
             var i = 0;
                     //rtxt_StatisticsOnReadDLCs.Text += "\n  54= " +dus.Tables[0].Rows.Count;
                     MaximumSize = dus.Tables[0].Rows.Count;
@@ -453,7 +453,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //    string SearchCmd = "SELECT DISTINCT ToneA FROM Arrangements;";
             //    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
             //    da.Fill(ds, "Arrangements");
-            DataSet ds = new DataSet(); ds = SelectFromDB("Arrangements", "SELECT DISTINCT ToneA FROM Arrangements;");
+            DataSet ds = new DataSet(); ds = SelectFromDB("Arrangements", "SELECT DISTINCT ToneA FROM Arrangements;", "");
             norec = ds.Tables[0].Rows.Count;
 
                 if (norec > 0)
@@ -482,7 +482,7 @@ namespace RocksmithToolkitGUI.DLCManager
         //    string SearchCmd = "SELECT DISTINCT ToneB FROM Arrangements;";
         //    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
         //    da.Fill(dIs, "Arrangements");
-        DataSet dIs = new DataSet(); dIs = SelectFromDB("Arrangements", "SELECT DISTINCT ToneB FROM Arrangements;");
+        DataSet dIs = new DataSet(); dIs = SelectFromDB("Arrangements", "SELECT DISTINCT ToneB FROM Arrangements;", "");
             norec = dIs.Tables[0].Rows.Count;
 
                 if (norec > 0)
@@ -511,7 +511,7 @@ namespace RocksmithToolkitGUI.DLCManager
         //    string SearchCmd = "SELECT DISTINCT ToneC FROM Arrangements;";
         //    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
         //    da.Fill(dfs, "Arrangements");
-        DataSet dfs = new DataSet(); dfs = SelectFromDB("Arrangements", "SELECT DISTINCT ToneC FROM Arrangements;");
+        DataSet dfs = new DataSet(); dfs = SelectFromDB("Arrangements", "SELECT DISTINCT ToneC FROM Arrangements;", "");
             norec = dfs.Tables[0].Rows.Count;
 
                 if (norec > 0)
@@ -540,7 +540,7 @@ namespace RocksmithToolkitGUI.DLCManager
         //    string SearchCmd = "SELECT DISTINCT ToneD FROM Arrangements;";
         //    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
         //    da.Fill(dHs, "Arrangements");
-        DataSet dHs = new DataSet(); dHs = SelectFromDB("Arrangements", "SELECT DISTINCT ToneD FROM Arrangements;");
+        DataSet dHs = new DataSet(); dHs = SelectFromDB("Arrangements", "SELECT DISTINCT ToneD FROM Arrangements;", "");
             norec = dHs.Tables[0].Rows.Count;
 
                 if (norec > 0)
@@ -564,7 +564,7 @@ namespace RocksmithToolkitGUI.DLCManager
             dHs.Dispose();
         //}
 
-        DataSet dxs = new DataSet(); dxs = SelectFromDB("Arrangements", "SELECT DISTINCT ToneBase FROM Arrangements;");
+        DataSet dxs = new DataSet(); dxs = SelectFromDB("Arrangements", "SELECT DISTINCT ToneBase FROM Arrangements;", "");
             //DataSet dxs = new DataSet();
             //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
             //{
@@ -598,7 +598,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //    string SearchCmd = "SELECT DISTINCT Tunning FROM Arrangements;";
             //    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
             //    da.Fill(dks, "Arrangements");
-            DataSet dks = new DataSet(); dks = SelectFromDB("Arrangements", "SELECT DISTINCT Tunning FROM Arrangements;");
+            DataSet dks = new DataSet(); dks = SelectFromDB("Arrangements", "SELECT DISTINCT Tunning FROM Arrangements;", "");
             norec = dks.Tables[0].Rows.Count;
 
                 if (norec > 0)
@@ -876,7 +876,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     xmlContent = Song2014.LoadFromFile(xml);
                     if (!(xmlContent.Arrangement.ToLower() == "showlights" || xmlContent.Arrangement.ToLower() == "vocals") || xml.IndexOf(".old") <= 0)
                     {
-                        var DDRemoved = (DLCManager.RemoveDD(Path.GetDirectoryName(txt_XMLFilePath.Text), "", xml, platform, false, false) == "Yes") ? "Yes" : "No";
+                        var DDRemoved = (RemoveDD(Path.GetDirectoryName(txt_XMLFilePath.Text), "", xml, platform, false, false) == "Yes") ? "Yes" : "No";
                     }
                 }
                 catch (Exception ee)
@@ -902,7 +902,7 @@ namespace RocksmithToolkitGUI.DLCManager
             foreach (var xml in xmlFiles)
                 if (xml.IndexOf("showlights") < 1)
                 {
-                    var DDAdded = (DLCManager.AddDD(Path.GetDirectoryName(txt_XMLFilePath.Text), "", xml, platform, false, false, numericUpDown1.Value.ToString()) == "Yes") ? "No" : "Yes";
+                    var DDAdded = (AddDD(Path.GetDirectoryName(txt_XMLFilePath.Text), "", xml, platform, false, false, numericUpDown1.Value.ToString()) == "Yes") ? "No" : "Yes";
                 }
             chbx_BassDD.Checked = true;
             MessageBox.Show("DD Added");

@@ -145,7 +145,7 @@ namespace RocksmithToolkitGUI.DLCManager
             sel += "LCASE(Song_Title_Sort) =LCASE(\"" + datas.SongInfo.SongDisplayNameSort + "\"))) OR LCASE(DLC_Name)=LCASE(\"" + datas.Name + "\");";
             //Get last inserted ID
             //rtxt_StatisticsOnReadDLCs.Text = sel + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-            DataSet dds = new DataSet(); dds = SelectFromDB("Main", sel);
+            DataSet dds = new DataSet(); dds = SelectFromDB("Main", sel, "");
             //OleDbDataAdapter dda = new OleDbDataAdapter(sel, con);
             //dda.Fill(dds, "Main");
             //dda.Dispose();
@@ -431,7 +431,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //        //MessageBox.Show("0");
             //        daa.Fill(ds, "Arrangements");
             //        daa.Dispose();
-            DataSet ds = new DataSet(); ds = SelectFromDB("Arrangements", "SELECT * FROM Arrangements WHERE CDLC_ID=" + filed.ID.ToString() + ";");
+            DataSet ds = new DataSet(); ds = SelectFromDB("Arrangements", "SELECT * FROM Arrangements WHERE CDLC_ID=" + filed.ID.ToString() + ";", "");
             var noOfRec = 0;
             //MessageBox.Show("0.1");
             noOfRec = ds.Tables[0].Rows.Count;//ds.Tables[0].Rows[0].ItemArray[0].ToString();
@@ -467,7 +467,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         if (ConfigRepository.Instance()["dlcm_AdditionalManipul36"] == "Yes") //37. Keep the Uncompressed Songs superorganized   chbx_Additional_Manipulations.GetItemChecked(36)                             
                             arg.SongFile.File = (arg.SongXml.File.Replace(".xml", ".json").Replace("\\EOF\\", "\\Toolkit\\"));
                         else
-                            arg.SongFile.File = arg.SongXml.File.Replace(".xml", ".json").Replace("\\songs\\arr", "\\" + DLCManager.calc_path(xx));
+                            arg.SongFile.File = arg.SongXml.File.Replace(".xml", ".json").Replace("\\songs\\arr", "\\" + calc_path(xx));
 
                         lastConversionDateTime_cur = GetTExtFromFile(arg.SongXml.File).Trim(' ');
                         lastConversionDateTime_exist = GetTExtFromFile(XmlFile).Trim(' ');
@@ -1534,7 +1534,7 @@ namespace RocksmithToolkitGUI.DLCManager
             var t = filed.oggPreviewPath;//"C:\\GitHub\\tmp\\0\\0_dlcpacks\\rs1compatibilitydisc_PS3\\audio\\ps3\\149627248.ogg";//txt_TempPath.Text + "\\0_dlcpacks\\rs1compatibilitydlc.psarc";
             startInfo.Arguments = String.Format(" -p \"{0}\"",
                                                 t);
-            startInfo.UseShellExecute = true; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
+            startInfo.UseShellExecute = false; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
 
             if (File.Exists(t))
                 using (var DDC = new Process())
@@ -1551,7 +1551,7 @@ namespace RocksmithToolkitGUI.DLCManager
             startInfo.WorkingDirectory = AppWD;// Path.GetDirectoryName();
             var t = filed.OggPath;//"C:\\GitHub\\tmp\\0\\0_dlcpacks\\rs1compatibilitydisc_PS3\\audio\\ps3\\149627248.ogg";//txt_TempPath.Text + "\\0_dlcpacks\\rs1compatibilitydlc.psarc";
             startInfo.Arguments = String.Format(" -p \"{0}\"", t);
-            startInfo.UseShellExecute = true; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
+            startInfo.UseShellExecute = false; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
 
             //var outputBuilder = new StringBuilder();
             if (File.Exists(t))

@@ -434,12 +434,13 @@ namespace RocksmithToolkitGUI.DLCManager
                 if (!chbx_AutoSave.Checked) MessageBox.Show("Tones Saved");
                 //das.SelectCommand.CommandText = "SELECT * FROM Tones";
                 //// das.Update(dssx, "Tones");
+                dis.Dispose();
             }
         }
 
         public void Populate(ref DataGridView DataGridView, ref BindingSource bs) //, ref BindingSource bsPositions, ref BindingSource bsBadges
         {
-            dssx = SelectFromDB("Tones", "SELECT * FROM Tones WHERE CDLC_ID=" + CDLCID + ";");
+            dssx = SelectFromDB("Tones", "SELECT * FROM Tones WHERE CDLC_ID=" + CDLCID + ";", "");
             //using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
             //{
             //    var cmd = "SELECT * FROM Tones WHERE CDLC_ID=" + CDLCID + ";";
@@ -644,7 +645,7 @@ namespace RocksmithToolkitGUI.DLCManager
             var MaximumSize = 0;
 
             //rtxt_StatisticsOnReadDLCs.Text += "\n  ee= ";
-            DataSet dus = new DataSet(); dus = SelectFromDB("Tones", cmd);
+            DataSet dus = new DataSet(); dus = SelectFromDB("Tones", cmd, "");
             //try
             //{
             //    MessageBox.Show(DB_Path);

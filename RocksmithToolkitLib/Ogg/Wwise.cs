@@ -37,6 +37,7 @@ namespace RocksmithToolkitLib.Ogg
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 //overridden ex, can't get real ex/msg, use log + throw;
                 Convert2Wem( wavSourcePath,  destinationPath,  audioQuality);
                 //throw new Exception("Wwise audio file conversion failed: " + ex.Message);

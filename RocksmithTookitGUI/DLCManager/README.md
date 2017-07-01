@@ -41,10 +41,10 @@
 [ ] song fails at import
 
 ## ToDos/bugs:
--+ small feature: when opening MainDB and detecting directory check runs, if next directory exists (give a change to empty the db then if possible)
--+ small improv: add the proper lasconvdate in the db 
-  [ ]make sure its read only once when imported and not anymore in the duplication management section
--+ vs blue maybe also yes blue (blu happens also when small 1bite amybe 2 diff in filesize
+[-] small feature: when opening MainDB and detecting directory check runs, if next directory exists (give a change to empty the db then if possible)
+[-] small improv: add the proper lasconvdate in the db 
+[ ] make sure its read only once when imported and not anymore in the duplication management section
+[-] vs blue maybe also yes blue (blu happens also when small 1bite amybe 2 diff in filesize
 [ ] feat:		 Alternate No for duplicates logic
 [ ] feat:		 Include Standardization names into duplication checks
 [ ] big feature: get the volume of the audio file and then compare against the rest or a norm
@@ -91,37 +91,36 @@
 [ ] copy imported files
 if info in the title dont add
 [-] Enable CDLC
-Repair broken CDLC
-46&2 lyrics from old one
+[ ] Repair broken CDLC
+[ ] add 46&2 lyrics from old one
 [x] standardization issues nin short is always on
 [x] search by album/comments/details
 [x] add acoustic
 [x] add acoustic to duplciates
-7033 issues with old file
+[x] 7033 issues with old file
 
-copied copied copied
-overrite rename buttons
-mac song gen errors at read dlc library
-Profiles should include also Format
-replace all does not exist
+[ ] copied copied copied
+[ ] overrite rename buttons
+[x] mac song gen errors at read dlc library
+[ ] Profiles should include also Format
+[ ] replace all does not exist
 [ ] come together lyrics
-each platform should have its own remote location
-delete moves to duplicates but does not add dupli if exists
-delete does not delete the actual record from repack_audittrail
-INCUBUS REDEFINE MULTI SHOWS IN RED AT DUPLICATION MANAGEMENT SCREEN
-fix import current month
-bitrate to compress maybe a config
-select incl groups has a small error
-standardization still w duplicates
-mantra cannot be imported
-gasoline cannot be packed
-check if filename is the same
-add comment beginning of song in lyrics
-why songs get preview created at pack :)
-log is not last come first entry
-check originals vs original dbb
-why do i have duplciates on the ps3
-multiple repacks cannto happen
+[ ] each platform should have its own remote location
+[ ] delete moves to duplicates but does not add dupli if exists
+[ ] delete does not delete the actual record from repack_audittrail
+[ ] INCUBUS REDEFINE MULTI SHOWS IN RED AT DUPLICATION MANAGEMENT SCREEN
+[ ] fix import current month
+[ ] bitrate to compress maybe a config
+[ ] select incl groups has a small error
+[x] standardization still w duplicates (null treatment included)
+[ ] mantra cannot be imported
+[ ] gasoline cannot be packed
+[x] check if filename is the same
+[x] why songs get preview created at pack :)
+[ ] log is not last come first entry
+[ ] check originals vs original dbb
+[ ] why do i have duplciates on the ps3
+[ ] multiple repacks cannto happen
 [ ] progress bar on possible duplicate import is too short
 [ ] populate new tone fields
 [-] prepare the rebuild option
@@ -129,8 +128,8 @@ multiple repacks cannto happen
 [-] redo save track at pack with update function
 [-] improve the overlay
 [-] fix for rebuild missing file
-[-] disable old and L->r
-[-] delete lib (gather lib from ps3-ftp/mac/pc 1. save 2. copy new)
+[x] disable old and L->r
+[x] delete lib (gather lib from ps3-ftp/mac/pc 1. save 2. copy new)
 	[ ] Delete All
 [ ] cannot find sick sick sic (override)
 [ ] audioslave sections missing maybe cause its an original and i used my own logic to strip the DD
@@ -147,8 +146,8 @@ multiple repacks cannto happen
 	[+] with or without u still doesnt have the right alternate no when importing vs an existing song= a2....maybe OK :)
 	[ ]alt 1 ahead of a.
 [x] fix importing own songs, eg. ana
-[ ] standardiation double counted songs 7981
-[ ] stadardization still fedup adding duplicates
+[x] standardiation double counted songs 7981
+[x] stadardization still fedup adding duplicates
 [x] check help that crashed at infi.nhame (broken now) partial file now we do some checks on extension
 [-] add copy last and initial to mass pack
 [x] standardise genhash to the already exiusting maindb.GetHashCode
@@ -167,10 +166,29 @@ multiple repacks cannto happen
 [ ] Add repair option
 [ ] update readme.md screenshots
 [ ] try db constant connection
-year inconsitencies (check should show these as well)
-the pretender doesnt register as alternate
-test replace ....
+[ ] year inconsitencies (check should show these as well)
+[ ] the pretender doesnt register as alternate
+[ ] test replace ....
 
+june 2017
+[+] when offline is quite slow cause of get track no
+[+] add spotify song, artist, album IDs, albbum cover path
+	[ ] Think of unifying the maindb&generic Spotify functions
+	[ ] import make sure Spotify connection is remembered showed and shard with maindb
+	[ ] save&override album image
+	[ ] at standardization apply spotify album url name ?
+[+] add total commander w ps3 plugin
+[+] add log total songtime import
+	[ ] &pack
+[ ] add comment beginning of song in lyrics
+[+] remove trailing /
+[+] remove use internal if manually modif
+[+] if folders do not exist default something
+whats w royal
+[+]whats w truly
+
+done:
+(next release)
 [x] when repacking groups add group at the beginning of song
 [x] live details should not be active if the song is not based on a live
 [x] Package Author:  Custom Song Creator Package Author: RepackedBy CATARA
@@ -188,8 +206,6 @@ test replace ....
 [x] initial
 [x] at copy save in remote location
 [x] add time stamps in logging to improve performance
-done:
-(next release)
 [x] add cancelation button
 [x] duplicate management..on change..check and green color
 [+] save in the db as well
@@ -255,10 +271,6 @@ done:
 [x] for newly added lyrics create sng and save the path in the DB
 [x] no cover Not Listening papa roach
 [x] remove should have a progress bar
- 
-
-
-(prev release; but maybe not thuroughly tested)
 [x] duplic manag make date bigger
 [x] duplic manag make date readonly
 [x] when opening no java...

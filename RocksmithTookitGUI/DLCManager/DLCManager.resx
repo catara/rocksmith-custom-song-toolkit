@@ -117,17 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="mainBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <metadata name="mainBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
   <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>301, 17</value>
   </metadata>
-  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>301, 17</value>
+  <metadata name="helpProvider1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>174, 17</value>
+  </metadata>
+  <metadata name="mainBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
   </metadata>
   <data name="txt_TempPath.ToolTip" xml:space="preserve">
     <value>Will be used store decompressed version of all DLCs and the original version
@@ -135,7 +132,10 @@ Please use a root location due to windows file lenght limitations. Location  to 
 Expect substantial size e.g. 20GB 1500 songs.
 Also requires the subfolders 0_old(imported), 0_broken(not imported), 0_duplicates(not imported cause of real or user controled uplciation), 0_repacked(repacked files by platform), 0_dlcpacks(imported RS1Retail, RS1DLC, or RS2014 Retail packs).</value>
   </data>
-  <metadata name="helpProvider1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>174, 17</value>
-  </metadata>
+  <data name="btn_PopulateDB.ToolTip" xml:space="preserve">
+    <value>Starts importing CDLC from Importing CDLC Folder. Note depending on Advanced settings it might copy or move the Imported Original CDLC to Temp/0_old or duplicates or broken as per importing logic and user decisions.</value>
+  </data>
+  <data name="btn_TempPath.ToolTip" xml:space="preserve">
+    <value>Select a location to store decompressed CDLC, original imported files, duplicates, broken. Note the tool requires/needs/is designed to use the CDCL in their decompressed state (Warning 3000 CDLC might take 70GB)</value>
+  </data>
 </root>

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.3
+VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RocksmithToolkitLibTest", "RocksmithToolkitLibTest\RocksmithToolkitLibTest.csproj", "{1940BBE3-640F-499C-80BC-2291585406D2}"
 EndProject
@@ -75,7 +75,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ddc", "ddc", "{CB7159F6-4CF
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RocksmithToolkitUpdater", "RocksmithToolkitUpdater\RocksmithToolkitUpdater.csproj", "{4404D0DD-017E-4CC5-8302-3C150FDF06E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cdlcconverter", "RocksmithToolkitCLI\cdlcconverter\cdlcconverter.csproj", "{972BC97A-B70A-4007-B915-952CC3606A2A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cdlcconverter", "RocksmithToolkitCLI\cdlcconverter\cdlcconverter.csproj", "{3EA40B0C-B63A-4670-BFC6-C6451C15F901}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "toneliberator", "RocksmithToolkitCLI\toneliberator\toneliberator.csproj", "{C8BDE9BB-F671-482E-97AB-5472F3C7D319}"
 EndProject
@@ -177,20 +177,26 @@ Global
 		{4404D0DD-017E-4CC5-8302-3C150FDF06E7}.Debug|x86.Build.0 = Debug|x86
 		{4404D0DD-017E-4CC5-8302-3C150FDF06E7}.Release|x86.ActiveCfg = Release|x86
 		{4404D0DD-017E-4CC5-8302-3C150FDF06E7}.Release|x86.Build.0 = Release|x86
-
-		{972BC97A-B70A-4007-B915-952CC3606A2A}.Debug|x86.ActiveCfg = Debug|x86
-		{972BC97A-B70A-4007-B915-952CC3606A2A}.Debug|x86.Build.0 = Debug|x86
-		{972BC97A-B70A-4007-B915-952CC3606A2A}.Release|x86.ActiveCfg = Release|x86
-		{972BC97A-B70A-4007-B915-952CC3606A2A}.Release|x86.Build.0 = Release|x86
+		{4404D0DD-017E-4CC5-8302-3C150FDF06E7}.ReleaseMac|x86.ActiveCfg = Release|x86
+		{4404D0DD-017E-4CC5-8302-3C150FDF06E7}.ReleaseMac|x86.Build.0 = Release|x86
+		{3EA40B0C-B63A-4670-BFC6-C6451C15F901}.Debug|x86.ActiveCfg = Debug|x86
+		{3EA40B0C-B63A-4670-BFC6-C6451C15F901}.Debug|x86.Build.0 = Debug|x86
+		{3EA40B0C-B63A-4670-BFC6-C6451C15F901}.Release|x86.ActiveCfg = Release|x86
+		{3EA40B0C-B63A-4670-BFC6-C6451C15F901}.Release|x86.Build.0 = Release|x86
+		{3EA40B0C-B63A-4670-BFC6-C6451C15F901}.ReleaseMac|x86.ActiveCfg = Release|x86
+		{3EA40B0C-B63A-4670-BFC6-C6451C15F901}.ReleaseMac|x86.Build.0 = Release|x86
 		{C8BDE9BB-F671-482E-97AB-5472F3C7D319}.Debug|x86.ActiveCfg = Debug|x86
 		{C8BDE9BB-F671-482E-97AB-5472F3C7D319}.Debug|x86.Build.0 = Debug|x86
 		{C8BDE9BB-F671-482E-97AB-5472F3C7D319}.Release|x86.ActiveCfg = Release|x86
 		{C8BDE9BB-F671-482E-97AB-5472F3C7D319}.Release|x86.Build.0 = Release|x86
+		{C8BDE9BB-F671-482E-97AB-5472F3C7D319}.ReleaseMac|x86.ActiveCfg = Release|x86
+		{C8BDE9BB-F671-482E-97AB-5472F3C7D319}.ReleaseMac|x86.Build.0 = Release|x86
 		{A391030A-8289-4B6A-8117-1C7995808AD5}.Debug|x86.ActiveCfg = Debug|x86
 		{A391030A-8289-4B6A-8117-1C7995808AD5}.Debug|x86.Build.0 = Debug|x86
 		{A391030A-8289-4B6A-8117-1C7995808AD5}.Release|x86.ActiveCfg = Release|x86
 		{A391030A-8289-4B6A-8117-1C7995808AD5}.Release|x86.Build.0 = Release|x86
-
+		{A391030A-8289-4B6A-8117-1C7995808AD5}.ReleaseMac|x86.ActiveCfg = Release|x86
+		{A391030A-8289-4B6A-8117-1C7995808AD5}.ReleaseMac|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

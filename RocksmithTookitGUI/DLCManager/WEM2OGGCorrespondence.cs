@@ -190,7 +190,7 @@ namespace RocksmithToolkitGUI.DLCManager
     public void Populate(ref DataGridView DataGridView, ref BindingSource bs) //, ref BindingSource bsPositions, ref BindingSource bsBadges
     {
 
-            DataSet dooz = new DataSet(); dooz = SelectFromDB("Standardization", "SELECT ID, (SELECT IIF(count(*)>1,\"Yes\",\"\") as Suspect from Standardization AS O WHERE LCASE(S.Artist)=LCASE(O.Artist) and LCASE(S.Album)=LCASE(O.Album)) as Suspect, Artist, Artist_Correction, Album, Album_Correction, AlbumArt_Correction FROM Standardization as S ORDER BY Artist, Album;");
+            DataSet dooz = new DataSet(); dooz = SelectFromDB("Standardization", "SELECT ID, (SELECT IIF(count(*)>1,\"Yes\",\"\") as Suspect from Standardization AS O WHERE LCASE(S.Artist)=LCASE(O.Artist) and LCASE(S.Album)=LCASE(O.Album)) as Suspect, Artist, Artist_Correction, Album, Album_Correction, AlbumArt_Correction FROM Standardization as S ORDER BY Artist, Album;", "");
             //DB_Path = "../../../../tmp\\Files.accdb;";
             //using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
             //{
@@ -308,7 +308,7 @@ namespace RocksmithToolkitGUI.DLCManager
         //Files[] files = new Files[10000];
 
         var MaximumSize = 0;
-            DataSet dus = new DataSet(); dus = SelectFromDB("Groups", cmd);
+            DataSet dus = new DataSet(); dus = SelectFromDB("Groups", cmd, "");
         //rtxt_StatisticsOnReadDLCs.Text += "\n  ee= ";
         //try
         //{

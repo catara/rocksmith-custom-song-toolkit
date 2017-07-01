@@ -179,7 +179,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 //        string SearchCmd = "SELECT DISTINCT Groups FROM Groups WHERE Type=\"Retail\";";
                 //        OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
                 //        da.Fill(ds, "Main");
-                DataSet ds = new DataSet(); ds = SelectFromDB("Main", "SELECT DISTINCT Groups FROM Groups WHERE Type=\"Retail\";");
+                DataSet ds = new DataSet(); ds = SelectFromDB("Main", "SELECT DISTINCT Groups FROM Groups WHERE Type=\"Retail\";", "");
                 norec = ds.Tables[0].Rows.Count;
 
                         if (norec > 0)
@@ -202,7 +202,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             }
                         }
 
-                DataSet dds = new DataSet(); dds = SelectFromDB("Main", "SELECT DISTINCT Groups FROM Groups WHERE Type=\"Retail\" AND CDLC_ID=\"" + DataGridView1.Rows[DataGridView1.SelectedCells[0].RowIndex].Cells["ID"].Value.ToString() + "\";");
+                DataSet dds = new DataSet(); dds = SelectFromDB("Main", "SELECT DISTINCT Groups FROM Groups WHERE Type=\"Retail\" AND CDLC_ID=\"" + DataGridView1.Rows[DataGridView1.SelectedCells[0].RowIndex].Cells["ID"].Value.ToString() + "\";", "");
                 //DataSet dds = new DataSet();
                 ////Create Groups list MultiCheckbox
                 //using (OleDbConnection con = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
@@ -234,7 +234,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 //catch (Exception ex)
                 //{
                 //    MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                //    ErrorWindow frm1 = new ErrorWindow("DB Open in Design Mode or Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error when opening the Retail DB", false, false);
+                //    ErrorWindow frm1 = new ErrorWindow("DB Open in Design Mode, or Missing, or you need to Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error when opening the Retail DB", false, false);
                 //    frm1.ShowDialog();
                 //    return;
                 //}
@@ -279,7 +279,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         //    OleDbDataAdapter dbf = new OleDbDataAdapter(updatecmd, cmb);
                         //    dbf.Fill(dooz, "Groups");
                         //    dbf.Dispose();
-                        DataSet dooz = new DataSet(); dooz = SelectFromDB("Groups", "SELECT ID FROM Groups WHERE Type=\"Retail\" AND CDLC_ID=\"" + txt_ID.Text + "\" AND Groups=\"" + chbx_AllGroups.Items[j] + "\";");
+                        DataSet dooz = new DataSet(); dooz = SelectFromDB("Groups", "SELECT ID FROM Groups WHERE Type=\"Retail\" AND CDLC_ID=\"" + txt_ID.Text + "\" AND Groups=\"" + chbx_AllGroups.Items[j] + "\";", "");
                         //var cmd = "INSERT INTO Groups(CDLC_ID,Groups,Type) VALUES";
 
                             var rr = dooz.Tables[0].Rows.Count;
@@ -365,7 +365,7 @@ namespace RocksmithToolkitGUI.DLCManager
         {
 
             SearchCmd = SearchCmd.Replace("WHERE  ORDER", "ORDER");
-             dssx = SelectFromDB("Cache", SearchCmd);
+             dssx = SelectFromDB("Cache", SearchCmd, "");
             //DB_Path = "../../../../tmp\\Files.accdb;";
             //using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
             //{
@@ -452,7 +452,7 @@ namespace RocksmithToolkitGUI.DLCManager
             bs.DataSource = dssx.Tables["Cache"];
             DataGridView.DataSource = bs;
             dssx.Dispose();
-            DataSet dooz = new DataSet(); dooz = SelectFromDB("Groups", "SELECT * from Cache AS O WHERE Removed=\"No\"");
+            DataSet dooz = new DataSet(); dooz = SelectFromDB("Groups", "SELECT * from Cache AS O WHERE Removed=\"No\"", "");
             //using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
             //{
             //    OleDbDataAdapter da = new OleDbDataAdapter("SELECT * from Cache AS O WHERE Removed=\"No\"", cn);
@@ -532,7 +532,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //try
             //{
                 MessageBox.Show(DB_Path);
-                DataSet dus = new DataSet(); dus = SelectFromDB("Groups", cmd);
+                DataSet dus = new DataSet(); dus = SelectFromDB("Groups", cmd, "");
                 //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.Jet.OLEDB.12.0;Data Source=" + DB_Path))
                 //{
                 //    DataSet dus = new DataSet();
@@ -603,7 +603,7 @@ namespace RocksmithToolkitGUI.DLCManager
         }
         public void generatehsan()
         {
-            DataSet drsx = new DataSet(); drsx = SelectFromDB("Cache", "SELECT DISTINCT SongsHSANPath, PSARCName, Platform from Cache AS O;");
+            DataSet drsx = new DataSet(); drsx = SelectFromDB("Cache", "SELECT DISTINCT SongsHSANPath, PSARCName, Platform from Cache AS O;", "");
             //using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
             //{
             //    OleDbDataAdapter da = new OleDbDataAdapter("SELECT DISTINCT SongsHSANPath, PSARCName, Platform from Cache AS O;", cn);
@@ -650,7 +650,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         startI.Arguments = String.Format(" a {0} {1}",
                                                             za,
                                                             "manifests\\songs\\songs.hsan");// + platformDLCP TempPath + "\\0_dlcpacks\\cache_pc\\
-                        startI.UseShellExecute = true; startI.CreateNoWindow = false; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
+                        startI.UseShellExecute = false; startI.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
                         using (var DDC = new Process())
                         {
                             DDC.StartInfo = startI; DDC.Start(); DDC.WaitForExit(1000 * 60 * 1); //wait 1min
@@ -668,7 +668,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         startInfo.Arguments = String.Format(" create -y --lzma -S -N -o {0} -i {1}",
                                                             t,
                                                             unpackedDir);// + platformDLCP
-                        startInfo.UseShellExecute = true; startInfo.CreateNoWindow = false; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
+                        startInfo.UseShellExecute = false; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
                         //rtxt_Comments.Text = startInfo.FileName + " "+startInfo.Arguments;
                         //if (!File.Exists(t))
                         using (var DDC = new Process())
@@ -721,7 +721,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                 foreach (string xmln in Directory.GetFiles(unpackedDir + "\\songs\\arr\\", "*_bass.xml", System.IO.SearchOption.AllDirectories))
                                 {
                                     {
-                                        var bassRemoved = (DLCManager.RemoveDD(unpackedDir, "Yes", xmln, unpackedDir.GetPlatform(), false, false) == "Yes") ? "Yes" : "No";
+                                        var bassRemoved = (RemoveDD(unpackedDir, "Yes", xmln, unpackedDir.GetPlatform(), false, false) == "Yes") ? "Yes" : "No";
                                     }
                                 }
                             }
@@ -736,7 +736,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                                             platfor,
                                                             t,
                                                             unpackedDir);// + platformDLCP
-                        startInfo.UseShellExecute = true; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
+                        startInfo.UseShellExecute = false; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
 
                         //pack
                         using (var DDC = new Process())
@@ -757,7 +757,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             startI.Arguments = String.Format(" encrypt -custom:CB4A06E85378CED307E63EFD1084C19D UP0001-BLUS31182_00-ROCKSMITHPATCH01 00 00 00 {0} {1}",
                                                                 zi,
                                                                 za);
-                            startI.UseShellExecute = true; startI.CreateNoWindow = false; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
+                            startI.UseShellExecute = false; startI.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
                             using (var DDC = new Process())
                             {
                                 DDC.StartInfo = startI; DDC.Start(); DDC.WaitForExit(1000 * 60 * 1); //wait 1min
@@ -806,7 +806,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                 foreach (string xmln in Directory.GetFiles(unpackedDir + "\\songs\\arr\\", "*_bass.xml", System.IO.SearchOption.AllDirectories))
                                 {
                                     {
-                                        var bassRemoved = (DLCManager.RemoveDD(unpackedDir, "Yes", xmln, unpackedDir.GetPlatform(), false, false) == "Yes") ? "Yes" : "No";
+                                        var bassRemoved = (RemoveDD(unpackedDir, "Yes", xmln, unpackedDir.GetPlatform(), false, false) == "Yes") ? "Yes" : "No";
                                     }
                                 }
                             }
@@ -827,7 +827,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                                             platfor,
                                                             t,
                                                             unpackedDir);// + platformDLCP
-                        startInfo.UseShellExecute = true; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
+                        startInfo.UseShellExecute = false; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
 
                         //if (!File.Exists(t))
                         using (var DDC = new Process())
@@ -849,7 +849,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             startI.Arguments = String.Format(" encrypt -custom:CB4A06E85378CED307E63EFD1084C19D UP0001-BLUS31182_00-ROCKSMITHPATCH01 00 00 00 {0} {1}",
                                                                 zi,
                                                                 za);
-                            startI.UseShellExecute = true; startI.CreateNoWindow = false; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
+                            startI.UseShellExecute = false; startI.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
                             using (var DDC = new Process())
                             {
                                 DDC.StartInfo = startI; DDC.Start(); DDC.WaitForExit(1000 * 60 * 1); //wait 1min
@@ -899,7 +899,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     songkey = "";
                     songkey = ((line.Trim().ToLower()).Replace("\"songkey\" : \"", "").Replace("\"", "")).Replace(",", "");
 
-                    DataSet disx = new DataSet(); disx = SelectFromDB("Groups", "SELECT Removed from Cache AS O WHERE LCASE(Identifier)=\"" + songkey + "\"");
+                    DataSet disx = new DataSet(); disx = SelectFromDB("Groups", "SELECT Removed from Cache AS O WHERE LCASE(Identifier)=\"" + songkey + "\"", "");
                     //cmd = "SELECT Removed from Cache AS O WHERE LCASE(Identifier)=\"" + songkey + "\"";
                     //using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
                     //{
@@ -1168,7 +1168,7 @@ namespace RocksmithToolkitGUI.DLCManager
             var t = txt_AudioPreviewPath.Text;//"C:\\GitHub\\tmp\\0\\0_dlcpacks\\rs1compatibilitydisc_PS3\\audio\\ps3\\149627248.ogg";//txt_TempPath.Text + "\\0_dlcpacks\\rs1compatibilitydlc.psarc";
             startInfo.Arguments = String.Format(" -p {0}",
                                                 t);
-            startInfo.UseShellExecute = true; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
+            startInfo.UseShellExecute = false; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
 
             if (File.Exists(t))
                 using (var DDC = new Process())
@@ -1208,7 +1208,7 @@ namespace RocksmithToolkitGUI.DLCManager
             startInfo.WorkingDirectory = AppWD;// Path.GetDirectoryName();
             var t = txt_AudioPath.Text;//"C:\\GitHub\\tmp\\0\\0_dlcpacks\\rs1compatibilitydisc_PS3\\audio\\ps3\\149627248.ogg";//txt_TempPath.Text + "\\0_dlcpacks\\rs1compatibilitydlc.psarc";
             startInfo.Arguments = String.Format(" -p {0}", t);
-            startInfo.UseShellExecute = true; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
+            startInfo.UseShellExecute = false; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
 
             if (File.Exists(t))
                 using (var DDC = new Process())
@@ -1504,7 +1504,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 //    //da.Fill(ds, "Badge");
                 //}
                 DeleteFromDB("Groups", "DELETE FROM Groups WHERE Type=\"Retail\" AND Groups= \"" + chbx_Group.Text + "\"");
-                DataSet ds = new DataSet(); ds = SelectFromDB("Cache", "SELECT * from Cache AS O");
+                DataSet ds = new DataSet(); ds = SelectFromDB("Cache", "SELECT * from Cache AS O", "");
                 var recs = dssx.Tables[0].Rows.Count;
                 pB_ReadDLCs.Value = 0;
                 if (recs != 0)

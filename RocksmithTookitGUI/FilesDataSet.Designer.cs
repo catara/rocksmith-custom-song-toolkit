@@ -16,7 +16,7 @@ namespace RocksmithToolkitGUI {
     /// <summary>
     ///Represents a strongly typed in-memory cache of data.
     ///</summary>
-    [global::System.Serializable()]
+    //[global::System.Serializable()]
     [global::System.ComponentModel.DesignerCategoryAttribute("code")]
     [global::System.ComponentModel.ToolboxItem(true)]
     [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedDataSetSchema")]
@@ -765,7 +765,7 @@ namespace RocksmithToolkitGUI {
         /// <summary>
         ///Represents the strongly named DataTable class.
         ///</summary>
-        [global::System.Serializable()]
+        //[global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
         public partial class ArrangementsDataTable : global::System.Data.TypedTableBase<ArrangementsRow> {
             
@@ -1665,7 +1665,7 @@ namespace RocksmithToolkitGUI {
         /// <summary>
         ///Represents the strongly named DataTable class.
         ///</summary>
-        [global::System.Serializable()]
+        //[global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
         public partial class CacheDataTable : global::System.Data.TypedTableBase<CacheRow> {
             
@@ -2182,7 +2182,7 @@ namespace RocksmithToolkitGUI {
         /// <summary>
         ///Represents the strongly named DataTable class.
         ///</summary>
-        [global::System.Serializable()]
+        //[global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
         public partial class GroupsDataTable : global::System.Data.TypedTableBase<GroupsRow> {
             
@@ -2518,7 +2518,7 @@ namespace RocksmithToolkitGUI {
         /// <summary>
         ///Represents the strongly named DataTable class.
         ///</summary>
-        [global::System.Serializable()]
+        //[global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
         public partial class ImportDataTable : global::System.Data.TypedTableBase<ImportRow> {
             
@@ -2899,7 +2899,7 @@ namespace RocksmithToolkitGUI {
         /// <summary>
         ///Represents the strongly named DataTable class.
         ///</summary>
-        [global::System.Serializable()]
+        //[global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
         public partial class Import_AuditTrailDataTable : global::System.Data.TypedTableBase<Import_AuditTrailRow> {
             
@@ -3325,7 +3325,7 @@ namespace RocksmithToolkitGUI {
         /// <summary>
         ///Represents the strongly named DataTable class.
         ///</summary>
-        [global::System.Serializable()]
+        //[global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
         public partial class LogImportingDataTable : global::System.Data.TypedTableBase<LogImportingRow> {
             
@@ -3646,7 +3646,7 @@ namespace RocksmithToolkitGUI {
         /// <summary>
         ///Represents the strongly named DataTable class.
         ///</summary>
-        [global::System.Serializable()]
+        //[global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
         public partial class LogImportingErrorDataTable : global::System.Data.TypedTableBase<LogImportingErrorRow> {
             
@@ -3967,7 +3967,7 @@ namespace RocksmithToolkitGUI {
         /// <summary>
         ///Represents the strongly named DataTable class.
         ///</summary>
-        [global::System.Serializable()]
+        //[global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
         public partial class LogPackingDataTable : global::System.Data.TypedTableBase<LogPackingRow> {
             
@@ -4287,7 +4287,7 @@ namespace RocksmithToolkitGUI {
         /// <summary>
         ///Represents the strongly named DataTable class.
         ///</summary>
-        [global::System.Serializable()]
+        //[global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
         public partial class LogPackingErrorDataTable : global::System.Data.TypedTableBase<LogPackingErrorRow> {
             
@@ -4607,7 +4607,7 @@ namespace RocksmithToolkitGUI {
         /// <summary>
         ///Represents the strongly named DataTable class.
         ///</summary>
-        [global::System.Serializable()]
+        //[global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
         public partial class MainDataTable : global::System.Data.TypedTableBase<MainRow> {
             
@@ -6388,7 +6388,7 @@ namespace RocksmithToolkitGUI {
         /// <summary>
         ///Represents the strongly named DataTable class.
         ///</summary>
-        [global::System.Serializable()]
+        //[global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
         public partial class OfficialSongsDataTable : global::System.Data.TypedTableBase<OfficialSongsRow> {
             
@@ -6905,7 +6905,7 @@ namespace RocksmithToolkitGUI {
         /// <summary>
         ///Represents the strongly named DataTable class.
         ///</summary>
-        [global::System.Serializable()]
+        //[global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
         public partial class Pack_AuditTrailDataTable : global::System.Data.TypedTableBase<Pack_AuditTrailRow> {
             
@@ -7314,7 +7314,7 @@ namespace RocksmithToolkitGUI {
         /// <summary>
         ///Represents the strongly named DataTable class.
         ///</summary>
-        [global::System.Serializable()]
+        //[global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
         public partial class StandardizationDataTable : global::System.Data.TypedTableBase<StandardizationRow> {
             
@@ -7710,7 +7710,7 @@ namespace RocksmithToolkitGUI {
         /// <summary>
         ///Represents the strongly named DataTable class.
         ///</summary>
-        [global::System.Serializable()]
+        //[global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
         public partial class TonesDataTable : global::System.Data.TypedTableBase<TonesRow> {
             
@@ -8546,7 +8546,7 @@ namespace RocksmithToolkitGUI {
         /// <summary>
         ///Represents the strongly named DataTable class.
         ///</summary>
-        [global::System.Serializable()]
+        //[global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
         public partial class WEM2OGGCorrespondenceDataTable : global::System.Data.TypedTableBase<WEM2OGGCorrespondenceRow> {
             

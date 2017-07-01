@@ -145,14 +145,14 @@ namespace RocksmithToolkitLib.Extensions
         {
             var cmdArgs = String.Format(" -s {2} -l {3} \"{0}\" \"{1}\"", sourcePath, destinationPath, msStart, msLength);
 
-            GeneralExtensions.RunExternalExecutable(APP_OGGCUT, true, false, true, cmdArgs);
+            GeneralExtensions.RunExternalExecutable(APP_OGGCUT, true, true, true, cmdArgs);
         }
 
         public static void Ogg2Wav(string sourcePath, string destinationPath)
         {
             var cmdArgs = String.Format(" -o \"{1}\" \"{0}\"", sourcePath, destinationPath);
 
-            GeneralExtensions.RunExternalExecutable(APP_OGGDEC, true, false, true, cmdArgs);
+            GeneralExtensions.RunExternalExecutable(APP_OGGDEC, true, true, true, cmdArgs);
         }
 
         public static void Preview2Wav(string sourcePath)

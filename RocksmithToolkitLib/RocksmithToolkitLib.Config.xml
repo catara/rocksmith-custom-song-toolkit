@@ -163,6 +163,7 @@
   <Config Key="dlcm_EoFPath" Value="C:\\GitHub\\rocksmith-custom-song-toolkit\\RocksmithTookitGUI\\DLCManager\\external_tools\\eof1.8RC12" />;
   <Config Key="dlcm_UltraStarCreator" Value="C:\\GitHub\rocksmith-custom-song-toolkit\\RocksmithTookitGUI\\DLCManager\\external_tools\\UltraStar Creator" />;
   <Config Key="dlcm_WinMerge" Value="C:\\GitHub\rocksmith-custom-song-toolkit\\RocksmithTookitGUI\\DLCManager\\external_tools\\WinMerge" />;
+  <Config Key="dlcm_TCommnader" Value="C:\\GitHub\rocksmith-custom-song-toolkit\\RocksmithTookitGUI\\DLCManager\\external_tools\\tcmdr" />;
 
-<Config Key="cgm_coloredinlay" Value="true" />
+  <Config Key="cgm_coloredinlay" Value="true" />
 </ArrayOfConfig>

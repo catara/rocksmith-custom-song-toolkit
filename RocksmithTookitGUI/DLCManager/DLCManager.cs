@@ -158,7 +158,7 @@ namespace RocksmithToolkitGUI.DLCManager
             InitializeComponent();
 
             //Enable Preview generation
-            if (ConfigRepository.Instance()["general_wwisepath"] == "") ConfigRepository.Instance()["general_wwisepath"] = "C:\\Program Files (x86)\\Audiokinetic\\Wwise v2015.1.9 build 5624";// 2016.2.1.5995";
+            if (ConfigRepository.Instance()["general_wwisepath"] == "") ConfigRepository.Instance()["general_wwisepath"] = "C:\\Program Files (x86)\\Audiokinetic\\Wwise 2016.2.1 build 5995";// 2016.2.1.5995";
             if (ConfigRepository.Instance()["general_rs2014path"] == "") ConfigRepository.Instance()["general_rs2014path"] = "C:\\Program Files (x86)\\Steam\\Apps\\common\\Rocksmith2014";
             if (ConfigRepository.Instance()["general_defaultauthor"] == "") ConfigRepository.Instance()["general_defaultauthor"] = "catara";
 
@@ -2390,7 +2390,8 @@ namespace RocksmithToolkitGUI.DLCManager
                         if (chbx_Additional_Manipulations.GetItemChecked(69) && info.OggPath != null && (bitrate > ConfigRepository.Instance()["dlcm_Bitrate"].ToInt32() + 8000 || SampleRate > 48001))
                         {
                             tst = "start encoding Main audio to 128kb ... " + bitrate + " ... " + SampleRate; timestamp = UpdateLog(timestamp, tst, true);
-                            if (WwiseInstalled())
+                            var d1 = WwiseInstalled("Convert Audio if bitrate> ConfigRepository");
+                            if (d1.Split(';')[0]=="1")
                             {
                                 Downstream(info.OggPath);//.Replace(".wem", "_fixed.ogg")
                                 audio_hash = GetHash(info.OggPath);
@@ -2400,11 +2401,13 @@ namespace RocksmithToolkitGUI.DLCManager
                                     SampleRate = vorbis.SampleRate;
                                 }
                             }
+                             if (d1.Split(';')[1] == "1") artist = "Ignore";
+                            if (d1.Split(';')[2] == "1") { j = 10; i = 9999; artist = "Ignore"; }
                             tst = "end set encoding to128kb 44khz ..."; timestamp = UpdateLog(timestamp, tst, true);
                         }
 
                         //Set Preview
-                        if ((chbx_Additional_Manipulations.GetItemChecked(34) && info.OggPreviewPath == null ||
+                        if (artist != "Ignore" && (chbx_Additional_Manipulations.GetItemChecked(34) && info.OggPreviewPath == null ||
                                 (chbx_Additional_Manipulations.GetItemChecked(55) && ((audio_hash != "" && audio_hash == audioPreview_hash) || recalc_Preview))))
                         {
                             timestamp = UpdateLog(timestamp, "Trying to add preview as missing.", true);
@@ -2502,11 +2505,15 @@ namespace RocksmithToolkitGUI.DLCManager
                         if (chbx_Additional_Manipulations.GetItemChecked(69) && info.OggPreviewPath != null && (bitratep > ConfigRepository.Instance()["dlcm_Bitrate"].ToInt32() + 8000))
                         {
                             tst = "start encoding preview audio to 128kb ... " + bitratep + " ... " + SampleRate; timestamp = UpdateLog(timestamp, tst, true);
-                            if (WwiseInstalled())
+                            var d2 = WwiseInstalled("Convert Preview Audio if bitrate> ConfigRepository");
+                            if (d2.Split(';')[0] == "1")
                             {
                                 Downstream(info.OggPreviewPath);//.Replace(".wem", "_fixed.ogg")
                                 audioPreview_hash = GetHash(info.OggPreviewPath);
                             }
+
+                            if (d2.Split(';')[1] == "1") artist = "Ignore";
+                            if (d2.Split(';')[2] == "1") { j = 10; i = 9999; artist = "Ignore"; }
                             tst = "end set encoding to128kb 44khz ..."; timestamp = UpdateLog(timestamp, tst, true);
                         }
 
@@ -3952,7 +3959,8 @@ namespace RocksmithToolkitGUI.DLCManager
                         if (chbx_Additional_Manipulations.GetItemChecked(69) && file.AudioPath != null && (bitrate > ConfigRepository.Instance()["dlcm_Bitrate"].ToInt32() + 8000))
                         {
                             tsst = "START set main audio reconv ..." + bitrate; timestamp = UpdateLog(timestamp, tsst, false);
-                            if (WwiseInstalled())
+                            var d3 = WwiseInstalled("Convert Audio if bitrate> ConfigRepository");
+                            if (d3.Split(';')[0] == "1")
                             {
                                 Downstream(file.AudioPath);
                                 using (var vorbis = new NVorbis.VorbisReader(file.OggPath))
@@ -3969,6 +3977,12 @@ namespace RocksmithToolkitGUI.DLCManager
                                 cmd += ",audioSampleRate=\"" + SampleRate + "\"";
                                 cmd += " WHERE ID=" + file.ID;
                                 DataSet dis = new DataSet(); dis = UpdateDB("Main", cmd + ";");
+                            }
+
+                            if (d3.Split(';')[1] == "1") break;
+                            if (d3.Split(';')[2] == "1") {
+                                btn_RePack.Text = "RePack";
+                                if (bwRGenerate.WorkerSupportsCancellation == true) bwRGenerate.CancelAsync();
                             }
                             tsst = "end set main audio reconv ..."; timestamp = UpdateLog(timestamp, tsst, false);
                         }
@@ -4040,7 +4054,8 @@ namespace RocksmithToolkitGUI.DLCManager
                         if (chbx_Additional_Manipulations.GetItemChecked(69) && file.audioPreviewPath != null && (bitratep > ConfigRepository.Instance()["dlcm_Bitrate"].ToInt32() + 8000))
                         {
                             tsst = "start set preview audio reconv ..." + bitratep; timestamp = UpdateLog(timestamp, tsst, false);
-                            if (WwiseInstalled())
+                            var d4 = WwiseInstalled("Convert Preview Audio if bitrate> ConfigRepository");
+                            if (d4.Split(';')[0] == "1")
                             {
                                 Downstream(file.audioPreviewPath);
                                 //save new new hash
@@ -4050,6 +4065,12 @@ namespace RocksmithToolkitGUI.DLCManager
                                 cmd += "audioPreview_Hash=\"" + audio_previewhash + "\"";
                                 cmd += " WHERE ID=" + file.ID;
                                 DataSet dis = new DataSet(); dis = UpdateDB("Main", cmd + ";");
+                            }
+
+                            if (d4.Split(';')[1] == "1") break;
+                            if (d4.Split(';')[2] == "1") {
+                                btn_RePack.Text = "RePack";
+                                if (bwRGenerate.WorkerSupportsCancellation == true) bwRGenerate.CancelAsync();
                             }
                             tsst = "end set preview audio reconv ..."; timestamp = UpdateLog(timestamp, tsst, false);
                         }
@@ -4087,7 +4108,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             Name = file.DLC_Name,
                             AppId = file.DLC_AppID,
                             ArtFiles = info.ArtFiles,
-                            Showlights = true,//info.Showlights, //apparently this infor is not read..also the tone base is removed/not read also
+                            //Showlights = true,//info.Showlights, //apparently this infor is not read..also the tone base is removed/not read also
                             Inlay = info.Inlay,
                             LyricArtPath = info.LyricArtPath,
 

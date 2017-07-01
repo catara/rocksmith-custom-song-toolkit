@@ -169,26 +169,26 @@ if info in the title dont add
 [ ] year inconsitencies (check should show these as well)
 [ ] the pretender doesnt register as alternate
 [ ] test replace ....
-
-june 2017
-[+] when offline is quite slow cause of get track no
-[+] add spotify song, artist, album IDs, albbum cover path
+	[ ] add log end sont timeat pack
+[ ] add comment beginning of song in lyrics
+[ ] spotify
 	[ ] Think of unifying the maindb&generic Spotify functions
 	[ ] import make sure Spotify connection is remembered showed and shard with maindb
 	[ ] save&override album image
-	[ ] at standardization apply spotify album url name ?
-[+] add total commander w ps3 plugin
-[+] add log total songtime import
-	[ ] &pack
-[ ] add comment beginning of song in lyrics
-[+] remove trailing /
-[+] remove use internal if manually modif
-[+] if folders do not exist default something
-whats w royal
-[+]whats w truly
+	[ ] at standardization apply spotify album url name ?	
+	[ ] album same as artist
 
 done:
 (next release)
+[+] when offline is quite slow cause of get track no
+[+] add spotify song, artist, album IDs, albbum cover path
+[+] add total commander w ps3 plugin
+[+] add log total songtime import
+[+] remove trailing /
+[+] remove use internal if manually modif
+[+] if folders do not exist default something
+[+] whats w royal
+[+] whats w truly
 [x] when repacking groups add group at the beginning of song
 [x] live details should not be active if the song is not based on a live
 [x] Package Author:  Custom Song Creator Package Author: RepackedBy CATARA

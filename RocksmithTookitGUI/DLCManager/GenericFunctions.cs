@@ -604,7 +604,7 @@ namespace RocksmithToolkitGUI.DLCManager
             catch (Exception ex) { Console.Write(ex); }
         }
 
-        static public bool WwiseInstalled()
+        static public string WwiseInstalled(string Mss)
         {
             var wwisePath = "";
                         if (!String.IsNullOrEmpty(ConfigRepository.Instance()["general_wwisepath"]))
@@ -613,12 +613,14 @@ namespace RocksmithToolkitGUI.DLCManager
                             wwisePath = Environment.GetEnvironmentVariable("WWISEROOT");
             if (wwisePath == "" || !Directory.Exists(wwisePath))
             {
-                ErrorWindow frm1 = new ErrorWindow("Please Install Wwise v2016.2.1.5995 with Authorithy binaries : " + Environment.NewLine + "A restart is required for the Conversion to WEM, process to be succesfull, else the errors can be captured through the Missing Files Query" + Environment.NewLine, "https://www.audiokinetic.com/download/", "Error at WEM Creation", true, true);
+                ErrorWindow frm1 = new ErrorWindow("Cause "+Mss+ ".\nPlease Install Wwise v2016.2.1.5995 with Authorithy binaries : " + Environment.NewLine + "A restart is required for the Conversion to WEM, process to be succesfull, else the errors can be captured through the Missing Files Query" + Environment.NewLine, "https://www.audiokinetic.com/download/", "Error at WEM Creation", true, true);
                 frm1.ShowDialog();
-                return false;
+                //if (frm1.IgnoreSong) break;
+                //if (frm1.StopImport) { j = 10; i = 9999; break; }
+                return "0" +";"+ frm1.IgnoreSong + ";" + frm1.StopImport;
             }
             else
-                return true;
+                return "1"+";0;0";
         }
 
         public static string Manipulate_strings(string words, int k, bool ifn, bool orig_flag, bool bassRemoved, GenericFunctions.MainDBfields[] SongRecord, string sep1, string sep2)

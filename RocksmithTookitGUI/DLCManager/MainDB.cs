@@ -2057,7 +2057,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     Name = filez.DLC_Name,
                     AppId = filez.DLC_AppID,
                     ArtFiles = info.ArtFiles, //not complete
-                    Showlights = true,//info.Showlights, //apparently this info is not read..also the tone base is removed/not read also
+                    //Showlights = true,//info.Showlights, //apparently this info is not read..also the tone base is removed/not read also
                     Inlay = info.Inlay,
                     LyricArtPath = info.LyricArtPath,
 

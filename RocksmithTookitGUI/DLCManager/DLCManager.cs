@@ -3813,7 +3813,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                 if (SourcePlatform.platform == GamePlatform.XBox360)
                                     dirToPack = Directory.GetDirectories(Path.Combine(unpackedDir, Packer.ROOT_XBox360))[0];
 
-                                Packer.Pack(dirToPack, targetFileName, updateSNG, TargetPlatform, fixShowlights: false);
+                                Packer.Pack(dirToPack, targetFileName, updateSNG, TargetPlatform);
                                 //DirectoryExtension.SafeDelete(unpackedDir);
                                 DeleteDirectory(unpackedDir);
                             }

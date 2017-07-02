@@ -89,19 +89,12 @@
 [ ] duplicate lead to Rhythm
 [ ] do i delete things three time, one more redundantly
 [ ] copy imported files
-if info in the title dont add
 [-] Enable CDLC
 [ ] Repair broken CDLC
 [ ] add 46&2 lyrics from old one
-[x] standardization issues nin short is always on
-[x] search by album/comments/details
-[x] add acoustic
-[x] add acoustic to duplciates
-[x] 7033 issues with old file
-
 [ ] copied copied copied
 [ ] overrite rename buttons
-[x] mac song gen errors at read dlc library
+[ ] mac song gen errors at read dlc library
 [ ] Profiles should include also Format
 [ ] replace all does not exist
 [ ] come together lyrics
@@ -112,11 +105,8 @@ if info in the title dont add
 [ ] fix import current month
 [ ] bitrate to compress maybe a config
 [ ] select incl groups has a small error
-[x] standardization still w duplicates (null treatment included)
 [ ] mantra cannot be imported
 [ ] gasoline cannot be packed
-[x] check if filename is the same
-[x] why songs get preview created at pack :)
 [ ] log is not last come first entry
 [ ] check originals vs original dbb
 [ ] why do i have duplciates on the ps3
@@ -128,7 +118,6 @@ if info in the title dont add
 [-] redo save track at pack with update function
 [-] improve the overlay
 [-] fix for rebuild missing file
-[x] disable old and L->r
 [x] delete lib (gather lib from ps3-ftp/mac/pc 1. save 2. copy new)
 	[ ] Delete All
 [ ] cannot find sick sick sic (override)
@@ -136,20 +125,42 @@ if info in the title dont add
 [ ] usa peaches long naming fails at packing (shortes folder the random id)
   [ ] ps3 long names sogs(149char)(cannot be read)
   [ ] after selecting deselect incl. Beta
-[x] update to wise 2015 (messages&testing)
 [ ] add simple logic to add sections
 	[ ] check and fix the Sections flag
 	[+] add sections (bored to death; Renabled BPR program)
 	[ ] add conter of sections
-[x] ignore and del 4k/no psarc files invalid wil/should be added by nmew validation
+[ ] ignore and del 4k/no psarc files invalid wil/should be added by nmew validation
 [x] alternate 0 improve
 	[+] with or without u still doesnt have the right alternate no when importing vs an existing song= a2....maybe OK :)
 	[ ]alt 1 ahead of a.
+[-] add copy last and initial to mass pack
+[ ] Add repair option
+[ ] update readme.md screenshots
+[ ] try db constant connection
+[ ] year inconsitencies (check should show these as well)
+[ ] the pretender doesnt register as alternate
+[ ] test replace ....
+	[ ] add log end sont timeat pack
+[ ] add comment beginning of song in lyrics
+[ ] check smooth saiyin and c file that breaks
+[ ] check crossed aslbubm ar
+[ ] check iron maiden albbubm art
+[ ] make downgrade invisibble whjen weming
+
+
+done:
+(next release)
+[ ] spotify
+	[ ] Think of unifying the maindb&generic Spotify functions
+	[x] import make sure Spotify connection is remembered showed and shard with maindb
+	[x] save&override album image
+	[ ] at standardization apply spotify album url name ?
 [x] fix importing own songs, eg. ana
+[x] if info in the title dont add
+[x] standardization still w duplicates (null treatment included)
 [x] standardiation double counted songs 7981
 [x] stadardization still fedup adding duplicates
-[x] check help that crashed at infi.nhame (broken now) partial file now we do some checks on extension
-[-] add copy last and initial to mass pack
+[x] check help that crashed at infi.nhame (broken now) partial file now we do some checks on extension	
 [x] standardise genhash to the already exiusting maindb.GetHashCode
 [x] filename has [] covering artist name/album ...no [] separator for FN
 [x] reset crashes maindb..not realy
@@ -162,155 +173,16 @@ if info in the title dont add
 [x] some preview hashtags are blank
 [x] add random no in title
 [x] why packID has that weird format
-[x] find missing..also should check folders
-[ ] Add repair option
-[ ] update readme.md screenshots
-[ ] try db constant connection
-[ ] year inconsitencies (check should show these as well)
-[ ] the pretender doesnt register as alternate
-[ ] test replace ....
-	[ ] add log end sont timeat pack
-[ ] add comment beginning of song in lyrics
-[ ] spotify
-	[ ] Think of unifying the maindb&generic Spotify functions
-	[ ] import make sure Spotify connection is remembered showed and shard with maindb
-	[ ] save&override album image
-	[ ] at standardization apply spotify album url name ?	
-	[ ] album same as artist
-
-done:
-(next release)
-[+] when offline is quite slow cause of get track no
-[+] add spotify song, artist, album IDs, albbum cover path
-[+] add total commander w ps3 plugin
-[+] add log total songtime import
-[+] remove trailing /
-[+] remove use internal if manually modif
-[+] if folders do not exist default something
-[+] whats w royal
-[+] whats w truly
-[x] when repacking groups add group at the beginning of song
-[x] live details should not be active if the song is not based on a live
-[x] Package Author:  Custom Song Creator Package Author: RepackedBy CATARA
-[x] remote still doesnt behave like other readonly boxes
-[x] clean maindb and others of Comments
-[x] when marking at dupli gne a pack_auditrail
-[x] duplicate should go into packed audit trail :) 
-[x] astronaut does not pick the file version
-[x] remove commented out code
-[x] save error log separately
-[x] save constantly not only at the end
-[x] smart dEbug OUTPUTING function...
-[x] Selecting a witha  new name should ask if you wanna rename
-[x] new filter...show loaded songs
-[x] initial
-[x] at copy save in remote location
-[x] add time stamps in logging to improve performance
-[x] add cancelation button
-[x] duplicate management..on change..check and green color
-[+] save in the db as well
-[x] finish profiles (load Saved Profile names)
-	[x] check they are saved at close
-[x] save when exit search 
-	[x] when clicking on a song disable Search
-[x] delete all duplicates at Standardization
-	[+] small bug: on inserting a new standardization
-[x] add group to Beta
-[x] standardiation delete does not refresh
-[x] duplicate import should save the names of the files in a separate table :) (not req)
-	[x] save also hash not to ask again for duplicates if already decided as duplicate (all imported are saved and so checked for hexa code)
-[x] enable Cover correction in Standardization
-[x] enable shortNames and Album correction in Standardization
-[x] fix filter in CAche
-[x] group display with issues
-[+] some songs dont repack
-[+] dont conv Orig
-[+] some songs have preview in minutes (preview rename thing) recalculated at repack
-	[+] why all songs have 30sec preview :)
-[x] copy name fails title sort in duplicate management
-[x] add read library option
-[x] wrap up the audit trail...only at succesfull import u update the table
-	[+] at deletion please remove from imported audit trail
-[x] duplicate also shows in winmerge Tones
-[x] fix stop import from duplicate screen
-[x] cacke give errors
-[x]  fix some dupli buttons not being enabled
-[x] add unique key for each packed&imported thing so to read libs
-	[+] use also name as identifier
-[x] profiles should be a table
-[x] duplic add numeric text box
-[x] tarck no Issues (all rhcp r 9)(fixed)
-[x] bass removed twice creates issues at packing(code cleanup)
-[x] dupli buttons dont deactivate after copy
-[x] backing is not recognized
-[x] vs pixel to r8 on cover
-[x] custom song creator still there after save
-[x] capture live flag? as track no fails
-[x] add live in Duplicate
-[x] swich from missing files to remote path
-[x] date bigger
-[x] crashes if i go on new rec in the maindblist
-[x] if multi info only in file name is not detected
-[x] add bonus in the title
-[x] a3 fails
-[x] vocals is not acti dupli wannabeLA
-[x] update DB
-[x] at save dupli is off
-[x] qa still doesnt says novales (was not in the xml)
-[x] TEst Live Removal
-[x] duplicate should also compare multitrack version and live_details
-[x] at pack mark as selected - Conflicting with Select functionality (is this useful? :) )
-[x] Create a new filter Deselect LAst PAcked. no deen
-[x] Profile Temp is now debug
-[x] Selecting no profile now is not gen error
-[x] fix for import unique hash for any
-[x] Fix for Copy Selection Old
-[+] third eye investig
-[x] count the trully ftp
-[x] added vocals hash is missing
-[x] for newly added lyrics create sng and save the path in the DB
-[x] no cover Not Listening papa roach
-[x] remove should have a progress bar
-[x] duplic manag make date bigger
-[x] duplic manag make date readonly
-[x] when opening no java...
-[x] remove author if custom
-[x] bring in no of duplicates in title
-[x] if multitrack dont bring in the duplicate
-[x] fix duplicate song for all the connected files at DB level. Copied OLD file as well.
-[x] Update Selectd stats after Save
-[?] Bass Picked changes when moving up and down in MainDB
-[x] Custom song creators only saved if Advanced option set
-[x] Fix for unnecessary preview creation for songs wo Albumart
-[x] Fix no album art detection
-[x] Remove BassDD only if DD exits
-[x] Add trully FPT to mass pack
-[x] Update to latest Master (template broken revert will gen DLCName change back from dlckey)
-[x] Spotify old API is dead, use a new way to... (bring also cover)
-[x] save track at repack
-[x] replace () w [] (ADD that to alt.;)
-[x] when in filter select none looks weird
-[x] it's my life..breaks because of the aphostrofe' (update log issue)(update duplication)
-[x] Filter by group
-[x] How many audioslave bring themback alive foler r? duplicate song issue? (old duplicqwrtes not deleted maybe)
-[x] Minerva gives a wwise error check on a repaired hdd...check and open a tix (no issue lately)
-[x] add incl group
-[x] at search when chicking it changes from exit to search
-[x] multitrack dont get their track no if they have (no guitar removed) as assumgly they stilla re searched witrh full name 
-[x] alternate doesnt go into title sort
-[x] trim SONG details
-[x] original bass remove fails on billy weathers  (fix)
-[x] beta does not apear on originals or indiv repack(mqiandb)(non issue-added save at repack)
-[x] some tracks no don't get read/picked cause" (1) " when importing other formats this should be ok
-[x] fixed remove dd on some originals
-[+] started to add details tones&arrangements from db at pack
-[x] Add Lyrics simple steps
-[x] Start thinking of importing other platforms(duplicate window platform indicator)
-[x] fix multiplatofrm import as folder created is always pc_ iggy pop lust for life
-[x] add exbox and mac to missing paths AudioP = songshsanP.Replace("\\manifests\\songs_rs1disc\\songs_rs1disc.hsan", "\\audio\\" + (platformDLCP == "PS3" ? platformDLCP : (platformDLCP == "Pc" ? "windows" : platformDLCP)) + "\\") + AudioP1 + (platformDLCP == "PS3" ? ".ogg" : "_fixed.ogg");
-[x] add external software registry paths
-[x] fixed reorder issue in Standardiyation
-
+[x] find missing..also should check folders[ ] album same as artist
+[x] standardization issues nin short is always on
+[x] search by album/comments/details
+[x] add acoustic
+[x] add acoustic to duplciates
+[x] 7033 issues with old file
+[x] update to wise 2015 (messages&testing)
+[x] disable old and L->r
+[x] check if filename is the same
+[x] why songs get preview created at pack :)
 
 - diff between master and branch
 DLCManager folder
@@ -492,7 +364,7 @@ of this folder should be directed to the respective developer.
 		- Beats & Phrases Resynchronizer by Svengraph
 		http://customsforge.com/topic/15687-beats-phrases-resynchronizer/
 
-		- Cover Manipualtions
+		- Cover Manipualtions (not used)
 		https://github.com/Lovroman/RS-CDLC-Tagger/
 		http://customsforge.com/topic/20334-tool-cdlc-tagger/
 
@@ -505,6 +377,7 @@ of this folder should be directed to the respective developer.
 		-DevOnly additional software
 			EOF v1.8b (c)2008-2010 T³ Software eof1.8RC11(5-19-2016) http://ignition.customsforge.com/eof http://customsforge.com/topic/1529-latest-eof-releases-5-19-2016/page-86
 			UltraStar Creator 1.2 https://sourceforge.net/projects/usc/
+			TotalCommander gisler.com
 
 ## Contact
 

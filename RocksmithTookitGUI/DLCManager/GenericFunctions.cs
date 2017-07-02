@@ -205,17 +205,47 @@ namespace RocksmithToolkitGUI.DLCManager
         }
         public static Task<string> StartToGetSpotifyDetails(string Artist, string Album, string Title, string Year, string Status)
         {
-            // lots of code prior to this
             Task<string> bytesRead = RequestToGetSpotifyDetailsAsync(Artist, Album, Title, Year, Status);
-            return bytesRead;
+            //string sRead = "";
+            //if (bytesRead.Result.ToString().Split(';')[4] != "-" && bytesRead.Result.ToString().Split(';')[4] != "") sRead = DwdldAlbumImg(bytesRead.Result.ToString().Split(';')[4], bytesRead.Result.ToString().Split(';')[3]);
+            return bytesRead;// +";"+ sRead;
         }
+        //public static string StartToGetSpotifyAlbumDetails(string url, string albumcover)
+        //{
+        //    //Task<string> bytesRead = RequestToGetSpotifyDetailsAsync(Artist, Album, Title, Year, Status);
+        //    Task<string> sRead = EAsync(url, albumcover);
+        //    return "OK";
+        //}
         public static async Task<string> RequestToGetSpotifyDetailsAsync(string Artist, string Album, string Title, string Year, string Status)
         {
-            // lots of code prior to this
             string bytesRead = await GetTrackNoFromSpotifyAsync(Artist, Album, Title, Year, Status);
             return bytesRead;
         }
-        public static async System.Threading.Tasks.Task<string> GetTrackNoFromSpotifyAsync(string Artist, string Album, string Title, string Year, string Status)
+        //public static async Task<string> RequestToGetSpotifyAlbbumCoverAsync(string Artist)
+        //{
+        //    using (WebClient wc = new WebClient())
+        //    {
+        //        byte[] imageBytes = await wc.DownloadDataTaskAsync(new Uri(Artist.ToString().Split(';')[4]));
+        //        using (MemoryStream stream = new MemoryStream(imageBytes)) ;
+        //        //picbx_SpotifyCover.Image = Image.FromStream(stream);
+        //    }
+        //}
+        public static string DwdldAlbumImg(string url, string spdetails)
+        {
+            try
+            {
+                using (WebClient wc = new WebClient())
+                {
+                    byte[] imageBytes = wc.DownloadData(new Uri(url));
+                    FileStream file = new FileStream(ConfigRepository.Instance()["dlcm_TempPath"] + "\\0_albumCovers\\" + spdetails + ".png", FileMode.Create, System.IO.FileAccess.Write);
+                    using (MemoryStream stream = new MemoryStream(imageBytes)) stream.WriteTo(file);
+                    //picbx_SpotifyCover.Image = Image.FromStream(stream);
+                }
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); return "NOK"; }
+            return "OK";
+        }
+        public static async Task<string> GetTrackNoFromSpotifyAsync(string Artist, string Album, string Title, string Year, string Status)
         {
 
             //ActivateSpotify_ClickAsync();
@@ -230,7 +260,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
             NameValueCollection nameValueCollection = new NameValueCollection();
             nameValueCollection.Add("query", keywordString);
-            var a1 = ""; var a2 = ""; var a3 = ""; var a4 = ""; var a5 = ""; var ab = "";
+            var a1 = ""; var a2 = ""; var a3 = ""; var a4 = ""; var a5 = ""; var a6 = ""; var ab = "";
             var albump = 0;
             var artistp = 0;
             var tracknop = 0;
@@ -240,32 +270,61 @@ namespace RocksmithToolkitGUI.DLCManager
                 //SearchItem Aitem = _spotify.SearchItems(Album, SearchType.Album);
                 //FullAlbum FAitem = _spotify.GetAlbum(Aitem.Albums.Items.);
                 //if (Aitem.Error==null) if (Aitem.Albums.Total>0) if (Aitem.Albums.Items[0]. > 0)
-                SearchItem Titem = _spotify.SearchItems(Title, SearchType.Track);
+                SearchItem Titem = _spotify.SearchItems(Title + "+" + Album + "+" + Artist, SearchType.All);
                 if (Titem.Error == null) if (Titem.Tracks.Total > 0)
                         foreach (SpotifyAPI.Web.Models.FullTrack Trac in Titem.Tracks.Items)
                         {
                             if (Titem.Tracks.Total > 0) foreach (SpotifyAPI.Web.Models.SimpleArtist Artis in Trac.Artists)
-                                    if (Artis.Name.ToString() == Artist)
+                                    if (Artis.Name.ToString().ToLower() == Artist.ToLower())
                                     {
                                         a1 = Trac.TrackNumber.ToString();
                                         a2 = Trac.Id;
                                         a3 = Artis.Id;
                                         FullAlbum FAitem = _spotify.GetAlbum(Trac.Album.Id);
-                                        using (WebClient wc = new WebClient())
-                                        {
-                                            // byte[] imageBytes = await wc.DownloadDataTaskAsync(new Uri(FAitem.Images[0].Url));
-                                            //using (MemoryStream stream = new MemoryStream(imageBytes))
-                                            //    picbx_SpotifyCover.Image = Image.FromStream(stream);                                            
-                                        }
+                                        a6 = (ConfigRepository.Instance()["dlcm_TempPath"] + "\\0_albumCovers\\" + Artis.Name.ToString() + " - " + Trac.Album.Name.ToString() + ".png").Replace("/", ""); ;
+                                        if (!File.Exists(a6))
+                                            using (WebClient wc = new WebClient())
+                                            {
+                                                byte[] imageBytes = webClient.DownloadData(new Uri(FAitem.Images[0].Url));
+                                                FileStream file = new FileStream(a6, FileMode.Create, System.IO.FileAccess.Write);
+                                                using (MemoryStream stream = new MemoryStream(imageBytes)) stream.WriteTo(file);
+                                            }
                                         a4 = Trac.Album.Id;
                                         a5 = FAitem.Images[0].Url;
-                                        if (Trac.Album.Name.ToString() == Album)
-                                        {
-                                            continue;
-                                        }
                                     }
 
                         }
+                    else
+                    {
+                        SearchItem Titem2 = _spotify.SearchItems(Title, SearchType.Track, 50);
+                        if (Titem2.Error == null) if (Titem2.Tracks.Total > 0)
+                                foreach (SpotifyAPI.Web.Models.FullTrack Trac in Titem2.Tracks.Items)
+                                {
+                                    if (Titem2.Tracks.Total > 0) foreach (SpotifyAPI.Web.Models.SimpleArtist Artis in Trac.Artists)
+                                            if (Artis.Name.ToString().ToLower() == Artist.ToLower())
+                                            {
+                                                a1 = Trac.TrackNumber.ToString();
+                                                a2 = Trac.Id;
+                                                a3 = Artis.Id;
+                                                FullAlbum FAitem = _spotify.GetAlbum(Trac.Album.Id);
+                                                a4 = Trac.Album.Id;
+                                                a5 = FAitem.Images[0].Url;
+                                                if (Trac.Album.Name.ToString().ToLower() == Album.ToLower())
+                                                {
+                                                    a6 = (ConfigRepository.Instance()["dlcm_TempPath"] + "\\0_albumCovers\\" + Artis.Name.ToString() + Trac.Album.Name.ToString() + ".png").Replace("/", ""); ;
+                                                    if (!File.Exists(a6))
+                                                        using (WebClient wc = new WebClient())
+                                                        {
+                                                            byte[] imageBytes = webClient.DownloadData(new Uri(FAitem.Images[0].Url));
+                                                            FileStream file = new FileStream(a6, FileMode.Create, System.IO.FileAccess.Write);
+                                                            using (MemoryStream stream = new MemoryStream(imageBytes)) stream.WriteTo(file);
+                                                        }
+                                                    continue;
+                                                }
+                                            }
+
+                                }
+                    }
                 //if (_profile.Images != null && _profile.Images.Count > 0)
                 //{
                 //    using (WebClient wc = new WebClient())
@@ -303,8 +362,8 @@ namespace RocksmithToolkitGUI.DLCManager
             //    a1 = GetTrackNoFromSpotifyAsync("", "", Title).ToString();
             //}
             //txt_Track_No.Text = z == "0" && txt_Track_No.Text != "" ? txt_Track_No.Text : z;
-            if (a1 != "") return a1 + ";" + a2 + ";" + a3 + ";" + a4 + ";" + a5;
-            else return "0" + ";-;-;-;-";
+            if (a1 != "") return a1 + ";" + a2 + ";" + a3 + ";" + a4 + ";" + a5 + ";" + a6;
+            else return "0" + ";-;-;-;-;-";
         }
 
         static public MainDBfields[] GetRecord_s(string cmd) //static
@@ -607,20 +666,20 @@ namespace RocksmithToolkitGUI.DLCManager
         static public string WwiseInstalled(string Mss)
         {
             var wwisePath = "";
-                        if (!String.IsNullOrEmpty(ConfigRepository.Instance()["general_wwisepath"]))
-                            wwisePath = ConfigRepository.Instance()["general_wwisepath"];
-                        else
-                            wwisePath = Environment.GetEnvironmentVariable("WWISEROOT");
+            if (!String.IsNullOrEmpty(ConfigRepository.Instance()["general_wwisepath"]))
+                wwisePath = ConfigRepository.Instance()["general_wwisepath"];
+            else
+                wwisePath = Environment.GetEnvironmentVariable("WWISEROOT");
             if (wwisePath == "" || !Directory.Exists(wwisePath))
             {
-                ErrorWindow frm1 = new ErrorWindow("Cause "+Mss+ ".\nPlease Install Wwise v2016.2.1.5995 with Authorithy binaries : " + Environment.NewLine + "A restart is required for the Conversion to WEM, process to be succesfull, else the errors can be captured through the Missing Files Query" + Environment.NewLine, "https://www.audiokinetic.com/download/", "Error at WEM Creation", true, true);
+                ErrorWindow frm1 = new ErrorWindow("Cause " + Mss + ".\nPlease Install Wwise v2016.2.1.5995 with Authorithy binaries : " + Environment.NewLine + "A restart is required for the Conversion to WEM, process to be succesfull, else the errors can be captured through the Missing Files Query" + Environment.NewLine, "https://www.audiokinetic.com/download/", "Error at WEM Creation", true, true);
                 frm1.ShowDialog();
                 //if (frm1.IgnoreSong) break;
                 //if (frm1.StopImport) { j = 10; i = 9999; break; }
-                return "0" +";"+ frm1.IgnoreSong + ";" + frm1.StopImport;
+                return "0" + ";" + frm1.IgnoreSong + ";" + frm1.StopImport;
             }
             else
-                return "1"+";0;0";
+                return "1" + ";0;0";
         }
 
         public static string Manipulate_strings(string words, int k, bool ifn, bool orig_flag, bool bassRemoved, GenericFunctions.MainDBfields[] SongRecord, string sep1, string sep2)
@@ -748,7 +807,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             tzt = rn.ToString(); //not yet done for all arrangements
                             break;
                         case "<Artist Short>":
-                            tzt =  SongRecord[k].Artist_ShortName != "" ? SongRecord[k].Artist_ShortName : SongRecord[k].Artist;
+                            tzt = SongRecord[k].Artist_ShortName != "" ? SongRecord[k].Artist_ShortName : SongRecord[k].Artist;
                             break;
                         case "<Album Short>":
                             tzt = SongRecord[k].Album_ShortName != "" ? SongRecord[k].Album_ShortName : SongRecord[k].Album;
@@ -794,7 +853,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             break;
                     }
                     if (tzt != "")
-                        fulltxt = fulltxt.IndexOf("[")>0 ? fulltxt.Replace(tzt.Replace("[", "").Replace("]", ""), "") + tzt : fulltxt+tzt;
+                        fulltxt = fulltxt.IndexOf("[") > 0 ? fulltxt.Replace(tzt.Replace("[", "").Replace("]", ""), "") + tzt : fulltxt + tzt;
 
                     if (oldtxt == fulltxt && last_ > 0) fulltxt = fulltxt.Substring(0, last_);
                     last_ = fulltxt.Length;
@@ -852,9 +911,9 @@ namespace RocksmithToolkitGUI.DLCManager
             }
         }
 
-        public static void CreateTempFolderStructure(string Temp_Path_Import, string old_Path_Import, string broken_Path_Import, string dupli_Path_Import, string dlcpacks, string pathDLC, string repacked_path, string repacked_XBOXPath, string repacked_PCPath, string repacked_MACPath, string repacked_PSPath, string log_Path)
+        public static void CreateTempFolderStructure(string Temp_Path_Import, string old_Path_Import, string broken_Path_Import, string dupli_Path_Import, string dlcpacks, string pathDLC, string repacked_path, string repacked_XBOXPath, string repacked_PCPath, string repacked_MACPath, string repacked_PSPath, string log_Path, string albumCovers_PSPath, string Log_PSPath)
         {
-            if (!Directory.Exists(Temp_Path_Import) || !Directory.Exists(pathDLC) || !Directory.Exists(old_Path_Import) || !Directory.Exists(broken_Path_Import) || !Directory.Exists(dupli_Path_Import) || !Directory.Exists(dlcpacks + "\\temp") || !Directory.Exists(dlcpacks + "\\manipulated") || !Directory.Exists(dlcpacks + "\\manifests") || !Directory.Exists(dlcpacks + "\\manipulated\\temp") || !Directory.Exists(repacked_path) || !Directory.Exists(repacked_XBOXPath) || !Directory.Exists(repacked_PCPath) || !Directory.Exists(repacked_MACPath) || !Directory.Exists(repacked_PSPath) || !Directory.Exists(log_Path))
+            if (!Directory.Exists(Temp_Path_Import) || !Directory.Exists(pathDLC) || !Directory.Exists(old_Path_Import) || !Directory.Exists(broken_Path_Import) || !Directory.Exists(dupli_Path_Import) || !Directory.Exists(dlcpacks + "\\temp") || !Directory.Exists(dlcpacks + "\\manipulated") || !Directory.Exists(dlcpacks + "\\manifests") || !Directory.Exists(dlcpacks + "\\manipulated\\temp") || !Directory.Exists(repacked_path) || !Directory.Exists(repacked_XBOXPath) || !Directory.Exists(repacked_PCPath) || !Directory.Exists(repacked_MACPath) || !Directory.Exists(repacked_PSPath) || !Directory.Exists(log_Path) || !Directory.Exists(Log_PSPath) || !Directory.Exists(albumCovers_PSPath))
             {
                 MessageBox.Show(String.Format("One of the mandatory backend, folder is missing " + ", " + Temp_Path_Import + ", " + pathDLC + ", " + old_Path_Import + ", " + broken_Path_Import + ", " + dupli_Path_Import + ", " + dlcpacks + "(manipulated or manipulated-temp or manifests or temp), " + repacked_path + "(split by platform), " + log_Path, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error));
                 try
@@ -879,6 +938,8 @@ namespace RocksmithToolkitGUI.DLCManager
                         if (!Directory.Exists(repacked_MACPath) && (repacked_MACPath != null)) di = Directory.CreateDirectory(repacked_MACPath);
                         if (!Directory.Exists(repacked_PSPath) && (repacked_PSPath != null)) di = Directory.CreateDirectory(repacked_PSPath);
                         if (!Directory.Exists(log_Path) && (log_Path != null)) di = Directory.CreateDirectory(log_Path);
+                        if (!Directory.Exists(albumCovers_PSPath) && (albumCovers_PSPath != null)) di = Directory.CreateDirectory(albumCovers_PSPath);
+                        if (!Directory.Exists(Log_PSPath) && (Log_PSPath != null)) di = Directory.CreateDirectory(Log_PSPath);
                     }
                     else if (result1 == DialogResult.No) return;
                     else Application.Exit();
@@ -886,7 +947,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    MessageBox.Show("Can not open create folders " + Temp_Path_Import + "-" + pathDLC + "-" + old_Path_Import + "-" + broken_Path_Import + "-" + dupli_Path_Import + "-" + dlcpacks + "-" + repacked_path);
+                    MessageBox.Show("Can not open create folders " + Temp_Path_Import + "-" + pathDLC + "-" + old_Path_Import + "-" + broken_Path_Import + "-" + dupli_Path_Import + "-" + dlcpacks + "-" + repacked_path + "-" + albumCovers_PSPath + "-" + Log_PSPath);
                 }
             }
         }

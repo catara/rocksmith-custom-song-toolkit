@@ -41,7 +41,7 @@ namespace RocksmithToolkitGUI.DLCManager
         string dlcSavePath = "";
         int no_ord = 0;
         string Groupss = "";
-        string netstatus = "NOK";
+        public string netstatus = "NOK";
         DLCPackageData data;
 
         //Processing global vars
@@ -158,7 +158,7 @@ namespace RocksmithToolkitGUI.DLCManager
             InitializeComponent();
 
             //Enable Preview generation
-            if (ConfigRepository.Instance()["general_wwisepath"] == "") ConfigRepository.Instance()["general_wwisepath"] = "C:\\Program Files (x86)\\Audiokinetic\\Wwise 2016.2.1 build 5995";// 2016.2.1.5995";
+            if (ConfigRepository.Instance()["general_wwisepath"] == "") ConfigRepository.Instance()["general_wwisepath"] = "C:\\Program Files (x86)\\Audiokinetic\\Wwise 2016.2.1.5995";// 2016.2.1.5995";
             if (ConfigRepository.Instance()["general_rs2014path"] == "") ConfigRepository.Instance()["general_rs2014path"] = "C:\\Program Files (x86)\\Steam\\Apps\\common\\Rocksmith2014";
             if (ConfigRepository.Instance()["general_defaultauthor"] == "") ConfigRepository.Instance()["general_defaultauthor"] = "catara";
 
@@ -513,6 +513,7 @@ namespace RocksmithToolkitGUI.DLCManager
             ConfigRepository.Instance()["dlcm_Activ_Album"] = cbx_Activ_Album.Checked ? "Yes" : "No";
             ConfigRepository.Instance()["dlcm_Activ_FileName"] = cbx_Activ_File_Name.Checked ? "Yes" : "No";
             ConfigRepository.Instance()["dlcm_cbx_Groups"] = cbx_Groups.Text;
+            ConfigRepository.Instance()["netstatus"] = cbx_Groups.Text; 
             ConfigRepository.Instance()["dlcm_AdditionalManipul0"] = chbx_Additional_Manipulations.GetItemChecked(0) ? "Yes" : "No";
             ConfigRepository.Instance()["dlcm_AdditionalManipul1"] = chbx_Additional_Manipulations.GetItemChecked(1) ? "Yes" : "No";
             ConfigRepository.Instance()["dlcm_AdditionalManipul2"] = chbx_Additional_Manipulations.GetItemChecked(2) ? "Yes" : "No";
@@ -888,7 +889,7 @@ namespace RocksmithToolkitGUI.DLCManager
         public DateTime UpdateLog(DateTime dt, string txt, bool multith)
         {
             DateTime dtt = System.DateTime.Now;
-            var ii = Math.Round((dt - dtt).TotalSeconds, 2).ToString();
+            var ii = Math.Abs(Math.Round((dt - dtt).TotalSeconds, 2)).ToString().PadLeft(4, '0');
             if (multith) rtxt_StatisticsOnReadDLCs.Text = dtt + " - " + ii + " - " + txt + "\n" + rtxt_StatisticsOnReadDLCs.Text;
 
             // Write the string to a file.
@@ -931,6 +932,8 @@ namespace RocksmithToolkitGUI.DLCManager
             var repacked_PCPath = txt_TempPath.Text + "\\0_repacked\\PC";
             var repacked_MACPath = txt_TempPath.Text + "\\0_repacked\\MAC";
             var repacked_PSPath = txt_TempPath.Text + "\\0_repacked\\PS3";
+            var Log_PSPath = txt_TempPath.Text + "\\0_log";
+            var AlbumCovers_PSPath = txt_TempPath.Text + "\\0_albumCovers";
             var log_Path = ConfigRepository.Instance()["dlcm_LogPath"];
             string pathDLC = txt_RocksmithDLCPath.Text;
             tst = "end config reading..."; timestamp = UpdateLog(timestamp, tst, true);
@@ -959,6 +962,8 @@ namespace RocksmithToolkitGUI.DLCManager
                         CleanFolder(txt_TempPath.Text + "\\0_dlcpacks\\temp", "");
                         CleanFolder(txt_TempPath.Text + "\\0_dlcpacks\\manipulated", "");
                         CleanFolder(txt_TempPath.Text + "\\0_dlcpacks\\manipulated\\temp", "");
+                        CleanFolder(txt_TempPath.Text + "\\0_log", "");
+                        CleanFolder(txt_TempPath.Text + "\\0_albumCovers", "");
                         CleanFolder(broken_Path_Import, "");
                         CleanFolder(log_Path, "");
                         //Delete Folders
@@ -967,7 +972,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         {
                             try
                             {
-                                if (dir.Name != "0_dlcpacks" && dir.Name != "0_broken" && dir.Name != "0_old" && dir.Name != "0_repacked" && dir.Name != "0_duplicate")
+                                if (dir.Name != "0_dlcpacks" && dir.Name != "0_broken" && dir.Name != "0_old" && dir.Name != "0_repacked" && dir.Name != "0_duplicate" && dir.Name != "0_log" && dir.Name != "0_albumCovers")
                                     //dir.Delete(true);
                                     DeleteDirectory(dir.FullName);
                             }
@@ -991,14 +996,14 @@ namespace RocksmithToolkitGUI.DLCManager
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    MessageBox.Show("Can not delete folders:\n\n" + "0\n0\\0_old\n0\\0_duplicate\n0\\0_repacked\n0\\0_repacked\\PC\n0\\0_repacked\\PS3\n0\\0_repacked\\MAC\n0\\0_repacked\\XBOX360\n" + broken_Path_Import + "\n" + log_Path + "\n0\\dlcpacks\n0\\dlcpacks\\manifests\n0\\dlcpacks\\temp\n0\\dlcpacks\\manipulated");
+                    MessageBox.Show("Can not delete folders:\n\n" + "0\n0\\0_old\n0\\0_duplicate\n0\\0_repacked\n0\\0_repacked\\PC\n0\\0_repacked\\PS3\n0\\0_repacked\\MAC\n0\\0_repacked\\XBOX360\n" + broken_Path_Import + "\n" + log_Path + "\n0\\dlcpacks\n0\\dlcpacks\\manifests\n0\\dlcpacks\\temp\n0\\dlcpacks\\manipulated\n"+AlbumCovers_PSPath+ "\n"+ Log_PSPath);
                 }
             }
             //if (!(File.Exists(txt_TempPath.Text) && File.Exists(txt_TempPath.Text + "\\0_old") && File.Exists(txt_TempPath.Text + "\\0_repacked") && File.Exists(txt_TempPath.Text + "\\0_repacked\\PC") && File.Exists(txt_TempPath.Text + "\\0_repacked\\PS3") && File.Exists(txt_TempPath.Text + "\\0_repacked\\XBBOX360") && File.Exists(txt_TempPath.Text + "\\0_repacked\\MAC") && File.Exists(txt_TempPath.Text + "\\0_duplicate") && File.Exists(txt_TempPath.Text + "\\0_dlcpacks") && File.Exists(broken_Path_Import) && File.Exists(log_Path)))
             //{
             //    DialogResult result2 = MessageBox.Show("Some folder is missing please" + "\n\nChose:\n\n1. Create Folders\n2. Cancel Import command\n3. Ignore", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
             //    if (result2 == DialogResult.Yes)
-            CreateTempFolderStructure(Temp_Path_Import, old_Path_Import, broken_Path_Import, dupli_Path_Import, dlcpacks, pathDLC, repacked_Path, repacked_XBOXPath, repacked_PCPath, repacked_MACPath, repacked_PSPath, log_Path);
+            CreateTempFolderStructure(Temp_Path_Import, old_Path_Import, broken_Path_Import, dupli_Path_Import, dlcpacks, pathDLC, repacked_Path, repacked_XBOXPath, repacked_PCPath, repacked_MACPath, repacked_PSPath, log_Path, AlbumCovers_PSPath, Log_PSPath);
             //    else if (result2 == DialogResult.No) return;
             //    else Application.Exit();
             //}
@@ -1319,12 +1324,14 @@ namespace RocksmithToolkitGUI.DLCManager
                 duplit = false;
                 dupliNo = 0;
                 dupliPrcs = 0;
-                if (chbx_Additional_Manipulations.GetItemChecked(41))
+                if (chbx_Additional_Manipulations.GetItemChecked(41) && netstatus!="OK")
                 {
                     netstatus = ActivateSpotify_ClickAsync().Result.ToString();
+                    timestamp = UpdateLog(timestamp, "ending estabblishing connection with SPOTIFY.", true);
                 }
 
                 for (var j = 0; j < 10000; j++) { dupliSongs[j] = 0; }
+                timestamp = UpdateLog(timestamp,"ending setting dupli array to 0.", true);
 
                 for (var j = 0; j <= 1; j++)
                     for (i = 0; i <= noOfRec - 1; i++)
@@ -1488,10 +1495,10 @@ namespace RocksmithToolkitGUI.DLCManager
                             }
 
                             stopp = false;
-                            tst = "start processing..."; timestamp = UpdateLog(timestamp, tst, true); var songt = timestamp;
+                            tst = "START processing..."; timestamp = UpdateLog(timestamp, tst, true); var songt = timestamp;
 
                             string imported = Processing(i, j, tst, FullPath, DB_Path, errr, broken_Path_Import, ds, Temp_Path_Import, dupli_Path_Import, old_Path_Import, cmd, unpackedDir, packid, false);
-                            tst = "end processing..." + (songt - DateTime.Now); timestamp = UpdateLog(timestamp, tst, true);
+                            tst = "END processing song..." + (songt - DateTime.Now); timestamp = UpdateLog(timestamp, tst, true);
                             if ((stopp)) break;
                             else
                             if (imported != "0")// && imported != "ignored")
@@ -1880,6 +1887,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 var SpotifyArtistID = "";
                 var SpotifyAlbumID = "";
                 var SpotifyAlbumURL = "";
+                var SpotifyAlbumPath = "";
 
                 Is_MultiTrack = "";
                 MultiTrack_Version = "";
@@ -2032,7 +2040,13 @@ namespace RocksmithToolkitGUI.DLCManager
                     SpotifyArtistID = sptyfy.Result.Split(';')[2];
                     SpotifyAlbumID = sptyfy.Result.Split(';')[3];
                     SpotifyAlbumURL = sptyfy.Result.Split(';')[4];
+                    SpotifyAlbumPath = sptyfy.Result.Split(';')[5];
                     // GetTrackNoSpotifyAsync(info.SongInfo.Artist, info.SongInfo.Album, info.SongInfo.SongDisplayName));
+
+                    tst = "startgetting cover spotify..."; timestamp = UpdateLog(timestamp, tst, true);
+                    string coverf = "";
+                    //if (SpotifyAlbumID!="-" && SpotifyAlbumID!="") coverf = StartToGetSpotifyAlbumDetails(SpotifyAlbumURL, SpotifyAlbumID);
+                    //if (SpotifyAlbumID != "-" && SpotifyAlbumID != "") { SpotifyAlbmID= SpotifyAlbumID; SpotifyAlbmURL } 
                 }
                 ExistingTrackNo = "";
                 tst = "end get track no from spotify..."; timestamp = UpdateLog(timestamp, tst, true);
@@ -2508,8 +2522,17 @@ namespace RocksmithToolkitGUI.DLCManager
                             var d2 = WwiseInstalled("Convert Preview Audio if bitrate> ConfigRepository");
                             if (d2.Split(';')[0] == "1")
                             {
-                                Downstream(info.OggPreviewPath);//.Replace(".wem", "_fixed.ogg")
+                                //file.move(info.OggPreviewPath);
+                                var destf = info.OggPreviewPath.Replace("_preview", "xw");
+                                File.Move(info.OggPreviewPath, destf);
+                                Downstream(destf);//.Replace(".wem", "_fixed.ogg")
+                                File.Move(destf, info.OggPreviewPath);
                                 audioPreview_hash = GetHash(info.OggPreviewPath);
+                                //Delete any Wav file created..by....?ccc
+                                foreach (string wav_name in Directory.GetFiles(Path.GetDirectoryName(info.OggPreviewPath), "*.wav", System.IO.SearchOption.AllDirectories))
+                                {
+                                    DeleteFile(wav_name);//, Microsoft.VisualBasic.FileIO.UIOption.OnlyErrorDialogs, Microsoft.VisualBasic.FileIO.RecycleOption.SendToRecycleBin); //File.Delete(wav_name);
+                                }
                             }
 
                             if (d2.Split(';')[1] == "1") artist = "Ignore";
@@ -3445,8 +3468,8 @@ namespace RocksmithToolkitGUI.DLCManager
 
                     if (dzs.Tables[0].Rows.Count == 0)
                     {
-                        var insertcmdd = "Artist, Album";
-                        var insertvalues = "\"" + info.SongInfo.Artist + "\",\"" + info.SongInfo.Album + "\"";
+                        var insertcmdd = "Artist, Album, SpotifyArtistID, SpotifyAlbumID, SpotifyAlbumURL, SpotifyAlbumPath";
+                        var insertvalues = "\"" + info.SongInfo.Artist + "\",\"" + info.SongInfo.Album + "\",\"" + SpotifyArtistID + "\",\"" + SpotifyAlbumID + "\",\"" + SpotifyAlbumURL + "\",\"" + SpotifyAlbumPath + "\"";
                         InsertIntoDBwValues("Standardization", insertcmdd, insertvalues);
                     }
                     timestamp = UpdateLog(timestamp, "done", true);
@@ -3637,8 +3660,10 @@ namespace RocksmithToolkitGUI.DLCManager
                 var repacked_MACPath = txt_TempPath.Text + "\\0_repacked\\MAC";
                 var repacked_PSPath = txt_TempPath.Text + "\\0_repacked\\PS3";
                 var log_Path = ConfigRepository.Instance()["dlcm_LogPath"];
+                var Log_PSPath = txt_TempPath.Text + "\\0_log";
+                var AlbumCovers_PSPath = txt_TempPath.Text + "\\0_albumCovers";
                 string pathDLC = txt_RocksmithDLCPath.Text;
-                CreateTempFolderStructure(Temp_Path_Import, old_Path_Import, broken_Path_Import, dupli_Path_Import, dlcpacks, pathDLC, repacked_Path, repacked_XBOXPath, repacked_PCPath, repacked_MACPath, repacked_PSPath, log_Path);
+                CreateTempFolderStructure(Temp_Path_Import, old_Path_Import, broken_Path_Import, dupli_Path_Import, dlcpacks, pathDLC, repacked_Path, repacked_XBOXPath, repacked_PCPath, repacked_MACPath, repacked_PSPath, log_Path, Log_PSPath, AlbumCovers_PSPath);
 
                 btn_RePack.Text = "Stop Repack";
                 if ((ConfigRepository.Instance()["general_defaultauthor"] == "" || ConfigRepository.Instance()["general_defaultauthor"] == "Custom Song Creator") && chbx_DebugB.Checked) ConfigRepository.Instance()["general_defaultauthor"] = "catara";
@@ -4674,7 +4699,7 @@ namespace RocksmithToolkitGUI.DLCManager
             var Temp_Path_Import = txt_TempPath.Text + "\\dlcpacks";
             string pathDLC = txt_RocksmithDLCPath.Text;
             if (!chbx_DebugB.Checked) MessageBox.Show("Please make sure one of the following Retail Packs:\ncache.psarc, songs.psarc, rs1compatibilitydisc.psarc(.edat if PS3 format), rs1compatibilitydlc.psarc(.edat) \n\n, are in the Import Folder: " + pathDLC + "\n\nAlso, make sure you have enought space for the packing&unpacking operations Platform x 3GB");
-            CreateTempFolderStructure(txt_TempPath.Text, txt_TempPath.Text + "\\0_old", txt_TempPath.Text + "\\0_broken", txt_TempPath.Text + "\\0_duplicate", txt_TempPath.Text + "\\0_dlcpacks", pathDLC, txt_TempPath.Text + "\\0_Repacked", txt_TempPath.Text + "\\0_Repacked\\XBOX", txt_TempPath.Text + "\\0_Repacked\\PC", txt_TempPath.Text + "\\0_Repacked\\MAC", txt_TempPath.Text + "\\0_Repacked\\PS", ConfigRepository.Instance()["dlcm_LogPath"]);
+            CreateTempFolderStructure(txt_TempPath.Text, txt_TempPath.Text + "\\0_old", txt_TempPath.Text + "\\0_broken", txt_TempPath.Text + "\\0_duplicate", txt_TempPath.Text + "\\0_dlcpacks", pathDLC, txt_TempPath.Text + "\\0_Repacked", txt_TempPath.Text + "\\0_Repacked\\XBOX", txt_TempPath.Text + "\\0_Repacked\\PC", txt_TempPath.Text + "\\0_Repacked\\MAC", txt_TempPath.Text + "\\0_Repacked\\PS", ConfigRepository.Instance()["dlcm_LogPath"], txt_TempPath.Text + "\\0_log",txt_TempPath.Text + "\\0_albumCovers");
 
             //read all the .PSARCs in the IMPORT folder
             var jsonFiles = Directory.GetFiles(pathDLC.Replace("Rocksmith2014\\DLC", "Rocksmith2014"), "*.psarc*", System.IO.SearchOption.AllDirectories);

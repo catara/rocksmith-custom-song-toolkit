@@ -39,13 +39,13 @@ namespace RocksmithToolkitLib.Ogg
             {
                 Console.WriteLine(ex.Message);
                 //overridden ex, can't get real ex/msg, use log + throw;
-                Convert2Wem( wavSourcePath,  destinationPath,  audioQuality);
+                //Convert2Wem( wavSourcePath,  destinationPath,  audioQuality);
                 //throw new Exception("Wwise audio file conversion failed: " + ex.Message);
                 //System.Threading.Thread.Sleep(30000);
                 //try
                 //{
                 //    var wwiseCLIPath = GetWwisePath();
-                //    var wwiseTemplateDir = LoadWwiseTemplate(wavSourcePath, audioQuality, wwiseCLIPath);
+                //    var wwiseTemplateDir = LoadWwiseTemplate(wavSourcePath, audioQuality);
                 //    ExternalApps.Wav2Wem(wwiseCLIPath, wwiseTemplateDir);
                 //    GetWwiseFiles(destinationPath, wwiseTemplateDir);
                 //}
@@ -56,7 +56,7 @@ namespace RocksmithToolkitLib.Ogg
                 //    try
                 //    {
                 //        var wwiseCLIPath = GetWwisePath();
-                //        var wwiseTemplateDir = LoadWwiseTemplate(wavSourcePath, audioQuality, wwiseCLIPath);
+                //        var wwiseTemplateDir = LoadWwiseTemplate(wavSourcePath, audioQuality);
                 //        ExternalApps.Wav2Wem(wwiseCLIPath, wwiseTemplateDir);
                 //        GetWwiseFiles(destinationPath, wwiseTemplateDir);
                 //    }
@@ -67,7 +67,7 @@ namespace RocksmithToolkitLib.Ogg
                 //        try
                 //        {
                 //            var wwiseCLIPath = GetWwisePath();
-                //            var wwiseTemplateDir = LoadWwiseTemplate(wavSourcePath, audioQuality, wwiseCLIPath);
+                //            var wwiseTemplateDir = LoadWwiseTemplate(wavSourcePath, audioQuality);
                 //            ExternalApps.Wav2Wem(wwiseCLIPath, wwiseTemplateDir);
                 //            GetWwiseFiles(destinationPath, wwiseTemplateDir);
                 //        }
@@ -77,9 +77,9 @@ namespace RocksmithToolkitLib.Ogg
                 //            throw new Exception("Wwise audio file conversion failed: " + excff.Message);
                 //        }
                 //    }
-                //    }
+                //}
             }
-            }
+        }
 
         public static string GetWwisePath()
         {
@@ -209,9 +209,11 @@ namespace RocksmithToolkitLib.Ogg
 
             File.Copy(sourcePath, Path.Combine(orgSfxDir, "Audio.wav"), true);
 
-            try {
+            try
+            {
                 File.Copy(sourcePreviewWave, Path.Combine(orgSfxDir, "Audio_preview.wav"), true);
-            } catch (Exception ex){ Console.Write(ex); } //bcapi
+            }
+            catch (Exception ex) { Console.Write(ex); } //bcapi
             return templateDir;
         }
 

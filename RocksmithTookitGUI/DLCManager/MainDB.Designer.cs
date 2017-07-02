@@ -497,7 +497,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.btn_ApplyAlbumSortNames.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_ApplyAlbumSortNames.Location = new System.Drawing.Point(410, 90);
-            this.btn_ApplyAlbumSortNames.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_ApplyAlbumSortNames.Margin = new System.Windows.Forms.Padding(2);
             this.btn_ApplyAlbumSortNames.Name = "btn_ApplyAlbumSortNames";
             this.btn_ApplyAlbumSortNames.Size = new System.Drawing.Size(18, 16);
             this.btn_ApplyAlbumSortNames.TabIndex = 407;
@@ -510,7 +510,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.btn_ApplyArtistShortNames.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_ApplyArtistShortNames.Location = new System.Drawing.Point(468, 3);
-            this.btn_ApplyArtistShortNames.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_ApplyArtistShortNames.Margin = new System.Windows.Forms.Padding(2);
             this.btn_ApplyArtistShortNames.Name = "btn_ApplyArtistShortNames";
             this.btn_ApplyArtistShortNames.Size = new System.Drawing.Size(18, 16);
             this.btn_ApplyArtistShortNames.TabIndex = 406;
@@ -523,7 +523,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.btn_Artist2SortA.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_Artist2SortA.Location = new System.Drawing.Point(410, 3);
-            this.btn_Artist2SortA.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_Artist2SortA.Margin = new System.Windows.Forms.Padding(2);
             this.btn_Artist2SortA.Name = "btn_Artist2SortA";
             this.btn_Artist2SortA.Size = new System.Drawing.Size(18, 16);
             this.btn_Artist2SortA.TabIndex = 403;
@@ -536,7 +536,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.btn_Title2SortT.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_Title2SortT.Location = new System.Drawing.Point(410, 73);
-            this.btn_Title2SortT.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_Title2SortT.Margin = new System.Windows.Forms.Padding(2);
             this.btn_Title2SortT.Name = "btn_Title2SortT";
             this.btn_Title2SortT.Size = new System.Drawing.Size(18, 15);
             this.btn_Title2SortT.TabIndex = 402;
@@ -549,7 +549,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.bbtn_Replace_Brakets.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bbtn_Replace_Brakets.Location = new System.Drawing.Point(410, 46);
-            this.bbtn_Replace_Brakets.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.bbtn_Replace_Brakets.Margin = new System.Windows.Forms.Padding(2);
             this.bbtn_Replace_Brakets.Name = "bbtn_Replace_Brakets";
             this.bbtn_Replace_Brakets.Size = new System.Drawing.Size(18, 14);
             this.bbtn_Replace_Brakets.TabIndex = 412;
@@ -562,7 +562,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.btn_RemoveBrakets.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_RemoveBrakets.Location = new System.Drawing.Point(410, 59);
-            this.btn_RemoveBrakets.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_RemoveBrakets.Margin = new System.Windows.Forms.Padding(2);
             this.btn_RemoveBrakets.Name = "btn_RemoveBrakets";
             this.btn_RemoveBrakets.Size = new System.Drawing.Size(18, 14);
             this.btn_RemoveBrakets.TabIndex = 413;
@@ -657,7 +657,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.tabControl.Controls.Add(this.tabPage3);
             this.tabControl.Controls.Add(this.tabPage4);
             this.tabControl.Location = new System.Drawing.Point(2, 347);
-            this.tabControl.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabControl.Margin = new System.Windows.Forms.Padding(2);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
             this.tabControl.Size = new System.Drawing.Size(1114, 274);
@@ -668,9 +668,9 @@ namespace RocksmithToolkitGUI.DLCManager
             this.tabPage1.Controls.Add(this.Panel1);
             this.tabPage1.Controls.Add(this.label2);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(2);
             this.tabPage1.Size = new System.Drawing.Size(1106, 248);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "DLC Info";
@@ -2493,9 +2493,9 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.tabPage2.Controls.Add(this.groupBox7);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage2.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(2);
             this.tabPage2.Size = new System.Drawing.Size(1106, 248);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "CustomForge";
@@ -2816,9 +2816,9 @@ namespace RocksmithToolkitGUI.DLCManager
             this.tabPage3.Controls.Add(this.btn_RemoveRemoteSong);
             this.tabPage3.Controls.Add(this.txt_RemotePath);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage3.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(2);
             this.tabPage3.Size = new System.Drawing.Size(1106, 248);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "GameData";
@@ -2949,9 +2949,9 @@ namespace RocksmithToolkitGUI.DLCManager
             this.tabPage4.Controls.Add(this.txt_SpotifyLog);
             this.tabPage4.Controls.Add(this.btn_ActivateSpotify);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
-            this.tabPage4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage4.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(2);
             this.tabPage4.Size = new System.Drawing.Size(1106, 248);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Spotify";
@@ -3040,7 +3040,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // btn_GetTrack
             // 
             this.btn_GetTrack.Location = new System.Drawing.Point(886, 52);
-            this.btn_GetTrack.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_GetTrack.Margin = new System.Windows.Forms.Padding(2);
             this.btn_GetTrack.Name = "btn_GetTrack";
             this.btn_GetTrack.Size = new System.Drawing.Size(106, 42);
             this.btn_GetTrack.TabIndex = 398;
@@ -3112,13 +3112,14 @@ namespace RocksmithToolkitGUI.DLCManager
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(1135, 512);
+            this.ClientSize = new System.Drawing.Size(1152, 512);
             this.Controls.Add(this.tabControl);
             this.Controls.Add(this.DataViewGrid);
             this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.Name = "MainDB";
             this.Text = "MainDB";
             this.Load += new System.EventHandler(this.MainDB_Load);
+            this.Leave += new System.EventHandler(this.MainDB_Leave_1);
             ((System.ComponentModel.ISupportInitialize)(this.DataViewGrid)).EndInit();
             this.tabControl.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);

@@ -233,7 +233,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_Close.BackColor = System.Drawing.Color.LightSteelBlue;
             this.btn_Close.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_Close.Location = new System.Drawing.Point(1274, 519);
-            this.btn_Close.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_Close.Margin = new System.Windows.Forms.Padding(2);
             this.btn_Close.Name = "btn_Close";
             this.btn_Close.Size = new System.Drawing.Size(72, 27);
             this.btn_Close.TabIndex = 273;
@@ -271,7 +271,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_DecompressAll.BackColor = System.Drawing.SystemColors.MenuHighlight;
             this.btn_DecompressAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_DecompressAll.Location = new System.Drawing.Point(1274, 474);
-            this.btn_DecompressAll.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_DecompressAll.Margin = new System.Windows.Forms.Padding(2);
             this.btn_DecompressAll.Name = "btn_DecompressAll";
             this.btn_DecompressAll.Size = new System.Drawing.Size(74, 44);
             this.btn_DecompressAll.TabIndex = 276;
@@ -374,7 +374,6 @@ namespace RocksmithToolkitGUI.DLCManager
             // chbx_Default_Cover
             // 
             this.chbx_Default_Cover.AutoSize = true;
-            this.chbx_Default_Cover.Enabled = false;
             this.chbx_Default_Cover.Location = new System.Drawing.Point(1149, 363);
             this.chbx_Default_Cover.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.chbx_Default_Cover.Name = "chbx_Default_Cover";
@@ -382,7 +381,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_Default_Cover.TabIndex = 390;
             this.chbx_Default_Cover.Text = "Default_Cover";
             this.chbx_Default_Cover.UseVisualStyleBackColor = true;
-            this.chbx_Default_Cover.Visible = false;
             // 
             // txt_Album_Short
             // 

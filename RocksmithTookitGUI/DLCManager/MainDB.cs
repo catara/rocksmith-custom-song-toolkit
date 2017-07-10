@@ -115,7 +115,7 @@ namespace RocksmithToolkitGUI.DLCManager
         public DateTime UpdateLog(DateTime dt, string txt)
         {
             DateTime dtt = System.DateTime.Now;
-            var ii = Math.Round((dt - dtt).TotalSeconds, 2).ToString();
+            var ii = Math.Abs(Math.Round((dt - dtt).TotalSeconds, 2)).ToString().PadLeft(4, '0');
             //rtxt_StatisticsOnReadDLCs.Text = dtt + " - " + ii + " - " + txt + "\n" + rtxt_StatisticsOnReadDLCs.Text;
 
             // Write the string to a file.
@@ -131,15 +131,18 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void MainDB_Load(object sender, EventArgs e)
         {
+             var startT = DateTime.Now.ToString("yyyyMMdd HHmmssfff");
+
             // Clean temp log
-            var fnl = (logPath == null || !Directory.Exists(logPath) ? AppWD : logPath) + "\\" + "current_temp.txt";
+            if (File.Exists((logPath == null || !Directory.Exists(logPath) ? ConfigRepository.Instance()["dlcm_TempPath"]+"\\0_log" : logPath) + "\\" + "current_temp.txt")) File.Copy((logPath == null || !Directory.Exists(logPath) ? ConfigRepository.Instance()["dlcm_TempPath"] + "\\0_log" : logPath) + "\\" + "current_temp.txt", (logPath == null || !Directory.Exists(logPath) ? ConfigRepository.Instance()["dlcm_TempPath"] + "\\0_log" : logPath) + "\\" + "current_temp_" + startT + ".txt");
+            var fnl = (logPath == null || !Directory.Exists(logPath) ? ConfigRepository.Instance()["dlcm_TempPath"] + "\\0_log" : logPath) + "\\" + "current_temp.txt";
             FileStream sw = File.Open(fnl, FileMode.Create);
             //StreamWriter sw = new StreamWriter(File.OpenWrite(fnl));
             //sw.Write("Some stuff here");
             sw.Dispose();
             txt_SpotifyStatus.Text = netstatus;
 
-            var startT = DateTime.Now.ToString("yyyyMMdd HHmmssfff");
+
             var tst = "Starting... " + startT; timestamp = UpdateLog(timestamp, tst);
 
             //DataAccess da = new DataAccess();
@@ -1683,7 +1686,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     }
                 }
 
-                h = GeneratePackageAsync(txt_ID.Text, bassRemoved == "No" ? false : true).ToString();
+                h = GeneratePackageAsync(txt_ID.Text, bassRemoved == "No" ? false : true).Result.ToString();
             }
             string copyftp = "";
             pB_ReadDLCs.Increment(1);
@@ -3489,8 +3492,8 @@ namespace RocksmithToolkitGUI.DLCManager
 
             var paath = ConfigRepository.Instance()["dlcm_EoFPath"];
             var xx = "";
-            if (Directory.Exists(paath)) xx = paath;
-            else xx = Path.Combine(AppWD, "eof1.8RC11\\eof.exe");
+            if (File.Exists(paath)) xx = paath;
+            else xx = Path.Combine(AppWD, "\\eof1.8RC12\\eof.exe");
 
             var startInfo = new ProcessStartInfo();
             startInfo.FileName = xx;
@@ -3501,7 +3504,7 @@ namespace RocksmithToolkitGUI.DLCManager
             if (File.Exists(xx) && File.Exists(DB_Path))
                 using (var DDC = new Process())
                 {
-                    DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 60 * 1);
+                    DDC.StartInfo = startInfo; DDC.Start(); //DDC.WaitForExit(1000 * 60 * 1);
                 }
             try
             {
@@ -3516,7 +3519,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
             var i = DataViewGrid.SelectedCells[0].RowIndex;
             string link = "https://www.google.com/#q=" + DataViewGrid.Rows[i].Cells["Artist"].Value.ToString() + "+" + DataViewGrid.Rows[i].Cells["Song_Title"].Value.ToString() + "+" + "Lyrics";
-            MessageBox.Show("1. Google the Lyrics e.g." + link + " \n2. Use Ultrastar Creator Tab lyrics to the songs time signature\n3. Using EditorOnFire Transform tabbed lyrics to Rocksmith Format(Import - Adjust and Save)\n4. When done press Import lyrics by using Change Lyrics button", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            MessageBox.Show("1. Google the Lyrics e.g." + link + " \n\n2. Use Ultrastar Creator Tab lyrics to the songs time signature (if crashing at play open it from outside DLC Manager)\n\n3. Using EditorOnFire Transform tabbed lyrics to Rocksmith Format(File->Import->L>rics - Song->Track->Vocals then Adjust-Manually and Save)\n\n\n\n4. When done press Import lyrics by using Change Lyrics button", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
 
             try
@@ -3526,7 +3529,7 @@ namespace RocksmithToolkitGUI.DLCManager
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                MessageBox.Show("Can not open Song Folder in Exporer ! ");
+                MessageBox.Show("Can't not open Song Folder in Exporer ! ");
             }
 
             //2. Open Song Folder
@@ -3539,7 +3542,7 @@ namespace RocksmithToolkitGUI.DLCManager
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                MessageBox.Show("Can not open Song Folder in Exporer ! ");
+                MessageBox.Show("Can't not open Song Folder in Exporer ! ");
             }
 
             //3. Open Ultrastar pointing at the Song Ogg
@@ -3547,19 +3550,28 @@ namespace RocksmithToolkitGUI.DLCManager
             //var xx = Path.Combine(AppWD, "UltraStar Creator\\usc.exe");
             var paath = ConfigRepository.Instance()["dlcm_UltraStarCreator"];
             var xx = "";
-            if (Directory.Exists(paath)) xx = paath;
-            else xx = Path.Combine(AppWD, "UltraStar Creator\\usc.exe");
+            if (File.Exists(paath)) xx = paath;
+            else xx = Path.Combine(AppWD, "\\UltraStar Creator\\usc.exe");
 
             var startInfo = new ProcessStartInfo();
             startInfo.FileName = xx;
             startInfo.WorkingDirectory = AppWD.Replace("external_tools", "");
             startInfo.Arguments = String.Format(" \"" + txt_OggPath.Text + "\"");
-            startInfo.UseShellExecute = false; startInfo.CreateNoWindow = true;
+            startInfo.UseShellExecute = true; startInfo.CreateNoWindow = true;
 
             if (File.Exists(xx) && File.Exists(DB_Path))
                 using (var DDC = new Process())
                 {
-                    DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 60 * 1);
+                    DDC.StartInfo = startInfo; DDC.Start();// DDC.WaitForExit(1000 * 60 * 1);
+                    try
+                    {
+                        Process process = Process.Start(@xx);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Can't not open Song Folder in Exporer ! ");
+                    }
                 }
 
             //4. Open EoF
@@ -3752,8 +3764,8 @@ namespace RocksmithToolkitGUI.DLCManager
                     dsr = UpdateDB("Arrangements", "UPDATE Arrangements SET XMLFilePath=\"" + temppath + "\", XMLFile_Hash=\"" + FileHash + "\",SNGFilePath=\"" + outputFile + "\", SNGFile_Hash=\"" + SNGHash + "\" WHERE ArrangementType=\"Vocal\" AND CDLC_ID=" + txt_ID.Text + ";");
                 else
                 {
-                    var insertcmdd = "Arrangement_Name,CDLC_ID, ArrangementType, Bonus, ArrangementSort, TuningPitch, RouteMask, Has_Sections, XMLFilePath, XMLFile_Hash, SNGFilePath, SNGFile_Hash";
-                    var insertvalues = "\"4\", " + txt_ID.Text + ", \"Vocal\", \"false\", \"0\", \"0\", \"None\",\"No\",\"" + temppath + "\",\"" + FileHash + "\",\"" + outputFile + "\",\"" + SNGHash;
+                    var insertcmdd = "Arrangement_Name,CDLC_ID, ArrangementType, Bonus, ArrangementSort, TuningPitch, RouteMask, Has_Sections, XMLFilePath, XMLFile_Hash, SNGFilePath, SNGFileHash";
+                    var insertvalues = "\"4\", " + txt_ID.Text + ", \"Vocal\", \"false\", \"0\", \"0\", \"None\",\"No\",\"" + temppath + "\",\"" + FileHash + "\",\"" + outputFile + "\",\"" + SNGHash + "\"";
                     InsertIntoDBwValues("Arrangements", insertcmdd, insertvalues);
                 }
 
@@ -4470,10 +4482,11 @@ namespace RocksmithToolkitGUI.DLCManager
 
             NameValueCollection nameValueCollection = new NameValueCollection();
             nameValueCollection.Add("query", keywordString);
-            var a1 = ""; var ab = "";
-            var albump = 0;
-            var artistp = 0;
-            var tracknop = 0;
+            var a1 = "";
+            //var ab = "";
+            //var albump = 0;
+            //var artistp = 0;
+            //var tracknop = 0;
             debug = "";
             try
             {

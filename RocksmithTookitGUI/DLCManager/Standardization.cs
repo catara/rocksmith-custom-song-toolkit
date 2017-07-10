@@ -673,6 +673,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void button1_Click_3(object sender, EventArgs e)
         {
+            i = DataGridView1.SelectedCells[0].RowIndex;
             txt_AlbumArt_Correction.Text = DataGridView1.Rows[i].Cells[14].Value.ToString();
         }
 
@@ -684,7 +685,7 @@ namespace RocksmithToolkitGUI.DLCManager
             pB_ReadDLCs.Maximum = 5;
             pB_ReadDLCs.Value = 1;
             i = DataGridView1.SelectedCells[0].RowIndex;
-            if (DataGridView1.Rows[i].Cells[14].Value.ToString() == "")
+            if (DataGridView1.Rows[i].Cells[14].Value.ToString() == ""|| DataGridView1.Rows[i].Cells[13].Value.ToString()=="")
             {
                 pB_ReadDLCs.Value ++;
                 Task<string> sptyfy = StartToGetSpotifyDetails(artist, album, "", txt_Year_Correction.Text, "");

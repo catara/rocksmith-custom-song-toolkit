@@ -143,9 +143,8 @@
 	[ ] add log end sont timeat pack
 [ ] add comment beginning of song in lyrics
 [ ] check smooth saiyin and c file that breaks
-[ ] check crossed aslbubm ar
-[ ] check iron maiden albbubm art
-[ ] make downgrade invisibble whjen weming
+[ ] check crossed album art
+[ ] check iron maiden album art
 
 
 done:
@@ -155,34 +154,7 @@ done:
 	[x] import make sure Spotify connection is remembered showed and shard with maindb
 	[x] save&override album image
 	[ ] at standardization apply spotify album url name ?
-[x] fix importing own songs, eg. ana
-[x] if info in the title dont add
-[x] standardization still w duplicates (null treatment included)
-[x] standardiation double counted songs 7981
-[x] stadardization still fedup adding duplicates
-[x] check help that crashed at infi.nhame (broken now) partial file now we do some checks on extension	
-[x] standardise genhash to the already exiusting maindb.GetHashCode
-[x] filename has [] covering artist name/album ...no [] separator for FN
-[x] reset crashes maindb..not realy
-[x] preview fails
-[x] convert to 44100... no need as no space is gained
-[x] some songs are messed up on ps3
-[x] remote path is fedup
-[x] has track no even when 0
-[x] has author mostly yes
-[x] some preview hashtags are blank
-[x] add random no in title
-[x] why packID has that weird format
-[x] find missing..also should check folders[ ] album same as artist
-[x] standardization issues nin short is always on
-[x] search by album/comments/details
-[x] add acoustic
-[x] add acoustic to duplciates
-[x] 7033 issues with old file
-[x] update to wise 2015 (messages&testing)
-[x] disable old and L->r
-[x] check if filename is the same
-[x] why songs get preview created at pack :)
+
 
 - diff between master and branch
 DLCManager folder

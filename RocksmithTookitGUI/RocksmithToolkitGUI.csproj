@@ -1134,6 +1134,9 @@
     <Content Include="DLCManager\external_tools\eof1.8RC12\libvorbisfile-3.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="DLCManager\external_tools\eof1.8RC12\libwinpthread-1.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="DLCManager\external_tools\eof1.8RC12\license.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

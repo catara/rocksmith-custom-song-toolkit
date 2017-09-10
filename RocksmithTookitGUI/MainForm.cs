@@ -45,9 +45,11 @@ namespace RocksmithToolkitGUI
 
         private void InitMainForm()
         {
-            // NOTE TO DEVS: WHEN ISSUING NEW RELEASE VERION OF TOOLKIT 
-            // Edit 'AssemblyVersion' and 'AssemblyConfiguration' values in the PatchAssemblyVersion.ps1 file 
-            this.Text = String.Format("Rocksmith Custom Song Toolkit (v{0})", ToolkitVersion.version);
+            // NOTE TO DEVS: WHEN ISSUING NEW RELEASE VERION OF TOOLKIT ...
+            // Modify the RocksmithToolkitLib prebuild event which will update the
+            // PatchAssemblyVersion.ps1 file '$AssemblyVersion' and '$AssemblyConfiguration' values 
+
+            this.Text = String.Format("Rocksmith Custom Song Toolkit (v{0})", ToolkitVersion.RSTKGuiVersion);
 
             if (Environment.OSVersion.Platform == PlatformID.MacOSX)
             {// Disable updates for Mac (speedup) -1.5 seconds here
@@ -64,7 +66,7 @@ namespace RocksmithToolkitGUI
             }
         }
 
-        public override sealed string Text
+        public sealed override string Text
         {
             get { return base.Text; }
             set { base.Text = value; }

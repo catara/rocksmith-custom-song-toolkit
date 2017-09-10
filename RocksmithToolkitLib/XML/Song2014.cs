@@ -16,7 +16,7 @@ using RocksmithToolkitLib.Extensions;
 using RocksmithToolkitLib.Sng;
 using CON = RocksmithToolkitLib.Sng.Constants;
 
-namespace RocksmithToolkitLib.Xml
+namespace RocksmithToolkitLib.XML
 {
     [Serializable]
     [XmlRoot("song", Namespace = "", IsNullable = false)]
@@ -149,11 +149,17 @@ namespace RocksmithToolkitLib.Xml
          * "B0", "High pitch tick"
          * "B1", "Low pitch tick"
          * 
-         * E is for Crowd emotion control
-         * "e0", "Crowd waving hands like in The Sky is crying.
-         * "E1", "Crowd happy" //Meet the band event
-         * "E3", "Crowd wild"
-         * "E13", "Crowd extra wild?" // usually at the end of the song
+         * E is for Crowd emotion control (Used at the first beat of an arrangement)
+         * >>>Can be used multiple times in a song. 
+         * >>>For example, a song might start with e2, switch to e0 in a quiet part, then switch back to e2.
+         * 
+         * "e0", "Crowd waving hands like in The Sky is crying". [Waving hands side to side slowly]
+         * "E1", "Crowd happy" //Meet the band event [Hands in the air, jumping around]
+         * "E2", "Crowd happy" //A bit faster than E1, maybe breakdown reaction?
+         * "E3", "Crowd wild" //Start ovation/applause.
+         * "E13", "Crowd reaction" //Usually at the end of the song, after both E3 and D3. [End applause gradually]
+         * 
+         * "D3", "Performance ending ovations" based on your score (if bad = no applause). //Used at the end of the song.
          * 
          * DNA stuff
          * dna_none
@@ -166,8 +172,6 @@ namespace RocksmithToolkitLib.Xml
          * tone_b
          * tone_c
          * tone_d
-         * 
-         * "D3", "maybe it dispose showlights? nope that ingame bug..."
          * 
          * ???
          */
@@ -357,7 +361,7 @@ namespace RocksmithToolkitLib.Xml
                 {
                     if (commentNode.ToString().Contains(CST_MAGIC))
                     {
-                        if (!commentNode.ToString().Contains(ToolkitVersion.version))
+                        if (!commentNode.ToString().Contains(ToolkitVersion.RSTKGuiVersion))
                         {
                             if (saveOldVers)
                                 rootnode.AddFirst(new XComment(commentNode));
@@ -372,7 +376,7 @@ namespace RocksmithToolkitLib.Xml
 
                 // always put current CST version info first
                 if (sameVersion || writeNewVers)
-                    rootnode.AddFirst(new XComment(CST_MAGIC + ToolkitVersion.version + " "));
+                    rootnode.AddFirst(new XComment(CST_MAGIC + ToolkitVersion.RSTKGuiVersion + " "));
             }
             
             // xml.Declaration = new XDeclaration("1.0", "utf-8", null);
@@ -1195,7 +1199,7 @@ namespace RocksmithToolkitLib.Xml
                 var chord = new SongChord2014();
                 chord.ChordId = notesSection.Notes[i].ChordId;
                 chord.Time = notesSection.Notes[i].Time;
-                // Debug.WriteLine("Song2014 chord.ChordId = " + chord.ChordId);
+                // Console.WriteLine("Song2014 chord.ChordId = " + chord.ChordId);
 
                 // TECHNIQUES
                 chord.parseChordMask(notesSection.Notes[i], notesSection.Notes[i].NoteMask);

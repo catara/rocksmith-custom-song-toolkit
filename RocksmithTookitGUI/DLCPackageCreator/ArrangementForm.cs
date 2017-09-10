@@ -15,7 +15,7 @@ using RocksmithToolkitLib.DLCPackage.Manifest.Tone;
 using RocksmithToolkitLib.DLCPackage.Manifest2014.Tone;
 using RocksmithToolkitLib.Extensions;
 using RocksmithToolkitLib.Sng;
-using RocksmithToolkitLib.Xml;
+using RocksmithToolkitLib.XML;
 using RocksmithToolkitLib.XmlRepository;
 
 // do most work with the arrangment as memory variable
@@ -371,7 +371,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                     // TODO: fix error checking logic for new types of conversion
                     if (_gameVersion != version && version != GameVersion.None)
                     {
-                        Debug.WriteLine("Please choose valid Rocksmith {0} Arrangement file!", _gameVersion);
+                        Console.WriteLine("Please choose valid Rocksmith {0} Arrangement file!", _gameVersion);
                         //XmlFilePath.Text = "";
                         //return;
                     }

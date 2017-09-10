@@ -15,11 +15,11 @@ using RocksmithToolkitLib.XML;
 using X360.STFS;
 using X360.Other;
 using RocksmithToolkitLib.Sng;
-using RocksmithToolkitLib.Xml;
 using RocksmithToolkitLib.Extensions;
 using RocksmithToolkitLib.Sng2014HSL;
 using RocksmithToolkitLib.Ogg;
 using RocksmithToolkitLib.DLCPackage.Manifest;
+
 
 namespace RocksmithToolkitLib.DLCPackage
 {
@@ -193,7 +193,7 @@ namespace RocksmithToolkitLib.DLCPackage
                                 eofSong.Serialize(stream, true);
 
                             Song2014.WriteXmlComments(xmlEofFile, xmlComments, customComment: "Synced with SNG file");
-                            Debug.WriteLine("Fixed Tuning Descrepancies: " + xmlEofFile);
+                            Console.WriteLine("Fixed Tuning Descrepancies: " + xmlEofFile);
                             GlobalExtension.ShowProgress("Fixed tuning descepancies ...");
                         }
                     }

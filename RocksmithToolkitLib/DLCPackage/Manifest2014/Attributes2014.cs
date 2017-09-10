@@ -7,7 +7,7 @@ using RocksmithToolkitLib.DLCPackage.Manifest;
 using RocksmithToolkitLib.DLCPackage.Manifest.Functions;
 using RocksmithToolkitLib.DLCPackage.Manifest2014.Header;
 using RocksmithToolkitLib.DLCPackage.Manifest2014.Tone;
-using RocksmithToolkitLib.Xml;
+using RocksmithToolkitLib.XML;
 using RocksmithToolkitLib.Extensions;
 
 namespace RocksmithToolkitLib.DLCPackage.Manifest2014
@@ -54,7 +54,7 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest2014
         public string Tone_D { get; set; }
         public string Tone_Multiplayer { get; set; }
         public List<Tone2014> Tones { get; set; }
-        public string InputEvent { get; set; } // Vocals only      
+        public string InputEvent { get; set; } // Vocals only
         public float? SongVolume { get; set; } // Used in Customs only
         public float? PreviewVolume { get; set; } // Used in Customs only
 
@@ -159,7 +159,7 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest2014
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("GenerateChords: " + ex.Message);
+                Console.WriteLine("GenerateChords: " + ex.Message);
             }
 
             //Techniques TODO: improve me
@@ -170,7 +170,7 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest2014
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("GenerateTechniques: " + ex.Message);
+                Console.WriteLine("GenerateTechniques: " + ex.Message);
             }
 
             //Fix for Dead tones

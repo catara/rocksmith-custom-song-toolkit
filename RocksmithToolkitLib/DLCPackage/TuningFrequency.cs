@@ -6,7 +6,7 @@ using System.Linq;
 using System.Xml.Linq;
 using RocksmithToolkitLib.Extensions;
 using RocksmithToolkitLib.Sng;
-using RocksmithToolkitLib.Xml;
+using RocksmithToolkitLib.XML;
 using RocksmithToolkitLib.XmlRepository;
 
 namespace RocksmithToolkitLib.DLCPackage
@@ -100,7 +100,7 @@ namespace RocksmithToolkitLib.DLCPackage
 
             if (isBassFixed)
             {
-                Debug.WriteLine("Low bass tuning may already be fixed: " + arr.SongXml.File);
+                Console.WriteLine("Low bass tuning may already be fixed: " + arr.SongXml.File);
                 // return false;
             }
 

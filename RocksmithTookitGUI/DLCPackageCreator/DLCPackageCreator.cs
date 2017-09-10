@@ -23,7 +23,7 @@ using RocksmithToolkitLib.DLCPackage.Manifest.Tone;
 using RocksmithToolkitLib.Extensions;
 using RocksmithToolkitLib.Ogg;
 using RocksmithToolkitLib.Sng;
-using RocksmithToolkitLib.Xml;
+using RocksmithToolkitLib.XML;
 using Control = System.Windows.Forms.Control;
 using ProgressBarStyle = System.Windows.Forms.ProgressBarStyle;
 using RocksmithToolkitGUI.Config;
@@ -88,6 +88,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             }
         }
 
+        //dirty implementation, it's always true, consider undo\redo manager for actions made+logging maybe?
         public bool IsDirty { get; set; }
         public string UnpackedDir { get; set; }
 
@@ -315,10 +316,10 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             songXml.ArrangementProperties.Metronome = (int)Metronome.Itself;
 
             var ebeats = songXml.Ebeats;
-            var songEvents = new RocksmithToolkitLib.Xml.SongEvent[ebeats.Length];
+            var songEvents = new RocksmithToolkitLib.XML.SongEvent[ebeats.Length];
             for (var i = 0; i < ebeats.Length; i++)
             {
-                songEvents[i] = new RocksmithToolkitLib.Xml.SongEvent
+                songEvents[i] = new RocksmithToolkitLib.XML.SongEvent
                     {
                         Code = ebeats[i].Measure == -1 ? "B1" : "B0",
                         Time = ebeats[i].Time
@@ -439,7 +440,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                     if (!String.IsNullOrEmpty(UnpackedDir))
                         ofd.InitialDirectory = UnpackedDir;
                     else
-                    { 
+                    {
                         try
                         {
                             // use EOF project directory if it exists
@@ -737,7 +738,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             }
         }
 
-        private void FillPackageCreatorForm(DLCPackageData info, string filesBaseDir)
+        public void FillPackageCreatorForm(DLCPackageData info, string filesBaseDir)
         {
             chkPlatformPC.Checked = info.Pc;
             chkPlatformMAC.Checked = info.Mac;
@@ -834,7 +835,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 AudioPath = info.OggPath.AbsoluteTo(BasePath);
 
             numVolSong.Value = Decimal.Round((decimal)info.Volume, 2);
-            numVolPreview.Value = (info.PreviewVolume != null) ? Decimal.Round((decimal)info.PreviewVolume, 2) : numVolSong.Value;
+            numVolPreview.Value = info.PreviewVolume != null ? Decimal.Round((decimal)info.PreviewVolume, 2) : numVolSong.Value;
 
             if (info.OggQuality > 1 && info.OggQuality < 10)
                 numAudioQuality.Value = info.OggQuality;
@@ -1154,7 +1155,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             //if (rbuttonSignatureLIVE.Checked)
             //{
             //    licenses.Add(new XBox360License() { ID = Convert.ToInt64(xboxLicense0IDTB.Text.Trim(), 16), Bit = 1, Flag = 1 });
-            //}            
+            //}
 
             var songVol = (float)numVolSong.Value;
             var previewVol = (float)numVolPreview.Value;
@@ -1717,7 +1718,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                     {
                         // commented out ... don't nag user with this message
                         // MessageBox.Show("Existing DD content in arrangement: " + arr.Name + " was not changed", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        Debug.WriteLine("Existing DD content in arrangement: " + arr.Name + " was not changed");
+                        Console.WriteLine("Existing DD content in arrangement: " + arr.Name + " was not changed");
                     }
                 }
 
@@ -1897,7 +1898,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
         private void ClickedInputControl(object sender, EventArgs e)
         {
             // well maybe user changed ;)
-            IsDirty = true;
+            //IsDirty = true;
         }
 
         private void GameVersion_MouseUp(object sender, MouseEventArgs e)
@@ -1962,7 +1963,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 }
                 catch (Exception ex)
                 {
-                    errorsFound.AppendLine(String.Format("Error generate PC package: {0}{1}{0}{2}{0}", Environment.NewLine, ex.Message, ex.StackTrace));
+                    errorsFound.AppendLine(String.Format("Error generating PC package: {0}{1}{0}{2}{0}", Environment.NewLine, ex.Message, ex.StackTrace));
                 }
 
             if (chkPlatformMAC.Checked)
@@ -1976,7 +1977,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 }
                 catch (Exception ex)
                 {
-                    errorsFound.AppendLine(String.Format("Error generate Mac package: {0}{1}{0}{2}{0}", Environment.NewLine, ex.Message, ex.StackTrace));
+                    errorsFound.AppendLine(String.Format("Error generating Mac package: {0}{1}{0}{2}{0}", Environment.NewLine, ex.Message, ex.StackTrace));
                 }
 
             if (chkPlatformXBox360.Checked)
@@ -1990,7 +1991,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 }
                 catch (Exception ex)
                 {
-                    errorsFound.AppendLine(String.Format("Error generate XBox 360 package: {0}{1}{0}{2}{0}", Environment.NewLine, ex.Message, ex.StackTrace));
+                    errorsFound.AppendLine(String.Format("Error generating XBox 360 package: {0}{1}{0}{2}{0}", Environment.NewLine, ex.Message, ex.StackTrace));
                 }
 
             if (chkPlatformPS3.Checked)
@@ -2004,7 +2005,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 }
                 catch (Exception ex)
                 {
-                    errorsFound.AppendLine(String.Format("Error generate PS3 package: {0}{1}. {0}PS3 package require 'JAVA x86' (32 bits) installed on your machine to generate properly.{0}", Environment.NewLine, ex.StackTrace));
+                    errorsFound.AppendLine(String.Format("Error generating PS3 package: {0}{1}. {0}PS3 package require 'JAVA x86' (32 bits) installed on your machine to generate properly.{0}", Environment.NewLine, ex.StackTrace));
                 }
 
             // Cache cleanup so we don't serialize or reuse data that could be changed
@@ -2064,7 +2065,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 case "generate":
                     var message = "Package was generated.";
                     if (errorsFound.Length > 0)
-                        message = String.Format("Package was generated with errors! See below: {0}{1}", Environment.NewLine, errorsFound);
+                        message = String.Format("Package {2} was generated with errors! See below: {0}{1}", Environment.NewLine, errorsFound, ToolkitVersion.RSTKGuiVersion);
                     else if (ConfigRepository.Instance().GetBoolean("creator_autosavetemplate"))
                         SaveTemplateFile(UnpackedDir);
 
@@ -2076,7 +2077,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                     break;
 
                 case "error":
-                    var message2 = String.Format("Package generation failed. See below: {0}{1}{0}", Environment.NewLine, errorsFound);
+                    var message2 = String.Format("Package generation {2} failed.  See below: {0}{1}{0}", Environment.NewLine, errorsFound, ToolkitVersion.RSTKGuiVersion);
                     MessageBox.Show(message2, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Parent.Focus();
                     break;
@@ -2237,6 +2238,8 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
         }
 
         //TODO: allow to choose audio for each arrangement separately. #Lessons, #Multitracks
+        //TODO: loudness normalization apply here
+        //TODO: detect quality, but suggest keeping it low at 4
         private void btnAudio_Click(object sender, EventArgs e)
         {
             using (var ofd = new OpenFileDialog())
@@ -2515,7 +2518,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
 
         private void numVolSong_ValueChanged(object sender, EventArgs e)
         {
-            if (numVolPreview.Value == decimal.Parse(numVolSong.Text)) //let's confuve user a bit more here :D
+            if (numVolPreview.Value == decimal.Parse(numVolSong.Text)) //TODO: here. warn about loudness normalization and that's better to adjust tones volume instead!
                 numVolPreview.Value = numVolSong.Value;
         }
 
@@ -2540,9 +2543,9 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 e.Handled = true;
         }
 
-        private class EqSEvent : IEqualityComparer<RocksmithToolkitLib.Xml.SongEvent>
+        private class EqSEvent : IEqualityComparer<RocksmithToolkitLib.XML.SongEvent>
         {
-            public bool Equals(RocksmithToolkitLib.Xml.SongEvent x, RocksmithToolkitLib.Xml.SongEvent y)
+            public bool Equals(RocksmithToolkitLib.XML.SongEvent x, RocksmithToolkitLib.XML.SongEvent y)
             {
                 if (x == null)
                     return y == null;
@@ -2550,7 +2553,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 return x.Code == y.Code && x.Time.Equals(y.Time);
             }
 
-            public int GetHashCode(RocksmithToolkitLib.Xml.SongEvent obj)
+            public int GetHashCode(RocksmithToolkitLib.XML.SongEvent obj)
             {
                 if (ReferenceEquals(obj, null))
                     return 0;

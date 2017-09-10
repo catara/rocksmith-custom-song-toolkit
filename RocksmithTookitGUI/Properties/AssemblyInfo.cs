@@ -28,7 +28,7 @@ using RocksmithToolkitLib;
 //      Revision
 //
 // THESE VALUES ARE PROGRAMMATICALLY GENERATED - DO NOT EDIT
-[assembly: AssemblyVersion("2.8.3.1")]
-[assembly: AssemblyInformationalVersion("ce57ebea")] // gitSubVersion
-[assembly: AssemblyConfiguration("BETA")] // "" blank for RELEASE
+[assembly: AssemblyVersion("2.8.4.1")]
+[assembly: AssemblyInformationalVersion("653a4b56")]
+[assembly: AssemblyConfiguration("BETA")]
 [assembly: NeutralResourcesLanguageAttribute("en")]

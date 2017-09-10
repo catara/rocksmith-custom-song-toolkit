@@ -28,6 +28,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -55,7 +56,6 @@
   <PropertyGroup>
     <ApplicationIcon>songcreator.ico</ApplicationIcon>
   </PropertyGroup>
-  <PropertyGroup />
   <PropertyGroup>
     <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
@@ -608,6 +608,7 @@
     <EmbeddedResource Include="ZpeConverter\ZpeConverter.resx">
       <DependentUpon>ZpeConverter.cs</DependentUpon>
     </EmbeddedResource>
+<<<<<<< HEAD
     <None Include="DLCManager\external_tools\CDLCEnablers\RUN_PATCH_RS.orig.command">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -966,6 +967,8 @@
     <None Include="FilesDataSet.xss">
       <DependentUpon>FilesDataSet.xsd</DependentUpon>
     </None>
+=======
+>>>>>>> 7b8c165e44d70b4403845599ed469595eca9a01f
     <None Include="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
@@ -2308,21 +2311,21 @@
   <PropertyGroup>
     <PostBuildEvent>xcopy /S /Y "$(SolutionDir)Third-party Apps"
 
-REM do some cleanup
+rem do some cleanup only if Release
 
 if $(ConfigurationName) == Release (
-del /S /Q "$(TargetDir)*.exe.config"
-del /S /Q "$(TargetDir)*.pdb"
-del /S /Q "$(TargetDir)*.vshost.exe"
+   del /S /Q "$(TargetDir)*.exe.config"
+   del /S /Q "$(TargetDir)*.pdb"
+   del /S /Q "$(TargetDir)*.vshost.exe"
 
-del /S /Q "$(SolutionDir)*.pdb"
-del /S /Q "$(SolutionDir)*.vshost.exe"
+   del /S /Q "$(SolutionDir)*.pdb"
+   del /S /Q "$(SolutionDir)*.vshost.exe"
 
-del /S /Q "$(TargetDir)MiscUtil.xml"
-del /S /Q "$(TargetDir)NLog.xml"
-del /S /Q "$(TargetDir)Newtonsoft.Json.xml"
-del /S /Q "$(TargetDir)X360.xml"
-)</PostBuildEvent>
+   del /S /Q "$(TargetDir)MiscUtil.xml"
+   del /S /Q "$(TargetDir)NLog.xml"
+   del /S /Q "$(TargetDir)Newtonsoft.Json.xml"
+   del /S /Q "$(TargetDir)X360.xml"
+ )</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

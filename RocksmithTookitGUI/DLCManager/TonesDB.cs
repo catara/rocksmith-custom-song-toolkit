@@ -270,44 +270,47 @@ namespace RocksmithToolkitGUI.DLCManager
             //}
 
             int i;
-            i = DataGridView1.SelectedCells[0].RowIndex;
-            txt_ID.Text = DataGridView1.Rows[i].Cells["ID"].Value.ToString();
-            txt_Tone_Name.Text = DataGridView1.Rows[i].Cells["Tone_Name"].Value.ToString();
-            txt_CDLC_ID.Text = DataGridView1.Rows[i].Cells["CDLC_ID"].Value.ToString();
-            txt_Volume.Text = DataGridView1.Rows[i].Cells["Volume"].Value.ToString();
-            txt_Keyy.Text = DataGridView1.Rows[i].Cells["Keyy"].Value.ToString();
-            //txt_GearList.Text = DataGridView1.Rows[i].Cells["GearList"].Value.ToString();
-            //txt_AmpRack.Text = DataGridView1.Rows[i].Cells["AmpRack"].Value.ToString();
-            txt_Description.Text = DataGridView1.Rows[i].Cells["Description"].Value.ToString();
-            //txt_TuningPitch.Text = DataGridView1.Rows[i].Cells["TuningPitch"].Value.ToString();
-            //chbx_ToneBase.Text = DataGridView1.Rows[i].Cells["ToneBase"].Value.ToString();
-            ////txt_Idd.Text = DataGridView1.Rows[i].Cells[15].Value.ToString();
-            //txt_ArrangementType.Text = DataGridView1.Rows[i].Cells["ArrangementType"].Value.ToString();
-            chbx_AmpType.Text = DataGridView1.Rows[i].Cells["AmpType"].Value.ToString();
-            chbx_AmpCategory.Text = DataGridView1.Rows[i].Cells["AmpCategory"].Value.ToString();
-            chbx_AmpKnobValues.Text = DataGridView1.Rows[i].Cells["AmpKnobValues"].Value.ToString();
-            chbx_AmpPedalKey.Text = DataGridView1.Rows[i].Cells["AmpPedalKey"].Value.ToString();
-            chbx_CabinetCategory.Text = DataGridView1.Rows[i].Cells["CabinetCategory"].Value.ToString();
-            chbx_CabinetKnobValues.Text = DataGridView1.Rows[i].Cells["CabinetKnobValues"].Value.ToString();
-            chbx_CabinetPedalKey.Text = DataGridView1.Rows[i].Cells["CabinetPedalKey"].Value.ToString();
-            chbx_CabinetType.Text = DataGridView1.Rows[i].Cells["CabinetType"].Value.ToString();
-            //chbx_ToneA.Text = DataGridView1.Rows[i].Cells["ToneA"].Value.ToString();
-            //chbx_ToneB.Text = DataGridView1.Rows[i].Cells["ToneB"].Value.ToString();
-            //chbx_ToneC.Text = DataGridView1.Rows[i].Cells["ToneC"].Value.ToString();
-            //chbx_ToneD.Text = DataGridView1.Rows[i].Cells["ToneD"].Value.ToString();
-            //txt_lastConversionDateTime.Text = DataGridView1.Rows[i].Cells["lastConversionDateTime"].Value.ToString();
-            //txt_Description.Text = DataGridView1.Rows[i].Cells["Comments"].Value.ToString();
+            if (DataGridView1.SelectedCells.Count > 0 && DataGridView1.Rows[DataGridView1.SelectedCells[0].RowIndex].Cells["ID"].ToString() != "")
+            {
+                i = DataGridView1.SelectedCells[0].RowIndex;
+                txt_ID.Text = DataGridView1.Rows[i].Cells["ID"].Value.ToString();
+                txt_Tone_Name.Text = DataGridView1.Rows[i].Cells["Tone_Name"].Value.ToString();
+                txt_CDLC_ID.Text = DataGridView1.Rows[i].Cells["CDLC_ID"].Value.ToString();
+                txt_Volume.Text = DataGridView1.Rows[i].Cells["Volume"].Value.ToString();
+                txt_Keyy.Text = DataGridView1.Rows[i].Cells["Keyy"].Value.ToString();
+                //txt_GearList.Text = DataGridView1.Rows[i].Cells["GearList"].Value.ToString();
+                //txt_AmpRack.Text = DataGridView1.Rows[i].Cells["AmpRack"].Value.ToString();
+                txt_Description.Text = DataGridView1.Rows[i].Cells["Description"].Value.ToString();
+                //txt_TuningPitch.Text = DataGridView1.Rows[i].Cells["TuningPitch"].Value.ToString();
+                //chbx_ToneBase.Text = DataGridView1.Rows[i].Cells["ToneBase"].Value.ToString();
+                ////txt_Idd.Text = DataGridView1.Rows[i].Cells[15].Value.ToString();
+                //txt_ArrangementType.Text = DataGridView1.Rows[i].Cells["ArrangementType"].Value.ToString();
+                chbx_AmpType.Text = DataGridView1.Rows[i].Cells["AmpType"].Value.ToString();
+                chbx_AmpCategory.Text = DataGridView1.Rows[i].Cells["AmpCategory"].Value.ToString();
+                chbx_AmpKnobValues.Text = DataGridView1.Rows[i].Cells["AmpKnobValues"].Value.ToString();
+                chbx_AmpPedalKey.Text = DataGridView1.Rows[i].Cells["AmpPedalKey"].Value.ToString();
+                chbx_CabinetCategory.Text = DataGridView1.Rows[i].Cells["CabinetCategory"].Value.ToString();
+                chbx_CabinetKnobValues.Text = DataGridView1.Rows[i].Cells["CabinetKnobValues"].Value.ToString();
+                chbx_CabinetPedalKey.Text = DataGridView1.Rows[i].Cells["CabinetPedalKey"].Value.ToString();
+                chbx_CabinetType.Text = DataGridView1.Rows[i].Cells["CabinetType"].Value.ToString();
+                //chbx_ToneA.Text = DataGridView1.Rows[i].Cells["ToneA"].Value.ToString();
+                //chbx_ToneB.Text = DataGridView1.Rows[i].Cells["ToneB"].Value.ToString();
+                //chbx_ToneC.Text = DataGridView1.Rows[i].Cells["ToneC"].Value.ToString();
+                //chbx_ToneD.Text = DataGridView1.Rows[i].Cells["ToneD"].Value.ToString();
+                //txt_lastConversionDateTime.Text = DataGridView1.Rows[i].Cells["lastConversionDateTime"].Value.ToString();
+                //txt_Description.Text = DataGridView1.Rows[i].Cells["Comments"].Value.ToString();
 
-            //if (DataGridView1.Rows[i].Cells["GearList"].Value.ToString() == "Yes") chbx_GearList.Checked = true;
-            //else chbx_GearList.Checked = false;
-            if (DataGridView1.Rows[i].Cells["Is_Custom"].Value.ToString() == "True") chbx_Custom.Checked = true;
-            else chbx_Custom.Checked = false;
+                //if (DataGridView1.Rows[i].Cells["GearList"].Value.ToString() == "Yes") chbx_GearList.Checked = true;
+                //else chbx_GearList.Checked = false;
+                if (DataGridView1.Rows[i].Cells["Is_Custom"].Value.ToString() == "True") chbx_Custom.Checked = true;
+                else chbx_Custom.Checked = false;
 
-            //if (txt_ArrangementType.Text == "Bass" && !(chbx_BassDD.Checked)) btn_AddDD.Enabled = true;
-            //if (txt_ArrangementType.Text == "Bass" && chbx_BassDD.Checked) btn_RemoveDD.Enabled = true;
+                //if (txt_ArrangementType.Text == "Bass" && !(chbx_BassDD.Checked)) btn_AddDD.Enabled = true;
+                //if (txt_ArrangementType.Text == "Bass" && chbx_BassDD.Checked) btn_RemoveDD.Enabled = true;
 
-            if (chbx_AutoSave.Checked) SaveOK = true;
-            else SaveOK = false;
+                if (chbx_AutoSave.Checked) SaveOK = true;
+                else SaveOK = false;
+            }
         }
 
         private void button8_Click(object sender, EventArgs e)
@@ -317,124 +320,126 @@ namespace RocksmithToolkitGUI.DLCManager
 
         public void SaveRecord()
         {
-            int i;
+            int i=-1;
             DataSet dis = new DataSet();
-
+            if (DataGridView1.SelectedCells.Count > 0)
+            {
             i = DataGridView1.SelectedCells[0].RowIndex;
 
-            DataGridView1.Rows[i].Cells[0].Value = txt_ID.Text;
-            DataGridView1.Rows[i].Cells["CDLC_ID"].Value = txt_CDLC_ID.Text;
-            DataGridView1.Rows[i].Cells["Volume"].Value = txt_Volume.Text;
-            DataGridView1.Rows[i].Cells["Keyy"].Value = txt_Keyy.Text;
-            //DataGridView1.Rows[i].Cells[5].Value = chbx_Custom.Checked ? "Yes" :"No";
-            DataGridView1.Rows[i].Cells["Description"].Value = txt_Description.Text;
-            DataGridView1.Rows[i].Cells["AmpType"].Value = chbx_AmpType.Text;
-            DataGridView1.Rows[i].Cells["AmpCategory"].Value = chbx_AmpCategory.Text;
-            DataGridView1.Rows[i].Cells["AmpKnobValues"].Value = chbx_AmpKnobValues.Text;
-            DataGridView1.Rows[i].Cells["AmpPedalKey"].Value = chbx_AmpPedalKey.Text;
-            DataGridView1.Rows[i].Cells["CabinetCategory"].Value = chbx_CabinetCategory.Text;
-            DataGridView1.Rows[i].Cells["CabinetKnobValues"].Value = chbx_CabinetKnobValues.Text;
-            DataGridView1.Rows[i].Cells["CabinetPedalKey"].Value = chbx_CabinetPedalKey.Text;
-            DataGridView1.Rows[i].Cells["CabinetType"].Value = chbx_CabinetType.Text;
+                DataGridView1.Rows[i].Cells[0].Value = txt_ID.Text;
+                DataGridView1.Rows[i].Cells["CDLC_ID"].Value = txt_CDLC_ID.Text;
+                DataGridView1.Rows[i].Cells["Volume"].Value = txt_Volume.Text;
+                DataGridView1.Rows[i].Cells["Keyy"].Value = txt_Keyy.Text;
+                //DataGridView1.Rows[i].Cells[5].Value = chbx_Custom.Checked ? "Yes" :"No";
+                DataGridView1.Rows[i].Cells["Description"].Value = txt_Description.Text;
+                DataGridView1.Rows[i].Cells["AmpType"].Value = chbx_AmpType.Text;
+                DataGridView1.Rows[i].Cells["AmpCategory"].Value = chbx_AmpCategory.Text;
+                DataGridView1.Rows[i].Cells["AmpKnobValues"].Value = chbx_AmpKnobValues.Text;
+                DataGridView1.Rows[i].Cells["AmpPedalKey"].Value = chbx_AmpPedalKey.Text;
+                DataGridView1.Rows[i].Cells["CabinetCategory"].Value = chbx_CabinetCategory.Text;
+                DataGridView1.Rows[i].Cells["CabinetKnobValues"].Value = chbx_CabinetKnobValues.Text;
+                DataGridView1.Rows[i].Cells["CabinetPedalKey"].Value = chbx_CabinetPedalKey.Text;
+                DataGridView1.Rows[i].Cells["CabinetType"].Value = chbx_CabinetType.Text;
 
-            if (chbx_Custom.Checked) DataGridView1.Rows[i].Cells["Is_Custom"].Value = "True";
-            else DataGridView1.Rows[i].Cells["Is_Custom"].Value = "False";
+                if (chbx_Custom.Checked) DataGridView1.Rows[i].Cells["Is_Custom"].Value = "True";
+                else DataGridView1.Rows[i].Cells["Is_Custom"].Value = "False";
 
-            //var DB_Path = "../../../../tmp\\Files.accdb;";
-            var connection = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path); //+ ";Persist Security Info=False"
-            var command = connection.CreateCommand();
-            //dssx = DataGridView1;
-            using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
-            {
-                //OleDbCommand command = new OleDbCommand(); ;
-                //Update TonesDB
-                //SqlCommand cmds = new SqlCommand(sqlCmd, conn2);
-                command.CommandText = "UPDATE Tones SET ";
-
-                //command.CommandText += "ID = @param0, ";
-                command.CommandText += "Tone_Name = @param1, ";
-                command.CommandText += "CDLC_ID = @param2, ";
-                command.CommandText += "Volume = @param3, ";
-                command.CommandText += "Keyy = @param4, ";
-                command.CommandText += "Is_Custom = @param5, ";
-                //command.CommandText += "GearList = @param6, ";
-                //command.CommandText += "AmpRack = @param7, ";
-                //command.CommandText += "Pedals = @param8, ";
-                command.CommandText += "Description = @param9, ";
-                //command.CommandText += "Favorite = @param10, ";
-                //command.CommandText += "SortOrder = @param11, ";
-                //command.CommandText += "NameSeparator = @param12, ";
-                //command.CommandText += "Cabinet = @param13, ";
-                //command.CommandText += "PostPedal1 = @param14, ";
-                //command.CommandText += "PostPedal2 = @param15, ";
-                //command.CommandText += "PostPedal3 = @param16, ";
-                //command.CommandText += "PostPedal4 = @param17, ";
-                //command.CommandText += "PrePedal1 = @param18, ";
-                //command.CommandText += "PrePedal2 = @param19, ";
-                //command.CommandText += "PrePedal3 = @param20, ";
-                //command.CommandText += "PrePedal4 = @param21, ";
-                //command.CommandText += "Rack1 = @param22, ";
-                //command.CommandText += "Rack2 = @param23, ";
-                //command.CommandText += "Rack3 = @param24, ";
-                //command.CommandText += "Rack4 = @param25, ";
-                command.CommandText += "AmpType = @param26, ";
-                command.CommandText += "AmpCategory = @param27, ";
-                command.CommandText += "AmpKnobValues = @param28, ";
-                command.CommandText += "AmpPedalKey = @param29, ";
-                command.CommandText += "CabinetCategory = @param30, ";
-                command.CommandText += "CabinetKnobValues = @param31, ";
-                command.CommandText += "CabinetPedalKey = @param32, ";
-                command.CommandText += "CabinetType = @param33, ";
-                command.CommandText += "lastConversionDateTime = @param34 ";
-                //command.CommandText += "lastConverjsonDateTime = @param35, ";
-                //command.CommandText += "Comments = @param36 ";
-
-                command.CommandText += "WHERE ID = " + txt_ID.Text;
-
-                command.Parameters.AddWithValue("@param1", DataGridView1.Rows[i].Cells["Tone_Name"].Value.ToString());
-                command.Parameters.AddWithValue("@param2", DataGridView1.Rows[i].Cells["CDLC_ID"].Value.ToString());
-                command.Parameters.AddWithValue("@param3", DataGridView1.Rows[i].Cells["Volume"].Value.ToString());
-                command.Parameters.AddWithValue("@param4", DataGridView1.Rows[i].Cells["Keyy"].Value.ToString());
-                command.Parameters.AddWithValue("@param8", DataGridView1.Rows[i].Cells["Pedals"].Value.ToString());
-                command.Parameters.AddWithValue("@param9", DataGridView1.Rows[i].Cells["Description"].Value.ToString());
-                command.Parameters.AddWithValue("@param26", DataGridView1.Rows[i].Cells["AmpType"].Value.ToString());
-                command.Parameters.AddWithValue("@param27", DataGridView1.Rows[i].Cells["AmpCategory"].Value.ToString());
-                command.Parameters.AddWithValue("@param28", DataGridView1.Rows[i].Cells["AmpKnobValues"].Value.ToString());
-                command.Parameters.AddWithValue("@param29", DataGridView1.Rows[i].Cells["AmpPedalKey"].Value.ToString());
-                command.Parameters.AddWithValue("@param30", DataGridView1.Rows[i].Cells["CabinetCategory"].Value.ToString());
-                command.Parameters.AddWithValue("@param31", DataGridView1.Rows[i].Cells["CabinetKnobValues"].Value.ToString());
-                command.Parameters.AddWithValue("@param32", DataGridView1.Rows[i].Cells["CabinetPedalKey"].Value.ToString());
-                command.Parameters.AddWithValue("@param33", DataGridView1.Rows[i].Cells["CabinetType"].Value.ToString());
-                command.Parameters.AddWithValue("@param34", DataGridView1.Rows[i].Cells["CabinetType"].Value.ToString());
-                command.Parameters.AddWithValue("@param5", DataGridView1.Rows[i].Cells["Is_Custom"].Value.ToString());
-                //command.Parameters.AddWithValue("@param25", DataGridView1.Rows[i].Cells[""].Value.ToString());
-                //command.Parameters.AddWithValue("@param33", DataGridView1.Rows[i].Cells[""].Value.ToString());
-                //command.Parameters.AddWithValue("@param34", DataGridView1.Rows[i].Cells[""].Value.ToString());
-                //command.Parameters.AddWithValue("@param35", DataGridView1.Rows[i].Cells[""].Value.ToString());
-                //command.Parameters.AddWithValue("@param36", DataGridView1.Rows[i].Cells[""].Value.ToString());
-                //command.Parameters.AddWithValue("@param37", DataGridView1.Rows[i].Cells[""].Value.ToString());
-                try
+                //var DB_Path = "../../../../tmp\\Files.accdb;";
+                var connection = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path); //+ ";Persist Security Info=False"
+                var command = connection.CreateCommand();
+                //dssx = DataGridView1;
+                using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
                 {
-                    command.CommandType = CommandType.Text;
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    MessageBox.Show("Can not open Tones DB connection in Tones Edit screen ! " + DB_Path + "-" + command.CommandText);
+                    //OleDbCommand command = new OleDbCommand(); ;
+                    //Update TonesDB
+                    //SqlCommand cmds = new SqlCommand(sqlCmd, conn2);
+                    command.CommandText = "UPDATE Tones SET ";
 
-                    throw;
+                    //command.CommandText += "ID = @param0, ";
+                    command.CommandText += "Tone_Name = @param1, ";
+                    command.CommandText += "CDLC_ID = @param2, ";
+                    command.CommandText += "Volume = @param3, ";
+                    command.CommandText += "Keyy = @param4, ";
+                    command.CommandText += "Is_Custom = @param5, ";
+                    //command.CommandText += "GearList = @param6, ";
+                    //command.CommandText += "AmpRack = @param7, ";
+                    //command.CommandText += "Pedals = @param8, ";
+                    command.CommandText += "Description = @param9, ";
+                    //command.CommandText += "Favorite = @param10, ";
+                    //command.CommandText += "SortOrder = @param11, ";
+                    //command.CommandText += "NameSeparator = @param12, ";
+                    //command.CommandText += "Cabinet = @param13, ";
+                    //command.CommandText += "PostPedal1 = @param14, ";
+                    //command.CommandText += "PostPedal2 = @param15, ";
+                    //command.CommandText += "PostPedal3 = @param16, ";
+                    //command.CommandText += "PostPedal4 = @param17, ";
+                    //command.CommandText += "PrePedal1 = @param18, ";
+                    //command.CommandText += "PrePedal2 = @param19, ";
+                    //command.CommandText += "PrePedal3 = @param20, ";
+                    //command.CommandText += "PrePedal4 = @param21, ";
+                    //command.CommandText += "Rack1 = @param22, ";
+                    //command.CommandText += "Rack2 = @param23, ";
+                    //command.CommandText += "Rack3 = @param24, ";
+                    //command.CommandText += "Rack4 = @param25, ";
+                    command.CommandText += "AmpType = @param26, ";
+                    command.CommandText += "AmpCategory = @param27, ";
+                    command.CommandText += "AmpKnobValues = @param28, ";
+                    command.CommandText += "AmpPedalKey = @param29, ";
+                    command.CommandText += "CabinetCategory = @param30, ";
+                    command.CommandText += "CabinetKnobValues = @param31, ";
+                    command.CommandText += "CabinetPedalKey = @param32, ";
+                    command.CommandText += "CabinetType = @param33, ";
+                    command.CommandText += "lastConversionDateTime = @param34 ";
+                    //command.CommandText += "lastConverjsonDateTime = @param35, ";
+                    //command.CommandText += "Comments = @param36 ";
+
+                    command.CommandText += "WHERE ID = " + txt_ID.Text;
+
+                    command.Parameters.AddWithValue("@param1", DataGridView1.Rows[i].Cells["Tone_Name"].Value.ToString());
+                    command.Parameters.AddWithValue("@param2", DataGridView1.Rows[i].Cells["CDLC_ID"].Value.ToString());
+                    command.Parameters.AddWithValue("@param3", DataGridView1.Rows[i].Cells["Volume"].Value.ToString());
+                    command.Parameters.AddWithValue("@param4", DataGridView1.Rows[i].Cells["Keyy"].Value.ToString());
+                    command.Parameters.AddWithValue("@param8", DataGridView1.Rows[i].Cells["Pedals"].Value.ToString());
+                    command.Parameters.AddWithValue("@param9", DataGridView1.Rows[i].Cells["Description"].Value.ToString());
+                    command.Parameters.AddWithValue("@param26", DataGridView1.Rows[i].Cells["AmpType"].Value.ToString());
+                    command.Parameters.AddWithValue("@param27", DataGridView1.Rows[i].Cells["AmpCategory"].Value.ToString());
+                    command.Parameters.AddWithValue("@param28", DataGridView1.Rows[i].Cells["AmpKnobValues"].Value.ToString());
+                    command.Parameters.AddWithValue("@param29", DataGridView1.Rows[i].Cells["AmpPedalKey"].Value.ToString());
+                    command.Parameters.AddWithValue("@param30", DataGridView1.Rows[i].Cells["CabinetCategory"].Value.ToString());
+                    command.Parameters.AddWithValue("@param31", DataGridView1.Rows[i].Cells["CabinetKnobValues"].Value.ToString());
+                    command.Parameters.AddWithValue("@param32", DataGridView1.Rows[i].Cells["CabinetPedalKey"].Value.ToString());
+                    command.Parameters.AddWithValue("@param33", DataGridView1.Rows[i].Cells["CabinetType"].Value.ToString());
+                    command.Parameters.AddWithValue("@param34", DataGridView1.Rows[i].Cells["CabinetType"].Value.ToString());
+                    command.Parameters.AddWithValue("@param5", DataGridView1.Rows[i].Cells["Is_Custom"].Value.ToString());
+                    //command.Parameters.AddWithValue("@param25", DataGridView1.Rows[i].Cells[""].Value.ToString());
+                    //command.Parameters.AddWithValue("@param33", DataGridView1.Rows[i].Cells[""].Value.ToString());
+                    //command.Parameters.AddWithValue("@param34", DataGridView1.Rows[i].Cells[""].Value.ToString());
+                    //command.Parameters.AddWithValue("@param35", DataGridView1.Rows[i].Cells[""].Value.ToString());
+                    //command.Parameters.AddWithValue("@param36", DataGridView1.Rows[i].Cells[""].Value.ToString());
+                    //command.Parameters.AddWithValue("@param37", DataGridView1.Rows[i].Cells[""].Value.ToString());
+                    try
+                    {
+                        command.CommandType = CommandType.Text;
+                        connection.Open();
+                        command.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Can not open Tones DB connection in Tones Edit screen ! " + DB_Path + "-" + command.CommandText);
+
+                        throw;
+                    }
+                    finally
+                    {
+                        if (connection != null) connection.Close();
+                    }
+                    ////OleDbDataAdapter das = new OleDbDataAdapter(command.CommandText, cnn);
+                    if (!chbx_AutoSave.Checked) MessageBox.Show("Tones Saved");
+                    //das.SelectCommand.CommandText = "SELECT * FROM Tones";
+                    //// das.Update(dssx, "Tones");
+                    dis.Dispose();
                 }
-                finally
-                {
-                    if (connection != null) connection.Close();
-                }
-                ////OleDbDataAdapter das = new OleDbDataAdapter(command.CommandText, cnn);
-                if (!chbx_AutoSave.Checked) MessageBox.Show("Tones Saved");
-                //das.SelectCommand.CommandText = "SELECT * FROM Tones";
-                //// das.Update(dssx, "Tones");
-                dis.Dispose();
             }
         }
 

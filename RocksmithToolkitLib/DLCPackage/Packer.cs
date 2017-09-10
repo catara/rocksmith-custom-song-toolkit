@@ -547,8 +547,7 @@ namespace RocksmithToolkitLib.DLCPackage
 
             var outputMessage = RijndaelEncryptor.DecryptPS3Edat();
 
-            if (File.Exists(outputFilename))
-                File.Delete(outputFilename);
+            if (File.Exists(outputFilename)) File.Delete(outputFilename);
 
             foreach (var fileName in Directory.EnumerateFiles(PS3_WORKDIR, "*.psarc.dat"))
             {

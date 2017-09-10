@@ -593,7 +593,7 @@ namespace RocksmithToolkitGUI.DLCManager
             if (chbx_Configurations.SelectedIndex >= 0)
             {
                 DataSet ds = new DataSet(); ds = SelectFromDB("Groups", "SELECT CDLC_ID FROM Groups WHERE Profile_Name=\"" + chbx_Configurations.Text + "\";", txt_DBFolder.Text);
-                var norec = ds.Tables[0].Rows.Count;
+                var norec = ds.Tables.Count < 1 ? 0: ds.Tables[0].Rows.Count;
                 if (norec == 3)
                 {
                     var fnn = ds.Tables[0].Rows[0].ItemArray[0].ToString();
@@ -940,12 +940,12 @@ namespace RocksmithToolkitGUI.DLCManager
 
 
             tst = "end config reading..."; timestamp = UpdateLog(timestamp, tst, true);
-
+            DialogResult result1 = DialogResult.No;
 
             //Clean Temp Folder
             if (chbx_CleanTemp.Checked && !chbx_Additional_Manipulations.GetItemChecked(38)) //39.Use only unpacked songs already in the 0 / dlcpacks folder
             {
-                DialogResult result1 = MessageBox.Show("Are you sure you want to DELETE (to Recycle BIN) the following folders:\n\n" + txt_TempPath.Text + "\n0\\0_old\n0\\0_duplicate\n0\\0_repacked\n0\\0_broken\n" + log_Path + "\n0\\0_repacked\\PC\n0\\0_repacked\\PS3\n0\\0_repacked\\MAC\n0\\0_repacked\\XBOX360\n0\\dlcpacks\n0\\dlcpacks\\manifests\n0\\dlcpacks\\temp\n0\\dlcpacks\\manipulated", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+                result1 = MessageBox.Show("Are you sure you want to DELETE (to Recycle BIN) the following folders:\n\n" + txt_TempPath.Text + "\n0\\0_old\n0\\0_duplicate\n0\\0_repacked\n0\\0_broken\n" + log_Path + "\n0\\0_repacked\\PC\n0\\0_repacked\\PS3\n0\\0_repacked\\MAC\n0\\0_repacked\\XBOX360\n0\\dlcpacks\n0\\dlcpacks\\manifests\n0\\dlcpacks\\temp\n0\\dlcpacks\\manipulated", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
                 try
                 {
                     //DirectoryInfo di;
@@ -1011,7 +1011,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //    else Application.Exit();
             //}
             // Clean temp log
-            var fnl = (logPath == null ? Log_PSPath : logPath) + "\\" + "current_temp.txt";
+            var fnl = (logPath == null || logPath == "" ? Log_PSPath : logPath) + "\\" + "current_temp.txt";
             StreamWriter sw = new StreamWriter(File.OpenWrite(fnl));
             sw.Write("Some stuff here");
             sw.Dispose();
@@ -1049,7 +1049,7 @@ namespace RocksmithToolkitGUI.DLCManager
             DeleteFromDB("Import", "DELETE FROM Import;");
             tst = "Cleaning....Import table...."; timestamp = UpdateLog(timestamp, tst, true);
             pB_ReadDLCs.CreateGraphics().DrawString(tst, new Font("Arial", (float)7, FontStyle.Bold), Brushes.Blue, new PointF(1, pB_ReadDLCs.Height / 4));
-            if (chbx_CleanDB.Checked)
+            if (chbx_CleanDB.Checked && result1 == DialogResult.No)
             {
                 DeleteFromDB("Main", "DELETE FROM Main;");
                 DeleteFromDB("Arrangements", "DELETE FROM Arrangements;");
@@ -1118,7 +1118,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     {
                         Console.WriteLine(ee.Message);
                         timestamp = UpdateLog(timestamp, "error at import", true);
-                        ErrorWindow frm1 = new ErrorWindow("DB Open in Design Mode, or Missing, or you need to Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error when opening the DB", false, false);
+                        ErrorWindow frm1 = new ErrorWindow("(1121)DB Open in Design Mode, or Missing, or you need to Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error when opening the DB", false, false);
                         frm1.ShowDialog();
                         return;
                         //continue;
@@ -1405,7 +1405,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                     wwisePath = Environment.GetEnvironmentVariable("WWISEROOT");
                                 if (wwisePath == "")
                                 {
-                                    ErrorWindow frm1 = new ErrorWindow("Please Install Wwise v2016.2.1.5995 with Authorithy binaries : " + Environment.NewLine + "A restart is required for the Conversion to WEM, process to be succesfull, else the errors can be captured through the Missing Files Query" + Environment.NewLine, "https://www.audiokinetic.com/download/", "Error at WEM Creation", true, true);
+                                    ErrorWindow frm1 = new ErrorWindow("(1408)Please Install Wwise v2016.2.1.5995 with Authorithy binaries : " + Environment.NewLine + "A restart is required for the Conversion to WEM, process to be succesfull, else the errors can be captured through the Missing Files Query" + Environment.NewLine, "https://www.audiokinetic.com/download/", "Error at WEM Creation", true, true);
                                     frm1.ShowDialog();
                                     if (frm1.IgnoreSong) break;
                                     if (frm1.StopImport) { j = 10; i = 9999; break; }
@@ -1428,7 +1428,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                 }
                                 catch (Exception ex)
                                 {
-                                    MessageBox.Show("Unpacking ..." + ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    //MessageBox.Show("Unpacking ..." + ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
                                     timestamp = UpdateLog(timestamp, ex.Message + "problem at unpacking" + FullPath + "---" + Temp_Path_Import, true);
                                     errr = false;
                                     try
@@ -2480,7 +2480,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                             wwisePath = Environment.GetEnvironmentVariable("WWISEROOT");
                                         if (wwisePath == "")
                                         {
-                                            ErrorWindow frm1 = new ErrorWindow("Please Install Wwise v2015.1.9 build 5624 with Authorithy binaries : " + Environment.NewLine + "A restart is required for the Conversion to WEM, process to be succesfull, else the errors can be captured through the Missing Files Query" + Environment.NewLine, "https://www.audiokinetic.com/download/", "Error at WEM Creation", true, true);
+                                            ErrorWindow frm1 = new ErrorWindow("(2483)Please Install Wwise v2015.1.9 build 5624 with Authorithy binaries : " + Environment.NewLine + "A restart is required for the Conversion to WEM, process to be succesfull, else the errors can be captured through the Missing Files Query" + Environment.NewLine, "https://www.audiokinetic.com/download/", "Error at WEM Creation", true, true);
                                             //v2016.2.1.5995 is currently breaking PC cocnversion (not Ps3)
                                             frm1.ShowDialog();
                                             if (frm1.IgnoreSong) return "0";// break;
@@ -3579,6 +3579,12 @@ namespace RocksmithToolkitGUI.DLCManager
             //Apply Album Short Name
             Standardization.ApplyAlbumShort();
 
+            //Multiply Spotify
+            Standardization.ApplySpotify();
+
+            //Multiply Cover
+            Standardization.ApplyDefaultCover();
+
             //Apply DefaultCover
             Standardization.MakeCover();
 
@@ -3906,7 +3912,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
                                 System.IO.FileInfo fi = null; //calc file size
                                 try { fi = new System.IO.FileInfo(h); }
-                                catch (Exception ee) { Console.Write(ee); ErrorWindow frm1 = new ErrorWindow("DB Open in Design Mode, or Missing, or you need to Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error when opening the DB", false, false); }
+                                catch (Exception ee) { Console.Write(ee); ErrorWindow frm1 = new ErrorWindow("(3915)DB Open in Design Mode, or Missing, or you need to Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error when opening the DB", false, false); }
 
                                 var insertcmdA = "CopyPath, PackPath, FileName, PackDate, FileHash, FileSize, DLC_ID, DLC_Name, Platform, Official";
                                 var fnnon = Path.GetFileName(h);
@@ -4323,7 +4329,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             {
                                 if (ex.Message.IndexOf("No JDK or JRE") > 0)//Help\\WwiseHelp_en.chm"))//
                                 {
-                                    ErrorWindow frm1 = new ErrorWindow("Please Install Java" + Environment.NewLine + "A restart is required" + Environment.NewLine, "http://www.java.com/en/download/win10.jsp", "Error at Packing", false, false);
+                                    ErrorWindow frm1 = new ErrorWindow("(4332)Please Install Java" + Environment.NewLine + "A restart is required" + Environment.NewLine, "http://www.java.com/en/download/win10.jsp", "Error at Packing", false, false);
                                     frm1.ShowDialog();
                                 }
                                 UpdatePackingLog("LogPackingError", DBc_Path, packid, file.ID, ex.ToString());
@@ -4343,7 +4349,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             {
                                 if (ex.Message.IndexOf("No JDK or JRE") > 0)//Help\\WwiseHelp_en.chm"))//
                                 {
-                                    ErrorWindow frm1 = new ErrorWindow("Please Install Java" + Environment.NewLine + "A restart is required" + Environment.NewLine, "http://www.java.com/en/download/win10.jsp", "Error at Packing", false, false);
+                                    ErrorWindow frm1 = new ErrorWindow("(4352)Please Install Java" + Environment.NewLine + "A restart is required" + Environment.NewLine, "http://www.java.com/en/download/win10.jsp", "Error at Packing", false, false);
                                     frm1.ShowDialog();
                                 }
                                 UpdatePackingLog("LogPackingError", DBc_Path, packid, file.ID, ex.ToString());
@@ -4383,7 +4389,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             {
                                 if (ex.Message.IndexOf("No JDK or JRE") > 0)//Help\\WwiseHelp_en.chm"))//
                                 {
-                                    ErrorWindow frm1 = new ErrorWindow("Please Install Java" + Environment.NewLine + "A restart is required" + Environment.NewLine, "http://www.java.com/en/download/win10.jsp", "Error at Packing", false, false);
+                                    ErrorWindow frm1 = new ErrorWindow("(4392)Please Install Java" + Environment.NewLine + "A restart is required" + Environment.NewLine, "http://www.java.com/en/download/win10.jsp", "Error at Packing", false, false);
                                     frm1.ShowDialog();
                                 }
                                 errorsFound.AppendLine(String.Format("Error 2generate PS3 package: {0}{1}. {0}PS3 package require 'JAVA x86' (32 bits) installed on your machine to generate properly.{0}", Environment.NewLine, ex.StackTrace));
@@ -4438,7 +4444,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             {
                                 Console.Write(ee.Message);
                                 timestamp = UpdateLog(timestamp, "error at pack details save", true);
-                                ErrorWindow frm1 = new ErrorWindow("DB Open in Design Mode, or Missing, or you need to Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error when opening the DB", false, false);
+                                ErrorWindow frm1 = new ErrorWindow("(4447)DB Open in Design Mode, or Missing, or you need to Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error when opening the DB", false, false);
                                 frm1.ShowDialog();
                             }
 
@@ -5679,6 +5685,22 @@ namespace RocksmithToolkitGUI.DLCManager
         {
 
             if (txt_TempPath.Text.Length > 0) if ((txt_TempPath.Text.Substring(txt_TempPath.Text.Length - 1, 1) == "\\")) txt_TempPath.Text = txt_TempPath.Text.Substring(0, txt_TempPath.Text.Length - 1);
+        }
+
+        private void btn_Param_Click(object sender, EventArgs e)
+        {
+            if (Directory.Exists(MyAppWD))
+            {
+                try
+                {
+                    Process process = Process.Start(@logPath);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Can not open Param folder in Exporer !");
+                }
+            }
         }
     }
 }

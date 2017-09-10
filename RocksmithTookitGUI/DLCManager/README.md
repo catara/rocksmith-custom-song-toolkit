@@ -145,16 +145,32 @@
 [ ] check smooth saiyin and c file that breaks
 [ ] check crossed album art
 [ ] check iron maiden album art
+[ ] unify pack function
+[ ] check author db saving being used at pack
+[ ] add missin tones and arrangement parameters
+[ ] enable garageband recordings multitrack sync
+		[ ] add each instrument timing for starting to 
+		[ ] capture start of each tracc in comments/newfield
+		[ ] add a 4 sec timestamp in each song
 
 
 done:
 (next release)
-[ ] spotify
-	[ ] Think of unifying the maindb&generic Spotify functions
+[x] spotify
+	[x] Think of unifying the maindb&generic Spotify functions
 	[x] import make sure Spotify connection is remembered showed and shard with maindb
 	[x] save&override album image
-	[ ] at standardization apply spotify album url name ?
-
+	[x] at standardization apply spotify album url name ?
+[x] fixed error mss at pack related to bass removal
+[x] diff at replack vocals have no scrool speed
+[x] tones volume sort order
+[x] fix tones opening dbb
+[x] fix pluck/pick wrong pack issue
+[ ] make mass pack also use db values
+[ ] why album id is the same as artist id
+[x] fixed maindb log
+[x] added log on read lib
+if no delete then dont delete DBscocnvert and ftp is it working at mass packing
 
 - diff between master and branch
 DLCManager folder

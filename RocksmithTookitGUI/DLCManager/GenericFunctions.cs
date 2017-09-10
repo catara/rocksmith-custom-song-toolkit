@@ -589,7 +589,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 catch (Exception ee)
                 {
                     Console.WriteLine(ee.Message);
-                    ErrorWindow frm1 = new ErrorWindow("DB Open in Design Mode, or Missing, or you need to Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error @Import", false, false);
+                    ErrorWindow frm1 = new ErrorWindow(DB + "--------" + slct + "--------------" + ee+"DB Open in Design Mode, or Missing, or you need to Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error @Import", false, false);
                     frm1.ShowDialog();
                     return;
                 }
@@ -614,7 +614,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 catch (Exception ee)
                 {
                     Console.WriteLine(ee.Message);
-                    ErrorWindow frm1 = new ErrorWindow(ee + "DB Open in Design Mode, or Missing, or you need to Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734 ", "Error @Import", false, false);
+                    ErrorWindow frm1 = new ErrorWindow(ftable+"--------"+ fvalues +"--------------"+ ee + "DB Open in Design Mode, or Missing, or you need to Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734 ", "Error @Import", false, false);
                     frm1.ShowDialog();
                     return;
                 }
@@ -629,7 +629,6 @@ namespace RocksmithToolkitGUI.DLCManager
             DataSet dsm = new DataSet();
             if (File.Exists(DB_Path))
             {
-
                 using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
                 {
                     try
@@ -642,7 +641,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     catch (Exception ee)
                     {
                         Console.WriteLine(ee.Message);
-                        ErrorWindow frm1 = new ErrorWindow("DB Open in Design Mode, or Missing, or you need to Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734 ", "Error @Import" + ee, false, false);
+                        ErrorWindow frm1 = new ErrorWindow(ftable + "--------" + fcmds + "--------------"  + "DB Open in Design Mode, or Missing, or you need to Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734 ", "Error @Import" + ee, false, false);
                         frm1.ShowDialog();
                         return dsm;
                     }
@@ -679,7 +678,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         static public DataSet UpdateDB(string ftable, string fcmds)
         {
-            var DB_Path = ConfigRepository.Instance()["dlcm_DBFolder"].ToString() + "\\Files.accdb;";
+            var DB_Path = ConfigRepository.Instance()["dlcm_DBFolder"].ToString() + "\\Files.accdb";
             DataSet dsm = new DataSet();
             if (File.Exists(DB_Path))
             {
@@ -696,7 +695,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 catch (Exception ee)
                 {
                     Console.WriteLine(ee.Message);
-                    ErrorWindow frm1 = new ErrorWindow(ee + "DB Open in Design Mode, or Missing, or you need to Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734 ", "Error @Import", false, false);
+                    ErrorWindow frm1 = new ErrorWindow(ftable + "--------" + fcmds + "--------------"+ee + "DB Open in Design Mode, or Missing, or you need to Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734 ", "Error @Import", false, false);
                     frm1.ShowDialog();
                     return dsm;
                 }

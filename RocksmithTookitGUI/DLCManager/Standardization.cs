@@ -149,14 +149,14 @@ namespace RocksmithToolkitGUI.DLCManager
                 DataGridViewTextBoxColumn Album_Correction = new DataGridViewTextBoxColumn { DataPropertyName = "Album_Correction", HeaderText = "Album_Correction ", Width = 165 };
                 DataGridViewTextBoxColumn AlbumArt_Correction = new DataGridViewTextBoxColumn { DataPropertyName = "AlbumArt_Correction", HeaderText = "AlbumArt_Correction ", Width = 55 };
                 DataGridViewTextBoxColumn Comments = new DataGridViewTextBoxColumn { DataPropertyName = "Comments", HeaderText = "Comments ", Width = 45 };
-                DataGridViewTextBoxColumn Artist_Short = new DataGridViewTextBoxColumn { DataPropertyName = "Artist_Short", HeaderText = "Artist_Short ", Width = 20 };
-                DataGridViewTextBoxColumn Album_Short = new DataGridViewTextBoxColumn { DataPropertyName = "Album_Short", HeaderText = "Album_Short ", Width = 20 };
-                DataGridViewTextBoxColumn Year_Correction = new DataGridViewTextBoxColumn { DataPropertyName = "Year_Correction", HeaderText = "Year_Correction ", Width = 20 };
+                DataGridViewTextBoxColumn Artist_Short = new DataGridViewTextBoxColumn { DataPropertyName = "Artist_Short", HeaderText = "Artist_Short ", Width = 40 };
+                DataGridViewTextBoxColumn Album_Short = new DataGridViewTextBoxColumn { DataPropertyName = "Album_Short", HeaderText = "Album_Short ", Width = 40 };
+                DataGridViewTextBoxColumn Year_Correction = new DataGridViewTextBoxColumn { DataPropertyName = "Year_Correction", HeaderText = "Year_Correction ", Width = 30 };
                 DataGridViewTextBoxColumn SpotifyArtistID = new DataGridViewTextBoxColumn { DataPropertyName = "SpotifyArtistID", HeaderText = "SpotifyArtistID ", Width = 55 };
                 DataGridViewTextBoxColumn SpotifyAlbumID = new DataGridViewTextBoxColumn { DataPropertyName = "SpotifyAlbumID", HeaderText = "SpotifyAlbumID ", Width = 55 };
                 DataGridViewTextBoxColumn SpotifyAlbumURL = new DataGridViewTextBoxColumn { DataPropertyName = "SpotifyAlbumURL", HeaderText = "SpotifyAlbumURL ", Width = 55 };
                 DataGridViewTextBoxColumn SpotifyAlbumPath = new DataGridViewTextBoxColumn { DataPropertyName = "SpotifyAlbumPath", HeaderText = "SpotifyAlbumPath ", Width = 55 };
-                DataGridViewTextBoxColumn Default_Cover = new DataGridViewTextBoxColumn { DataPropertyName = "Default_Cover", HeaderText = "Default_Cover ", Width = 10 };
+                DataGridViewTextBoxColumn Default_Cover = new DataGridViewTextBoxColumn { DataPropertyName = "Default_Cover", HeaderText = "Default_Cover ", Width = 30 };
                 DataGridView.AutoGenerateColumns = false;
 
                 DataGridView.Columns.AddRange(new DataGridViewColumn[]
@@ -332,7 +332,7 @@ namespace RocksmithToolkitGUI.DLCManager
             v1.Translation_And_Correction(txt);
             //advance or step back in the song list
             int i = 0;
-            if (DataGridView1.Rows.Count > 1)
+            if (DataGridView1.Rows.Count > 1 && DataGridView1.SelectedCells.Count>0)
             {
                 var prev = DataGridView1.SelectedCells[0].RowIndex;
                 if (DataGridView1.Rows.Count == prev + 2)
@@ -357,6 +357,14 @@ namespace RocksmithToolkitGUI.DLCManager
                     DataGridView1.Rows[rowindex].Selected = false;
                     row = DataGridView1.Rows[rowindex + 1];
                 }
+            }
+            else if (DataGridView1.Rows.Count > 1)
+            {
+                int rowindex = 1;
+                DataGridViewRow row;
+                DataGridView1.Rows[rowindex + 1].Selected = true;
+                DataGridView1.Rows[rowindex].Selected = false;
+                row = DataGridView1.Rows[rowindex + 1];
             }
             ChangeRow();
         }
@@ -464,11 +472,12 @@ namespace RocksmithToolkitGUI.DLCManager
                 var artist_c = dataRow.ItemArray[0].ToString();
                 var album_c = dataRow.ItemArray[1].ToString();
                 var artpath_c = dataRow.ItemArray[2].ToString();
-                var cmd1 = "UPDATE Main SET AlbumArtPath = \"" + artpath_c + "\" WHERE Artist=\"" + artist_c + "\" and Album=\"" + album_c + "\";";
+                var cmd1 = "";
+                cmd1 = "UPDATE Main SET AlbumArtPath = \"" + artpath_c + "\" WHERE Artist=\"" + artist_c + "\" and Album=\"" + album_c + "\"";
                 dgt = UpdateDB("Main", cmd1 + ";");
-                dgt = SelectFromDB("Main", "SELECT * FROM Main WHERE Artist=\"" + artist_c + "\" and Album=\"" + album_c + "\";", ""); try { NoRec = dgt.Tables[0].Rows.Count; } catch { }
-                cmd1 = "UPDATE Standardization SET AlbumArt_Correction = \"" + artpath_c + "\" WHERE (Artist=\"" + artist_c + "\" OR Artist_Correction=\"" + artist_c + "\") AND (Album=\"" + album_c + "\" OR Album_Correction=\"" + album_c + "\");";
-                dgt = UpdateDB("Main", cmd1 + ";");
+                dgt = SelectFromDB("Main", "SELECT * FROM Main WHERE Artist=\"" + artist_c + "\" and Album=\"" + album_c + "\"", ""); try { NoRec = dgt.Tables[0].Rows.Count; } catch { }
+                //cmd1 = "UPDATE Standardization SET AlbumArt_Correction = \"" + artpath_c + "\" WHERE (Artist=\"" + artist_c + "\" OR Artist_Correction=\"" + artist_c + "\") AND (Album=\"" + album_c + "\" OR Album_Correction=\"" + album_c + "\");";
+                //dgt = UpdateDB("Standardization", cmd1 + ";");
             }
             //DataSet dxr = new DataSet(); dxr = UpdateDB("Main", "UPDATE Main SET AlbumArt = \"" + AlbumArt + "\" WHERE Artist=\"" + Artist + "\" and Album=\"" + Albums + "\"");
             //DataSet dssx = new DataSet(); dxr = SelectFromDB("Main", "SELECT ID FROM Main WHERE Artist=\"" + Artist + "\" and Album=\"" + Albums + "\";");
@@ -495,7 +504,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 DataSet dus = UpdateDB("Main", cmd1 + ";");
                 dus = SelectFromDB("Main", "SELECT * FROM Main WHERE Artist=\"" + artist_c + "\"", ""); try { norec = dus.Tables[0].Rows.Count; } catch { }
                 cmd1 = "UPDATE Standardization SET Artist_Short = \"" + short_c + "\" WHERE Artist=\"" + artist_c + "\" OR Artist_Correction=\"" + artist_c + "\"";
-                dus = UpdateDB("Main", cmd1 + ";");
+                dus = UpdateDB("Standardization", cmd1 + ";");
             }
 
             //MessageBox.Show("Artist Short Name has been defaulted onto " + norec.ToString() + " songs");
@@ -519,11 +528,59 @@ namespace RocksmithToolkitGUI.DLCManager
                 DataSet dus = UpdateDB("Main", cmd1);
                 dus = SelectFromDB("Main", "SELECT * FROM Main WHERE Artist=\"" + artist_c + "\" AND Album=\"" + album_c + "\";", ""); try { norec = dus.Tables[0].Rows.Count; } catch { }
                 cmd1 = "UPDATE Standardization SET Album_Short = \"" + short_c + "\" WHERE (Artist=\"" + artist_c + "\" OR Artist_Correction=\"" + artist_c + "\") AND (Album=\"" + album_c + "\" OR Album_Correction=\"" + album_c + "\")";
-                dus = UpdateDB("Main", cmd1 + ";");
+                dus = UpdateDB("Standardization", cmd1 + ";");
             }
             //var noOfRec = dgt.Tables[0].Rows.Count;
             //lbl_NoRec = norec.ToString() + " records.";
             //MessageBox.Show("Album Short has been defaulted onto " + norec.ToString() + " songs");
+        }
+
+        public static void ApplySpotify()//(string DBs_Path)//, string AlbumArt, string Artist, string Albums)
+        {//continue;
+            //}
+
+            var norec = 0;
+            DataSet dfz = new DataSet(); dfz = SelectFromDB("Standardization", "SELECT iif(Artist_Correction<>\"\", Artist_Correction, Artist), iif(Album_Correction<>\"\", Album_Correction, Album), SpotifyArtistID, SpotifyAlbumID, SpotifyAlbumURL,SpotifyAlbumPath FROM Standardization WHERE (SpotifyArtistID <> \"\") GROUP BY iif(Artist_Correction<>\"\", Artist_Correction, Artist), iif(Album_Correction<>\"\", Album_Correction, Album), SpotifyArtistID, SpotifyAlbumID, SpotifyAlbumURL,SpotifyAlbumPath;", "");
+
+            foreach (DataRow dataRow in dfz.Tables[0].Rows)
+            {
+                var artist_c = dataRow.ItemArray[0].ToString();
+                var album_c = dataRow.ItemArray[1].ToString();
+                var SpotifyArtistID = dataRow.ItemArray[2].ToString();
+                var SpotifyAlbumID = dataRow.ItemArray[3].ToString();
+                var SpotifyAlbumURL = dataRow.ItemArray[4].ToString();
+                var SpotifyAlbumPath = dataRow.ItemArray[5].ToString();
+                //var cmd1 = "UPDATE Main SET Spotify_Artist_ID = \"" + SpotifyArtistID + "\",Spotify_Album_ID = \"" + SpotifyAlbumID + "\",Spotify_Album_URL = \"" + SpotifyAlbumURL + "\",Spotify_Album_Path = \"" + SpotifyAlbumPath + "\", WHERE Album=\"" + SpotifyAlbumID + "\"";
+                //DataSet dus = UpdateDB("Main", cmd1 + ";");
+                //dus = SelectFromDB("Main", "SELECT * FROM Main WHERE Artist=\"" + artist_c + "\"", ""); try { norec = dus.Tables[0].Rows.Count; } catch { }
+               var cmd1 = "UPDATE Standardization SET SpotifyArtistID = \"" + SpotifyArtistID + "\",SpotifyAlbumID = \"" + SpotifyAlbumID + "\",SpotifyAlbumURL = \"" + SpotifyAlbumURL + "\",SpotifyAlbumPath = \"" + SpotifyAlbumPath + "\" WHERE (Artist=\"" + artist_c + "\" OR Artist_Correction=\"" + artist_c + "\") and (Album=\"" + album_c + "\" OR Album_Correction=\"" + album_c + "\")";
+                var dus = UpdateDB("Standardization", cmd1 + ";");
+            }
+
+            //MessageBox.Show("Artist Short Name has been defaulted onto " + norec.ToString() + " songs");
+        }
+
+        public static void ApplyDefaultCover()//(string DBs_Path)//, string AlbumArt, string Artist, string Albums)
+        {//continue;
+            //}
+
+            var norec = 0; //get al Default ON entries in standardization table
+            DataSet dfz = new DataSet(); dfz = SelectFromDB("Standardization", "SELECT iif(Artist_Correction<>\"\", Artist_Correction, Artist), iif(Album_Correction<>\"\", Album_Correction, Album), IIF(AlbumArt_Correction<>\"\", AlbumArt_Correction, SpotifyAlbumPath) FROM Standardization WHERE (Default_Cover = \"Yes\") GROUP BY iif(Artist_Correction<>\"\", Artist_Correction, Artist), iif(Album_Correction<>\"\", Album_Correction, Album),IIF(AlbumArt_Correction<>\"\", AlbumArt_Correction, SpotifyAlbumPath);", "");
+
+            foreach (DataRow dataRow in dfz.Tables[0].Rows)
+            {
+                var artist_c = dataRow.ItemArray[0].ToString();
+                var album_c = dataRow.ItemArray[1].ToString();
+                var Default_Cover = dataRow.ItemArray[2].ToString();
+                //var cmd1 = "UPDATE Main SET Spotify_Artist_ID = \"" + SpotifyArtistID + "\",Spotify_Album_ID = \"" + SpotifyAlbumID + "\",Spotify_Album_URL = \"" + SpotifyAlbumURL + "\",Spotify_Album_Path = \"" + SpotifyAlbumPath + "\", WHERE Album=\"" + SpotifyAlbumID + "\"";
+                //DataSet dus = UpdateDB("Main", cmd1 + ";");
+                //dus = SelectFromDB("Main", "SELECT * FROM Main WHERE Artist=\"" + artist_c + "\"", ""); try { norec = dus.Tables[0].Rows.Count; } catch { }
+                //apply only to Same Artist&Album Names
+                var cmd1 = "UPDATE Standardization SET AlbumArt_Correction = \"" + Default_Cover + "\", Default_Cover == \"Yes\" WHERE (Artist=\"" + artist_c + "\" OR Artist_Correction=\"" + artist_c + "\") and (Album=\"" + album_c + "\" OR Album_Correction=\"" + album_c + "\")";
+                var dus = UpdateDB("Standardization", cmd1 + ";");
+            }
+
+            //MessageBox.Show("Artist Short Name has been defaulted onto " + norec.ToString() + " songs");
         }
 
         private void DataGridView1_CellLeave(object sender, DataGridViewCellEventArgs e)
@@ -540,80 +597,83 @@ namespace RocksmithToolkitGUI.DLCManager
             int i;
             DataSet dis = new DataSet();
             //try {
-            i = DataGridView1.SelectedCells[0].RowIndex;
-            //if (txt_Artist_Correction.Text != "")
-            DataGridView1.Rows[i].Cells[3].Value = txt_Artist_Correction.Text;
-            //if (txt_Album_Correction.Text != "")
-            DataGridView1.Rows[i].Cells[5].Value = txt_Album_Correction.Text;
-            //if (txt_AlbumArt_Correction.Text != "")
-            DataGridView1.Rows[i].Cells[6].Value = txt_AlbumArt_Correction.Text;
-            //if (txt_Comments.Text != "")
-            DataGridView1.Rows[i].Cells[7].Value = txt_Comments.Text;
-            DataGridView1.Rows[i].Cells[8].Value = txt_Artist_Short.Text;
-            //if (txt_Artist_Short.Text != "")
-            DataGridView1.Rows[i].Cells[9].Value = txt_Album_Short.Text;
-            //if (txt_Year_Correction.Text != "")
-            DataGridView1.Rows[i].Cells[10].Value = txt_Year_Correction.Text;
-            if (chbx_Default_Cover.Checked) DataGridView1.Rows[i].Cells[15].Value = "Yes" ;
-            else DataGridView1.Rows[i].Cells[15].Value = "No";
-            //if (txt_Album_Short.Text != "")
-            //Main.EndEdit();
-            ////IDataAdapter.Update(dataTable);
-            //Main.ResetBindings(false);
-
-
-            var connection = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path);
-            var command = connection.CreateCommand();
-            using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            if (DataGridView1.SelectedCells.Count > 0)
             {
-                command.CommandText = "UPDATE Standardization SET ";
+                i = DataGridView1.SelectedCells[0].RowIndex;
+                //if (txt_Artist_Correction.Text != "")
+                DataGridView1.Rows[i].Cells[3].Value = txt_Artist_Correction.Text;
+                //if (txt_Album_Correction.Text != "")
+                DataGridView1.Rows[i].Cells[5].Value = txt_Album_Correction.Text;
+                //if (txt_AlbumArt_Correction.Text != "")
+                DataGridView1.Rows[i].Cells[6].Value = txt_AlbumArt_Correction.Text;
+                //if (txt_Comments.Text != "")
+                DataGridView1.Rows[i].Cells[7].Value = txt_Comments.Text;
+                DataGridView1.Rows[i].Cells[8].Value = txt_Artist_Short.Text;
+                //if (txt_Artist_Short.Text != "")
+                DataGridView1.Rows[i].Cells[9].Value = txt_Album_Short.Text;
+                //if (txt_Year_Correction.Text != "")
+                DataGridView1.Rows[i].Cells[10].Value = txt_Year_Correction.Text;
+                if (chbx_Default_Cover.Checked) DataGridView1.Rows[i].Cells[15].Value = "Yes";
+                else DataGridView1.Rows[i].Cells[15].Value = "No";
+                //if (txt_Album_Short.Text != "")
+                //Main.EndEdit();
+                ////IDataAdapter.Update(dataTable);
+                //Main.ResetBindings(false);
 
-                command.CommandText += "Artist_Correction = @param3, ";
-                command.CommandText += "Album_Correction = @param5, ";
-                command.CommandText += "AlbumArt_Correction = @param6, ";
-                command.CommandText += "Comments = @param7, ";
-                command.CommandText += "Artist_Short = @param8, ";
-                command.CommandText += "Album_Short = @param9, ";
-                command.CommandText += "Year_Correction = @param10, ";
-                command.CommandText += "SpotifyArtistID = @param11, ";
-                command.CommandText += "SpotifyAlbumID = @param12, ";
-                command.CommandText += "SpotifyAlbumURL = @param13, ";
-                command.CommandText += "SpotifyAlbumPath = @param14, ";
-                command.CommandText += "Default_Cover = @param15 ";
-                command.CommandText += "WHERE ID = " + txt_ID.Text;
-                command.Parameters.AddWithValue("@param3", DataGridView1.Rows[i].Cells[3].Value.ToString() ?? DBNull.Value.ToString());
-                command.Parameters.AddWithValue("@param5", DataGridView1.Rows[i].Cells[5].Value.ToString() ?? DBNull.Value.ToString());
-                command.Parameters.AddWithValue("@param6", DataGridView1.Rows[i].Cells[6].Value.ToString() ?? DBNull.Value.ToString());
-                command.Parameters.AddWithValue("@param7", DataGridView1.Rows[i].Cells[7].Value.ToString() ?? DBNull.Value.ToString());
-                command.Parameters.AddWithValue("@param8", DataGridView1.Rows[i].Cells[8].Value.ToString() ?? DBNull.Value.ToString());
-                command.Parameters.AddWithValue("@param9", DataGridView1.Rows[i].Cells[9].Value.ToString() ?? DBNull.Value.ToString());
-                command.Parameters.AddWithValue("@param10", DataGridView1.Rows[i].Cells[10].Value.ToString() ?? DBNull.Value.ToString());
-                command.Parameters.AddWithValue("@param11", DataGridView1.Rows[i].Cells[11].Value.ToString() ?? DBNull.Value.ToString());
-                command.Parameters.AddWithValue("@param12", DataGridView1.Rows[i].Cells[12].Value.ToString() ?? DBNull.Value.ToString());
-                command.Parameters.AddWithValue("@param13", DataGridView1.Rows[i].Cells[13].Value.ToString() ?? DBNull.Value.ToString());
-                command.Parameters.AddWithValue("@param14", DataGridView1.Rows[i].Cells[14].Value.ToString() ?? DBNull.Value.ToString());
-                command.Parameters.AddWithValue("@param15", DataGridView1.Rows[i].Cells[15].Value.ToString() ?? DBNull.Value.ToString());
-                try
-                {
-                    command.CommandType = CommandType.Text;
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                    //Main.EndEdit();
-                    //IDataAdapter.Update(dataTable);
-                    //Main.ResetBindings(false);
 
-                }
-                catch (Exception ex)
+                var connection = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path);
+                var command = connection.CreateCommand();
+                using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
                 {
-                    MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    MessageBox.Show("Can not open Standardization DB connection in Standardization Edit screen ! " + DB_Path + "-" + command.CommandText);
-                    throw;
+                    command.CommandText = "UPDATE Standardization SET ";
+
+                    command.CommandText += "Artist_Correction = @param3, ";
+                    command.CommandText += "Album_Correction = @param5, ";
+                    command.CommandText += "AlbumArt_Correction = @param6, ";
+                    command.CommandText += "Comments = @param7, ";
+                    command.CommandText += "Artist_Short = @param8, ";
+                    command.CommandText += "Album_Short = @param9, ";
+                    command.CommandText += "Year_Correction = @param10, ";
+                    command.CommandText += "SpotifyArtistID = @param11, ";
+                    command.CommandText += "SpotifyAlbumID = @param12, ";
+                    command.CommandText += "SpotifyAlbumURL = @param13, ";
+                    command.CommandText += "SpotifyAlbumPath = @param14, ";
+                    command.CommandText += "Default_Cover = @param15 ";
+                    command.CommandText += "WHERE ID = " + txt_ID.Text;
+                    command.Parameters.AddWithValue("@param3", DataGridView1.Rows[i].Cells[3].Value.ToString() ?? DBNull.Value.ToString());
+                    command.Parameters.AddWithValue("@param5", DataGridView1.Rows[i].Cells[5].Value.ToString() ?? DBNull.Value.ToString());
+                    command.Parameters.AddWithValue("@param6", DataGridView1.Rows[i].Cells[6].Value.ToString() ?? DBNull.Value.ToString());
+                    command.Parameters.AddWithValue("@param7", DataGridView1.Rows[i].Cells[7].Value.ToString() ?? DBNull.Value.ToString());
+                    command.Parameters.AddWithValue("@param8", DataGridView1.Rows[i].Cells[8].Value.ToString() ?? DBNull.Value.ToString());
+                    command.Parameters.AddWithValue("@param9", DataGridView1.Rows[i].Cells[9].Value.ToString() ?? DBNull.Value.ToString());
+                    command.Parameters.AddWithValue("@param10", DataGridView1.Rows[i].Cells[10].Value.ToString() ?? DBNull.Value.ToString());
+                    command.Parameters.AddWithValue("@param11", DataGridView1.Rows[i].Cells[11].Value.ToString() ?? DBNull.Value.ToString());
+                    command.Parameters.AddWithValue("@param12", DataGridView1.Rows[i].Cells[12].Value.ToString() ?? DBNull.Value.ToString());
+                    command.Parameters.AddWithValue("@param13", DataGridView1.Rows[i].Cells[13].Value.ToString() ?? DBNull.Value.ToString());
+                    command.Parameters.AddWithValue("@param14", DataGridView1.Rows[i].Cells[14].Value.ToString() ?? DBNull.Value.ToString());
+                    command.Parameters.AddWithValue("@param15", DataGridView1.Rows[i].Cells[15].Value.ToString() ?? DBNull.Value.ToString());
+                    try
+                    {
+                        command.CommandType = CommandType.Text;
+                        connection.Open();
+                        command.ExecuteNonQuery();
+                        //Main.EndEdit();
+                        //IDataAdapter.Update(dataTable);
+                        //Main.ResetBindings(false);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Can not open Standardization DB connection in Standardization Edit screen ! " + DB_Path + "-" + command.CommandText);
+                        throw;
+                    }
+                    finally
+                    {
+                        if (connection != null) connection.Close();
+                    }
+                    if (!chbx_AutoSave.Checked) MessageBox.Show("Song Details Correction Saved");
                 }
-                finally
-                {
-                    if (connection != null) connection.Close();
-                }
-                if (!chbx_AutoSave.Checked) MessageBox.Show("Song Details Correction Saved");
             }
             //catch (Exception ex)
             //{ }
@@ -685,7 +745,7 @@ namespace RocksmithToolkitGUI.DLCManager
             pB_ReadDLCs.Maximum = 5;
             pB_ReadDLCs.Value = 1;
             i = DataGridView1.SelectedCells[0].RowIndex;
-            if (DataGridView1.Rows[i].Cells[14].Value.ToString() == ""|| DataGridView1.Rows[i].Cells[13].Value.ToString()=="")
+            if (DataGridView1.Rows[i].Cells[14].Value.ToString() == ""|| DataGridView1.Rows[i].Cells[13].Value.ToString()=="" || !File.Exists(ConfigRepository.Instance()["dlcm_TempPath"] + "\\0_albumCovers\\" + artist + " - " + album + ".png"))
             {
                 pB_ReadDLCs.Value ++;
                 Task<string> sptyfy = StartToGetSpotifyDetails(artist, album, "", txt_Year_Correction.Text, "");
@@ -719,18 +779,22 @@ namespace RocksmithToolkitGUI.DLCManager
             }
             else
             {
-                pB_ReadDLCs.Value++;
-                using (WebClient wc = new WebClient())
+                if (File.Exists(ConfigRepository.Instance()["dlcm_TempPath"] + "\\0_albumCovers\\" + artist + " - " + album + ".png"))
                 {
-                    byte[] imageBytes = wc.DownloadData(new Uri(DataGridView1.Rows[i].Cells[13].Value.ToString()));
                     pB_ReadDLCs.Value++;
-                    FileStream file = new FileStream(ConfigRepository.Instance()["dlcm_TempPath"] + "\\0_albumCovers\\" + artist + " - " + album + ".png", FileMode.Create, System.IO.FileAccess.Write);
-                    using (MemoryStream stream = new MemoryStream(imageBytes)) stream.WriteTo(file);
-                    pxbx_SavedSpotify.ImageLocation = ConfigRepository.Instance()["dlcm_TempPath"] + "\\0_albumCovers\\" + artist + " - " + album + ".png";
-                    DataGridView1.Rows[i].Cells[14].Value = pxbx_SavedSpotify.ImageLocation;
+                    using (WebClient wc = new WebClient())
+                    {
+                        byte[] imageBytes = wc.DownloadData(new Uri(DataGridView1.Rows[i].Cells[13].Value.ToString()));
+                        pB_ReadDLCs.Value++;
+                        FileStream file = new FileStream(ConfigRepository.Instance()["dlcm_TempPath"] + "\\0_albumCovers\\" + artist + " - " + album + ".png", FileMode.Create, System.IO.FileAccess.Write);
+                        using (MemoryStream stream = new MemoryStream(imageBytes)) stream.WriteTo(file);
+                        pxbx_SavedSpotify.ImageLocation = ConfigRepository.Instance()["dlcm_TempPath"] + "\\0_albumCovers\\" + artist + " - " + album + ".png";
+                        DataGridView1.Rows[i].Cells[14].Value = pxbx_SavedSpotify.ImageLocation;
+                        pB_ReadDLCs.Value++;
+                    }
                     pB_ReadDLCs.Value++;
                 }
-                pB_ReadDLCs.Value++;
+                else pB_ReadDLCs.Value = 5;
             }
         }
     }

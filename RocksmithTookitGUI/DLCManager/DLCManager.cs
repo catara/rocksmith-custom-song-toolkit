@@ -21,7 +21,7 @@ using RocksmithToolkitLib.DLCPackage;
 using RocksmithToolkitLib;
 using RocksmithToolkitLib.XmlRepository;
 using RocksmithToolkitLib.Extensions;
-using RocksmithToolkitLib.Xml;
+using RocksmithToolkitLib.XML;
 using RocksmithToolkitLib.DLCPackage.Manifest.Functions;
 using RocksmithToolkitLib.DLCPackage.Manifest2014;
 using RocksmithToolkitLib.Sng;
@@ -4166,7 +4166,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         }
 
                         var toolkitv = new RocksmithToolkitLib.DLCPackage.ToolkitInfo();
-                        if (chbx_Additional_Manipulations.GetItemChecked(47)) toolkitv.PackageVersion = ToolkitVersion.version.ToString();
+                        if (chbx_Additional_Manipulations.GetItemChecked(47)) toolkitv.PackageVersion = ToolkitVersion.RSTKGuiVersion.ToString();
                         else toolkitv.PackageVersion = file.Version;
                         data = new DLCPackageData
                         {
@@ -5689,18 +5689,19 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btn_Param_Click(object sender, EventArgs e)
         {
-            if (Directory.Exists(MyAppWD))
-            {
+            var patt = MyAppWD + "\\..\\..\\RocksmithToolkitLib.Config.xml";
+            //if (File.Exists(patt))
+            //{
                 try
                 {
-                    Process process = Process.Start(@logPath);
+                    Process process = Process.Start(@patt);
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     MessageBox.Show("Can not open Param folder in Exporer !");
                 }
-            }
+            //}
         }
     }
 }

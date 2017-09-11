@@ -11,7 +11,7 @@ using System.Windows.Forms;
 using System.Data.OleDb;
 //using RocksmithToolkitGUI.OggConverter;//convert ogg to wem
 using RocksmithToolkitLib.Ogg;//convert ogg to wem
-using RocksmithToolkitLib.Xml; //For xml read library
+using RocksmithToolkitLib.XML; //For xml read library
 using RocksmithToolkitLib.Extensions;
 using System.IO;
 using Ookii.Dialogs; //cue text
@@ -2437,7 +2437,7 @@ namespace RocksmithToolkitGUI.DLCManager
         }
 
 
-        public int GetHashCode(RocksmithToolkitLib.Xml.SongEvent obj)
+        public int GetHashCode(RocksmithToolkitLib.XML.SongEvent obj)
         {
             if (ReferenceEquals(obj, null))
                 return 0;
@@ -3528,7 +3528,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
             var i = DataViewGrid.SelectedCells[0].RowIndex;
             string link = "https://www.google.com/#q=" + DataViewGrid.Rows[i].Cells["Artist"].Value.ToString() + "+" + DataViewGrid.Rows[i].Cells["Song_Title"].Value.ToString() + "+" + "Lyrics";
-            MessageBox.Show("1. Google the Lyrics e.g." + link + " \n\n2. Use Ultrastar Creator Tab lyrics to the songs time signature (if crashing at play open it from outside DLC Manager)\n\n3. Using EditorOnFire Transform tabbed lyrics to Rocksmith Format(File->Import->L>rics - Song->Track->Vocals then Adjust-Manually and Save)\n\n\n\n4. When done press Import lyrics by using Change Lyrics button", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            MessageBox.Show("http://www.guitarcade.fr/en/cdlc-creation/advanced-features/add-lyrics/ /n/n1.Google the Lyrics e.g." + link + " \n\n2. Use Ultrastar Creator Tab lyrics to the songs time signature (if crashing at play open it from outside DLC Manager)\n\n3. Using EditorOnFire Transform tabbed lyrics to Rocksmith Format(File->Import->L>rics - Song->Track->Vocals then Adjust-Manually and Save)\n\n\n\n4. When done press Import lyrics by using Change Lyrics button", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
 
             try

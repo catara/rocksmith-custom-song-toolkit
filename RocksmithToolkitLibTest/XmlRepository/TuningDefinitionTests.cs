@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 //using RocksmithToolkitGUI.DLCPackageCreator;
 using NUnit.Framework;
-using RocksmithToolkitLib.Xml;
 using RocksmithToolkitLib.XmlRepository; //bcapi else doesnt compile
 using RocksmithToolkitLib.XML;
 

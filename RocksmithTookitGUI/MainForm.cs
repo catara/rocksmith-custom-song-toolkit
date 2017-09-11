@@ -211,7 +211,7 @@ namespace RocksmithToolkitGUI
         {
             //manageToolStripMenuItem.Enabled = false;
             //bcapi (temp)Renaming this Fork
-            this.Text = String.Format("bcapi's v0.5 Custom Song Creator Toolkit (v{0} beta)", ToolkitVersion.version);
+            this.Text = String.Format("bcapi's v0.5 Custom Song Creator Toolkit (v{0} beta)", ToolkitVersion.RSTKGuiVersion);
 
             // Remove all tabs
             tabControl1.TabPages.Clear();

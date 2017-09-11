@@ -10,7 +10,7 @@ using RocksmithToolkitLib.DLCPackage;
 using RocksmithToolkitLib.Extensions;
 using RocksmithToolkitLib.PsarcLoader;
 using RocksmithToolkitLib.Sng;
-using RocksmithToolkitLib.Xml;
+using RocksmithToolkitLib.XML;
 
 namespace remastered
 {

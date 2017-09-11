@@ -608,7 +608,7 @@
     <EmbeddedResource Include="ZpeConverter\ZpeConverter.resx">
       <DependentUpon>ZpeConverter.cs</DependentUpon>
     </EmbeddedResource>
-<<<<<<< HEAD
+
     <None Include="DLCManager\external_tools\CDLCEnablers\RUN_PATCH_RS.orig.command">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -955,7 +955,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="DLCManager\README.md" />
-    <None Include="App.config" />
     <None Include="FilesDataSet.xsc">
       <DependentUpon>FilesDataSet.xsd</DependentUpon>
     </None>
@@ -967,8 +966,6 @@
     <None Include="FilesDataSet.xss">
       <DependentUpon>FilesDataSet.xsd</DependentUpon>
     </None>
-=======
->>>>>>> 7b8c165e44d70b4403845599ed469595eca9a01f
     <None Include="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>

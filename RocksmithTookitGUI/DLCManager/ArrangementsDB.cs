@@ -14,7 +14,7 @@ using RocksmithToolkitGUI;
 using RocksmithToolkitLib.Extensions;
 using Ookii.Dialogs; //cue text
 using System.IO; //file io things
-using RocksmithToolkitLib.Xml; //For xml read library
+using RocksmithToolkitLib.XML; //For xml read library
 using RocksmithToolkitLib.DLCPackage; //4packing
 using static RocksmithToolkitGUI.DLCManager.GenericFunctions;
 

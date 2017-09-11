@@ -20,7 +20,7 @@ using System.Net.NetworkInformation;
 using System.Text.RegularExpressions;
 using RocksmithToolkitLib;
 using RocksmithToolkitLib.DLCPackage;
-using RocksmithToolkitLib.Xml;
+using RocksmithToolkitLib.XML;
 using RocksmithToolkitLib.Ogg;
 using System.Diagnostics;
 using RocksmithToolkitLib.DLCPackage.Manifest.Functions;

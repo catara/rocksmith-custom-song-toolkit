@@ -206,9 +206,6 @@
     <Compile Include="DLCManager\external_tools\SpotifyAPI-NET-master\SpotifyAPI.Example\LocalControl.Designer.cs">
       <DependentUpon>LocalControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET-master\SpotifyAPI.Example\obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET-master\SpotifyAPI.Example\obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET-master\SpotifyAPI.Example\obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
     <Compile Include="DLCManager\external_tools\SpotifyAPI-NET-master\SpotifyAPI.Example\Program.cs" />
     <None Include="DLCManager\external_tools\SpotifyAPI-NET-master\SpotifyAPI.Example\Properties\AssemblyInfo.cs.issue" />
     <Compile Include="DLCManager\external_tools\SpotifyAPI-NET-master\SpotifyAPI.Example\Properties\Resources.Designer.cs" />
@@ -219,9 +216,6 @@
     <Compile Include="DLCManager\external_tools\SpotifyAPI-NET-master\SpotifyAPI.Example\WebControl.Designer.cs">
       <DependentUpon>WebControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET-master\SpotifyAPI.Tests\obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET-master\SpotifyAPI.Tests\obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET-master\SpotifyAPI.Tests\obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
     <None Include="DLCManager\external_tools\SpotifyAPI-NET-master\SpotifyAPI.Tests\Properties\AssemblyInfo.cs.issue" />
     <Compile Include="DLCManager\external_tools\SpotifyAPI-NET-master\SpotifyAPI.Tests\TestClass.cs" />
     <Compile Include="DLCManager\external_tools\SpotifyAPI-NET-master\SpotifyAPI\Local\Enums\AlbumArtSize.cs" />
@@ -239,9 +233,6 @@
     <Compile Include="DLCManager\external_tools\SpotifyAPI-NET-master\SpotifyAPI\Local\RemoteHandler.cs" />
     <Compile Include="DLCManager\external_tools\SpotifyAPI-NET-master\SpotifyAPI\Local\SpotifyLocalAPI.cs" />
     <Compile Include="DLCManager\external_tools\SpotifyAPI-NET-master\SpotifyAPI\Local\VolumeMixerControl.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET-master\SpotifyAPI\obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET-master\SpotifyAPI\obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET-master\SpotifyAPI\obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
     <None Include="DLCManager\external_tools\SpotifyAPI-NET-master\SpotifyAPI\Properties\AssemblyInfo.cs.issue" />
     <Compile Include="DLCManager\external_tools\SpotifyAPI-NET-master\SpotifyAPI\Web\Auth\AutorizationCodeAuth.cs" />
     <Compile Include="DLCManager\external_tools\SpotifyAPI-NET-master\SpotifyAPI\Web\Auth\ClientCredentialsAuth.cs" />
@@ -608,7 +599,6 @@
     <EmbeddedResource Include="ZpeConverter\ZpeConverter.resx">
       <DependentUpon>ZpeConverter.cs</DependentUpon>
     </EmbeddedResource>
-
     <None Include="DLCManager\external_tools\CDLCEnablers\RUN_PATCH_RS.orig.command">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -850,99 +840,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="DLCManager\external_tools\WinMerge\IgnoreSectionMarkers.ini">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="DLCManager\external_tools\WinMerge\Languages\Basque.po">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="DLCManager\external_tools\WinMerge\Languages\Brazilian.po">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="DLCManager\external_tools\WinMerge\Languages\Bulgarian.po">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="DLCManager\external_tools\WinMerge\Languages\Catalan.po">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="DLCManager\external_tools\WinMerge\Languages\ChineseSimplified.po">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="DLCManager\external_tools\WinMerge\Languages\ChineseTraditional.po">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="DLCManager\external_tools\WinMerge\Languages\Croatian.po">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="DLCManager\external_tools\WinMerge\Languages\Czech.po">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="DLCManager\external_tools\WinMerge\Languages\Danish.po">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="DLCManager\external_tools\WinMerge\Languages\Dutch.po">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="DLCManager\external_tools\WinMerge\Languages\French.po">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="DLCManager\external_tools\WinMerge\Languages\Galician.po">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="DLCManager\external_tools\WinMerge\Languages\German.po">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="DLCManager\external_tools\WinMerge\Languages\Greek.po">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="DLCManager\external_tools\WinMerge\Languages\Hungarian.po">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="DLCManager\external_tools\WinMerge\Languages\Italian.po">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="DLCManager\external_tools\WinMerge\Languages\Japanese.po">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="DLCManager\external_tools\WinMerge\Languages\Korean.po">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="DLCManager\external_tools\WinMerge\Languages\Norwegian.po">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="DLCManager\external_tools\WinMerge\Languages\Persian.po">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="DLCManager\external_tools\WinMerge\Languages\Polish.po">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="DLCManager\external_tools\WinMerge\Languages\Portuguese.po">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="DLCManager\external_tools\WinMerge\Languages\Romanian.po">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="DLCManager\external_tools\WinMerge\Languages\Russian.po">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="DLCManager\external_tools\WinMerge\Languages\Serbian.po">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="DLCManager\external_tools\WinMerge\Languages\Slovak.po">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="DLCManager\external_tools\WinMerge\Languages\Slovenian.po">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="DLCManager\external_tools\WinMerge\Languages\Spanish.po">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="DLCManager\external_tools\WinMerge\Languages\Swedish.po">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="DLCManager\external_tools\WinMerge\Languages\Turkish.po">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="DLCManager\external_tools\WinMerge\Languages\Ukrainian.po">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="DLCManager\external_tools\WinMerge\Lang\en.ttt">
@@ -1813,60 +1710,6 @@
     <Content Include="DLCManager\external_tools\WinMerge\Docs\ChangeLog.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Docs\ReadMe-Basque.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Docs\ReadMe-Brazilian.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Docs\ReadMe-Bulgarian.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Docs\ReadMe-Catalan.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Docs\ReadMe-ChineseSimplified.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Docs\ReadMe-ChineseTraditional.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Docs\ReadMe-Croatian.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Docs\ReadMe-Dutch.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Docs\ReadMe-French.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Docs\ReadMe-Galician.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Docs\ReadMe-Greek.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Docs\ReadMe-Japanese.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Docs\ReadMe-Romanian.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Docs\ReadMe-Serbian.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Docs\ReadMe-Spanish.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Docs\ReadMe-Swedish.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Docs\ReadMe-Turkish.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Docs\ReadMe-Ukrainian.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="DLCManager\external_tools\WinMerge\Docs\ReadMe.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1874,240 +1717,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="DLCManager\external_tools\WinMerge\Files.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\af.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\ar.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\ast.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\az.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\ba.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\be.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\bg.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\bn.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\br.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\ca.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\cs.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\cy.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\da.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\de.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\el.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\eo.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\es.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\et.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\eu.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\ext.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\fa.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\fi.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\fr.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\fur.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\fy.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\gl.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\gu.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\he.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\hi.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\hr.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\hu.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\hy.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\id.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\io.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\is.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\it.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\ja.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\ka.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\kk.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\ko.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\ku-ckb.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\ku.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\lt.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\lv.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\mk.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\mn.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\mr.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\ms.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\nb.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\ne.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\nl.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\nn.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\pa-in.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\pl.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\ps.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\pt-br.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\pt.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\ro.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\ru.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\sa.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\si.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\sk.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\sl.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\sq.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\sr-spc.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\sr-spl.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\sv.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\ta.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\th.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\tr.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\tt.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\ug.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\uk.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\uz.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\va.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\vi.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\zh-cn.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Lang\zh-tw.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="DLCManager\external_tools\WinMerge\libexpat.dll">
@@ -2291,6 +1900,7 @@
     <Folder Include="DLCManager\external_tools\remastered\Connected Services\" />
     <Folder Include="DLCManager\external_tools\SpotifyAPI-NET-master\SpotifyAPI.Tests\obj\Debug\TempPE\" />
     <Folder Include="DLCManager\external_tools\SpotifyAPI-NET-master\SpotifyAPI\obj\Debug\TempPE\" />
+    <Folder Include="DLCManager\external_tools\WinMerge\Languages\" />
     <Folder Include="DLCManager\Temp\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

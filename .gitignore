@@ -121,3 +121,4 @@ __pycache__/
 *.py[cod]
 *.egg
 *.userprefs
+.vs/RocksmithCustomSongCreator/v15/sqlite3/storage.ide

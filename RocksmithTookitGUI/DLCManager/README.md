@@ -97,17 +97,12 @@
 [ ] mac song gen errors at read dlc library
 [ ] Profiles should include also Format
 [ ] replace all does not exist
-[ ] come together lyrics
 [ ] each platform should have its own remote location
 [ ] delete moves to duplicates but does not add dupli if exists
 [ ] delete does not delete the actual record from repack_audittrail
 [ ] INCUBUS REDEFINE MULTI SHOWS IN RED AT DUPLICATION MANAGEMENT SCREEN
 [ ] fix import current month
-[ ] bitrate to compress maybe a config
-[ ] select incl groups has a small error
-[ ] mantra cannot be imported
 [ ] gasoline cannot be packed
-[ ] log is not last come first entry
 [ ] check originals vs original dbb
 [ ] why do i have duplciates on the ps3
 [ ] multiple repacks cannto happen
@@ -141,17 +136,12 @@
 [ ] the pretender doesnt register as alternate
 [ ] test replace ....
 	[ ] add log end sont timeat pack
-[ ] add comment beginning of song in lyrics
 [ ] check smooth saiyin and c file that breaks
 [ ] check crossed album art
 [ ] check iron maiden album art
 [ ] unify pack function
 [ ] check author db saving being used at pack
 [ ] add missin tones and arrangement parameters
-[ ] enable garageband recordings multitrack sync
-		[ ] add each instrument timing for starting to 
-		[ ] capture start of each tracc in comments/newfield
-		[ ] add a 4 sec timestamp in each song
 
 
 done:
@@ -166,11 +156,22 @@ done:
 [x] tones volume sort order
 [x] fix tones opening dbb
 [x] fix pluck/pick wrong pack issue
-[ ] make mass pack also use db values
-[ ] why album id is the same as artist id
 [x] fixed maindb log
 [x] added log on read lib
 if no delete then dont delete DBscocnvert and ftp is it working at mass packing
+fix newsoft issue
+[ ] make mass pack also use db values
+[ ] why album id is the same as artist id
+[ ] enable garageband recordings multitrack sync
+		[ ] add each instrument timing for starting to 
+		[ ] capture start of each tracc in comments/newfield
+		[ ] add a 4 sec timestamp in each song
+		[ ] add comment beginning of song in lyrics
+		[ ] bitrate to compress maybe a config
+[ ] select incl groups has a small error
+[ ] mantra cannot be imported
+[ ] log is not last come first entry
+[ ] come together lyrics
 
 - diff between master and branch
 DLCManager folder

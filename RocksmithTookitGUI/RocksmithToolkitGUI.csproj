@@ -82,10 +82,9 @@
     <Reference Include="NDesk.Options">
       <HintPath>..\lib\NDesk\NDesk.Options.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net40\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>Z:\Volumes\HFS\Users\bogdan\GitHub\rocksmith-custom-song-toolkit\lib\Newtonsoft.Json\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NLog">
       <HintPath>..\lib\NLog\NLog.dll</HintPath>
@@ -188,6 +187,12 @@
     </Compile>
     <Compile Include="DLCManager\external_tools\remastered\Entry.cs" />
     <Compile Include="DLCManager\external_tools\remastered\Program.cs" />
+    <None Include="DLCManager\external_tools\dlcconverter\dlcconverter.exe.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DLCManager\external_tools\dlcconverter\RocksmithToolkitLib.dll.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="DLCManager\external_tools\remastered\Properties\AssemblyInfo.cs.issue" />
     <Compile Include="DLCManager\external_tools\remastered\Properties\Resources.Designer.cs" />
     <Compile Include="DLCManager\external_tools\remastered\PSARC.cs" />
@@ -907,10 +912,6 @@
       <Project>{FE4E3BDA-2942-4009-9F42-07ECEF8DE350}</Project>
       <Name>convert2012</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RocksmithToolkitCLI\dlcconverter\dlcconverter.csproj">
-      <Project>{972BC97A-B70A-4007-B915-952CC3606A2A}</Project>
-      <Name>dlcconverter</Name>
-    </ProjectReference>
     <ProjectReference Include="..\RocksmithToolkitCLI\PackageCreator\packagecreator.csproj">
       <Project>{ED268869-387A-477E-A652-C6E47BE2AC02}</Project>
       <Name>packagecreator</Name>
@@ -971,6 +972,60 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="DLCManager\external_tools\D3DX9_42.dll" />
+    <Content Include="DLCManager\external_tools\dlcconverter\CFSM.AudioTools.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\dlcconverter\DF_DDSImage.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\dlcconverter\dlcconverter.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\dlcconverter\dlcconverter.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\dlcconverter\ICSharpCode.SharpZipLib.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\dlcconverter\MiscUtil.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\dlcconverter\MiscUtil.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\dlcconverter\NDesk.Options.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\dlcconverter\Newtonsoft.Json.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\dlcconverter\Newtonsoft.Json.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\dlcconverter\RocksmithToolkitLib.Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\dlcconverter\RocksmithToolkitLib.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\dlcconverter\RocksmithToolkitLib.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\dlcconverter\RocksmithToolkitLib.SongAppId.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\dlcconverter\RocksmithToolkitLib.TuningDefinition.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\dlcconverter\X360.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\dlcconverter\X360.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLCManager\external_tools\dlcconverter\zlib.net.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="DLCManager\external_tools\eof1.8RC12\alleg44.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1350,7 +1405,6 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="DLCManager\external_tools\remastered\bin\Debug\NDesk.Options.dll" />
-    <Content Include="DLCManager\external_tools\remastered\bin\Debug\Newtonsoft.Json.dll" />
     <Content Include="DLCManager\external_tools\remastered\bin\Debug\Newtonsoft.Json.xml" />
     <Content Include="DLCManager\external_tools\remastered\bin\Debug\remastered.exe" />
     <Content Include="DLCManager\external_tools\remastered\bin\Debug\remastered.pdb" />

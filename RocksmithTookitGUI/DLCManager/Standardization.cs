@@ -539,7 +539,7 @@ namespace RocksmithToolkitGUI.DLCManager
         {//continue;
             //}
 
-            var norec = 0;
+            //var norec = 0;
             DataSet dfz = new DataSet(); dfz = SelectFromDB("Standardization", "SELECT iif(Artist_Correction<>\"\", Artist_Correction, Artist), iif(Album_Correction<>\"\", Album_Correction, Album), SpotifyArtistID, SpotifyAlbumID, SpotifyAlbumURL,SpotifyAlbumPath FROM Standardization WHERE (SpotifyArtistID <> \"\") GROUP BY iif(Artist_Correction<>\"\", Artist_Correction, Artist), iif(Album_Correction<>\"\", Album_Correction, Album), SpotifyArtistID, SpotifyAlbumID, SpotifyAlbumURL,SpotifyAlbumPath;", "");
 
             foreach (DataRow dataRow in dfz.Tables[0].Rows)

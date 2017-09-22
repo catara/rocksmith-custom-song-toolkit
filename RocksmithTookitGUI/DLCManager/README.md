@@ -142,36 +142,23 @@
 [ ] unify pack function
 [ ] check author db saving being used at pack
 [ ] add missin tones and arrangement parameters
-
+[ ] make mass pack also use db values
+[ ] why album id is the same as artist id
+if no delete then dont delete DBscocnvert and ftp is it working at mass packing
+		[ ] add a 4 sec timestamp in each song
+		[ ] bitrate to compress maybe a config
+		[ ] mantra cannot be imported
+		[] select incl groups has a small error (userissues)
+		[ ] come together lyrics
+[ ] fix songs w only bass and dd attached
+[ ] check import tones db
+copy-back vocal orig end of pack
+check db also checks arrangements, standardization, tones,
+make updatelog static
 
 done:
 (next release)
-[x] spotify
-	[x] Think of unifying the maindb&generic Spotify functions
-	[x] import make sure Spotify connection is remembered showed and shard with maindb
-	[x] save&override album image
-	[x] at standardization apply spotify album url name ?
-[x] fixed error mss at pack related to bass removal
-[x] diff at replack vocals have no scrool speed
-[x] tones volume sort order
-[x] fix tones opening dbb
-[x] fix pluck/pick wrong pack issue
-[x] fixed maindb log
-[x] added log on read lib
-if no delete then dont delete DBscocnvert and ftp is it working at mass packing
-fix newsoft issue
-[ ] make mass pack also use db values
-[ ] why album id is the same as artist id
-[ ] enable garageband recordings multitrack sync
-		[ ] add each instrument timing for starting to 
-		[ ] capture start of each tracc in comments/newfield
-		[ ] add a 4 sec timestamp in each song
-		[ ] add comment beginning of song in lyrics
-		[ ] bitrate to compress maybe a config
-[ ] select incl groups has a small error
-[ ] mantra cannot be imported
-[ ] log is not last come first entry
-[ ] come together lyrics
+
 
 - diff between master and branch
 DLCManager folder

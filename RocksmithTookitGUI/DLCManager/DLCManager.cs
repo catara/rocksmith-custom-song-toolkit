@@ -341,7 +341,8 @@ namespace RocksmithToolkitGUI.DLCManager
             else chbx_Additional_Manipulations.SetItemCheckState(72, CheckState.Unchecked);
             if (ConfigRepository.Instance()["dlcm_AdditionalManipul73"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(73, CheckState.Checked);
             else chbx_Additional_Manipulations.SetItemCheckState(73, CheckState.Unchecked);
-
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul74"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(74, CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(74, CheckState.Unchecked);
             // Generate package worker
             bwRGenerate.DoWork += new DoWorkEventHandler(GeneratePackage);
 
@@ -356,7 +357,7 @@ namespace RocksmithToolkitGUI.DLCManager
             bwConvert.WorkerReportsProgress = true;
             if (!File.Exists(txt_DBFolder.Text + "\\Files.accdb")) chbx_DefaultDB.Checked = true;
             if (!Directory.Exists(txt_TempPath.Text)) txt_TempPath.Text = AppDomain.CurrentDomain.BaseDirectory + "DLCManager\\Temp";
-            SetImportNo();
+            SaveSettings();
         }
 
         private void btn_SteamDLCFolder_Click(object sender, EventArgs e)
@@ -588,12 +589,13 @@ namespace RocksmithToolkitGUI.DLCManager
             ConfigRepository.Instance()["dlcm_AdditionalManipul71"] = chbx_Additional_Manipulations.GetItemChecked(71) ? "Yes" : "No";
             ConfigRepository.Instance()["dlcm_AdditionalManipul72"] = chbx_Additional_Manipulations.GetItemChecked(72) ? "Yes" : "No";
             ConfigRepository.Instance()["dlcm_AdditionalManipul73"] = chbx_Additional_Manipulations.GetItemChecked(73) ? "Yes" : "No";
+            ConfigRepository.Instance()["dlcm_AdditionalManipul74"] = chbx_Additional_Manipulations.GetItemChecked(74) ? "Yes" : "No";
 
             //Save Profiles
             if (chbx_Configurations.SelectedIndex >= 0)
             {
                 DataSet ds = new DataSet(); ds = SelectFromDB("Groups", "SELECT CDLC_ID FROM Groups WHERE Profile_Name=\"" + chbx_Configurations.Text + "\";", txt_DBFolder.Text);
-                var norec = ds.Tables.Count < 1 ? 0: ds.Tables[0].Rows.Count;
+                var norec = ds.Tables.Count < 1 ? 0 : ds.Tables[0].Rows.Count;
                 if (norec == 3)
                 {
                     var fnn = ds.Tables[0].Rows[0].ItemArray[0].ToString();
@@ -606,6 +608,7 @@ namespace RocksmithToolkitGUI.DLCManager
             ConfigRepository.Instance()["dlcm_RocksmithDLCPath"] = txt_RocksmithDLCPath.Text;
             ConfigRepository.Instance()["dlcm_TempPath"] = txt_TempPath.Text;
             ConfigRepository.Instance()["dlcm_DBFolder"] = txt_DBFolder.Text;
+            SetImportNo();
         }
 
         private void cbx_Activ_Title_CheckedChanged(object sender, EventArgs e)
@@ -893,7 +896,8 @@ namespace RocksmithToolkitGUI.DLCManager
             if (multith) rtxt_StatisticsOnReadDLCs.Text = dtt + " - " + ii + " - " + txt + "\n" + rtxt_StatisticsOnReadDLCs.Text;
 
             // Write the string to a file.
-            var fn = (logPath == null || !Directory.Exists(logPath) ? AppWD + ConfigRepository.Instance()["dlcm_LogPath"] : logPath) + "\\" + "current_temp.txt";
+            var log = ConfigRepository.Instance()["dlcm_TempPath"] + "\\0_log";
+            var fn = (logPath == null || !Directory.Exists(logPath) ? (Directory.Exists(log) ? log : AppWD + ConfigRepository.Instance()["dlcm_LogPath"]) : logPath) + "\\" + "current_temp.txt";
             // This text is always added, making the file longer over time
             // if it is not deleted.
             using (StreamWriter sw = File.AppendText(fn))
@@ -1049,7 +1053,7 @@ namespace RocksmithToolkitGUI.DLCManager
             DeleteFromDB("Import", "DELETE FROM Import;");
             tst = "Cleaning....Import table...."; timestamp = UpdateLog(timestamp, tst, true);
             pB_ReadDLCs.CreateGraphics().DrawString(tst, new Font("Arial", (float)7, FontStyle.Bold), Brushes.Blue, new PointF(1, pB_ReadDLCs.Height / 4));
-            if (chbx_CleanDB.Checked && result1 == DialogResult.No)
+            if (chbx_CleanDB.Checked && result1 == DialogResult.Yes)
             {
                 DeleteFromDB("Main", "DELETE FROM Main;");
                 DeleteFromDB("Arrangements", "DELETE FROM Arrangements;");
@@ -1059,9 +1063,11 @@ namespace RocksmithToolkitGUI.DLCManager
                 DeleteFromDB("LogImporting", "DELETE FROM LogImporting;");
                 DeleteFromDB("LogImportingError", "DELETE FROM LogImportingError;");
                 DeleteFromDB("Pack_AuditTrail", "DELETE FROM Pack_AuditTrail;");
-                //DeleteFromDB("Groups", "DELETE FROM Groups WHERE TYPE=\"Profile\";");
+                result1 = MessageBox.Show("Are you sure you want to DELETE All Groups related entities(Profiles, Song Groups/Setlist)?", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+                if (result1 == DialogResult.Yes) DeleteFromDB("Groups", "DELETE FROM Groups WHERE TYPE=\"Profile\";");
                 DeleteFromDB("Import_AuditTrail", "DELETE FROM Import_AuditTrail;");
-                DeleteFromDB("Standardization", "DELETE FROM Standardization;");
+                result1 = MessageBox.Show("Are you sure you want to DELETE Standardizations (&Spotify downloaded info)?", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+                if (result1 == DialogResult.Yes) DeleteFromDB("Standardization", "DELETE FROM Standardization;");
                 DeleteFromDB("Cache", "DELETE FROM Cache;");
                 DeleteFromDB("Groups", "DELETE FROM Groups WHERE Type=\"DLC\" or Type=\"Retail\";");
             }
@@ -1103,7 +1109,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         invalid = "Yes";
                         //broken_fl[bb] = s;
                         ///bb++;
-                        // continue;
+                        continue;
                     }
                     //try to get the details
                     // Create the FileInfo object only when needed to ensure 
@@ -1372,7 +1378,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             if (!chbx_Additional_Manipulations.GetItemChecked(37))
                                 if (!FullPath.IsValidPSARC())
                                 {
-                                    MessageBox.Show(String.Format("File '{0}' isn't valid. File extension was changed to '.invalid'", Path.GetFileName(FullPath)), MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    //MessageBox.Show(String.Format("File '{0}' isn't valid. File extension was changed to '.invalid'", Path.GetFileName(FullPath)), MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
                                     var Pathh = broken_Path_Import + "\\" + ds.Tables[0].Rows[i].ItemArray[2].ToString();
                                     if (chbx_Additional_Manipulations.GetItemChecked(30))
                                     {
@@ -1579,7 +1585,7 @@ namespace RocksmithToolkitGUI.DLCManager
             if (chbx_Additional_Manipulations.GetItemChecked(42)) //43. Save import Log
             {
                 // Write the string to a file.
-                var fn = (log_Path == null ? Log_PSPath : log_Path) + "\\" + GetTimestamps(DateTime.Now).Replace(":", "_") + ".txt";
+                var fn = (log_Path == null || log_Path == "" ? Log_PSPath : log_Path) + "\\" + GetTimestamps(DateTime.Now).Replace(":", "_") + ".txt";
                 using (System.IO.StreamWriter file = new System.IO.StreamWriter(fn, true))
                 {
                     file.WriteLine("Full Log");
@@ -2030,14 +2036,17 @@ namespace RocksmithToolkitGUI.DLCManager
                 if (Is_MultiTrack == "Yes") timestamp = UpdateLog(timestamp, "Multitrack=-=" + MultiTrack_Version, true);
                 tst = "end multitrackcheckin..."; timestamp = UpdateLog(timestamp, tst, true);
 
+                //Detect Live
                 var IsLive = "";
-                var IsAcoustic = "";
                 var LiveDetails = "";
                 multxt = "Live"; Titl = Check4MultiT(origFN, info.SongInfo.SongDisplayName, multxt);
-                if ("Yes" == Titl.Split(';')[1] && Titl.Split(';')[1].Length > 6)
+                if ("Yes" == Titl.Split(';')[1] && Titl.Split(';')[0].Length > 6)
                 { IsLive = "Yes"; gom = Titl.Split(';')[0].TrimEnd().TrimStart().Replace(" ()", ""); LiveDetails += gom.IndexOf(multxt) <= gom.Length - 4 ? "" : gom.Replace(gom.Substring(0, info.SongInfo.SongDisplayName.IndexOf(multxt) + 4), ""); }
+
+                //Detect Acoustic
+                var IsAcoustic = "";
                 multxt = "Acoustic"; Titl = Check4MultiT(origFN, info.SongInfo.SongDisplayName, multxt);
-                if ("Yes" == Titl.Split(';')[1] && Titl.Split(';')[1].Length > 6)
+                if ("Yes" == Titl.Split(';')[1] && Titl.Split(';')[0].Length > 6)
                 { IsAcoustic = "Yes"; gom = Titl.Split(';')[0].TrimEnd().TrimStart().Replace(" ()", ""); LiveDetails += gom.IndexOf(multxt) <= gom.Length - 4 ? "" : gom.Replace(gom.Substring(0, info.SongInfo.SongDisplayName.IndexOf(multxt) + 4), ""); }
 
                 //Remove MultiTrackLive Info from Title
@@ -3027,6 +3036,10 @@ namespace RocksmithToolkitGUI.DLCManager
                             {
                                 var mss = arg.SongXml.File.ToString();
                                 int poss = 0;
+
+                                var StartTime = "";
+                                StartTime = GetTrackStartTime(arg.SongXml.File, arg.RouteMask.ToString(), arg.ArrangementType.ToString());
+
                                 if (mss.Length > 0)
                                 {
                                     poss = mss.ToString().LastIndexOf("\\") + 1;
@@ -3095,7 +3108,8 @@ namespace RocksmithToolkitGUI.DLCManager
                                     command.CommandText += "XMLFile_Hash = @param33,";
                                     command.CommandText += "SNGFileHash = @param34,";
                                     command.CommandText += "lastConversionDateTime = @param35,";
-                                    command.CommandText += "Has_Sections = @param36";
+                                    command.CommandText += "Has_Sections = @param36,";
+                                    command.CommandText += "Start_Time = @param37";
                                 }
                                 else
                                 {
@@ -3135,11 +3149,12 @@ namespace RocksmithToolkitGUI.DLCManager
                                     command.CommandText += "XMLFile_Hash,";
                                     command.CommandText += "SNGFileHash,";
                                     command.CommandText += "lastConversionDateTime,";
-                                    command.CommandText += "Has_Sections";
+                                    command.CommandText += "Has_Sections,";
+                                    command.CommandText += "Start_Time";
                                     command.CommandText += ") VALUES(@param1,@param2,@param3,@param4,@param5,@param6,@param7,@param8,@param9";
                                     command.CommandText += ",@param10,@param11,@param12,@param13,@param14,@param15,@param16,@param17,@param18,@param19";
                                     command.CommandText += ",@param20,@param21,@param22,@param23,@param24,@param25,@param26,@param27,@param28,@param29";
-                                    command.CommandText += ",@param30,@param31,@param32,@param33,@param34,@param35,@param36";
+                                    command.CommandText += ",@param30,@param31,@param32,@param33,@param34,@param35,@param36,@param37";
                                     command.CommandText += ")";
                                 }
                                 command.Parameters.AddWithValue("@param1", CDLC_ID);
@@ -3178,6 +3193,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                 command.Parameters.AddWithValue("@param34", (blist[n].ToString() ?? DBNull.Value.ToString()));
                                 command.Parameters.AddWithValue("@param35", (clist[n].ToString() ?? DBNull.Value.ToString()));
                                 command.Parameters.AddWithValue("@param36", (dlist[n].ToString() ?? DBNull.Value.ToString()));
+                                command.Parameters.AddWithValue("@param37", (StartTime ?? DBNull.Value.ToString()));
                                 n++;
 
                                 //EXECUTE SQL/INSERT
@@ -3199,8 +3215,8 @@ namespace RocksmithToolkitGUI.DLCManager
                             }
                             catch (Exception ex)
                             {
-                                MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                MessageBox.Show(CDLC_ID + "Can not open Arrangements DB connection in Import ! " + DB_Path + "-" + arg.Name + "-" + command.CommandText);
+                                //MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show(CDLC_ID + "Can not open Arrangements DB connection in Import ! " + DB_Path + "-" + arg.SongXml.File + "-" + command.CommandText + ex.Message);
                             }
                         }
                         timestamp = UpdateLog(timestamp, "Arrangements Updated " + info.Arrangements.Count, true);
@@ -4285,6 +4301,12 @@ namespace RocksmithToolkitGUI.DLCManager
                             MessageBox.Show("One or more fields are missing information.", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return;
                         }
+
+                        //Add comments to beginning of the lyrics
+                        //var der=chbx_Additional_Manipulations.GetItemChecked(72);
+                        //var ft=file.Has_Vocals;
+                        var ttt2 = (chbx_Additional_Manipulations.GetItemChecked(72) && file.Has_Vocals == "Yes") ? AddStuffToLyrics(file.ID, file.Comments, rbtn_Population_Groups.Checked ? Groupss : "", file.Has_DD, (bassRemoved == "Yes") ? "No" : "Yes", file.Has_BassDD, file.Author, file.Is_Acoustic, file.Is_Live, file.Live_Details, file.Is_Multitrack, file.Is_Original) : "";
+                        var ttt1 = chbx_Additional_Manipulations.GetItemChecked(73) && file.Has_Vocals == "Yes" ? AddTrackStart2Lyrics(file.ID) : "";
                         var FN = txt_File_Name.Text;
 
                         if (cbx_Activ_File_Name.Checked) FN = Manipulate_strings(FN, i, true, chbx_Additional_Manipulations.GetItemChecked(25), false, SongRecord, "", "");
@@ -4398,6 +4420,18 @@ namespace RocksmithToolkitGUI.DLCManager
                         tsst = "end gen ..."; timestamp = UpdateLog(timestamp, tsst, false);
                         data.CleanCache();
                         i++;
+
+                        DataSet dus = new DataSet(); dus = SelectFromDB("Arrangements", "SELECT XMLFilePath, ArrangementType, RouteMask, Start_Time FROM Arrangements WHERE CDLC_ID=" + file.ID + "", "");
+                        var noOfRec = dus.Tables[0].Rows.Count;
+                        var XMLFilePath = "";
+                        for (var k = 0; k <= noOfRec - 1; k++)
+                        {
+                            var ArrangementType = dus.Tables[0].Rows[k].ItemArray[1].ToString();
+                            XMLFilePath = ArrangementType == "Vocal" ? dus.Tables[0].Rows[k].ItemArray[0].ToString() : XMLFilePath;
+                        }
+                        if (file.Has_Vocals == "Yes" && (chbx_Additional_Manipulations.GetItemChecked(72) || chbx_Additional_Manipulations.GetItemChecked(73)))
+                            if (File.Exists(XMLFilePath + ".orig")) File.Copy(XMLFilePath + ".orig", XMLFilePath, true);
+
                         var source = chbx_PS3.Checked ? "_ps3.psarc.edat" : (chbx_PC.Checked ? "_p" : (chbx_Mac.Checked ? "_m" : "")) + ".psarc";
 
                         if (File.Exists(dlcSavePath + source))
@@ -4606,7 +4640,7 @@ namespace RocksmithToolkitGUI.DLCManager
             SaveSettings();
 
             //Show Intro database window
-            MainDB frm = new MainDB((chbx_DefaultDB.Checked == true ? MyAppWD : txt_DBFolder.Text), txt_TempPath.Text, chbx_Additional_Manipulations.GetItemChecked(33), txt_RocksmithDLCPath.Text, chbx_Additional_Manipulations.GetItemChecked(39), chbx_Additional_Manipulations.GetItemChecked(40));
+            MainDB frm = new MainDB((txt_DBFolder.Text), txt_TempPath.Text, chbx_Additional_Manipulations.GetItemChecked(33), txt_RocksmithDLCPath.Text, chbx_Additional_Manipulations.GetItemChecked(39), chbx_Additional_Manipulations.GetItemChecked(40));
             frm.Show();
         }
 
@@ -4727,9 +4761,10 @@ namespace RocksmithToolkitGUI.DLCManager
         private void DBchanged(object sender, EventArgs e)
         {
             //if (chbx_DefaultDB.Checked == true) chbx_DefaultDB.Checked = false;
-            // SaveSettings();
+            //SaveSettings();
             if (!(txt_DBFolder.Text == MyAppWD)) chbx_DefaultDB.Checked = false;
             if (txt_DBFolder.Text.Length > 0) if ((txt_DBFolder.Text.Substring(txt_DBFolder.Text.Length - 1, 1) == "\\")) txt_DBFolder.Text = txt_DBFolder.Text.Substring(0, txt_DBFolder.Text.Length - 1);
+            SaveSettings();
         }
 
         private void chbx_DefaultDB_CheckedChanged(object sender, EventArgs e)
@@ -5470,8 +5505,8 @@ namespace RocksmithToolkitGUI.DLCManager
                 txt_RocksmithDLCPath.Text = ds.Tables[0].Rows[0].ItemArray[0].ToString();
                 txt_DBFolder.Text = ds.Tables[0].Rows[2].ItemArray[0].ToString();
                 txt_TempPath.Text = ds.Tables[0].Rows[1].ItemArray[0].ToString();
-
             }
+            SaveSettings();
         }
 
 
@@ -5491,12 +5526,12 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            //var t =;
-            if (Directory.Exists(logPath))
+            var logPatht = (logPath == null || !Directory.Exists(logPath) ? AppWD + ConfigRepository.Instance()["dlcm_LogPath"] : logPath) + "\\";
+            if (Directory.Exists(logPatht))
             {
                 try
                 {
-                    Process process = Process.Start(@logPath);
+                    Process process = Process.Start(@logPatht);
                     btn_OpenLogsFolder.Text = btn_OpenLogsFolder.Text.Replace(" N/A", "");
                 }
                 catch (Exception ex)
@@ -5629,8 +5664,243 @@ namespace RocksmithToolkitGUI.DLCManager
         private void txt_RocksmithDLCPath_TextChanged(object sender, EventArgs e)
         {
             if (txt_RocksmithDLCPath.Text.Length > 0) if ((txt_RocksmithDLCPath.Text.Substring(txt_RocksmithDLCPath.Text.Length - 1, 1) == "\\")) txt_RocksmithDLCPath.Text = txt_RocksmithDLCPath.Text.Substring(0, txt_RocksmithDLCPath.Text.Length - 1);
-            SetImportNo();
+            SaveSettings();
         }
+
+        ////[XmlType("vocal")]
+        //public class newLyrics
+        //{
+        //    //[XmlAttribute("time")]
+        //    public float Time { get; set; }
+
+        //    //[XmlAttribute("note")]
+        //    public Int32 Note { get; set; }
+
+        //    //[XmlAttribute("length")]
+        //    public float Length { get; set; }
+
+        //    //[XmlAttribute("lyric")] // len 32 (RS1) | len 48 (RS2014)
+        //    public string Lyric { get; set; }
+        //}
+
+        private void GetTrackStartTimeW(object sender, EventArgs e)
+        {
+            //var ST = "C:\\GitHub\\Quick\\0\\Pc_CDLC_Bush_2001_Golden State_3_The People That We Love_86307\\songs\\arr\\cusbushthepeoplethatwelove_vocals.xml";
+
+            //Add2LinesInVocals(ST,2);
+            //Vocals xmlContent = null;
+            //try
+            //{
+            //    xmlContent = Vocals.LoadFromFile(ST);
+
+            //    //SongLenght = xmlContent.SongLength.ToString();
+            //}
+            //catch (Exception ee)
+            //{
+            //    Console.Write(ee.Message);
+            //}
+
+            //Vocals newLyrics = null;
+            //try
+            //{
+            //    newLyrics = Vocals.LoadFromFile(ST + ".newvcl");
+
+            //    //SongLenght = xmlContent.SongLength.ToString();
+            //}
+            //catch (Exception ee)
+            //{
+            //    Console.Write(ee.Message);
+            //}
+            //if (!File.Exists(ST + ".orig")) File.Copy(ST, ST + ".orig");
+            ////newLyrics.Vocal[1].Time;
+            ////newLyrics = Vocals.LoadFromFile(ST);
+            //newLyrics.Vocal[0].Time = 0;
+            //newLyrics.Vocal[0].Note = 254;
+            //newLyrics.Vocal[0].Length = 3;
+            //newLyrics.Vocal[0].Lyric = "Song Details:";
+            //newLyrics.Vocal[1].Time = 3;
+            //newLyrics.Vocal[1].Note = 254;
+            //newLyrics.Vocal[1].Length = 2;
+            //newLyrics.Vocal[1].Lyric = "Lyrics Details:";
+
+            ////for (var i = 0; i < xmlContent.Count; i++)
+            ////{
+            ////    newLyrics.Vocal[i+2].Time = xmlContent.Vocal[i].Time;
+            ////    newLyrics.Vocal[i + 2].Note = xmlContent.Vocal[i].Note;
+            ////    newLyrics.Vocal[i + 2].Length = xmlContent.Vocal[i].Length;
+            ////    newLyrics.Vocal[i + 2].Lyric = xmlContent.Vocal[i].Lyric;
+            ////}
+            ////rev.Length = xmlContent.Vocal[i].Length;turn ST;
+            ////xmv.Lyric = xmlContent.Vocal[i].Lyric;lContent.Vocal.
+            ////var v1 = new RocksmithToolkitLib.XML.Vocal();
+            ////v1.Time = 0;
+            ////v1.Note = 254;
+            ////v1.Length = 2;
+            ////v1.Lyric = "bbog";
+
+            ////Vocals newLyrics = new Vocals(ST,false);
+            //////newLyrics.Vocal[0] = v1;
+            ////newLyrics.Vocal[1].Note = 254;
+            ////for (var i = 0; i < xmlContent.Count; i++)
+            ////{
+            ////    var v = new RocksmithToolkitLib.XML.Vocal();
+            ////    v.Time= xmlContent.Vocal[i].Time;
+            ////    v.Note = xmlContent.Vocal[i].Note;
+            ////    v.Length = xmlContent.Vocal[i].Length;
+            ////    v.Lyric = xmlContent.Vocal[i].Lyric;
+
+            ////    newLyrics.Vocal[i+2] = v;
+            ////}
+            //// write updated xml arrangement
+            //using (var stream = File.Open(ST, FileMode.Create))
+            //    newLyrics.Serialize(stream);
+        }
+
+        static string GetTrackStartTime(string SongXml, string MaskRoute, string ArrangementType)
+        {
+            Song2014 xmlContent = null;
+            Vocals xmlVocals = null;
+            var startt = "";
+            if (MaskRoute == "Rhythm" || MaskRoute == "Lead" || MaskRoute == "Bass")
+            {
+                try
+                {
+                    xmlContent = Song2014.LoadFromFile(SongXml);
+                    startt = xmlContent.Levels[0].Notes[0].Time.ToString();
+                }
+                catch (Exception ee)
+                {
+                    Console.Write(ee.Message);
+                    startt = xmlContent.Sections[0].StartTime.ToString();
+                }
+            }
+            if (ArrangementType == "Vocal")
+            {
+                try
+                {
+                    xmlVocals = Vocals.LoadFromFile(SongXml);
+                    startt = xmlVocals.Vocal[0].Time.ToString();
+                }
+                catch (Exception ee) { Console.Write(ee.Message); }
+            }
+            //for (var i = 0; i < xmlContent.Levels[0].Notes.Length; i++)
+            //{
+            //if (xmlContent.Levels[0].Notes[0].Time > 5)
+            //{
+
+            //break;
+            //}
+            //else startt = xmlContent.Vocal[i].Time.ToString();
+            //}
+            return startt;
+        }
+
+        static string AddTrackStart2Lyrics(string SongID)
+        {
+            DataSet dus = new DataSet(); dus = SelectFromDB("Arrangements", "SELECT XMLFilePath, ArrangementType, RouteMask, Start_Time FROM Arrangements WHERE CDLC_ID=" + SongID + "", "");
+            //var CDLC_ID = dus.Tables[0].Rows[0].ItemArray[0].ToString();
+            var noOfRec = dus.Tables[0].Rows.Count;
+            var XMLFilePath = "";
+            for (var i = 0; i <= noOfRec - 1; i++)
+            {
+                var ArrangementType = dus.Tables[0].Rows[i].ItemArray[1].ToString();
+                XMLFilePath = ArrangementType == "Vocal" ? dus.Tables[0].Rows[i].ItemArray[0].ToString() : XMLFilePath;
+            }
+            for (var i = 0; i <= noOfRec - 1; i++)
+            {
+                var ArrangementType = dus.Tables[0].Rows[i].ItemArray[1].ToString();
+                Add2LinesInVocals(XMLFilePath, 1);
+                //XMLFilePath =  dus.Tables[0].Rows[i].ItemArray[0].ToString();// : XMLFilePath;ArrangementType == "Vocal" ?
+                var RouteMask = dus.Tables[0].Rows[i].ItemArray[2].ToString();
+                var strartt = dus.Tables[0].Rows[i].ItemArray[3].ToString();
+                if (RouteMask == "Lead" || RouteMask == "Bass" || RouteMask == "Rhythm")
+                {
+                    Vocals xmlContent = null;
+                    try
+                    {
+                        xmlContent = Vocals.LoadFromFile(XMLFilePath);
+                    }
+                    catch (Exception ee) { Console.Write(ee.Message); }
+                    //var startt = "";
+                    for (var j = 1; j < xmlContent.Count; j++)
+                        //{
+                        if (xmlContent.Vocal[j].Time > float.Parse(strartt) && j > 0)
+                        {
+                            xmlContent.Vocal[j - 1].Lyric = "[" + (RouteMask == "Lead" ? "L" : RouteMask == "Bass" ? "B" : RouteMask == "Rhythm" ? "R" : "-")+ "]";
+                            xmlContent.Vocal[j - 1].Length = float.Parse("0.5");
+                            xmlContent.Vocal[j - 1].Time = float.Parse(strartt);
+                            ////if (File.Exists(XMLFilePath)) File.Delete(XMLFilePath);
+                            //File.Copy(XMLFilePath, XMLFilePath + "orig",false);
+                            using (var stream = File.Open(XMLFilePath, FileMode.Create))
+                                xmlContent.Serialize(stream);
+                            j = xmlContent.Count;
+                        }
+                        else { xmlContent.Vocal[j - 1].Lyric = xmlContent.Vocal[j].Lyric; xmlContent.Vocal[j - 1].Length = xmlContent.Vocal[j].Length; xmlContent.Vocal[j - 1].Time = xmlContent.Vocal[j].Time; }
+                            //else if (xmlContent.Vocal[j].Time < float.Parse(strartt) && j == 0 && xmlContent.Vocal[j+1].Time > float.Parse(strartt))
+                            //{
+                            //    xmlContent.Vocal[0].Lyric += "Start-";
+                            //    using (var stream = File.Open(XMLFilePath, FileMode.Create))
+                            //        xmlContent.Serialize(stream);
+                            //    continue;
+                            //}
+                            //}
+                        }
+            }
+            return "";
+        }
+
+        static string AddStuffToLyrics(string SongID, string Comments, string Group, string Has_DD, string bassRemoved, string Has_BassDD, string Author, string Is_Acoustic, string Is_Live, string Live_Details, string Is_Multitrack, string Is_Original)
+        {
+            var ST = "";
+            var sdetails = "SongDetails: " + (Comments == "" ? "" : "Comment_" + Comments) + " DD=" + Has_DD + (Has_DD == "Yes" && bassRemoved == "Yes" ? "(BDDremoved)" : "") + (Author == "" ? "" : " by: " + Author) + (Is_Acoustic == "Yes" ? " Acoustic":"") + (Is_Live == "Yes" ? " Live":"" + Is_Live + (Live_Details == "" ? "" : "(" + Live_Details + ")")) + (Is_Original == "No" ? " Custom-DLC" : " ORIGINAL ") + " Tracks=";
+            var scomments = "";
+            //DataSet dus = new DataSet(); dus = SelectFromDB("Main", "SELECT XMLFilePath, Bonus, Comments FROM Main WHERE ArrangementType=\"ArrangementType\" AND DLC_ID=\""+ SongID + "\"", "");
+            //var CDLC_ID = dus.Tables[0].Rows[0].ItemArray[0].ToString();
+            DataSet dus = new DataSet(); dus = SelectFromDB("Arrangements", "SELECT XMLFilePath, Bonus, Comments, ArrangementType, RouteMask FROM Arrangements WHERE CDLC_ID=" + SongID + "", "");
+            //var CDLC_ID = dus.Tables[0].Rows[0].ItemArray[0].ToString();
+            var noOfRec = dus.Tables[0].Rows.Count;
+            for (var i = 0; i <= noOfRec - 1; i++)
+            {
+                var XMLFilePath = dus.Tables[0].Rows[i].ItemArray[0].ToString();
+                var Bonus = dus.Tables[0].Rows[i].ItemArray[1].ToString();
+                var Commentz = dus.Tables[0].Rows[i].ItemArray[2].ToString();
+                var ArrangementType = dus.Tables[0].Rows[i].ItemArray[3].ToString();
+                var RouteMask = dus.Tables[0].Rows[i].ItemArray[4].ToString();
+                if (ArrangementType == "Vocal") ST = XMLFilePath;//ArrangementType
+                sdetails += (RouteMask == "Lead" ? " Lead" : "") + (RouteMask == "Bass" ? " Bass" : "") + (RouteMask == "Rhythm" ? " Rhythm" : "");
+                sdetails += (RouteMask == "Lead" && Bonus == "true" ? " L_Bonus" : "") + (RouteMask == "Bass" && Bonus == "true" ? " B_Bonus" : "") + (RouteMask == "Rhythm" && Bonus == "true" ? " R_Bonus" : "");
+                scomments += (RouteMask == "Lead" && Commentz != "" ? " L_" + Commentz : "") + (RouteMask == "Bass" && Commentz != "" ? " B_" + Commentz : "") + (RouteMask == "Rhythm" && Commentz != "" ? " R_" + Commentz : "");
+            }
+
+            Add2LinesInVocals(ST, 2);
+
+            Vocals newLyrics = null;
+            try
+            {
+                newLyrics = Vocals.LoadFromFile(ST);//+ ".newvcl"
+            }
+            catch (Exception ee) { Console.Write(ee.Message); }
+
+            if (!File.Exists(ST + ".orig")) File.Copy(ST, ST + ".orig");
+            newLyrics.Vocal[0].Time = float.Parse("0.61");
+            newLyrics.Vocal[0].Note = 254;
+            newLyrics.Vocal[0].Length = float.Parse("2.39");
+            newLyrics.Vocal[0].Lyric = "Song Details: " + sdetails;
+            newLyrics.Vocal[1].Time = 3;
+            newLyrics.Vocal[1].Note = 254;
+            newLyrics.Vocal[1].Length = 2;
+            newLyrics.Vocal[1].Lyric = "Lyrics Details:" + scomments;
+
+            //write new file
+            using (var stream = File.Open(ST, FileMode.Create))
+                newLyrics.Serialize(stream);
+            //if (File.Exists(ST + ".newvcl"))
+            //{ File.Delete(ST);
+            //File.Copy(ST + ".newvcl", ST,true);
+            //}
+            return ST;
+        }
+
         private void SetImportNo()
         {
             string[] filez;
@@ -5645,6 +5915,12 @@ namespace RocksmithToolkitGUI.DLCManager
 
             }
             else btn_PopulateDB.Text = "Import N/A DLCs";
+
+            DataSet dus = new DataSet(); dus = SelectFromDB("Main", "SELECT * FROM Main;", "");
+            //var CDLC_ID = dus.Tables[0].Rows[0].ItemArray[0].ToString();
+            var noOfRec = dus.Tables.Count > 0 ? dus.Tables[0].Rows.Count : 0;
+            btn_OpenMainDB.Text = "Open MainDB" + " (" + noOfRec.ToString() + ")";
+            //if (noOfRec > 0) else btn_OpenMainDB.Text = "Open MainDB";
         }
 
         private void btn_CalcNoOfImports_Click(object sender, EventArgs e)
@@ -5683,8 +5959,8 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void txt_TempPath_TextChanged(object sender, EventArgs e)
         {
-
             if (txt_TempPath.Text.Length > 0) if ((txt_TempPath.Text.Substring(txt_TempPath.Text.Length - 1, 1) == "\\")) txt_TempPath.Text = txt_TempPath.Text.Substring(0, txt_TempPath.Text.Length - 1);
+            SaveSettings();
         }
 
         private void btn_Param_Click(object sender, EventArgs e)
@@ -5692,15 +5968,15 @@ namespace RocksmithToolkitGUI.DLCManager
             var patt = MyAppWD + "\\..\\..\\RocksmithToolkitLib.Config.xml";
             //if (File.Exists(patt))
             //{
-                try
-                {
-                    Process process = Process.Start(@patt);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    MessageBox.Show("Can not open Param folder in Exporer !");
-                }
+            try
+            {
+                Process process = Process.Start(@patt);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Can not open Param folder in Exporer !");
+            }
             //}
         }
     }

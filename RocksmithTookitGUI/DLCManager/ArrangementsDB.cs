@@ -192,6 +192,7 @@ namespace RocksmithToolkitGUI.DLCManager
             DataGridViewTextBoxColumn SNGFileHash = new DataGridViewTextBoxColumn { DataPropertyName = "SNGFileHash", HeaderText = "SNGFileHash " };
             DataGridViewTextBoxColumn Has_Sections = new DataGridViewTextBoxColumn { DataPropertyName = "Has_Sections", HeaderText = "Has_Sections " };
             DataGridViewTextBoxColumn Comments = new DataGridViewTextBoxColumn { DataPropertyName = "Comments", HeaderText = "Comments " };
+            DataGridViewTextBoxColumn Start_Time = new DataGridViewTextBoxColumn { DataPropertyName = "Start_Time", HeaderText = "Start_Time " };
 
 
 
@@ -348,6 +349,7 @@ namespace RocksmithToolkitGUI.DLCManager
             public string SNGFileHash { get; set; }
             public string Has_Sections { get; set; }
             public string Comments { get; set; }
+            public string Start_Time { get; set; }
         }
 
         private Files[] files = new Files[10000];
@@ -418,6 +420,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         files[i].SNGFileHash = dataRow.ItemArray[39].ToString();
                         files[i].Has_Sections = dataRow.ItemArray[40].ToString();
                         files[i].Comments = dataRow.ItemArray[41].ToString();
+                        files[i].Start_Time = dataRow.ItemArray[42].ToString();
                         i++;
                     }
                     //Closing Connection

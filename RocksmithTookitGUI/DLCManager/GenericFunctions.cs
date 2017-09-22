@@ -273,67 +273,94 @@ namespace RocksmithToolkitGUI.DLCManager
                 //if (Aitem.Error==null) if (Aitem.Albums.Total>0) if (Aitem.Albums.Items[0]. > 0)
                 SearchItem Titem = _spotify.SearchItems(Title + "+" + Album + "+" + Artist, SearchType.All);
                 if (Titem.Error == null && Titem.Tracks.Total > 0)
-                        foreach (SpotifyAPI.Web.Models.FullTrack Trac in Titem.Tracks.Items)
+                    foreach (SpotifyAPI.Web.Models.FullTrack Trac in Titem.Tracks.Items)
+                    {
+                        if (Titem.Tracks.Total > 0) foreach (SpotifyAPI.Web.Models.SimpleArtist Artis in Trac.Artists)
+                                if (Artis.Name.ToString().ToLower() == Artist.ToLower())
+                                {
+                                    a1 = Trac.TrackNumber.ToString();
+                                    a2 = Trac.Id;
+                                    a3 = Artis.Id;
+                                    FullAlbum FAitem = _spotify.GetAlbum(Trac.Album.Id);
+                                    a6 = (ConfigRepository.Instance()["dlcm_TempPath"] + "\\0_albumCovers\\" + Artis.Name.ToString() + " - " + Trac.Album.Name.ToString().Replace(":", "") + ".png").Replace("/", "").Replace("?", "");
+                                    if (!File.Exists(a6))
+                                        using (WebClient wc = new WebClient())
+                                        {
+                                            byte[] imageBytes = webClient.DownloadData(new Uri(FAitem.Images[0].Url));
+                                            FileStream file = new FileStream(a6, FileMode.Create, System.IO.FileAccess.Write);
+                                            using (MemoryStream stream = new MemoryStream(imageBytes)) stream.WriteTo(file);
+                                        }
+                                    a4 = Trac.Album.Id;
+                                    a5 = FAitem.Images[0].Url;
+                                    if (Trac.Album.Name.ToLower() == Album.ToLower())
+                                        break;
+                                }
+                    }
+
+                else
+                {
+                    SearchItem Titem2 = _spotify.SearchItems(Title, SearchType.Track, 50);
+                    if (Titem2.Error == null && Titem2.Tracks.Total > 0)
+                        foreach (SpotifyAPI.Web.Models.FullTrack Trac in Titem2.Tracks.Items)
                         {
-                            if (Titem.Tracks.Total > 0) foreach (SpotifyAPI.Web.Models.SimpleArtist Artis in Trac.Artists)
+                            if (Titem2.Tracks.Total > 0) foreach (SpotifyAPI.Web.Models.SimpleArtist Artis in Trac.Artists)
                                     if (Artis.Name.ToString().ToLower() == Artist.ToLower())
                                     {
                                         a1 = Trac.TrackNumber.ToString();
                                         a2 = Trac.Id;
                                         a3 = Artis.Id;
                                         FullAlbum FAitem = _spotify.GetAlbum(Trac.Album.Id);
-                                    a6 = (ConfigRepository.Instance()["dlcm_TempPath"] + "\\0_albumCovers\\" + Artis.Name.ToString() + " - " + Trac.Album.Name.ToString().Replace(":", "") + ".png").Replace("/", "").Replace("?", "");
-                                        if (!File.Exists(a6))
-                                            using (WebClient wc = new WebClient())
-                                            {
-                                                byte[] imageBytes = webClient.DownloadData(new Uri(FAitem.Images[0].Url));
-                                                FileStream file = new FileStream(a6, FileMode.Create, System.IO.FileAccess.Write);
-                                                using (MemoryStream stream = new MemoryStream(imageBytes)) stream.WriteTo(file);
-                                            }
                                         a4 = Trac.Album.Id;
                                         a5 = FAitem.Images[0].Url;
-                                    if (Trac.Album.Name.ToLower() == Album.ToLower())
-                                        break;
+                                        if (Trac.Album.Name.ToString().ToLower() == Album.ToLower())
+                                        {
+                                            a6 = (ConfigRepository.Instance()["dlcm_TempPath"] + "\\0_albumCovers\\" + Artis.Name.ToString() + Trac.Album.Name.ToString().Replace(":", "") + ".png").Replace("/", "").Replace("?", "");
+                                            if (!File.Exists(a6))
+                                                using (WebClient wc = new WebClient())
+                                                {
+                                                    byte[] imageBytes = webClient.DownloadData(new Uri(FAitem.Images[0].Url));
+                                                    FileStream file = new FileStream(a6, FileMode.Create, System.IO.FileAccess.Write);
+                                                    using (MemoryStream stream = new MemoryStream(imageBytes)) stream.WriteTo(file);
+                                                }
+                                            break; ;
+                                        }
                                     }
                         }
-                
-                else
-                {
-                    SearchItem Titem2 = _spotify.SearchItems(Title, SearchType.Track, 50);
-                    if (Titem2.Error == null && Titem2.Tracks.Total > 0)
-                            foreach (SpotifyAPI.Web.Models.FullTrack Trac in Titem2.Tracks.Items)
+
+                    else
+                    {
+                        SearchItem Titem3 = _spotify.SearchItems(Album + "+" + Artist, SearchType.All);
+                        if (Titem3.Error == null && Titem3.Tracks.Total > 0)
+                            foreach (SpotifyAPI.Web.Models.FullTrack Trac in Titem3.Tracks.Items)
                             {
-                                if (Titem2.Tracks.Total > 0) foreach (SpotifyAPI.Web.Models.SimpleArtist Artis in Trac.Artists)
+                                if (Titem3.Tracks.Total > 0) foreach (SpotifyAPI.Web.Models.SimpleArtist Artis in Trac.Artists)
                                         if (Artis.Name.ToString().ToLower() == Artist.ToLower())
                                         {
                                             a1 = Trac.TrackNumber.ToString();
                                             a2 = Trac.Id;
                                             a3 = Artis.Id;
                                             FullAlbum FAitem = _spotify.GetAlbum(Trac.Album.Id);
+                                            a6 = (ConfigRepository.Instance()["dlcm_TempPath"] + "\\0_albumCovers\\" + Artis.Name.ToString() + " - " + Trac.Album.Name.ToString().Replace(":", "") + ".png").Replace("/", "").Replace("?", "");
+                                            if (!File.Exists(a6))
+                                                using (WebClient wc = new WebClient())
+                                                {
+                                                    byte[] imageBytes = webClient.DownloadData(new Uri(FAitem.Images[0].Url));
+                                                    FileStream file = new FileStream(a6, FileMode.Create, System.IO.FileAccess.Write);
+                                                    using (MemoryStream stream = new MemoryStream(imageBytes)) stream.WriteTo(file);
+                                                }
                                             a4 = Trac.Album.Id;
                                             a5 = FAitem.Images[0].Url;
-                                            if (Trac.Album.Name.ToString().ToLower() == Album.ToLower())
-                                            {
-                                                a6 = (ConfigRepository.Instance()["dlcm_TempPath"] + "\\0_albumCovers\\" + Artis.Name.ToString() + Trac.Album.Name.ToString().Replace(":", "") + ".png").Replace("/", "").Replace("?", "");
-                                                if (!File.Exists(a6))
-                                                    using (WebClient wc = new WebClient())
-                                                    {
-                                                        byte[] imageBytes = webClient.DownloadData(new Uri(FAitem.Images[0].Url));
-                                                        FileStream file = new FileStream(a6, FileMode.Create, System.IO.FileAccess.Write);
-                                                        using (MemoryStream stream = new MemoryStream(imageBytes)) stream.WriteTo(file);
-                                                    }
-                                            break; ;
-                                            }
+                                            if (Trac.Album.Name.ToLower() == Album.ToLower()) break;
                                         }
                             }
-                    
-                    else
-                    {
-                        SearchItem Titem3 = _spotify.SearchItems(Album + "+" + Artist, SearchType.All);
-                        if (Titem3.Error == null && Titem3.Tracks.Total > 0)
-                                foreach (SpotifyAPI.Web.Models.FullTrack Trac in Titem3.Tracks.Items)
+
+                        else
+                        {
+                            SearchItem Titem4 = _spotify.SearchItems(Album, SearchType.Album);
+                            if (Titem4.Error == null && Titem4.Albums.Total > 0)
+                                foreach (SpotifyAPI.Web.Models.FullTrack Trac in Titem4.Tracks.Items)
                                 {
-                                    if (Titem3.Tracks.Total > 0) foreach (SpotifyAPI.Web.Models.SimpleArtist Artis in Trac.Artists)
+                                    if (Titem4.Tracks.Total > 0) foreach (SpotifyAPI.Web.Models.SimpleArtist Artis in Trac.Artists)
                                             if (Artis.Name.ToString().ToLower() == Artist.ToLower())
                                             {
                                                 a1 = Trac.TrackNumber.ToString();
@@ -350,36 +377,9 @@ namespace RocksmithToolkitGUI.DLCManager
                                                     }
                                                 a4 = Trac.Album.Id;
                                                 a5 = FAitem.Images[0].Url;
-                                            if (Trac.Album.Name.ToLower() == Album.ToLower()) break;
-                                        }
-                                }
-                        
-                        else
-                        {
-                            SearchItem Titem4 = _spotify.SearchItems(Album, SearchType.Album);
-                            if (Titem4.Error == null && Titem4.Albums.Total > 0)
-                                    foreach (SpotifyAPI.Web.Models.FullTrack Trac in Titem4.Tracks.Items)
-                                    {
-                                        if (Titem4.Tracks.Total > 0) foreach (SpotifyAPI.Web.Models.SimpleArtist Artis in Trac.Artists)
-                                                if (Artis.Name.ToString().ToLower() == Artist.ToLower())
-                                                {
-                                                    a1 = Trac.TrackNumber.ToString();
-                                                    a2 = Trac.Id;
-                                                    a3 = Artis.Id;
-                                                    FullAlbum FAitem = _spotify.GetAlbum(Trac.Album.Id);
-                                                    a6 = (ConfigRepository.Instance()["dlcm_TempPath"] + "\\0_albumCovers\\" + Artis.Name.ToString() + " - " + Trac.Album.Name.ToString().Replace(":", "") + ".png").Replace("/", "").Replace("?", ""); 
-                                                    if (!File.Exists(a6))
-                                                        using (WebClient wc = new WebClient())
-                                                        {
-                                                            byte[] imageBytes = webClient.DownloadData(new Uri(FAitem.Images[0].Url));
-                                                            FileStream file = new FileStream(a6, FileMode.Create, System.IO.FileAccess.Write);
-                                                            using (MemoryStream stream = new MemoryStream(imageBytes)) stream.WriteTo(file);
-                                                        }
-                                                    a4 = Trac.Album.Id;
-                                                    a5 = FAitem.Images[0].Url;
                                                 if (Trac.Album.Name.ToLower() == Album.ToLower()) break;
                                             }
-                                    }
+                                }
                         }
                     }
                 }
@@ -420,7 +420,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //    a1 = GetTrackNoFromSpotifyAsync("", "", Title).ToString();
             //}
             //txt_Track_No.Text = z == "0" && txt_Track_No.Text != "" ? txt_Track_No.Text : z;
-            if (a1 != "") return a1 + ";" + a2 + ";" + a3 + ";" + a4 + ";" + a5 + ";" + (File.Exists(a6) ?a6 :"") ;
+            if (a1 != "") return a1 + ";" + a2 + ";" + a3 + ";" + a4 + ";" + a5 + ";" + (File.Exists(a6) ? a6 : "");
             else return "0" + ";-;-;-;-;-";
         }
 
@@ -589,7 +589,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 catch (Exception ee)
                 {
                     Console.WriteLine(ee.Message);
-                    ErrorWindow frm1 = new ErrorWindow(DB + "--------" + slct + "--------------" + ee+"DB Open in Design Mode, or Missing, or you need to Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error @Import", false, false);
+                    ErrorWindow frm1 = new ErrorWindow(DB + "--------" + slct + "--------------" + ee + "DB Open in Design Mode, or Missing, or you need to Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error @Import", false, false);
                     frm1.ShowDialog();
                     return;
                 }
@@ -614,7 +614,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 catch (Exception ee)
                 {
                     Console.WriteLine(ee.Message);
-                    ErrorWindow frm1 = new ErrorWindow(ftable+"--------"+ fvalues +"--------------"+ ee + "DB Open in Design Mode, or Missing, or you need to Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734 ", "Error @Import", false, false);
+                    ErrorWindow frm1 = new ErrorWindow(ftable + "--------" + fvalues + "--------------" + ee + "DB Open in Design Mode, or Missing, or you need to Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734 ", "Error @Import", false, false);
                     frm1.ShowDialog();
                     return;
                 }
@@ -641,7 +641,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     catch (Exception ee)
                     {
                         Console.WriteLine(ee.Message);
-                        ErrorWindow frm1 = new ErrorWindow(ftable + "--------" + fcmds + "--------------"  + "DB Open in Design Mode, or Missing, or you need to Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734 ", "Error @Import" + ee, false, false);
+                        ErrorWindow frm1 = new ErrorWindow(ftable + "--------" + fcmds + "--------------" + "DB Open in Design Mode, or Missing, or you need to Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734 ", "Error @Import" + ee, false, false);
                         frm1.ShowDialog();
                         return dsm;
                     }
@@ -663,7 +663,8 @@ namespace RocksmithToolkitGUI.DLCManager
 
         static public void CleanFolder(string pathfld, string exttoigno)
         {
-            pathfld = pathfld + "\\";
+            if (pathfld != "" && pathfld != null)
+                pathfld = pathfld + "\\";
             try
             {
                 System.IO.DirectoryInfo downloadedMessageInfo2 = new DirectoryInfo(pathfld);
@@ -695,7 +696,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 catch (Exception ee)
                 {
                     Console.WriteLine(ee.Message);
-                    ErrorWindow frm1 = new ErrorWindow(ftable + "--------" + fcmds + "--------------"+ee + "DB Open in Design Mode, or Missing, or you need to Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734 ", "Error @Import", false, false);
+                    ErrorWindow frm1 = new ErrorWindow(ftable + "--------" + fcmds + "--------------" + ee + "DB Open in Design Mode, or Missing, or you need to Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734 ", "Error @Import", false, false);
                     frm1.ShowDialog();
                     return dsm;
                 }
@@ -970,7 +971,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         public static void CreateTempFolderStructure(string Temp_Path_Import, string old_Path_Import, string broken_Path_Import, string dupli_Path_Import, string dlcpacks, string pathDLC, string repacked_path, string repacked_XBOXPath, string repacked_PCPath, string repacked_MACPath, string repacked_PSPath, string log_Path, string albumCovers_PSPath, string Log_PSPath)
         {
-            if (!Directory.Exists(Temp_Path_Import) || !Directory.Exists(pathDLC) || !Directory.Exists(old_Path_Import) || !Directory.Exists(broken_Path_Import) || !Directory.Exists(dupli_Path_Import) || !Directory.Exists(dlcpacks + "\\temp") || !Directory.Exists(dlcpacks + "\\manipulated") || !Directory.Exists(dlcpacks + "\\manifests") || !Directory.Exists(dlcpacks + "\\manipulated\\temp") || !Directory.Exists(repacked_path) || !Directory.Exists(repacked_XBOXPath) || !Directory.Exists(repacked_PCPath) || !Directory.Exists(repacked_MACPath) || !Directory.Exists(repacked_PSPath) || (!Directory.Exists(log_Path)&& log_Path!="") || !Directory.Exists(Log_PSPath) || !Directory.Exists(albumCovers_PSPath))
+            if (!Directory.Exists(Temp_Path_Import) || !Directory.Exists(pathDLC) || !Directory.Exists(old_Path_Import) || !Directory.Exists(broken_Path_Import) || !Directory.Exists(dupli_Path_Import) || !Directory.Exists(dlcpacks + "\\temp") || !Directory.Exists(dlcpacks + "\\manipulated") || !Directory.Exists(dlcpacks + "\\manifests") || !Directory.Exists(dlcpacks + "\\manipulated\\temp") || !Directory.Exists(repacked_path) || !Directory.Exists(repacked_XBOXPath) || !Directory.Exists(repacked_PCPath) || !Directory.Exists(repacked_MACPath) || !Directory.Exists(repacked_PSPath) || (!Directory.Exists(log_Path) && log_Path != "") || !Directory.Exists(Log_PSPath) || !Directory.Exists(albumCovers_PSPath))
             {
                 MessageBox.Show(String.Format("One of the mandatory backend, folder is missing " + ", " + Temp_Path_Import + ", " + pathDLC + ", " + old_Path_Import + ", " + broken_Path_Import + ", " + dupli_Path_Import + ", " + dlcpacks + "(manipulated or manipulated-temp or manifests or temp), " + repacked_path + "(split by platform), " + log_Path, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error));
                 try
@@ -1028,6 +1029,52 @@ namespace RocksmithToolkitGUI.DLCManager
             }
             info.Close();
             return author;
+        }
+
+        public static string Add2LinesInVocals(string filePath, int nooflines)
+        {
+            var info = File.OpenText(filePath);
+            string firsttime = "";
+            string secondtime = "";
+            string secondline = "";
+            string fistline = "";
+            string fistlineorig = "";
+            string line;
+            //3 lines
+            //if (File.Exists(filePath + ".newvcl"))
+            //    File.Delete(filePath + ".newvcl");
+            using (StreamWriter sw = File.CreateText(filePath + ".newvcl"))
+            {
+                while ((line = info.ReadLine()) != null)
+                {
+                    if (line.Contains("<vocal time=\"") && firsttime == "")
+                    {
+                        fistlineorig = line;
+                        firsttime = line.Substring(line.IndexOf(value: "\"") + 1, 8);
+                        firsttime = firsttime.Substring(0, firsttime.IndexOf("\""));
+                        if (firsttime.ToInt32() < 4)
+                        { sw.WriteLine(" <vocal time=\"0.61\" note=\"254\" length=\"2\" lyric=\"\"/>"); if (nooflines == 1) sw.WriteLine(line); }
+                        else fistline = line.Substring(line.IndexOf("lyric = \\\"") + 7, line.Length - line.IndexOf("lyric = \\\"") + 8);
+                    }
+                    else
+                        if (line.Contains("<vocal time=\"") && firsttime != "" && secondtime == "" && nooflines == 2)
+                    {
+                        secondtime = line.Substring(line.IndexOf(value: "\"") + 1, 8);
+                        secondtime = secondtime.Substring(0, secondtime.IndexOf("\""));
+                        if (secondtime.ToInt32() < 4)
+                            sw.WriteLine(" <vocal time=\"3\" note=\"254\" length=\"0.9\" lyric=\"\"/>");
+                        else secondline = line.Substring(line.IndexOf("lyric = \\\"") + 7, line.Length - line.IndexOf("lyric = \\\"") + 8);
+                        sw.WriteLine(fistlineorig);
+                        sw.WriteLine(line);
+                    }
+                    else sw.WriteLine(line);
+                }
+
+            }
+            info.Close();
+            File.Copy(filePath + ".newvcl", filePath, true);
+            File.Delete(filePath + ".newvcl");
+            return fistline + ";" + secondline; ;// return firsttime.Substring(0, firsttime.Length - firsttime.IndexOf("\""));
         }
 
         public static string ReadPackageToolkitVersion(string filePath)

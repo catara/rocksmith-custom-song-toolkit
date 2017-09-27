@@ -65,7 +65,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.btn_CorrectWithSpotify = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btn_DeleteAll = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.btn_Delete_All)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPath)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pxbx_SavedSpotify)).BeginInit();
@@ -234,7 +234,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_Close.BackColor = System.Drawing.Color.LightSteelBlue;
             this.btn_Close.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_Close.Location = new System.Drawing.Point(2548, 998);
-            this.btn_Close.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btn_Close.Margin = new System.Windows.Forms.Padding(4);
             this.btn_Close.Name = "btn_Close";
             this.btn_Close.Size = new System.Drawing.Size(144, 52);
             this.btn_Close.TabIndex = 273;
@@ -272,7 +272,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_DecompressAll.BackColor = System.Drawing.SystemColors.MenuHighlight;
             this.btn_DecompressAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_DecompressAll.Location = new System.Drawing.Point(2548, 912);
-            this.btn_DecompressAll.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btn_DecompressAll.Margin = new System.Windows.Forms.Padding(4);
             this.btn_DecompressAll.Name = "btn_DecompressAll";
             this.btn_DecompressAll.Size = new System.Drawing.Size(148, 85);
             this.btn_DecompressAll.TabIndex = 276;
@@ -453,16 +453,17 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_CorrectWithSpotify.UseVisualStyleBackColor = true;
             this.btn_CorrectWithSpotify.Click += new System.EventHandler(this.button1_Click_3);
             // 
-            // button1
+            // btn_DeleteAll
             // 
-            this.button1.Location = new System.Drawing.Point(2424, 135);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(268, 50);
-            this.button1.TabIndex = 398;
-            this.button1.Text = "Delete All";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click_4);
+            this.btn_DeleteAll.Location = new System.Drawing.Point(2424, 135);
+            this.btn_DeleteAll.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btn_DeleteAll.Name = "btn_DeleteAll";
+            this.btn_DeleteAll.Size = new System.Drawing.Size(268, 50);
+            this.btn_DeleteAll.TabIndex = 398;
+            this.btn_DeleteAll.Text = "Delete All";
+            this.btn_DeleteAll.UseVisualStyleBackColor = true;
+            this.btn_DeleteAll.Visible = false;
+            this.btn_DeleteAll.Click += new System.EventHandler(this.button1_Click_4);
             // 
             // Standardization
             // 
@@ -470,7 +471,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(2610, 1054);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btn_DeleteAll);
             this.Controls.Add(this.btn_CorrectWithSpotify);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -596,6 +597,6 @@ namespace RocksmithToolkitGUI.DLCManager
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btn_CorrectWithSpotify;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btn_DeleteAll;
     }
 }

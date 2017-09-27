@@ -36,15 +36,12 @@
 <img src="/RocksmithTookitGUI/DLCManager/Screenshot2.png" alt="Song Metadata DB Screen"/>
 
 # Official tool / MAster Branch bugs:
-[ ] CICAGO 26 25 original SONG FAILS AT PACK
-[ ] open ticket for the dlcpackagedata crash for 311 down in
-[ ] song fails at import
+[-] CICAGO 26 25 original SONG FAILS AT PACK
+[-] open ticket for the dlcpackagedata crash for 311 down in
 
 ## ToDos/bugs:
-[-] small feature: when opening MainDB and detecting directory check runs, if next directory exists (give a change to empty the db then if possible)
-[-] small improv: add the proper lasconvdate in the db 
+
 [ ] make sure its read only once when imported and not anymore in the duplication management section
-[-] vs blue maybe also yes blue (blu happens also when small 1bite amybe 2 diff in filesize
 [ ] feat:		 Alternate No for duplicates logic
 [ ] feat:		 Include Standardization names into duplication checks
 [ ] big feature: get the volume of the audio file and then compare against the rest or a norm
@@ -54,7 +51,7 @@
 [ ] if i delete a folder do i get a warning in the maintenance check ?
   [ ] check for json existance as well. Maybe
 [ ] increase the no of threads
-  -[ ] progress bar update
+  [ ] progress bar update
 [ ] duplicate window should return last maximum conv date and save it 
 -[ ] reorder main db fields
 	[ ] size
@@ -64,37 +61,24 @@
 [ ] ask if you wanna have the packing folder deleted
 [ ] fix/check changing path of library
 [ ] add info box with folders sizes
-
-
-## WiP:
-[-] generate a garageband _(curently the mp3 is converted to wav for GB Import)
 [ ] if cover was from someone else please compare against that (save old cover)
-[+] remove all dd in Cache/Retails screen
 [ ] Check Packer.cs bug
-[ ] Bring year and picture from Spotify
 [ ] muse uprising songs have preview lenght in minutes
 [ ] duplicate window reformat not to sent backand forth 1mio variables but on dataset
 [ ] consider live when searching for the track NO or dont :)
 [ ] Repack only repack Initial or LAst only one platform 
 [ ] Repack only copy and ftp,  Initial or LAst only one platform 
-[-] all options should be a table
 [ ] finish arrangement (demo with the hives overdrive all the time :) )
 [ ] add checks to packed..remember to ask if they wanna clean ups or notification 
-[ ] add ps3 as a duplicate
 [ ] cause it doesnt pick up version it cannot diff shiro astronau
 [ ] other platforms do not have official flag correctly detected
 [ ] search using ignition
 [ ] add convert multitone to single tone
-[ ] add bonus into in lyrics
 [ ] duplicate lead to Rhythm
-[ ] do i delete things three time, one more redundantly
 [ ] copy imported files
-[-] Enable CDLC
 [ ] Repair broken CDLC
 [ ] add 46&2 lyrics from old one
-[ ] copied copied copied
 [ ] overrite rename buttons
-[ ] mac song gen errors at read dlc library
 [ ] Profiles should include also Format
 [ ] replace all does not exist
 [ ] each platform should have its own remote location
@@ -108,34 +92,16 @@
 [ ] multiple repacks cannto happen
 [ ] progress bar on possible duplicate import is too short
 [ ] populate new tone fields
-[-] prepare the rebuild option
-[-] is dupli marked as ignore/ duplicate decompressed folder deleted?
-[-] redo save track at pack with update function
-[-] improve the overlay
-[-] fix for rebuild missing file
-[x] delete lib (gather lib from ps3-ftp/mac/pc 1. save 2. copy new)
-	[ ] Delete All
 [ ] cannot find sick sick sic (override)
 [ ] audioslave sections missing maybe cause its an original and i used my own logic to strip the DD
 [ ] usa peaches long naming fails at packing (shortes folder the random id)
   [ ] ps3 long names sogs(149char)(cannot be read)
   [ ] after selecting deselect incl. Beta
-[ ] add simple logic to add sections
-	[ ] check and fix the Sections flag
-	[+] add sections (bored to death; Renabled BPR program)
-	[ ] add conter of sections
-[ ] ignore and del 4k/no psarc files invalid wil/should be added by nmew validation
-[x] alternate 0 improve
-	[+] with or without u still doesnt have the right alternate no when importing vs an existing song= a2....maybe OK :)
-	[ ]alt 1 ahead of a.
-[-] add copy last and initial to mass pack
 [ ] Add repair option
 [ ] update readme.md screenshots
 [ ] try db constant connection
 [ ] year inconsitencies (check should show these as well)
 [ ] the pretender doesnt register as alternate
-[ ] test replace ....
-	[ ] add log end sont timeat pack
 [ ] check smooth saiyin and c file that breaks
 [ ] check crossed album art
 [ ] check iron maiden album art
@@ -144,20 +110,54 @@
 [ ] add missin tones and arrangement parameters
 [ ] make mass pack also use db values
 [ ] why album id is the same as artist id
-if no delete then dont delete DBscocnvert and ftp is it working at mass packing
-		[ ] add a 4 sec timestamp in each song
-		[ ] bitrate to compress maybe a config
-		[ ] mantra cannot be imported
-		[] select incl groups has a small error (userissues)
-		[ ] come together lyrics
-[ ] fix songs w only bass and dd attached
-[ ] check import tones db
-copy-back vocal orig end of pack
-check db also checks arrangements, standardization, tones,
-make updatelog static
+[ ] if no delete then dont delete DBscocnvert and ftp is it working at mass packing
+[ ] add a 4 sec timestamp in each song
+[ ] bitrate to compress maybe a config
+[ ] mantra cannot be imported
+[ ] come together lyrics
+[ ] check db also checks arrangements, standardization, tones,
+[ ] make updatelog static
+
+## WiP:
+[-] vs blue maybe also yes blue (blu happens also when small 1bite amybe 2 diff in filesize
+[-] small feature: when opening MainDB and detecting directory check runs, if next directory exists (give a change to empty the db then if possible)
+[-] small improv: add the proper lasconvdate in the db 
+[-] fix songs w only bass and dd attached
+[-] select incl groups has a small error (userissues)
+[-] test replace ....
+[-] add copy last and initial to mass pack
+[-] prepare the rebuild option
+[-] is dupli marked as ignore/ duplicate decompressed folder deleted?
+[-] redo save track at pack with update function
+[-] improve the overlay
+[-] fix for rebuild missing file
+[-] all options should be a table
+[x] delete lib (gather lib from ps3-ftp/mac/pc 1. save 2. copy new)
+	[-] Delete All
+	[ ] add simple logic to add sections
+	[ ] check and fix the Sections flag
+	[+] add sections (bored to death; Renabled BPR program)
+	[x] add conter of sections
+[-] ignore and del 4k/no psarc files invalid wil/should be added by nmew validation
+[x] alternate 0 improve
+	[+] with or without u still doesnt have the right alternate no when importing vs an existing song= a2....maybe OK :)
+	[ ]alt 1 ahead of a.
+[-] mac song gen errors at read dlc library
+[-] Enable CDLC
+[-] copied copied copied (user issue)
+[+] remove all dd in Cache/Retails screen
+[-] generate a garageband _(curently the mp3 is converted to wav for GB Import)
+[-] song fails at import
 
 done:
 (next release)
+[x] add log end sont timeat pack
+[x] check import tones db (userissue)
+[x] copy-back vocal orig end of pack
+[x] do i delete things three time, one more redundantly
+[x] add bonus into in lyrics
+[x] add ps3 as a duplicate
+[x] Bring year and picture from Spotify
 
 
 - diff between master and branch
@@ -216,7 +216,7 @@ dlcpackagedata
 
 
 
-		# Date: 12.03.2017
+		# Date: 12.09.2017
 		# Document Name: Rocksmith DLC Management tool README
 						(fork of rocksmith-custom-song-toolkit)
 		# Document purpose: To describe the functionailities and the way to change, the NEW tab that enable MASS Manipulation of Rocksmith DLC Library
@@ -241,7 +241,7 @@ dlcpackagedata
 6. --Add new libraries (include)
 7. --Add controls to activate User Controls
 8. --Add Interop.Excel REference (Tools-AddReference-Extensions-Microsoft.Office.Interop.Excel)
-9. Activate debug by trying to debug?!
+9. Activate debug by trying to debug?! &aet GUI folder as startup (right click)
 10. copy missing dlls from...a prev version !?
 
 # Implementation Tracking for the Main Features:

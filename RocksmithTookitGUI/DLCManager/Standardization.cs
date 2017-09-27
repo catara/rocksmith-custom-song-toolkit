@@ -33,6 +33,7 @@ namespace RocksmithToolkitGUI.DLCManager
             TempPath = txt_TempPath;
             RocksmithDLCPath = txt_RocksmithDLCPath;
             chbx_AutoSave.Checked = ConfigRepository.Instance()["dlcm_Autosave"] == "Yes" ? true : false;
+            if (ConfigRepository.Instance()["dlcm_Debug"] == "Yes") btn_DeleteAll.Visible = true;
         }
 
         private string Filename = System.IO.Path.Combine(Application.StartupPath, "Text.txt");

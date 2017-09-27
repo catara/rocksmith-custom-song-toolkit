@@ -956,6 +956,9 @@
     <None Include="Resources\flipXc.png" />
     <None Include="Resources\flipYc.png" />
     <None Include="Resources\music_edit.png" />
+    <Content Include="DLCManager\AccessDB.accdb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="DLCManager\external_tools\bpr_v0.3\bpr.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1905,9 +1908,6 @@
     <Content Include="DLCManager\external_tools\WinMerge\WinMergeU.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="DLCManager\Files.accdb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="DLCManager\Screenshot1.png" />
     <Content Include="DLCManager\Screenshot2.png" />
     <Content Include="DLCManager\Screenshot3.png" />
@@ -1922,7 +1922,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="DLCManager\external_tools\Files.accdb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="DLCManager\external_tools\oggdec.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

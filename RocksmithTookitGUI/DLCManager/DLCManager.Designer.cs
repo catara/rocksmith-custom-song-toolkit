@@ -437,6 +437,7 @@
             "72. <Import other formats but PC, as well (as standalone)>",
             "72. Add Track Info&Comments beginning of Lyrics",
             "73. Add Track start into Vocals",
+            "74. Copy to \\0\\0_Old",
             "99. @Pack>",
             "beer"});
             this.chbx_Additional_Manipulations.Location = new System.Drawing.Point(16, 690);
@@ -1166,10 +1167,10 @@
             // 
             // rtxt_StatisticsOnReadDLCs
             // 
-            this.rtxt_StatisticsOnReadDLCs.Location = new System.Drawing.Point(20, 958);
+            this.rtxt_StatisticsOnReadDLCs.Location = new System.Drawing.Point(20, 935);
             this.rtxt_StatisticsOnReadDLCs.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.rtxt_StatisticsOnReadDLCs.Name = "rtxt_StatisticsOnReadDLCs";
-            this.rtxt_StatisticsOnReadDLCs.Size = new System.Drawing.Size(1048, 132);
+            this.rtxt_StatisticsOnReadDLCs.Size = new System.Drawing.Size(1048, 180);
             this.rtxt_StatisticsOnReadDLCs.TabIndex = 264;
             this.rtxt_StatisticsOnReadDLCs.Text = "";
             this.rtxt_StatisticsOnReadDLCs.Visible = false;
@@ -1502,10 +1503,11 @@
             // 
             this.btn_Debbug.Location = new System.Drawing.Point(650, 200);
             this.btn_Debbug.Name = "btn_Debbug";
-            this.btn_Debbug.Size = new System.Drawing.Size(85, 58);
+            this.btn_Debbug.Size = new System.Drawing.Size(111, 58);
             this.btn_Debbug.TabIndex = 404;
             this.btn_Debbug.Text = "Debug";
             this.btn_Debbug.UseVisualStyleBackColor = true;
+            this.btn_Debbug.Visible = false;
             this.btn_Debbug.Click += new System.EventHandler(this.GetTrackStartTimeW);
             // 
             // DLCManager

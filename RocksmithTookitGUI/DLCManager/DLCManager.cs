@@ -355,7 +355,8 @@ namespace RocksmithToolkitGUI.DLCManager
             bwConvert.ProgressChanged += new ProgressChangedEventHandler(ProgressChanged);
             bwConvert.RunWorkerCompleted += new RunWorkerCompletedEventHandler(ProcessCompleted);
             bwConvert.WorkerReportsProgress = true;
-            if (!File.Exists(txt_DBFolder.Text + "\\Files.accdb")) chbx_DefaultDB.Checked = true;
+            if (!File.Exists(txt_DBFolder.Text + "\\Files.accdb"))
+                chbx_DefaultDB.Checked = true;
             if (!Directory.Exists(txt_TempPath.Text)) txt_TempPath.Text = AppDomain.CurrentDomain.BaseDirectory + "DLCManager\\Temp";
             SaveSettings();
         }
@@ -441,6 +442,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 lbl_PreviewText.Visible = true;
                 lbl_Mask.Visible = true;
                 lbl_Artist_Sort.Visible = true;
+                btn_Debbug.Visible = true;
 
             }
             else
@@ -484,6 +486,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 lbl_PreviewText.Visible = false;
                 lbl_Mask.Visible = false;
                 lbl_Artist_Sort.Visible = false;
+                btn_Debbug.Visible = false;
             }
         }
 
@@ -891,9 +894,17 @@ namespace RocksmithToolkitGUI.DLCManager
 
         public DateTime UpdateLog(DateTime dt, string txt, bool multith)
         {
+            StackFrame stackFrame = new System.Diagnostics.StackTrace(1).GetFrame(1);
+            string fileName = stackFrame.GetFileName();
+            string methodName = stackFrame.GetMethod().ToString();
+            int lineNumber = stackFrame.GetFileLineNumber();
+
+            Console.WriteLine("{0}({1}:{2})\n{3}", methodName, Path.GetFileName(fileName), lineNumber, txt);
+
             DateTime dtt = System.DateTime.Now;
             var ii = Math.Abs(Math.Round((dt - dtt).TotalSeconds, 2)).ToString().PadLeft(4, '0');
-            if (multith) rtxt_StatisticsOnReadDLCs.Text = dtt + " - " + ii + " - " + txt + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+
+            if (multith) rtxt_StatisticsOnReadDLCs.Text = dtt + " - " + ii + " - " + txt + "\n" + rtxt_StatisticsOnReadDLCs.Text+ methodName+ Path.GetFileName(fileName)+ lineNumber;
 
             // Write the string to a file.
             var log = ConfigRepository.Instance()["dlcm_TempPath"] + "\\0_log";
@@ -1003,7 +1014,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    MessageBox.Show("Can not delete folders:\n\n" + "0\n0\\0_old\n0\\0_duplicate\n0\\0_repacked\n0\\0_repacked\\PC\n0\\0_repacked\\PS3\n0\\0_repacked\\MAC\n0\\0_repacked\\XBOX360\n" + broken_Path_Import + "\n" + log_Path + "\n0\\dlcpacks\n0\\dlcpacks\\manifests\n0\\dlcpacks\\temp\n0\\dlcpacks\\manipulated\n" + AlbumCovers_PSPath + "\n" + Log_PSPath);
+                    MessageBox.Show("l1009Can not delete folders:\n\n" + "0\n0\\0_old\n0\\0_duplicate\n0\\0_repacked\n0\\0_repacked\\PC\n0\\0_repacked\\PS3\n0\\0_repacked\\MAC\n0\\0_repacked\\XBOX360\n" + broken_Path_Import + "\n" + log_Path + "\n0\\dlcpacks\n0\\dlcpacks\\manifests\n0\\dlcpacks\\temp\n0\\dlcpacks\\manipulated\n" + AlbumCovers_PSPath + "\n" + Log_PSPath);
                 }
             }
             //if (!(File.Exists(txt_TempPath.Text) && File.Exists(txt_TempPath.Text + "\\0_old") && File.Exists(txt_TempPath.Text + "\\0_repacked") && File.Exists(txt_TempPath.Text + "\\0_repacked\\PC") && File.Exists(txt_TempPath.Text + "\\0_repacked\\PS3") && File.Exists(txt_TempPath.Text + "\\0_repacked\\XBBOX360") && File.Exists(txt_TempPath.Text + "\\0_repacked\\MAC") && File.Exists(txt_TempPath.Text + "\\0_duplicate") && File.Exists(txt_TempPath.Text + "\\0_dlcpacks") && File.Exists(broken_Path_Import) && File.Exists(log_Path)))
@@ -1105,7 +1116,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         //errorsFound.AppendLine(String.Format("File '{0}' isn't valid. File extension was changed to '.invalid'", Path.GetFileName(s)));
                         //MessageBox.Show(String.Format("File '{0}' isn't valid. File extension was changed to '.invalid'", Path.GetFileName(s)));
                         timestamp = UpdateLog(timestamp, "error at import " + String.Format("File '{0}' isn't valid. File extension was changed to '.invalid'", Path.GetFileName(s)), true);
-                        File.Move(s.Replace(".psarc", ".invalid"), s);
+                        if (File.Exists(s.Replace(".psarc", ".invalid"))) File.Move(s.Replace(".psarc", ".invalid"), s);
                         invalid = "Yes";
                         //broken_fl[bb] = s;
                         ///bb++;
@@ -1320,7 +1331,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             DeleteFile(dns.Tables[0].Rows[m].ItemArray[0].ToString());
                             // File.Delete(dns.Tables[0].Rows[m].ItemArray[0].ToString());
                         }
-                        catch (Exception ex) { MessageBox.Show("Issues when moving to duplicate folder at import" + "-" + ex.Message + dns.Tables[0].Rows[m].ItemArray[0].ToString()); }
+                        catch (Exception ex) { MessageBox.Show("l1326Issues when moving to duplicate folder at import" + "-" + ex.Message + dns.Tables[0].Rows[m].ItemArray[0].ToString()); }
                         tft += "\n Deleting " + dns.Tables[0].Rows[m].ItemArray[0].ToString() + " as imported on " + dns.Tables[0].Rows[m].ItemArray[5].ToString();
                     }
                 }
@@ -1457,7 +1468,11 @@ namespace RocksmithToolkitGUI.DLCManager
                                     }
                                 }
                             }
-                            else unpackedDir = FullPath;
+                            else
+                            {
+                                unpackedDir = FullPath;
+                                FullPath = FullPath.Replace("_Pc", ".psarc").Replace("_Mac", ".psarc").Replace("_PS3", ".edat.psarc");
+                            }
 
                             //Commenting Reorganize as they might have fixed the incompatib char issue
                             // REORGANIZE
@@ -1652,7 +1667,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 }
                 catch (Exception ee)
                 {
-                    MessageBox.Show(ee.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("l1658" + ee.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     timestamp = UpdateLog(timestamp, ee.Message + " Broken Song Not Imported", true);
                     Console.WriteLine(ee.Message);
                     var Pathh = broken_Path_Import + "\\" + ds.Tables[0].Rows[i].ItemArray[2].ToString();
@@ -2500,7 +2515,9 @@ namespace RocksmithToolkitGUI.DLCManager
                                         GenericFunctions.Converters(tt, GenericFunctions.ConverterTypes.Ogg2Wem, false);
                                         if (File.Exists(info.OggPreviewPath)) DeleteFile(info.OggPreviewPath.Replace(".wem", ".wav"));
                                         if (File.Exists(info.OggPreviewPath)) DeleteFile(info.OggPreviewPath.Replace(".wem", ".ogg"));
-                                        info.OggPreviewPath = tt.Replace(".ogg", ".wem");
+                                        info.OggPreviewPath = tt.Replace(".ogg", ".wem"); var tg = "";
+                                        if (!File.Exists(info.OggPreviewPath))
+                                            tg="";
                                         audioPreview_hash = GetHash(info.OggPreviewPath);
 
                                         PreviewTime = ConfigRepository.Instance()["dlcm_PreviewStart"];
@@ -3241,10 +3258,10 @@ namespace RocksmithToolkitGUI.DLCManager
                                     command.CommandText += "NameSeparator = @param7, ";
                                     command.CommandText += "AmpType = @param8, ";
                                     command.CommandText += "AmpCategory = @param9, ";
-                                    //command.CommandText += "AmpKnobValues = @param10, ";
+                                    command.CommandText += "AmpKnobValues = @param10, ";
                                     command.CommandText += "AmpPedalKey = @param11, ";
                                     command.CommandText += "CabinetCategory = @param12, ";
-                                    //command.CommandText += "CabinetKnobValues = @param13, ";
+                                    command.CommandText += "CabinetKnobValues = @param13, ";
                                     command.CommandText += "CabinetPedalKey = @param14, ";
                                     command.CommandText += "CabinetType = @param15, ";
                                     command.CommandText += "PostPedal1 = @param16, ";
@@ -3272,10 +3289,10 @@ namespace RocksmithToolkitGUI.DLCManager
                                     command.CommandText += "NameSeparator, ";
                                     command.CommandText += "AmpType, ";
                                     command.CommandText += "AmpCategory, ";
-                                    //command.CommandText += "AmpKnobValues, ";
+                                    command.CommandText += "AmpKnobValues, ";
                                     command.CommandText += "AmpPedalKey, ";
                                     command.CommandText += "CabinetCategory, ";
-                                    //command.CommandText += "CabinetKnobValues, ";
+                                    command.CommandText += "CabinetKnobValues, ";
                                     command.CommandText += "CabinetPedalKey, ";
                                     command.CommandText += "CabinetType, ";
                                     command.CommandText += "PostPedal1, ";
@@ -3290,8 +3307,8 @@ namespace RocksmithToolkitGUI.DLCManager
                                     command.CommandText += "Rack2, ";
                                     command.CommandText += "Rack3, ";
                                     command.CommandText += "Rack4";
-                                    command.CommandText += ") VALUES(@param1, @param2, @param3, @param4, @param5, @param6, @param7, @param8, @param9";//,@param10
-                                    command.CommandText += ",@param11,@param12,@param14,@param15,@param16,@param17,@param18,@param19";//;,@param13
+                                    command.CommandText += ") VALUES(@param1, @param2, @param3, @param4, @param5, @param6, @param7, @param8, @param9,@param10";
+                                    command.CommandText += ",@param11,@param12,@param14,@param15,@param16,@param17,@param18,@param19,@param13";
                                     command.CommandText += ",@param20,@param21,@param22,@param23,@param24,@param25,@param26,@param27";
                                     command.CommandText += ")";
                                 }
@@ -3304,10 +3321,28 @@ namespace RocksmithToolkitGUI.DLCManager
                                 command.Parameters.AddWithValue("@param7", NullHandler(tn.NameSeparator));
                                 command.Parameters.AddWithValue("@param8", (tn.GearList.Amp == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Amp.Type)));
                                 command.Parameters.AddWithValue("@param9", (tn.GearList.Amp == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Amp.Category)));
-                                //command.Parameters.AddWithValue("@param10", (tn.GearList.Amp== null ==null ?DBNull.Value.ToString() :NullHandler(tn.GearList.Amp.KnobValues.Values)));
+                                string vals = "";
+                                var iz = 0;
+                                try
+                                { iz = tn.GearList.Amp.KnobValues.Count;
+                                }
+                                catch (Exception ee) {
+                                    Console.Write(ee); }
+                                if (iz>0) foreach (float glakv in tn.GearList.Amp.KnobValues.Values)
+                                        vals += ";" + glakv;
+                                command.Parameters.AddWithValue("@param10", (tn.GearList.Amp == null ? DBNull.Value.ToString() : NullHandler(vals)));//w issues
                                 command.Parameters.AddWithValue("@param11", (tn.GearList.Amp == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Amp.PedalKey)));
                                 command.Parameters.AddWithValue("@param12", (tn.GearList.Cabinet == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Cabinet.Category)));
-                                //command.Parameters.AddWithValue("@param13", ((tn.GearList.Cabinet == null) ? DBNull.Value.ToString() : NullHandler(tn.GearList.Cabinet.KnobValues)));
+                                vals = ""; foreach (KeyValuePair<string, float> glckv in tn.GearList.Cabinet.KnobValues) vals += ";" + glckv;
+                                //var rtt = "";
+                                //iz = 0;
+                                //try
+                                //{ iz = tn.GearList.Cabinet.KnobValues.Count; }
+                                //catch  (Exception ee) {
+                                //    Console.Write(ee); }
+                                //if (vals != "" || iz > 0)
+                                //    rtt = "";
+                                command.Parameters.AddWithValue("@param13", ((tn.GearList.Cabinet == null) ? DBNull.Value.ToString() : NullHandler(vals)));//w issues
                                 command.Parameters.AddWithValue("@param14", (tn.GearList.Cabinet == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Cabinet.PedalKey)));
                                 command.Parameters.AddWithValue("@param15", (tn.GearList.Cabinet == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Cabinet.Type)));
                                 command.Parameters.AddWithValue("@param16", NullHandler(tn.GearList.PostPedal1));
@@ -3380,13 +3415,13 @@ namespace RocksmithToolkitGUI.DLCManager
                             Console.WriteLine(ee.Message);
                         }
 
-                        if (chbx_Additional_Manipulations.GetItemChecked(15)) //16. Move Original Imported files to temp/0_old                               
+                        if (chbx_Additional_Manipulations.GetItemChecked(15) && chbx_Additional_Manipulations.GetItemChecked(74)) //16. Move Original Imported files to temp/0_old                               
                         {
                             //Move imported psarc into the old folder
                             try
                             {
                                 File.Copy(txt_RocksmithDLCPath.Text + "\\" + original_FileName, old_Path_Import + "\\" + original_FileName, true);
-                                DeleteFile(txt_RocksmithDLCPath.Text + "\\" + original_FileName);
+                                if (chbx_Additional_Manipulations.GetItemChecked(15)) DeleteFile(txt_RocksmithDLCPath.Text + "\\" + original_FileName);
                                 Available_Old = "Yes";
                                 timestamp = UpdateLog(timestamp, "File Moved to old" + "...", true);
                             }
@@ -4762,14 +4797,16 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             //if (chbx_DefaultDB.Checked == true) chbx_DefaultDB.Checked = false;
             //SaveSettings();
-            if (!(txt_DBFolder.Text == MyAppWD)) chbx_DefaultDB.Checked = false;
+            if (!(txt_DBFolder.Text == MyAppWD))
+                chbx_DefaultDB.Checked = false;
             if (txt_DBFolder.Text.Length > 0) if ((txt_DBFolder.Text.Substring(txt_DBFolder.Text.Length - 1, 1) == "\\")) txt_DBFolder.Text = txt_DBFolder.Text.Substring(0, txt_DBFolder.Text.Length - 1);
             SaveSettings();
         }
 
         private void chbx_DefaultDB_CheckedChanged(object sender, EventArgs e)
         {
-            if (chbx_DefaultDB.Checked == true) txt_DBFolder.Text = MyAppWD;
+            if (chbx_DefaultDB.Checked == true)
+                txt_DBFolder.Text = MyAppWD;
         }
 
         private void btn_LoadRetailSongs_Click(object sender, EventArgs e)
@@ -5506,6 +5543,9 @@ namespace RocksmithToolkitGUI.DLCManager
                 txt_DBFolder.Text = ds.Tables[0].Rows[2].ItemArray[0].ToString();
                 txt_TempPath.Text = ds.Tables[0].Rows[1].ItemArray[0].ToString();
             }
+            if (!File.Exists(txt_DBFolder.Text + "\\Files.accdb"))
+                chbx_DefaultDB.Checked = true;
+            else if (!(txt_DBFolder.Text == MyAppWD)) chbx_DefaultDB.Checked = false;
             SaveSettings();
         }
 
@@ -5826,7 +5866,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         //{
                         if (xmlContent.Vocal[j].Time > float.Parse(strartt) && j > 0)
                         {
-                            xmlContent.Vocal[j - 1].Lyric = "[" + (RouteMask == "Lead" ? "L" : RouteMask == "Bass" ? "B" : RouteMask == "Rhythm" ? "R" : "-")+ "]";
+                            xmlContent.Vocal[j - 1].Lyric = "[" + (RouteMask == "Lead" ? "L" : RouteMask == "Bass" ? "B" : RouteMask == "Rhythm" ? "R" : "-") + "]";
                             xmlContent.Vocal[j - 1].Length = float.Parse("0.5");
                             xmlContent.Vocal[j - 1].Time = float.Parse(strartt);
                             ////if (File.Exists(XMLFilePath)) File.Delete(XMLFilePath);
@@ -5836,15 +5876,15 @@ namespace RocksmithToolkitGUI.DLCManager
                             j = xmlContent.Count;
                         }
                         else { xmlContent.Vocal[j - 1].Lyric = xmlContent.Vocal[j].Lyric; xmlContent.Vocal[j - 1].Length = xmlContent.Vocal[j].Length; xmlContent.Vocal[j - 1].Time = xmlContent.Vocal[j].Time; }
-                            //else if (xmlContent.Vocal[j].Time < float.Parse(strartt) && j == 0 && xmlContent.Vocal[j+1].Time > float.Parse(strartt))
-                            //{
-                            //    xmlContent.Vocal[0].Lyric += "Start-";
-                            //    using (var stream = File.Open(XMLFilePath, FileMode.Create))
-                            //        xmlContent.Serialize(stream);
-                            //    continue;
-                            //}
-                            //}
-                        }
+                    //else if (xmlContent.Vocal[j].Time < float.Parse(strartt) && j == 0 && xmlContent.Vocal[j+1].Time > float.Parse(strartt))
+                    //{
+                    //    xmlContent.Vocal[0].Lyric += "Start-";
+                    //    using (var stream = File.Open(XMLFilePath, FileMode.Create))
+                    //        xmlContent.Serialize(stream);
+                    //    continue;
+                    //}
+                    //}
+                }
             }
             return "";
         }
@@ -5852,7 +5892,7 @@ namespace RocksmithToolkitGUI.DLCManager
         static string AddStuffToLyrics(string SongID, string Comments, string Group, string Has_DD, string bassRemoved, string Has_BassDD, string Author, string Is_Acoustic, string Is_Live, string Live_Details, string Is_Multitrack, string Is_Original)
         {
             var ST = "";
-            var sdetails = "SongDetails: " + (Comments == "" ? "" : "Comment_" + Comments) + " DD=" + Has_DD + (Has_DD == "Yes" && bassRemoved == "Yes" ? "(BDDremoved)" : "") + (Author == "" ? "" : " by: " + Author) + (Is_Acoustic == "Yes" ? " Acoustic":"") + (Is_Live == "Yes" ? " Live":"" + Is_Live + (Live_Details == "" ? "" : "(" + Live_Details + ")")) + (Is_Original == "No" ? " Custom-DLC" : " ORIGINAL ") + " Tracks=";
+            var sdetails = "SongDetails: " + (Comments == "" ? "" : "Comment_" + Comments) + " DD=" + Has_DD + (Has_DD == "Yes" && bassRemoved == "Yes" ? "(BDDremoved)" : "") + (Author == "" ? "" : " by: " + Author) + (Is_Acoustic == "Yes" ? " Acoustic" : "") + (Is_Live == "Yes" ? " Live" : "" + Is_Live + (Live_Details == "" ? "" : "(" + Live_Details + ")")) + (Is_Original == "No" ? " Custom-DLC" : " ORIGINAL ") + " Tracks=";
             var scomments = "";
             //DataSet dus = new DataSet(); dus = SelectFromDB("Main", "SELECT XMLFilePath, Bonus, Comments FROM Main WHERE ArrangementType=\"ArrangementType\" AND DLC_ID=\""+ SongID + "\"", "");
             //var CDLC_ID = dus.Tables[0].Rows[0].ItemArray[0].ToString();

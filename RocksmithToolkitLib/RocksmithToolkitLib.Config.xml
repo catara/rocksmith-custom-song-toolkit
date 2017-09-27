@@ -159,6 +159,7 @@
   <Config Key="dlcm_Last_Packed" Value="Yes" />;
   <Config Key="dlcm_DefaultDB" Value="No" />;
   <Config Key="dlcm_Bitrate" Value="128000" />;
+  <Config Key="dlcm_MaxBitrate" Value="128000" />;
   <Config Key="dlcm_SampleRate" Value="48000" />;
   <Config Key="dlcm_EoFPath" Value="C:\\GitHub\\rocksmith-custom-song-toolkit\\RocksmithTookitGUI\\DLCManager\\external_tools\\eof1.8RC12\\eof.exe" />;
   <Config Key="dlcm_UltraStarCreator" Value="C:\\GitHub\\rocksmith-custom-song-toolkit\\RocksmithTookitGUI\\DLCManager\\external_tools\\UltraStar Creator\\usc.exe" />;

@@ -1,4 +1,4 @@
-﻿## Rocksmith DLC Library Manager v0.5
+﻿## Rocksmith DLC Library Manager v0.6
 *(beta version-unreleased to the masses; branch of CSC)*
 # App Description: MASS Manipulation of Rocksmith DLC Library 
 		e.g. 1. in Rocksmith, in the Library, each song's Album, to contain a personal rating, if it has DD, instr. avail
@@ -112,11 +112,9 @@
 [ ] why album id is the same as artist id
 [ ] if no delete then dont delete DBscocnvert and ftp is it working at mass packing
 [ ] add a 4 sec timestamp in each song
-[ ] bitrate to compress maybe a config
 [ ] mantra cannot be imported
 [ ] come together lyrics
 [ ] check db also checks arrangements, standardization, tones,
-[ ] make updatelog static
 
 ## WiP:
 [-] vs blue maybe also yes blue (blu happens also when small 1bite amybe 2 diff in filesize
@@ -141,36 +139,53 @@
 [-] ignore and del 4k/no psarc files invalid wil/should be added by nmew validation
 [x] alternate 0 improve
 	[+] with or without u still doesnt have the right alternate no when importing vs an existing song= a2....maybe OK :)
-	[ ]alt 1 ahead of a.
+	[ ] alt 1 ahead of a.
 [-] mac song gen errors at read dlc library
 [-] Enable CDLC
 [-] copied copied copied (user issue)
 [+] remove all dd in Cache/Retails screen
 [-] generate a garageband _(curently the mp3 is converted to wav for GB Import)
 [-] song fails at import
+[ ] at import get youtube rksmith link
+[ ] at import get youtube song link
+[ ] at import gather
+[ ] make processing static
+[ ] optimize the variable transfer to generate package
+[ ] think multithreading the decompression before import
+[ ] make all unique check(02-05 look the same) at mass pack
+[ ] log should also update progressbar
+[ ] check why spofity fails after 100 requests
+[ ] dont let spotify crash after 100 requests and failure notice
+[ ] 4328
+[ ] georlitt_m.psarc
+[ ] "Alice-In-Chains_Nutshell-Unplugged_v6_p.psarc"
+[ ] orion changed cover
+[ ] new dupli platform none
+[ ] fixed a vocal at dupli missing 
+[ ] improve maybe tone diff message
+
 
 done:
 (next release)
-[x] add log end sont timeat pack
-[x] check import tones db (userissue)
-[x] copy-back vocal orig end of pack
-[x] do i delete things three time, one more redundantly
-[x] add bonus into in lyrics
-[x] add ps3 as a duplicate
-[x] Bring year and picture from Spotify
-
+[ ] 1_1 should be 1.1
+[ ] fix dupli issues...album red label
+[ ] check if there are any platforms None
+[ ] import form exiting folders
+	[ ] fixe size
+	[ ] fix platformcheck for orig if exiting else iugnore
+	maybbe fix audio should not be async
+[ ] improve skipp typoo and @import move to old	
+[ ] cleand up the saving settings logic
+[x] one looks like it has too many metallica duplciates
+[ ] fix audio add cancel
+[ ] if 75 selected add twice in pack
+[ ] dont move if 75 selected ..any other hash duplciate or duplim managh duplicate
 
 - diff between master and branch
 DLCManager folder
 .xml
 mainform.cs
 mainfor.designer
-gui.csprj
-dlcpackagedata
-                var newPreviewFileName = Path.Combine(Path.GetDirectoryName(audioPath), String.Format("{0}_preview{1}", Path.GetFileNameWithoutExtension(audioPath), Path.GetExtension(audioPath)));
-                if (!File.Exists(newPreviewFileName)) File.Move(audioPreviewPath, newPreviewFileName); //bcapi as some original create an error here
-                //old File.Move(audioPreviewPath, newPreviewFileName);
-                data.OggPreviewPath = newPreviewFileName;
 
 ### Dev Tips:
 + Toolkit version flag does not sync to&from Github: Run RunMeFirst.bat
@@ -206,13 +221,14 @@ dlcpackagedata
 	0.2.0.14 (20.06.2016) analyse accuracy on conversion to ps3 (1979,7army..)
 	0.3 (10.05.2016) full release (anyone can download and use the tool..no bugs..and all un-implemented features disabled), repack wo bugs, edit screens functional
 	0.4 (21.11.2016) Major improvements	and features
-	0.5 (15.03.2017) Implement a logic to properly read DLCManager manipulated DLCs
-	wip: 0.5.0.1 (03.06.2017) (90%) Remove getlastconversiondate from Duplicates as already coming from the arrangements table
-	wip: 0.5.0.2 (20.06.2017) (20%) has_section flag(to be tested with a song missing sections); 
-	wip: 0.5.1 (31.07.2017) (10%) HTML&Excel exports
-	tbr: 0.5.2 move Import DB to Main.DB or at least use an official data source as DB source to also be able to edit from the grid
-	tbr: 0.5.3 ?move Access code to project? or from hardcoded to views	
-	wip: 0.5.4 (03.10.2017) (10%) use parameterized SQL everywhere (&/ integrate template DB into project or a SQL DB)
+	0.5 (15.03.2017) Implement a logic to properly read DLCManager manipulated DLCs	
+	0.6 (28.10.2017) Modify Lyrics, get tool ready for multithreading, 
+	wip: 0.7.1 (03.06.2017) (90%) Remove getlastconversiondate from Duplicates as already coming from the arrangements table
+	wip: 0.7.2 (20.06.2017) (20%) has_section flag(to be tested with a song missing sections); 
+	wip: 0.8.1 (31.07.2017) (10%) HTML&Excel exports
+	tbr: 0.8.2 move Import DB to Main.DB or at least use an official data source as DB source to also be able to edit from the grid
+	tbr: 0.8.3 ?move Access code to project? or from hardcoded to views	
+	wip: 0.8.4 (03.10.2017) (10%) use parameterized SQL everywhere (&/ integrate template DB into project or a SQL DB)
 
 
 

@@ -25,7 +25,7 @@ namespace RocksmithToolkitGUI.DLCManager
 {
     public partial class Standardization : Form
     {
-        public Standardization(string txt_DBFolder, string txt_TempPath, string txt_RocksmithDLCPath, bool AllowEncript, bool AllowORIGDelete)
+        public Standardization(string txt_DBFolder, string txt_TempPath, string txt_RocksmithDLCPath, bool AllowEncript, bool AllowORIGDelete, OleDbConnection cnnb)
         {
             InitializeComponent();
             //MessageBox.Show("test0");
@@ -34,11 +34,12 @@ namespace RocksmithToolkitGUI.DLCManager
             RocksmithDLCPath = txt_RocksmithDLCPath;
             chbx_AutoSave.Checked = ConfigRepository.Instance()["dlcm_Autosave"] == "Yes" ? true : false;
             if (ConfigRepository.Instance()["dlcm_Debug"] == "Yes") btn_DeleteAll.Visible = true;
+            cnb = cnnb;
         }
 
         private string Filename = System.IO.Path.Combine(Application.StartupPath, "Text.txt");
 
-        public string netstatus = ConfigRepository.Instance()["netstatus"];
+        public string netstatus = ConfigRepository.Instance()["dlcm_netstatus"];
 
         private BindingSource Main = new BindingSource();
         private readonly string MESSAGEBOX_CAPTION = "StandardizationDB";
@@ -50,6 +51,7 @@ namespace RocksmithToolkitGUI.DLCManager
         public DataSet dssx = new DataSet();
         public bool AllowORIGDeleteb = false;
         public bool AllowEncriptb = false;
+        public OleDbConnection cnb;
 
         private void Standardization_Load(object sender, EventArgs e)
         {
@@ -134,7 +136,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //{
             dssx.Clear();
             //DataSet ds = new DataSet();
-            dssx = SelectFromDB("Standardization", "SELECT ID, (SELECT IIF(count(*)>1,\"Yes\",\"\") as Suspect from Standardization AS O WHERE LCASE(S.Artist)=LCASE(O.Artist) and LCASE(S.Artist_Correction)=LCASE(O.Artist_Correction) and LCASE(S.Album_Correction)=LCASE(O.Album_Correction) and LCASE(S.Album)=LCASE(O.Album)) as Suspect, Artist, Artist_Correction, Album, Album_Correction, AlbumArt_Correction, Comments, Artist_Short, Album_Short, Year_Correction, SpotifyArtistID, SpotifyAlbumID, SpotifyAlbumURL, SpotifyAlbumPath, Default_Cover FROM Standardization as S ORDER BY Artist, Album, Artist_Correction, Album_Correction;", "");
+            dssx = SelectFromDB("Standardization", "SELECT ID, (SELECT IIF(count(*)>1,\"Yes\",\"\") as Suspect from Standardization AS O WHERE LCASE(S.Artist)=LCASE(O.Artist) and LCASE(S.Artist_Correction)=LCASE(O.Artist_Correction) and LCASE(S.Album_Correction)=LCASE(O.Album_Correction) and LCASE(S.Album)=LCASE(O.Album)) as Suspect, Artist, Artist_Correction, Album, Album_Correction, AlbumArt_Correction, Comments, Artist_Short, Album_Short, Year_Correction, SpotifyArtistID, SpotifyAlbumID, SpotifyAlbumURL, SpotifyAlbumPath, Default_Cover FROM Standardization as S ORDER BY Artist, Album, Artist_Correction, Album_Correction;", "", cnb);
             //OleDbDataAdapter da = new OleDbDataAdapter(cmd, cn);
             //da.Fill(dssx, "Standardization");
             if (dssx.Tables.Count > 0)
@@ -268,7 +270,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //    DataSet dus = new DataSet();
             //    OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
             //    dax.Fill(dus, "Standardization");
-            DataSet dus = new DataSet(); dus = SelectFromDB("Standardization", cmd, "");
+            DataSet dus = new DataSet(); dus = SelectFromDB("Standardization", cmd, "", cnb);
             var i = 0;
             //rtxt_StatisticsOnReadDLCs.Text += "\n  54= " +dus.Tables[0].Rows.Count;
             MaximumSize = dus.Tables[0].Rows.Count;
@@ -321,14 +323,14 @@ namespace RocksmithToolkitGUI.DLCManager
         private void btn_DecompressAll_Click(object sender, EventArgs e)
         {
             //txt_Description.Text = DB_Path;
-            MainDB frm = new MainDB(DB_Path.Replace("\\Files.accdb", ""), TempPath, false, "", AllowEncriptb, AllowORIGDeleteb);
+            MainDB frm = new MainDB(DB_Path, TempPath, false, "", AllowEncriptb, AllowORIGDeleteb, cnb);//.Replace("\\AccessDB.accdb", "")
             frm.Show();
         }
 
         public void button1_Click_1(object sender, EventArgs e)
         {
             DLCManager v1 = new DLCManager();
-            string txt = DB_Path.Replace("\\Files.accdb", "");
+            string txt = DB_Path;//.Replace("\\AccessDB.accdb", "");
             //MessageBox.Show(txt);
             v1.Translation_And_Correction(txt);
             //advance or step back in the song list
@@ -373,10 +375,10 @@ namespace RocksmithToolkitGUI.DLCManager
         private void btn_CopyArtist2ArtistSort_Click(object sender, EventArgs e)
         {
             //var cmd1 = "";
-            ////DB_Path = DB_Path.Replace("dlc\\Files.accdb","dlc");
+            ////DB_Path = DB_Path.Replace("dlc\\AccessDB.accdb","dlc");
             //try
             //{
-            //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path.Replace("\\Files.accdb;", "")))
+            //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path.Replace("\\AccessDB.accdb;", "")))
             //    {
             //        DataSet dus = new DataSet();
             //        cmd1 = "UPDATE Main SET Artist_Sort = Artist";
@@ -393,14 +395,14 @@ namespace RocksmithToolkitGUI.DLCManager
             //    Console.WriteLine(ee.Message);
             //    //continue;
             //}
-            DataSet dxr = new DataSet(); dxr = UpdateDB("Main", "UPDATE Main SET Artist_Sort = Artist");
+            DataSet dxr = new DataSet(); dxr = UpdateDB("Main", "UPDATE Main SET Artist_Sort = Artist", cnb);
             MessageBox.Show("ArtistSort is now the same as Artist");
         }
 
         private void btn_CopyTitle2TitleSort_Click(object sender, EventArgs e)
         {
             //var cmd1 = "";
-            ////var DB_Path = DB_Path + "\\Files.accdb";
+            ////var DB_Path = DB_Path + "\\AccessDB.accdb";
             //try
             //{
             //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
@@ -420,7 +422,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //    Console.WriteLine(ee.Message);
             //    //continue;
             //}
-            DataSet dxr = new DataSet(); dxr = UpdateDB("Main", "UPDATE Main SET Song_Title_Sort = Song_Title");
+            DataSet dxr = new DataSet(); dxr = UpdateDB("Main", "UPDATE Main SET Song_Title_Sort = Song_Title", cnb);
             MessageBox.Show("TitleSort is now the same as Title");
         }
 
@@ -429,10 +431,10 @@ namespace RocksmithToolkitGUI.DLCManager
             // MakeCover(DB_Path, txt_AlbumArt.Text, txt_Artist.Text, txt_Album.Text);
         }
 
-        public static void MakeCover()//(string DBs_Path)//, string AlbumArt, string Artist, string Albums)
+        public static void MakeCover(OleDbConnection cnb)//(string DBs_Path)//, string AlbumArt, string Artist, string Albums)
         {
             //var cmd1 = "";
-            ////var DB_Path = DB_Path + "\\Files.accdb";
+            ////var DB_Path = DB_Path + "\\AccessDB.accdb";
             //try
             //{
             //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DBs_Path))
@@ -465,7 +467,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //da.Fill(ds, "Badge");
             //}
 
-            DataSet dgt = new DataSet(); dgt = SelectFromDB("Standardization", "SELECT Artist, Album, AlbumArt_Correction FROM Standardization WHERE (AlbumArt_Correction <> \"\") GROUP BY Artist,Album,AlbumArt_Correction;", "");
+            DataSet dgt = new DataSet(); dgt = SelectFromDB("Standardization", "SELECT Artist, Album, AlbumArt_Correction FROM Standardization WHERE (AlbumArt_Correction <> \"\") GROUP BY Artist,Album,AlbumArt_Correction;", "", cnb);
             //NoRec = dgt.Tables[0].Rows.Count;
             //pB_ReadDLCs.Maximum = NoRec;
             foreach (DataRow dataRow in dgt.Tables[0].Rows)
@@ -475,8 +477,8 @@ namespace RocksmithToolkitGUI.DLCManager
                 var artpath_c = dataRow.ItemArray[2].ToString();
                 var cmd1 = "";
                 cmd1 = "UPDATE Main SET AlbumArtPath = \"" + artpath_c + "\" WHERE Artist=\"" + artist_c + "\" and Album=\"" + album_c + "\"";
-                dgt = UpdateDB("Main", cmd1 + ";");
-                dgt = SelectFromDB("Main", "SELECT * FROM Main WHERE Artist=\"" + artist_c + "\" and Album=\"" + album_c + "\"", ""); try { NoRec = dgt.Tables[0].Rows.Count; } catch { }
+                dgt = UpdateDB("Main", cmd1 + ";", cnb);
+                dgt = SelectFromDB("Main", "SELECT * FROM Main WHERE Artist=\"" + artist_c + "\" and Album=\"" + album_c + "\"", "", cnb); try { NoRec = dgt.Tables[0].Rows.Count; } catch { }
                 //cmd1 = "UPDATE Standardization SET AlbumArt_Correction = \"" + artpath_c + "\" WHERE (Artist=\"" + artist_c + "\" OR Artist_Correction=\"" + artist_c + "\") AND (Album=\"" + album_c + "\" OR Album_Correction=\"" + album_c + "\");";
                 //dgt = UpdateDB("Standardization", cmd1 + ";");
             }
@@ -488,12 +490,12 @@ namespace RocksmithToolkitGUI.DLCManager
             //MessageBox.Show("Cover has been defaulted as Cover to " + NoRec.ToString() + " songs");
         }
 
-        public static void ApplyArtistShort()//(string DBs_Path)//, string AlbumArt, string Artist, string Albums)
+        public static void ApplyArtistShort(OleDbConnection cnb)//(string DBs_Path)//, string AlbumArt, string Artist, string Albums)
         {//continue;
             //}
 
             var norec = 0;
-            DataSet dfz = new DataSet(); dfz = SelectFromDB("Standardization", "SELECT iif(Artist_Correction<>\"\", Artist_Correction, Artist), Artist_Short FROM Standardization WHERE (Artist_Short <> \"\") GROUP BY iif(Artist_Correction<>\"\", Artist_Correction, Artist), Artist_Short;", "");
+            DataSet dfz = new DataSet(); dfz = SelectFromDB("Standardization", "SELECT iif(Artist_Correction<>\"\", Artist_Correction, Artist), Artist_Short FROM Standardization WHERE (Artist_Short <> \"\") GROUP BY iif(Artist_Correction<>\"\", Artist_Correction, Artist), Artist_Short;", "", cnb);
 
             //pB_ReadDLCs.Maximum = norec;
             //pB_ReadDLCs.Value = 0;
@@ -502,22 +504,22 @@ namespace RocksmithToolkitGUI.DLCManager
                 var artist_c = dataRow.ItemArray[0].ToString();
                 var short_c = dataRow.ItemArray[1].ToString();
                 var cmd1 = "UPDATE Main SET Artist_ShortName = \"" + short_c + "\" WHERE Artist=\"" + artist_c + "\"";
-                DataSet dus = UpdateDB("Main", cmd1 + ";");
-                dus = SelectFromDB("Main", "SELECT * FROM Main WHERE Artist=\"" + artist_c + "\"", ""); try { norec = dus.Tables[0].Rows.Count; } catch { }
+                DataSet dus = UpdateDB("Main", cmd1 + ";", cnb);
+                dus = SelectFromDB("Main", "SELECT * FROM Main WHERE Artist=\"" + artist_c + "\"", "", cnb); try { norec = dus.Tables[0].Rows.Count; } catch { }
                 cmd1 = "UPDATE Standardization SET Artist_Short = \"" + short_c + "\" WHERE Artist=\"" + artist_c + "\" OR Artist_Correction=\"" + artist_c + "\"";
-                dus = UpdateDB("Standardization", cmd1 + ";");
+                dus = UpdateDB("Standardization", cmd1 + ";", cnb);
             }
 
             //MessageBox.Show("Artist Short Name has been defaulted onto " + norec.ToString() + " songs");
         }
 
-        public static void ApplyAlbumShort()//(string DBs_Path)//, string AlbumArt, string Artist, string Albums)
+        public static void ApplyAlbumShort(OleDbConnection cnb)//(string DBs_Path)//, string AlbumArt, string Artist, string Albums)
         {//continue;
             //}
 
             var norec = 0;
 
-            DataSet dfz = new DataSet(); dfz = SelectFromDB("Standardization", "SELECT iif(Artist_Correction<>\"\", Artist_Correction, Artist), iif(Album_Correction<>\"\", Album_Correction, Album), Album_short FROM Standardization WHERE (Album_Short <> \"\") GROUP BY iif(Artist_Correction<>\"\", Artist_Correction, Artist),Album_short,iif(Album_Correction<>\"\",Album_Correction,Album);", "");
+            DataSet dfz = new DataSet(); dfz = SelectFromDB("Standardization", "SELECT iif(Artist_Correction<>\"\", Artist_Correction, Artist), iif(Album_Correction<>\"\", Album_Correction, Album), Album_short FROM Standardization WHERE (Album_Short <> \"\") GROUP BY iif(Artist_Correction<>\"\", Artist_Correction, Artist),Album_short,iif(Album_Correction<>\"\",Album_Correction,Album);", "", cnb);
             //pB_ReadDLCs.Maximum = norec;
             //pB_ReadDLCs.Value = 0;
             foreach (DataRow dataRow in dfz.Tables[0].Rows)
@@ -526,22 +528,22 @@ namespace RocksmithToolkitGUI.DLCManager
                 var album_c = dataRow.ItemArray[1].ToString();
                 var short_c = dataRow.ItemArray[2].ToString();
                 var cmd1 = "UPDATE Main SET Album_ShortName = \"" + short_c + "\" WHERE Artist=\"" + artist_c + "\" AND Album=\"" + album_c + "\";";
-                DataSet dus = UpdateDB("Main", cmd1);
-                dus = SelectFromDB("Main", "SELECT * FROM Main WHERE Artist=\"" + artist_c + "\" AND Album=\"" + album_c + "\";", ""); try { norec = dus.Tables[0].Rows.Count; } catch { }
+                DataSet dus = UpdateDB("Main", cmd1, cnb);
+                dus = SelectFromDB("Main", "SELECT * FROM Main WHERE Artist=\"" + artist_c + "\" AND Album=\"" + album_c + "\";", "", cnb); try { norec = dus.Tables[0].Rows.Count; } catch { }
                 cmd1 = "UPDATE Standardization SET Album_Short = \"" + short_c + "\" WHERE (Artist=\"" + artist_c + "\" OR Artist_Correction=\"" + artist_c + "\") AND (Album=\"" + album_c + "\" OR Album_Correction=\"" + album_c + "\")";
-                dus = UpdateDB("Standardization", cmd1 + ";");
+                dus = UpdateDB("Standardization", cmd1 + ";", cnb);
             }
             //var noOfRec = dgt.Tables[0].Rows.Count;
             //lbl_NoRec = norec.ToString() + " records.";
             //MessageBox.Show("Album Short has been defaulted onto " + norec.ToString() + " songs");
         }
 
-        public static void ApplySpotify()//(string DBs_Path)//, string AlbumArt, string Artist, string Albums)
+        public static void ApplySpotify(OleDbConnection cnb)//(string DBs_Path)//, string AlbumArt, string Artist, string Albums)
         {//continue;
             //}
 
             //var norec = 0;
-            DataSet dfz = new DataSet(); dfz = SelectFromDB("Standardization", "SELECT iif(Artist_Correction<>\"\", Artist_Correction, Artist), iif(Album_Correction<>\"\", Album_Correction, Album), SpotifyArtistID, SpotifyAlbumID, SpotifyAlbumURL,SpotifyAlbumPath FROM Standardization WHERE (SpotifyArtistID <> \"\") GROUP BY iif(Artist_Correction<>\"\", Artist_Correction, Artist), iif(Album_Correction<>\"\", Album_Correction, Album), SpotifyArtistID, SpotifyAlbumID, SpotifyAlbumURL,SpotifyAlbumPath;", "");
+            DataSet dfz = new DataSet(); dfz = SelectFromDB("Standardization", "SELECT iif(Artist_Correction<>\"\", Artist_Correction, Artist), iif(Album_Correction<>\"\", Album_Correction, Album), SpotifyArtistID, SpotifyAlbumID, SpotifyAlbumURL,SpotifyAlbumPath FROM Standardization WHERE (SpotifyArtistID <> \"\") GROUP BY iif(Artist_Correction<>\"\", Artist_Correction, Artist), iif(Album_Correction<>\"\", Album_Correction, Album), SpotifyArtistID, SpotifyAlbumID, SpotifyAlbumURL,SpotifyAlbumPath;", "", cnb);
 
             foreach (DataRow dataRow in dfz.Tables[0].Rows)
             {
@@ -555,18 +557,18 @@ namespace RocksmithToolkitGUI.DLCManager
                 //DataSet dus = UpdateDB("Main", cmd1 + ";");
                 //dus = SelectFromDB("Main", "SELECT * FROM Main WHERE Artist=\"" + artist_c + "\"", ""); try { norec = dus.Tables[0].Rows.Count; } catch { }
                var cmd1 = "UPDATE Standardization SET SpotifyArtistID = \"" + SpotifyArtistID + "\",SpotifyAlbumID = \"" + SpotifyAlbumID + "\",SpotifyAlbumURL = \"" + SpotifyAlbumURL + "\",SpotifyAlbumPath = \"" + SpotifyAlbumPath + "\" WHERE (Artist=\"" + artist_c + "\" OR Artist_Correction=\"" + artist_c + "\") and (Album=\"" + album_c + "\" OR Album_Correction=\"" + album_c + "\")";
-                var dus = UpdateDB("Standardization", cmd1 + ";");
+                var dus = UpdateDB("Standardization", cmd1 + ";", cnb);
             }
 
             //MessageBox.Show("Artist Short Name has been defaulted onto " + norec.ToString() + " songs");
         }
 
-        public static void ApplyDefaultCover()//(string DBs_Path)//, string AlbumArt, string Artist, string Albums)
+        public static void ApplyDefaultCover(OleDbConnection cnb)//(string DBs_Path)//, string AlbumArt, string Artist, string Albums)
         {//continue;
             //}
 
             var norec = 0; //get al Default ON entries in standardization table
-            DataSet dfz = new DataSet(); dfz = SelectFromDB("Standardization", "SELECT iif(Artist_Correction<>\"\", Artist_Correction, Artist), iif(Album_Correction<>\"\", Album_Correction, Album), IIF(AlbumArt_Correction<>\"\", AlbumArt_Correction, SpotifyAlbumPath) FROM Standardization WHERE (Default_Cover = \"Yes\") GROUP BY iif(Artist_Correction<>\"\", Artist_Correction, Artist), iif(Album_Correction<>\"\", Album_Correction, Album),IIF(AlbumArt_Correction<>\"\", AlbumArt_Correction, SpotifyAlbumPath);", "");
+            DataSet dfz = new DataSet(); dfz = SelectFromDB("Standardization", "SELECT iif(Artist_Correction<>\"\", Artist_Correction, Artist), iif(Album_Correction<>\"\", Album_Correction, Album), IIF(AlbumArt_Correction<>\"\", AlbumArt_Correction, SpotifyAlbumPath) FROM Standardization WHERE (Default_Cover = \"Yes\") GROUP BY iif(Artist_Correction<>\"\", Artist_Correction, Artist), iif(Album_Correction<>\"\", Album_Correction, Album),IIF(AlbumArt_Correction<>\"\", AlbumArt_Correction, SpotifyAlbumPath);", "", cnb);
 
             foreach (DataRow dataRow in dfz.Tables[0].Rows)
             {
@@ -578,7 +580,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 //dus = SelectFromDB("Main", "SELECT * FROM Main WHERE Artist=\"" + artist_c + "\"", ""); try { norec = dus.Tables[0].Rows.Count; } catch { }
                 //apply only to Same Artist&Album Names
                 var cmd1 = "UPDATE Standardization SET AlbumArt_Correction = \"" + Default_Cover + "\", Default_Cover == \"Yes\" WHERE (Artist=\"" + artist_c + "\" OR Artist_Correction=\"" + artist_c + "\") and (Album=\"" + album_c + "\" OR Album_Correction=\"" + album_c + "\")";
-                var dus = UpdateDB("Standardization", cmd1 + ";");
+                var dus = UpdateDB("Standardization", cmd1 + ";", cnb);
             }
 
             //MessageBox.Show("Artist Short Name has been defaulted onto " + norec.ToString() + " songs");
@@ -594,7 +596,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void SaveRecord()
         {
-            ConfigRepository.Instance()["netstatus"] = netstatus;
+            ConfigRepository.Instance()["dlcm_netstatus"] = netstatus;
             int i;
             DataSet dis = new DataSet();
             //try {
@@ -682,7 +684,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btn_Delete_Click(object sender, EventArgs e)
         {
-            DeleteFromDB("Standardization", "DELETE * FROM Standardization WHERE ID IN (" + txt_ID.Text + ")");
+            DeleteFromDB("Standardization", "DELETE * FROM Standardization WHERE ID IN (" + txt_ID.Text + ")", cnb);
             //var cmd = "DELETE * FROM Standardization WHERE ID IN (" + txt_ID.Text + ")";
             //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
             //{
@@ -804,7 +806,7 @@ namespace RocksmithToolkitGUI.DLCManager
             var result1 = MessageBox.Show("Are you sure you want to DELETE Standardizations (&Spotify downloaded info)?", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
             if (result1 == DialogResult.Yes)
             {
-                DeleteFromDB("Standardization", "DELETE * FROM Standardization");
+                DeleteFromDB("Standardization", "DELETE * FROM Standardization", cnb);
                 Populate(ref btn_Delete_All, ref Main);
                 btn_Delete_All.EditingControlShowing += DataGridView1_EditingControlShowing;
                 btn_Delete_All.Refresh();

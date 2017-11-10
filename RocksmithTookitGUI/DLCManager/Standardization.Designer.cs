@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using RocksmithToolkitLib.DLCPackage;
 using static RocksmithToolkitGUI.DLCManager.GenericFunctions;
+using System.Data.OleDb;
 
 namespace RocksmithToolkitGUI.DLCManager
 {
@@ -551,9 +552,10 @@ namespace RocksmithToolkitGUI.DLCManager
         private string audioPreview_hash;
         private List<string> alist;
         private List<string> blist;
+        //private OleDbConnection cnnb;
 
-        internal Standardization(string txt_DBFolder, MainDBfields filed, DLCPackageData datas, string author, string tkversion, string dD, string bass, string guitar, string combo, string rhythm, string lead, string tunnings, int i, int norows, string original_FileName, string art_hash, string audio_hash, string audioPreview_hash, List<string> alist, List<string> blist, string txt_TempPath, string txt_RocksmithDLCPath, bool AllowEncript, bool AllowORIGDelete)
-            : this(txt_DBFolder, txt_TempPath, txt_RocksmithDLCPath, AllowEncript, AllowORIGDelete)
+        internal Standardization(string txt_DBFolder, MainDBfields filed, DLCPackageData datas, string author, string tkversion, string dD, string bass, string guitar, string combo, string rhythm, string lead, string tunnings, int i, int norows, string original_FileName, string art_hash, string audio_hash, string audioPreview_hash, List<string> alist, List<string> blist, string txt_TempPath, string txt_RocksmithDLCPath, bool AllowEncript, bool AllowORIGDelete, OleDbConnection cnnb)
+            : this(txt_DBFolder, txt_TempPath, txt_RocksmithDLCPath, AllowEncript, AllowORIGDelete, cnnb)
         {
             this.filed = filed;
             this.datas = datas;
@@ -574,6 +576,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.audioPreview_hash = audioPreview_hash;
             this.alist = alist;
             this.blist = blist;
+            this.cnb = cnnb;
         }
 
         private System.Windows.Forms.Button btn_Close;

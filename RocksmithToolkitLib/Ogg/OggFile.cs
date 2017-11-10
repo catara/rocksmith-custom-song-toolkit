@@ -108,6 +108,9 @@ namespace RocksmithToolkitLib.Ogg
                     case WwiseVersion.Wwise2013:
                         ww2oggProcess.StartInfo.Arguments = String.Format("\"{0}\" -o \"{1}\" --pcb \"{2}\"", file, outputFileName, codebooks603Path);
                         break;
+                    case WwiseVersion.Wwise2016:
+                        ww2oggProcess.StartInfo.Arguments = String.Format("\"{0}\" -o \"{1}\" --pcb \"{2}\"", file, outputFileName, codebooks603Path);
+                        break;
                     default:
                         throw new InvalidOperationException("Wwise version not supported or invalid input file.");
                 }
@@ -348,15 +351,15 @@ namespace RocksmithToolkitLib.Ogg
                 audioPath = wemPath;
             }
 
-            if (audioPath.Substring(audioPath.Length - 4).ToLower() == ".wem" && !File.Exists(wemPreviewPath))
-            {
-                Revorb(audioPath, oggPath, Path.GetDirectoryName(Application.ExecutablePath), WwiseVersion.Wwise2013);
-                ExternalApps.Ogg2Wav(oggPath, wavPath);
-                ExternalApps.Ogg2Preview(oggPath, oggPreviewPath, previewLength, chorusTime);
-                ExternalApps.Ogg2Wav(oggPreviewPath, wavPreviewPath);
-                Wwise.Convert2Wem(wavPath, wemPath, audioQuality);
-                audioPath = wemPath;
-            }
+            //if (audioPath.Substring(audioPath.Length - 4).ToLower() == ".wem" && !File.Exists(wemPreviewPath))
+            //{
+            //    Revorb(audioPath, oggPath, Path.GetDirectoryName(Application.ExecutablePath), WwiseVersion.Wwise2013);
+            //    ExternalApps.Ogg2Wav(oggPath, wavPath);
+            //    ExternalApps.Ogg2Preview(oggPath, oggPreviewPath, previewLength, chorusTime);
+            //    ExternalApps.Ogg2Wav(oggPreviewPath, wavPreviewPath);
+            //    Wwise.Convert2Wem(wavPath, wemPath, audioQuality);
+            //    audioPath = wemPath;
+            //}
 
             return audioPath;
         }
@@ -465,7 +468,7 @@ namespace RocksmithToolkitLib.Ogg
                 case ".ogg":
                     return WwiseVersion.Wwise2010;
                 case ".wem":
-                    return WwiseVersion.Wwise2013;
+                    return WwiseVersion.Wwise2016;
                 default:
                     throw new InvalidOperationException("Audio file not supported.");
             }

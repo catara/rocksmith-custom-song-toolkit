@@ -21,13 +21,14 @@ namespace RocksmithToolkitGUI.DLCManager
 {
     public partial class WEM2OGGCorrespondence : Form
     {
-        public WEM2OGGCorrespondence(string txt_DBFolder, string txt_TempPath, string txt_RocksmithDLCPath)
+        public WEM2OGGCorrespondence(string txt_DBFolder, string txt_TempPath, string txt_RocksmithDLCPath, OleDbConnection cnnb)
         { 
             InitializeComponent();
             //MessageBox.Show("test0");
             DB_Path = txt_DBFolder;
             TempPath = txt_TempPath;
             RocksmithDLCPath = txt_RocksmithDLCPath;
+            cnb = cnnb;
         }
 
     private string Filename = System.IO.Path.Combine(Application.StartupPath, "Text.txt");
@@ -44,6 +45,7 @@ namespace RocksmithToolkitGUI.DLCManager
     public DataSet dssx = new DataSet();
         public bool AllowORIGDeleteb = false;
         public bool AllowEncriptb = false;
+        public OleDbConnection cnb;
         //public OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn);
 
         //private BindingSource bsPositions = new BindingSource();
@@ -103,7 +105,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
     private void button1_Click(object sender, EventArgs e)
     {
-        // DB_Path = DB_Path + "\\Files.accdb"; //DLCManager.txt_DBFolder.Text
+        // DB_Path = DB_Path + "\\AccessDB.accdb"; //DLCManager.txt_DBFolder.Text
         try
             {
                 Process process = Process.Start(@DB_Path);
@@ -144,7 +146,7 @@ namespace RocksmithToolkitGUI.DLCManager
             DataGridView1.Rows[i].Cells[5].Value = txt_Album_Correction.Text;
            // DataGridView1.Rows[i].Cells[6].Value = txt_AlbumArtPath_Correction.Text;
 
-            //var DB_Path = "../../../../tmp\\Files.accdb;";
+            //var DB_Path = "../../../../tmp\\AccessDB.accdb;";
             var connection = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path); //+ ";Persist Security Info=False"
             var command = connection.CreateCommand();
             //dssx = DataGridView1;
@@ -190,8 +192,8 @@ namespace RocksmithToolkitGUI.DLCManager
     public void Populate(ref DataGridView DataGridView, ref BindingSource bs) //, ref BindingSource bsPositions, ref BindingSource bsBadges
     {
 
-            DataSet dooz = new DataSet(); dooz = SelectFromDB("Standardization", "SELECT ID, (SELECT IIF(count(*)>1,\"Yes\",\"\") as Suspect from Standardization AS O WHERE LCASE(S.Artist)=LCASE(O.Artist) and LCASE(S.Album)=LCASE(O.Album)) as Suspect, Artist, Artist_Correction, Album, Album_Correction, AlbumArt_Correction FROM Standardization as S ORDER BY Artist, Album;", "");
-            //DB_Path = "../../../../tmp\\Files.accdb;";
+            DataSet dooz = new DataSet(); dooz = SelectFromDB("Standardization", "SELECT ID, (SELECT IIF(count(*)>1,\"Yes\",\"\") as Suspect from Standardization AS O WHERE LCASE(S.Artist)=LCASE(O.Artist) and LCASE(S.Album)=LCASE(O.Album)) as Suspect, Artist, Artist_Correction, Album, Album_Correction, AlbumArt_Correction FROM Standardization as S ORDER BY Artist, Album;", "", cnb);
+            //DB_Path = "../../../../tmp\\AccessDB.accdb;";
             //using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
             //{
             //    OleDbDataAdapter da = new OleDbDataAdapter("SELECT ID, (SELECT IIF(count(*)>1,\"Yes\",\"\") as Suspect from Standardization AS O WHERE LCASE(S.Artist)=LCASE(O.Artist) and LCASE(S.Album)=LCASE(O.Album)) as Suspect, Artist, Artist_Correction, Album, Album_Correction, AlbumArt_Correction FROM Standardization as S ORDER BY Artist, Album;", cn);
@@ -308,7 +310,7 @@ namespace RocksmithToolkitGUI.DLCManager
         //Files[] files = new Files[10000];
 
         var MaximumSize = 0;
-            DataSet dus = new DataSet(); dus = SelectFromDB("Groups", cmd, "");
+            DataSet dus = new DataSet(); dus = SelectFromDB("Groups", cmd, "", cnb);
         //rtxt_StatisticsOnReadDLCs.Text += "\n  ee= ";
         //try
         //{
@@ -359,7 +361,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private void btn_DecompressAll_Click(object sender, EventArgs e)
         {
             //txt_Description.Text = DB_Path;
-            MainDB frm = new MainDB(DB_Path.Replace("\\Files.accdb", ""), TempPath, false, "", AllowEncriptb, AllowORIGDeleteb);
+            MainDB frm = new MainDB(DB_Path, TempPath, false, "", AllowEncriptb, AllowORIGDeleteb, cnb);//.Replace("\\AccessDB.accdb", "")
             frm.Show();
         }
 
@@ -392,10 +394,10 @@ namespace RocksmithToolkitGUI.DLCManager
         private void btn_CopyArtist2ArtistSort_Click(object sender, EventArgs e)
         {
             //var cmd1 = "";
-            ////DB_Path = DB_Path.Replace("dlc\\Files.accdb","dlc");
+            ////DB_Path = DB_Path.Replace("dlc\\AccessDB.accdb","dlc");
             //try
             //{
-            //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path.Replace("\\Files.accdb;", "")))
+            //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path.Replace("\\AccessDB.accdb;", "")))
             //    {
             //        DataSet dus = new DataSet();
             //        cmd1 = "UPDATE Main SET Artist_Sort = Artist";
@@ -418,7 +420,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private void btn_CopyTitle2TitleSort_Click(object sender, EventArgs e)
         {
             //var cmd1 = "";
-            ////var DB_Path = DB_Path + "\\Files.accdb";
+            ////var DB_Path = DB_Path + "\\AccessDB.accdb";
             //try
             //{
             //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))

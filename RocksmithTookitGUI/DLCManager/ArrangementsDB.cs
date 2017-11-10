@@ -22,13 +22,14 @@ namespace RocksmithToolkitGUI.DLCManager
 {
     public partial class ArrangementsDB : Form
     {
-        public ArrangementsDB(string txt_DBFolder, string CDLC_ID, bool chbx_BassD)
+        public ArrangementsDB(string txt_DBFolder, string CDLC_ID, bool chbx_BassD, OleDbConnection cnnb)
         {
             InitializeComponent();
             DB_Path = txt_DBFolder;
             CDLCID = CDLC_ID;
             BassDD = chbx_BassD;
             chbx_BassDD.Checked = BassDD;
+            cnb = cnnb;
         }
 
         private string Filename = System.IO.Path.Combine(Application.StartupPath, "Text.txt");
@@ -43,6 +44,7 @@ namespace RocksmithToolkitGUI.DLCManager
         public int noOfRec = 0;
         public DataSet dssx = new DataSet();
         public bool SaveOK = false;
+        public OleDbConnection cnb;
 
         private void ArrangementsDB_Load(object sender, EventArgs e)
         {
@@ -96,7 +98,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void button1_Click(object sender, EventArgs e)
         {
-            // DB_Path = DB_Path + "\\Files.accdb"; //DLCManager.txt_DBFolder.Text
+            // DB_Path = DB_Path + "\\AccessDB.accdb"; //DLCManager.txt_DBFolder.Text
             try
             {
                 Process process = Process.Start(@DB_Path);
@@ -146,7 +148,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //        return;
             //    }
             //cn.Dispose();
-            dssx = SelectFromDB("Arrangements", "SELECT * FROM Arrangements WHERE CDLC_ID=" + CDLCID + ";", "");
+            dssx = SelectFromDB("Arrangements", "SELECT * FROM Arrangements WHERE CDLC_ID=" + CDLCID + ";", "", cnb);
             noOfRec = dssx.Tables[0].Rows.Count;
                 lbl_NoRec.Text = noOfRec.ToString() + " records.";
             //}
@@ -370,7 +372,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //        DataSet dus = new DataSet();
             //        OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
             //        dax.Fill(dus, "Arrangements");
-            DataSet dus = new DataSet();dus = SelectFromDB("Arrangements", cmd, "");
+            DataSet dus = new DataSet();dus = SelectFromDB("Arrangements", cmd, "", cnb);
             var i = 0;
                     //rtxt_StatisticsOnReadDLCs.Text += "\n  54= " +dus.Tables[0].Rows.Count;
                     MaximumSize = dus.Tables[0].Rows.Count;
@@ -456,7 +458,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //    string SearchCmd = "SELECT DISTINCT ToneA FROM Arrangements;";
             //    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
             //    da.Fill(ds, "Arrangements");
-            DataSet ds = new DataSet(); ds = SelectFromDB("Arrangements", "SELECT DISTINCT ToneA FROM Arrangements;", "");
+            DataSet ds = new DataSet(); ds = SelectFromDB("Arrangements", "SELECT DISTINCT ToneA FROM Arrangements;", "", cnb);
             norec = ds.Tables[0].Rows.Count;
 
                 if (norec > 0)
@@ -485,7 +487,7 @@ namespace RocksmithToolkitGUI.DLCManager
         //    string SearchCmd = "SELECT DISTINCT ToneB FROM Arrangements;";
         //    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
         //    da.Fill(dIs, "Arrangements");
-        DataSet dIs = new DataSet(); dIs = SelectFromDB("Arrangements", "SELECT DISTINCT ToneB FROM Arrangements;", "");
+        DataSet dIs = new DataSet(); dIs = SelectFromDB("Arrangements", "SELECT DISTINCT ToneB FROM Arrangements;", "", cnb);
             norec = dIs.Tables[0].Rows.Count;
 
                 if (norec > 0)
@@ -514,7 +516,7 @@ namespace RocksmithToolkitGUI.DLCManager
         //    string SearchCmd = "SELECT DISTINCT ToneC FROM Arrangements;";
         //    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
         //    da.Fill(dfs, "Arrangements");
-        DataSet dfs = new DataSet(); dfs = SelectFromDB("Arrangements", "SELECT DISTINCT ToneC FROM Arrangements;", "");
+        DataSet dfs = new DataSet(); dfs = SelectFromDB("Arrangements", "SELECT DISTINCT ToneC FROM Arrangements;", "", cnb);
             norec = dfs.Tables[0].Rows.Count;
 
                 if (norec > 0)
@@ -543,7 +545,7 @@ namespace RocksmithToolkitGUI.DLCManager
         //    string SearchCmd = "SELECT DISTINCT ToneD FROM Arrangements;";
         //    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
         //    da.Fill(dHs, "Arrangements");
-        DataSet dHs = new DataSet(); dHs = SelectFromDB("Arrangements", "SELECT DISTINCT ToneD FROM Arrangements;", "");
+        DataSet dHs = new DataSet(); dHs = SelectFromDB("Arrangements", "SELECT DISTINCT ToneD FROM Arrangements;", "", cnb);
             norec = dHs.Tables[0].Rows.Count;
 
                 if (norec > 0)
@@ -567,7 +569,7 @@ namespace RocksmithToolkitGUI.DLCManager
             dHs.Dispose();
         //}
 
-        DataSet dxs = new DataSet(); dxs = SelectFromDB("Arrangements", "SELECT DISTINCT ToneBase FROM Arrangements;", "");
+        DataSet dxs = new DataSet(); dxs = SelectFromDB("Arrangements", "SELECT DISTINCT ToneBase FROM Arrangements;", "", cnb);
             //DataSet dxs = new DataSet();
             //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
             //{
@@ -601,7 +603,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //    string SearchCmd = "SELECT DISTINCT Tunning FROM Arrangements;";
             //    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
             //    da.Fill(dks, "Arrangements");
-            DataSet dks = new DataSet(); dks = SelectFromDB("Arrangements", "SELECT DISTINCT Tunning FROM Arrangements;", "");
+            DataSet dks = new DataSet(); dks = SelectFromDB("Arrangements", "SELECT DISTINCT Tunning FROM Arrangements;", "", cnb);
             norec = dks.Tables[0].Rows.Count;
 
                 if (norec > 0)
@@ -737,7 +739,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //else DataGridView1.Rows[i].Cells["Bonus"].Value = "No";
 
 
-            //var DB_Path = "../../../../tmp\\Files.accdb;";
+            //var DB_Path = "../../../../tmp\\AccessDB.accdb;";
             var connection = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path); //+ ";Persist Security Info=False"
             var command = connection.CreateCommand();
             //dssx = DataGridView1;

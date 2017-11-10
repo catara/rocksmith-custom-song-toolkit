@@ -67,6 +67,8 @@ namespace RocksmithToolkitGUI.DLCManager
         public string isLive { get; set; }
         public string isAcoustic { get; set; }
         public string liveDetails { get; set; }
+        public string dupli_reason { get; set; }
+        public OleDbConnection cnb { get; set; }
 
         //public bool newold { get; set; }
         //public string clist { get; set; }
@@ -75,12 +77,17 @@ namespace RocksmithToolkitGUI.DLCManager
         //    InitializeComponent();
         //    //MessageBox.Show("test0");
         //    DB_Path = txt_DBFolder;
-        //    DB_Path = DB_Path + "\\Files.accdb";
+        //    DB_Path = DB_Path + "\\AccessDB.accdb";
         //    MessageBox.Show("test1");
 
         //}
 
-        internal frm_Duplicates_Management(GenericFunctions.MainDBfields filed, DLCPackageData datas, string author, string tkversion, string dD, string bass, string guitar, string combo, string rhythm, string lead, string vocal, string tunnings, int i, int norows, string original_FileName, string art_hash, string audio_hash, string audioPreview_hash, List<string> alist, List<string> blist, string DBPath, List<string> clist, List<string> dlist, bool newold, string Is_Original, string altvert, string txt_RocksmithDLCPath, bool AllowEncript, bool AllowORIGDelete, string FileSize, string unpackedDir, string Is_MultiTrack, string MultiTrack_Version, string FileDate, string title_duplic, string original_Platform, string IsLive, string LiveDetails, string IsAcoustic)//string Is_MultiTracking, string Multitracking, 
+        internal frm_Duplicates_Management(GenericFunctions.MainDBfields filed, DLCPackageData datas, string author, string tkversion, string dD,
+            string bass, string guitar, string combo, string rhythm, string lead, string vocal, string tunnings, int i, int norows, string original_FileName,
+            string art_hash, string audio_hash, string audioPreview_hash, List<string> alist, List<string> blist, string DBPath, List<string> clist,
+            List<string> dlist, bool newold, string Is_Original, string altvert, string txt_RocksmithDLCPath, bool AllowEncript, bool AllowORIGDelete,
+            string FileSize, string unpackedDir, string Is_MultiTrack, string MultiTrack_Version, string FileDate, string title_duplic,
+            string original_Platform, string IsLive, string LiveDetails, string IsAcoustic, OleDbConnection cnnb, string dupli_reasons)//string Is_MultiTracking, string Multitracking, 
         //file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, Tunings, b, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist, DB_Path, clist, dlist, newold, Is_Original, altver
         {
             //Text = text;
@@ -129,7 +136,10 @@ namespace RocksmithToolkitGUI.DLCManager
             //MessageBox.Show(DB_Path);
             //DB_Path = text;
             //MessageBox.Show(DB_Path);
-            //DB_Path = DB_Path;// + "\\Files.accdb";
+            //DB_Path = DB_Path;// + "\\AccessDB.accdb";
+            this.dupli_reason = dupli_reasons;
+            this.cnb = cnnb;
+            
         }
         public string GetAlternateNo()
         {
@@ -145,7 +155,7 @@ namespace RocksmithToolkitGUI.DLCManager
             sel += "LCASE(Song_Title_Sort) =LCASE(\"" + datas.SongInfo.SongDisplayNameSort + "\"))) OR LCASE(DLC_Name)=LCASE(\"" + datas.Name + "\");";
             //Get last inserted ID
             //rtxt_StatisticsOnReadDLCs.Text = sel + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-            DataSet dds = new DataSet(); dds = SelectFromDB("Main", sel, "");
+            DataSet dds = new DataSet(); dds = SelectFromDB("Main", sel, "", cnb);
             //OleDbDataAdapter dda = new OleDbDataAdapter(sel, con);
             //dda.Fill(dds, "Main");
             //dda.Dispose();
@@ -206,6 +216,8 @@ namespace RocksmithToolkitGUI.DLCManager
             Comment = "";
             Description = "";
             dupliID = "";
+
+            this.Text += " " + dupli_reason+ " ";
 
             btn_Title2SortT.Text = char.ConvertFromUtf32(8595);
             btn_Artist2SortA.Text = char.ConvertFromUtf32(8595);
@@ -316,9 +328,9 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_TuningNew.Text = tunnings;
             txt_TuningExisting.Text = filed.Tunning;
 
-            if (datas.ToolkitInfo.PackageVersion != filed.Version) lbl_Version.ForeColor = lbl_Reference.ForeColor;
+            if ((datas.ToolkitInfo.PackageVersion == null ? "1" : datas.ToolkitInfo.PackageVersion.ToString()) != filed.Version) lbl_Version.ForeColor = lbl_Reference.ForeColor;
             else if (datas.ToolkitInfo.PackageVersion == "" && "" == filed.Version) lbl_Version.Text = "";
-            txt_VersionNew.Text = datas.ToolkitInfo.PackageVersion;
+            txt_VersionNew.Text = (datas.ToolkitInfo.PackageVersion == null ? "1" : datas.ToolkitInfo.PackageVersion.ToString());
             txt_VersionExisting.Text = filed.Version;
             txt_FileDateNew.Text = FileDate;
             txt_FileDateExisting.Text = filed.File_Creation_Date;
@@ -344,25 +356,24 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_ToolkitNew.Text = tkversion;
             txt_ToolkitExisting.Text = filed.ToolkitVersion;
 
-            if (filed.AlbumArt_Hash != art_hash) { lbl_AlbumArt.ForeColor = lbl_Reference.ForeColor; btn_CoverNew.Enabled = true; btn_CoverExisting.Enabled = true; }
-            else if (filed.AlbumArt_Hash == "" && "" == art_hash) lbl_AlbumArt.Text = "";
-
+            if (filed.AlbumArt_OrigHash != art_hash) { lbl_AlbumArt.ForeColor = lbl_Reference.ForeColor; btn_CoverNew.Enabled = true; btn_CoverExisting.Enabled = true; }
+            else if (filed.AlbumArt_OrigHash == "" && "" == art_hash) lbl_AlbumArt.Text = "";
             datas.AlbumArtPath = datas.AlbumArtPath.Replace("/", "\\");
             picbx_AlbumArtPathNew.ImageLocation = datas.AlbumArtPath.Replace(".dds", ".png");
             //txt_Description.Text= datas.AlbumArtPath.Replace(".dds", ".png");
             picbx_AlbumArtPathExisting.ImageLocation = filed.AlbumArtPath.Replace(".dds", ".png");
 
-            if (filed.Audio_Hash != audio_hash) lbl_Audio.ForeColor = lbl_Reference.ForeColor;
-            else if (filed.Audio_Hash == "" && "" == audio_hash) lbl_Audio.Text = "";
+            if (filed.Audio_OrigHash != audio_hash) lbl_Audio.ForeColor = lbl_Reference.ForeColor;
+            else if (filed.Audio_OrigHash == "" && "" == audio_hash) lbl_Audio.Text = "";
             txt_AudioNew.Text = (audio_hash.ToString() == "" ? "" : "Yes");
-            txt_AudioExisting.Text = (filed.Audio_Hash.ToString() == "" ? "" : "Yes");
+            txt_AudioExisting.Text = (filed.Audio_OrigHash.ToString() == "" ? "" : "Yes");
 
-            if (filed.AudioPreview_Hash != audioPreview_hash) lbl_Preview.ForeColor = lbl_Reference.ForeColor;
-            else if (filed.AudioPreview_Hash == "" && "" == audioPreview_hash) lbl_Vocals.Text = "";
+            if (filed.Audio_OrigPreviewHash != audioPreview_hash) lbl_Preview.ForeColor = lbl_Reference.ForeColor;
+            else if (filed.Audio_OrigPreviewHash == "" && "" == audioPreview_hash) lbl_Vocals.Text = "";
             txt_PreviewNew.Text = (audioPreview_hash.ToString() == "" ? "No" : "Yes");
-            txt_PreviewExisting.Text = (filed.AudioPreview_Hash.ToString() == "" ? "No" : "Yes");
+            txt_PreviewExisting.Text = (filed.Audio_OrigPreviewHash.ToString() == "" ? "No" : "Yes");
             if (audioPreview_hash.ToString() != "") btn_PlayPreviewNew.Enabled = true;
-            if (filed.AudioPreview_Hash.ToString() != "") btn_PlayPreviewExisting.Enabled = true;
+            if (filed.Audio_OrigPreviewHash.ToString() != "") btn_PlayPreviewExisting.Enabled = true;
             if (filed.PreviewTime != "") { lbl_Preview.ForeColor = lbl_previewFootnote.ForeColor; lbl_previewFootnote.Visible = true; }
 
             if (filed.Has_Vocals.ToString() != vocal) lbl_Vocals.ForeColor = lbl_Reference.ForeColor;
@@ -400,7 +411,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //files hash
             //DataSet ds = new DataSet();
             i = 0;
-            //DB_Path = DB_Path + "\\Files.accdb;";
+            //DB_Path = DB_Path + "\\AccessDB.accdb;";
             string jsonHash = "";
             //bool diffjson;// = true;
             string XmlHash = "";
@@ -431,7 +442,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //        //MessageBox.Show("0");
             //        daa.Fill(ds, "Arrangements");
             //        daa.Dispose();
-            DataSet ds = new DataSet(); ds = SelectFromDB("Arrangements", "SELECT * FROM Arrangements WHERE CDLC_ID=" + filed.ID.ToString() + ";", "");
+            DataSet ds = new DataSet(); ds = SelectFromDB("Arrangements", "SELECT * FROM Arrangements WHERE CDLC_ID=" + filed.ID.ToString() + ";", "", cnb);
             var noOfRec = 0;
             //MessageBox.Show("0.1");
             noOfRec = ds.Tables[0].Rows.Count;//ds.Tables[0].Rows[0].ItemArray[0].ToString();
@@ -567,7 +578,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                 bassjson = "";
                                 lbl_JSONBass.Visible = true;
                                 if (!(lastConverjsonDateTime_cur == "" && "" == lastConverjsonDateTime_exist))
-                                    if (lastConverjsonDateTime_cur != lastConverjsonDateTime_exist || jsonHash != blist[k]) { lbl_JSONBass.ForeColor = lbl_Reference.ForeColor; btn_TN_Rhythm.Enabled = true; }
+                                    if (lastConverjsonDateTime_cur != lastConverjsonDateTime_exist || jsonHash != blist[k]) { lbl_JSONBass.ForeColor = lbl_Reference.ForeColor; btn_TN_Bass.Enabled = true; }
                                 txt_JSONBassNew.Text = lastConverjsonDateTime_cur;
                                 txt_JSONBassExisting.Text = lastConverjsonDateTime_exist;
                                 bassjson = "\"" + arg.SongFile.File + "\"" + " " + "\"" + jsonFile + "\"";
@@ -578,7 +589,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                 lbl_JSONLead.Visible = true;
                                 leadjson = "";
                                 if (!(lastConverjsonDateTime_cur == "" && "" == lastConverjsonDateTime_exist))
-                                    if (lastConverjsonDateTime_cur != lastConverjsonDateTime_exist || jsonHash != blist[k]) { lbl_JSONLead.ForeColor = lbl_Reference.ForeColor; btn_TN_Rhythm.Enabled = true; }
+                                    if (lastConverjsonDateTime_cur != lastConverjsonDateTime_exist || jsonHash != blist[k]) { lbl_JSONLead.ForeColor = lbl_Reference.ForeColor; btn_TN_Lead.Enabled = true; }
                                 txt_JSONLeadNew.Text = lastConverjsonDateTime_cur;
                                 txt_JSONLeadExisting.Text = lastConverjsonDateTime_exist;
                                 leadjson = "\"" + arg.SongFile.File + "\"" + " " + "\"" + jsonFile + "\"";
@@ -589,7 +600,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                 combojson = "";
                                 lbl_JSONCombo.Visible = true;
                                 if (!(lastConverjsonDateTime_cur == "" && "" == lastConverjsonDateTime_exist))
-                                    if (lastConverjsonDateTime_cur != lastConverjsonDateTime_exist || jsonHash != blist[k]) { lbl_JSONCombo.ForeColor = lbl_Reference.ForeColor; btn_TN_Rhythm.Enabled = true; }
+                                    if (lastConverjsonDateTime_cur != lastConverjsonDateTime_exist || jsonHash != blist[k]) { lbl_JSONCombo.ForeColor = lbl_Reference.ForeColor; btn_TN_Combo.Enabled = true; }
                                 txt_JSONComboNew.Text = lastConverjsonDateTime_cur;
                                 txt_JSONComboExisting.Text = lastConverjsonDateTime_exist;
                                 combojson = "\"" + arg.SongFile.File + "\"" + " " + "\"" + jsonFile + "\"";
@@ -606,7 +617,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                 rhythmjson = "\"" + arg.SongFile.File + "\"" + " " + "\"" + jsonFile + "\"";
 
                             }
-                            if (arg.RouteMask.ToString() == "Vocal")
+                            if (arg.ArrangementType.ToString() == "Vocal")
                             {
                                 vocaljson = "";
                                 lbl_Vocals.Visible = true;
@@ -688,7 +699,7 @@ namespace RocksmithToolkitGUI.DLCManager
             lbl_DateExisting.Text = LastConvDate_exis.ToString();
             if (LastConvDate_new.ToString() == LastConvDate_exis.ToString()) lbl_tonediff.Visible = true;
 
-            this.Text = "Duplicate Management " + title_duplic;
+            this.Text += ". " + title_duplic;
         }
 
         //private class Files
@@ -1071,8 +1082,8 @@ namespace RocksmithToolkitGUI.DLCManager
             //    {
             if (Asses == "Update")
             {
-                DeleteFromDB("Tones", "DELETE FROM Tones WHERE CDLC_ID=" + lbl_IDExisting.Text);
-                DeleteFromDB("Arrangements", "DELETE FROM Arrangements WHERE CDLC_ID=" + lbl_IDExisting.Text);
+                DeleteFromDB("Tones", "DELETE FROM Tones WHERE CDLC_ID=" + lbl_IDExisting.Text, cnb);
+                DeleteFromDB("Arrangements", "DELETE FROM Arrangements WHERE CDLC_ID=" + lbl_IDExisting.Text, cnb);
                 //OleDbDataAdapter dan = new OleDbDataAdapter("DELETE FROM Tones WHERE CDLC_ID=" + lbl_IDExisting.Text, cnn);
                 //dan.Fill(dss, "Cache");
                 //dan.Dispose();
@@ -1128,7 +1139,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //sel += "\", AlbumArt_Hash = \"" + (rbtn_CoverNew.Checked ? art_hash : filed.AlbumArt_Hash);
             sel += " WHERE ID=" + lbl_IDExisting.Text;
             //txt_Description.Text = sel;
-            DataSet ddr = new DataSet(); ddr = UpdateDB("Main", sel + ";");
+            DataSet ddr = new DataSet(); ddr = UpdateDB("Main", sel + ";", cnb);
             //OleDbDataAdapter dat = new OleDbDataAdapter(sel, cnn);
 
             //dat.Fill(ddr, "Main");
@@ -1232,9 +1243,9 @@ namespace RocksmithToolkitGUI.DLCManager
             }
             else
             {
-                btn_AlbumExisting.Enabled = true;
-                btn_AlbumNew.Enabled = true;
-                lbl_Album.ForeColor = lbl_Reference.ForeColor;
+                btn_AuthorExisting.Enabled = true;
+                btn_AuthorNew.Enabled = true;
+                lbl_Author.ForeColor = lbl_Reference.ForeColor;
             }
             ExistChng = true;
         }
@@ -1254,7 +1265,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private void btn_DecompressAll_Click(object sender, EventArgs e)
         {
             //txt_Description.Text = DB_Path;
-            MainDB frm = new MainDB(DB_Path.Replace("\\Files.accdb;", ""), TempPath, false, RocksmithDLCPath, AllowEncriptb, AllowORIGDeleteb);
+            MainDB frm = new MainDB(DB_Path, TempPath, false, RocksmithDLCPath, AllowEncriptb, AllowORIGDeleteb, cnb);//.Replace("\\AccessDB.accdb;", "")
             frm.Show();
         }
 

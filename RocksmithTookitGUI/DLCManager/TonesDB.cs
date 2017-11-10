@@ -19,11 +19,12 @@ namespace RocksmithToolkitGUI.DLCManager
 {
     public partial class TonesDB : Form
     {
-        public TonesDB(string txt_DBFolder, string CDLC_ID)
+        public TonesDB(string txt_DBFolder, string CDLC_ID, OleDbConnection cnnb)
         {
             InitializeComponent();
             CDLCID = CDLC_ID;
             DB_Path = txt_DBFolder;
+            cnb = cnnb;
         }
 
         private string Filename = System.IO.Path.Combine(Application.StartupPath, "Text.txt");
@@ -37,6 +38,7 @@ namespace RocksmithToolkitGUI.DLCManager
         public string CDLCID = "";
         public DataSet dssx = new DataSet();
         public bool SaveOK = false;
+        public OleDbConnection cnb;
         //public OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn);
 
         //private BindingSource bsPositions = new BindingSource();
@@ -84,7 +86,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void button1_Click(object sender, EventArgs e)
         {
-            // DB_Path = DB_Path + "\\Files.accdb"; //DLCManager.txt_DBFolder.Text
+            // DB_Path = DB_Path + "\\AccessDB.accdb"; //DLCManager.txt_DBFolder.Text
             try
             {
                 Process process = Process.Start(@DB_Path);
@@ -105,7 +107,7 @@ namespace RocksmithToolkitGUI.DLCManager
         public void ChangeRow()
         {
 
-           // var norec = 0;
+            // var norec = 0;
             //DataSet ds = new DataSet();
             //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
             //{
@@ -285,14 +287,14 @@ namespace RocksmithToolkitGUI.DLCManager
                 //chbx_ToneBase.Text = DataGridView1.Rows[i].Cells["ToneBase"].Value.ToString();
                 ////txt_Idd.Text = DataGridView1.Rows[i].Cells[15].Value.ToString();
                 //txt_ArrangementType.Text = DataGridView1.Rows[i].Cells["ArrangementType"].Value.ToString();
-                chbx_AmpType.Text = DataGridView1.Rows[i].Cells["AmpType"].Value.ToString();
-                chbx_AmpCategory.Text = DataGridView1.Rows[i].Cells["AmpCategory"].Value.ToString();
-                chbx_AmpKnobValues.Text = DataGridView1.Rows[i].Cells["AmpKnobValues"].Value.ToString();
-                chbx_AmpPedalKey.Text = DataGridView1.Rows[i].Cells["AmpPedalKey"].Value.ToString();
-                chbx_CabinetCategory.Text = DataGridView1.Rows[i].Cells["CabinetCategory"].Value.ToString();
-                chbx_CabinetKnobValues.Text = DataGridView1.Rows[i].Cells["CabinetKnobValues"].Value.ToString();
-                chbx_CabinetPedalKey.Text = DataGridView1.Rows[i].Cells["CabinetPedalKey"].Value.ToString();
-                chbx_CabinetType.Text = DataGridView1.Rows[i].Cells["CabinetType"].Value.ToString();
+                //chbx_AmpType.Text = DataGridView1.Rows[i].Cells["AmpType"].Value.ToString();
+                //chbx_AmpCategory.Text = DataGridView1.Rows[i].Cells["AmpCategory"].Value.ToString();
+                //chbx_AmpKnobValues.Text = DataGridView1.Rows[i].Cells["AmpKnobValues"].Value.ToString();
+                //chbx_AmpPedalKey.Text = DataGridView1.Rows[i].Cells["AmpPedalKey"].Value.ToString();
+                //chbx_CabinetCategory.Text = DataGridView1.Rows[i].Cells["CabinetCategory"].Value.ToString();
+                //chbx_CabinetKnobValues.Text = DataGridView1.Rows[i].Cells["CabinetKnobValues"].Value.ToString();
+                //chbx_CabinetPedalKey.Text = DataGridView1.Rows[i].Cells["CabinetPedalKey"].Value.ToString();
+                //chbx_CabinetType.Text = DataGridView1.Rows[i].Cells["CabinetType"].Value.ToString();
                 //chbx_ToneA.Text = DataGridView1.Rows[i].Cells["ToneA"].Value.ToString();
                 //chbx_ToneB.Text = DataGridView1.Rows[i].Cells["ToneB"].Value.ToString();
                 //chbx_ToneC.Text = DataGridView1.Rows[i].Cells["ToneC"].Value.ToString();
@@ -320,11 +322,11 @@ namespace RocksmithToolkitGUI.DLCManager
 
         public void SaveRecord()
         {
-            int i=-1;
+            int i = -1;
             DataSet dis = new DataSet();
             if (DataGridView1.SelectedCells.Count > 0)
             {
-            i = DataGridView1.SelectedCells[0].RowIndex;
+                i = DataGridView1.SelectedCells[0].RowIndex;
 
                 DataGridView1.Rows[i].Cells[0].Value = txt_ID.Text;
                 DataGridView1.Rows[i].Cells["CDLC_ID"].Value = txt_CDLC_ID.Text;
@@ -332,19 +334,21 @@ namespace RocksmithToolkitGUI.DLCManager
                 DataGridView1.Rows[i].Cells["Keyy"].Value = txt_Keyy.Text;
                 //DataGridView1.Rows[i].Cells[5].Value = chbx_Custom.Checked ? "Yes" :"No";
                 DataGridView1.Rows[i].Cells["Description"].Value = txt_Description.Text;
-                DataGridView1.Rows[i].Cells["AmpType"].Value = chbx_AmpType.Text;
-                DataGridView1.Rows[i].Cells["AmpCategory"].Value = chbx_AmpCategory.Text;
-                DataGridView1.Rows[i].Cells["AmpKnobValues"].Value = chbx_AmpKnobValues.Text;
-                DataGridView1.Rows[i].Cells["AmpPedalKey"].Value = chbx_AmpPedalKey.Text;
-                DataGridView1.Rows[i].Cells["CabinetCategory"].Value = chbx_CabinetCategory.Text;
-                DataGridView1.Rows[i].Cells["CabinetKnobValues"].Value = chbx_CabinetKnobValues.Text;
-                DataGridView1.Rows[i].Cells["CabinetPedalKey"].Value = chbx_CabinetPedalKey.Text;
-                DataGridView1.Rows[i].Cells["CabinetType"].Value = chbx_CabinetType.Text;
+                //DataGridView1.Rows[i].Cells["AmpType"].Value = chbx_AmpType.Text;
+                //DataGridView1.Rows[i].Cells["AmpCategory"].Value = chbx_AmpCategory.Text;
+                //DataGridView1.Rows[i].Cells["AmpKnobValues"].Value = chbx_AmpKnobValues.Text;
+                ////DataGridView1.Rows[i].Cells["AmpKnobKeys"].Value = chbx_AmpKnobValues.Text;
+                //DataGridView1.Rows[i].Cells["AmpPedalKey"].Value = chbx_AmpPedalKey.Text;
+                //DataGridView1.Rows[i].Cells["CabinetCategory"].Value = chbx_CabinetCategory.Text;
+                //DataGridView1.Rows[i].Cells["CabinetKnobValues"].Value = chbx_CabinetKnobValues.Text;
+                ////DataGridView1.Rows[i].Cells["CabinetKnobKeys"].Value = chbx_CabinetKnobValues.Text;
+                //DataGridView1.Rows[i].Cells["CabinetPedalKey"].Value = chbx_CabinetPedalKey.Text;
+                //DataGridView1.Rows[i].Cells["CabinetType"].Value = chbx_CabinetType.Text;
 
                 if (chbx_Custom.Checked) DataGridView1.Rows[i].Cells["Is_Custom"].Value = "True";
                 else DataGridView1.Rows[i].Cells["Is_Custom"].Value = "False";
 
-                //var DB_Path = "../../../../tmp\\Files.accdb;";
+                //var DB_Path = "../../../../tmp\\AccessDB.accdb;";
                 var connection = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path); //+ ";Persist Security Info=False"
                 var command = connection.CreateCommand();
                 //dssx = DataGridView1;
@@ -381,14 +385,14 @@ namespace RocksmithToolkitGUI.DLCManager
                     //command.CommandText += "Rack2 = @param23, ";
                     //command.CommandText += "Rack3 = @param24, ";
                     //command.CommandText += "Rack4 = @param25, ";
-                    command.CommandText += "AmpType = @param26, ";
-                    command.CommandText += "AmpCategory = @param27, ";
-                    command.CommandText += "AmpKnobValues = @param28, ";
-                    command.CommandText += "AmpPedalKey = @param29, ";
-                    command.CommandText += "CabinetCategory = @param30, ";
-                    command.CommandText += "CabinetKnobValues = @param31, ";
-                    command.CommandText += "CabinetPedalKey = @param32, ";
-                    command.CommandText += "CabinetType = @param33, ";
+                    //command.CommandText += "AmpType = @param26, ";
+                    //command.CommandText += "AmpCategory = @param27, ";
+                    //command.CommandText += "AmpKnobValues = @param28, ";
+                    //command.CommandText += "AmpPedalKey = @param29, ";
+                    //command.CommandText += "CabinetCategory = @param30, ";
+                    //command.CommandText += "CabinetKnobValues = @param31, ";
+                    //command.CommandText += "CabinetPedalKey = @param32, ";
+                    //command.CommandText += "CabinetType = @param33, ";
                     command.CommandText += "lastConversionDateTime = @param34 ";
                     //command.CommandText += "lastConverjsonDateTime = @param35, ";
                     //command.CommandText += "Comments = @param36 ";
@@ -401,15 +405,15 @@ namespace RocksmithToolkitGUI.DLCManager
                     command.Parameters.AddWithValue("@param4", DataGridView1.Rows[i].Cells["Keyy"].Value.ToString());
                     command.Parameters.AddWithValue("@param8", DataGridView1.Rows[i].Cells["Pedals"].Value.ToString());
                     command.Parameters.AddWithValue("@param9", DataGridView1.Rows[i].Cells["Description"].Value.ToString());
-                    command.Parameters.AddWithValue("@param26", DataGridView1.Rows[i].Cells["AmpType"].Value.ToString());
-                    command.Parameters.AddWithValue("@param27", DataGridView1.Rows[i].Cells["AmpCategory"].Value.ToString());
-                    command.Parameters.AddWithValue("@param28", DataGridView1.Rows[i].Cells["AmpKnobValues"].Value.ToString());
-                    command.Parameters.AddWithValue("@param29", DataGridView1.Rows[i].Cells["AmpPedalKey"].Value.ToString());
-                    command.Parameters.AddWithValue("@param30", DataGridView1.Rows[i].Cells["CabinetCategory"].Value.ToString());
-                    command.Parameters.AddWithValue("@param31", DataGridView1.Rows[i].Cells["CabinetKnobValues"].Value.ToString());
-                    command.Parameters.AddWithValue("@param32", DataGridView1.Rows[i].Cells["CabinetPedalKey"].Value.ToString());
-                    command.Parameters.AddWithValue("@param33", DataGridView1.Rows[i].Cells["CabinetType"].Value.ToString());
-                    command.Parameters.AddWithValue("@param34", DataGridView1.Rows[i].Cells["CabinetType"].Value.ToString());
+                    //command.Parameters.AddWithValue("@param26", DataGridView1.Rows[i].Cells["AmpType"].Value.ToString());
+                    //command.Parameters.AddWithValue("@param27", DataGridView1.Rows[i].Cells["AmpCategory"].Value.ToString());
+                    //command.Parameters.AddWithValue("@param28", DataGridView1.Rows[i].Cells["AmpKnobValues"].Value.ToString());
+                    //command.Parameters.AddWithValue("@param29", DataGridView1.Rows[i].Cells["AmpPedalKey"].Value.ToString());
+                    //command.Parameters.AddWithValue("@param30", DataGridView1.Rows[i].Cells["CabinetCategory"].Value.ToString());
+                    //command.Parameters.AddWithValue("@param31", DataGridView1.Rows[i].Cells["CabinetKnobValues"].Value.ToString());
+                    //command.Parameters.AddWithValue("@param32", DataGridView1.Rows[i].Cells["CabinetPedalKey"].Value.ToString());
+                    //command.Parameters.AddWithValue("@param33", DataGridView1.Rows[i].Cells["CabinetType"].Value.ToString());
+                    //command.Parameters.AddWithValue("@param34", DataGridView1.Rows[i].Cells["CabinetType"].Value.ToString());
                     command.Parameters.AddWithValue("@param5", DataGridView1.Rows[i].Cells["Is_Custom"].Value.ToString());
                     //command.Parameters.AddWithValue("@param25", DataGridView1.Rows[i].Cells[""].Value.ToString());
                     //command.Parameters.AddWithValue("@param33", DataGridView1.Rows[i].Cells[""].Value.ToString());
@@ -445,7 +449,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         public void Populate(ref DataGridView DataGridView, ref BindingSource bs) //, ref BindingSource bsPositions, ref BindingSource bsBadges
         {
-            dssx = SelectFromDB("Tones", "SELECT * FROM Tones WHERE CDLC_ID=" + CDLCID + ";", "");
+            dssx = SelectFromDB("Tones", "SELECT * FROM Tones WHERE CDLC_ID=" + CDLCID + ";", "", cnb);
             //using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
             //{
             //    var cmd = "SELECT * FROM Tones WHERE CDLC_ID=" + CDLCID + ";";
@@ -481,9 +485,11 @@ namespace RocksmithToolkitGUI.DLCManager
             DataGridViewTextBoxColumn AmpType = new DataGridViewTextBoxColumn { DataPropertyName = "AmpType", HeaderText = "AmpType " };
             DataGridViewTextBoxColumn AmpCategory = new DataGridViewTextBoxColumn { DataPropertyName = "AmpCategory", HeaderText = "AmpCategory " };
             DataGridViewTextBoxColumn AmpKnobValues = new DataGridViewTextBoxColumn { DataPropertyName = "AmpKnobValues", HeaderText = "AmpKnobValues " };
+            DataGridViewTextBoxColumn AmpKnobKeys = new DataGridViewTextBoxColumn { DataPropertyName = "AmpKnobKeys", HeaderText = "AmpKnobKeys " };
             DataGridViewTextBoxColumn AmpPedalKey = new DataGridViewTextBoxColumn { DataPropertyName = "AmpPedalKey", HeaderText = "AmpPedalKey " };
             DataGridViewTextBoxColumn CabinetCategory = new DataGridViewTextBoxColumn { DataPropertyName = "CabinetCategory", HeaderText = "CabinetCategory " };
             DataGridViewTextBoxColumn CabinetKnobValues = new DataGridViewTextBoxColumn { DataPropertyName = "CabinetKnobValues", HeaderText = "CabinetKnobValues " };
+            DataGridViewTextBoxColumn CabinetKnobKeys = new DataGridViewTextBoxColumn { DataPropertyName = "CabinetKnobKeys", HeaderText = "CabinetKnobKeys " };
             DataGridViewTextBoxColumn CabinetPedalKey = new DataGridViewTextBoxColumn { DataPropertyName = "CabinetPedalKey", HeaderText = "CabinetPedalKey " };
             DataGridViewTextBoxColumn CabinetType = new DataGridViewTextBoxColumn { DataPropertyName = "CabinetType", HeaderText = "CabinetType " };
             DataGridViewTextBoxColumn lastConversionDateTime = new DataGridViewTextBoxColumn { DataPropertyName = "lastConversionDateTime", HeaderText = "lastConversionDateTime " };
@@ -631,9 +637,11 @@ namespace RocksmithToolkitGUI.DLCManager
             public string AmpType { get; set; }
             public string AmpCategory { get; set; }
             public string AmpKnobValues { get; set; }
+            public string AmpKnobKeys { get; set; }
             public string AmpPedalKey { get; set; }
             public string CabinetCategory { get; set; }
             public string CabinetKnobValues { get; set; }
+            public string CabinetKnobKeys { get; set; }
             public string CabinetPedalKey { get; set; }
             public string CabinetType { get; set; }
             public string lastConversionDateTime { get; set; }
@@ -650,7 +658,7 @@ namespace RocksmithToolkitGUI.DLCManager
             var MaximumSize = 0;
 
             //rtxt_StatisticsOnReadDLCs.Text += "\n  ee= ";
-            DataSet dus = new DataSet(); dus = SelectFromDB("Tones", cmd, "");
+            DataSet dus = new DataSet(); dus = SelectFromDB("Tones", cmd, "", cnb);
             //try
             //{
             //    MessageBox.Show(DB_Path);
@@ -660,59 +668,61 @@ namespace RocksmithToolkitGUI.DLCManager
             //        OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
             //        dax.Fill(dus, "Tones");
 
-                    var i = 0;
-                    //rtxt_StatisticsOnReadDLCs.Text += "\n  54= " +dus.Tables[0].Rows.Count;
-                    MaximumSize = dus.Tables[0].Rows.Count;
-                    foreach (DataRow dataRow in dus.Tables[0].Rows)
-                    {
-                        files[i] = new Files();
+            var i = 0;
+            //rtxt_StatisticsOnReadDLCs.Text += "\n  54= " +dus.Tables[0].Rows.Count;
+            MaximumSize = dus.Tables[0].Rows.Count;
+            foreach (DataRow dataRow in dus.Tables[0].Rows)
+            {
+                files[i] = new Files();
 
-                        //rtxt_StatisticsOnReadDLCs.Text += "\n  a= " + i + MaximumSize+dataRow.ItemArray[0].ToString();
-                        files[i].ID = dataRow.ItemArray[0].ToString();
-                        files[i].Tone_Name = dataRow.ItemArray[1].ToString();
-                        files[i].CDLC_ID = dataRow.ItemArray[2].ToString();
-                        files[i].Volume = dataRow.ItemArray[3].ToString();
-                        files[i].Keyy = dataRow.ItemArray[4].ToString();
-                        files[i].Is_Custom = dataRow.ItemArray[5].ToString();
-                        files[i].GearList = dataRow.ItemArray[6].ToString();
-                        files[i].AmpRack = dataRow.ItemArray[7].ToString();
-                        files[i].Pedals = dataRow.ItemArray[8].ToString();
-                        files[i].Description = dataRow.ItemArray[9].ToString();
-                        files[i].Favorite = dataRow.ItemArray[10].ToString();
-                        files[i].SortOrder = dataRow.ItemArray[11].ToString();
-                        files[i].NameSeparator = dataRow.ItemArray[12].ToString();
-                        files[i].Cabinet = dataRow.ItemArray[13].ToString();
-                        files[i].PostPedal1 = dataRow.ItemArray[14].ToString();
-                        files[i].PostPedal2 = dataRow.ItemArray[15].ToString();
-                        files[i].PostPedal3 = dataRow.ItemArray[16].ToString();
-                        files[i].PostPedal4 = dataRow.ItemArray[17].ToString();
-                        files[i].PrePedal1 = dataRow.ItemArray[18].ToString();
-                        files[i].PrePedal2 = dataRow.ItemArray[19].ToString();
-                        files[i].PrePedal3 = dataRow.ItemArray[20].ToString();
-                        files[i].PrePedal4 = dataRow.ItemArray[21].ToString();
-                        files[i].Rack1 = dataRow.ItemArray[22].ToString();
-                        files[i].Rack2 = dataRow.ItemArray[23].ToString();
-                        files[i].Rack3 = dataRow.ItemArray[24].ToString();
-                        files[i].Rack4 = dataRow.ItemArray[25].ToString();
-                        files[i].AmpType = dataRow.ItemArray[26].ToString();
-                        files[i].AmpCategory = dataRow.ItemArray[27].ToString();
-                        files[i].AmpKnobValues = dataRow.ItemArray[28].ToString();
-                        files[i].AmpPedalKey = dataRow.ItemArray[29].ToString();
-                        files[i].CabinetCategory = dataRow.ItemArray[30].ToString();
-                        files[i].CabinetKnobValues = dataRow.ItemArray[31].ToString();
-                        files[i].CabinetPedalKey = dataRow.ItemArray[32].ToString();
-                        files[i].CabinetType = dataRow.ItemArray[33].ToString();
-                        files[i].lastConversionDateTime = dataRow.ItemArray[34].ToString();
-                        files[i].lastConverjsonDateTime = dataRow.ItemArray[35].ToString();
-                        files[i].Comments = dataRow.ItemArray[36].ToString();
-                        i++;
-                    }
-                    //Closing Connection
-                    //dax.Dispose();
-                    //cnn.Close();
-                    //rtxt_StatisticsOnReadDLCs.Text += i;
-                    //var ex = 0;
-                //}
+                //rtxt_StatisticsOnReadDLCs.Text += "\n  a= " + i + MaximumSize+dataRow.ItemArray[0].ToString();
+                files[i].ID = dataRow.ItemArray[0].ToString();
+                files[i].Tone_Name = dataRow.ItemArray[1].ToString();
+                files[i].CDLC_ID = dataRow.ItemArray[2].ToString();
+                files[i].Volume = dataRow.ItemArray[3].ToString();
+                files[i].Keyy = dataRow.ItemArray[4].ToString();
+                files[i].Is_Custom = dataRow.ItemArray[5].ToString();
+                files[i].GearList = dataRow.ItemArray[6].ToString();
+                files[i].AmpRack = dataRow.ItemArray[7].ToString();
+                files[i].Pedals = dataRow.ItemArray[8].ToString();
+                files[i].Description = dataRow.ItemArray[9].ToString();
+                files[i].Favorite = dataRow.ItemArray[10].ToString();
+                files[i].SortOrder = dataRow.ItemArray[11].ToString();
+                files[i].NameSeparator = dataRow.ItemArray[12].ToString();
+                files[i].Cabinet = dataRow.ItemArray[13].ToString();
+                files[i].PostPedal1 = dataRow.ItemArray[14].ToString();
+                files[i].PostPedal2 = dataRow.ItemArray[15].ToString();
+                files[i].PostPedal3 = dataRow.ItemArray[16].ToString();
+                files[i].PostPedal4 = dataRow.ItemArray[17].ToString();
+                files[i].PrePedal1 = dataRow.ItemArray[18].ToString();
+                files[i].PrePedal2 = dataRow.ItemArray[19].ToString();
+                files[i].PrePedal3 = dataRow.ItemArray[20].ToString();
+                files[i].PrePedal4 = dataRow.ItemArray[21].ToString();
+                files[i].Rack1 = dataRow.ItemArray[22].ToString();
+                files[i].Rack2 = dataRow.ItemArray[23].ToString();
+                files[i].Rack3 = dataRow.ItemArray[24].ToString();
+                files[i].Rack4 = dataRow.ItemArray[25].ToString();
+                files[i].AmpType = dataRow.ItemArray[26].ToString();
+                files[i].AmpCategory = dataRow.ItemArray[27].ToString();
+                files[i].AmpKnobValues = dataRow.ItemArray[28].ToString();
+                files[i].AmpKnobKeys = dataRow.ItemArray[29].ToString();
+                files[i].AmpPedalKey = dataRow.ItemArray[30].ToString();
+                files[i].CabinetCategory = dataRow.ItemArray[31].ToString();
+                files[i].CabinetKnobValues = dataRow.ItemArray[32].ToString();
+                files[i].CabinetKnobKeys = dataRow.ItemArray[33].ToString();
+                files[i].CabinetPedalKey = dataRow.ItemArray[34].ToString();
+                files[i].CabinetType = dataRow.ItemArray[35].ToString();
+                files[i].lastConversionDateTime = dataRow.ItemArray[36].ToString();
+                files[i].lastConverjsonDateTime = dataRow.ItemArray[37].ToString();
+                files[i].Comments = dataRow.ItemArray[38].ToString();
+                i++;
+            }
+            //Closing Connection
+            //dax.Dispose();
+            //cnn.Close();
+            //rtxt_StatisticsOnReadDLCs.Text += i;
+            //var ex = 0;
+            //}
             //}
             //catch (System.IO.FileNotFoundException ee)
             //{
@@ -759,6 +769,30 @@ namespace RocksmithToolkitGUI.DLCManager
         private void chbx_AmpPedalKey_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void cmbx_Gear_Name_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var nrc = 0;
+            DataSet dsc = new DataSet(); dsc = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + txt_CDLC_ID.Text + " AND Gear_Name=\""+ cmbx_Gear_Name.Text+ "\";", "", cnb);
+            nrc = dsc.Tables[0].Rows.Count;
+            for (int k = 0; k < nrc; k++)
+            {
+                chbx_Type.Text = dsc.Tables[0].Rows[k].ItemArray[0].ToString();
+                chbx_Category.Text = dsc.Tables[0].Rows[k].ItemArray[1].ToString();
+                //Dictionary<string, float> FG = new Dictionary<string, float>();
+                string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
+                strArrK = dsc.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
+                strArrV = dsc.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
+                //for (int l = 0; k <= strArrK.Length - 1; l++) chbx_KnobKeys.Add(strArrK[l]);
+                //for (int l = 0; k <= strArrV.Length - 1; l++) chbx_KnobValues.Add(strArrV[l]);
+                //chbx_KnobValues = FG;, float.Parse()
+                chbx_KnobKeys.Text= dsc.Tables[0].Rows[k].ItemArray[2].ToString();
+                chbx_KnobValues.Text = dsc.Tables[0].Rows[k].ItemArray[3].ToString();
+                chbx_PedalKey.Text = dsc.Tables[0].Rows[k].ItemArray[4].ToString();
+                chbx_Skin.Text = dsc.Tables[0].Rows[k].ItemArray[5].ToString();
+                chbx_SkinIndex.Text = dsc.Tables[0].Rows[k].ItemArray[6].ToString();
+            }
         }
     }
 }

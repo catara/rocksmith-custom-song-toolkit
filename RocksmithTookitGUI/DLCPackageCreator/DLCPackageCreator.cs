@@ -253,11 +253,11 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                     case GameVersion.RS2014:
                         // TODO: Test WEM generation with non-PC Platforms
                         if (chkPlatformMAC.Checked == chkPlatformPS3.Checked == chkPlatformXBox360.Checked == false)
-                            return "All Supported Files|*.wem;*.ogg;*.wav|Wwise 2013 audio files (*.wem)|*.wem|Ogg Vorbis audio files (*.ogg)|*.ogg|Wave audio files (*.wav)|*.wav";
+                            return "All Supported Files|*.wem;*.ogg;*.wav|Wwise 2016 audio files (*.wem)|*.wem|Ogg Vorbis audio files (*.ogg)|*.ogg|Wave audio files (*.wav)|*.wav";
 
-                        return "Wwise 2013 audio files (*.wem)|*.wem";
+                        return "Wwise 2016 audio files (*.wem)|*.wem";
                     default:
-                        return "Wwise 2010 audio files (*.ogg)|*.ogg";
+                        return "Wwise 2016 audio files (*.ogg)|*.ogg";
                 }
             }
         }
@@ -1352,12 +1352,12 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                         txtAudioPath.Text = "";
                     if (!chkPlatformMAC.Checked && !chkPlatformPS3.Checked && !chkPlatformXBox360.Checked)
                     {//PC only
-                        txtAudioPath.Cue = "Audio to Wwise 2013 converter for Windows (*.wem, *.ogg, *.wav)";
+                        txtAudioPath.Cue = "Audio to Wwise 2016 converter for Windows (*.wem, *.ogg, *.wav)";
                         label2.Text = @"Song preview is generated automatically if not provided in format 'filename_preview.wem'";
                     }
                     else
                     {
-                        txtAudioPath.Cue = "Converted audio on Wwise 2013 for Windows, Mac, XBox360 or PS3 (*.wem)";
+                        txtAudioPath.Cue = "Converted audio on Wwise 2016 for Windows, Mac, XBox360 or PS3 (*.wem)";
                         label2.Text = @"Song preview must have the same file name with '_preview' in the end, eg. 'filename_preview.wem'";
                     }
                     break;
@@ -1366,7 +1366,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                         txtAudioPath.Text = "";
                     chkPlatformMAC.Checked = false;
                     numAudioQuality.Enabled = false;
-                    txtAudioPath.Cue = "Converted audio on Wwise 2010 for Windows, XBox360 or PS3 (*.ogg)";
+                    txtAudioPath.Cue = "Converted audio on Wwise 2016 for Windows, XBox360 or PS3 (*.ogg)";
                     label2.Text = "";
                     break;
             }

@@ -137,7 +137,7 @@ namespace RocksmithToolkitLib.Ogg
 
              if (Selected == OggFile.WwiseVersion.None)
                 throw new FileNotFoundException("You have no compatible version of Audiokinetic Wwise installed." +
-                Environment.NewLine + "Install supportend Wwise version, which are v2013.2.x || v2014.1.x || v2015.1.x || v2016.2.x series" +
+                Environment.NewLine + "Install supportend Wwise version, which are v2013.2.x || v2014.1.x || v2015.1.x || v2016.2.x series|| v2017.1.x series" +
                 Environment.NewLine + " if you would like to use our Wwise autoconvert feature.");
 
              return wwiseCLIexe;

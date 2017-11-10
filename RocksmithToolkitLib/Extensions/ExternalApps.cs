@@ -176,7 +176,7 @@ namespace RocksmithToolkitLib.Extensions
             // -Save should help with updating project to new schema (may loose quality factor field)
             var cmdArgs = String.Format(" \"{0}\" -GenerateSoundBanks -Platform Windows -Language English(US) -NoWwiseDat -ClearAudioFileCache -Save", templatePath);
 
-            GeneralExtensions.RunExternalExecutable(wwiseCLIPath, true, true, true, cmdArgs); //bcapi hidding conversion windows
+            GeneralExtensions.RunExternalExecutable(wwiseCLIPath, true, false, true, cmdArgs); //bcapi hidding conversion windows
         }
 
     }

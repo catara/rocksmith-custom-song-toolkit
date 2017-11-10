@@ -391,7 +391,7 @@ namespace RocksmithToolkitLib.DLCPackage
                     }
                 }
 
-                // Lyric Art Texture
+                // Lyric Art Textureno
                 if (File.Exists(info.LyricArtPath))
                     packPsarc.AddEntry(String.Format("assets/ui/lyrics/{0}/lyrics_{0}.dds", dlcName), new FileStream(info.LyricArtPath, FileMode.Open, FileAccess.Read, FileShare.Read));
 
@@ -603,9 +603,24 @@ namespace RocksmithToolkitLib.DLCPackage
                     packPsarc.AddEntry(String.Format("gamexblocks/nsongs/{0}.xblock", dlcName), xblockStream);
 
                     // WRITE PACKAGE
-                    packPsarc.Write(output, !platform.IsConsole);
+                    Object thisLock = new Object();
+                    //lock (thisLock)
+                    //{
+                        packPsarc.Write(output, !platform.IsConsole);
+                    //}
                     output.WriteTmpFile(String.Format("{0}.psarc", dlcName), platform);
                 }
+            }
+            catch (Exception ex)
+            {
+                //if (ex.Message.IndexOf("No JDK or JRE") > 0)//Help\\WwiseHelp_en.chm"))//
+                //{
+                //    ErrorWindow frm1 = new ErrorWindow("Please Install Java" + Environment.NewLine + "A restart is required" + Environment.NewLine, "http://www.java.com/en/download/win10.jsp", "Error at Packing", false, false);
+                //    frm1.ShowDialog();
+                //}
+                //string ss = String.Format("Error 2generate PS3 package: {0}{1}. {0}PS3 package require 'JAVA x86' (32 bits) installed on your machine to generate properly.{0}", Environment.NewLine, ex.StackTrace);
+                MessageBox.Show(ex.Message);
+                //errorsFound.AppendLine(ss);
             }
             finally
             {

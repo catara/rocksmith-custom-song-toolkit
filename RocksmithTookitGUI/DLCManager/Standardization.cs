@@ -567,7 +567,7 @@ namespace RocksmithToolkitGUI.DLCManager
         {//continue;
             //}
 
-            var norec = 0; //get al Default ON entries in standardization table
+            //var norec = 0; //get al Default ON entries in standardization table
             DataSet dfz = new DataSet(); dfz = SelectFromDB("Standardization", "SELECT iif(Artist_Correction<>\"\", Artist_Correction, Artist), iif(Album_Correction<>\"\", Album_Correction, Album), IIF(AlbumArt_Correction<>\"\", AlbumArt_Correction, SpotifyAlbumPath) FROM Standardization WHERE (Default_Cover = \"Yes\") GROUP BY iif(Artist_Correction<>\"\", Artist_Correction, Artist), iif(Album_Correction<>\"\", Album_Correction, Album),IIF(AlbumArt_Correction<>\"\", AlbumArt_Correction, SpotifyAlbumPath);", "", cnb);
 
             foreach (DataRow dataRow in dfz.Tables[0].Rows)

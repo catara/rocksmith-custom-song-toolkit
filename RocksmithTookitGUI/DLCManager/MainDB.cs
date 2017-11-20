@@ -58,7 +58,7 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             InitializeComponent();
             DB_Path = txt_DBFolder;// + "\\Files.accdb";
-            TempPath = txt_TempPath;
+            TempPath = txt_TempPath;            
             RocksmithDLCPath = txt_RocksmithDLCPath;
             updateDBb = updateDB;
             AllowEncriptb = AllowEncript;
@@ -97,6 +97,7 @@ namespace RocksmithToolkitGUI.DLCManager
         public static PrivateProfile _profile;
         public List<FullTrack> _savedTracks;
         public List<SimplePlaylist> _playlists;
+        public string Archive_Path = ConfigRepository.Instance()["dlcm_TempPath"] + "\\0_archive";
 
         private BindingSource Main = new BindingSource();
         private const string MESSAGEBOX_CAPTION = "MainDB";
@@ -550,6 +551,10 @@ namespace RocksmithToolkitGUI.DLCManager
                 if (databox.Rows[i].Cells["Has_Bonus_Arrangement"].Value.ToString() == "Yes") chbx_Bonus.Checked = true;
                 else chbx_Bonus.Checked = false;
                 chbx_Avail_Old.Checked = false;
+                if (float.Parse(databox.Rows[i].Cells["audioBitrate"].Value.ToString()) > ConfigRepository.Instance()["dlcm_MaxBitRate"].ToInt32()
+                    || float.Parse(databox.Rows[i].Cells["audioSampleRate"].Value.ToString()) > ConfigRepository.Instance()["dlcm_MaxSampleRate"].ToInt32()
+                    || databox.Rows[i].Cells["Has_Preview"].Value.ToString() == "No")
+                { btn_Fix_AudioIssues.Enabled = true; }
 
                 if (databox.Rows[i].Cells["Available_Old"].Value.ToString() == "Yes") { chbx_Avail_Old.Checked = true; btn_OldFolder.Enabled = true; btn_CopyOld.Enabled = true; chbx_CopyOld.Enabled = true; }
                 else { chbx_Avail_Old.Checked = false; btn_OldFolder.Enabled = false; ; btn_CopyOld.Enabled = false; chbx_CopyOld.Enabled = false; }
@@ -584,9 +589,11 @@ namespace RocksmithToolkitGUI.DLCManager
                 // Create the ToolTip and associate with the Form container.
                 ToolTip toolTip1 = new ToolTip();
                 ToolTip toolTip2 = new ToolTip();
+                ToolTip toolTip3 = new ToolTip();
                 // Set up the ToolTip text for the Button and Checkbox.
                 toolTip1.SetToolTip(this.btn_PlayAudio, databox.Rows[i].Cells["Audio_OrigHash"].Value.ToString());
                 toolTip2.SetToolTip(this.btn_PlayPreview, databox.Rows[i].Cells["Audio_OrigPreviewHash"].Value.ToString());
+                toolTip3.SetToolTip(this.picbx_AlbumArtPath, databox.Rows[i].Cells["audioBitrate"].Value.ToString() + " - " + databox.Rows[i].Cells["audioSampleRate"].Value.ToString());
 
                 if (databox.Rows[i].Cells["Is_Live"].Value.ToString() == "Yes") { chbx_Is_Live.Checked = true; txt_Live_Details.Enabled = true; }
                 else { chbx_Is_Live.Checked = false; txt_Live_Details.Enabled = true; }
@@ -1537,7 +1544,7 @@ namespace RocksmithToolkitGUI.DLCManager
             var AlbumCovers_PSPath = TempPath + "\\0_albumCovers";
             var Log_PSPath = TempPath + "\\0_log";
             string pathDLC = ConfigRepository.Instance()["dlcm_RocksmithDLCPath"]; //; RocksmithDLCPath;
-            CreateTempFolderStructure(Temp_Path_Import, old_Path_Import, broken_Path_Import, dupli_Path_Import, dlcpacks, pathDLC, repacked_Path, repacked_XBOXPath, repacked_PCPath, repacked_MACPath, repacked_PSPath, log_Path, AlbumCovers_PSPath, Log_PSPath);
+            CreateTempFolderStructure(Temp_Path_Import, old_Path_Import, broken_Path_Import, dupli_Path_Import, dlcpacks, pathDLC, repacked_Path, repacked_XBOXPath, repacked_PCPath, repacked_MACPath, repacked_PSPath, log_Path, AlbumCovers_PSPath, Log_PSPath,Archive_Path);
 
 
 
@@ -1700,7 +1707,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //            }
             //        }
             //    }
-            string dlcSavePath = "";
+            //string dlcSavePath = "";
             var cmd = "SELECT * FROM Main ";
             cmd += "WHERE ID = " + txt_ID.Text + "";
 
@@ -4724,10 +4731,10 @@ namespace RocksmithToolkitGUI.DLCManager
             //}
             try
             {
-                CleanFolder(TempPath + "\\0_repacked\\PC", "");
-                CleanFolder(TempPath + "\\0_repacked\\PS3", "");
-                CleanFolder(TempPath + "\\0_repacked\\MAC", "");
-                CleanFolder(TempPath + "\\0_repacked\\XBOX360", "");
+                CleanFolder(TempPath + "\\0_repacked\\PC", "", true, Archive_Path);
+                CleanFolder(TempPath + "\\0_repacked\\PS3", "", true, Archive_Path);
+                CleanFolder(TempPath + "\\0_repacked\\MAC", "", true, Archive_Path);
+                CleanFolder(TempPath + "\\0_repacked\\XBOX360", "", true, Archive_Path);
             }
             catch (Exception ex) { Console.Write(ex); }
 
@@ -4778,7 +4785,7 @@ namespace RocksmithToolkitGUI.DLCManager
             {
                 try
                 {
-                    CleanFolder(TempPath + "\\0_duplicate", "");
+                    CleanFolder(TempPath + "\\0_duplicate", "", true, Archive_Path);
                 }
                 catch (Exception ex) { Console.Write(ex); }
             }

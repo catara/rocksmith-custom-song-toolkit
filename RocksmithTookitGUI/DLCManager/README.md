@@ -68,22 +68,17 @@
 [ ] consider live when searching for the track NO or dont :)
 [ ] Repack only repack Initial or LAst only one platform 
 [ ] Repack only copy and ftp,  Initial or LAst only one platform 
-[ ] finish arrangement (demo with the hives overdrive all the time :) )
 [ ] add checks to packed..remember to ask if they wanna clean ups or notification 
 [ ] cause it doesnt pick up version it cannot diff shiro astronau
 [ ] other platforms do not have official flag correctly detected
 [ ] search using ignition
 [ ] add convert multitone to single tone
 [ ] duplicate lead to Rhythm
-[ ] copy imported files
 [ ] Repair broken CDLC
 [ ] add 46&2 lyrics from old one
 [ ] overrite rename buttons
-[ ] Profiles should include also Format
 [ ] replace all does not exist
 [ ] each platform should have its own remote location
-[ ] delete moves to duplicates but does not add dupli if exists
-[ ] delete does not delete the actual record from repack_audittrail
 [ ] INCUBUS REDEFINE MULTI SHOWS IN RED AT DUPLICATION MANAGEMENT SCREEN
 [ ] fix import current month
 [ ] gasoline cannot be packed
@@ -101,31 +96,22 @@
 [ ] update readme.md screenshots
 [ ] try db constant connection
 [ ] year inconsitencies (check should show these as well)
-[ ] the pretender doesnt register as alternate
-[ ] check smooth saiyin and c file that breaks
-[ ] check crossed album art
-[ ] check iron maiden album art
 [ ] unify pack function
 [ ] check author db saving being used at pack
 [ ] add missin tones and arrangement parameters
 [ ] make mass pack also use db values
 [ ] why album id is the same as artist id
 [ ] if no delete then dont delete DBscocnvert and ftp is it working at mass packing
-[ ] add a 4 sec timestamp in each song
 [ ] mantra cannot be imported
 [ ] come together lyrics
 [ ] check db also checks arrangements, standardization, tones,
-
-## WiP:
 [-] vs blue maybe also yes blue (blu happens also when small 1bite amybe 2 diff in filesize
-[-] small feature: when opening MainDB and detecting directory check runs, if next directory exists (give a change to empty the db then if possible)
 [-] small improv: add the proper lasconvdate in the db 
 [-] fix songs w only bass and dd attached
 [-] select incl groups has a small error (userissues)
 [-] test replace ....
 [-] add copy last and initial to mass pack
 [-] prepare the rebuild option
-[-] is dupli marked as ignore/ duplicate decompressed folder deleted?
 [-] redo save track at pack with update function
 [-] improve the overlay
 [-] fix for rebuild missing file
@@ -136,13 +122,8 @@
 	[ ] check and fix the Sections flag
 	[+] add sections (bored to death; Renabled BPR program)
 	[x] add conter of sections
-[-] ignore and del 4k/no psarc files invalid wil/should be added by nmew validation
-[x] alternate 0 improve
-	[+] with or without u still doesnt have the right alternate no when importing vs an existing song= a2....maybe OK :)
-	[ ] alt 1 ahead of a.
 [-] mac song gen errors at read dlc library
 [-] Enable CDLC
-[-] copied copied copied (user issue)
 [+] remove all dd in Cache/Retails screen
 [-] generate a garageband _(curently the mp3 is converted to wav for GB Import)
 [-] song fails at import
@@ -160,26 +141,50 @@
 [ ] georlitt_m.psarc
 [ ] "Alice-In-Chains_Nutshell-Unplugged_v6_p.psarc"
 [ ] orion changed cover
-[ ] new dupli platform none
 [ ] fixed a vocal at dupli missing 
 [ ] improve maybe tone diff message
+fix tones
+72 should be 37
 
-
-done:
+## WiP:
 (next release)
-[ ] 1_1 should be 1.1
-[ ] fix dupli issues...album red label
+
+## done:
+(this release)
+[x] 1_1 should be 1.1
+[x] copied copied copied (user issue)
+[x] fix dupli issues...album red label
 [ ] check if there are any platforms None
-[ ] import form exiting folders
-	[ ] fixe size
-	[ ] fix platformcheck for orig if exiting else iugnore
+[x] import from exiting folders
+	[x] fixe siz
+	e
+	[x] fix platform check for orig if exiting else ignore
 	maybbe fix audio should not be async
-[ ] improve skipp typoo and @import move to old	
-[ ] cleand up the saving settings logic
-[x] one looks like it has too many metallica duplciates
+[x] new dupli platform none
+[x] improve skipp typoo and @import move to old	
+[ ] clean up the saving settings logic
+[x] one looks like it has too many metallica duplicates (name containe in multiple songs)
 [ ] fix audio add cancel
-[ ] if 75 selected add twice in pack
-[ ] dont move if 75 selected ..any other hash duplciate or duplim managh duplicate
+[x] if 75 selected add twice in pack
+[x] dont move if 75 selected ..any other hash duplicate or duplim manag duplicate
+[ ] add logprogress at SAveSettings
+[x] mac songs should be duplciate of pcs
+[-] ignore and del 4k/no psarc files invalid wil/should be added by nmew validation
+[x] alternate 0 improve
+	[+] with or without u still doesnt have the right alternate no when importing vs an existing song= a2....maybe OK :)
+	[ ] alt 1 ahead of a.
+[-] is dupli marked as ignore/ duplicate decompressed folder deleted?
+[-] small feature: when opening MainDB and detecting directory check runs, if next directory exists (give a change to empty the db then if possible)
+[ ] add a 4 sec timestamp in each song
+[ ] the pretender doesnt register as alternate
+[ ] check smooth sailying and c file that breaks
+[ ] check crossed album art
+[ ] check iron maiden album art
+[x] delete moves to duplicates but does not add dupli if exists
+[x] Profiles should include also Format
+[ ] copy imported files
+[ ] finish arrangement (demo with the hives overdrive all the time :) )
+[ ] delete does not delete the actual record from repack_audittrail
 
 - diff between master and branch
 DLCManager folder

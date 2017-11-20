@@ -114,15 +114,19 @@
   <Config Key="dlcm_AdditionalManipul69" Value="Yes" />
   <Config Key="dlcm_AdditionalManipul70" Value="No" />
   <Config Key="dlcm_AdditionalManipul71" Value="No" />
-  <Config Key="dlcm_AdditionalManipul72" Value="Yes" />
+  <Config Key="dlcm_AdditionalManipul72" Value="No" />
   <Config Key="dlcm_AdditionalManipul73" Value="Yes" />
   <Config Key="dlcm_AdditionalManipul74" Value="Yes" />
-  <Config Key="dlcm_AdditionalManipul75" Value="No" />
+  <Config Key="dlcm_AdditionalManipul75" Value="Yes" />
   <Config Key="dlcm_AdditionalManipul76" Value="Yes" />
   <Config Key="dlcm_AdditionalManipul77" Value="Yes" />
   <Config Key="dlcm_AdditionalManipul78" Value="Yes" />
   <Config Key="dlcm_AdditionalManipul79" Value="No" />
   <Config Key="dlcm_AdditionalManipul80" Value="Yes" />
+  <Config Key="dlcm_AdditionalManipul81" Value="Yes" />
+  <Config Key="dlcm_AdditionalManipul82" Value="Yes" />
+  <Config Key="dlcm_AdditionalManipul83" Value="No" />
+  <Config Key="dlcm_AdditionalManipul84" Value="Yes" />
   <Config Key="dlcm_Album" Value="&#60;Broken&#62;&#60;Year&#62; - &#60;Album&#62; - &#60;Rating&#62; - &#60;Avail. Instr.&#62; - &#60;DD&#62; - &#60;Tuning&#62;-&#60;Group&#62;" />;
   <Config Key="dlcm_Artist" Value="&#60;Artist&#62;-&#60;CDLC&#62;-&#60;Avail. Tracks&#62;-&#60;DD&#62;-&#60;QAs&#62;-&#60;Bass_HasDD&#62;" />;
   <Config Key="dlcm_Artist_Sort" Value="&#60;Beta&#62;&#60;Group&#62;&#60;Artist&#62;" />;
@@ -167,7 +171,7 @@
   <Config Key="dlcm_BitRate" Value="128000" />;
   <Config Key="dlcm_MaxBitRate" Value="135000" />;
   <Config Key="dlcm_MaxSampleRate" Value="48001" />;  
-  <Config Key="dlcm_SampleRate" Value="44001" />;
+  <Config Key="dlcm_SampleRate" Value="44000" />;
   <Config Key="dlcm_EoFPath" Value="C:\\GitHub\\rocksmith-custom-song-toolkit\\RocksmithTookitGUI\\DLCManager\\external_tools\\eof1.8RC12\\eof.exe" />;
   <Config Key="dlcm_UltraStarCreator" Value="C:\\GitHub\\rocksmith-custom-song-toolkit\\RocksmithTookitGUI\\DLCManager\\external_tools\\UltraStar Creator\\usc.exe" />;
   <Config Key="dlcm_WinMerge" Value="\C:\\GitHub\\rocksmith-custom-song-toolkit\\RocksmithTookitGUI\\DLCManager\external_tools\\WinMerge" />;

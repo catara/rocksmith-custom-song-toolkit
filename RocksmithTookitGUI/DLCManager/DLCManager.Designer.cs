@@ -410,12 +410,12 @@ namespace RocksmithToolkitGUI.DLCManager
             "43. @Import Set the DLCID autom",
             "44. @Pack Set the DLCID autom",
             "45. <Convert Originals>",
-            "46. Duplicate Mangement, Title added info is inbetween []",
+            "46. Duplicate Mangement, Title added info is inbetween separators: []",
             "47. Add New Toolkit v. and RePackedByAuthor",
-            "48. @Import Remove Multitrack/Live info from Title",
+            "48. @Import Remove Multitrack/Live/Acoustic info from Title",
             "49. @Pack Also Copy/FTP",
-            "50. @Import place \"obvious\" duplicates at the end of the Process",
-            "51. @Import Overrite the XML",
+            "50. @Import Manually assess duplicates at the end",
+            "51. @Import&Unpack Overwrite the XML",
             "52. @Pack keep Bass DD if indicated so",
             "53. @Pack keep All DD if indicated so",
             "54. @Pack consider All songs as beta (place them top of the list)",
@@ -436,14 +436,14 @@ namespace RocksmithToolkitGUI.DLCManager
             "69. Compress AudioFiles to 128VBR @Pack/Import if bigger than 136k",
             "70. @Repack pack Preview (bugfix)",
             "71. <@Import/Repack check if Original flag is in the Official list and correct>",
-            "72. <Import other formats but PC, as well (as standalone)>",
+            "72. Import other formats but PC, as standalone",
             "73. Add Track Info&Comments beginning of Lyrics",
             "74. Add Track start into Vocals",
             "75. Copy to \\0\\0_Old (Overwrites 15 Move to old)",
             "76. Include Tones/arangements Db changes",
             "77. After Import open MainDB",
             "78. @Import Fix Audio Issues at end",
-            "79. @Import Asses All Duplicates",
+            "79. @Import Manually Asses All Suspicious Duplicates",
             "80. Duplicate manag. ignores Acoustic Songs",
             "81. ",
             "82.",
@@ -1067,7 +1067,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // chbx_DebugB
             // 
             this.chbx_DebugB.AutoSize = true;
-            this.chbx_DebugB.Location = new System.Drawing.Point(624, 8);
+            this.chbx_DebugB.Location = new System.Drawing.Point(618, 8);
             this.chbx_DebugB.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.chbx_DebugB.Name = "chbx_DebugB";
             this.chbx_DebugB.Size = new System.Drawing.Size(140, 29);
@@ -1091,7 +1091,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // btn_DBFolder
             // 
-            this.btn_DBFolder.Location = new System.Drawing.Point(576, 91);
+            this.btn_DBFolder.Location = new System.Drawing.Point(570, 91);
             this.btn_DBFolder.Margin = new System.Windows.Forms.Padding(5, 2, 5, 2);
             this.btn_DBFolder.Name = "btn_DBFolder";
             this.btn_DBFolder.Size = new System.Drawing.Size(43, 27);
@@ -1150,19 +1150,19 @@ namespace RocksmithToolkitGUI.DLCManager
             // chbx_CleanTemp
             // 
             this.chbx_CleanTemp.AutoSize = true;
-            this.chbx_CleanTemp.Location = new System.Drawing.Point(624, 48);
+            this.chbx_CleanTemp.Location = new System.Drawing.Point(618, 48);
             this.chbx_CleanTemp.Margin = new System.Windows.Forms.Padding(5, 2, 5, 2);
             this.chbx_CleanTemp.Name = "chbx_CleanTemp";
-            this.chbx_CleanTemp.Size = new System.Drawing.Size(167, 29);
+            this.chbx_CleanTemp.Size = new System.Drawing.Size(233, 29);
             this.chbx_CleanTemp.TabIndex = 17;
-            this.chbx_CleanTemp.Text = "Clean Folder";
+            this.chbx_CleanTemp.Text = "Clean DB&&TempFld";
             this.toolTip1.SetToolTip(this.chbx_CleanTemp, "Cleans the Temp, Old, Duplicate, Repacked, Broken Folders");
             this.chbx_CleanTemp.UseVisualStyleBackColor = true;
             this.chbx_CleanTemp.Visible = false;
             // 
             // btn_SteamDLCFolder
             // 
-            this.btn_SteamDLCFolder.Location = new System.Drawing.Point(576, 10);
+            this.btn_SteamDLCFolder.Location = new System.Drawing.Point(570, 10);
             this.btn_SteamDLCFolder.Margin = new System.Windows.Forms.Padding(5, 2, 5, 2);
             this.btn_SteamDLCFolder.Name = "btn_SteamDLCFolder";
             this.btn_SteamDLCFolder.Size = new System.Drawing.Size(43, 27);
@@ -1175,7 +1175,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // chbx_CleanDB
             // 
             this.chbx_CleanDB.AutoSize = true;
-            this.chbx_CleanDB.Location = new System.Drawing.Point(663, 91);
+            this.chbx_CleanDB.Location = new System.Drawing.Point(34, 1104);
             this.chbx_CleanDB.Margin = new System.Windows.Forms.Padding(5, 2, 5, 2);
             this.chbx_CleanDB.Name = "chbx_CleanDB";
             this.chbx_CleanDB.Size = new System.Drawing.Size(146, 29);
@@ -1199,10 +1199,10 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.btn_PopulateDB.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.btn_PopulateDB.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_PopulateDB.Location = new System.Drawing.Point(843, 120);
+            this.btn_PopulateDB.Location = new System.Drawing.Point(852, 120);
             this.btn_PopulateDB.Margin = new System.Windows.Forms.Padding(5, 2, 5, 2);
             this.btn_PopulateDB.Name = "btn_PopulateDB";
-            this.btn_PopulateDB.Size = new System.Drawing.Size(229, 48);
+            this.btn_PopulateDB.Size = new System.Drawing.Size(220, 48);
             this.btn_PopulateDB.TabIndex = 13;
             this.btn_PopulateDB.Text = "Import DLCs";
             this.toolTip1.SetToolTip(this.btn_PopulateDB, resources.GetString("btn_PopulateDB.ToolTip"));
@@ -1213,10 +1213,10 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.btn_OpenMainDB.BackColor = System.Drawing.SystemColors.MenuHighlight;
             this.btn_OpenMainDB.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_OpenMainDB.Location = new System.Drawing.Point(843, 50);
+            this.btn_OpenMainDB.Location = new System.Drawing.Point(852, 50);
             this.btn_OpenMainDB.Margin = new System.Windows.Forms.Padding(5, 2, 5, 2);
             this.btn_OpenMainDB.Name = "btn_OpenMainDB";
-            this.btn_OpenMainDB.Size = new System.Drawing.Size(229, 69);
+            this.btn_OpenMainDB.Size = new System.Drawing.Size(220, 69);
             this.btn_OpenMainDB.TabIndex = 10;
             this.btn_OpenMainDB.Text = "Open MainDB";
             this.toolTip1.SetToolTip(this.btn_OpenMainDB, "Main DB Listing All Imported CDLC");
@@ -1236,7 +1236,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // btn_TempPath
             // 
-            this.btn_TempPath.Location = new System.Drawing.Point(576, 50);
+            this.btn_TempPath.Location = new System.Drawing.Point(570, 50);
             this.btn_TempPath.Margin = new System.Windows.Forms.Padding(5, 2, 5, 2);
             this.btn_TempPath.Name = "btn_TempPath";
             this.btn_TempPath.Size = new System.Drawing.Size(43, 27);
@@ -1317,7 +1317,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // chbx_DefaultDB
             // 
             this.chbx_DefaultDB.AutoSize = true;
-            this.chbx_DefaultDB.Location = new System.Drawing.Point(624, 133);
+            this.chbx_DefaultDB.Location = new System.Drawing.Point(657, 94);
             this.chbx_DefaultDB.Margin = new System.Windows.Forms.Padding(5, 2, 5, 2);
             this.chbx_DefaultDB.Name = "chbx_DefaultDB";
             this.chbx_DefaultDB.Size = new System.Drawing.Size(185, 29);
@@ -1472,7 +1472,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // btn_CalcNoOfImports
             // 
             this.btn_CalcNoOfImports.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_CalcNoOfImports.Location = new System.Drawing.Point(816, 120);
+            this.btn_CalcNoOfImports.Location = new System.Drawing.Point(827, 127);
             this.btn_CalcNoOfImports.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.btn_CalcNoOfImports.Name = "btn_CalcNoOfImports";
             this.btn_CalcNoOfImports.Size = new System.Drawing.Size(24, 27);
@@ -1485,7 +1485,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // btn_CopyDefaultDBtoTemp
             // 
             this.btn_CopyDefaultDBtoTemp.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_CopyDefaultDBtoTemp.Location = new System.Drawing.Point(624, 91);
+            this.btn_CopyDefaultDBtoTemp.Location = new System.Drawing.Point(618, 90);
             this.btn_CopyDefaultDBtoTemp.Margin = new System.Windows.Forms.Padding(5);
             this.btn_CopyDefaultDBtoTemp.Name = "btn_CopyDefaultDBtoTemp";
             this.btn_CopyDefaultDBtoTemp.Size = new System.Drawing.Size(37, 32);

@@ -132,7 +132,7 @@ namespace RocksmithToolkitGUI.DLCManager
             dssx.Dispose();
             //try
             //{
-            //using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
             //{
             dssx.Clear();
             //DataSet ds = new DataSet();
@@ -329,10 +329,10 @@ namespace RocksmithToolkitGUI.DLCManager
 
         public void button1_Click_1(object sender, EventArgs e)
         {
-            DLCManager v1 = new DLCManager();
+            //DLCManager v1 = new DLCManager();
             string txt = DB_Path;//.Replace("\\AccessDB.accdb", "");
             //MessageBox.Show(txt);
-            v1.Translation_And_Correction(txt);
+            GenericFunctions.Translation_And_Correction(txt, pB_ReadDLCs, cnb);
             //advance or step back in the song list
             int i = 0;
             if (btn_Delete_All.Rows.Count > 1 && btn_Delete_All.SelectedCells.Count>0)
@@ -378,7 +378,7 @@ namespace RocksmithToolkitGUI.DLCManager
             ////DB_Path = DB_Path.Replace("dlc\\AccessDB.accdb","dlc");
             //try
             //{
-            //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path.Replace("\\AccessDB.accdb;", "")))
+            //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path.Replace("\\AccessDB.accdb;", "")))
             //    {
             //        DataSet dus = new DataSet();
             //        cmd1 = "UPDATE Main SET Artist_Sort = Artist";
@@ -405,7 +405,7 @@ namespace RocksmithToolkitGUI.DLCManager
             ////var DB_Path = DB_Path + "\\AccessDB.accdb";
             //try
             //{
-            //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
             //    {
             //        DataSet dus = new DataSet();
             //        cmd1 = "UPDATE Main SET Song_Title_Sort = Song_Title";
@@ -437,7 +437,7 @@ namespace RocksmithToolkitGUI.DLCManager
             ////var DB_Path = DB_Path + "\\AccessDB.accdb";
             //try
             //{
-            //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DBs_Path))
+            //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DBs_Path))
             //    {
             //        DataSet dus = new DataSet();
             //        cmd1 = "UPDATE Main SET AlbumArt = \"" + AlbumArt + "\" WHERE Artist=\"" + Artist + "\" and Album=\"" + Albums + "\"";
@@ -457,7 +457,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
             var NoRec = 0;
             //DataSet dssx = new DataSet();
-            //using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DBs_Path))
+            //using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DBs_Path))
             //{
             //    OleDbDataAdapter da = new OleDbDataAdapter("SELECT ID FROM Main WHERE Artist=\"" + Artist + "\" and Album=\"" + Albums + "\";", cn);
             //    da.Fill(dssx, "Standardization");
@@ -624,9 +624,9 @@ namespace RocksmithToolkitGUI.DLCManager
                 //Main.ResetBindings(false);
 
 
-                var connection = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path);
+                var connection = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path);
                 var command = connection.CreateCommand();
-                using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
                 {
                     command.CommandText = "UPDATE Standardization SET ";
 
@@ -686,7 +686,7 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             DeleteFromDB("Standardization", "DELETE * FROM Standardization WHERE ID IN (" + txt_ID.Text + ")", cnb);
             //var cmd = "DELETE * FROM Standardization WHERE ID IN (" + txt_ID.Text + ")";
-            //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
             //{
             //    DataSet dhs = new DataSet();
             //    OleDbDataAdapter dhx = new OleDbDataAdapter(cmd, cnn);
@@ -810,6 +810,57 @@ namespace RocksmithToolkitGUI.DLCManager
                 Populate(ref btn_Delete_All, ref Main);
                 btn_Delete_All.EditingControlShowing += DataGridView1_EditingControlShowing;
                 btn_Delete_All.Refresh();
+            }
+        }
+
+        private void button1_Click_5(object sender, EventArgs e)
+        {
+            if (netstatus == "NOK" || netstatus == "") netstatus = ActivateSpotify_ClickAsync().Result.ToString();
+            DataSet SongRecord = new DataSet(); SongRecord = SelectFromDB("Standardization", "SELECT IIF(Artist_Correction is null,Artist,Artist_Correction), IIF(Album_Correction is null,Album,Album_Correction), ID FROM Standardization WHERE SpotifyArtistID = \"-\" OR SpotifyArtistID = \"\" OR SpotifyArtistID is null ORDER BY SpotifyArtistID ASC;", "", cnb);
+            var noOfRec = SongRecord.Tables[0].Rows.Count;
+            //var vFilesMissingIssues = "";
+            pB_ReadDLCs.Value = 0;pB_ReadDLCs.Step = 1;
+            pB_ReadDLCs.Maximum = noOfRec;
+            
+            //var MissingPSARC = false;
+            for (var i = 0; i < noOfRec; i++)
+            {
+                pB_ReadDLCs.Increment(1);
+                try
+                {
+                    Task<string> sptyfy = StartToGetSpotifyDetails(SongRecord.Tables[0].Rows[i].ItemArray[0].ToString(), SongRecord.Tables[0].Rows[i].ItemArray[1].ToString(), "", "", "");
+                    //s = sptyfy.ToString();  
+                    var trackno = sptyfy.Result.Split(';')[0].ToInt32();
+                    //var Track_No = trackno.ToString();
+                    var SpotifySongID = sptyfy.Result.Split(';')[1];
+                    var SpotifyArtistID = sptyfy.Result.Split(';')[2];
+                    var SpotifyAlbumID = sptyfy.Result.Split(';')[3];
+                    var SpotifyAlbumURL = sptyfy.Result.Split(';')[4];
+                    var SpotifyAlbumPath = sptyfy.Result.Split(';')[5];
+                    //if (ConfigRepository.Instance()["dlcm_AdditionalManipul59"] == "Yes")
+                    //{
+                    var cmds = "UPDATE Standardization SET ";// Spotify_Song_ID=\"" + SpotifySongID + "\", SpotifyArtistID=\"" + SpotifyArtistID + "\"";
+                    cmds += " SpotifyAlbumID=\"" + SpotifyAlbumID + "\"" + ", SpotifyAlbumURL=\"" + SpotifyAlbumURL + "\"" + ",SpotifyAlbumPath=\"" + SpotifyAlbumPath + "\"";
+                    cmds += " WHERE ID=" + SongRecord.Tables[0].Rows[i].ItemArray[2].ToString();
+                    DataSet dis = new DataSet(); 
+                    if (trackno> 0 && SpotifySongID != "" && SpotifySongID != "-") dis = UpdateDB("Standardization", cmds + ";", cnb);
+                    DateTime timestamp = UpdateLog(DateTime.Now, i + "/" + noOfRec + " Spotify details: " + trackno + " " + SpotifyAlbumPath, true , ConfigRepository.Instance()["dlcm_LogPath"], ConfigRepository.Instance()["dlcm_TempPath"], "", "DLCManager", pB_ReadDLCs, null);
+                    //ADD STADARDISATION UPDATE
+                    //Updating the Standardization table
+                    //DataSet dzs = new DataSet(); dzs = SelectFromDB("Standardization", "SELECT * FROM Standardization WHERE StrComp(Artist,\""
+                    //    + info.SongInfo.Artist + "\", 0) = 0 AND StrComp(Album,\"" + info.SongInfo.Album + "\", 0) = 0;", ConfigRepository.Instance()["dlcm_DBFolder"], cnb);
+
+                    //if (dzs.Tables[0].Rows.Count == 0)
+                    //{
+                    //var updcmd = "UPDATE Stadarization SET SpotifyArtistID=\"" + SpotifyArtistID + "\" , SpotifyAlbumID=\"" + SpotifyArtistID + "\", SpotifyAlbumURL=\""
+                    //    + SpotifyAlbumURL + "\", SpotifyAlbumPath=\"" + SpotifyAlbumPath + "\" WHERE (Artist=\"" + SongRecord.Tables[0].Rows[i].ItemArray[0].ToString() + "\" OR Artist_Correction=\""
+                    //    + SongRecord.Tables[0].Rows[i].ItemArray[0].ToString() + "\") AND (Artist=\"" + SongRecord.Tables[0].Rows[i].ItemArray[0].ToString() + "\" OR Album_Correction=\"" + SongRecord.Tables[0].Rows[i].ItemArray[0].ToString() + "\")";
+
+                    //UpdateDB("Standardization", updcmd + ";", cnb);
+                    //}
+
+                }
+                catch (Exception ex) { var tust = "Spotify Error ..." + ex; UpdateLog(DateTime.Now, tust, false, ConfigRepository.Instance()["dlcm_LogPath"], ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null); }
             }
         }
     }

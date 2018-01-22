@@ -176,7 +176,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 var norec = 0;
                 //try
                 //{
-                //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
                 //    {
                 //        string SearchCmd = "SELECT DISTINCT Groups FROM Groups WHERE Type=\"Retail\";";
                 //        OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
@@ -207,7 +207,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 DataSet dds = new DataSet(); dds = SelectFromDB("Main", "SELECT DISTINCT Groups FROM Groups WHERE Type=\"Retail\" AND CDLC_ID=\"" + DataGridView1.Rows[DataGridView1.SelectedCells[0].RowIndex].Cells["ID"].Value.ToString() + "\";", "", cnb);
                 //DataSet dds = new DataSet();
                 ////Create Groups list MultiCheckbox
-                //using (OleDbConnection con = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                //using (OleDbConnection con = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
                 //{
                 //    string SearchCmds = "SELECT DISTINCT Groups FROM Groups WHERE Type=\"Retail\" AND CDLC_ID=\"" + DataGridView1.Rows[DataGridView1.SelectedCells[0].RowIndex].Cells["ID"].Value.ToString() + "\";";
                 //    OleDbDataAdapter dfa = new OleDbDataAdapter(SearchCmds, con); //WHERE id=253
@@ -274,7 +274,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     //DataSet ddz = new DataSet();
                     for (int j = 0; j < chbx_AllGroups.Items.Count; j++)
                     {
-                        //using (OleDbConnection cmb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                        //using (OleDbConnection cmb = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
                         //{
                         //    DataSet dooz = new DataSet();
                         //    string updatecmd = "SELECT ID FROM Groups WHERE Type=\"Retail\" AND CDLC_ID=\"" + txt_ID.Text + "\" AND Groups=\"" + chbx_AllGroups.Items[j] + "\";";
@@ -290,7 +290,7 @@ namespace RocksmithToolkitGUI.DLCManager
                              //   cmd += "(\"" + txt_ID.Text + "\",\"" + chbx_AllGroups.Items[j] + "\",\"Retail\")";
                             var insertcmdd = "CDLC_ID, Groups, Type";
                             var insertvalues = "\"" + txt_ID.Text + "\",\"" + chbx_AllGroups.Items[j] + "\",\"Retail\"";
-                            InsertIntoDBwValues("Groups", insertcmdd, insertvalues, cnb);
+                            InsertIntoDBwValues("Groups", insertcmdd, insertvalues, cnb, 0);
                             //OleDbDataAdapter dab = new OleDbDataAdapter(cmd, cmb);
                             //dab.Fill(dsz, "Groups");
                             //dab.Dispose();
@@ -302,7 +302,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     cmdDel = cmdDel.Replace(" OR ;", ";");
                     //cmd += ";";
                     //cmd = cmd.Replace(",;", ";");
-                    //using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                    //using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
                     //{
                     //if (cmd != "INSERT INTO Groups(CDLC_ID,Groups) VALUES")
                     //{
@@ -319,10 +319,10 @@ namespace RocksmithToolkitGUI.DLCManager
                     //}
                 }
                 //var DB_Path = "../../../../tmp\\AccessDB.accdb;";
-                var connection = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path); //+ ";Persist Security Info=False"
+                var connection = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path); //+ ";Persist Security Info=False"
                 var command = connection.CreateCommand();
                 //dssx = DataGridView1;
-                using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
                 {
                     //OleDbCommand command = new OleDbCommand();
                     //Update StadardizationDB
@@ -369,7 +369,7 @@ namespace RocksmithToolkitGUI.DLCManager
             SearchCmd = SearchCmd.Replace("WHERE  ORDER", "ORDER");
              dssx = SelectFromDB("Cache", SearchCmd, "", cnb);
             //DB_Path = "../../../../tmp\\AccessDB.accdb;";
-            //using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
             //{
             //    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cn);
             //    da.Fill(dssx, "Cache");
@@ -455,7 +455,7 @@ namespace RocksmithToolkitGUI.DLCManager
             DataGridView.DataSource = bs;
             dssx.Dispose();
             DataSet dooz = new DataSet(); dooz = SelectFromDB("Groups", "SELECT * from Cache AS O WHERE Removed=\"No\"", "", cnb);
-            //using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
             //{
             //    OleDbDataAdapter da = new OleDbDataAdapter("SELECT * from Cache AS O WHERE Removed=\"No\"", cn);
             //    da.Fill(dssx, "Cache");
@@ -606,7 +606,7 @@ namespace RocksmithToolkitGUI.DLCManager
         public void generatehsan()
         {
             DataSet drsx = new DataSet(); drsx = SelectFromDB("Cache", "SELECT DISTINCT SongsHSANPath, PSARCName, Platform from Cache AS O;", "", cnb);
-            //using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
             //{
             //    OleDbDataAdapter da = new OleDbDataAdapter("SELECT DISTINCT SongsHSANPath, PSARCName, Platform from Cache AS O;", cn);
             //    da.Fill(drsx, "Cache");
@@ -903,7 +903,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
                     DataSet disx = new DataSet(); disx = SelectFromDB("Groups", "SELECT Removed from Cache AS O WHERE LCASE(Identifier)=\"" + songkey + "\"", "", cnb);
                     //cmd = "SELECT Removed from Cache AS O WHERE LCASE(Identifier)=\"" + songkey + "\"";
-                    //using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                    //using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
                     //{
                     //    DataSet disx = new DataSet();
                     //    OleDbDataAdapter da = new OleDbDataAdapter(cmd, cn);
@@ -967,10 +967,10 @@ namespace RocksmithToolkitGUI.DLCManager
                 Console.WriteLine(ee.Message);
                 MessageBox.Show("Error at set to original " + ee);
             }
-            var connection = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path); //+ ";Persist Security Info=False"
+            var connection = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path); //+ ";Persist Security Info=False"
             var command = connection.CreateCommand();
             //dssx = DataGridView1;
-            using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
             {
                 command.CommandText = "UPDATE Cache SET ";
                 command.CommandText += "Removed = @param8, Selected=@param9 WHERE Removed='Yes' ";
@@ -1227,7 +1227,7 @@ namespace RocksmithToolkitGUI.DLCManager
             else
             {
                 var cmd = "SELECT Identifier, Removed,Selected, Comments FROM Cache AS O WHERE Platform=\"" + Pltfrm + "\"";
-                using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
                 {
                     DataSet disx = new DataSet();
                     OleDbDataAdapter da = new OleDbDataAdapter(cmd, cn);
@@ -1235,7 +1235,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
 
 
-                    var connection = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path); //+ ";Persist Security Info=False"
+                    var connection = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path); //+ ";Persist Security Info=False"
                     var command = connection.CreateCommand();
                     pB_ReadDLCs.Value = 0;
 
@@ -1248,7 +1248,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         var sele = dataRow.ItemArray[2].ToString();
                         var comm = dataRow.ItemArray[3].ToString();
                         ////dssx = DataGridView1;
-                        using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                        using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
                         {
                             command.CommandText = "UPDATE Cache SET ";
                             command.CommandText += "Removed = @param8, Selected = @param9, Comments = @param10 WHERE Identifier=\"" + iden + "\" ";
@@ -1433,7 +1433,7 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             //var cmd = "INSERT into Groups (CDLC_ID, Groups, Type) VALUES (\"" + txt_ID.Text + "\",\"" + chbx_Group.Text + "\",\"Retail\");";
             //DataSet dsz = new DataSet();
-            //using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
             //{
             //    OleDbDataAdapter dab = new OleDbDataAdapter(cmd, cnb);
             //    dab.Fill(dsz, "Groups");
@@ -1441,7 +1441,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //}
             var insertcmdd = "CDLC_ID, Groups, Type";
             var insertvalues = "\"" + txt_ID.Text + "\",\"" + chbx_Group.Text + "\",\"Retail\"";
-            InsertIntoDBwValues("Groups", insertcmdd, insertvalues, cnb);
+            InsertIntoDBwValues("Groups", insertcmdd, insertvalues, cnb, 0);
             GroupChanged = true;
             ChangeRow();
         }
@@ -1451,7 +1451,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //var cmd = "DELETE FROM Groups WHERE Type=\"Retail\" AND Groups= \"" + chbx_Group.Text + "\"";
             //try
             //{
-            //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
             //    {
             //        DataSet dhs = new DataSet();
 
@@ -1478,7 +1478,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 //var cmd = "DELETE FROM Groups WHERE Type=\"Retail\" AND Groups= \"" + chbx_Group.Text + "\"";
                 //try
                 //{
-                //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
                 //    {
                 //        DataSet dhs = new DataSet();
 
@@ -1495,7 +1495,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
                 ////calc how many rows are filled with values
                 //DataSet dssx = new DataSet();
-                //using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                //using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
                 //{
                 //    OleDbDataAdapter da = new OleDbDataAdapter("SELECT * from Cache AS O", cn);
                 //    da.Fill(dssx, "Cache");
@@ -1517,7 +1517,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     string IDD = DataGridView1.Rows[i].Cells["ID"].Value.ToString();
                     //cmd = "INSERT into Groups (CDLC_ID, Groups, Type) VALUES (\"" + IDD + "\",\"" + chbx_Group.Text + "\",\"Retail\");";
                     //if (DataGridView1.Rows[i].Cells["Removed"].Value.ToString() != "Yes")
-                    //    using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                    //    using (OleDbConnection cnb = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
                     //    {
                     //        OleDbDataAdapter dab = new OleDbDataAdapter(cmd, cnb);
                     //        dab.Fill(dsz, "Groups");
@@ -1525,7 +1525,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     //    }
                     var insertcmdd = "CDLC_ID, Groups, Type";
                     var insertvalues = "\"" + IDD + "\",\"" + chbx_Group.Text + "\",\"Retail\"";
-                    InsertIntoDBwValues("Groups", insertcmdd, insertvalues, cnb);
+                    InsertIntoDBwValues("Groups", insertcmdd, insertvalues, cnb, 0);
 
                     pB_ReadDLCs.Increment(2);
                 }
@@ -1536,10 +1536,10 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             if (chbx_Group.Text != null || chbx_Group.Text != "")
             {
-                var connection = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path); //+ ";Persist Security Info=False"
+                var connection = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path); //+ ";Persist Security Info=False"
                 var command = connection.CreateCommand();
                 //dssx = DataGridView1;
-                using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
                 {
                     command.CommandText = "UPDATE Cache SET ";
                     command.CommandText += "Removed = @param8 ";
@@ -1564,7 +1564,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 //var cmd = "UPDATE Cache SET Removed=\"No\",Selected=\"Yes\" WHERE cstr(ID) IN (SELECT CDLC_ID From Groups WHERE Groups=\"" + chbx_Group.Text + "\")";
                 //try
                 //{
-                //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
                 //    {
                 //        DataSet dhs = new DataSet();
 
@@ -1599,9 +1599,9 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btn_SelectAll_Click(object sender, EventArgs e)
         {
-            var cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path); //+ ";Persist Security Info=False"
+            var cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path); //+ ";Persist Security Info=False"
             var command = cnn.CreateCommand();
-            //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
             //{
             command.CommandText = "UPDATE Cache SET ";
             command.CommandText += "Removed = @param8, ";
@@ -1637,7 +1637,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //try
             //{
             //    DataSet dhs = new DataSet();
-            //    using (OleDbConnection cBn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //    using (OleDbConnection cBn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
             //    {// 1. If hash already exists do not insert
             //        OleDbDataAdapter dBs = new OleDbDataAdapter(com, cBn);
             //        dBs.Fill(dhs, "Main");
@@ -1655,9 +1655,9 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btn_SelectNone_Click(object sender, EventArgs e)
         {
-            var cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path); //+ ";Persist Security Info=False"
+            var cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path); //+ ";Persist Security Info=False"
             var command = cnn.CreateCommand();
-            //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
             //{
             command.CommandText = "UPDATE Cache SET ";
             command.CommandText += "Removed = @param8,";

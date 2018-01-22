@@ -491,7 +491,7 @@ namespace RocksmithToolkitLib.DLCPackage
                         // GAME SONG (SNG)
                         UpdateToneDescriptors(info);
                         GenerateSNG(arrangement, platform);
-                        var sngSongFile = File.OpenRead(arrangement.SongFile.File);
+                        var sngSongFile = File.OpenRead(arrangement.SongXML.File);
                         arrangementStream.Add(sngSongFile);
                         packPsarc.AddEntry(String.Format("songs/bin/{0}/{1}_{2}.sng", platform.GetPathName()[1].ToLower(), dlcName, arrangementFileName), sngSongFile);
 
@@ -956,7 +956,7 @@ namespace RocksmithToolkitLib.DLCPackage
                         //Generate sng file in execution time
                         GenerateSNG(x, platform);
 
-                        manifestBuilder.AggregateGraph.SongFiles.Add(x.SongFile);
+                        manifestBuilder.AggregateGraph.SongFiles.Add(x.SongXML);
                         manifestBuilder.AggregateGraph.SongXMLs.Add(x.SongXml);
                     }
                     manifestBuilder.AggregateGraph.XBlock = new XBlockFile { File = info.Name + ".xblock" };
@@ -995,10 +995,10 @@ namespace RocksmithToolkitLib.DLCPackage
                     {
                         var xmlFile = File.OpenRead(x.SongXml.File);
                         arrangementFiles.Add(xmlFile);
-                        var sngFile = File.OpenRead(x.SongFile.File);
+                        var sngFile = File.OpenRead(x.SongXML.File);
                         arrangementFiles.Add(sngFile);
                         songPsarc.AddEntry(String.Format("GR/Behaviors/Songs/{0}.xml", Path.GetFileNameWithoutExtension(x.SongXml.File)), xmlFile);
-                        songPsarc.AddEntry(String.Format("GRExports/{0}/{1}.sng", platform.GetPathName()[1], Path.GetFileNameWithoutExtension(x.SongFile.File)), sngFile);
+                        songPsarc.AddEntry(String.Format("GRExports/{0}/{1}.sng", platform.GetPathName()[1], Path.GetFileNameWithoutExtension(x.SongXML.File)), sngFile);
                     }
                     songPsarc.Write(output, false);
                 }
@@ -1177,9 +1177,9 @@ namespace RocksmithToolkitLib.DLCPackage
                     throw new InvalidOperationException("Unexpected game version value");
             }
 
-            if (arr.SongFile == null)
-                arr.SongFile = new SongFile { File = "" };
-            arr.SongFile.File = Path.GetFullPath(sngFile);
+            if (arr.SongXML == null)
+                arr.SongXML = new SongFile { File = "" };
+            arr.SongXML.File = Path.GetFullPath(sngFile);
 
             TMPFILES_SNG.Add(sngFile);
         }

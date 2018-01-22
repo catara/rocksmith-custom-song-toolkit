@@ -307,7 +307,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             var songXml = Song2014.LoadFromFile(mArr.SongXml.File);
             var newXml = Path.GetTempFileName();
             mArr.SongXml = new RocksmithToolkitLib.DLCPackage.AggregateGraph.SongXML { File = newXml };
-            mArr.SongFile = new RocksmithToolkitLib.DLCPackage.AggregateGraph.SongFile { File = "" };
+            mArr.SongXML = new RocksmithToolkitLib.DLCPackage.AggregateGraph.SongFile { File = "" };
             mArr.ClearCache();
             mArr.BonusArr = true;
             mArr.Id = IdGenerator.Guid();
@@ -485,7 +485,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 if (String.IsNullOrEmpty(arr.SongXml.File))
                     continue;
                 arr.SongXml.File = arr.SongXml.File.RelativeTo(BasePath);
-                arr.SongFile.File = "";
+                arr.SongXML.File = "";
                 if (!String.IsNullOrEmpty(arr.FontSng))
                     arr.FontSng = arr.FontSng.RelativeTo(BasePath);
             }
@@ -504,8 +504,8 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 {
                     if (!String.IsNullOrEmpty(arr.SongXml.File))
                         arr.SongXml.File = arr.SongXml.File.AbsoluteTo(BasePath);
-                    if (!String.IsNullOrEmpty(arr.SongFile.File))
-                        arr.SongFile.File = arr.SongFile.File.AbsoluteTo(BasePath);
+                    if (!String.IsNullOrEmpty(arr.SongXML.File))
+                        arr.SongXML.File = arr.SongXML.File.AbsoluteTo(BasePath);
                     if (!String.IsNullOrEmpty(arr.FontSng))
                         arr.FontSng = arr.FontSng.AbsoluteTo(BasePath);
                 }
@@ -519,8 +519,8 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             {
                 if (!String.IsNullOrEmpty(arr.SongXml.File))
                     arr.SongXml.File = arr.SongXml.File.AbsoluteTo(BasePath);
-                if (!String.IsNullOrEmpty(arr.SongFile.File))
-                    arr.SongFile.File = arr.SongFile.File.AbsoluteTo(BasePath);
+                if (!String.IsNullOrEmpty(arr.SongXML.File))
+                    arr.SongXML.File = arr.SongXML.File.AbsoluteTo(BasePath);
                 if (!String.IsNullOrEmpty(arr.FontSng))
                     arr.FontSng = arr.FontSng.AbsoluteTo(BasePath);
             }
@@ -1063,7 +1063,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 }
 
                 // clear the archive file name
-                arr.SongFile.File = "";
+                arr.SongXML.File = "";
 
                 if (arr.ArrangementType == ArrangementType.Bass || arr.ArrangementType == ArrangementType.Guitar)
                 {
@@ -1650,7 +1650,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 if (updateArrangmentID)
                 {
                     // generate new AggregateGraph
-                    arr.SongFile = new RocksmithToolkitLib.DLCPackage.AggregateGraph.SongFile() { File = "" };
+                    arr.SongXML = new RocksmithToolkitLib.DLCPackage.AggregateGraph.SongFile() { File = "" };
                     // generate new Arrangement IDs
                     arr.Id = IdGenerator.Guid();
                     arr.MasterId = RandomGenerator.NextInt();

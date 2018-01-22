@@ -80,7 +80,7 @@ namespace convert2012
                     foreach (var arr in info.Arrangements)
                     {
                         Console.WriteLine(@"Converting XML Arrangement: " + arr);
-                        arr.SongFile.File = "";
+                        arr.SongXML.File = "";
 
                         if (arr.ArrangementType != ArrangementType.Vocal)
                             UpdateXml(arr, info);
@@ -115,7 +115,7 @@ namespace convert2012
 
         public static void UpdateXml(Arrangement arr, DLCPackageData info)
         {
-            arr.SongFile = new RocksmithToolkitLib.DLCPackage.AggregateGraph.SongFile { File = "" };
+            arr.SongXML = new RocksmithToolkitLib.DLCPackage.AggregateGraph.SongFile { File = "" };
             arr.Id = IdGenerator.Guid();
             arr.MasterId = RandomGenerator.NextInt();
 

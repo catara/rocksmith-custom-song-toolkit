@@ -167,7 +167,7 @@ namespace RocksmithToolkitLib.DLCPackage.AggregateGraph2014
                 sng.Tag.Add(TagValue.MusicgameSong.GetDescription());
                 if (currentPlatform.IsConsole)
                     sng.Tag.Add(GraphItem.GetPlatformTagDescription(currentPlatform.platform));
-                sng.UUID = arrangement.SongFile.UUID;
+                sng.UUID = arrangement.SongXML.UUID;
                 sng.LLID = IdGenerator.LLIDGuid();
                 sng.RelPathFile = String.Format("{0}.sng", sng.Name);
                 sng.LogPathFile = sng.RelPathFile;

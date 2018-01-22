@@ -1,4 +1,4 @@
-﻿## Rocksmith DLC Library Manager v0.6
+﻿## Rocksmith DLC Library Manager v0.7
 *(beta version-unreleased to the masses; branch of CSC)*
 # App Description: MASS Manipulation of Rocksmith DLC Library 
 		e.g. 1. in Rocksmith, in the Library, each song's Album, to contain a personal rating, if it has DD, instr. avail
@@ -12,9 +12,10 @@
 	- Fix Songs without
 		- Preview
 		- Cover
-		- Lyrics (NEW)
+		- Lyrics
+		- the stanndard 128kb bitrate
 	- Listen to songs Audio/Preview
-	- Gathers Track No. from Spotify
+	- Gathers Track No./Cover/Year from Spotify
 - Mass Modify songdetails/metadata @repack per each Rocksmith song
 	*e.g. Album Field: "<Broken><Year> - <Album> - r<Rating> - <Avail. Instr.> - <DD> - <Tuning>"
 	- Copies songs/packs directly to the PS3 by means of FTP
@@ -22,7 +23,7 @@
 - Setlists (NEW)
 - Read Current Game Library and match it to the DLCManager Library (incl. PS3) (NEW)
 - Mass rename songs(Standardization) e.g. Black Keys->The Black Keys and maintain changes in a local DB
-- Manipulates the Retail songs list of Rocksmith (Rocksmith 2014 disc, or Rocksmith 2012 DLC, or Rocksmith 2012 Import disc for P
+- Manipulates the Retail songs list of Rocksmith (Rocksmith 2014 disc, or Rocksmith 2012 DLC, or Rocksmith 2012 Import disc)
 <img src="/RocksmithTookitGUI/DLCManager/Screenshot3.png" alt="Song Metadata Standardization Screen"/>
 <img src="/RocksmithTookitGUI/DLCManager/Screenshot4.png" alt="Rocksmith Retail Manipulation Scree"/>
 <img src="/RocksmithTookitGUI/DLCManager/Screenshot5.png" alt="Duplicate Management Import Screen"/>
@@ -84,7 +85,7 @@
 [ ] gasoline cannot be packed
 [ ] check originals vs original dbb
 [ ] why do i have duplciates on the ps3
-[ ] multiple repacks cannto happen
+[ ] multiple repacks cannt happen
 [ ] progress bar on possible duplicate import is too short
 [ ] populate new tone fields
 [ ] cannot find sick sick sic (override)
@@ -94,12 +95,8 @@
   [ ] after selecting deselect incl. Beta
 [ ] Add repair option
 [ ] update readme.md screenshots
-[ ] try db constant connection
 [ ] year inconsitencies (check should show these as well)
-[ ] unify pack function
 [ ] check author db saving being used at pack
-[ ] add missin tones and arrangement parameters
-[ ] make mass pack also use db values
 [ ] why album id is the same as artist id
 [ ] if no delete then dont delete DBscocnvert and ftp is it working at mass packing
 [ ] mantra cannot be imported
@@ -132,59 +129,93 @@
 [ ] at import gather
 [ ] make processing static
 [ ] optimize the variable transfer to generate package
-[ ] think multithreading the decompression before import
 [ ] make all unique check(02-05 look the same) at mass pack
-[ ] log should also update progressbar
-[ ] check why spofity fails after 100 requests
-[ ] dont let spotify crash after 100 requests and failure notice
-[ ] 4328
 [ ] georlitt_m.psarc
 [ ] "Alice-In-Chains_Nutshell-Unplugged_v6_p.psarc"
 [ ] orion changed cover
 [ ] fixed a vocal at dupli missing 
 [ ] improve maybe tone diff message
-fix tones
-72 should be 37
-
-## WiP:
-(next release)
-
-## done:
-(this release)
-[x] 1_1 should be 1.1
-[x] copied copied copied (user issue)
-[x] fix dupli issues...album red label
-[ ] check if there are any platforms None
-[x] import from exiting folders
-	[x] fixe siz
-	e
-	[x] fix platform check for orig if exiting else ignore
-	maybbe fix audio should not be async
-[x] new dupli platform none
-[x] improve skipp typoo and @import move to old	
-[ ] clean up the saving settings logic
-[x] one looks like it has too many metallica duplicates (name containe in multiple songs)
-[ ] fix audio add cancel
-[x] if 75 selected add twice in pack
-[x] dont move if 75 selected ..any other hash duplicate or duplim manag duplicate
-[ ] add logprogress at SAveSettings
-[x] mac songs should be duplciate of pcs
-[-] ignore and del 4k/no psarc files invalid wil/should be added by nmew validation
-[x] alternate 0 improve
-	[+] with or without u still doesnt have the right alternate no when importing vs an existing song= a2....maybe OK :)
-	[ ] alt 1 ahead of a.
-[-] is dupli marked as ignore/ duplicate decompressed folder deleted?
-[-] small feature: when opening MainDB and detecting directory check runs, if next directory exists (give a change to empty the db then if possible)
 [ ] add a 4 sec timestamp in each song
 [ ] the pretender doesnt register as alternate
 [ ] check smooth sailying and c file that breaks
 [ ] check crossed album art
 [ ] check iron maiden album art
-[x] delete moves to duplicates but does not add dupli if exists
-[x] Profiles should include also Format
-[ ] copy imported files
+[-] is dupli marked as ignore/ duplicate decompressed folder deleted?
+[-] small feature: when opening MainDB and detecting directory check runs, if next directory exists (give a change to empty the db then if possible)
+[x] clean up the saving settings logic
+    [ ] at open it gets records for 3 times
 [ ] finish arrangement (demo with the hives overdrive all the time :) )
 [ ] delete does not delete the actual record from repack_audittrail
+[ ] check if there are any platforms None
+[ ] fix audio add cancel
+[ ] 4483
+[ ] fix tones Sceeen
+[ ] progress bar having it overelayed text overlayered bug error
+[ ] add some free space statistics
+[ ] save old db when changing to new db
+[ ] open folder in the root of the input text box
+[ ] audio slave bring back alive error when moving something
+[ ] euology 10.3 1.02 is not detected as dupli
+[ ] comparison should not take in account info inbetween []
+[ ] clean pack_audit trail duplicates
+[ ] clean pack audio ...copy path folder instad of full path
+[ ] when autom deciding something is not a duplicate dont continue maybe
+[ ] MAke Sure CHANGIN D THE AUDIO/PREVIEW DOES NOT deletes the old info useful for Duplciation comparison
+where is duplciate reason, add duplciate number
+L:\Temp\Arctic-Monkeys_Perhaps-Vampires-Is-A-Bit-Strong-But_v2_p.psarc path too long
+add import as diff to dupli manag window
+fix official set alternate 4392
+
+## WiP:
+(next release)
+[x] try db constant connection
+[x] unify pack function
+[x] add missin tones and arrangement parameters
+[x] make mass pack also use db values
+[x] log should also update progressbar
+[x] think multithreading the decompression before import (now done at each import file Processing procedure)
+[x] check why spofity fails after 100 requests
+[x] dont let spotify crash after 100 requests and failure notice
+[x] ignore and del 4k/no psarc files invalid wil/should be added by nmew validation
+[x] alternate 0 improve
+	[+] with or without u still doesnt have the right alternate no when importing vs an existing song= a2....maybe OK :)
+	[ ] alt 1 ahead of a.
+[x] maybe fix audio should not be async (ok)
+[x] copy imported files
+[x] george babker section standardization insert
+[x] preview still generated..why (improvements to reading the profiles when changin db)
+[x] first add preview then audio fix
+[x] some import files are not read by the valid and hash background workers
+[x] 72 should be 37 (no)
+[x] take out archive from delete; add note of its use
+[x] check if preview &downstream are generated and flag updated see u2 boy twilight where has preview flag is off
+[x] archiv, logs, covere is being deleted
+[x] tones are not being updated on duplicate update? (just replaced)
+[x] delete arrangements and tones at overrite
+[x] check log errors regarding file delete 1045 genericfunctions
+[x] add info on log why preview was generated
+[x] think to move validations outside
+[x] vocalas compare xml not json
+[x] color platform if diff at duplciatiopn check
+[x] change order of fix all audio issues opreview first then bitrate
+[x] improve pack logging
+[x] dont let pack crash ... and log
+[x] wtf happened w packing log...not all imported..
+[x] no packe ones
+[x] go back to pack get track
+[x] check hash checks audio&preview
+[x]fix                 //Microsoft.Office.Interop.Access.Application app = new Microsoft.Office.Interop.Access.Application();
+[x] no old displayed
+[x] take slash double on repacked
+[x] no bdd
+[x] monalisa no sound
+[x] volcas ice ice baby
+[x] george barker
+
+
+## done:
+(this release)
+
 
 - diff between master and branch
 DLCManager folder
@@ -361,7 +392,7 @@ of this folder should be directed to the respective developer.
 		- Beats & Phrases Resynchronizer by Svengraph
 		http://customsforge.com/topic/15687-beats-phrases-resynchronizer/
 
-		- Cover Manipualtions (not used)
+		- Cover Manipulations (not used)
 		https://github.com/Lovroman/RS-CDLC-Tagger/
 		http://customsforge.com/topic/20334-tool-cdlc-tagger/
 
@@ -372,9 +403,10 @@ of this folder should be directed to the respective developer.
 		https://nvorbis.codeplex.com/documentation
 
 		-DevOnly additional software
-			EOF v1.8b (c)2008-2010 T³ Software eof1.8RC11(5-19-2016) http://ignition.customsforge.com/eof http://customsforge.com/topic/1529-latest-eof-releases-5-19-2016/page-86
-			UltraStar Creator 1.2 https://sourceforge.net/projects/usc/
-			TotalCommander gisler.com
+			EOF v1.8b (c)2008-2010 T³ Software eof1.8RC11(5-19-2016) http://ignition.customsforge.com/eof http://customsforge.com/topic/1529-latest-eof-releases-5-19-2016/page-86 -4 transforming lyrics into RS Vocals
+			UltraStar Creator 1.2 https://sourceforge.net/projects/usc/ -4creati ng lyrics files to import in EoF
+			TotalCommander https://gisler.com -4Encripting PS3 Retail Sog PSARCS (0 encription level only avail here)
+			MediaInfo https://sourceforge.net/projects/mediainfo/ -4checking wem bitrate
 
 ## Contact
 

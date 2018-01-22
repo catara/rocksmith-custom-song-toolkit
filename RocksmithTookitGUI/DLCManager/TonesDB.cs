@@ -14,6 +14,7 @@ using RocksmithToolkitGUI;
 using RocksmithToolkitLib.Extensions; //dds
 using Ookii.Dialogs; //cue text
 using static RocksmithToolkitGUI.DLCManager.GenericFunctions;
+using RocksmithToolkitLib.XmlRepository;
 
 namespace RocksmithToolkitGUI.DLCManager
 {
@@ -109,7 +110,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
             // var norec = 0;
             //DataSet ds = new DataSet();
-            //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
             //{
             //    string SearchCmd = "SELECT DISTINCT ToneA FROM Arrangements;";
             //    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
@@ -136,7 +137,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //    }
             //}
             //DataSet dIs = new DataSet();
-            //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
             //{
             //    string SearchCmd = "SELECT DISTINCT ToneB FROM Arrangements;";
             //    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
@@ -163,7 +164,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //    }
             //}
             //DataSet dfs = new DataSet();
-            //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
             //{
             //    string SearchCmd = "SELECT DISTINCT ToneC FROM Arrangements;";
             //    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
@@ -190,7 +191,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //    }
             //}
             //DataSet dHs = new DataSet();
-            //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
             //{
             //    string SearchCmd = "SELECT DISTINCT ToneD FROM Arrangements;";
             //    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
@@ -217,7 +218,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //    }
             //}
             //DataSet dxs = new DataSet();
-            //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
             //{
             //    string SearchCmd = "SELECT DISTINCT ToneBase FROM Arrangements;";
             //    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
@@ -244,7 +245,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //    }
             //}
             //DataSet dks = new DataSet();
-            //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
             //{
             //    string SearchCmd = "SELECT DISTINCT Tunning FROM Arrangements;";
             //    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
@@ -304,7 +305,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
                 //if (DataGridView1.Rows[i].Cells["GearList"].Value.ToString() == "Yes") chbx_GearList.Checked = true;
                 //else chbx_GearList.Checked = false;
-                if (DataGridView1.Rows[i].Cells["Is_Custom"].Value.ToString() == "True") chbx_Custom.Checked = true;
+                if (DataGridView1.Rows[i].Cells["Is_Custom"].Value.ToString().ToLower() == "true") chbx_Custom.Checked = true;
                 else chbx_Custom.Checked = false;
 
                 //if (txt_ArrangementType.Text == "Bass" && !(chbx_BassDD.Checked)) btn_AddDD.Enabled = true;
@@ -349,10 +350,10 @@ namespace RocksmithToolkitGUI.DLCManager
                 else DataGridView1.Rows[i].Cells["Is_Custom"].Value = "False";
 
                 //var DB_Path = "../../../../tmp\\AccessDB.accdb;";
-                var connection = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path); //+ ";Persist Security Info=False"
+                var connection = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path); //+ ";Persist Security Info=False"
                 var command = connection.CreateCommand();
                 //dssx = DataGridView1;
-                using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+                using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
                 {
                     //OleDbCommand command = new OleDbCommand(); ;
                     //Update TonesDB
@@ -450,7 +451,7 @@ namespace RocksmithToolkitGUI.DLCManager
         public void Populate(ref DataGridView DataGridView, ref BindingSource bs) //, ref BindingSource bsPositions, ref BindingSource bsBadges
         {
             dssx = SelectFromDB("Tones", "SELECT * FROM Tones WHERE CDLC_ID=" + CDLCID + ";", "", cnb);
-            //using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
             //{
             //    var cmd = "SELECT * FROM Tones WHERE CDLC_ID=" + CDLCID + ";";
             //    OleDbDataAdapter da = new OleDbDataAdapter(cmd, cn);
@@ -662,7 +663,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //try
             //{
             //    MessageBox.Show(DB_Path);
-            //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
             //    {
             //        DataSet dus = new DataSet();
             //        OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
@@ -715,7 +716,272 @@ namespace RocksmithToolkitGUI.DLCManager
                 files[i].lastConversionDateTime = dataRow.ItemArray[36].ToString();
                 files[i].lastConverjsonDateTime = dataRow.ItemArray[37].ToString();
                 files[i].Comments = dataRow.ItemArray[38].ToString();
-                i++;
+
+                ////Read Tones
+                //        var nrc = 0;
+                //        DataSet dsc = new DataSet(); dsc = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin," +
+                //            " SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + files[i].ID + " AND Gear_Name=\"Amp\";", "", cnb);
+                //        nrc = dsc.Tables[0].Rows.Count;
+                //        for (int k = 0; k < nrc; k++)
+                //        {
+                //            files[i].AmpType = dsc.Tables[0].Rows[k].ItemArray[0].ToString();
+                //            files[i].AmpCategory = dsc.Tables[0].Rows[k].ItemArray[1].ToString();
+                //            Dictionary<string, float> FG = new Dictionary<string, float>();
+                //            string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
+                //            strArrK = dsc.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
+                //            strArrV = dsc.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
+                //            for (int l = 0; k <= strArrK.Length - 1; l++) FG.Add(strArrK[l], float.Parse(strArrV[l]));
+                //            files[i].AmpKnobValues = FG.ToString();
+                //            files[i].AmpPedalKey = dsc.Tables[0].Rows[k].ItemArray[4].ToString();
+                //            //files[i].PostPedal1.Skin = dsc.Tables[0].Rows[k].ItemArray[5].ToString();
+                //            //files[i].PostPedal1.SkinIndex = float.Parse(dsc.Tables[0].Rows[k].ItemArray[6].ToString());
+                //        }
+                //        nrc = 0;
+                //        DataSet dsa = new DataSet(); dsa = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey," +
+                //            " Skin, SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + files[i].ID + " AND Gear_Name=\"Cabinet\";", "", cnb);
+                //        nrc = dsa.Tables[0].Rows.Count;
+                //        for (int k = 0; k < nrc; k++)
+                //        {
+                //            string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
+                //            files[i].GearList.Cabinet.Type = dsa.Tables[0].Rows[k].ItemArray[0].ToString();
+                //            files[i].GearList.Cabinet.Category = dsa.Tables[0].Rows[k].ItemArray[1].ToString();
+                //            Dictionary<string, float> FS = new Dictionary<string, float>();
+                //            strArrK = dsa.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
+                //            strArrV = dsa.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
+                //            for (int l = 0; l <= strArrK.Length - 1; k++) FS.Add(strArrK[l], float.Parse(strArrV[l]));
+                //            files[i].GearList.Cabinet.KnobValues = FS;
+                //            files[i].GearList.Cabinet.PedalKey = dsa.Tables[0].Rows[k].ItemArray[4].ToString();
+                //            files[i].GearList.PostPedal1.Skin = dsa.Tables[0].Rows[k].ItemArray[5].ToString();
+                //            files[i].GearList.PostPedal1.SkinIndex = float.Parse(dsa.Tables[0].Rows[k].ItemArray[6].ToString());
+                //        }
+                //        nrc = 0;
+                //        DataSet dss1 = new DataSet(); dss1 = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey," +
+                //            " Skin, SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + files[i].ID + " AND Gear_Name=\"PostPedal1\";", "", cnb);
+                //        nrc = dss1.Tables[0].Rows.Count;
+                //        for (int k = 0; k < nrc; k++)
+                //        {
+                //            string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
+                //            files[i].GearList.PostPedal1.Type = dss1.Tables[0].Rows[k].ItemArray[0].ToString();
+                //            files[i].GearList.PostPedal1.Category = dss1.Tables[0].Rows[k].ItemArray[1].ToString();
+                //            Dictionary<string, float> FS = new Dictionary<string, float>();
+                //            strArrK = dss1.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
+                //            strArrV = dss1.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
+                //            for (int l = 0; l <= strArrK.Length - 1; k++) FS.Add(strArrK[l], float.Parse(strArrV[l]));
+                //            files[i].GearList.PostPedal1.KnobValues = FS;
+                //            files[i].GearList.PostPedal1.PedalKey = dss1.Tables[0].Rows[k].ItemArray[4].ToString();
+                //            files[i].GearList.PostPedal1.Skin = dss1.Tables[0].Rows[k].ItemArray[5].ToString();
+                //            files[i].GearList.PostPedal1.SkinIndex = float.Parse(dss1.Tables[0].Rows[k].ItemArray[6].ToString());
+                //        }
+                //        nrc = 0;
+                //        DataSet dss2 = new DataSet(); dss2 = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey," +
+                //            " Skin, SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + files[i].ID + " AND Gear_Name=\"PostPedal2\";", "", cnb);
+                //        nrc = dss2.Tables[0].Rows.Count;
+                //        for (int k = 0; k < nrc; k++)
+                //        {
+                //            string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
+                //            files[i].GearList.PostPedal2.Type = dss2.Tables[0].Rows[k].ItemArray[0].ToString();
+                //            files[i].GearList.PostPedal2.Category = dss2.Tables[0].Rows[k].ItemArray[1].ToString();
+                //            Dictionary<string, float> FS = new Dictionary<string, float>();
+                //            strArrK = dss2.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
+                //            strArrV = dss2.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
+                //            for (int l = 0; l <= strArrK.Length - 1; k++) FS.Add(strArrK[l], float.Parse(strArrV[l]));
+                //            files[i].GearList.PostPedal2.KnobValues = FS;
+                //            files[i].GearList.PostPedal2.PedalKey = dss2.Tables[0].Rows[k].ItemArray[4].ToString();
+                //            files[i].GearList.PostPedal2.Skin = dss2.Tables[0].Rows[k].ItemArray[5].ToString();
+                //            files[i].GearList.PostPedal2.SkinIndex = float.Parse(dss2.Tables[0].Rows[k].ItemArray[6].ToString());
+
+                //        }
+                //        nrc = 0;
+                //        DataSet dss3 = new DataSet(); dss3 = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin," +
+                //            " SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + files[i].ID + " AND Gear_Name=\"PostPedal3\";", "", cnb);
+                //        nrc = dss3.Tables[0].Rows.Count;
+                //        for (int k = 0; k < nrc; k++)
+                //        {
+                //            string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
+                //            files[i].GearList.PostPedal3.Type = dss3.Tables[0].Rows[k].ItemArray[0].ToString();
+                //            files[i].GearList.PostPedal3.Category = dss3.Tables[0].Rows[k].ItemArray[1].ToString();
+                //            Dictionary<string, float> FS = new Dictionary<string, float>();
+                //            strArrK = dss3.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
+                //            strArrV = dss3.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
+                //            for (int l = 0; l <= strArrK.Length - 1; k++) FS.Add(strArrK[l], float.Parse(strArrV[l]));
+                //            files[i].GearList.PostPedal3.KnobValues = FS;
+                //            files[i].GearList.PostPedal3.PedalKey = dss3.Tables[0].Rows[k].ItemArray[4].ToString();
+                //            files[i].GearList.PostPedal3.Skin = dss3.Tables[0].Rows[k].ItemArray[5].ToString();
+                //            files[i].GearList.PostPedal3.SkinIndex = float.Parse(dss3.Tables[0].Rows[k].ItemArray[6].ToString());
+
+                //        }
+                //        nrc = 0;
+                //        DataSet dss4 = new DataSet(); dss4 = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey," +
+                //            " Skin, SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + files[i].ID + " AND Gear_Name=\"PostPedal4\";", "", cnb);
+                //        nrc = dss4.Tables[0].Rows.Count;
+                //        for (int k = 0; k < nrc; k++)
+                //        {
+                //            string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
+                //            files[i].GearList.PostPedal4.Type = dss4.Tables[0].Rows[k].ItemArray[0].ToString();
+                //            files[i].GearList.PostPedal4.Category = dss4.Tables[0].Rows[k].ItemArray[1].ToString();
+                //            Dictionary<string, float> FS = new Dictionary<string, float>();
+                //            strArrK = dss4.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
+                //            strArrV = dss4.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
+                //            for (int l = 0; l <= strArrK.Length - 1; k++) FS.Add(strArrK[l], float.Parse(strArrV[l]));
+                //            files[i].GearList.PostPedal4.KnobValues = FS;
+                //            files[i].GearList.PostPedal4.PedalKey = dss4.Tables[0].Rows[k].ItemArray[4].ToString();
+                //            files[i].GearList.PostPedal4.Skin = dss4.Tables[0].Rows[k].ItemArray[5].ToString();
+                //            files[i].GearList.PostPedal4.SkinIndex = float.Parse(dss4.Tables[0].Rows[k].ItemArray[6].ToString());
+
+                //        }
+
+                //        nrc = 0;
+                //        DataSet dsp1 = new DataSet(); dsp1 = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin," +
+                //            " SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + files[i].ID + " AND Gear_Name=\"PrePedal1\";", "", cnb);
+                //        nrc = dsp1.Tables[0].Rows.Count;
+                //        for (int k = 0; k < nrc; k++)
+                //        {
+                //            string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
+                //            files[i].GearList.PrePedal1.Type = dsp1.Tables[0].Rows[k].ItemArray[0].ToString();
+                //            files[i].GearList.PrePedal1.Category = dsp1.Tables[0].Rows[k].ItemArray[1].ToString();
+                //            Dictionary<string, float> FS = new Dictionary<string, float>();
+                //            strArrK = dsp1.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
+                //            strArrV = dsp1.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
+                //            for (int l = 0; l <= strArrK.Length - 1; k++) FS.Add(strArrK[l], float.Parse(strArrV[l]));
+                //            files[i].GearList.PrePedal1.KnobValues = FS;
+                //            files[i].GearList.PrePedal1.PedalKey = dsp1.Tables[0].Rows[k].ItemArray[4].ToString();
+                //            files[i].GearList.PrePedal1.Skin = dsp1.Tables[0].Rows[k].ItemArray[5].ToString();
+                //            files[i].GearList.PrePedal1.SkinIndex = float.Parse(dsp1.Tables[0].Rows[k].ItemArray[6].ToString());
+                //        }
+                //        nrc = 0;
+                //        DataSet dsp2 = new DataSet(); dsp2 = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin," +
+                //            " SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + files[i].ID + " AND Gear_Name=\"PrePedal2\";", "", cnb);
+                //        nrc = dsp2.Tables[0].Rows.Count;
+                //        for (int k = 0; k < nrc; k++)
+                //        {
+                //            string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
+                //            files[i].GearList.PrePedal2.Type = dsp2.Tables[0].Rows[k].ItemArray[0].ToString();
+                //            files[i].GearList.PrePedal2.Category = dsp2.Tables[0].Rows[k].ItemArray[1].ToString();
+                //            Dictionary<string, float> FS = new Dictionary<string, float>();
+                //            strArrK = dsp2.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
+                //            strArrV = dsp2.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
+                //            for (int l = 0; l <= strArrK.Length - 1; k++) FS.Add(strArrK[l], float.Parse(strArrV[l]));
+                //            files[i].GearList.PrePedal2.KnobValues = FS;
+                //            files[i].GearList.PrePedal2.PedalKey = dsp2.Tables[0].Rows[k].ItemArray[4].ToString();
+                //            files[i].GearList.PrePedal2.Skin = dsp2.Tables[0].Rows[k].ItemArray[5].ToString();
+                //            files[i].GearList.PrePedal2.SkinIndex = float.Parse(dsp2.Tables[0].Rows[k].ItemArray[6].ToString());
+
+                //        }
+                //        nrc = 0;
+                //        DataSet dsp3 = new DataSet(); dsp3 = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin," +
+                //            " SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + files[i].ID + " AND Gear_Name=\"PrePedal3\";", "", cnb);
+                //        nrc = dsp3.Tables[0].Rows.Count;
+                //        for (int k = 0; k < nrc; k++)
+                //        {
+                //            string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
+                //            files[i].GearList.PrePedal3.Type = dsp3.Tables[0].Rows[k].ItemArray[0].ToString();
+                //            files[i].GearList.PrePedal3.Category = dsp3.Tables[0].Rows[k].ItemArray[1].ToString();
+                //            Dictionary<string, float> FS = new Dictionary<string, float>();
+                //            strArrK = dsp3.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
+                //            strArrV = dsp3.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
+                //            for (int l = 0; l <= strArrK.Length - 1; k++) FS.Add(strArrK[l], float.Parse(strArrV[l]));
+                //            files[i].GearList.PrePedal3.KnobValues = FS;
+                //            files[i].GearList.PrePedal3.PedalKey = dsp3.Tables[0].Rows[k].ItemArray[4].ToString();
+                //            files[i].GearList.PrePedal3.Skin = dsp3.Tables[0].Rows[k].ItemArray[5].ToString();
+                //            files[i].GearList.PrePedal3.SkinIndex = float.Parse(dsp3.Tables[0].Rows[k].ItemArray[6].ToString());
+
+                //        }
+                //        nrc = 0;
+                //        DataSet dsp4 = new DataSet(); dsp4 = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin," +
+                //            " SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + files[i].ID + " AND Gear_Name=\"PrePedal4\";", "", cnb);
+                //        nrc = dsp4.Tables[0].Rows.Count;
+                //        for (int k = 0; k < nrc; k++)
+                //        {
+                //            string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
+                //            files[i].GearList.PrePedal4.Type = dsp4.Tables[0].Rows[k].ItemArray[0].ToString();
+                //            files[i].GearList.PrePedal4.Category = dsp4.Tables[0].Rows[k].ItemArray[1].ToString();
+                //            Dictionary<string, float> FS = new Dictionary<string, float>();
+                //            strArrK = dsp4.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
+                //            strArrV = dsp4.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
+                //            for (int l = 0; l <= strArrK.Length - 1; k++) FS.Add(strArrK[l], float.Parse(strArrV[l]));
+                //            files[i].GearList.PrePedal4.KnobValues = FS;
+                //            files[i].GearList.PrePedal4.PedalKey = dsp4.Tables[0].Rows[k].ItemArray[4].ToString();
+                //            files[i].GearList.PrePedal4.Skin = dsp4.Tables[0].Rows[k].ItemArray[5].ToString();
+                //            files[i].GearList.PrePedal4.SkinIndex = float.Parse(dsp4.Tables[0].Rows[k].ItemArray[6].ToString());
+
+                //        }
+
+                //        nrc = 0;
+                //        DataSet dsr1 = new DataSet(); dsr1 = SelectFromDB("Tones", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin," +
+                //            " SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + files[i].ID + " AND Gear_Name=\"Rack1\";", "", cnb);
+                //        nrc = dsr1.Tables[0].Rows.Count;
+                //        for (int k = 0; k < nrc; k++)
+                //        {
+                //            string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
+                //            files[i].GearList.Rack1.Type = dsr1.Tables[0].Rows[k].ItemArray[0].ToString();
+                //            files[i].GearList.Rack1.Category = dsr1.Tables[0].Rows[k].ItemArray[1].ToString();
+                //            Dictionary<string, float> FS = new Dictionary<string, float>();
+                //            strArrK = dsr1.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
+                //            strArrV = dsr1.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
+                //            for (int l = 0; l <= strArrK.Length - 1; k++) FS.Add(strArrK[l], float.Parse(strArrV[l]));
+                //            files[i].GearList.Rack1.KnobValues = FS;
+                //            files[i].GearList.Rack1.PedalKey = dsr1.Tables[0].Rows[k].ItemArray[4].ToString();
+                //            files[i].GearList.Rack1.Skin = dsr1.Tables[0].Rows[k].ItemArray[5].ToString();
+                //            files[i].GearList.Rack1.SkinIndex = float.Parse(dsr1.Tables[0].Rows[k].ItemArray[6].ToString());
+                //        }
+                //        nrc = 0;
+                //        DataSet dsr2 = new DataSet(); dsr2 = SelectFromDB("Tones", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin," +
+                //            " SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + files[i].ID + " AND Gear_Name=\"Rack2\";", "", cnb);
+                //        nrc = dsr2.Tables[0].Rows.Count;
+                //        for (int k = 0; k < nrc; k++)
+                //        {
+                //            string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
+                //            files[i].GearList.Rack2.Type = dsr2.Tables[0].Rows[k].ItemArray[0].ToString();
+                //            files[i].GearList.Rack2.Category = dsr2.Tables[0].Rows[k].ItemArray[1].ToString();
+                //            Dictionary<string, float> FS = new Dictionary<string, float>();
+                //            strArrK = dsr2.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
+                //            strArrV = dsr2.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
+                //            for (int l = 0; l <= strArrK.Length - 1; k++) FS.Add(strArrK[l], float.Parse(strArrV[l]));
+                //            files[i].GearList.Rack2.KnobValues = FS;
+                //            files[i].GearList.Rack2.PedalKey = dsr2.Tables[0].Rows[k].ItemArray[4].ToString();
+                //            files[i].GearList.Rack2.Skin = dsr2.Tables[0].Rows[k].ItemArray[5].ToString();
+                //            files[i].GearList.Rack2.SkinIndex = float.Parse(dsr2.Tables[0].Rows[k].ItemArray[6].ToString());
+
+                //        }
+                //        nrc = 0;
+                //        DataSet dsr3 = new DataSet(); dsr3 = SelectFromDB("Tones", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin," +
+                //            " SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + files[i].ID + " AND Gear_Name=\"Rack3\";", "", cnb);
+                //        nrc = dsr3.Tables[0].Rows.Count;
+                //        for (int k = 0; k < nrc; k++)
+                //        {
+                //            string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
+                //            files[i].GearList.Rack3.Type = dsr3.Tables[0].Rows[k].ItemArray[0].ToString();
+                //            files[i].GearList.Rack3.Category = dsr3.Tables[0].Rows[k].ItemArray[1].ToString();
+                //            Dictionary<string, float> FS = new Dictionary<string, float>();
+                //            strArrK = dsr3.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
+                //            strArrV = dsr3.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
+                //            for (int l = 0; l <= strArrK.Length - 1; k++) FS.Add(strArrK[l], float.Parse(strArrV[l]));
+                //            files[i].GearList.Rack3.KnobValues = FS;
+                //            files[i].GearList.Rack3.PedalKey = dsr3.Tables[0].Rows[k].ItemArray[4].ToString();
+                //            files[i].GearList.Rack3.Skin = dsr3.Tables[0].Rows[k].ItemArray[5].ToString();
+                //            files[i].GearList.Rack3.SkinIndex = float.Parse(dsr3.Tables[0].Rows[k].ItemArray[6].ToString());
+
+                //        }
+                //        nrc = 0;
+                //        DataSet dsr4 = new DataSet(); dsr4 = SelectFromDB("Tones", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey," +
+                //            " Skin, SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + files[i].ID + " AND Gear_Name=\"Rack4\";", "", cnb);
+                //        nrc = dsr4.Tables[0].Rows.Count;
+                //        for (int k = 0; k < nrc; k++)
+                //        {
+                //            string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
+                //            files[i].GearList.Rack4.Type = dsr4.Tables[0].Rows[k].ItemArray[0].ToString();
+                //            files[i].GearList.Rack4.Category = dsr4.Tables[0].Rows[k].ItemArray[1].ToString();
+                //            Dictionary<string, float> FS = new Dictionary<string, float>();
+                //            strArrK = dsr4.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
+                //            strArrV = dsr4.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
+                //            for (int l = 0; l <= strArrK.Length - 1; k++) FS.Add(strArrK[l], float.Parse(strArrV[l]));
+                //            files[i].GearList.Rack4.KnobValues = FS;
+                //            files[i].GearList.Rack4.PedalKey = dsr4.Tables[0].Rows[k].ItemArray[4].ToString();
+                //            files[i].GearList.Rack4.Skin = dsr4.Tables[0].Rows[k].ItemArray[5].ToString();
+                //            files[i].GearList.Rack4.SkinIndex = float.Parse(dsr4.Tables[0].Rows[k].ItemArray[6].ToString());
+
+                //        }
+                    i++;
             }
             //Closing Connection
             //dax.Dispose();

@@ -71,9 +71,9 @@ namespace RocksmithToolkitGUI.DLCManager
             // lbl_Link
             // 
             this.lbl_Link.AutoSize = true;
-            this.lbl_Link.Location = new System.Drawing.Point(65, 60);
+            this.lbl_Link.Location = new System.Drawing.Point(34, 66);
             this.lbl_Link.Name = "lbl_Link";
-            this.lbl_Link.Size = new System.Drawing.Size(72, 17);
+            this.lbl_Link.Size = new System.Drawing.Size(110, 25);
             this.lbl_Link.TabIndex = 2;
             this.lbl_Link.TabStop = true;
             this.lbl_Link.Text = "linkLabel1";
@@ -84,7 +84,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.lbl_Message.AutoSize = true;
             this.lbl_Message.Location = new System.Drawing.Point(34, 28);
             this.lbl_Message.Name = "lbl_Message";
-            this.lbl_Message.Size = new System.Drawing.Size(46, 17);
+            this.lbl_Message.Size = new System.Drawing.Size(70, 25);
             this.lbl_Message.TabIndex = 3;
             this.lbl_Message.Text = "label1";
             // 

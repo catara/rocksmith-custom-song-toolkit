@@ -1,73 +1,25 @@
-078: Logging started during program initialization at 03/03/17 01:26:01
-078: EOF v1.8RC12 (3-1-2017)
-078: eof_load_config() entered
-078: set_default_config() entered
-078: eof_controller_read_button_names() entered
-078: eof_controller_read_button_names() entered
-078: 	Importing chord shape definitions
-078: eof_load_chord_shape_definitions() entered
-078: 	53 chord shape definitions imported
-078: eof_set_display_mode() entered
-078: eof_window_create() entered
-078: eof_window_create() entered
-078: eof_window_create() entered
-078: eof_window_create() entered
-078: eof_window_create() entered
-078: eof_load_data() entered
-078: eof_init_colors() entered
-078: eof_switch_out_callback() entered
-078: eof_switch_in_callback() entered
-078: eof_switch_out_callback() entered
-078: create_silence_sample() entered
-078: save_wav() entered
-078: save_wav_fp() entered
-078: eof_switch_in_callback() entered
-078: eof_switch_out_callback() entered
-078: eof_copy_file() entered
-078: eof_switch_in_callback() entered
-078: eof_switch_out_callback() entered
-078: eof_undo_reset() entered
-078: 	Initializing audio
-078: eof_mix_init() entered
-078: eof_switch_in_callback() entered
-078: 	Checking for crash recovery files
-078: 	Entering main program loop
-078: eof_emergency_stop_music() entered
-078: eof_emergency_stop_music() entered
-078: eof_emergency_stop_music() entered
-078: eof_emergency_stop_music() entered
-078: eof_emergency_stop_music() entered
-078: eof_destroy_data() entered
-078: eof_set_display_mode() entered
-078: eof_window_destroy() entered
-078: eof_window_destroy() entered
-078: eof_window_destroy() entered
-078: eof_window_destroy() entered
-078: eof_window_destroy() entered
-078: eof_window_create() entered
-078: eof_window_create() entered
-078: eof_window_create() entered
-078: eof_window_create() entered
-078: eof_window_create() entered
-078: eof_load_data() entered
-078: eof_emergency_stop_music() entered
-078: eof_emergency_stop_music() entered
-078: eof_emergency_stop_music() entered
-078: eof_restore_oggs_helper() entered
-078: eof_exit() entered
-078: eof_save_config() entered
-078: eof_controller_save_config() entered
-078: eof_controller_save_config() entered
-078: eof_mix_exit() entered
-078: eof_destroy_data() entered
-078: eof_destroy_ogg() entered
-078: 	Closing project
-078: eof_destroy_song() entered
-078: eof_destroy_waveform() entered
-078: eof_destroy_spectrogram() entered
-078: eof_window_destroy() entered
-078: eof_window_destroy() entered
-078: eof_window_destroy() entered
-078: eof_window_destroy() entered
-078: eof_window_destroy() entered
-078: Logging stopped during program completion at 03/03/17 01:27:54
+138: Logging started during program initialization at 01/21/18 14:34:43
+138: EOF v1.8RC12 (12-18-2017)
+138: eof_load_config() entered
+138: set_default_config() entered
+138: eof_controller_read_button_names() entered
+138: eof_controller_read_button_names() entered
+138: eof_controller_load_config() entered
+138: eof_controller_read_button_names() entered
+138: eof_controller_load_config() entered
+138: eof_controller_read_button_names() entered
+138: 	Importing chord shape definitions
+138: eof_load_chord_shape_definitions() entered
+138: 	54 chord shape definitions imported
+138: eof_set_display_mode() entered
+138: eof_window_create() entered
+138: eof_window_create() entered
+138: eof_window_create() entered
+138: eof_window_create() entered
+138: eof_window_create() entered
+138: eof_load_data() entered
+138: 	Could not detect temp folder at:  C:\Temp\eof1.8RC12\
+138: eof_switch_out_callback() entered
+138: eof_switch_in_callback() entered
+138: 	Could not validate working directory and temp folder
+138: 	Entering main program loop

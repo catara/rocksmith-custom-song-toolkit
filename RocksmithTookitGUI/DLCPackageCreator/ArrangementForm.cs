@@ -36,7 +36,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
         public ArrangementForm(DLCPackageCreator control, GameVersion gameVersion)
             : this(new Arrangement
             {
-                SongFile = new SongFile { File = "" },
+                SongXML = new SongFile { File = "" },
                 SongXml = new SongXML { File = "" },
                 ArrangementType = ArrangementType.Guitar
             }, control, gameVersion)
@@ -312,7 +312,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
 
             Arrangement = new Arrangement
             {
-                SongFile = new SongFile { File = "" },
+                SongXML = new SongFile { File = "" },
                 SongXml = new SongXML { File = xmlFilePath }
             };
 

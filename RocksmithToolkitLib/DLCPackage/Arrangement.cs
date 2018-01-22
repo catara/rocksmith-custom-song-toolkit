@@ -35,7 +35,7 @@ namespace RocksmithToolkitLib.DLCPackage
 
     public class Arrangement
     {
-        public SongFile SongFile { get; set; }
+        public SongFile SongXML { get; set; }
         public SongXML SongXml { get; set; }
         // Song Information
         public SongArrangementProperties2014 ArrangementPropeties { get; set; }
@@ -89,7 +89,7 @@ namespace RocksmithToolkitLib.DLCPackage
             var isDirty = false;
             var song = Song2014.LoadFromFile(xmlSongFile);
 
-            this.SongFile = new SongFile { File = "" };
+            this.SongXML = new SongFile { File = "" };
             this.SongXml = new SongXML { File = xmlSongFile };
 
             //Properties

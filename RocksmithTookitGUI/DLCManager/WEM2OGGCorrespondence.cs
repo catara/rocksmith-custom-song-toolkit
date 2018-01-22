@@ -16,6 +16,7 @@ using System.Diagnostics;
 using Ookii.Dialogs; //cue text
 using System.IO;//dir commands
 using static RocksmithToolkitGUI.DLCManager.GenericFunctions;
+using RocksmithToolkitLib.XmlRepository;
 
 namespace RocksmithToolkitGUI.DLCManager
 {
@@ -147,10 +148,10 @@ namespace RocksmithToolkitGUI.DLCManager
            // DataGridView1.Rows[i].Cells[6].Value = txt_AlbumArtPath_Correction.Text;
 
             //var DB_Path = "../../../../tmp\\AccessDB.accdb;";
-            var connection = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path); //+ ";Persist Security Info=False"
+            var connection = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path); //+ ";Persist Security Info=False"
             var command = connection.CreateCommand();
             //dssx = DataGridView1;
-            using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
         {
                 //OleDbCommand command = new OleDbCommand();
                 //Update StadardizationDB
@@ -194,7 +195,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
             DataSet dooz = new DataSet(); dooz = SelectFromDB("Standardization", "SELECT ID, (SELECT IIF(count(*)>1,\"Yes\",\"\") as Suspect from Standardization AS O WHERE LCASE(S.Artist)=LCASE(O.Artist) and LCASE(S.Album)=LCASE(O.Album)) as Suspect, Artist, Artist_Correction, Album, Album_Correction, AlbumArt_Correction FROM Standardization as S ORDER BY Artist, Album;", "", cnb);
             //DB_Path = "../../../../tmp\\AccessDB.accdb;";
-            //using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
             //{
             //    OleDbDataAdapter da = new OleDbDataAdapter("SELECT ID, (SELECT IIF(count(*)>1,\"Yes\",\"\") as Suspect from Standardization AS O WHERE LCASE(S.Artist)=LCASE(O.Artist) and LCASE(S.Album)=LCASE(O.Album)) as Suspect, Artist, Artist_Correction, Album, Album_Correction, AlbumArt_Correction FROM Standardization as S ORDER BY Artist, Album;", cn);
             //    da.Fill(dssx, "Standardization");
@@ -397,7 +398,7 @@ namespace RocksmithToolkitGUI.DLCManager
             ////DB_Path = DB_Path.Replace("dlc\\AccessDB.accdb","dlc");
             //try
             //{
-            //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path.Replace("\\AccessDB.accdb;", "")))
+            //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path.Replace("\\AccessDB.accdb;", "")))
             //    {
             //        DataSet dus = new DataSet();
             //        cmd1 = "UPDATE Main SET Artist_Sort = Artist";
@@ -423,7 +424,7 @@ namespace RocksmithToolkitGUI.DLCManager
             ////var DB_Path = DB_Path + "\\AccessDB.accdb";
             //try
             //{
-            //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
             //    {
             //        DataSet dus = new DataSet();
             //        cmd1 = "UPDATE Main SET Song_Title_Sort = Song_Title";

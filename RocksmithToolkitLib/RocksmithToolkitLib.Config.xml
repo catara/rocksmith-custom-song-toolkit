@@ -123,8 +123,8 @@
   <Config Key="dlcm_AdditionalManipul78" Value="Yes" />
   <Config Key="dlcm_AdditionalManipul79" Value="No" />
   <Config Key="dlcm_AdditionalManipul80" Value="Yes" />
-  <Config Key="dlcm_AdditionalManipul81" Value="Yes" />
-  <Config Key="dlcm_AdditionalManipul82" Value="Yes" />
+  <Config Key="dlcm_AdditionalManipul81" Value="No" />
+  <Config Key="dlcm_AdditionalManipul82" Value="No" />
   <Config Key="dlcm_AdditionalManipul83" Value="No" />
   <Config Key="dlcm_AdditionalManipul84" Value="Yes" />
   <Config Key="dlcm_Album" Value="&#60;Broken&#62;&#60;Year&#62; - &#60;Album&#62; - &#60;Rating&#62; - &#60;Avail. Instr.&#62; - &#60;DD&#62; - &#60;Tuning&#62;-&#60;Group&#62;" />;
@@ -143,9 +143,10 @@
   <Config Key="dlcm_File_Name_old" Value="&#60;Beta&#62;&#60;Broken&#62;&#60;CDLC&#62;-&#60;Artist Short&#62;-&#60;Year&#62;-&#60;Album Short&#62;&#60;Track No.&#62;-&#60;Title&#62;&#60;Live&#62;-&#60;DD&#62;-&#60;Avail. Tracks&#62;-v&#60;Version&#62;-&#60;Bass_HasDD&#62;&#60;QA&#62;&#60;Bonus&#62;" />;
   <Config Key="dlcm_Title" Value="&#60;Title&#62;&#60;QA&#62;&#60;Bonus&#62;&#60;Live&#62;" />;
   <Config Key="dlcm_Title_Sort" Value="&#60;Year&#62;&#60;Album&#62;&#60;Track No.&#62;&#60;Title&#62;" />;
-  <Config Key="dlcm_FTP" Value="EU" />;
-  <Config Key="dlcm_FTP1" Value="ftp://192.168.1.12/dev_hdd0/game/BLES01862/USRDIR/DLC/" />;
-  <Config Key="dlcm_FTP2" Value="ftp://192.168.1.12/dev_hdd0/game/BLUS31182/USRDIR/DLC/" />;
+  <Config Key="dlcm_FTP" Value="US" />;
+  <Config Key="dlcm_FTP1" Value="ftp://192.168.1.13/dev_hdd0/game/BLES01862/USRDIR/DLC/" />;
+  <Config Key="dlcm_FTP2" Value="ftp://192.168.1.13/dev_hdd0/game/BLUS31182/USRDIR/DLC/" />;
+  <Config Key="dlcm_FTP3" Value="ftp://192.168.1.13/dev_hdd0/game/BLUS31182/USRDIR/DLC/" />;
   <Config Key="dlcm_RemoveBassDD" Value="Yes" />;
   <Config Key="dlcm_UniqueID" Value="Yes" />;
   <Config Key="dlcm_andCopy" Value="Yes" />;
@@ -153,6 +154,7 @@
   <Config Key="dlcm_DupliGTrack" Value="Yes" />;
   <Config Key="dlcm_PathForBRM" Value="C:\\GitHub\\rocksmith-custom-song-toolkit\\RocksmithTookitGUI\\DLCManager\\external_tools\\bpr_v0.3" />;
   <Config Key="dlcm_PreviewLenght" Value="30" />;
+  <Config Key="dlcm_MaxPreviewLenght" Value="32" />;
   <Config Key="dlcm_PreviewStart" Value="00:30" />;
   <Config Key="dlcm_Debug" Value="No" />;
   <Config Key="dlcm_DebugProfile" Value="Temp" />;
@@ -174,9 +176,11 @@
   <Config Key="dlcm_SampleRate" Value="44000" />;
   <Config Key="dlcm_EoFPath" Value="C:\\GitHub\\rocksmith-custom-song-toolkit\\RocksmithTookitGUI\\DLCManager\\external_tools\\eof1.8RC12\\eof.exe" />;
   <Config Key="dlcm_UltraStarCreator" Value="C:\\GitHub\\rocksmith-custom-song-toolkit\\RocksmithTookitGUI\\DLCManager\\external_tools\\UltraStar Creator\\usc.exe" />;
-  <Config Key="dlcm_WinMerge" Value="\C:\\GitHub\\rocksmith-custom-song-toolkit\\RocksmithTookitGUI\\DLCManager\external_tools\\WinMerge" />;
-  <Config Key="dlcm_TCommnader" Value="C:\\GitHub\\rocksmith-custom-song-toolkit\\RocksmithTookitGUI\\DLCManager\\external_tools\\totalcmd" />;
+  <Config Key="dlcm_WinMerge" Value="\C:\\GitHub\\rocksmith-custom-song-toolkit\\RocksmithTookitGUI\\DLCManager\\external_tools\\WinMerge" />;
+  <Config Key="dlcm_TCommander" Value="C:\\GitHub\\rocksmith-custom-song-toolkit\\RocksmithTookitGUI\\DLCManager\\external_tools\\totalcmd" />;
   <Config Key="dlcm_netstsatus" Value="NOK" />;
+  <!-- ACE.OLEDB.12.0 Access 2007, ACE.OLEDB.14.0 Access 2010, ACE.OLEDB.15.0 Access 2013, ACE.OLEDB.16.0 Access 2016 -->"
+  <Config Key="dlcm_AccessDLLVersion" Value="ACE.OLEDB.16.0" />;
 
   <Config Key="cgm_coloredinlay" Value="true" />
 </ArrayOfConfig>

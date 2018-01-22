@@ -17,6 +17,7 @@ using System.IO; //file io things
 using RocksmithToolkitLib.XML; //For xml read library
 using RocksmithToolkitLib.DLCPackage; //4packing
 using static RocksmithToolkitGUI.DLCManager.GenericFunctions;
+using RocksmithToolkitLib.XmlRepository;
 
 namespace RocksmithToolkitGUI.DLCManager
 {
@@ -132,7 +133,7 @@ namespace RocksmithToolkitGUI.DLCManager
             bs.DataSource = null;
             dssx.Dispose();
             //var cmd = "SELECT * FROM Arrangements WHERE CDLC_ID=" + CDLCID + ";";
-            //using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
             //{
             //    try
             //    {
@@ -195,8 +196,8 @@ namespace RocksmithToolkitGUI.DLCManager
             DataGridViewTextBoxColumn Has_Sections = new DataGridViewTextBoxColumn { DataPropertyName = "Has_Sections", HeaderText = "Has_Sections " };
             DataGridViewTextBoxColumn Comments = new DataGridViewTextBoxColumn { DataPropertyName = "Comments", HeaderText = "Comments " };
             DataGridViewTextBoxColumn Start_Time = new DataGridViewTextBoxColumn { DataPropertyName = "Start_Time", HeaderText = "Start_Time " };
-
-
+DataGridViewTextBoxColumn SNGFileHash_Orig = new DataGridViewTextBoxColumn { DataPropertyName = "SNGFileHash_Orig", HeaderText = "SNGFileHash_Orig " };
+DataGridViewTextBoxColumn XMLFile_Hash_Orig= new DataGridViewTextBoxColumn { DataPropertyName = "XMLFile_Hash_Orig", HeaderText = "XMLFile_Hash_Orig " };
 
             //bsPositions.DataSource = ds.Tables["Main"];
             //bsBadges.DataSource = ds.Tables["Badge"];
@@ -352,6 +353,8 @@ namespace RocksmithToolkitGUI.DLCManager
             public string Has_Sections { get; set; }
             public string Comments { get; set; }
             public string Start_Time { get; set; }
+            public string SNGFileHash_Orig { get; set; }
+            public string XMLFile_Hash_Orig { get; set; }
         }
 
         private Files[] files = new Files[10000];
@@ -367,7 +370,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //try
             //{
             //    //MessageBox.Show(DB_Path);
-            //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
             //    {
             //        DataSet dus = new DataSet();
             //        OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
@@ -423,7 +426,9 @@ namespace RocksmithToolkitGUI.DLCManager
                         files[i].Has_Sections = dataRow.ItemArray[40].ToString();
                         files[i].Comments = dataRow.ItemArray[41].ToString();
                         files[i].Start_Time = dataRow.ItemArray[42].ToString();
-                        i++;
+                files[i].SNGFileHash_Orig = dataRow.ItemArray[43].ToString();
+                files[i].XMLFile_Hash_Orig = dataRow.ItemArray[44].ToString();
+                i++;
                     }
                     //Closing Connection
                     dus.Dispose();
@@ -453,7 +458,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
             var norec = 0;
             //DataSet ds = new DataSet();
-            //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
             //{
             //    string SearchCmd = "SELECT DISTINCT ToneA FROM Arrangements;";
             //    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
@@ -482,7 +487,7 @@ namespace RocksmithToolkitGUI.DLCManager
             ds.Dispose();
         //}
         //DataSet dIs = new DataSet();
-        //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+        //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
         //{
         //    string SearchCmd = "SELECT DISTINCT ToneB FROM Arrangements;";
         //    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
@@ -511,7 +516,7 @@ namespace RocksmithToolkitGUI.DLCManager
             dIs.Dispose();
         //}
         //DataSet dfs = new DataSet();
-        //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+        //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
         //{
         //    string SearchCmd = "SELECT DISTINCT ToneC FROM Arrangements;";
         //    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
@@ -540,7 +545,7 @@ namespace RocksmithToolkitGUI.DLCManager
             dfs.Dispose();
         //}
         //DataSet dHs = new DataSet();
-        //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+        //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
         //{
         //    string SearchCmd = "SELECT DISTINCT ToneD FROM Arrangements;";
         //    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
@@ -571,7 +576,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         DataSet dxs = new DataSet(); dxs = SelectFromDB("Arrangements", "SELECT DISTINCT ToneBase FROM Arrangements;", "", cnb);
             //DataSet dxs = new DataSet();
-            //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
             //{
             //    string SearchCmd = "SELECT DISTINCT ToneBase FROM Arrangements;";
             //    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
@@ -598,7 +603,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 }
             //}
             //DataSet dks = new DataSet();
-            //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
             //{
             //    string SearchCmd = "SELECT DISTINCT Tunning FROM Arrangements;";
             //    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
@@ -740,10 +745,10 @@ namespace RocksmithToolkitGUI.DLCManager
 
 
             //var DB_Path = "../../../../tmp\\AccessDB.accdb;";
-            var connection = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path); //+ ";Persist Security Info=False"
+            var connection = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path); //+ ";Persist Security Info=False"
             var command = connection.CreateCommand();
             //dssx = DataGridView1;
-            using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DB_Path))
+            using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
             {
                 //OleDbCommand command = new OleDbCommand(); ;
                 //Update MainDB

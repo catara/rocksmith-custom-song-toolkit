@@ -487,7 +487,7 @@ namespace remastered
                     if (!optionPre)
                     {
                         // generate new AggregateGraph
-                        arr.SongFile = new RocksmithToolkitLib.DLCPackage.AggregateGraph.SongFile { File = "" };
+                        arr.SongXML = new RocksmithToolkitLib.DLCPackage.AggregateGraph.SongFile { File = "" };
 
                         // generate new Arrangement IDs
                         arr.Id = IdGenerator.Guid();

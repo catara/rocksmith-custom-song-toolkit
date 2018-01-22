@@ -207,7 +207,7 @@ namespace RocksmithToolkitLib.DLCPackage
                         ArrangementType = ArrangementType.Vocal,
                         ScrollSpeed = 20,
                         SongXml = new SongXML { File = xmlFile },
-                        SongFile = new SongFile { File = "" },
+                        SongXML = new SongFile { File = "" },
                         CustomFont = false
                     });
                 }
@@ -563,7 +563,7 @@ namespace RocksmithToolkitLib.DLCPackage
                             ArrangementType = ArrangementType.Vocal,
                             ScrollSpeed = 20,
                             SongXml = new SongXML { File = xmlFile },
-                            SongFile = new SongFile { File = "" },
+                            SongXML = new SongFile { File = "" },
                             CustomFont = attr.JapaneseVocal == true,
                             XmlComments = Song2014.ReadXmlComments(xmlFile)
                         };
@@ -597,7 +597,7 @@ namespace RocksmithToolkitLib.DLCPackage
                         ArrangementType = ArrangementType.ShowLight,
                         Name = ArrangementName.ShowLights,
                         SongXml = new SongXML { File = xmlShowLights },
-                        SongFile = new SongFile { File = "" },
+                        SongXML = new SongFile { File = "" },
                         XmlComments = Song2014.ReadXmlComments(xmlShowLights)
                     };
 

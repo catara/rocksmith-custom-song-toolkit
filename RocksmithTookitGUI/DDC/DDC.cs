@@ -261,7 +261,7 @@ namespace RocksmithToolkitGUI.DDC
                 if (chkGenArrIds.Checked)
                 {
                     // generate new AggregateGraph
-                    arr.SongFile = new RocksmithToolkitLib.DLCPackage.AggregateGraph.SongFile() { File = "" };
+                    arr.SongXML = new RocksmithToolkitLib.DLCPackage.AggregateGraph.SongFile() { File = "" };
 
                     // generate new Arrangement IDs
                     arr.Id = IdGenerator.Guid();

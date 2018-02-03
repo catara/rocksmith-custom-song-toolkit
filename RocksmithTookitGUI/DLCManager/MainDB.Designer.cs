@@ -69,7 +69,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_Duplicate_Official = new System.Windows.Forms.CheckBox();
             this.btn_Beta = new System.Windows.Forms.Button();
             this.btn_Fix_AudioIssues = new System.Windows.Forms.Button();
-            this.txt_Tuning = new RocksmithToolkitGUI.CueTextBox();
             this.chbx_InclBroken = new System.Windows.Forms.CheckBox();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -77,15 +76,12 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_FixAudioAll = new System.Windows.Forms.Button();
             this.btn_Copy_Orig = new System.Windows.Forms.Button();
             this.btn_Find_FilesMissingIssues = new System.Windows.Forms.Button();
-            this.txt_FilesMissingIssues = new RocksmithToolkitGUI.CueTextBox();
             this.btn_ReadGameLibrary = new System.Windows.Forms.Button();
-            this.txt_OldPath = new RocksmithToolkitGUI.CueTextBox();
             this.txt_Platform = new System.Windows.Forms.ComboBox();
             this.label13 = new System.Windows.Forms.Label();
             this.txt_Description = new System.Windows.Forms.RichTextBox();
             this.txt_Track_No = new System.Windows.Forms.NumericUpDown();
             this.btn_ChangeLyrics = new System.Windows.Forms.Button();
-            this.txt_Lyrics = new RocksmithToolkitGUI.CueTextBox();
             this.btn_GroupsAdd = new System.Windows.Forms.Button();
             this.btn_GroupsRemove = new System.Windows.Forms.Button();
             this.chbx_AllGroups = new System.Windows.Forms.CheckedListBox();
@@ -110,14 +106,11 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_PreSavedFTP = new System.Windows.Forms.ComboBox();
             this.chbx_Format = new System.Windows.Forms.ComboBox();
             this.chbx_Copy = new System.Windows.Forms.CheckBox();
-            this.txt_FTPPath = new RocksmithToolkitGUI.CueTextBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.chbx_Bass = new System.Windows.Forms.CheckBox();
-            this.txt_Live_Details = new RocksmithToolkitGUI.CueTextBox();
             this.chbx_Lead = new System.Windows.Forms.CheckBox();
             this.chbx_Combo = new System.Windows.Forms.CheckBox();
             this.chbx_Rhythm = new System.Windows.Forms.CheckBox();
-            this.txt_BassPicking = new RocksmithToolkitGUI.CueTextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.chbx_Is_Acoustic = new System.Windows.Forms.CheckBox();
             this.chbx_Is_Live = new System.Windows.Forms.CheckBox();
@@ -147,7 +140,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_Avail_Old = new System.Windows.Forms.CheckBox();
             this.chbx_Has_Been_Corrected = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.txt_ID = new RocksmithToolkitGUI.CueTextBox();
             this.btn_SelectInverted = new System.Windows.Forms.Button();
             this.btn_InvertSelect = new System.Windows.Forms.Button();
             this.label12 = new System.Windows.Forms.Label();
@@ -170,32 +162,16 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_PreviewStart = new System.Windows.Forms.DateTimePicker();
             this.btn_PlayAudio = new System.Windows.Forms.Button();
             this.btn_PlayPreview = new System.Windows.Forms.Button();
-            this.txt_AverageTempo = new RocksmithToolkitGUI.CueTextBox();
             this.chbx_AutoPlay = new System.Windows.Forms.CheckBox();
-            this.txt_OggPath = new RocksmithToolkitGUI.CueTextBox();
             this.txt_PreviewEnd = new System.Windows.Forms.NumericUpDown();
-            this.txt_OggPreviewPath = new RocksmithToolkitGUI.CueTextBox();
             this.btn_SelectPreview = new System.Windows.Forms.Button();
             this.btn_OpenRetail = new System.Windows.Forms.Button();
             this.btn_Close = new System.Windows.Forms.Button();
             this.btn_OpenStandardization = new System.Windows.Forms.Button();
-            this.txt_AlbumArtPath = new RocksmithToolkitGUI.CueTextBox();
             this.btn_ChangeCover = new System.Windows.Forms.Button();
-            this.txt_Artist_ShortName = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_Album_ShortName = new RocksmithToolkitGUI.CueTextBox();
             this.chbx_AutoSave = new System.Windows.Forms.CheckBox();
-            this.txt_Album_Year = new RocksmithToolkitGUI.CueTextBox();
             this.picbx_AlbumArtPath = new System.Windows.Forms.PictureBox();
             this.btn_Save = new System.Windows.Forms.Button();
-            this.txt_APP_ID = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_DLC_ID = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_Version = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_Author = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_Album = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_Title_Sort = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_Title = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_Artist_Sort = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_Artist = new RocksmithToolkitGUI.CueTextBox();
             this.btn_Duplicate = new System.Windows.Forms.Button();
             this.btn_SearchReset = new System.Windows.Forms.Button();
             this.btn_Search = new System.Windows.Forms.Button();
@@ -212,7 +188,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.label11 = new System.Windows.Forms.Label();
             this.txt_CustomsForge_ReleaseNotes = new System.Windows.Forms.RichTextBox();
             this.btn_Playthrough = new System.Windows.Forms.Button();
-            this.txt_Playthough = new RocksmithToolkitGUI.CueTextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.btn_Like = new System.Windows.Forms.Button();
             this.txt_Followers = new System.Windows.Forms.NumericUpDown();
@@ -224,8 +199,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_Youtube = new System.Windows.Forms.Button();
             this.label59 = new System.Windows.Forms.Label();
             this.btn_Debug = new System.Windows.Forms.Button();
-            this.txt_YouTube_Link = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_CustomsForge_Link = new RocksmithToolkitGUI.CueTextBox();
             this.lbfl_YouTube_Link = new System.Windows.Forms.Label();
             this.label33 = new System.Windows.Forms.Label();
             this.label32 = new System.Windows.Forms.Label();
@@ -239,13 +212,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_Remove_Packed = new System.Windows.Forms.Button();
             this.btn_RemoveAllRemoteSongs = new System.Windows.Forms.Button();
             this.btn_RemoveRemoteSong = new System.Windows.Forms.Button();
-            this.txt_RemotePath = new RocksmithToolkitGUI.CueTextBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.txt_Spotify_Album_URL = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_Spotify_Album_ID = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_Spotify_Artist_ID = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_Spotify_Song_ID = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_SpotifyStatus = new RocksmithToolkitGUI.CueTextBox();
             this.picbx_SpotifyCover = new System.Windows.Forms.PictureBox();
             this.btn_GetTrack = new System.Windows.Forms.Button();
             this.txt_SavedPlaylists = new System.Windows.Forms.ListBox();
@@ -255,6 +222,39 @@ namespace RocksmithToolkitGUI.DLCManager
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.txt_SpotifyLog = new System.Windows.Forms.RichTextBox();
             this.btn_ActivateSpotify = new System.Windows.Forms.Button();
+            this.txt_FilesMissingIssues = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_OldPath = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_Lyrics = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_FTPPath = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_Live_Details = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_BassPicking = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_Tuning = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_ID = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_AverageTempo = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_OggPath = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_OggPreviewPath = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_AlbumArtPath = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_Artist_ShortName = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_Album_ShortName = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_Album_Year = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_APP_ID = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_DLC_ID = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_Version = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_Author = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_Album = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_Title_Sort = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_Title = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_Artist_Sort = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_Artist = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_Playthough = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_YouTube_Link = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_CustomsForge_Link = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_RemotePath = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_Spotify_Album_URL = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_Spotify_Album_ID = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_Spotify_Artist_ID = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_Spotify_Song_ID = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_SpotifyStatus = new RocksmithToolkitGUI.CueTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.databox)).BeginInit();
             this.tabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -324,6 +324,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.databox.Size = new System.Drawing.Size(2216, 678);
             this.databox.TabIndex = 2;
             this.databox.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick_1);
+            this.databox.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.databox_CellContentClick);
             this.databox.CellLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellLeave);
             this.databox.RowLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataViewGrid_RowLeave);
             this.databox.SelectionChanged += new System.EventHandler(this.ChangeEdit);
@@ -658,18 +659,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_Fix_AudioIssues.UseVisualStyleBackColor = true;
             this.btn_Fix_AudioIssues.Click += new System.EventHandler(this.btn_Fix_All_Audio_isues_Click);
             // 
-            // txt_Tuning
-            // 
-            this.txt_Tuning.Cue = "Tuning (All)";
-            this.txt_Tuning.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_Tuning.ForeColor = System.Drawing.Color.Gray;
-            this.txt_Tuning.Location = new System.Drawing.Point(12, 102);
-            this.txt_Tuning.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.txt_Tuning.Name = "txt_Tuning";
-            this.txt_Tuning.Size = new System.Drawing.Size(144, 32);
-            this.txt_Tuning.TabIndex = 78;
-            this.toolTip1.SetToolTip(this.txt_Tuning, "For all instruments.");
-            // 
             // chbx_InclBroken
             // 
             this.chbx_InclBroken.AutoSize = true;
@@ -821,20 +810,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_Find_FilesMissingIssues.UseVisualStyleBackColor = true;
             this.btn_Find_FilesMissingIssues.Click += new System.EventHandler(this.btn_Find_FilesMissingIssues_Click);
             // 
-            // txt_FilesMissingIssues
-            // 
-            this.txt_FilesMissingIssues.Cue = "FilesMissingIssues";
-            this.txt_FilesMissingIssues.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_FilesMissingIssues.ForeColor = System.Drawing.Color.Gray;
-            this.txt_FilesMissingIssues.HideSelection = false;
-            this.txt_FilesMissingIssues.Location = new System.Drawing.Point(1196, 458);
-            this.txt_FilesMissingIssues.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.txt_FilesMissingIssues.Name = "txt_FilesMissingIssues";
-            this.txt_FilesMissingIssues.ReadOnly = true;
-            this.txt_FilesMissingIssues.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
-            this.txt_FilesMissingIssues.Size = new System.Drawing.Size(460, 32);
-            this.txt_FilesMissingIssues.TabIndex = 334;
-            // 
             // btn_ReadGameLibrary
             // 
             this.btn_ReadGameLibrary.Location = new System.Drawing.Point(1900, 57);
@@ -845,21 +820,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_ReadGameLibrary.Text = "Read Game DLC Library";
             this.btn_ReadGameLibrary.UseVisualStyleBackColor = true;
             this.btn_ReadGameLibrary.Click += new System.EventHandler(this.btn_ReadGameLibrary_Click);
-            // 
-            // txt_OldPath
-            // 
-            this.txt_OldPath.Cue = "Old Path";
-            this.txt_OldPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_OldPath.ForeColor = System.Drawing.Color.Gray;
-            this.txt_OldPath.HideSelection = false;
-            this.txt_OldPath.Location = new System.Drawing.Point(1664, 458);
-            this.txt_OldPath.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.txt_OldPath.Name = "txt_OldPath";
-            this.txt_OldPath.ReadOnly = true;
-            this.txt_OldPath.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
-            this.txt_OldPath.Size = new System.Drawing.Size(228, 32);
-            this.txt_OldPath.TabIndex = 334;
-            this.txt_OldPath.Visible = false;
             // 
             // txt_Platform
             // 
@@ -926,21 +886,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_ChangeLyrics.Text = "Change Lyrics";
             this.btn_ChangeLyrics.UseVisualStyleBackColor = true;
             this.btn_ChangeLyrics.Click += new System.EventHandler(this.btn_ChangeLyrics_Click);
-            // 
-            // txt_Lyrics
-            // 
-            this.txt_Lyrics.Cue = "Lyrics Path";
-            this.txt_Lyrics.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_Lyrics.ForeColor = System.Drawing.Color.Gray;
-            this.txt_Lyrics.HideSelection = false;
-            this.txt_Lyrics.Location = new System.Drawing.Point(1000, 420);
-            this.txt_Lyrics.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.txt_Lyrics.Name = "txt_Lyrics";
-            this.txt_Lyrics.ReadOnly = true;
-            this.txt_Lyrics.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
-            this.txt_Lyrics.Size = new System.Drawing.Size(224, 32);
-            this.txt_Lyrics.TabIndex = 334;
-            this.txt_Lyrics.Visible = false;
             // 
             // btn_GroupsAdd
             // 
@@ -1267,18 +1212,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_Copy.UseVisualStyleBackColor = true;
             this.chbx_Copy.CheckedChanged += new System.EventHandler(this.chbx_Copy_CheckedChanged);
             // 
-            // txt_FTPPath
-            // 
-            this.txt_FTPPath.Cue = "FTP_Path";
-            this.txt_FTPPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_FTPPath.ForeColor = System.Drawing.Color.Gray;
-            this.txt_FTPPath.Location = new System.Drawing.Point(116, 180);
-            this.txt_FTPPath.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.txt_FTPPath.Name = "txt_FTPPath";
-            this.txt_FTPPath.Size = new System.Drawing.Size(124, 32);
-            this.txt_FTPPath.TabIndex = 308;
-            this.txt_FTPPath.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
             // groupBox5
             // 
             this.groupBox5.Controls.Add(this.chbx_Bass);
@@ -1308,18 +1241,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_Bass.TabIndex = 75;
             this.chbx_Bass.Text = "Bass";
             this.chbx_Bass.UseVisualStyleBackColor = true;
-            // 
-            // txt_Live_Details
-            // 
-            this.txt_Live_Details.Cue = "Live/Acoustic Details";
-            this.txt_Live_Details.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_Live_Details.ForeColor = System.Drawing.Color.Gray;
-            this.txt_Live_Details.Location = new System.Drawing.Point(164, 102);
-            this.txt_Live_Details.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.txt_Live_Details.Name = "txt_Live_Details";
-            this.txt_Live_Details.Size = new System.Drawing.Size(140, 32);
-            this.txt_Live_Details.TabIndex = 335;
-            this.txt_Live_Details.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_Artist_KeyPress);
             // 
             // chbx_Lead
             // 
@@ -1356,18 +1277,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_Rhythm.TabIndex = 77;
             this.chbx_Rhythm.Text = "Rhythm";
             this.chbx_Rhythm.UseVisualStyleBackColor = true;
-            // 
-            // txt_BassPicking
-            // 
-            this.txt_BassPicking.Cue = "Bass Picking";
-            this.txt_BassPicking.Enabled = false;
-            this.txt_BassPicking.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F);
-            this.txt_BassPicking.ForeColor = System.Drawing.Color.Gray;
-            this.txt_BassPicking.Location = new System.Drawing.Point(232, 68);
-            this.txt_BassPicking.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.txt_BassPicking.Name = "txt_BassPicking";
-            this.txt_BassPicking.Size = new System.Drawing.Size(72, 26);
-            this.txt_BassPicking.TabIndex = 96;
             // 
             // groupBox4
             // 
@@ -1767,18 +1676,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Song Section";
             // 
-            // txt_ID
-            // 
-            this.txt_ID.Cue = "ID";
-            this.txt_ID.Enabled = false;
-            this.txt_ID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_ID.ForeColor = System.Drawing.Color.Gray;
-            this.txt_ID.Location = new System.Drawing.Point(56, 172);
-            this.txt_ID.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.txt_ID.Name = "txt_ID";
-            this.txt_ID.Size = new System.Drawing.Size(100, 32);
-            this.txt_ID.TabIndex = 95;
-            // 
             // btn_SelectInverted
             // 
             this.btn_SelectInverted.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F);
@@ -2119,17 +2016,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_PlayPreview.UseVisualStyleBackColor = true;
             this.btn_PlayPreview.Click += new System.EventHandler(this.btn_PlayPreview_Click);
             // 
-            // txt_AverageTempo
-            // 
-            this.txt_AverageTempo.Cue = "Avg. Tempo";
-            this.txt_AverageTempo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_AverageTempo.ForeColor = System.Drawing.Color.Gray;
-            this.txt_AverageTempo.Location = new System.Drawing.Point(440, 32);
-            this.txt_AverageTempo.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.txt_AverageTempo.Name = "txt_AverageTempo";
-            this.txt_AverageTempo.Size = new System.Drawing.Size(64, 32);
-            this.txt_AverageTempo.TabIndex = 90;
-            // 
             // chbx_AutoPlay
             // 
             this.chbx_AutoPlay.AutoSize = true;
@@ -2143,21 +2029,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_AutoPlay.TabIndex = 291;
             this.chbx_AutoPlay.Text = "AutoPlay";
             this.chbx_AutoPlay.UseVisualStyleBackColor = true;
-            // 
-            // txt_OggPath
-            // 
-            this.txt_OggPath.Cue = "Ogg Path";
-            this.txt_OggPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_OggPath.ForeColor = System.Drawing.Color.Gray;
-            this.txt_OggPath.HideSelection = false;
-            this.txt_OggPath.Location = new System.Drawing.Point(12, 76);
-            this.txt_OggPath.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.txt_OggPath.Name = "txt_OggPath";
-            this.txt_OggPath.ReadOnly = true;
-            this.txt_OggPath.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
-            this.txt_OggPath.Size = new System.Drawing.Size(192, 32);
-            this.txt_OggPath.TabIndex = 312;
-            this.txt_OggPath.Visible = false;
             // 
             // txt_PreviewEnd
             // 
@@ -2176,21 +2047,6 @@ namespace RocksmithToolkitGUI.DLCManager
             0,
             0,
             0});
-            // 
-            // txt_OggPreviewPath
-            // 
-            this.txt_OggPreviewPath.Cue = "Ogg Preview Path";
-            this.txt_OggPreviewPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_OggPreviewPath.ForeColor = System.Drawing.Color.Gray;
-            this.txt_OggPreviewPath.HideSelection = false;
-            this.txt_OggPreviewPath.Location = new System.Drawing.Point(12, 112);
-            this.txt_OggPreviewPath.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.txt_OggPreviewPath.Name = "txt_OggPreviewPath";
-            this.txt_OggPreviewPath.ReadOnly = true;
-            this.txt_OggPreviewPath.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
-            this.txt_OggPreviewPath.Size = new System.Drawing.Size(192, 32);
-            this.txt_OggPreviewPath.TabIndex = 313;
-            this.txt_OggPreviewPath.Visible = false;
             // 
             // btn_SelectPreview
             // 
@@ -2243,21 +2099,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_OpenStandardization.UseVisualStyleBackColor = false;
             this.btn_OpenStandardization.Click += new System.EventHandler(this.btn_OpenStandardization_Click);
             // 
-            // txt_AlbumArtPath
-            // 
-            this.txt_AlbumArtPath.Cue = "Album art Path";
-            this.txt_AlbumArtPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_AlbumArtPath.ForeColor = System.Drawing.Color.Gray;
-            this.txt_AlbumArtPath.HideSelection = false;
-            this.txt_AlbumArtPath.Location = new System.Drawing.Point(1664, 270);
-            this.txt_AlbumArtPath.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.txt_AlbumArtPath.Name = "txt_AlbumArtPath";
-            this.txt_AlbumArtPath.ReadOnly = true;
-            this.txt_AlbumArtPath.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
-            this.txt_AlbumArtPath.Size = new System.Drawing.Size(224, 32);
-            this.txt_AlbumArtPath.TabIndex = 107;
-            this.txt_AlbumArtPath.Visible = false;
-            // 
             // btn_ChangeCover
             // 
             this.btn_ChangeCover.Enabled = false;
@@ -2269,28 +2110,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_ChangeCover.Text = "Change Cover";
             this.btn_ChangeCover.UseVisualStyleBackColor = true;
             this.btn_ChangeCover.Click += new System.EventHandler(this.btn_ChangeCover_Click);
-            // 
-            // txt_Artist_ShortName
-            // 
-            this.txt_Artist_ShortName.Cue = "Short";
-            this.txt_Artist_ShortName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_Artist_ShortName.ForeColor = System.Drawing.Color.Gray;
-            this.txt_Artist_ShortName.Location = new System.Drawing.Point(868, 6);
-            this.txt_Artist_ShortName.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.txt_Artist_ShortName.Name = "txt_Artist_ShortName";
-            this.txt_Artist_ShortName.Size = new System.Drawing.Size(56, 32);
-            this.txt_Artist_ShortName.TabIndex = 104;
-            // 
-            // txt_Album_ShortName
-            // 
-            this.txt_Album_ShortName.Cue = "Short";
-            this.txt_Album_ShortName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_Album_ShortName.ForeColor = System.Drawing.Color.Gray;
-            this.txt_Album_ShortName.Location = new System.Drawing.Point(732, 180);
-            this.txt_Album_ShortName.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.txt_Album_ShortName.Name = "txt_Album_ShortName";
-            this.txt_Album_ShortName.Size = new System.Drawing.Size(80, 32);
-            this.txt_Album_ShortName.TabIndex = 103;
             // 
             // chbx_AutoSave
             // 
@@ -2304,17 +2123,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_AutoSave.TabIndex = 100;
             this.chbx_AutoSave.Text = "AutoSave";
             this.chbx_AutoSave.UseVisualStyleBackColor = true;
-            // 
-            // txt_Album_Year
-            // 
-            this.txt_Album_Year.Cue = "Year";
-            this.txt_Album_Year.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_Album_Year.ForeColor = System.Drawing.Color.Gray;
-            this.txt_Album_Year.Location = new System.Drawing.Point(868, 180);
-            this.txt_Album_Year.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.txt_Album_Year.Name = "txt_Album_Year";
-            this.txt_Album_Year.Size = new System.Drawing.Size(100, 32);
-            this.txt_Album_Year.TabIndex = 98;
             // 
             // picbx_AlbumArtPath
             // 
@@ -2338,109 +2146,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_Save.Text = "Save";
             this.btn_Save.UseVisualStyleBackColor = true;
             this.btn_Save.Click += new System.EventHandler(this.btn_Save_Click);
-            // 
-            // txt_APP_ID
-            // 
-            this.txt_APP_ID.Cue = "App ID";
-            this.txt_APP_ID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_APP_ID.ForeColor = System.Drawing.Color.Gray;
-            this.txt_APP_ID.Location = new System.Drawing.Point(732, 224);
-            this.txt_APP_ID.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.txt_APP_ID.Name = "txt_APP_ID";
-            this.txt_APP_ID.Size = new System.Drawing.Size(120, 32);
-            this.txt_APP_ID.TabIndex = 80;
-            // 
-            // txt_DLC_ID
-            // 
-            this.txt_DLC_ID.Cue = "DLC Name";
-            this.txt_DLC_ID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_DLC_ID.ForeColor = System.Drawing.Color.Gray;
-            this.txt_DLC_ID.Location = new System.Drawing.Point(412, 224);
-            this.txt_DLC_ID.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.txt_DLC_ID.Name = "txt_DLC_ID";
-            this.txt_DLC_ID.Size = new System.Drawing.Size(308, 32);
-            this.txt_DLC_ID.TabIndex = 79;
-            // 
-            // txt_Version
-            // 
-            this.txt_Version.Cue = "Version";
-            this.txt_Version.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_Version.ForeColor = System.Drawing.Color.Gray;
-            this.txt_Version.Location = new System.Drawing.Point(1008, 90);
-            this.txt_Version.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.txt_Version.Name = "txt_Version";
-            this.txt_Version.Size = new System.Drawing.Size(80, 32);
-            this.txt_Version.TabIndex = 73;
-            // 
-            // txt_Author
-            // 
-            this.txt_Author.Cue = "Author";
-            this.txt_Author.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_Author.ForeColor = System.Drawing.Color.Gray;
-            this.txt_Author.Location = new System.Drawing.Point(980, 48);
-            this.txt_Author.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.txt_Author.Name = "txt_Author";
-            this.txt_Author.Size = new System.Drawing.Size(308, 32);
-            this.txt_Author.TabIndex = 72;
-            this.txt_Author.TextChanged += new System.EventHandler(this.txt_Author_TextChanged);
-            // 
-            // txt_Album
-            // 
-            this.txt_Album.Cue = "Album";
-            this.txt_Album.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_Album.ForeColor = System.Drawing.Color.Gray;
-            this.txt_Album.Location = new System.Drawing.Point(412, 180);
-            this.txt_Album.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.txt_Album.Name = "txt_Album";
-            this.txt_Album.Size = new System.Drawing.Size(308, 32);
-            this.txt_Album.TabIndex = 69;
-            this.txt_Album.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_Artist_KeyPress);
-            // 
-            // txt_Title_Sort
-            // 
-            this.txt_Title_Sort.Cue = "Title Sort";
-            this.txt_Title_Sort.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_Title_Sort.ForeColor = System.Drawing.Color.Gray;
-            this.txt_Title_Sort.Location = new System.Drawing.Point(412, 140);
-            this.txt_Title_Sort.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.txt_Title_Sort.Name = "txt_Title_Sort";
-            this.txt_Title_Sort.Size = new System.Drawing.Size(400, 32);
-            this.txt_Title_Sort.TabIndex = 68;
-            // 
-            // txt_Title
-            // 
-            this.txt_Title.Cue = "Title";
-            this.txt_Title.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_Title.ForeColor = System.Drawing.Color.Gray;
-            this.txt_Title.Location = new System.Drawing.Point(412, 96);
-            this.txt_Title.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.txt_Title.Name = "txt_Title";
-            this.txt_Title.Size = new System.Drawing.Size(400, 32);
-            this.txt_Title.TabIndex = 67;
-            this.txt_Title.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_Artist_KeyPress);
-            // 
-            // txt_Artist_Sort
-            // 
-            this.txt_Artist_Sort.Cue = "Artist  Sort";
-            this.txt_Artist_Sort.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_Artist_Sort.ForeColor = System.Drawing.Color.Gray;
-            this.txt_Artist_Sort.Location = new System.Drawing.Point(412, 52);
-            this.txt_Artist_Sort.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.txt_Artist_Sort.Name = "txt_Artist_Sort";
-            this.txt_Artist_Sort.Size = new System.Drawing.Size(440, 32);
-            this.txt_Artist_Sort.TabIndex = 66;
-            // 
-            // txt_Artist
-            // 
-            this.txt_Artist.Cue = "Artist";
-            this.txt_Artist.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_Artist.ForeColor = System.Drawing.Color.Gray;
-            this.txt_Artist.Location = new System.Drawing.Point(412, 6);
-            this.txt_Artist.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.txt_Artist.Name = "txt_Artist";
-            this.txt_Artist.Size = new System.Drawing.Size(400, 32);
-            this.txt_Artist.TabIndex = 65;
-            this.txt_Artist.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_Artist_KeyPress);
             // 
             // btn_Duplicate
             // 
@@ -2656,18 +2361,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_Playthrough.Text = ">";
             this.btn_Playthrough.UseVisualStyleBackColor = true;
             // 
-            // txt_Playthough
-            // 
-            this.txt_Playthough.Cue = "PlayThrough";
-            this.txt_Playthough.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_Playthough.ForeColor = System.Drawing.Color.Gray;
-            this.txt_Playthough.Location = new System.Drawing.Point(164, 76);
-            this.txt_Playthough.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.txt_Playthough.Name = "txt_Playthough";
-            this.txt_Playthough.Size = new System.Drawing.Size(76, 32);
-            this.txt_Playthough.TabIndex = 386;
-            this.txt_Playthough.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
             // label10
             // 
             this.label10.AutoSize = true;
@@ -2815,30 +2508,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_Debug.UseVisualStyleBackColor = true;
             this.btn_Debug.Visible = false;
             this.btn_Debug.Click += new System.EventHandler(this.btn_Debug_Click);
-            // 
-            // txt_YouTube_Link
-            // 
-            this.txt_YouTube_Link.Cue = "YouTube Link New";
-            this.txt_YouTube_Link.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_YouTube_Link.ForeColor = System.Drawing.Color.Gray;
-            this.txt_YouTube_Link.Location = new System.Drawing.Point(164, 32);
-            this.txt_YouTube_Link.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.txt_YouTube_Link.Name = "txt_YouTube_Link";
-            this.txt_YouTube_Link.Size = new System.Drawing.Size(76, 32);
-            this.txt_YouTube_Link.TabIndex = 314;
-            this.txt_YouTube_Link.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // txt_CustomsForge_Link
-            // 
-            this.txt_CustomsForge_Link.Cue = "CustomsForge New";
-            this.txt_CustomsForge_Link.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_CustomsForge_Link.ForeColor = System.Drawing.Color.Gray;
-            this.txt_CustomsForge_Link.Location = new System.Drawing.Point(156, 114);
-            this.txt_CustomsForge_Link.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.txt_CustomsForge_Link.Name = "txt_CustomsForge_Link";
-            this.txt_CustomsForge_Link.Size = new System.Drawing.Size(88, 32);
-            this.txt_CustomsForge_Link.TabIndex = 316;
-            this.txt_CustomsForge_Link.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lbfl_YouTube_Link
             // 
@@ -3001,20 +2670,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_RemoveRemoteSong.UseVisualStyleBackColor = true;
             this.btn_RemoveRemoteSong.Click += new System.EventHandler(this.btn_RemoveRemoteSong_Click);
             // 
-            // txt_RemotePath
-            // 
-            this.txt_RemotePath.Cue = "Remote Path";
-            this.txt_RemotePath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_RemotePath.ForeColor = System.Drawing.Color.Gray;
-            this.txt_RemotePath.HideSelection = false;
-            this.txt_RemotePath.Location = new System.Drawing.Point(300, 14);
-            this.txt_RemotePath.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.txt_RemotePath.Name = "txt_RemotePath";
-            this.txt_RemotePath.ReadOnly = true;
-            this.txt_RemotePath.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
-            this.txt_RemotePath.Size = new System.Drawing.Size(900, 32);
-            this.txt_RemotePath.TabIndex = 335;
-            // 
             // tabPage4
             // 
             this.tabPage4.Controls.Add(this.txt_Spotify_Album_URL);
@@ -3036,76 +2691,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Spotify";
             this.tabPage4.UseVisualStyleBackColor = true;
-            // 
-            // txt_Spotify_Album_URL
-            // 
-            this.txt_Spotify_Album_URL.Cue = "Spotify Album URL";
-            this.txt_Spotify_Album_URL.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_Spotify_Album_URL.ForeColor = System.Drawing.Color.Gray;
-            this.txt_Spotify_Album_URL.HideSelection = false;
-            this.txt_Spotify_Album_URL.Location = new System.Drawing.Point(1783, 263);
-            this.txt_Spotify_Album_URL.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.txt_Spotify_Album_URL.Name = "txt_Spotify_Album_URL";
-            this.txt_Spotify_Album_URL.ReadOnly = true;
-            this.txt_Spotify_Album_URL.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
-            this.txt_Spotify_Album_URL.Size = new System.Drawing.Size(410, 32);
-            this.txt_Spotify_Album_URL.TabIndex = 404;
-            // 
-            // txt_Spotify_Album_ID
-            // 
-            this.txt_Spotify_Album_ID.Cue = "Spotify Album ID";
-            this.txt_Spotify_Album_ID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_Spotify_Album_ID.ForeColor = System.Drawing.Color.Gray;
-            this.txt_Spotify_Album_ID.HideSelection = false;
-            this.txt_Spotify_Album_ID.Location = new System.Drawing.Point(1783, 219);
-            this.txt_Spotify_Album_ID.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.txt_Spotify_Album_ID.Name = "txt_Spotify_Album_ID";
-            this.txt_Spotify_Album_ID.ReadOnly = true;
-            this.txt_Spotify_Album_ID.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
-            this.txt_Spotify_Album_ID.Size = new System.Drawing.Size(410, 32);
-            this.txt_Spotify_Album_ID.TabIndex = 403;
-            // 
-            // txt_Spotify_Artist_ID
-            // 
-            this.txt_Spotify_Artist_ID.Cue = "Spotify Artist ID";
-            this.txt_Spotify_Artist_ID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_Spotify_Artist_ID.ForeColor = System.Drawing.Color.Gray;
-            this.txt_Spotify_Artist_ID.HideSelection = false;
-            this.txt_Spotify_Artist_ID.Location = new System.Drawing.Point(1783, 175);
-            this.txt_Spotify_Artist_ID.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.txt_Spotify_Artist_ID.Name = "txt_Spotify_Artist_ID";
-            this.txt_Spotify_Artist_ID.ReadOnly = true;
-            this.txt_Spotify_Artist_ID.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
-            this.txt_Spotify_Artist_ID.Size = new System.Drawing.Size(410, 32);
-            this.txt_Spotify_Artist_ID.TabIndex = 402;
-            // 
-            // txt_Spotify_Song_ID
-            // 
-            this.txt_Spotify_Song_ID.Cue = "Spotify Song ID";
-            this.txt_Spotify_Song_ID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_Spotify_Song_ID.ForeColor = System.Drawing.Color.Gray;
-            this.txt_Spotify_Song_ID.HideSelection = false;
-            this.txt_Spotify_Song_ID.Location = new System.Drawing.Point(1783, 131);
-            this.txt_Spotify_Song_ID.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.txt_Spotify_Song_ID.Name = "txt_Spotify_Song_ID";
-            this.txt_Spotify_Song_ID.ReadOnly = true;
-            this.txt_Spotify_Song_ID.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
-            this.txt_Spotify_Song_ID.Size = new System.Drawing.Size(410, 32);
-            this.txt_Spotify_Song_ID.TabIndex = 401;
-            // 
-            // txt_SpotifyStatus
-            // 
-            this.txt_SpotifyStatus.Cue = "Authentification Status";
-            this.txt_SpotifyStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_SpotifyStatus.ForeColor = System.Drawing.Color.Gray;
-            this.txt_SpotifyStatus.HideSelection = false;
-            this.txt_SpotifyStatus.Location = new System.Drawing.Point(360, 52);
-            this.txt_SpotifyStatus.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.txt_SpotifyStatus.Name = "txt_SpotifyStatus";
-            this.txt_SpotifyStatus.ReadOnly = true;
-            this.txt_SpotifyStatus.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
-            this.txt_SpotifyStatus.Size = new System.Drawing.Size(410, 32);
-            this.txt_SpotifyStatus.TabIndex = 400;
             // 
             // picbx_SpotifyCover
             // 
@@ -3188,6 +2773,422 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_ActivateSpotify.Text = "Authentificate with Spotify";
             this.btn_ActivateSpotify.UseVisualStyleBackColor = true;
             this.btn_ActivateSpotify.Click += new System.EventHandler(this.btn_ActivateSpotify_Click);
+            // 
+            // txt_FilesMissingIssues
+            // 
+            this.txt_FilesMissingIssues.Cue = "FilesMissingIssues";
+            this.txt_FilesMissingIssues.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_FilesMissingIssues.ForeColor = System.Drawing.Color.Gray;
+            this.txt_FilesMissingIssues.HideSelection = false;
+            this.txt_FilesMissingIssues.Location = new System.Drawing.Point(1196, 458);
+            this.txt_FilesMissingIssues.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.txt_FilesMissingIssues.Name = "txt_FilesMissingIssues";
+            this.txt_FilesMissingIssues.ReadOnly = true;
+            this.txt_FilesMissingIssues.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
+            this.txt_FilesMissingIssues.Size = new System.Drawing.Size(460, 32);
+            this.txt_FilesMissingIssues.TabIndex = 334;
+            // 
+            // txt_OldPath
+            // 
+            this.txt_OldPath.Cue = "Old Path";
+            this.txt_OldPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_OldPath.ForeColor = System.Drawing.Color.Gray;
+            this.txt_OldPath.HideSelection = false;
+            this.txt_OldPath.Location = new System.Drawing.Point(1664, 458);
+            this.txt_OldPath.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.txt_OldPath.Name = "txt_OldPath";
+            this.txt_OldPath.ReadOnly = true;
+            this.txt_OldPath.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
+            this.txt_OldPath.Size = new System.Drawing.Size(228, 32);
+            this.txt_OldPath.TabIndex = 334;
+            this.txt_OldPath.Visible = false;
+            // 
+            // txt_Lyrics
+            // 
+            this.txt_Lyrics.Cue = "Lyrics Path";
+            this.txt_Lyrics.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_Lyrics.ForeColor = System.Drawing.Color.Gray;
+            this.txt_Lyrics.HideSelection = false;
+            this.txt_Lyrics.Location = new System.Drawing.Point(1000, 420);
+            this.txt_Lyrics.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.txt_Lyrics.Name = "txt_Lyrics";
+            this.txt_Lyrics.ReadOnly = true;
+            this.txt_Lyrics.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
+            this.txt_Lyrics.Size = new System.Drawing.Size(224, 32);
+            this.txt_Lyrics.TabIndex = 334;
+            this.txt_Lyrics.Visible = false;
+            // 
+            // txt_FTPPath
+            // 
+            this.txt_FTPPath.Cue = "FTP_Path";
+            this.txt_FTPPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_FTPPath.ForeColor = System.Drawing.Color.Gray;
+            this.txt_FTPPath.Location = new System.Drawing.Point(116, 180);
+            this.txt_FTPPath.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.txt_FTPPath.Name = "txt_FTPPath";
+            this.txt_FTPPath.Size = new System.Drawing.Size(124, 32);
+            this.txt_FTPPath.TabIndex = 308;
+            this.txt_FTPPath.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txt_Live_Details
+            // 
+            this.txt_Live_Details.Cue = "Live/Acoustic Details";
+            this.txt_Live_Details.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_Live_Details.ForeColor = System.Drawing.Color.Gray;
+            this.txt_Live_Details.Location = new System.Drawing.Point(164, 102);
+            this.txt_Live_Details.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.txt_Live_Details.Name = "txt_Live_Details";
+            this.txt_Live_Details.Size = new System.Drawing.Size(140, 32);
+            this.txt_Live_Details.TabIndex = 335;
+            this.txt_Live_Details.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_Artist_KeyPress);
+            // 
+            // txt_BassPicking
+            // 
+            this.txt_BassPicking.Cue = "Bass Picking";
+            this.txt_BassPicking.Enabled = false;
+            this.txt_BassPicking.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F);
+            this.txt_BassPicking.ForeColor = System.Drawing.Color.Gray;
+            this.txt_BassPicking.Location = new System.Drawing.Point(232, 68);
+            this.txt_BassPicking.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.txt_BassPicking.Name = "txt_BassPicking";
+            this.txt_BassPicking.Size = new System.Drawing.Size(72, 26);
+            this.txt_BassPicking.TabIndex = 96;
+            // 
+            // txt_Tuning
+            // 
+            this.txt_Tuning.Cue = "Tuning (All)";
+            this.txt_Tuning.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_Tuning.ForeColor = System.Drawing.Color.Gray;
+            this.txt_Tuning.Location = new System.Drawing.Point(12, 102);
+            this.txt_Tuning.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.txt_Tuning.Name = "txt_Tuning";
+            this.txt_Tuning.Size = new System.Drawing.Size(144, 32);
+            this.txt_Tuning.TabIndex = 78;
+            this.toolTip1.SetToolTip(this.txt_Tuning, "For all instruments.");
+            // 
+            // txt_ID
+            // 
+            this.txt_ID.Cue = "ID";
+            this.txt_ID.Enabled = false;
+            this.txt_ID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_ID.ForeColor = System.Drawing.Color.Gray;
+            this.txt_ID.Location = new System.Drawing.Point(56, 172);
+            this.txt_ID.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.txt_ID.Name = "txt_ID";
+            this.txt_ID.Size = new System.Drawing.Size(100, 32);
+            this.txt_ID.TabIndex = 95;
+            // 
+            // txt_AverageTempo
+            // 
+            this.txt_AverageTempo.Cue = "Avg. Tempo";
+            this.txt_AverageTempo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_AverageTempo.ForeColor = System.Drawing.Color.Gray;
+            this.txt_AverageTempo.Location = new System.Drawing.Point(440, 32);
+            this.txt_AverageTempo.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.txt_AverageTempo.Name = "txt_AverageTempo";
+            this.txt_AverageTempo.Size = new System.Drawing.Size(64, 32);
+            this.txt_AverageTempo.TabIndex = 90;
+            // 
+            // txt_OggPath
+            // 
+            this.txt_OggPath.Cue = "Ogg Path";
+            this.txt_OggPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_OggPath.ForeColor = System.Drawing.Color.Gray;
+            this.txt_OggPath.HideSelection = false;
+            this.txt_OggPath.Location = new System.Drawing.Point(12, 76);
+            this.txt_OggPath.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.txt_OggPath.Name = "txt_OggPath";
+            this.txt_OggPath.ReadOnly = true;
+            this.txt_OggPath.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
+            this.txt_OggPath.Size = new System.Drawing.Size(192, 32);
+            this.txt_OggPath.TabIndex = 312;
+            this.txt_OggPath.Visible = false;
+            // 
+            // txt_OggPreviewPath
+            // 
+            this.txt_OggPreviewPath.Cue = "Ogg Preview Path";
+            this.txt_OggPreviewPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_OggPreviewPath.ForeColor = System.Drawing.Color.Gray;
+            this.txt_OggPreviewPath.HideSelection = false;
+            this.txt_OggPreviewPath.Location = new System.Drawing.Point(12, 112);
+            this.txt_OggPreviewPath.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.txt_OggPreviewPath.Name = "txt_OggPreviewPath";
+            this.txt_OggPreviewPath.ReadOnly = true;
+            this.txt_OggPreviewPath.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
+            this.txt_OggPreviewPath.Size = new System.Drawing.Size(192, 32);
+            this.txt_OggPreviewPath.TabIndex = 313;
+            this.txt_OggPreviewPath.Visible = false;
+            // 
+            // txt_AlbumArtPath
+            // 
+            this.txt_AlbumArtPath.Cue = "Album art Path";
+            this.txt_AlbumArtPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_AlbumArtPath.ForeColor = System.Drawing.Color.Gray;
+            this.txt_AlbumArtPath.HideSelection = false;
+            this.txt_AlbumArtPath.Location = new System.Drawing.Point(1664, 270);
+            this.txt_AlbumArtPath.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.txt_AlbumArtPath.Name = "txt_AlbumArtPath";
+            this.txt_AlbumArtPath.ReadOnly = true;
+            this.txt_AlbumArtPath.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
+            this.txt_AlbumArtPath.Size = new System.Drawing.Size(224, 32);
+            this.txt_AlbumArtPath.TabIndex = 107;
+            this.txt_AlbumArtPath.Visible = false;
+            // 
+            // txt_Artist_ShortName
+            // 
+            this.txt_Artist_ShortName.Cue = "Short";
+            this.txt_Artist_ShortName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_Artist_ShortName.ForeColor = System.Drawing.Color.Gray;
+            this.txt_Artist_ShortName.Location = new System.Drawing.Point(868, 6);
+            this.txt_Artist_ShortName.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.txt_Artist_ShortName.Name = "txt_Artist_ShortName";
+            this.txt_Artist_ShortName.Size = new System.Drawing.Size(56, 32);
+            this.txt_Artist_ShortName.TabIndex = 104;
+            // 
+            // txt_Album_ShortName
+            // 
+            this.txt_Album_ShortName.Cue = "Short";
+            this.txt_Album_ShortName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_Album_ShortName.ForeColor = System.Drawing.Color.Gray;
+            this.txt_Album_ShortName.Location = new System.Drawing.Point(732, 180);
+            this.txt_Album_ShortName.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.txt_Album_ShortName.Name = "txt_Album_ShortName";
+            this.txt_Album_ShortName.Size = new System.Drawing.Size(80, 32);
+            this.txt_Album_ShortName.TabIndex = 103;
+            // 
+            // txt_Album_Year
+            // 
+            this.txt_Album_Year.Cue = "Year";
+            this.txt_Album_Year.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_Album_Year.ForeColor = System.Drawing.Color.Gray;
+            this.txt_Album_Year.Location = new System.Drawing.Point(868, 180);
+            this.txt_Album_Year.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.txt_Album_Year.Name = "txt_Album_Year";
+            this.txt_Album_Year.Size = new System.Drawing.Size(100, 32);
+            this.txt_Album_Year.TabIndex = 98;
+            // 
+            // txt_APP_ID
+            // 
+            this.txt_APP_ID.Cue = "App ID";
+            this.txt_APP_ID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_APP_ID.ForeColor = System.Drawing.Color.Gray;
+            this.txt_APP_ID.Location = new System.Drawing.Point(732, 224);
+            this.txt_APP_ID.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.txt_APP_ID.Name = "txt_APP_ID";
+            this.txt_APP_ID.Size = new System.Drawing.Size(120, 32);
+            this.txt_APP_ID.TabIndex = 80;
+            // 
+            // txt_DLC_ID
+            // 
+            this.txt_DLC_ID.Cue = "DLC Name";
+            this.txt_DLC_ID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_DLC_ID.ForeColor = System.Drawing.Color.Gray;
+            this.txt_DLC_ID.Location = new System.Drawing.Point(412, 224);
+            this.txt_DLC_ID.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.txt_DLC_ID.Name = "txt_DLC_ID";
+            this.txt_DLC_ID.Size = new System.Drawing.Size(308, 32);
+            this.txt_DLC_ID.TabIndex = 79;
+            // 
+            // txt_Version
+            // 
+            this.txt_Version.Cue = "Version";
+            this.txt_Version.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_Version.ForeColor = System.Drawing.Color.Gray;
+            this.txt_Version.Location = new System.Drawing.Point(1008, 90);
+            this.txt_Version.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.txt_Version.Name = "txt_Version";
+            this.txt_Version.Size = new System.Drawing.Size(80, 32);
+            this.txt_Version.TabIndex = 73;
+            // 
+            // txt_Author
+            // 
+            this.txt_Author.Cue = "Author";
+            this.txt_Author.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_Author.ForeColor = System.Drawing.Color.Gray;
+            this.txt_Author.Location = new System.Drawing.Point(980, 48);
+            this.txt_Author.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.txt_Author.Name = "txt_Author";
+            this.txt_Author.Size = new System.Drawing.Size(308, 32);
+            this.txt_Author.TabIndex = 72;
+            this.txt_Author.TextChanged += new System.EventHandler(this.txt_Author_TextChanged);
+            // 
+            // txt_Album
+            // 
+            this.txt_Album.Cue = "Album";
+            this.txt_Album.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_Album.ForeColor = System.Drawing.Color.Gray;
+            this.txt_Album.Location = new System.Drawing.Point(412, 180);
+            this.txt_Album.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.txt_Album.Name = "txt_Album";
+            this.txt_Album.Size = new System.Drawing.Size(308, 32);
+            this.txt_Album.TabIndex = 69;
+            this.txt_Album.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_Artist_KeyPress);
+            // 
+            // txt_Title_Sort
+            // 
+            this.txt_Title_Sort.Cue = "Title Sort";
+            this.txt_Title_Sort.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_Title_Sort.ForeColor = System.Drawing.Color.Gray;
+            this.txt_Title_Sort.Location = new System.Drawing.Point(412, 140);
+            this.txt_Title_Sort.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.txt_Title_Sort.Name = "txt_Title_Sort";
+            this.txt_Title_Sort.Size = new System.Drawing.Size(400, 32);
+            this.txt_Title_Sort.TabIndex = 68;
+            // 
+            // txt_Title
+            // 
+            this.txt_Title.Cue = "Title";
+            this.txt_Title.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_Title.ForeColor = System.Drawing.Color.Gray;
+            this.txt_Title.Location = new System.Drawing.Point(412, 96);
+            this.txt_Title.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.txt_Title.Name = "txt_Title";
+            this.txt_Title.Size = new System.Drawing.Size(400, 32);
+            this.txt_Title.TabIndex = 67;
+            this.txt_Title.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_Artist_KeyPress);
+            // 
+            // txt_Artist_Sort
+            // 
+            this.txt_Artist_Sort.Cue = "Artist  Sort";
+            this.txt_Artist_Sort.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_Artist_Sort.ForeColor = System.Drawing.Color.Gray;
+            this.txt_Artist_Sort.Location = new System.Drawing.Point(412, 52);
+            this.txt_Artist_Sort.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.txt_Artist_Sort.Name = "txt_Artist_Sort";
+            this.txt_Artist_Sort.Size = new System.Drawing.Size(440, 32);
+            this.txt_Artist_Sort.TabIndex = 66;
+            // 
+            // txt_Artist
+            // 
+            this.txt_Artist.Cue = "Artist";
+            this.txt_Artist.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_Artist.ForeColor = System.Drawing.Color.Gray;
+            this.txt_Artist.Location = new System.Drawing.Point(412, 6);
+            this.txt_Artist.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.txt_Artist.Name = "txt_Artist";
+            this.txt_Artist.Size = new System.Drawing.Size(400, 32);
+            this.txt_Artist.TabIndex = 65;
+            this.txt_Artist.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_Artist_KeyPress);
+            // 
+            // txt_Playthough
+            // 
+            this.txt_Playthough.Cue = "PlayThrough";
+            this.txt_Playthough.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_Playthough.ForeColor = System.Drawing.Color.Gray;
+            this.txt_Playthough.Location = new System.Drawing.Point(164, 76);
+            this.txt_Playthough.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.txt_Playthough.Name = "txt_Playthough";
+            this.txt_Playthough.Size = new System.Drawing.Size(76, 32);
+            this.txt_Playthough.TabIndex = 386;
+            this.txt_Playthough.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txt_YouTube_Link
+            // 
+            this.txt_YouTube_Link.Cue = "YouTube Link New";
+            this.txt_YouTube_Link.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_YouTube_Link.ForeColor = System.Drawing.Color.Gray;
+            this.txt_YouTube_Link.Location = new System.Drawing.Point(164, 32);
+            this.txt_YouTube_Link.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.txt_YouTube_Link.Name = "txt_YouTube_Link";
+            this.txt_YouTube_Link.Size = new System.Drawing.Size(76, 32);
+            this.txt_YouTube_Link.TabIndex = 314;
+            this.txt_YouTube_Link.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txt_CustomsForge_Link
+            // 
+            this.txt_CustomsForge_Link.Cue = "CustomsForge New";
+            this.txt_CustomsForge_Link.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_CustomsForge_Link.ForeColor = System.Drawing.Color.Gray;
+            this.txt_CustomsForge_Link.Location = new System.Drawing.Point(156, 114);
+            this.txt_CustomsForge_Link.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.txt_CustomsForge_Link.Name = "txt_CustomsForge_Link";
+            this.txt_CustomsForge_Link.Size = new System.Drawing.Size(88, 32);
+            this.txt_CustomsForge_Link.TabIndex = 316;
+            this.txt_CustomsForge_Link.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txt_RemotePath
+            // 
+            this.txt_RemotePath.Cue = "Remote Path";
+            this.txt_RemotePath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_RemotePath.ForeColor = System.Drawing.Color.Gray;
+            this.txt_RemotePath.HideSelection = false;
+            this.txt_RemotePath.Location = new System.Drawing.Point(300, 14);
+            this.txt_RemotePath.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.txt_RemotePath.Name = "txt_RemotePath";
+            this.txt_RemotePath.ReadOnly = true;
+            this.txt_RemotePath.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
+            this.txt_RemotePath.Size = new System.Drawing.Size(900, 32);
+            this.txt_RemotePath.TabIndex = 335;
+            // 
+            // txt_Spotify_Album_URL
+            // 
+            this.txt_Spotify_Album_URL.Cue = "Spotify Album URL";
+            this.txt_Spotify_Album_URL.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_Spotify_Album_URL.ForeColor = System.Drawing.Color.Gray;
+            this.txt_Spotify_Album_URL.HideSelection = false;
+            this.txt_Spotify_Album_URL.Location = new System.Drawing.Point(1783, 263);
+            this.txt_Spotify_Album_URL.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.txt_Spotify_Album_URL.Name = "txt_Spotify_Album_URL";
+            this.txt_Spotify_Album_URL.ReadOnly = true;
+            this.txt_Spotify_Album_URL.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
+            this.txt_Spotify_Album_URL.Size = new System.Drawing.Size(410, 32);
+            this.txt_Spotify_Album_URL.TabIndex = 404;
+            // 
+            // txt_Spotify_Album_ID
+            // 
+            this.txt_Spotify_Album_ID.Cue = "Spotify Album ID";
+            this.txt_Spotify_Album_ID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_Spotify_Album_ID.ForeColor = System.Drawing.Color.Gray;
+            this.txt_Spotify_Album_ID.HideSelection = false;
+            this.txt_Spotify_Album_ID.Location = new System.Drawing.Point(1783, 219);
+            this.txt_Spotify_Album_ID.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.txt_Spotify_Album_ID.Name = "txt_Spotify_Album_ID";
+            this.txt_Spotify_Album_ID.ReadOnly = true;
+            this.txt_Spotify_Album_ID.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
+            this.txt_Spotify_Album_ID.Size = new System.Drawing.Size(410, 32);
+            this.txt_Spotify_Album_ID.TabIndex = 403;
+            // 
+            // txt_Spotify_Artist_ID
+            // 
+            this.txt_Spotify_Artist_ID.Cue = "Spotify Artist ID";
+            this.txt_Spotify_Artist_ID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_Spotify_Artist_ID.ForeColor = System.Drawing.Color.Gray;
+            this.txt_Spotify_Artist_ID.HideSelection = false;
+            this.txt_Spotify_Artist_ID.Location = new System.Drawing.Point(1783, 175);
+            this.txt_Spotify_Artist_ID.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.txt_Spotify_Artist_ID.Name = "txt_Spotify_Artist_ID";
+            this.txt_Spotify_Artist_ID.ReadOnly = true;
+            this.txt_Spotify_Artist_ID.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
+            this.txt_Spotify_Artist_ID.Size = new System.Drawing.Size(410, 32);
+            this.txt_Spotify_Artist_ID.TabIndex = 402;
+            // 
+            // txt_Spotify_Song_ID
+            // 
+            this.txt_Spotify_Song_ID.Cue = "Spotify Song ID";
+            this.txt_Spotify_Song_ID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_Spotify_Song_ID.ForeColor = System.Drawing.Color.Gray;
+            this.txt_Spotify_Song_ID.HideSelection = false;
+            this.txt_Spotify_Song_ID.Location = new System.Drawing.Point(1783, 131);
+            this.txt_Spotify_Song_ID.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.txt_Spotify_Song_ID.Name = "txt_Spotify_Song_ID";
+            this.txt_Spotify_Song_ID.ReadOnly = true;
+            this.txt_Spotify_Song_ID.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
+            this.txt_Spotify_Song_ID.Size = new System.Drawing.Size(410, 32);
+            this.txt_Spotify_Song_ID.TabIndex = 401;
+            // 
+            // txt_SpotifyStatus
+            // 
+            this.txt_SpotifyStatus.Cue = "Authentification Status";
+            this.txt_SpotifyStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_SpotifyStatus.ForeColor = System.Drawing.Color.Gray;
+            this.txt_SpotifyStatus.HideSelection = false;
+            this.txt_SpotifyStatus.Location = new System.Drawing.Point(360, 52);
+            this.txt_SpotifyStatus.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.txt_SpotifyStatus.Name = "txt_SpotifyStatus";
+            this.txt_SpotifyStatus.ReadOnly = true;
+            this.txt_SpotifyStatus.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
+            this.txt_SpotifyStatus.Size = new System.Drawing.Size(410, 32);
+            this.txt_SpotifyStatus.TabIndex = 400;
             // 
             // MainDB
             // 

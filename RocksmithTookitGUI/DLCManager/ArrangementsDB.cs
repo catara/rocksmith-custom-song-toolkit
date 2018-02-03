@@ -918,5 +918,15 @@ DataGridViewTextBoxColumn XMLFile_Hash_Orig= new DataGridViewTextBoxColumn { Dat
             MessageBox.Show("DD Added");
             SaveRecord();
         }
+
+        private void btn_Tones_Click(object sender, EventArgs e)
+        {
+            if (DataGridView1.SelectedCells.Count > 0 && txt_ID.Text != "")
+            {
+                TonesDB frm = new TonesDB(DB_Path, txt_ID.Text, cnb);
+                frm.Show();
+            }
+            else MessageBox.Show("Chose a Tone.");
+        }
     }
 }

@@ -33,13 +33,13 @@
   <Config Key="ddc_config" Value="ddc_default" />
   <Config Key="ddc_rampup" Value="ddc_default" />
   <Config Key="ddc_phraselength" Value="8" />
-  <Config Key="ddc_removesustain" Value="false" />  
+  <Config Key="ddc_removesustain" Value="false" />
   <Config Key="ddc_autogen" Value="true" />
   <!-- inlay 3 items TODO: add these -->"
   <Config Key="cgm_inlayname" Value="Default Inlay" />
   <Config Key="cgm_24frets" Value="false" />
 
-<!--<Config Key="first_time" Value="true" /> determine if we launched toolkit at first time-->
+  <!--<Config Key="first_time" Value="true" /> determine if we launched toolkit at first time-->
 
   <!--bcapi DLCManager-->
   <Config Key="dlcm_AdditionalManipul0" Value="No" />
@@ -127,6 +127,13 @@
   <Config Key="dlcm_AdditionalManipul82" Value="No" />
   <Config Key="dlcm_AdditionalManipul83" Value="No" />
   <Config Key="dlcm_AdditionalManipul84" Value="Yes" />
+  <Config Key="dlcm_AdditionalManipul85" Value="Yes" />
+  <Config Key="dlcm_AdditionalManipul86" Value="Yes" />
+  <Config Key="dlcm_AdditionalManipul87" Value="Yes" />
+  <Config Key="dlcm_AdditionalManipul88" Value="Yes" />
+  <Config Key="dlcm_AdditionalManipul89" Value="Yes" />
+  <Config Key="dlcm_AdditionalManipul90" Value="Yes" />  
+  <Config Key="dlcm_AdditionalManipul91" Value="Yes" />
   <Config Key="dlcm_Album" Value="&#60;Broken&#62;&#60;Year&#62; - &#60;Album&#62; - &#60;Rating&#62; - &#60;Avail. Instr.&#62; - &#60;DD&#62; - &#60;Tuning&#62;-&#60;Group&#62;" />;
   <Config Key="dlcm_Artist" Value="&#60;Artist&#62;-&#60;CDLC&#62;-&#60;Avail. Tracks&#62;-&#60;DD&#62;-&#60;QAs&#62;-&#60;Bass_HasDD&#62;" />;
   <Config Key="dlcm_Artist_Sort" Value="&#60;Beta&#62;&#60;Group&#62;&#60;Artist&#62;" />;
@@ -172,7 +179,7 @@
   <Config Key="dlcm_DefaultDB" Value="No" />;
   <Config Key="dlcm_BitRate" Value="128000" />;
   <Config Key="dlcm_MaxBitRate" Value="135000" />;
-  <Config Key="dlcm_MaxSampleRate" Value="48001" />;  
+  <Config Key="dlcm_MaxSampleRate" Value="48001" />;
   <Config Key="dlcm_SampleRate" Value="44000" />;
   <Config Key="dlcm_EoFPath" Value="C:\\GitHub\\rocksmith-custom-song-toolkit\\RocksmithTookitGUI\\DLCManager\\external_tools\\eof1.8RC12\\eof.exe" />;
   <Config Key="dlcm_UltraStarCreator" Value="C:\\GitHub\\rocksmith-custom-song-toolkit\\RocksmithTookitGUI\\DLCManager\\external_tools\\UltraStar Creator\\usc.exe" />;

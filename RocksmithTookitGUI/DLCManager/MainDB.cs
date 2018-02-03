@@ -1760,7 +1760,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 args += chbx_Replace.Checked + ";" + chbx_Replace.Enabled + ";";
                 args += SourcePlatform + ";" + TargetPlatform + ";";
                 args += databox.Rows[i].Cells["Original_FileName"].Value.ToString() + ";" + databox.Rows[i].Cells["Folder_Name"].Value.ToString() + ";";
-                args += txt_RemotePath.Text + ";" + txt_FTPPath.Text + ";";
+                args += ConfigRepository.Instance()["dlcm_AdditionalManipul49"] + ";" + txt_RemotePath.Text + ";" + txt_FTPPath.Text + ";";
                 args += chbx_RemoveBassDD.Checked + ";" + chbx_BassDD.Checked + ";" + chbx_KeepBassDD.Checked + ";";
                 args += chbx_KeepDD.Checked + ";" + chbx_Original.Text + ";" + txt_DLC_ID.Text + ";";
                 args += SearchCmd + (SearchCmd.IndexOf(";") > 0 ? "" : ";") + pathDLC + ";" + databox.Rows[databox.SelectedCells[0].RowIndex].Cells["DLC_Name"].Value + ";"; //SearchCmd + ";" + RocksmithDLCPath, DataViewGrid.Rows[DataViewGrid.SelectedCells[0].RowIndex].Cells["DLC_Name"].Value
@@ -2106,7 +2106,7 @@ namespace RocksmithToolkitGUI.DLCManager
             {
                 command.CommandText += ",Is_Broken = @param10 ";
                 command.Parameters.AddWithValue("@param10", "No");
-                test = " or Beta";
+                test = " or Broken";
             }
             try
             {
@@ -3031,17 +3031,18 @@ namespace RocksmithToolkitGUI.DLCManager
             var fold2 = "";
             try //Copy dir
             {
+                CopyFolder(source_dir, destination_dir);
                 // substring is to remove destination_dir absolute path (E:\).
                 // Create subdirectory structure in destination    
-                foreach (string dir in Directory.GetDirectories(source_dir, "*", System.IO.SearchOption.AllDirectories))
-                {
-                    Directory.CreateDirectory(destination_dir + dir.Substring(source_dir.Length));
-                }
+                //foreach (string dir in Directory.GetDirectories(source_dir, "*", System.IO.SearchOption.AllDirectories))
+                //{
+                //    Directory.CreateDirectory(destination_dir + dir.Substring(source_dir.Length));
+                //}
 
-                foreach (string file_name in Directory.GetFiles(source_dir, "*.*", System.IO.SearchOption.AllDirectories))
-                {
-                    File.Copy(file_name, destination_dir + file_name.Substring(source_dir.Length), true);
-                }
+                //foreach (string file_name in Directory.GetFiles(source_dir, "*.*", System.IO.SearchOption.AllDirectories))
+                //{
+                //    File.Copy(file_name, destination_dir + file_name.Substring(source_dir.Length), true);
+                //}
 
                 //copy old
                 if (databox.Rows[i].Cells["Available_Old"].Value.ToString() == "Yes")
@@ -5022,7 +5023,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                         }
                                         if (Trac.Album.Name.ToString().ToLower() == Album.ToLower())
                                         {
-                                            continue;
+                                            break;
                                         }
                                     }
                                     else debug += Artis.Name.ToString().ToLower() + " - " + Trac.Name + "\n";
@@ -5046,7 +5047,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                         }
                                         if (Trac.Album.Name.ToString().ToLower() == Album.ToLower())
                                         {
-                                            continue;
+                                            break;
                                         }
                                     }
                                     else debug += Artis.Name.ToString().ToLower() + " - " + Trac.Name + "\n";
@@ -5391,6 +5392,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 + "ID IN(" + SearchCmd.Replace(" * ", " ID ").Replace("; ", "").Replace(SearchFields, "ID") + ")";
             //cmd += " AND " + ((SearchCmd.IndexOf("WHERE ") > 0) ? (SearchCmd.Substring(SearchCmd.IndexOf("WHERE ") + 5)) : "1=1");
             FixAudioIssues(cmd.Replace("; ", ""), cnb, AppWD, pB_ReadDLCs, rtxt_StatisticsOnReadDLCs, cancel);
+
             //fix missing spotify details
             if (netstatus == "NOK" || netstatus == "") netstatus = GenericFunctions.ActivateSpotify_ClickAsync().Result.ToString();
             var sel = "SELECT Song_Title, Song_Title_Sort, Album, Artist, Album_Year, ID FROM Main WHERE (Track_No = \"0\" OR Track_No = \"-1\" OR Track_No = \"\" OR Track_No is null) "
@@ -5497,6 +5499,11 @@ namespace RocksmithToolkitGUI.DLCManager
         }
 
         private void button2_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void databox_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }

@@ -39,12 +39,13 @@ namespace RocksmithToolkitGUI.DLCManager
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label16 = new System.Windows.Forms.Label();
             this.txt_Comment = new System.Windows.Forms.RichTextBox();
             this.txt_Description = new System.Windows.Forms.RichTextBox();
             this.label15 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
+            this.lbl_AudioPreview = new System.Windows.Forms.Label();
+            this.lbl_AudioMain = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
@@ -257,6 +258,10 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_TitleNew = new RocksmithToolkitGUI.CueTextBox();
             this.chbx_AcousticExisting = new System.Windows.Forms.CheckBox();
             this.chbx_AcousticNew = new System.Windows.Forms.CheckBox();
+            this.btn_NotADuplicate = new System.Windows.Forms.Button();
+            this.btn_AddStandard = new System.Windows.Forms.Button();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.lbl_Covers = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPathNew)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPathExisting)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -278,7 +283,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_Comment
             // 
-            this.txt_Comment.Location = new System.Drawing.Point(1236, 504);
+            this.txt_Comment.Location = new System.Drawing.Point(1256, 571);
             this.txt_Comment.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.txt_Comment.Name = "txt_Comment";
             this.txt_Comment.Size = new System.Drawing.Size(308, 129);
@@ -288,7 +293,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_Description
             // 
-            this.txt_Description.Location = new System.Drawing.Point(1236, 338);
+            this.txt_Description.Location = new System.Drawing.Point(1256, 405);
             this.txt_Description.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.txt_Description.Name = "txt_Description";
             this.txt_Description.Size = new System.Drawing.Size(308, 129);
@@ -305,25 +310,25 @@ namespace RocksmithToolkitGUI.DLCManager
             this.label15.TabIndex = 275;
             this.label15.Text = "Avaialble Tracks";
             // 
-            // label14
+            // lbl_AudioPreview
             // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(176, 187);
-            this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(88, 25);
-            this.label14.TabIndex = 274;
-            this.label14.Text = "Preview";
+            this.lbl_AudioPreview.AutoSize = true;
+            this.lbl_AudioPreview.Location = new System.Drawing.Point(176, 187);
+            this.lbl_AudioPreview.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_AudioPreview.Name = "lbl_AudioPreview";
+            this.lbl_AudioPreview.Size = new System.Drawing.Size(88, 25);
+            this.lbl_AudioPreview.TabIndex = 274;
+            this.lbl_AudioPreview.Text = "Preview";
             // 
-            // label13
+            // lbl_AudioMain
             // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(196, 137);
-            this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(67, 25);
-            this.label13.TabIndex = 273;
-            this.label13.Text = "Audio";
+            this.lbl_AudioMain.AutoSize = true;
+            this.lbl_AudioMain.Location = new System.Drawing.Point(196, 137);
+            this.lbl_AudioMain.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_AudioMain.Name = "lbl_AudioMain";
+            this.lbl_AudioMain.Size = new System.Drawing.Size(67, 25);
+            this.lbl_AudioMain.TabIndex = 273;
+            this.lbl_AudioMain.Text = "Audio";
             // 
             // label12
             // 
@@ -399,7 +404,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.lbl_AlbumArt.AutoSize = true;
             this.lbl_AlbumArt.ForeColor = System.Drawing.Color.DarkGreen;
-            this.lbl_AlbumArt.Location = new System.Drawing.Point(1172, 790);
+            this.lbl_AlbumArt.Location = new System.Drawing.Point(1192, 857);
             this.lbl_AlbumArt.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbl_AlbumArt.Name = "lbl_AlbumArt";
             this.lbl_AlbumArt.Size = new System.Drawing.Size(43, 25);
@@ -419,7 +424,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // picbx_AlbumArtPathNew
             // 
-            this.picbx_AlbumArtPathNew.Location = new System.Drawing.Point(840, 677);
+            this.picbx_AlbumArtPathNew.Location = new System.Drawing.Point(860, 744);
             this.picbx_AlbumArtPathNew.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.picbx_AlbumArtPathNew.Name = "picbx_AlbumArtPathNew";
             this.picbx_AlbumArtPathNew.Size = new System.Drawing.Size(332, 279);
@@ -429,7 +434,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // picbx_AlbumArtPathExisting
             // 
-            this.picbx_AlbumArtPathExisting.Location = new System.Drawing.Point(1216, 677);
+            this.picbx_AlbumArtPathExisting.Location = new System.Drawing.Point(1236, 744);
             this.picbx_AlbumArtPathExisting.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.picbx_AlbumArtPathExisting.Name = "picbx_AlbumArtPathExisting";
             this.picbx_AlbumArtPathExisting.Size = new System.Drawing.Size(332, 281);
@@ -737,7 +742,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(1232, 308);
+            this.label1.Location = new System.Drawing.Point(1252, 375);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(120, 25);
@@ -747,7 +752,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(1232, 471);
+            this.label2.Location = new System.Drawing.Point(1252, 538);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(103, 25);
@@ -1789,7 +1794,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.btn_CoverNew.Enabled = false;
             this.btn_CoverNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_CoverNew.Location = new System.Drawing.Point(1156, 965);
+            this.btn_CoverNew.Location = new System.Drawing.Point(1176, 1032);
             this.btn_CoverNew.Margin = new System.Windows.Forms.Padding(4);
             this.btn_CoverNew.Name = "btn_CoverNew";
             this.btn_CoverNew.Size = new System.Drawing.Size(36, 33);
@@ -1802,7 +1807,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.btn_CoverExisting.Enabled = false;
             this.btn_CoverExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_CoverExisting.Location = new System.Drawing.Point(1196, 965);
+            this.btn_CoverExisting.Location = new System.Drawing.Point(1216, 1032);
             this.btn_CoverExisting.Margin = new System.Windows.Forms.Padding(4);
             this.btn_CoverExisting.Name = "btn_CoverExisting";
             this.btn_CoverExisting.Size = new System.Drawing.Size(36, 33);
@@ -1830,8 +1835,8 @@ namespace RocksmithToolkitGUI.DLCManager
             this.groupBox3.Controls.Add(this.txt_AudioExisting);
             this.groupBox3.Controls.Add(this.txt_PreviewNew);
             this.groupBox3.Controls.Add(this.txt_PreviewExisting);
-            this.groupBox3.Controls.Add(this.label13);
-            this.groupBox3.Controls.Add(this.label14);
+            this.groupBox3.Controls.Add(this.lbl_AudioMain);
+            this.groupBox3.Controls.Add(this.lbl_AudioPreview);
             this.groupBox3.Controls.Add(this.label15);
             this.groupBox3.Controls.Add(this.lbl_DD);
             this.groupBox3.Controls.Add(this.lbl_AvailableTracks);
@@ -2095,7 +2100,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.groupBox4.Controls.Add(this.txt_CustomsForge_LikeExisting);
             this.groupBox4.Controls.Add(this.label33);
             this.groupBox4.Controls.Add(this.label32);
-            this.groupBox4.Location = new System.Drawing.Point(892, 1035);
+            this.groupBox4.Location = new System.Drawing.Point(912, 1102);
             this.groupBox4.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Padding = new System.Windows.Forms.Padding(4, 6, 4, 6);
@@ -2409,7 +2414,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_UseBrakets.AutoSize = true;
             this.chbx_UseBrakets.Checked = true;
             this.chbx_UseBrakets.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chbx_UseBrakets.Location = new System.Drawing.Point(1008, 640);
+            this.chbx_UseBrakets.Location = new System.Drawing.Point(1028, 707);
             this.chbx_UseBrakets.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.chbx_UseBrakets.Name = "chbx_UseBrakets";
             this.chbx_UseBrakets.Size = new System.Drawing.Size(554, 29);
@@ -2432,10 +2437,10 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // btn_StopImport
             // 
-            this.btn_StopImport.Location = new System.Drawing.Point(1308, 977);
+            this.btn_StopImport.Location = new System.Drawing.Point(1404, 1044);
             this.btn_StopImport.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btn_StopImport.Name = "btn_StopImport";
-            this.btn_StopImport.Size = new System.Drawing.Size(240, 67);
+            this.btn_StopImport.Size = new System.Drawing.Size(164, 67);
             this.btn_StopImport.TabIndex = 397;
             this.btn_StopImport.Text = "Stop the Import";
             this.btn_StopImport.UseVisualStyleBackColor = true;
@@ -2445,7 +2450,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.chbx_DeleteTemp.AutoSize = true;
             this.chbx_DeleteTemp.Enabled = false;
-            this.chbx_DeleteTemp.Location = new System.Drawing.Point(976, 1002);
+            this.chbx_DeleteTemp.Location = new System.Drawing.Point(920, 666);
             this.chbx_DeleteTemp.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.chbx_DeleteTemp.Name = "chbx_DeleteTemp";
             this.chbx_DeleteTemp.Size = new System.Drawing.Size(328, 29);
@@ -2523,7 +2528,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_LiveNew.AutoSize = true;
             this.chbx_LiveNew.Checked = true;
             this.chbx_LiveNew.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chbx_LiveNew.Location = new System.Drawing.Point(188, 564);
+            this.chbx_LiveNew.Location = new System.Drawing.Point(183, 564);
             this.chbx_LiveNew.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.chbx_LiveNew.Name = "chbx_LiveNew";
             this.chbx_LiveNew.Size = new System.Drawing.Size(84, 29);
@@ -2580,7 +2585,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_LiveDetailsNew.Location = new System.Drawing.Point(12, 561);
             this.txt_LiveDetailsNew.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.txt_LiveDetailsNew.Name = "txt_LiveDetailsNew";
-            this.txt_LiveDetailsNew.Size = new System.Drawing.Size(168, 32);
+            this.txt_LiveDetailsNew.Size = new System.Drawing.Size(157, 32);
             this.txt_LiveDetailsNew.TabIndex = 410;
             // 
             // txt_LiveDetailsExisting
@@ -2977,6 +2982,39 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_AcousticNew.UseVisualStyleBackColor = true;
             this.chbx_AcousticNew.CheckedChanged += new System.EventHandler(this.chbx_LiveNew_CheckedChanged);
             // 
+            // btn_NotADuplicate
+            // 
+            this.btn_NotADuplicate.Location = new System.Drawing.Point(1309, 303);
+            this.btn_NotADuplicate.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btn_NotADuplicate.Name = "btn_NotADuplicate";
+            this.btn_NotADuplicate.Size = new System.Drawing.Size(240, 67);
+            this.btn_NotADuplicate.TabIndex = 415;
+            this.btn_NotADuplicate.Text = "NOT a Duplicate";
+            this.btn_NotADuplicate.UseVisualStyleBackColor = true;
+            this.btn_NotADuplicate.Visible = false;
+            this.btn_NotADuplicate.Click += new System.EventHandler(this.btn_NotADuplicate_Click);
+            // 
+            // btn_AddStandard
+            // 
+            this.btn_AddStandard.Location = new System.Drawing.Point(1160, 233);
+            this.btn_AddStandard.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btn_AddStandard.Name = "btn_AddStandard";
+            this.btn_AddStandard.Size = new System.Drawing.Size(140, 85);
+            this.btn_AddStandard.TabIndex = 416;
+            this.btn_AddStandard.Text = "Add Standard Differences";
+            this.btn_AddStandard.UseVisualStyleBackColor = true;
+            this.btn_AddStandard.Click += new System.EventHandler(this.btn_AddStandard_Click);
+            // 
+            // lbl_Covers
+            // 
+            this.lbl_Covers.AutoSize = true;
+            this.lbl_Covers.Location = new System.Drawing.Point(861, 713);
+            this.lbl_Covers.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_Covers.Name = "lbl_Covers";
+            this.lbl_Covers.Size = new System.Drawing.Size(67, 25);
+            this.lbl_Covers.TabIndex = 409;
+            this.lbl_Covers.Text = "Audio";
+            // 
             // frm_Duplicates_Management
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
@@ -2984,6 +3022,9 @@ namespace RocksmithToolkitGUI.DLCManager
             this.AutoScroll = true;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1598, 1492);
+            this.Controls.Add(this.lbl_Covers);
+            this.Controls.Add(this.btn_AddStandard);
+            this.Controls.Add(this.btn_NotADuplicate);
             this.Controls.Add(this.chbx_AcousticNew);
             this.Controls.Add(this.chbx_AcousticExisting);
             this.Controls.Add(this.txt_VersionExisting);
@@ -3135,8 +3176,8 @@ namespace RocksmithToolkitGUI.DLCManager
         private RichTextBox txt_Comment;
         private RichTextBox txt_Description;
         private Label label15;
-        private Label label14;
-        private Label label13;
+        private Label lbl_AudioPreview;
+        private Label lbl_AudioMain;
         private Label label12;
         private Label label11;
         private Label label10;
@@ -3346,5 +3387,9 @@ namespace RocksmithToolkitGUI.DLCManager
         private CueTextBox txt_VersionExisting;
         private CheckBox chbx_AcousticExisting;
         private CheckBox chbx_AcousticNew;
+        private Button btn_NotADuplicate;
+        private Button btn_AddStandard;
+        private ToolTip toolTip1;
+        private Label lbl_Covers;
     }
 }

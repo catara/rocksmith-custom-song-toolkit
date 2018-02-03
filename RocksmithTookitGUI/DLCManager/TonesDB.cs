@@ -308,8 +308,20 @@ namespace RocksmithToolkitGUI.DLCManager
                 if (DataGridView1.Rows[i].Cells["Is_Custom"].Value.ToString().ToLower() == "true") chbx_Custom.Checked = true;
                 else chbx_Custom.Checked = false;
 
-                //if (txt_ArrangementType.Text == "Bass" && !(chbx_BassDD.Checked)) btn_AddDD.Enabled = true;
-                //if (txt_ArrangementType.Text == "Bass" && chbx_BassDD.Checked) btn_RemoveDD.Enabled = true;
+                ////Read Tones
+                var nrc = 0;
+                DataSet dtc = new DataSet(); dtc = SelectFromDB("Tones_GearList", "SELECT Gear_Name FROM Tones_GearList WHERE CDLC_ID=" + txt_ID.Text + ";", "", cnb);
+                nrc = dtc.Tables[0].Rows.Count; var TID = "";
+                if (nrc > 0)
+                {
+                    for (int k = cbx_Gear_Name.Items.Count - 1; k >= 0; --k) cbx_Gear_Name.Items.RemoveAt(k);
+                    for (int k = 0; k < nrc; k++)
+                        cbx_Gear_Name.Items.Add(dtc.Tables[0].Rows[k].ItemArray[0].ToString());
+                    cbx_Gear_Name.SelectedIndex = 0;
+
+                    //if (txt_ArrangementType.Text == "Bass" && !(chbx_BassDD.Checked)) btn_AddDD.Enabled = true;
+                    //if (txt_ArrangementType.Text == "Bass" && chbx_BassDD.Checked) btn_RemoveDD.Enabled = true;
+                }
 
                 if (chbx_AutoSave.Checked) SaveOK = true;
                 else SaveOK = false;
@@ -325,7 +337,7 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             int i = -1;
             DataSet dis = new DataSet();
-            if (DataGridView1.SelectedCells.Count > 0)
+            if (DataGridView1.SelectedCells.Count > 0 && txt_ID.Text != "")
             {
                 i = DataGridView1.SelectedCells[0].RowIndex;
 
@@ -350,10 +362,10 @@ namespace RocksmithToolkitGUI.DLCManager
                 else DataGridView1.Rows[i].Cells["Is_Custom"].Value = "False";
 
                 //var DB_Path = "../../../../tmp\\AccessDB.accdb;";
-                var connection = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path); //+ ";Persist Security Info=False"
+                var connection = new OleDbConnection("Provider=Microsoft." + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path); //+ ";Persist Security Info=False"
                 var command = connection.CreateCommand();
                 //dssx = DataGridView1;
-                using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
+                using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft." + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
                 {
                     //OleDbCommand command = new OleDbCommand(); ;
                     //Update TonesDB
@@ -439,6 +451,164 @@ namespace RocksmithToolkitGUI.DLCManager
                     {
                         if (connection != null) connection.Close();
                     }
+
+                    var tid = txt_ID.Text;
+                    var insertcmdd = "CDLC_ID, Gear_Name, Type, Category, KnobValuesValues, KnobValuesKeys, PedalKey, Skin, SkinIndex";
+                    var insertvalues = ""; insertvalues += tid + ", \"" + cbx_Gear_Name.Text + "\", \"" + NullHandler(cbx_Type.Text);
+                    insertvalues += "\", \"" + NullHandler(chbx_Category.Text);
+                    //string vals = ""; string keys = ""; if (tn.GearList.Amp != null) foreach (KeyValuePair<string, float> glakv in tn.GearList.Amp.KnobValues) { vals += ";" + glakv.Value; keys += ";" + glakv.Key; }
+                    insertvalues += "\", \"" + NullHandler(chbx_KnobValues.Text);
+                    insertvalues += "\", \"" + NullHandler(chbx_KnobKeys.Text);
+                    insertvalues += "\", \"" + NullHandler(chbx_PedalKey.Text);
+                    insertvalues += "\", \"" + chbx_Skin.Text;
+                    insertvalues += "\", \"" + NullHandler(chbx_SkinIndex.Text) + "\"";
+                    InsertIntoDBwValues("Tones_GearList", insertcmdd, insertvalues, cnb, 0);
+                    //for (int k = 0;k< cbx_Type.Items.Count - 1; k++)
+                    //{
+                    //var insertcmdd = "CDLC_ID, Gear_Name, Type, Category, KnobValuesValues, KnobValuesKeys, PedalKey, Skin, SkinIndex";
+                    //var insertvalues = ""; insertvalues += tid + ", \""+ cbx_Gear_Name + "\", \"" + NullHandler(cbx_Type.Items[k]);
+                    //insertvalues += "\", \"" + NullHandler(cbx_Type.Text);
+                    //string vals = ""; string keys = ""; if (tn.GearList.Amp != null) foreach (KeyValuePair<string, float> glakv in tn.GearList.Amp.KnobValues) { vals += ";" + glakv.Value; keys += ";" + glakv.Key; }
+                    //insertvalues += "\", \"" + (tn.GearList.Amp == null ? DBNull.Value.ToString() : NullHandler(vals == "" ? DBNull.Value.ToString() : vals.Substring(1)));
+                    //insertvalues += "\", \"" + (tn.GearList.Amp == null ? DBNull.Value.ToString() : NullHandler(keys == "" ? DBNull.Value.ToString() : keys.Substring(1)));
+                    //insertvalues += "\", \"" + (tn.GearList.Amp == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Amp.PedalKey));
+                    //insertvalues += "\", \"" + (tn.GearList.Amp == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Amp.Skin));
+                    //insertvalues += "\", \"" + (tn.GearList.Amp == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Amp.SkinIndex)) + "\"";
+                    //InsertIntoDBwValues("Tones_GearList", insertcmdd, insertvalues, cnb, mutit);
+
+
+                    //}
+
+                    //insertvalues = ""; insertvalues += tid + ", \"Cabinet\", \"" + (tn.GearList.Cabinet == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Cabinet.Type));
+                    //insertvalues += "\", \"" + (tn.GearList.Cabinet == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Cabinet.Category));
+                    //vals = ""; keys = ""; if (tn.GearList.Cabinet != null) foreach (KeyValuePair<string, float> glakv in tn.GearList.Cabinet.KnobValues) { vals += ";" + glakv.Value; keys += ";" + glakv.Key; }
+                    //insertvalues += "\", \"" + (tn.GearList.Cabinet == null ? DBNull.Value.ToString() : NullHandler(vals == "" ? DBNull.Value.ToString() : vals.Substring(1)));
+                    //insertvalues += "\", \"" + (tn.GearList.Cabinet == null ? DBNull.Value.ToString() : NullHandler(keys == "" ? DBNull.Value.ToString() : keys.Substring(1)));
+                    //insertvalues += "\", \"" + (tn.GearList.Cabinet == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Cabinet.PedalKey));
+                    //insertvalues += "\", \"" + (tn.GearList.Cabinet == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Cabinet.Skin));
+                    //insertvalues += "\", \"" + (tn.GearList.Cabinet == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Cabinet.SkinIndex)) + "\"";
+                    //InsertIntoDBwValues("Tones_GearList", insertcmdd, insertvalues, cnb, mutit);
+
+                    //insertvalues = ""; insertvalues += tid + ", \"PostPedal1\", \"" + (tn.GearList.PostPedal1 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PostPedal1.Type));
+                    //insertvalues += "\", \"" + (tn.GearList.PostPedal1 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PostPedal1.Category));
+                    //vals = ""; keys = ""; if (tn.GearList.PostPedal1 != null) foreach (KeyValuePair<string, float> glakv in tn.GearList.PostPedal1.KnobValues) { vals += ";" + glakv.Value; keys += ";" + glakv.Key; }
+                    //insertvalues += "\", \"" + NullHandler(vals == "" ? DBNull.Value.ToString() : vals.Substring(1));
+                    //insertvalues += "\", \"" + NullHandler(keys == "" ? DBNull.Value.ToString() : keys.Substring(1));
+                    //insertvalues += "\", \"" + (tn.GearList.PostPedal1 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PostPedal1.PedalKey));
+                    //insertvalues += "\", \"" + (tn.GearList.PostPedal1 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PostPedal1.Skin));
+                    //insertvalues += "\", \"" + (tn.GearList.PostPedal1 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PostPedal1.SkinIndex)) + "\"";
+                    //InsertIntoDBwValues("Tones_GearList", insertcmdd, insertvalues, cnb, mutit);
+
+                    //insertvalues = ""; insertvalues += tid + ", \"PostPedal2\", \"" + (tn.GearList.PostPedal2 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PostPedal2.Type));
+                    //insertvalues += "\", \"" + (tn.GearList.PostPedal2 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PostPedal2.Category));
+                    //vals = ""; keys = ""; if (tn.GearList.PostPedal2 != null) foreach (KeyValuePair<string, float> glakv in tn.GearList.PostPedal2.KnobValues) { vals += ";" + glakv.Value; keys += ";" + glakv.Key; }
+                    //insertvalues += "\", \"" + NullHandler(vals == "" ? DBNull.Value.ToString() : vals.Substring(1));
+                    //insertvalues += "\", \"" + NullHandler(keys == "" ? DBNull.Value.ToString() : keys.Substring(1));
+                    //insertvalues += "\", \"" + (tn.GearList.PostPedal2 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PostPedal2.PedalKey));
+                    //insertvalues += "\", \"" + (tn.GearList.PostPedal2 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PostPedal2.Skin));
+                    //insertvalues += "\", \"" + (tn.GearList.PostPedal2 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PostPedal2.SkinIndex)) + "\"";
+                    //InsertIntoDBwValues("Tones_GearList", insertcmdd, insertvalues, cnb, mutit);
+
+                    //insertvalues = ""; insertvalues += tid + ", \"PostPedal3\", \"" + (tn.GearList.PostPedal3 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PostPedal3.Type));
+                    //insertvalues += "\", \"" + (tn.GearList.PostPedal3 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PostPedal3.Category));
+                    //vals = ""; keys = ""; if (tn.GearList.PostPedal3 != null) foreach (KeyValuePair<string, float> glakv in tn.GearList.PostPedal3.KnobValues) { vals += ";" + glakv.Value; keys += ";" + glakv.Key; }
+                    //insertvalues += "\", \"" + NullHandler(vals == "" ? DBNull.Value.ToString() : vals.Substring(1));
+                    //insertvalues += "\", \"" + NullHandler(keys == "" ? DBNull.Value.ToString() : keys.Substring(1));
+                    //insertvalues += "\", \"" + (tn.GearList.PostPedal3 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PostPedal3.PedalKey));
+                    //insertvalues += "\", \"" + (tn.GearList.PostPedal3 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PostPedal3.Skin));
+                    //insertvalues += "\", \"" + (tn.GearList.PostPedal3 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PostPedal3.SkinIndex)) + "\"";
+                    //InsertIntoDBwValues("Tones_GearList", insertcmdd, insertvalues, cnb, mutit);
+
+                    //insertvalues = ""; insertvalues += tid + ", \"PostPedal4\", \"" + (tn.GearList.PostPedal4 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PostPedal4.Type));
+                    //insertvalues += "\", \"" + (tn.GearList.PostPedal4 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PostPedal4.Category));
+                    //vals = ""; keys = ""; if (tn.GearList.PostPedal4 != null) foreach (KeyValuePair<string, float> glakv in tn.GearList.PostPedal4.KnobValues) { vals += ";" + glakv.Value; keys += ";" + glakv.Key; }
+                    //insertvalues += "\", \"" + NullHandler(vals == "" ? DBNull.Value.ToString() : vals.Substring(1));
+                    //insertvalues += "\", \"" + NullHandler(keys == "" ? DBNull.Value.ToString() : keys.Substring(1));
+                    //insertvalues += "\", \"" + (tn.GearList.PostPedal4 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PostPedal4.PedalKey));
+                    //insertvalues += "\", \"" + (tn.GearList.PostPedal4 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PostPedal4.Skin));
+                    //insertvalues += "\", \"" + (tn.GearList.PostPedal4 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PostPedal4.SkinIndex)) + "\"";
+                    //InsertIntoDBwValues("Tones_GearList", insertcmdd, insertvalues, cnb, mutit);
+
+                    //insertvalues = ""; insertvalues += tid + ", \"PrePedal1\", \"" + (tn.GearList.PrePedal1 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PrePedal1.Type));
+                    //insertvalues += "\", \"" + (tn.GearList.PrePedal1 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PrePedal1.Category));
+                    //vals = ""; keys = ""; if (tn.GearList.PrePedal1 != null) foreach (KeyValuePair<string, float> glakv in tn.GearList.PrePedal1.KnobValues) { vals += ";" + glakv.Value; keys += ";" + glakv.Key; }
+                    //insertvalues += "\", \"" + NullHandler(vals == "" ? DBNull.Value.ToString() : vals.Substring(1));
+                    //insertvalues += "\", \"" + NullHandler(keys == "" ? DBNull.Value.ToString() : keys.Substring(1));
+                    //insertvalues += "\", \"" + (tn.GearList.PrePedal1 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PrePedal1.PedalKey));
+                    //insertvalues += "\", \"" + (tn.GearList.PrePedal1 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PrePedal1.Skin));
+                    //insertvalues += "\", \"" + (tn.GearList.PrePedal1 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PrePedal1.SkinIndex)) + "\"";
+                    //InsertIntoDBwValues("Tones_GearList", insertcmdd, insertvalues, cnb, mutit);
+
+                    //insertvalues = ""; insertvalues += tid + ", \"PrePedal2\", \"" + (tn.GearList.PrePedal2 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PrePedal2.Type));
+                    //insertvalues += "\", \"" + (tn.GearList.PrePedal2 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PrePedal2.Category));
+                    //vals = ""; keys = ""; if (tn.GearList.PrePedal2 != null) foreach (KeyValuePair<string, float> glakv in tn.GearList.PrePedal2.KnobValues) { vals += ";" + glakv.Value; keys += ";" + glakv.Key; }
+                    //insertvalues += "\", \"" + NullHandler(vals == "" ? DBNull.Value.ToString() : vals.Substring(1));
+                    //insertvalues += "\", \"" + NullHandler(keys == "" ? DBNull.Value.ToString() : keys.Substring(1));
+                    //insertvalues += "\", \"" + (tn.GearList.PrePedal2 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PrePedal2.PedalKey));
+                    //insertvalues += "\", \"" + (tn.GearList.PrePedal2 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PrePedal2.Skin));
+                    //insertvalues += "\", \"" + (tn.GearList.PrePedal2 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PrePedal2.SkinIndex)) + "\"";
+                    //InsertIntoDBwValues("Tones_GearList", insertcmdd, insertvalues, cnb, mutit);
+
+                    //insertvalues = ""; insertvalues += tid + ", \"PrePedal3\", \"" + (tn.GearList.PrePedal3 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PrePedal3.Type));
+                    //insertvalues += "\", \"" + (tn.GearList.PrePedal3 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PrePedal3.Category));
+                    //vals = ""; keys = ""; if (tn.GearList.PrePedal3 != null) foreach (KeyValuePair<string, float> glakv in tn.GearList.PrePedal3.KnobValues) { vals += ";" + glakv.Value; keys += ";" + glakv.Key; }
+                    //insertvalues += "\", \"" + NullHandler(vals == "" ? DBNull.Value.ToString() : vals.Substring(1));
+                    //insertvalues += "\", \"" + NullHandler(keys == "" ? DBNull.Value.ToString() : keys.Substring(1));
+                    //insertvalues += "\", \"" + (tn.GearList.PrePedal3 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PrePedal3.PedalKey));
+                    //insertvalues += "\", \"" + (tn.GearList.PrePedal3 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PrePedal3.Skin));
+                    //insertvalues += "\", \"" + (tn.GearList.PrePedal3 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PrePedal3.SkinIndex)) + "\"";
+                    //InsertIntoDBwValues("Tones_GearList", insertcmdd, insertvalues, cnb, mutit);
+
+                    //insertvalues = ""; insertvalues += tid + ", \"PrePedal4\", \"" + (tn.GearList.PrePedal4 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PrePedal4.Type));
+                    //insertvalues += "\", \"" + (tn.GearList.PrePedal4 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PrePedal4.Category));
+                    //vals = ""; keys = ""; if (tn.GearList.PrePedal4 != null) foreach (KeyValuePair<string, float> glakv in tn.GearList.PrePedal4.KnobValues) { vals += ";" + glakv.Value; keys += ";" + glakv.Key; }
+                    //insertvalues += "\", \"" + NullHandler(vals == "" ? DBNull.Value.ToString() : vals.Substring(1));
+                    //insertvalues += "\", \"" + NullHandler(keys == "" ? DBNull.Value.ToString() : keys.Substring(1));
+                    //insertvalues += "\", \"" + (tn.GearList.PrePedal4 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PrePedal4.PedalKey));
+                    //insertvalues += "\", \"" + (tn.GearList.PrePedal4 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PrePedal4.Skin));
+                    //insertvalues += "\", \"" + (tn.GearList.PrePedal4 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PrePedal4.SkinIndex)) + "\"";
+                    //InsertIntoDBwValues("Tones_GearList", insertcmdd, insertvalues, cnb, mutit);
+
+                    //insertvalues = ""; insertvalues += tid + ", \"Rack1\", \"" + (tn.GearList.Rack1 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Rack1.Type));
+                    //insertvalues += "\", \"" + (tn.GearList.Rack1 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Rack1.Category));
+                    //vals = ""; keys = ""; if (tn.GearList.Rack1 != null) foreach (KeyValuePair<string, float> glakv in tn.GearList.Rack1.KnobValues) { vals += ";" + glakv.Value; keys += ";" + glakv.Key; }
+                    //insertvalues += "\", \"" + NullHandler(vals == "" ? DBNull.Value.ToString() : vals.Substring(1));
+                    //insertvalues += "\", \"" + NullHandler(keys == "" ? DBNull.Value.ToString() : keys.Substring(1));
+                    //insertvalues += "\", \"" + (tn.GearList.Rack1 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Rack1.PedalKey));
+                    //insertvalues += "\", \"" + (tn.GearList.Rack1 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Rack1.Skin));
+                    //insertvalues += "\", \"" + (tn.GearList.Rack1 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Rack1.SkinIndex)) + "\"";
+                    //InsertIntoDBwValues("Tones_GearList", insertcmdd, insertvalues, cnb, mutit);
+
+                    //insertvalues = ""; insertvalues += tid + ", \"Rack2\", \"" + (tn.GearList.Rack2 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Rack2.Type));
+                    //insertvalues += "\", \"" + (tn.GearList.Rack2 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Rack2.Category));
+                    //vals = ""; keys = ""; if (tn.GearList.Rack2 != null) foreach (KeyValuePair<string, float> glakv in tn.GearList.Rack2.KnobValues) { vals += ";" + glakv.Value; keys += ";" + glakv.Key; }
+                    //insertvalues += "\", \"" + NullHandler(vals == "" ? DBNull.Value.ToString() : vals.Substring(1));
+                    //insertvalues += "\", \"" + NullHandler(keys == "" ? DBNull.Value.ToString() : keys.Substring(1));
+                    //insertvalues += "\", \"" + (tn.GearList.Rack2 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Rack2.PedalKey));
+                    //insertvalues += "\", \"" + (tn.GearList.Rack2 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Rack2.Skin));
+                    //insertvalues += "\", \"" + (tn.GearList.Rack2 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Rack2.SkinIndex)) + "\"";
+                    //InsertIntoDBwValues("Tones_GearList", insertcmdd, insertvalues, cnb, mutit);
+
+                    //insertvalues = ""; insertvalues += tid + ", \"Rack3\", \"" + (tn.GearList.Rack3 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Rack3.Type));
+                    //insertvalues += "\", \"" + (tn.GearList.Rack3 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Rack3.Category));
+                    //vals = ""; keys = ""; if (tn.GearList.Rack3 != null) foreach (KeyValuePair<string, float> glakv in tn.GearList.Rack3.KnobValues) { vals += ";" + glakv.Value; keys += ";" + glakv.Key; }
+                    //insertvalues += "\", \"" + NullHandler(vals == "" ? DBNull.Value.ToString() : vals.Substring(1));
+                    //insertvalues += "\", \"" + NullHandler(keys == "" ? DBNull.Value.ToString() : keys.Substring(1));
+                    //insertvalues += "\", \"" + (tn.GearList.Rack3 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Rack3.PedalKey));
+                    //insertvalues += "\", \"" + (tn.GearList.Rack3 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Rack3.Skin));
+                    //insertvalues += "\", \"" + (tn.GearList.Rack3 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Rack3.SkinIndex)) + "\"";
+                    //InsertIntoDBwValues("Tones_GearList", insertcmdd, insertvalues, cnb, mutit);
+
+                    //insertvalues = ""; insertvalues += tid + ", \"Rack4\", \"" + (tn.GearList.Rack4 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Rack4.Type));
+                    //insertvalues += "\", \"" + (tn.GearList.Rack4 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Rack4.Category));
+                    //vals = ""; keys = ""; if (tn.GearList.Rack4 != null) foreach (KeyValuePair<string, float> glakv in tn.GearList.Rack4.KnobValues) { vals += ";" + glakv.Value; keys += ";" + glakv.Key; }
+                    //insertvalues += "\", \"" + NullHandler(vals == "" ? DBNull.Value.ToString() : vals.Substring(1));
+                    //insertvalues += "\", \"" + NullHandler(keys == "" ? DBNull.Value.ToString() : keys.Substring(1));
+                    //insertvalues += "\", \"" + (tn.GearList.Rack4 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Rack4.PedalKey));
+                    //insertvalues += "\", \"" + (tn.GearList.Rack4 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Rack4.Skin));
+                    //insertvalues += "\", \"" + (tn.GearList.Rack4 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Rack4.SkinIndex)) + "\"";
+                    //InsertIntoDBwValues("Tones_GearList", insertcmdd, insertvalues, cnb, mutit);
+
                     ////OleDbDataAdapter das = new OleDbDataAdapter(command.CommandText, cnn);
                     if (!chbx_AutoSave.Checked) MessageBox.Show("Tones Saved");
                     //das.SelectCommand.CommandText = "SELECT * FROM Tones";
@@ -570,41 +740,60 @@ namespace RocksmithToolkitGUI.DLCManager
             //    }
             //);
 
+            //dssx.Tables["Tones"].AcceptChanges();
+
+            //bs.DataSource = dssx.Tables["Tones"];
+            //DataGridView.DataSource = bs;
+            ////DataGridView.ExpandColumns();
+
+            ////advance or step back in the song list
+            //int i = 0;
+            //if (DataGridView.Rows.Count > 1)
+            //{
+            //    var prev = DataGridView.SelectedCells[0].RowIndex;
+            //    if (DataGridView.Rows.Count == prev + 2)
+            //        if (prev == 0) return;
+            //        else
+            //        {
+            //            int rowindex;
+            //            DataGridViewRow row;
+            //            i = DataGridView.SelectedCells[0].RowIndex;
+            //            rowindex = i;
+            //            DataGridView.Rows[rowindex - 1].Selected = true;
+            //            DataGridView.Rows[rowindex].Selected = false;
+            //            row = DataGridView.Rows[rowindex - 1];
+            //        }
+            //    else
+            //    {
+            //        int rowindex;
+            //        DataGridViewRow row;
+            //        i = DataGridView.SelectedCells[0].RowIndex;
+            //        rowindex = i;
+            //        DataGridView.Rows[rowindex + 1].Selected = true;
+            //        DataGridView.Rows[rowindex].Selected = false;
+            //        row = DataGridView.Rows[rowindex + 1];
+            //    }
+            //}
+            DataGridView.AutoResizeColumns();
+            bs.ResetBindings(false);
             dssx.Tables["Tones"].AcceptChanges();
-
             bs.DataSource = dssx.Tables["Tones"];
+            DataGridView.DataSource = null;
             DataGridView.DataSource = bs;
-            //DataGridView.ExpandColumns();
+            DataGridView.Refresh();
+            dssx.Dispose();
 
-            //advance or step back in the song list
-            int i = 0;
-            if (DataGridView.Rows.Count > 1)
-            {
-                var prev = DataGridView.SelectedCells[0].RowIndex;
-                if (DataGridView.Rows.Count == prev + 2)
-                    if (prev == 0) return;
-                    else
-                    {
-                        int rowindex;
-                        DataGridViewRow row;
-                        i = DataGridView.SelectedCells[0].RowIndex;
-                        rowindex = i;
-                        DataGridView.Rows[rowindex - 1].Selected = true;
-                        DataGridView.Rows[rowindex].Selected = false;
-                        row = DataGridView.Rows[rowindex - 1];
-                    }
-                else
-                {
-                    int rowindex;
-                    DataGridViewRow row;
-                    i = DataGridView.SelectedCells[0].RowIndex;
-                    rowindex = i;
-                    DataGridView.Rows[rowindex + 1].Selected = true;
-                    DataGridView.Rows[rowindex].Selected = false;
-                    row = DataGridView.Rows[rowindex + 1];
-                }
-            }
-            ChangeRow();
+            //////Read Tones
+            //var nrc = 0;
+            //DataSet dtc = new DataSet(); dtc = SelectFromDB("Tones_GearList", "SELECT Gear_Name FROM Tones_GearList WHERE CDLC_ID=" + files[i].ID + ";", "", cnb);
+            //nrc = dtc.Tables[0].Rows.Count; var TID = "";
+            //if (nrc > 0)
+            //{
+            //    for (int k = 0; k < nrc; k++)
+            //        cmbx_Gear_Name.Items.Add(dtc.Tables[0].Rows[k].ItemArray[0].ToString());
+            //    cmbx_Gear_Name.SelectedIndex = 0;
+
+            //    ChangeRow();
         }
 
         private class Files
@@ -718,10 +907,251 @@ namespace RocksmithToolkitGUI.DLCManager
                 files[i].Comments = dataRow.ItemArray[38].ToString();
 
                 ////Read Tones
-                //        var nrc = 0;
-                //        DataSet dsc = new DataSet(); dsc = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin," +
-                //            " SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + files[i].ID + " AND Gear_Name=\"Amp\";", "", cnb);
-                //        nrc = dsc.Tables[0].Rows.Count;
+                var nrc = 0;
+                DataSet dtc = new DataSet(); dtc = SelectFromDB("Tones_GearList", "SELECT Gear_Name FROM Tones_GearList WHERE CDLC_ID=" + files[i].ID + ";", "", cnb);
+                nrc = dtc.Tables[0].Rows.Count; var TID = "";
+                if (nrc > 0)
+                {
+                    for (int k = 0; k < nrc; k++)
+                        cbx_Gear_Name.Items.Add(dtc.Tables[0].Rows[k].ItemArray[0].ToString());
+                    cbx_Gear_Name.SelectedIndex = 0;
+                    //TID = dtc.Tables[0].Rows[0].ItemArray[0].ToString();
+                    //dictionary types not saved in the DB yet
+
+                    //}
+                    //nrc = 0;
+                    //DataSet dsa = new DataSet(); dsa = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + TID + " AND Gear_Name=\"Cabinet\" ORDER BY Type DESC;", "", cnb);
+                    //nrc = dsa.Tables[0].Rows.Count;
+                    //for (int k = 0; k < nrc; k++)
+                    //{
+                    //    string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
+                    //    if (dsa.Tables[0].Rows[k].ItemArray[0].ToString() != "") data.TonesRS2014[j].GearList.Cabinet.Type = dsa.Tables[0].Rows[k].ItemArray[0].ToString();
+                    //    if (dsa.Tables[0].Rows[k].ItemArray[1].ToString() != "") data.TonesRS2014[j].GearList.Cabinet.Category = dsa.Tables[0].Rows[k].ItemArray[1].ToString();
+                    //    Dictionary<string, float> FS = new Dictionary<string, float>();
+                    //    strArrK = dsa.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
+                    //    strArrV = dsa.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
+                    //    for (int l = 0; l <= strArrK.Length - 1; l++) if (strArrK[l] != "" && strArrV[l] != "") FS.Add(strArrK[l], float.Parse(strArrV[l]));
+                    //    if (FS.Count != 0) data.TonesRS2014[j].GearList.Cabinet.KnobValues = FS;
+                    //    if (dsa.Tables[0].Rows[k].ItemArray[4].ToString() != "") data.TonesRS2014[j].GearList.Cabinet.PedalKey = dsa.Tables[0].Rows[k].ItemArray[4].ToString();
+                    //    if (dsa.Tables[0].Rows[k].ItemArray[5].ToString() != "") data.TonesRS2014[j].GearList.PostPedal1.Skin = dsa.Tables[0].Rows[k].ItemArray[5].ToString();
+                    //    if (dsa.Tables[0].Rows[k].ItemArray[6].ToString() != "") data.TonesRS2014[j].GearList.PostPedal1.SkinIndex = float.Parse(dsa.Tables[0].Rows[k].ItemArray[6].ToString());
+                    //}
+                    //nrc = 0;
+                    //DataSet dss1 = new DataSet(); dss1 = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + TID + " AND Gear_Name=\"PostPedal1\" ORDER BY Type DESC;", "", cnb);
+                    //nrc = dss1.Tables[0].Rows.Count;
+                    //for (int k = 0; k < nrc; k++)
+                    //{
+                    //    string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
+                    //    if (dss1.Tables[0].Rows[k].ItemArray[0].ToString() != "") data.TonesRS2014[j].GearList.PostPedal1.Type = dss1.Tables[0].Rows[k].ItemArray[0].ToString();
+                    //    if (dss1.Tables[0].Rows[k].ItemArray[1].ToString() != "") data.TonesRS2014[j].GearList.PostPedal1.Category = dss1.Tables[0].Rows[k].ItemArray[1].ToString();
+                    //    Dictionary<string, float> FS = new Dictionary<string, float>();
+                    //    strArrK = dss1.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
+                    //    strArrV = dss1.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
+                    //    for (int l = 0; l <= strArrK.Length - 1; l++) if (strArrK[l] != "" && strArrV[l] != "") FS.Add(strArrK[l], float.Parse(strArrV[l]));
+                    //    if (FS.Count != 0) data.TonesRS2014[j].GearList.PostPedal1.KnobValues = FS;
+                    //    if (dss1.Tables[0].Rows[k].ItemArray[4].ToString() != "") data.TonesRS2014[j].GearList.PostPedal1.PedalKey = dss1.Tables[0].Rows[k].ItemArray[4].ToString();
+                    //    if (dss1.Tables[0].Rows[k].ItemArray[5].ToString() != "") data.TonesRS2014[j].GearList.PostPedal1.Skin = dss1.Tables[0].Rows[k].ItemArray[5].ToString();
+                    //    if (dss1.Tables[0].Rows[k].ItemArray[6].ToString() != "") data.TonesRS2014[j].GearList.PostPedal1.SkinIndex = float.Parse(dss1.Tables[0].Rows[k].ItemArray[6].ToString());
+                    //}
+                    //nrc = 0;
+                    //DataSet dss2 = new DataSet(); dss2 = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + TID + " AND Gear_Name=\"PostPedal2\" ORDER BY Type DESC;", "", cnb);
+                    //nrc = dss2.Tables[0].Rows.Count;
+                    //for (int k = 0; k < nrc; k++)
+                    //{
+                    //    string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
+                    //    if (dss2.Tables[0].Rows[k].ItemArray[0].ToString() != "") data.TonesRS2014[j].GearList.PostPedal2.Type = dss2.Tables[0].Rows[k].ItemArray[0].ToString();
+                    //    if (dss2.Tables[0].Rows[k].ItemArray[1].ToString() != "") data.TonesRS2014[j].GearList.PostPedal2.Category = dss2.Tables[0].Rows[k].ItemArray[1].ToString();
+                    //    Dictionary<string, float> FS = new Dictionary<string, float>();
+                    //    strArrK = dss2.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
+                    //    strArrV = dss2.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
+                    //    for (int l = 0; l <= strArrK.Length - 1; l++) if (strArrK[l] != "" && strArrV[l] != "") FS.Add(strArrK[l], float.Parse(strArrV[l]));
+                    //    if (FS.Count != 0) data.TonesRS2014[j].GearList.PostPedal2.KnobValues = FS;
+                    //    if (dss2.Tables[0].Rows[k].ItemArray[4].ToString() != "") data.TonesRS2014[j].GearList.PostPedal2.PedalKey = dss2.Tables[0].Rows[k].ItemArray[4].ToString();
+                    //    if (dss2.Tables[0].Rows[k].ItemArray[5].ToString() != "") data.TonesRS2014[j].GearList.PostPedal2.Skin = dss2.Tables[0].Rows[k].ItemArray[5].ToString();
+                    //    if (dss2.Tables[0].Rows[k].ItemArray[6].ToString() != "") data.TonesRS2014[j].GearList.PostPedal2.SkinIndex = float.Parse(dss2.Tables[0].Rows[k].ItemArray[6].ToString());
+
+                    //}
+                    //nrc = 0;
+                    //DataSet dss3 = new DataSet(); dss3 = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + TID + " AND Gear_Name=\"PostPedal3\" ORDER BY Type DESC;", "", cnb);
+                    //nrc = dss3.Tables[0].Rows.Count;
+                    //for (int k = 0; k < nrc; k++)
+                    //{
+                    //    string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
+                    //    if (dss3.Tables[0].Rows[k].ItemArray[0].ToString() != "") data.TonesRS2014[j].GearList.PostPedal3.Type = dss3.Tables[0].Rows[k].ItemArray[0].ToString();
+                    //    if (dss3.Tables[0].Rows[k].ItemArray[1].ToString() != "") data.TonesRS2014[j].GearList.PostPedal3.Category = dss3.Tables[0].Rows[k].ItemArray[1].ToString();
+                    //    Dictionary<string, float> FS = new Dictionary<string, float>();
+                    //    strArrK = dss3.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
+                    //    strArrV = dss3.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
+                    //    for (int l = 0; l <= strArrK.Length - 1; l++) if (strArrK[l] != "" && strArrV[l] != "") FS.Add(strArrK[l], float.Parse(strArrV[l]));
+                    //    if (FS.Count != 0) data.TonesRS2014[j].GearList.PostPedal3.KnobValues = FS;
+                    //    if (dss3.Tables[0].Rows[k].ItemArray[4].ToString() != "") data.TonesRS2014[j].GearList.PostPedal3.PedalKey = dss3.Tables[0].Rows[k].ItemArray[4].ToString();
+                    //    if (dss3.Tables[0].Rows[k].ItemArray[5].ToString() != "") data.TonesRS2014[j].GearList.PostPedal3.Skin = dss3.Tables[0].Rows[k].ItemArray[5].ToString();
+                    //    if (dss3.Tables[0].Rows[k].ItemArray[6].ToString() != "") data.TonesRS2014[j].GearList.PostPedal3.SkinIndex = float.Parse(dss3.Tables[0].Rows[k].ItemArray[6].ToString());
+
+                    //}
+                    //nrc = 0;
+                    //DataSet dss4 = new DataSet(); dss4 = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + TID + " AND Gear_Name=\"PostPedal4\" ORDER BY Type DESC;", "", cnb);
+                    //nrc = dss4.Tables[0].Rows.Count;
+                    //for (int k = 0; k < nrc; k++)
+                    //{
+                    //    string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
+                    //    if (dss4.Tables[0].Rows[k].ItemArray[0].ToString() != "") data.TonesRS2014[j].GearList.PostPedal4.Type = dss4.Tables[0].Rows[k].ItemArray[0].ToString();
+                    //    if (dss4.Tables[0].Rows[k].ItemArray[1].ToString() != "") data.TonesRS2014[j].GearList.PostPedal4.Category = dss4.Tables[0].Rows[k].ItemArray[1].ToString();
+                    //    Dictionary<string, float> FS = new Dictionary<string, float>();
+                    //    strArrK = dss4.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
+                    //    strArrV = dss4.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
+                    //    for (int l = 0; l <= strArrK.Length - 1; l++) if (strArrK[l] != "" && strArrV[l] != "") FS.Add(strArrK[l], float.Parse(strArrV[l]));
+                    //    if (FS.Count != 0) data.TonesRS2014[j].GearList.PostPedal4.KnobValues = FS;
+                    //    if (dss4.Tables[0].Rows[k].ItemArray[4].ToString() != "") data.TonesRS2014[j].GearList.PostPedal4.PedalKey = dss4.Tables[0].Rows[k].ItemArray[4].ToString();
+                    //    if (dss4.Tables[0].Rows[k].ItemArray[5].ToString() != "") data.TonesRS2014[j].GearList.PostPedal4.Skin = dss4.Tables[0].Rows[k].ItemArray[5].ToString();
+                    //    if (dss4.Tables[0].Rows[k].ItemArray[6].ToString() != "") data.TonesRS2014[j].GearList.PostPedal4.SkinIndex = float.Parse(dss4.Tables[0].Rows[k].ItemArray[6].ToString());
+
+                    //}
+
+                    //nrc = 0;
+                    //DataSet dsp1 = new DataSet(); dsp1 = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + TID + " AND Gear_Name=\"PrePedal1\" ORDER BY Type DESC;", "", cnb);
+                    //nrc = dsp1.Tables[0].Rows.Count;
+                    //for (int k = 0; k < nrc; k++)
+                    //{
+                    //    string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
+                    //    if (dsp1.Tables[0].Rows[k].ItemArray[0].ToString() != "") data.TonesRS2014[j].GearList.PrePedal1.Type = dsp1.Tables[0].Rows[k].ItemArray[0].ToString();
+                    //    if (dsp1.Tables[0].Rows[k].ItemArray[1].ToString() != "") data.TonesRS2014[j].GearList.PrePedal1.Category = dsp1.Tables[0].Rows[k].ItemArray[1].ToString();
+                    //    Dictionary<string, float> FS = new Dictionary<string, float>();
+                    //    strArrK = dsp1.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
+                    //    strArrV = dsp1.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
+                    //    for (int l = 0; l <= strArrK.Length - 1; l++) if (strArrK[l] != "" && strArrV[l] != "") FS.Add(strArrK[l], float.Parse(strArrV[l]));
+                    //    if (FS.Count != 0) data.TonesRS2014[j].GearList.PrePedal1.KnobValues = FS;
+                    //    if (dsp1.Tables[0].Rows[k].ItemArray[4].ToString() != "") data.TonesRS2014[j].GearList.PrePedal1.PedalKey = dsp1.Tables[0].Rows[k].ItemArray[4].ToString();
+                    //    if (dsp1.Tables[0].Rows[k].ItemArray[5].ToString() != "") data.TonesRS2014[j].GearList.PrePedal1.Skin = dsp1.Tables[0].Rows[k].ItemArray[5].ToString();
+                    //    if (dsp1.Tables[0].Rows[k].ItemArray[6].ToString() != "") data.TonesRS2014[j].GearList.PrePedal1.SkinIndex = float.Parse(dsp1.Tables[0].Rows[k].ItemArray[6].ToString());
+                    //}
+                    //nrc = 0;
+                    //DataSet dsp2 = new DataSet(); dsp2 = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + TID + " AND Gear_Name=\"PrePedal2\" ORDER BY Type DESC;", "", cnb);
+                    //nrc = dsp2.Tables[0].Rows.Count;
+                    //for (int k = 0; k < nrc; k++)
+                    //{
+                    //    string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
+                    //    if (dsp2.Tables[0].Rows[k].ItemArray[0].ToString() != "") data.TonesRS2014[j].GearList.PrePedal2.Type = dsp2.Tables[0].Rows[k].ItemArray[0].ToString();
+                    //    if (dsp2.Tables[0].Rows[k].ItemArray[1].ToString() != "") data.TonesRS2014[j].GearList.PrePedal2.Category = dsp2.Tables[0].Rows[k].ItemArray[1].ToString();
+                    //    Dictionary<string, float> FS = new Dictionary<string, float>();
+                    //    strArrK = dsp2.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
+                    //    strArrV = dsp2.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
+                    //    for (int l = 0; l <= strArrK.Length - 1; l++) if (strArrK[l] != "" && strArrV[l] != "") FS.Add(strArrK[l], float.Parse(strArrV[l]));
+                    //    if (FS.Count != 0) data.TonesRS2014[j].GearList.PrePedal2.KnobValues = FS;
+                    //    if (dsp2.Tables[0].Rows[k].ItemArray[4].ToString() != "") data.TonesRS2014[j].GearList.PrePedal2.PedalKey = dsp2.Tables[0].Rows[k].ItemArray[4].ToString();
+                    //    if (dsp2.Tables[0].Rows[k].ItemArray[5].ToString() != "") data.TonesRS2014[j].GearList.PrePedal2.Skin = dsp2.Tables[0].Rows[k].ItemArray[5].ToString();
+                    //    if (dsp2.Tables[0].Rows[k].ItemArray[6].ToString() != "") data.TonesRS2014[j].GearList.PrePedal2.SkinIndex = float.Parse(dsp2.Tables[0].Rows[k].ItemArray[6].ToString());
+
+                    //}
+                    //nrc = 0;
+                    //DataSet dsp3 = new DataSet(); dsp3 = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + TID + " AND Gear_Name=\"PrePedal3\" ORDER BY Type DESC;", "", cnb);
+                    //nrc = dsp3.Tables[0].Rows.Count;
+                    //for (int k = 0; k < nrc; k++)
+                    //{
+                    //    string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
+                    //    if (dsp3.Tables[0].Rows[k].ItemArray[0].ToString() != "") data.TonesRS2014[j].GearList.PrePedal3.Type = dsp3.Tables[0].Rows[k].ItemArray[0].ToString();
+                    //    if (dsp3.Tables[0].Rows[k].ItemArray[1].ToString() != "") data.TonesRS2014[j].GearList.PrePedal3.Category = dsp3.Tables[0].Rows[k].ItemArray[1].ToString();
+                    //    Dictionary<string, float> FS = new Dictionary<string, float>();
+                    //    strArrK = dsp3.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
+                    //    strArrV = dsp3.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
+                    //    for (int l = 0; l <= strArrK.Length - 1; l++) if (strArrK[l] != "" && strArrV[l] != "") FS.Add(strArrK[l], float.Parse(strArrV[l]));
+                    //    if (FS.Count != 0) data.TonesRS2014[j].GearList.PrePedal3.KnobValues = FS;
+                    //    if (dsp3.Tables[0].Rows[k].ItemArray[4].ToString() != "") data.TonesRS2014[j].GearList.PrePedal3.PedalKey = dsp3.Tables[0].Rows[k].ItemArray[4].ToString();
+                    //    if (dsp3.Tables[0].Rows[k].ItemArray[5].ToString() != "") data.TonesRS2014[j].GearList.PrePedal3.Skin = dsp3.Tables[0].Rows[k].ItemArray[5].ToString();
+                    //    if (dsp3.Tables[0].Rows[k].ItemArray[6].ToString() != "") data.TonesRS2014[j].GearList.PrePedal3.SkinIndex = float.Parse(dsp3.Tables[0].Rows[k].ItemArray[6].ToString());
+
+                    //}
+                    //nrc = 0;
+                    //DataSet dsp4 = new DataSet(); dsp4 = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + TID + " AND Gear_Name=\"PrePedal4\" ORDER BY Type DESC;", "", cnb);
+                    //nrc = dsp4.Tables[0].Rows.Count;
+                    //for (int k = 0; k < nrc; k++)
+                    //{
+                    //    string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
+                    //    if (dsp4.Tables[0].Rows[k].ItemArray[0].ToString() != "") data.TonesRS2014[j].GearList.PrePedal4.Type = dsp4.Tables[0].Rows[k].ItemArray[0].ToString();
+                    //    if (dsp4.Tables[0].Rows[k].ItemArray[1].ToString() != "") data.TonesRS2014[j].GearList.PrePedal4.Category = dsp4.Tables[0].Rows[k].ItemArray[1].ToString();
+                    //    Dictionary<string, float> FS = new Dictionary<string, float>();
+                    //    strArrK = dsp4.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
+                    //    strArrV = dsp4.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
+                    //    for (int l = 0; l <= strArrK.Length - 1; l++) if (strArrK[l] != "" && strArrV[l] != "") FS.Add(strArrK[l], float.Parse(strArrV[l]));
+                    //    if (FS.Count != 0) data.TonesRS2014[j].GearList.PrePedal4.KnobValues = FS;
+                    //    if (dsp4.Tables[0].Rows[k].ItemArray[4].ToString() != "") data.TonesRS2014[j].GearList.PrePedal4.PedalKey = dsp4.Tables[0].Rows[k].ItemArray[4].ToString();
+                    //    if (dsp4.Tables[0].Rows[k].ItemArray[5].ToString() != "") data.TonesRS2014[j].GearList.PrePedal4.Skin = dsp4.Tables[0].Rows[k].ItemArray[5].ToString();
+                    //    if (dsp4.Tables[0].Rows[k].ItemArray[6].ToString() != "") data.TonesRS2014[j].GearList.PrePedal4.SkinIndex = float.Parse(dsp4.Tables[0].Rows[k].ItemArray[6].ToString());
+
+                    //}
+
+                    //nrc = 0;
+                    //DataSet dsr1 = new DataSet(); dsr1 = SelectFromDB("Tones", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + TID + " AND Gear_Name=\"Rack1\" ORDER BY Type DESC;", "", cnb);
+                    //nrc = dsr1.Tables[0].Rows.Count;
+                    //for (int k = 0; k < nrc; k++)
+                    //{
+                    //    string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
+                    //    if (dsr1.Tables[0].Rows[k].ItemArray[0].ToString() != "") data.TonesRS2014[j].GearList.Rack1.Type = dsr1.Tables[0].Rows[k].ItemArray[0].ToString();
+                    //    if (dsr1.Tables[0].Rows[k].ItemArray[1].ToString() != "") data.TonesRS2014[j].GearList.Rack1.Category = dsr1.Tables[0].Rows[k].ItemArray[1].ToString();
+                    //    Dictionary<string, float> FS = new Dictionary<string, float>();
+                    //    strArrK = dsr1.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
+                    //    strArrV = dsr1.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
+                    //    for (int l = 0; l <= strArrK.Length - 1; l++) if (strArrK[l] != "" && strArrV[l] != "") FS.Add(strArrK[l], float.Parse(strArrV[l]));
+                    //    if (FS.Count != 0) data.TonesRS2014[j].GearList.Rack1.KnobValues = FS;
+                    //    if (dsr1.Tables[0].Rows[k].ItemArray[4].ToString() != "") data.TonesRS2014[j].GearList.Rack1.PedalKey = dsr1.Tables[0].Rows[k].ItemArray[4].ToString();
+                    //    if (dsr1.Tables[0].Rows[k].ItemArray[5].ToString() != "") data.TonesRS2014[j].GearList.Rack1.Skin = dsr1.Tables[0].Rows[k].ItemArray[5].ToString();
+                    //    if (dsr1.Tables[0].Rows[k].ItemArray[6].ToString() != "") data.TonesRS2014[j].GearList.Rack1.SkinIndex = float.Parse(dsr1.Tables[0].Rows[k].ItemArray[6].ToString());
+                    //}
+                    //nrc = 0;
+                    //DataSet dsr2 = new DataSet(); dsr2 = SelectFromDB("Tones", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + TID + " AND Gear_Name=\"Rack2\" ORDER BY Type DESC;", "", cnb);
+                    //nrc = dsr2.Tables[0].Rows.Count;
+                    //for (int k = 0; k < nrc; k++)
+                    //{
+                    //    string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
+                    //    if (dsr2.Tables[0].Rows[k].ItemArray[0].ToString() != "") data.TonesRS2014[j].GearList.Rack2.Type = dsr2.Tables[0].Rows[k].ItemArray[0].ToString();
+                    //    if (dsr2.Tables[0].Rows[k].ItemArray[1].ToString() != "") data.TonesRS2014[j].GearList.Rack2.Category = dsr2.Tables[0].Rows[k].ItemArray[1].ToString();
+                    //    Dictionary<string, float> FS = new Dictionary<string, float>();
+                    //    strArrK = dsr2.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
+                    //    strArrV = dsr2.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
+                    //    for (int l = 0; l <= strArrK.Length - 1; l++) if (strArrK[l] != "" && strArrV[l] != "") FS.Add(strArrK[l], float.Parse(strArrV[l]));
+                    //    if (FS.Count != 0) data.TonesRS2014[j].GearList.Rack2.KnobValues = FS;
+                    //    if (dsr2.Tables[0].Rows[k].ItemArray[4].ToString() != "") data.TonesRS2014[j].GearList.Rack2.PedalKey = dsr2.Tables[0].Rows[k].ItemArray[4].ToString();
+                    //    if (dsr2.Tables[0].Rows[k].ItemArray[5].ToString() != "") data.TonesRS2014[j].GearList.Rack2.Skin = dsr2.Tables[0].Rows[k].ItemArray[5].ToString();
+                    //    if (dsr2.Tables[0].Rows[k].ItemArray[6].ToString() != "") data.TonesRS2014[j].GearList.Rack2.SkinIndex = float.Parse(dsr2.Tables[0].Rows[k].ItemArray[6].ToString());
+
+                    //}
+                    //nrc = 0;
+                    //DataSet dsr3 = new DataSet(); dsr3 = SelectFromDB("Tones", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + TID + " AND Gear_Name=\"Rack3\" ORDER BY Type DESC;", "", cnb);
+                    //nrc = dsr3.Tables[0].Rows.Count;
+                    //for (int k = 0; k < nrc; k++)
+                    //{
+                    //    string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
+                    //    if (dsr3.Tables[0].Rows[k].ItemArray[0].ToString() != "") data.TonesRS2014[j].GearList.Rack3.Type = dsr3.Tables[0].Rows[k].ItemArray[0].ToString();
+                    //    if (dsr3.Tables[0].Rows[k].ItemArray[1].ToString() != "") data.TonesRS2014[j].GearList.Rack3.Category = dsr3.Tables[0].Rows[k].ItemArray[1].ToString();
+                    //    Dictionary<string, float> FS = new Dictionary<string, float>();
+                    //    strArrK = dsr3.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
+                    //    strArrV = dsr3.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
+                    //    for (int l = 0; l <= strArrK.Length - 1; l++) if (strArrK[l] != "" && strArrV[l] != "") FS.Add(strArrK[l], float.Parse(strArrV[l]));
+                    //    if (FS.Count != 0) data.TonesRS2014[j].GearList.Rack3.KnobValues = FS;
+                    //    if (dsr3.Tables[0].Rows[k].ItemArray[4].ToString() != "") data.TonesRS2014[j].GearList.Rack3.PedalKey = dsr3.Tables[0].Rows[k].ItemArray[4].ToString();
+                    //    if (dsr3.Tables[0].Rows[k].ItemArray[5].ToString() != "") data.TonesRS2014[j].GearList.Rack3.Skin = dsr3.Tables[0].Rows[k].ItemArray[5].ToString();
+                    //    if (dsr3.Tables[0].Rows[k].ItemArray[6].ToString() != "") data.TonesRS2014[j].GearList.Rack3.SkinIndex = float.Parse(dsr3.Tables[0].Rows[k].ItemArray[6].ToString());
+
+                    //}
+                    //nrc = 0;
+                    //DataSet dsr4 = new DataSet(); dsr4 = SelectFromDB("Tones", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + TID + " AND Gear_Name=\"Rack4\" ORDER BY Type DESC;", "", cnb);
+                    //nrc = dsr4.Tables[0].Rows.Count;
+                    //for (int k = 0; k < nrc; k++)
+                    //{
+                    //    string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
+                    //    if (dsr4.Tables[0].Rows[k].ItemArray[0].ToString() != "") data.TonesRS2014[j].GearList.Rack4.Type = dsr4.Tables[0].Rows[k].ItemArray[0].ToString();
+                    //    if (dsr4.Tables[0].Rows[k].ItemArray[1].ToString() != "") data.TonesRS2014[j].GearList.Rack4.Category = dsr4.Tables[0].Rows[k].ItemArray[1].ToString();
+                    //    Dictionary<string, float> FS = new Dictionary<string, float>();
+                    //    strArrK = dsr4.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
+                    //    strArrV = dsr4.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
+                    //    for (int l = 0; l <= strArrK.Length - 1; l++) if (strArrK[l] != "" && strArrV[l] != "") FS.Add(strArrK[l], float.Parse(strArrV[l]));
+                    //    if (FS.Count != 0) data.TonesRS2014[j].GearList.Rack4.KnobValues = FS;
+                    //    if (dsr4.Tables[0].Rows[k].ItemArray[4].ToString() != "") data.TonesRS2014[j].GearList.Rack4.PedalKey = dsr4.Tables[0].Rows[k].ItemArray[4].ToString();
+                    //    if (dsr4.Tables[0].Rows[k].ItemArray[5].ToString() != "") data.TonesRS2014[j].GearList.Rack4.Skin = dsr4.Tables[0].Rows[k].ItemArray[5].ToString();
+                    //    if (dsr4.Tables[0].Rows[k].ItemArray[6].ToString() != "") data.TonesRS2014[j].GearList.Rack4.SkinIndex = float.Parse(dsr4.Tables[0].Rows[k].ItemArray[6].ToString());
+
+                    //}
+                }
                 //        for (int k = 0; k < nrc; k++)
                 //        {
                 //            files[i].AmpType = dsc.Tables[0].Rows[k].ItemArray[0].ToString();
@@ -981,7 +1411,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 //            files[i].GearList.Rack4.SkinIndex = float.Parse(dsr4.Tables[0].Rows[k].ItemArray[6].ToString());
 
                 //        }
-                    i++;
+                i++;
             }
             //Closing Connection
             //dax.Dispose();
@@ -1039,25 +1469,102 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void cmbx_Gear_Name_SelectedIndexChanged(object sender, EventArgs e)
         {
+
             var nrc = 0;
-            DataSet dsc = new DataSet(); dsc = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + txt_CDLC_ID.Text + " AND Gear_Name=\""+ cmbx_Gear_Name.Text+ "\";", "", cnb);
-            nrc = dsc.Tables[0].Rows.Count;
-            for (int k = 0; k < nrc; k++)
+            for (int k = cbx_Type.Items.Count - 1; k >= 0; --k) cbx_Type.Items.RemoveAt(k);
+            for (int k = chbx_Category.Items.Count - 1; k >= 0; --k) chbx_Category.Items.RemoveAt(k);
+            for (int k = chbx_KnobValues.Items.Count - 1; k >= 0; --k) chbx_KnobValues.Items.RemoveAt(k);
+            for (int k = chbx_KnobKeys.Items.Count - 1; k >= 0; --k) chbx_KnobKeys.Items.RemoveAt(k);
+            for (int k = chbx_PedalKey.Items.Count - 1; k >= 0; --k) chbx_PedalKey.Items.RemoveAt(k);
+            for (int k = chbx_Skin.Items.Count - 1; k >= 0; --k) chbx_Skin.Items.RemoveAt(k);
+            for (int k = chbx_SkinIndex.Items.Count - 1; k >= 0; --k) chbx_SkinIndex.Items.RemoveAt(k);
+
+
+            DataSet dsc = new DataSet(); dsc = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + txt_ID.Text + " AND Gear_Name=\"" + cbx_Gear_Name.Text + "\" ORDER BY Type DESC;", "", cnb);
+            if (dsc.Tables.Count > 0) nrc = dsc.Tables[0].Rows.Count;
+            //for (int k = 0; k < nrc; k++)
+            if (nrc > 0)
             {
-                chbx_Type.Text = dsc.Tables[0].Rows[k].ItemArray[0].ToString();
-                chbx_Category.Text = dsc.Tables[0].Rows[k].ItemArray[1].ToString();
-                //Dictionary<string, float> FG = new Dictionary<string, float>();
-                string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
-                strArrK = dsc.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
-                strArrV = dsc.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
-                //for (int l = 0; k <= strArrK.Length - 1; l++) chbx_KnobKeys.Add(strArrK[l]);
-                //for (int l = 0; k <= strArrV.Length - 1; l++) chbx_KnobValues.Add(strArrV[l]);
-                //chbx_KnobValues = FG;, float.Parse()
-                chbx_KnobKeys.Text= dsc.Tables[0].Rows[k].ItemArray[2].ToString();
-                chbx_KnobValues.Text = dsc.Tables[0].Rows[k].ItemArray[3].ToString();
-                chbx_PedalKey.Text = dsc.Tables[0].Rows[k].ItemArray[4].ToString();
-                chbx_Skin.Text = dsc.Tables[0].Rows[k].ItemArray[5].ToString();
-                chbx_SkinIndex.Text = dsc.Tables[0].Rows[k].ItemArray[6].ToString();
+                if (dsc.Tables[0].Rows[0].ItemArray[0].ToString() != "") { cbx_Type.Items.Add(dsc.Tables[0].Rows[0].ItemArray[0].ToString()); cbx_Type.SelectedIndex = 0; }
+                if (dsc.Tables[0].Rows[0].ItemArray[1].ToString() != "") { chbx_Category.Items.Add(dsc.Tables[0].Rows[0].ItemArray[1].ToString()); chbx_Category.SelectedIndex = 0; }
+                Dictionary<string, float> FG = new Dictionary<string, float>();
+                string strArrK = null; string strArrV = null;// char[] splitchar = { ';' };
+                strArrK = dsc.Tables[0].Rows[0].ItemArray[2].ToString();//.Split(splitchar);
+                strArrV = dsc.Tables[0].Rows[0].ItemArray[3].ToString();//.Split(splitchar);
+                //for (int l = 0; l <= strArrK.Length - 1; l++) if (strArrK[l] == "" || strArrV[l] == "") FG.Add(strArrK[l], float.Parse(strArrV[l]));
+                //if (strArrV != 0)
+                chbx_KnobValues.Items.Add(strArrV); chbx_KnobValues.SelectedIndex = 0;
+                //if (FG.strArrV != 0)
+                chbx_KnobKeys.Items.Add(strArrK); chbx_KnobKeys.SelectedIndex = 0;
+                if (dsc.Tables[0].Rows[0].ItemArray[4].ToString() != "") { chbx_PedalKey.Items.Add(dsc.Tables[0].Rows[0].ItemArray[4].ToString()); chbx_PedalKey.SelectedIndex = 0; }
+                if (dsc.Tables[0].Rows[0].ItemArray[5].ToString() != "") { chbx_Skin.Items.Add(dsc.Tables[0].Rows[0].ItemArray[5].ToString()); chbx_Skin.SelectedIndex = 0; }
+                if (dsc.Tables[0].Rows[0].ItemArray[6].ToString() != "") { chbx_SkinIndex.Items.Add(float.Parse(dsc.Tables[0].Rows[0].ItemArray[6].ToString())); chbx_SkinIndex.SelectedIndex = 0; }
+                //var nrc = 0;
+                //DataSet dsc = new DataSet(); dsc = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + txt_CDLC_ID.Text + " AND Gear_Name=\"" + cmbx_Gear_Name.Text + "\";", "", cnb);
+                //nrc = dsc.Tables[0].Rows.Count;
+                //for (int k = 0; k < nrc; k++)
+                //{
+                //    chbx_Type.Text = dsc.Tables[0].Rows[k].ItemArray[0].ToString();
+                //    chbx_Category.Text = dsc.Tables[0].Rows[k].ItemArray[1].ToString();
+                //    //Dictionary<string, float> FG = new Dictionary<string, float>();
+                //    string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
+                //    strArrK = dsc.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
+                //    strArrV = dsc.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
+                //    //for (int l = 0; k <= strArrK.Length - 1; l++) chbx_KnobKeys.Add(strArrK[l]);
+                //    //for (int l = 0; k <= strArrV.Length - 1; l++) chbx_KnobValues.Add(strArrV[l]);
+                //    //chbx_KnobValues = FG;, float.Parse()
+                //    chbx_KnobKeys.Text = dsc.Tables[0].Rows[k].ItemArray[2].ToString();
+                //    chbx_KnobValues.Text = dsc.Tables[0].Rows[k].ItemArray[3].ToString();
+                //    chbx_PedalKey.Text = dsc.Tables[0].Rows[k].ItemArray[4].ToString();
+                //    chbx_Skin.Text = dsc.Tables[0].Rows[k].ItemArray[5].ToString();
+                //    chbx_SkinIndex.Text = dsc.Tables[0].Rows[k].ItemArray[6].ToString();
+            }
+
+        }
+
+        private void btn_Arrangements_Click(object sender, EventArgs e)
+        {
+            if (DataGridView1.SelectedCells.Count > 0 && txt_ID.Text != "")
+            {
+                ArrangementsDB frm = new ArrangementsDB(DB_Path, txt_ID.Text, false, cnb);
+                frm.Show();
+            }
+            else MessageBox.Show("Chose an Arragement.");
+        }
+
+        private void cbx_Gear_Name_DropDown(object sender, EventArgs e)
+        {
+            //var tid = txt_ID.Text;
+            //if (chbx_AutoSave.Checked)
+            //{
+            //    var insertcmdd = "CDLC_ID, Gear_Name, Type, Category, KnobValuesValues, KnobValuesKeys, PedalKey, Skin, SkinIndex";
+            //    var insertvalues = ""; insertvalues += tid + ", \"" + cbx_Gear_Name.Text + "\", \"" + NullHandler(cbx_Type.Text);
+            //    insertvalues += "\", \"" + NullHandler(chbx_Category.Text);
+            //    //string vals = ""; string keys = ""; if (tn.GearList.Amp != null) foreach (KeyValuePair<string, float> glakv in tn.GearList.Amp.KnobValues) { vals += ";" + glakv.Value; keys += ";" + glakv.Key; }
+            //    insertvalues += "\", \"" + NullHandler(chbx_KnobValues.Text);
+            //    insertvalues += "\", \"" + NullHandler(chbx_KnobKeys.Text);
+            //    insertvalues += "\", \"" + NullHandler(chbx_PedalKey.Text);
+            //    insertvalues += "\", \"" + chbx_Skin.Text;
+            //    insertvalues += "\", \"" + NullHandler(chbx_SkinIndex.Text) + "\"";
+            //    InsertIntoDBwValues("Tones_GearList", insertcmdd, insertvalues, cnb, 0);
+            //}
+        }
+
+        private void cbx_Gear_Name_Enter(object sender, EventArgs e)
+        {
+            var tid = txt_ID.Text;
+            if (chbx_AutoSave.Checked)
+            {
+                var insertcmdd = "CDLC_ID, Gear_Name, Type, Category, KnobValuesValues, KnobValuesKeys, PedalKey, Skin, SkinIndex";
+                var insertvalues = ""; insertvalues += tid + ", \"" + cbx_Gear_Name.Text + "\", \"" + NullHandler(cbx_Type.Text);
+                insertvalues += "\", \"" + NullHandler(chbx_Category.Text);
+                //string vals = ""; string keys = ""; if (tn.GearList.Amp != null) foreach (KeyValuePair<string, float> glakv in tn.GearList.Amp.KnobValues) { vals += ";" + glakv.Value; keys += ";" + glakv.Key; }
+                insertvalues += "\", \"" + NullHandler(chbx_KnobValues.Text);
+                insertvalues += "\", \"" + NullHandler(chbx_KnobKeys.Text);
+                insertvalues += "\", \"" + NullHandler(chbx_PedalKey.Text);
+                insertvalues += "\", \"" + chbx_Skin.Text;
+                insertvalues += "\", \"" + NullHandler(chbx_SkinIndex.Text) + "\"";
+                InsertIntoDBwValues("Tones_GearList", insertcmdd, insertvalues, cnb, 0);
             }
         }
     }

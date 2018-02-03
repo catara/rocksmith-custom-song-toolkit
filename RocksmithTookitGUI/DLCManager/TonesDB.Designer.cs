@@ -31,6 +31,13 @@
             this.DataGridView1 = new System.Windows.Forms.DataGridView();
             this.Panel1 = new System.Windows.Forms.Panel();
             this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.btn_Arrangements = new System.Windows.Forms.Button();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.chbx_KnobKeys = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.cbx_Gear_Name = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
@@ -49,7 +56,7 @@
             this.chbx_PedalKey = new System.Windows.Forms.ComboBox();
             this.chbx_KnobValues = new System.Windows.Forms.ComboBox();
             this.chbx_Category = new System.Windows.Forms.ComboBox();
-            this.chbx_Type = new System.Windows.Forms.ComboBox();
+            this.cbx_Type = new System.Windows.Forms.ComboBox();
             this.chbx_Skin = new System.Windows.Forms.ComboBox();
             this.chbx_SkinIndex = new System.Windows.Forms.ComboBox();
             this.txt_Keyy = new RocksmithToolkitGUI.CueTextBox();
@@ -61,10 +68,6 @@
             this.button3 = new System.Windows.Forms.Button();
             this.chbx_Broken = new System.Windows.Forms.CheckBox();
             this.CheckBox1 = new System.Windows.Forms.CheckBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.cmbx_Gear_Name = new System.Windows.Forms.ComboBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.chbx_KnobKeys = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridView1)).BeginInit();
             this.Panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txt_Volume)).BeginInit();
@@ -92,11 +95,14 @@
             // 
             // Panel1
             // 
+            this.Panel1.Controls.Add(this.label12);
+            this.Panel1.Controls.Add(this.label13);
+            this.Panel1.Controls.Add(this.btn_Arrangements);
+            this.Panel1.Controls.Add(this.label10);
             this.Panel1.Controls.Add(this.label8);
             this.Panel1.Controls.Add(this.chbx_KnobKeys);
             this.Panel1.Controls.Add(this.label7);
-            this.Panel1.Controls.Add(this.cmbx_Gear_Name);
-            this.Panel1.Controls.Add(this.label12);
+            this.Panel1.Controls.Add(this.cbx_Gear_Name);
             this.Panel1.Controls.Add(this.label6);
             this.Panel1.Controls.Add(this.label9);
             this.Panel1.Controls.Add(this.label11);
@@ -115,7 +121,7 @@
             this.Panel1.Controls.Add(this.chbx_PedalKey);
             this.Panel1.Controls.Add(this.chbx_KnobValues);
             this.Panel1.Controls.Add(this.chbx_Category);
-            this.Panel1.Controls.Add(this.chbx_Type);
+            this.Panel1.Controls.Add(this.cbx_Type);
             this.Panel1.Controls.Add(this.chbx_Skin);
             this.Panel1.Controls.Add(this.chbx_SkinIndex);
             this.Panel1.Controls.Add(this.txt_Keyy);
@@ -131,19 +137,104 @@
             this.Panel1.Location = new System.Drawing.Point(0, 299);
             this.Panel1.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.Panel1.Name = "Panel1";
-            this.Panel1.Size = new System.Drawing.Size(1979, 219);
+            this.Panel1.Size = new System.Drawing.Size(1984, 219);
             this.Panel1.TabIndex = 41;
             // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.ForeColor = System.Drawing.Color.DarkRed;
-            this.label12.Location = new System.Drawing.Point(9, 193);
+            this.label12.Location = new System.Drawing.Point(138, 184);
             this.label12.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(506, 25);
-            this.label12.TabIndex = 348;
-            this.label12.Text = "Information ONLY used @Individual MainDB repack";
+            this.label12.Size = new System.Drawing.Size(95, 25);
+            this.label12.TabIndex = 355;
+            this.label12.Text = "CDLC ID";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(5, 182);
+            this.label13.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(32, 25);
+            this.label13.TabIndex = 354;
+            this.label13.Text = "ID";
+            // 
+            // btn_Arrangements
+            // 
+            this.btn_Arrangements.Location = new System.Drawing.Point(5, 125);
+            this.btn_Arrangements.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btn_Arrangements.Name = "btn_Arrangements";
+            this.btn_Arrangements.Size = new System.Drawing.Size(240, 50);
+            this.btn_Arrangements.TabIndex = 42;
+            this.btn_Arrangements.Text = "Open Arrangements";
+            this.btn_Arrangements.UseVisualStyleBackColor = true;
+            this.btn_Arrangements.Click += new System.EventHandler(this.btn_Arrangements_Click);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(752, 6);
+            this.label10.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(121, 25);
+            this.label10.TabIndex = 353;
+            this.label10.Text = "Gear Name";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(1186, 173);
+            this.label8.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(110, 25);
+            this.label8.TabIndex = 352;
+            this.label8.Text = "KnobKeys";
+            // 
+            // chbx_KnobKeys
+            // 
+            this.chbx_KnobKeys.FormattingEnabled = true;
+            this.chbx_KnobKeys.Location = new System.Drawing.Point(1389, 165);
+            this.chbx_KnobKeys.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
+            this.chbx_KnobKeys.Name = "chbx_KnobKeys";
+            this.chbx_KnobKeys.Size = new System.Drawing.Size(239, 33);
+            this.chbx_KnobKeys.TabIndex = 351;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(753, 4);
+            this.label7.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(0, 25);
+            this.label7.TabIndex = 350;
+            // 
+            // cbx_Gear_Name
+            // 
+            this.cbx_Gear_Name.FormattingEnabled = true;
+            this.cbx_Gear_Name.Items.AddRange(new object[] {
+            "Amp",
+            "Cabinet",
+            "Prepedal1",
+            "Prepedal2",
+            "Prepedal3",
+            "Prepedal4",
+            "PostPedal1",
+            "PostPedal2",
+            "PostPedal3",
+            "PostPedal4",
+            "Rack1",
+            "Rack2",
+            "Rack3",
+            "Rack4"});
+            this.cbx_Gear_Name.Location = new System.Drawing.Point(878, 3);
+            this.cbx_Gear_Name.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
+            this.cbx_Gear_Name.Name = "cbx_Gear_Name";
+            this.cbx_Gear_Name.Size = new System.Drawing.Size(286, 33);
+            this.cbx_Gear_Name.TabIndex = 349;
+            this.cbx_Gear_Name.DropDown += new System.EventHandler(this.cbx_Gear_Name_DropDown);
+            this.cbx_Gear_Name.SelectedIndexChanged += new System.EventHandler(this.cmbx_Gear_Name_SelectedIndexChanged);
+            this.cbx_Gear_Name.Enter += new System.EventHandler(this.cbx_Gear_Name_Enter);
             // 
             // label6
             // 
@@ -168,7 +259,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(317, 172);
+            this.label11.Location = new System.Drawing.Point(327, 83);
             this.label11.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(126, 25);
@@ -187,7 +278,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(743, 172);
+            this.label5.Location = new System.Drawing.Point(742, 150);
             this.label5.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(104, 25);
@@ -207,7 +298,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(743, 132);
+            this.label2.Location = new System.Drawing.Point(742, 110);
             this.label2.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(99, 25);
@@ -217,7 +308,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(743, 96);
+            this.label1.Location = new System.Drawing.Point(742, 67);
             this.label1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(60, 25);
@@ -280,10 +371,10 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(5, 81);
+            this.button1.Location = new System.Drawing.Point(5, 76);
             this.button1.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(240, 69);
+            this.button1.Size = new System.Drawing.Size(240, 46);
             this.button1.TabIndex = 274;
             this.button1.Text = "Open File";
             this.button1.UseVisualStyleBackColor = true;
@@ -316,7 +407,7 @@
             // chbx_PedalKey
             // 
             this.chbx_PedalKey.FormattingEnabled = true;
-            this.chbx_PedalKey.Location = new System.Drawing.Point(916, 167);
+            this.chbx_PedalKey.Location = new System.Drawing.Point(915, 145);
             this.chbx_PedalKey.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.chbx_PedalKey.Name = "chbx_PedalKey";
             this.chbx_PedalKey.Size = new System.Drawing.Size(239, 33);
@@ -336,22 +427,22 @@
             // chbx_Category
             // 
             this.chbx_Category.FormattingEnabled = true;
-            this.chbx_Category.Location = new System.Drawing.Point(916, 126);
+            this.chbx_Category.Location = new System.Drawing.Point(915, 104);
             this.chbx_Category.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.chbx_Category.Name = "chbx_Category";
             this.chbx_Category.Size = new System.Drawing.Size(239, 33);
             this.chbx_Category.TabIndex = 136;
             this.chbx_Category.SelectedIndexChanged += new System.EventHandler(this.chbx_AmpCategory_SelectedIndexChanged);
             // 
-            // chbx_Type
+            // cbx_Type
             // 
-            this.chbx_Type.FormattingEnabled = true;
-            this.chbx_Type.Location = new System.Drawing.Point(916, 86);
-            this.chbx_Type.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
-            this.chbx_Type.Name = "chbx_Type";
-            this.chbx_Type.Size = new System.Drawing.Size(239, 33);
-            this.chbx_Type.TabIndex = 135;
-            this.chbx_Type.SelectedIndexChanged += new System.EventHandler(this.chbx_AmpType_SelectedIndexChanged);
+            this.cbx_Type.FormattingEnabled = true;
+            this.cbx_Type.Location = new System.Drawing.Point(915, 64);
+            this.cbx_Type.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
+            this.cbx_Type.Name = "cbx_Type";
+            this.cbx_Type.Size = new System.Drawing.Size(239, 33);
+            this.cbx_Type.TabIndex = 135;
+            this.cbx_Type.SelectedIndexChanged += new System.EventHandler(this.chbx_AmpType_SelectedIndexChanged);
             // 
             // chbx_Skin
             // 
@@ -400,7 +491,7 @@
             this.txt_ID.Enabled = false;
             this.txt_ID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_ID.ForeColor = System.Drawing.Color.Gray;
-            this.txt_ID.Location = new System.Drawing.Point(14, 157);
+            this.txt_ID.Location = new System.Drawing.Point(41, 180);
             this.txt_ID.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.txt_ID.Name = "txt_ID";
             this.txt_ID.Size = new System.Drawing.Size(87, 32);
@@ -412,7 +503,7 @@
             this.txt_CDLC_ID.Enabled = false;
             this.txt_CDLC_ID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_CDLC_ID.ForeColor = System.Drawing.Color.Gray;
-            this.txt_CDLC_ID.Location = new System.Drawing.Point(111, 155);
+            this.txt_CDLC_ID.Location = new System.Drawing.Point(236, 180);
             this.txt_CDLC_ID.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.txt_CDLC_ID.Name = "txt_CDLC_ID";
             this.txt_CDLC_ID.Size = new System.Drawing.Size(108, 32);
@@ -447,7 +538,7 @@
             this.button3.Location = new System.Drawing.Point(5, 10);
             this.button3.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(240, 69);
+            this.button3.Size = new System.Drawing.Size(240, 63);
             this.button3.TabIndex = 122;
             this.button3.Text = "Open DB in M$ Access";
             this.button3.UseVisualStyleBackColor = true;
@@ -478,65 +569,13 @@
             this.CheckBox1.Text = "Show only MessageBox";
             this.CheckBox1.UseVisualStyleBackColor = true;
             // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(753, 4);
-            this.label7.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(640, 25);
-            this.label7.TabIndex = 350;
-            this.label7.Text = "Gear Name (Amp, Cabinet, PrePedal1-4, PostPedal 1-4, Rack1-4)";
-            // 
-            // cmbx_Gear_Name
-            // 
-            this.cmbx_Gear_Name.FormattingEnabled = true;
-            this.cmbx_Gear_Name.Items.AddRange(new object[] {
-            "Amp",
-            "Cabinet",
-            "Prepedal1",
-            "Prepedal2",
-            "Prepedal3",
-            "Prepedal4",
-            "PostPedal1",
-            "PostPedal2",
-            "PostPedal3",
-            "PostPedal4",
-            "Rack1",
-            "Rack2",
-            "Rack3",
-            "Rack4"});
-            this.cmbx_Gear_Name.Location = new System.Drawing.Point(758, 40);
-            this.cmbx_Gear_Name.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
-            this.cmbx_Gear_Name.Name = "cmbx_Gear_Name";
-            this.cmbx_Gear_Name.Size = new System.Drawing.Size(397, 33);
-            this.cmbx_Gear_Name.TabIndex = 349;
-            this.cmbx_Gear_Name.SelectedIndexChanged += new System.EventHandler(this.cmbx_Gear_Name_SelectedIndexChanged);
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(1186, 173);
-            this.label8.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(110, 25);
-            this.label8.TabIndex = 352;
-            this.label8.Text = "KnobKeys";
-            // 
-            // chbx_KnobKeys
-            // 
-            this.chbx_KnobKeys.FormattingEnabled = true;
-            this.chbx_KnobKeys.Location = new System.Drawing.Point(1389, 165);
-            this.chbx_KnobKeys.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
-            this.chbx_KnobKeys.Name = "chbx_KnobKeys";
-            this.chbx_KnobKeys.Size = new System.Drawing.Size(239, 33);
-            this.chbx_KnobKeys.TabIndex = 351;
-            // 
             // TonesDB
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1979, 518);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(192F, 192F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.AutoScroll = true;
+            this.AutoSize = true;
+            this.ClientSize = new System.Drawing.Size(1984, 518);
             this.Controls.Add(this.Panel1);
             this.Controls.Add(this.DataGridView1);
             this.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
@@ -567,7 +606,7 @@
         private System.Windows.Forms.ComboBox chbx_PedalKey;
         private System.Windows.Forms.ComboBox chbx_KnobValues;
         private System.Windows.Forms.ComboBox chbx_Category;
-        private System.Windows.Forms.ComboBox chbx_Type;
+        private System.Windows.Forms.ComboBox cbx_Type;
         private System.Windows.Forms.ComboBox chbx_Skin;
         private System.Windows.Forms.ComboBox chbx_SkinIndex;
         private CueTextBox txt_lastConversionDateTime;
@@ -585,10 +624,13 @@
         private System.Windows.Forms.RichTextBox txt_Description;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.ComboBox cmbx_Gear_Name;
+        private System.Windows.Forms.ComboBox cbx_Gear_Name;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ComboBox chbx_KnobKeys;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Button btn_Arrangements;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label13;
     }
 }

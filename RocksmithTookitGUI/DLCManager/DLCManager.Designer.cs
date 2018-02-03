@@ -454,6 +454,12 @@ namespace RocksmithToolkitGUI.DLCManager
             "83. Import All suspicious Duplicates as Duplicates (Ignore)",
             "84. When checking Songs validate wem bitrate (10% wem conversion raises the bitra" +
                 "te)",
+            "85. Apply standard naming to all duplicates",
+            "86. Keep XML Manipulations",
+            "87.",
+            "88.",
+            "89.",
+            "90.",
             "beer"});
             this.chbx_Additional_Manipulations.Location = new System.Drawing.Point(16, 682);
             this.chbx_Additional_Manipulations.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);

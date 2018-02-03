@@ -87,7 +87,6 @@
 [ ] why do i have duplciates on the ps3
 [ ] multiple repacks cannt happen
 [ ] progress bar on possible duplicate import is too short
-[ ] populate new tone fields
 [ ] cannot find sick sick sic (override)
 [ ] audioslave sections missing maybe cause its an original and i used my own logic to strip the DD
 [ ] usa peaches long naming fails at packing (shortes folder the random id)
@@ -144,12 +143,10 @@
 [-] small feature: when opening MainDB and detecting directory check runs, if next directory exists (give a change to empty the db then if possible)
 [x] clean up the saving settings logic
     [ ] at open it gets records for 3 times
-[ ] finish arrangement (demo with the hives overdrive all the time :) )
 [ ] delete does not delete the actual record from repack_audittrail
 [ ] check if there are any platforms None
 [ ] fix audio add cancel
 [ ] 4483
-[ ] fix tones Sceeen
 [ ] progress bar having it overelayed text overlayered bug error
 [ ] add some free space statistics
 [ ] save old db when changing to new db
@@ -161,77 +158,38 @@
 [ ] clean pack audio ...copy path folder instad of full path
 [ ] when autom deciding something is not a duplicate dont continue maybe
 [ ] MAke Sure CHANGIN D THE AUDIO/PREVIEW DOES NOT deletes the old info useful for Duplciation comparison
-where is duplciate reason, add duplciate number
+where is duplciate reason, add duplicate number
 L:\Temp\Arctic-Monkeys_Perhaps-Vampires-Is-A-Bit-Strong-But_v2_p.psarc path too long
-add import as diff to dupli manag window
+add import as diff to dupli manag window . if so no alternate option is selected no alternate id, DLCIDs are made unique songname, 
 fix official set alternate 4392
+read volume independently of regional settings
+compare/dupli manag 2-x selected songs
+whn copying maybe consider updating any existing packed &copy link
 
 ## WiP:
 (next release)
-[x] try db constant connection
-[x] unify pack function
-[x] add missin tones and arrangement parameters
-[x] make mass pack also use db values
-[x] log should also update progressbar
-[x] think multithreading the decompression before import (now done at each import file Processing procedure)
-[x] check why spofity fails after 100 requests
-[x] dont let spotify crash after 100 requests and failure notice
-[x] ignore and del 4k/no psarc files invalid wil/should be added by nmew validation
-[x] alternate 0 improve
-	[+] with or without u still doesnt have the right alternate no when importing vs an existing song= a2....maybe OK :)
-	[ ] alt 1 ahead of a.
-[x] maybe fix audio should not be async (ok)
-[x] copy imported files
-[x] george babker section standardization insert
-[x] preview still generated..why (improvements to reading the profiles when changin db)
-[x] first add preview then audio fix
-[x] some import files are not read by the valid and hash background workers
-[x] 72 should be 37 (no)
-[x] take out archive from delete; add note of its use
-[x] check if preview &downstream are generated and flag updated see u2 boy twilight where has preview flag is off
-[x] archiv, logs, covere is being deleted
-[x] tones are not being updated on duplicate update? (just replaced)
-[x] delete arrangements and tones at overrite
-[x] check log errors regarding file delete 1045 genericfunctions
-[x] add info on log why preview was generated
-[x] think to move validations outside
-[x] vocalas compare xml not json
-[x] color platform if diff at duplciatiopn check
-[x] change order of fix all audio issues opreview first then bitrate
-[x] improve pack logging
-[x] dont let pack crash ... and log
-[x] wtf happened w packing log...not all imported..
-[x] no packe ones
-[x] go back to pack get track
-[x] check hash checks audio&preview
-[x]fix                 //Microsoft.Office.Interop.Access.Application app = new Microsoft.Office.Interop.Access.Application();
-[x] no old displayed
-[x] take slash double on repacked
-[x] no bdd
-[x] monalisa no sound
-[x] volcas ice ice baby
-[x] george barker
-
 
 ## done:
 (this release)
-
-
-- diff between master and branch
-DLCManager folder
-.xml
-mainform.cs
-mainfor.designer
-
-### Dev Tips:
-+ Toolkit version flag does not sync to&from Github: Run RunMeFirst.bat
-+ activate debug: set RocksmithToolkitGUI Folder as Start-up project
-+ When having GitHub conficting issue
- https://help.github.com/articles/resolving-a-merge-conflict-from-the-command-line/
- git status
- edit in notepad 
- git add xxx.xxx
- git commit
+[x] added a delete/restorefrombackup the wwise template when conversion fails
+[x] made covers, preview or main audio red when hash is the same (dupli management)
+[x] added Not a duplicate button (dupli management)
+[x] added add stadard (dupli management)
+[x] fixed import tonne issue
+[x] autom add default diff to duplic management
+[x] fixing add single instruments removes the letter from the song title
+[x] make sure on duplciate is marked if we indicate it's not alternate in Duplicate managemet window
+[x] implement Amps/Cabs in the tones Sceeen sinc enow using new table
+[x] populate new tone fields
+[ ] finish arrangement (demo with the hives overdrive all the time :) )
+[x] acdc back in black pack (take / and . from all dlcs (issues at pc compress)
+[x] fixed a pack issue
+[x] improved the duplicate DLCName detection logic
+[x] added dlcid as part of FolderName
+[x] added option not to delete edited xmls (also keeps orig file in place)
+[x] fixed get track issue
+[x] added check standardisation on ggl
+[x] improved (hopefuly) save standardizations
 
 # Version History(release date):
 	0.1(12.08.2014) prototype, 
@@ -259,43 +217,7 @@ mainfor.designer
 	0.4 (21.11.2016) Major improvements	and features
 	0.5 (15.03.2017) Implement a logic to properly read DLCManager manipulated DLCs	
 	0.6 (28.10.2017) Modify Lyrics, get tool ready for multithreading, 
-	wip: 0.7.1 (03.06.2017) (90%) Remove getlastconversiondate from Duplicates as already coming from the arrangements table
-	wip: 0.7.2 (20.06.2017) (20%) has_section flag(to be tested with a song missing sections); 
-	wip: 0.8.1 (31.07.2017) (10%) HTML&Excel exports
-	tbr: 0.8.2 move Import DB to Main.DB or at least use an official data source as DB source to also be able to edit from the grid
-	tbr: 0.8.3 ?move Access code to project? or from hardcoded to views	
-	wip: 0.8.4 (03.10.2017) (10%) use parameterized SQL everywhere (&/ integrate template DB into project or a SQL DB)
-
-
-
-		# Date: 12.09.2017
-		# Document Name: Rocksmith DLC Management tool README
-						(fork of rocksmith-custom-song-toolkit)
-		# Document purpose: To describe the functionailities and the way to change, the NEW tab that enable MASS Manipulation of Rocksmith DLC Library
-							(DLC folder; including customs(CDLC), DLCs and songs embeded in the ready to ship version of Rocksmith 2014) 
-		# Legend:
-		- to be implemented
-		+ done
-		_ future release
-		-- WIP
-		{} old unimplemented feature
-
-# IDE-Setup <old>
-1. Download Git Client and Visual Studio 2013 Desktop Edition
-2. Update Visual Studio, SQL, download HELP, and FORM-Controls-Object reference
-3.0 Create a new Folder DLCManager
-3.1 Add a new Item README.txt
-3.1 Create a new Tab and a new Menu Item
-3.2. Add User Control
-3.3. Add New User Control &paste/create yr own assets(buttons..textboxes&logic)
-3.4. Rebuild and then Add the tab to the MainFormControl from the Toolbox DLCManager object
-3.5. Comment/fix regression Git issues
-6. --Add new libraries (include)
-7. --Add controls to activate User Controls
-8. --Add Interop.Excel REference (Tools-AddReference-Extensions-Microsoft.Office.Interop.Excel)
-9. Activate debug by trying to debug?! &aet GUI folder as startup (right click)
-10. copy missing dlls from...a prev version !?
-
+	0.7 () Code review
 # Implementation Tracking for the Main Features:
 		+1. Ability to Generate a Database with all DLC
 			Design description:
@@ -353,6 +275,61 @@ mainfor.designer
 			+ Show duplicates and solve conflicts
 			+ Audio Preview full track&preview track
 			+ Remove DD (arragement dependent..e.g. only bass)
+
+
+- diff between master and branch
+DLCManager folder
+.xml
+mainform.cs
+mainfor.designer
+
+### Dev Tips:
++ Toolkit version flag does not sync to&from Github: Run RunMeFirst.bat
++ activate debug: set RocksmithToolkitGUI Folder as Start-up project
++ When having GitHub conficting issue
+ https://help.github.com/articles/resolving-a-merge-conflict-from-the-command-line/
+ git status
+ edit in notepad 
+ git add xxx.xxx
+ git commit
+
+ ### old goals
+	wip: 0.7.1 (03.06.2017) (90%) Remove getlastconversiondate from Duplicates as already coming from the arrangements table
+	wip: 0.7.2 (20.06.2017) (20%) has_section flag(to be tested with a song missing sections); 
+	wip: 0.8.1 (31.07.2017) (10%) HTML&Excel exports
+	tbr: 0.8.2 move Import DB to Main.DB or at least use an official data source as DB source to also be able to edit from the grid
+	tbr: 0.8.3 ?move Access code to project? or from hardcoded to views	
+	wip: 0.8.4 (03.10.2017) (10%) use parameterized SQL everywhere (&/ integrate template DB into project or a SQL DB)
+
+
+
+		# Date: 12.01.2018
+		# Document Name: Rocksmith DLC Management tool README
+						(fork of rocksmith-custom-song-toolkit)
+		# Document purpose: To describe the functionailities and the way to change, the NEW tab that enable MASS Manipulation of Rocksmith DLC Library
+							(DLC folder; including customs(CDLC), DLCs and songs embeded in the ready to ship version of Rocksmith 2014) 
+		# Legend:
+		- to be implemented
+		+ done
+		_ future release
+		-- WIP
+		{} old unimplemented feature
+
+# IDE-Setup <old>
+1. Download Git Client and Visual Studio 2013 Desktop Edition
+2. Update Visual Studio, SQL, download HELP, and FORM-Controls-Object reference
+3.0 Create a new Folder DLCManager
+3.1 Add a new Item README.txt
+3.1 Create a new Tab and a new Menu Item
+3.2. Add User Control
+3.3. Add New User Control &paste/create yr own assets(buttons..textboxes&logic)
+3.4. Rebuild and then Add the tab to the MainFormControl from the Toolbox DLCManager object
+3.5. Comment/fix regression Git issues
+6. --Add new libraries (include)
+7. --Add controls to activate User Controls
+8. --Add Interop.Excel REference (Tools-AddReference-Extensions-Microsoft.Office.Interop.Excel)
+9. Activate debug by trying to debug?! &aet GUI folder as startup (right click)
+10. copy missing dlls from...a prev version !?
 
 ## Disclaimer:
 *This program is maintained by catara, and it's a fork of the Rocksmith Custom Song Project(http://www.rscustom.net/), and is not affiliated with Ubisoft®

@@ -33,7 +33,7 @@ namespace RocksmithToolkitGUI.DLCManager
         /// </summary>
         private void InitializeComponent()
         {
-            this.btn_Delete_All = new System.Windows.Forms.DataGridView();
+            this.databox = new System.Windows.Forms.DataGridView();
             this.btn_ChangeCover = new System.Windows.Forms.Button();
             this.picbx_AlbumArtPath = new System.Windows.Forms.PictureBox();
             this.chbx_Save_All = new System.Windows.Forms.CheckBox();
@@ -68,30 +68,31 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_CorrectWithSpotify = new System.Windows.Forms.Button();
             this.btn_DeleteAll = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.btn_Delete_All)).BeginInit();
+            this.btn_CheckOnline = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.databox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPath)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pxbx_SavedSpotify)).BeginInit();
             this.SuspendLayout();
             // 
-            // btn_Delete_All
+            // databox
             // 
-            this.btn_Delete_All.AllowUserToAddRows = false;
-            this.btn_Delete_All.AllowUserToDeleteRows = false;
-            this.btn_Delete_All.AllowUserToOrderColumns = true;
-            this.btn_Delete_All.AllowUserToResizeRows = false;
-            this.btn_Delete_All.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllHeaders;
-            this.btn_Delete_All.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.btn_Delete_All.Location = new System.Drawing.Point(0, 0);
-            this.btn_Delete_All.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btn_Delete_All.MultiSelect = false;
-            this.btn_Delete_All.Name = "btn_Delete_All";
-            this.btn_Delete_All.RowHeadersWidth = 61;
-            this.btn_Delete_All.Size = new System.Drawing.Size(2090, 1046);
-            this.btn_Delete_All.TabIndex = 38;
-            this.btn_Delete_All.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick_1);
-            this.btn_Delete_All.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick_1);
-            this.btn_Delete_All.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick_1);
-            this.btn_Delete_All.CellLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellLeave);
+            this.databox.AllowUserToAddRows = false;
+            this.databox.AllowUserToDeleteRows = false;
+            this.databox.AllowUserToOrderColumns = true;
+            this.databox.AllowUserToResizeRows = false;
+            this.databox.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllHeaders;
+            this.databox.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.databox.Location = new System.Drawing.Point(0, 0);
+            this.databox.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.databox.MultiSelect = false;
+            this.databox.Name = "databox";
+            this.databox.RowHeadersWidth = 61;
+            this.databox.Size = new System.Drawing.Size(2090, 1046);
+            this.databox.TabIndex = 38;
+            this.databox.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick_1);
+            this.databox.CellLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellLeave);
+            this.databox.RowLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.databox_RowLeave);
+            this.databox.SelectionChanged += new System.EventHandler(this.databox_SelectionChanged);
             // 
             // btn_ChangeCover
             // 
@@ -408,11 +409,11 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // pB_ReadDLCs
             // 
-            this.pB_ReadDLCs.Location = new System.Drawing.Point(2100, 837);
+            this.pB_ReadDLCs.Location = new System.Drawing.Point(2102, 837);
             this.pB_ReadDLCs.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.pB_ReadDLCs.Maximum = 10000;
             this.pB_ReadDLCs.Name = "pB_ReadDLCs";
-            this.pB_ReadDLCs.Size = new System.Drawing.Size(592, 38);
+            this.pB_ReadDLCs.Size = new System.Drawing.Size(590, 38);
             this.pB_ReadDLCs.Step = 1;
             this.pB_ReadDLCs.TabIndex = 393;
             // 
@@ -428,7 +429,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(2164, 660);
+            this.label1.Location = new System.Drawing.Point(2164, 659);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(198, 33);
@@ -446,10 +447,10 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // btn_CorrectWithSpotify
             // 
-            this.btn_CorrectWithSpotify.Location = new System.Drawing.Point(2098, 788);
+            this.btn_CorrectWithSpotify.Location = new System.Drawing.Point(2100, 788);
             this.btn_CorrectWithSpotify.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btn_CorrectWithSpotify.Name = "btn_CorrectWithSpotify";
-            this.btn_CorrectWithSpotify.Size = new System.Drawing.Size(250, 40);
+            this.btn_CorrectWithSpotify.Size = new System.Drawing.Size(248, 40);
             this.btn_CorrectWithSpotify.TabIndex = 397;
             this.btn_CorrectWithSpotify.Text = "Correct with Spotify Cover";
             this.btn_CorrectWithSpotify.UseVisualStyleBackColor = true;
@@ -478,12 +479,24 @@ namespace RocksmithToolkitGUI.DLCManager
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click_5);
             // 
+            // btn_CheckOnline
+            // 
+            this.btn_CheckOnline.Location = new System.Drawing.Point(2206, 134);
+            this.btn_CheckOnline.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btn_CheckOnline.Name = "btn_CheckOnline";
+            this.btn_CheckOnline.Size = new System.Drawing.Size(210, 50);
+            this.btn_CheckOnline.TabIndex = 400;
+            this.btn_CheckOnline.Text = "Check on GGL";
+            this.btn_CheckOnline.UseVisualStyleBackColor = true;
+            this.btn_CheckOnline.Click += new System.EventHandler(this.btn_CheckOnline_Click);
+            // 
             // Standardization
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(2698, 1054);
+            this.Controls.Add(this.btn_CheckOnline);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btn_DeleteAll);
             this.Controls.Add(this.btn_CorrectWithSpotify);
@@ -512,7 +525,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.Controls.Add(this.txt_Artist);
             this.Controls.Add(this.txt_AlbumArtPath);
             this.Controls.Add(this.btn_ChangeCover);
-            this.Controls.Add(this.btn_Delete_All);
+            this.Controls.Add(this.databox);
             this.Controls.Add(this.chbx_Save_All);
             this.Controls.Add(this.picbx_AlbumArtPath);
             this.Controls.Add(this.button8);
@@ -523,7 +536,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.Name = "Standardization";
             this.Text = "Standardization";
             this.Load += new System.EventHandler(this.Standardization_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.btn_Delete_All)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.databox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPath)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pxbx_SavedSpotify)).EndInit();
             this.ResumeLayout(false);
@@ -533,7 +546,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         #endregion
 
-        internal System.Windows.Forms.DataGridView btn_Delete_All;
+        internal System.Windows.Forms.DataGridView databox;
         private System.Windows.Forms.CheckBox chbx_Save_All;
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Button button3;
@@ -615,5 +628,6 @@ namespace RocksmithToolkitGUI.DLCManager
         private System.Windows.Forms.Button btn_CorrectWithSpotify;
         private System.Windows.Forms.Button btn_DeleteAll;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btn_CheckOnline;
     }
 }

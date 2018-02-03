@@ -43,7 +43,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private BindingSource Main = new BindingSource();
         private readonly string MESSAGEBOX_CAPTION = "StandardizationDB";
-        public bool SaveOK = false;
+        public bool SaveOK = true;
         //bcapi
         public string DB_Path = "";
         public string TempPath = "";
@@ -55,8 +55,8 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void Standardization_Load(object sender, EventArgs e)
         {
-            Populate(ref btn_Delete_All, ref Main);
-            btn_Delete_All.EditingControlShowing += DataGridView1_EditingControlShowing;
+            Populate(ref databox, ref Main);
+            databox.EditingControlShowing += DataGridView1_EditingControlShowing;
             chbx_AutoSave.Checked = ConfigRepository.Instance()["dlcm_Autosave"] == "Yes" ? true : false;
         }
 
@@ -88,36 +88,38 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void DataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
-            var line = -1;
-            line = btn_Delete_All.SelectedCells[0].RowIndex;
-            if (line > -1) ChangeRow();
+            //var line = -1;
+            //line = databox.SelectedCells[0].RowIndex;
+            //if (line > -1) ChangeRow();
         }
 
         public void ChangeRow()
         {
             int i;
-            if (btn_Delete_All.SelectedCells.Count > 0 && btn_Delete_All.SelectedCells[0].ToString() != "")
+            if (databox.SelectedCells.Count > 0 && databox.SelectedCells[0].ToString() != "")
             {
-                i = btn_Delete_All.SelectedCells[0].RowIndex;
-                txt_ID.Text = btn_Delete_All.Rows[i].Cells[0].Value.ToString();
-                txt_Artist.Text = btn_Delete_All.Rows[i].Cells[2].Value.ToString();
-                txt_Artist_Correction.Text = btn_Delete_All.Rows[i].Cells[3].Value.ToString();
-                txt_Album.Text = btn_Delete_All.Rows[i].Cells[4].Value.ToString();
-                txt_Album_Correction.Text = btn_Delete_All.Rows[i].Cells[5].Value.ToString();
-                txt_AlbumArt_Correction.Text = btn_Delete_All.Rows[i].Cells[6].Value.ToString();
-                txt_Comments.Text = btn_Delete_All.Rows[i].Cells[7].Value.ToString();
-                txt_Artist_Short.Text = btn_Delete_All.Rows[i].Cells[8].Value.ToString();
-                txt_Album_Short.Text = btn_Delete_All.Rows[i].Cells[9].Value.ToString();
-                txt_Year_Correction.Text = btn_Delete_All.Rows[i].Cells[10].Value.ToString();
-                if( btn_Delete_All.Rows[i].Cells[15].Value.ToString()=="Yes") chbx_Default_Cover.Checked= true;
+                i = databox.SelectedCells[0].RowIndex;
+                txt_ID.Text = databox.Rows[i].Cells[0].Value.ToString();
+                txt_Artist.Text = databox.Rows[i].Cells[2].Value.ToString();
+                txt_Artist_Correction.Text = databox.Rows[i].Cells[3].Value.ToString();
+                txt_Album.Text = databox.Rows[i].Cells[4].Value.ToString();
+                txt_Album_Correction.Text = databox.Rows[i].Cells[5].Value.ToString();
+                txt_AlbumArt_Correction.Text = databox.Rows[i].Cells[6].Value.ToString();
+                txt_Comments.Text = databox.Rows[i].Cells[7].Value.ToString();
+                txt_Artist_Short.Text = databox.Rows[i].Cells[8].Value.ToString();
+                txt_Album_Short.Text = databox.Rows[i].Cells[9].Value.ToString();
+                txt_Year_Correction.Text = databox.Rows[i].Cells[10].Value.ToString();
+                if( databox.Rows[i].Cells[15].Value.ToString()=="Yes") chbx_Default_Cover.Checked= true;
                 else chbx_Default_Cover.Checked= false;
                 if (txt_AlbumArt_Correction.Text != "") picbx_AlbumArtPath.ImageLocation = txt_AlbumArt_Correction.Text.Replace(".dds", ".png");
-                if (btn_Delete_All.Rows[i].Cells[14].Value != null) if (btn_Delete_All.Rows[i].Cells[14].Value.ToString() != "") pxbx_SavedSpotify.ImageLocation = btn_Delete_All.Rows[i].Cells[14].Value.ToString();
+                if (databox.Rows[i].Cells[14].Value != null) if (databox.Rows[i].Cells[14].Value.ToString() != "") pxbx_SavedSpotify.ImageLocation = databox.Rows[i].Cells[14].Value.ToString();
                     else pxbx_SavedSpotify.ImageLocation = null;
                 //if (DataGridView1.Rows[i].Cells["Default_Cover"].Value.ToString() == "Yes") chbx_Default_Cover.Checked = true;
                 //    else chbx_Default_Cover.Checked = false;
-                if (chbx_AutoSave.Checked) SaveOK = true;
-                else SaveOK = false;
+                //if (chbx_AutoSave.Checked) SaveOK = true;
+                //else SaveOK = false;
+                
+                //else SaveOK = false;
             }
         }
 
@@ -130,6 +132,8 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             bs.DataSource = null;
             dssx.Dispose();
+            //lbl_NoRec.Text = " songs.";
+            //bs.DataSource = null;
             //try
             //{
             //using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
@@ -183,50 +187,58 @@ namespace RocksmithToolkitGUI.DLCManager
                     }
                 );
 
+                //bs.ResetBindings(false);
+                //dssx.Tables["Standardization"].AcceptChanges();
+                //bs.DataSource = dssx.Tables["Standardization"];
+                //DataGridView.DataSource = null;
+                //databox.DataSource = bs;
+                //databox.Refresh();
+                //dssx.Dispose();
+
+                ////}
+                ////catch (Exception ex)
+                ////{
+                ////    MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ////    ErrorWindow frm1 = new ErrorWindow("DB Open in Design Mode, or Missing, or you need to Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error when opening the Standardization DB", false, false);
+                ////    frm1.ShowDialog();
+                ////    return;
+                ////}
+                ////advance or step back in the song list
+                //int i = 0;
+                //if (DataGridView.Rows.Count > 1)
+                //{
+                //    var prev = DataGridView.SelectedCells[0].RowIndex;
+                //    if (DataGridView.Rows.Count == prev + 2)
+                //        if (prev == 0) return;
+                //        else
+                //        {
+                //            int rowindex;
+                //            DataGridViewRow row;
+                //            i = DataGridView.SelectedCells[0].RowIndex;
+                //            rowindex = i;
+                //            DataGridView.Rows[rowindex - 1].Selected = true;
+                //            DataGridView.Rows[rowindex].Selected = false;
+                //            row = DataGridView.Rows[rowindex - 1];
+                //        }
+                //    else
+                //    {
+                //        int rowindex;
+                //        DataGridViewRow row;
+                //        i = DataGridView.SelectedCells[0].RowIndex;
+                //        rowindex = i;
+                //        DataGridView.Rows[rowindex + 1].Selected = true;
+                //        DataGridView.Rows[rowindex].Selected = false;
+                //        row = DataGridView.Rows[rowindex + 1];
+                //    }
+                //}
+                //DataGridView.AutoResizeColumns();
                 bs.ResetBindings(false);
                 dssx.Tables["Standardization"].AcceptChanges();
                 bs.DataSource = dssx.Tables["Standardization"];
                 DataGridView.DataSource = null;
-                btn_Delete_All.DataSource = bs;
-                btn_Delete_All.Refresh();
+                DataGridView.DataSource = bs;
+                DataGridView.Refresh();
                 dssx.Dispose();
-
-                //}
-                //catch (Exception ex)
-                //{
-                //    MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                //    ErrorWindow frm1 = new ErrorWindow("DB Open in Design Mode, or Missing, or you need to Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error when opening the Standardization DB", false, false);
-                //    frm1.ShowDialog();
-                //    return;
-                //}
-                //advance or step back in the song list
-                int i = 0;
-                if (DataGridView.Rows.Count > 1)
-                {
-                    var prev = DataGridView.SelectedCells[0].RowIndex;
-                    if (DataGridView.Rows.Count == prev + 2)
-                        if (prev == 0) return;
-                        else
-                        {
-                            int rowindex;
-                            DataGridViewRow row;
-                            i = DataGridView.SelectedCells[0].RowIndex;
-                            rowindex = i;
-                            DataGridView.Rows[rowindex - 1].Selected = true;
-                            DataGridView.Rows[rowindex].Selected = false;
-                            row = DataGridView.Rows[rowindex - 1];
-                        }
-                    else
-                    {
-                        int rowindex;
-                        DataGridViewRow row;
-                        i = DataGridView.SelectedCells[0].RowIndex;
-                        rowindex = i;
-                        DataGridView.Rows[rowindex + 1].Selected = true;
-                        DataGridView.Rows[rowindex].Selected = false;
-                        row = DataGridView.Rows[rowindex + 1];
-                    }
-                }
                 ChangeRow();
             }
         }
@@ -335,39 +347,39 @@ namespace RocksmithToolkitGUI.DLCManager
             GenericFunctions.Translation_And_Correction(txt, pB_ReadDLCs, cnb);
             //advance or step back in the song list
             int i = 0;
-            if (btn_Delete_All.Rows.Count > 1 && btn_Delete_All.SelectedCells.Count>0)
+            if (databox.Rows.Count > 1 && databox.SelectedCells.Count>0)
             {
-                var prev = btn_Delete_All.SelectedCells[0].RowIndex;
-                if (btn_Delete_All.Rows.Count == prev + 2)
+                var prev = databox.SelectedCells[0].RowIndex;
+                if (databox.Rows.Count == prev + 2)
                     if (prev == 0) return;
                     else
                     {
                         int rowindex;
                         DataGridViewRow row;
-                        i = btn_Delete_All.SelectedCells[0].RowIndex;
+                        i = databox.SelectedCells[0].RowIndex;
                         rowindex = i;
-                        btn_Delete_All.Rows[rowindex - 1].Selected = true;
-                        btn_Delete_All.Rows[rowindex].Selected = false;
-                        row = btn_Delete_All.Rows[rowindex - 1];
+                        databox.Rows[rowindex - 1].Selected = true;
+                        databox.Rows[rowindex].Selected = false;
+                        row = databox.Rows[rowindex - 1];
                     }
                 else
                 {
                     int rowindex;
                     DataGridViewRow row;
-                    i = btn_Delete_All.SelectedCells[0].RowIndex;
+                    i = databox.SelectedCells[0].RowIndex;
                     rowindex = i;
-                    btn_Delete_All.Rows[rowindex + 1].Selected = true;
-                    btn_Delete_All.Rows[rowindex].Selected = false;
-                    row = btn_Delete_All.Rows[rowindex + 1];
+                    databox.Rows[rowindex + 1].Selected = true;
+                    databox.Rows[rowindex].Selected = false;
+                    row = databox.Rows[rowindex + 1];
                 }
             }
-            else if (btn_Delete_All.Rows.Count > 1)
+            else if (databox.Rows.Count > 1)
             {
                 int rowindex = 1;
                 DataGridViewRow row;
-                btn_Delete_All.Rows[rowindex + 1].Selected = true;
-                btn_Delete_All.Rows[rowindex].Selected = false;
-                row = btn_Delete_All.Rows[rowindex + 1];
+                databox.Rows[rowindex + 1].Selected = true;
+                databox.Rows[rowindex].Selected = false;
+                row = databox.Rows[rowindex + 1];
             }
             ChangeRow();
         }
@@ -590,8 +602,8 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             //if (chbx_AutoSave.Checked && (txt_Artist_Correction.Text != "" || txt_Album_Correction.Text != "" || txt_Year_Correction.Text != "" || txt_AlbumArt_Correction.Text != "" || txt_Artist_Short.Text != "" || txt_Album_Short.Text != "")) SaveRecord();//&& SaveOK
             //else;
-            if (chbx_AutoSave.Checked && SaveOK) { SaveOK = true; SaveRecord(); }
-            else SaveOK = false;
+            //if (chbx_AutoSave.Checked && SaveOK) { SaveOK = true; SaveRecord(); }
+            //else SaveOK = false;
         }
 
         private void SaveRecord()
@@ -600,24 +612,24 @@ namespace RocksmithToolkitGUI.DLCManager
             int i;
             DataSet dis = new DataSet();
             //try {
-            if (btn_Delete_All.SelectedCells.Count > 0)
+            if (databox.SelectedCells.Count > 0 && txt_ID.Text!="")
             {
-                i = btn_Delete_All.SelectedCells[0].RowIndex;
+                i = databox.SelectedCells[0].RowIndex;
                 //if (txt_Artist_Correction.Text != "")
-                btn_Delete_All.Rows[i].Cells[3].Value = txt_Artist_Correction.Text;
+                databox.Rows[i].Cells[3].Value = txt_Artist_Correction.Text;
                 //if (txt_Album_Correction.Text != "")
-                btn_Delete_All.Rows[i].Cells[5].Value = txt_Album_Correction.Text;
+                databox.Rows[i].Cells[5].Value = txt_Album_Correction.Text;
                 //if (txt_AlbumArt_Correction.Text != "")
-                btn_Delete_All.Rows[i].Cells[6].Value = txt_AlbumArt_Correction.Text;
+                databox.Rows[i].Cells[6].Value = txt_AlbumArt_Correction.Text;
                 //if (txt_Comments.Text != "")
-                btn_Delete_All.Rows[i].Cells[7].Value = txt_Comments.Text;
-                btn_Delete_All.Rows[i].Cells[8].Value = txt_Artist_Short.Text;
+                databox.Rows[i].Cells[7].Value = txt_Comments.Text;
+                databox.Rows[i].Cells[8].Value = txt_Artist_Short.Text;
                 //if (txt_Artist_Short.Text != "")
-                btn_Delete_All.Rows[i].Cells[9].Value = txt_Album_Short.Text;
+                databox.Rows[i].Cells[9].Value = txt_Album_Short.Text;
                 //if (txt_Year_Correction.Text != "")
-                btn_Delete_All.Rows[i].Cells[10].Value = txt_Year_Correction.Text;
-                if (chbx_Default_Cover.Checked) btn_Delete_All.Rows[i].Cells[15].Value = "Yes";
-                else btn_Delete_All.Rows[i].Cells[15].Value = "No";
+                databox.Rows[i].Cells[10].Value = txt_Year_Correction.Text;
+                if (chbx_Default_Cover.Checked) databox.Rows[i].Cells[15].Value = "Yes";
+                else databox.Rows[i].Cells[15].Value = "No";
                 //if (txt_Album_Short.Text != "")
                 //Main.EndEdit();
                 ////IDataAdapter.Update(dataTable);
@@ -643,18 +655,18 @@ namespace RocksmithToolkitGUI.DLCManager
                     command.CommandText += "SpotifyAlbumPath = @param14, ";
                     command.CommandText += "Default_Cover = @param15 ";
                     command.CommandText += "WHERE ID = " + txt_ID.Text;
-                    command.Parameters.AddWithValue("@param3", btn_Delete_All.Rows[i].Cells[3].Value.ToString() ?? DBNull.Value.ToString());
-                    command.Parameters.AddWithValue("@param5", btn_Delete_All.Rows[i].Cells[5].Value.ToString() ?? DBNull.Value.ToString());
-                    command.Parameters.AddWithValue("@param6", btn_Delete_All.Rows[i].Cells[6].Value.ToString() ?? DBNull.Value.ToString());
-                    command.Parameters.AddWithValue("@param7", btn_Delete_All.Rows[i].Cells[7].Value.ToString() ?? DBNull.Value.ToString());
-                    command.Parameters.AddWithValue("@param8", btn_Delete_All.Rows[i].Cells[8].Value.ToString() ?? DBNull.Value.ToString());
-                    command.Parameters.AddWithValue("@param9", btn_Delete_All.Rows[i].Cells[9].Value.ToString() ?? DBNull.Value.ToString());
-                    command.Parameters.AddWithValue("@param10", btn_Delete_All.Rows[i].Cells[10].Value.ToString() ?? DBNull.Value.ToString());
-                    command.Parameters.AddWithValue("@param11", btn_Delete_All.Rows[i].Cells[11].Value.ToString() ?? DBNull.Value.ToString());
-                    command.Parameters.AddWithValue("@param12", btn_Delete_All.Rows[i].Cells[12].Value.ToString() ?? DBNull.Value.ToString());
-                    command.Parameters.AddWithValue("@param13", btn_Delete_All.Rows[i].Cells[13].Value.ToString() ?? DBNull.Value.ToString());
-                    command.Parameters.AddWithValue("@param14", btn_Delete_All.Rows[i].Cells[14].Value.ToString() ?? DBNull.Value.ToString());
-                    command.Parameters.AddWithValue("@param15", btn_Delete_All.Rows[i].Cells[15].Value.ToString() ?? DBNull.Value.ToString());
+                    command.Parameters.AddWithValue("@param3", databox.Rows[i].Cells[3].Value.ToString() ?? DBNull.Value.ToString());
+                    command.Parameters.AddWithValue("@param5", databox.Rows[i].Cells[5].Value.ToString() ?? DBNull.Value.ToString());
+                    command.Parameters.AddWithValue("@param6", databox.Rows[i].Cells[6].Value.ToString() ?? DBNull.Value.ToString());
+                    command.Parameters.AddWithValue("@param7", databox.Rows[i].Cells[7].Value.ToString() ?? DBNull.Value.ToString());
+                    command.Parameters.AddWithValue("@param8", databox.Rows[i].Cells[8].Value.ToString() ?? DBNull.Value.ToString());
+                    command.Parameters.AddWithValue("@param9", databox.Rows[i].Cells[9].Value.ToString() ?? DBNull.Value.ToString());
+                    command.Parameters.AddWithValue("@param10", databox.Rows[i].Cells[10].Value.ToString() ?? DBNull.Value.ToString());
+                    command.Parameters.AddWithValue("@param11", databox.Rows[i].Cells[11].Value.ToString() ?? DBNull.Value.ToString());
+                    command.Parameters.AddWithValue("@param12", databox.Rows[i].Cells[12].Value.ToString() ?? DBNull.Value.ToString());
+                    command.Parameters.AddWithValue("@param13", databox.Rows[i].Cells[13].Value.ToString() ?? DBNull.Value.ToString());
+                    command.Parameters.AddWithValue("@param14", databox.Rows[i].Cells[14].Value.ToString() ?? DBNull.Value.ToString());
+                    command.Parameters.AddWithValue("@param15", databox.Rows[i].Cells[15].Value.ToString() ?? DBNull.Value.ToString());
                     try
                     {
                         command.CommandType = CommandType.Text;
@@ -696,35 +708,35 @@ namespace RocksmithToolkitGUI.DLCManager
 
 
             //redresh 
-            Populate(ref btn_Delete_All, ref Main);
-            btn_Delete_All.EditingControlShowing += DataGridView1_EditingControlShowing;
-            btn_Delete_All.Refresh();
+            Populate(ref databox, ref Main);
+            databox.EditingControlShowing += DataGridView1_EditingControlShowing;
+            databox.Refresh();
 
             //advance or step back in the song list
-            if (btn_Delete_All.Rows.Count > 1)
+            if (databox.Rows.Count > 1)
             {
-                var prev = btn_Delete_All.SelectedCells[0].RowIndex;
-                if (btn_Delete_All.Rows.Count == prev + 2)
+                var prev = databox.SelectedCells[0].RowIndex;
+                if (databox.Rows.Count == prev + 2)
                     if (prev == 0) return;
                     else
                     {
                         int rowindex;
                         DataGridViewRow row;
-                        i = btn_Delete_All.SelectedCells[0].RowIndex;
+                        i = databox.SelectedCells[0].RowIndex;
                         rowindex = i;
-                        btn_Delete_All.Rows[rowindex - 1].Selected = true;
-                        btn_Delete_All.Rows[rowindex].Selected = false;
-                        row = btn_Delete_All.Rows[rowindex - 1];
+                        databox.Rows[rowindex - 1].Selected = true;
+                        databox.Rows[rowindex].Selected = false;
+                        row = databox.Rows[rowindex - 1];
                     }
                 else
                 {
                     int rowindex;
                     DataGridViewRow row;
-                    i = btn_Delete_All.SelectedCells[0].RowIndex;
+                    i = databox.SelectedCells[0].RowIndex;
                     rowindex = i;
-                    btn_Delete_All.Rows[rowindex + 1].Selected = true;
-                    btn_Delete_All.Rows[rowindex].Selected = false;
-                    row = btn_Delete_All.Rows[rowindex + 1];
+                    databox.Rows[rowindex + 1].Selected = true;
+                    databox.Rows[rowindex].Selected = false;
+                    row = databox.Rows[rowindex + 1];
                 }
             }
         }
@@ -736,8 +748,8 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void button1_Click_3(object sender, EventArgs e)
         {
-            i = btn_Delete_All.SelectedCells[0].RowIndex;
-            txt_AlbumArt_Correction.Text = btn_Delete_All.Rows[i].Cells[14].Value.ToString();
+            i = databox.SelectedCells[0].RowIndex;
+            txt_AlbumArt_Correction.Text = databox.Rows[i].Cells[14].Value.ToString();
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -747,8 +759,8 @@ namespace RocksmithToolkitGUI.DLCManager
             var album = txt_Album_Correction.Text == "" ? txt_Album.Text : txt_Album_Correction.Text;
             pB_ReadDLCs.Maximum = 5;
             pB_ReadDLCs.Value = 1;
-            i = btn_Delete_All.SelectedCells[0].RowIndex;
-            if (btn_Delete_All.Rows[i].Cells[14].Value.ToString() == ""|| btn_Delete_All.Rows[i].Cells[13].Value.ToString()=="" || !File.Exists(ConfigRepository.Instance()["dlcm_TempPath"] + "\\0_albumCovers\\" + artist + " - " + album + ".png"))
+            i = databox.SelectedCells[0].RowIndex;
+            if (databox.Rows[i].Cells[14].Value.ToString() == ""|| databox.Rows[i].Cells[13].Value.ToString()=="" || !File.Exists(ConfigRepository.Instance()["dlcm_TempPath"] + "\\0_albumCovers\\" + artist + " - " + album + ".png"))
             {
                 pB_ReadDLCs.Value ++;
                 Task<string> sptyfy = StartToGetSpotifyDetails(artist, album, "", txt_Year_Correction.Text, "");
@@ -765,16 +777,16 @@ namespace RocksmithToolkitGUI.DLCManager
                 pB_ReadDLCs.Value++;
                 if (SpotifyArtistID != "-" && SpotifyArtistID != "")
                 {
-                    btn_Delete_All.Rows[i].Cells[11].Value = SpotifyArtistID;
-                    btn_Delete_All.Rows[i].Cells[12].Value = SpotifyAlbumID;
-                    btn_Delete_All.Rows[i].Cells[13].Value = SpotifyAlbumURL;
+                    databox.Rows[i].Cells[11].Value = SpotifyArtistID;
+                    databox.Rows[i].Cells[12].Value = SpotifyAlbumID;
+                    databox.Rows[i].Cells[13].Value = SpotifyAlbumURL;
                     //using (WebClient wc = new WebClient())
                     //{
                     //    byte[] imageBytes = wc.DownloadData(new Uri(SpotifyAlbumURL));
                     //    FileStream file = new FileStream(ConfigRepository.Instance()["dlcm_TempPath"] + "\\0_albumCovers\\" + artist + " - " + album + ".png", FileMode.Create, System.IO.FileAccess.Write);
                     //    using (MemoryStream stream = new MemoryStream(imageBytes)) stream.WriteTo(file);
                     pxbx_SavedSpotify.ImageLocation = SpotifyAlbumPath;// ConfigRepository.Instance()["dlcm_TempPath"] + "\\0_albumCovers\\" + artist + " - " + album + ".png";
-                        btn_Delete_All.Rows[i].Cells[14].Value = pxbx_SavedSpotify.ImageLocation;
+                        databox.Rows[i].Cells[14].Value = pxbx_SavedSpotify.ImageLocation;
                         pB_ReadDLCs.Value++;
                     //}
                 }
@@ -787,12 +799,12 @@ namespace RocksmithToolkitGUI.DLCManager
                     pB_ReadDLCs.Value++;
                     using (WebClient wc = new WebClient())
                     {
-                        byte[] imageBytes = wc.DownloadData(new Uri(btn_Delete_All.Rows[i].Cells[13].Value.ToString()));
+                        byte[] imageBytes = wc.DownloadData(new Uri(databox.Rows[i].Cells[13].Value.ToString()));
                         pB_ReadDLCs.Value++;
                         FileStream file = new FileStream(ConfigRepository.Instance()["dlcm_TempPath"] + "\\0_albumCovers\\" + artist + " - " + album + ".png", FileMode.Create, System.IO.FileAccess.Write);
                         using (MemoryStream stream = new MemoryStream(imageBytes)) stream.WriteTo(file);
                         pxbx_SavedSpotify.ImageLocation = ConfigRepository.Instance()["dlcm_TempPath"] + "\\0_albumCovers\\" + artist + " - " + album + ".png";
-                        btn_Delete_All.Rows[i].Cells[14].Value = pxbx_SavedSpotify.ImageLocation;
+                        databox.Rows[i].Cells[14].Value = pxbx_SavedSpotify.ImageLocation;
                         pB_ReadDLCs.Value++;
                     }
                     pB_ReadDLCs.Value++;
@@ -807,9 +819,9 @@ namespace RocksmithToolkitGUI.DLCManager
             if (result1 == DialogResult.Yes)
             {
                 DeleteFromDB("Standardization", "DELETE * FROM Standardization", cnb);
-                Populate(ref btn_Delete_All, ref Main);
-                btn_Delete_All.EditingControlShowing += DataGridView1_EditingControlShowing;
-                btn_Delete_All.Refresh();
+                Populate(ref databox, ref Main);
+                databox.EditingControlShowing += DataGridView1_EditingControlShowing;
+                databox.Refresh();
             }
         }
 
@@ -861,6 +873,37 @@ namespace RocksmithToolkitGUI.DLCManager
 
                 }
                 catch (Exception ex) { var tust = "Spotify Error ..." + ex; UpdateLog(DateTime.Now, tust, false, ConfigRepository.Instance()["dlcm_LogPath"], ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null); }
+            }
+        }
+
+        private void databox_RowLeave(object sender, DataGridViewCellEventArgs e)
+        {
+            if (chbx_AutoSave.Checked && SaveOK) { SaveOK = true; SaveRecord(); }
+            else SaveOK = false;
+        }
+
+        private void databox_SelectionChanged(object sender, EventArgs e)
+        {
+            //if (txt_ID.Text != "") ChangeRow();
+            var line = -1;
+             if(databox.SelectedCells.Count>0) line = databox.SelectedCells[0].RowIndex;
+            if (line > -1) ChangeRow();
+        }
+
+        private void btn_CheckOnline_Click(object sender, EventArgs e)
+        {
+            i = databox.SelectedCells[0].RowIndex;
+            string link = "https://www.google.com/#q=" + txt_Artist.Text + "+" + txt_Album.Text;
+
+            try
+            {
+                Process process = Process.Start(@link);
+            }
+            catch (Exception ex)
+            {
+                var tsst = "Error ..." + ex; UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_LogPath"], ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
+                MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //MessageBox.Show("Can't not open Song Folder in Exporer ! ");
             }
         }
     }

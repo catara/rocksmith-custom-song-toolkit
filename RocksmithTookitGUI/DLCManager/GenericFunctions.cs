@@ -401,7 +401,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         if (a1 == "")
                         {
                             SearchItem Titem4 = _spotify.SearchItems(Album, SearchType.Album);
-                            if (Titem4.Error == null && Titem4.Albums.Total > 0)
+                            if (Titem4.Error == null && Titem4.Tracks != null)
                                 foreach (SpotifyAPI.Web.Models.FullTrack Trac in Titem4.Tracks.Items)
                                 {
                                     if (Titem4.Tracks.Total > 0) foreach (SpotifyAPI.Web.Models.SimpleArtist Artis in Trac.Artists)
@@ -1040,6 +1040,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 OleDbCommandBuilder custCB = new OleDbCommandBuilder(myDataAdapter);
                 try
                 {
+
                     myDataAdapter.Fill(dsm, ftable);
                     //cn.Close();cn.Open();
                     return dsm;
@@ -2419,7 +2420,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
             //Read from DB
             MainDBfields[] SongRecord = new MainDBfields[10000];
-            SongRecord = GetRecord_s(cmd, cnb); 
+            SongRecord = GetRecord_s(cmd, cnb);
             try
             {
                 if (cnb.State.ToString() == "Open") cnb.Open();
@@ -3164,7 +3165,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                 var SpotifyAlbumID = sptyfy.Result.Split(';')[3];
                                 var SpotifyAlbumURL = sptyfy.Result.Split(';')[4];
                                 var SpotifyAlbumPath = sptyfy.Result.Split(';')[5];
-                                UpdateLog(DateTime.Now, "Retrieved Spotify details "+ SpotifyAlbumPath, false, ConfigRepository.Instance()["dlcm_LogPath"], ConfigRepository.Instance()["dlcm_TempPath"], multithreadname, form, null, null);
+                                UpdateLog(DateTime.Now, "Retrieved Spotify details " + SpotifyAlbumPath, false, ConfigRepository.Instance()["dlcm_LogPath"], ConfigRepository.Instance()["dlcm_TempPath"], multithreadname, form, null, null);
                                 if (ConfigRepository.Instance()["dlcm_AdditionalManipul59"] == "Yes" && SpotifySongID != "" && SpotifySongID != "-" && trackno > 0)
                                 {
                                     var cmds = "UPDATE Main SET Spotify_Song_ID=\"" + SpotifySongID + "\", Spotify_Artist_ID=\"" + SpotifyArtistID + "\"";
@@ -3480,7 +3481,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         //var ft=file.Has_Vocals;
                         var ttt2 = (ConfigRepository.Instance()["dlcm_AdditionalManipul73"] == "Yes" && filez.Has_Vocals == "Yes") ? AddStuffToLyrics(filez.ID, filez.Comments, Groupss, filez.Has_DD, (filez.Has_BassDD == "Yes") ? "No" : "Yes", filez.Has_BassDD, filez.Author, filez.Is_Acoustic, filez.Is_Live, filez.Live_Details, filez.Is_Multitrack, filez.Is_Original, cnb) : "";
                         var ttt1 = ConfigRepository.Instance()["dlcm_AdditionalManipul74"] == "Yes" && filez.Has_Vocals == "Yes" ? AddTrackStart2Lyrics(filez.ID, cnb) : "";
-                        
+
                         //var FN = txt_File_Name.Text;
 
                         var FN = ConfigRepository.Instance()["dlcm_File_Name"];
@@ -3507,7 +3508,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         timestamp = UpdateLog(timestamp, "Packing" + PreviewLenght, true, logPath, TempPath, multithreadname, form, null, null);
 
                         if (chbx_PC == "PC")
-                        try
+                            try
                             {
                                 dlcSavePath = repacked_Path + "\\" + chbx_PC + "\\" + FN;
                                 RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate(dlcSavePath, data, new Platform(GamePlatform.Pc, GameVersion.RS2014));
@@ -3528,7 +3529,10 @@ namespace RocksmithToolkitGUI.DLCManager
                         if (chbx_Mac == "Mac")
                             try
                             {
-                                dlcSavePath = (repacked_Path + "\\" + chbx_Mac + "\\" + FN).Replace(".", "_");
+                                if (!File.Exists(data.ArtFiles[0].destinationFile)) File.Copy(data.ArtFiles[0].sourceFile, data.ArtFiles[0].destinationFile);
+                                if (!File.Exists(data.ArtFiles[1].destinationFile)) File.Copy(data.ArtFiles[1].sourceFile, data.ArtFiles[1].destinationFile);
+                                if (!File.Exists(data.ArtFiles[2].destinationFile)) File.Copy(data.ArtFiles[2].sourceFile, data.ArtFiles[2].destinationFile);
+                                dlcSavePath = repacked_Path + "\\" + chbx_Mac + "\\" + FN;
                                 RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate(dlcSavePath, data, new Platform(GamePlatform.Mac, GameVersion.RS2014));
                                 progress += step;
                             }
@@ -3546,6 +3550,9 @@ namespace RocksmithToolkitGUI.DLCManager
                         if (chbx_XBOX == "XBOX360")
                             try
                             {
+                                if (!File.Exists(data.ArtFiles[0].destinationFile)) File.Copy(data.ArtFiles[0].sourceFile, data.ArtFiles[0].destinationFile);
+                                if (!File.Exists(data.ArtFiles[1].destinationFile)) File.Copy(data.ArtFiles[1].sourceFile, data.ArtFiles[1].destinationFile);
+                                if (!File.Exists(data.ArtFiles[2].destinationFile)) File.Copy(data.ArtFiles[2].sourceFile, data.ArtFiles[2].destinationFile);
                                 dlcSavePath = repacked_Path + "\\" + chbx_XBOX + "\\" + FN;
                                 RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate(dlcSavePath, data, new Platform(GamePlatform.XBox360, GameVersion.RS2014));
                                 progress += step;
@@ -3565,6 +3572,9 @@ namespace RocksmithToolkitGUI.DLCManager
                         if (chbx_PS3 == "PS3")
                             try
                             {
+                                if (!File.Exists(data.ArtFiles[0].destinationFile)) File.Copy(data.ArtFiles[0].sourceFile, data.ArtFiles[0].destinationFile);
+                                if (!File.Exists(data.ArtFiles[1].destinationFile)) File.Copy(data.ArtFiles[1].sourceFile, data.ArtFiles[1].destinationFile);
+                                if (!File.Exists(data.ArtFiles[2].destinationFile)) File.Copy(data.ArtFiles[2].sourceFile, data.ArtFiles[2].destinationFile);
                                 dlcSavePath = repacked_Path + "\\" + chbx_PS3 + "\\" + FN;
                                 RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate(dlcSavePath, data, new Platform(GamePlatform.PS3, GameVersion.RS2014));
                                 progress += step;
@@ -3590,28 +3600,28 @@ namespace RocksmithToolkitGUI.DLCManager
                 }
 
                 //Restore XML changes
-                if (!((chbx_Last_Packed && chbx_Last_PackedEnabled) || (chbx_CopyOld && chbx_CopyOldEnabled))&& ConfigRepository.Instance()["dlcm_AdditionalManipul86"]=="No")
+                if (!((chbx_Last_Packed && chbx_Last_PackedEnabled) || (chbx_CopyOld && chbx_CopyOldEnabled)) && ConfigRepository.Instance()["dlcm_AdditionalManipul86"] == "No")
                 {
                     Platform platformz = Folder_Name.GetPlatform();
                     var xmlFilez = Directory.GetFiles(Folder_Name, "*.old", System.IO.SearchOption.AllDirectories);
                     foreach (var xml in xmlFilez)
                     {
                         //Song2014 xmlContent = null;
-                        if (xml.ToLower().IndexOf("showlights") < 0 )/*&& xml.IndexOf(".old") > 0*/
+                        if (xml.ToLower().IndexOf("showlights") < 0)/*&& xml.IndexOf(".old") > 0*/
                             try
                             {
-                                File.Copy( xml, xml.Replace(".old", ""),true);
+                                File.Copy(xml, xml.Replace(".old", ""), true);
                                 timestamp = UpdateLog(timestamp, "Restore XML", true, logPath, TempPath, multithreadname, form, null, null);
                                 DeleteFile(xml);//if (File.Exists(xml.Replace(".old", "")))
                             }
                             catch (Exception ex) { var tgst = "Error at restoring xml changes..." + ex; UpdateLog(DateTime.Now, tgst, false, ConfigRepository.Instance()["dlcm_LogPath"], ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null); }
-                                            }
+                    }
                 }
 
                 if (h != "")
                 {
                     timestamp = UpdateLog(timestamp, "Start the Copy/FTPing process", true, logPath, TempPath, multithreadname, form, null, null);
-                    var source = h + (chbx_Format == "PS3" ? "_ps3.psarc.edat" : (chbx_Format == "PC" ? "_p.psarc" : (chbx_Format == "Mac" ? "_m.psarc" : "")));
+                    var source = "";
                     //calc hash and file size
                     System.IO.FileInfo fi = null;
                     try
@@ -3624,67 +3634,109 @@ namespace RocksmithToolkitGUI.DLCManager
                             //pB_ReadDLCs.Increment(1);
                             var dest = "";
                             //source = "";
-                            if (chbx_Format == "PS3" && chbx_Copy)
+                            if (chbx_PS3 == "PS3" && chbx_Copy)
                             {
-
+                                source = h + "_ps3.psarc.edat";
                                 var u = ""; if (chbx_Replace && chbx_ReplaceEnabled) u = DeleteFTPFiles(txt_RemotePath, txt_FTPPath);
                                 var a = "";
                                 if (File.Exists(source))
                                 {
                                     FTPFile(txt_FTPPath, source, TempPath, SearchCmd, cnb);
-                                    copyftp = " and " + a + " FTPed";
+                                    copyftp = " and " + a + " FTPed(PS3)";
                                 }
-                                else error = true;
-                                error_reason = "@FTP";
+                                else {error = true; error_reason = "@FTP";}
+                                //Add Pack Audit Trail
+                                if (!(chbx_CopyOld && chbx_CopyOldEnabled) && !(chbx_Last_Packed && chbx_Last_PackedEnabled) && !error) //&& oldfilePath.GetPlatform().platform.ToString() != chbx_Format
+                                {
+
+                                    var FileHash = GetHash(source);//Generating the HASH code
+
+                                    DataSet dfs = new DataSet(); dfs = SelectFromDB("Pack_AuditTrail", "SELECT * FROM Pack_AuditTrail WHERE FileHash=\"" + FileHash + "\";", "", cnb);
+
+                                    var norec = 0;
+                                    norec = dfs.Tables[0].Rows.Count;
+                                    if (norec == 0)
+                                    {
+                                        var sourcedir = source.Replace(Path.GetFileName(source), "");
+                                        string insertcmdA = "CopyPath, PackPath, FileName, PackDate, FileHash, FileSize, DLC_ID, DLC_Name, Platform";
+                                        var insertA = "\"" + dest + "\",\"" + sourcedir.Remove(sourcedir.Length - 1) + "\",\"" + Path.GetFileName(source) + "\",\"" + DateTime.Today.ToString() + "\",\"" + FileHash + "\",\"" + fi.Length + "\"," + ID + ",\"" + DLC_Name + "\",\"" + chbx_Format + "\"";
+
+                                        InsertIntoDBwValues("Pack_AuditTrail", insertcmdA, insertA, cnb, 0);
+                                    }
+                                }
                             }
-                            else if ((chbx_Format == "PC" || chbx_Format == "Mac") && chbx_Copy)
+
+                            if (chbx_PC == "PC" && chbx_Copy)
                             {
-                                var platfrm = (chbx_Format == "PC" ? "_p" : (chbx_Format == "Mac" ? "_m" : h));
+                                var platfrm = "_p";
                                 //source = h + (h.IndexOf(platfrm + ".psarc") > 0 ? "" : platfrm + ".psarc");
                                 dest = RocksmithDLCPath + source.Substring(source.LastIndexOf("\\"));
                                 try
                                 {
                                     var fn = source;//.Substring(source.IndexOf("PC\\") + 3, source.Length - source.IndexOf("PS3\\") - 3);
-                                    DataSet dxr = new DataSet(); dxr = UpdateDB("Main", "Update Main Set Remote_path = \"" + fn + "\";", cnb);
-                                    if (chbx_Replace && chbx_ReplaceEnabled) File.Move(txt_RemotePath, txt_RemotePath.Replace(platfrm + ".psarc", ".old"));
+                                    DataSet dxr = new DataSet(); dxr = UpdateDB("Main", "Update Main Set Remote_path = \"" + fn + "\" AND ID=" + ID + ";", cnb);
+                                    if (chbx_Replace && chbx_ReplaceEnabled && File.Exists(txt_RemotePath)) File.Move(txt_RemotePath, txt_RemotePath.Replace(platfrm + ".psarc", ".old"));
                                     File.Copy(source, dest, true);
                                 }
                                 catch (Exception ex) { error = true; copyftp = "Not"; var tgst = "Error @copy after pack..." + ex; UpdateLog(DateTime.Now, tgst, false, ConfigRepository.Instance()["dlcm_LogPath"], ConfigRepository.Instance()["dlcm_TempPath"], multithreadname, form, null, null); }
-                                copyftp = " and " + copyftp + " Copied";
-                            }
-                            //else if (chbx_Format == "PS3") source = h + "_ps3.psarc.edat";
-                            //else source = h + (chbx_Format == "PC" ? "_p" : (chbx_Format == "Mac" ? "_m" : "")) + ".psarc";
-
-                            //Add Pack Audit Trail
-                            if (!(chbx_CopyOld && chbx_CopyOldEnabled) && !(chbx_Last_Packed && chbx_Last_PackedEnabled) && !error) //&& oldfilePath.GetPlatform().platform.ToString() != chbx_Format
-                            {
-
-
-
-                                //using (FileStream fs = File.OpenRead(source))
-                                //{
-                                //    SHA1 sha = new SHA1Managed();
-                                //    FileHash = BitConverter.ToString(sha.ComputeHash(fs));
-                                //    fs.Close();
-                                //}
-
-                                //Generating the HASH code
-                                var FileHash = ""; FileHash = GetHash(source);
-
-
-                                DataSet dfs = new DataSet(); dfs = SelectFromDB("Pack_AuditTrail", "SELECT * FROM Pack_AuditTrail WHERE FileHash=\"" + FileHash + "\";", "", cnb);
-
-                                var norec = 0;
-
-                                norec = dfs.Tables[0].Rows.Count;
-                                if (norec == 0)
+                                copyftp = " and " + copyftp + " Copied(PC)";
+                                //Add Pack Audit Trail
+                                if (!(chbx_CopyOld && chbx_CopyOldEnabled) && !(chbx_Last_Packed && chbx_Last_PackedEnabled) && !error) //&& oldfilePath.GetPlatform().platform.ToString() != chbx_Format
                                 {
-                                    //var j = DataViewGrid.SelectedCells[0].RowIndex;
-                                    var sourcedir = source.Replace(Path.GetFileName(source), "");
-                                    string insertcmdA = "CopyPath, PackPath, FileName, PackDate, FileHash, FileSize, DLC_ID, DLC_Name, Platform";
-                                    var insertA = "\"" + dest + "\",\"" + sourcedir.Remove(sourcedir.Length - 1) + "\",\"" + Path.GetFileName(source) + "\",\"" + DateTime.Today.ToString() + "\",\"" + FileHash + "\",\"" + fi.Length + "\"," + ID + ",\"" + DLC_Name + "\",\"" + chbx_Format + "\"";
 
-                                    InsertIntoDBwValues("Pack_AuditTrail", insertcmdA, insertA, cnb, 0);
+                                    var FileHash = GetHash(source);//Generating the HASH code
+
+                                    DataSet dfs = new DataSet(); dfs = SelectFromDB("Pack_AuditTrail", "SELECT * FROM Pack_AuditTrail WHERE FileHash=\"" + FileHash + "\";", "", cnb);
+
+                                    var norec = 0;
+                                    norec = dfs.Tables[0].Rows.Count;
+                                    if (norec == 0)
+                                    {
+                                        var sourcedir = source.Replace(Path.GetFileName(source), "");
+                                        string insertcmdA = "CopyPath, PackPath, FileName, PackDate, FileHash, FileSize, DLC_ID, DLC_Name, Platform";
+                                        var insertA = "\"" + dest + "\",\"" + sourcedir.Remove(sourcedir.Length - 1) + "\",\"" + Path.GetFileName(source) + "\",\"" + DateTime.Today.ToString() + "\",\"" + FileHash + "\",\"" + fi.Length + "\"," + ID + ",\"" + DLC_Name + "\",\"" + chbx_Format + "\"";
+
+                                        InsertIntoDBwValues("Pack_AuditTrail", insertcmdA, insertA, cnb, 0);
+                                    }
+                                }
+                            }
+
+                            if (chbx_Mac == "Mac" && chbx_Copy)
+                            {
+                                var platfrm = "_m";
+                                //source = h + (h.IndexOf(platfrm + ".psarc") > 0 ? "" : platfrm + ".psarc");
+                                dest = RocksmithDLCPath + source.Substring(source.LastIndexOf("\\"));
+                                try
+                                {
+                                    var fn = source;//.Substring(source.IndexOf("PC\\") + 3, source.Length - source.IndexOf("PS3\\") - 3);
+                                    DataSet dxr = new DataSet(); dxr = UpdateDB("Main", "Update Main Set Remote_path = \"" + fn + "\" AND ID=" + ID + ";", cnb);
+                                    if (chbx_Replace && chbx_ReplaceEnabled && File.Exists(txt_RemotePath)) File.Move(txt_RemotePath, txt_RemotePath.Replace(platfrm + ".psarc", ".old"));
+                                    File.Copy(source, dest, true);
+                                }
+                                catch (Exception ex) { error = true; copyftp = "Not"; var tgst = "Error @copy after pack..." + ex; UpdateLog(DateTime.Now, tgst, false, ConfigRepository.Instance()["dlcm_LogPath"], ConfigRepository.Instance()["dlcm_TempPath"], multithreadname, form, null, null); }
+                                copyftp = " and " + copyftp + " Copied(Mac)";
+
+                                //else if (chbx_Format == "PS3") source = h + "_ps3.psarc.edat";
+                                //else source = h + (chbx_Format == "PC" ? "_p" : (chbx_Format == "Mac" ? "_m" : "")) + ".psarc";
+
+                                //Add Pack Audit Trail
+                                if (!(chbx_CopyOld && chbx_CopyOldEnabled) && !(chbx_Last_Packed && chbx_Last_PackedEnabled) && !error) //&& oldfilePath.GetPlatform().platform.ToString() != chbx_Format
+                                {
+
+                                    var FileHash = GetHash(source);//Generating the HASH code
+
+                                    DataSet dfs = new DataSet(); dfs = SelectFromDB("Pack_AuditTrail", "SELECT * FROM Pack_AuditTrail WHERE FileHash=\"" + FileHash + "\";", "", cnb);
+
+                                    var norec = 0;
+                                    norec = dfs.Tables[0].Rows.Count;
+                                    if (norec == 0)
+                                    {
+                                        var sourcedir = source.Replace(Path.GetFileName(source), "");
+                                        string insertcmdA = "CopyPath, PackPath, FileName, PackDate, FileHash, FileSize, DLC_ID, DLC_Name, Platform";
+                                        var insertA = "\"" + dest + "\",\"" + sourcedir.Remove(sourcedir.Length - 1) + "\",\"" + Path.GetFileName(source) + "\",\"" + DateTime.Today.ToString() + "\",\"" + FileHash + "\",\"" + fi.Length + "\"," + ID + ",\"" + DLC_Name + "\",\"" + chbx_Format + "\"";
+
+                                        InsertIntoDBwValues("Pack_AuditTrail", insertcmdA, insertA, cnb, 0);
+                                    }
                                 }
                             }
                         }
@@ -3815,7 +3867,7 @@ namespace RocksmithToolkitGUI.DLCManager
             var sdetails = "SongDetails: " + (Comments == "" ? "" : "Comment_" + Comments) + " DD=" + Has_DD + (Has_DD == "Yes" && bassRemoved == "Yes" ? "(BDDremoved)" : "") + (Author == "" ? "" : " by: " + Author) + (Is_Acoustic == "Yes" ? " Acoustic" : "") + (Is_Live == "Yes" ? " Live" : "" + Is_Live + (Live_Details == "" ? "" : "(" + Live_Details + ")")) + (Is_Original == "No" ? " Custom-DLC" : " ORIGINAL ") + " Tracks=";
             var scomments = "";
             var tsst = "Start TH ..."; var timestamp = UpdateLog(DateTime.Now, tsst, true, ConfigRepository.Instance()["dlcm_LogPath"], ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
-            
+
 
             //DataSet dus = new DataSet(); dus = SelectFromDB("Main", "SELECT XMLFilePath, Bonus, Comments FROM Main WHERE ArrangementType=\"ArrangementType\" AND DLC_ID=\""+ SongID + "\"", "");
             //var CDLC_ID = dus.Tables[0].Rows[0].ItemArray[0].ToString();
@@ -3834,7 +3886,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 sdetails += (RouteMask == "Lead" && Bonus.ToLower() == "true" ? " L_Bonus" : "") + (RouteMask == "Bass" && Bonus.ToLower() == "true" ? " B_Bonus" : "") + (RouteMask == "Rhythm" && Bonus.ToLower() == "true" ? " R_Bonus" : "");
                 scomments += (RouteMask == "Lead" && Commentz != "" ? " L_" + Commentz : "") + (RouteMask == "Bass" && Commentz != "" ? " B_" + Commentz : "") + (RouteMask == "Rhythm" && Commentz != "" ? " R_" + Commentz : "");
             }
-if (!File.Exists(ST + ".old")) File.Copy(ST, ST + ".old");
+            if (!File.Exists(ST + ".old")) File.Copy(ST, ST + ".old");
             Add2LinesInVocals(ST, 2);
 
             Vocals newLyrics = null;
@@ -3843,7 +3895,7 @@ if (!File.Exists(ST + ".old")) File.Copy(ST, ST + ".old");
                 newLyrics = Vocals.LoadFromFile(ST);//+ ".newvcl"
             }
             catch (Exception ex) { var tgst = "Error ..." + ex; UpdateLog(DateTime.Now, tgst, false, ConfigRepository.Instance()["dlcm_LogPath"], ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null); }
-                        
+
             newLyrics.Vocal[0].Time = float.Parse("0.61");
             newLyrics.Vocal[0].Note = 254;
             newLyrics.Vocal[0].Length = float.Parse("2.39");
@@ -3926,7 +3978,7 @@ if (!File.Exists(ST + ".old")) File.Copy(ST, ST + ".old");
             while (cnb.State.ToString() == "Connecting");
             cnb.Open(); //if (cnb.State.ToString()=="Closed") 
 
-            var tsst = "Start FixBitRate TH ..."; DateTime timestamp = startT; UpdateLog(timestamp, tsst, false, logPath, tmpPath, multithreadname, "", null, null);
+            var tsst = "Start FixBitRate TH ..." + AudioPath + "-" + bitrate + "-" + SampleRate; DateTime timestamp = startT; UpdateLog(timestamp, tsst, false, logPath, tmpPath, multithreadname, "", null, null);
 
             Random randomp = new Random();
             var packid = randomp.Next(0, 100000);
@@ -4302,11 +4354,11 @@ if (!File.Exists(ST + ".old")) File.Copy(ST, ST + ".old");
             else
             {
                 DataSet dhs = new DataSet(); dhs = SelectFromDB("Main", cmd, "", cnb); var noOfRec = dhs.Tables[0].Rows.Count;
-                
+                //if (pB_ReadDLCs != null) {pB_ReadDLCs.Step = 1; pB_ReadDLCs.Maximum = noOfRec; pB_ReadDLCs.Value = 0;}
                 for (var i = 0; i <= noOfRec - 1; i++)
                 {
                     //var tst = "Starting...  Fixing Audio Issues preview&bitrate&Spotfy Metadata"; var timestamp = UpdateLog(DateTime.Now, tst, true, ConfigRepository.Instance()["dlcm_LogPath"], ConfigRepository.Instance()["dlcm_TempPath"], "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
-                    if (pB_ReadDLCs != null) { pB_ReadDLCs.Value = 0; pB_ReadDLCs.Step = 1; pB_ReadDLCs.Maximum = noOfRec; }
+                    if (pB_ReadDLCs != null) { pB_ReadDLCs.Value = i; pB_ReadDLCs.Step = 1; pB_ReadDLCs.Maximum = noOfRec; }
                     var ID = dhs.Tables[0].Rows[i].ItemArray[0].ToString();
                     var AudioPath = dhs.Tables[0].Rows[i].ItemArray[1].ToString();
                     float bitrate = float.Parse(dhs.Tables[0].Rows[i].ItemArray[2].ToString());
@@ -4315,7 +4367,7 @@ if (!File.Exists(ST + ".old")) File.Copy(ST, ST + ".old");
                     var oggPreviewPath = dhs.Tables[0].Rows[i].ItemArray[5].ToString();
 
                     if (pB_ReadDLCs != null) pB_ReadDLCs.Value += 1;
-                    //var tst = "AudioFixing: " + i + "/" + noOfRec + " " + AudioPath; var timestamp = UpdateLog(DateTime.Now, tst, true, ConfigRepository.Instance()["dlcm_LogPath"], ConfigRepository.Instance()["dlcm_TempPath"], "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+                    var tst = "AudioFixing: " + i + "/" + noOfRec + " " + AudioPath; var timestamp = UpdateLog(DateTime.Now, tst, true, ConfigRepository.Instance()["dlcm_LogPath"], ConfigRepository.Instance()["dlcm_TempPath"], "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
 
                     var args = cmd.Replace(";", "") + ";" + AudioPath + ";" + bitrate + ";" + SampleRate + ";" + ID + ";" + audioPreviewPath + ";" + oggPreviewPath + ";" + i;
                     //do

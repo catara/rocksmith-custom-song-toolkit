@@ -158,38 +158,32 @@
 [ ] clean pack audio ...copy path folder instad of full path
 [ ] when autom deciding something is not a duplicate dont continue maybe
 [ ] MAke Sure CHANGIN D THE AUDIO/PREVIEW DOES NOT deletes the old info useful for Duplciation comparison
-where is duplciate reason, add duplicate number
-L:\Temp\Arctic-Monkeys_Perhaps-Vampires-Is-A-Bit-Strong-But_v2_p.psarc path too long
-add import as diff to dupli manag window . if so no alternate option is selected no alternate id, DLCIDs are made unique songname, 
-fix official set alternate 4392
-read volume independently of regional settings
-compare/dupli manag 2-x selected songs
-whn copying maybe consider updating any existing packed &copy link
+[ ] where is duplciate reason, add duplicate number
+[ ] L:\Temp\Arctic-Monkeys_Perhaps-Vampires-Is-A-Bit-Strong-But_v2_p.psarc path too long
+[ ] add import as diff to dupli manag window . if so no alternate option is selected no alternate id, DLCIDs are made unique songname, 
+[ ] fix official set alternate 4392
+[ ] read volume independently of regional settings
+[ ] compare/dupli manag 2-x selected songs
+[ ] wehn copying maybe consider updating any existing packed &copy link
+
 
 ## WiP:
 (next release)
+bug pack moves dds to tmp the deletes it ergo diff load needs to happen before secondrepack
 
 ## done:
 (this release)
-[x] added a delete/restorefrombackup the wwise template when conversion fails
-[x] made covers, preview or main audio red when hash is the same (dupli management)
-[x] added Not a duplicate button (dupli management)
-[x] added add stadard (dupli management)
-[x] fixed import tonne issue
-[x] autom add default diff to duplic management
-[x] fixing add single instruments removes the letter from the song title
-[x] make sure on duplciate is marked if we indicate it's not alternate in Duplicate managemet window
-[x] implement Amps/Cabs in the tones Sceeen sinc enow using new table
-[x] populate new tone fields
-[ ] finish arrangement (demo with the hives overdrive all the time :) )
-[x] acdc back in black pack (take / and . from all dlcs (issues at pc compress)
-[x] fixed a pack issue
-[x] improved the duplicate DLCName detection logic
-[x] added dlcid as part of FolderName
-[x] added option not to delete edited xmls (also keeps orig file in place)
-[x] fixed get track issue
-[x] added check standardisation on ggl
-[x] improved (hopefuly) save standardizations
+[x] improved audio fixing logs
+[x] get track fix
+[x] fix audio button canncel each step
+[x] fix audio not brokenn songs
+[x] select reverse fails
+[x] fixed repack stop missig
+[x] fixed remove all packed 
+[x] improved multi-platform packing
+[x] fixed remote_path default@pack
+[x] removed old bug creation at multiplatform packing
+[x] improved removed from Pack buttons
 
 # Version History(release date):
 	0.1(12.08.2014) prototype, 

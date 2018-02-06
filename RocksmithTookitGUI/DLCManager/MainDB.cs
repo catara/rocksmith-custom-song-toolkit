@@ -3796,7 +3796,8 @@ namespace RocksmithToolkitGUI.DLCManager
             try
             {
                 command.CommandType = CommandType.Text;
-                cnb.Open(); pB_ReadDLCs.Increment(1);
+                //cnb.Open();
+                pB_ReadDLCs.Increment(1);
                 command.ExecuteNonQuery();
             }
             catch (Exception ex) { MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error); }
@@ -4171,7 +4172,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 using (FileStream outputStream = new FileStream(outputFile, FileMode.Create, FileAccess.ReadWrite))
                 {
                     Sng2014File sng = Sng2014File.ConvertXML(temppath, ArrangementType.Vocal);
-                    sng.WriteSng(outputStream, new Platform(txt_Platform.Text.ToString().Replace("PC","Pc"), GameVersion.RS2014.ToString()));
+                    sng.WriteSng(outputStream, new Platform(txt_Platform.Text.ToString().Replace("PC", "Pc"), GameVersion.RS2014.ToString()));
                 }
 
                 //MessageBox.Show(String.Format("SNG file was generated! {0}It was saved on same location of xml file specified.", Environment.NewLine), MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -4374,8 +4375,8 @@ namespace RocksmithToolkitGUI.DLCManager
                                     DataSet dfb = new DataSet(); dfb = SelectFromDB("Main", "SELECT ID FROM Main WHERE Song_Title=\"" + info.SongInfo.SongDisplayName + "\";", "", cnb); //song.Title
                                     DataSet dfc = new DataSet(); dfc = SelectFromDB("Pack_AuditTrail", "SELECT DLC_ID FROM Pack_AuditTrail WHERE FileHash=\"" + FileHash + "\";", "", cnb);
                                     DataSet dff = new DataSet(); dff = SelectFromDB("Main", "SELECT ID FROM Main WHERE DLC_Name =\"" + info.Name.Substring(5, info.Name.Length - 5) + "\";", "", cnb);
-                                    DataSet dfd = new DataSet(); dfd = SelectFromDB("Main", "SELECT ID FROM Main WHERE DLC_Name like \"*" + info.Name.Substring(5, info.Name.Length - 5) + "*\";", "", cnb);
-                                    DataSet dfe = new DataSet(); dfe = SelectFromDB("Main", "SELECT ID FROM Main WHERE Song_Title like \"*" + info.SongInfo.SongDisplayName + "*\";", "", cnb);
+                                    DataSet dfd = new DataSet(); dfd = SelectFromDB("Main", "SELECT ID FROM Main WHERE DLC_Name like \"%" + info.Name.Substring(5, info.Name.Length - 5) + "%\";", "", cnb);
+                                    DataSet dfe = new DataSet(); dfe = SelectFromDB("Main", "SELECT ID FROM Main WHERE Song_Title like \"%" + info.SongInfo.SongDisplayName + "%\";", "", cnb);
                                     noreca = dfa.Tables[0].Rows.Count; norecb = dfb.Tables[0].Rows.Count; norecc = dfc.Tables[0].Rows.Count; norecd = dfd.Tables[0].Rows.Count; norece = dfe.Tables[0].Rows.Count; norecf = dff.Tables[0].Rows.Count;
                                     DataSet fxd = new DataSet();
                                     if (norecc == 1) fxd = dfc;
@@ -4479,8 +4480,8 @@ namespace RocksmithToolkitGUI.DLCManager
                                 DataSet dfb = new DataSet(); dfb = SelectFromDB("Main", "SELECT ID FROM Main WHERE Song_Title=\"" + song.Title + "\";", "", cnb);
                                 DataSet dfc = new DataSet(); dfc = SelectFromDB("Pack_AuditTrail", "SELECT DLC_ID FROM Pack_AuditTrail WHERE FileHash=\"" + FileHash + "\";", "", cnb);
                                 DataSet dff = new DataSet(); dff = SelectFromDB("Main", "SELECT ID FROM Main WHERE DLC_Name =\"" + song.Identifier.Substring(5, song.Identifier.Length - 5) + "\";", "", cnb);
-                                DataSet dfd = new DataSet(); dfd = SelectFromDB("Main", "SELECT ID FROM Main WHERE DLC_Name like \"*" + song.Identifier.Substring(5, song.Identifier.Length - 5) + "*\";", "", cnb);
-                                DataSet dfe = new DataSet(); dfe = SelectFromDB("Main", "SELECT ID FROM Main WHERE Song_Title like \"*" + song.Title + "*\";", "", cnb);
+                                DataSet dfd = new DataSet(); dfd = SelectFromDB("Main", "SELECT ID FROM Main WHERE DLC_Name like \"%" + song.Identifier.Substring(5, song.Identifier.Length - 5) + "%\";", "", cnb);
+                                DataSet dfe = new DataSet(); dfe = SelectFromDB("Main", "SELECT ID FROM Main WHERE Song_Title like \"%" + song.Title + "%\";", "", cnb);
                                 noreca = dfa.Tables[0].Rows.Count; norecb = dfb.Tables[0].Rows.Count; norecc = dfc.Tables[0].Rows.Count; norecd = dfd.Tables[0].Rows.Count; norece = dfe.Tables[0].Rows.Count; norecf = dff.Tables[0].Rows.Count;
                                 DataSet fxd = new DataSet();
                                 if (norecc == 1) fxd = dfc;
@@ -4550,7 +4551,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private void btn_RemoveRemoteSong_Click(object sender, EventArgs e)
         {
             var outp = "";
-            DataSet dxr = new DataSet(); dxr = UpdateDB("Main", "Update Main Set Remote_path = \"\";", cnb);
+            DataSet dxr = new DataSet(); dxr = UpdateDB("Main", "Update Main Set Remote_path = \"\" WHERE ID=" + txt_ID.Text + ";", cnb);
             if (chbx_Format.Text == "PS3")
             {
                 var FTPPath = "";
@@ -4570,7 +4571,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 catch (Exception ex) { var tsst = "Error ..." + ex; UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_LogPath"], ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null); }
             }
             txt_RemotePath.Text = "";
-            MessageBox.Show(outp);
+            MessageBox.Show("Removed " + outp);
         }
 
         private void btn_RemoveAllRemoteSongs_Click(object sender, EventArgs e)
@@ -4613,6 +4614,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
             }
             DataSet dxr = new DataSet(); dxr = UpdateDB("Main", "Update Main Set Remote_path = \"\";", cnb);
+            MessageBox.Show("All Remote-s songs have been deleted");
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -4895,7 +4897,8 @@ namespace RocksmithToolkitGUI.DLCManager
             }
             catch (Exception ex) { var tsst = "Error ..." + ex; UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_LogPath"], ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null); }
 
-            DataSet dxr = new DataSet(); dxr = UpdateDB("Pack_AuditTrail", "DELETE * FROM Pack_AuditTrail WHERE PackPath like \"*0_repacked*\";", cnb);
+            DataSet dxr = new DataSet(); dxr = UpdateDB("Pack_AuditTrail", "DELETE * FROM Pack_AuditTrail WHERE PackPath like \"%0_repacked%\";", cnb);
+            MessageBox.Show("All repacked songs have been deleted");
         }
 
         private void chbx_Copy_CheckedChanged(object sender, EventArgs e)
@@ -4945,12 +4948,14 @@ namespace RocksmithToolkitGUI.DLCManager
             }
             DeleteFromDB("Import_AuditTrail", "SELECT * WHERE FileHash NOT IN (SELECT FileHash FROM Main)", cnb);
             DeleteFromDB("Pack_AuditTrail", tcmd, cnb);
+            MessageBox.Show("All Duplicates songs have been deleted");
         }
 
         private void button3_Click_1(object sender, EventArgs e)
         {
             var cmd = " FROM Pack_AuditTrail WHERE PackPath+\"\\\"+FileName = \"" + cmb_Packed.Text + "\"";
             DeleteFile(cmb_Packed.Text);
+            cmb_Packed.Items.RemoveAt(cmb_Packed.SelectedIndex);
             DataSet dxr = new DataSet(); dxr = UpdateDB("Pack_AuditTrail", "DELETE * " + cmd, cnb);
         }
 
@@ -5382,18 +5387,24 @@ namespace RocksmithToolkitGUI.DLCManager
             var cancel = false;
             if (btn_FixAudioAll.Text != "Fix Audio Issues") { cancel = true; btn_FixAudioAll.Text = "Fix Audio Issues"; }
             else btn_FixAudioAll.Text = "Cancel Fix Audio";
-            var cmd = "SELECT ID, AudioPath, audioBitrate, audioSampleRate, audioPreviewPath, Folder_Name FROM Main WHERE Has_Preview=\"No\"";
+            var cmd = "SELECT ID, AudioPath, audioBitrate, audioSampleRate, audioPreviewPath, Folder_Name FROM Main WHERE Has_Preview=\"No\" AND Is_Broken<>\"Yes\"";
             //cmd += " AND " + ((SearchCmd.IndexOf("WHERE ") > 0) ? (SearchCmd.Substring(SearchCmd.IndexOf("WHERE ") + 5)) : "1=1");
             FixMissingPreview(cmd, cnb, AppWD, pB_ReadDLCs, rtxt_StatisticsOnReadDLCs, cancel);
-
+            btn_FixAudioAll.Text = "Fix Audio Issues";
             //if (bwRGenerate.WorkerSupportsCancellation == true) bwRGenerate.CancelAsync();// Cancel the asynchronous operation.
+
+            if (btn_FixAudioAll.Text != "Fix Audio Issues") { cancel = true; btn_FixAudioAll.Text = "Fix Audio Issues"; }
+            else btn_FixAudioAll.Text = "Cancel Fix Audio";
             cmd = "SELECT ID, AudioPath, audioBitrate, audioSampleRate, audioPreviewPath, oggPreviewPath FROM Main WHERE (VAL(audioBitrate) > "
                 + (ConfigRepository.Instance()["dlcm_MaxBitRate"]) + " or VAL(audioSampleRate) > " + (ConfigRepository.Instance()["dlcm_MaxSampleRate"]) + ") AND "
-                + "ID IN(" + SearchCmd.Replace(" * ", " ID ").Replace("; ", "").Replace(SearchFields, "ID") + ")";
+                + "ID IN(" + SearchCmd.Replace(" * ", " ID ").Replace("; ", "").Replace(SearchFields, "ID") + ") AND Is_Broken<>\"Yes\"";
             //cmd += " AND " + ((SearchCmd.IndexOf("WHERE ") > 0) ? (SearchCmd.Substring(SearchCmd.IndexOf("WHERE ") + 5)) : "1=1");
             FixAudioIssues(cmd.Replace("; ", ""), cnb, AppWD, pB_ReadDLCs, rtxt_StatisticsOnReadDLCs, cancel);
+            btn_FixAudioAll.Text = "Fix Audio Issues";
 
             //fix missing spotify details
+            if (btn_FixAudioAll.Text != "Fix Audio Issues") { cancel = true; btn_FixAudioAll.Text = "Fix Audio Issues"; }
+            else btn_FixAudioAll.Text = "Cancel Fix Audio";
             if (netstatus == "NOK" || netstatus == "") netstatus = GenericFunctions.ActivateSpotify_ClickAsync().Result.ToString();
             var sel = "SELECT Song_Title, Song_Title_Sort, Album, Artist, Album_Year, ID FROM Main WHERE (Track_No = \"0\" OR Track_No = \"-1\" OR Track_No = \"\" OR Track_No is null) "
                 + "AND ID IN(" + SearchCmd.Replace(" * ", " ID ").Replace("; ", "").Replace(SearchFields, "ID") + ") ORDER BY Spotify_Artist_ID ASC";
@@ -5444,6 +5455,7 @@ namespace RocksmithToolkitGUI.DLCManager
             DeleteFromDB("Import_AuditTrail", "SELECT * WHERE FileHash NOT IN (SELECT FileHash FROM Main)", cnb);
             DeleteFromDB("Pack_AuditTrail", tcmd, cnb);
             //DataSet dxr = new DataSet(); dxr = UpdateDB("Pack_AuditTrail", "DELETE * " + cmd, cnb);
+            MessageBox.Show("All HashDuplicates songs have been deleted");
         }
         public void FixWithSpotifyDetails(DataSet SongRecord, int i, int noOfRec)
         {
@@ -5506,6 +5518,23 @@ namespace RocksmithToolkitGUI.DLCManager
         private void databox_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void btn_Remove_Packed_Click(object sender, EventArgs e)
+        {
+            for (var i = 0; i < cmb_Packed.Items.Count - 1; i++)
+                if (i != cmb_Packed.SelectedIndex)
+                {
+                    DeleteFile(cmb_Packed.Items[i].ToString());
+                    cmb_Packed.Items.RemoveAt(i);
+                    DataSet dxr = new DataSet(); dxr = UpdateDB("Pack_AuditTrail", "DELETE * FROM Pack_AuditTrail WHERE PackPath+FileName=\"" + cmb_Packed.Items[i].ToString() + "\" AND PackPath unlike \"%old%\"; ", cnb);
+                }
+            MessageBox.Show("All repacked songs have been deleted");
+        }
+
+        private void button2_Click_2(object sender, EventArgs e)
+        {
+            DataSet dxr = new DataSet(); dxr = UpdateDB("Pack_AuditTrail", "Update Pack_AuditTrail Set Reason = \"\" WHERE Reson=\"Missing PSARC\"; ", cnb);
         }
     }
 }

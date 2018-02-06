@@ -40,9 +40,9 @@ namespace RocksmithToolkitGUI.DLCManager
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             this.databox = new System.Windows.Forms.DataGridView();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.chbx_DupliGTrack = new System.Windows.Forms.CheckBox();
@@ -255,6 +255,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_Spotify_Artist_ID = new RocksmithToolkitGUI.CueTextBox();
             this.txt_Spotify_Song_ID = new RocksmithToolkitGUI.CueTextBox();
             this.txt_SpotifyStatus = new RocksmithToolkitGUI.CueTextBox();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.databox)).BeginInit();
             this.tabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -291,36 +292,36 @@ namespace RocksmithToolkitGUI.DLCManager
             this.databox.AllowUserToDeleteRows = false;
             this.databox.AllowUserToOrderColumns = true;
             this.databox.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.databox.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.databox.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
             this.databox.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.databox.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.databox.DefaultCellStyle = dataGridViewCellStyle11;
             this.databox.Location = new System.Drawing.Point(4, 6);
             this.databox.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.databox.MultiSelect = false;
             this.databox.Name = "databox";
             this.databox.ReadOnly = true;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.databox.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.databox.RowHeadersDefaultCellStyle = dataGridViewCellStyle12;
             this.databox.Size = new System.Drawing.Size(2216, 678);
             this.databox.TabIndex = 2;
             this.databox.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick_1);
@@ -2541,6 +2542,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.button2);
             this.tabPage3.Controls.Add(this.btn_Remove_HashDuplicates);
             this.tabPage3.Controls.Add(this.chbx_Duplicate_Official);
             this.tabPage3.Controls.Add(this.button3);
@@ -2639,14 +2641,14 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // btn_Remove_Packed
             // 
-            this.btn_Remove_Packed.Enabled = false;
             this.btn_Remove_Packed.Location = new System.Drawing.Point(8, 118);
             this.btn_Remove_Packed.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btn_Remove_Packed.Name = "btn_Remove_Packed";
-            this.btn_Remove_Packed.Size = new System.Drawing.Size(280, 90);
+            this.btn_Remove_Packed.Size = new System.Drawing.Size(280, 69);
             this.btn_Remove_Packed.TabIndex = 338;
-            this.btn_Remove_Packed.Text = "Remove All but the Curently Selected Packed Song";
+            this.btn_Remove_Packed.Text = "Remove All but the Selected Packed Song";
             this.btn_Remove_Packed.UseVisualStyleBackColor = true;
+            this.btn_Remove_Packed.Click += new System.EventHandler(this.btn_Remove_Packed_Click);
             // 
             // btn_RemoveAllRemoteSongs
             // 
@@ -3190,6 +3192,17 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_SpotifyStatus.Size = new System.Drawing.Size(410, 32);
             this.txt_SpotifyStatus.TabIndex = 400;
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(8, 199);
+            this.button2.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(280, 61);
+            this.button2.TabIndex = 348;
+            this.button2.Text = "Remove All Marked (by readLib) as Missing";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click_2);
+            // 
             // MainDB
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(192F, 192F);
@@ -3460,5 +3473,6 @@ namespace RocksmithToolkitGUI.DLCManager
         public ProgressBar pB_ReadDLCs;
         private Button btn_Remove_HashDuplicates;
         private CheckBox chbx_InclBroken;
+        private Button button2;
     }
 }

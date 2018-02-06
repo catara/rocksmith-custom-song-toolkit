@@ -122,3 +122,11 @@ __pycache__/
 *.egg
 *.userprefs
 .vs/RocksmithCustomSongCreator/v15/sqlite3/storage.ide
+.vs/RocksmithCustomSongCreator/v15/Server/sqlite3/db.lock
+.vs/RocksmithCustomSongCreator/v15/Server/sqlite3/db.lock
+.vs/RocksmithCustomSongCreator/v15/Server/sqlite3/storage.ide-shm
+.vs/RocksmithCustomSongCreator/v15/sqlite3/db.lock
+.vs/RocksmithCustomSongCreator/v15/sqlite3/storage.ide
+.vs/RocksmithCustomSongCreator/v15/sqlite3/storage.ide-shm
+.vs/RocksmithCustomSongCreator/v15/sqlite3/storage.ide-wal
+.vs/RocksmithCustomSongCreator/v15/Server/sqlite3/storage.ide

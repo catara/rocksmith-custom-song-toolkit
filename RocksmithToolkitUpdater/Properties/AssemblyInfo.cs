@@ -31,4 +31,3 @@ using System.Resources;
 [assembly: AssemblyVersion("2.8.4.1")]
 [assembly: AssemblyInformationalVersion("1f8cdf33")]
 [assembly: AssemblyConfiguration("BETA")]
-[assembly: NeutralResourcesLanguageAttribute("en")]

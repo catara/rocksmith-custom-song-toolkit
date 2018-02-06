@@ -178,7 +178,7 @@ namespace RocksmithToolkitGUI.DDC
                 switch (Path.GetExtension(file.Value))
                 {
                     case ".xml":   // Arrangement
-                        ApplyDD(file.Value, (int)cmbPhraseLen.Value, chkRemoveSustains.Checked, rampPath, cfgPath, out consoleOutput, chkOverwrite.Checked, chkGenLogFile.Checked);
+                        DDCreator.ApplyDD(file.Value, (int)cmbPhraseLen.Value, chkRemoveSustains.Checked, rampPath, cfgPath, out consoleOutput, chkOverwrite.Checked, chkGenLogFile.Checked);
                         break;
                     case ".psarc": // PC / Mac (RS2014)
                     case ".dat":   // PC (RS1)
@@ -209,6 +209,7 @@ namespace RocksmithToolkitGUI.DDC
             e.Result = errorCount; // No Errors = 0
         }
 
+        [Obsolete("Depricated, please use RocksmithToolkitLib.DDCreator.", true)]
         public int ApplyDD(string filePath, int phraseLen, bool removeSus, string rampPath, string cfgPath, out string consoleOutput, bool overWrite = false, bool keepLog = false)
         {
             var startInfo = new ProcessStartInfo
@@ -291,7 +292,7 @@ namespace RocksmithToolkitGUI.DDC
                 Song2014.WriteXmlComments(arr.SongXml.File, arr.XmlComments);
 
                 // apply DD to xml arrangments... 0 = Ends normally with no error
-                result = ApplyDD(arr.SongXml.File, phraseLen, removeSus, rampPath, cfgPath, out consoleOutput, true, keepLog);
+                result = DDCreator.ApplyDD(arr.SongXml.File, phraseLen, removeSus, rampPath, cfgPath, out consoleOutput, true, keepLog);
                 if (result == 1) // Ends with system error
                 {
                     consoleOutput = "DDC System Error: " + Environment.NewLine +
@@ -404,9 +405,9 @@ namespace RocksmithToolkitGUI.DDC
         private string GenerateDdcFilePath(string filePath)
         {
             var platform = filePath.GetPlatform();
-            var ddcFilePath = Path.Combine(Path.GetDirectoryName(filePath), String.Format("{0}_{1}{2}",
+            var ddcFilePath = Path.Combine(Path.GetDirectoryName(filePath), String.Format("{0}{1}{2}",
                 Path.GetFileNameWithoutExtension(filePath).StripPlatformEndName().GetValidFileName().Replace("_DD", "").Replace("_NDD", ""),
-                IsNDD ? "NDD" : "DD", platform.GetPathName()[2]));
+                IsNDD ? "_NDD" : "", platform.GetPathName()[2]));
             ddcFilePath = String.Format("{0}{1}", ddcFilePath, Path.GetExtension(filePath));
 
             return ddcFilePath;

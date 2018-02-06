@@ -31,7 +31,7 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest2014.Header
         // apply conditional serialization to BassPick
         public int BassPick { get; set; } // added to resolve issue #272
         public decimal CapoFret { get; set; }
-        public double? CentOffset { get; set; }
+        public double? CentOffset { get; set; } // tuning frequency, see Cents2Frequency method
         public bool DLC { get; set; }
         public string DLCKey { get; set; } // <=> SongKey
         public double? DNA_Chords { get; set; }
@@ -60,6 +60,8 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest2014.Header
         public string SongName { get; set; }
         public string SongNameSort { get; set; }
         public int? SongYear { get; set; }
+        public string JapaneseSongName { get; set; } //Unicode string, be cautious
+        public string JapaneseArtist { get; set; } //Unicode string, be cautious
         public TuningStrings Tuning { get; set; }
         public string PersistentID { get; set; }
 
@@ -139,6 +141,8 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest2014.Header
             SongLength = Math.Round(SongContent.SongLength, 3, MidpointRounding.AwayFromZero);
             SongName = info.SongInfo.SongDisplayName;
             SongNameSort = info.SongInfo.SongDisplayNameSort;
+            JapaneseSongName = info.SongInfo.JapaneseSongName;
+            JapaneseArtist = info.SongInfo.JapaneseArtist;
             SongYear = info.SongInfo.SongYear;
 
             //Detect tuning

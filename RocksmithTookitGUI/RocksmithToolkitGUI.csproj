@@ -921,7 +921,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="DLCManager\external_tools\bpr_v0.3\bpr.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>=
+    <EmbeddedResource Include="BetaInfo.rtf" />
+    <Content Include="songcreator.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="DLCManager\external_tools\bpr_v0.3\bpr_config.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

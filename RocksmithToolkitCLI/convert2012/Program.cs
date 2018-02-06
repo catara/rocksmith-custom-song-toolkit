@@ -17,9 +17,13 @@ namespace convert2012
     {
         static int Main(string[] args)
         {
-            Console.WindowWidth = 85;
-            Console.BackgroundColor = ConsoleColor.Black;
-            Console.ForegroundColor = ConsoleColor.Green;
+            try
+            {
+                Console.SetWindowSize(85, 40);
+                Console.BackgroundColor = ConsoleColor.Black;
+                Console.ForegroundColor = ConsoleColor.Green;
+            }
+            catch {/* DO NOTHING */}
 
 #if (DEBUG)
             // give the progie some dumby file to work on
@@ -170,7 +174,7 @@ namespace convert2012
                     ExternalApps.Ogg2Preview(oggPath, oggPreviewPath);
                     ExternalApps.Ogg2Wav(oggPreviewPath, wavPreviewPath);
                 }
-                Wwise.Convert2Wem(audioPath, wemPath, 4); // default audio quality = 4
+                Wwise.Wav2Wem(audioPath, wemPath, 4); // default audio quality = 4
                 audioPath = wemPath;
             }
 

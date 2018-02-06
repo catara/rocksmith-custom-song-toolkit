@@ -19,7 +19,7 @@ using RocksmithToolkitLib.Sng2014HSL;
   * 32(G#) = Dark Orange;               33(A#) = LtBlue(D like)
   * 34(A)  = Yellow(A# like)            35(B)  = Dark Violet(F like)
   * 
-  * Spotlights midi notes: 48-59, 42 is off
+  * Spotlights midi notes: 48-59 (may be venue dependent), 42 is off
   * 48(C)  = Green;                     49(C#) = Dark Red(G like)
   * 50(D)  = Medium Turquoise(C# like); 51(D#) = Brown(A like)
   * 52(E)  = Blue(D# like);             53(F)  = LtGreen(B like)
@@ -31,11 +31,13 @@ using RocksmithToolkitLib.Sng2014HSL;
   * ? Spinning Laser Light: 66
   * ? Back spotlights combine: 66 & 67 
   *
+  * Unknown 0-23
   * Unknown: 36-41
-  * notes 43-47 causes game hangs
-  * notes 60-62 causes game hangs
+  * Notes 43-47 causes game hangs
+  * Notes 60-62 causes game hangs
   * Unknown: 63-65
   * Unknown: 68-69
+  * Unknown: 42 - used in "My Generation" 53, 42, 55
   *
   * CAUTION - showlights can be major cause of in-game crashes
   * Initialize Fog and Beam in first two elements to avoid in-game crashes
@@ -48,6 +50,21 @@ using RocksmithToolkitLib.Sng2014HSL;
   * ? 67, 42, 66 turns off all spots and lasers
   * ? 67, 54, 66 turns off all spots and lasers except back four spot
   * ? 42, 54 turns on back spot, search and laser lights.
+  * 
+  * Strobe effect can be acheived by changing between two fog colors every 0.2 seconds.
+  * thanks to iminash's for sharing research about showlights
+  * 
+  * Each stage has 4 zones of lights, large venues can have led lights and has no spawners limitation
+  * effects type:
+  * blinder lights - those stacks of lamps at the back
+  * par can lights - those colorful projectors always there
+  * intelligent laser - those stripes you hate
+  * intelligent streak - ?derectional beam of light
+  * intelligent bright - ?bidirectional light for doing common lightning
+  * Disabled:
+  * led lights - maybe not that useful or I missed it?
+  * 
+  * 
  */
 
 namespace RocksmithToolkitLib.XML
@@ -216,7 +233,7 @@ namespace RocksmithToolkitLib.XML
                 // forcing midi notes for guitar gives more consistent results even with bass arrangements
                 var mNote = Sng2014FileWriter.getChordNote(tuning, chord, song.ChordTemplates, false, song.Capo);
                 // varying midi notes gives more color changes
-                // var mNote = Sng2014FileWriter.getChordNote(tuning, chord, song.ChordTemplates, song.Arrangement == "Bass", song.Capo);
+                //var mNote = Sng2014FileWriter.getChordNote(tuning, chord, song.ChordTemplates, song.Arrangement == "Bass", song.Capo);
                 chordNotes.Add(new Showlight { Time = measOffset.Time, Note = mNote });
             }
 
@@ -247,15 +264,28 @@ namespace RocksmithToolkitLib.XML
                 // using bottoms up approach
                 for (var i = showlightList.Count - 1; i > 0; i--)
                 {
-                    // remove any bad/unknown notes: ranges 0-23, 36-41, 43-47, 60-65, 68-99
-                    if ((showlightList[i].Note > -1 && showlightList[i].Note < 24) || (showlightList[i].Note > 35 && showlightList[i].Note < 42) || (showlightList[i].Note > 42 && showlightList[i].Note < 48) || (showlightList[i].Note > 59 && showlightList[i].Note < 66))
-                    // || (showlightList[i].Note > 67 && showlightList[i].Note < 128))
+                    // replace any bad/unknown notes: ranges 0-23, 36-41, 43-47, 60-65, 68-128
+                    if ((showlightList[i].Note > -1 && showlightList[i].Note < 24) ||
+                        (showlightList[i].Note > 35 && showlightList[i].Note < 42) ||
+                        (showlightList[i].Note > 42 && showlightList[i].Note < 48) ||
+                        (showlightList[i].Note > 59 && showlightList[i].Note < 66) ||
+                        (showlightList[i].Note > 67 && showlightList[i].Note < 128))
                     {
-                        showlightList.RemoveAt(i);
-                        continue; // must be used
+                        if (showlightList[i].Note < 48)
+                            showlightList[i].Note = GetFogNote(showlightList[i].Note);
+
+                        if (showlightList[i].Note > 59)
+                            showlightList[i].Note = GetBeamNote(showlightList[i].Note);
                     }
 
                     // remove any back to back duplicate notes
+                    if (i < showlightList.Count - 1)
+                        if (showlightList[i].Note == showlightList[i + 1].Note)
+                        {
+                            showlightList.RemoveAt(i + 1);
+                            continue; // must be used
+                        }
+
                     if (showlightList[i].Note == showlightList[i - 1].Note)
                     {
                         showlightList.RemoveAt(i);
@@ -263,7 +293,7 @@ namespace RocksmithToolkitLib.XML
                     }
 
                     //// for testing music swell/solo effect
-                    //// Change FogNote to BeamNote when third octive changes occure (quasi solo swell effect) not really
+                    //// Change FogNote to BeamNote when third of octive changes occure (quasi solo swell effect) not really
                     //if ((showlightList[i].Note > 23 && showlightList[i].Note < 36) && (showlightList[i - 1].Note > 23 && showlightList[i - 1].Note < 36))
                     //{
                     //    if (Math.Abs(showlightList[i].Note - showlightList[i - 1].Note) > 3)

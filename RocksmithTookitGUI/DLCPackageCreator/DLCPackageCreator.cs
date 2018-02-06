@@ -28,6 +28,7 @@ using Control = System.Windows.Forms.Control;
 using ProgressBarStyle = System.Windows.Forms.ProgressBarStyle;
 using RocksmithToolkitGUI.Config;
 
+
 namespace RocksmithToolkitGUI.DLCPackageCreator
 {
     public partial class DLCPackageCreator : UserControl
@@ -50,14 +51,13 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
         // prevents multiple tool tip appearance and gives better action
         private ToolTip tt = new ToolTip();
 
-
         public DLCPackageCreator()
         {
             InitializeComponent();
 
-#if (!DEBUG)
-            btnDevUse.Visible = false;
-#endif
+            // it is better to be hidden initially and then unhide when needed
+            if (GeneralExtensions.IsInDesignMode)
+                btnDevUse.Visible = true;
 
             lstArrangements.AllowDrop = true;
             numAudioQuality.MouseEnter += AudioQuality_MouseEnter;
@@ -75,10 +75,10 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             bwGenerate.WorkerReportsProgress = true;
             AddValidationEventHandlers();
 
+            // this sequence gets done everytime config changes
             try
             {
-                // this sequence gets done everytime config changes
-                SetDefaultFromConfig();
+                ReadConfigSettings();
                 PopulateAppIdCombo();
                 PopulateTonesLB();
             }
@@ -86,6 +86,8 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             {
                 /*For mono compatibility*/
             }
+
+            var debugMe = txtAppId.Text;
         }
 
         //dirty implementation, it's always true, consider undo\redo manager for actions made+logging maybe?
@@ -110,6 +112,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             set { txtYear.Text = value.GetValidYear(); }
         }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] // perma fix to prevent an empty AppId
         public string AppId
         {
             get { return txtAppId.Text; }
@@ -217,6 +220,18 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
         {
             get { return txtVersion.Text; }
             set { txtVersion.Text = String.IsNullOrEmpty(value) ? "" : value.GetValidVersion(); }
+        }
+
+        public string JapaneseArtist
+        {
+            get { return txtJapaneseArtist.Text; }
+            set { txtJapaneseArtist.Text = value; }
+        }
+
+        public string JapaneseSongTitle
+        {
+            get { return txtJapaneseSongTitle.Text; }
+            set { txtJapaneseSongTitle.Text = value; }
         }
 
         public string SongTitle
@@ -338,7 +353,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             DLCPackageData info = null;
             try
             {
-                if (rbRs2014.Checked)
+                if (CurrentGameVersion == GameVersion.RS2014) // rbRs2014.Checked)
                 {
                     // check and fix the template compatibility if necessary
                     var templateString = File.ReadAllText(templatePath);
@@ -356,8 +371,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 if (info == null) throw new InvalidDataException("CDLC Template is null");
 
                 // use AppId to determine GameVersion of dlc.xml template
-                rbRs2012.Checked = (Convert.ToInt32(info.AppId) < 230000);
-                rbRs2014.Checked = (Convert.ToInt32(info.AppId) > 240000);
+                CurrentGameVersion = (Convert.ToInt32(info.AppId) < 230000) ? GameVersion.RS2012 : GameVersion.RS2014;
             }
             catch (Exception se)
             {
@@ -792,16 +806,34 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             // Song INFO
             txtDlcKey.Text = info.Name;
 
+            // do in case CurrentGameVersion changed
             PopulateAppIdCombo();
-            Application.DoEvents();
 
-            txtAppId.Text = info.AppId;
-            if (String.IsNullOrEmpty(txtAppId.Text))
-                txtAppId.Text = info.AppId = "248750"; // hardcoded for now
+            // Update AppID unless it is locked
+            if (!ConfigRepository.Instance().GetBoolean("general_lockappid"))
+            {
+                if (String.IsNullOrEmpty(info.AppId))
+                {
+                    // get GeneralConfig default AppID
+                    var songAppId = SongAppIdRepository.Instance().Select((CurrentGameVersion == GameVersion.RS2014) ? ConfigRepository.Instance()["general_defaultappid_RS2014"] : ConfigRepository.Instance()["general_defaultappid_RS2012"], CurrentGameVersion);
+                    if (!String.IsNullOrEmpty(songAppId.AppId))
+                        AppId = songAppId.AppId;
+                    else
+                        AppId = "248750"; // JIC use hardcoded default
+                }
+                else
+                    AppId = info.AppId;
+            }
+            else
+                AppId = info.AppId;
 
-            SelectComboAppId(info.AppId);
+            SelectComboAppId(AppId);
+
             txtAlbum.Text = info.SongInfo.Album;
             txtAlbumSort.Text = info.SongInfo.AlbumSort;
+            txtJapaneseSongTitle.Text = info.SongInfo.JapaneseSongName;
+            txtJapaneseArtist.Text = info.SongInfo.JapaneseArtist;
+            cbJapaneseTitle.Checked = !string.IsNullOrEmpty(txtJapaneseSongTitle.Text) || !string.IsNullOrEmpty(txtJapaneseArtist.Text);
             txtSongTitle.Text = info.SongInfo.SongDisplayName;
             txtSongTitleSort.Text = info.SongInfo.SongDisplayNameSort;
             txtYear.Text = info.SongInfo.SongYear.ToString();
@@ -928,7 +960,17 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 //    DlcKeyTB.Focus();
                 //    return null;
                 //}
-
+                /* //ignore since optional
+                if (txtJapaneseSongTitle.Enabled && String.IsNullOrEmpty(JapaneseSongTitle))
+                {
+                    txtJapaneseSongTitle.Focus();
+                    return null;
+                }
+                if (txtJapaneseArtist.Enabled && String.IsNullOrEmpty(JapaneseArtist))
+                {
+                    txtJapaneseArtist.Focus();
+                    return null;
+                }*/
                 if (String.IsNullOrEmpty(SongTitle))
                 {
                     txtSongTitle.Focus();
@@ -1172,13 +1214,15 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
 
                     SongInfo = new SongInfo
                         {
-                            SongDisplayName = txtSongTitle.Text,
-                            SongDisplayNameSort = String.IsNullOrEmpty(txtSongTitleSort.Text.Trim()) ? txtSongTitle.Text : txtSongTitleSort.Text,
-                            Album = txtAlbum.Text,
-                            AlbumSort = txtAlbumSort.Text,
+                            JapaneseArtist = this.JapaneseArtist,
+                            JapaneseSongName = this.JapaneseSongTitle,
+                            SongDisplayName = this.SongTitle,
+                            SongDisplayNameSort = this.SongTitleSort,
+                            Album = this.Album,
+                            AlbumSort = this.AlbumSort,
                             SongYear = year,
-                            Artist = txtArtist.Text,
-                            ArtistSort = String.IsNullOrEmpty(txtArtistSort.Text.Trim()) ? txtArtist.Text : txtArtistSort.Text,
+                            Artist = this.Artist,
+                            ArtistSort = this.ArtistSort,
                             AverageTempo = tempo
                         },
 
@@ -1305,18 +1349,12 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
 
         private void PopulateAppIdCombo()
         {
-            // takes into account possible conversion
-            var currentGameVersion = GameVersion.RS2014;
-            if (CurrentGameVersion == GameVersion.RS2012)
-                currentGameVersion = GameVersion.RS2012;
-
             cmbAppIds.Items.Clear();
-            foreach (var song in SongAppIdRepository.Instance().Select(currentGameVersion))
+            foreach (var song in SongAppIdRepository.Instance().Select(CurrentGameVersion))
                 cmbAppIds.Items.Add(song);
 
-            var songAppId = SongAppIdRepository.Instance().Select((currentGameVersion == GameVersion.RS2014) ? ConfigRepository.Instance()["general_defaultappid_RS2014"] : ConfigRepository.Instance()["general_defaultappid_RS2012"], currentGameVersion);
+            var songAppId = SongAppIdRepository.Instance().Select((CurrentGameVersion == GameVersion.RS2014) ? ConfigRepository.Instance()["general_defaultappid_RS2014"] : ConfigRepository.Instance()["general_defaultappid_RS2012"], CurrentGameVersion);
             cmbAppIds.SelectedItem = songAppId;
-            txtAppId.Text = songAppId.AppId;
             AppId = songAppId.AppId;
         }
 
@@ -1440,28 +1478,39 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 lstArrangements.Refresh();
                 IsDirty = true;
             }
+
+            var debubMe = txtAppId.Text;
         }
 
         private void SelectComboAppId(string appId)
         {
             var songAppId = SongAppIdRepository.Instance().Select(appId, CurrentGameVersion);
+
             if (SongAppIdRepository.Instance().List.Any<SongAppId>(a => a.AppId == appId))
+            {
                 cmbAppIds.SelectedItem = songAppId;
-            else//TODO: combobox
+            }
+            else
             {
                 if (!appId.IsAppIdSixDigits())
                     MessageBox.Show("Please enter a valid six digit  " + Environment.NewLine + "App ID before continuing.", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 else
-                    MessageBox.Show("User entered an unknown AppID." + Environment.NewLine + Environment.NewLine + "Toolkit will use the AppID that  " + Environment.NewLine + "was entered manually but it can  " + Environment.NewLine + "not assess its validity.", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                {
+                    cmbAppIds.Items.Insert(0, new SongAppId() { Name = "Unknown AppID", AppId = appId });
+                    cmbAppIds.SelectedIndex = 0;
+                    MessageBox.Show("<WARNING> Unknown AppID ..." + Environment.NewLine +
+                                    "This AppID may or may not be valid.  " + Environment.NewLine + Environment.NewLine +
+                                    "Please ensure the AppID is valid.", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
         }
 
-        private void SetDefaultFromConfig()
+        private void ReadConfigSettings()
         {
             // read from RocksmithToolkitLib.Config.xml
             try
             {
-
+                numAudioQuality.Value = ConfigRepository.Instance().GetDecimal("creator_qualityfactor");
                 fixLowBass = ConfigRepository.Instance().GetBoolean("creator_fixlowbass");
                 fixMultiTone = ConfigRepository.Instance().GetBoolean("creator_fixmultitone");
                 Globals.DefaultProjectDir = ConfigRepository.Instance()["creator_defaultproject"];
@@ -1560,8 +1609,8 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 }
 
                 var packageVersion = String.Format("{0}{1}", versionPrefix, PackageVersion.Replace(".", "_"));
-                var ddAcronym = ConfigRepository.Instance().GetBoolean("ddc_autogen") || isDD ? "DD" : "NDD";
-                var fileName = String.Format("{0}_{1}", StringExtensions.GetValidShortFileName(ArtistSort, SongTitleSort, packageVersion, ConfigRepository.Instance().GetBoolean("creator_useacronyms")), ddAcronym);
+                var ddAcronym = ConfigRepository.Instance().GetBoolean("ddc_autogen") || isDD ? "" : "_NDD";
+                var fileName = String.Format("{0}{1}", StringExtensions.GetValidShortFileName(ArtistSort, SongTitleSort, packageVersion, ConfigRepository.Instance().GetBoolean("creator_useacronyms")), ddAcronym);
                 sfd.FileName = fileName.GetValidFileName();
                 sfd.Filter = CurrentRocksmithTitle + " CDLC (*.*)|*.*";
 
@@ -1638,12 +1687,12 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
 
             // declare one time for DDC generation   
             var consoleOutput = String.Empty;
-            SettingsDDC.Instance.LoadConfigXml();
-            var phraseLen = SettingsDDC.Instance.PhraseLen;
+            DDCSettings.Instance.LoadConfigXml();
+            var phraseLen = DDCSettings.Instance.PhraseLen;
             // removeSus may be depricated in latest DDC but left here for comptiblity
-            var removeSus = SettingsDDC.Instance.RemoveSus;
-            var rampPath = SettingsDDC.Instance.RampPath;
-            var cfgPath = SettingsDDC.Instance.CfgPath;
+            var removeSus = DDCSettings.Instance.RemoveSus;
+            var rampPath = DDCSettings.Instance.RampPath;
+            var cfgPath = DDCSettings.Instance.CfgPath;
 
             foreach (var arr in packageData.Arrangements)
             {
@@ -1697,21 +1746,18 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                     // Important ... don't overwrite author's DD if it is already present in any arragement
                     if (!isDD)
                     {
-                        using (var ddc = new DDC.DDC())
+                        // apply DD to xml arrangments
+                        var result = DDCreator.ApplyDD(arr.SongXml.File, phraseLen, removeSus, rampPath, cfgPath, out consoleOutput, true);
+                        if (result == 1)
                         {
-                            // apply DD to xml arrangments
-                            var singleResult = ddc.ApplyDD(arr.SongXml.File, phraseLen, removeSus, rampPath, cfgPath, out consoleOutput, true);
-                            if (singleResult == 1)
-                            {
-                                var errMsg = "DDC generated an error while processing arrangement:" + Environment.NewLine + arr.SongXml.File + Environment.NewLine;
-                                BetterDialog2.ShowDialog(errMsg, "DDC Generated Error", null, null, "Ok", Bitmap.FromHicon(SystemIcons.Error.Handle), "Error", 150, 150);
-                            }
+                            var errMsg = "DDC generated an error while processing arrangement:" + Environment.NewLine + arr.SongXml.File + Environment.NewLine;
+                            BetterDialog2.ShowDialog(errMsg, "DDC Generated Error", null, null, "Ok", Bitmap.FromHicon(SystemIcons.Error.Handle), "Error", 150, 150);
+                        }
 
-                            if (singleResult == 2)
-                            {
-                                consoleOutput = String.Format("Arrangement file '{0}' => {1}", Path.GetFileNameWithoutExtension(arr.SongXml.File), consoleOutput);
-                                BetterDialog2.ShowDialog(consoleOutput, "DDC Generation Info", null, null, "Ok", Bitmap.FromHicon(SystemIcons.Error.Handle), "Error", 150, 150);
-                            }
+                        if (result == 2)
+                        {
+                            consoleOutput = String.Format("Arrangement file '{0}' => {1}", Path.GetFileNameWithoutExtension(arr.SongXml.File), consoleOutput);
+                            BetterDialog2.ShowDialog(consoleOutput, "DDC Generation Info", null, null, "Ok", Bitmap.FromHicon(SystemIcons.Error.Handle), "Error", 150, 150);
                         }
                     }
                     else
@@ -2502,7 +2548,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
         {
             if (cmbAppIds.SelectedItem != null)
             {
-                txtAppId.Text = ((SongAppId)cmbAppIds.SelectedItem).AppId;
+                AppId = ((SongAppId)cmbAppIds.SelectedItem).AppId;
             }
         }
 
@@ -2561,7 +2607,28 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             }
         }
 
+        private void cbJapaneseTitle_CheckedChanged(object sender, EventArgs e)
+        {
+            if (((CheckBox)sender).Checked)
+            {
+                txtJapaneseSongTitle.BringToFront();
+                txtJapaneseArtist.BringToFront();
+            }
+            else
+            {
+                txtJapaneseSongTitle.SendToBack();
+                txtJapaneseArtist.SendToBack();
+            }
+        }
 
+        private void txtJapaneseSongTitle_Validating(object sender, CancelEventArgs e)
+        {
+            ((CueTextBox)sender).Text = ((CueTextBox)sender).Text.TrimEnd();
+        }
 
+        private void cbJapaneseTitle_Click(object sender, EventArgs e)
+        {
+            cbJapaneseTitle.Checked = !((CheckBox)sender).Checked;
+        }
     }
 }

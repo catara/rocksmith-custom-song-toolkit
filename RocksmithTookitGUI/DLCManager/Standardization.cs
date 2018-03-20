@@ -774,12 +774,14 @@ namespace RocksmithToolkitGUI.DLCManager
                 var SpotifyAlbumID = sptyfy.Result.Split(';')[3];
                 var SpotifyAlbumURL = sptyfy.Result.Split(';')[4];
                 var SpotifyAlbumPath = sptyfy.Result.Split(';')[5];
+                var SpotifyAlbumYear = sptyfy.Result.Split(';')[6].Length >= 4 ? sptyfy.Result.Split(';')[6].Substring(0, 4) : "";
                 pB_ReadDLCs.Value++;
                 if (SpotifyArtistID != "-" && SpotifyArtistID != "")
                 {
                     databox.Rows[i].Cells[11].Value = SpotifyArtistID;
                     databox.Rows[i].Cells[12].Value = SpotifyAlbumID;
                     databox.Rows[i].Cells[13].Value = SpotifyAlbumURL;
+                    databox.Rows[i].Cells[10].Value = SpotifyAlbumYear;
                     //using (WebClient wc = new WebClient())
                     //{
                     //    byte[] imageBytes = wc.DownloadData(new Uri(SpotifyAlbumURL));
@@ -849,10 +851,11 @@ namespace RocksmithToolkitGUI.DLCManager
                     var SpotifyAlbumID = sptyfy.Result.Split(';')[3];
                     var SpotifyAlbumURL = sptyfy.Result.Split(';')[4];
                     var SpotifyAlbumPath = sptyfy.Result.Split(';')[5];
+                    var SpotifyAlbumYear = sptyfy.Result.Split(';')[6].Length >= 4 ? sptyfy.Result.Split(';')[6].Substring(0, 4) : "";
                     //if (ConfigRepository.Instance()["dlcm_AdditionalManipul59"] == "Yes")
                     //{
                     var cmds = "UPDATE Standardization SET ";// Spotify_Song_ID=\"" + SpotifySongID + "\", SpotifyArtistID=\"" + SpotifyArtistID + "\"";
-                    cmds += " SpotifyAlbumID=\"" + SpotifyAlbumID + "\"" + ", SpotifyAlbumURL=\"" + SpotifyAlbumURL + "\"" + ",SpotifyAlbumPath=\"" + SpotifyAlbumPath + "\"";
+                    cmds += " SpotifyAlbumID=\"" + SpotifyAlbumID + "\"" + ", SpotifyAlbumURL=\"" + SpotifyAlbumURL + "\"" + ",SpotifyAlbumPath=\"" + SpotifyAlbumPath + "\",Year_Correction=\"" + SpotifyAlbumYear + "\"";
                     cmds += " WHERE ID=" + SongRecord.Tables[0].Rows[i].ItemArray[2].ToString();
                     DataSet dis = new DataSet(); 
                     if (trackno> 0 && SpotifySongID != "" && SpotifySongID != "-") dis = UpdateDB("Standardization", cmds + ";", cnb);

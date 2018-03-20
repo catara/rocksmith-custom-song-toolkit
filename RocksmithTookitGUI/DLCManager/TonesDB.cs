@@ -15,6 +15,7 @@ using RocksmithToolkitLib.Extensions; //dds
 using Ookii.Dialogs; //cue text
 using static RocksmithToolkitGUI.DLCManager.GenericFunctions;
 using RocksmithToolkitLib.XmlRepository;
+using System.Globalization;
 
 namespace RocksmithToolkitGUI.DLCManager
 {
@@ -1498,7 +1499,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 chbx_KnobKeys.Items.Add(strArrK); chbx_KnobKeys.SelectedIndex = 0;
                 if (dsc.Tables[0].Rows[0].ItemArray[4].ToString() != "") { chbx_PedalKey.Items.Add(dsc.Tables[0].Rows[0].ItemArray[4].ToString()); chbx_PedalKey.SelectedIndex = 0; }
                 if (dsc.Tables[0].Rows[0].ItemArray[5].ToString() != "") { chbx_Skin.Items.Add(dsc.Tables[0].Rows[0].ItemArray[5].ToString()); chbx_Skin.SelectedIndex = 0; }
-                if (dsc.Tables[0].Rows[0].ItemArray[6].ToString() != "") { chbx_SkinIndex.Items.Add(float.Parse(dsc.Tables[0].Rows[0].ItemArray[6].ToString())); chbx_SkinIndex.SelectedIndex = 0; }
+                if (dsc.Tables[0].Rows[0].ItemArray[6].ToString() != "") { chbx_SkinIndex.Items.Add(float.Parse(dsc.Tables[0].Rows[0].ItemArray[6].ToString(), NumberStyles.Float, CultureInfo.CurrentCulture)); chbx_SkinIndex.SelectedIndex = 0; }
                 //var nrc = 0;
                 //DataSet dsc = new DataSet(); dsc = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + txt_CDLC_ID.Text + " AND Gear_Name=\"" + cmbx_Gear_Name.Text + "\";", "", cnb);
                 //nrc = dsc.Tables[0].Rows.Count;

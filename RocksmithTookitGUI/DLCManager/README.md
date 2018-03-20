@@ -41,30 +41,25 @@
 [-] open ticket for the dlcpackagedata crash for 311 down in
 
 ## ToDos/bugs:
-
-[ ] make sure its read only once when imported and not anymore in the duplication management section
 [ ] feat:		 Alternate No for duplicates logic
 [ ] feat:		 Include Standardization names into duplication checks
 [ ] big feature: get the volume of the audio file and then compare against the rest or a norm
 [ ] medium feature: add DLCs into cache.psarc to speed up the game startup
 [ ] big feature [ ]For the tagging add the info to the Preview Image/Album Art
 [ ] make a custom song out of retail
-[ ] if i delete a folder do i get a warning in the maintenance check ?
   [ ] check for json existance as well. Maybe
 [ ] increase the no of threads
   [ ] progress bar update
+[ ] improve progress bar of repacks
 [ ] duplicate window should return last maximum conv date and save it 
 -[ ] reorder main db fields
 	[ ] size
 	[ ] save /offer the chance to reorder
 [ ] rename the Options and use the xml code inside the tool (removing the 03 14 35 dependency)
-[ ] improve progress bar of repacks
 [ ] ask if you wanna have the packing folder deleted
 [ ] fix/check changing path of library
 [ ] add info box with folders sizes
 [ ] if cover was from someone else please compare against that (save old cover)
-[ ] Check Packer.cs bug
-[ ] muse uprising songs have preview lenght in minutes
 [ ] duplicate window reformat not to sent backand forth 1mio variables but on dataset
 [ ] consider live when searching for the track NO or dont :)
 [ ] Repack only repack Initial or LAst only one platform 
@@ -72,30 +67,22 @@
 [ ] add checks to packed..remember to ask if they wanna clean ups or notification 
 [ ] cause it doesnt pick up version it cannot diff shiro astronau
 [ ] other platforms do not have official flag correctly detected
+[ ] check originals vs original dbb
 [ ] search using ignition
 [ ] add convert multitone to single tone
 [ ] duplicate lead to Rhythm
 [ ] Repair broken CDLC
-[ ] add 46&2 lyrics from old one
 [ ] overrite rename buttons
 [ ] replace all does not exist
 [ ] each platform should have its own remote location
 [ ] INCUBUS REDEFINE MULTI SHOWS IN RED AT DUPLICATION MANAGEMENT SCREEN
 [ ] fix import current month
-[ ] gasoline cannot be packed
-[ ] check originals vs original dbb
-[ ] why do i have duplciates on the ps3
-[ ] multiple repacks cannt happen
-[ ] progress bar on possible duplicate import is too short
 [ ] cannot find sick sick sic (override)
 [ ] audioslave sections missing maybe cause its an original and i used my own logic to strip the DD
 [ ] usa peaches long naming fails at packing (shortes folder the random id)
   [ ] ps3 long names sogs(149char)(cannot be read)
-  [ ] after selecting deselect incl. Beta
 [ ] Add repair option
-[ ] update readme.md screenshots
 [ ] year inconsitencies (check should show these as well)
-[ ] check author db saving being used at pack
 [ ] why album id is the same as artist id
 [ ] if no delete then dont delete DBscocnvert and ftp is it working at mass packing
 [ ] mantra cannot be imported
@@ -108,7 +95,6 @@
 [-] test replace ....
 [-] add copy last and initial to mass pack
 [-] prepare the rebuild option
-[-] redo save track at pack with update function
 [-] improve the overlay
 [-] fix for rebuild missing file
 [-] all options should be a table
@@ -119,71 +105,89 @@
 	[+] add sections (bored to death; Renabled BPR program)
 	[x] add conter of sections
 [-] mac song gen errors at read dlc library
-[-] Enable CDLC
 [+] remove all dd in Cache/Retails screen
 [-] generate a garageband _(curently the mp3 is converted to wav for GB Import)
-[-] song fails at import
-[ ] at import get youtube rksmith link
-[ ] at import get youtube song link
 [ ] at import gather
 [ ] make processing static
-[ ] optimize the variable transfer to generate package
 [ ] make all unique check(02-05 look the same) at mass pack
-[ ] georlitt_m.psarc
-[ ] "Alice-In-Chains_Nutshell-Unplugged_v6_p.psarc"
 [ ] orion changed cover
 [ ] fixed a vocal at dupli missing 
 [ ] improve maybe tone diff message
 [ ] add a 4 sec timestamp in each song
-[ ] the pretender doesnt register as alternate
-[ ] check smooth sailying and c file that breaks
-[ ] check crossed album art
-[ ] check iron maiden album art
 [-] is dupli marked as ignore/ duplicate decompressed folder deleted?
 [-] small feature: when opening MainDB and detecting directory check runs, if next directory exists (give a change to empty the db then if possible)
 [x] clean up the saving settings logic
     [ ] at open it gets records for 3 times
-[ ] delete does not delete the actual record from repack_audittrail
-[ ] check if there are any platforms None
-[ ] fix audio add cancel
-[ ] 4483
 [ ] progress bar having it overelayed text overlayered bug error
 [ ] add some free space statistics
-[ ] save old db when changing to new db
 [ ] open folder in the root of the input text box
 [ ] audio slave bring back alive error when moving something
 [ ] euology 10.3 1.02 is not detected as dupli
 [ ] comparison should not take in account info inbetween []
-[ ] clean pack_audit trail duplicates
 [ ] clean pack audio ...copy path folder instad of full path
 [ ] when autom deciding something is not a duplicate dont continue maybe
 [ ] MAke Sure CHANGIN D THE AUDIO/PREVIEW DOES NOT deletes the old info useful for Duplciation comparison
-[ ] where is duplciate reason, add duplicate number
 [ ] L:\Temp\Arctic-Monkeys_Perhaps-Vampires-Is-A-Bit-Strong-But_v2_p.psarc path too long
-[ ] add import as diff to dupli manag window . if so no alternate option is selected no alternate id, DLCIDs are made unique songname, 
 [ ] fix official set alternate 4392
-[ ] read volume independently of regional settings
-[ ] compare/dupli manag 2-x selected songs
-[ ] wehn copying maybe consider updating any existing packed &copy link
-
+[-] compare/dupli manag 2-x selected songs
+[ ] when copying maybe consider updating any existing packed &copy link
+restore old dd/xmls button in main db
+duplicate dlcname?
+add year to standardization (...maybe not so important)
+[ ] clean pack_audit trail duplicates
+[-] at import get youtube rksmith link (unsolved bug: async stays in waiting)
+[-] at import get youtube song link (unsolved bug: async stays in waiting)
+what does audio mean in name "( audio)"
+[ ] add 46&2 lyrics from old one
 
 ## WiP:
-(next release)
-bug pack moves dds to tmp the deletes it ergo diff load needs to happen before secondrepack
+(this release)
+
 
 ## done:
-(this release)
-[x] improved audio fixing logs
-[x] get track fix
-[x] fix audio button canncel each step
-[x] fix audio not brokenn songs
-[x] select reverse fails
-[x] fixed repack stop missig
-[x] fixed remove all packed 
-[x] improved multi-platform packing
-[x] fixed remote_path default@pack
-[x] removed old bug creation at multiplatform packing
-[x] improved removed from Pack buttons
+(prev release)
+[x] removed packer as not compilig
+[x] improved param 85 behavior
+[x] CDLC-Nirvana-1992at_Reading-8-Lithium_[a_2]-Live__ps3.psarc
+[x] i belong to you mon coure muse resistence
+	[x] removing \u009c and "  " from songinfo-s
+[x] some ps3 song did not compress
+[x] track should be saved as 0x
+[x] delete does not delete the actual record from repack_audittrail
+[x] check if there are any platforms None(no)
+[x] fix audio add cancel
+[x] where is duplciate reason, add duplicate number
+[x] save old db when changing to new db
+[x] redo save track at pack with update function
+[x] optimize the variable transfer to generate package
+[x] add import as diff to dupli manag window . if so no alternate option is selected no alternate id, DLCIDs are made unique songname,
+[x] make sure its read only once when imported and not anymore in the duplication management section
+[x] if i delete a folder do i get a warning in the maintenance check ? (yes)
+[x] Check Packer.cs bug
+[x] muse uprising songs have preview lenght in minutes
+[x] why do i have duplciates on the ps3
+[x] gasoline cannot be packed
+[x] multiple repacks cannt happen
+[x] progress bar on possible duplicate import is too short
+[x] some songs have -e29 volume (truncarted e-e+))
+[-] at import get youtube rksmith link (unsolved bug: async stays in waiting)
+[-] at import get youtube song link (unsolved bug: async stays in waiting)
+[x] the pretender doesnt register as alternate
+[x] check smooth sailying and c file that breaks
+[x] check crossed album art
+[x] check iron maiden album art
+[x] georlitt_m.psarc
+[x] "Alice-In-Chains_Nutshell-Unplugged_v6_p.psarc"
+[x] 4483
+[x] uprising origs not in stanndard (no bob marley)
+[x] remove also recalc
+[x] read volume independently of regional settings (appplied , NumberStyles.Float, CultureInfo.CurrentCulture to any float/decimal.parse)
+[x] fixed pack w die/the at the end of sorts
+[x] at open make instr labels non bold ..make then green/red too
+[x] add group to artist
+[x] add group to name is a checkbox
+[x] improved pack multi formats
+[x] improved add stuff to lyrics
 
 # Version History(release date):
 	0.1(12.08.2014) prototype, 
@@ -194,15 +198,15 @@ bug pack moves dds to tmp the deletes it ergo diff load needs to happen before s
 	0.1.7 (30.10.2014) FORK from/on git from 06.12.2014
 	0.2 (15.11.2014) Import 1000 dlcs, provide screen to edit, repack in any format
 	0.2.0.1 (06.11.2014) manage the the/die at import(remove when creating a folder name), manage the errors at import (move broken files in a broken folder), fix the whitestripes 7armies import issue
-	0.2.0.2 (10.11) bugfixes and drafts on screen an future features
-	0.2.0.3 (18.11) Implement translation for cleanups (every artist The Black Key = Black Keys) plus add/remove DD.Added field in Main DB to say that record had naming issues.
-	0.2.0.4 (20.11) Redesign stats & Duplicates screen as an independendent form not a yes no cancel alert window
-	0.2.0.5 (01.12) Search screen prototype
-	0.2.0.6 (29.11) add save confirm for any save operation and add DLCID checks in all updates that mighht affect it WHERE (SELECT NO OTHER DLCNAME)
-	0.2.0.7 (15.12) New features: Add: lastconversiondata field per each arrangement, MainDb filters
-	0.2.0.8 (31.03) Manage RS12, RS12 DLC & RS14 retail songs. Pending platform independent...checks on compression platform dependent...DB independece/dependence on already provided 1..play and FTP and Preview Adding
-	0.2.0.9 (30.04) Implement FTP to PS3 (also as a copy to any other location)
-	0.2.0.10 (05.05) save settings in Toolkit config, getrck no, groups, Add 30 sec preview midsong; close bugs on Conversion to Ps3(nin hell)
+	0.2.0.2 (10.11.2014) bugfixes and drafts on screen an future features
+	0.2.0.3 (18.11.2014) Implement translation for cleanups (every artist The Black Key = Black Keys) plus add/remove DD.Added field in Main DB to say that record had naming issues.
+	0.2.0.4 (20.11.2014) Redesign stats & Duplicates screen as an independendent form not a yes no cancel alert window
+	0.2.0.5 (01.12.2014) Search screen prototype
+	0.2.0.6 (29.11.2014) add save confirm for any save operation and add DLCID checks in all updates that mighht affect it WHERE (SELECT NO OTHER DLCNAME)
+	0.2.0.7 (15.12.2014) New features: Add: lastconversiondata field per each arrangement, MainDb filters
+	0.2.0.8 (31.03.2015) Manage RS12, RS12 DLC & RS14 retail songs. Pending platform independent...checks on compression platform dependent...DB independece/dependence on already provided 1..play and FTP and Preview Adding
+	0.2.0.9 (30.04.2015) Implement FTP to PS3 (also as a copy to any other location)
+	0.2.0.10 (05.05.2015) save settings in Toolkit config, getrck no, groups, Add 30 sec preview midsong; close bugs on Conversion to Ps3(nin hell)
 	0.2.0.11 (22.08.2015) remove bug on auto import if original
 	0.2.0.12 (26.09.2015) If importing an original over a alternate the alternate flag should be set no the Alternate
 	0.2.0.13 (12.11.2015) Finally implement Arrangements and Tones and song Groups	
@@ -211,7 +215,7 @@ bug pack moves dds to tmp the deletes it ergo diff load needs to happen before s
 	0.4 (21.11.2016) Major improvements	and features
 	0.5 (15.03.2017) Implement a logic to properly read DLCManager manipulated DLCs	
 	0.6 (28.10.2017) Modify Lyrics, get tool ready for multithreading, 
-	0.7 () Code review
+	0.7 (28.01.2018) Code review
 # Implementation Tracking for the Main Features:
 		+1. Ability to Generate a Database with all DLC
 			Design description:

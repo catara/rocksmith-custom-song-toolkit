@@ -359,7 +359,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
             if (filed.AlbumArt_OrigHash != art_hash) { lbl_AlbumArt.ForeColor = lbl_Reference.ForeColor; btn_CoverNew.Enabled = true; btn_CoverExisting.Enabled = true; }
             else if (filed.AlbumArt_OrigHash == "" && "" == art_hash) lbl_AlbumArt.Text = "";
-            else            { lbl_Covers.ForeColor = lbl_Reference.ForeColor; lbl_Covers.Font = new Font(lbl_Covers.Font.Name, 9, FontStyle.Bold | FontStyle.Underline); }
+            else            { lbl_Covers.ForeColor = System.Drawing.Color.Green; lbl_Covers.Font = new Font(lbl_Covers.Font.Name, 9, FontStyle.Bold | FontStyle.Underline); }
             datas.AlbumArtPath = datas.AlbumArtPath.Replace("/", "\\");
             picbx_AlbumArtPathNew.ImageLocation = datas.AlbumArtPath.Replace(".dds", ".png");
             //txt_Description.Text= datas.AlbumArtPath.Replace(".dds", ".png");
@@ -367,13 +367,13 @@ namespace RocksmithToolkitGUI.DLCManager
 
             if (filed.Audio_OrigHash != audio_hash) lbl_Audio.ForeColor = lbl_Reference.ForeColor;/*|| filed.Audio_Hash != audio_hash*/
             else if (filed.Audio_OrigHash == "" && "" == audio_hash) lbl_Audio.Text = "";
-            else { lbl_AudioMain.ForeColor = lbl_Reference.ForeColor; lbl_AudioMain.Font = new Font(lbl_AudioMain.Font.Name, 9, FontStyle.Bold | FontStyle.Underline); }
+            else { lbl_AudioMain.ForeColor = System.Drawing.Color.Green; lbl_AudioMain.Font = new Font(lbl_AudioMain.Font.Name, 9, FontStyle.Bold | FontStyle.Underline); }
             txt_AudioNew.Text = (audio_hash.ToString() == "" ? "" : "Yes");
             txt_AudioExisting.Text = (filed.Audio_OrigHash.ToString() == "" ? "" : "Yes");
 
             if (filed.Audio_OrigPreviewHash != audioPreview_hash) lbl_Preview.ForeColor = lbl_Reference.ForeColor;
             else if (filed.Audio_OrigPreviewHash == "" && "" == audioPreview_hash) lbl_Vocals.Text = "";
-            else { lbl_AudioPreview.ForeColor = lbl_Reference.ForeColor; lbl_AudioMain.Font = new Font(lbl_AudioPreview.Font.Name, 9, FontStyle.Bold | FontStyle.Underline); }
+            else { lbl_AudioPreview.ForeColor = System.Drawing.Color.Green; lbl_AudioMain.Font = new Font(lbl_AudioPreview.Font.Name, 9, FontStyle.Bold | FontStyle.Underline); }
             txt_PreviewNew.Text = (audioPreview_hash.ToString() == "" ? "No" : "Yes");
             txt_PreviewExisting.Text = (filed.Audio_OrigPreviewHash.ToString() == "" ? "No" : "Yes");
             if (audioPreview_hash.ToString() != "") btn_PlayPreviewNew.Enabled = true;
@@ -711,8 +711,11 @@ namespace RocksmithToolkitGUI.DLCManager
             this.Text += ". " + title_duplic;
 
             if (ConfigRepository.Instance()["dlcm_AdditionalManipul13"] == "Yes" && ConfigRepository.Instance()["dlcm_AdditionalManipul85"] == "Yes")
-                btn_AddStandard_Click(null,null);
+            {
+                btn_AddStandard_Click(null,null); btn_Alternate_Click(null, null);
+                return;
         }
+    }
 
         //private class Files
         //{

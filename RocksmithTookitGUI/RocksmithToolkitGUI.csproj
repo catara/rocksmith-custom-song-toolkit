@@ -66,6 +66,7 @@
     <Reference Include="CFSM.AudioTools, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>DLCManager\external_tools\remastered\bin\Release\CFSM.AudioTools.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
@@ -73,11 +74,29 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="FSharp.Core, Version=4.4.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\FSharp.Core.4.2.3\lib\net45\FSharp.Core.dll</HintPath>
+    <Reference Include="FSharp.Core, Version=4.4.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\FSharp.Core.4.3.4\lib\net45\FSharp.Core.dll</HintPath>
     </Reference>
-    <Reference Include="HtmlAgilityPack, Version=1.6.13.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
-      <HintPath>..\packages\HtmlAgilityPack.1.6.13\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    <Reference Include="Google.Apis, Version=1.25.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.1.25.0\lib\net45\Google.Apis.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Auth, Version=1.25.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Auth.1.25.0\lib\net45\Google.Apis.Auth.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Auth.PlatformServices, Version=1.25.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Auth.1.25.0\lib\net45\Google.Apis.Auth.PlatformServices.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Core, Version=1.25.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Core.1.25.0\lib\net45\Google.Apis.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.PlatformServices, Version=1.25.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.1.25.0\lib\net45\Google.Apis.PlatformServices.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.YouTube.v3, Version=1.25.0.760, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.YouTube.v3.1.25.0.760\lib\net45\Google.Apis.YouTube.v3.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.6.16.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.6.16\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -91,9 +110,10 @@
     <Reference Include="NDesk.Options">
       <HintPath>..\lib\NDesk\NDesk.Options.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Z:\Volumes\HFS\Users\bogdan\GitHub\rocksmith-custom-song-toolkit\lib\Newtonsoft.Json\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.10.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="NLog">
       <HintPath>..\lib\NLog\NLog.dll</HintPath>
@@ -119,17 +139,21 @@
     <Reference Include="SharpConfig">
       <HintPath>..\lib\SharpConfig\SharpConfig.dll</HintPath>
     </Reference>
+    <Reference Include="SpotifyAPI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SpotifyAPI-NET.2.17.1\lib\SpotifyAPI.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.SQLite, Version=1.0.106.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Data.SQLite.Core.1.0.106.0\lib\net45\System.Data.SQLite.dll</HintPath>
+    <Reference Include="System.Data.SQLite, Version=1.0.107.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.107.0\lib\net45\System.Data.SQLite.dll</HintPath>
     </Reference>
-    <Reference Include="System.Data.SQLite.EF6, Version=1.0.106.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Data.SQLite.EF6.1.0.106.0\lib\net45\System.Data.SQLite.EF6.dll</HintPath>
+    <Reference Include="System.Data.SQLite.EF6, Version=1.0.107.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.EF6.1.0.107.0\lib\net45\System.Data.SQLite.EF6.dll</HintPath>
     </Reference>
-    <Reference Include="System.Data.SQLite.Linq, Version=1.0.106.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.106.0\lib\net45\System.Data.SQLite.Linq.dll</HintPath>
+    <Reference Include="System.Data.SQLite.Linq, Version=1.0.107.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.107.0\lib\net45\System.Data.SQLite.Linq.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Runtime.Caching" />
@@ -152,6 +176,9 @@
     <Reference Include="zlib.net, Version=1.0.3.0, Culture=neutral, PublicKeyToken=47d7877cb3620160">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>DLCManager\external_tools\remastered\bin\Release\zlib.net.dll</HintPath>
+    </Reference>
+    <Reference Include="Zlib.Portable, Version=1.11.0.0, Culture=neutral, PublicKeyToken=431cba815f6a8b5b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Zlib.Portable.Signed.1.11.0\lib\portable-net4+sl5+wp8+win8+wpa81+MonoTouch+MonoAndroid\Zlib.Portable.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -200,8 +227,6 @@
     <Compile Include="DLCManager\DuplicatesManagement.Designer.cs">
       <DependentUpon>DuplicatesManagement.cs</DependentUpon>
     </Compile>
-    <Compile Include="DLCManager\external_tools\remastered\Entry.cs" />
-    <Compile Include="DLCManager\external_tools\remastered\Program.cs" />
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
@@ -224,89 +249,6 @@
     <None Include="DLCManager\external_tools\MediaInfo_CLI_17.12_Windows_x64\Plugin\Custom\Table by streams, verbose %28HTML%29.csv" />
     <None Include="DLCManager\external_tools\MediaInfo_CLI_17.12_Windows_x64\Plugin\Custom\XML.csv" />
     <None Include="DLCManager\external_tools\MediaInfo_CLI_17.12_Windows_x64\Plugin\Custom\zzz_Contrib - Dusil %28HTML%29.csv" />
-    <None Include="DLCManager\external_tools\remastered\Properties\AssemblyInfo.cs.issue" />
-    <Compile Include="DLCManager\external_tools\remastered\Properties\Resources.Designer.cs" />
-    <Compile Include="DLCManager\external_tools\remastered\PSARC.cs" />
-    <Compile Include="DLCManager\external_tools\remastered\PsarcBrowser.cs" />
-    <Compile Include="DLCManager\external_tools\remastered\PsarcExtensions.cs" />
-    <Compile Include="DLCManager\external_tools\remastered\PsarcPackager.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Local\Enums\AlbumArtSize.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Local\Enums\UriType.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Local\ExtendedWebClient.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Local\LocalEvents.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Local\Models\CFID.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Local\Models\OpenGraphState.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Local\Models\SpotifyResource.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Local\Models\SpotifyUri.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Local\Models\StatusResponse.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Local\Models\Track.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Local\Models\TrackResourceLocation.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Local\RemoteHandler.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Local\SpotifyLocalAPI.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Local\SpotifyLocalAPIConfig.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Local\VolumeMixerControl.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Auth\AutorizationCodeAuth.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Auth\ClientCredentialsAuth.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Auth\ImplicitGrantAuth.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Auth\WebApiFactory.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Enums\AlbumType.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Enums\FollowType.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Enums\RepeatState.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Enums\Scope.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Enums\SearchType.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Enums\TimeRangeType.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\IClient.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Models\AnalysisMeta.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Models\AnalysisSection.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Models\AnalysisSegment.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Models\AnalysisTimeSlice.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Models\AnalysisTrack.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Models\ArrayResponse.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Models\AudioAnalysis.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Models\AudioFeatures.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Models\AvailabeDevices.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Models\BasicModel.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Models\Category.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Models\CategoryList.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Models\CategoryPlaylist.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Models\CursorPaging.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Models\Device.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Models\FeaturedPlaylists.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Models\FollowedArtists.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Models\FullAlbum.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Models\FullArtist.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Models\FullPlaylist.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Models\FullTrack.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Models\GeneralModels.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Models\NewAlbumReleases.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Models\Paging.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Models\PlaybackContext.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Models\PlayHistory.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Models\PrivateProfile.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Models\PublicProfile.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Models\Recommendations.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Models\RecommendationSeed .cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Models\RecommendationSeedGenres.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Models\ResponseInfo.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Models\SearchItem.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Models\SeveralAlbums.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Models\SeveralArtists.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Models\SeveralAudioFeatures.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Models\SeveralTracks.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Models\SimpleAlbum.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Models\SimpleArtist.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Models\SimplePlaylist.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Models\SimpleTrack.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Models\Snapshot.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Models\Token.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Models\TuneableTrack.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\SimpleHttpServer.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\SpotifyWebAPI.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\SpotifyWebBuilder.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\SpotifyWebClient.cs" />
-    <Compile Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Web\Util.cs" />
     <Compile Include="DLCManager\GenericFunctions.cs" />
     <Compile Include="DLCManager\MainDB.cs">
       <SubType>Form</SubType>
@@ -509,7 +451,6 @@
     <EmbeddedResource Include="DLCManager\DLCManager.resx">
       <DependentUpon>DLCManager.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DLCManager\external_tools\remastered\Properties\Resources.resx" />
     <EmbeddedResource Include="DLCManager\MainDB.resx">
       <DependentUpon>MainDB.cs</DependentUpon>
     </EmbeddedResource>
@@ -662,46 +603,6 @@
     <None Include="DLCManager\external_tools\packed_codebooks_aoTuV_603.bin">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="DLCManager\external_tools\remastered\.vs\remastered\v15\.suo" />
-    <None Include="DLCManager\external_tools\remastered\packed_codebooks.bin" />
-    <None Include="DLCManager\external_tools\remastered\packed_codebooks_aoTuV_603.bin" />
-    <None Include="DLCManager\external_tools\remastered\Program.cs.org" />
-    <None Include="DLCManager\external_tools\remastered\remastered.exe -org -pre.bat" />
-    <None Include="DLCManager\external_tools\remastered\remastered.exe -org.bat" />
-    <None Include="DLCManager\external_tools\remastered\remastered.exe -pre.bat" />
-    <None Include="DLCManager\external_tools\remastered\remastered.exe -ren.bat" />
-    <None Include="DLCManager\external_tools\remastered\remastered.exe.bat" />
-    <None Include="DLCManager\external_tools\SpotifyAPI-NET\.gitattributes" />
-    <None Include="DLCManager\external_tools\SpotifyAPI-NET\.gitignore" />
-    <None Include="DLCManager\external_tools\SpotifyAPI-NET\CODE_OF_CONDUCT.md" />
-    <None Include="DLCManager\external_tools\SpotifyAPI-NET\LICENSE" />
-    <None Include="DLCManager\external_tools\SpotifyAPI-NET\README.md" />
-    <None Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI.Docs\.gitignore" />
-    <None Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI.Docs\docs.cmd" />
-    <None Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI.Docs\docs\index.md" />
-    <None Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI.Docs\docs\SpotifyLocalAPI\index.md" />
-    <None Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI.Docs\docs\SpotifyWebAPI\albums.md" />
-    <None Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI.Docs\docs\SpotifyWebAPI\artists.md" />
-    <None Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI.Docs\docs\SpotifyWebAPI\auth.md" />
-    <None Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI.Docs\docs\SpotifyWebAPI\browse.md" />
-    <None Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI.Docs\docs\SpotifyWebAPI\examples.md" />
-    <None Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI.Docs\docs\SpotifyWebAPI\follow.md" />
-    <None Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI.Docs\docs\SpotifyWebAPI\gettingstarted.md" />
-    <None Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI.Docs\docs\SpotifyWebAPI\library.md" />
-    <None Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI.Docs\docs\SpotifyWebAPI\player.md" />
-    <None Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI.Docs\docs\SpotifyWebAPI\playlists.md" />
-    <None Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI.Docs\docs\SpotifyWebAPI\profiles.md" />
-    <None Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI.Docs\docs\SpotifyWebAPI\search.md" />
-    <None Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI.Docs\docs\SpotifyWebAPI\tracks.md" />
-    <None Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI.Docs\docs\SpotifyWebAPI\util.md" />
-    <None Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI.Docs\mkdocs.yml" />
-    <None Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI.Docs\mytheme\fonts\fontawesome-webfont.eot" />
-    <None Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI.Docs\mytheme\fonts\fontawesome-webfont.ttf" />
-    <None Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI.Docs\mytheme\fonts\fontawesome-webfont.woff" />
-    <None Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\app.config" />
-    <None Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\packages.config" />
-    <None Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\publish.cmd" />
-    <None Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\SpotifyAPI.nuspec" />
     <None Include="DLCManager\external_tools\totalcmd\CGLPT64.SYS">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -877,10 +778,6 @@
       <Project>{ED268869-387A-477E-A652-C6E47BE2AC02}</Project>
       <Name>packagecreator</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RocksmithToolkitCLI\packer\packer.csproj">
-      <Project>{822D185A-28A3-4AE0-A811-800E968AA2E7}</Project>
-      <Name>packer</Name>
-    </ProjectReference>
     <ProjectReference Include="..\RocksmithToolkitCLI\sng2014\sng2014.csproj">
       <Project>{8FDBC548-DEBF-46D6-A933-33C8D72F33AB}</Project>
       <Name>sng2014</Name>
@@ -921,8 +818,8 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="DLCManager\external_tools\bpr_v0.3\bpr.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>=
-    <EmbeddedResource Include="BetaInfo.rtf" />
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="songcreator.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1324,43 +1221,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="DLCManager\external_tools\remastered.exe" />
-    <Content Include="DLCManager\external_tools\remastered\CFSM.AudioTools.dll" />
-    <Content Include="DLCManager\external_tools\remastered\CLI.ico" />
-    <Content Include="DLCManager\external_tools\remastered\DF_DDSImage.dll" />
-    <Content Include="DLCManager\external_tools\remastered\ICSharpCode.SharpZipLib.dll" />
-    <Content Include="DLCManager\external_tools\remastered\MiscUtil.dll" />
-    <Content Include="DLCManager\external_tools\remastered\MiscUtil.xml" />
-    <Content Include="DLCManager\external_tools\remastered\NDesk.Options.dll" />
-    <Content Include="DLCManager\external_tools\remastered\Newtonsoft.Json.dll" />
-    <Content Include="DLCManager\external_tools\remastered\Newtonsoft.Json.xml" />
-    <Content Include="DLCManager\external_tools\remastered\remastered.csproj" />
-    <Content Include="DLCManager\external_tools\remastered\remastered.exe" />
-    <Content Include="DLCManager\external_tools\remastered\remastered.sln" />
-    <Content Include="DLCManager\external_tools\remastered\revorb.exe" />
-    <Content Include="DLCManager\external_tools\remastered\RocksmithToolkitLib.Config.xml" />
-    <Content Include="DLCManager\external_tools\remastered\RocksmithToolkitLib.dll" />
-    <Content Include="DLCManager\external_tools\remastered\RocksmithToolkitLib.pdb" />
-    <Content Include="DLCManager\external_tools\remastered\RocksmithToolkitLib.SongAppId.xml" />
-    <Content Include="DLCManager\external_tools\remastered\ww2ogg.exe" />
-    <Content Include="DLCManager\external_tools\remastered\X360.dll" />
-    <Content Include="DLCManager\external_tools\remastered\X360.xml" />
-    <Content Include="DLCManager\external_tools\remastered\zlib.net.dll" />
-    <Content Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI.Docs\docs\highlight.js" />
-    <Content Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI.Docs\mytheme\base.html" />
-    <Content Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI.Docs\mytheme\content.html" />
-    <Content Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI.Docs\mytheme\css\base.css" />
-    <Content Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI.Docs\mytheme\css\bootstrap-custom.min.css" />
-    <Content Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI.Docs\mytheme\css\font-awesome-4.0.3.css" />
-    <Content Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI.Docs\mytheme\css\prettify-1.0.css" />
-    <Content Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI.Docs\mytheme\fonts\fontawesome-webfont.svg" />
-    <Content Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI.Docs\mytheme\img\favicon.ico" />
-    <Content Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI.Docs\mytheme\js\base.js" />
-    <Content Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI.Docs\mytheme\js\bootstrap-3.0.3.min.js" />
-    <Content Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI.Docs\mytheme\js\prettify-1.0.min.js" />
-    <Content Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI.Docs\mytheme\nav.html" />
-    <Content Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI.Docs\mytheme\toc.html" />
-    <Content Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI.sln" />
-    <Content Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\SpotifyAPI.csproj" />
     <Content Include="DLCManager\external_tools\totalcmd\CABRK.DLL">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1711,17 +1571,13 @@
       <Link>VersionInfo.txt</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <EmbeddedResource Include="Resources\BetaInfo.rtf" />
+    <EmbeddedResource Include="BetaInfo.rtf" />
     <Content Include="songcreator.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DLCManager\external_tools\eof1.8RC12\temp\" />
-    <Folder Include="DLCManager\external_tools\remastered\bin\" />
-    <Folder Include="DLCManager\external_tools\remastered\Connected Services\" />
-    <Folder Include="DLCManager\external_tools\remastered\obj\x86\" />
-    <Folder Include="DLCManager\external_tools\SpotifyAPI-NET\SpotifyAPI\Properties\" />
     <Folder Include="DLCManager\external_tools\WinMerge\Languages\" />
     <Folder Include="DLCManager\Temp\" />
   </ItemGroup>
@@ -1772,9 +1628,9 @@ if $(ConfigurationName) == Release (
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\SQLite.3.13.0\build\net45\SQLite.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SQLite.3.13.0\build\net45\SQLite.props'))" />
-    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.106.0\build\net45\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.106.0\build\net45\System.Data.SQLite.Core.targets'))" />
+    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.107.0\build\net45\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.107.0\build\net45\System.Data.SQLite.Core.targets'))" />
   </Target>
-  <Import Project="..\packages\System.Data.SQLite.Core.1.0.106.0\build\net45\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.106.0\build\net45\System.Data.SQLite.Core.targets')" />
+  <Import Project="..\packages\System.Data.SQLite.Core.1.0.107.0\build\net45\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.107.0\build\net45\System.Data.SQLite.Core.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

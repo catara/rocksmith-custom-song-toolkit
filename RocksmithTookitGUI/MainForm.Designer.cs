@@ -465,7 +465,7 @@
             this.btnDevTestMethod.Text = "Dev Use";
             this.btnDevTestMethod.UseVisualStyleBackColor = true;
             this.btnDevTestMethod.Visible = false;
-            this.btnDevTestMethod.Click += new System.EventHandler(this.btnDevTestMethod_Click);
+            //this.btnDevTestMethod.Click += new System.EventHandler(this.btnDevTestMethod_Click);
             // 
             // MainForm
             // 

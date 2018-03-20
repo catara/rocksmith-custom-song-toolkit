@@ -155,9 +155,9 @@
   <Config Key="dlcm_Title" Value="&#60;Title&#62;&#60;QA&#62;&#60;Bonus&#62;&#60;Live&#62;" />;
   <Config Key="dlcm_Title_Sort" Value="&#60;Year&#62;&#60;Album&#62;&#60;Track No.&#62;&#60;Title&#62;" />;
   <Config Key="dlcm_FTP" Value="US" />;
-  <Config Key="dlcm_FTP1" Value="ftp://192.168.1.13/dev_hdd0/game/BLES01862/USRDIR/DLC/" />;
-  <Config Key="dlcm_FTP2" Value="ftp://192.168.1.13/dev_hdd0/game/BLUS31182/USRDIR/DLC/" />;
-  <Config Key="dlcm_FTP3" Value="ftp://192.168.1.13/dev_hdd0/game/BLUS31182/USRDIR/DLC/" />;
+  <Config Key="dlcm_FTP1" Value="ftp://192.168.1.14/dev_hdd0/game/BLES01862/USRDIR/DLC/" />;
+  <Config Key="dlcm_FTP2" Value="ftp://192.168.1.14/dev_hdd0/game/BLUS31182/USRDIR/DLC/" />;
+  <Config Key="dlcm_FTP3" Value="ftp://192.168.1.14/dev_hdd0/game/BLUS31182/USRDIR/DLC/" />;
   <Config Key="dlcm_RemoveBassDD" Value="Yes" />;
   <Config Key="dlcm_UniqueID" Value="Yes" />;
   <Config Key="dlcm_andCopy" Value="Yes" />;

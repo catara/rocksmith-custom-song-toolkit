@@ -28,6 +28,7 @@ using RocksmithToolkitLib.Sng;
 //using RocksmithToolkitLib.Ogg;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Globalization;
 //using System.Threading;
 namespace RocksmithToolkitGUI.DLCManager
 {
@@ -1207,6 +1208,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
             var TempPath = txt_TempPath.Text;
             DeleteRecords(ids, cmd, DB_Path, TempPath, norows.ToString(), hash, cnb);
+            SetImportNo();
         }
 
 
@@ -2269,44 +2271,53 @@ namespace RocksmithToolkitGUI.DLCManager
                     //Remove weird/illegal characters
                     info.SongInfo.Artist = info.SongInfo.Artist.Trim();
                     info.SongInfo.Artist = info.SongInfo.Artist.Replace("\\", "");
-                    info.SongInfo.Artist = info.SongInfo.Artist.Replace("\"", "");
+                    info.SongInfo.Artist = info.SongInfo.Artist.Replace("\"", "'");
                     info.SongInfo.Artist = info.SongInfo.Artist.Replace("/", "");
                     info.SongInfo.Artist = info.SongInfo.Artist.Replace("?", "");
                     info.SongInfo.Artist = info.SongInfo.Artist.Replace(":", "");
-                    info.SongInfo.Artist = info.SongInfo.Artist.Replace("\"", "'");
-                    info.SongInfo.Artist = info.SongInfo.Artist.Replace(";", "'");
+                    //info.SongInfo.Artist = info.SongInfo.Artist.Replace("\"", "'");
+                    info.SongInfo.Artist = info.SongInfo.Artist.Replace(";", "");
+                    info.SongInfo.Artist = info.SongInfo.Artist.Replace("  ", "");
+                    info.SongInfo.Artist = info.SongInfo.Artist.Replace("\u009c", "");
                     info.SongInfo.ArtistSort = info.SongInfo.ArtistSort.Trim();
                     info.SongInfo.ArtistSort = info.SongInfo.ArtistSort.Replace("\\", "");
-                    info.SongInfo.ArtistSort = info.SongInfo.ArtistSort.Replace("\"", "");
+                    info.SongInfo.ArtistSort = info.SongInfo.ArtistSort.Replace("\"", "'");
                     info.SongInfo.ArtistSort = info.SongInfo.ArtistSort.Replace("/", "");
                     info.SongInfo.ArtistSort = info.SongInfo.ArtistSort.Replace("?", "");
                     info.SongInfo.ArtistSort = info.SongInfo.ArtistSort.Replace(":", "");
-                    info.SongInfo.ArtistSort = info.SongInfo.ArtistSort.Replace("\"", "'");
+                    //info.SongInfo.ArtistSort = info.SongInfo.ArtistSort.Replace("\"", "'");
                     info.SongInfo.ArtistSort = info.SongInfo.ArtistSort.Replace(";", "");
+                    info.SongInfo.ArtistSort = info.SongInfo.ArtistSort.Replace("\u009c", "");
                     info.SongInfo.SongDisplayName = info.SongInfo.SongDisplayName.Trim();
                     info.SongInfo.SongDisplayName = info.SongInfo.SongDisplayName.Replace("\\", "");
-                    info.SongInfo.SongDisplayName = info.SongInfo.SongDisplayName.Replace("\"", "");
+                    info.SongInfo.SongDisplayName = info.SongInfo.SongDisplayName.Replace("\"", "'");
                     info.SongInfo.SongDisplayName = info.SongInfo.SongDisplayName.Replace("/", "");
                     info.SongInfo.SongDisplayName = info.SongInfo.SongDisplayName.Replace("?", "");
                     info.SongInfo.SongDisplayName = info.SongInfo.SongDisplayName.Replace(":", "");
-                    info.SongInfo.SongDisplayName = info.SongInfo.SongDisplayName.Replace("\"", "'");
+                    //info.SongInfo.SongDisplayName = info.SongInfo.SongDisplayName.Replace("\"", "'");
                     info.SongInfo.SongDisplayName = info.SongInfo.SongDisplayName.Replace(";", "");
+                    info.SongInfo.SongDisplayName = info.SongInfo.SongDisplayName.Replace("  ", "");
+                    info.SongInfo.SongDisplayName = info.SongInfo.SongDisplayName.Replace("\u009c", "");
                     info.SongInfo.SongDisplayNameSort = info.SongInfo.SongDisplayNameSort.Trim();
                     info.SongInfo.SongDisplayNameSort = info.SongInfo.SongDisplayNameSort.Replace("\\", "");
                     info.SongInfo.SongDisplayNameSort = info.SongInfo.SongDisplayNameSort.Replace("/", "");
-                    info.SongInfo.SongDisplayNameSort = info.SongInfo.SongDisplayNameSort.Replace("\"", "");
+                    info.SongInfo.SongDisplayNameSort = info.SongInfo.SongDisplayNameSort.Replace("\"", "'");
                     info.SongInfo.SongDisplayNameSort = info.SongInfo.SongDisplayNameSort.Replace("?", "");
                     info.SongInfo.SongDisplayNameSort = info.SongInfo.SongDisplayNameSort.Replace(":", "");
-                    info.SongInfo.SongDisplayNameSort = info.SongInfo.SongDisplayNameSort.Replace("\"", "'");
+                    //info.SongInfo.SongDisplayNameSort = info.SongInfo.SongDisplayNameSort.Replace("\"", "'");
                     info.SongInfo.SongDisplayNameSort = info.SongInfo.SongDisplayNameSort.Replace(";", "");
+                    info.SongInfo.SongDisplayNameSort = info.SongInfo.SongDisplayNameSort.Replace("  ", "");
+                    info.SongInfo.SongDisplayNameSort = info.SongInfo.SongDisplayNameSort.Replace("\u009c", "");
                     info.SongInfo.Album = info.SongInfo.Album.Replace("\\", "");
-                    info.SongInfo.Album = info.SongInfo.Album.Replace("\"", "");
+                    //info.SongInfo.Album = info.SongInfo.Album.Replace("\"", "");
                     info.SongInfo.Album = info.SongInfo.Album.Trim();
                     info.SongInfo.Album = info.SongInfo.Album.Replace("/", "");
                     info.SongInfo.Album = info.SongInfo.Album.Replace("?", "");
                     info.SongInfo.Album = info.SongInfo.Album.Replace(":", "");
                     info.SongInfo.Album = info.SongInfo.Album.Replace(";", "");
                     info.SongInfo.Album = info.SongInfo.Album.Replace("\"", "'");
+                    info.SongInfo.Album = info.SongInfo.Album.Replace("  ", "");
+                    info.SongInfo.Album = info.SongInfo.Album.Replace("\u009c", "");
 
                     //info.AlbumArtPath = info.SongInfo.Album.Replace("/", "");
                     if (ff != info.SongInfo.Artist) timestamp = UpdateLog(timestamp, "removed potentially illegal characters \\,\",/,?,: from Artist...", true, logPath, Temp_Path_Import, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
@@ -2506,6 +2517,13 @@ namespace RocksmithToolkitGUI.DLCManager
                 var SpotifyAlbumID = "";
                 var SpotifyAlbumURL = "";
                 var SpotifyAlbumPath = "";
+                var SpotifyAlbumYear = "";
+                var ybRAddress = "";
+                var ybAddress = "";
+                var ybLAddress = "";
+                var ybBAddress = "";
+                var ybCAddress = "";
+                var ybSAddress = "";
 
                 Is_MultiTrack = "";
                 MultiTrack_Version = "";
@@ -2667,8 +2685,41 @@ namespace RocksmithToolkitGUI.DLCManager
                     SpotifyAlbumID = sptyfy.Result.Split(';')[3];
                     SpotifyAlbumURL = sptyfy.Result.Split(';')[4];
                     SpotifyAlbumPath = sptyfy.Result.Split(';')[5];
+                    SpotifyAlbumYear = sptyfy.Result.Split(';')[6].Length >= 4 ? sptyfy.Result.Split(';')[6].Substring(0, 4) : "";
                     // GetTrackNoSpotifyAsync(info.SongInfo.Artist, info.SongInfo.Album, info.SongInfo.SongDisplayName));
                     tst = "end get track no from spotify..." + SpotifyAlbumPath; timestamp = UpdateLog(timestamp, tst, true, logPath, Temp_Path_Import, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+
+                    string yAddress = null;
+                    try
+                    {
+                        MainDBfields SongRecord = new MainDBfields();
+                        SongRecord.Album = info.SongInfo.Album; ; SongRecord.Artist = info.SongInfo.Artist; SongRecord.Song_Title = info.SongInfo.SongDisplayName;
+                        SongRecord.Has_Lead = (Lead != "" ? Lead : "No"); SongRecord.Has_Rhythm = (Rhythm != "" ? Rhythm : "No"); SongRecord.Has_Bass = Bass;
+                        SongRecord.Has_Combo = (Combo != "" ? Combo : "No");
+                        //yAddress = StartToGetYoutubeDetail(SongRecord, i, cnb).Result;//.Wait();.Result
+                        if (yAddress!=null)
+                        {
+                       ybAddress = yAddress.Split(';')[0];
+                        ybLAddress = yAddress.Split(';')[1];
+                        ybBAddress = yAddress.Split(';')[2];
+                        ybRAddress = yAddress.Split(';')[3];
+                        ybCAddress = yAddress.Split(';')[4];
+                        ybSAddress = yAddress.Split(';')[5];
+                        }
+                        //var cmdz = "UPDATE Main SET Youtube_Playthrough=\"https://www.youtube.com/watch?v=" + ybRAddress + "\"";//YouTube_Link
+                        //cmdz += ", YouTube_Link=\"https://www.youtube.com/watch?v=" + ybAddress + "\"";
+                        //cmdz += " WHERE ID=" + SongRecord.ID;
+                        //DataSet dos = new DataSet();
+                        //if (ybAddress != "") dos = UpdateDB("Main", cmdz + ";", cnb);
+                        //YbRun(SongRecord, i);
+                    }
+                    catch (AggregateException ex)
+                    {
+                        foreach (var e in ex.InnerExceptions)
+                        {
+                            Console.WriteLine("Error: " + e.Message);
+                        }
+                    }
 
                     //string coverf = "";
                     //if (SpotifyAlbumID!="-" && SpotifyAlbumID!="") coverf = StartToGetSpotifyAlbumDetails(SpotifyAlbumURL, SpotifyAlbumID);
@@ -2803,7 +2854,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         HasOrig = "";
                         var dupli_reason = "";
 
-                        var versio = info.ToolkitInfo.PackageVersion == null ? 1 : float.Parse(info.ToolkitInfo.PackageVersion.Replace("_", "."));//else dupli_reason += ". Possible Duplicate Import at end. End Else";
+                        var versio = info.ToolkitInfo.PackageVersion == null ? 1 : float.Parse(info.ToolkitInfo.PackageVersion.Replace("_", "."), NumberStyles.Float, CultureInfo.CurrentCulture);//else dupli_reason += ". Possible Duplicate Import at end. End Else";
 
                         timestamp = UpdateLog(timestamp, dupli_reason, true, logPath, Temp_Path_Import, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
                         dupli_assesment = AssessConflict(file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead,
@@ -3028,7 +3079,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                 //    PreviewLenght = (duration.Split(':'))[2];
                                 //else
                                 //PreviewLenght = duration;
-                                PreviewLenght = (float.Parse((duration.Split(':'))[0]) * 3600 + float.Parse((duration.Split(':'))[1]) * 60 + float.Parse((duration.Split(':'))[2])).ToString();
+                                PreviewLenght = (float.Parse((duration.Split(':'))[0]) * 3600 + float.Parse((duration.Split(':'))[1], NumberStyles.Float, CultureInfo.CurrentCulture) * 60 + float.Parse((duration.Split(':'))[2]), NumberStyles.Float, CultureInfo.CurrentCulture).ToString();
                                 string[] timepiece = duration.Split(':');
                                 //if (timepiece[0] != "00" || timepiece[1] != "00")
                                 //    recalc_Preview = true;
@@ -3141,7 +3192,9 @@ namespace RocksmithToolkitGUI.DLCManager
                         command.CommandText += "Audio_OrigHash = @param82,";
                         command.CommandText += "Audio_OrigPreviewHash = @param83,";
                         command.CommandText += "AlbumArt_OrigHash = @param84,";
-                        command.CommandText += "Duplicate_Of = @param85";
+                        command.CommandText += "Duplicate_Of = @param85,";
+                        command.CommandText += "Youtube_Playthrough = @param86";
+                        //command.CommandText += "YouTube_Link = @param87";
                         command.CommandText += " WHERE ID = " + IDD;
 
                         command.Parameters.AddWithValue("@param1", import_path);
@@ -3160,8 +3213,10 @@ namespace RocksmithToolkitGUI.DLCManager
                         if (chbx_Additional_Manipulations.GetItemChecked(61)) command.Parameters.AddWithValue("@param14", info.SongInfo.SongYear);
                         command.Parameters.AddWithValue("@param15", ((info.ToolkitInfo.PackageVersion == null) ? "1" : info.ToolkitInfo.PackageVersion));
                         command.Parameters.AddWithValue("@param16", info.SongInfo.AverageTempo);
-                        command.Parameters.AddWithValue("@param17", info.Volume);
-                        command.Parameters.AddWithValue("@param18", info.PreviewVolume != null ? info.PreviewVolume : info.Volume);
+                        command.Parameters.AddWithValue("@param17", TruncateExponentials(info.Volume.ToString()));
+                        command.Parameters.AddWithValue("@param18", info.PreviewVolume != null ? TruncateExponentials(info.PreviewVolume.ToString()) : TruncateExponentials(info.Volume.ToString()));
+                        //command.Parameters.AddWithValue("@param17", info.Volume);
+                        //command.Parameters.AddWithValue("@param18", info.PreviewVolume != null ? info.PreviewVolume : info.Volume);
                         if (chbx_Additional_Manipulations.GetItemChecked(60)) command.Parameters.AddWithValue("@param19", info.Name);
                         command.Parameters.AddWithValue("@param20", AppIdD);
                         if (chbx_Additional_Manipulations.GetItemChecked(61)) command.Parameters.AddWithValue("@param21", info.AlbumArtPath ?? DBNull.Value.ToString());
@@ -3201,11 +3256,11 @@ namespace RocksmithToolkitGUI.DLCManager
                         command.Parameters.AddWithValue("@param55", info.OggPath.Replace(".wem", "_fixed.ogg"));
                         if (chbx_Additional_Manipulations.GetItemChecked(60)) command.Parameters.AddWithValue("@param56", (info.OggPreviewPath == null ? DBNull.Value.ToString() : (File.Exists(info.OggPreviewPath.Replace(".wem", "_fixed.ogg")) ? info.OggPreviewPath.Replace(".wem", "_fixed.ogg") : info.OggPreviewPath.Replace(".wem", ".ogg"))));
                         command.Parameters.AddWithValue("@param57", (trackno == 0 ? "No" : "Yes"));
-                        command.Parameters.AddWithValue("@param58", trackno.ToString());
+                        command.Parameters.AddWithValue("@param58", trackno.ToString("D2"));
                         command.Parameters.AddWithValue("@param59", platformTXT);
                         command.Parameters.AddWithValue("@param60", Is_MultiTrack);
                         command.Parameters.AddWithValue("@param61", MultiTrack_Version);
-                        command.Parameters.AddWithValue("@param62", YouTube_Link);
+                        command.Parameters.AddWithValue("@param62", ybAddress == null ? DBNull.Value.ToString() : ybAddress);
                         command.Parameters.AddWithValue("@param63", CustomsForge_Link);
                         command.Parameters.AddWithValue("@param64", CustomsForge_Like);
                         command.Parameters.AddWithValue("@param65", CustomsForge_ReleaseNotes);
@@ -3229,6 +3284,9 @@ namespace RocksmithToolkitGUI.DLCManager
                         command.Parameters.AddWithValue("@param83", audioPreview_hash);
                         command.Parameters.AddWithValue("@param84", art_hash);
                         command.Parameters.AddWithValue("@param85", Duplic.ToString());
+                        command.Parameters.AddWithValue("@param86", ybSAddress == null ? DBNull.Value.ToString() : ybRAddress);
+                        //command.Parameters.AddWithValue("@param87", ybAddress == null ? DBNull.Value.ToString() : ybAddress);
+
                         //EXECUTE SQL/UPDATE
                         try
                         {
@@ -3375,7 +3433,9 @@ namespace RocksmithToolkitGUI.DLCManager
                         command.CommandText += "Audio_OrigHash,";
                         command.CommandText += "Audio_OrigPreviewHash,";
                         command.CommandText += "AlbumArt_OrigHash,";
-                        command.CommandText += "Duplicate_Of";
+                        command.CommandText += "Duplicate_Of,";
+                        command.CommandText += "Youtube_Playthrough";
+                        //command.CommandText += "YouTube_Link";
                         command.CommandText += ") VALUES (@param1,@param2,@param3,@param4,@param5,@param6,@param7,@param8,@param9";
                         command.CommandText += ",@param10,@param11,@param12,@param13,@param14,@param15,@param16,@param17,@param18,@param19";
                         command.CommandText += ",@param20,@param21,@param22,@param23,@param24,@param25,@param26,@param27,@param28,@param29";
@@ -3384,7 +3444,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         command.CommandText += ",@param50,@param51,@param52,@param53,@param54,@param55,@param56,@param57,@param58,@param59";
                         command.CommandText += ",@param60,@param61,@param62,@param63,@param64,@param65,@param66,@param67,@param68,@param69";
                         command.CommandText += ",@param70,@param71,@param72,@param73,@param74,@param75,@param76,@param77,@param78,@param79";
-                        command.CommandText += ",@param80,@param81,@param82,@param83,@param84,@param85" + ")";//,@param76
+                        command.CommandText += ",@param80,@param81,@param82,@param83,@param84,@param85,@param86" + ")";//,@param76
 
 
                         command.Parameters.AddWithValue("@param1", import_path);
@@ -3403,8 +3463,8 @@ namespace RocksmithToolkitGUI.DLCManager
                         command.Parameters.AddWithValue("@param14", info.SongInfo.SongYear);
                         command.Parameters.AddWithValue("@param15", ((info.ToolkitInfo.PackageVersion == null) ? "1" : info.ToolkitInfo.PackageVersion));
                         command.Parameters.AddWithValue("@param16", info.SongInfo.AverageTempo);
-                        command.Parameters.AddWithValue("@param17", info.Volume);
-                        command.Parameters.AddWithValue("@param18", info.PreviewVolume != null ? info.PreviewVolume : info.Volume);
+                        command.Parameters.AddWithValue("@param17", TruncateExponentials(info.Volume.ToString()));
+                        command.Parameters.AddWithValue("@param18", info.PreviewVolume != null ? TruncateExponentials(info.PreviewVolume.ToString()) : TruncateExponentials(info.Volume.ToString()));
                         command.Parameters.AddWithValue("@param19", info.Name);
                         command.Parameters.AddWithValue("@param20", AppIdD);
                         command.Parameters.AddWithValue("@param21", info.AlbumArtPath ?? DBNull.Value.ToString());
@@ -3444,11 +3504,11 @@ namespace RocksmithToolkitGUI.DLCManager
                         command.Parameters.AddWithValue("@param55", info.OggPath.Replace(".wem", "_fixed.ogg"));
                         command.Parameters.AddWithValue("@param56", (info.OggPreviewPath == null ? DBNull.Value.ToString() : (File.Exists(info.OggPreviewPath.Replace(".wem", "_fixed.ogg")) ? info.OggPreviewPath.Replace(".wem", "_fixed.ogg") : info.OggPreviewPath.Replace(".wem", ".ogg"))));
                         command.Parameters.AddWithValue("@param57", (trackno == 0 ? "No" : "Yes"));
-                        command.Parameters.AddWithValue("@param58", trackno.ToString());
+                        command.Parameters.AddWithValue("@param58", trackno.ToString("D2"));
                         command.Parameters.AddWithValue("@param59", platformTXT.ToString());
                         command.Parameters.AddWithValue("@param60", Is_MultiTrack);
                         command.Parameters.AddWithValue("@param61", MultiTrack_Version);
-                        command.Parameters.AddWithValue("@param62", YouTube_Link);
+                        command.Parameters.AddWithValue("@param62", ybAddress == null ? DBNull.Value.ToString() : ybAddress);
                         command.Parameters.AddWithValue("@param63", CustomsForge_Link);
                         command.Parameters.AddWithValue("@param64", CustomsForge_Like);
                         command.Parameters.AddWithValue("@param65", CustomsForge_ReleaseNotes);
@@ -3472,6 +3532,8 @@ namespace RocksmithToolkitGUI.DLCManager
                         command.Parameters.AddWithValue("@param83", audioPreview_hash);
                         command.Parameters.AddWithValue("@param84", art_hash);
                         command.Parameters.AddWithValue("@param85", Duplic.ToString());
+                        command.Parameters.AddWithValue("@param86", ybSAddress == null ? DBNull.Value.ToString() : ybRAddress);
+                        //command.Parameters.AddWithValue("@param87", ybAddress == null ? DBNull.Value.ToString() : ybAddress);
                         //command.Parameters.AddWithValue("@param76", Top10);
                         var rt = (import_path) + "\",\"" + (original_FileName) + "\",\"" + (original_FileName) + "\",\"" + (ds.Tables[0].Rows[i].ItemArray[3]) + "\",\"" + (ds.Tables[0].Rows[i].ItemArray[3]) + "\",\"" + (ds.Tables[0].Rows[i].ItemArray[4]) + "\",\"" + (ds.Tables[0].Rows[i].ItemArray[5]) + "\",\"" + (unpackedDir) + "\",\"" + (info.SongInfo.SongDisplayName) + "\",\"" + (info.SongInfo.SongDisplayNameSort) + "\",\"" + (info.SongInfo.Album) + "\",\"" + (info.SongInfo.Artist) + "\",\"" + (info.SongInfo.ArtistSort) + "\",\"" + (info.SongInfo.SongYear) + "\",\"" + (((info.ToolkitInfo.PackageVersion == null) ? "1" : info.ToolkitInfo.PackageVersion)) + "\",\"" + (info.SongInfo.AverageTempo) + "\",\"" + (info.Volume) + "\",\"" + (info.PreviewVolume) + "\",\"" + (info.Name) + "\",\"" + (AppIdD) + "\",\"" + (info.AlbumArtPath ?? DBNull.Value.ToString()) + "\",\"" + (info.OggPath) + "\",\"" + ((info.OggPreviewPath ?? DBNull.Value.ToString())) + "\",\"" + (Bass) + "\",\"" + (Guitar) + "\",\"" + (((Lead != "") ? Lead : "No")) + "\",\"" + (((Rhythm != "") ? Rhythm : "No")) + "\",\"" + (((Combo != "") ? Combo : "No")) + "\",\"" + (((Vocalss != "") ? Vocalss : "No")) + "\",\"" + (sect1on) + "\",\"" + (((info.AlbumArtPath == "" || info.AlbumArtPath == null) ? "No" : "Yes")) + "\",\"" + (((info.OggPreviewPath != null) ? "Yes" : "No")) + "\",\"" + (Tones_Custom) + "\",\"" + (DD) + "\",\"" + (((info.ToolkitInfo.PackageVersion != null && tkversion != "" && Is_Original == "No") ? "Yes" : "No")) + "\",\"" + (Has_author) + "\",\"" + (Tunings) + "\",\"" + (PluckedType) + "\",\"" + (((Is_Original == "Yes") ? "ORIG" : "CDLC")) + "\",\"" + (info.SignatureType) + "\",\"" + (author) + "\",\"" + (tkversion) + "\",\"" + (Is_Original) + "\",\"" + (((alt == "" || alt == null) ? "No" : "Yes")) + "\",\"" + (alt ?? DBNull.Value.ToString()) + "\",\"" + (art_hash) + "\",\"" + (audio_hash) + "\",\"" + (audioPreview_hash) + "\",\"" + (Bass_Has_DD) + "\",\"" + (bonus) + "\",\"" + (Available_Duplicate) + "\",\"" + (Available_Old) + "\",\"" + (description) + "\",\"" + (comment) + "\",\"" + (info.OggPath.Replace(".wem", "_fixed.ogg")) + "\",\"" + ((info.OggPreviewPath == null ? DBNull.Value.ToString() : (File.Exists(info.OggPreviewPath.Replace(".wem", "_fixed.ogg")) ? info.OggPreviewPath.Replace(".wem", "_fixed.ogg") : info.OggPreviewPath.Replace(".wem", ".ogg")))) + "\",\"" + ((trackno == 0 ? "No" : "Yes")) + "\",\"" + (trackno.ToString()) + "\",\"" + (platformTXT.ToString()) + "\",\"" + (Is_MultiTrack) + "\",\"" + (MultiTrack_Version) + "\",\"" + (YouTube_Link) + "\",\"" + (CustomsForge_Link) + "\",\"" + (CustomsForge_Like) + "\",\"" + (CustomsForge_ReleaseNotes) + "\",\"" + (PreviewTime ?? DBNull.Value.ToString()) + "\",\"" + (PreviewLenght ?? DBNull.Value.ToString()) + "\",\"" + (ds.Tables[0].Rows[i].ItemArray[6]) + "\",\"" + (SongLenght) + "\",\"" + (ds.Tables[0].Rows[i].ItemArray[7]) + "\",\"" + (IsLive == null ? DBNull.Value.ToString() : IsLive) + "\",\"" + (LiveDetails == null ? DBNull.Value.ToString() : LiveDetails) + "\",\"" + (IsAcoustic == null ? DBNull.Value.ToString() : IsAcoustic) + "\"";
                         //EXECUTE SQL/INSERT
@@ -3660,12 +3722,13 @@ namespace RocksmithToolkitGUI.DLCManager
                                     command.CommandText += "Has_Sections,";
                                     command.CommandText += "Start_Time,";
                                     command.CommandText += "XMLFile_Hash_Orig,";
-                                    command.CommandText += "SNGFileHash_Orig";
+                                    command.CommandText += "SNGFileHash_Orig,";
+                                    command.CommandText += "PlayThoughYBLink";
                                     command.CommandText += ") VALUES(@param1,@param2,@param3,@param4,@param5,@param6,@param7,@param8,@param9";
                                     command.CommandText += ",@param10,@param11,@param12,@param13,@param14,@param15,@param16,@param17,@param18,@param19";
                                     command.CommandText += ",@param20,@param21,@param22,@param23,@param24,@param25,@param26,@param27,@param28,@param29";
                                     command.CommandText += ",@param30,@param31,@param32,@param33,@param34,@param35,@param36,@param37,@param38,@param39";
-                                    command.CommandText += ")";
+                                    command.CommandText += ",@param40)";
                                 }
                                 command.Parameters.AddWithValue("@param1", CDLC_ID);
                                 command.Parameters.AddWithValue("@param2", arg.Name);
@@ -3706,6 +3769,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                 command.Parameters.AddWithValue("@param37", (StartTime ?? DBNull.Value.ToString()));
                                 command.Parameters.AddWithValue("@param38", (alist[n].ToString() ?? DBNull.Value.ToString()));
                                 command.Parameters.AddWithValue("@param39", (blist[n].ToString() ?? DBNull.Value.ToString()));
+                                command.Parameters.AddWithValue("@param39", (arg.ArrangementType.ToString() == "Lead" ? ybLAddress :(arg.ArrangementType.ToString() == "Bass" ? ybBAddress :(arg.ArrangementType.ToString() == "Rhythm" ? ybRAddress :(arg.ArrangementType.ToString() == "Combo" ? ybCAddress :""))) ?? DBNull.Value.ToString()));
                                 n++;
 
                                 //EXECUTE SQL/INSERT
@@ -4275,7 +4339,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         if (!chbx_Additional_Manipulations.GetItemChecked(78))
                             if ((chbx_Additional_Manipulations.GetItemChecked(69) && info.OggPath != null)
                                 || (((chbx_Additional_Manipulations.GetItemChecked(34) && (info.OggPreviewPath == null || info.OggPreviewPath == ""))
-                                || (chbx_Additional_Manipulations.GetItemChecked(55) && float.Parse(PreviewLenght) > float.Parse(ConfigRepository.Instance()["dlcm_MaxPreviewLenght"]))
+                                || (chbx_Additional_Manipulations.GetItemChecked(55) && float.Parse(PreviewLenght, NumberStyles.Float, CultureInfo.CurrentCulture) > float.Parse(ConfigRepository.Instance()["dlcm_MaxPreviewLenght"], NumberStyles.Float, CultureInfo.CurrentCulture))
                                 && info.OggPath != null)))
                             {
                                 var d1 = WwiseInstalled("Convert Audio if bitrate> ConfigRepository");
@@ -4283,13 +4347,13 @@ namespace RocksmithToolkitGUI.DLCManager
                                 {
                                     if ((chbx_Additional_Manipulations.GetItemChecked(34) && (info.OggPreviewPath == null || info.OggPreviewPath == ""))
                                         || (chbx_Additional_Manipulations.GetItemChecked(55)
-                                        && float.Parse(PreviewLenght) > float.Parse(ConfigRepository.Instance()["dlcm_MaxPreviewLenght"]))
+                                        && float.Parse(PreviewLenght, NumberStyles.Float, CultureInfo.CurrentCulture) > float.Parse(ConfigRepository.Instance()["dlcm_MaxPreviewLenght"], NumberStyles.Float, CultureInfo.CurrentCulture))
                                         && info.OggPath != null)
                                     {
                                         tst = "start set preview"; timestamp = UpdateLog(timestamp, tst, true, logPath, Temp_Path_Import, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
                                         cmd = "SELECT ID,AudioPath,audioBitrate,audioSampleRate,audioPreviewPath,Folder_Name FROM Main WHERE ";
                                         cmd += "ID=" + CDLC_ID + "";
-                                        if (chbx_Additional_Manipulations.GetItemChecked(55) && float.Parse(PreviewLenght) > float.Parse(ConfigRepository.Instance()["dlcm_PreviewLenght"]) && info.OggPreviewPath != null) DeleteFile(info.OggPreviewPath);
+                                        if (chbx_Additional_Manipulations.GetItemChecked(55) && float.Parse(PreviewLenght, NumberStyles.Float, CultureInfo.CurrentCulture) > float.Parse(ConfigRepository.Instance()["dlcm_PreviewLenght"], NumberStyles.Float, CultureInfo.CurrentCulture) && info.OggPreviewPath != null) DeleteFile(info.OggPreviewPath);
                                         FixMissingPreview(cmd, cnb, AppWD, pB_ReadDLCs, rtxt_StatisticsOnReadDLCs, false);
                                     }
                                     tst = "end set preview ..."; timestamp = UpdateLog(timestamp, tst, true, logPath, Temp_Path_Import, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
@@ -4342,9 +4406,9 @@ namespace RocksmithToolkitGUI.DLCManager
 
                     if (dzs.Tables[0].Rows.Count == 0)
                     {
-                        var insertcmdd = "Artist, Album, SpotifyArtistID, SpotifyAlbumID, SpotifyAlbumURL, SpotifyAlbumPath";
+                        var insertcmdd = "Artist, Album, SpotifyArtistID, SpotifyAlbumID, SpotifyAlbumURL, SpotifyAlbumPath, Year_Correction";
                         var insertvalues = "\"" + info.SongInfo.Artist + "\",\"" + info.SongInfo.Album + "\",\"" + SpotifyArtistID + "\",\"" + SpotifyAlbumID
-                            + "\",\"" + SpotifyAlbumURL + "\",\"" + SpotifyAlbumPath + "\"";
+                            + "\",\"" + SpotifyAlbumURL + "\",\"" + SpotifyAlbumPath + "\",\"" + SpotifyAlbumYear + "\"";
                         InsertIntoDBwValues("Standardization", insertcmdd, insertvalues, cnb, mutit);
                     }
                     timestamp = UpdateLog(timestamp, "done", true, logPath, Temp_Path_Import, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
@@ -6516,142 +6580,142 @@ namespace RocksmithToolkitGUI.DLCManager
                 pB_ReadDLCs.Increment(1);
                 //if (norec > 0)
                 //{
-                    for (int j = 0; j < norec; j++)
-                        ConfigRepository.Instance()[ds.Tables[0].Rows[j].ItemArray[1].ToString()] = ds.Tables[0].Rows[j].ItemArray[0].ToString();
+                for (int j = 0; j < norec; j++)
+                    ConfigRepository.Instance()[ds.Tables[0].Rows[j].ItemArray[1].ToString()] = ds.Tables[0].Rows[j].ItemArray[0].ToString();
 
-                    //ConfigRepository.Instance()["dlcm_DBFolder"] = ds.Tables[0].Rows[106].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_DBFolder"] = ds.Tables[0].Rows[106].ItemArray[0].ToString();
 
-                    //ConfigRepository.Instance()["dlcm_Activ_Album"] = ds.Tables[0].Rows[0].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_Activ_Artist"] = ds.Tables[0].Rows[1].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_Activ_ArtistSort"] = ds.Tables[0].Rows[2].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_Activ_FileName"] = ds.Tables[0].Rows[3].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_Activ_Title"] = ds.Tables[0].Rows[4].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_Activ_TitleSort"] = ds.Tables[0].Rows[5].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul0"] = ds.Tables[0].Rows[6].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul1"] = ds.Tables[0].Rows[7].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul10"] = ds.Tables[0].Rows[8].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul11"] = ds.Tables[0].Rows[9].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul12"] = ds.Tables[0].Rows[10].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul13"] = ds.Tables[0].Rows[11].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul14"] = ds.Tables[0].Rows[12].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul15"] = ds.Tables[0].Rows[13].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul16"] = ds.Tables[0].Rows[14].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul17"] = ds.Tables[0].Rows[15].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul18"] = ds.Tables[0].Rows[16].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul19"] = ds.Tables[0].Rows[17].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul2"] = ds.Tables[0].Rows[18].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul20"] = ds.Tables[0].Rows[19].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul21"] = ds.Tables[0].Rows[20].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul22"] = ds.Tables[0].Rows[21].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul23"] = ds.Tables[0].Rows[22].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul24"] = ds.Tables[0].Rows[23].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul25"] = ds.Tables[0].Rows[24].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul26"] = ds.Tables[0].Rows[25].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul27"] = ds.Tables[0].Rows[26].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul28"] = ds.Tables[0].Rows[27].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul29"] = ds.Tables[0].Rows[28].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul3"] = ds.Tables[0].Rows[29].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul30"] = ds.Tables[0].Rows[30].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul31"] = ds.Tables[0].Rows[31].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul32"] = ds.Tables[0].Rows[32].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul33"] = ds.Tables[0].Rows[33].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul34"] = ds.Tables[0].Rows[34].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul35"] = ds.Tables[0].Rows[35].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul36"] = ds.Tables[0].Rows[36].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul37"] = ds.Tables[0].Rows[37].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul38"] = ds.Tables[0].Rows[38].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul39"] = ds.Tables[0].Rows[39].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul4"] = ds.Tables[0].Rows[40].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul40"] = ds.Tables[0].Rows[41].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul41"] = ds.Tables[0].Rows[42].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul42"] = ds.Tables[0].Rows[43].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul43"] = ds.Tables[0].Rows[44].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul44"] = ds.Tables[0].Rows[45].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul45"] = ds.Tables[0].Rows[46].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul46"] = ds.Tables[0].Rows[47].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul47"] = ds.Tables[0].Rows[48].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul48"] = ds.Tables[0].Rows[49].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul49"] = ds.Tables[0].Rows[50].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul5"] = ds.Tables[0].Rows[51].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul50"] = ds.Tables[0].Rows[52].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul51"] = ds.Tables[0].Rows[53].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul52"] = ds.Tables[0].Rows[54].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul53"] = ds.Tables[0].Rows[55].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul54"] = ds.Tables[0].Rows[56].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul55"] = ds.Tables[0].Rows[57].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul56"] = ds.Tables[0].Rows[58].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul57"] = ds.Tables[0].Rows[59].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul58"] = ds.Tables[0].Rows[60].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul59"] = ds.Tables[0].Rows[61].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul6"] = ds.Tables[0].Rows[62].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul60"] = ds.Tables[0].Rows[63].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul61"] = ds.Tables[0].Rows[64].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul62"] = ds.Tables[0].Rows[65].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul63"] = ds.Tables[0].Rows[66].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul64"] = ds.Tables[0].Rows[67].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul65"] = ds.Tables[0].Rows[68].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul66"] = ds.Tables[0].Rows[69].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul67"] = ds.Tables[0].Rows[70].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul68"] = ds.Tables[0].Rows[71].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul69"] = ds.Tables[0].Rows[72].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul7"] = ds.Tables[0].Rows[73].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul70"] = ds.Tables[0].Rows[74].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul71"] = ds.Tables[0].Rows[75].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul72"] = ds.Tables[0].Rows[76].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul73"] = ds.Tables[0].Rows[77].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul74"] = ds.Tables[0].Rows[78].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul75"] = ds.Tables[0].Rows[79].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul76"] = ds.Tables[0].Rows[80].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul77"] = ds.Tables[0].Rows[81].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul78"] = ds.Tables[0].Rows[82].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul79"] = ds.Tables[0].Rows[83].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul8"] = ds.Tables[0].Rows[84].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul80"] = ds.Tables[0].Rows[85].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul81"] = ds.Tables[0].Rows[86].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul82"] = ds.Tables[0].Rows[87].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul83"] = ds.Tables[0].Rows[88].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul84"] = ds.Tables[0].Rows[89].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul85"] = ds.Tables[0].Rows[91].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul86"] = ds.Tables[0].Rows[92].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul87"] = ds.Tables[0].Rows[93].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul88"] = ds.Tables[0].Rows[94].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul89"] = ds.Tables[0].Rows[95].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul9"] = ds.Tables[0].Rows[90].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul90"] = ds.Tables[0].Rows[96].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_AdditionalManipul91"] = ds.Tables[0].Rows[97].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_Album"] = ds.Tables[0].Rows[91].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_Artist"] = ds.Tables[0].Rows[92].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_Artist_Sort"] = ds.Tables[0].Rows[93].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_cbx_Groups"] = ds.Tables[0].Rows[94].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_chbx_Mac"] = ds.Tables[0].Rows[95].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_chbx_PC"] = ds.Tables[0].Rows[96].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_chbx_PS3"] = ds.Tables[0].Rows[97].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_chbx_XBOX360"] = ds.Tables[0].Rows[98].ItemArray[0].ToString();
-                    ////ConfigRepository.Instance()["dlcm_DBFolder"] = ds.Tables[0].Rows[99].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_Debug"] = ds.Tables[0].Rows[100].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_DefaultDB"] = ds.Tables[0].Rows[101].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_File_Name"] = ds.Tables[0].Rows[102].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_netstatus"] = ds.Tables[0].Rows[103].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_RocksmithDLCPath"] = ds.Tables[0].Rows[104].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_TempPath"] = ds.Tables[0].Rows[105].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_Title"] = ds.Tables[0].Rows[106].ItemArray[0].ToString();
-                    //ConfigRepository.Instance()["dlcm_Title_Sort"] = ds.Tables[0].Rows[107].ItemArray[0].ToString();
-                }
-                if (chbx_Configurations.Text == ConfigRepository.Instance()["dlcm_DebugProfile"])
-                {
-                    chbx_Additional_Manipulations.SetItemCheckState(15, CheckState.Unchecked);//move to old
-                    chbx_Additional_Manipulations.SetItemCheckState(49, CheckState.Unchecked);//ftp
-                    chbx_Additional_Manipulations.SetItemCheckState(24, CheckState.Unchecked);//apply standard
-                    chbx_Additional_Manipulations.SetItemCheckState(77, CheckState.Unchecked);//dont open main db
-                    chbx_Additional_Manipulations.SetItemCheckState(75, CheckState.Checked);//copy to old
-                    chbx_Additional_Manipulations.SetItemCheckState(34, CheckState.Unchecked);//audio
-                    chbx_Additional_Manipulations.SetItemCheckState(55, CheckState.Unchecked);//audio
-                    chbx_Additional_Manipulations.SetItemCheckState(69, CheckState.Unchecked);//audio
-                    chbx_Additional_Manipulations.SetItemCheckState(78, CheckState.Unchecked);//audio
-                    //chbx_CleanDB.Checked = true;
-                    chbx_CleanTemp.Checked = true;
-                    chbx_DebugB.Checked = true;
-                }
+                //ConfigRepository.Instance()["dlcm_Activ_Album"] = ds.Tables[0].Rows[0].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_Activ_Artist"] = ds.Tables[0].Rows[1].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_Activ_ArtistSort"] = ds.Tables[0].Rows[2].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_Activ_FileName"] = ds.Tables[0].Rows[3].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_Activ_Title"] = ds.Tables[0].Rows[4].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_Activ_TitleSort"] = ds.Tables[0].Rows[5].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul0"] = ds.Tables[0].Rows[6].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul1"] = ds.Tables[0].Rows[7].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul10"] = ds.Tables[0].Rows[8].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul11"] = ds.Tables[0].Rows[9].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul12"] = ds.Tables[0].Rows[10].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul13"] = ds.Tables[0].Rows[11].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul14"] = ds.Tables[0].Rows[12].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul15"] = ds.Tables[0].Rows[13].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul16"] = ds.Tables[0].Rows[14].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul17"] = ds.Tables[0].Rows[15].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul18"] = ds.Tables[0].Rows[16].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul19"] = ds.Tables[0].Rows[17].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul2"] = ds.Tables[0].Rows[18].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul20"] = ds.Tables[0].Rows[19].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul21"] = ds.Tables[0].Rows[20].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul22"] = ds.Tables[0].Rows[21].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul23"] = ds.Tables[0].Rows[22].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul24"] = ds.Tables[0].Rows[23].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul25"] = ds.Tables[0].Rows[24].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul26"] = ds.Tables[0].Rows[25].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul27"] = ds.Tables[0].Rows[26].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul28"] = ds.Tables[0].Rows[27].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul29"] = ds.Tables[0].Rows[28].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul3"] = ds.Tables[0].Rows[29].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul30"] = ds.Tables[0].Rows[30].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul31"] = ds.Tables[0].Rows[31].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul32"] = ds.Tables[0].Rows[32].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul33"] = ds.Tables[0].Rows[33].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul34"] = ds.Tables[0].Rows[34].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul35"] = ds.Tables[0].Rows[35].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul36"] = ds.Tables[0].Rows[36].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul37"] = ds.Tables[0].Rows[37].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul38"] = ds.Tables[0].Rows[38].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul39"] = ds.Tables[0].Rows[39].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul4"] = ds.Tables[0].Rows[40].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul40"] = ds.Tables[0].Rows[41].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul41"] = ds.Tables[0].Rows[42].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul42"] = ds.Tables[0].Rows[43].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul43"] = ds.Tables[0].Rows[44].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul44"] = ds.Tables[0].Rows[45].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul45"] = ds.Tables[0].Rows[46].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul46"] = ds.Tables[0].Rows[47].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul47"] = ds.Tables[0].Rows[48].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul48"] = ds.Tables[0].Rows[49].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul49"] = ds.Tables[0].Rows[50].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul5"] = ds.Tables[0].Rows[51].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul50"] = ds.Tables[0].Rows[52].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul51"] = ds.Tables[0].Rows[53].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul52"] = ds.Tables[0].Rows[54].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul53"] = ds.Tables[0].Rows[55].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul54"] = ds.Tables[0].Rows[56].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul55"] = ds.Tables[0].Rows[57].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul56"] = ds.Tables[0].Rows[58].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul57"] = ds.Tables[0].Rows[59].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul58"] = ds.Tables[0].Rows[60].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul59"] = ds.Tables[0].Rows[61].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul6"] = ds.Tables[0].Rows[62].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul60"] = ds.Tables[0].Rows[63].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul61"] = ds.Tables[0].Rows[64].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul62"] = ds.Tables[0].Rows[65].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul63"] = ds.Tables[0].Rows[66].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul64"] = ds.Tables[0].Rows[67].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul65"] = ds.Tables[0].Rows[68].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul66"] = ds.Tables[0].Rows[69].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul67"] = ds.Tables[0].Rows[70].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul68"] = ds.Tables[0].Rows[71].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul69"] = ds.Tables[0].Rows[72].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul7"] = ds.Tables[0].Rows[73].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul70"] = ds.Tables[0].Rows[74].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul71"] = ds.Tables[0].Rows[75].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul72"] = ds.Tables[0].Rows[76].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul73"] = ds.Tables[0].Rows[77].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul74"] = ds.Tables[0].Rows[78].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul75"] = ds.Tables[0].Rows[79].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul76"] = ds.Tables[0].Rows[80].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul77"] = ds.Tables[0].Rows[81].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul78"] = ds.Tables[0].Rows[82].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul79"] = ds.Tables[0].Rows[83].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul8"] = ds.Tables[0].Rows[84].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul80"] = ds.Tables[0].Rows[85].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul81"] = ds.Tables[0].Rows[86].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul82"] = ds.Tables[0].Rows[87].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul83"] = ds.Tables[0].Rows[88].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul84"] = ds.Tables[0].Rows[89].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul85"] = ds.Tables[0].Rows[91].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul86"] = ds.Tables[0].Rows[92].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul87"] = ds.Tables[0].Rows[93].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul88"] = ds.Tables[0].Rows[94].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul89"] = ds.Tables[0].Rows[95].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul9"] = ds.Tables[0].Rows[90].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul90"] = ds.Tables[0].Rows[96].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_AdditionalManipul91"] = ds.Tables[0].Rows[97].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_Album"] = ds.Tables[0].Rows[91].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_Artist"] = ds.Tables[0].Rows[92].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_Artist_Sort"] = ds.Tables[0].Rows[93].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_cbx_Groups"] = ds.Tables[0].Rows[94].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_chbx_Mac"] = ds.Tables[0].Rows[95].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_chbx_PC"] = ds.Tables[0].Rows[96].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_chbx_PS3"] = ds.Tables[0].Rows[97].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_chbx_XBOX360"] = ds.Tables[0].Rows[98].ItemArray[0].ToString();
+                ////ConfigRepository.Instance()["dlcm_DBFolder"] = ds.Tables[0].Rows[99].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_Debug"] = ds.Tables[0].Rows[100].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_DefaultDB"] = ds.Tables[0].Rows[101].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_File_Name"] = ds.Tables[0].Rows[102].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_netstatus"] = ds.Tables[0].Rows[103].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_RocksmithDLCPath"] = ds.Tables[0].Rows[104].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_TempPath"] = ds.Tables[0].Rows[105].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_Title"] = ds.Tables[0].Rows[106].ItemArray[0].ToString();
+                //ConfigRepository.Instance()["dlcm_Title_Sort"] = ds.Tables[0].Rows[107].ItemArray[0].ToString();
+            }
+            if (chbx_Configurations.Text == ConfigRepository.Instance()["dlcm_DebugProfile"])
+            {
+                chbx_Additional_Manipulations.SetItemCheckState(15, CheckState.Unchecked);//move to old
+                chbx_Additional_Manipulations.SetItemCheckState(49, CheckState.Unchecked);//ftp
+                chbx_Additional_Manipulations.SetItemCheckState(24, CheckState.Unchecked);//apply standard
+                chbx_Additional_Manipulations.SetItemCheckState(77, CheckState.Unchecked);//dont open main db
+                chbx_Additional_Manipulations.SetItemCheckState(75, CheckState.Checked);//copy to old
+                chbx_Additional_Manipulations.SetItemCheckState(34, CheckState.Unchecked);//audio
+                chbx_Additional_Manipulations.SetItemCheckState(55, CheckState.Unchecked);//audio
+                chbx_Additional_Manipulations.SetItemCheckState(69, CheckState.Unchecked);//audio
+                chbx_Additional_Manipulations.SetItemCheckState(78, CheckState.Unchecked);//audio
+                                                                                          //chbx_CleanDB.Checked = true;
+                chbx_CleanTemp.Checked = true;
+                chbx_DebugB.Checked = true;
+            }
             //}
             pB_ReadDLCs.Increment(1);
             if (!File.Exists(txt_DBFolder.Text))// + "\\Files.accdb"
@@ -7134,11 +7198,11 @@ namespace RocksmithToolkitGUI.DLCManager
                 //if (dupli_assesment != "Ignore")
                 else if ((author.ToLower() == filed.Author.ToLower() && author != "" && filed.Author != "" && filed.Author != "Custom Song Creator" && author != "Custom Song Creator"))
                 {
-                    if (float.Parse(filed.Version) < versio) return "Update;Bigger version";
-                    else if (float.Parse(filed.Version) > versio)
+                    if (float.Parse(filed.Version, NumberStyles.Float, CultureInfo.CurrentCulture) < versio) return "Update;Bigger version";
+                    else if (float.Parse(filed.Version, NumberStyles.Float, CultureInfo.CurrentCulture) > versio)
                         return "Ignore;Duplicated_cause_version_bigger;Duplicated IGNORED cause version bigger and NOTalternate";
                     ///* */ if (file.Is_Alternate != "Yes")else dupli_reason = "Possible Duplicate Import at end. Same Version but alternate";
-                    else if (float.Parse(filed.Version) == versio) dupli_reason = "Possible Duplicate Import at end. Same Version";
+                    else if (float.Parse(filed.Version, NumberStyles.Float, CultureInfo.CurrentCulture) == versio) dupli_reason = "Possible Duplicate Import at end. Same Version";
                     //else dupli_reason += "Duplicated wo version number probblems";
                 }
                 //else if (file.Is_Original == "Yes") dupli_assesment = "alternate";// dupli_reason = "Duplicated added as alternate to Original already in."; }

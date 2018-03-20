@@ -928,5 +928,10 @@ DataGridViewTextBoxColumn XMLFile_Hash_Orig= new DataGridViewTextBoxColumn { Dat
             }
             else MessageBox.Show("Chose a Tone.");
         }
+
+        private void btn_Youtube_Click(object sender, EventArgs e)
+        {
+            Process.Start("IExplore.exe", txt_Playthough.Text);
+        }
     }
 }

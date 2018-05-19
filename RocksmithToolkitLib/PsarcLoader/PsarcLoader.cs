@@ -14,6 +14,8 @@ using RocksmithToolkitLib.Extensions;
 using RocksmithToolkitLib.Ogg;
 using System.Windows.Forms;
 
+// tools for future use
+
 namespace RocksmithToolkitLib.PsarcLoader
 {
     public sealed class PsarcLoader : IDisposable
@@ -129,11 +131,13 @@ namespace RocksmithToolkitLib.PsarcLoader
             // this foreach loop addresses song packs otherwise it is only done one time
             foreach (var xblockEntry in xblockEntries)
             {
-                var strippedName = xblockEntry.Name.Replace(".xblock", "").Replace("gamexblocks/nsongs/", "");
+                // CAREFUL with use of Contains and Replace to avoid creating duplicates
+                var strippedName = xblockEntry.Name.Replace(".xblock", "").Replace("gamexblocks/nsongs", "");
                 if (strippedName.Contains("_fcp_dlc"))
-                    strippedName = strippedName.Replace("_fcp_dlc", "");
+                    strippedName = strippedName.Replace("fcp_dlc", "");
 
-                var jsonEntries = _archive.TOC.Where(x => x.Name.StartsWith("manifests/songs") && x.Name.EndsWith(".json") && x.Name.Contains(strippedName)).OrderBy(x => x.Name).ToList();
+                var jsonEntries = _archive.TOC.Where(x => x.Name.StartsWith("manifests/songs") &&
+                    x.Name.EndsWith(".json") && x.Name.Contains(strippedName)).OrderBy(x => x.Name).ToList();
 
                 // looping through song multiple times gathering each arrangement
                 foreach (var jsonEntry in jsonEntries)
@@ -202,10 +206,10 @@ namespace RocksmithToolkitLib.PsarcLoader
             else
             {
                 // this helps prevent null exceptions
-                tkInfo.ToolkitVersion = "N/A";
+                tkInfo.ToolkitVersion = "Null";
                 tkInfo.PackageAuthor = "Ubisoft";
-                tkInfo.PackageVersion = "N/A";
-                tkInfo.PackageComment = "N/A";
+                tkInfo.PackageVersion = "Null";
+                tkInfo.PackageComment = "Null";
             }
 
             return tkInfo;

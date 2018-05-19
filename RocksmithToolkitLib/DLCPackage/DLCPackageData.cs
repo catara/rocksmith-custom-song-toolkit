@@ -372,7 +372,9 @@ namespace RocksmithToolkitLib.DLCPackage
                     catch (Exception ex)
                     {
                         // mainly for the benefit of convert2012 CLI users
-                        Console.WriteLine(@"This CDLC could not be auto converted." + Environment.NewLine + "You can still try manually adding the arrangements and assets." + Environment.NewLine + ex.Message);
+                        Console.WriteLine(@"This CDLC could not be auto converted." + Environment.NewLine +
+                            "You can still try manually adding the arrangements and assets." + Environment.NewLine +
+                            ex.Message);
                     }
                 }
             }
@@ -393,7 +395,13 @@ namespace RocksmithToolkitLib.DLCPackage
 
             var targetArtFiles = new List<DDSConvertedFile>();
             data.AlbumArtPath = artFiles[0];
-            targetArtFiles.Add(new DDSConvertedFile() { sizeX = 256, sizeY = 256, sourceFile = artFiles[0], destinationFile = artFiles[0].CopyToTempFile(".dds") });
+            targetArtFiles.Add(new DDSConvertedFile()
+                {
+                    sizeX = 256,
+                    sizeY = 256,
+                    sourceFile = artFiles[0],
+                    destinationFile = artFiles[0].CopyToTempFile(".dds")
+                });
             data.ArtFiles = targetArtFiles;
 
             //Audio files
@@ -412,6 +420,7 @@ namespace RocksmithToolkitLib.DLCPackage
                 if (!convert && !audioFiles[i].Contains("_fixed.ogg"))
                     break;
             }
+
             // FIXME: platform specific decode is broken
             var sourcePlatform = unpackedDir.GetPlatform();
             if (targetPlatform.IsConsole != (sourcePlatform = audioFiles[i].GetAudioPlatform()).IsConsole)
@@ -491,8 +500,9 @@ namespace RocksmithToolkitLib.DLCPackage
             data.TonesRS2014 = new List<Tone2014>();
 
             //Load files
-            float? _volume = null;
-            float? _volume_preview = null;
+            float defaultVolume = -7.0f;
+            float? mainVolume = null;
+            float? previewVolume = null;
             var jsonFiles = Directory.EnumerateFiles(unpackedDir, "*.json", SearchOption.AllDirectories).ToArray();
             foreach (var json in jsonFiles)
             {
@@ -508,11 +518,23 @@ namespace RocksmithToolkitLib.DLCPackage
                         data.Name = attr.DLCKey;
 
                         // Get song volume
-                        _volume = attr.SongVolume;
-                        _volume_preview = attr.PreviewVolume ?? _volume;
+                        mainVolume = attr.SongVolume;
+                        previewVolume = attr.PreviewVolume ?? mainVolume;
 
                         // Fill SongInfo
-                        data.SongInfo = new SongInfo { JapaneseArtist= attr.JapaneseArtist, JapaneseSongName = attr.JapaneseSongName, SongDisplayName = attr.SongName, SongDisplayNameSort = attr.SongNameSort, Album = attr.AlbumName, AlbumSort = attr.AlbumNameSort, SongYear = attr.SongYear ?? 0, Artist = attr.ArtistName, ArtistSort = attr.ArtistNameSort, AverageTempo = (int)attr.SongAverageTempo };
+                        data.SongInfo = new SongInfo
+                            {
+                                JapaneseArtistName = attr.JapaneseArtistName,
+                                JapaneseSongName = attr.JapaneseSongName,
+                                SongDisplayName = attr.SongName,
+                                SongDisplayNameSort = attr.SongNameSort,
+                                Album = attr.AlbumName,
+                                AlbumSort = attr.AlbumNameSort,
+                                SongYear = attr.SongYear ?? 0,
+                                Artist = attr.ArtistName,
+                                ArtistSort = attr.ArtistNameSort,
+                                AverageTempo = (int)attr.SongAverageTempo
+                            };
                     }
 
                     // Adding Arrangement
@@ -589,6 +611,28 @@ namespace RocksmithToolkitLib.DLCPackage
                 }
             }
 
+            // Read volume from BNK if it was not found in Manifest
+            if (mainVolume == null)
+            {
+                var bnkfiles = Directory.EnumerateFiles(unpackedDir, "*.bnk", SearchOption.AllDirectories).ToArray();
+                if (bnkfiles.Any())
+                {
+                    var bnkMain = bnkfiles.FirstOrDefault(x => !x.Contains("_preview.bnk"));
+                    if (!String.IsNullOrEmpty(bnkMain))
+                    {
+                        mainVolume = SoundBankGenerator2014.ReadBNKVolume(File.OpenRead(bnkMain), sourcePlatform, defaultVolume);
+
+                        var bnkPreview = bnkfiles.FirstOrDefault(x => x.Contains("_preview.bnk"));
+                        if (!String.IsNullOrEmpty(bnkPreview))
+                            previewVolume = SoundBankGenerator2014.ReadBNKVolume(File.OpenRead(bnkPreview), sourcePlatform, defaultVolume);
+                    }
+                }
+            }
+
+            // Set volume defaults if null
+            data.Volume = mainVolume ?? defaultVolume;
+            data.PreviewVolume = previewVolume ?? mainVolume;
+
             //ShowLights XML
             var xmlShowLights = Directory.EnumerateFiles(unpackedDir, "*_showlights.xml", SearchOption.AllDirectories).FirstOrDefault();
             if (!String.IsNullOrEmpty(xmlShowLights))
@@ -634,21 +678,6 @@ namespace RocksmithToolkitLib.DLCPackage
             var lyricArt = Directory.EnumerateFiles(unpackedDir, "lyrics_*.dds", SearchOption.AllDirectories).ToArray();
             if (lyricArt.Any())
                 data.LyricArtPath = lyricArt.FirstOrDefault();
-
-            // Get other files //
-
-            // Volume from BNK
-            var bnkfiles = Directory.EnumerateFiles(unpackedDir, "*.bnk", SearchOption.AllDirectories).ToArray();
-            if (bnkfiles.Length == 2)
-            {
-                data.Volume = _volume ?? SoundBankGenerator2014.ReadBNKVolume(File.OpenRead(bnkfiles[0]), targetPlatform, GameVersion.RS2014);
-                data.PreviewVolume = _volume_preview ?? SoundBankGenerator2014.ReadBNKVolume(File.OpenRead(bnkfiles[1]), targetPlatform, GameVersion.RS2014);
-            }
-            else
-            {
-                data.Volume = _volume ?? -7F;
-                data.PreviewVolume = _volume_preview ?? _volume;
-            }
 
             // Audio files
             var targetAudioFiles = new List<string>();

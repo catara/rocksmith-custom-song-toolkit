@@ -541,7 +541,6 @@
     <EmbeddedResource Include="ZpeConverter\ZpeConverter.resx">
       <DependentUpon>ZpeConverter.cs</DependentUpon>
     </EmbeddedResource>
-<<<<<<< HEAD
     <None Include="DLCManager\external_tools\CDLCEnablers\RUN_PATCH_RS.orig.command">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -725,11 +724,9 @@
     <None Include="FilesDataSet.xss">
       <DependentUpon>FilesDataSet.xsd</DependentUpon>
     </None>
-=======
     <None Include="app.manifest">
       <SubType>Designer</SubType>
     </None>
->>>>>>> 82226a9c6987ccd38a98093e617b2abef85753e4
     <None Include="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
@@ -814,7 +811,6 @@
     <Content Include="DLCManager\AccessDB.accdb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-<<<<<<< HEAD
     <Content Include="DLCManager\external_tools\bpr_v0.3\bpr.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1589,9 +1585,6 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
-=======
-    <EmbeddedResource Include="BetaInfo.rtf" />
-    <Content Include="songcreator.ico" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
@@ -1614,7 +1607,6 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
->>>>>>> 82226a9c6987ccd38a98093e617b2abef85753e4
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
@@ -1625,11 +1617,7 @@
       xcopy /S /Y "$(SolutionDir)Third-party Apps"
     </PostBuildEvent>
     <PostBuildEvent Condition=" '$(OS)' == 'Unix' ">
-<<<<<<< HEAD
       /bin/cp -Rf "$(SolutionDir)Third-party Apps" "$(TargetDir)"
-=======
-      cp -Rf "$(SolutionDir)Third-party Apps" "$(TargetDir)"
->>>>>>> 82226a9c6987ccd38a98093e617b2abef85753e4
     </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
@@ -1651,7 +1639,6 @@ if $(ConfigurationName) == Release (
    del /S /Q "$(TargetDir)X360.xml"
  )</PostBuildEvent>
   </PropertyGroup>
-<<<<<<< HEAD
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
@@ -1660,8 +1647,6 @@ if $(ConfigurationName) == Release (
     <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.108.0\build\net45\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.108.0\build\net45\System.Data.SQLite.Core.targets'))" />
   </Target>
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.108.0\build\net45\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.108.0\build\net45\System.Data.SQLite.Core.targets')" />
-=======
->>>>>>> 82226a9c6987ccd38a98093e617b2abef85753e4
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

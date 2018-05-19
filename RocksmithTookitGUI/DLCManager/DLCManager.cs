@@ -229,7 +229,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 files = value;
             }
         }
-        public void RefreshSelectedStat(string db, string txt)
+        public void RefreshSelectedStat(string db, string txt, string extrasplit)
         {
             if (File.Exists(txt_DBFolder.Text)) //+ "\\Files.accdb"
             {
@@ -250,7 +250,19 @@ namespace RocksmithToolkitGUI.DLCManager
 
                 var noOfSelRec = 0;
                 if (dsz2.Tables.Count > 0) noOfSelRec = dsz2.Tables[0].Rows.Count;
-                lbl_NoRec2.Text = noOfSelRec.ToString() + "/" + noOfRec.ToString() + " records.";
+
+                var noOfSelRec3 = 0;
+                if (extrasplit != "" && extrasplit != null)
+                  {
+                    SearchCmd = "SELECT * FROM Main u " + " WHERE " + extrasplit + ";";
+                    DataSet dsz3 = new DataSet(); dsz3 = SelectFromDB(db, SearchCmd, txt_DBFolder.Text, cnb);
+
+                    timestamp = DateTime.Now; timestamp = UpdateLog(timestamp, "End selecting", true, logPath, txt_TempPath.Text, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+
+                    
+                    if (dsz3.Tables.Count > 0) noOfSelRec3 = dsz3.Tables[0].Rows.Count;
+                }
+                lbl_NoRec2.Text = (noOfSelRec3>0 ? "": (noOfSelRec3.ToString() + "/")) + noOfSelRec.ToString() + "/" + noOfRec.ToString() + " records.";
             }
         }
 
@@ -312,7 +324,10 @@ namespace RocksmithToolkitGUI.DLCManager
             //cnb.Open();
             //SaveSettings();  
             //Populate Se3lectee songs
-            RefreshSelectedStat("Main", "1=1");
+            RefreshSelectedStat("Main", "1=1", "");
+
+            txt_NoOfSplits.Value = ConfigRepository.Instance()["dlcm_Spli4Pack"].ToInt32();
+            ConfigRepository.Instance()["dlcm_Spli4Pack"] = (txt_NoOfSplits.Value + 1).ToString();
         }
 
         public void DLCManagerOpen()
@@ -2156,12 +2171,12 @@ namespace RocksmithToolkitGUI.DLCManager
 
             if (chbx_Additional_Manipulations.GetItemChecked(78))
             {
-                cmd = "SELECT ID,AudioPath,audioBitrate,audioSampleRate,audioPreviewPath,Folder_Name FROM Main WHERE Has_Preview=\"No\"";
+                cmd = "SELECT ID,AudioPath,audioBitrate,audioSampleRate,audioPreviewPath,Folder_Name FROM Main WHERE Has_Preview=\"No\" AND Is_Broken<>\"Yes\"";
                 //cmd += " AND " + ((SearchCmd.IndexOf("WHERE ") > 0) ? (SearchCmd.Substring(SearchCmd.IndexOf("WHERE ") + 5)) : "1=1");
                 FixMissingPreview(cmd, cnb, AppWD, pB_ReadDLCs, rtxt_StatisticsOnReadDLCs, false);
 
                 cmd = "SELECT ID,AudioPath,audioBitrate,audioSampleRate,audioPreviewPath, oggPreviewPath FROM Main WHERE (VAL(audioBitrate) > "
-                    + (ConfigRepository.Instance()["dlcm_MaxBitRate"]) + " or VAL(audioSampleRate) > " + (ConfigRepository.Instance()["dlcm_MaxSampleRate"]) + ")";
+                    + (ConfigRepository.Instance()["dlcm_MaxBitRate"]) + " or VAL(audioSampleRate) > " + (ConfigRepository.Instance()["dlcm_MaxSampleRate"]) + ") AND Is_Broken<>\"Yes\"";
                 //cmd += " AND " + ((SearchCmd.IndexOf("WHERE ") > 0) ? (SearchCmd.Substring(SearchCmd.IndexOf("WHERE ") + 5)) : "1=1");
                 FixAudioIssues(cmd, cnb, AppWD, pB_ReadDLCs, rtxt_StatisticsOnReadDLCs, false);
             }
@@ -2697,14 +2712,14 @@ namespace RocksmithToolkitGUI.DLCManager
                         SongRecord.Has_Lead = (Lead != "" ? Lead : "No"); SongRecord.Has_Rhythm = (Rhythm != "" ? Rhythm : "No"); SongRecord.Has_Bass = Bass;
                         SongRecord.Has_Combo = (Combo != "" ? Combo : "No");
                         //yAddress = StartToGetYoutubeDetail(SongRecord, i, cnb).Result;//.Wait();.Result
-                        if (yAddress!=null)
+                        if (yAddress != null)
                         {
-                       ybAddress = yAddress.Split(';')[0];
-                        ybLAddress = yAddress.Split(';')[1];
-                        ybBAddress = yAddress.Split(';')[2];
-                        ybRAddress = yAddress.Split(';')[3];
-                        ybCAddress = yAddress.Split(';')[4];
-                        ybSAddress = yAddress.Split(';')[5];
+                            ybAddress = yAddress.Split(';')[0];
+                            ybLAddress = yAddress.Split(';')[1];
+                            ybBAddress = yAddress.Split(';')[2];
+                            ybRAddress = yAddress.Split(';')[3];
+                            ybCAddress = yAddress.Split(';')[4];
+                            ybSAddress = yAddress.Split(';')[5];
                         }
                         //var cmdz = "UPDATE Main SET Youtube_Playthrough=\"https://www.youtube.com/watch?v=" + ybRAddress + "\"";//YouTube_Link
                         //cmdz += ", YouTube_Link=\"https://www.youtube.com/watch?v=" + ybAddress + "\"";
@@ -2854,7 +2869,16 @@ namespace RocksmithToolkitGUI.DLCManager
                         HasOrig = "";
                         var dupli_reason = "";
 
-                        var versio = info.ToolkitInfo.PackageVersion == null ? 1 : float.Parse(info.ToolkitInfo.PackageVersion.Replace("_", "."), NumberStyles.Float, CultureInfo.CurrentCulture);//else dupli_reason += ". Possible Duplicate Import at end. End Else";
+                        //in case we have versions with 2 dots :) e.g. v3.4.5
+                        string countdots = info.ToolkitInfo.PackageVersion == null ? "" : info.ToolkitInfo.PackageVersion.Replace("_", ".");
+                        var versn = ""; int cnt = 0; var firstdot = 0;
+                        for (int m = 0; m < countdots.Length; m++)
+                        {
+                            if (countdots[m] == '.') firstdot++;
+                            else versn += countdots[m];
+                            if (firstdot == 1) { versn += countdots[m]; firstdot++; }
+                        }
+                        var versio = versn == null || versn == "" ? 1 : float.Parse(versn, NumberStyles.Float, CultureInfo.CurrentCulture);//else dupli_reason += ". Possible Duplicate Import at end. End Else";
 
                         timestamp = UpdateLog(timestamp, dupli_reason, true, logPath, Temp_Path_Import, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
                         dupli_assesment = AssessConflict(file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead,
@@ -3079,7 +3103,14 @@ namespace RocksmithToolkitGUI.DLCManager
                                 //    PreviewLenght = (duration.Split(':'))[2];
                                 //else
                                 //PreviewLenght = duration;
-                                PreviewLenght = (float.Parse((duration.Split(':'))[0]) * 3600 + float.Parse((duration.Split(':'))[1], NumberStyles.Float, CultureInfo.CurrentCulture) * 60 + float.Parse((duration.Split(':'))[2]), NumberStyles.Float, CultureInfo.CurrentCulture).ToString();
+                                var rf = float.Parse((duration.Split(':'))[0], NumberStyles.Float, CultureInfo.CurrentCulture) * 3600;
+                                var rg = float.Parse((duration.Split(':'))[1], NumberStyles.Float, CultureInfo.CurrentCulture) * 60;
+                                var rh = float.Parse((duration.Split(':'))[2], NumberStyles.Float, CultureInfo.CurrentCulture);
+                                var rt = rf + rg + rh;
+                                PreviewLenght = rt.ToString();
+                                //
+                                //+ 
+                                //+ ;//;
                                 string[] timepiece = duration.Split(':');
                                 //if (timepiece[0] != "00" || timepiece[1] != "00")
                                 //    recalc_Preview = true;
@@ -3769,7 +3800,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                 command.Parameters.AddWithValue("@param37", (StartTime ?? DBNull.Value.ToString()));
                                 command.Parameters.AddWithValue("@param38", (alist[n].ToString() ?? DBNull.Value.ToString()));
                                 command.Parameters.AddWithValue("@param39", (blist[n].ToString() ?? DBNull.Value.ToString()));
-                                command.Parameters.AddWithValue("@param39", (arg.ArrangementType.ToString() == "Lead" ? ybLAddress :(arg.ArrangementType.ToString() == "Bass" ? ybBAddress :(arg.ArrangementType.ToString() == "Rhythm" ? ybRAddress :(arg.ArrangementType.ToString() == "Combo" ? ybCAddress :""))) ?? DBNull.Value.ToString()));
+                                command.Parameters.AddWithValue("@param39", (arg.ArrangementType.ToString() == "Lead" ? ybLAddress : (arg.ArrangementType.ToString() == "Bass" ? ybBAddress : (arg.ArrangementType.ToString() == "Rhythm" ? ybRAddress : (arg.ArrangementType.ToString() == "Combo" ? ybCAddress : ""))) ?? DBNull.Value.ToString()));
                                 n++;
 
                                 //EXECUTE SQL/INSERT
@@ -4514,6 +4545,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 if (rbtn_Population_Selected.Checked == true) cmd += "WHERE Selected = \"Yes\"";
                 else if (rbtn_Population_Groups.Checked) cmd += "WHERE cstr(ID) IN (SELECT CDLC_ID FROM Groups WHERE Type=\"DLC\" AND Groups=\"" + Groupss + "\")";
 
+                if (chbx_Additional_Manipulations.GetItemChecked(89)) cmd += " AND Split4Pack=\"" + txt_NoOfSplits.Value + "\"";
                 cmd += " ORDER BY Artist,Album_Year,Album,Track_No,ID";
                 //Read from DB
                 MainDBfields[] SongRecord = new MainDBfields[10000];
@@ -5497,27 +5529,27 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void ProcessCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            if (!(e.Result == null))
-                switch (e.Result.ToString())
-                {
+            //if (!(e.Result == null))
+            //    switch (e.Result.ToString())
+            //    {
 
-                    case "generate":
-                        var message = "Package was generated.";
-                        if (errorsFound.Length > 0)
-                            message = String.Format("Package was generated with errors! See below: {0}(1}", Environment.NewLine, errorsFound);
-                        message += String.Format("{0}You want to open the folder in which the package was generated?{0}", Environment.NewLine);
-                        if (MessageBox.Show(message, MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
-                        {
-                            Process.Start(Path.GetDirectoryName(dlcSavePath));
-                        }
-                        break;
-                    case "error":
-                        var message2 = String.Format("Package generation failed. See below: {0}{1}{0}", Environment.NewLine, errorsFound);
-                        MessageBox.Show(message2, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        Parent.Focus();
-                        break;
-                }
-            //btn_RePack.Text = "RePack";
+            //        case "generate":
+            //            var message = "Package was generated.";
+            //            if (errorsFound.Length > 0)
+            //                message = String.Format("Package was generated with errors! See below: {0}(1}", Environment.NewLine, errorsFound);
+            //            message += String.Format("{0}You want to open the folder in which the package was generated?{0}", Environment.NewLine);
+            //            if (MessageBox.Show(message, MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+            //            {
+            //                Process.Start(Path.GetDirectoryName(dlcSavePath));
+            //            }
+            //            break;
+            //        case "error":
+            //            var message2 = String.Format("Package generation failed. See below: {0}{1}{0}", Environment.NewLine, errorsFound);
+            //            MessageBox.Show(message2, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //            Parent.Focus();
+            //            break;
+            //    }
+            ////btn_RePack.Text = "RePack";
         }
         private void ValidProcessCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
@@ -6240,8 +6272,6 @@ namespace RocksmithToolkitGUI.DLCManager
             }
         }
 
-
-
         private void cbx_Groups_DropDown(object sender, EventArgs e)
         {
             //populaet the Group  Dropdown
@@ -6813,17 +6843,17 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void cbx_Groups_SelectedIndexChanged(object sender, EventArgs e)
         {
-            RefreshSelectedStat("Groups", "(Type=\"DLC\" AND Groups=\"" + cbx_Groups.Text + "\")");
+            RefreshSelectedStat("Groups", "(Type=\"DLC\" AND Groups=\"" + cbx_Groups.Text + "\")", "");
         }
 
         private void rbtn_Population_Selected_CheckedChanged(object sender, EventArgs e)
         {
-            if (rbtn_Population_Selected.Checked) RefreshSelectedStat("Main", "(Selected =\"Yes\")");
+            if (rbtn_Population_Selected.Checked) RefreshSelectedStat("Main", "(Selected =\"Yes\")", "");
         }
 
         private void rbtn_Population_All_CheckedChanged(object sender, EventArgs e)
         {
-            if (rbtn_Population_All.Checked) RefreshSelectedStat("Main", "1=1");
+            if (rbtn_Population_All.Checked) RefreshSelectedStat("Main", "1=1", "");
         }
 
         private void btn_Enable_CDLC_Click(object sender, EventArgs e)
@@ -7001,9 +7031,13 @@ namespace RocksmithToolkitGUI.DLCManager
             btn_OpenMainDB.Text = "Open MainDB" + " (" + noOfRec.ToString() + ")";
             //if (noOfRec > 0) else btn_OpenMainDB.Text = "Open MainDB";
 
-            if (rbtn_Population_All.Checked) RefreshSelectedStat("Main", "1=1");
-            else if (rbtn_Population_Groups.Checked) RefreshSelectedStat("Groups", "(Type=\"DLC\" AND Groups=\"" + cbx_Groups.Text + "\")");
-            else if (rbtn_Population_Selected.Checked) RefreshSelectedStat("Main", "(Selected =\"Yes\")");
+            if (rbtn_Population_All.Checked) RefreshSelectedStat("Main", "1=1", "");
+            else if (rbtn_Population_Groups.Checked)
+                if (ConfigRepository.Instance()["dlcm_AdditionalManipul89"] == "Yes")
+                    RefreshSelectedStat("Groups", "(Type=\"DLC\" AND Groups=\"" + cbx_Groups.Text + "\")", "Split4Pack=\"" + txt_NoOfSplits.Value + "\"");
+                else
+                    RefreshSelectedStat("Groups", "(Type=\"DLC\" AND Groups=\"" + cbx_Groups.Text + "\")", "");
+            else if (rbtn_Population_Selected.Checked) RefreshSelectedStat("Main", "(Selected =\"Yes\")", "");
 
             //Folder Size stat
             //string pathDLC = txt_RocksmithDLCPath.Text; var RootImport = "";
@@ -7207,7 +7241,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 }
                 //else if (file.Is_Original == "Yes") dupli_assesment = "alternate";// dupli_reason = "Duplicated added as alternate to Original already in."; }
                 if (filed.DLC_Name.ToLower() == datas.Name.ToLower()) dupli_reason += ". Possible Duplicate Import Same DLC Name";  //if (author.ToLower() != file.Author.ToLower() && (author != "" && author != "Custom Song Creator" && file.Author != "Custom Song Creator" && file.Author != "")) dupli_assesment = "Alternate";
-                if ((art_hash == filed.AlbumArt_Hash && audio_hash == filed.Audio_Hash && audioPreview_hash == filed.AudioPreview_Hash) || (art_hash == filed.AlbumArt_OrigHash && audio_hash == filed.Audio_OrigHash && audioPreview_hash == filed.Audio_OrigPreviewHash)
+                if (((art_hash == filed.AlbumArt_Hash && audio_hash == filed.Audio_Hash && audioPreview_hash == filed.AudioPreview_Hash) || (art_hash == filed.AlbumArt_OrigHash && audio_hash == filed.Audio_OrigHash && audioPreview_hash == filed.Audio_OrigPreviewHash))
                        && tkversion == filed.ToolkitVersion && Fauthor == filed.Author
                        && (datas.ToolkitInfo.PackageVersion == filed.Version || (datas.ToolkitInfo.PackageVersion == "" && "1" == filed.Version)) && Is_Original == filed.Is_Original
                        && datas.Name == filed.DLC_Name && (platform_doesnt_matters))//&& platform == filed.Platform

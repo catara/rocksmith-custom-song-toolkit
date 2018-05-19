@@ -25,7 +25,7 @@ namespace RocksmithToolkitGUI.DLCManager
         { 
             InitializeComponent();
             lbl_Link.Text = link;
-            lbl_Message.Text = mss;
+            txt_Description.Text = mss;
             IgnoreSong = false;
             StopImport = false;
             //ErrorWindow.ActiveForm.Text = Title;
@@ -43,8 +43,8 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_Close = new System.Windows.Forms.Button();
             this.helpProvider1 = new System.Windows.Forms.HelpProvider();
             this.lbl_Link = new System.Windows.Forms.LinkLabel();
-            this.lbl_Message = new System.Windows.Forms.Label();
             this.btn_StopImport = new System.Windows.Forms.Button();
+            this.txt_Description = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
             // btn_OK
@@ -79,15 +79,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.lbl_Link.Text = "linkLabel1";
             this.lbl_Link.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lbl_Link_LinkClicked);
             // 
-            // lbl_Message
-            // 
-            this.lbl_Message.AutoSize = true;
-            this.lbl_Message.Location = new System.Drawing.Point(34, 28);
-            this.lbl_Message.Name = "lbl_Message";
-            this.lbl_Message.Size = new System.Drawing.Size(70, 25);
-            this.lbl_Message.TabIndex = 3;
-            this.lbl_Message.Text = "label1";
-            // 
             // btn_StopImport
             // 
             this.btn_StopImport.Location = new System.Drawing.Point(12, 112);
@@ -98,11 +89,20 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_StopImport.UseVisualStyleBackColor = true;
             this.btn_StopImport.Click += new System.EventHandler(this.btn_StopImport_Click);
             // 
+            // txt_Description
+            // 
+            this.txt_Description.Location = new System.Drawing.Point(13, 4);
+            this.txt_Description.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txt_Description.Name = "txt_Description";
+            this.txt_Description.Size = new System.Drawing.Size(558, 57);
+            this.txt_Description.TabIndex = 335;
+            this.txt_Description.Text = "";
+            // 
             // ErrorWindow
             // 
             this.ClientSize = new System.Drawing.Size(583, 148);
+            this.Controls.Add(this.txt_Description);
             this.Controls.Add(this.btn_StopImport);
-            this.Controls.Add(this.lbl_Message);
             this.Controls.Add(this.lbl_Link);
             this.Controls.Add(this.btn_Close);
             this.Controls.Add(this.btn_OK);

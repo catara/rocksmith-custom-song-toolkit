@@ -34,6 +34,7 @@ namespace RocksmithToolkitGUI.DLCManager
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DLCManager));
             this.cbx_Export = new System.Windows.Forms.ComboBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.txt_NoOfSplits = new System.Windows.Forms.NumericUpDown();
             this.btm_GoRepack = new System.Windows.Forms.Button();
             this.lbl_NoRec2 = new System.Windows.Forms.Label();
             this.chbx_XBOX360 = new System.Windows.Forms.CheckBox();
@@ -124,6 +125,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txt_NoOfSplits)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mainBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -143,6 +145,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.txt_NoOfSplits);
             this.panel2.Controls.Add(this.btm_GoRepack);
             this.panel2.Controls.Add(this.lbl_NoRec2);
             this.panel2.Controls.Add(this.chbx_XBOX360);
@@ -161,6 +164,16 @@ namespace RocksmithToolkitGUI.DLCManager
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(597, 138);
             this.panel2.TabIndex = 204;
+            // 
+            // txt_NoOfSplits
+            // 
+            this.txt_NoOfSplits.Location = new System.Drawing.Point(453, 3);
+            this.txt_NoOfSplits.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.txt_NoOfSplits.Name = "txt_NoOfSplits";
+            this.txt_NoOfSplits.Size = new System.Drawing.Size(76, 31);
+            this.txt_NoOfSplits.TabIndex = 408;
+            this.toolTip1.SetToolTip(this.txt_NoOfSplits, "The Assigned split No when packing with multiple instances of DLCManager (Setting" +
+        " 88). First SET the No in MainDB/GameData tab.");
             // 
             // btm_GoRepack
             // 
@@ -456,11 +469,11 @@ namespace RocksmithToolkitGUI.DLCManager
                 "te)",
             "85. Apply standard naming to all duplicates",
             "86. Keep XML Manipulations",
-            "87. Add Groups to head of Title/Artist Sort when beta",
-            "88.",
-            "89.",
-            "90.",
-            "beer"});
+            "87. Add Groups to beginning of Title/Artist Sort even when beta @MassPack",
+            "88. Add Groups to beginning of Title/Artist Sort @MassPack",
+            "89. @Mass pack split into xxx (param in xml) songs",
+            "90. When adding times into vocals(74) add only in seconds",
+            "91. Add group to Filename"});
             this.chbx_Additional_Manipulations.Location = new System.Drawing.Point(16, 682);
             this.chbx_Additional_Manipulations.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.chbx_Additional_Manipulations.Name = "chbx_Additional_Manipulations";
@@ -944,8 +957,8 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_File_Name.Name = "txt_File_Name";
             this.txt_File_Name.Size = new System.Drawing.Size(665, 31);
             this.txt_File_Name.TabIndex = 50;
-            this.txt_File_Name.Text = "<Beta><Broken><CDLC>-<Artist>-<Year>-<Album><Track No.>-<Title>-<DD>-<Avail. Trac" +
-    "ks>-<QAs>-v<Version>-<Bass_HasDD>";
+            this.txt_File_Name.Text = "<CDLC>-<Artist>-<Year>-<Album><Track No.>-<Title>-<DD>-<Avail. Tracks>-<QAs>-v<Ve" +
+    "rsion>-<Bass_HasDD>";
             this.txt_File_Name.Visible = false;
             // 
             // cbx_Album
@@ -1656,6 +1669,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.Size = new System.Drawing.Size(1227, 1528);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txt_NoOfSplits)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.mainBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -1755,6 +1769,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private Button button1;
         private Label label2;
         private Label label3;
+        private NumericUpDown txt_NoOfSplits;
         //public static ProgressBar pB_ReadDLCs;
     }
 }

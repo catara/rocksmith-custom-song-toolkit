@@ -69,6 +69,8 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_DeleteAll = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.btn_CheckOnline = new System.Windows.Forms.Button();
+            this.cbx_Groups = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.databox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPath)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pxbx_SavedSpotify)).BeginInit();
@@ -201,10 +203,10 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_AlbumArtPath.Enabled = false;
             this.txt_AlbumArtPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_AlbumArtPath.ForeColor = System.Drawing.Color.Gray;
-            this.txt_AlbumArtPath.Location = new System.Drawing.Point(2100, 354);
+            this.txt_AlbumArtPath.Location = new System.Drawing.Point(2300, 354);
             this.txt_AlbumArtPath.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.txt_AlbumArtPath.Name = "txt_AlbumArtPath";
-            this.txt_AlbumArtPath.Size = new System.Drawing.Size(592, 32);
+            this.txt_AlbumArtPath.Size = new System.Drawing.Size(392, 32);
             this.txt_AlbumArtPath.TabIndex = 130;
             this.txt_AlbumArtPath.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -274,10 +276,10 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.btn_DecompressAll.BackColor = System.Drawing.SystemColors.MenuHighlight;
             this.btn_DecompressAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_DecompressAll.Location = new System.Drawing.Point(2548, 912);
+            this.btn_DecompressAll.Location = new System.Drawing.Point(2548, 934);
             this.btn_DecompressAll.Margin = new System.Windows.Forms.Padding(4);
             this.btn_DecompressAll.Name = "btn_DecompressAll";
-            this.btn_DecompressAll.Size = new System.Drawing.Size(144, 85);
+            this.btn_DecompressAll.Size = new System.Drawing.Size(144, 63);
             this.btn_DecompressAll.TabIndex = 276;
             this.btn_DecompressAll.Text = "Open Main DB";
             this.btn_DecompressAll.UseVisualStyleBackColor = false;
@@ -369,7 +371,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_Year_Correction.Cue = "Year Correction";
             this.txt_Year_Correction.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_Year_Correction.ForeColor = System.Drawing.Color.Gray;
-            this.txt_Year_Correction.Location = new System.Drawing.Point(2494, 698);
+            this.txt_Year_Correction.Location = new System.Drawing.Point(2098, 354);
             this.txt_Year_Correction.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.txt_Year_Correction.Name = "txt_Year_Correction";
             this.txt_Year_Correction.Size = new System.Drawing.Size(184, 32);
@@ -378,7 +380,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // chbx_Default_Cover
             // 
             this.chbx_Default_Cover.AutoSize = true;
-            this.chbx_Default_Cover.Location = new System.Drawing.Point(2298, 698);
+            this.chbx_Default_Cover.Location = new System.Drawing.Point(2300, 659);
             this.chbx_Default_Cover.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.chbx_Default_Cover.Name = "chbx_Default_Cover";
             this.chbx_Default_Cover.Size = new System.Drawing.Size(181, 29);
@@ -432,13 +434,13 @@ namespace RocksmithToolkitGUI.DLCManager
             this.label1.Location = new System.Drawing.Point(2164, 659);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(198, 33);
+            this.label1.Size = new System.Drawing.Size(115, 33);
             this.label1.TabIndex = 395;
             this.label1.Text = "Corrected";
             // 
             // label2
             // 
-            this.label2.Location = new System.Drawing.Point(2418, 660);
+            this.label2.Location = new System.Drawing.Point(2480, 659);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(198, 33);
@@ -490,12 +492,34 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_CheckOnline.UseVisualStyleBackColor = true;
             this.btn_CheckOnline.Click += new System.EventHandler(this.btn_CheckOnline_Click);
             // 
+            // cbx_Groups
+            // 
+            this.cbx_Groups.FormattingEnabled = true;
+            this.cbx_Groups.Location = new System.Drawing.Point(2404, 700);
+            this.cbx_Groups.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
+            this.cbx_Groups.Name = "cbx_Groups";
+            this.cbx_Groups.Size = new System.Drawing.Size(285, 33);
+            this.cbx_Groups.TabIndex = 401;
+            this.cbx_Groups.DropDown += new System.EventHandler(this.cbx_Groups_DropDown);
+            this.cbx_Groups.SelectedIndexChanged += new System.EventHandler(this.cbx_Groups_SelectedIndexChanged);
+            // 
+            // label3
+            // 
+            this.label3.Location = new System.Drawing.Point(2273, 700);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(129, 33);
+            this.label3.TabIndex = 402;
+            this.label3.Text = "Auto Group:";
+            // 
             // Standardization
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(2698, 1054);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.cbx_Groups);
             this.Controls.Add(this.btn_CheckOnline);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btn_DeleteAll);
@@ -629,5 +653,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private System.Windows.Forms.Button btn_DeleteAll;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button btn_CheckOnline;
+        private System.Windows.Forms.ComboBox cbx_Groups;
+        private System.Windows.Forms.Label label3;
     }
 }

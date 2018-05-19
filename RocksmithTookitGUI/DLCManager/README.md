@@ -86,7 +86,6 @@
 [ ] why album id is the same as artist id
 [ ] if no delete then dont delete DBscocnvert and ftp is it working at mass packing
 [ ] mantra cannot be imported
-[ ] come together lyrics
 [ ] check db also checks arrangements, standardization, tones,
 [-] vs blue maybe also yes blue (blu happens also when small 1bite amybe 2 diff in filesize
 [-] small improv: add the proper lasconvdate in the db 
@@ -129,65 +128,68 @@
 [ ] MAke Sure CHANGIN D THE AUDIO/PREVIEW DOES NOT deletes the old info useful for Duplciation comparison
 [ ] L:\Temp\Arctic-Monkeys_Perhaps-Vampires-Is-A-Bit-Strong-But_v2_p.psarc path too long
 [ ] fix official set alternate 4392
-[-] compare/dupli manag 2-x selected songs
 [ ] when copying maybe consider updating any existing packed &copy link
 restore old dd/xmls button in main db
 duplicate dlcname?
 add year to standardization (...maybe not so important)
 [ ] clean pack_audit trail duplicates
-[-] at import get youtube rksmith link (unsolved bug: async stays in waiting)
-[-] at import get youtube song link (unsolved bug: async stays in waiting)
-what does audio mean in name "( audio)"
-[ ] add 46&2 lyrics from old one
+[ ] Add option not to import CDLC packed by Catara/DLCMANAGER
 
 ## WiP:
 (this release)
+[ ] File Name should be standardised.. 
+[ ] Viva la Vida or Death and All His Friends did not get into standardization with all its different spellings
+[ ] add 46&2 lyrics from old one
+[ ] add starting times as tooltip on instruments
+[ ] add warning if lyrics added not to forget to select add new arangement
+[ ] change profile saves old setting on new profile
+[ ] fix color instr that doesnt change
+[ ] if 89 selected the show right no in stats
+[ ] kids orig was not replaced
+[ ] korn for you arrangement inser break
+[ ] mass dont copy single do
+[ ] pack as a group (incl. ps3)
+[ ] ps3 decompression fail cause json manifest missing
+[ ] replace not always work..
+[ ] saving remote not working
+[ ] standardization suggest similar album names based on capitalisation
+[ ] think of adding that ref point for all tracks to be synced
+[ ] version is not being saved?
+[ ] what does audio mean in name "( audio)"
+[-] add auto groups
+[-] add maybe chery love to favs
+[-] at import get youtube rksmith link (unsolved bug: async stays in waiting)
+[-] at import get youtube song link (unsolved bug: async stays in waiting)
+[-] compare/dupli manag 2-x selected songs
 
 
 ## done:
 (prev release)
-[x] removed packer as not compilig
-[x] improved param 85 behavior
-[x] CDLC-Nirvana-1992at_Reading-8-Lithium_[a_2]-Live__ps3.psarc
-[x] i belong to you mon coure muse resistence
-	[x] removing \u009c and "  " from songinfo-s
-[x] some ps3 song did not compress
-[x] track should be saved as 0x
-[x] delete does not delete the actual record from repack_audittrail
-[x] check if there are any platforms None(no)
-[x] fix audio add cancel
-[x] where is duplciate reason, add duplicate number
-[x] save old db when changing to new db
-[x] redo save track at pack with update function
-[x] optimize the variable transfer to generate package
-[x] add import as diff to dupli manag window . if so no alternate option is selected no alternate id, DLCIDs are made unique songname,
-[x] make sure its read only once when imported and not anymore in the duplication management section
-[x] if i delete a folder do i get a warning in the maintenance check ? (yes)
-[x] Check Packer.cs bug
-[x] muse uprising songs have preview lenght in minutes
-[x] why do i have duplciates on the ps3
-[x] gasoline cannot be packed
-[x] multiple repacks cannt happen
-[x] progress bar on possible duplicate import is too short
-[x] some songs have -e29 volume (truncarted e-e+))
-[-] at import get youtube rksmith link (unsolved bug: async stays in waiting)
-[-] at import get youtube song link (unsolved bug: async stays in waiting)
-[x] the pretender doesnt register as alternate
-[x] check smooth sailying and c file that breaks
-[x] check crossed album art
-[x] check iron maiden album art
-[x] georlitt_m.psarc
-[x] "Alice-In-Chains_Nutshell-Unplugged_v6_p.psarc"
-[x] 4483
-[x] uprising origs not in stanndard (no bob marley)
-[x] remove also recalc
-[x] read volume independently of regional settings (appplied , NumberStyles.Float, CultureInfo.CurrentCulture to any float/decimal.parse)
-[x] fixed pack w die/the at the end of sorts
-[x] at open make instr labels non bold ..make then green/red too
-[x] add group to artist
-[x] add group to name is a checkbox
-[x] improved pack multi formats
-[x] improved add stuff to lyrics
+[x] add filter/show show the All Others (reverse current filter)
+[x] add misfits to favs
+[x] another one bytest the dust freeses at bullets rip (bass issue?sustain note)(issue:bass bend 0.5 sec not only 1 sec)
+[x] come together crashing (bend info is not transported in the DD free internal version)
+[x] come together lyrics
+[x] double /time remove from vocals
+[x] enable multi instance packing using DLCManager
+[x] fix additional stuff to lyrics sometimes breaking the song (make a limit for 50 char)
+[x] fix audio at the end includes broken songs
+[x] fix monthly imports filter
+[x] fix one filter (all originals not in Setilist)
+[x] fixe single packing wont to break 
+[x] fixed add lyrics to include new fields
+[x] fixed an isssue at duplciate management where some dupli would be cosidered same quicker than expected
+[x] imported this month
+[x] increasedy of Song_Comments till the 1st lyric
+[x] is there a Pc_CDLC_The Offspring_1998_Americana_0_The Kid's Aren't Alright_2109 (name typo fixed)
+[x] lengthen the start of 1,2,3 lines of intro vocal text
+[x] no zero added if 87 and 88 are on
+[x] ps3 special beginning of lyrics lyrics dont always(ps3, 2nd line not indipendendt) display
+[x] removed artist folder (fixed)
+[x] shorten start of track to seconds
+[x] talk issue w double bass
+[x] why single threading happens 4 time at pack from maindb (fixed using a global variab)
+[x] MAYBE  WHAT IF i wanna structure my files based on group anyway line 3858 (MAYBEno need for 0&Group at the beginning) 
 
 # Version History(release date):
 	0.1(12.08.2014) prototype, 

@@ -1,5 +1,5 @@
 <config>
-    <RSToolkitDirectory value="C:\\GitHub\\rocksmith-custom-song-toolkit\\RocksmithTookitGUI\\bin\\Debug"/>
+    <RSToolkitDirectory value="C:\\GitHub\\Tools\\rstoolkit-2.8.4.1-ece1a0ed-win"/>
     <DDCPhraseLength value="20"/>
     <DDCConfigFile value="ddc_default"/>
     <DDCRampUpModel value="ddc_default"/>

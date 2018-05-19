@@ -43,7 +43,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private System.Windows.Forms.Button btn_Close;
         private System.Windows.Forms.HelpProvider helpProvider1;
         private System.Windows.Forms.LinkLabel lbl_Link;
-        private System.Windows.Forms.Label lbl_Message;
         private System.Windows.Forms.Button btn_StopImport;
+        private System.Windows.Forms.RichTextBox txt_Description;
     }
 }

@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<game>
+  <entitySet>
+    <entity id="f8cd4470e79340698d21c3ecd768306e" modelName="RSEnumerable_Song" name="APerfectCircleTheDoomed_Lead" iterations="0">
+      <properties>
+        <property name="Header">
+          <set value="urn:database:hsan-db:songs_dlc_aperfectcirclethedoomed" />
+        </property>
+        <property name="Manifest">
+          <set value="urn:database:json-db:aperfectcirclethedoomed_lead" />
+        </property>
+        <property name="SngAsset">
+          <set value="urn:application:musicgame-song:aperfectcirclethedoomed_lead" />
+        </property>
+        <property name="AlbumArtSmall">
+          <set value="urn:image:dds:album_aperfectcirclethedoomed_64" />
+        </property>
+        <property name="AlbumArtMedium">
+          <set value="urn:image:dds:album_aperfectcirclethedoomed_128" />
+        </property>
+        <property name="AlbumArtLarge">
+          <set value="urn:image:dds:album_aperfectcirclethedoomed_256" />
+        </property>
+        <property name="LyricArt">
+          <set value="" />
+        </property>
+        <property name="ShowLightsXMLAsset">
+          <set value="urn:application:xml:aperfectcirclethedoomed_showlights" />
+        </property>
+        <property name="SoundBank">
+          <set value="urn:audio:wwise-sound-bank:song_aperfectcirclethedoomed" />
+        </property>
+        <property name="PreviewSoundBank">
+          <set value="urn:audio:wwise-sound-bank:song_aperfectcirclethedoomed_preview" />
+        </property>
+      </properties>
+    </entity>
+    <entity id="b2b9b5f750e14235a3553ab98a1b0c9e" modelName="RSEnumerable_Song" name="APerfectCircleTheDoomed_Rhythm" iterations="0">
+      <properties>
+        <property name="Header">
+          <set value="urn:database:hsan-db:songs_dlc_aperfectcirclethedoomed" />
+        </property>
+        <property name="Manifest">
+          <set value="urn:database:json-db:aperfectcirclethedoomed_rhythm" />
+        </property>
+        <property name="SngAsset">
+          <set value="urn:application:musicgame-song:aperfectcirclethedoomed_rhythm" />
+        </property>
+        <property name="AlbumArtSmall">
+          <set value="urn:image:dds:album_aperfectcirclethedoomed_64" />
+        </property>
+        <property name="AlbumArtMedium">
+          <set value="urn:image:dds:album_aperfectcirclethedoomed_128" />
+        </property>
+        <property name="AlbumArtLarge">
+          <set value="urn:image:dds:album_aperfectcirclethedoomed_256" />
+        </property>
+        <property name="LyricArt">
+          <set value="" />
+        </property>
+        <property name="ShowLightsXMLAsset">
+          <set value="urn:application:xml:aperfectcirclethedoomed_showlights" />
+        </property>
+        <property name="SoundBank">
+          <set value="urn:audio:wwise-sound-bank:song_aperfectcirclethedoomed" />
+        </property>
+        <property name="PreviewSoundBank">
+          <set value="urn:audio:wwise-sound-bank:song_aperfectcirclethedoomed_preview" />
+        </property>
+      </properties>
+    </entity>
+  </entitySet>
+</game>

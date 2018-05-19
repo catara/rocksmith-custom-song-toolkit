@@ -4208,39 +4208,47 @@ namespace RocksmithToolkitGUI.DLCManager
             var packid = randomp.Next(0, 100000);
             var d1 = WwiseInstalled("Convert Audio if bitrate > ConfigRepository");
             var audio_hash = "";
-            if (d1.Split(';')[0] == "1")
+            try
             {
-                if (File.Exists(AudioPath)) Downstream(AudioPath, bitrate);
-                audio_hash = GetHash(AudioPath);
-                using (var vorbis = new NVorbis.VorbisReader(AudioPath.Replace(".wem", "_fixed.ogg")))
+                if (d1.Split(';')[0] == "1")
                 {
-                    bitrate = vorbis.NominalBitrate;
-                    SampleRate = vorbis.SampleRate;
-                }
-                cmd = "UPDATE Main SET ";
-                cmd += "Audio_Hash=\"" + audio_hash + "\"" + ", audioBitrate =\"" + bitrate + "\"";
-                cmd += ", audioSampleRate=\"" + SampleRate + "\"";
-                cmd += " WHERE ID=" + ID;
-                DataSet dios = new DataSet(); dios = UpdateDB("Main", cmd + ";", cnb);
-
-                //Update Preview
-                if (audioPreviewPath != null && audioPreviewPath != "")
-                {
-                    if (File.Exists(audioPreviewPath)) Downstream(audioPreviewPath, bitrate);
-                    audio_hash = GetHash(audioPreviewPath);
+                    if (File.Exists(AudioPath)) Downstream(AudioPath, bitrate);
+                    audio_hash = GetHash(AudioPath);
+                    using (var vorbis = new NVorbis.VorbisReader(AudioPath.Replace(".wem", "_fixed.ogg")))
+                    {
+                        bitrate = vorbis.NominalBitrate;
+                        SampleRate = vorbis.SampleRate;
+                    }
                     cmd = "UPDATE Main SET ";
-                    cmd += "audioPreview_Hash=\"" + audio_hash;
-                    cmd += "\" WHERE ID=" + ID;
-                    DataSet dis = new DataSet(); dis = UpdateDB("Main", cmd + ";", cnb);
+                    cmd += "Audio_Hash=\"" + audio_hash + "\"" + ", audioBitrate =\"" + bitrate + "\"";
+                    cmd += ", audioSampleRate=\"" + SampleRate + "\"";
+                    cmd += " WHERE ID=" + ID;
+                    DataSet dios = new DataSet(); dios = UpdateDB("Main", cmd + ";", cnb);
+
+                    //Update Preview
+                    if (audioPreviewPath != null && audioPreviewPath != "")
+                    {
+                        if (File.Exists(audioPreviewPath)) Downstream(audioPreviewPath, bitrate);
+                        audio_hash = GetHash(audioPreviewPath);
+                        cmd = "UPDATE Main SET ";
+                        cmd += "audioPreview_Hash=\"" + audio_hash;
+                        cmd += "\" WHERE ID=" + ID;
+                        DataSet dis = new DataSet(); dis = UpdateDB("Main", cmd + ";", cnb);
+                    }
+                    //Delete any Wav file created..by....?ccc
+                    foreach (string wav_name in Directory.GetFiles(Path.GetDirectoryName(AudioPath), "*.wav", System.IO.SearchOption.AllDirectories))
+                    {
+                        DeleteFile(wav_name);
+                    }
                 }
-                //Delete any Wav file created..by....?ccc
-                foreach (string wav_name in Directory.GetFiles(Path.GetDirectoryName(AudioPath), "*.wav", System.IO.SearchOption.AllDirectories))
-                {
-                    DeleteFile(wav_name);
-                }
+                e.Result = "done";
+                cnb.Close();
             }
-            e.Result = "done";
-            cnb.Close();
+            catch (Exception ee)
+            {
+                timestamp = UpdateLog(timestamp, "FAILED1 FixOggwDiffName" + ee.Message + "----" + AudioPath.Replace(".wem", "_fixed.ogg") + "\n -" + AudioPath + ".ogg", true, logPath, "", "", "DLCManager", null, null);
+                Console.WriteLine(ee.Message);
+            }
             //sender.ReportProgress(100);            
             //MainDB.bwRFixAudio.ReportProgress(100);
             //MainDB.bwRFixAudio.RunWorkerCompleted -= new RunWorkerCompletedEventHandler(ProcessCompleted);

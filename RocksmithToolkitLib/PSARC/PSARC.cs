@@ -268,8 +268,8 @@ namespace RocksmithToolkitLib.PSARC
                 var data = bReader.ReadToEnd().Split('\n');//0x0A
                 Parallel.For(0, data.Length, i =>
                 {
-                    if (i + 1 != count)
-                        _toc[i + 1].Name = data[i];
+                    if (i+1 != count)
+                        _toc[i+1].Name = data[i];
                 });
             }
             _toc.RemoveAt(0);

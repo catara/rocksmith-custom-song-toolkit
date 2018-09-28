@@ -151,7 +151,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //cn.Dispose();
             dssx = SelectFromDB("Arrangements", "SELECT * FROM Arrangements WHERE CDLC_ID=" + CDLCID + ";", "", cnb);
             noOfRec = dssx.Tables[0].Rows.Count;
-                lbl_NoRec.Text = noOfRec.ToString() + " records.";
+            lbl_NoRec.Text = noOfRec.ToString() + " records.";
             //}
             //MessageBox.Show("test");
             DataGridViewTextBoxColumn ID = new DataGridViewTextBoxColumn { DataPropertyName = "ID", HeaderText = "ID " };
@@ -196,8 +196,10 @@ namespace RocksmithToolkitGUI.DLCManager
             DataGridViewTextBoxColumn Has_Sections = new DataGridViewTextBoxColumn { DataPropertyName = "Has_Sections", HeaderText = "Has_Sections " };
             DataGridViewTextBoxColumn Comments = new DataGridViewTextBoxColumn { DataPropertyName = "Comments", HeaderText = "Comments " };
             DataGridViewTextBoxColumn Start_Time = new DataGridViewTextBoxColumn { DataPropertyName = "Start_Time", HeaderText = "Start_Time " };
-DataGridViewTextBoxColumn SNGFileHash_Orig = new DataGridViewTextBoxColumn { DataPropertyName = "SNGFileHash_Orig", HeaderText = "SNGFileHash_Orig " };
-DataGridViewTextBoxColumn XMLFile_Hash_Orig= new DataGridViewTextBoxColumn { DataPropertyName = "XMLFile_Hash_Orig", HeaderText = "XMLFile_Hash_Orig " };
+            DataGridViewTextBoxColumn SNGFileHash_Orig = new DataGridViewTextBoxColumn { DataPropertyName = "SNGFileHash_Orig", HeaderText = "SNGFileHash_Orig " };
+            DataGridViewTextBoxColumn XMLFile_Hash_Orig = new DataGridViewTextBoxColumn { DataPropertyName = "XMLFile_Hash_Orig", HeaderText = "XMLFile_Hash_Orig " };
+            DataGridViewTextBoxColumn Part = new DataGridViewTextBoxColumn { DataPropertyName = "Part", HeaderText = "Part " };
+            DataGridViewTextBoxColumn MaxDifficulty = new DataGridViewTextBoxColumn { DataPropertyName = "MaxDifficulty", HeaderText = "MaxDifficulty " };
 
             //bsPositions.DataSource = ds.Tables["Main"];
             //bsBadges.DataSource = ds.Tables["Badge"];
@@ -355,6 +357,8 @@ DataGridViewTextBoxColumn XMLFile_Hash_Orig= new DataGridViewTextBoxColumn { Dat
             public string Start_Time { get; set; }
             public string SNGFileHash_Orig { get; set; }
             public string XMLFile_Hash_Orig { get; set; }
+            public string Part { get; set; }
+            public string MaxDifficulty { get; set; }
         }
 
         private Files[] files = new Files[10000];
@@ -375,63 +379,65 @@ DataGridViewTextBoxColumn XMLFile_Hash_Orig= new DataGridViewTextBoxColumn { Dat
             //        DataSet dus = new DataSet();
             //        OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
             //        dax.Fill(dus, "Arrangements");
-            DataSet dus = new DataSet();dus = SelectFromDB("Arrangements", cmd, "", cnb);
+            DataSet dus = new DataSet(); dus = SelectFromDB("Arrangements", cmd, "", cnb);
             var i = 0;
-                    //rtxt_StatisticsOnReadDLCs.Text += "\n  54= " +dus.Tables[0].Rows.Count;
-                    MaximumSize = dus.Tables[0].Rows.Count;
-                    foreach (DataRow dataRow in dus.Tables[0].Rows)
-                    {
-                        files[i] = new Files();
+            //rtxt_StatisticsOnReadDLCs.Text += "\n  54= " +dus.Tables[0].Rows.Count;
+            MaximumSize = dus.Tables[0].Rows.Count;
+            foreach (DataRow dataRow in dus.Tables[0].Rows)
+            {
+                files[i] = new Files();
 
-                        //rtxt_StatisticsOnReadDLCs.Text += "\n  a= " + i + MaximumSize+dataRow.ItemArray[0].ToString();
-                        files[i].ID = dataRow.ItemArray[0].ToString();
-                        files[i].Arrangement_Name = dataRow.ItemArray[1].ToString();
-                        files[i].CDLC_ID = dataRow.ItemArray[2].ToString();
-                        files[i].Bonus = dataRow.ItemArray[3].ToString();
-                        files[i].SNGFilePath = dataRow.ItemArray[5].ToString();
-                        files[i].XMLFilePath = dataRow.ItemArray[6].ToString();
-                        files[i].XMLFile_Hash = dataRow.ItemArray[7].ToString();
-                        files[i].ScrollSpeed = dataRow.ItemArray[8].ToString();
-                        files[i].Tunning = dataRow.ItemArray[9].ToString();
-                        files[i].Rating = dataRow.ItemArray[10].ToString();
-                        files[i].PlayThoughYBLink = dataRow.ItemArray[11].ToString();
-                        files[i].CustomsForge_Link = dataRow.ItemArray[12].ToString();
-                        files[i].ArrangementSort = dataRow.ItemArray[13].ToString();
-                        files[i].TuningPitch = dataRow.ItemArray[14].ToString();
-                        files[i].ToneBase = dataRow.ItemArray[15].ToString();
-                        files[i].Idd = dataRow.ItemArray[16].ToString();
-                        files[i].MasterId = dataRow.ItemArray[17].ToString();
-                        files[i].ArrangementType = dataRow.ItemArray[18].ToString();
-                        files[i].String0 = dataRow.ItemArray[19].ToString();
-                        files[i].String1 = dataRow.ItemArray[20].ToString();
-                        files[i].String2 = dataRow.ItemArray[21].ToString();
-                        files[i].String3 = dataRow.ItemArray[22].ToString();
-                        files[i].String4 = dataRow.ItemArray[23].ToString();
-                        files[i].String5 = dataRow.ItemArray[24].ToString();
-                        files[i].PluckedType = dataRow.ItemArray[25].ToString();
-                        files[i].RouteMask = dataRow.ItemArray[26].ToString();
-                        files[i].XMLFileName = dataRow.ItemArray[27].ToString();
-                        files[i].XMLFileLLID = dataRow.ItemArray[28].ToString();
-                        files[i].XMLFileUUID = dataRow.ItemArray[29].ToString();
-                        files[i].SNGFileName = dataRow.ItemArray[30].ToString();
-                        files[i].SNGFileLLID = dataRow.ItemArray[31].ToString();
-                        files[i].SNGFileUUID = dataRow.ItemArray[32].ToString();
-                        files[i].ToneMultiplayer = dataRow.ItemArray[33].ToString();
-                        files[i].ToneA = dataRow.ItemArray[34].ToString();
-                        files[i].ToneB = dataRow.ItemArray[35].ToString();
-                        files[i].ToneC = dataRow.ItemArray[36].ToString();
-                        files[i].ToneD = dataRow.ItemArray[37].ToString();
-                        files[i].lastConversionDateTime = dataRow.ItemArray[38].ToString();
-                        files[i].SNGFileHash = dataRow.ItemArray[39].ToString();
-                        files[i].Has_Sections = dataRow.ItemArray[40].ToString();
-                        files[i].Comments = dataRow.ItemArray[41].ToString();
-                        files[i].Start_Time = dataRow.ItemArray[42].ToString();
+                //rtxt_StatisticsOnReadDLCs.Text += "\n  a= " + i + MaximumSize+dataRow.ItemArray[0].ToString();
+                files[i].ID = dataRow.ItemArray[0].ToString();
+                files[i].Arrangement_Name = dataRow.ItemArray[1].ToString();
+                files[i].CDLC_ID = dataRow.ItemArray[2].ToString();
+                files[i].Bonus = dataRow.ItemArray[3].ToString();
+                files[i].SNGFilePath = dataRow.ItemArray[5].ToString();
+                files[i].XMLFilePath = dataRow.ItemArray[6].ToString();
+                files[i].XMLFile_Hash = dataRow.ItemArray[7].ToString();
+                files[i].ScrollSpeed = dataRow.ItemArray[8].ToString();
+                files[i].Tunning = dataRow.ItemArray[9].ToString();
+                files[i].Rating = dataRow.ItemArray[10].ToString();
+                files[i].PlayThoughYBLink = dataRow.ItemArray[11].ToString();
+                files[i].CustomsForge_Link = dataRow.ItemArray[12].ToString();
+                files[i].ArrangementSort = dataRow.ItemArray[13].ToString();
+                files[i].TuningPitch = dataRow.ItemArray[14].ToString();
+                files[i].ToneBase = dataRow.ItemArray[15].ToString();
+                files[i].Idd = dataRow.ItemArray[16].ToString();
+                files[i].MasterId = dataRow.ItemArray[17].ToString();
+                files[i].ArrangementType = dataRow.ItemArray[18].ToString();
+                files[i].String0 = dataRow.ItemArray[19].ToString();
+                files[i].String1 = dataRow.ItemArray[20].ToString();
+                files[i].String2 = dataRow.ItemArray[21].ToString();
+                files[i].String3 = dataRow.ItemArray[22].ToString();
+                files[i].String4 = dataRow.ItemArray[23].ToString();
+                files[i].String5 = dataRow.ItemArray[24].ToString();
+                files[i].PluckedType = dataRow.ItemArray[25].ToString();
+                files[i].RouteMask = dataRow.ItemArray[26].ToString();
+                files[i].XMLFileName = dataRow.ItemArray[27].ToString();
+                files[i].XMLFileLLID = dataRow.ItemArray[28].ToString();
+                files[i].XMLFileUUID = dataRow.ItemArray[29].ToString();
+                files[i].SNGFileName = dataRow.ItemArray[30].ToString();
+                files[i].SNGFileLLID = dataRow.ItemArray[31].ToString();
+                files[i].SNGFileUUID = dataRow.ItemArray[32].ToString();
+                files[i].ToneMultiplayer = dataRow.ItemArray[33].ToString();
+                files[i].ToneA = dataRow.ItemArray[34].ToString();
+                files[i].ToneB = dataRow.ItemArray[35].ToString();
+                files[i].ToneC = dataRow.ItemArray[36].ToString();
+                files[i].ToneD = dataRow.ItemArray[37].ToString();
+                files[i].lastConversionDateTime = dataRow.ItemArray[38].ToString();
+                files[i].SNGFileHash = dataRow.ItemArray[39].ToString();
+                files[i].Has_Sections = dataRow.ItemArray[40].ToString();
+                files[i].Comments = dataRow.ItemArray[41].ToString();
+                files[i].Start_Time = dataRow.ItemArray[42].ToString();
                 files[i].SNGFileHash_Orig = dataRow.ItemArray[43].ToString();
                 files[i].XMLFile_Hash_Orig = dataRow.ItemArray[44].ToString();
+                files[i].Part = dataRow.ItemArray[45].ToString();
+                files[i].MaxDifficulty = dataRow.ItemArray[46].ToString();
                 i++;
-                    }
-                    //Closing Connection
-                    dus.Dispose();
+            }
+            //Closing Connection
+            dus.Dispose();
             //        cnn.Close();
             //        //rtxt_StatisticsOnReadDLCs.Text += i;
             //        //var ex = 0;
@@ -466,141 +472,141 @@ DataGridViewTextBoxColumn XMLFile_Hash_Orig= new DataGridViewTextBoxColumn { Dat
             DataSet ds = new DataSet(); ds = SelectFromDB("Arrangements", "SELECT DISTINCT ToneA FROM Arrangements;", "", cnb);
             norec = ds.Tables[0].Rows.Count;
 
-                if (norec > 0)
+            if (norec > 0)
+            {
+                //remove items
+                if (chbx_ToneA.Items.Count > 0)
                 {
-                    //remove items
-                    if (chbx_ToneA.Items.Count > 0)
+                    chbx_ToneA.DataSource = null;
+                    for (int k = chbx_ToneA.Items.Count - 1; k >= 0; --k)
                     {
-                        chbx_ToneA.DataSource = null;
-                        for (int k = chbx_ToneA.Items.Count - 1; k >= 0; --k)
+                        if (!chbx_ToneA.Items[k].ToString().Contains("--"))
                         {
-                            if (!chbx_ToneA.Items[k].ToString().Contains("--"))
-                            {
-                                chbx_ToneA.Items.RemoveAt(k);
-                            }
+                            chbx_ToneA.Items.RemoveAt(k);
                         }
                     }
-                    //add items
-                    for (int j = 0; j < norec; j++)
-                        chbx_ToneA.Items.Add(ds.Tables[0].Rows[j][0].ToString());
                 }
+                //add items
+                for (int j = 0; j < norec; j++)
+                    chbx_ToneA.Items.Add(ds.Tables[0].Rows[j][0].ToString());
+            }
             ds.Dispose();
-        //}
-        //DataSet dIs = new DataSet();
-        //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
-        //{
-        //    string SearchCmd = "SELECT DISTINCT ToneB FROM Arrangements;";
-        //    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
-        //    da.Fill(dIs, "Arrangements");
-        DataSet dIs = new DataSet(); dIs = SelectFromDB("Arrangements", "SELECT DISTINCT ToneB FROM Arrangements;", "", cnb);
+            //}
+            //DataSet dIs = new DataSet();
+            //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
+            //{
+            //    string SearchCmd = "SELECT DISTINCT ToneB FROM Arrangements;";
+            //    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
+            //    da.Fill(dIs, "Arrangements");
+            DataSet dIs = new DataSet(); dIs = SelectFromDB("Arrangements", "SELECT DISTINCT ToneB FROM Arrangements;", "", cnb);
             norec = dIs.Tables[0].Rows.Count;
 
-                if (norec > 0)
+            if (norec > 0)
+            {
+                //remove items
+                if (chbx_ToneB.Items.Count > 0)
                 {
-                    //remove items
-                    if (chbx_ToneB.Items.Count > 0)
+                    chbx_ToneB.DataSource = null;
+                    for (int k = chbx_ToneB.Items.Count - 1; k >= 0; --k)
                     {
-                        chbx_ToneB.DataSource = null;
-                        for (int k = chbx_ToneB.Items.Count - 1; k >= 0; --k)
+                        if (!chbx_ToneB.Items[k].ToString().Contains("--"))
                         {
-                            if (!chbx_ToneB.Items[k].ToString().Contains("--"))
-                            {
-                                chbx_ToneB.Items.RemoveAt(k);
-                            }
+                            chbx_ToneB.Items.RemoveAt(k);
                         }
                     }
-                    //add items
-                    for (int j = 0; j < norec; j++)
-                        chbx_ToneB.Items.Add(dIs.Tables[0].Rows[j][0].ToString());
                 }
+                //add items
+                for (int j = 0; j < norec; j++)
+                    chbx_ToneB.Items.Add(dIs.Tables[0].Rows[j][0].ToString());
+            }
             dIs.Dispose();
-        //}
-        //DataSet dfs = new DataSet();
-        //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
-        //{
-        //    string SearchCmd = "SELECT DISTINCT ToneC FROM Arrangements;";
-        //    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
-        //    da.Fill(dfs, "Arrangements");
-        DataSet dfs = new DataSet(); dfs = SelectFromDB("Arrangements", "SELECT DISTINCT ToneC FROM Arrangements;", "", cnb);
+            //}
+            //DataSet dfs = new DataSet();
+            //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
+            //{
+            //    string SearchCmd = "SELECT DISTINCT ToneC FROM Arrangements;";
+            //    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
+            //    da.Fill(dfs, "Arrangements");
+            DataSet dfs = new DataSet(); dfs = SelectFromDB("Arrangements", "SELECT DISTINCT ToneC FROM Arrangements;", "", cnb);
             norec = dfs.Tables[0].Rows.Count;
 
-                if (norec > 0)
+            if (norec > 0)
+            {
+                //remove items
+                if (chbx_ToneC.Items.Count > 0)
                 {
-                    //remove items
-                    if (chbx_ToneC.Items.Count > 0)
+                    chbx_ToneC.DataSource = null;
+                    for (int k = chbx_ToneC.Items.Count - 1; k >= 0; --k)
                     {
-                        chbx_ToneC.DataSource = null;
-                        for (int k = chbx_ToneC.Items.Count - 1; k >= 0; --k)
+                        if (!chbx_ToneC.Items[k].ToString().Contains("--"))
                         {
-                            if (!chbx_ToneC.Items[k].ToString().Contains("--"))
-                            {
-                                chbx_ToneC.Items.RemoveAt(k);
-                            }
+                            chbx_ToneC.Items.RemoveAt(k);
                         }
                     }
-                    //add items
-                    for (int j = 0; j < norec; j++)
-                        chbx_ToneC.Items.Add(dfs.Tables[0].Rows[j][0].ToString());
                 }
+                //add items
+                for (int j = 0; j < norec; j++)
+                    chbx_ToneC.Items.Add(dfs.Tables[0].Rows[j][0].ToString());
+            }
             dfs.Dispose();
-        //}
-        //DataSet dHs = new DataSet();
-        //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
-        //{
-        //    string SearchCmd = "SELECT DISTINCT ToneD FROM Arrangements;";
-        //    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
-        //    da.Fill(dHs, "Arrangements");
-        DataSet dHs = new DataSet(); dHs = SelectFromDB("Arrangements", "SELECT DISTINCT ToneD FROM Arrangements;", "", cnb);
+            //}
+            //DataSet dHs = new DataSet();
+            //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
+            //{
+            //    string SearchCmd = "SELECT DISTINCT ToneD FROM Arrangements;";
+            //    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
+            //    da.Fill(dHs, "Arrangements");
+            DataSet dHs = new DataSet(); dHs = SelectFromDB("Arrangements", "SELECT DISTINCT ToneD FROM Arrangements;", "", cnb);
             norec = dHs.Tables[0].Rows.Count;
 
-                if (norec > 0)
+            if (norec > 0)
+            {
+                //remove items
+                if (chbx_ToneD.Items.Count > 0)
                 {
-                    //remove items
-                    if (chbx_ToneD.Items.Count > 0)
+                    chbx_ToneD.DataSource = null;
+                    for (int k = chbx_ToneD.Items.Count - 1; k >= 0; --k)
                     {
-                        chbx_ToneD.DataSource = null;
-                        for (int k = chbx_ToneD.Items.Count - 1; k >= 0; --k)
+                        if (!chbx_ToneD.Items[k].ToString().Contains("--"))
                         {
-                            if (!chbx_ToneD.Items[k].ToString().Contains("--"))
-                            {
-                                chbx_ToneD.Items.RemoveAt(k);
-                            }
+                            chbx_ToneD.Items.RemoveAt(k);
                         }
                     }
-                    //add items
-                    for (int j = 0; j < norec; j++)
-                        chbx_ToneD.Items.Add(dHs.Tables[0].Rows[j][0].ToString());
                 }
+                //add items
+                for (int j = 0; j < norec; j++)
+                    chbx_ToneD.Items.Add(dHs.Tables[0].Rows[j][0].ToString());
+            }
             dHs.Dispose();
-        //}
+            //}
 
-        DataSet dxs = new DataSet(); dxs = SelectFromDB("Arrangements", "SELECT DISTINCT ToneBase FROM Arrangements;", "", cnb);
+            DataSet dxs = new DataSet(); dxs = SelectFromDB("Arrangements", "SELECT DISTINCT ToneBase FROM Arrangements;", "", cnb);
             //DataSet dxs = new DataSet();
             //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
             //{
             //    string SearchCmd = "SELECT DISTINCT ToneBase FROM Arrangements;";
             //    OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
             //    da.Fill(dxs, "Arrangements");
-                norec = dxs.Tables[0].Rows.Count;
+            norec = dxs.Tables[0].Rows.Count;
 
-                if (norec > 0)
+            if (norec > 0)
+            {
+                //remove items
+                if (chbx_ToneBase.Items.Count > 0)
                 {
-                    //remove items
-                    if (chbx_ToneBase.Items.Count > 0)
+                    chbx_ToneBase.DataSource = null;
+                    for (int k = chbx_ToneBase.Items.Count - 1; k >= 0; --k)
                     {
-                        chbx_ToneBase.DataSource = null;
-                        for (int k = chbx_ToneBase.Items.Count - 1; k >= 0; --k)
+                        if (!chbx_ToneBase.Items[k].ToString().Contains("--"))
                         {
-                            if (!chbx_ToneBase.Items[k].ToString().Contains("--"))
-                            {
-                                chbx_ToneBase.Items.RemoveAt(k);
-                            }
+                            chbx_ToneBase.Items.RemoveAt(k);
                         }
                     }
-                    //add items
-                    for (int j = 0; j < norec; j++)
-                        chbx_ToneBase.Items.Add(dxs.Tables[0].Rows[j][0].ToString());
                 }
+                //add items
+                for (int j = 0; j < norec; j++)
+                    chbx_ToneBase.Items.Add(dxs.Tables[0].Rows[j][0].ToString());
+            }
             //}
             //DataSet dks = new DataSet();
             //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
@@ -611,28 +617,28 @@ DataGridViewTextBoxColumn XMLFile_Hash_Orig= new DataGridViewTextBoxColumn { Dat
             DataSet dks = new DataSet(); dks = SelectFromDB("Arrangements", "SELECT DISTINCT Tunning FROM Arrangements;", "", cnb);
             norec = dks.Tables[0].Rows.Count;
 
-                if (norec > 0)
+            if (norec > 0)
+            {
+                //remove items
+                if (chbx_Tunning.Items.Count > 0)
                 {
-                    //remove items
-                    if (chbx_Tunning.Items.Count > 0)
+                    chbx_Tunning.DataSource = null;
+                    for (int k = chbx_Tunning.Items.Count - 1; k >= 0; --k)
                     {
-                        chbx_Tunning.DataSource = null;
-                        for (int k = chbx_Tunning.Items.Count - 1; k >= 0; --k)
-                        {
-                            //if (!chbx_Tunning.Items[k].ToString().Contains("--"))
-                            //{
-                            chbx_Tunning.Items.RemoveAt(k);
-                            //}
-                        }
+                        //if (!chbx_Tunning.Items[k].ToString().Contains("--"))
+                        //{
+                        chbx_Tunning.Items.RemoveAt(k);
+                        //}
                     }
-                    //add items
-                    for (int j = 0; j < norec; j++)
-                        chbx_Tunning.Items.Add(dks.Tables[0].Rows[j][0].ToString());
                 }
+                //add items
+                for (int j = 0; j < norec; j++)
+                    chbx_Tunning.Items.Add(dks.Tables[0].Rows[j][0].ToString());
+            }
             //}
 
             int i;
-            if (DataGridView1.SelectedCells.Count >0)
+            if (DataGridView1.SelectedCells.Count > 0)
             {
                 i = DataGridView1.SelectedCells[0].RowIndex;
                 txt_ID.Text = DataGridView1.Rows[i].Cells["ID"].Value.ToString();
@@ -745,10 +751,10 @@ DataGridViewTextBoxColumn XMLFile_Hash_Orig= new DataGridViewTextBoxColumn { Dat
 
 
             //var DB_Path = "../../../../tmp\\AccessDB.accdb;";
-            var connection = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path); //+ ";Persist Security Info=False"
+            var connection = new OleDbConnection("Provider=Microsoft." + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path); //+ ";Persist Security Info=False"
             var command = connection.CreateCommand();
             //dssx = DataGridView1;
-            using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
+            using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft." + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
             {
                 //OleDbCommand command = new OleDbCommand(); ;
                 //Update MainDB
@@ -886,7 +892,7 @@ DataGridViewTextBoxColumn XMLFile_Hash_Orig= new DataGridViewTextBoxColumn { Dat
                     xmlContent = Song2014.LoadFromFile(xml);
                     if (!(xmlContent.Arrangement.ToLower() == "showlights" || xmlContent.Arrangement.ToLower() == "vocals") || xml.IndexOf(".old") <= 0)
                     {
-                        var DDRemoved = (RemoveDD(Path.GetDirectoryName(txt_XMLFilePath.Text), "", xml, platform, false, false) == "Yes") ? "Yes" : "No";
+                        var DDRemoved = (RemoveDD(Path.GetDirectoryName(txt_XMLFilePath.Text), "", xml, platform, false, false, "No") == "Yes") ? "Yes" : "No";
                     }
                 }
                 catch (Exception ee)

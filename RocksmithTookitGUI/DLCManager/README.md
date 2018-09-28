@@ -76,7 +76,6 @@
 [ ] replace all does not exist
 [ ] each platform should have its own remote location
 [ ] INCUBUS REDEFINE MULTI SHOWS IN RED AT DUPLICATION MANAGEMENT SCREEN
-[ ] fix import current month
 [ ] cannot find sick sick sic (override)
 [ ] audioslave sections missing maybe cause its an original and i used my own logic to strip the DD
 [ ] usa peaches long naming fails at packing (shortes folder the random id)
@@ -121,32 +120,25 @@
 [ ] add some free space statistics
 [ ] open folder in the root of the input text box
 [ ] audio slave bring back alive error when moving something
-[ ] euology 10.3 1.02 is not detected as dupli
-[ ] comparison should not take in account info inbetween []
+[ ] euology 10.3 1.02 is not detected as duplix
 [ ] clean pack audio ...copy path folder instad of full path
 [ ] when autom deciding something is not a duplicate dont continue maybe
-[ ] MAke Sure CHANGIN D THE AUDIO/PREVIEW DOES NOT deletes the old info useful for Duplciation comparison
 [ ] L:\Temp\Arctic-Monkeys_Perhaps-Vampires-Is-A-Bit-Strong-But_v2_p.psarc path too long
 [ ] fix official set alternate 4392
 [ ] when copying maybe consider updating any existing packed &copy link
-restore old dd/xmls button in main db
-duplicate dlcname?
-add year to standardization (...maybe not so important)
+[ ] restore old dd/xmls button in main db
+[ ] duplicate dlcname?
+[ ] add year to standardization (...maybe not so important)
 [ ] clean pack_audit trail duplicates
 [ ] Add option not to import CDLC packed by Catara/DLCMANAGER
-
-## WiP:
-(this release)
-[ ] File Name should be standardised.. 
 [ ] Viva la Vida or Death and All His Friends did not get into standardization with all its different spellings
 [ ] add 46&2 lyrics from old one
 [ ] add starting times as tooltip on instruments
-[ ] add warning if lyrics added not to forget to select add new arangement
 [ ] change profile saves old setting on new profile
 [ ] fix color instr that doesnt change
 [ ] if 89 selected the show right no in stats
 [ ] kids orig was not replaced
-[ ] korn for you arrangement inser break
+[ ] korn for you arrangement insert break
 [ ] mass dont copy single do
 [ ] pack as a group (incl. ps3)
 [ ] ps3 decompression fail cause json manifest missing
@@ -156,12 +148,61 @@ add year to standardization (...maybe not so important)
 [ ] think of adding that ref point for all tracks to be synced
 [ ] version is not being saved?
 [ ] what does audio mean in name "( audio)"
+[ ] add options to install missing tools (winmerge; pkg linker, reasigner, etc.)
+[ ] update screenshots
+[ ] update wwise to latest 2017.2.xx
+[ ] check rape me no bass
+[ ] MAMAS AND PAPASE LEAD and back vocal split
+[ ] is combo lead track in lyrics?
+[ ] why eu us is not changing
+[ ] why sometimes ps3 ftp is not transmited
+[ ] can we have a dupli assement window :) (all 5 dupli what happened if automated)
+[ ] single pack sometimes runs multiple times
+[ ] MAke Sure CHANGIN D THE AUDIO/PREVIEW DOES NOT deletes the old info useful for Duplciation comparison
+[ ] the rover preview issue , file get a weird name
+[ ] consider multitasking DDC style
+report change in the house of flies remove ddd issue
+add dynamic filter for all tunnings in Arrangements:)
+
+## WiP:
+(this release)
+[-] added dupli button in maindb 
+[x] fix import current month
+[-] File Name should be standardised.. 
+[x] add warning if lyrics added not to forget to select add new arangement
 [-] add auto groups
 [-] add maybe chery love to favs
 [-] at import get youtube rksmith link (unsolved bug: async stays in waiting)
 [-] at import get youtube song link (unsolved bug: async stays in waiting)
 [-] compare/dupli manag 2-x selected songs
-
+[-] add java 64bit if windows is for 64b https://www.java.com/en/download/manual.jsp
+[-] 1st feeling inc. not coverting
+[-] add better initial setup options & messages
+[-] replaced way to call DDC to latest standard
+[-] mamas and papas bonus (Added Part Field)
+[-] mMa nd pPAS VOCALS (1st lyris ismissin)
+[-] mMa nd pPAS VOCALS (1st lyric has the same start at second ()
+[-] instead of old and new maybe add timestamp
+[-] add song lenght in the duplicate management window
+[-] tomahawk is not imported w the right version (same hash; any update/overrite of a song updates also original_filehash)
+[-] search again should work if returning nada
+[x] dlc name should only be unique after all dupli have been assesed
+[x] cassius breaks (added stauff to lyrics from 0.o01 and dynamically size them)
+[x] fix duplicate songs to incl new fields
+[x] fix add vocals with new path
+[x] if gearlist is NOT there disable use of db arg&tones values
+[-] add dificulty field in arrangements
+[-] check the in sort titles (re-enable it as lost in the single pack to multipack functions)
+[-] clean lyrics doesnt clear some end empty lines
+[-] renablin 1 and 2 option
+[-] fascination stret bass is not properly removed (check if it really has DD as if the bonus/2nd track has the flag is set)
+[-] love cats remove bass removal has issues (check if it really has DD as if the bonus/2nd track has the flag is set)
+[x] change from pc to ps3 loses the ftp address (save only if PS3 is last format)
+[x] fix for delete song incl also gearlist
+[-] duplicate remov should clean title also for alt 1 alt 2
+[-] added use internal logic flag per song
+[x] fixe for packing with arang&tones details (amp and cab settings)
+[x] fix for using internal logic not being selected
 
 ## done:
 (prev release)
@@ -353,6 +394,7 @@ of this folder should be directed to the respective developer.
 
 		- psarc.exe decompress packs and WEM
 		?aldotools?
+		http://www.aldostools.org/ps3tools.html
 
 		- oggdec.exe - play ogg
 		http://www.rarewares.org/ogg-oggdec.php
@@ -378,6 +420,15 @@ of this folder should be directed to the respective developer.
 
 		-NVORBIS library - reading ogg lenght
 		https://nvorbis.codeplex.com/documentation
+
+		- PS3xploit resigner - resigning pkg for PS3 HAN enabled CDLCs
+		https://github.com/PS3Xploit/PS3xploit-resigner
+
+		- TrueAncestor PKG Creator - packing PS3 HAN enabled CDLCs
+		http://www.psx-place.com/threads/trueancestor-pkg-repacker-v2-45-by-jjkkyu.10067/#post-48238
+
+		- PKG Linker - WEBServer for PS3 HAN enabled delivered packages
+		http://www.psx-place.com/threads/pkg-linker-2-0-serve-packages-to-your-ps3-han-cfw.17252/page-20#post-125162
 
 		-DevOnly additional software
 			EOF v1.8b (c)2008-2010 T³ Software eof1.8RC11(5-19-2016) http://ignition.customsforge.com/eof http://customsforge.com/topic/1529-latest-eof-releases-5-19-2016/page-86 -4 transforming lyrics into RS Vocals

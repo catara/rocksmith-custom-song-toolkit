@@ -191,7 +191,7 @@ namespace RocksmithToolkitGUI.DLCConverter
                         ofd.Filter = "PS3 Rocksmith 2014 DLC (*.edat)|*.edat";
                         break;
                     default:
-                        MessageBox.Show("The converted audio on Wwise 2016 for target platform should be selected.", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("The converted audio on Wwise 2017 for target platform should be selected.", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                 }
 

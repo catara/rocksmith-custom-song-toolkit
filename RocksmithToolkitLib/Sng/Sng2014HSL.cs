@@ -56,7 +56,7 @@ namespace RocksmithToolkitLib.Sng2014HSL
             {
                 // incomplete song information may cause exceptions during conversion
                 // such as, "End of Stream reached with 4 bytes left to read" 
-                throw new Exception("Corrupt CDLC ... Regenerating or Converting the original with Creator GUI may fix it." + Environment.NewLine + "Make sure the song information is complete and correct, including Song Year and Avg Tempo information. (HINT)" + Environment.NewLine + ex.Message + Environment.NewLine + Environment.NewLine);
+                //bcapi throw new Exception("Corrupt CDLC ... Regenerating or Converting the original with Creator GUI may fix it." + Environment.NewLine + "Make sure the song information is complete and correct, including Song Year and Avg Tempo information. (HINT)" + Environment.NewLine + ex.Message + Environment.NewLine + Environment.NewLine);
             }
         }
     }
@@ -106,7 +106,17 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public void read(EndianBinaryReader r)
         {
             Count = r.ReadInt32();
-            Phrases = new Phrase[Count]; for (int i = 0; i < Count; i++) { var obj = new Phrase(); obj.read(r); Phrases[i] = obj; }
+            int i = 0;
+            try //bcapi
+            {
+                Phrases = new Phrase[Count]; for (i = 0; i < Count; i++) { var obj = new Phrase(); obj.read(r); Phrases[i] = obj; }
+            }
+            catch (Exception ex)
+            {
+                // incomplete song information may cause exceptions during conversion
+                // such as, "End of Stream reached with 4 bytes left to read" 
+                //bcapi throw new Exception("Corrupt CDLC ... Regenerating or Converting the original with Creator GUI may fix it." + Environment.NewLine + "Make sure the song information is complete and correct, including Song Year and Avg Tempo information. (HINT)" + Environment.NewLine + ex.Message + Environment.NewLine + Environment.NewLine);
+            }
         }
     }
     public class Chord

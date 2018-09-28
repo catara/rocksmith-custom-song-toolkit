@@ -110,8 +110,8 @@ namespace packer
             args = new string[]
             {
                 "-u",
-                "-input=D:\\Temp\\PeppaPig_p.psarc",
-                "-x",
+                "-input=D:\\Temp\\PeppaPig_p.psarc", 
+                "-x", 
                 "-d",
                 "-f=Pc",
                 "-v=RS2014",

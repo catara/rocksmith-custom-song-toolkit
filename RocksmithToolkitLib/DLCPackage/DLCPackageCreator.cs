@@ -390,7 +390,7 @@ namespace RocksmithToolkitLib.DLCPackage
                     }
                 }
 
-                // Lyric Art Textureno
+                // Lyric Art Texture
                 if (File.Exists(info.LyricArtPath))
                     packPsarc.AddEntry(String.Format("assets/ui/lyrics/{0}/lyrics_{0}.dds", dlcName), new FileStream(info.LyricArtPath, FileMode.Open, FileAccess.Read, FileShare.Read));
 
@@ -435,7 +435,7 @@ namespace RocksmithToolkitLib.DLCPackage
                 {
                     // TOOLKIT VERSION
                     var stopHere = info;
-                    GenerateToolkitVersion(toolkitVersionStream, "","","");//bcapi my implementations creates pl: info.ToolkitInfo.PackageAuthor, info.ToolkitInfo.PackageVersion, info.ToolkitInfo.PackageComment);
+                    GenerateToolkitVersion(toolkitVersionStream, info.ToolkitInfo.PackageAuthor, info.ToolkitInfo.PackageVersion, info.ToolkitInfo.PackageComment);
                     packPsarc.AddEntry("toolkit.version", toolkitVersionStream);
 
                     // APP ID
@@ -490,7 +490,7 @@ namespace RocksmithToolkitLib.DLCPackage
                         // GAME SONG (SNG)
                         UpdateToneDescriptors(info);
                         GenerateSNG(arrangement, platform);
-                        var sngSongFile = File.OpenRead(arrangement.SongXML.File);
+                        var sngSongFile = File.OpenRead(arrangement.SongFile.File);
                         arrangementStream.Add(sngSongFile);
                         packPsarc.AddEntry(String.Format("songs/bin/{0}/{1}_{2}.sng", platform.GetPathName()[1].ToLower(), dlcName, arrangementFileName), sngSongFile);
 
@@ -602,10 +602,7 @@ namespace RocksmithToolkitLib.DLCPackage
                     packPsarc.AddEntry(String.Format("gamexblocks/nsongs/{0}.xblock", dlcName), xblockStream);
 
                     // WRITE PACKAGE
-                    Object thisLock = new Object();
-                    //lock (thisLock)
-                    //{
-                        packPsarc.Write(output, !platform.IsConsole);
+                    packPsarc.Write(output, !platform.IsConsole);
                     //}
                     output.WriteTmpFile(String.Format("{0}.psarc", dlcName), platform);
                 }
@@ -955,7 +952,7 @@ namespace RocksmithToolkitLib.DLCPackage
                         //Generate sng file in execution time
                         GenerateSNG(x, platform);
 
-                        manifestBuilder.AggregateGraph.SongFiles.Add(x.SongXML);
+                        manifestBuilder.AggregateGraph.SongFiles.Add(x.SongFile);
                         manifestBuilder.AggregateGraph.SongXMLs.Add(x.SongXml);
                     }
                     manifestBuilder.AggregateGraph.XBlock = new XBlockFile { File = info.Name + ".xblock" };
@@ -994,10 +991,10 @@ namespace RocksmithToolkitLib.DLCPackage
                     {
                         var xmlFile = File.OpenRead(x.SongXml.File);
                         arrangementFiles.Add(xmlFile);
-                        var sngFile = File.OpenRead(x.SongXML.File);
+                        var sngFile = File.OpenRead(x.SongFile.File);
                         arrangementFiles.Add(sngFile);
                         songPsarc.AddEntry(String.Format("GR/Behaviors/Songs/{0}.xml", Path.GetFileNameWithoutExtension(x.SongXml.File)), xmlFile);
-                        songPsarc.AddEntry(String.Format("GRExports/{0}/{1}.sng", platform.GetPathName()[1], Path.GetFileNameWithoutExtension(x.SongXML.File)), sngFile);
+                        songPsarc.AddEntry(String.Format("GRExports/{0}/{1}.sng", platform.GetPathName()[1], Path.GetFileNameWithoutExtension(x.SongFile.File)), sngFile);
                     }
                     songPsarc.Write(output, false);
                 }
@@ -1146,9 +1143,9 @@ namespace RocksmithToolkitLib.DLCPackage
                     throw new InvalidOperationException("Unexpected game version value");
             }
 
-            if (arr.SongXML == null)
-                arr.SongXML = new SongFile { File = "" };
-            arr.SongXML.File = Path.GetFullPath(sngFile);
+            if (arr.SongFile == null)
+                arr.SongFile = new SongFile { File = "" };
+            arr.SongFile.File = Path.GetFullPath(sngFile);
 
             TMPFILES_SNG.Add(sngFile);
         }

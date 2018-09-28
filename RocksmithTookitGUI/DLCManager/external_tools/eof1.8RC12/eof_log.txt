@@ -1,204 +1,130 @@
-287: Logging started during program initialization at 05/10/18 18:39:13
-287: EOF v1.8RC12 (5-8-2018)
-287: eof_load_config() entered
-287: set_default_controller_config() entered
-287: eof_controller_read_button_names() entered
-287: eof_controller_read_button_names() entered
-287: eof_controller_load_config() entered
-287: eof_controller_read_button_names() entered
-287: eof_controller_load_config() entered
-287: eof_controller_read_button_names() entered
-287: 	Importing chord shape definitions
-287: eof_load_chord_shape_definitions() entered
-287: 	54 chord shape definitions imported
-287: eof_set_display_mode() entered
-287: eof_window_create() entered
-287: eof_window_create() entered
-287: eof_window_create() entered
-287: eof_window_create() entered
-287: eof_window_create() entered
-287: eof_load_data() entered
-287: 	Could not detect temp folder at:  C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\
-287: eof_init_colors() entered
-287: eof_undo_reset() entered
-287: 	Initializing audio
-287: eof_mix_init() entered
-287: 	Buffering file:  "eof.dat#piano.esp/NOTE_36_OGG"
-287: 	Buffering file:  "eof.dat#piano.esp/NOTE_37_OGG"
-287: 	Buffering file:  "eof.dat#piano.esp/NOTE_38_OGG"
-287: 	Buffering file:  "eof.dat#piano.esp/NOTE_39_OGG"
-287: 	Buffering file:  "eof.dat#piano.esp/NOTE_40_OGG"
-287: 	Buffering file:  "eof.dat#piano.esp/NOTE_41_OGG"
-287: 	Buffering file:  "eof.dat#piano.esp/NOTE_42_OGG"
-287: 	Buffering file:  "eof.dat#piano.esp/NOTE_43_OGG"
-287: 	Buffering file:  "eof.dat#piano.esp/NOTE_44_OGG"
-287: 	Buffering file:  "eof.dat#piano.esp/NOTE_45_OGG"
-287: 	Buffering file:  "eof.dat#piano.esp/NOTE_46_OGG"
-287: 	Buffering file:  "eof.dat#piano.esp/NOTE_47_OGG"
-287: 	Buffering file:  "eof.dat#piano.esp/NOTE_48_OGG"
-287: 	Buffering file:  "eof.dat#piano.esp/NOTE_49_OGG"
-287: 	Buffering file:  "eof.dat#piano.esp/NOTE_50_OGG"
-287: 	Buffering file:  "eof.dat#piano.esp/NOTE_51_OGG"
-287: 	Buffering file:  "eof.dat#piano.esp/NOTE_52_OGG"
-287: 	Buffering file:  "eof.dat#piano.esp/NOTE_53_OGG"
-287: 	Buffering file:  "eof.dat#piano.esp/NOTE_54_OGG"
-287: 	Buffering file:  "eof.dat#piano.esp/NOTE_55_OGG"
-287: 	Buffering file:  "eof.dat#piano.esp/NOTE_56_OGG"
-287: 	Buffering file:  "eof.dat#piano.esp/NOTE_57_OGG"
-287: 	Buffering file:  "eof.dat#piano.esp/NOTE_58_OGG"
-287: 	Buffering file:  "eof.dat#piano.esp/NOTE_59_OGG"
-287: 	Buffering file:  "eof.dat#piano.esp/NOTE_60_OGG"
-287: 	Buffering file:  "eof.dat#piano.esp/NOTE_61_OGG"
-287: 	Buffering file:  "eof.dat#piano.esp/NOTE_62_OGG"
-287: 	Buffering file:  "eof.dat#piano.esp/NOTE_63_OGG"
-287: 	Buffering file:  "eof.dat#piano.esp/NOTE_64_OGG"
-287: 	Buffering file:  "eof.dat#piano.esp/NOTE_65_OGG"
-287: 	Buffering file:  "eof.dat#piano.esp/NOTE_66_OGG"
-287: 	Buffering file:  "eof.dat#piano.esp/NOTE_67_OGG"
-287: 	Buffering file:  "eof.dat#piano.esp/NOTE_68_OGG"
-287: 	Buffering file:  "eof.dat#piano.esp/NOTE_69_OGG"
-287: 	Buffering file:  "eof.dat#piano.esp/NOTE_70_OGG"
-287: 	Buffering file:  "eof.dat#piano.esp/NOTE_71_OGG"
-287: 	Buffering file:  "eof.dat#piano.esp/NOTE_72_OGG"
-287: 	Buffering file:  "eof.dat#piano.esp/NOTE_73_OGG"
-287: 	Buffering file:  "eof.dat#piano.esp/NOTE_74_OGG"
-287: 	Buffering file:  "eof.dat#piano.esp/NOTE_75_OGG"
-287: 	Buffering file:  "eof.dat#piano.esp/NOTE_76_OGG"
-287: 	Buffering file:  "eof.dat#piano.esp/NOTE_77_OGG"
-287: 	Buffering file:  "eof.dat#piano.esp/NOTE_78_OGG"
-287: 	Buffering file:  "eof.dat#piano.esp/NOTE_79_OGG"
-287: 	Buffering file:  "eof.dat#piano.esp/NOTE_80_OGG"
-287: 	Buffering file:  "eof.dat#piano.esp/NOTE_81_OGG"
-287: 	Buffering file:  "eof.dat#piano.esp/NOTE_82_OGG"
-287: 	Buffering file:  "eof.dat#piano.esp/NOTE_83_OGG"
-287: 	Buffering file:  "eof.dat#piano.esp/NOTE_84_OGG"
-287: 	Buffering file:  "percussion.dat#cowbell.ogg"
-287: 	Buffering file:  "percussion.dat#tambourine1.ogg"
-287: 	Buffering file:  "percussion.dat#tambourine2.ogg"
-287: 	Buffering file:  "percussion.dat#tambourine3.ogg"
-287: 	Buffering file:  "percussion.dat#triangle1.ogg"
-287: 	Buffering file:  "percussion.dat#triangle2.ogg"
-287: 	Buffering file:  "percussion.dat#woodblock1.ogg"
-287: 	Buffering file:  "percussion.dat#woodblock2.ogg"
-287: 	Buffering file:  "percussion.dat#woodblock3.ogg"
-287: 	Buffering file:  "percussion.dat#woodblock4.ogg"
-287: 	Buffering file:  "percussion.dat#woodblock5.ogg"
-287: 	Buffering file:  "percussion.dat#woodblock6.ogg"
-287: 	Buffering file:  "percussion.dat#woodblock7.ogg"
-287: 	Buffering file:  "percussion.dat#woodblock8.ogg"
-287: 	Buffering file:  "percussion.dat#woodblock9.ogg"
-287: 	Buffering file:  "percussion.dat#woodblock10.ogg"
-287: 	Buffering file:  "percussion.dat#clap1.ogg"
-287: 	Buffering file:  "percussion.dat#clap2.ogg"
-287: 	Buffering file:  "percussion.dat#clap3.ogg"
-287: 	Buffering file:  "percussion.dat#clap4.ogg"
-287: 	Checking for crash recovery files
-287: 	Could not detect temp folder at:  C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\
-287: eof_switch_out_callback() entered
-287: eof_switch_in_callback() entered
-287: 	Could not validate working directory and temp folder
-287: 	Detected working directory:  C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\
-287: 	Entering main program loop
-287: eof_emergency_stop_music() entered
-287: eof_emergency_stop_music() entered
-287: eof_emergency_stop_music() entered
-287: eof_menu_file_load() entered
-287: eof_switch_out_callback() entered
-287: eof_switch_in_callback() entered
-287: eof_emergency_stop_music() entered
-287: eof_emergency_stop_music() entered
-287: eof_emergency_stop_music() entered
-287: eof_menu_file_new_wizard() entered
-287: eof_switch_out_callback() entered
-287: eof_switch_in_callback() entered
-287: eof_new_chart() entered
-287: 	Buffering file:  "C:\GitHub\RocksmithDB\0\Pc_CDLC_Cure_1989_Disintegration_0_Lullaby_37876\audio\windows\540591752_fixed.ogg"
-287: 	Song information confirmed
-287: 	Create new folder selected
-287: eof_audio_to_ogg() entered
-287: 	Using source file in its original format (OGG assumed)
-287: eof_copy_file() entered
-287: eof_destroy_ogg() entered
-287: eof_create_song_populated() entered
-287: eof_create_song() entered
-287: 	Initializing after load
-287: eof_init_after_load() entered
-287: eof_calculate_beats() entered
-287: eof_truncate_chart() entered
-287: 	Adding beats
-287: eof_truncate_chart() exiting
-287: eof_select_beat() entered
-287: eof_undo_reset() entered
-287: eof_sort_notes() entered
-287: eof_fixup_notes() entered
-287: eof_cleanup_beat_flags() entered
-287: eof_sort_events() entered
-287: 	Initialization after load complete
-287: 	Project file "C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\The Cure - Lullaby\notes.eof" does not exist.  Checking existence of project folder
-287: 	Error creating project folder:  "File exists"
-287: eof_switch_out_callback() entered
-287: eof_switch_in_callback() entered
-287: eof_emergency_stop_music() entered
-287: eof_music_play() entered
-287: 	Starting playback
-287: eof_mix_start() entered
-287: eof_music_play() entered
-287: 	Stopping playback
-287: eof_emergency_stop_music() entered
-287: 	Importing lyrics
-287: 	Could not detect temp folder at:  C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\
-287: eof_switch_out_callback() entered
-287: eof_switch_in_callback() entered
-287: 	Could not validate working directory and temp folder
-287: eof_emergency_stop_music() entered
-287: eof_emergency_stop_music() entered
-287: eof_emergency_stop_music() entered
-287: 	Importing lyrics
-287: 	Could not detect temp folder at:  C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\
-287: eof_switch_out_callback() entered
-287: eof_switch_in_callback() entered
-287: 	Could not validate working directory and temp folder
-287: eof_emergency_stop_music() entered
-287: eof_emergency_stop_music() entered
-287: eof_emergency_stop_music() entered
-287: eof_restore_oggs_helper() entered
-287: eof_exit() entered
-287: 	Could not detect temp folder at:  C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\
-287: eof_switch_out_callback() entered
-287: eof_switch_in_callback() entered
-287: eof_save_config() entered
-287: eof_controller_save_config() entered
-287: eof_controller_save_config() entered
-287: eof_mix_exit() entered
-287: eof_destroy_data() entered
-287: eof_destroy_ogg() entered
-287: 	Closing project
-287: eof_destroy_song() entered
-287: eof_destroy_waveform() entered
-287: eof_destroy_spectrogram() entered
-287: eof_song_delete_track() entered
-287: eof_song_delete_track() entered
-287: eof_song_delete_track() entered
-287: eof_song_delete_track() entered
-287: eof_song_delete_track() entered
-287: eof_song_delete_track() entered
-287: eof_song_delete_track() entered
-287: eof_song_delete_track() entered
-287: eof_song_delete_track() entered
-287: eof_song_delete_track() entered
-287: eof_song_delete_track() entered
-287: eof_song_delete_track() entered
-287: eof_song_delete_track() entered
-287: eof_song_delete_track() entered
-287: eof_song_delete_track() entered
-287: eof_MIDI_empty_track_list() entered
-287: 	Project closed
-287: eof_destroy_waveform() entered
-287: eof_destroy_spectrogram() entered
-287: eof_window_destroy() entered
-287: eof_window_destroy() entered
-287: eof_window_destroy() entered
-287: eof_window_destroy() entered
-287: eof_window_destroy() entered
-287: eof_window_destroy() entered
-287: Logging stopped during program completion at 05/10/18 18:40:52
+678: Logging started during program initialization at 09/10/18 01:28:56
+678: EOF v1.8RC12 (9-1-2018)
+678: eof_controller_load_config() entered
+678: eof_controller_read_button_names() entered
+678: eof_controller_load_config() entered
+678: eof_controller_read_button_names() entered
+678: Logging level set to normal
+678: 	Importing chord shape definitions
+678: eof_load_chord_shape_definitions() entered
+678: 	54 chord shape definitions imported
+678: eof_set_display_mode() entered
+678: eof_window_create() entered
+678: eof_window_create() entered
+678: eof_window_create() entered
+678: eof_window_create() entered
+678: eof_window_create() entered
+678: eof_load_data() entered
+678: eof_init_colors() entered
+678: eof_undo_reset() entered
+678: 	Initializing audio
+678: eof_mix_init() entered
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_36_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_37_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_38_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_39_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_40_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_41_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_42_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_43_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_44_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_45_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_46_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_47_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_48_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_49_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_50_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_51_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_52_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_53_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_54_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_55_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_56_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_57_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_58_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_59_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_60_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_61_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_62_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_63_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_64_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_65_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_66_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_67_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_68_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_69_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_70_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_71_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_72_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_73_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_74_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_75_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_76_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_77_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_78_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_79_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_80_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_81_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_82_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_83_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_84_OGG"
+678: 	Buffering file:  "percussion.dat#cowbell.ogg"
+678: 	Buffering file:  "percussion.dat#tambourine1.ogg"
+678: 	Buffering file:  "percussion.dat#tambourine2.ogg"
+678: 	Buffering file:  "percussion.dat#tambourine3.ogg"
+678: 	Buffering file:  "percussion.dat#triangle1.ogg"
+678: 	Buffering file:  "percussion.dat#triangle2.ogg"
+678: 	Buffering file:  "percussion.dat#woodblock1.ogg"
+678: 	Buffering file:  "percussion.dat#woodblock2.ogg"
+678: 	Buffering file:  "percussion.dat#woodblock3.ogg"
+678: 	Buffering file:  "percussion.dat#woodblock4.ogg"
+678: 	Buffering file:  "percussion.dat#woodblock5.ogg"
+678: 	Buffering file:  "percussion.dat#woodblock6.ogg"
+678: 	Buffering file:  "percussion.dat#woodblock7.ogg"
+678: 	Buffering file:  "percussion.dat#woodblock8.ogg"
+678: 	Buffering file:  "percussion.dat#woodblock9.ogg"
+678: 	Buffering file:  "percussion.dat#woodblock10.ogg"
+678: 	Buffering file:  "percussion.dat#clap1.ogg"
+678: 	Buffering file:  "percussion.dat#clap2.ogg"
+678: 	Buffering file:  "percussion.dat#clap3.ogg"
+678: 	Buffering file:  "percussion.dat#clap4.ogg"
+678: 	Checking for crash recovery files
+678: 	Entering main program loop
+678: eof_menu_file_load() entered
+678: eof_destroy_ogg() entered
+678: 	Loading project
+678: eof_load_song() entered
+678: eof_create_song() entered
+678: eof_load_song_pf() entered
+678: 	Project loaded
+678: 	Set eof_song_path to "C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\Freak Power - Turn On, Tune In, Cop Out\"
+678: eof_import_ini() entered
+678: 	Buffering INI file into memory
+678: 	Buffering file:  "C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\Freak Power - Turn On, Tune In, Cop Out\song.ini"
+678: 	Tokenizing INI file buffer
+678: 	Parsing INI file buffer
+678: 	Processing INI file contents
+678: 	Freeing INI buffer
+678: eof_load_ogg_quick() entered
+678: eof_destroy_ogg() entered
+678: 	Buffering file:  "C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\Freak Power - Turn On, Tune In, Cop Out\guitar.ogg"
+678: 	Loading OGG file "C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\Freak Power - Turn On, Tune In, Cop Out\guitar.ogg"
+678: 		Unsupported sample rate detected:  44000
+678: eof_truncate_chart() entered
+678: 	Deleting beats
+678: eof_truncate_chart() exiting
+678: 	Initializing after load
+678: eof_init_after_load() entered
+678: eof_truncate_chart() entered
+678: 	Deleting beats
+678: eof_truncate_chart() exiting
+678: eof_select_beat() entered
+678: eof_undo_reset() entered
+678: eof_sort_notes() entered
+678: eof_fixup_notes() entered
+678: eof_cleanup_beat_flags() entered
+678: eof_sort_events() entered
+678: eof_delete_blank_events() entered
+678: 	Removed 0 empty text events
+678: 	Initialization after load complete
+678: eof_fixup_notes() entered

@@ -126,12 +126,6 @@
   <metadata name="mainBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <metadata name="mainBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>301, 17</value>
-  </metadata>
   <data name="txt_TempPath.ToolTip" xml:space="preserve">
     <value>Will be used store decompressed version of all DLCs and the original version
 Please use a root location due to windows file lenght limitations. Location  to store any temp file(uncompressed audio, uncompressed Covers).
@@ -144,7 +138,4 @@ Also requires the subfolders 0_old(imported), 0_broken(not imported), 0_duplicat
   <data name="btn_TempPath.ToolTip" xml:space="preserve">
     <value>Select a location to store decompressed CDLC, original imported files, duplicates, broken. Note the tool requires/needs/is designed to use the CDCL in their decompressed state (Warning 3000 CDLC might take 70GB)</value>
   </data>
-  <metadata name="helpProvider1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>174, 17</value>
-  </metadata>
 </root>

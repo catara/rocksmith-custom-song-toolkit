@@ -309,6 +309,7 @@ namespace RocksmithToolkitGUI
             ShowConfigScreen();
             BringToFront();
         }
+
         private void ShowHelpForm()
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
@@ -322,5 +323,36 @@ namespace RocksmithToolkitGUI
                 }
             }
         }
+
+        // area for developer testing 
+        private void DevTestMethod()
+        {
+            var args = new string[]
+            {
+                "-u",
+                "-input=D:\\Temp\\PeppaPig_p.psarc", 
+                "-x", 
+                "-d",
+                "-f=Pc",
+                "-v=RS2014",
+                "-output=D:\\Temp",
+                "-c"
+            };
+
+            var cmdArgs = String.Join(" ", args);
+            var appDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            var cliPath = Path.Combine(appDir, "packer.exe");
+
+            if (File.Exists(cliPath))
+                GeneralExtensions.RunExternalExecutable(cliPath, arguments: cmdArgs);
+            else
+                MessageBox.Show("'Build, Rebuild Solution' while configuration is set to 'Debug w CLI'", "WRONG CONFIGURATION IS SELECTED ...", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        private void btnDevTestMethod_Click(object sender, EventArgs e)
+        {
+            DevTestMethod();
+        }
+
     }
 }

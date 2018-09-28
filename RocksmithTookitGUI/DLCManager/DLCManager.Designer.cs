@@ -399,8 +399,8 @@ namespace RocksmithToolkitGUI.DLCManager
             "15. Move the Imported files to temp/0_old",
             "16. Import with Artist/Title same as Artist/Title Sort",
             "17. Repack with Artist/Title same as Artist/Title Sort",
-            "18. <Import without The/Die at the beginning of Artist/Title Sort>",
-            "19. <Pack without The/Die at the beginning of Artist/Title Sort>",
+            "18. Import without The/Die at the beginning of Artist/Title Sort",
+            "19. Pack without The/Die at the beginning of Artist/Title Sort",
             "20. Import with the The/Die at the end of Artist/Title Sort",
             "21. Pack with The/Die at the end of Title Sort",
             "22. Import with the The/Die only at the end of Artist Sort",
@@ -469,11 +469,20 @@ namespace RocksmithToolkitGUI.DLCManager
                 "te)",
             "85. Apply standard naming to all duplicates",
             "86. Keep XML Manipulations",
-            "87. Add Groups to beginning of Title/Artist Sort even when beta @MassPack",
-            "88. Add Groups to beginning of Title/Artist Sort @MassPack",
+            "87. ",
+            "88. ",
             "89. @Mass pack split into xxx (param in xml) songs",
             "90. When adding times into vocals(74) add only in seconds",
-            "91. Add group to Filename"});
+            "91. Add group to Filename",
+            "92. Package for a HAN enabled PS3",
+            "93. If packaging for a HAN En abled PS3 then also copy Retail(RS2012) Songs",
+            "94. After lyrics manipulation Open them in Notepad",
+            "95. ",
+            "96. ",
+            "97. ",
+            "98. ",
+            "99. ",
+            "x100."});
             this.chbx_Additional_Manipulations.Location = new System.Drawing.Point(16, 682);
             this.chbx_Additional_Manipulations.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.chbx_Additional_Manipulations.Name = "chbx_Additional_Manipulations";
@@ -1531,7 +1540,8 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_Param.Size = new System.Drawing.Size(101, 40);
             this.btn_Param.TabIndex = 403;
             this.btn_Param.Text = "Param";
-            this.toolTip1.SetToolTip(this.btn_Param, "Checks and Enable Rocksmith to show Custom Downloadabe extra-user-made Content.");
+            this.toolTip1.SetToolTip(this.btn_Param, "Open XML containing the Basic Options for DLCManager (Please note each profile mo" +
+        "st imp settings are maintained at DB level in the table Groups)");
             this.btn_Param.UseVisualStyleBackColor = false;
             this.btn_Param.Click += new System.EventHandler(this.btn_Param_Click);
             // 
@@ -1667,6 +1677,8 @@ namespace RocksmithToolkitGUI.DLCManager
             this.MinimumSize = new System.Drawing.Size(1227, 1528);
             this.Name = "DLCManager";
             this.Size = new System.Drawing.Size(1227, 1528);
+            this.Load += new System.EventHandler(this.DLCManager_Load);
+            this.Enter += new System.EventHandler(this.DLCManager_Enter);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txt_NoOfSplits)).EndInit();

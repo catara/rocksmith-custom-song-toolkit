@@ -1,46 +1,40 @@
-﻿using RocksmithToolkitLib.XmlRepository;
-using System;
-using System.Data;
-using System.Data.OleDb;
-using System.IO;
-using System.Security.Cryptography;
+﻿//yb
+using Google.Apis.Services;
+using Google.Apis.YouTube.v3;
 using Microsoft.VisualBasic.FileIO; //addded references Asembly VB for deleting to recycle bin
-
+using RocksmithToolkitLib;
+using RocksmithToolkitLib.DLCPackage;
+using RocksmithToolkitLib.DLCPackage.AggregateGraph;
+using RocksmithToolkitLib.DLCPackage.AggregateGraph2014;
+using RocksmithToolkitLib.DLCPackage.Manifest.Functions;
+using RocksmithToolkitLib.Extensions;
+using RocksmithToolkitLib.Ogg;
+using RocksmithToolkitLib.Sng;
+using RocksmithToolkitLib.XML;
+using RocksmithToolkitLib.XmlRepository;
 using SpotifyAPI.Web; //Base Namespace
 using SpotifyAPI.Web.Auth; //All Authentication-related classes
 using SpotifyAPI.Web.Enums; //Enums
 using SpotifyAPI.Web.Models; //Models for the JSON-responses
-//using Image = System.Drawing.Image;
-using System.Threading.Tasks;
-using System.Collections.Specialized;
+using System;
 using System.Collections.Generic;
-using System.Net;
-using System.Windows.Forms;
-using System.Net.NetworkInformation;
-using System.Text.RegularExpressions;
-using RocksmithToolkitLib;
-using RocksmithToolkitLib.DLCPackage;
-using RocksmithToolkitLib.XML;
-using RocksmithToolkitLib.Ogg;
-using System.Diagnostics;
-using RocksmithToolkitLib.DLCPackage.Manifest.Functions;
-using RocksmithToolkitLib.Extensions;
-using System.Text;
-using System.Linq;
-using RocksmithToolkitLib.DLCPackage.AggregateGraph;
-using RocksmithToolkitLib.Sng;
+using System.Collections.Specialized;
 using System.ComponentModel;
-using RocksmithToolkitLib.DLCPackage.AggregateGraph2014;
+using System.Data;
+using System.Data.OleDb;
+using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
-
-//yb
-using Google.Apis.Auth.OAuth2;
-using Google.Apis.Services;
-using Google.Apis.Upload;
-using Google.Apis.Util.Store;
-using Google.Apis.YouTube.v3;
-using Google.Apis.YouTube.v3.Data;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Net.NetworkInformation;
+using System.Security.Cryptography;
+using System.Text;
+using System.Text.RegularExpressions;
+//using Image = System.Drawing.Image;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace RocksmithToolkitGUI.DLCManager
 {
@@ -173,6 +167,8 @@ namespace RocksmithToolkitGUI.DLCManager
             public string Audio_OrigPreviewHash { get; set; }
             public string AlbumArt_OrigHash { get; set; }
             public string Duplicate_Of { get; set; }
+            public string Split4Pack { get; set; }
+            public string UseInternalDDRemovalLogic { get; set; }
         }
 
 
@@ -197,7 +193,7 @@ namespace RocksmithToolkitGUI.DLCManager
             try
             {
                 Ping myPing = new Ping();
-                String host = "google.com";
+                string host = "google.com";
                 byte[] buffer = new byte[32];
                 int timeout = 1000;
                 PingOptions pingOptions = new PingOptions();
@@ -207,7 +203,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 WebAPIFactory webApiFactory = new WebAPIFactory(
                     "http://localhost",
                     8000,
-                    "26d287105e31491889f3cd293d85bfea",
+                    "34392dbf46d04a94b778de26f2324472 ",
                     Scope.UserReadPrivate | Scope.UserReadEmail | Scope.PlaylistReadPrivate | Scope.UserLibraryRead |
                     Scope.UserReadPrivate | Scope.UserFollowRead | Scope.UserReadBirthdate | Scope.UserTopRead | Scope.PlaylistReadCollaborative |
                     Scope.UserReadRecentlyPlayed | Scope.UserReadPlaybackState | Scope.UserModifyPlaybackState);
@@ -226,7 +222,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             _spotify = await webApiFactory.GetWebApi();
                             status = "OK";
                         }
-                        catch (Exception exi)
+                        catch (Exception)
                         {
                             tsst = "2ndError connecting to Spotify..."; UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_LogPath"], ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
                             try
@@ -234,7 +230,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                 _spotify = await webApiFactory.GetWebApi();
                                 status = "OK";
                             }
-                            catch (Exception exci)
+                            catch (Exception)
                             {
                                 tsst = "3rdError connecting to Spotify..."; UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_LogPath"], ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
 
@@ -332,8 +328,10 @@ namespace RocksmithToolkitGUI.DLCManager
 
             WebClient webClient = new WebClient();
 
-            NameValueCollection nameValueCollection = new NameValueCollection();
-            nameValueCollection.Add("query", keywordString);
+            NameValueCollection nameValueCollection = new NameValueCollection
+            {
+                { "query", keywordString }
+            };
             var a1 = ""; var a2 = ""; var a3 = ""; var a4 = ""; var a5 = ""; var a6 = ""; var a7 = "";
             var output = "";
             //var ab = "";
@@ -518,8 +516,10 @@ namespace RocksmithToolkitGUI.DLCManager
             var i = 0;
             MaximumSize = dus.Tables.Count == 0 ? 0 : dus.Tables[0].Rows.Count;
 
-            query[0] = new MainDBfields();
-            query[0].NoRec = MaximumSize.ToString();
+            query[0] = new MainDBfields
+            {
+                NoRec = MaximumSize.ToString()
+            };
             if (MaximumSize == 0) return query;
             foreach (DataRow dataRow in dus.Tables[0].Rows)
             {
@@ -631,12 +631,14 @@ namespace RocksmithToolkitGUI.DLCManager
                 query[i].Audio_OrigPreviewHash = dataRow.ItemArray[104].ToString();
                 query[i].AlbumArt_OrigHash = dataRow.ItemArray[105].ToString();
                 query[i].Duplicate_Of = dataRow.ItemArray[106].ToString();
+                query[i].Split4Pack = dataRow.ItemArray[107].ToString();
+                query[i].UseInternalDDRemovalLogic = dataRow.ItemArray[108].ToString();
                 i++;
                 query[i] = new MainDBfields();
             }
             return query;//files[10000];
         }
-        static public String GetHash(string filename) //static
+        static public string GetHash(string filename) //static
         {
             //Generating the HASH code
             var FileHash = "";
@@ -678,7 +680,7 @@ namespace RocksmithToolkitGUI.DLCManager
             catch (Exception ex)
             {
                 var tsst = "Error4 ..." + ex; UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_LogPath"], ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
-                ErrorWindow frm1 = new ErrorWindow(DB + "--------" + slct + "--------------" + ex.Message + "DB Open in Design Mode, or Missing, or you need to Download the 32bit Connectivity library @ ", "https://www.microsoft.com/en-us/download/details.aspx?id=39358", "Error @Import", false, false); //access 2016 file x86 32bitsacedbole6  https://www.microsoft.com/en-us/download/details.aspx?id=50040 //access 2013 file x86 32bitsacedbole15 https://www.microsoft.com/en-us/download/details.aspx?id=39358 //access 2007 smaller file x86 32bitsacedbole12 https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734
+                ErrorWindow frm1 = new ErrorWindow(DB + "--------" + slct + "--------------" + ex.Message + "DB Open in Design Mode, or Missing, or you need to Download the 32bit Connectivity library" + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + " @ ", "https://www.microsoft.com/en-us/download/details.aspx?id=39358", "Error @Import", false, false); //access 2016 file x86 32bitsacedbole6  https://www.microsoft.com/en-us/download/details.aspx?id=50040 //access 2013 file x86 32bitsacedbole15 https://www.microsoft.com/en-us/download/details.aspx?id=39358 //access 2007 smaller file x86 32bitsacedbole12 https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734
                 frm1.ShowDialog();
                 return;
             }
@@ -710,7 +712,7 @@ namespace RocksmithToolkitGUI.DLCManager
             {
                 //errorsFound.AppendLine(String.Format("File '{0}' isn't valid. File extension was changed to '.invalid'", Path.GetFileName(s)));
                 //MessageBox.Show(String.Format("File '{0}' isn't valid. File extension was changed to '.invalid'", Path.GetFileName(s)));
-                timestamp = UpdateLog(timestamp, "error at import " + String.Format("File '{0}' isn't valid. File extension was changed to '.invalid'",
+                timestamp = UpdateLog(timestamp, "error at import " + string.Format("File '{0}' isn't valid. File extension was changed to '.invalid'",
                     Path.GetFileName(s)), true, logPath, tmpPath, "", "", null, null);
                 //CopyMoveFileSafely(s.Replace(".psarc", ".invalid"), s, chbx_Additional_Manipulations.GetItemChecked(75));
                 //File.Move(s.Replace(".psarc", ".invalid"), s);
@@ -861,7 +863,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     else insertcmd = "INSERT INTO " + ftable + " (" + ffields + ") VALUES (" + fvalues + ");";
                     DateTime timestamp;
                     timestamp = UpdateLog(DateTime.Now, "error at import " + ee.Message + "-" + insertcmd, true, logPath, tmpPath, mutit.ToString(), "", null, null);
-                    ErrorWindow frm1 = new ErrorWindow(ftable + "--------" + fvalues + "--------------" + ex.Message + "DB Open in Design Mode, or Missing, or you need to Download the 32bit Connectivity library @ ", "https://www.microsoft.com/en-us/download/details.aspx?id=39358", "Error @Import", false, false); //access 2016 file x86 32bitsacedbole6  https://www.microsoft.com/en-us/download/details.aspx?id=50040 //access 2013 file x86 32bitsacedbole15 https://www.microsoft.com/en-us/download/details.aspx?id=39358 //access 2007 smaller file x86 32bitsacedbole12 https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734
+                    ErrorWindow frm1 = new ErrorWindow(ftable + "--------" + fvalues + "--------------" + ex.Message + "DB Open in Design Mode, or Missing, or you need to Download the 32bit Connectivity library" + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + " @ ", "https://www.microsoft.com/en-us/download/details.aspx?id=39358", "Error @Import", false, false); //access 2016 file x86 32bitsacedbole6  https://www.microsoft.com/en-us/download/details.aspx?id=50040 //access 2013 file x86 32bitsacedbole15 https://www.microsoft.com/en-us/download/details.aspx?id=39358 //access 2007 smaller file x86 32bitsacedbole12 https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734
                     frm1.ShowDialog();
                     //        }
                     //    }
@@ -948,7 +950,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     }
                     catch (Exception ex)
                     {
-                        if (ex.Message.ToString().IndexOf("The 'Microsoft.ACE.OLEDB.15.0' provider is not registered on the local machine.") >= 0)
+                        if (ex.Message.ToString().IndexOf("The '" + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + "' provider is not registered on the local machine.") >= 0)
                         {
                             ErrorWindow frm1 = new ErrorWindow("You need to Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734 ", "Error @Import", false, false);
                             frm1.ShowDialog();
@@ -1049,8 +1051,10 @@ namespace RocksmithToolkitGUI.DLCManager
             if (File.Exists(DB_Path))
             {
                 //OleDbConnection myConn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path);
-                OleDbDataAdapter myDataAdapter = new OleDbDataAdapter();
-                myDataAdapter.SelectCommand = new OleDbCommand(fcmds, cn);
+                OleDbDataAdapter myDataAdapter = new OleDbDataAdapter
+                {
+                    SelectCommand = new OleDbCommand(fcmds, cn)
+                };
                 OleDbCommandBuilder custCB = new OleDbCommandBuilder(myDataAdapter);
                 try
                 {
@@ -1100,7 +1104,7 @@ namespace RocksmithToolkitGUI.DLCManager
         static public string WwiseInstalled(string Mss)
         {
             var wwisePath = "";
-            if (!String.IsNullOrEmpty(ConfigRepository.Instance()["general_wwisepath"]))
+            if (!string.IsNullOrEmpty(ConfigRepository.Instance()["general_wwisepath"]))
                 wwisePath = ConfigRepository.Instance()["general_wwisepath"];
             else
                 wwisePath = Environment.GetEnvironmentVariable("WWISEROOT");
@@ -1116,7 +1120,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 return "1" + ";0;0";
         }
 
-        public static string Manipulate_strings(string words, int k, bool ifn, bool orig_flag, bool bassRemoved, GenericFunctions.MainDBfields[] SongRecord, string sep1, string sep2)
+        public static string Manipulate_strings(string words, int k, bool ifn, bool orig_flag, bool bassRemoved, GenericFunctions.MainDBfields[] SongRecord, string sep1, string sep2, bool beta)//, string always_grp, string grp)
         {
 
             //2. Read from DB
@@ -1131,6 +1135,9 @@ namespace RocksmithToolkitGUI.DLCManager
             var readt = false;
             var oldtxt = "";
             var last_ = 0;
+            //words.Replace(
+            //if (grp.ToLower() == "yes") { words = words.Replace("<Groups>", ""); words = "<Groups>"+ words; }
+            //if (always_grp.ToLower() == "yes") { words = words.Replace("<Beta>", "").Replace("<Groups>", ""); words = "<Groups><Beta>" + words; }
             for (i = 0; i <= txt.Length - 1; i++)
             {
                 curtext = txt[i].ToString();//.Substring(i,1);
@@ -1212,7 +1219,8 @@ namespace RocksmithToolkitGUI.DLCManager
                             tzt = SongRecord[k].Groups;
                             break;
                         case "<Beta>":
-                            fulltxt = ((SongRecord[k].Is_Beta == "Yes") ? "0" : "") + fulltxt;
+                            if (beta) fulltxt = "0" +fulltxt;
+                                else fulltxt = ((SongRecord[k].Is_Beta == "Yes") ? "0" : "") + fulltxt;
                             break;
                         case "<Broken>":
                             fulltxt = ((SongRecord[k].Is_Broken == "Yes") ? "Brkn-" : "") + fulltxt;
@@ -1342,6 +1350,9 @@ namespace RocksmithToolkitGUI.DLCManager
                 // //Delete Tones
                 DeleteFromDB("Tones", "DELETE FROM Tones WHERE CDLC_ID IN (" + ID + ")", cnb);
 
+                // //Delete Tones
+                DeleteFromDB("Tones", "DELETE FROM Tones_GearList WHERE CDLC_ID IN (" + ID + ")", cnb);
+
                 // //Delete Audit trail of import
                 DeleteFromDB("Import_AuditTrail", "DELETE * FROM Import_AuditTrail WHERE FileHash IN (\"" + hash.Replace(", ", "\", \"") + "\")", cnb);
 
@@ -1364,7 +1375,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 !Directory.Exists(repacked_PSPath) || (!Directory.Exists(log_Path) && log_Path != "") || !Directory.Exists(Log_PSPath)
                 || !Directory.Exists(albumCovers_PSPath) || !Directory.Exists(Archive_Path))
             {
-                MessageBox.Show(String.Format("One of the mandatory backend, folder is missing " + ", " + Temp_Path_Import + ", " + pathDLC + ", " + old_Path_Import + ", " + broken_Path_Import + ", " + dupli_Path_Import + ", " + dlcpacks + "(manipulated or manipulated-temp or manifests or temp), " + repacked_path + "(split by platform), " + log_Path + ", " + albumCovers_PSPath + ", " + Log_PSPath + ", " + Archive_Path, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error));
+                MessageBox.Show(string.Format("One of the mandatory backend, folder is missing " + ", " + Temp_Path_Import + ", " + pathDLC + ", " + old_Path_Import + ", " + broken_Path_Import + ", " + dupli_Path_Import + ", " + dlcpacks + "(manipulated or manipulated-temp or manifests or temp), " + repacked_path + "(split by platform), " + log_Path + ", " + albumCovers_PSPath + ", " + Log_PSPath + ", " + Archive_Path, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error));
                 try
                 {
                     DirectoryInfo di;
@@ -1425,43 +1436,53 @@ namespace RocksmithToolkitGUI.DLCManager
             return author;
         }
 
-        public static string Add2LinesInVocals(string filePath, int nooflines)
+        public static string Add2LinesInVocals(string filePath, int nooflines, string pos)
         {
             var info = File.OpenText(filePath);
             string firsttime = "";
-            string secondtime = "";
-            string secondline = "";
+            //string secondtime = "";
+            //string secondline = "";
             string fistline = "";
-            string fistlineorig = "";
+            bool once = true;
             string line;
+            string firstlyric = "";
             //var timestamp = UpdateLog(DateTime.Now, "Add2LinesInVocals", true, ConfigRepository.Instance()["dlcm_LogPath"], ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
 
             using (StreamWriter sw = File.CreateText(filePath + ".newvcl"))
             {
                 while ((line = info.ReadLine()) != null)
                 {
-                    if (line.Contains("<vocal time=\"") && firsttime == "")
+                    if (line.Contains("<vocal time") && once)
                     {
-                        fistlineorig = line;
+                        for (var j = 0; j < nooflines; j++)
+                            sw.WriteLine(" <vocal time=\"" + pos + "\" note=\"254\" length=\"0.9\" lyric=\"\"/>");
+                        once = false;
+
                         firsttime = line.Substring(line.IndexOf(value: "\"") + 1, 8);
                         firsttime = firsttime.Substring(0, firsttime.IndexOf("\""));
-                        if (firsttime.ToInt32() < 4)
-                        { sw.WriteLine(" <vocal time=\"0.61\" note=\"254\" length=\"2\" lyric=\"\"/>"); if (nooflines == 1) sw.WriteLine(line); }
-                        else fistline = line.Substring(line.IndexOf("lyric=\\\"") + 7, line.Length - (line.IndexOf("lyric=\\\"") + 8));
-                    }
-                    else
-                        if (line.Contains("<vocal time=\"") && firsttime != "" && secondtime == "" && nooflines == 2)
-                    {
-                        secondtime = line.Substring(line.IndexOf(value: "\"") + 1, 8);
-                        secondtime = secondtime.Substring(0, secondtime.IndexOf("\""));
-                        if (secondtime.ToInt32() < 4)
-                            sw.WriteLine(" <vocal time=\"3\" note=\"254\" length=\"0.9\" lyric=\"\"/>");
-                        else { secondline = line; secondline = line; int ii = line.IndexOf("lyric=") + 9; int jj = line.Length - line.IndexOf("lyric=") + 10; secondline = line; jj = line.Length - (line.IndexOf("lyric=") + 10); secondline = line.Substring(line.IndexOf("lyric=") + 9, line.Length - (line.IndexOf("lyric=") + 10)); }
-                        //(line.IndexOf("lyric = \\\"") >= 0)? line.Substring(line.IndexOf("lyric = \\\"") + 7, line.Length - line.IndexOf("lyric = \\\"") + 8):
 
-                        sw.WriteLine(fistlineorig);
+                        var lyric = line.Substring(line.IndexOf("lyric") + 5);
+                        lyric = lyric.Substring(lyric.IndexOf("\"") + 1);
+                        firstlyric = lyric.Substring(0, lyric.IndexOf("\""));
+
+                        //if (float.Parse(firsttime, NumberStyles.Float, CultureInfo.CurrentCulture) < 4 && firstlyric != "" && pos == "3") //
+                        //{ }
+                        //else
                         sw.WriteLine(line);
                     }
+                    //else
+                    //    if (line.Contains("<vocal time=\"") && firsttime != "" && secondtime == "" && nooflines == 2)
+                    //{
+                    //    secondtime = line.Substring(line.IndexOf(value: "\"") + 1, 8);
+                    //    secondtime = secondtime.Substring(0, secondtime.IndexOf("\""));
+                    //    if (secondtime.ToInt32() < 4)
+                    //        sw.WriteLine(" <vocal time=\"3\" note=\"254\" length=\"0.9\" lyric=\"\"/>");
+                    //    else { secondline = line; secondline = line; int ii = line.IndexOf("lyric=") + 9; int jj = line.Length - line.IndexOf("lyric=") + 10; secondline = line; jj = line.Length - (line.IndexOf("lyric=") + 10); secondline = line.Substring(line.IndexOf("lyric=") + 9, line.Length - (line.IndexOf("lyric=") + 10)); }
+                    //    //(line.IndexOf("lyric = \\\"") >= 0)? line.Substring(line.IndexOf("lyric = \\\"") + 7, line.Length - line.IndexOf("lyric = \\\"") + 8):
+
+                    //    sw.WriteLine(fistlineorig);
+                    //    sw.WriteLine(line);
+                    //}
                     else sw.WriteLine(line);
                 }
 
@@ -1469,7 +1490,7 @@ namespace RocksmithToolkitGUI.DLCManager
             info.Close();
             File.Copy(filePath + ".newvcl", filePath, true);
             DeleteFile(filePath + ".newvcl");
-            return fistline + ";" + secondline; ;// return firsttime.Substring(0, firsttime.Length - firsttime.IndexOf("\""));
+            return fistline;// + ";" + secondline; ;// return firsttime.Substring(0, firsttime.Length - firsttime.IndexOf("\""));
         }
 
         public static string ReadPackageToolkitVersion(string filePath)
@@ -1514,9 +1535,9 @@ namespace RocksmithToolkitGUI.DLCManager
         public static string GetValidNameg(string value, bool allowSpace = false, bool allowStartsWithNumber = false, bool underscoreSpace = false, bool frets24 = false)
         {
             // valid characters developed from actually reviewing ODLC artist, title, album names
-            string name = String.Empty;
+            string name = string.Empty;
 
-            if (!String.IsNullOrEmpty(value))
+            if (!string.IsNullOrEmpty(value))
             {
                 // ODLC artist, title, album character use allows these but not these
                 // allow use of accents Über ñice \\p{L}
@@ -1607,7 +1628,7 @@ namespace RocksmithToolkitGUI.DLCManager
             else { File.Copy(json + ".old", json, true); if (Is_Original == "Yes") return "Yes"; }
             var startInfo = new ProcessStartInfo();
 
-            var c = String.Format(" -c \"{0}\"", Path.GetFullPath("ddc\\ddc_default.xml"));
+            var c = string.Format(" -c \"{0}\"", Path.GetFullPath("ddc\\ddc_default.xml"));
             startInfo.FileName = Path.Combine(AppWD, "..\\..\\ddc", "ddc.exe");
 
             if (superOrg) //37. Keep the Uncompressed Songs superorganized
@@ -1615,7 +1636,7 @@ namespace RocksmithToolkitGUI.DLCManager
             else
                 startInfo.WorkingDirectory = Folder_Name + "\\songs\\arr\\";
 
-            startInfo.Arguments = String.Format("\"{0}\" -l {1} -s {2} {3}{4}{5}",
+            startInfo.Arguments = string.Format("\"{0}\" -l {1} -s {2} {3}{4}{5}",
                                                 Path.GetFileName(xml),
                                                 4, "N", c,
                                                     " -p Y", " -t Y");
@@ -1635,7 +1656,7 @@ namespace RocksmithToolkitGUI.DLCManager
             return DDAdded;
         }
 
-        public static string RemoveDD(string Folder_Name, string Is_Original, string xml, Platform platform, bool superOrg, bool InternalLog)
+        public static string RemoveDD(string Folder_Name, string Is_Original, string xml, Platform platform, bool superOrg, bool InternalLog, string UseInternalLog)
         {
             var Has_BassDD = "No";
 
@@ -1645,6 +1666,18 @@ namespace RocksmithToolkitGUI.DLCManager
             else
                 jsons = (xml.Replace(".xml", ".json").Replace("songs\\arr", calc_path(Directory.GetFiles(Folder_Name, "*.json", System.IO.SearchOption.AllDirectories)[0])));
 
+            // Bass_Has_DD
+            var manifestFunctions = new ManifestFunctions(platform.version);
+            Song2014 xmlContent = null;
+
+            xmlContent = Song2014.LoadFromFile(xml);
+            if (xmlContent.Arrangement.ToLower() == "bass")
+            {
+                platform.version = RocksmithToolkitLib.GameVersion.RS2014;
+                if (manifestFunctions.GetMaxDifficulty(xmlContent) <= 0)
+                    return "No";
+            }
+
             //Save a copy
             if (!File.Exists(xml + ".old")) File.Copy(xml, xml + ".old", false);
             else File.Copy(xml, xml + ".old", true);
@@ -1652,287 +1685,303 @@ namespace RocksmithToolkitGUI.DLCManager
             if (!File.Exists(json + ".old")) File.Copy(json, json + ".old", false);
             else { File.Copy(json + ".old", json, true); }
 
-            var startInfo = new ProcessStartInfo();
+            //ProcessOutput = String.Empty;
+            var rampPath = Path.Combine(AppWD.Replace("DLCManager\\external_tools", ""), "ddc\\ddc_dd_remover.xml");/*String.Format(" -m \"{0}\"", )*/
+            var cfgPath = Path.Combine(AppWD.Replace("DLCManager\\external_tools", ""), "ddc\\ddc_default.cfg");/*String.Format(" -c \"{0}\"", )*/
 
-            var r = String.Format(" -m \"{0}\"", Path.GetFullPath("ddc\\ddc_dd_remover.xml"));
-            var c = String.Format(" -c \"{0}\"", Path.GetFullPath("ddc\\ddc_default.xml"));
-            startInfo.FileName = Path.Combine(AppWD, "..\\..\\ddc", "ddc.exe");
-            startInfo.WorkingDirectory = Folder_Name;
-            startInfo.Arguments = String.Format("\"{0}\" -l {1} -s {2}{3}{4}",
-                                                Path.GetFileName(xml),
-                                                40, "N", r,
-                                                 " -p Y");
-            startInfo.UseShellExecute = false;
-            startInfo.CreateNoWindow = true;
-            startInfo.RedirectStandardOutput = true;
-            startInfo.RedirectStandardError = true;
-            var DDCExitCode = 5;
-            using (var DDC = new Process())
-            {
+            //Invoke(new MethodInvoker(() =>
+            //{
+            //    rampPath = GetRampUpMdl();
+            //    cfgPath = GetConfig();
+            //}));
+            //var step = (int)Math.Round(1.0 /  1 * 100, 0);/*FilesDb.Count*/
 
-                if (!InternalLog)//32. When removing DD use internal logic not DDC
+            var cmbPhraseLen = ConfigRepository.Instance().GetDecimal("ddc_phraselength");
+            var consoleOutput = string.Empty;
+            if (UseInternalLog != "Yes") DDCreator.ApplyDD(xml, (int)cmbPhraseLen, false, rampPath, cfgPath, out consoleOutput, true, false);
+
+            //var startInfo = new ProcessStartInfo();
+
+            //var r = String.Format(" -m \"{0}\"", Path.GetFullPath("ddc\\ddc_dd_remover.xml"));
+            //var c = String.Format(" -c \"{0}\"", Path.GetFullPath("ddc\\ddc_default.xml"));
+            //startInfo.FileName = Path.Combine(AppWD, "..\\..\\ddc", "ddc.exe");
+            //startInfo.WorkingDirectory = Folder_Name;
+            //startInfo.Arguments = String.Format("\"{0}\" -l {1} -s {2}{3}{4}",
+            //                                    Path.GetFileName(xml),
+            //                                    40, "N", r,
+            //                                     " -p Y");
+            //startInfo.UseShellExecute = false;
+            //startInfo.CreateNoWindow = true;
+            //startInfo.RedirectStandardOutput = true;
+            //startInfo.RedirectStandardError = true;
+            //var DDCExitCode =5;/*= 5*/
+            //using (var DDC = new Process())
+            //{
+
+            //    if (!InternalLog)//32. When removing DD use internal logic not DDC
+            //    {
+            //        DDC.StartInfo = startInfo;
+            //        DDC.Start();
+            //        DDC.WaitForExit(1000 * 60 * 5);
+            //    }//wait 5 minutes}
+            //    else DDCExitCode = 5;
+
+            if (Is_Original == "Yes" || !string.IsNullOrEmpty(consoleOutput))
+            //{ DDCExitCode == 5)
+            { //http://code.google.com/p/rocksmith-custom-song-creator/issues/detail?id=60
+
+                if (xml.Length > 0)
                 {
-                    DDC.StartInfo = startInfo;
-                    DDC.Start();
-                    DDC.WaitForExit(1000 * 60 * 5);
-                }//wait 5 minutes}
-                else DDCExitCode = 5;
+                    platform.version = RocksmithToolkitLib.GameVersion.RS2014;
+                    Song2014 xmlContent1 = Song2014.LoadFromFile(xml);
+                    var manifestFunctions1 = new ManifestFunctions(platform.version);
+                    var j = manifestFunctions1.GetMaxDifficulty(xmlContent1);
+                    string textfile = File.ReadAllText(xml);
 
-                if (Is_Original == "Yes" || DDCExitCode == 5)
-                { //http://code.google.com/p/rocksmith-custom-song-creator/issues/detail?id=60
-
-                    if (xml.Length > 0)
+                    //for each timestamp in the xml file take the highest level entry
+                    var fxml = File.OpenText(xml);
+                    string tecst = "";
+                    string line;
+                    var header = "";
+                    var footer = "";
+                    //Read and Save Header
+                    while ((line = fxml.ReadLine()) != null)
                     {
-                        platform.version = RocksmithToolkitLib.GameVersion.RS2014;
-                        Song2014 xmlContent1 = Song2014.LoadFromFile(xml);
-                        var manifestFunctions1 = new ManifestFunctions(platform.version);
-                        var j = manifestFunctions1.GetMaxDifficulty(xmlContent1);
-                        string textfile = File.ReadAllText(xml);
+                        if (line.Contains("<levels")) break;
+                        header += line + "\n";
+                    }
+                    header += "\n<levels count=\"1\">\n";
+                    //level the maxdiff overall setting in the xml
+                    var m = 1;
+                    for (m = 1; m <= j; m++)
+                    {
+                        header = header.Replace("maxDifficulty=\"" + m + "\"", "maxDifficulty=\"0\"");
+                    }
 
-                        //for each timestamp in the xml file take the highest level entry
-                        var fxml = File.OpenText(xml);
-                        string tecst = "";
-                        string line;
-                        var header = "";
-                        var footer = "";
-                        //Read and Save Header
-                        while ((line = fxml.ReadLine()) != null)
+                    var v = 0; //difficulty level in the parsing
+                    var diff = 0;
+                    float[] timea = new float[10000]; //keeps the timestamp of each note
+                    float[] timeb = new float[10000]; //keeps the timestamp of each anchor
+                    string[] notes = new string[10000]; // keeps the full note details
+                    string[] bends = new string[10000]; // keeps the bends single note details
+                    string[] anchor = new string[10000]; // keeps the full note details
+                    int[] lvla = new int[10000]; //keeps the level of the note&timestamp
+                    string[] bnds = new string[10000]; //keeps the bends of the note&timestamp
+                    int[] lvlb = new int[10000]; //keeps the level of the note&timestamp
+                                                 //bool is_header = true; //to know when the header has been read and saved
+                                                 //var l = 0; //storage counter in the array
+                    float ts = 0; //timestamp parsed fro the <notes line
+                    int ea = 0; //top end of the storage array notes
+                    int eb = 0; //top end of the storage array anchor
+                    bool UpdateT = false;
+                    while ((line = fxml.ReadLine()) != null)
+                    {
+                        //header
+                        if (line.Contains("<level difficulty=\""))
                         {
-                            if (line.Contains("<levels")) break;
-                            header += line + "\n";
-                        }
-                        header += "\n<levels count=\"1\">\n";
-                        //level the maxdiff overall setting in the xml
-                        var m = 1;
-                        for (m = 1; m <= j; m++)
-                        {
-                            header = header.Replace("maxDifficulty=\"" + m + "\"", "maxDifficulty=\"0\"");
-                        }
-
-                        var v = 0; //difficulty level in the parsing
-                        var diff = 0;
-                        float[] timea = new float[10000]; //keeps the timestamp of each note
-                        float[] timeb = new float[10000]; //keeps the timestamp of each anchor
-                        string[] notes = new string[10000]; // keeps the full note details
-                        string[] bends = new string[10000]; // keeps the bends single note details
-                        string[] anchor = new string[10000]; // keeps the full note details
-                        int[] lvla = new int[10000]; //keeps the level of the note&timestamp
-                        string[] bnds = new string[10000]; //keeps the bends of the note&timestamp
-                        int[] lvlb = new int[10000]; //keeps the level of the note&timestamp
-                                                     //bool is_header = true; //to know when the header has been read and saved
-                                                     //var l = 0; //storage counter in the array
-                        float ts = 0; //timestamp parsed fro the <notes line
-                        int ea = 0; //top end of the storage array notes
-                        int eb = 0; //top end of the storage array anchor
-                        bool UpdateT = false;
-                        while ((line = fxml.ReadLine()) != null)
-                        {
-                            //header
-                            if (line.Contains("<level difficulty=\""))
+                            line = line.Replace("<level difficulty=\"", "").Trim();
+                            line = line.Replace("\">", "");
+                            try { diff = line.ToInt32(); }
+                            catch
                             {
-                                line = line.Replace("<level difficulty=\"", "").Trim();
-                                line = line.Replace("\">", "");
-                                try { diff = line.ToInt32(); }
-                                catch
-                                {
-                                    MessageBox.Show("Errors at DD lvl READ removal");
-                                }
-                                //if (line != v.ToString())
-                                //{
-                                //    MessageBox.Show("Errors at DD removal");
-                                //    break;
-                                //}
-                                v = diff;
-                                continue;
+                                MessageBox.Show("Errors at DD lvl READ removal");
+                            }
+                            //if (line != v.ToString())
+                            //{
+                            //    MessageBox.Show("Errors at DD removal");
+                            //    break;
+                            //}
+                            v = diff;
+                            continue;
+                        }
+
+                        //notes
+                        if (line.Contains("<note time=\""))
+                        {
+                            tecst = (line.Replace("<note time=\"", "")).TrimStart();
+                            tecst = tecst.Replace(tecst.Substring(tecst.IndexOf("\"")), "");
+                            try { ts = Convert.ToSingle(tecst); }
+                            catch (Exception ex)
+                            {
+                                var tsst = "Error11 ..." + ex; UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_LogPath"], ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
+                                MessageBox.Show("Errors at DD time notes READ removal");
                             }
 
-                            //notes
-                            if (line.Contains("<note time=\""))
+                            UpdateT = false;
+                            for (m = 0; m < ea; m++)
                             {
-                                tecst = (line.Replace("<note time=\"", "")).TrimStart();
-                                tecst = tecst.Replace(tecst.Substring(tecst.IndexOf("\"")), "");
-                                try { ts = Convert.ToSingle(tecst); }
-                                catch (Exception ex)
+                                if (ts == timea[m])
                                 {
-                                    var tsst = "Error11 ..." + ex; UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_LogPath"], ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
-                                    MessageBox.Show("Errors at DD time notes READ removal");
-                                }
-
-                                UpdateT = false;
-                                for (m = 0; m < ea; m++)
-                                {
-                                    if (ts == timea[m])
+                                    if (v > lvla[m])
                                     {
-                                        if (v > lvla[m])
+                                        notes[m] = line.Replace("\">", "\" />");
+                                        timea[m] = ts;
+                                        lvla[m] = v;
+                                        UpdateT = true;
+                                        if (line.IndexOf("bend=\"0\"") == -1 && line.IndexOf("bend=\"") > 0)
                                         {
-                                            notes[m] = line.Replace("\">", "\" />");
-                                            timea[m] = ts;
-                                            lvla[m] = v;
-                                            UpdateT = true;
-                                            if (line.IndexOf("bend=\"0\"") == -1 && line.IndexOf("bend=\"") > 0)
+                                            line = fxml.ReadLine();
+                                            if (line.IndexOf("bendValue") > 0 && line.IndexOf("bendValues>") > 0)
                                             {
                                                 line = fxml.ReadLine();
-                                                if (line.IndexOf("bendValue") > 0 && line.IndexOf("bendValues>") > 0)
+                                                if (line.IndexOf("bendValue time") > 0)
                                                 {
-                                                    line = fxml.ReadLine();
-                                                    if (line.IndexOf("bendValue time") > 0)
-                                                    {
-                                                        bends[m] = line;
-                                                        m += 2;
-                                                    }
+                                                    bends[m] = line;
+                                                    m += 2;
                                                 }
                                             }
                                         }
-                                        break;
                                     }
+                                    break;
                                 }
-                                if (!UpdateT) //if TimeStamp has not been found in the storage array then save it
+                            }
+                            if (!UpdateT) //if TimeStamp has not been found in the storage array then save it
+                            {
+                                notes[ea] = line.Replace("\">", "\" />");
+                                timea[ea] = ts;
+                                lvla[ea] = v;
+                                ea++;
+                                if (line.IndexOf("bend=\"0\"") == -1 && line.IndexOf("bend=\"") > 0)
                                 {
-                                    notes[ea] = line.Replace("\">", "\" />");
-                                    timea[ea] = ts;
-                                    lvla[ea] = v;
-                                    ea++;
-                                    if (line.IndexOf("bend=\"0\"") == -1 && line.IndexOf("bend=\"") > 0)
+                                    line = fxml.ReadLine();
+                                    if (line.IndexOf("bendValue") > 0 && line.IndexOf("bendValues>") > 0)
                                     {
                                         line = fxml.ReadLine();
-                                        if (line.IndexOf("bendValue") > 0 && line.IndexOf("bendValues>") > 0)
+                                        if (line.IndexOf("bendValue time") > 0)
                                         {
-                                            line = fxml.ReadLine();
-                                            if (line.IndexOf("bendValue time") > 0)
-                                            {
-                                                bends[m] = line;
-                                                m += 2;
-                                            }
+                                            bends[m] = line;
+                                            m += 2;
                                         }
                                     }
                                 }
                             }
-                            //anchor
-                            if (line.Contains("<anchor time=\""))
+                        }
+                        //anchor
+                        if (line.Contains("<anchor time=\""))
+                        {
+                            tecst = (line.Replace("<anchor time=\"", "")).TrimStart();
+                            tecst = tecst.Replace(tecst.Substring(tecst.IndexOf("\"")), "");
+                            try { ts = Convert.ToSingle(tecst); }
+                            catch (Exception ex)
                             {
-                                tecst = (line.Replace("<anchor time=\"", "")).TrimStart();
-                                tecst = tecst.Replace(tecst.Substring(tecst.IndexOf("\"")), "");
-                                try { ts = Convert.ToSingle(tecst); }
-                                catch (Exception ex)
+                                var tsst = "Error12 ..." + ex; UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_LogPath"], ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
+                                MessageBox.Show("Errors at DD time anchor READ removal");
+                            }
+                            UpdateT = false;
+                            for (m = 0; m < eb; m++)
+                            {
+                                if (ts == timeb[m])
                                 {
-                                    var tsst = "Error12 ..." + ex; UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_LogPath"], ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
-                                    MessageBox.Show("Errors at DD time anchor READ removal");
-                                }
-                                UpdateT = false;
-                                for (m = 0; m < eb; m++)
-                                {
-                                    if (ts == timeb[m])
+                                    if (v > lvlb[m])
                                     {
-                                        if (v > lvlb[m])
-                                        {
-                                            anchor[m] = line;
-                                            timeb[m] = ts;
-                                            lvlb[m] = v;
-                                            UpdateT = true;
-                                        }
-                                        break;
+                                        anchor[m] = line;
+                                        timeb[m] = ts;
+                                        lvlb[m] = v;
+                                        UpdateT = true;
                                     }
-                                }
-                                if (!UpdateT) //if TimeStamp has not been found in the storage array then save it
-                                {
-                                    anchor[eb] = line;
-                                    timeb[eb] = ts;
-                                    lvlb[eb] = v;
-                                    eb++;
+                                    break;
                                 }
                             }
-                            if (line.Contains("<notes>")) continue;
-
-                        }
-
-                        //reorder the storage array
-                        var n = 0;
-                        string no;
-                        string be;
-                        int lv;
-                        float ti;
-                        for (m = 0; m <= ea - 1; m++)
-                        {
-                            for (n = m + 1; n <= ea; n++)
+                            if (!UpdateT) //if TimeStamp has not been found in the storage array then save it
                             {
-                                if (timea[m] > timea[n]) //if TimeStamp is bigger reverse the order
-                                {
-                                    no = notes[n];
-                                    ti = timea[n];
-                                    lv = lvla[n];
-                                    be = bends[n];
-                                    notes[n] = notes[m];
-                                    timea[n] = timea[m];
-                                    lvla[n] = lvla[m];
-                                    bends[n] = bends[m];
-                                    notes[m] = no;
-                                    timea[m] = ti;
-                                    lvla[m] = lv;
-                                    bends[m] = be;
-                                }
+                                anchor[eb] = line;
+                                timeb[eb] = ts;
+                                lvlb[eb] = v;
+                                eb++;
                             }
                         }
-                        //reorder the anchor storage array
-                        for (m = 0; m <= eb - 1; m++)
-                        {
-                            for (n = m + 1; n <= eb; n++)
-                            {
-                                if (timeb[m] > timeb[n]) //if TimeStamp is bigger reverse the order
-                                {
-                                    no = anchor[n];
-                                    ti = timeb[n];
-                                    lv = lvlb[n];
-                                    anchor[n] = anchor[m];
-                                    timeb[n] = timeb[m];
-                                    lvlb[n] = lvlb[m];
-                                    anchor[m] = no;
-                                    timeb[m] = ti;
-                                    lvlb[m] = lv;
-                                }
-                            }
-                        }
-                        //add level & notes to the footer
-                        footer += "    <level difficulty=\"0\">" + "\n" + "      <notes>" + "\n";
-                        for (m = 0; m <= ea; m++)
-                        {
-                            //footer += notes[m] + "\n";
-                            if (bends[m] != "" && bends[m] != null)
-                            {
-                                footer += notes[m].Replace("/>", ">") + "\n";
-                                footer += "  <bendValues>\n";
-                                footer += "   " + bends[m] + "\n";
-                                footer += "  </bendValues>\n";
-                                footer += " </note>\n";
-                            }
-                            else footer += notes[m] + "\n";
-                        }
-                        footer += "	  </notes>\n      <chords />\n      <anchors>\n";
-                        //add level & notes to the footer
-                        for (m = 0; m <= eb; m++)
-                        {
-                            footer += anchor[m] + "\n";
-                        }
-                        footer += "      </anchors>" + "\n" + "      <handShapes />" + "\n" + "     </level>" + "\n" + "   </levels>" + "\n" + "</song>";
-                        fxml.Close();
-                        File.WriteAllText(xml, header + footer);
+                        if (line.Contains("<notes>")) continue;
 
-                        //level the json as well
-                        textfile = File.ReadAllText(json);
-                        n = 0;
-                        for (n = 0; n < j; n++)
-                        {
-                            textfile = textfile.Replace("\"MaxPhraseDifficulty\": " + n + ",", "\"MaxPhraseDifficulty\": 0,");
-                        }
-                        File.WriteAllText(json, textfile);
                     }
+
+                    //reorder the storage array
+                    var n = 0;
+                    string no;
+                    string be;
+                    int lv;
+                    float ti;
+                    for (m = 0; m <= ea - 1; m++)
+                    {
+                        for (n = m + 1; n <= ea; n++)
+                        {
+                            if (timea[m] > timea[n]) //if TimeStamp is bigger reverse the order
+                            {
+                                no = notes[n];
+                                ti = timea[n];
+                                lv = lvla[n];
+                                be = bends[n];
+                                notes[n] = notes[m];
+                                timea[n] = timea[m];
+                                lvla[n] = lvla[m];
+                                bends[n] = bends[m];
+                                notes[m] = no;
+                                timea[m] = ti;
+                                lvla[m] = lv;
+                                bends[m] = be;
+                            }
+                        }
+                    }
+                    //reorder the anchor storage array
+                    for (m = 0; m <= eb - 1; m++)
+                    {
+                        for (n = m + 1; n <= eb; n++)
+                        {
+                            if (timeb[m] > timeb[n]) //if TimeStamp is bigger reverse the order
+                            {
+                                no = anchor[n];
+                                ti = timeb[n];
+                                lv = lvlb[n];
+                                anchor[n] = anchor[m];
+                                timeb[n] = timeb[m];
+                                lvlb[n] = lvlb[m];
+                                anchor[m] = no;
+                                timeb[m] = ti;
+                                lvlb[m] = lv;
+                            }
+                        }
+                    }
+                    //add level & notes to the footer
+                    footer += "    <level difficulty=\"0\">" + "\n" + "      <notes>" + "\n";
+                    for (m = 0; m <= ea; m++)
+                    {
+                        //footer += notes[m] + "\n";
+                        if (bends[m] != "" && bends[m] != null)
+                        {
+                            footer += notes[m].Replace("/>", ">") + "\n";
+                            footer += "  <bendValues>\n";
+                            footer += "   " + bends[m] + "\n";
+                            footer += "  </bendValues>\n";
+                            footer += " </note>\n";
+                        }
+                        else footer += notes[m] + "\n";
+                    }
+                    footer += "	  </notes>\n      <chords />\n      <anchors>\n";
+                    //add level & notes to the footer
+                    for (m = 0; m <= eb; m++)
+                    {
+                        footer += anchor[m] + "\n";
+                    }
+                    footer += "      </anchors>" + "\n" + "      <handShapes />" + "\n" + "     </level>" + "\n" + "   </levels>" + "\n" + "</song>";
+                    fxml.Close();
+                    File.WriteAllText(xml, header + footer);
+
+                    //level the json as well
+                    textfile = File.ReadAllText(json);
+                    n = 0;
+                    for (n = 0; n < j; n++)
+                    {
+                        textfile = textfile.Replace("\"MaxPhraseDifficulty\": " + n + ",", "\"MaxPhraseDifficulty\": 0,");
+                    }
+                    File.WriteAllText(json, textfile);
                 }
+                //}
                 Has_BassDD = "Yes";
             }
 
             //remove altough original or t0o old dd
-            platform.version = RocksmithToolkitLib.GameVersion.RS2014;
-            Song2014 xmlContent = Song2014.LoadFromFile(xml);
-            var manifestFunctions = new ManifestFunctions(platform.version);
+            //platform.version = RocksmithToolkitLib.GameVersion.RS2014;
+            //Song2014 xmlContent2 = Song2014.LoadFromFile(xml);
+            //var manifestFunctions2 = new ManifestFunctions(platform.version);
             return Has_BassDD;
 
         }
@@ -1946,7 +1995,7 @@ namespace RocksmithToolkitGUI.DLCManager
             startInfo.WorkingDirectory = AppWD;
             var t = (fn.IndexOf("preview.wem") > 0 ? fn.Replace(".wem", ".ogg") : fn.Replace(".wem", "_fixed.ogg")).TrimStart(' ');
             var tt = t + "l";
-            startInfo.Arguments = String.Format(" \"{0}\" -o \"{1}\" -Q",
+            startInfo.Arguments = string.Format(" \"{0}\" -o \"{1}\" -Q",
                                                 t,
                                                 tt);
             startInfo.UseShellExecute = false; startInfo.CreateNoWindow = true;
@@ -1962,15 +2011,18 @@ namespace RocksmithToolkitGUI.DLCManager
                     DDC.WaitForExit(1000 * 60 * 4); //wait 1min
                     if (DDC.ExitCode == 0)
                     {
-                        startInfo = new ProcessStartInfo();
-                        startInfo.FileName = Path.Combine(AppWD, "oggenc.exe");
-                        startInfo.WorkingDirectory = AppWD;
-                        startInfo.Arguments = String.Format(" \"{0}\" -o \"{1}\" -b \"{2}\"  --resample \"{3}\" -Q",
+                        startInfo = new ProcessStartInfo
+                        {
+                            FileName = Path.Combine(AppWD, "oggenc.exe"),
+                            WorkingDirectory = AppWD,
+                            Arguments = string.Format(" \"{0}\" -o \"{1}\" -b \"{2}\"  --resample \"{3}\" -Q",
                                                             tt,
                                                             t,
                                                             ConfigRepository.Instance()["dlcm_BitRate"].Substring(0, 3),
-                                                            ConfigRepository.Instance()["dlcm_SampleRate"]);
-                        startInfo.UseShellExecute = false; startInfo.CreateNoWindow = true;
+                                                            ConfigRepository.Instance()["dlcm_SampleRate"]),
+                            UseShellExecute = false,
+                            CreateNoWindow = true
+                        };
 
                         if (File.Exists(t))
                             using (var DDgC = new Process())
@@ -2125,7 +2177,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
                 FileStream writeStream = new FileStream(localf, FileMode.Create);
                 int Length = 2048;
-                Byte[] buffer = new Byte[Length];
+                byte[] buffer = new byte[Length];
                 int bytesRead = bbinaryReader.Read(buffer, 0, Length);
                 while (bytesRead > 0)
                 {
@@ -2184,7 +2236,7 @@ namespace RocksmithToolkitGUI.DLCManager
         }
         public static void Ogg2Wav(string sourcePath, string destinationPath)
         {
-            var cmdArgs = String.Format(" -o \"{1}\" \"{0}\"", sourcePath, destinationPath);
+            var cmdArgs = string.Format(" -o \"{1}\" \"{0}\"", sourcePath, destinationPath);
 
 
             var APP_OGGDEC = "oggdec.exe";
@@ -2192,7 +2244,7 @@ namespace RocksmithToolkitGUI.DLCManager
         }
         public static void Ogg2Preview(string sourcePath, string destinationPath, long msLength = 30000, long msStart = 4000)
         {
-            var cmdArgs = String.Format(" -s {2} -l {3} \"{0}\" \"{1}\"", sourcePath, destinationPath, msStart, msLength);
+            var cmdArgs = string.Format(" -s {2} -l {3} \"{0}\" \"{1}\"", sourcePath, destinationPath, msStart, msLength);
             var APP_OGGCUT = "oggCut.exe";
             GeneralExtensions.RunExternalExecutable(APP_OGGCUT, true, true, true, cmdArgs);
         }
@@ -2200,9 +2252,9 @@ namespace RocksmithToolkitGUI.DLCManager
         public static void Wav2Ogg(string sourcePath, string destinationPath, int qualityFactor)
         {
             if (destinationPath == null)
-                destinationPath = String.Format("{0}", Path.ChangeExtension(sourcePath, "ogg"));
+                destinationPath = string.Format("{0}", Path.ChangeExtension(sourcePath, "ogg"));
             // interestingly ODLC uses 44100 or 48000 interchangeably ... so resampling is not necessary
-            var cmdArgs = String.Format(" -q {2} \"{0}\" -o \"{1}\"", sourcePath, destinationPath, Convert.ToString(qualityFactor));
+            var cmdArgs = string.Format(" -q {2} \"{0}\" -o \"{1}\"", sourcePath, destinationPath, Convert.ToString(qualityFactor));
             var APP_OGGENC = "oggenc.exe";
             GeneralExtensions.RunExternalExecutable(APP_OGGENC, true, true, true, cmdArgs);
         }
@@ -2219,12 +2271,12 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             // ExternalApps.VerifyExternalApps(); // for testing
             var audioPathNoExt = Path.Combine(Path.GetDirectoryName(audioPath), Path.GetFileNameWithoutExtension(audioPath));
-            var oggPath = String.Format(audioPathNoExt + ".ogg");
-            var wavPath = String.Format(audioPathNoExt + ".wav");
-            var wemPath = String.Format(audioPathNoExt + ".wem");
-            var oggPreviewPath = String.Format(audioPathNoExt + "_preview.ogg");
-            var wavPreviewPath = String.Format(audioPathNoExt + "_preview.wav");
-            var wemPreviewPath = String.Format(audioPathNoExt + "_preview.wem");
+            var oggPath = string.Format(audioPathNoExt + ".ogg");
+            var wavPath = string.Format(audioPathNoExt + ".wav");
+            var wemPath = string.Format(audioPathNoExt + ".wem");
+            var oggPreviewPath = string.Format(audioPathNoExt + "_preview.ogg");
+            var wavPreviewPath = string.Format(audioPathNoExt + "_preview.wav");
+            var wemPreviewPath = string.Format(audioPathNoExt + "_preview.wem");
 
             if (audioPath.Substring(audioPath.Length - 4).ToLower() == ".ogg") //in RS1 ogg was actually wwise
             {
@@ -2273,10 +2325,10 @@ namespace RocksmithToolkitGUI.DLCManager
         public static void Converters(string file, ConverterTypes converterType, bool mssON, bool WinOn)
         {
 
-            var txtOgg2FixHdr = String.Empty;
-            var txtWwiseConvert = String.Empty;
-            var txtWwise2Ogg = String.Empty;
-            var txtAudio2Wem = String.Empty;
+            var txtOgg2FixHdr = string.Empty;
+            var txtWwiseConvert = string.Empty;
+            var txtWwise2Ogg = string.Empty;
+            var txtAudio2Wem = string.Empty;
 
             Dictionary<string, string> errorFiles = new Dictionary<string, string>();
             List<string> successFiles = new List<string>();
@@ -2284,7 +2336,7 @@ namespace RocksmithToolkitGUI.DLCManager
             try
             {
                 var extension = Path.GetExtension(file);
-                var outputFileName = Path.Combine(Path.GetDirectoryName(file), String.Format("{0}_fixed{1}", Path.GetFileNameWithoutExtension(file), ".ogg"));
+                var outputFileName = Path.Combine(Path.GetDirectoryName(file), string.Format("{0}_fixed{1}", Path.GetFileNameWithoutExtension(file), ".ogg"));
                 switch (converterType)
                 {
                     case ConverterTypes.Ogg2Wem:
@@ -2315,10 +2367,10 @@ namespace RocksmithToolkitGUI.DLCManager
                         "Files converted with success:" + Environment.NewLine);
 
                     foreach (var sFile in successFiles)
-                        alertMessage.AppendLine(String.Format("File: {0}", sFile));
+                        alertMessage.AppendLine(string.Format("File: {0}", sFile));
                     alertMessage.AppendLine("Files converted with error:" + Environment.NewLine);
                     foreach (var eFile in errorFiles)
-                        alertMessage.AppendLine(String.Format("File: {0}; error: {1}", eFile.Key, eFile.Value));
+                        alertMessage.AppendLine(string.Format("File: {0}; error: {1}", eFile.Key, eFile.Value));
 
                     if (mssON) MessageBox.Show(alertMessage.ToString(), MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
@@ -2329,15 +2381,15 @@ namespace RocksmithToolkitGUI.DLCManager
                     alertMessage.AppendLine(
                         "Files converted with error: " + Environment.NewLine);
                     foreach (var eFile in errorFiles)
-                        alertMessage.AppendLine(String.Format("File: {0}, error: {1}", eFile.Key, eFile.Value));
+                        alertMessage.AppendLine(string.Format("File: {0}, error: {1}", eFile.Key, eFile.Value));
 
                     if (mssON) MessageBox.Show(alertMessage.ToString(), MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
         }
 
-        public static Boolean IsNumbers(String value)
+        public static bool IsNumbers(string value)
         {
-            return value.All(Char.IsDigit);
+            return value.All(char.IsDigit);
         }
 
         public static string IndexOfTest(string strSource)
@@ -2388,6 +2440,15 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             DateTime dtt = System.DateTime.Now;
             var ismaindb = "";
+            //pB_ReadDLCs.CreateGraphics().Dispose();
+            //pB_ReadDLCs.CreateGraphics().DrawString("§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§", new Font("Arial", (float)9, FontStyle.Bold), Brushes.DarkGray, new PointF(1, pB_ReadDLCs.Height));
+            //pB_ReadDLCs.Invalidate();
+            if (pB_ReadDLCs != null)
+            {
+                pB_ReadDLCs.CreateGraphics().Clear(System.Drawing.Color.HotPink);
+                pB_ReadDLCs.CreateGraphics().DrawString(txt, new Font("Arial", 7, FontStyle.Bold), Brushes.Blue, new PointF(1, pB_ReadDLCs.Height / 4));
+            }
+
             var ii = Math.Abs(Math.Round((dt - dtt).TotalSeconds, 2)).ToString().PadLeft(4, '0');
             if (form != null && form != "" && rtxt_StatisticsOnReadDLCs != null)
             //else if (form == "DLCManager")
@@ -2396,7 +2457,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 //pB_ReadDLCs.Value += 1;
                 //pB_ReadDLCs.CreateGraphics().DrawString("####################################################################################"
                 //    , new Font("Arial", (float)7, FontStyle.Bold), Brushes.Green, new PointF(1, pB_ReadDLCs.Height / 4));
-                pB_ReadDLCs.CreateGraphics().DrawString(txt, new Font("Arial", (float)7, FontStyle.Bold), Brushes.Blue, new PointF(1, pB_ReadDLCs.Height / 4));
+                ////pB_ReadDLCs.CreateGraphics().DrawString(txt, new Font("Arial", (float)7, FontStyle.Bold), Brushes.Blue, new PointF(1, pB_ReadDLCs.Height / 4));
             }
             if (form == "MainDB") ismaindb = "maindb";
             // Write the string to a file. packid+
@@ -2431,7 +2492,7 @@ namespace RocksmithToolkitGUI.DLCManager
             if (form == "DLCManager")
             {
                 pB_ReadDLCs.Value += 1;
-                pB_ReadDLCs.CreateGraphics().DrawString("-" + txt + "---------------", new Font("Arial", (float)7, FontStyle.Bold), Brushes.Blue, new PointF(1, pB_ReadDLCs.Height / 4));
+                pB_ReadDLCs.CreateGraphics().DrawString("-" + txt + "---------------", new Font("Arial", 7, FontStyle.Bold), Brushes.Blue, new PointF(1, pB_ReadDLCs.Height / 4));
             }
             // Write the string to a file. packid+
             Random randomp = new Random();
@@ -2478,6 +2539,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //Read from DB
             MainDBfields[] SongRecord = new MainDBfields[10000];
             SongRecord = GetRecord_s(cmd, cnb);
+            string Folder_Name = SongRecord[0].Folder_Name;
             try
             {
                 if (cnb.State.ToString() == "Open") cnb.Open();
@@ -2504,7 +2566,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 //string SourcePlatform = args[19];
                 //string TargetPlatform = args[20];
                 string Original_FileName = SongRecord[0].Original_FileName;
-                string Folder_Name = SongRecord[0].Folder_Name;
+
                 //string copyj = args[23];
                 string txt_RemotePath = SongRecord[0].Remote_Path;
                 string txt_FTPPath = args[25];
@@ -2517,10 +2579,11 @@ namespace RocksmithToolkitGUI.DLCManager
                 string SearchCmd = args[32];
                 string RocksmithDLCPath = args[33];
                 string DLC_Name = SongRecord[0].DLC_Name;
-                bool updateTonesArrangs = ConfigRepository.Instance()["dlcm_AdditionalManipul76"] == "yes" ? true : false;
+                bool updateTonesArrangs = ConfigRepository.Instance()["dlcm_AdditionalManipul76"].ToLower() == "yes" ? true : false;
                 multithreadname = args[36];
                 form = args[37];
-
+                var ord_no = args[38];
+                string chbx_UseInternalDD = ConfigRepository.Instance()["dlcm_AdditionalManipul31"].ToLower() == "yes" ? "Yes":SongRecord[0].UseInternalDDRemovalLogic;//(.ToLower() == "yes" ? true : false;
                 string chbx_Format = (chbx_PC != "" ? "PC" : (chbx_PS3 != "" ? "PS3" : (chbx_XBOX != "" ? "XBOX360" : (chbx_Mac != "" ? "Mac" : ""))));
                 UpdateLog(timestamp, tsst, false, logPath, tmpPath, multithreadname, form, null, null);
 
@@ -2553,7 +2616,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         var packageName = Path.GetFileNameWithoutExtension(oldfilePath).StripPlatformEndName();
                         if (chbx_UniqueID) packageName += packid;
                         packageName = packageName.Replace(".", "_");
-                        var targetFileName = String.Format(nameTemplate, Path.Combine(Path.GetDirectoryName(oldfilePath), packageName), TargetPlatform.GetPathName()[2]);
+                        var targetFileName = string.Format(nameTemplate, Path.Combine(Path.GetDirectoryName(oldfilePath), packageName), TargetPlatform.GetPathName()[2]);
 
                         // CONVERSION
                         if (needRebuildPackage)
@@ -2677,6 +2740,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         //if (structured)
                         //file.Folder_Name = DLCPackageData.DoLikeProject(file.Folder_Name);
 
+                        //RemoveDD DD 
                         bassRemoved = false;
                         Platform platformz = Folder_Name.GetPlatform();
                         var xmlFilez = Directory.GetFiles(Folder_Name, "*.xml", System.IO.SearchOption.AllDirectories);
@@ -2692,7 +2756,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                         if ((ConfigRepository.Instance()["dlcm_AdditionalManipul3"] == "Yes" || chbx_RemoveBassDD) && chbx_BassDD && (!(chbx_KeepBassDD && ConfigRepository.Instance()["dlcm_AdditionalManipul52"] == "Yes") && !(chbx_KeepDD && ConfigRepository.Instance()["dlcm_AdditionalManipul53"] == "Yes")))
 
                                         {
-                                            bassRemoved = (RemoveDD(Folder_Name, chbx_Original, xml, platformz, false, false) == "Yes") ? true : false;
+                                            bassRemoved = (RemoveDD(Folder_Name, chbx_Original, xml, platformz, false, false, chbx_UseInternalDD) == "Yes") ? true : false;
                                             //bassfile = xml;
                                             timestamp = UpdateLog(timestamp, "Removing Bass.." + filez.ID + "-" + filez.Artist + "-" + filez.Song_Title, true, logPath, TempPath, multithreadname, form, null, null);
                                             break;
@@ -2703,7 +2767,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                         if (ConfigRepository.Instance()["dlcm_AdditionalManipul3"] == "Yes" && !(chbx_KeepDD && ConfigRepository.Instance()["dlcm_AdditionalManipul53"] == "Yes"))
 
                                         {
-                                            bassRemoved = (RemoveDD(Folder_Name, chbx_Original, xml, platformz, false, false) == "Yes") ? true : false;
+                                            bassRemoved = (RemoveDD(Folder_Name, chbx_Original, xml, platformz, false, false, chbx_UseInternalDD) == "Yes") ? true : false;
                                             //bassfile = xml;
                                             timestamp = UpdateLog(timestamp, "Removing non bass DD.." + filez.ID + "-" + filez.Artist + "-" + filez.Song_Title, true, logPath, TempPath, multithreadname, form, null, null);
                                             break;
@@ -2713,9 +2777,59 @@ namespace RocksmithToolkitGUI.DLCManager
                                 catch (Exception ex) { var tust = "Error ..." + ex; UpdateLog(DateTime.Now, tust, false, ConfigRepository.Instance()["dlcm_LogPath"], ConfigRepository.Instance()["dlcm_TempPath"], multithreadname, form, null, null); }
                         }
 
+                        //Add Author if empty or other conditions
+                        if ((filez.Author == "Custom Song Creator" || filez.Author == "") && ConfigRepository.Instance()["dlcm_AdditionalManipul47"] == "Yes" && filez.Is_Original != "Yes")
+                        {
+                            //saving in the txt file is not rally usefull as the system gen the file at every pack :)
+                            filez.Author = ConfigRepository.Instance()["general_defaultauthor"].ToLower().IndexOf("repackedby") >= 0 || ConfigRepository.Instance()["general_defaultauthor"].ToLower().IndexOf("repacked by") >= 0
+                                ? ConfigRepository.Instance()["general_defaultauthor"].ToUpper() : "RepackedBy " + ConfigRepository.Instance()["general_defaultauthor"].ToUpper();
+                            //data.ToolkitInfo.PackageAuthor = "RepackedBy " + ConfigRepository.Instance()["general_defaultauthor"].ToUpper();
+                            var fxml = File.OpenText(filez.Folder_Name + "\\toolkit.version");
+                            string line;
+                            string header = "";
+                            //Read and Save Header
+                            while ((line = fxml.ReadLine()) != null)
+                            {
+                                if (line.Contains("Package Author:")) header += System.Environment.NewLine + "Package Author: " + filez.Author;
+                                else header += line + System.Environment.NewLine;
+                            }
+                            fxml.Close();
+                            File.WriteAllText(filez.Folder_Name + "\\toolkit.version", header);
+                        }
+
                         //modify lyrics
-                        string ttt2 = (ConfigRepository.Instance()["dlcm_AdditionalManipul73"] == "Yes" && filez.Has_Vocals == "Yes") ? AddStuffToLyrics(filez.ID, filez.Description, Groupss, filez.Has_DD, (filez.Has_BassDD == "Yes") ? "No" : "Yes", filez.Has_BassDD, filez.Author, filez.Is_Acoustic, filez.Is_Live, filez.Live_Details, filez.Is_Multitrack, filez.Is_Original, cnb) : "";
-                        string ttt1 = (ConfigRepository.Instance()["dlcm_AdditionalManipul74"]).ToLower() == "Yes".ToLower() && filez.Has_Vocals.ToLower() == "Yes".ToLower() ? AddTrackStart2Lyrics(filez.ID, cnb) : "";
+                        string ttt2 = (ConfigRepository.Instance()["dlcm_AdditionalManipul73"] == "Yes" && filez.Has_Vocals == "Yes")
+                            ? AddStuffToLyrics(filez.ID, filez.Description, Groupss, filez.Has_DD, (filez.Has_BassDD == "Yes") ? "No" : "Yes", filez.Has_BassDD, filez.Author, filez.Is_Acoustic, filez.Is_Live, filez.Live_Details, filez.Is_Multitrack, filez.Is_Original, cnb) : "";
+                        string ttt1 = (ConfigRepository.Instance()["dlcm_AdditionalManipul74"]).ToLower() == "Yes".ToLower() && filez.Has_Vocals.ToLower() == "Yes".ToLower()
+                            ? AddTrackStart2Lyrics(filez.ID, cnb) : "";
+                        if (ttt2 != "" || ttt1 != "") cleanlyrics(filez.ID, cnb);
+
+                        //open lyrics after manipulation
+                        if (ConfigRepository.Instance()["dlcm_AdditionalManipul73"] == "Yes" && ConfigRepository.Instance()["dlcm_AdditionalManipul96"] == "Yes")
+                        {
+                            DataSet dus = new DataSet(); dus = SelectFromDB("Arrangements", "SELECT XMLFilePath, ArrangementType FROM Arrangements WHERE CDLC_ID=" + filez.ID + "", "", cnb);
+                            //var CDLC_ID = dus.Tables[0].Rows[0].ItemArray[0].ToString();
+                            var noOfRec = dus.Tables[0].Rows.Count;
+                            var ST = "";
+                            for (i = 0; i <= noOfRec - 1; i++)
+                            {
+                                var XMLFilePath = dus.Tables[0].Rows[i].ItemArray[0].ToString();
+                                var ArrangementType = dus.Tables[0].Rows[i].ItemArray[1].ToString();
+                                if (ArrangementType == "Vocal") ST = XMLFilePath;
+                            }
+
+                            string filePath = ST;// TempPath + "\\0_old\\" + databox.Rows[j].Cells["Original_FileName"].Value.ToString();
+                            if (ST != null && ST != "") try
+                                {
+                                    Process process = Process.Start(filePath);/*"explorer.exe", string.Format("/select,\"{0}\"",)*/
+                                }
+                                catch (Exception)
+                                {
+                                    //var tsst = "Error ..." + ex; UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_LogPath"], ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
+                                    //MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    MessageBox.Show("Can not open Lyrics ! ");
+                                }
+                        }
 
 
                         // LOAD DATA
@@ -2772,435 +2886,475 @@ namespace RocksmithToolkitGUI.DLCManager
                             PreviewVolume = volumep,
                             SignatureType = info.SignatureType
                         };
+
+                        //IF Vocals have been added  but Repack is set not to cosider them
+                        if (updateTonesArrangs)
+                        {
+                            DataSet dbs = new DataSet(); dbs = SelectFromDB("Tones_GearList", "SELECT * FROM Tones_GearList WHERE CDLC_ID=" + ID + ";", "", cnb);
+                            var norecx = dbs.Tables.Count > 0 ? dbs.Tables[0].Rows.Count : 0;
+                            //bool vocalmissing = true;
+                            //foreach (var arg in info.Arrangements)//, Type
+                            //{
+                            //    if (arg.ArrangementType.ToString() == "Vocal") vocalmissing = false;
+                            //}&& vocalmissing
+                            if (norecx == 0) updateTonesArrangs = false;// MessageBox.Show("Vocals not included as added in the DLCManager tool, but Option 76 is Unselected ergo no DLCManager-DB changes are considered at packing");
+                            else updateTonesArrangs = true;
+                        }//else if (ConfigRepository.Instance()["dlcm_AdditionalManipul76"].ToLower() == "yes") 
+
+                        //IF Vocals have been added  but Repack is set not to cosider them
+                        if (!updateTonesArrangs)
+                        {
+                            DataSet dvs = new DataSet(); dvs = SelectFromDB("Arrangements", "SELECT * FROM Arrangements WHERE CDLC_ID=" + ID + " AND ArrangementType=\"Vocal\";", "", cnb);
+                            var norec = dvs.Tables.Count > 0 ? dvs.Tables[0].Rows.Count : 0;
+                            bool vocalmissing = true;
+                            foreach (var arg in info.Arrangements)//, Type
+                            {
+                                if (arg.ArrangementType.ToString() == "Vocal") vocalmissing = false;
+                            }
+                            if (norec > 0 && vocalmissing) MessageBox.Show("Vocals not included as added in the DLCManager tool, but Option 76 is Unselected ergo no DLCManager-DB changes are considered at packing");
+                        }
                         //RocksmithToolkitLib.DLCPackage.ToolkitInfo.PackageVersion = filez.ToolkitVersion//Version
 
-                        //Add Tones
+                        //Load Tones
                         //var cmds = "SELECT * FROM Tones WHERE CDLC_ID=" + txt_ID.Text + ";";
                         //DataSet dfs = new DataSet();
                         //var norec = 0;
                         //using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
                         //{
-                        //    try
-                        //    {
-                        //        OleDbDataAdapter da = new OleDbDataAdapter(cmds, cn);
-                        //        da.Fill(dfs, "Tones");
-                        //    }
-                        //    catch (Exception ex)
-                        //    {
-
-                        //    }
-                        if (updateTonesArrangs)
+                        var tz = 0; var j = 0; var jf = 0;
+                        try
                         {
-                            //Update Tones
-                            var norec = 0;
-                            DataSet dfs = new DataSet(); dfs = SelectFromDB("Tones", "SELECT * FROM Tones WHERE CDLC_ID=" + ID + ";", "", cnb);
-                            foreach (var arg in info.TonesRS2014)//, Type
+                            //        OleDbDataAdapter da = new OleDbDataAdapter(cmds, cn);
+                            //        da.Fill(dfs, "Tones");
+                            //    }
+                            //    catch (Exception ex)
+                            //    {
+
+                            //    }
+                            if (updateTonesArrangs)
                             {
-                                norec = dfs.Tables[0].Rows.Count;
-                                for (int j = 0; j < norec; j++)
+                                //Update Tones
+                                var norec = 0;
+                                DataSet dfs = new DataSet(); dfs = SelectFromDB("Tones", "SELECT * FROM Tones WHERE CDLC_ID=" + ID + ";", "", cnb);
+                                foreach (var arg in info.TonesRS2014)//, Type
                                 {
-                                    var TID = dfs.Tables[0].Rows[j].ItemArray[0].ToString();
-                                    data.TonesRS2014[j].Name = dfs.Tables[0].Rows[j].ItemArray[1].ToString();
-                                    data.TonesRS2014[j].Volume = float.Parse(dfs.Tables[0].Rows[j].ItemArray[3].ToString(), NumberStyles.Float, CultureInfo.CurrentCulture);
-                                    data.TonesRS2014[j].Key = dfs.Tables[0].Rows[j].ItemArray[4].ToString();
-                                    data.TonesRS2014[j].IsCustom = dfs.Tables[0].Rows[j].ItemArray[5].ToString().ToLower() == "true" ? true : false;
-                                    data.TonesRS2014[j].SortOrder = decimal.Parse(dfs.Tables[0].Rows[j].ItemArray[11].ToString(), NumberStyles.Float, CultureInfo.CurrentCulture);
-                                    data.TonesRS2014[j].NameSeparator = dfs.Tables[0].Rows[j].ItemArray[12].ToString();
-                                    //dictionary types not saved in the DB yet
-                                    var nrc = 0;
-                                    DataSet dsc = new DataSet(); dsc = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + TID + " AND Gear_Name=\"Amp\" ORDER BY Type DESC;", "", cnb);
-                                    nrc = dsc.Tables[0].Rows.Count;
-                                    for (int k = 0; k < nrc; k++)
+                                    j = 0; jf++; //jf,tz,j used for debugging
+                                    norec = dfs.Tables[0].Rows.Count;
+                                    for (j = 0; j < norec; j++)
                                     {
-                                        if (dsc.Tables[0].Rows[k].ItemArray[0].ToString() != "") data.TonesRS2014[j].GearList.Amp.Type = dsc.Tables[0].Rows[k].ItemArray[0].ToString();
-                                        if (dsc.Tables[0].Rows[k].ItemArray[1].ToString() != "") data.TonesRS2014[j].GearList.Amp.Category = dsc.Tables[0].Rows[k].ItemArray[1].ToString();
-                                        Dictionary<string, float> FG = new Dictionary<string, float>();
-                                        string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
-                                        strArrK = dsc.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
-                                        strArrV = dsc.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
-                                        for (int l = 0; l <= strArrK.Length - 1; l++) if (strArrK[l] == "" || strArrV[l] == "") FG.Add(strArrK[l], float.Parse(strArrV[l], NumberStyles.Float, CultureInfo.CurrentCulture));
-                                        if (FG.Count != 0) data.TonesRS2014[j].GearList.Amp.KnobValues = FG;
-                                        if (dsc.Tables[0].Rows[k].ItemArray[4].ToString() != "") data.TonesRS2014[j].GearList.Amp.PedalKey = dsc.Tables[0].Rows[k].ItemArray[4].ToString();
-                                        if (dsc.Tables[0].Rows[k].ItemArray[5].ToString() != "") data.TonesRS2014[j].GearList.PostPedal1.Skin = dsc.Tables[0].Rows[k].ItemArray[5].ToString();
-                                        if (dsc.Tables[0].Rows[k].ItemArray[6].ToString() != "") data.TonesRS2014[j].GearList.PostPedal1.SkinIndex = float.Parse(dsc.Tables[0].Rows[k].ItemArray[6].ToString(), NumberStyles.Float, CultureInfo.CurrentCulture);
-                                    }
-                                    nrc = 0;
-                                    DataSet dsa = new DataSet(); dsa = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + TID + " AND Gear_Name=\"Cabinet\" ORDER BY Type DESC;", "", cnb);
-                                    nrc = dsa.Tables[0].Rows.Count;
-                                    for (int k = 0; k < nrc; k++)
-                                    {
-                                        string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
-                                        if (dsa.Tables[0].Rows[k].ItemArray[0].ToString() != "") data.TonesRS2014[j].GearList.Cabinet.Type = dsa.Tables[0].Rows[k].ItemArray[0].ToString();
-                                        if (dsa.Tables[0].Rows[k].ItemArray[1].ToString() != "") data.TonesRS2014[j].GearList.Cabinet.Category = dsa.Tables[0].Rows[k].ItemArray[1].ToString();
-                                        Dictionary<string, float> FS = new Dictionary<string, float>();
-                                        strArrK = dsa.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
-                                        strArrV = dsa.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
-                                        for (int l = 0; l <= strArrK.Length - 1; l++) if (strArrK[l] != "" && strArrV[l] != "") FS.Add(strArrK[l], float.Parse(strArrV[l], NumberStyles.Float, CultureInfo.CurrentCulture));
-                                        if (FS.Count != 0) data.TonesRS2014[j].GearList.Cabinet.KnobValues = FS;
-                                        if (dsa.Tables[0].Rows[k].ItemArray[4].ToString() != "") data.TonesRS2014[j].GearList.Cabinet.PedalKey = dsa.Tables[0].Rows[k].ItemArray[4].ToString();
-                                        if (dsa.Tables[0].Rows[k].ItemArray[5].ToString() != "") data.TonesRS2014[j].GearList.PostPedal1.Skin = dsa.Tables[0].Rows[k].ItemArray[5].ToString();
-                                        if (dsa.Tables[0].Rows[k].ItemArray[6].ToString() != "") data.TonesRS2014[j].GearList.PostPedal1.SkinIndex = float.Parse(dsa.Tables[0].Rows[k].ItemArray[6].ToString(), NumberStyles.Float, CultureInfo.CurrentCulture);
-                                    }
-                                    nrc = 0;
-                                    DataSet dss1 = new DataSet(); dss1 = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + TID + " AND Gear_Name=\"PostPedal1\" ORDER BY Type DESC;", "", cnb);
-                                    nrc = dss1.Tables[0].Rows.Count;
-                                    for (int k = 0; k < nrc; k++)
-                                    {
-                                        string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
-                                        if (dss1.Tables[0].Rows[k].ItemArray[0].ToString() != "") data.TonesRS2014[j].GearList.PostPedal1.Type = dss1.Tables[0].Rows[k].ItemArray[0].ToString();
-                                        if (dss1.Tables[0].Rows[k].ItemArray[1].ToString() != "") data.TonesRS2014[j].GearList.PostPedal1.Category = dss1.Tables[0].Rows[k].ItemArray[1].ToString();
-                                        Dictionary<string, float> FS = new Dictionary<string, float>();
-                                        strArrK = dss1.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
-                                        strArrV = dss1.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
-                                        for (int l = 0; l <= strArrK.Length - 1; l++) if (strArrK[l] != "" && strArrV[l] != "") FS.Add(strArrK[l], float.Parse(strArrV[l], NumberStyles.Float, CultureInfo.CurrentCulture));
-                                        if (FS.Count != 0) data.TonesRS2014[j].GearList.PostPedal1.KnobValues = FS;
-                                        if (dss1.Tables[0].Rows[k].ItemArray[4].ToString() != "") data.TonesRS2014[j].GearList.PostPedal1.PedalKey = dss1.Tables[0].Rows[k].ItemArray[4].ToString();
-                                        if (dss1.Tables[0].Rows[k].ItemArray[5].ToString() != "") data.TonesRS2014[j].GearList.PostPedal1.Skin = dss1.Tables[0].Rows[k].ItemArray[5].ToString();
-                                        if (dss1.Tables[0].Rows[k].ItemArray[6].ToString() != "") data.TonesRS2014[j].GearList.PostPedal1.SkinIndex = float.Parse(dss1.Tables[0].Rows[k].ItemArray[6].ToString(), NumberStyles.Float, CultureInfo.CurrentCulture);
-                                    }
-                                    nrc = 0;
-                                    DataSet dss2 = new DataSet(); dss2 = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + TID + " AND Gear_Name=\"PostPedal2\" ORDER BY Type DESC;", "", cnb);
-                                    nrc = dss2.Tables[0].Rows.Count;
-                                    for (int k = 0; k < nrc; k++)
-                                    {
-                                        string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
-                                        if (dss2.Tables[0].Rows[k].ItemArray[0].ToString() != "") data.TonesRS2014[j].GearList.PostPedal2.Type = dss2.Tables[0].Rows[k].ItemArray[0].ToString();
-                                        if (dss2.Tables[0].Rows[k].ItemArray[1].ToString() != "") data.TonesRS2014[j].GearList.PostPedal2.Category = dss2.Tables[0].Rows[k].ItemArray[1].ToString();
-                                        Dictionary<string, float> FS = new Dictionary<string, float>();
-                                        strArrK = dss2.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
-                                        strArrV = dss2.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
-                                        for (int l = 0; l <= strArrK.Length - 1; l++) if (strArrK[l] != "" && strArrV[l] != "") FS.Add(strArrK[l], float.Parse(strArrV[l], NumberStyles.Float, CultureInfo.CurrentCulture));
-                                        if (FS.Count != 0) data.TonesRS2014[j].GearList.PostPedal2.KnobValues = FS;
-                                        if (dss2.Tables[0].Rows[k].ItemArray[4].ToString() != "") data.TonesRS2014[j].GearList.PostPedal2.PedalKey = dss2.Tables[0].Rows[k].ItemArray[4].ToString();
-                                        if (dss2.Tables[0].Rows[k].ItemArray[5].ToString() != "") data.TonesRS2014[j].GearList.PostPedal2.Skin = dss2.Tables[0].Rows[k].ItemArray[5].ToString();
-                                        if (dss2.Tables[0].Rows[k].ItemArray[6].ToString() != "") data.TonesRS2014[j].GearList.PostPedal2.SkinIndex = float.Parse(dss2.Tables[0].Rows[k].ItemArray[6].ToString(), NumberStyles.Float, CultureInfo.CurrentCulture);
+                                        if (j == 2 && jf == 3)
+                                            tz = tz;
+                                        if (arg.Name == dfs.Tables[0].Rows[j].ItemArray[1].ToString())
+                                        {
+                                            tz = 0; tz++;
+                                            var TID = dfs.Tables[0].Rows[j].ItemArray[0].ToString();
+                                            data.TonesRS2014[j].Name = dfs.Tables[0].Rows[j].ItemArray[1].ToString();
+                                            data.TonesRS2014[j].Volume = float.Parse(dfs.Tables[0].Rows[j].ItemArray[3].ToString(), NumberStyles.Float, CultureInfo.CurrentCulture);
+                                            data.TonesRS2014[j].Key = dfs.Tables[0].Rows[j].ItemArray[4].ToString();
+                                            data.TonesRS2014[j].IsCustom = dfs.Tables[0].Rows[j].ItemArray[5].ToString().ToLower() == "true" ? true : false;
+                                            data.TonesRS2014[j].SortOrder = decimal.Parse(dfs.Tables[0].Rows[j].ItemArray[11].ToString(), NumberStyles.Float, CultureInfo.CurrentCulture);
+                                            data.TonesRS2014[j].NameSeparator = dfs.Tables[0].Rows[j].ItemArray[12].ToString();
+                                            //dictionary types not saved in the DB yet
+                                            var nrc = 0;
+                                            DataSet dsc = new DataSet(); dsc = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE Tone_ID=" + TID + " AND Gear_Name=\"Amp\" ORDER BY Type DESC;", "", cnb);
+                                            nrc = dsc.Tables[0].Rows.Count; tz++;
+                                            for (int k = 0; k < nrc; k++)
+                                            {
+                                                if (dsc.Tables[0].Rows[k].ItemArray[0].ToString() != "") data.TonesRS2014[j].GearList.Amp.Type = dsc.Tables[0].Rows[k].ItemArray[0].ToString();
+                                                if (dsc.Tables[0].Rows[k].ItemArray[1].ToString() != "") data.TonesRS2014[j].GearList.Amp.Category = dsc.Tables[0].Rows[k].ItemArray[1].ToString();
+                                                Dictionary<string, float> FG = new Dictionary<string, float>();
+                                                string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
+                                                strArrK = dsc.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
+                                                strArrV = dsc.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
+                                                for (int l = 0; l <= strArrK.Length - 1; l++) if (strArrK[l] == "" || strArrV[l] == "") FG.Add(strArrK[l], float.Parse(strArrV[l], NumberStyles.Float, CultureInfo.CurrentCulture));
+                                                if (FG.Count != 0) data.TonesRS2014[j].GearList.Amp.KnobValues = FG;
+                                                if (dsc.Tables[0].Rows[k].ItemArray[4].ToString() != "") data.TonesRS2014[j].GearList.Amp.PedalKey = dsc.Tables[0].Rows[k].ItemArray[4].ToString();
+                                                if (dsc.Tables[0].Rows[k].ItemArray[5].ToString() != "") data.TonesRS2014[j].GearList.Amp.Skin = dsc.Tables[0].Rows[k].ItemArray[5].ToString();
+                                                if (dsc.Tables[0].Rows[k].ItemArray[6].ToString() != "") data.TonesRS2014[j].GearList.Amp.SkinIndex = float.Parse(dsc.Tables[0].Rows[k].ItemArray[6].ToString(), NumberStyles.Float, CultureInfo.CurrentCulture);
+                                            }
+                                            nrc = 0;
+                                            DataSet dsa = new DataSet(); dsa = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE Tone_ID=" + TID + " AND Gear_Name=\"Cabinet\" ORDER BY Type DESC;", "", cnb);
+                                            nrc = dsa.Tables[0].Rows.Count; tz++;
+                                            for (int k = 0; k < nrc; k++)
+                                            {
+                                                string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
+                                                if (dsa.Tables[0].Rows[k].ItemArray[0].ToString() != "") data.TonesRS2014[j].GearList.Cabinet.Type = dsa.Tables[0].Rows[k].ItemArray[0].ToString();
+                                                if (dsa.Tables[0].Rows[k].ItemArray[1].ToString() != "") data.TonesRS2014[j].GearList.Cabinet.Category = dsa.Tables[0].Rows[k].ItemArray[1].ToString();
+                                                Dictionary<string, float> FS = new Dictionary<string, float>();
+                                                strArrK = dsa.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
+                                                strArrV = dsa.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
+                                                for (int l = 0; l <= strArrK.Length - 1; l++) if (strArrK[l] != "" && strArrV[l] != "") FS.Add(strArrK[l], float.Parse(strArrV[l], NumberStyles.Float, CultureInfo.CurrentCulture));
+                                                if (FS.Count != 0) data.TonesRS2014[j].GearList.Cabinet.KnobValues = FS;
+                                                if (dsa.Tables[0].Rows[k].ItemArray[4].ToString() != "") data.TonesRS2014[j].GearList.Cabinet.PedalKey = dsa.Tables[0].Rows[k].ItemArray[4].ToString();
+                                                if (dsa.Tables[0].Rows[k].ItemArray[5].ToString() != "") data.TonesRS2014[j].GearList.Cabinet.Skin = dsa.Tables[0].Rows[k].ItemArray[5].ToString();
+                                                if (dsa.Tables[0].Rows[k].ItemArray[6].ToString() != "") data.TonesRS2014[j].GearList.Cabinet.SkinIndex = float.Parse(dsa.Tables[0].Rows[k].ItemArray[6].ToString(), NumberStyles.Float, CultureInfo.CurrentCulture);
+                                            }
+                                            nrc = 0;
+                                            DataSet dss1 = new DataSet(); dss1 = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE Tone_ID=" + TID + " AND Gear_Name=\"PostPedal1\" ORDER BY Type DESC;", "", cnb);
+                                            nrc = dss1.Tables[0].Rows.Count; tz++;
+                                            for (int k = 0; k < nrc; k++)
+                                            {
+                                                string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
+                                                if (dss1.Tables[0].Rows[k].ItemArray[0].ToString() != "") data.TonesRS2014[j].GearList.PostPedal1.Type = dss1.Tables[0].Rows[k].ItemArray[0].ToString();
+                                                if (dss1.Tables[0].Rows[k].ItemArray[1].ToString() != "") data.TonesRS2014[j].GearList.PostPedal1.Category = dss1.Tables[0].Rows[k].ItemArray[1].ToString();
+                                                Dictionary<string, float> FS = new Dictionary<string, float>();
+                                                strArrK = dss1.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
+                                                strArrV = dss1.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
+                                                for (int l = 0; l <= strArrK.Length - 1; l++) if (strArrK[l] != "" && strArrV[l] != "") FS.Add(strArrK[l], float.Parse(strArrV[l], NumberStyles.Float, CultureInfo.CurrentCulture));
+                                                if (FS.Count != 0) data.TonesRS2014[j].GearList.PostPedal1.KnobValues = FS;
+                                                if (dss1.Tables[0].Rows[k].ItemArray[4].ToString() != "") data.TonesRS2014[j].GearList.PostPedal1.PedalKey = dss1.Tables[0].Rows[k].ItemArray[4].ToString();
+                                                if (dss1.Tables[0].Rows[k].ItemArray[5].ToString() != "") data.TonesRS2014[j].GearList.PostPedal1.Skin = dss1.Tables[0].Rows[k].ItemArray[5].ToString();
+                                                if (dss1.Tables[0].Rows[k].ItemArray[6].ToString() != "") data.TonesRS2014[j].GearList.PostPedal1.SkinIndex = float.Parse(dss1.Tables[0].Rows[k].ItemArray[6].ToString(), NumberStyles.Float, CultureInfo.CurrentCulture);
+                                            }
+                                            nrc = 0;
+                                            DataSet dss2 = new DataSet(); dss2 = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE Tone_ID=" + TID + " AND Gear_Name=\"PostPedal2\" ORDER BY Type DESC;", "", cnb);
+                                            nrc = dss2.Tables[0].Rows.Count; tz++;
+                                            for (int k = 0; k < nrc; k++)
+                                            {
+                                                string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
+                                                if (dss2.Tables[0].Rows[k].ItemArray[0].ToString() != "") data.TonesRS2014[j].GearList.PostPedal2.Type = dss2.Tables[0].Rows[k].ItemArray[0].ToString();
+                                                if (dss2.Tables[0].Rows[k].ItemArray[1].ToString() != "") data.TonesRS2014[j].GearList.PostPedal2.Category = dss2.Tables[0].Rows[k].ItemArray[1].ToString();
+                                                Dictionary<string, float> FS = new Dictionary<string, float>();
+                                                strArrK = dss2.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
+                                                strArrV = dss2.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
+                                                for (int l = 0; l <= strArrK.Length - 1; l++) if (strArrK[l] != "" && strArrV[l] != "") FS.Add(strArrK[l], float.Parse(strArrV[l], NumberStyles.Float, CultureInfo.CurrentCulture));
+                                                if (FS.Count != 0) data.TonesRS2014[j].GearList.PostPedal2.KnobValues = FS;
+                                                if (dss2.Tables[0].Rows[k].ItemArray[4].ToString() != "") data.TonesRS2014[j].GearList.PostPedal2.PedalKey = dss2.Tables[0].Rows[k].ItemArray[4].ToString();
+                                                if (dss2.Tables[0].Rows[k].ItemArray[5].ToString() != "") data.TonesRS2014[j].GearList.PostPedal2.Skin = dss2.Tables[0].Rows[k].ItemArray[5].ToString();
+                                                if (dss2.Tables[0].Rows[k].ItemArray[6].ToString() != "") data.TonesRS2014[j].GearList.PostPedal2.SkinIndex = float.Parse(dss2.Tables[0].Rows[k].ItemArray[6].ToString(), NumberStyles.Float, CultureInfo.CurrentCulture);
 
+                                            }
+                                            nrc = 0;
+                                            DataSet dss3 = new DataSet(); dss3 = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE Tone_ID=" + TID + " AND Gear_Name=\"PostPedal3\" ORDER BY Type DESC;", "", cnb);
+                                            nrc = dss3.Tables[0].Rows.Count; tz++;
+                                            for (int k = 0; k < nrc; k++)
+                                            {
+                                                string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
+                                                if (dss3.Tables[0].Rows[k].ItemArray[0].ToString() != "") data.TonesRS2014[j].GearList.PostPedal3.Type = dss3.Tables[0].Rows[k].ItemArray[0].ToString();
+                                                if (dss3.Tables[0].Rows[k].ItemArray[1].ToString() != "") data.TonesRS2014[j].GearList.PostPedal3.Category = dss3.Tables[0].Rows[k].ItemArray[1].ToString();
+                                                Dictionary<string, float> FS = new Dictionary<string, float>();
+                                                strArrK = dss3.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
+                                                strArrV = dss3.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
+                                                for (int l = 0; l <= strArrK.Length - 1; l++) if (strArrK[l] != "" && strArrV[l] != "") FS.Add(strArrK[l], float.Parse(strArrV[l], NumberStyles.Float, CultureInfo.CurrentCulture));
+                                                if (FS.Count != 0) data.TonesRS2014[j].GearList.PostPedal3.KnobValues = FS;
+                                                if (dss3.Tables[0].Rows[k].ItemArray[4].ToString() != "") data.TonesRS2014[j].GearList.PostPedal3.PedalKey = dss3.Tables[0].Rows[k].ItemArray[4].ToString();
+                                                if (dss3.Tables[0].Rows[k].ItemArray[5].ToString() != "") data.TonesRS2014[j].GearList.PostPedal3.Skin = dss3.Tables[0].Rows[k].ItemArray[5].ToString();
+                                                if (dss3.Tables[0].Rows[k].ItemArray[6].ToString() != "") data.TonesRS2014[j].GearList.PostPedal3.SkinIndex = float.Parse(dss3.Tables[0].Rows[k].ItemArray[6].ToString(), NumberStyles.Float, CultureInfo.CurrentCulture);
+
+                                            }
+                                            nrc = 0;
+                                            DataSet dss4 = new DataSet(); dss4 = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE Tone_ID=" + TID + " AND Gear_Name=\"PostPedal4\" ORDER BY Type DESC;", "", cnb);
+                                            nrc = dss4.Tables[0].Rows.Count; tz++;
+                                            for (int k = 0; k < nrc; k++)
+                                            {
+                                                string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
+                                                if (dss4.Tables[0].Rows[k].ItemArray[0].ToString() != "") data.TonesRS2014[j].GearList.PostPedal4.Type = dss4.Tables[0].Rows[k].ItemArray[0].ToString();
+                                                if (dss4.Tables[0].Rows[k].ItemArray[1].ToString() != "") data.TonesRS2014[j].GearList.PostPedal4.Category = dss4.Tables[0].Rows[k].ItemArray[1].ToString();
+                                                Dictionary<string, float> FS = new Dictionary<string, float>();
+                                                strArrK = dss4.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
+                                                strArrV = dss4.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
+                                                for (int l = 0; l <= strArrK.Length - 1; l++) if (strArrK[l] != "" && strArrV[l] != "") FS.Add(strArrK[l], float.Parse(strArrV[l], NumberStyles.Float, CultureInfo.CurrentCulture));
+                                                if (FS.Count != 0) data.TonesRS2014[j].GearList.PostPedal4.KnobValues = FS;
+                                                if (dss4.Tables[0].Rows[k].ItemArray[4].ToString() != "") data.TonesRS2014[j].GearList.PostPedal4.PedalKey = dss4.Tables[0].Rows[k].ItemArray[4].ToString();
+                                                if (dss4.Tables[0].Rows[k].ItemArray[5].ToString() != "") data.TonesRS2014[j].GearList.PostPedal4.Skin = dss4.Tables[0].Rows[k].ItemArray[5].ToString();
+                                                if (dss4.Tables[0].Rows[k].ItemArray[6].ToString() != "") data.TonesRS2014[j].GearList.PostPedal4.SkinIndex = float.Parse(dss4.Tables[0].Rows[k].ItemArray[6].ToString(), NumberStyles.Float, CultureInfo.CurrentCulture);
+
+                                            }
+
+                                            nrc = 0;
+                                            DataSet dsp1 = new DataSet(); dsp1 = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE Tone_ID=" + TID + " AND Gear_Name=\"PrePedal1\" ORDER BY Type DESC;", "", cnb);
+                                            nrc = dsp1.Tables[0].Rows.Count; tz++;
+                                            for (int k = 0; k < nrc; k++)
+                                            {
+                                                string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
+                                                if (dsp1.Tables[0].Rows[k].ItemArray[0].ToString() != "") data.TonesRS2014[j].GearList.PrePedal1.Type = dsp1.Tables[0].Rows[k].ItemArray[0].ToString();
+                                                if (dsp1.Tables[0].Rows[k].ItemArray[1].ToString() != "") data.TonesRS2014[j].GearList.PrePedal1.Category = dsp1.Tables[0].Rows[k].ItemArray[1].ToString();
+                                                Dictionary<string, float> FS = new Dictionary<string, float>();
+                                                strArrK = dsp1.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
+                                                strArrV = dsp1.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
+                                                for (int l = 0; l <= strArrK.Length - 1; l++) if (strArrK[l] != "" && strArrV[l] != "") FS.Add(strArrK[l], float.Parse(strArrV[l], NumberStyles.Float, CultureInfo.CurrentCulture));
+                                                if (FS.Count != 0) data.TonesRS2014[j].GearList.PrePedal1.KnobValues = FS;
+                                                if (dsp1.Tables[0].Rows[k].ItemArray[4].ToString() != "") data.TonesRS2014[j].GearList.PrePedal1.PedalKey = dsp1.Tables[0].Rows[k].ItemArray[4].ToString();
+                                                if (dsp1.Tables[0].Rows[k].ItemArray[5].ToString() != "") data.TonesRS2014[j].GearList.PrePedal1.Skin = dsp1.Tables[0].Rows[k].ItemArray[5].ToString();
+                                                if (dsp1.Tables[0].Rows[k].ItemArray[6].ToString() != "") data.TonesRS2014[j].GearList.PrePedal1.SkinIndex = float.Parse(dsp1.Tables[0].Rows[k].ItemArray[6].ToString(), NumberStyles.Float, CultureInfo.CurrentCulture);
+                                            }
+                                            nrc = 0;
+                                            DataSet dsp2 = new DataSet(); dsp2 = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE Tone_ID=" + TID + " AND Gear_Name=\"PrePedal2\" ORDER BY Type DESC;", "", cnb);
+                                            nrc = dsp2.Tables[0].Rows.Count; tz++;
+                                            for (int k = 0; k < nrc; k++)
+                                            {
+                                                string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
+                                                if (dsp2.Tables[0].Rows[k].ItemArray[0].ToString() != "") data.TonesRS2014[j].GearList.PrePedal2.Type = dsp2.Tables[0].Rows[k].ItemArray[0].ToString();
+                                                if (dsp2.Tables[0].Rows[k].ItemArray[1].ToString() != "") data.TonesRS2014[j].GearList.PrePedal2.Category = dsp2.Tables[0].Rows[k].ItemArray[1].ToString();
+                                                Dictionary<string, float> FS = new Dictionary<string, float>();
+                                                strArrK = dsp2.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
+                                                strArrV = dsp2.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
+                                                for (int l = 0; l <= strArrK.Length - 1; l++) if (strArrK[l] != "" && strArrV[l] != "") FS.Add(strArrK[l], float.Parse(strArrV[l], NumberStyles.Float, CultureInfo.CurrentCulture));
+                                                if (FS.Count != 0) data.TonesRS2014[j].GearList.PrePedal2.KnobValues = FS;
+                                                if (dsp2.Tables[0].Rows[k].ItemArray[4].ToString() != "") data.TonesRS2014[j].GearList.PrePedal2.PedalKey = dsp2.Tables[0].Rows[k].ItemArray[4].ToString();
+                                                if (dsp2.Tables[0].Rows[k].ItemArray[5].ToString() != "") data.TonesRS2014[j].GearList.PrePedal2.Skin = dsp2.Tables[0].Rows[k].ItemArray[5].ToString();
+                                                if (dsp2.Tables[0].Rows[k].ItemArray[6].ToString() != "") data.TonesRS2014[j].GearList.PrePedal2.SkinIndex = float.Parse(dsp2.Tables[0].Rows[k].ItemArray[6].ToString(), NumberStyles.Float, CultureInfo.CurrentCulture);
+
+                                            }
+                                            nrc = 0;
+                                            DataSet dsp3 = new DataSet(); dsp3 = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE Tone_ID=" + TID + " AND Gear_Name=\"PrePedal3\" ORDER BY Type DESC;", "", cnb);
+                                            nrc = dsp3.Tables[0].Rows.Count; tz++;
+                                            for (int k = 0; k < nrc; k++)
+                                            {
+                                                string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
+                                                if (dsp3.Tables[0].Rows[k].ItemArray[0].ToString() != "") data.TonesRS2014[j].GearList.PrePedal3.Type = dsp3.Tables[0].Rows[k].ItemArray[0].ToString();
+                                                if (dsp3.Tables[0].Rows[k].ItemArray[1].ToString() != "") data.TonesRS2014[j].GearList.PrePedal3.Category = dsp3.Tables[0].Rows[k].ItemArray[1].ToString();
+                                                Dictionary<string, float> FS = new Dictionary<string, float>();
+                                                strArrK = dsp3.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
+                                                strArrV = dsp3.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
+                                                for (int l = 0; l <= strArrK.Length - 1; l++) if (strArrK[l] != "" && strArrV[l] != "") FS.Add(strArrK[l], float.Parse(strArrV[l], NumberStyles.Float, CultureInfo.CurrentCulture));
+                                                if (FS.Count != 0) data.TonesRS2014[j].GearList.PrePedal3.KnobValues = FS;
+                                                if (dsp3.Tables[0].Rows[k].ItemArray[4].ToString() != "") data.TonesRS2014[j].GearList.PrePedal3.PedalKey = dsp3.Tables[0].Rows[k].ItemArray[4].ToString();
+                                                if (dsp3.Tables[0].Rows[k].ItemArray[5].ToString() != "") data.TonesRS2014[j].GearList.PrePedal3.Skin = dsp3.Tables[0].Rows[k].ItemArray[5].ToString();
+                                                if (dsp3.Tables[0].Rows[k].ItemArray[6].ToString() != "") data.TonesRS2014[j].GearList.PrePedal3.SkinIndex = float.Parse(dsp3.Tables[0].Rows[k].ItemArray[6].ToString(), NumberStyles.Float, CultureInfo.CurrentCulture);
+
+                                            }
+                                            nrc = 0;
+                                            DataSet dsp4 = new DataSet(); dsp4 = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE Tone_ID=" + TID + " AND Gear_Name=\"PrePedal4\" ORDER BY Type DESC;", "", cnb);
+                                            nrc = dsp4.Tables[0].Rows.Count; tz++;
+                                            for (int k = 0; k < nrc; k++)
+                                            {
+                                                string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
+                                                if (dsp4.Tables[0].Rows[k].ItemArray[0].ToString() != "") data.TonesRS2014[j].GearList.PrePedal4.Type = dsp4.Tables[0].Rows[k].ItemArray[0].ToString();
+                                                if (dsp4.Tables[0].Rows[k].ItemArray[1].ToString() != "") data.TonesRS2014[j].GearList.PrePedal4.Category = dsp4.Tables[0].Rows[k].ItemArray[1].ToString();
+                                                Dictionary<string, float> FS = new Dictionary<string, float>();
+                                                strArrK = dsp4.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
+                                                strArrV = dsp4.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
+                                                for (int l = 0; l <= strArrK.Length - 1; l++) if (strArrK[l] != "" && strArrV[l] != "") FS.Add(strArrK[l], float.Parse(strArrV[l], NumberStyles.Float, CultureInfo.CurrentCulture));
+                                                if (FS.Count != 0) data.TonesRS2014[j].GearList.PrePedal4.KnobValues = FS;
+                                                if (dsp4.Tables[0].Rows[k].ItemArray[4].ToString() != "") data.TonesRS2014[j].GearList.PrePedal4.PedalKey = dsp4.Tables[0].Rows[k].ItemArray[4].ToString();
+                                                if (dsp4.Tables[0].Rows[k].ItemArray[5].ToString() != "") data.TonesRS2014[j].GearList.PrePedal4.Skin = dsp4.Tables[0].Rows[k].ItemArray[5].ToString();
+                                                if (dsp4.Tables[0].Rows[k].ItemArray[6].ToString() != "") data.TonesRS2014[j].GearList.PrePedal4.SkinIndex = float.Parse(dsp4.Tables[0].Rows[k].ItemArray[6].ToString(), NumberStyles.Float, CultureInfo.CurrentCulture);
+
+                                            }
+
+                                            nrc = 0;
+                                            DataSet dsr1 = new DataSet(); dsr1 = SelectFromDB("Tones", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE Tone_ID=" + TID + " AND Gear_Name=\"Rack1\" ORDER BY Type DESC;", "", cnb);
+                                            nrc = dsr1.Tables[0].Rows.Count; tz++;
+                                            for (int k = 0; k < nrc; k++)
+                                            {
+                                                string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
+                                                if (dsr1.Tables[0].Rows[k].ItemArray[0].ToString() != "") data.TonesRS2014[j].GearList.Rack1.Type = dsr1.Tables[0].Rows[k].ItemArray[0].ToString();
+                                                if (dsr1.Tables[0].Rows[k].ItemArray[1].ToString() != "") data.TonesRS2014[j].GearList.Rack1.Category = dsr1.Tables[0].Rows[k].ItemArray[1].ToString();
+                                                Dictionary<string, float> FS = new Dictionary<string, float>();
+                                                strArrK = dsr1.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
+                                                strArrV = dsr1.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
+                                                for (int l = 0; l <= strArrK.Length - 1; l++) if (strArrK[l] != "" && strArrV[l] != "") FS.Add(strArrK[l], float.Parse(strArrV[l], NumberStyles.Float, CultureInfo.CurrentCulture));
+                                                if (FS.Count != 0) data.TonesRS2014[j].GearList.Rack1.KnobValues = FS;
+                                                if (dsr1.Tables[0].Rows[k].ItemArray[4].ToString() != "") data.TonesRS2014[j].GearList.Rack1.PedalKey = dsr1.Tables[0].Rows[k].ItemArray[4].ToString();
+                                                if (dsr1.Tables[0].Rows[k].ItemArray[5].ToString() != "") data.TonesRS2014[j].GearList.Rack1.Skin = dsr1.Tables[0].Rows[k].ItemArray[5].ToString();
+                                                if (dsr1.Tables[0].Rows[k].ItemArray[6].ToString() != "") data.TonesRS2014[j].GearList.Rack1.SkinIndex = float.Parse(dsr1.Tables[0].Rows[k].ItemArray[6].ToString(), NumberStyles.Float, CultureInfo.CurrentCulture);
+                                            }
+                                            nrc = 0;
+                                            DataSet dsr2 = new DataSet(); dsr2 = SelectFromDB("Tones", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE Tone_ID=" + TID + " AND Gear_Name=\"Rack2\" ORDER BY Type DESC;", "", cnb);
+                                            nrc = dsr2.Tables[0].Rows.Count; tz++;
+                                            for (int k = 0; k < nrc; k++)
+                                            {
+                                                string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
+                                                if (dsr2.Tables[0].Rows[k].ItemArray[0].ToString() != "") data.TonesRS2014[j].GearList.Rack2.Type = dsr2.Tables[0].Rows[k].ItemArray[0].ToString();
+                                                if (dsr2.Tables[0].Rows[k].ItemArray[1].ToString() != "") data.TonesRS2014[j].GearList.Rack2.Category = dsr2.Tables[0].Rows[k].ItemArray[1].ToString();
+                                                Dictionary<string, float> FS = new Dictionary<string, float>();
+                                                strArrK = dsr2.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
+                                                strArrV = dsr2.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
+                                                for (int l = 0; l <= strArrK.Length - 1; l++) if (strArrK[l] != "" && strArrV[l] != "") FS.Add(strArrK[l], float.Parse(strArrV[l], NumberStyles.Float, CultureInfo.CurrentCulture));
+                                                if (FS.Count != 0) data.TonesRS2014[j].GearList.Rack2.KnobValues = FS;
+                                                if (dsr2.Tables[0].Rows[k].ItemArray[4].ToString() != "") data.TonesRS2014[j].GearList.Rack2.PedalKey = dsr2.Tables[0].Rows[k].ItemArray[4].ToString();
+                                                if (dsr2.Tables[0].Rows[k].ItemArray[5].ToString() != "") data.TonesRS2014[j].GearList.Rack2.Skin = dsr2.Tables[0].Rows[k].ItemArray[5].ToString();
+                                                if (dsr2.Tables[0].Rows[k].ItemArray[6].ToString() != "") data.TonesRS2014[j].GearList.Rack2.SkinIndex = float.Parse(dsr2.Tables[0].Rows[k].ItemArray[6].ToString(), NumberStyles.Float, CultureInfo.CurrentCulture);
+
+                                            }
+                                            nrc = 0;
+                                            DataSet dsr3 = new DataSet(); dsr3 = SelectFromDB("Tones", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE Tone_ID=" + TID + " AND Gear_Name=\"Rack3\" ORDER BY Type DESC;", "", cnb);
+                                            nrc = dsr3.Tables[0].Rows.Count; tz++;
+                                            for (int k = 0; k < nrc; k++)
+                                            {
+                                                string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
+                                                if (dsr3.Tables[0].Rows[k].ItemArray[0].ToString() != "") data.TonesRS2014[j].GearList.Rack3.Type = dsr3.Tables[0].Rows[k].ItemArray[0].ToString();
+                                                if (dsr3.Tables[0].Rows[k].ItemArray[1].ToString() != "") data.TonesRS2014[j].GearList.Rack3.Category = dsr3.Tables[0].Rows[k].ItemArray[1].ToString();
+                                                Dictionary<string, float> FS = new Dictionary<string, float>();
+                                                strArrK = dsr3.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
+                                                strArrV = dsr3.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
+                                                for (int l = 0; l <= strArrK.Length - 1; l++) if (strArrK[l] != "" && strArrV[l] != "") FS.Add(strArrK[l], float.Parse(strArrV[l], NumberStyles.Float, CultureInfo.CurrentCulture));
+                                                if (FS.Count != 0) data.TonesRS2014[j].GearList.Rack3.KnobValues = FS;
+                                                if (dsr3.Tables[0].Rows[k].ItemArray[4].ToString() != "") data.TonesRS2014[j].GearList.Rack3.PedalKey = dsr3.Tables[0].Rows[k].ItemArray[4].ToString();
+                                                if (dsr3.Tables[0].Rows[k].ItemArray[5].ToString() != "") data.TonesRS2014[j].GearList.Rack3.Skin = dsr3.Tables[0].Rows[k].ItemArray[5].ToString();
+                                                if (dsr3.Tables[0].Rows[k].ItemArray[6].ToString() != "") data.TonesRS2014[j].GearList.Rack3.SkinIndex = float.Parse(dsr3.Tables[0].Rows[k].ItemArray[6].ToString(), NumberStyles.Float, CultureInfo.CurrentCulture);
+
+                                            }
+                                            nrc = 0;
+                                            DataSet dsr4 = new DataSet(); dsr4 = SelectFromDB("Tones", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE Tone_ID=" + TID + " AND Gear_Name=\"Rack4\" ORDER BY Type DESC;", "", cnb);
+                                            nrc = dsr4.Tables[0].Rows.Count; tz++;
+                                            for (int k = 0; k < nrc; k++)
+                                            {
+                                                string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
+                                                if (dsr4.Tables[0].Rows[k].ItemArray[0].ToString() != "") data.TonesRS2014[j].GearList.Rack4.Type = dsr4.Tables[0].Rows[k].ItemArray[0].ToString();
+                                                if (dsr4.Tables[0].Rows[k].ItemArray[1].ToString() != "") data.TonesRS2014[j].GearList.Rack4.Category = dsr4.Tables[0].Rows[k].ItemArray[1].ToString();
+                                                Dictionary<string, float> FS = new Dictionary<string, float>();
+                                                strArrK = dsr4.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
+                                                strArrV = dsr4.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
+                                                for (int l = 0; l <= strArrK.Length - 1; l++) if (strArrK[l] != "" && strArrV[l] != "") FS.Add(strArrK[l], float.Parse(strArrV[l], NumberStyles.Float, CultureInfo.CurrentCulture));
+                                                if (FS.Count != 0) data.TonesRS2014[j].GearList.Rack4.KnobValues = FS;
+                                                if (dsr4.Tables[0].Rows[k].ItemArray[4].ToString() != "") data.TonesRS2014[j].GearList.Rack4.PedalKey = dsr4.Tables[0].Rows[k].ItemArray[4].ToString();
+                                                if (dsr4.Tables[0].Rows[k].ItemArray[5].ToString() != "") data.TonesRS2014[j].GearList.Rack4.Skin = dsr4.Tables[0].Rows[k].ItemArray[5].ToString();
+                                                if (dsr4.Tables[0].Rows[k].ItemArray[6].ToString() != "") data.TonesRS2014[j].GearList.Rack4.SkinIndex = float.Parse(dsr4.Tables[0].Rows[k].ItemArray[6].ToString(), NumberStyles.Float, CultureInfo.CurrentCulture);
+
+                                            }
+
+                                            //Type myType = typeof(RocksmithToolkitLib.DLCPackage.Manifest2014.Tone.Gear2014);
+                                            //PropertyInfo myPropInfo = myType.GetProperty(propertyName);
+                                            //myPropInfo.SetValue(this, value, null);
+                                            //data.TonesRS2014[j].GearList.PostPedal1.;//.sdfs.Tables[0].Rows[14].ItemArray[0].ToString() };
+                                            //data.TonesRS2014[j].GearList.PostPedal2 = dfs.Tables[0].Rows[15].ItemArray[0].ToString();
+                                            //data.TonesRS2014[j].GearList.PostPedal3 = dfs.Tables[0].Rows[16].ItemArray[0].ToString();
+                                            //data.TonesRS2014[j].GearList.PostPedal4 = dfs.Tables[0].Rows[17].ItemArray[0].ToString();
+                                            //data.TonesRS2014[j].GearList.PrePedal1 = dfs.Tables[0].Rows[18].ItemArray[0].ToString().ToInt32();
+                                            //data.TonesRS2014[j].GearList.PrePedal2 = dfs.Tables[0].Rows[19].ItemArray[0].ToString();
+                                            //data.TonesRS2014[j].GearList.PrePedal3 = dfs.Tables[0].Rows[20].ItemArray[0].ToString();
+                                            //data.TonesRS2014[j].GearList.PrePedal4 = dfs.Tables[0].Rows[21].ItemArray[0].ToString();
+                                            //Pedal2014 rack1 = new Pedal2014();
+                                            //Pedal2014 rack2 = new Pedal2014();
+                                            //rack1.
+                                            //data.TonesRS2014[j].GearList.Rack1 = dfs.Tables[0].Rows[22].ItemArray[0].ToString().ToInt32();
+                                            //data.TonesRS2014[j].GearList.Rack2 = dfs.Tables[0].Rows[23].ItemArray[0].ToString();
+                                            //data.TonesRS2014[j].GearList.Rack3 = dfs.Tables[0].Rows[24].ItemArray[0].ToString();
+                                            //data.TonesRS2014[j].GearList.Rack4 = dfs.Tables[0].Rows[25].ItemArray[0].ToString();
+                                            //data.TonesRS2014[j].GearList.Amp.Type = dfs.Tables[0].Rows[26].ItemArray[0].ToString();
+                                            //data.TonesRS2014[j].GearList.Amp.Category = dfs.Tables[0].Rows[j].ItemArray[27].ToString();
+                                            ////IDictionary dictionar;// ="";
+                                            ////KeyCollection Kes;//= dfs.Tables[0].Rows[28].ItemArray[0].ToString().ToInt32();
+                                            //Dictionary<string, float> FG = new Dictionary<string, float>();
+                                            //string[] strArrK = null;
+                                            //string[] strArrV = null;
+                                            ////int count = 0;
+                                            ////str = "CSharp split test";
+                                            //char[] splitchar = { ';' };
+                                            //strArrK = dfs.Tables[0].Rows[28].ItemArray[0].ToString().Split(splitchar);
+                                            //strArrV = dfs.Tables[0].Rows[29].ItemArray[0].ToString().Split(splitchar);
+                                            //for (int k = 0; k <= strArrK.Length - 1; k++) FG.Add(strArrK[k], strArrV[k].ToInt32());
+                                            //data.TonesRS2014[j].GearList.Amp.KnobValues = FG;
+                                            ////data.TonesRS2014[j].GearList.Amp.KnobValues.Keys = dfs.Tables[0].Rows[28].ItemArray[0].ToString().ToInt32();
+                                            ////data.TonesRS2014[j].GearList.Amp.KnobValues.Keys = float.Parse((dfs.Tables[0].Rows[29].ItemArray[0].ToString());
+                                            //data.TonesRS2014[j].GearList.Amp.PedalKey = dfs.Tables[0].Rows[j].ItemArray[30].ToString();
+                                            //data.TonesRS2014[j].GearList.Cabinet.Category = dfs.Tables[0].Rows[j].ItemArray[31].ToString();
+                                            //Dictionary<string, float> FS = new Dictionary<string, float>();
+                                            //strArrK = dfs.Tables[0].Rows[32].ItemArray[0].ToString().Split(splitchar);
+                                            //strArrV = dfs.Tables[0].Rows[33].ItemArray[0].ToString().Split(splitchar);
+                                            //for (int k = 0; k <= strArrK.Length - 1; k++)  FG.Add(strArrK[k], strArrV[k].ToInt32());
+                                            //data.TonesRS2014[j].GearList.Cabinet.KnobValues = FS;
+                                            ////data.TonesRS2014[j].GearList.Cabinet.KnobValues.Values = float.Parse((dfs.Tables[0].Rows[32].ItemArray[0].ToString());
+                                            ////data.TonesRS2014[j].GearList.Cabinet.KnobValues.Keys = dfs.Tables[0].Rows[33].ItemArray[0].ToString();
+                                            //data.TonesRS2014[j].GearList.Cabinet.PedalKey = dfs.Tables[0].Rows[j].ItemArray[34].ToString();
+                                            //data.TonesRS2014[j].GearList.Cabinet.Type = dfs.Tables[0].Rows[j].ItemArray[35].ToString();
+
+                                        }
                                     }
-                                    nrc = 0;
-                                    DataSet dss3 = new DataSet(); dss3 = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + TID + " AND Gear_Name=\"PostPedal3\" ORDER BY Type DESC;", "", cnb);
-                                    nrc = dss3.Tables[0].Rows.Count;
-                                    for (int k = 0; k < nrc; k++)
-                                    {
-                                        string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
-                                        if (dss3.Tables[0].Rows[k].ItemArray[0].ToString() != "") data.TonesRS2014[j].GearList.PostPedal3.Type = dss3.Tables[0].Rows[k].ItemArray[0].ToString();
-                                        if (dss3.Tables[0].Rows[k].ItemArray[1].ToString() != "") data.TonesRS2014[j].GearList.PostPedal3.Category = dss3.Tables[0].Rows[k].ItemArray[1].ToString();
-                                        Dictionary<string, float> FS = new Dictionary<string, float>();
-                                        strArrK = dss3.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
-                                        strArrV = dss3.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
-                                        for (int l = 0; l <= strArrK.Length - 1; l++) if (strArrK[l] != "" && strArrV[l] != "") FS.Add(strArrK[l], float.Parse(strArrV[l], NumberStyles.Float, CultureInfo.CurrentCulture));
-                                        if (FS.Count != 0) data.TonesRS2014[j].GearList.PostPedal3.KnobValues = FS;
-                                        if (dss3.Tables[0].Rows[k].ItemArray[4].ToString() != "") data.TonesRS2014[j].GearList.PostPedal3.PedalKey = dss3.Tables[0].Rows[k].ItemArray[4].ToString();
-                                        if (dss3.Tables[0].Rows[k].ItemArray[5].ToString() != "") data.TonesRS2014[j].GearList.PostPedal3.Skin = dss3.Tables[0].Rows[k].ItemArray[5].ToString();
-                                        if (dss3.Tables[0].Rows[k].ItemArray[6].ToString() != "") data.TonesRS2014[j].GearList.PostPedal3.SkinIndex = float.Parse(dss3.Tables[0].Rows[k].ItemArray[6].ToString(), NumberStyles.Float, CultureInfo.CurrentCulture);
-
-                                    }
-                                    nrc = 0;
-                                    DataSet dss4 = new DataSet(); dss4 = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + TID + " AND Gear_Name=\"PostPedal4\" ORDER BY Type DESC;", "", cnb);
-                                    nrc = dss4.Tables[0].Rows.Count;
-                                    for (int k = 0; k < nrc; k++)
-                                    {
-                                        string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
-                                        if (dss4.Tables[0].Rows[k].ItemArray[0].ToString() != "") data.TonesRS2014[j].GearList.PostPedal4.Type = dss4.Tables[0].Rows[k].ItemArray[0].ToString();
-                                        if (dss4.Tables[0].Rows[k].ItemArray[1].ToString() != "") data.TonesRS2014[j].GearList.PostPedal4.Category = dss4.Tables[0].Rows[k].ItemArray[1].ToString();
-                                        Dictionary<string, float> FS = new Dictionary<string, float>();
-                                        strArrK = dss4.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
-                                        strArrV = dss4.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
-                                        for (int l = 0; l <= strArrK.Length - 1; l++) if (strArrK[l] != "" && strArrV[l] != "") FS.Add(strArrK[l], float.Parse(strArrV[l], NumberStyles.Float, CultureInfo.CurrentCulture));
-                                        if (FS.Count != 0) data.TonesRS2014[j].GearList.PostPedal4.KnobValues = FS;
-                                        if (dss4.Tables[0].Rows[k].ItemArray[4].ToString() != "") data.TonesRS2014[j].GearList.PostPedal4.PedalKey = dss4.Tables[0].Rows[k].ItemArray[4].ToString();
-                                        if (dss4.Tables[0].Rows[k].ItemArray[5].ToString() != "") data.TonesRS2014[j].GearList.PostPedal4.Skin = dss4.Tables[0].Rows[k].ItemArray[5].ToString();
-                                        if (dss4.Tables[0].Rows[k].ItemArray[6].ToString() != "") data.TonesRS2014[j].GearList.PostPedal4.SkinIndex = float.Parse(dss4.Tables[0].Rows[k].ItemArray[6].ToString(), NumberStyles.Float, CultureInfo.CurrentCulture);
-
-                                    }
-
-                                    nrc = 0;
-                                    DataSet dsp1 = new DataSet(); dsp1 = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + TID + " AND Gear_Name=\"PrePedal1\" ORDER BY Type DESC;", "", cnb);
-                                    nrc = dsp1.Tables[0].Rows.Count;
-                                    for (int k = 0; k < nrc; k++)
-                                    {
-                                        string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
-                                        if (dsp1.Tables[0].Rows[k].ItemArray[0].ToString() != "") data.TonesRS2014[j].GearList.PrePedal1.Type = dsp1.Tables[0].Rows[k].ItemArray[0].ToString();
-                                        if (dsp1.Tables[0].Rows[k].ItemArray[1].ToString() != "") data.TonesRS2014[j].GearList.PrePedal1.Category = dsp1.Tables[0].Rows[k].ItemArray[1].ToString();
-                                        Dictionary<string, float> FS = new Dictionary<string, float>();
-                                        strArrK = dsp1.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
-                                        strArrV = dsp1.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
-                                        for (int l = 0; l <= strArrK.Length - 1; l++) if (strArrK[l] != "" && strArrV[l] != "") FS.Add(strArrK[l], float.Parse(strArrV[l], NumberStyles.Float, CultureInfo.CurrentCulture));
-                                        if (FS.Count != 0) data.TonesRS2014[j].GearList.PrePedal1.KnobValues = FS;
-                                        if (dsp1.Tables[0].Rows[k].ItemArray[4].ToString() != "") data.TonesRS2014[j].GearList.PrePedal1.PedalKey = dsp1.Tables[0].Rows[k].ItemArray[4].ToString();
-                                        if (dsp1.Tables[0].Rows[k].ItemArray[5].ToString() != "") data.TonesRS2014[j].GearList.PrePedal1.Skin = dsp1.Tables[0].Rows[k].ItemArray[5].ToString();
-                                        if (dsp1.Tables[0].Rows[k].ItemArray[6].ToString() != "") data.TonesRS2014[j].GearList.PrePedal1.SkinIndex = float.Parse(dsp1.Tables[0].Rows[k].ItemArray[6].ToString(), NumberStyles.Float, CultureInfo.CurrentCulture);
-                                    }
-                                    nrc = 0;
-                                    DataSet dsp2 = new DataSet(); dsp2 = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + TID + " AND Gear_Name=\"PrePedal2\" ORDER BY Type DESC;", "", cnb);
-                                    nrc = dsp2.Tables[0].Rows.Count;
-                                    for (int k = 0; k < nrc; k++)
-                                    {
-                                        string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
-                                        if (dsp2.Tables[0].Rows[k].ItemArray[0].ToString() != "") data.TonesRS2014[j].GearList.PrePedal2.Type = dsp2.Tables[0].Rows[k].ItemArray[0].ToString();
-                                        if (dsp2.Tables[0].Rows[k].ItemArray[1].ToString() != "") data.TonesRS2014[j].GearList.PrePedal2.Category = dsp2.Tables[0].Rows[k].ItemArray[1].ToString();
-                                        Dictionary<string, float> FS = new Dictionary<string, float>();
-                                        strArrK = dsp2.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
-                                        strArrV = dsp2.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
-                                        for (int l = 0; l <= strArrK.Length - 1; l++) if (strArrK[l] != "" && strArrV[l] != "") FS.Add(strArrK[l], float.Parse(strArrV[l], NumberStyles.Float, CultureInfo.CurrentCulture));
-                                        if (FS.Count != 0) data.TonesRS2014[j].GearList.PrePedal2.KnobValues = FS;
-                                        if (dsp2.Tables[0].Rows[k].ItemArray[4].ToString() != "") data.TonesRS2014[j].GearList.PrePedal2.PedalKey = dsp2.Tables[0].Rows[k].ItemArray[4].ToString();
-                                        if (dsp2.Tables[0].Rows[k].ItemArray[5].ToString() != "") data.TonesRS2014[j].GearList.PrePedal2.Skin = dsp2.Tables[0].Rows[k].ItemArray[5].ToString();
-                                        if (dsp2.Tables[0].Rows[k].ItemArray[6].ToString() != "") data.TonesRS2014[j].GearList.PrePedal2.SkinIndex = float.Parse(dsp2.Tables[0].Rows[k].ItemArray[6].ToString(), NumberStyles.Float, CultureInfo.CurrentCulture);
-
-                                    }
-                                    nrc = 0;
-                                    DataSet dsp3 = new DataSet(); dsp3 = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + TID + " AND Gear_Name=\"PrePedal3\" ORDER BY Type DESC;", "", cnb);
-                                    nrc = dsp3.Tables[0].Rows.Count;
-                                    for (int k = 0; k < nrc; k++)
-                                    {
-                                        string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
-                                        if (dsp3.Tables[0].Rows[k].ItemArray[0].ToString() != "") data.TonesRS2014[j].GearList.PrePedal3.Type = dsp3.Tables[0].Rows[k].ItemArray[0].ToString();
-                                        if (dsp3.Tables[0].Rows[k].ItemArray[1].ToString() != "") data.TonesRS2014[j].GearList.PrePedal3.Category = dsp3.Tables[0].Rows[k].ItemArray[1].ToString();
-                                        Dictionary<string, float> FS = new Dictionary<string, float>();
-                                        strArrK = dsp3.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
-                                        strArrV = dsp3.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
-                                        for (int l = 0; l <= strArrK.Length - 1; l++) if (strArrK[l] != "" && strArrV[l] != "") FS.Add(strArrK[l], float.Parse(strArrV[l], NumberStyles.Float, CultureInfo.CurrentCulture));
-                                        if (FS.Count != 0) data.TonesRS2014[j].GearList.PrePedal3.KnobValues = FS;
-                                        if (dsp3.Tables[0].Rows[k].ItemArray[4].ToString() != "") data.TonesRS2014[j].GearList.PrePedal3.PedalKey = dsp3.Tables[0].Rows[k].ItemArray[4].ToString();
-                                        if (dsp3.Tables[0].Rows[k].ItemArray[5].ToString() != "") data.TonesRS2014[j].GearList.PrePedal3.Skin = dsp3.Tables[0].Rows[k].ItemArray[5].ToString();
-                                        if (dsp3.Tables[0].Rows[k].ItemArray[6].ToString() != "") data.TonesRS2014[j].GearList.PrePedal3.SkinIndex = float.Parse(dsp3.Tables[0].Rows[k].ItemArray[6].ToString(), NumberStyles.Float, CultureInfo.CurrentCulture);
-
-                                    }
-                                    nrc = 0;
-                                    DataSet dsp4 = new DataSet(); dsp4 = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + TID + " AND Gear_Name=\"PrePedal4\" ORDER BY Type DESC;", "", cnb);
-                                    nrc = dsp4.Tables[0].Rows.Count;
-                                    for (int k = 0; k < nrc; k++)
-                                    {
-                                        string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
-                                        if (dsp4.Tables[0].Rows[k].ItemArray[0].ToString() != "") data.TonesRS2014[j].GearList.PrePedal4.Type = dsp4.Tables[0].Rows[k].ItemArray[0].ToString();
-                                        if (dsp4.Tables[0].Rows[k].ItemArray[1].ToString() != "") data.TonesRS2014[j].GearList.PrePedal4.Category = dsp4.Tables[0].Rows[k].ItemArray[1].ToString();
-                                        Dictionary<string, float> FS = new Dictionary<string, float>();
-                                        strArrK = dsp4.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
-                                        strArrV = dsp4.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
-                                        for (int l = 0; l <= strArrK.Length - 1; l++) if (strArrK[l] != "" && strArrV[l] != "") FS.Add(strArrK[l], float.Parse(strArrV[l], NumberStyles.Float, CultureInfo.CurrentCulture));
-                                        if (FS.Count != 0) data.TonesRS2014[j].GearList.PrePedal4.KnobValues = FS;
-                                        if (dsp4.Tables[0].Rows[k].ItemArray[4].ToString() != "") data.TonesRS2014[j].GearList.PrePedal4.PedalKey = dsp4.Tables[0].Rows[k].ItemArray[4].ToString();
-                                        if (dsp4.Tables[0].Rows[k].ItemArray[5].ToString() != "") data.TonesRS2014[j].GearList.PrePedal4.Skin = dsp4.Tables[0].Rows[k].ItemArray[5].ToString();
-                                        if (dsp4.Tables[0].Rows[k].ItemArray[6].ToString() != "") data.TonesRS2014[j].GearList.PrePedal4.SkinIndex = float.Parse(dsp4.Tables[0].Rows[k].ItemArray[6].ToString(), NumberStyles.Float, CultureInfo.CurrentCulture);
-
-                                    }
-
-                                    nrc = 0;
-                                    DataSet dsr1 = new DataSet(); dsr1 = SelectFromDB("Tones", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + TID + " AND Gear_Name=\"Rack1\" ORDER BY Type DESC;", "", cnb);
-                                    nrc = dsr1.Tables[0].Rows.Count;
-                                    for (int k = 0; k < nrc; k++)
-                                    {
-                                        string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
-                                        if (dsr1.Tables[0].Rows[k].ItemArray[0].ToString() != "") data.TonesRS2014[j].GearList.Rack1.Type = dsr1.Tables[0].Rows[k].ItemArray[0].ToString();
-                                        if (dsr1.Tables[0].Rows[k].ItemArray[1].ToString() != "") data.TonesRS2014[j].GearList.Rack1.Category = dsr1.Tables[0].Rows[k].ItemArray[1].ToString();
-                                        Dictionary<string, float> FS = new Dictionary<string, float>();
-                                        strArrK = dsr1.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
-                                        strArrV = dsr1.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
-                                        for (int l = 0; l <= strArrK.Length - 1; l++) if (strArrK[l] != "" && strArrV[l] != "") FS.Add(strArrK[l], float.Parse(strArrV[l], NumberStyles.Float, CultureInfo.CurrentCulture));
-                                        if (FS.Count != 0) data.TonesRS2014[j].GearList.Rack1.KnobValues = FS;
-                                        if (dsr1.Tables[0].Rows[k].ItemArray[4].ToString() != "") data.TonesRS2014[j].GearList.Rack1.PedalKey = dsr1.Tables[0].Rows[k].ItemArray[4].ToString();
-                                        if (dsr1.Tables[0].Rows[k].ItemArray[5].ToString() != "") data.TonesRS2014[j].GearList.Rack1.Skin = dsr1.Tables[0].Rows[k].ItemArray[5].ToString();
-                                        if (dsr1.Tables[0].Rows[k].ItemArray[6].ToString() != "") data.TonesRS2014[j].GearList.Rack1.SkinIndex = float.Parse(dsr1.Tables[0].Rows[k].ItemArray[6].ToString(), NumberStyles.Float, CultureInfo.CurrentCulture);
-                                    }
-                                    nrc = 0;
-                                    DataSet dsr2 = new DataSet(); dsr2 = SelectFromDB("Tones", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + TID + " AND Gear_Name=\"Rack2\" ORDER BY Type DESC;", "", cnb);
-                                    nrc = dsr2.Tables[0].Rows.Count;
-                                    for (int k = 0; k < nrc; k++)
-                                    {
-                                        string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
-                                        if (dsr2.Tables[0].Rows[k].ItemArray[0].ToString() != "") data.TonesRS2014[j].GearList.Rack2.Type = dsr2.Tables[0].Rows[k].ItemArray[0].ToString();
-                                        if (dsr2.Tables[0].Rows[k].ItemArray[1].ToString() != "") data.TonesRS2014[j].GearList.Rack2.Category = dsr2.Tables[0].Rows[k].ItemArray[1].ToString();
-                                        Dictionary<string, float> FS = new Dictionary<string, float>();
-                                        strArrK = dsr2.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
-                                        strArrV = dsr2.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
-                                        for (int l = 0; l <= strArrK.Length - 1; l++) if (strArrK[l] != "" && strArrV[l] != "") FS.Add(strArrK[l], float.Parse(strArrV[l], NumberStyles.Float, CultureInfo.CurrentCulture));
-                                        if (FS.Count != 0) data.TonesRS2014[j].GearList.Rack2.KnobValues = FS;
-                                        if (dsr2.Tables[0].Rows[k].ItemArray[4].ToString() != "") data.TonesRS2014[j].GearList.Rack2.PedalKey = dsr2.Tables[0].Rows[k].ItemArray[4].ToString();
-                                        if (dsr2.Tables[0].Rows[k].ItemArray[5].ToString() != "") data.TonesRS2014[j].GearList.Rack2.Skin = dsr2.Tables[0].Rows[k].ItemArray[5].ToString();
-                                        if (dsr2.Tables[0].Rows[k].ItemArray[6].ToString() != "") data.TonesRS2014[j].GearList.Rack2.SkinIndex = float.Parse(dsr2.Tables[0].Rows[k].ItemArray[6].ToString(), NumberStyles.Float, CultureInfo.CurrentCulture);
-
-                                    }
-                                    nrc = 0;
-                                    DataSet dsr3 = new DataSet(); dsr3 = SelectFromDB("Tones", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + TID + " AND Gear_Name=\"Rack3\" ORDER BY Type DESC;", "", cnb);
-                                    nrc = dsr3.Tables[0].Rows.Count;
-                                    for (int k = 0; k < nrc; k++)
-                                    {
-                                        string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
-                                        if (dsr3.Tables[0].Rows[k].ItemArray[0].ToString() != "") data.TonesRS2014[j].GearList.Rack3.Type = dsr3.Tables[0].Rows[k].ItemArray[0].ToString();
-                                        if (dsr3.Tables[0].Rows[k].ItemArray[1].ToString() != "") data.TonesRS2014[j].GearList.Rack3.Category = dsr3.Tables[0].Rows[k].ItemArray[1].ToString();
-                                        Dictionary<string, float> FS = new Dictionary<string, float>();
-                                        strArrK = dsr3.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
-                                        strArrV = dsr3.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
-                                        for (int l = 0; l <= strArrK.Length - 1; l++) if (strArrK[l] != "" && strArrV[l] != "") FS.Add(strArrK[l], float.Parse(strArrV[l], NumberStyles.Float, CultureInfo.CurrentCulture));
-                                        if (FS.Count != 0) data.TonesRS2014[j].GearList.Rack3.KnobValues = FS;
-                                        if (dsr3.Tables[0].Rows[k].ItemArray[4].ToString() != "") data.TonesRS2014[j].GearList.Rack3.PedalKey = dsr3.Tables[0].Rows[k].ItemArray[4].ToString();
-                                        if (dsr3.Tables[0].Rows[k].ItemArray[5].ToString() != "") data.TonesRS2014[j].GearList.Rack3.Skin = dsr3.Tables[0].Rows[k].ItemArray[5].ToString();
-                                        if (dsr3.Tables[0].Rows[k].ItemArray[6].ToString() != "") data.TonesRS2014[j].GearList.Rack3.SkinIndex = float.Parse(dsr3.Tables[0].Rows[k].ItemArray[6].ToString(), NumberStyles.Float, CultureInfo.CurrentCulture);
-
-                                    }
-                                    nrc = 0;
-                                    DataSet dsr4 = new DataSet(); dsr4 = SelectFromDB("Tones", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + TID + " AND Gear_Name=\"Rack4\" ORDER BY Type DESC;", "", cnb);
-                                    nrc = dsr4.Tables[0].Rows.Count;
-                                    for (int k = 0; k < nrc; k++)
-                                    {
-                                        string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
-                                        if (dsr4.Tables[0].Rows[k].ItemArray[0].ToString() != "") data.TonesRS2014[j].GearList.Rack4.Type = dsr4.Tables[0].Rows[k].ItemArray[0].ToString();
-                                        if (dsr4.Tables[0].Rows[k].ItemArray[1].ToString() != "") data.TonesRS2014[j].GearList.Rack4.Category = dsr4.Tables[0].Rows[k].ItemArray[1].ToString();
-                                        Dictionary<string, float> FS = new Dictionary<string, float>();
-                                        strArrK = dsr4.Tables[0].Rows[k].ItemArray[2].ToString().Split(splitchar);
-                                        strArrV = dsr4.Tables[0].Rows[k].ItemArray[3].ToString().Split(splitchar);
-                                        for (int l = 0; l <= strArrK.Length - 1; l++) if (strArrK[l] != "" && strArrV[l] != "") FS.Add(strArrK[l], float.Parse(strArrV[l], NumberStyles.Float, CultureInfo.CurrentCulture));
-                                        if (FS.Count != 0) data.TonesRS2014[j].GearList.Rack4.KnobValues = FS;
-                                        if (dsr4.Tables[0].Rows[k].ItemArray[4].ToString() != "") data.TonesRS2014[j].GearList.Rack4.PedalKey = dsr4.Tables[0].Rows[k].ItemArray[4].ToString();
-                                        if (dsr4.Tables[0].Rows[k].ItemArray[5].ToString() != "") data.TonesRS2014[j].GearList.Rack4.Skin = dsr4.Tables[0].Rows[k].ItemArray[5].ToString();
-                                        if (dsr4.Tables[0].Rows[k].ItemArray[6].ToString() != "") data.TonesRS2014[j].GearList.Rack4.SkinIndex = float.Parse(dsr4.Tables[0].Rows[k].ItemArray[6].ToString(), NumberStyles.Float, CultureInfo.CurrentCulture);
-
-                                    }
-
-                                    //Type myType = typeof(RocksmithToolkitLib.DLCPackage.Manifest2014.Tone.Gear2014);
-                                    //PropertyInfo myPropInfo = myType.GetProperty(propertyName);
-                                    //myPropInfo.SetValue(this, value, null);
-                                    //data.TonesRS2014[j].GearList.PostPedal1.;//.sdfs.Tables[0].Rows[14].ItemArray[0].ToString() };
-                                    //data.TonesRS2014[j].GearList.PostPedal2 = dfs.Tables[0].Rows[15].ItemArray[0].ToString();
-                                    //data.TonesRS2014[j].GearList.PostPedal3 = dfs.Tables[0].Rows[16].ItemArray[0].ToString();
-                                    //data.TonesRS2014[j].GearList.PostPedal4 = dfs.Tables[0].Rows[17].ItemArray[0].ToString();
-                                    //data.TonesRS2014[j].GearList.PrePedal1 = dfs.Tables[0].Rows[18].ItemArray[0].ToString().ToInt32();
-                                    //data.TonesRS2014[j].GearList.PrePedal2 = dfs.Tables[0].Rows[19].ItemArray[0].ToString();
-                                    //data.TonesRS2014[j].GearList.PrePedal3 = dfs.Tables[0].Rows[20].ItemArray[0].ToString();
-                                    //data.TonesRS2014[j].GearList.PrePedal4 = dfs.Tables[0].Rows[21].ItemArray[0].ToString();
-                                    //Pedal2014 rack1 = new Pedal2014();
-                                    //Pedal2014 rack2 = new Pedal2014();
-                                    //rack1.
-                                    //data.TonesRS2014[j].GearList.Rack1 = dfs.Tables[0].Rows[22].ItemArray[0].ToString().ToInt32();
-                                    //data.TonesRS2014[j].GearList.Rack2 = dfs.Tables[0].Rows[23].ItemArray[0].ToString();
-                                    //data.TonesRS2014[j].GearList.Rack3 = dfs.Tables[0].Rows[24].ItemArray[0].ToString();
-                                    //data.TonesRS2014[j].GearList.Rack4 = dfs.Tables[0].Rows[25].ItemArray[0].ToString();
-                                    //data.TonesRS2014[j].GearList.Amp.Type = dfs.Tables[0].Rows[26].ItemArray[0].ToString();
-                                    //data.TonesRS2014[j].GearList.Amp.Category = dfs.Tables[0].Rows[j].ItemArray[27].ToString();
-                                    ////IDictionary dictionar;// ="";
-                                    ////KeyCollection Kes;//= dfs.Tables[0].Rows[28].ItemArray[0].ToString().ToInt32();
-                                    //Dictionary<string, float> FG = new Dictionary<string, float>();
-                                    //string[] strArrK = null;
-                                    //string[] strArrV = null;
-                                    ////int count = 0;
-                                    ////str = "CSharp split test";
-                                    //char[] splitchar = { ';' };
-                                    //strArrK = dfs.Tables[0].Rows[28].ItemArray[0].ToString().Split(splitchar);
-                                    //strArrV = dfs.Tables[0].Rows[29].ItemArray[0].ToString().Split(splitchar);
-                                    //for (int k = 0; k <= strArrK.Length - 1; k++) FG.Add(strArrK[k], strArrV[k].ToInt32());
-                                    //data.TonesRS2014[j].GearList.Amp.KnobValues = FG;
-                                    ////data.TonesRS2014[j].GearList.Amp.KnobValues.Keys = dfs.Tables[0].Rows[28].ItemArray[0].ToString().ToInt32();
-                                    ////data.TonesRS2014[j].GearList.Amp.KnobValues.Keys = float.Parse((dfs.Tables[0].Rows[29].ItemArray[0].ToString());
-                                    //data.TonesRS2014[j].GearList.Amp.PedalKey = dfs.Tables[0].Rows[j].ItemArray[30].ToString();
-                                    //data.TonesRS2014[j].GearList.Cabinet.Category = dfs.Tables[0].Rows[j].ItemArray[31].ToString();
-                                    //Dictionary<string, float> FS = new Dictionary<string, float>();
-                                    //strArrK = dfs.Tables[0].Rows[32].ItemArray[0].ToString().Split(splitchar);
-                                    //strArrV = dfs.Tables[0].Rows[33].ItemArray[0].ToString().Split(splitchar);
-                                    //for (int k = 0; k <= strArrK.Length - 1; k++)  FG.Add(strArrK[k], strArrV[k].ToInt32());
-                                    //data.TonesRS2014[j].GearList.Cabinet.KnobValues = FS;
-                                    ////data.TonesRS2014[j].GearList.Cabinet.KnobValues.Values = float.Parse((dfs.Tables[0].Rows[32].ItemArray[0].ToString());
-                                    ////data.TonesRS2014[j].GearList.Cabinet.KnobValues.Keys = dfs.Tables[0].Rows[33].ItemArray[0].ToString();
-                                    //data.TonesRS2014[j].GearList.Cabinet.PedalKey = dfs.Tables[0].Rows[j].ItemArray[34].ToString();
-                                    //data.TonesRS2014[j].GearList.Cabinet.Type = dfs.Tables[0].Rows[j].ItemArray[35].ToString();
-
+                                    //}
                                 }
-                                //}
-                            }
 
 
-                            //Add Arrangements
-                            norec = 0;
-                            string sds = "";
-                            DataSet ds = new DataSet(); ds = SelectFromDB("Arrangements", "SELECT * FROM Arrangements WHERE CDLC_ID = " + ID + "; ", "", cnb);
+                                //Add Arrangements
+                                norec = 0;
+                                string sds = "";
+                                DataSet ds = new DataSet(); ds = SelectFromDB("Arrangements", "SELECT * FROM Arrangements WHERE CDLC_ID = " + ID + "; ", "", cnb);
 
-                            norec = ds.Tables[0].Rows.Count;
-                            if (info.Arrangements.Capacity < norec)
-                                data.Arrangements.Add(new RocksmithToolkitLib.DLCPackage.Arrangement
-                                {
-                                    Name = RocksmithToolkitLib.Sng.ArrangementName.Vocals,
-                                    ArrangementType = ArrangementType.Vocal,
-                                    ScrollSpeed = 20,
+                                norec = ds.Tables[0].Rows.Count;
+                                if (info.Arrangements.Capacity < norec)
+                                    data.Arrangements.Add(new RocksmithToolkitLib.DLCPackage.Arrangement
+                                    {
+                                        Name = RocksmithToolkitLib.Sng.ArrangementName.Vocals,
+                                        ArrangementType = ArrangementType.Vocal,
+                                        ScrollSpeed = 20,
 
-                                    Id = IdGenerator.Guid(),
-                                    MasterId = RandomGenerator.NextInt(),
-                                    //SongXml = new SongXML { File = xmlFile },
-                                    //SongFile = new SongFile { File = "" },
-                                    CustomFont = false
-                                });
-                            //norec += 1;
-                            if (norec > data.Arrangements.Count)
-                            {
-                                //mArr.Add(GenMetronomeArr(data.Arrangements));
-                                //mArr[0].SongXml.File = "1";
-                                //var mArr = new List<Arrangement>();
-                                //data.Arrangements.Capacity = 5;
-                                //data.Arrangements.Add(data.Arrangements[j]);
-                                // Add Vocal Arrangement
-                                data.Arrangements.Add(new Arrangement
-                                {
-                                    Name = ArrangementName.Vocals,
-                                    ArrangementType = ArrangementType.Vocal,
-                                    ScrollSpeed = 20,
-                                    //SongXml = new SongXML { File = xmlFile },
-                                    //SongFile = new SongFile { File = "" },
-                                    CustomFont = false
-                                });
+                                        Id = IdGenerator.Guid(),
+                                        MasterId = RandomGenerator.NextInt(),
+                                        //SongXml = new SongXML { File = xmlFile },
+                                        //SongFile = new SongFile { File = "" },
+                                        CustomFont = false
+                                    });
                                 //norec += 1;
-                            }
-                            var n = 0;
-                            foreach (var arg in info.Arrangements)//, Type
-                            {
+                                if (norec > data.Arrangements.Count)
+                                {
+                                    //mArr.Add(GenMetronomeArr(data.Arrangements));
+                                    //mArr[0].SongXml.File = "1";
+                                    //var mArr = new List<Arrangement>();
+                                    //data.Arrangements.Capacity = 5;
+                                    //data.Arrangements.Add(data.Arrangements[j]);
+                                    // Add Vocal Arrangement
+                                    data.Arrangements.Add(new Arrangement
+                                    {
+                                        Name = ArrangementName.Vocals,
+                                        ArrangementType = ArrangementType.Vocal,
+                                        ScrollSpeed = 20,
+                                        //SongXml = new SongXML { File = xmlFile },
+                                        //SongFile = new SongFile { File = "" },
+                                        CustomFont = false
+                                    });
+                                    //norec += 1;
+                                }
+                                var n = 0;
+                                foreach (var arg in info.Arrangements)//, Type
+                                {
 
-                                //for (int j = 0; j < norec; j++)
-                                //{
+                                    //for (int j = 0; j < norec; j++)
+                                    //{
 
-                                sds = ds.Tables[0].Rows[n].ItemArray[1].ToString();
-                                //data.Arrangements[n].Name = ArrangementName.Vocals;
-                                //data.Arrangements[n].Name = ds.Tables[0].Rows[n].ItemArray[1].ToString() == "Bass" ? RocksmithToolkitLib.Sng.ArrangementName.Bass : ds.Tables[0].Rows[n].ItemArray[1].ToString() == "Lead" ? RocksmithToolkitLib.Sng.ArrangementName.Lead : ds.Tables[0].Rows[n].ItemArray[1].ToString() == "Vocals" ? RocksmithToolkitLib.Sng.ArrangementName.Vocals : ds.Tables[0].Rows[n].ItemArray[1].ToString() == "Rhythm" ? RocksmithToolkitLib.Sng.ArrangementName.Rhythm : ds.Tables[0].Rows[n].ItemArray[12].ToString() == "ShowLights" ? RocksmithToolkitLib.Sng.ArrangementName.ShowLights : RocksmithToolkitLib.Sng.ArrangementName.Combo;
-                                data.Arrangements[n].Name = (sds == "3" ? ArrangementName.Bass : (sds == "0" ? ArrangementName.Lead : (sds == "4" ? ArrangementName.Vocals : (sds == "1" ? ArrangementName.Rhythm : (sds == "6" ? ArrangementName.ShowLights : ArrangementName.Combo)))));
-                                data.Arrangements[n].BonusArr = ds.Tables[0].Rows[n].ItemArray[3].ToString().ToLower() == "true" ? true : false;
-                                sds = ds.Tables[0].Rows[n].ItemArray[4].ToString();
-                                data.Arrangements[n].SongXML = new SongFile { File = ds.Tables[0].Rows[n].ItemArray[4].ToString() == "" ? ds.Tables[0].Rows[n].ItemArray[5].ToString().Replace(".xml", ".json") : ds.Tables[0].Rows[n].ItemArray[4].ToString() }; // if (File.Exists(sds))
-                                data.Arrangements[n].SongXml = new SongXML { File = ds.Tables[0].Rows[n].ItemArray[5].ToString() };
-                                //data.Arrangements[n].SongXml = new SongXML { File = ds.Tables[0].Rows[n].ItemArray[5].ToString() };
-                                data.Arrangements[n].ScrollSpeed = ds.Tables[0].Rows[n].ItemArray[7].ToString().ToInt32();
-                                data.Arrangements[n].Tuning = ds.Tables[0].Rows[n].ItemArray[8].ToString();
-                                data.Arrangements[n].ArrangementSort = ds.Tables[0].Rows[n].ItemArray[12].ToString().ToInt32();
-                                data.Arrangements[n].TuningPitch = ds.Tables[0].Rows[n].ItemArray[13].ToString().ToInt32();
-                                data.Arrangements[n].ToneBase = ds.Tables[0].Rows[n].ItemArray[14].ToString();
-                                //var sd= ds.Tables[0].Rows[15].ItemArray[0].ToString();
-                                if (ds.Tables[0].Rows[n].ItemArray[15].ToString() != "") data.Arrangements[n].Id = Guid.Parse(ds.Tables[0].Rows[n].ItemArray[15].ToString());
-                                else data.Arrangements[n].Id = Guid.NewGuid();
-                                data.Arrangements[n].MasterId = (ds.Tables[0].Rows[n].ItemArray[16].ToString().ToInt32() == 0 ? data.Arrangements[n].MasterId : ds.Tables[0].Rows[n].ItemArray[16].ToString().ToInt32());
-                                data.Arrangements[n].ArrangementType = ds.Tables[0].Rows[n].ItemArray[17].ToString() == "Bass" ? ArrangementType.Bass : ds.Tables[0].Rows[n].ItemArray[17].ToString() == "Guitar" ? ArrangementType.Guitar : ds.Tables[0].Rows[n].ItemArray[17].ToString() == "Vocal" ? ArrangementType.Vocal : ArrangementType.ShowLight;
-                                //RocksmithToolkitLib.Sng.ArrangementType.Bass ds.Tables[0].Rows[17].ItemArray[0].ToString();
-                                if (ds.Tables[0].Rows[n].ItemArray[18].ToString() != "") data.Arrangements[n].TuningStrings.String0 = Int16.Parse(ds.Tables[0].Rows[n].ItemArray[18].ToString());
-                                if (ds.Tables[0].Rows[n].ItemArray[19].ToString() != "") data.Arrangements[n].TuningStrings.String1 = Int16.Parse(ds.Tables[0].Rows[n].ItemArray[19].ToString());
-                                if (ds.Tables[0].Rows[n].ItemArray[20].ToString() != "") data.Arrangements[n].TuningStrings.String2 = Int16.Parse(ds.Tables[0].Rows[n].ItemArray[20].ToString());
-                                if (ds.Tables[0].Rows[n].ItemArray[21].ToString() != "") data.Arrangements[n].TuningStrings.String3 = Int16.Parse(ds.Tables[0].Rows[n].ItemArray[21].ToString());
-                                if (ds.Tables[0].Rows[n].ItemArray[22].ToString() != "") data.Arrangements[n].TuningStrings.String4 = Int16.Parse(ds.Tables[0].Rows[n].ItemArray[22].ToString());
-                                if (ds.Tables[0].Rows[n].ItemArray[23].ToString() != "") data.Arrangements[n].TuningStrings.String5 = Int16.Parse(ds.Tables[0].Rows[n].ItemArray[23].ToString());
-                                data.Arrangements[n].PluckedType = ds.Tables[0].Rows[n].ItemArray[24].ToString() == "Picked" ? PluckedType.Picked : PluckedType.NotPicked;
-                                data.Arrangements[n].RouteMask = ds.Tables[0].Rows[n].ItemArray[25].ToString() == "Bass" ? RouteMask.Bass : ds.Tables[0].Rows[n].ItemArray[25].ToString() == "Lead" ? RouteMask.Lead : ds.Tables[0].Rows[n].ItemArray[25].ToString() == "Rhythm" ? RouteMask.Rhythm : ds.Tables[0].Rows[n].ItemArray[25].ToString() == "None" ? RouteMask.None : RouteMask.Any;
-                                //data.Arrangements[n].SongXml.Name = ds.Tables[0].Rows[n].ItemArray[26].ToString();
-                                //data.Arrangements[n].SongXml.LLID = ds.Tables[0].Rows[n].ItemArray[27].ToInt32().ToInt32();
-                                if (ds.Tables[0].Rows[n].ItemArray[28].ToString() != "") data.Arrangements[n].SongXml.UUID = Guid.Parse(ds.Tables[0].Rows[n].ItemArray[28].ToString());
-                                else data.Arrangements[n].SongXml.UUID = Guid.NewGuid();
-                                //data.Arrangements[n].SongFile.Name = ds.Tables[0].Rows[n].ItemArray[29].ToString();
-                                //data.Arrangements[n].SongFile.LLID = Guid.Parse(ds.Tables[0].Rows[n].ItemArray[30].ToString().ToString());
-                                if (ds.Tables[0].Rows[n].ItemArray[31].ToString() != "") data.Arrangements[n].SongXML.UUID = Guid.Parse(ds.Tables[0].Rows[n].ItemArray[31].ToString());
-                                else data.Arrangements[n].SongXML.UUID = Guid.NewGuid();
-                                //data.Arrangements[n].SongXML.
-                                data.Arrangements[n].ToneMultiplayer = ds.Tables[0].Rows[n].ItemArray[32].ToString();
-                                data.Arrangements[n].ToneA = ds.Tables[0].Rows[n].ItemArray[33].ToString();
-                                data.Arrangements[n].ToneB = ds.Tables[0].Rows[n].ItemArray[34].ToString();
-                                data.Arrangements[n].ToneC = ds.Tables[0].Rows[n].ItemArray[35].ToString();
-                                data.Arrangements[n].ToneD = ds.Tables[0].Rows[n].ItemArray[36].ToString();
-                                n++;
+                                    sds = ds.Tables[0].Rows[n].ItemArray[1].ToString();
+                                    //data.Arrangements[n].Name = ArrangementName.Vocals;
+                                    //data.Arrangements[n].Name = ds.Tables[0].Rows[n].ItemArray[1].ToString() == "Bass" ? RocksmithToolkitLib.Sng.ArrangementName.Bass : ds.Tables[0].Rows[n].ItemArray[1].ToString() == "Lead" ? RocksmithToolkitLib.Sng.ArrangementName.Lead : ds.Tables[0].Rows[n].ItemArray[1].ToString() == "Vocals" ? RocksmithToolkitLib.Sng.ArrangementName.Vocals : ds.Tables[0].Rows[n].ItemArray[1].ToString() == "Rhythm" ? RocksmithToolkitLib.Sng.ArrangementName.Rhythm : ds.Tables[0].Rows[n].ItemArray[12].ToString() == "ShowLights" ? RocksmithToolkitLib.Sng.ArrangementName.ShowLights : RocksmithToolkitLib.Sng.ArrangementName.Combo;
+                                    data.Arrangements[n].Name = (sds == "3" ? ArrangementName.Bass : (sds == "0" ? ArrangementName.Lead : (sds == "4" ? ArrangementName.Vocals : (sds == "1" ? ArrangementName.Rhythm : (sds == "6" ? ArrangementName.ShowLights : ArrangementName.Combo)))));
+                                    data.Arrangements[n].BonusArr = ds.Tables[0].Rows[n].ItemArray[3].ToString().ToLower() == "true" ? true : false;
+                                    sds = ds.Tables[0].Rows[n].ItemArray[4].ToString();
+                                    data.Arrangements[n].SongFile = new SongFile { File = ds.Tables[0].Rows[n].ItemArray[4].ToString() == "" ? ds.Tables[0].Rows[n].ItemArray[5].ToString().Replace(".xml", ".json") : ds.Tables[0].Rows[n].ItemArray[4].ToString() }; // if (File.Exists(sds))
+                                    data.Arrangements[n].SongXml = new SongXML { File = ds.Tables[0].Rows[n].ItemArray[5].ToString() };
+                                    //data.Arrangements[n].SongXml = new SongXML { File = ds.Tables[0].Rows[n].ItemArray[5].ToString() };
+                                    data.Arrangements[n].ScrollSpeed = ds.Tables[0].Rows[n].ItemArray[7].ToString().ToInt32();
+                                    data.Arrangements[n].Tuning = ds.Tables[0].Rows[n].ItemArray[8].ToString();
+                                    data.Arrangements[n].ArrangementSort = ds.Tables[0].Rows[n].ItemArray[12].ToString().ToInt32();
+                                    data.Arrangements[n].TuningPitch = ds.Tables[0].Rows[n].ItemArray[13].ToString().ToInt32();
+                                    data.Arrangements[n].ToneBase = ds.Tables[0].Rows[n].ItemArray[14].ToString();
+                                    //var sd= ds.Tables[0].Rows[15].ItemArray[0].ToString();
+                                    if (ds.Tables[0].Rows[n].ItemArray[15].ToString() != "") data.Arrangements[n].Id = Guid.Parse(ds.Tables[0].Rows[n].ItemArray[15].ToString());
+                                    else data.Arrangements[n].Id = Guid.NewGuid();
+                                    data.Arrangements[n].MasterId = (ds.Tables[0].Rows[n].ItemArray[16].ToString().ToInt32() == 0 ? data.Arrangements[n].MasterId : ds.Tables[0].Rows[n].ItemArray[16].ToString().ToInt32());
+                                    data.Arrangements[n].ArrangementType = ds.Tables[0].Rows[n].ItemArray[17].ToString() == "Bass" ? ArrangementType.Bass : ds.Tables[0].Rows[n].ItemArray[17].ToString() == "Guitar" ? ArrangementType.Guitar : ds.Tables[0].Rows[n].ItemArray[17].ToString() == "Vocal" ? ArrangementType.Vocal : ArrangementType.ShowLight;
+                                    //RocksmithToolkitLib.Sng.ArrangementType.Bass ds.Tables[0].Rows[17].ItemArray[0].ToString();
+                                    if (ds.Tables[0].Rows[n].ItemArray[18].ToString() != "") data.Arrangements[n].TuningStrings.String0 = short.Parse(ds.Tables[0].Rows[n].ItemArray[18].ToString());
+                                    if (ds.Tables[0].Rows[n].ItemArray[19].ToString() != "") data.Arrangements[n].TuningStrings.String1 = short.Parse(ds.Tables[0].Rows[n].ItemArray[19].ToString());
+                                    if (ds.Tables[0].Rows[n].ItemArray[20].ToString() != "") data.Arrangements[n].TuningStrings.String2 = short.Parse(ds.Tables[0].Rows[n].ItemArray[20].ToString());
+                                    if (ds.Tables[0].Rows[n].ItemArray[21].ToString() != "") data.Arrangements[n].TuningStrings.String3 = short.Parse(ds.Tables[0].Rows[n].ItemArray[21].ToString());
+                                    if (ds.Tables[0].Rows[n].ItemArray[22].ToString() != "") data.Arrangements[n].TuningStrings.String4 = short.Parse(ds.Tables[0].Rows[n].ItemArray[22].ToString());
+                                    if (ds.Tables[0].Rows[n].ItemArray[23].ToString() != "") data.Arrangements[n].TuningStrings.String5 = short.Parse(ds.Tables[0].Rows[n].ItemArray[23].ToString());
+                                    data.Arrangements[n].PluckedType = ds.Tables[0].Rows[n].ItemArray[24].ToString() == "Picked" ? PluckedType.Picked : PluckedType.NotPicked;
+                                    data.Arrangements[n].RouteMask = ds.Tables[0].Rows[n].ItemArray[25].ToString() == "Bass" ? RouteMask.Bass : ds.Tables[0].Rows[n].ItemArray[25].ToString() == "Lead" ? RouteMask.Lead : ds.Tables[0].Rows[n].ItemArray[25].ToString() == "Rhythm" ? RouteMask.Rhythm : ds.Tables[0].Rows[n].ItemArray[25].ToString() == "None" ? RouteMask.None : RouteMask.Any;
+                                    //data.Arrangements[n].SongXml.Name = ds.Tables[0].Rows[n].ItemArray[26].ToString();
+                                    //data.Arrangements[n].SongXml.LLID = ds.Tables[0].Rows[n].ItemArray[27].ToInt32().ToInt32();
+                                    if (ds.Tables[0].Rows[n].ItemArray[28].ToString() != "") data.Arrangements[n].SongXml.UUID = Guid.Parse(ds.Tables[0].Rows[n].ItemArray[28].ToString());
+                                    else data.Arrangements[n].SongXml.UUID = Guid.NewGuid();
+                                    //data.Arrangements[n].SongFile.Name = ds.Tables[0].Rows[n].ItemArray[29].ToString();
+                                    //data.Arrangements[n].SongFile.LLID = Guid.Parse(ds.Tables[0].Rows[n].ItemArray[30].ToString().ToString());
+                                    if (ds.Tables[0].Rows[n].ItemArray[31].ToString() != "") data.Arrangements[n].SongFile.UUID = Guid.Parse(ds.Tables[0].Rows[n].ItemArray[31].ToString());
+                                    else data.Arrangements[n].SongFile.UUID = Guid.NewGuid();
+                                    //data.Arrangements[n].SongXML.
+                                    data.Arrangements[n].ToneMultiplayer = ds.Tables[0].Rows[n].ItemArray[32].ToString();
+                                    data.Arrangements[n].ToneA = ds.Tables[0].Rows[n].ItemArray[33].ToString();
+                                    data.Arrangements[n].ToneB = ds.Tables[0].Rows[n].ItemArray[34].ToString();
+                                    data.Arrangements[n].ToneC = ds.Tables[0].Rows[n].ItemArray[35].ToString();
+                                    data.Arrangements[n].ToneD = ds.Tables[0].Rows[n].ItemArray[36].ToString();
+                                    n++;
+                                }
                             }
+                            timestamp = UpdateLog(timestamp, "End Loading song..", true, logPath, TempPath, multithreadname, form, null, null);
+
                         }
-                        timestamp = UpdateLog(timestamp, "End Loading song..", true, logPath, TempPath, multithreadname, form, null, null);
-
+                        catch (Exception ex)
+                        {
+                            error = true; error_reason = "?" + j + jf +tz+ ex;
+                        }
                         //get track no
                         //string s = "";
                         if ((ConfigRepository.Instance()["dlcm_AdditionalManipul58"] == "Yes" || ConfigRepository.Instance()["dlcm_AdditionalManipul59"] == "Yes") && netstatus != "NOK")
@@ -3462,26 +3616,10 @@ namespace RocksmithToolkitGUI.DLCManager
                         //tsst = "end set preview audio reconv ..."; timestamp = UpdateLog(timestamp, tsst, false);
                         //}
 
-
-                        data.ToolkitInfo = new RocksmithToolkitLib.DLCPackage.ToolkitInfo();
-                        data.ToolkitInfo.PackageAuthor = filez.Author;
-                        if ((filez.Author == "Custom Song Creator" || filez.Author == "") && ConfigRepository.Instance()["dlcm_AdditionalManipul47"] == "Yes" && filez.Is_Original != "Yes")
+                        data.ToolkitInfo = new RocksmithToolkitLib.DLCPackage.ToolkitInfo
                         {
-                            //saving in the txt file is not rally usefull as the system gen the file at every pack :)
-                            filez.Author = "RepackedBy " + ConfigRepository.Instance()["general_defaultauthor"].ToUpper();
-                            data.ToolkitInfo.PackageAuthor = "RepackedBy " + ConfigRepository.Instance()["general_defaultauthor"].ToUpper();
-                            var fxml = File.OpenText(filez.Folder_Name + "\\toolkit.version");
-                            string line;
-                            string header = "";
-                            //Read and Save Header
-                            while ((line = fxml.ReadLine()) != null)
-                            {
-                                if (line.Contains("Package Author:")) header += System.Environment.NewLine + "Package Author: " + filez.Author;
-                                else header += line + System.Environment.NewLine;
-                            }
-                            fxml.Close();
-                            File.WriteAllText(filez.Folder_Name + "\\toolkit.version", header);
-                        }
+                            PackageAuthor = filez.Author
+                        };
 
                         DirectoryInfo di;
                         var repacked_Path = TempPath + "\\0_repacked";
@@ -3489,31 +3627,56 @@ namespace RocksmithToolkitGUI.DLCManager
 
                         var norm_path = "";
                         if (ConfigRepository.Instance()["dlcm_Activ_FileName"] == "Yes")
-                            norm_path = repacked_Path + "\\" + Manipulate_strings(ConfigRepository.Instance()["dlcm_File_Name"], 0, false, false, bassRemoved, SongRecord, "[", "]");
+                            norm_path = repacked_Path + "\\" + Manipulate_strings(ConfigRepository.Instance()["dlcm_File_Name"], 0, false, false, bassRemoved, SongRecord, "[", "]", chbx_Beta);//, ConfigRepository.Instance()["dlcm_AdditionalManipul87"], ConfigRepository.Instance()["dlcm_AdditionalManipul88"]);
                         else
                             norm_path = ((filez.ToolkitVersion == "") ? "ORIG" : "CDLC") + "_" + data.SongInfo.Artist + "_" + data.SongInfo.SongYear.ToString() + "_" + data.SongInfo.Album + "_" + data.SongInfo.SongDisplayName;
                         //manipulating the info
 
-                        if (ConfigRepository.Instance()["dlcm_Activ_Title"] == "Yes") data.SongInfo.SongDisplayName = Manipulate_strings(ConfigRepository.Instance()["dlcm_Title"], 0, false, false, bassRemoved, SongRecord, "[", "]");
-                        if (ConfigRepository.Instance()["dlcm_Activ_TitleSort"] == "Yes") data.SongInfo.SongDisplayNameSort = Manipulate_strings(ConfigRepository.Instance()["dlcm_Title_Sort"], 0, false, false, bassRemoved, SongRecord, "", "");
-                        if (chbx_Beta && ConfigRepository.Instance()["dlcm_AdditionalManipul87"] == "Yes") data.SongInfo.SongDisplayNameSort = "0" + Groupss + data.SongInfo.SongDisplayNameSort; //.Substring(1, data.SongInfo.SongDisplayNameSort.Length - 2); //).Replace("][", "-").Replace("]0", "");
-                        else if (ConfigRepository.Instance()["dlcm_AdditionalManipul88"] == "Yes") data.SongInfo.SongDisplayNameSort = Groupss + data.SongInfo.SongDisplayNameSort; //.Substring(1, data.SongInfo.SongDisplayNameSort.Length - 2); //).Replace("][", "-").Replace("]0", "");
-                        else data.SongInfo.SongDisplayNameSort = "0" + data.SongInfo.SongDisplayNameSort; //.Substring(1, data.SongInfo.SongDisplayNameSort.Length - 2); //).Replace("][", "-").Replace("]0", "");
-                                                                                                          //if (chbx_Group != "") 
-                        if (ConfigRepository.Instance()["dlcm_Activ_Artist"] == "Yes") data.SongInfo.Artist = Manipulate_strings(ConfigRepository.Instance()["dlcm_Artist"], 0, false, false, bassRemoved, SongRecord, "[", "]");
-                        if (ConfigRepository.Instance()["dlcm_Activ_ArtistSort"] == "Yes") data.SongInfo.ArtistSort = Manipulate_strings(ConfigRepository.Instance()["dlcm_Artist_Sort"], 0, false, false, bassRemoved, SongRecord, "", "");
-                        if (chbx_Beta && ConfigRepository.Instance()["dlcm_AdditionalManipul87"] == "Yes") data.SongInfo.ArtistSort = ((ConfigRepository.Instance()["dlcm_Activ_ArtistSort"] == "Yes" && ConfigRepository.Instance()["dlcm_Artist_Sort"].IndexOf("<Beta>") > -1) ? "" : "0") + Groupss + data.SongInfo.ArtistSort; //.Substring(1, data.SongInfo.ArtistSort.Length - 2)).Replace("][", "-").Replace("]0", "");
-                        else if (ConfigRepository.Instance()["dlcm_AdditionalManipul88"] == "Yes") data.SongInfo.ArtistSort = ((ConfigRepository.Instance()["dlcm_Activ_ArtistSort"] == "Yes" && ConfigRepository.Instance()["dlcm_Artist_Sort"].IndexOf("<Beta>") > -1) ? "" : "0") + Groupss + data.SongInfo.ArtistSort; //.Substring(1, data.SongInfo.ArtistSort.Length - 2)).Replace("][", "-").Replace("]0", "");
-                        else data.SongInfo.ArtistSort = "0" + data.SongInfo.ArtistSort; //.Substring(1, data.SongInfo.ArtistSort.Length - 2)).Replace("][", "-").Replace("]0", "");
+                        if (ConfigRepository.Instance()["dlcm_Activ_Title"] == "Yes") data.SongInfo.SongDisplayName = Manipulate_strings(ConfigRepository.Instance()["dlcm_Title"], 0, false, false, bassRemoved, SongRecord, "[", "]", chbx_Beta);//, ConfigRepository.Instance()["dlcm_AdditionalManipul87"], ConfigRepository.Instance()["dlcm_AdditionalManipul88"]);
+                        if (ConfigRepository.Instance()["dlcm_Activ_TitleSort"] == "Yes") data.SongInfo.SongDisplayNameSort = Manipulate_strings(ConfigRepository.Instance()["dlcm_Title_Sort"], 0, false, false, bassRemoved, SongRecord, "", "", chbx_Beta);//, ConfigRepository.Instance()["dlcm_AdditionalManipul87"], ConfigRepository.Instance()["dlcm_AdditionalManipul88"]);
 
-                        if (ConfigRepository.Instance()["dlcm_Activ_Album"] == "Yes") data.SongInfo.Album = Manipulate_strings(ConfigRepository.Instance()["dlcm_Album"], 0, false, false, bassRemoved, SongRecord, "[", "]");
+                        //if (chbx_Group != "") 
+                        if (ConfigRepository.Instance()["dlcm_Activ_Artist"] == "Yes") data.SongInfo.Artist = Manipulate_strings(ConfigRepository.Instance()["dlcm_Artist"], 0, false, false, bassRemoved, SongRecord, "[", "]", chbx_Beta);//, ConfigRepository.Instance()["dlcm_AdditionalManipul87"], ConfigRepository.Instance()["dlcm_AdditionalManipul88"]);
+                        if (ConfigRepository.Instance()["dlcm_Activ_ArtistSort"] == "Yes") data.SongInfo.ArtistSort = Manipulate_strings(ConfigRepository.Instance()["dlcm_Artist_Sort"], 0, false, false, bassRemoved, SongRecord, "", "", chbx_Beta);//, ConfigRepository.Instance()["dlcm_AdditionalManipul87"], ConfigRepository.Instance()["dlcm_AdditionalManipul88"]);
+                        //if (chbx_Beta && ConfigRepository.Instance()["dlcm_AdditionalManipul87"] == "Yes") data.SongInfo.ArtistSort = ((ConfigRepository.Instance()["dlcm_Activ_ArtistSort"] == "Yes" && ConfigRepository.Instance()["dlcm_Artist_Sort"].IndexOf("<Beta>") > -1) ? "" : "0") + Groupss + data.SongInfo.ArtistSort; //.Substring(1, data.SongInfo.ArtistSort.Length - 2)).Replace("][", "-").Replace("]0", "");
+                        //else if (ConfigRepository.Instance()["dlcm_AdditionalManipul88"] == "Yes") data.SongInfo.ArtistSort = ((ConfigRepository.Instance()["dlcm_Activ_ArtistSort"] == "Yes" && ConfigRepository.Instance()["dlcm_Artist_Sort"].IndexOf("<Beta>") > -1) ? "" : "0") + Groupss + data.SongInfo.ArtistSort; //.Substring(1, data.SongInfo.ArtistSort.Length - 2)).Replace("][", "-").Replace("]0", "");
+                        //else data.SongInfo.ArtistSort = "0" + data.SongInfo.ArtistSort; //.Substring(1, data.SongInfo.ArtistSort.Length - 2)).Replace("][", "-").Replace("]0", "");
 
-                        if (ConfigRepository.Instance()["dlcm_AdditionalManipul23"] == "Yes" && data.SongInfo.ArtistSort.ToInt32() > 4) //21.Pack with The/ Die only at the end of Title Sort 
+                        if (ConfigRepository.Instance()["dlcm_Activ_Album"] == "Yes") data.SongInfo.Album = Manipulate_strings(ConfigRepository.Instance()["dlcm_Album"], 0, false, false, bassRemoved, SongRecord, "[", "]", chbx_Beta);//, ConfigRepository.Instance()["dlcm_AdditionalManipul87"], ConfigRepository.Instance()["dlcm_AdditionalManipul88"]);
+
+                        if (ConfigRepository.Instance()["dlcm_AdditionalManipul18"] == "Yes") //21.Pack with The/ Die only at the end of Title Sort 
                         {
-                            if (ConfigRepository.Instance()["dlcm_AdditionalManipul21"] == "Yes" && data.SongInfo.SongDisplayNameSort.ToInt32() > 4)
+                            if (data.SongInfo.SongDisplayNameSort.Length > 4 && data.SongInfo.SongDisplayNameSort.ToLower().IndexOf("the") == 0 && data.SongInfo.SongDisplayNameSort.ToLower().IndexOf("die") == 0)
+                                data.SongInfo.SongDisplayNameSort = data.SongInfo.SongDisplayNameSort.Substring(4, data.SongInfo.SongDisplayNameSort.Length - 3);
+                            if (data.SongInfo.ArtistSort.Length > 4 && data.SongInfo.ArtistSort.ToLower().IndexOf("the") == 0 && data.SongInfo.ArtistSort.ToLower().IndexOf("die") == 0)
+                                data.SongInfo.ArtistSort = data.SongInfo.ArtistSort.Substring(4, data.SongInfo.ArtistSort.Length - 3);
+                        }
+                        else
+                         if (ConfigRepository.Instance()["dlcm_AdditionalManipul23"] == "Yes" && data.SongInfo.ArtistSort.Length > 4) //21.Pack with The/ Die only at the end of Title Sort 
+                        {
+                            if (ConfigRepository.Instance()["dlcm_AdditionalManipul21"] == "Yes" && data.SongInfo.SongDisplayNameSort.Length > 4)
                                 data.SongInfo.SongDisplayNameSort = MoveTheAtEnd(data.SongInfo.SongDisplayNameSort);
                             data.SongInfo.ArtistSort = MoveTheAtEnd(data.SongInfo.ArtistSort);
                         }
+                        var no_ord = 1;
+                        if (ConfigRepository.Instance()["dlcm_AdditionalManipul1"] == "Yes") //"2. Add Increment to all songs(&Separately per artist)"
+                                                                                             //{
+                                                                                             //if (i > 0)
+                                                                                             //    if (data.SongInfo.Artist == filez[i - 1].Artist) no_ord += 1;
+                                                                                             //    else no_ord = 1;
+                                                                                             //else no_ord += 1;
+                                                                                             //artist = no_ord + " ";
+                            data.SongInfo.SongDisplayName = no_ord + " " + data.SongInfo.SongDisplayName;
+                        //}
+
+                        if (ConfigRepository.Instance()["dlcm_AdditionalManipul2"] == "Yes")
+                            //"3. Make all DLC IDs unique (&save)"
+                            if (filez.UniqueDLCName != null && filez.UniqueDLCName != "") data.Name = filez.UniqueDLCName;
+                            else
+                            {
+                                Random random = new Random();
+                                data.Name = random.Next(0, 100000) + data.Name;
+                            }
 
                         //pB_ReadDLCs.Increment(1);
                         if (chbx_UniqueID)
@@ -3564,7 +3727,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         //var FN = txt_File_Name.Text;
 
                         var FN = ConfigRepository.Instance()["dlcm_File_Name"];
-                        FN = Manipulate_strings(FN, 0, false, false, bassRemoved, SongRecord, "", "");
+                        FN = Manipulate_strings(FN, 0, false, false, bassRemoved, SongRecord, "", "", chbx_Beta);//, ConfigRepository.Instance()["dlcm_AdditionalManipul87"], ConfigRepository.Instance()["dlcm_AdditionalManipul88"]);
                         /*File Name should be standardised.. no need for 0&Group at the beginning MAYBE MAYBE WHAT IF i wanna structure my files based on group anyway((ConfigRepository.Instance()["dlcm_File_Name"].IndexOf("<Beta>") > -1) ? "" : "0") + */
                         if (ConfigRepository.Instance()["dlcm_AdditionalManipul91"] == "Yes") FN = Groupss + FN;
 
@@ -3600,7 +3763,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             {
                                 if (ex.Message.IndexOf("No JDK or JRE") > 0)//Help\\WwiseHelp_en.chm"))//
                                 {
-                                    ErrorWindow frm1 = new ErrorWindow("Please Install Java" + Environment.NewLine + "A restart is required" + Environment.NewLine, "http://www.java.com/en/download/win10.jsp", "Error at Packing", false, false);
+                                    ErrorWindow frm1 = new ErrorWindow("Please Install Java (64bit if windows is for 64b https://www.java.com/en/download/manual.jsp)" + Environment.NewLine + "A restart is required" + Environment.NewLine, "http://www.java.com/en/download/win10.jsp", "Error at Packing", false, false);
                                     frm1.ShowDialog();
                                 }
                                 var tgst = "Error ..." + ex; UpdateLog(DateTime.Now, tgst, false, ConfigRepository.Instance()["dlcm_LogPath"], ConfigRepository.Instance()["dlcm_TempPath"], multithreadname, form, null, null);
@@ -3620,7 +3783,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             {
                                 if (ex.Message.IndexOf("No JDK or JRE") > 0)//Help\\WwiseHelp_en.chm"))//
                                 {
-                                    ErrorWindow frm1 = new ErrorWindow("Please Install Java" + Environment.NewLine + "A restart is required" + Environment.NewLine, "http://www.java.com/en/download/win10.jsp", "Error at Packing", false, false);
+                                    ErrorWindow frm1 = new ErrorWindow("Please Install Java (64bit if windows is for 64b https://www.java.com/en/download/manual.jsp)" + Environment.NewLine + "A restart is required" + Environment.NewLine, "http://www.java.com/en/download/win10.jsp", "Error at Packing", false, false);
                                     frm1.ShowDialog();
                                 }
                                 error = true;
@@ -3639,7 +3802,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             {
                                 if (ex.Message.IndexOf("No JDK or JRE") > 0)//Help\\WwiseHelp_en.chm"))//
                                 {
-                                    ErrorWindow frm1 = new ErrorWindow("Please Install Java" + Environment.NewLine + "A restart is required" + Environment.NewLine, "http://www.java.com/en/download/win10.jsp", "Error at Packing", false, false);
+                                    ErrorWindow frm1 = new ErrorWindow("Please Install Java (64bit if windows is for 64b https://www.java.com/en/download/manual.jsp)" + Environment.NewLine + "A restart is required" + Environment.NewLine, "http://www.java.com/en/download/win10.jsp", "Error at Packing", false, false);
                                     frm1.ShowDialog();
                                 }
                                 var tgst = "Error ..." + ex; UpdateLog(DateTime.Now, tgst, false, ConfigRepository.Instance()["dlcm_LogPath"], ConfigRepository.Instance()["dlcm_TempPath"], multithreadname, form, null, null);
@@ -3659,10 +3822,10 @@ namespace RocksmithToolkitGUI.DLCManager
                             {
                                 if (ex.Message.IndexOf("No JDK or JRE") > 0)//Help\\WwiseHelp_en.chm"))//
                                 {
-                                    ErrorWindow frm1 = new ErrorWindow("Please Install Java" + Environment.NewLine + "A restart is required" + Environment.NewLine, "http://www.java.com/en/download/win10.jsp", "Error at Packing", false, false);
+                                    ErrorWindow frm1 = new ErrorWindow("Please Install Java (64bit if windows is for 64b https://www.java.com/en/download/manual.jsp)" + Environment.NewLine + "A restart is required" + Environment.NewLine, "http://www.java.com/en/download/win10.jsp", "Error at Packing", false, false);
                                     frm1.ShowDialog();
                                 }
-                                string ss = String.Format("Error 2generate PS3 package: {0}{1}. {0}PS3 package require 'JAVA x86' (32 bits) installed on your machine to generate properly.{0}", Environment.NewLine, ex.StackTrace);
+                                string ss = string.Format("Error 2generate PS3 package: {0}{1}. {0}PS3 package require 'JAVA x86' (32 bits) installed on your machine to generate properly.{0}", Environment.NewLine, ex.StackTrace);
                                 //MessageBox.Show(ex + ss);
                                 var tgst = "Error ..." + ex; UpdateLog(DateTime.Now, tgst, false, ConfigRepository.Instance()["dlcm_LogPath"], ConfigRepository.Instance()["dlcm_TempPath"], multithreadname, form, null, null);
                                 error = true;
@@ -3673,25 +3836,6 @@ namespace RocksmithToolkitGUI.DLCManager
                     }
                     //pB_ReadDLCs.Increment(1);
                     h = dlcSavePath;
-                }
-
-                //Restore XML changes
-                if (!((chbx_Last_Packed && chbx_Last_PackedEnabled) || (chbx_CopyOld && chbx_CopyOldEnabled)) && ConfigRepository.Instance()["dlcm_AdditionalManipul86"] == "No")
-                {
-                    Platform platformz = Folder_Name.GetPlatform();
-                    var xmlFilez = Directory.GetFiles(Folder_Name, "*.old", System.IO.SearchOption.AllDirectories);
-                    foreach (var xml in xmlFilez)
-                    {
-                        //Song2014 xmlContent = null;
-                        if (xml.ToLower().IndexOf("showlights") < 0)/*&& xml.IndexOf(".old") > 0*/
-                            try
-                            {
-                                File.Copy(xml, xml.Replace(".old", ""), true);
-                                timestamp = UpdateLog(timestamp, "Restore XML", true, logPath, TempPath, multithreadname, form, null, null);
-                                DeleteFile(xml);//if (File.Exists(xml.Replace(".old", "")))
-                            }
-                            catch (Exception ex) { var tgst = "Error at restoring xml changes..." + ex; UpdateLog(DateTime.Now, tgst, false, ConfigRepository.Instance()["dlcm_LogPath"], ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null); }
-                    }
                 }
 
                 if (h != "")
@@ -3709,12 +3853,24 @@ namespace RocksmithToolkitGUI.DLCManager
                         if (chbx_PS3 == "PS3" && chbx_Copy)
                         {
                             source = h + "_ps3.psarc.edat"; fi = new System.IO.FileInfo(source); if (fi.Length == 0) error = true;
-                            var u = ""; if (chbx_Replace && chbx_ReplaceEnabled) u = DeleteFTPFiles(txt_RemotePath, txt_FTPPath);
-                            var a = "";
+                            var u = ""; var a = "";
+
                             if (File.Exists(source))
                             {
-                                a = FTPFile(txt_FTPPath, source, TempPath, SearchCmd, ID, cnb);
-                                copyftp = " and " + a + " FTPed(PS3)";
+                                if (ConfigRepository.Instance()["dlcm_AdditionalManipul92"] == "Yes")
+                                {
+                                    var TrueGameFldr = Path.Combine(AppWD, "TrueAncestor_PKG_Repacker_v2.45\\game\\") +
+                                        (ConfigRepository.Instance()["dlcm_FTP1"].IndexOf("BLES01862") >= 0 ? "BLES01862" : "BLUS31182");
+                                    //copy edat in DLC folder
+                                    var dst = TrueGameFldr + "\\USRDIR\\DLC\\" + Path.GetFileName(source);
+                                    if (File.Exists(source)) File.Copy(source, dst, true);
+                                }
+                                else
+                                {
+                                    if (chbx_Replace && chbx_ReplaceEnabled) u = DeleteFTPFiles(txt_RemotePath, txt_FTPPath);
+                                    a = FTPFile(txt_FTPPath, source, TempPath, SearchCmd, ID, cnb);
+                                    copyftp = " and " + a + " FTPed(PS3)";
+                                }
                             }
                             else { error = true; error_reason = "@FTP"; }
 
@@ -3829,6 +3985,25 @@ namespace RocksmithToolkitGUI.DLCManager
                 error = true; error_reason = "?" + ex;
             }
 
+            //Restore XML changes
+            //if (!((chbx_Last_Packed && chbx_Last_PackedEnabled) || (chbx_CopyOld && chbx_CopyOldEnabled)) && ConfigRepository.Instance()["dlcm_AdditionalManipul86"] == "No")
+            //{
+            //var platforms = Folder_Name.GetPlatform();
+            var xmlFilex = Directory.GetFiles(Folder_Name, "*.old", System.IO.SearchOption.AllDirectories);
+            foreach (var xml in xmlFilex)
+            {
+                //Song2014 xmlContent = null;
+                if (xml.ToLower().IndexOf("showlights") < 0)/*&& xml.IndexOf(".old") > 0*/
+                    try
+                    {
+                        File.Copy(xml, xml.Replace(".old", ""), true);
+                        timestamp = UpdateLog(timestamp, "Restore XML", true, logPath, TempPath, multithreadname, form, null, null);
+                        DeleteFile(xml);//if (File.Exists(xml.Replace(".old", "")))
+                    }
+                    catch (Exception ex) { var tgst = "Error at restoring xml changes..." + ex; UpdateLog(DateTime.Now, tgst, false, ConfigRepository.Instance()["dlcm_LogPath"], ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null); }
+            }
+            //}
+
             if (error)
             {
                 UpdatePackingLog("LogPackingError", ConfigRepository.Instance()["dlcm_DBFolder"], packid, args[0], error_reason, cnb);
@@ -3840,6 +4015,102 @@ namespace RocksmithToolkitGUI.DLCManager
             e.Result = "done";
             ConfigRepository.Instance()["dlcm_GlobalTempVariable"] = "Yes";
             return;
+        }
+
+        static public void HANPackagePreparation()
+        {
+            var TrueGameFldr = Path.Combine(AppWD, "TrueAncestor_PKG_Repacker_v2.45\\game\\") +
+                (ConfigRepository.Instance()["dlcm_FTP1"].IndexOf("BLES01862") >= 0 ? "BLES01862" : "BLUS31182");
+            var TrueTEmpFldr = Path.Combine(AppWD, "TrueAncestor_PKG_Repacker_v2.45\\game");
+            var TrueTempGameFldr = Path.Combine(AppWD, "TrueAncestor_PKG_Repacker_v2.45\\tmp\\" +
+                (ConfigRepository.Instance()["dlcm_FTP1"].IndexOf("BLES01862") >= 0 ? "BLES01862" : "BLUS31182"));
+
+            //clean game Directory in true
+            CleanFolder(TrueTEmpFldr, "", true, "");
+
+            DeleteDirectory(TrueGameFldr);
+
+            //copy game template in True
+            CopyFolder(TrueTempGameFldr, TrueGameFldr);
+        }
+
+        static public void HANPackage()
+        {
+            var TrueGameFldr = Path.Combine(AppWD, "TrueAncestor_PKG_Repacker_v2.45\\game\\") +
+                (ConfigRepository.Instance()["dlcm_FTP"].IndexOf("EU") >= 0 ? "BLES01862" : "BLUS31182");
+            var TrueTEmpFldr = Path.Combine(AppWD, "TrueAncestor_PKG_Repacker_v2.45\\game");
+            var TrueTempGameFldr = Path.Combine(AppWD, "TrueAncestor_PKG_Repacker_v2.45\\tmp\\" +
+                (ConfigRepository.Instance()["dlcm_FTP"].IndexOf("EU") >= 0 ? "BLES01862" : "BLUS31182"));
+
+            ////clean game Directory in true
+            //CleanFolder(TrueTEmpFldr, "", true, "");
+
+            //DeleteDirectory(TrueGameFldr);
+
+            ////copy game template in True
+            //CopyFolder(TrueTempGameFldr, TrueGameFldr);
+
+            ////copy edat in DLC folder
+            //var dst = TrueGameFldr + "\\USRDIR\\DLC\\" + Path.GetFileName(source);
+            //File.Copy(source, dst, true);
+
+            // package
+            var startInfo = new ProcessStartInfo
+            {
+                FileName = Path.Combine(AppWD, "TrueAncestor_PKG_Repacker_v2.45", "repacker.exe"),
+                WorkingDirectory = Path.Combine(AppWD, "TrueAncestor_PKG_Repacker_v2.45"),
+                //var t = txt_OggPath.Text;
+                //startInfo.Arguments = String.Format(" -p \"{0}\"", t);
+                UseShellExecute = false,
+                CreateNoWindow = false
+            };
+            //if (File.Exists(t))
+            using (var DDC = new Process())
+            {
+                DDC.StartInfo = startInfo;
+                DDC.Start(); DDC.WaitForExit(1000 * 60 * 1); //wait 1min
+            }
+
+            //copy to to re-signed
+            var tz = Path.Combine(AppWD, "TrueAncestor_PKG_Repacker_v2.45\\pkg", (
+                ConfigRepository.Instance()["dlcm_FTP"].IndexOf("EU") >= 0 ? "UP0001-BLES01862_00-RS001PACK0000003-A0111-V0100.pkg" :
+                "UP0001-BLUS31182_00-RS001PACK0000003-A0111-V0100.pkg"));
+            var trz = Path.Combine(AppWD, "PS3xploit-resigner-master\\input\\pkgs", (
+                ConfigRepository.Instance()["dlcm_FTP"].IndexOf("EU") >= 0 ? "UP0001-BLES01862_00-RS001PACK0000003-A0111-V0100.pkg" :
+                "UP0001-BLUS31182_00-RS001PACK0000003-A0111-V0100.pkg"));
+            //, (
+            //ConfigRepository.Instance()["dlcm_FTP1"].IndexOf("BLES01862") >= 0 ? "UP0001-BLES01862_00-RS001PACK0000003-A0109-V0100" :
+            //"UP0001-BLUS31182_00-RS001PACK0000003-A0109-V0100"));
+            File.Copy(tz, trz, true);
+            // TrueGameFldr + "\\" + (ConfigRepository.Instance()["dlcm_FTP1"].IndexOf("BLES01862") >= 0 ? "BLES01862" : "BLUS31182")
+            //+ "\\USRDIR\\DLC\\" + Path.GetFileName(source), true);
+
+            //reassign
+            var startInfo2 = new ProcessStartInfo
+            {
+                FileName = Path.Combine(AppWD, "PS3xploit-resigner-master", "resign_windows.bat"),
+                WorkingDirectory = Path.Combine(AppWD, "PS3xploit-resigner-master"),
+                //var t = txt_OggPath.Text;
+                //startInfo.Arguments = String.Format(" -p \"{0}\"", t);
+                UseShellExecute = false,
+                CreateNoWindow = false
+            };
+
+            //if (File.Exists(t))
+            using (var DDC = new Process())
+            {
+                DDC.StartInfo = startInfo2;
+                DDC.Start(); DDC.WaitForExit(1000 * 60 * 1); //wait 1min
+            }
+
+
+            //copy to server
+            //packagelist.pkg done by the resigner
+            var srs = trz.Replace("\\input\\", "\\output\\").Replace(".pkg", ".pkg_signed.pkg");
+            var dstn = ConfigRepository.Instance()["dlcm_PKG_Linker"] + "\\" + (
+                ConfigRepository.Instance()["dlcm_FTP"].IndexOf("EU") >= 0 ? "UP0001-BLES01862_00-RS001PACK0000003-A0111-V0100.pkg" :
+                "UP0001-BLUS31182_00-RS001PACK0000003-A0111-V0100.pkg");
+            File.Copy(srs, dstn, true);
         }
 
         static public void fixMissingTempArtfiles(DLCPackageData data)
@@ -3897,7 +4168,7 @@ namespace RocksmithToolkitGUI.DLCManager
             return startt;
         }
 
-        public static string AddTrackStart2Lyrics(string SongID, OleDbConnection cnb)
+        public static void cleanlyrics(string SongID, OleDbConnection cnb)
         {
             DataSet dus = new DataSet(); dus = SelectFromDB("Arrangements", "SELECT XMLFilePath, ArrangementType, RouteMask, Start_Time FROM Arrangements WHERE CDLC_ID=" + SongID + "", "", cnb);
             //var CDLC_ID = dus.Tables[0].Rows[0].ItemArray[0].ToString();
@@ -3906,7 +4177,97 @@ namespace RocksmithToolkitGUI.DLCManager
             for (var i = 0; i <= noOfRec - 1; i++)
             {
                 var ArrangementType = dus.Tables[0].Rows[i].ItemArray[1].ToString();
+                //var RouteMask = dus.Tables[0].Rows[i].ItemArray[2].ToString();
+                if (ArrangementType == "Vocal") XMLFilePath = dus.Tables[0].Rows[i].ItemArray[0].ToString();/* : XMLFilePath;*/
+            }
 
+            Vocals xmlContent = null; var j = 0;
+            if (XMLFilePath != "")
+                try
+                {
+                    xmlContent = Vocals.LoadFromFile(XMLFilePath);
+                    //Vocals xmlContent = Vocals[noOfRec - 1];
+                    for (var i = 0; i < xmlContent.Vocal.Length; i++)
+                    {
+                        if (xmlContent.Vocal[i].Lyric == "")
+                        //|| xmlContent.Vocal[i].Time == xmlContent.Vocal[i + 1].Time || xmlContent.Vocal[i].Time == xmlContent.Vocal[i + 2].Time || xmlContent.Vocal[i].Time == xmlContent.Vocal[i + 3].Time || xmlContent.Vocal[i].Time == xmlContent.Vocal[i + 4].Time)
+                        {
+                            //xmlContent.Vocal[j].Lyric = xmlContent.Vocal[i+1].Lyric.Trim();
+                            //xmlContent.Vocal[j].Length = xmlContent.Vocal[i+1].Length;
+                            //xmlContent.Vocal[j].Time = xmlContent.Vocal[i+1].Time;
+                            //i++;
+                        }
+                        else
+                        {
+                            xmlContent.Vocal[j].Lyric = xmlContent.Vocal[i].Lyric.Trim();
+                            xmlContent.Vocal[j].Length = xmlContent.Vocal[i].Length;
+                            xmlContent.Vocal[j].Time = xmlContent.Vocal[i].Time;
+                            j++;
+                        }
+                    }
+                }
+                catch (Exception ex) { var tsst = "Error ..." + ex; UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_LogPath"], ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null); }
+            for (var i = j; i < xmlContent.Vocal.Length; i++)
+            {
+                xmlContent.Vocal[i].Lyric = "";
+                xmlContent.Vocal[i].Length = (float)0.1;
+                xmlContent.Vocal[i].Time = (float)Math.Round(xmlContent.Vocal[j - 1].Time + xmlContent.Vocal[j - 1].Length + (float)(0.15 * (i - j)), 3);
+            }
+
+            using (var stream = File.Open(XMLFilePath, FileMode.Create))
+                xmlContent.Serialize(stream);
+
+            //Remove end empty lines
+            //AND count no of lines
+            var info = File.OpenText(XMLFilePath);
+            string line;
+            //Removes empty end lines
+            var nolines = 0;
+            using (StreamWriter sw = File.CreateText(XMLFilePath + ".newvcl"))
+            {
+                while ((line = info.ReadLine()) != null)
+                {
+                    if (!(line.Contains("lyric=\"\"") || line.Contains("lyric = \"\"") || line.Contains("lyric= \"\"")))
+                    {
+                        sw.WriteLine(line);
+                        if (line.Contains("<vocal ")) nolines++;
+                    }
+                }
+            }
+            info.Close();
+            File.Copy(XMLFilePath + ".newvcl", XMLFilePath, true);
+            DeleteFile(XMLFilePath + ".newvcl");
+
+            //add count of lines<vocals count= "244" >
+            var info2 = File.OpenText(XMLFilePath);
+            using (StreamWriter sx = File.CreateText(XMLFilePath + ".newvcl"))
+            {
+                while ((line = info2.ReadLine()) != null)
+                {
+                    if (line.Contains("<vocals")) sx.WriteLine("<vocals count = \"" + nolines + "\">"); /*{ break; }*/
+                    else sx.WriteLine(line);
+                }
+            }
+            info2.Close();
+            File.Copy(XMLFilePath + ".newvcl", XMLFilePath, true);
+            DeleteFile(XMLFilePath + ".newvcl");
+            //return fistline;// + ";" + secondline; ;// return firsttime.Substring(0, firsttime.Length - firsttime.IndexOf("\""));
+
+            return;
+        }
+
+        public static string AddTrackStart2Lyrics(string SongID, OleDbConnection cnb)
+        {
+            DataSet dup = new DataSet(); dup = SelectFromDB("Arrangements", "SELECT Max(Part) FROM Arrangements WHERE CDLC_ID=" + SongID + "", "", cnb);
+            var noOfRecP = dup.Tables.Count > 0 ? (string.IsNullOrEmpty(dup.Tables[0].Rows[0].ItemArray[0].ToString()) ? 0 : int.Parse(dup.Tables[0].Rows[0].ItemArray[0].ToString())) : 0;
+
+            DataSet dus = new DataSet(); dus = SelectFromDB("Arrangements", "SELECT XMLFilePath, ArrangementType, RouteMask, Start_Time, Bonus, Part FROM Arrangements WHERE CDLC_ID=" + SongID + "", "", cnb);
+            //var CDLC_ID = dus.Tables[0].Rows[0].ItemArray[0].ToString();
+            var noOfRec = dus.Tables[0].Rows.Count;
+            var XMLFilePath = "";
+            for (var i = 0; i <= noOfRec - 1; i++)
+            {
+                var ArrangementType = dus.Tables[0].Rows[i].ItemArray[1].ToString();
                 //var RouteMask = dus.Tables[0].Rows[i].ItemArray[2].ToString();
                 if (ArrangementType == "Vocal") XMLFilePath = dus.Tables[0].Rows[i].ItemArray[0].ToString();/* : XMLFilePath;*/
             }
@@ -3914,7 +4275,7 @@ namespace RocksmithToolkitGUI.DLCManager
             {
                 var RouteMask = dus.Tables[0].Rows[i].ItemArray[2].ToString();
                 if (RouteMask == "Lead" || RouteMask == "Bass" || RouteMask == "Rhythm")
-                    Add2LinesInVocals(XMLFilePath, 1); //per each arrangement add an empty line
+                    Add2LinesInVocals(XMLFilePath, 1, "0.001"); //per each arrangement add an empty line
             }
 
             Vocals xmlContent = null;
@@ -3924,13 +4285,17 @@ namespace RocksmithToolkitGUI.DLCManager
                     xmlContent = Vocals.LoadFromFile(XMLFilePath);
                     for (var i = 0; i <= noOfRec - 1; i++)
                     {
-                        var ArrangementType = dus.Tables[0].Rows[i].ItemArray[1].ToString();
                         var changeaplied = false;
                         var insertedinlyric = 0;
                         //XMLFilePath =  dus.Tables[0].Rows[i].ItemArray[0].ToString();// : XMLFilePath;ArrangementType == "Vocal" ?
+
+                        var ArrangementType = dus.Tables[0].Rows[i].ItemArray[1].ToString();
                         var RouteMask = dus.Tables[0].Rows[i].ItemArray[2].ToString();
                         var strartt = dus.Tables[0].Rows[i].ItemArray[3].ToString();
-                        var shortstart = ConfigRepository.Instance()["dlcm_AdditionalManipul90"].ToLower() == "Yes".ToLower() ? (strartt.Substring(0, strartt.IndexOf(".")) + "s") : strartt;
+                        var Part = dus.Tables[0].Rows[i].ItemArray[5].ToString();
+                        var b = dus.Tables[0].Rows[i].ItemArray[4].ToString() == "True" ? "b" : "";
+                        var p = noOfRecP > 1 ? Part : "";
+                        var shortstart = (ConfigRepository.Instance()["dlcm_AdditionalManipul90"].ToLower() == "Yes".ToLower() ? strartt.Substring(0, strartt.IndexOf(".")) : strartt) + "s";
                         if (RouteMask == "Lead" || RouteMask == "Bass" || RouteMask == "Rhythm")
                         {
                             var j = 0;
@@ -3940,7 +4305,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                     && xmlContent.Vocal[j].Time <= float.Parse(strartt, NumberStyles.Float, CultureInfo.CurrentCulture)
                                     && changeaplied == false)
                                 {
-                                    xmlContent.Vocal[j - 1].Lyric = "[" + (RouteMask == "Lead" ? "L(" : RouteMask == "Bass" ? "B(" : RouteMask == "Rhythm" ? "R(" : "-") + shortstart + ")]"
+                                    xmlContent.Vocal[j - 1].Lyric = "[" + (RouteMask == "Lead" ? "L" + b + p + "(" : RouteMask == "Bass" ? "B" + b + p + "(" : RouteMask == "Rhythm" ? "R" + b + p + "(" : "-") + shortstart + ")]"
                                          + xmlContent.Vocal[j].Lyric.Trim().Replace("  ", " ");// xmlContent.Vocal[j].Time+ "/" +.Replace(xmlContent.Vocal[j].Time+"/" ,"" ) ;
                                     xmlContent.Vocal[j - 1].Length = xmlContent.Vocal[j].Length;
                                     xmlContent.Vocal[j - 1].Time = xmlContent.Vocal[j].Time;
@@ -3956,11 +4321,11 @@ namespace RocksmithToolkitGUI.DLCManager
                                         && xmlContent.Vocal[j].Time > float.Parse(strartt, NumberStyles.Float, CultureInfo.CurrentCulture)
                                     && changeaplied == false)
                                 {
-                                    xmlContent.Vocal[j - 1].Lyric = ("[" + (RouteMask == "Lead" ? "L(" : RouteMask == "Bass" ? "B(" : RouteMask == "Rhythm" ? "R(" : "-") + shortstart + ")]").Replace("  ", " ");
+                                    xmlContent.Vocal[j - 1].Lyric = ("[" + (RouteMask == "Lead" ? "L" + b + p + "(" : RouteMask == "Bass" ? "B" + b + p + "(" : RouteMask == "Rhythm" ? "R" + b + p + "(" : "-") + shortstart + ")]").Replace("  ", " ");
                                     xmlContent.Vocal[j - 1].Length = float.Parse("0.5", NumberStyles.Float, CultureInfo.CurrentCulture);
                                     xmlContent.Vocal[j - 1].Time = float.Parse(strartt, NumberStyles.Float, CultureInfo.CurrentCulture);
                                     if (xmlContent.Vocal[j - 1].Time + xmlContent.Vocal[j - 1].Length > xmlContent.Vocal[j].Time)
-                                        xmlContent.Vocal[j - 1].Length = (float)(Math.Round((double)(xmlContent.Vocal[j].Time - xmlContent.Vocal[j - 1].Time - float.Parse("0.001", NumberStyles.Float, CultureInfo.CurrentCulture)), 3));
+                                        xmlContent.Vocal[j - 1].Length = (float)(Math.Round(xmlContent.Vocal[j].Time - xmlContent.Vocal[j - 1].Time - float.Parse("0.001", NumberStyles.Float, CultureInfo.CurrentCulture), 3));
                                     ////if (File.Exists(XMLFilePath)) File.Delete(XMLFilePath);
                                     //File.Copy(XMLFilePath, XMLFilePath + "orig",false);
                                     changeaplied = true;
@@ -3996,29 +4361,31 @@ namespace RocksmithToolkitGUI.DLCManager
 
             using (var stream = File.Open(XMLFilePath, FileMode.Create))
                 xmlContent.Serialize(stream);
-            return "";
+            return XMLFilePath;
         }
 
         public static string AddStuffToLyrics(string SongID, string Comments, string Group, string Has_DD, string bassRemoved, string Has_BassDD, string Author, string Is_Acoustic, string Is_Live, string Live_Details, string Is_Multitrack, string Is_Original, OleDbConnection cnb)
         {
             var ST = "";
-            var sdetails = (Comments == "" ? "" : "Comment_" + Comments);/*"SongDetails: " + */
-            sdetails += " DynamicDificulty " + Has_DD + (Has_DD == "Yes" && bassRemoved == "Yes" ? "(BassDDremoved)" : "");
+            var sdetails = (Comments == "" ? "" : "Comment: " + Comments);/*"SongDetails: " + */
+            sdetails += " DynamicDificulty: " + Has_DD + (Has_DD == "Yes" && bassRemoved == "Yes" ? "(BassDDremoved)" : "");
             sdetails += (Author == "" ? "" : " by:" + Author) + (Is_Acoustic == "Yes" ? " Acoustic" : "");
             sdetails += (Is_Live == "Yes" ? " Live" : "") + (Live_Details == "" ? "" : "(" + Live_Details + ")");
             sdetails += (Is_Original == "No" ? " CustomSong" : " ORIGINAL ") + " ";
             var scomments = "";
             var tsst = "Start TH ..."; var timestamp = UpdateLog(DateTime.Now, tsst, true, ConfigRepository.Instance()["dlcm_LogPath"], ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
 
+            DataSet dup = new DataSet(); dup = SelectFromDB("Arrangements", "SELECT Max(Part) FROM Arrangements WHERE CDLC_ID=" + SongID + "", "", cnb);
+            var noOfRecP = dup.Tables.Count > 0 ? (string.IsNullOrEmpty(dup.Tables[0].Rows[0].ItemArray[0].ToString()) ? 0 : int.Parse(dup.Tables[0].Rows[0].ItemArray[0].ToString())) : 0;
 
             //DataSet dus = new DataSet(); dus = SelectFromDB("Main", "SELECT XMLFilePath, Bonus, Comments FROM Main WHERE ArrangementType=\"ArrangementType\" AND DLC_ID=\""+ SongID + "\"", "");
             //var CDLC_ID = dus.Tables[0].Rows[0].ItemArray[0].ToString();
-            DataSet dus = new DataSet(); dus = SelectFromDB("Arrangements", "SELECT XMLFilePath, Bonus, Comments, ArrangementType, RouteMask, Start_Time FROM Arrangements WHERE CDLC_ID=" + SongID + "", "", cnb);
+            DataSet dus = new DataSet(); dus = SelectFromDB("Arrangements", "SELECT XMLFilePath, Bonus, Comments, ArrangementType, RouteMask, Start_Time, Part FROM Arrangements WHERE CDLC_ID=" + SongID + "", "", cnb);
             //var CDLC_ID = dus.Tables[0].Rows[0].ItemArray[0].ToString();
             var noOfRec = dus.Tables[0].Rows.Count;
             float FirstLyric = 5000;
-            float FirstVocal = 0;
-            for (var i = 0; i <= noOfRec - 1; i++)
+            float FirstVocal = 0; var i = 0;
+            for (i = 0; i <= noOfRec - 1; i++)
             {
                 var XMLFilePath = dus.Tables[0].Rows[i].ItemArray[0].ToString();
                 var Bonus = dus.Tables[0].Rows[i].ItemArray[1].ToString();
@@ -4026,7 +4393,8 @@ namespace RocksmithToolkitGUI.DLCManager
                 var ArrangementType = dus.Tables[0].Rows[i].ItemArray[3].ToString();
                 var RouteMask = dus.Tables[0].Rows[i].ItemArray[4].ToString();
                 var StartTime = dus.Tables[0].Rows[i].ItemArray[5].ToString();
-                string shortstart = ConfigRepository.Instance()["dlcm_AdditionalManipul90"].ToLower() == "Yes".ToLower() && StartTime != "" && StartTime != null ? (StartTime.Substring(0, StartTime.IndexOf(".")) + "s") : StartTime;
+                var Part = dus.Tables[0].Rows[i].ItemArray[6].ToString();
+                string shortstart = ConfigRepository.Instance()["dlcm_AdditionalManipul90"].ToLower() == "Yes".ToLower() && StartTime != "" && StartTime != null && StartTime.IndexOf(".") > 0 ? (StartTime.Substring(0, StartTime.IndexOf(".")) + "s") : StartTime;
                 if (ArrangementType == "Vocal")
                 {
                     ST = XMLFilePath;//ArrangementType
@@ -4039,93 +4407,149 @@ namespace RocksmithToolkitGUI.DLCManager
                             FirstLyric = float.Parse(StartTime, NumberStyles.Float, CultureInfo.CurrentCulture);
                 //sdetails += (RouteMask == "Lead" ? " L" : "") + (RouteMask == "Bass" ? " B" : "") + (RouteMask == "R" ? " R" : "");
                 //sdetails += (RouteMask == "Lead" && Bonus.ToLower() == "true" ? " L_Bonus" : "") + (RouteMask == "Bass" && Bonus.ToLower() == "true" ? " B_Bonus" : "") + (RouteMask == "Rhythm" && Bonus.ToLower() == "true" ? " R_Bonus" : "");
-                sdetails += Bonus.ToLower() == "true" ? " Bonus" : "";
+                sdetails += (Bonus.ToLower() == "true" ? " Bonus" : "").Trim().Replace("  ", " ");
                 var b = ""; var bonus = "";
                 if (Bonus.ToLower() == "true")
                 {
                     b = "(B)";
                     bonus = "(Bonus)";
                 }
-                scomments += (RouteMask == "Lead" && Commentz != "" ? " L_" + Commentz + b : "") + (RouteMask == "Bass" && Commentz != "" ? " B_" + Commentz + b : "") + (RouteMask == "Rhythm" && Commentz != "" ? " R_" + Commentz + b : "");
-                var Instr = (RouteMask == "Lead" ? " Lead" + bonus : "") + (RouteMask == "Bass" ? " Bass" + bonus : "") + (RouteMask == "Rhythm" ? " Rhythm" + bonus : "") + (ArrangementType == "Vocal" ? " Vocal" : "");
-                scomments += (StartTime != "" ? " " + Instr + "(" + shortstart + ")" : "");
+                var p = "";
+                if (noOfRecP > 1)
+                {
+                    p = Part;
+                }
+
+                scomments += (RouteMask == "Lead" && Commentz != "" ? " L_" + Commentz + b + p : "") + (RouteMask == "Bass" && Commentz != "" ? " B_" + Commentz + b + p : "") + (RouteMask == "Rhythm" && Commentz != "" ? " R_" + Commentz + b + p : "");
+                var Instr = (RouteMask == "Lead" ? " Lead" + bonus + p : "") + (RouteMask == "Bass" ? " Bass" + bonus + p : "") + (RouteMask == "Rhythm" ? " Rhythm" + bonus + p : "") + (ArrangementType == "Vocal" ? " Vocal" : "");
+                scomments += (StartTime != "" ? " " + Instr + "(" + shortstart + ")" : "").Trim().Replace("  ", " ");
             }
             if (ConfigRepository.Instance()["dlcm_AdditionalManipul74"].ToLower() != "Yes".ToLower()) FirstLyric = FirstVocal;
 
-            var spacetoadd = (float)FirstLyric - 0.61;
+            var spacetoadd = FirstLyric - 0.001;
             //if (ConfigRepository.Instance()["dlcm_AdditionalManipul74"].ToLower() != "Yes".ToLower()) spacetoadd = spacetoadd;
 
             if (!File.Exists(ST + ".old")) File.Copy(ST, ST + ".old");
             else File.Copy(ST + ".old", ST, true);
-            Add2LinesInVocals(ST, 2);
-            if (sdetails.Length > 50) Add2LinesInVocals(ST, 1);
-            if (scomments.Length > 50) Add2LinesInVocals(ST, 1);
 
+            var ft = float.Parse(Math.Ceiling(decimal.Parse((sdetails.Length / 50).ToString())).ToString()) + 1;
+            var fdt = float.Parse(Math.Ceiling(decimal.Parse((scomments.Length / 50).ToString())).ToString()) + 1;
+            spacetoadd = spacetoadd / (ft + fdt);
+
+            //first add the second line  then the first
+            //if (scomments.Length > 50) Add2LinesInVocals(ST, 2, "3");
+            //else Add2LinesInVocals(ST, 1, "3");
+            Add2LinesInVocals(ST, int.Parse(Math.Ceiling(decimal.Parse(fdt.ToString())).ToString()), ((float)(Math.Round((FirstLyric - 0.001) / 2))).ToString());
             Vocals newLyrics = null;
             try
             {
                 newLyrics = Vocals.LoadFromFile(ST);//+ ".newvcl"
             }
             catch (Exception ex) { var tgst = "Error ..." + ex; UpdateLog(DateTime.Now, tgst, false, ConfigRepository.Instance()["dlcm_LogPath"], ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null); }
-            if (sdetails.Length > 50 && scomments.Length > 50) spacetoadd = spacetoadd / 4;
-            else if (sdetails.Length > 50 || scomments.Length > 50) spacetoadd = spacetoadd / 3;
-            else spacetoadd = spacetoadd / 2;
-
-            if (sdetails.Length > 50)
+            scomments = scomments.Trim().Replace("  ", " ");
+            var size = int.Parse(Math.Floor(decimal.Parse((scomments.Length / fdt).ToString())).ToString());
+            for (i = 0; i < (fdt); i++)
             {
-                //for (var i= newLyrics.Vocal.Length; i >0; i--)
-                //{
-                //    newLyrics.Vocal[i+1].Length = newLyrics.Vocal[i].Length;
-                //    newLyrics.Vocal[i + 1].Note = newLyrics.Vocal[i].Note;
-                //    newLyrics.Vocal[i + 1].Time = newLyrics.Vocal[i].Time;
-                //    newLyrics.Vocal[i + 1].Lyric = newLyrics.Vocal[i].Lyric;
-                //}
-                //newLyrics.Vocal[0].Time = float.Parse("0.61", NumberStyles.Float, CultureInfo.CurrentCulture);
-                //newLyrics.Vocal[0].Note = 254;
-                //newLyrics.Vocal[0].Length = float.Parse("2.38", NumberStyles.Float, CultureInfo.CurrentCulture);
-                //newLyrics.Vocal[0].Lyric = "" + sdetails.Substring(0,49) + "";
-                //newLyrics.Vocal[1].Time = float.Parse("0.61", NumberStyles.Float, CultureInfo.CurrentCulture);
-                //newLyrics.Vocal[1].Note = 254;
-                //newLyrics.Vocal[1].Length = float.Parse("2.38", NumberStyles.Float, CultureInfo.CurrentCulture);
-                //newLyrics.Vocal[1].Lyric = "" + sdetails.Substring(50, 100) + "+";//sdetails.Length
-                newLyrics.Vocal[0].Time = float.Parse("0.61", NumberStyles.Float, CultureInfo.CurrentCulture);
-                newLyrics.Vocal[0].Note = 254;
-                newLyrics.Vocal[0].Length = (float)(Math.Round(spacetoadd - 0.001, 3));
-                newLyrics.Vocal[0].Lyric = "" + sdetails.Substring(0, 49).Trim() + "";
-                newLyrics.Vocal[1].Time = (float)(Math.Round(float.Parse("0.61", NumberStyles.Float, CultureInfo.CurrentCulture) + newLyrics.Vocal[0].Length, 3));
-                newLyrics.Vocal[1].Note = 254;
-                newLyrics.Vocal[1].Length = (float)(Math.Round(spacetoadd - 0.001, 3));
-                var tr = sdetails.Length - 50;
-                newLyrics.Vocal[1].Lyric = "" + sdetails.Substring(49, sdetails.Length < 98 ? sdetails.Length - 49 : 49).Trim().Replace("  ", " ") + "+";
+                newLyrics.Vocal[i].Time = (float)(Math.Round(float.Parse("0.001", NumberStyles.Float, CultureInfo.CurrentCulture) + spacetoadd * ft + spacetoadd * i / fdt, 3));//(float)(Math.Round((float)spacetoadd + newLyrics.Vocal[i].Length, 3));
+                newLyrics.Vocal[i].Note = 254;
+                newLyrics.Vocal[i].Length = (float)(Math.Round((spacetoadd / fdt - float.Parse("0.001", NumberStyles.Float, CultureInfo.CurrentCulture)), 3));/*(double)FirstLyric -  / 2*/
+                var txt = scomments.Substring(0, size);
+                if (i + 1 < fdt) scomments = scomments.Substring(size, scomments.Length - size);
+                newLyrics.Vocal[i].Lyric = "" + txt + "+";
             }
-            else
+            using (var stream = File.Open(ST, FileMode.Create))
+                newLyrics.Serialize(stream);
+
+            //if (sdetails.Length > 50) Add2LinesInVocals(ST, 2, "0.61");
+            //else Add2LinesInVocals(ST, 1, "0.61");
+            Add2LinesInVocals(ST, int.Parse(Math.Ceiling(decimal.Parse(ft.ToString())).ToString()), "0.001");
+            newLyrics = null;
+            try
             {
-                newLyrics.Vocal[0].Time = float.Parse("0.61", NumberStyles.Float, CultureInfo.CurrentCulture);
-                newLyrics.Vocal[0].Note = 254;
-                newLyrics.Vocal[0].Length = (float)spacetoadd - float.Parse("0.001", NumberStyles.Float, CultureInfo.CurrentCulture);
-                newLyrics.Vocal[0].Lyric = "" + sdetails.Trim() + "+";
+                newLyrics = Vocals.LoadFromFile(ST);//+ ".newvcl"
+            }
+            catch (Exception ex) { var tgst = "Error ..." + ex; UpdateLog(DateTime.Now, tgst, false, ConfigRepository.Instance()["dlcm_LogPath"], ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null); }
+
+            sdetails = sdetails.ToString().Trim().Replace("  ", " ");
+            size = int.Parse(Math.Floor(decimal.Parse((sdetails.Length / ft).ToString())).ToString());
+            for (i = 0; i < (ft); i++)
+            {
+                newLyrics.Vocal[i].Time = (float)(Math.Round(float.Parse("0.001", NumberStyles.Float, CultureInfo.CurrentCulture) + spacetoadd * i / ft, 3));
+                newLyrics.Vocal[i].Note = 254;
+                newLyrics.Vocal[i].Length = (float)(Math.Round((spacetoadd / ft - float.Parse("0.001", NumberStyles.Float, CultureInfo.CurrentCulture)), 3));
+                var txt = sdetails.Substring(0, size);
+                if (i + 1 < ft) sdetails = sdetails.Substring(size, sdetails.Length - size);
+                newLyrics.Vocal[i].Lyric = "" + txt + "+";
             }
 
-            if (scomments.Length > 50)
-            {
+            //(float.Parse(Math.Ceiling(decimal.Parse((sdetails.Length / 50).ToString())).ToString()) + float.Parse(Math.Ceiling(decimal.Parse((scomments.Length / 50).ToString())).ToString()));
+            //if (sdetails.Length > 50) //if (scomments.Length > 50) spacetoadd = spacetoadd / 4;
+            //else if (sdetails.Length < 50 || scomments.Length > 50) spacetoadd = spacetoadd / 3;
+            //else spacetoadd = spacetoadd / 2;
 
-                newLyrics.Vocal[2].Time = (float)spacetoadd;
-                newLyrics.Vocal[2].Note = 254;
-                newLyrics.Vocal[2].Length = (float)(Math.Round(((double)FirstLyric - spacetoadd - float.Parse("0.001", NumberStyles.Float, CultureInfo.CurrentCulture) - 0.001) / 2, 3));
-                newLyrics.Vocal[2].Lyric = "" + scomments.Substring(0, 49).Trim() + "";
-                newLyrics.Vocal[3].Time = (float)(Math.Round((float)spacetoadd + newLyrics.Vocal[2].Length, 3));
-                newLyrics.Vocal[3].Note = 254;
-                newLyrics.Vocal[3].Length = (float)(Math.Round(((double)FirstLyric - spacetoadd - float.Parse("0.001", NumberStyles.Float, CultureInfo.CurrentCulture)) / 2, 3));
-                newLyrics.Vocal[3].Lyric = "" + scomments.Substring(49, scomments.Length < 98 ? scomments.Length - 49 : 49).Trim().Replace("  ", " ") + "+";
-            }
-            else
-            {
+            //////if (sdetails.Length > 50)
+            //////{
+            //////    //for (var i= newLyrics.Vocal.Length; i >0; i--)
+            //////    //{
+            //////    //    newLyrics.Vocal[i+1].Length = newLyrics.Vocal[i].Length;
+            //////    //    newLyrics.Vocal[i + 1].Note = newLyrics.Vocal[i].Note;
+            //////    //    newLyrics.Vocal[i + 1].Time = newLyrics.Vocal[i].Time;
+            //////    //    newLyrics.Vocal[i + 1].Lyric = newLyrics.Vocal[i].Lyric;
+            //////    //}
+            //////    //newLyrics.Vocal[0].Time = float.Parse("0.61", NumberStyles.Float, CultureInfo.CurrentCulture);
+            //////    //newLyrics.Vocal[0].Note = 254;
+            //////    //newLyrics.Vocal[0].Length = float.Parse("2.38", NumberStyles.Float, CultureInfo.CurrentCulture);
+            //////    //newLyrics.Vocal[0].Lyric = "" + sdetails.Substring(0,49) + "";
+            //////    //newLyrics.Vocal[1].Time = float.Parse("0.61", NumberStyles.Float, CultureInfo.CurrentCulture);
+            //////    //newLyrics.Vocal[1].Note = 254;
+            //////    //newLyrics.Vocal[1].Length = float.Parse("2.38", NumberStyles.Float, CultureInfo.CurrentCulture);
+            //////    //newLyrics.Vocal[1].Lyric = "" + sdetails.Substring(50, 100) + "+";//sdetails.Length
+            //////    newLyrics.Vocal[0].Time = float.Parse("0.61", NumberStyles.Float, CultureInfo.CurrentCulture);
+            //////    newLyrics.Vocal[0].Note = 254;
+            //////    newLyrics.Vocal[0].Length = (float)(Math.Round(spacetoadd - 0.001, 3));
+            //////    newLyrics.Vocal[0].Lyric = "" + sdetails.Substring(0, 49).Trim() + "";
+            //////    newLyrics.Vocal[1].Time = (float)(Math.Round(float.Parse("0.61", NumberStyles.Float, CultureInfo.CurrentCulture) + newLyrics.Vocal[0].Length, 3));
+            //////    newLyrics.Vocal[1].Note = 254;
+            //////    newLyrics.Vocal[1].Length = (float)(Math.Round(spacetoadd - 0.001, 3));
+            //////    var tr = sdetails.Length - 50;
+            //////    newLyrics.Vocal[1].Lyric = "" + sdetails.Substring(49, sdetails.Length < 98 ? sdetails.Length - 49 : 49).Trim().Replace("  ", " ") + "+";
+            //////}
+            //////else
+            //////{
+            //////    newLyrics.Vocal[0].Time = float.Parse("0.61", NumberStyles.Float, CultureInfo.CurrentCulture);
+            //////    newLyrics.Vocal[0].Note = 254;
+            //////    newLyrics.Vocal[0].Length = (float)spacetoadd - float.Parse("0.001", NumberStyles.Float, CultureInfo.CurrentCulture);
+            //////    newLyrics.Vocal[0].Lyric = "" + sdetails.Trim() + "+";
+            //////}
 
-                newLyrics.Vocal[1].Time = (float)spacetoadd + float.Parse("0.61", NumberStyles.Float, CultureInfo.CurrentCulture);
-                newLyrics.Vocal[1].Note = 254;
-                newLyrics.Vocal[1].Length = (float)(Math.Round(spacetoadd - float.Parse("0.001", NumberStyles.Float, CultureInfo.CurrentCulture), 3));// FirstLyric - newLyrics.Vocal[1].Time - 2; //2
-                newLyrics.Vocal[1].Lyric = "" + scomments.Trim() + "+";/*(double)FirstLyric - */
-            }
+            //////if (scomments.Length > 50)
+            //////{
+
+            //////    newLyrics.Vocal[1].Time = (float)(Math.Round(spacetoadd, 3));
+            //////    newLyrics.Vocal[1].Note = 254;
+            //////    newLyrics.Vocal[1].Length = (float)(Math.Round(((double)FirstLyric - spacetoadd - float.Parse("0.001", NumberStyles.Float, CultureInfo.CurrentCulture) - 0.001) / 2, 3));
+            //////    newLyrics.Vocal[1].Lyric = "" + scomments.Substring(0, 49).Trim() + "";
+            //////    newLyrics.Vocal[2].Time = (float)(Math.Round((float)spacetoadd + newLyrics.Vocal[2].Length, 3));
+            //////    newLyrics.Vocal[2].Note = 254;
+            //////    newLyrics.Vocal[2].Length = (float)(Math.Round(((double)FirstLyric - spacetoadd - float.Parse("0.001", NumberStyles.Float, CultureInfo.CurrentCulture)) / 2, 3));
+            //////    newLyrics.Vocal[2].Lyric = "" + scomments.Substring(49, scomments.Length < 98 ? scomments.Length - 49 : 49).Trim().Replace("  ", " ") + "+";
+            //////}
+            //////else if (sdetails.Length <= 50)
+            //////{
+
+            //////    newLyrics.Vocal[1].Time = (float)(Math.Round((float)spacetoadd + float.Parse("0.61", NumberStyles.Float, CultureInfo.CurrentCulture), 3));
+            //////    newLyrics.Vocal[1].Note = 254;
+            //////    newLyrics.Vocal[1].Length = (float)(Math.Round(spacetoadd - float.Parse("0.001", NumberStyles.Float, CultureInfo.CurrentCulture), 3));// FirstLyric - newLyrics.Vocal[1].Time - 2; //2
+            //////    newLyrics.Vocal[1].Lyric = "" + scomments.Trim() + "+";/*(double)FirstLyric - */
+            //////}
+            //////else
+            //////{
+
+            //////    newLyrics.Vocal[2].Time = (float)(Math.Round((float)spacetoadd + float.Parse("0.61", NumberStyles.Float, CultureInfo.CurrentCulture), 3));
+            //////    newLyrics.Vocal[2].Note = 254;
+            //////    newLyrics.Vocal[2].Length = (float)(Math.Round(spacetoadd - float.Parse("0.001", NumberStyles.Float, CultureInfo.CurrentCulture), 3));// FirstLyric - newLyrics.Vocal[1].Time - 2; //2
+            //////    newLyrics.Vocal[2].Lyric = "" + scomments.Trim() + "+";/*(double)FirstLyric - */
+            //////}
             //if (float.Parse(dus.Tables[0].Rows[i].ItemArray[3].ToString(), NumberStyles.Float, CultureInfo.CurrentCulture) > FirstLyric)
             //    FirstLyric = float.Parse(dus.Tables[0].Rows[i].ItemArray[3].ToString(), NumberStyles.Float, CultureInfo.CurrentCulture);
 
@@ -4164,15 +4588,15 @@ namespace RocksmithToolkitGUI.DLCManager
                     case "generate":
                         var message = "Package was generated.";
                         if (errorsFound.Length > 0)
-                            message = String.Format("Package was generated with errors! See below: {0}(1}", Environment.NewLine, errorsFound);
-                        message += String.Format("{0}You want to open the folder in which the package was generated?{0}", Environment.NewLine);
+                            message = string.Format("Package was generated with errors! See below: {0}(1}", Environment.NewLine, errorsFound);
+                        message += string.Format("{0}You want to open the folder in which the package was generated?{0}", Environment.NewLine);
                         if (MessageBox.Show(message, MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                         {
                             Process.Start(Path.GetDirectoryName("-"));
                         }
                         break;
                     case "error":
-                        var message2 = String.Format("Package generation failed. See below: {0}{1}{0}", Environment.NewLine, errorsFound);
+                        var message2 = string.Format("Package generation failed. See below: {0}{1}{0}", Environment.NewLine, errorsFound);
                         MessageBox.Show(message2, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         //Parent.Focus();
                         break;
@@ -4283,9 +4707,11 @@ namespace RocksmithToolkitGUI.DLCManager
 
             Random randomp = new Random();
             var packid = randomp.Next(0, 100000);
-            var startInfo = new ProcessStartInfo();
-            startInfo.FileName = Path.Combine(AppWD, "oggcut.exe");
-            startInfo.WorkingDirectory = AppWD;
+            var startInfo = new ProcessStartInfo
+            {
+                FileName = Path.Combine(AppWD, "oggcut.exe"),
+                WorkingDirectory = AppWD
+            };
             var t = OggPath.Replace(".wem", "_fixed.ogg"); //"C:\\GitHub\\tmp\\0\\0_dlcpacks\\rs1compatibilitydisc_PS3\\audio\\ps3\\149627248.ogg";//txt_TempPath.Text + "\\0_dlcpacks\\rs1compatibilitydlc.psarc";
             var tt = t.Replace("_fixed.ogg", "_preview.ogg");
             var times = ConfigRepository.Instance()["dlcm_PreviewStart"]; //00:30
@@ -4294,7 +4720,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //var PreviewTime = "";
             var PreviewLenght = "";
             TimeSpan r = new TimeSpan(0, timepieces[0].ToInt32(), timepieces[1].ToInt32());
-            startInfo.Arguments = String.Format(" -i \"{0}\" -o \"{1}\" -s \"{2}\" -e \"{3}\"",
+            startInfo.Arguments = string.Format(" -i \"{0}\" -o \"{1}\" -s \"{2}\" -e \"{3}\"",
                                                 t,
                                                 tt,
                                                 r.TotalMilliseconds,
@@ -4309,7 +4735,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     if (DDC.ExitCode == 0)
                     {
                         var wwisePath = "";
-                        if (!String.IsNullOrEmpty(ConfigRepository.Instance()["general_wwisepath"]))
+                        if (!string.IsNullOrEmpty(ConfigRepository.Instance()["general_wwisepath"]))
                             wwisePath = ConfigRepository.Instance()["general_wwisepath"];
                         else
                             wwisePath = Environment.GetEnvironmentVariable("WWISEROOT");
@@ -4744,7 +5170,7 @@ namespace RocksmithToolkitGUI.DLCManager
             {
                 try
                 { Directory.CreateDirectory(destination_dir + dir.Substring(copy_dir.Length)); }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     //foreach (var e in ex.InnerExceptions)
                     //{Aggregate
@@ -4759,7 +5185,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 {
                     File.Copy(file_name, destination_dir + file_name.Substring(copy_dir.Length), true);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     //foreach (var e in ex.InnerExceptions)
                     //{Aggregate
@@ -4867,7 +5293,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 //    //Console.WriteLine(String.Format("Channels:\n{0}\n", string.Join("\n", channels)));
                 //    //Console.WriteLine(String.Format("Playlists:\n{0}\n", string.Join("\n", playlists)));
             }
-            catch (AggregateException ex) { }
+            catch (AggregateException) { }
 
             //foreach (var e in ex.InnerExceptions)
             //{
@@ -4919,11 +5345,9 @@ namespace RocksmithToolkitGUI.DLCManager
         public static Task<string> StartToGetYoutubeDetail(MainDBfields SongRecord, int i, OleDbConnection cnb)
         {
             Task<string> bytesRead = GetYoutubeDetailsAsync(SongRecord, i, cnb, null);
-            string sRead = "";
             //if (bytesRead.Result.ToString().Split(';')[4] != "-" && bytesRead.Result.ToString().Split(';')[4] != "") sRead = DwdldAlbumImg(bytesRead.Result.ToString().Split(';')[4], bytesRead.Result.ToString().Split(';')[3]);
             while (bytesRead.Status.ToString() != "Done")
             {
-                sRead = "";// +";"+ sRead;
             }
             return bytesRead;
         }

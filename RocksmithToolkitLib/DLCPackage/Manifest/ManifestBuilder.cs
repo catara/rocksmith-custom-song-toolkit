@@ -87,7 +87,7 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest
                 attribute.Score_PNV = 0;
                 attribute.Sections = new List<Section>();
                 attribute.Shipping = true;
-                attribute.SongAsset = String.Format("urn:llid:{0}", x.SongXML.LLID);
+                attribute.SongAsset = String.Format("urn:llid:{0}", x.SongFile.LLID);
                 attribute.SongEvent = String.Format("Play_{0}", dlcKey);
                 attribute.SongKey = dlcKey;
                 attribute.SongLength = 0;

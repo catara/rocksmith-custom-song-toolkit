@@ -336,7 +336,7 @@ namespace RocksmithToolkitLib.Ogg
                 audioPath = wemPath;
             }
 
-//bcpai previously it was commented out
+
             if (audioPath.Substring(audioPath.Length - 4).ToLower() == ".wem" && !File.Exists(wemPreviewPath))
             {
                 Revorb(audioPath, oggPath, Path.GetDirectoryName(Application.ExecutablePath), WwiseVersion.Wwise2013);
@@ -454,7 +454,7 @@ namespace RocksmithToolkitLib.Ogg
                 case ".ogg":
                     return WwiseVersion.Wwise2010;
                 case ".wem":
-                    return WwiseVersion.Wwise2016;
+                    return WwiseVersion.Wwise2017;//bcapi
                 default:
                     throw new InvalidOperationException("Audio file not supported.");
             }

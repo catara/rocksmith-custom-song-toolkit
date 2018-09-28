@@ -268,11 +268,11 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                     case GameVersion.RS2014:
                         // TODO: Test WEM generation with non-PC Platforms
                         if (chkPlatformMAC.Checked == chkPlatformPS3.Checked == chkPlatformXBox360.Checked == false)
-                            return "All Supported Files|*.wem;*.ogg;*.wav|Wwise 2016 audio files (*.wem)|*.wem|Ogg Vorbis audio files (*.ogg)|*.ogg|Wave audio files (*.wav)|*.wav";
+                            return "All Supported Files|*.wem;*.ogg;*.wav|Wwise 2017 audio files (*.wem)|*.wem|Ogg Vorbis audio files (*.ogg)|*.ogg|Wave audio files (*.wav)|*.wav";
 
-                        return "Wwise 2016 audio files (*.wem)|*.wem";
+                        return "Wwise 2017 audio files (*.wem)|*.wem";
                     default:
-                        return "Wwise 2016 audio files (*.ogg)|*.ogg";
+                        return "Wwise 2017 audio files (*.ogg)|*.ogg";
                 }
             }
         }
@@ -322,7 +322,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             var songXml = Song2014.LoadFromFile(mArr.SongXml.File);
             var newXml = Path.GetTempFileName();
             mArr.SongXml = new RocksmithToolkitLib.DLCPackage.AggregateGraph.SongXML { File = newXml };
-            mArr.SongXML = new RocksmithToolkitLib.DLCPackage.AggregateGraph.SongFile { File = "" };
+            mArr.SongFile = new RocksmithToolkitLib.DLCPackage.AggregateGraph.SongFile { File = "" };
             mArr.ClearCache();
             mArr.BonusArr = true;
             mArr.Id = IdGenerator.Guid();
@@ -499,7 +499,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 if (String.IsNullOrEmpty(arr.SongXml.File))
                     continue;
                 arr.SongXml.File = arr.SongXml.File.RelativeTo(BasePath);
-                arr.SongXML.File = "";
+                arr.SongFile.File = "";
                 if (!String.IsNullOrEmpty(arr.FontSng))
                     arr.FontSng = arr.FontSng.RelativeTo(BasePath);
             }
@@ -518,8 +518,8 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 {
                     if (!String.IsNullOrEmpty(arr.SongXml.File))
                         arr.SongXml.File = arr.SongXml.File.AbsoluteTo(BasePath);
-                    if (!String.IsNullOrEmpty(arr.SongXML.File))
-                        arr.SongXML.File = arr.SongXML.File.AbsoluteTo(BasePath);
+                    if (!String.IsNullOrEmpty(arr.SongFile.File))
+                        arr.SongFile.File = arr.SongFile.File.AbsoluteTo(BasePath);
                     if (!String.IsNullOrEmpty(arr.FontSng))
                         arr.FontSng = arr.FontSng.AbsoluteTo(BasePath);
                 }
@@ -533,8 +533,8 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             {
                 if (!String.IsNullOrEmpty(arr.SongXml.File))
                     arr.SongXml.File = arr.SongXml.File.AbsoluteTo(BasePath);
-                if (!String.IsNullOrEmpty(arr.SongXML.File))
-                    arr.SongXML.File = arr.SongXML.File.AbsoluteTo(BasePath);
+                if (!String.IsNullOrEmpty(arr.SongFile.File))
+                    arr.SongFile.File = arr.SongFile.File.AbsoluteTo(BasePath);
                 if (!String.IsNullOrEmpty(arr.FontSng))
                     arr.FontSng = arr.FontSng.AbsoluteTo(BasePath);
             }
@@ -1105,7 +1105,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 }
 
                 // clear the archive file name
-                arr.SongXML.File = "";
+                arr.SongFile.File = "";
 
                 if (arr.ArrangementType == ArrangementType.Bass || arr.ArrangementType == ArrangementType.Guitar)
                 {
@@ -1390,12 +1390,12 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                         txtAudioPath.Text = "";
                     if (!chkPlatformMAC.Checked && !chkPlatformPS3.Checked && !chkPlatformXBox360.Checked)
                     {//PC only
-                        txtAudioPath.Cue = "Audio to Wwise 2016 converter for Windows (*.wem, *.ogg, *.wav)";
+                        txtAudioPath.Cue = "Audio to Wwise 2017 converter for Windows (*.wem, *.ogg, *.wav)";
                         label2.Text = @"Song preview is generated automatically if not provided in format 'filename_preview.wem'";
                     }
                     else
                     {
-                        txtAudioPath.Cue = "Converted audio on Wwise 2016 for Windows, Mac, XBox360 or PS3 (*.wem)";
+                        txtAudioPath.Cue = "Converted audio on Wwise 2017 for Windows, Mac, XBox360 or PS3 (*.wem)";
                         label2.Text = @"Song preview must have the same file name with '_preview' in the end, eg. 'filename_preview.wem'";
                     }
                     break;
@@ -1404,7 +1404,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                         txtAudioPath.Text = "";
                     chkPlatformMAC.Checked = false;
                     numAudioQuality.Enabled = false;
-                    txtAudioPath.Cue = "Converted audio on Wwise 2016 for Windows, XBox360 or PS3 (*.ogg)";
+                    txtAudioPath.Cue = "Converted audio on Wwise 2017 for Windows, XBox360 or PS3 (*.ogg)";
                     label2.Text = "";
                     break;
             }
@@ -1699,7 +1699,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 if (updateArrangmentID)
                 {
                     // generate new AggregateGraph
-                    arr.SongXML = new RocksmithToolkitLib.DLCPackage.AggregateGraph.SongFile() { File = "" };
+                    arr.SongFile = new RocksmithToolkitLib.DLCPackage.AggregateGraph.SongFile() { File = "" };
                     // generate new Arrangement IDs
                     arr.Id = IdGenerator.Guid();
                     arr.MasterId = RandomGenerator.NextInt();
@@ -2187,9 +2187,9 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             Control control = (Control)sender;
             string name = control.Name;
             if (name == "numVolSong")
-                tt.SetToolTip(numVolSong, "Higher 0,-1,-2,-3,..., Average -12 ,...,-16,-17 Lower");
-            else
-                tt.SetToolTip(numVolPreview, "Higher 0,-1,-2,-3,..., Average -12 ,...,-16,-17 Lower");
+                tt.SetToolTip(numVolSong, "Softer 0, -1, -2 ... Default -7 ... -18, -19, -20 Louder");
+            else // TODO: consider changing preview default to -5.0
+                tt.SetToolTip(numVolPreview, "Softer 0, -1, -2 ... Default -5 ... -18, -19, -20 Louder");
         }
 
         private void btnAlbumArt_Click(object sender, EventArgs e)

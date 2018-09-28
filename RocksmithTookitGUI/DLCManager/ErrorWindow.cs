@@ -91,6 +91,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_Description
             // 
+            this.txt_Description.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txt_Description.Location = new System.Drawing.Point(13, 4);
             this.txt_Description.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txt_Description.Name = "txt_Description";

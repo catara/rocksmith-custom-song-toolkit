@@ -76,6 +76,7 @@ namespace RocksmithToolkitLib.DLCPackage
         /// <param name="predefinedPlatform">Predefined source platform.</param>
         public static string Unpack(string sourceFileName, string savePath, bool decodeAudio = false, bool overwriteSongXml = false, Platform predefinedPlatform = null)
         {
+            var ps4 = false;
             Platform platform = sourceFileName.GetPlatform();
             if (predefinedPlatform != null && predefinedPlatform.platform != GamePlatform.None && predefinedPlatform.version != GameVersion.None)
                 platform = predefinedPlatform;
@@ -113,6 +114,7 @@ namespace RocksmithToolkitLib.DLCPackage
                     break;
                 case GamePlatform.PS3:
                     UnpackPS3Package(sourceFileName, savePath, platform);
+                    if (platform.version == GameVersion.None) { platform.version = GameVersion.RS2014; ps4 = true; } //bcapi
                     break;
                 case GamePlatform.None:
                     throw new InvalidOperationException("Platform not found :(");
@@ -124,8 +126,8 @@ namespace RocksmithToolkitLib.DLCPackage
             // DECODE AUDIO
             if (decodeAudio)
             {
-                GlobalExtension.ShowProgress("Decoding Audio ...", 50); //bcapi removing oggg as giving errors e.g. pretender official
-                var audioFiles = Directory.EnumerateFiles(unpackedDir, "*.*", SearchOption.AllDirectories).Where(s => s.EndsWith(".odgg") || s.EndsWith(".wem"));
+                GlobalExtension.ShowProgress("Decoding Audio ...", 50);
+                var audioFiles = Directory.EnumerateFiles(unpackedDir, "*.*", SearchOption.AllDirectories).Where(s => s.EndsWith(".ogg") || s.EndsWith(".wem"));
                 foreach (var file in audioFiles)
                 {
                     var outputAudioFileName = Path.Combine(Path.GetDirectoryName(file), String.Format("{0}_fixed{1}", Path.GetFileNameWithoutExtension(file), ".ogg"));
@@ -166,51 +168,54 @@ namespace RocksmithToolkitLib.DLCPackage
                             att = Manifest2014<Attributes2014>.LoadFromFile(jsonFiles).Entries.ToArray()[0].Value.ToArray()[0].Value;
                     }
 
-                    var sngContent = Sng2014File.LoadFromFile(sngFile, platform);
-                    using (var outputStream = new FileStream(xmlSngFile, FileMode.Create, FileAccess.ReadWrite))
+                    if (!ps4) //bcapi
                     {
-                        dynamic xmlContent = null;
-
-                        if (arrType == ArrangementType.Vocal)
-                            xmlContent = new Vocals(sngContent);
-                        else
-                            xmlContent = new Song2014(sngContent, att);
-
-                        xmlContent.Serialize(outputStream);
-                    }
-
-                    // correct old toolkit/EOF xml (tuning) issues ... sync with SNG data
-                    if (File.Exists(xmlEofFile) && !overwriteSongXml && arrType != ArrangementType.Vocal)
-                    {
-                        var eofSong = Song2014.LoadFromFile(xmlEofFile);
-                        var sngSong = Song2014.LoadFromFile(xmlSngFile);
-                        if (eofSong.Tuning != sngSong.Tuning)
+                        var sngContent = Sng2014File.LoadFromFile(sngFile, platform);
+                        using (var outputStream = new FileStream(xmlSngFile, FileMode.Create, FileAccess.ReadWrite))
                         {
-                            eofSong.Tuning = sngSong.Tuning;
-                            var xmlComments = Song2014.ReadXmlComments(xmlEofFile);
+                            dynamic xmlContent = null;
 
-                            using (var stream = File.Open(xmlEofFile, FileMode.Create))
-                                eofSong.Serialize(stream, true);
+                            if (arrType == ArrangementType.Vocal)
+                                xmlContent = new Vocals(sngContent);
+                            else
+                                xmlContent = new Song2014(sngContent, att);
 
-                            Song2014.WriteXmlComments(xmlEofFile, xmlComments, customComment: "Synced with SNG file");
-                            Console.WriteLine("Fixed Tuning Descrepancies: " + xmlEofFile);
-                            GlobalExtension.ShowProgress("Fixed tuning descepancies ...");
+                            xmlContent.Serialize(outputStream);
                         }
-                    }
-                    else if (File.Exists(xmlEofFile) && !overwriteSongXml && arrType == ArrangementType.Vocal)
-                    {
-                        // preserves vocal xml comments
-                    }
-                    else
-                    {
-                        if (!isODLC)
-                            Song2014.WriteXmlComments(xmlSngFile, customComment: "Generated from SNG file");
 
-                        File.Copy(xmlSngFile, xmlEofFile, true);
-                    }
+                        // correct old toolkit/EOF xml (tuning) issues ... sync with SNG data
+                        if (File.Exists(xmlEofFile) && !overwriteSongXml && arrType != ArrangementType.Vocal)
+                        {
+                            var eofSong = Song2014.LoadFromFile(xmlEofFile);
+                            var sngSong = Song2014.LoadFromFile(xmlSngFile);
+                            if (eofSong.Tuning != sngSong.Tuning)
+                            {
+                                eofSong.Tuning = sngSong.Tuning;
+                                var xmlComments = Song2014.ReadXmlComments(xmlEofFile);
 
-                    if (File.Exists(xmlSngFile))
-                        File.Delete(xmlSngFile);
+                                using (var stream = File.Open(xmlEofFile, FileMode.Create))
+                                    eofSong.Serialize(stream, true);
+
+                                Song2014.WriteXmlComments(xmlEofFile, xmlComments, customComment: "Synced with SNG file");
+                                Console.WriteLine("Fixed Tuning Descrepancies: " + xmlEofFile);
+                                GlobalExtension.ShowProgress("Fixed tuning descepancies ...");
+                            }
+                        }
+                        else if (File.Exists(xmlEofFile) && !overwriteSongXml && arrType == ArrangementType.Vocal)
+                        {
+                            // preserves vocal xml comments
+                        }
+                        else
+                        {
+                            if (!isODLC)
+                                Song2014.WriteXmlComments(xmlSngFile, customComment: "Generated from SNG file");
+
+                            File.Copy(xmlSngFile, xmlEofFile, true);
+                        }
+
+                        if (File.Exists(xmlSngFile))
+                            File.Delete(xmlSngFile);
+                    }
 
                     progress += step;
                     GlobalExtension.UpdateProgress.Value = (int)progress;
@@ -547,9 +552,10 @@ namespace RocksmithToolkitLib.DLCPackage
 
             var outputMessage = RijndaelEncryptor.DecryptPS3Edat();
 
-            if (File.Exists(outputFilename)) File.Delete(outputFilename);
+            if (File.Exists(outputFilename))
+                ;//File.Delete(outputFilename);
 
-            foreach (var fileName in Directory.EnumerateFiles(PS3_WORKDIR, "*.psarc.dat"))
+            foreach (var fileName in Directory.EnumerateFiles(PS3_WORKDIR, "*.psarc.edat"))
             {
                 using (var outputFileStream = File.OpenRead(fileName))
                 {

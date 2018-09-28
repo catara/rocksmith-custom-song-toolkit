@@ -723,7 +723,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                 foreach (string xmln in Directory.GetFiles(unpackedDir + "\\songs\\arr\\", "*_bass.xml", System.IO.SearchOption.AllDirectories))
                                 {
                                     {
-                                        var bassRemoved = (RemoveDD(unpackedDir, "Yes", xmln, unpackedDir.GetPlatform(), false, false) == "Yes") ? "Yes" : "No";
+                                        var bassRemoved = (RemoveDD(unpackedDir, "Yes", xmln, unpackedDir.GetPlatform(), false, false, "No") == "Yes") ? "Yes" : "No";
                                     }
                                 }
                             }
@@ -808,7 +808,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                 foreach (string xmln in Directory.GetFiles(unpackedDir + "\\songs\\arr\\", "*_bass.xml", System.IO.SearchOption.AllDirectories))
                                 {
                                     {
-                                        var bassRemoved = (RemoveDD(unpackedDir, "Yes", xmln, unpackedDir.GetPlatform(), false, false) == "Yes") ? "Yes" : "No";
+                                        var bassRemoved = (RemoveDD(unpackedDir, "Yes", xmln, unpackedDir.GetPlatform(), false, false, "No") == "Yes") ? "Yes" : "No";
                                     }
                                 }
                             }

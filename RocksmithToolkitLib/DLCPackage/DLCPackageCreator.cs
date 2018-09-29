@@ -34,8 +34,10 @@ namespace RocksmithToolkitLib.DLCPackage
     {
         #region CONSTANT
 
-        private static readonly string XBOX_WORKDIR = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "xboxpackage");
-        private static readonly string PS3_WORKDIR = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "edat");
+        // path fixed for unit testing compatiblity
+        private static readonly string XBOX_WORKDIR = Path.Combine(AppDomain.CurrentDomain.SetupInformation.ApplicationBase, "xboxpackage");
+        // path fixed for unit testing compatiblity
+        private static readonly string PS3_WORKDIR = Path.Combine(AppDomain.CurrentDomain.SetupInformation.ApplicationBase, "edat");
 
         private static readonly string[] PATH_PC = { "Windows", "Generic", "_p" };
         private static readonly string[] PATH_MAC = { "Mac", "MacOS", "_m" };
@@ -93,14 +95,14 @@ namespace RocksmithToolkitLib.DLCPackage
         #region PACKAGE
 
         /// <summary>
-        /// Generates CDLC package into packagePath.
+        /// Generate package archive(s) (Song RS1 and RS2014, Lesson or Inlay) from DLCPackageData
         /// </summary>
-        /// <param name="packagePath">Package path.</param>
-        /// <param name="info">DLCPackageData.</param>
-        /// <param name="platform">Target platform.</param>
-        /// <param name="dlcType">Package type.</param>
-        /// <param name="pnum">Packages left. Used to control art cache.</param>
-        public static void Generate(string packagePath, DLCPackageData info, Platform platform, DLCPackageType dlcType = DLCPackageType.Song, int pnum = -1)
+        /// <param name="destPath">Archive destination path and file name with/or without extension</param>
+        /// <param name="info">DLCPackageData</param>
+        /// <param name="platform">Target Platform.</param>
+        /// <param name="dlcType">Package Type (Song, Lesson, or Inlay)</param>
+        /// <param name="pnum">Packages remaining to generate (used to control art cache)</param>
+        public static string Generate(string destPath, DLCPackageData info, Platform platform, DLCPackageType dlcType = DLCPackageType.Song, int pnum = -1)
         {
             switch (platform.platform)
             {
@@ -113,6 +115,12 @@ namespace RocksmithToolkitLib.DLCPackage
                         Directory.CreateDirectory(PS3_WORKDIR);
                     break;
             }
+
+            var packageName = Path.GetFileNameWithoutExtension(destPath).StripPlatformEndName();
+            var archivePath = Path.Combine(Path.GetDirectoryName(destPath), packageName);
+
+            if (platform.version == GameVersion.RS2014)
+                archivePath += platform.GetPathName()[2];
 
             using (var packPsarcStream = new MemoryStream())
             {
@@ -138,9 +146,6 @@ namespace RocksmithToolkitLib.DLCPackage
                         throw new InvalidOperationException("Unexpected game version value");
                 }
 
-                var packageName = Path.GetFileNameWithoutExtension(packagePath).StripPlatformEndName();
-                var songFileName = String.Format("{0}{1}", Path.Combine(Path.GetDirectoryName(packagePath), packageName), platform.GetPathName()[2]);
-
                 // SAVE PACKAGE
                 switch (platform.platform)
                 {
@@ -149,11 +154,17 @@ namespace RocksmithToolkitLib.DLCPackage
                         switch (platform.version)
                         {
                             case GameVersion.RS2014:
-                                using (var fl = File.Create(songFileName + ".psarc"))
+                                if (!archivePath.EndsWith(".psarc"))
+                                    archivePath += ".psarc";
+
+                                using (var fl = File.Create(archivePath))
                                     packPsarcStream.CopyTo(fl);
                                 break;
                             case GameVersion.RS2012:
-                                using (var fl = File.Create(songFileName + ".dat"))
+                                if (!archivePath.EndsWith(".dat"))
+                                    archivePath += ".dat";
+
+                                using (var fl = File.Create(archivePath))
                                     RijndaelEncryptor.EncryptFile(packPsarcStream, fl, RijndaelEncryptor.DLCKey);
                                 break;
                             default:
@@ -161,27 +172,36 @@ namespace RocksmithToolkitLib.DLCPackage
                         }
                         break;
                     case GamePlatform.XBox360:
-                        BuildXBox360Package(songFileName, info, FILES_XBOX, platform.version, dlcType);
+                        if (!archivePath.EndsWith("_xbox"))
+                            archivePath += "_xbox";
+
+                        archivePath = BuildXBox360Package(archivePath, info, FILES_XBOX, platform.version, dlcType);
                         break;
                     case GamePlatform.PS3:
-                        EncryptPS3EdatFiles(songFileName + ".psarc", platform);
+                        if (!archivePath.EndsWith(".psarc"))
+                            archivePath += ".psarc";
+
+                        archivePath = EncryptPS3EdatFiles(archivePath, platform);
                         break;
                 }
             }
 
-            packPsarc.Dispose();//test this too
+            if (packPsarc != null)
+                packPsarc.Dispose();
+
             FILES_XBOX.Clear();
             FILES_PS3.Clear();
             DeleteTmpFiles(TMPFILES_SNG);
+
             if (pnum <= 1)// doesn't trigger for last one, should be ? == 1 when last package generated.
-            {
                 DeleteTmpFiles(TMPFILES_ART);
-            }
+
+            return archivePath;
         }
 
         #region XBox360
 
-        public static void BuildXBox360Package(string songFileName, DLCPackageData info, IEnumerable<string> xboxFiles, GameVersion gameVersion, DLCPackageType dlcType = DLCPackageType.Song)
+        public static string BuildXBox360Package(string destPath, DLCPackageData info, IEnumerable<string> xboxFiles, GameVersion gameVersion, DLCPackageType dlcType = DLCPackageType.Song)
         {
             LogRecord x = new LogRecord();
             RSAParams xboxRSA = info.SignatureType == PackageMagic.CON ? new RSAParams(new DJsIO(Resources.XBox360_KV, true)) : new RSAParams(StrongSigned.LIVE);
@@ -190,7 +210,7 @@ namespace RocksmithToolkitLib.DLCPackage
             foreach (string file in xboxFiles)
                 xboxSTFS.AddFile(file, Path.GetFileName(file));
 
-            STFSPackage xboxPackage = new STFSPackage(xboxSTFS, xboxRSA, songFileName, x);
+            STFSPackage xboxPackage = new STFSPackage(xboxSTFS, xboxRSA, destPath, x);
             var generated = xboxPackage.RebuildPackage(xboxRSA);
             if (!generated)
                 throw new InvalidOperationException("Error on create XBox360 package, details: \n" + x.Log);
@@ -198,7 +218,12 @@ namespace RocksmithToolkitLib.DLCPackage
             xboxPackage.FlushPackage(xboxRSA);
             xboxPackage.CloseIO();
 
-            DirectoryExtension.SafeDelete(XBOX_WORKDIR);
+            IOExtension.DeleteDirectory(XBOX_WORKDIR);
+
+            if (File.Exists(destPath))
+                return destPath;
+
+            return String.Empty;
         }
 
         private static HeaderData GetSTFSHeader(this DLCPackageData info, GameVersion gameVersion, DLCPackageType dlcType)
@@ -249,13 +274,18 @@ namespace RocksmithToolkitLib.DLCPackage
 
         #region PS3
 
-        public static void EncryptPS3EdatFiles(string songFileName, Platform platform)
+        // TODO: elimate redundancy
+        // this method is almost the same as as Packer.PackPS3 method
+        public static string EncryptPS3EdatFiles(string srcPath, Platform platform)
         {
-            // Due to PS3 encryption limitation - replace spaces in fname with '_'
-            if (Path.GetFileName(songFileName).Contains(" "))
-                songFileName = Path.Combine(Path.GetDirectoryName(songFileName), Path.GetFileName(songFileName).Replace(" ", "_"));
+            // source file must be in "/edat" folder in application root directory
+            var destPath = String.Empty;
 
-            // Cleaning work dir, beware there is .psarcthat we need.
+            // Due to PS3 encryption limitation - replace spaces in fname with '_'
+            if (Path.GetFileName(srcPath).Contains(" "))
+                srcPath = Path.Combine(Path.GetDirectoryName(srcPath), Path.GetFileName(srcPath).Replace(" ", "_"));
+
+            // Cleaning work dir, beware there is .psarc that we need.
             var junkFiles = Directory.EnumerateFiles(PS3_WORKDIR, "*.*").Where(e => !e.EndsWith(".psarc"));
             foreach (var junk in junkFiles)
                 File.Delete(junk);
@@ -267,13 +297,14 @@ namespace RocksmithToolkitLib.DLCPackage
                     if (File.Exists(FILES_PS3[0]))
                     {
                         var oldName = FILES_PS3[0].Clone().ToString();
-                        FILES_PS3[0] = Path.Combine(Path.GetDirectoryName(FILES_PS3[0]), Path.GetFileName(songFileName));
+                        FILES_PS3[0] = Path.Combine(Path.GetDirectoryName(FILES_PS3[0]), Path.GetFileName(srcPath));
 
                         if (File.Exists(FILES_PS3[0]))
                             File.Delete(FILES_PS3[0]);
                         File.Move(oldName, FILES_PS3[0]);
                     }
             }
+
             string encryptResult = RijndaelEncryptor.EncryptPS3Edat();
 
             // Delete .psarc files
@@ -285,25 +316,27 @@ namespace RocksmithToolkitLib.DLCPackage
             if (platform.version == GameVersion.RS2014)
             {
                 var encryptedFile = String.Format("{0}.edat", FILES_PS3[0]);
-                var userSavePath = String.Format("{0}.edat", songFileName);
+                destPath = String.Format("{0}.edat", srcPath);
 
-                if (File.Exists(userSavePath))
-                    File.Delete(userSavePath);
+                if (File.Exists(destPath))
+                    File.Delete(destPath);
 
                 if (File.Exists(encryptedFile))
-                    File.Move(encryptedFile, userSavePath);
+                    File.Move(encryptedFile, destPath);
             }
             else
             {
                 if (Directory.Exists(PS3_WORKDIR))
-                    DirectoryExtension.Move(PS3_WORKDIR, String.Format("{0}_PS3", songFileName));
+                    IOExtension.MoveDirectory(PS3_WORKDIR, String.Format("{0}_PS3", srcPath), true);
             }
 
             if (encryptResult.IndexOf("No JDK or JRE is installed on your machine") > 0)
                 throw new InvalidOperationException("You need install Java SE 7 (x86) or higher on your machine. The Java path should be in PATH Environment Variable:" + Environment.NewLine + Environment.NewLine + encryptResult);
 
-            if (encryptResult.IndexOf("Encrypt all EDAT files successfully") < 0)
+            if (encryptResult.IndexOf(Packer.EDAT_MSG) < 0)
                 throw new InvalidOperationException("Rebuilder error, please check if .edat files are created correctly and see output bellow:" + Environment.NewLine + Environment.NewLine + encryptResult);
+
+            return destPath;
         }
 
         #endregion
@@ -344,10 +377,12 @@ namespace RocksmithToolkitLib.DLCPackage
                                 new DDSConvertedFile() { sizeX = 128, destinationFile = d128 },
                                 new DDSConvertedFile() { sizeX = 256, destinationFile = d256 }
                             };
+
                             info.ArtFiles = _found;
                         }
                     }
                 }
+
                 if (info.ArtFiles == null)
                 {
                     //Generate art files
@@ -435,7 +470,7 @@ namespace RocksmithToolkitLib.DLCPackage
                 {
                     // TOOLKIT VERSION
                     var stopHere = info;
-                    GenerateToolkitVersion(toolkitVersionStream, info.ToolkitInfo.PackageAuthor, info.ToolkitInfo.PackageVersion, info.ToolkitInfo.PackageComment);
+                    GenerateToolkitVersion(toolkitVersionStream, info.ToolkitInfo.PackageAuthor, info.ToolkitInfo.PackageVersion, info.ToolkitInfo.PackageComment, info.ToolkitInfo.PackageRating);
                     packPsarc.AddEntry("toolkit.version", toolkitVersionStream);
 
                     // APP ID
@@ -823,7 +858,7 @@ namespace RocksmithToolkitLib.DLCPackage
                     var packageListWriter = new StreamWriter(packageListStream);
 
                     // TOOLKIT VERSION
-                    GenerateToolkitVersion(toolkitVersionStream);
+                    GenerateToolkitVersion(toolkitVersionStream, info.ToolkitInfo.PackageAuthor, info.ToolkitInfo.PackageVersion, info.ToolkitInfo.PackageComment, info.ToolkitInfo.PackageRating);
                     packPsarc.AddEntry("toolkit.version", toolkitVersionStream);
 
                     // APP ID
@@ -1068,24 +1103,37 @@ namespace RocksmithToolkitLib.DLCPackage
                     args = "-file \"{0}\" -output \"{1}\" -prescale {2} {3} -quality_highest -max -dxt5 -nomipmap -alpha -overwrite -forcewrite";
                     break;
             }
-            //RE: Another ExternalApps usage.
+
             foreach (var item in filesToConvert)
-                GeneralExtensions.RunExternalExecutable("tools/nvdxt.exe", true, true, true, String.Format(args, item.sourceFile, item.destinationFile, item.sizeX, item.sizeY));
+                GeneralExtensions.RunExternalExecutable(ExternalApps.APP_NVDXT, true, true, true, String.Format(args, item.sourceFile, item.destinationFile, item.sizeX, item.sizeY));
         }
 
-        public static void GenerateToolkitVersion(Stream output, string packageAuthor = null, string packageVersion = null, string packageComment = null)
+        /// <summary>
+        /// Generates memory stream for toolkit.version file
+        /// </summary>
+        /// <param name="output"></param>
+        /// <param name="packageAuthor"></param>
+        /// <param name="packageVersion">0.0 to 9.9 decimal or integer versioning system</param>
+        /// <param name="packageComment"></param>
+        /// <param name="packageRating">0 to 5 user rating system</param>
+        /// <param name="toolkitVersion">If left blank then the current toolkitversion is used</param>
+        public static void GenerateToolkitVersion(Stream output, string packageAuthor = null, string packageVersion = null, string packageComment = null, string packageRating = null, string toolkitVersion = null)
         {
+            var writer = new StreamWriter(output);
             if (String.IsNullOrEmpty(packageAuthor))
                 packageAuthor = ConfigRepository.Instance()["general_defaultauthor"];
-
-            var writer = new StreamWriter(output);
-            writer.WriteLine("Toolkit version: {0}", ToolkitVersion.RSTKGuiVersion);
+            if (String.IsNullOrEmpty(toolkitVersion))
+                toolkitVersion = ToolkitVersion.RSTKGuiVersion;           
+            if (!String.IsNullOrEmpty(toolkitVersion))
+                writer.WriteLine("Toolkit version: {0}", toolkitVersion);
             if (!String.IsNullOrEmpty(packageAuthor))
                 writer.WriteLine("Package Author: {0}", packageAuthor);
             if (!String.IsNullOrEmpty(packageVersion))
                 writer.WriteLine("Package Version: {0}", packageVersion);
             if (!String.IsNullOrEmpty(packageComment))
-                writer.Write("Package Comment: {0}", packageComment);
+                writer.WriteLine("Package Comment: {0}", packageComment);
+            if (!String.IsNullOrEmpty(packageRating))
+                writer.Write("Package Rating: {0}", packageRating);
 
             writer.Flush();
             output.Seek(0, SeekOrigin.Begin);

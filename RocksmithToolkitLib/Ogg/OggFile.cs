@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Text;
-using System.IO;
-using System.Windows.Forms;
-using MiscUtil.Conversion;
-using MiscUtil.IO;
 using System.Diagnostics;
-using RocksmithToolkitLib.Extensions;
+using System.IO;
+using System.Text;
 
 namespace RocksmithToolkitLib.Ogg
 {
@@ -56,49 +52,31 @@ namespace RocksmithToolkitLib.Ogg
 
         #endregion
 
-        public static void Revorb(string file, string outputFileName, string appPath, WwiseVersion wwiseVersion)
-        {//RE: ExternalApps used
-            var subroot = "tools";
-            var ww2oggPath = Path.Combine(appPath, subroot, "ww2ogg.exe");
-            var revorbPath = Path.Combine(appPath, subroot, "revorb.exe");
-            var codebooksPath = Path.Combine(appPath, subroot, "packed_codebooks.bin"); // Default
-            var codebooks603Path = Path.Combine(appPath, subroot, "packed_codebooks_aoTuV_603.bin"); // RS2014
-
-            // Verifying if third part apps is in root application directory
-            if (!File.Exists(ww2oggPath))
-                throw new FileNotFoundException("ww2ogg executable not found!");
-
-            if (!File.Exists(revorbPath))
-                throw new FileNotFoundException("revorb executable not found!");
-
-            if (!File.Exists(codebooksPath))
-                throw new FileNotFoundException("packed_codebooks.bin not found!");
-
-            if (!File.Exists(codebooks603Path))
-                throw new FileNotFoundException("packed_codebooks_aoTuV_603.bin not found!");
-
+        public static void Revorb(string file, string outputFileName, WwiseVersion wwiseVersion)
+        {
             // Processing with ww2ogg
             Process ww2oggProcess = new Process();
-            ww2oggProcess.StartInfo.FileName = ww2oggPath;
-            ww2oggProcess.StartInfo.WorkingDirectory = appPath;
+            ww2oggProcess.StartInfo.FileName = Path.Combine(ExternalApps.TOOLKIT_ROOT, ExternalApps.APP_WW2OGG);
+            ww2oggProcess.StartInfo.WorkingDirectory = ExternalApps.TOOLKIT_ROOT;
 
-                switch (wwiseVersion)
-                {
-                    case WwiseVersion.Wwise2010:
-                        ww2oggProcess.StartInfo.Arguments = String.Format("\"{0}\" -o \"{1}\"", file, outputFileName);
-                        break;
-                    case WwiseVersion.Wwise2013:
-                        ww2oggProcess.StartInfo.Arguments = String.Format("\"{0}\" -o \"{1}\" --pcb \"{2}\"", file, outputFileName, codebooks603Path);
-                        break;
-                    case WwiseVersion.Wwise2016:
-                        ww2oggProcess.StartInfo.Arguments = String.Format("\"{0}\" -o \"{1}\" --pcb \"{2}\"", file, outputFileName, codebooks603Path);
-                        break;
-                    case WwiseVersion.Wwise2017:
-                        ww2oggProcess.StartInfo.Arguments = String.Format("\"{0}\" -o \"{1}\" --pcb \"{2}\"", file, outputFileName, codebooks603Path);
-                        break;
-                    default:
-                        throw new InvalidOperationException("Wwise version not supported or invalid input file.");
-                }
+            switch (wwiseVersion)
+            {
+                case WwiseVersion.Wwise2010:
+                    ww2oggProcess.StartInfo.Arguments = String.Format("\"{0}\" -o \"{1}\" --pcb \"{2}\"", file, outputFileName, Path.Combine(ExternalApps.TOOLKIT_ROOT, ExternalApps.APP_CODEBOOKS));
+                    break;
+                case WwiseVersion.Wwise2013:
+                    ww2oggProcess.StartInfo.Arguments = String.Format("\"{0}\" -o \"{1}\" --pcb \"{2}\"", file, outputFileName, Path.Combine(ExternalApps.TOOLKIT_ROOT, ExternalApps.APP_CODEBOOKS_603));
+                    break;
+                case WwiseVersion.Wwise2016:
+                    ww2oggProcess.StartInfo.Arguments = String.Format("\"{0}\" -o \"{1}\" --pcb \"{2}\"", file, outputFileName, Path.Combine(ExternalApps.TOOLKIT_ROOT, ExternalApps.APP_CODEBOOKS_603));
+                    break;
+                case WwiseVersion.Wwise2017:
+                    ww2oggProcess.StartInfo.Arguments = String.Format("\"{0}\" -o \"{1}\" --pcb \"{2}\"", file, outputFileName, Path.Combine(ExternalApps.TOOLKIT_ROOT, ExternalApps.APP_CODEBOOKS_603));
+                    break;
+                default:
+                    throw new InvalidOperationException("Wwise version not supported or invalid input file.");
+            }
+
 
 
             ww2oggProcess.StartInfo.UseShellExecute = false;
@@ -114,8 +92,8 @@ namespace RocksmithToolkitLib.Ogg
 
             // Processing with revorb
             Process revorbProcess = new Process();
-            revorbProcess.StartInfo.FileName = revorbPath;
-            revorbProcess.StartInfo.WorkingDirectory = appPath;
+            revorbProcess.StartInfo.FileName = Path.Combine(ExternalApps.TOOLKIT_ROOT, ExternalApps.APP_REVORB);
+            revorbProcess.StartInfo.WorkingDirectory = ExternalApps.TOOLKIT_ROOT;
             revorbProcess.StartInfo.Arguments = String.Format("\"{0}\"", outputFileName);
             revorbProcess.StartInfo.UseShellExecute = false;
             revorbProcess.StartInfo.CreateNoWindow = true;
@@ -175,8 +153,9 @@ namespace RocksmithToolkitLib.Ogg
         }
 
         /// <summary>
-        /// Converts the audio files betewwn RIFF-RIFX platforms.
+        /// Converts the audio files between RIFF-RIFX platforms.
         /// Basically changes Magic and converts from Big to Little endian format.
+        /// RIFF is little endian, RIFX is big endian
         /// </summary>
         /// <returns>The audio platform.</returns>
         /// <param name="inputFile">Input file.</param>
@@ -187,12 +166,12 @@ namespace RocksmithToolkitLib.Ogg
 
             EndianBitConverter bitConverter;
             EndianBitConverter targetbitConverter;
-            if (!platform.IsConsole)
+            if (!platform.IsConsole) // little endian
             {
                 bitConverter = EndianBitConverter.Little;
                 targetbitConverter = EndianBitConverter.Big;
             }
-            else if (platform.IsConsole)
+            else if (platform.IsConsole) // big endian
             {
                 bitConverter = EndianBitConverter.Big;
                 targetbitConverter = EndianBitConverter.Little;
@@ -207,12 +186,13 @@ namespace RocksmithToolkitLib.Ogg
             {
                 // Process Header
                 UInt32 header = reader.ReadUInt32();
-                if (header == 1179011410)//RIFF header to RIFX
+                if (header == 1179011410) //RIFF header to RIFX
                     //raw
-                    writer.Write(1380533848);
+                    writer.Write(1380533848); // RIFX
                 else
                     //raw
-                    writer.Write(1179011410); // 1179011410
+                    writer.Write(1179011410); // RIFF
+
                 writer.Write(reader.ReadUInt32()); // Size of File
                 //raw
                 writer.Write(reader.ReadBytes(4)); // WAVE (RIFF type)
@@ -270,20 +250,32 @@ namespace RocksmithToolkitLib.Ogg
                     writer.Write(reader.ReadByte());
                 }
 
-                //stream
-                var streamsize = (end - start); //calculate the total stream size till End of File
-                for (int i = 0; i < streamsize; i++)
+                try
                 {
-                    UInt16 packetsize = reader.ReadUInt16(); // size of packet
-                    i++; // increase because two bytes read for size of packet
-                    writer.Write(packetsize);
-                    for (int z = 0; z < packetsize; z++)
+                    // stream
+                    var streamsize = (end - start); // calculate the total stream size till End of File
+                    for (int i = 0; i < streamsize; i++)
                     {
-                        Byte packet = reader.ReadByte();
-                        writer.Write(packet); // the packets are the same in both pc/console
-                        i++; // add the  bytes read to packetsize counter.
+                        UInt16 packetsize = reader.ReadUInt16(); // size of packet
+                        i++; // increase because two bytes read for size of packet
+                        writer.Write(packetsize);
+
+                        for (int z = 0; z < packetsize; z++)
+                        {
+                            Byte packet = reader.ReadByte();
+                            writer.Write(packet); // the packets are the same in both pc/console
+                            i++; // add the bytes read to packetsize counter.
+                        }
                     }
                 }
+                catch (Exception ex)
+                {
+                    // Incomplete/corrupt audio file may cause exception, e.g. 
+                    // "End of stream reached with 2 byte left to read"
+                    var errMsg = ex.Message + Environment.NewLine + Environment.NewLine + "USER README:" + Environment.NewLine + "Try generating the RS2012PC CDLC and then use 'Import Package' on generated PC file, then select a console and 'Generate' again.  If this fails then the audio must be remastered for console using the Wwise 2010 GUI :(" + Environment.NewLine;
+                    throw new InvalidDataException(errMsg);
+                }
+
                 return new MemoryStream(outputFileStream.GetBuffer(), 0, (int)outputFileStream.Length);
             }
         }
@@ -298,8 +290,7 @@ namespace RocksmithToolkitLib.Ogg
         /// <returns>wemPath</returns>
         public static string Convert2Wem(string audioPath, int audioQuality = 4, long previewLength = 30000, long chorusTime = 4000)
         {
-            //TODO: check for converted wem's from GUI call and ask if we want generate over or use existing files.
-            // ExternalApps.VerifyExternalApps(); // for testing
+            // TODO: check for converted wem's from GUI call and ask if we want generate over or use existing files.
             var audioPathNoExt = Path.Combine(Path.GetDirectoryName(audioPath), Path.GetFileNameWithoutExtension(audioPath));
             var oggPath = String.Format(audioPathNoExt + ".ogg");
             var wavPath = String.Format(audioPathNoExt + ".wav");
@@ -311,12 +302,13 @@ namespace RocksmithToolkitLib.Ogg
             //switch to verify headers instead, maybe Plus current implmentation bugged as for me.
             if (audioPath.Substring(audioPath.Length - 4).ToLower() == ".ogg") //in RS1 ogg was actually wwise
             {
-                ExternalApps.Ogg2Wav(audioPath, wavPath); //detect quality here
+                // create ogg preview if it does not exist
                 if (!File.Exists(oggPreviewPath))
-                {
                     ExternalApps.Ogg2Preview(audioPath, oggPreviewPath, previewLength, chorusTime);
-                    ExternalApps.Ogg2Wav(oggPreviewPath, wavPreviewPath);
-                }
+
+                // convert ogg to wav
+                ExternalApps.Ogg2Wav(audioPath, wavPath); //detect quality here
+                ExternalApps.Ogg2Wav(oggPreviewPath, wavPreviewPath);
                 audioPath = wavPath;
             }
 
@@ -324,14 +316,15 @@ namespace RocksmithToolkitLib.Ogg
             {
                 if (!File.Exists(wavPreviewPath))
                 {
+                    // may cause issues if you've got another guitar.ogg in folder, but it's extremely rare.
                     if (!File.Exists(oggPath))
-                    {
-                        //may cause issues if you've got another guitar.ogg in folder, but it's extremely rare.
                         ExternalApps.Wav2Ogg(audioPath, oggPath, audioQuality); // 4
-                    }
+
+                    // create preview from ogg and then convert back to wav
                     ExternalApps.Ogg2Preview(oggPath, oggPreviewPath, previewLength, chorusTime);
                     ExternalApps.Ogg2Wav(oggPreviewPath, wavPreviewPath);
                 }
+
                 Wwise.Wav2Wem(audioPath, wemPath, audioQuality);
                 audioPath = wemPath;
             }
@@ -339,7 +332,7 @@ namespace RocksmithToolkitLib.Ogg
 
             if (audioPath.Substring(audioPath.Length - 4).ToLower() == ".wem" && !File.Exists(wemPreviewPath))
             {
-                Revorb(audioPath, oggPath, Path.GetDirectoryName(Application.ExecutablePath), WwiseVersion.Wwise2013);
+                Revorb(audioPath, oggPath, WwiseVersion.Wwise2013);
                 ExternalApps.Ogg2Wav(oggPath, wavPath);
                 ExternalApps.Ogg2Preview(oggPath, oggPreviewPath, previewLength, chorusTime);
                 ExternalApps.Ogg2Wav(oggPreviewPath, wavPreviewPath);

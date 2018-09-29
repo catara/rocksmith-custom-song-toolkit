@@ -315,13 +315,13 @@
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label3.Location = new System.Drawing.Point(52, 73);
+            this.label3.Location = new System.Drawing.Point(54, 73);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(20, 13);
+            this.label3.Size = new System.Drawing.Size(16, 12);
             this.label3.TabIndex = 13;
-            this.label3.Text = "dB";
+            this.label3.Text = "LF";
             // 
             // rbRs2012
             // 
@@ -607,12 +607,22 @@
             // label4
             // 
             this.label4.AutoSize = true;
+//<<<<<<< HEAD
+//            this.label4.ForeColor = System.Drawing.SystemColors.ControlText;
+//            this.label4.Location = new System.Drawing.Point(116, 73);
+//            this.label4.Name = "label4";
+//            this.label4.Size = new System.Drawing.Size(20, 13);
+//            this.label4.TabIndex = 14;
+//            this.label4.Text = "dB";
+//=======
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label4.Location = new System.Drawing.Point(116, 73);
+            this.label4.Location = new System.Drawing.Point(120, 73);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(20, 13);
+            this.label4.Size = new System.Drawing.Size(16, 12);
             this.label4.TabIndex = 14;
-            this.label4.Text = "dB";
+            this.label4.Text = "LF";
+//>>>>>>> c7d902e63baa725649519d722a2c7540c837ad77
             // 
             // label9
             // 
@@ -661,6 +671,7 @@
             this.btnPackageImport.Size = new System.Drawing.Size(97, 29);
             this.btnPackageImport.TabIndex = 0;
             this.btnPackageImport.Text = "Import Package";
+            this.toolTip.SetToolTip(this.btnPackageImport, resources.GetString("btnPackageImport.ToolTip"));
             this.btnPackageImport.UseVisualStyleBackColor = false;
             this.btnPackageImport.Click += new System.EventHandler(this.btnPackageImport_Click);
             // 
@@ -933,7 +944,7 @@
             // txtAlbumArtPath
             // 
             this.txtAlbumArtPath.BackColor = System.Drawing.SystemColors.Window;
-            this.txtAlbumArtPath.Cue = "Album Art [use 512x512 size only] (*.dds,*.gif,*.jpg,*.jpeg,*.bmp,*.png)";
+            this.txtAlbumArtPath.Cue = "Album Art [use 512x512 image size] (*.dds, *.gif, *.jpg, *.png)";
             this.txtAlbumArtPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txtAlbumArtPath.ForeColor = System.Drawing.Color.Gray;
             this.txtAlbumArtPath.Location = new System.Drawing.Point(7, 19);
@@ -1054,12 +1065,10 @@
         private System.Windows.Forms.RadioButton rbRs2014;
         private System.Windows.Forms.GroupBox gbPlatform;
         private System.Windows.Forms.CheckBox chkPlatformMAC;
-        private System.Windows.Forms.GroupBox gbFiles;
         private System.Windows.Forms.GroupBox gbTones;
         private System.Windows.Forms.GroupBox gbArrangements;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label keyboardDescArrLabel;
-        private System.Windows.Forms.GroupBox gbSongInformation;
         private System.Windows.Forms.GroupBox gbGameVersion;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnToneDuplicate;
@@ -1085,5 +1094,7 @@
         private System.Windows.Forms.Label label8;
         private CueTextBox txtJapaneseArtistName;
         private System.Windows.Forms.Label label9;
+        public System.Windows.Forms.GroupBox gbFiles;
+        public System.Windows.Forms.GroupBox gbSongInformation;
     }
 }

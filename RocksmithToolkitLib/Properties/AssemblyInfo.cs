@@ -1,4 +1,4 @@
-using System.Reflection;
+﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Resources;
@@ -26,6 +26,6 @@ using System.Resources;
 //      Revision
 //
 // THESE VALUES ARE PROGRAMMATICALLY GENERATED - DO NOT EDIT
-[assembly: AssemblyVersion("2.8.4.1")]
-[assembly: AssemblyInformationalVersion("73f67dc0")]
+[assembly: AssemblyVersion("2.9.1.0")]
+[assembly: AssemblyInformationalVersion("4a26da2d")]
 [assembly: AssemblyConfiguration("BETA")]

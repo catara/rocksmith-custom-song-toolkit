@@ -50,6 +50,9 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\lib\Newtonsoft.Json\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\lib\NLog\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -70,6 +73,13 @@
     <Compile Include="Conversion\Rs1Converter.cs" />
     <Compile Include="Conversion\Rs2014Converter.cs" />
     <Compile Include="DLCPackage\DDCreator.cs" />
+    <Compile Include="Extensions\HelpForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extensions\HelpForm.Designer.cs">
+      <DependentUpon>HelpForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\NotifyPropChangedBase.cs" />
     <Compile Include="SngToTab\Common.cs" />
     <Compile Include="SngToTab\Sng2Tab.cs" />
     <Compile Include="SngToTab\TabBeat.cs" />
@@ -168,7 +178,7 @@
     <Compile Include="DLCPackage\XBox360License.cs" />
     <Compile Include="Extensions\FileStreamExtension.cs" />
     <Compile Include="Extensions\ImageHandler.cs" />
-    <Compile Include="Extensions\DirectoryExtension.cs" />
+    <Compile Include="Extensions\IOExtension.cs" />
     <Compile Include="Extensions\EnumerableExtension.cs" />
     <Compile Include="Extensions\GeneralExtension.cs" />
     <Compile Include="Platform.cs" />
@@ -221,6 +231,9 @@
     <EmbeddedResource Include="Extensions\BetterDialog2.resx">
       <DependentUpon>BetterDialog2.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Extensions\HelpForm.resx">
+      <DependentUpon>HelpForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -234,7 +247,6 @@
     <None Include="Resources\XBox360_DLC_image2014.png" />
     <None Include="Resources\cgm_default_icon.png" />
     <None Include="Resources\cgm_default_inlay.png" />
-    <Content Include="PsarcLoader\ReadMe.txt" />
     <Content Include="RocksmithToolkitLib.Config.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -266,13 +278,22 @@
 rem RocksmithPreBuild.exe takes care of updating Assembly.cs files and AppVeyor versioning information
 
 if $(ConfigurationName) == Debug (
-  CD "$(SolutionDir)"
+CD "$(SolutionDir)"
 
-  rem there are several alternate usages for RocksmithPreBuild.exe
+rem if a 'Type 1 Error' occures check the .git folder for missing critical contents
+rem usual this error occures after a .git Garbage Cleanup - so don't use it!  DOH
+rem resyncing the commit usual fixes the error
 
-         cmd /c "RocksmithPreBuild.exe PREBUILD READ READ"
-  rem cmd /c "RocksmithPreBuild.exe PREBUILD 2.8.4.1 BETA"
-  rem cmd /c "RocksmithPreBuild.exe PREBUILD 2.8.4.0 RELEASE"
+rem there are several alternate usages for RocksmithPreBuild.exe
+
+rem the next cmd is used for normal beta development mode (default mode)
+cmd /c "RocksmithPreBuild.exe PREBUILD READ READ"
+
+rem before issuing new release make next cmd active and comment out the others
+rem cmd /c "RocksmithPreBuild.exe PREBUILD 2.9.0.0 RELEASE"
+
+rem after making a Release must switch back to Beta using next cmd
+rem cmd /c "RocksmithPreBuild.exe PREBUILD 2.9.1.0 BETA"
 )
 
 rem there are some hidden prebuild commands for OSX and Linux in the RocksmithToolkitLib.csproj these call the 'prebuild.sh' file</PreBuildEvent>

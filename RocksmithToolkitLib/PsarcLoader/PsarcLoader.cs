@@ -14,7 +14,9 @@ using RocksmithToolkitLib.Extensions;
 using RocksmithToolkitLib.Ogg;
 using System.Windows.Forms;
 
-// tools for future use
+// PsarcLoader methods are used to load archives into memory
+// More efficient and faster than unpacking to physical files
+// RS2014 ONLY
 
 namespace RocksmithToolkitLib.PsarcLoader
 {
@@ -208,12 +210,14 @@ namespace RocksmithToolkitLib.PsarcLoader
                 // this helps prevent null exceptions
                 tkInfo.ToolkitVersion = "Null";
                 tkInfo.PackageAuthor = "Ubisoft";
-                tkInfo.PackageVersion = "Null";
+                tkInfo.PackageVersion = "0";
                 tkInfo.PackageComment = "Null";
+                tkInfo.PackageRating = "5";
             }
 
             return tkInfo;
         }
+
         public string ExtractAppId()
         {
             var appId = String.Empty;
@@ -306,7 +310,7 @@ namespace RocksmithToolkitLib.PsarcLoader
                     top.Data.CopyTo(fs);
                     try
                     {
-                        OggFile.Revorb(tempAudioPath, audioOggPath, Path.GetDirectoryName(Application.ExecutablePath), Path.GetExtension(tempAudioPath).GetWwiseVersion());
+                        OggFile.Revorb(tempAudioPath, audioOggPath, Path.GetExtension(tempAudioPath).GetWwiseVersion());
                         result = true;
                     }
                     catch
@@ -326,7 +330,7 @@ namespace RocksmithToolkitLib.PsarcLoader
                     bottom.Data.CopyTo(fs);
                     try
                     {
-                        OggFile.Revorb(tempAudioPath, previewOggPath, Path.GetDirectoryName(Application.ExecutablePath), Path.GetExtension(tempAudioPath).GetWwiseVersion());
+                        OggFile.Revorb(tempAudioPath, previewOggPath, Path.GetExtension(tempAudioPath).GetWwiseVersion());
                         result = true;
                     }
                     catch

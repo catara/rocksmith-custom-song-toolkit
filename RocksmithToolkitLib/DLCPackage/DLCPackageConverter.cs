@@ -32,7 +32,7 @@ namespace RocksmithToolkitLib.DLCPackage
             var tmpDir = Path.GetTempPath();
 
             // key to good conversion is to overwriteSongXml
-            var unpackedDir = Packer.Unpack(sourcePackage, tmpDir, false, true, sourcePlatform);
+            var unpackedDir = Packer.Unpack(sourcePackage, tmpDir, sourcePlatform, false, true);
 
             // DESTINATION
             var nameTemplate = (!targetPlatform.IsConsole) ? "{0}{1}.psarc" : "{0}{1}";
@@ -48,7 +48,7 @@ namespace RocksmithToolkitLib.DLCPackage
             else
                 ConvertPackageForSimilarPlatform(unpackedDir, targetFileName, sourcePlatform, targetPlatform, appId);
 
-            DirectoryExtension.SafeDelete(unpackedDir);
+            IOExtension.DeleteDirectory(unpackedDir);
 
             return String.Empty;
         }
@@ -84,14 +84,14 @@ namespace RocksmithToolkitLib.DLCPackage
                 if (dir.EndsWith(sourceDir0))
                 {
                     var newDir = dir.Substring(0, dir.LastIndexOf(sourceDir0)) + targetDir0;
-                    DirectoryExtension.SafeDelete(newDir);
-                    DirectoryExtension.Move(dir, newDir);
+                    IOExtension.DeleteDirectory(newDir);
+                    IOExtension.MoveDirectory(dir, newDir);
                 }
                 else if (dir.EndsWith(sourceDir1))
                 {
                     var newDir = dir.Substring(0, dir.LastIndexOf(sourceDir1)) + targetDir1;
-                    DirectoryExtension.SafeDelete(newDir);
-                    DirectoryExtension.Move(dir, newDir);
+                    IOExtension.DeleteDirectory(newDir);
+                    IOExtension.MoveDirectory(dir, newDir);
                 }
             }
 
@@ -101,10 +101,10 @@ namespace RocksmithToolkitLib.DLCPackage
             // Packing
             var dirToPack = unpackedDir;
             if (sourcePlatform.platform == GamePlatform.XBox360)
-                dirToPack = Directory.GetDirectories(Path.Combine(unpackedDir, Packer.ROOT_XBox360))[0];
+                dirToPack = Directory.GetDirectories(Path.Combine(unpackedDir, Packer.ROOT_XBOX360))[0];
 
-            Packer.Pack(dirToPack, targetFileName, updateSNG, targetPlatform);
-            DirectoryExtension.SafeDelete(unpackedDir);
+            Packer.Pack(dirToPack, targetFileName, targetPlatform, updateSNG);
+            IOExtension.DeleteDirectory(unpackedDir);
         }
 
         private static void ConvertPackageRebuilding(string unpackedDir, string targetFileName, Platform sourcePlatform, Platform targetPlatform, string appId)

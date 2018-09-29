@@ -15,6 +15,7 @@ using RocksmithToolkitLib.DLCPackage.Manifest2014;
 using RocksmithToolkitLib.Extensions;
 using RocksmithToolkitLib.Sng;
 using CON = RocksmithToolkitLib.Sng.Constants;
+using System.Text.RegularExpressions;
 
 namespace RocksmithToolkitLib.XML
 {
@@ -346,37 +347,85 @@ namespace RocksmithToolkitLib.XML
 
             if (commentNodes != null)
             {
-                // add back all non-magic (DDC, EOF, custom) comments first
-                foreach (var commentNode in commentNodes.Reverse())
-                {
-                    if (!commentNode.ToString().Contains(CST_MAGIC))
-                        rootnode.AddFirst(new XComment(commentNode));
+                // uncomment this code to make XML comments compatible with EOF versions before (5-22-2018)                 
+                //double eofVersionNumber = 1.812;  // EOF version when comments come before first node
+                //var eofCommentNode = commentNodes.FirstOrDefault(x => x.Value.Contains("EOF"));
+                //if (eofCommentNode != null)
+                //{
+                //    var eofCommentString = eofCommentNode.ToString(); // <!-- EOF v1.8RC12 (12-22-2016) -->
+                //    var eofVersionString = Regex.Replace(eofCommentString, "[^.0-9]", ""); // 1.81212222016
+                //    eofVersionNumber = Double.Parse(eofVersionString);
+                //}
 
-                    if (!String.IsNullOrEmpty(customComment) && commentNode.ToString().Contains(customComment))
-                        sameComment = true;
-                }
-
-                // add back old version info
-                foreach (var commentNode in commentNodes.Reverse())
+                // place comments before the 'vocals' node to be compatible with old versions of EOF
+                if (rootElement == "vocals") // && eofVersionNumber < 1.813)
                 {
-                    if (commentNode.ToString().Contains(CST_MAGIC))
+                    foreach (var commentNode in commentNodes.Reverse())
                     {
-                        if (!commentNode.ToString().Contains(ToolkitVersion.RSTKGuiVersion))
-                        {
-                            if (saveOldVers)
-                                rootnode.AddFirst(new XComment(commentNode));
-                        }
-                        else
-                            sameVersion = true;
+                        if (!commentNode.ToString().Contains(CST_MAGIC))
+                            rootnode.AddBeforeSelf(new XComment(commentNode));
+
+                        if (!String.IsNullOrEmpty(customComment) && commentNode.ToString().Contains(customComment))
+                            sameComment = true;
                     }
+
+                    // add back old version info
+                    foreach (var commentNode in commentNodes.Reverse())
+                    {
+                        if (commentNode.ToString().Contains(CST_MAGIC))
+                        {
+                            if (!commentNode.ToString().Contains(ToolkitVersion.RSTKGuiVersion))
+                            {
+                                if (saveOldVers)
+                                    rootnode.AddBeforeSelf(new XComment(commentNode));
+                            }
+                            else
+                                sameVersion = true;
+                        }
+                    }
+
+                    if (!sameComment && !String.IsNullOrEmpty(customComment))
+                        rootnode.AddBeforeSelf(new XComment(" " + customComment + " "));
+
+                    // always put current CST version info first
+                    if (sameVersion || writeNewVers)
+                        rootnode.AddBeforeSelf(new XComment(CST_MAGIC + ToolkitVersion.RSTKGuiVersion + " "));
+
                 }
+                else // place comments after the 'songs' node be compatible with EOF
+                {
+                    // add back all non-magic (DDC, EOF, custom) comments first
+                    foreach (var commentNode in commentNodes.Reverse())
+                    {
+                        if (!commentNode.ToString().Contains(CST_MAGIC))
+                            rootnode.AddFirst(new XComment(commentNode));
 
-                if (!sameComment && !String.IsNullOrEmpty(customComment))
-                    rootnode.AddFirst(new XComment(" " + customComment + " "));
+                        if (!String.IsNullOrEmpty(customComment) && commentNode.ToString().Contains(customComment))
+                            sameComment = true;
+                    }
 
-                // always put current CST version info first
-                if (sameVersion || writeNewVers)
-                    rootnode.AddFirst(new XComment(CST_MAGIC + ToolkitVersion.RSTKGuiVersion + " "));
+                    // add back old version info
+                    foreach (var commentNode in commentNodes.Reverse())
+                    {
+                        if (commentNode.ToString().Contains(CST_MAGIC))
+                        {
+                            if (!commentNode.ToString().Contains(ToolkitVersion.RSTKGuiVersion))
+                            {
+                                if (saveOldVers)
+                                    rootnode.AddFirst(new XComment(commentNode));
+                            }
+                            else
+                                sameVersion = true;
+                        }
+                    }
+
+                    if (!sameComment && !String.IsNullOrEmpty(customComment))
+                        rootnode.AddFirst(new XComment(" " + customComment + " "));
+
+                    // always put current CST version info first
+                    if (sameVersion || writeNewVers)
+                        rootnode.AddFirst(new XComment(CST_MAGIC + ToolkitVersion.RSTKGuiVersion + " "));
+                }
             }
 
             // xml.Declaration = new XDeclaration("1.0", "utf-8", null);
@@ -415,18 +464,15 @@ namespace RocksmithToolkitLib.XML
             stream.Seek(0, SeekOrigin.Begin);
         }
 
+
         /// <summary>
-        /// Writes count attribute for chosen nodes.
+        /// Writes count attribute for chosen nodes (required/used by DDC)
         /// </summary>
         /// <param name="xml">Xml stream.</param>
         private static void FixArrayAttribs(Stream xml)
         {
-            //string[] anodes = { "phrases", "phraseIterations", "newLinkedDiffs", "linkedDiffs",
-            //    "phraseProperties", "chordTemplates", "fretHandMuteTemplates", "fretHandMutes"/*DDC*/,
-            //    "ebeats", "sections", "events", "levels", "notes", "chords", "anchors", "handShapes", "tones"
-            //};
-
-            string[] anodes = { "phrases", "phraseIterations", "newLinkedDiffs", "linkedDiffs", "phraseProperties", "chordTemplates", "fretHandMuteTemplates", "fretHandMutes" /*DDC*/, "ebeats", "sections", "events", "levels", "notes", "chords", "anchors", "handShapes", "tones" };
+            string[] anodes = { "phrases", "phraseIterations", "newLinkedDiffs", "linkedDiffs", "phraseProperties", "chordTemplates", "fretHandMuteTemplates", "fretHandMutes",
+                                  /*Required by DDC*/ "ebeats", "sections", "events", "levels", "notes", "chords", "anchors", "handShapes", "tones" };
 
             xml.Position = 0;
             var doc = XDocument.Load(xml);
@@ -890,6 +936,7 @@ namespace RocksmithToolkitLib.XML
         [XmlAttribute("harmonic")]
         public Byte Harmonic { get; set; }
 
+        // FIXME: either hopo is missing or it does not exist ... always zero
         [XmlAttribute("hopo")]
         public Byte Hopo { get; set; }
 
@@ -1088,6 +1135,9 @@ namespace RocksmithToolkitLib.XML
                 p &= ~CON.NOTE_MASK_PULLOFF;
                 this.PullOff = 1;
             }
+
+            // FIXME: either hopo is missing or it does not exist
+
             if ((p & CON.NOTE_MASK_HARMONIC) != 0)
             {
                 p &= ~CON.NOTE_MASK_HARMONIC;
@@ -1173,6 +1223,7 @@ namespace RocksmithToolkitLib.XML
         [XmlAttribute("palmMute")]
         public Int32 PalmMute { get; set; }
 
+        // FIXME: no usage ... always zero
         [XmlAttribute("hopo")]
         public Int32 Hopo { get; set; }
 
@@ -1201,14 +1252,10 @@ namespace RocksmithToolkitLib.XML
                 chord.Time = notesSection.Notes[i].Time;
                 // Console.WriteLine("Song2014 chord.ChordId = " + chord.ChordId);
 
+                // TODO: make changes here to fix 'strum =' issue
+
                 // TECHNIQUES
                 chord.parseChordMask(notesSection.Notes[i], notesSection.Notes[i].NoteMask);
-
-                // CHORD NOTES (WITHOUT TECHNIQUES) + NOT HIGH DENSITY
-                if (chord.HighDensity != 1)
-                {
-                    chord.ParseChordNotes(sngData.Chords.Chords[chord.ChordId]);
-                }
 
                 // CHORD NOTES (WITH TECHNIQUES)
                 var cnId = notesSection.Notes[i].ChordNotesId;
@@ -1217,6 +1264,11 @@ namespace RocksmithToolkitLib.XML
                     if (sngData.ChordNotes.ChordNotes.Length > cnId)
                         chord.ParseChordNotes(sngData.Chords.Chords[chord.ChordId], sngData.ChordNotes.ChordNotes[cnId], notesSection.Notes[i].Sustain);
                 }
+                /*else if (chord.Strum == "up")
+                {
+                    // CHORD NOTES (WITHOUT TECHNIQUES) + NOT HIGH DENSITY
+                    chord.ParseChordNotes(sngData.Chords.Chords[chord.ChordId]);
+                }*/
 
                 chords.Add(chord);
             }
@@ -1288,6 +1340,8 @@ namespace RocksmithToolkitLib.XML
                 p &= ~CON.NOTE_MASK_DOUBLESTOP;
             if ((p & CON.NOTE_MASK_ARPEGGIO) != 0)
                 p &= ~CON.NOTE_MASK_ARPEGGIO;
+
+            // TODO: make changes to fix inacurrate 'strum ='
 
             this.Strum = "down";
             if ((p & CON.NOTE_MASK_STRUM) != 0)

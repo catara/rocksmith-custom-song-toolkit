@@ -88,6 +88,9 @@ namespace RocksmithToolkitLib.Extensions
         /// <returns></returns>
         public static string GetValidAtaSpaceName(this string value)
         {
+            if (String.IsNullOrEmpty(value))
+                return String.Empty;
+
             // ODLC artist, title, album character use allows these
             // allow use of accents Über ñice \\p{L} diacritics
             // allow use of unicode punctuation \\p{P\\{S} not currently implimented
@@ -220,7 +223,7 @@ namespace RocksmithToolkitLib.Extensions
         public static string GetValidShortFileName(string artist, string title, string version, bool acronym = false)
         {
             if (String.IsNullOrEmpty(artist) || String.IsNullOrEmpty(title) || String.IsNullOrEmpty(version))
-                throw new DataException("Artist, title, or version field is null or empty.");
+                throw new DataException("Artist, title, or version field is null or empty ...");
 
             string value;
             if (!acronym)
@@ -245,6 +248,7 @@ namespace RocksmithToolkitLib.Extensions
             value = value.ShortWordMover(); // "The Beatles" becomes "Beatles, The"
             value = value.Capitalize(); // "blink-182" becomes "Blink 182"
             value = value.StripExcessWhiteSpace();
+            value = value.Replace(".", "");  // Remove periods from sortable fields, it screws up file naming ...
 
             return value;
         }
@@ -265,6 +269,9 @@ namespace RocksmithToolkitLib.Extensions
 
         public static string GetValidVersion(this string value)
         {
+            if (String.IsNullOrEmpty(value))
+                return String.Empty;
+
             Regex rgx = new Regex(@"^[\d\.]*");
             var match = rgx.Match(value);
             if (match.Success)
@@ -276,6 +283,9 @@ namespace RocksmithToolkitLib.Extensions
 
         public static string GetValidYear(this string value)
         {
+            if (String.IsNullOrEmpty(value))
+                return String.Empty;
+
             // check for valid four digit song year 
             if (!Regex.IsMatch(value, "^(15[0-9][0-9]|16[0-9][0-9]|17[0-9][0-9]|18[0-9][0-9]|19[0-9][0-9]|20[0-1][0-9])"))
                 value = ""; // clear if not valid
@@ -588,20 +598,6 @@ namespace RocksmithToolkitLib.Extensions
             Regex rgx = new Regex("[^a-zA-Z0-9_]+");
             var result = rgx.Replace(value, "");
             return result;
-        }
-
-        public static string StripPlatformEndName(this string filePath)
-        {
-            if (filePath.EndsWith(GamePlatform.Pc.GetPathName()[2]) ||
-               filePath.EndsWith(GamePlatform.Mac.GetPathName()[2]) ||
-               filePath.EndsWith(GamePlatform.XBox360.GetPathName()[2]) ||
-               filePath.EndsWith(GamePlatform.PS3.GetPathName()[2]) ||
-               filePath.EndsWith(GamePlatform.PS3.GetPathName()[2] + ".psarc"))
-            {
-                return filePath.Substring(0, filePath.LastIndexOf("_"));
-            }
-
-            return filePath;
         }
 
         public static string StripSpecialCharacters(this string value)

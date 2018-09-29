@@ -50,7 +50,6 @@
             this.chkOverwrite = new System.Windows.Forms.CheckBox();
             this.cmbConfigFile = new System.Windows.Forms.ComboBox();
             this.btnConfigFile = new System.Windows.Forms.Button();
-            this.cmbPhraseLen = new RocksmithToolkitGUI.DLCPackageCreator.NumericUpDownFixed();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.btnRemove = new System.Windows.Forms.Button();
@@ -63,11 +62,12 @@
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.lblStatus = new System.Windows.Forms.Label();
             this.ddcVersion = new System.Windows.Forms.Label();
+            this.cmbPhraseLen = new RocksmithToolkitGUI.DLCPackageCreator.NumericUpDownFixed();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DDCfilesDgw)).BeginInit();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.cmbPhraseLen)).BeginInit();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbPhraseLen)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -165,7 +165,7 @@
             this.cmbRampUp.Size = new System.Drawing.Size(341, 21);
             this.cmbRampUp.Sorted = true;
             this.cmbRampUp.TabIndex = 2;
-            this.cmbRampUp.DropDown += new System.EventHandler(this.ramUpMdlsCbox_DropDown);
+            this.cmbRampUp.DropDown += new System.EventHandler(this.cmbRamUp_DropDown);
             this.cmbRampUp.SelectedIndexChanged += new System.EventHandler(this.cmbRampUp_SelectedIndexChanged);
             // 
             // DDCfilesDgw
@@ -259,8 +259,8 @@
             this.chkGenArrIds.Size = new System.Drawing.Size(196, 17);
             this.chkGenArrIds.TabIndex = 10;
             this.chkGenArrIds.Text = "Generate Arrangement Identification";
-            this.toolTip.SetToolTip(this.chkGenArrIds, "Notice: This only applies to archives (not xml files)\r\nGenerating Arrangment Iden" +
-                    "tification will reset \r\nsong stats and helps elminate some in game errors\r\n\r\n");
+            this.toolTip.SetToolTip(this.chkGenArrIds, "Note:  Generate Arrangment Identification\r\nwill reset song stats and helps to elm" +
+                    "inate\r\nsome in game errors or game hanging.");
             this.chkGenArrIds.UseVisualStyleBackColor = true;
             this.chkGenArrIds.CheckStateChanged += new System.EventHandler(this.Highlight_CheckStateChanged);
             // 
@@ -301,7 +301,7 @@
             this.cmbConfigFile.Size = new System.Drawing.Size(341, 21);
             this.cmbConfigFile.Sorted = true;
             this.cmbConfigFile.TabIndex = 4;
-            this.cmbConfigFile.DropDown += new System.EventHandler(this.ConfigFilesCbx_DropDown);
+            this.cmbConfigFile.DropDown += new System.EventHandler(this.cmbConfigFiles_DropDown);
             // 
             // btnConfigFile
             // 
@@ -313,37 +313,6 @@
             this.btnConfigFile.Text = "Add";
             this.btnConfigFile.UseVisualStyleBackColor = true;
             this.btnConfigFile.Click += new System.EventHandler(this.btnConfigFile_Click);
-            // 
-            // cmbPhraseLen
-            // 
-            this.cmbPhraseLen.Increment = new decimal(new int[] {
-            4,
-            0,
-            0,
-            0});
-            this.cmbPhraseLen.Location = new System.Drawing.Point(94, 81);
-            this.cmbPhraseLen.Maximum = new decimal(new int[] {
-            256,
-            0,
-            0,
-            0});
-            this.cmbPhraseLen.Minimum = new decimal(new int[] {
-            8,
-            0,
-            0,
-            0});
-            this.cmbPhraseLen.Name = "cmbPhraseLen";
-            this.cmbPhraseLen.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.cmbPhraseLen.Size = new System.Drawing.Size(52, 20);
-            this.cmbPhraseLen.TabIndex = 6;
-            this.cmbPhraseLen.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.cmbPhraseLen.ThousandsSeparator = true;
-            this.toolTip.SetToolTip(this.cmbPhraseLen, "Number of Bars");
-            this.cmbPhraseLen.Value = new decimal(new int[] {
-            8,
-            0,
-            0,
-            0});
             // 
             // label5
             // 
@@ -471,6 +440,37 @@
             this.ddcVersion.TabIndex = 10;
             this.ddcVersion.Text = "v0.0";
             // 
+            // cmbPhraseLen
+            // 
+            this.cmbPhraseLen.Increment = new decimal(new int[] {
+            4,
+            0,
+            0,
+            0});
+            this.cmbPhraseLen.Location = new System.Drawing.Point(94, 81);
+            this.cmbPhraseLen.Maximum = new decimal(new int[] {
+            256,
+            0,
+            0,
+            0});
+            this.cmbPhraseLen.Minimum = new decimal(new int[] {
+            8,
+            0,
+            0,
+            0});
+            this.cmbPhraseLen.Name = "cmbPhraseLen";
+            this.cmbPhraseLen.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.cmbPhraseLen.Size = new System.Drawing.Size(52, 20);
+            this.cmbPhraseLen.TabIndex = 6;
+            this.cmbPhraseLen.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.cmbPhraseLen.ThousandsSeparator = true;
+            this.toolTip.SetToolTip(this.cmbPhraseLen, "Number of Bars");
+            this.cmbPhraseLen.Value = new decimal(new int[] {
+            8,
+            0,
+            0,
+            0});
+            // 
             // DDC
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -493,8 +493,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.DDCfilesDgw)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.cmbPhraseLen)).EndInit();
             this.groupBox2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.cmbPhraseLen)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

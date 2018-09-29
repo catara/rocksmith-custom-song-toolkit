@@ -19,14 +19,18 @@ using RocksmithToolkitLib.Ogg;
 using RocksmithToolkitLib.Sng;
 using Tone = RocksmithToolkitLib.DLCPackage.Manifest.Tone.Tone;
 using RocksmithToolkitLib.Conversion;
+using RocksmithToolkitLib.XmlRepository;
+using System.Diagnostics;
+using System.Drawing;
 
 namespace RocksmithToolkitLib.DLCPackage
 {
 
     public class DLCPackageData
     {
+        private const string MESSAGEBOX_CAPTION = "DLCPackageData";
         private const float DEFAULT_AUDIO_VOLUME = -7.0f;
-        private const float DEFAULT_PREVIEW_VOLUME = -5.0f; 
+        private const float DEFAULT_PREVIEW_VOLUME = -5.0f;
 
         // DO NOT change variable names ... there are hidden dependancies
         public GameVersion GameVersion;
@@ -39,19 +43,13 @@ namespace RocksmithToolkitLib.DLCPackage
         public string Name { get; set; } // aka DLCKey <=> SongKey //TODO: implement deserialize here, with workaround for DLCKey=Name and rename Name to DLCKey finnaly!
         public SongInfo SongInfo { get; set; }
         public string AlbumArtPath { get; set; }
-        public string OggPath { get; set; }
-        public string OggPreviewPath { get; set; }
+        public string OggPath { get; set; } // wem/ogg path
+        public string OggPreviewPath { get; set; } // wem/ogg preview path
         public decimal OggQuality { get; set; }
         public List<Arrangement> Arrangements { get; set; }
         public float Volume { get; set; }
         public PackageMagic SignatureType { get; set; }
         public ToolkitInfo ToolkitInfo { get; set; }
-        // TODO: remove depricated fields when I'm dead
-        [Obsolete("Depricated, please use ToolkitInfo.PackageVersion.", true)]
-        public string PackageVersion { get; set; }
-        [Obsolete("Depricated, please use ToolkitInfo.PackageComment.", true)]
-        public string PackageComment { get; set; }
-
 
         // loads the old toolkit version info from template (if any)
         // writes current toolkit version to package template file
@@ -93,7 +91,7 @@ namespace RocksmithToolkitLib.DLCPackage
         public List<Tone> Tones { get; set; }
 
         // Load RS1 CDLC into PackageCreator
-        public static DLCPackageData RS1LoadFromFolder(string unpackedDir, Platform targetPlatform, bool convert)
+        public static DLCPackageData RS1LoadFromFolder(string unpackedDir, Platform platform, bool convert)
         {
             var data = new DLCPackageData();
             data.Arrangements = new List<Arrangement>();
@@ -108,41 +106,52 @@ namespace RocksmithToolkitLib.DLCPackage
             data.PreviewVolume = DEFAULT_PREVIEW_VOLUME;
 
             //Load song manifest
-            var songsManifestJson = Directory.GetFiles(unpackedDir, "songs.manifest.json", SearchOption.AllDirectories);
-            if (songsManifestJson.Length < 1)
-                throw new DataException("No songs.manifest.json file found.");
-            if (songsManifestJson.Length > 1)
-                throw new DataException("More than one songs.manifest.json file found.");
+            string[] fileExt = new string[] { "songs.manifest.json", "songs_bass.manifest.json" };
+            var songsManifestJson = Directory.EnumerateFiles(unpackedDir, "*", SearchOption.AllDirectories).Where(fi => fileExt.Any(fi.ToLower().EndsWith)).ToList();
+            if (!songsManifestJson.Any())
+                throw new DataException("<CRITICAL ERROR> No songs.manifest.json file found." + Environment.NewLine +
+                    "Please confirm " + Packer.RecycleUnpackedDir(unpackedDir) + " is an RS1 CDLC ..." + Environment.NewLine +
+                    "The 'Game Version' must be properly set in the 'General Config' menu." + Environment.NewLine + Environment.NewLine);
+
+            // newer RS1 may have two manifest files
+            if (songsManifestJson.Count > 2)
+                throw new DataException("<ERROR> More than two *.manifest.json files found." + Environment.NewLine + Environment.NewLine);
 
             var attr = new List<Attributes>();
-            var songsManifest = Manifest.Manifest.LoadFromFile(songsManifestJson[0]).Entries.ToArray();
-
-            for (int smIndex = 0; smIndex < songsManifest.Count(); smIndex++)
+            foreach (var manifestFile in songsManifestJson)
             {
-                var smData = songsManifest[smIndex].Value.ToArray()[0].Value;
-                attr.Add(smData);
+                var songsManifest = Manifest.Manifest.LoadFromFile(manifestFile).Entries.ToArray();
+                for (int smIndex = 0; smIndex < songsManifest.Count(); smIndex++)
+                {
+                    var smData = songsManifest[smIndex].Value.ToArray()[0].Value;
+                    attr.Add(smData);
+                }
             }
 
-            if (attr.FirstOrDefault() == null)
-                throw new DataException("songs.manifest.json file did not parse correctly.");
+            attr = attr.Where(x => !x.ArrangementName.Equals("Vocals")).ToList();
+            if (!attr.Any())
+                throw new DataException("<ERROR> songs.manifest.json file did not parse correctly.");
 
+            var attrFirst = attr.First();
             // Fill SongInfo
             data.SongInfo = new SongInfo();
-            data.SongInfo.SongDisplayName = attr.FirstOrDefault().SongName;
-            data.SongInfo.SongDisplayNameSort = attr.FirstOrDefault().SongNameSort;
-            data.SongInfo.Album = attr.FirstOrDefault().AlbumName;
-            data.SongInfo.SongYear = (attr.FirstOrDefault().SongYear == 0 ? 2012 : attr.FirstOrDefault().SongYear);
-            data.SongInfo.Artist = attr.FirstOrDefault().ArtistName;
-            data.SongInfo.ArtistSort = attr.FirstOrDefault().ArtistNameSort;
-            data.Name = attr.FirstOrDefault().SongKey;
+            data.Name = attrFirst.SongKey;
+            data.SongInfo.Artist = attrFirst.ArtistName;
+            data.SongInfo.ArtistSort = StringExtensions.GetValidSortableName(String.IsNullOrEmpty(attrFirst.ArtistNameSort) ? attrFirst.ArtistName : attrFirst.ArtistNameSort);
+            data.SongInfo.SongDisplayName = attrFirst.SongName;
+            data.SongInfo.SongDisplayNameSort = StringExtensions.GetValidSortableName(String.IsNullOrEmpty(attrFirst.SongNameSort) ? attrFirst.SongName : attrFirst.SongNameSort);
+            data.SongInfo.Album = attrFirst.AlbumName;
+            data.SongInfo.AlbumSort = StringExtensions.GetValidSortableName(String.IsNullOrEmpty(attrFirst.AlbumNameSort) ? attrFirst.AlbumName : attrFirst.AlbumNameSort);
+            data.SongInfo.SongYear = (attrFirst.SongYear == 0 ? 2012 : attrFirst.SongYear);
+            data.SongInfo.AverageTempo = attrFirst.AverageTempo;
 
             //Load tone manifest, even poorly formed tone_bass.manifest.json
             var toneManifestJson = Directory.GetFiles(unpackedDir, "*tone*.manifest.json", SearchOption.AllDirectories);
-            if (toneManifestJson.Length < 1)
-                throw new DataException("No tone.manifest.json file found.");
+            if (!toneManifestJson.Any())
+                throw new DataException("<ERROR> Did not find any tone.manifest.json files ..." + Environment.NewLine + Environment.NewLine);
 
             // toolkit produces multiple tone.manifest.json files when packing RS1 CDLC files
-            // rather than change toolkit behavior just merge manifest files for now
+            // rather than change toolkit behavior just merge manifest files
             if (toneManifestJson.Length > 1)
             {
                 var mergeSettings = new JsonMergeSettings { MergeArrayHandling = MergeArrayHandling.Union };
@@ -174,17 +183,16 @@ namespace RocksmithToolkitLib.DLCPackage
             data.Tones = tones;
 
             // Load AggregateGraph.nt 
-            var songDir = Path.Combine(unpackedDir, data.Name);
-            if (targetPlatform.platform == GamePlatform.XBox360)
-                songDir = Path.Combine(unpackedDir, "Root", data.Name);
-
+            var songDir = Directory.EnumerateDirectories(unpackedDir, "*", SearchOption.AllDirectories).Where(di => !di.Contains("DLC_Tone_")).FirstOrDefault(); ;
             var aggFile = Directory.GetFiles(songDir, "*.nt", SearchOption.TopDirectoryOnly)[0];
+            if (String.IsNullOrEmpty(aggFile))
+                throw new FileNotFoundException("<ERROR> Did not find AggregateGraph.nt ..." + Environment.NewLine + Environment.NewLine);
+
             var aggGraphData = AggregateGraph.AggregateGraph.ReadFromFile(aggFile);
 
             // Load Exports\Songs\*.xblock
             var xblockDir = Path.Combine(songDir, "Exports\\Songs");
             var xblockFile = Directory.GetFiles(xblockDir, "*.xblock", SearchOption.TopDirectoryOnly)[0];
-            // xblockFile = "D:\\Temp\\Mapping\\songs.xblock";
             var songsXblock = XblockX.LoadFromFile(xblockFile);
 
             // create project map for cross referencing arrangements with tones
@@ -193,7 +201,7 @@ namespace RocksmithToolkitLib.DLCPackage
             // Load xml arrangements
             var xmlFiles = Directory.GetFiles(unpackedDir, "*.xml", SearchOption.AllDirectories);
             if (xmlFiles.Length <= 0)
-                throw new DataException("Can not find any XML arrangement files");
+                throw new DataException("<ERROR> Can not find any XML arrangement files");
 
             foreach (var xmlFile in xmlFiles)
             {
@@ -220,68 +228,62 @@ namespace RocksmithToolkitLib.DLCPackage
                     var rsSong = new Song();
                     var rsSong2014 = new Song2014();
 
-                    // optimized tone matching effort using project mapping algo
-                    var result = projectMap.First(m => String.Equals(Path.GetFileName(m.SongXmlPath), Path.GetFileName(xmlFile), StringComparison.CurrentCultureIgnoreCase));
-                    if (result.Tones.Count != 1)
-                        throw new DataException("Invalid RS1 CDLC Tones Data");
-
-                    var arrangement = attr.First(s => s.SongXml.ToLower().Contains(result.LLID));//FIXME: Sequence contains no matching element issue
-                    var tone = tones.First(t => t.Key == result.Tones[0]);
-
                     using (var obj1 = new Rs1Converter())
-                    {
                         rsSong = obj1.XmlToSong(xmlFile);
-                        data.SongInfo.AverageTempo = (int)obj1.AverageBPM(rsSong);
-                    }
 
-                    if (arrangement.Tuning == "E Standard")
-                        rsSong.Tuning = new TuningStrings { String0 = 0, String1 = 0, String2 = 0, String3 = 0, String4 = 0, String5 = 0 };
-                    else if (arrangement.Tuning == "DropD")
-                        rsSong.Tuning = new TuningStrings { String0 = -2, String1 = 0, String2 = 0, String3 = 0, String4 = 0, String5 = 0 };
-                    else if (arrangement.Tuning == "OpenG")
-                        rsSong.Tuning = new TuningStrings { String0 = -2, String1 = -2, String2 = 0, String3 = 0, String4 = 0, String5 = -2 };
-                    else if (arrangement.Tuning == "EFlat")
-                        rsSong.Tuning = new TuningStrings { String0 = -1, String1 = -1, String2 = -1, String3 = -1, String4 = -1, String5 = -1 };
-                    else // default to standard tuning
+                    Tone tone;
+                    Attributes arr;
+                    // optimized tone matching effort using project mapping algo
+                    if (projectMap.Count > 0)
                     {
-                        arrangement.Tuning = "E Standard";
-                        rsSong.Tuning = new TuningStrings { String0 = 0, String1 = 0, String2 = 0, String3 = 0, String4 = 0, String5 = 0 };
+                        var result = projectMap.First(m => String.Equals(Path.GetFileName(m.SongXmlPath), Path.GetFileName(xmlFile), StringComparison.CurrentCultureIgnoreCase));
+                        tone = tones.First(t => t.Key == result.Tones[0]);
+
+                        // now works for newer RS1 multitone CDLC
+                        arr = attr.First(s => s.SongXml.ToLower().Contains(result.LLID));
                     }
-
-                    // save/write the changes to xml file
-                    using (var obj1 = new Rs1Converter())
-                        obj1.SongToXml(rsSong, xmlFile, true);
-
-                    if (convert)
-                        using (var obj1 = new Rs1Converter())
-                            tones2014.Add(obj1.ToneToTone2014(tone, rsSong));
+                    else // tone matching is not enabled (single tone)
+                    {
+                        tone = tones.First();
+                        arr = attr.First();
+                    }
 
                     // load attr2014 with RS1 mapped values for use by Arrangement()
-                    attr2014.Tone_Base = tone.Name;
-                    attr2014.ArrangementName = arrangement.ArrangementName;
                     attr2014.CentOffset = 0;
                     attr2014.DynamicVisualDensity = new List<float>() { 2 };
-                    attr2014.SongPartition = arrangement.SongPartition;
+                    attr2014.SongPartition = arr.SongPartition;
                     attr2014.PersistentID = IdGenerator.Guid().ToString();
                     attr2014.MasterID_RDV = RandomGenerator.NextInt();
                     attr2014.ArrangementProperties = new SongArrangementProperties2014();
+                    attr2014.Tone_Base = tone.Name;
+
+                    if (arr.Tuning == "E Standard")
+                        attr2014.Tuning = new TuningStrings { String0 = 0, String1 = 0, String2 = 0, String3 = 0, String4 = 0, String5 = 0 };
+                    else if (arr.Tuning == "DropD")
+                        attr2014.Tuning = new TuningStrings { String0 = -2, String1 = 0, String2 = 0, String3 = 0, String4 = 0, String5 = 0 };
+                    else if (arr.Tuning == "OpenG")
+                        attr2014.Tuning = new TuningStrings { String0 = -2, String1 = -2, String2 = 0, String3 = 0, String4 = 0, String5 = -2 };
+                    else if (arr.Tuning == "EFlat")
+                        attr2014.Tuning = new TuningStrings { String0 = -1, String1 = -1, String2 = -1, String3 = -1, String4 = -1, String5 = -1 };
+                    else // default to standard tuning
+                    {
+                        arr.Tuning = "E Standard";
+                        attr2014.Tuning = new TuningStrings { String0 = 0, String1 = 0, String2 = 0, String3 = 0, String4 = 0, String5 = 0 };
+                    }
 
                     // processing order is important - CAREFUL
                     // RouteMask  None = 0, Lead = 1, Rhythm = 2, Any = 3, Bass = 4
                     // XML file names are usually meaningless to arrangement determination
-
-                    if (arrangement.ArrangementName.ToLower().Contains("lead") ||
-                        rsSong.Arrangement.ToLower().Contains("lead"))
+                    if (rsSong.Arrangement.ToLower().Contains("combo") || arr.ArrangementName.ToLower().Contains("combo"))
                     {
-                        attr2014.ArrangementName = "Lead";
+                        attr2014.ArrangementName = "Combo";
                         attr2014.ArrangementType = (int)ArrangementType.Guitar;
-                        attr2014.ArrangementProperties.RouteMask = (int)RouteMask.Lead;
-                        attr2014.ArrangementProperties.PathLead = 1;
-                        attr2014.ArrangementProperties.PathRhythm = 0;
+                        attr2014.ArrangementProperties.RouteMask = arr.EffectChainName.ToLower().Contains("lead") ? (int)RouteMask.Lead : (int)RouteMask.Rhythm;
+                        attr2014.ArrangementProperties.PathLead = arr.EffectChainName.ToLower().Contains("lead") ? 1 : 0;
+                        attr2014.ArrangementProperties.PathRhythm = arr.EffectChainName.ToLower().Contains("lead") ? 0 : 1;
                         attr2014.ArrangementProperties.PathBass = 0;
                     }
-                    else if (arrangement.ArrangementName.ToLower().Contains("rhythm") ||
-                        rsSong.Arrangement.ToLower().Contains("rhythm"))
+                    else if (rsSong.Arrangement.ToLower().Contains("rhythm") || arr.ArrangementName.ToLower().Contains("rhythm"))
                     // || rsSong.Arrangement.ToLower().Contains("guitar"))
                     {
                         attr2014.ArrangementName = "Rhythm";
@@ -291,18 +293,16 @@ namespace RocksmithToolkitLib.DLCPackage
                         attr2014.ArrangementProperties.PathRhythm = 1;
                         attr2014.ArrangementProperties.PathBass = 0;
                     }
-                    else if (arrangement.ArrangementName.ToLower().Contains("combo") ||
-                        rsSong.Arrangement.ToLower().Contains("combo"))
+                    else if (rsSong.Arrangement.ToLower().Contains("lead") || arr.ArrangementName.ToLower().Contains("lead"))
                     {
-                        attr2014.ArrangementName = "Combo";
+                        attr2014.ArrangementName = "Lead";
                         attr2014.ArrangementType = (int)ArrangementType.Guitar;
-                        attr2014.ArrangementProperties.RouteMask = arrangement.EffectChainName.ToLower().Contains("lead") ? (int)RouteMask.Lead : (int)RouteMask.Rhythm;
-                        attr2014.ArrangementProperties.PathLead = arrangement.EffectChainName.ToLower().Contains("lead") ? 1 : 0;
-                        attr2014.ArrangementProperties.PathRhythm = arrangement.EffectChainName.ToLower().Contains("lead") ? 0 : 1;
+                        attr2014.ArrangementProperties.RouteMask = (int)RouteMask.Lead;
+                        attr2014.ArrangementProperties.PathLead = 1;
+                        attr2014.ArrangementProperties.PathRhythm = 0;
                         attr2014.ArrangementProperties.PathBass = 0;
                     }
-                    else if (arrangement.ArrangementName.ToLower().Contains("bass") ||
-                        rsSong.Arrangement.ToLower().Contains("bass"))
+                    else if (rsSong.Arrangement.ToLower().Contains("bass")) // || arr.ArrangementName.ToLower().Contains("bass"))
                     {
                         attr2014.ArrangementName = "Bass";
                         attr2014.ArrangementType = (int)ArrangementType.Bass;
@@ -327,14 +327,17 @@ namespace RocksmithToolkitLib.DLCPackage
                     if (convert) // RS1 -> RS2 magic
                     {
                         using (var obj1 = new Rs1Converter())
+                        {
+                            tones2014.Add(obj1.ToneToTone2014(tone));
                             rsSong2014 = obj1.SongToSong2014(rsSong);
+                        }
 
                         // update ArrangementProperties
                         rsSong2014.ArrangementProperties.RouteMask = attr2014.ArrangementProperties.RouteMask;
                         rsSong2014.ArrangementProperties.PathLead = attr2014.ArrangementProperties.PathLead;
                         rsSong2014.ArrangementProperties.PathRhythm = attr2014.ArrangementProperties.PathRhythm;
                         rsSong2014.ArrangementProperties.PathBass = attr2014.ArrangementProperties.PathBass;
-                        rsSong2014.ArrangementProperties.StandardTuning = (arrangement.Tuning == "E Standard" ? 1 : 0);
+                        rsSong2014.ArrangementProperties.StandardTuning = (arr.Tuning == "E Standard" ? 1 : 0);
 
                         // <note time="58.366" linkNext="0" accent="0" bend="0" fret="7" hammerOn="0" harmonic="0" hopo="0" ignore="0" leftHand="-1" mute="0" palmMute="0" pluck="-1" pullOff="0" slap="-1" slideTo="-1" string="3" sustain="0.108" tremolo="0" harmonicPinch="0" pickDirection="0" rightHand="-1" slideUnpitchTo="-1" tap="0" vibrato="0" />
                         if (rsSong2014.Levels.Any(sl => sl.Notes.Any(sln => sln.Bend != 0)))
@@ -375,12 +378,13 @@ namespace RocksmithToolkitLib.DLCPackage
                     catch (Exception ex)
                     {
                         // mainly for the benefit of convert2012 CLI users
-                        Console.WriteLine(@"This CDLC could not be auto converted." + Environment.NewLine +
-                            "You can still try manually adding the arrangements and assets." + Environment.NewLine +
+                        Console.WriteLine("This CDLC could not be auto converted." + Environment.NewLine +
+                            "You can still try manually adding arrangements and assets." + Environment.NewLine +
                             ex.Message);
                     }
                 }
             }
+
             if (convert)
             {
                 // get rid of duplicate tone names
@@ -389,12 +393,12 @@ namespace RocksmithToolkitLib.DLCPackage
                 data.TonesRS2014 = tones2014;
             }
 
-            //Get Album Artwork DDS Files
+            // Get Album Artwork DDS Files
             var artFiles = Directory.GetFiles(unpackedDir, "*.dds", SearchOption.AllDirectories);
             if (artFiles.Length < 1)
-                throw new DataException("No Album Artwork file found.");
+                throw new DataException("<ERROR> No Album Artwork file found.");
             if (artFiles.Length > 1)
-                throw new DataException("More than one Album Artwork file found.");
+                throw new DataException("<ERROR> More than one Album Artwork file found.");
 
             var targetArtFiles = new List<DDSConvertedFile>();
             data.AlbumArtPath = artFiles[0];
@@ -407,13 +411,13 @@ namespace RocksmithToolkitLib.DLCPackage
                 });
             data.ArtFiles = targetArtFiles;
 
-            //Audio files
+            // Audio files
             var targetAudioFiles = new List<string>();
             var audioFiles = Directory.GetFiles(unpackedDir, "*.ogg", SearchOption.AllDirectories);
             if (audioFiles.Length < 1)
-                throw new DataException("No Audio file found.");
+                throw new DataException("<ERROR> No Audio file found.");
             if (audioFiles.Length > 2)
-                throw new DataException("Too many Audio files found.");
+                throw new DataException("<ERROR> Too many Audio files found.");
 
             int i;
             for (i = 0; i < audioFiles.Length; i++)
@@ -424,9 +428,8 @@ namespace RocksmithToolkitLib.DLCPackage
                     break;
             }
 
-            // FIXME: platform specific decode is broken
             var sourcePlatform = unpackedDir.GetPlatform();
-            if (targetPlatform.IsConsole != (sourcePlatform = audioFiles[i].GetAudioPlatform()).IsConsole)
+            if (platform.IsConsole != (sourcePlatform = audioFiles[i].GetAudioPlatform()).IsConsole)
             {
                 var newFile = Path.Combine(Path.GetDirectoryName(audioFiles[i]), String.Format("{0}_cap.ogg", Path.GetFileNameWithoutExtension(audioFiles[i])));
                 OggFile.ConvertAudioPlatform(audioFiles[i], newFile);
@@ -436,12 +439,12 @@ namespace RocksmithToolkitLib.DLCPackage
             targetAudioFiles.Add(audioFiles[i]);
 
             if (!targetAudioFiles.Any())
-                throw new DataException("Audio file not found.");
+                throw new DataException("<ERROR> Audio file not found.");
 
             var a = new FileInfo(audioFiles[i]);
             data.OggPath = a.FullName;
 
-            //AppID
+            // AppID
             if (!sourcePlatform.IsConsole)
             {
                 if (!convert)
@@ -454,17 +457,21 @@ namespace RocksmithToolkitLib.DLCPackage
                     data.AppId = "248750";
             }
 
-            try
-            {
-                // Package Info
-                var versionFile = Directory.EnumerateFiles(unpackedDir, "toolkit.version", SearchOption.AllDirectories).FirstOrDefault();
-                if (versionFile != null)
-                    data.ToolkitInfo = GeneralExtensions.ReadToolkitInfo(versionFile);
-            }
-            catch { }
+            // Package Info
+            var versionFile = Directory.EnumerateFiles(unpackedDir, "toolkit.version", SearchOption.AllDirectories).FirstOrDefault();
+            if (versionFile != null)
+                data.ToolkitInfo = GeneralExtensions.ReadToolkitInfo(versionFile);
+            else
+                data.ToolkitInfo = new ToolkitInfo();
+
+            if (String.IsNullOrEmpty(data.ToolkitInfo.PackageVersion))
+                data.ToolkitInfo.PackageVersion = "1";
 
             if (convert)
+            {
+                data.ToolkitInfo.PackageComment += "(RS1 to RS2014 by CDLC Creator)";
                 data.Tones = null;
+            }
 
             return data;
         }
@@ -492,19 +499,18 @@ namespace RocksmithToolkitLib.DLCPackage
         /// <param name="renameAudioPreview">If set to <c>true</c> rename preview audio with friendly name </param>
         public static DLCPackageData LoadFromFolder(string unpackedDir, Platform targetPlatform, Platform sourcePlatform = null, bool fixMultiTone = false, bool fixLowBass = false)
         {
+            if (sourcePlatform == null || sourcePlatform.platform == GamePlatform.None || sourcePlatform.version == GameVersion.None)
+                sourcePlatform = unpackedDir.GetPlatform();
+
+            float? bnkAudioVolume = null;
+            float? bnkPreviewVolume = null;
             var data = new DLCPackageData();
             data.GameVersion = GameVersion.RS2014;
             data.SignatureType = PackageMagic.CON;
-            if (sourcePlatform == null)
-                sourcePlatform = unpackedDir.GetPlatform();
-
-            //Arrangements / Tones
             data.Arrangements = new List<Arrangement>();
             data.TonesRS2014 = new List<Tone2014>();
 
             //Load files
-            float? audioVolume = null;
-            float? previewVolume = null;
             var jsonFiles = Directory.EnumerateFiles(unpackedDir, "*.json", SearchOption.AllDirectories).ToArray();
             foreach (var json in jsonFiles)
             {
@@ -520,27 +526,19 @@ namespace RocksmithToolkitLib.DLCPackage
                         data.Name = attr.DLCKey;
 
                         // Get song volume
-                        audioVolume = attr.SongVolume;
-                        previewVolume = attr.PreviewVolume;
+                        bnkAudioVolume = attr.SongVolume;
+                        bnkPreviewVolume = attr.PreviewVolume;
 
                         // Fill SongInfo
-                        data.SongInfo = new SongInfo
-                            {
-                                JapaneseArtistName = attr.JapaneseArtistName,
-                                JapaneseSongName = attr.JapaneseSongName,
-                                SongDisplayName = attr.SongName,
-                                SongDisplayNameSort = attr.SongNameSort,
-                                Album = attr.AlbumName,
-                                AlbumSort = attr.AlbumNameSort,
-                                SongYear = attr.SongYear ?? 0,
-                                Artist = attr.ArtistName,
-                                ArtistSort = attr.ArtistNameSort,
-                                AverageTempo = (int)attr.SongAverageTempo
-                            };
+                        data.SongInfo = new SongInfo { JapaneseArtistName = attr.JapaneseArtistName, JapaneseSongName = attr.JapaneseSongName, SongDisplayName = attr.SongName, SongDisplayNameSort = attr.SongNameSort, Album = attr.AlbumName, AlbumSort = attr.AlbumNameSort, SongYear = attr.SongYear ?? 0, Artist = attr.ArtistName, ArtistSort = attr.ArtistNameSort, AverageTempo = (int)attr.SongAverageTempo };
                     }
 
                     // Adding Arrangement
                     data.Arrangements.Add(new Arrangement(attr, xmlFile, fixMultiTone, fixLowBass));
+
+                    // Add Tuning Name
+                    var tuningName = TuningDefinitionRepository.Instance.Detect(attr.Tuning, GameVersion.RS2014);
+                    data.Arrangements.Last().Tuning = tuningName.UIName;
 
                     // make a list of tone names used in arrangements
                     var toneNames = new List<string>();
@@ -613,38 +611,72 @@ namespace RocksmithToolkitLib.DLCPackage
                 }
             }
 
-            // Read volume from BNK if it was not found in Manifest
-            if (audioVolume == null)
+            // Enumerate *.bnk files
+            var bnkWemList = new List<BnkWemData>();
+            var bnkFiles = Directory.EnumerateFiles(unpackedDir, "song_*.bnk", SearchOption.AllDirectories).ToList();
+            if (!bnkFiles.Any()) // LOG, IGNORE, AND CONTINUE
             {
-                var bnkfiles = Directory.EnumerateFiles(unpackedDir, "*.bnk", SearchOption.AllDirectories).ToArray();
-                if (bnkfiles.Any())
+                var errMsg = "<WARNING> Did not find any *.bnk files ..." + Environment.NewLine + "You can still try loading an audio file by hand.  " + Environment.NewLine + Environment.NewLine;
+                GlobalExtension.Log.Info(errMsg);
+                BetterDialog2.ShowDialog(errMsg, MESSAGEBOX_CAPTION, null, null, "OK", Bitmap.FromHicon(SystemIcons.Warning.Handle), "Warning ...", 150, 150);
+            }
+            else if (bnkFiles.Count > 2)
+                throw new FileLoadException("<ERROR> Found too many *.bnk files ..." + Environment.NewLine + Environment.NewLine);
+            else
+            {
+                // extract .bnk file data
+                foreach (var bnkFile in bnkFiles)
                 {
-                    var bnkAudio = bnkfiles.FirstOrDefault(x => !x.EndsWith("_preview.bnk"));
-                    if (!String.IsNullOrEmpty(bnkAudio))
-                        audioVolume = SoundBankGenerator2014.ReadBNKVolume(File.OpenRead(bnkAudio), sourcePlatform);
+//<<<<<<< HEAD
+//                    var bnkAudio = bnkfiles.FirstOrDefault(x => !x.EndsWith("_preview.bnk"));
+//                    if (!String.IsNullOrEmpty(bnkAudio))
+//                        audioVolume = SoundBankGenerator2014.ReadBNKVolume(File.OpenRead(bnkAudio), sourcePlatform);
 
-                    var bnkPreview = bnkfiles.FirstOrDefault(x => x.EndsWith("_preview.bnk"));
-                    if (!String.IsNullOrEmpty(bnkPreview))
-                        previewVolume = SoundBankGenerator2014.ReadBNKVolume(File.OpenRead(bnkPreview), sourcePlatform);
+//                    var bnkPreview = bnkfiles.FirstOrDefault(x => x.EndsWith("_preview.bnk"));
+//                    if (!String.IsNullOrEmpty(bnkPreview))
+//                        previewVolume = SoundBankGenerator2014.ReadBNKVolume(File.OpenRead(bnkPreview), sourcePlatform);
+//=======
+                    var bnkPlatform = sourcePlatform;
+                    var sourceResult = SoundBankGenerator2014.ValidateBnkFile(bnkFile, sourcePlatform);
+                    if (sourceResult.StartsWith("<ERROR>"))
+                    {
+                        // maybe this .bnk already has targetPlatform endians
+                        var targetResult = SoundBankGenerator2014.ValidateBnkFile(bnkFile, targetPlatform);
+                        if (targetResult.StartsWith("<ERROR>"))
+                            throw new FormatException(sourceResult + Environment.NewLine + targetResult);
+
+                        bnkPlatform = targetPlatform;
+                    }
+
+                    var bnkWemData = new BnkWemData { BnkFileName = bnkFile, WemFileId = SoundBankGenerator2014.ReadWemFileId(bnkFile, bnkPlatform), VolumeFactor = SoundBankGenerator2014.ReadVolumeFactor(bnkFile, bnkPlatform) };
+
+                    bnkWemList.Add(bnkWemData);
                 }
+
+                // set volume from .bnk file
+                if (bnkAudioVolume == null)
+                    bnkAudioVolume = bnkWemList.Where(fn => !fn.BnkFileName.EndsWith("_preview.bnk")).Select(vf => vf.VolumeFactor).FirstOrDefault();
+
+                if (bnkPreviewVolume == null)
+                    bnkPreviewVolume = bnkWemList.Where(fn => fn.BnkFileName.EndsWith("_preview.bnk")).Select(vf => vf.VolumeFactor).FirstOrDefault();
             }
 
             // Use default volume if still null
-            data.Volume = audioVolume ?? DEFAULT_AUDIO_VOLUME;
-            data.PreviewVolume = previewVolume ?? DEFAULT_PREVIEW_VOLUME;
+            data.Volume = bnkAudioVolume ?? DEFAULT_AUDIO_VOLUME;
+            data.PreviewVolume = bnkPreviewVolume ?? DEFAULT_PREVIEW_VOLUME;
 
             //ShowLights XML
             var xmlShowLights = Directory.EnumerateFiles(unpackedDir, "*_showlights.xml", SearchOption.AllDirectories).FirstOrDefault();
             if (!String.IsNullOrEmpty(xmlShowLights))
             {
                 var shl = new Arrangement
-                    {
-                        ArrangementType = ArrangementType.ShowLight,
-                        Name = ArrangementName.ShowLights,
-                        SongXml = new SongXML { File = xmlShowLights },
-                        SongFile = new SongFile { File = "" },
-                        XmlComments = Song2014.ReadXmlComments(xmlShowLights)
-                    };
+                {
+                    ArrangementType = ArrangementType.ShowLight,
+                    Name = ArrangementName.ShowLights,
+                    SongXml = new SongXML { File = xmlShowLights },
+                    SongFile = new SongFile { File = "" },
+                    XmlComments = Song2014.ReadXmlComments(xmlShowLights)
+                };
 
                 // Adding ShowLights
                 data.Arrangements.Add(shl);
@@ -679,56 +711,86 @@ namespace RocksmithToolkitLib.DLCPackage
             if (lyricArt.Any())
                 data.LyricArtPath = lyricArt.FirstOrDefault();
 
-            // Audio files
-            var targetAudioFiles = new List<string>();
-            var sourceAudioFiles = Directory.EnumerateFiles(unpackedDir, "*.wem", SearchOption.AllDirectories).ToArray();
-            foreach (var file in sourceAudioFiles)
+            // Audio Files
+            // Give ogg files friendly names
+            var fixedOggFiles = Directory.EnumerateFiles(unpackedDir, "*_fixed.ogg", SearchOption.AllDirectories).ToList();
+            if (fixedOggFiles.Any())
             {
-                var newFile = Path.Combine(Path.GetDirectoryName(file), String.Format("{0}_fixed{1}", Path.GetFileNameWithoutExtension(file), Path.GetExtension(file)));
-                if (targetPlatform.IsConsole != file.GetAudioPlatform().IsConsole)
-                {
-                    OggFile.ConvertAudioPlatform(file, newFile);
-                    targetAudioFiles.Add(newFile);
-                }
-                else
-                    targetAudioFiles.Add(file);
+                if (fixedOggFiles.Count > 2)
+                    throw new FileLoadException("<ERROR> Found too many *_fixed.ogg files ..." + Environment.NewLine + Environment.NewLine);
+
+                // reset data.OggPath and data.OggPreviewPath
+                data.OggPath = null;
+                data.OggPreviewPath = null;
             }
 
-            if (!targetAudioFiles.Any())
-                throw new InvalidDataException("Audio files not found.");
-
-            string audioPath = null, audioPreviewPath = null;
-            var a = new FileInfo(targetAudioFiles[0]);
-
-            if (targetAudioFiles.Count == 2)
+            foreach (string fixedOggFile in fixedOggFiles)
             {
-                var b = new FileInfo(targetAudioFiles[1]);
+                foreach (var item in bnkWemList)
+                {
+                    if (Path.GetFileName(fixedOggFile).Contains(item.WemFileId))
+                    {
+                        var friendlyOggFile = Path.Combine(Path.GetDirectoryName(fixedOggFile), Path.GetFileName(Path.ChangeExtension(item.BnkFileName, ".ogg")));
+                        File.Move(fixedOggFile, friendlyOggFile);
 
-                if (a.Length > b.Length)
-                {
-                    audioPath = a.FullName;
-                    audioPreviewPath = b.FullName;
-                }
-                else
-                {
-                    audioPath = b.FullName;
-                    audioPreviewPath = a.FullName;
+                        if (Path.GetFileName(friendlyOggFile).EndsWith("_preview.wem"))
+                            data.OggPreviewPath = friendlyOggFile;
+                        else
+                            data.OggPath = friendlyOggFile;
+                    }
                 }
             }
-            else
-                audioPath = a.FullName;
 
-            data.OggPath = audioPath;
-            data.OggPreviewPath = audioPreviewPath;
-
-            // copy the correct wem audio to _preview.wem for use with CDLC Creator
-            if (!String.IsNullOrEmpty(audioPreviewPath) && !audioPreviewPath.EndsWith("_preview.wem"))
+            // Give wem files friendly names
+            var wemFiles = Directory.EnumerateFiles(unpackedDir, "*.wem", SearchOption.AllDirectories).ToList();
+            if (wemFiles.Any())
             {
-                var newPreviewFileName = Path.Combine(Path.GetDirectoryName(audioPath), String.Format("{0}_preview{1}", Path.GetFileNameWithoutExtension(audioPath), Path.GetExtension(audioPath)));
-                File.Copy(audioPreviewPath, newPreviewFileName, true); //bcapi (may2018 changed byck to copy)as some original creates an error here if (!File.Exists(newPreviewFileName)) 
+                if (wemFiles.Count > 2)
+                    throw new FileLoadException("<ERROR> Found too many *.wem files ..." + Environment.NewLine + Environment.NewLine);
 
-                data.OggPreviewPath = newPreviewFileName;
+                // reset data.OggPath and data.OggPreviewPath
+                data.OggPath = null;
+                data.OggPreviewPath = null;
             }
+
+            foreach (string wemFile in wemFiles)
+            {
+                foreach (var item in bnkWemList)
+                {
+                    if (Path.GetFileName(wemFile).Contains(item.WemFileId))
+                    {
+                        var friendlyWemFile = Path.Combine(Path.GetDirectoryName(wemFile), Path.GetFileName(Path.ChangeExtension(item.BnkFileName, ".wem")));
+                        File.Copy(wemFile, friendlyWemFile);
+
+                        // both bnk files may reference the same wem file 
+                        // where preview audio is the same as main audio
+                        if (wemFiles.Count == 1)
+                        {
+                            data.OggPath = friendlyWemFile;
+                            break;
+                        }
+
+//<<<<<<< HEAD
+//            // copy the correct wem audio to _preview.wem for use with CDLC Creator
+//            if (!String.IsNullOrEmpty(audioPreviewPath) && !audioPreviewPath.EndsWith("_preview.wem"))
+//            {
+//                var newPreviewFileName = Path.Combine(Path.GetDirectoryName(audioPath), String.Format("{0}_preview{1}", Path.GetFileNameWithoutExtension(audioPath), Path.GetExtension(audioPath)));
+//                File.Copy(audioPreviewPath, newPreviewFileName, true); //bcapi (may2018 changed byck to copy)as some original creates an error here if (!File.Exists(newPreviewFileName)) 
+
+//                data.OggPreviewPath = newPreviewFileName;
+//=======
+                        // more efficient to use friendly name wem files with CDLC Creator
+                        if (Path.GetFileName(friendlyWemFile).EndsWith("_preview.wem"))
+                            data.OggPreviewPath = friendlyWemFile;
+                        else
+                            data.OggPath = friendlyWemFile;
+                    }
+                }
+//>>>>>>> c7d902e63baa725649519d722a2c7540c837ad77
+            }
+
+            if (!wemFiles.Any() && !fixedOggFiles.Any())
+                throw new InvalidDataException("<ERROR> Did not find any audio files found ..." + Environment.NewLine + Environment.NewLine);
 
             //AppID
             var appidFile = Directory.EnumerateFiles(unpackedDir, "*.appid", SearchOption.AllDirectories).FirstOrDefault();
@@ -744,6 +806,7 @@ namespace RocksmithToolkitLib.DLCPackage
                 data.ToolkitInfo = new ToolkitInfo();
                 data.ToolkitInfo.PackageVersion = "0";
                 data.ToolkitInfo.PackageAuthor = "Ubisoft";
+                data.ToolkitInfo.PackageRating = "0";
             }
 
             return data;
@@ -785,153 +848,105 @@ namespace RocksmithToolkitLib.DLCPackage
         }
 
         /// <summary>
-        /// Transforms unpacked Song into project-like folder structure.
+        /// Transforms song artifacts into project-like folder structure
+        /// unpackedDir is recycled (RS2014 ONLY)
         /// </summary>
-        /// <returns>Output folder path.</returns>
-        /// <param name="unpackedDir">Unpacked dir.</param>
+        /// <param name="unpackedDir"></param>
         public static string DoLikeProject(string unpackedDir)
         {
-            const string EOF = "EOF";
-            const string KIT = "Toolkit";
-            string SongName = "SongName";
-            string songVersion = "v0";
+            var platform = unpackedDir.GetPlatform();
+            if (platform.version != GameVersion.RS2014)
+                throw new FileLoadException("<ERROR> DoLikeProject method does not work with RS1 ..." + Environment.NewLine + Environment.NewLine);
 
-            // Get name for a new folder
-            var jsonFiles = Directory.EnumerateFiles(unpackedDir, "*.json", SearchOption.AllDirectories).ToArray();
-            var attr = Manifest2014<Attributes2014>.LoadFromFile(jsonFiles[0]).Entries.ToArray()[0].Value.ToArray()[0].Value;
-            var fileNameParts = Path.GetFileNameWithoutExtension(unpackedDir).Split('_');
-            if (fileNameParts.Length > 3)
-                songVersion = fileNameParts[2];
-            SongName = attr.FullName.Split('_')[0];
+            // Create temporary project directory structure
+            var tmpProjectDir = Path.Combine(Path.GetTempPath(), "ProjectFiles", Path.GetFileName(unpackedDir));
+            var eofDir = Path.Combine(tmpProjectDir, "EOF");
+            var toolkitDir = Path.Combine(tmpProjectDir, "Toolkit");
 
-            //Create dir struct
-            var outdir = Path.Combine(Path.GetDirectoryName(unpackedDir), String.Format("{0}_{1}", SongName, songVersion).Replace(" ", "-"));
-            var eofdir = Path.Combine(outdir, EOF);
-            var kitdir = Path.Combine(outdir, KIT);
-            attr = null; //dispose
+            // Start clean/fresh
+            IOExtension.DeleteDirectory(tmpProjectDir);
+            IOExtension.MakeDirectory(tmpProjectDir);
+            IOExtension.MakeDirectory(eofDir);
+            IOExtension.MakeDirectory(toolkitDir);
 
-            // Don't work in same dir
-            if (Directory.Exists(outdir))
-            {
-                if (outdir == unpackedDir)
-                    return unpackedDir;
-                DirectoryExtension.SafeDelete(outdir);
-            }
-
-            Directory.CreateDirectory(outdir);
-            Directory.CreateDirectory(eofdir);
-            Directory.CreateDirectory(kitdir);
-
+            // Gather up the project files and songName
             var xmlFiles = Directory.EnumerateFiles(unpackedDir, "*.xml", SearchOption.AllDirectories).ToArray();
-            // var sngFiles = Directory.EnumerateFiles(unpackedDir, "*vocals.sng", SearchOption.AllDirectories).ToArray();
+            var jsonFiles = Directory.EnumerateFiles(unpackedDir, "*.json", SearchOption.AllDirectories).ToArray();
+            string songName = "SongName";
+            var attr = Manifest2014<Attributes2014>.LoadFromFile(jsonFiles[0]).Entries.ToArray()[0].Value.ToArray()[0].Value;
+            songName = attr.FullName.Split('_')[0];
+            attr = null; // dispose
 
             foreach (var json in jsonFiles)
             {
+                // Move JSON
                 var name = Path.GetFileNameWithoutExtension(json);
+                IOExtension.MoveFile(json, Path.Combine(toolkitDir, name + ".json"));
+
+                // Move matching XML
                 var xmlFile = xmlFiles.FirstOrDefault(x => Path.GetFileNameWithoutExtension(x) == name);
-                // var sngFile = sngFiles.FirstOrDefault(x => Path.GetFileNameWithoutExtension(x) == name);
-
-                //Move all pair JSON\XML
-                File.Move(json, Path.Combine(kitdir, name + ".json"));
-                File.Move(xmlFile, Path.Combine(eofdir, name + ".xml"));
-
-                //if (name.EndsWith("vocals", StringComparison.Ordinal))
-                //    if (sngFile != null)
-                //        File.Move(sngFile, Path.Combine(kitdir, name + ".sng"));
+                if (!String.IsNullOrEmpty(xmlFile)) // in case there is no matching XML file
+                    IOExtension.MoveFile(xmlFile, Path.Combine(eofDir, name + ".xml"));
             }
 
-            // move showlights.xml
-            var showlightPath = Directory.EnumerateFiles(unpackedDir, "*_showlights.xml", SearchOption.AllDirectories).ToArray();
-            if (showlightPath.Any())
-                File.Move(showlightPath[0], Path.Combine(eofdir, Path.GetFileName(showlightPath[0])));
+            // Move showlights.xml to EOF folder
+            var showlightFile = Directory.EnumerateFiles(unpackedDir, "*_showlights.xml", SearchOption.AllDirectories).FirstOrDefault();
+            if (!String.IsNullOrEmpty(showlightFile))
+                IOExtension.MoveFile(showlightFile, Path.Combine(eofDir, Path.GetFileName(showlightFile)));
 
-            //Move all art_size.dds to KIT folder
-            var artFiles = Directory.EnumerateFiles(unpackedDir, "album_*_*.dds", SearchOption.AllDirectories).ToArray();
-            if (artFiles.Any())
-                foreach (var art in artFiles)
-                    File.Move(art, Path.Combine(kitdir, Path.GetFileName(art)));
+            // Move artwork png to EOF folder
+            var artPngFiles = Directory.EnumerateFiles(unpackedDir, "*.png", SearchOption.AllDirectories).Where(fp => !Path.GetFileName(fp).Equals("Package Image.png") && !Path.GetFileName(fp).Equals("Content Image.png")).ToList();
+            foreach (var pngFile in artPngFiles)
+                IOExtension.MoveFile(pngFile, Path.Combine(eofDir, Path.GetFileName(pngFile)));
 
-            var lyricArt = Directory.EnumerateFiles(unpackedDir, "lyrics_*.dds", SearchOption.AllDirectories).ToArray();
-            if (lyricArt.Any())
-                foreach (var art in lyricArt)
-                    File.Move(art, Path.Combine(kitdir, Path.GetFileName(art)));
+            // Move ogg to EOF folder
+            var oggFiles = Directory.EnumerateFiles(unpackedDir, "*.ogg", SearchOption.AllDirectories).ToList();
+            foreach (var oggFile in oggFiles)
+                IOExtension.MoveFile(oggFile, Path.Combine(eofDir, Path.GetFileName(oggFile)));
 
-            //Move all .BNK to KIT folder
-            var bnkFiles = Directory.EnumerateFiles(unpackedDir, "song_*.bnk", SearchOption.AllDirectories).ToArray();
-            if (bnkFiles.Any())
-                foreach (var bnk in bnkFiles)
-                    File.Move(bnk, Path.Combine(kitdir, Path.GetFileName(bnk)));
+            // Move Xbox360 png files to Toolkit folder
+            var xbox360PngFiles = Directory.EnumerateFiles(unpackedDir, "*.png", SearchOption.AllDirectories).Where(fp => Path.GetFileName(fp).Equals("Package Image.png") || Path.GetFileName(fp).Equals("Content Image.png")).ToList();
+            foreach (var pngFile in xbox360PngFiles)
+                IOExtension.MoveFile(pngFile, Path.Combine(toolkitDir, Path.GetFileName(pngFile)));
 
-            //Move ogg to EOF folder + rename
-            var oggFiles = Directory.EnumerateFiles(unpackedDir, "*_fixed.ogg", SearchOption.AllDirectories).ToArray();
-            // don't really need oggFiles but if they exist use them
-            if (oggFiles.Any())
-            {
-                // TODO: read names from bnk and rename.
-                // TODO: FIX THIS ... not valid for short jingle/riff CDLC < 30 seconds
-                // because the preview 30 seconds is larger than actual song
-                // need to base preview decision on duration not size
-                var a0 = new FileInfo(oggFiles[0]);
-                if (oggFiles.Count() == 2)
-                {
-                    var b0 = new FileInfo(oggFiles[1]);
+            // Move art_size.dds to Toolkit folder
+            var artFiles = Directory.EnumerateFiles(unpackedDir, "album_*_*.dds", SearchOption.AllDirectories).ToList();
+            foreach (var art in artFiles)
+                IOExtension.MoveFile(art, Path.Combine(toolkitDir, Path.GetFileName(art)));
 
-                    if (a0.Length > b0.Length)
-                    {
-                        File.Move(a0.FullName, Path.Combine(eofdir, SongName + ".ogg"));
-                        File.Move(b0.FullName, Path.Combine(eofdir, SongName + "_preview.ogg"));
-                    }
-                    else
-                    {
-                        File.Move(b0.FullName, Path.Combine(eofdir, SongName + ".ogg"));
-                        File.Move(a0.FullName, Path.Combine(eofdir, SongName + "_preview.ogg"));
-                    }
-                }
-                else
-                    File.Move(a0.FullName, Path.Combine(eofdir, SongName + ".ogg"));
-            }
+            var lyricArt = Directory.EnumerateFiles(unpackedDir, "lyrics_*.dds", SearchOption.AllDirectories).ToList();
+            foreach (var art in lyricArt)
+                IOExtension.MoveFile(art, Path.Combine(toolkitDir, Path.GetFileName(art)));
 
-            //Move wem to KIT folder + rename
-            var wemFiles = Directory.EnumerateFiles(unpackedDir, "*.wem", SearchOption.AllDirectories).ToArray();
+            // Move song_*.bnk to Toolkit folder
+            var bnkFiles = Directory.EnumerateFiles(unpackedDir, "song_*.bnk", SearchOption.AllDirectories).ToList();
+            foreach (var bnkFile in bnkFiles)
+                IOExtension.MoveFile(bnkFile, Path.Combine(toolkitDir, Path.GetFileName(bnkFile)));
+
+            // Move wem to Toolkit folder
+            var wemFiles = Directory.EnumerateFiles(unpackedDir, "*.wem", SearchOption.AllDirectories).ToList();
             if (!wemFiles.Any() && !oggFiles.Any())
-                throw new InvalidDataException("Audio files not found.");
+                throw new InvalidDataException("<ERROR> Audio files not found ..." + Environment.NewLine + Environment.NewLine);
 
-            // TODO: FIX THIS ... not valid for short jingle/riff CDLC < 30 seconds
-            // because the preview 30 seconds is larger than actual song
-            // need to base preview decision on duration not size
-            var a1 = new FileInfo(wemFiles[0]);
-            if (wemFiles.Count() == 2)
-            {
-                var b1 = new FileInfo(wemFiles[1]);
+            foreach (string wemFile in wemFiles)
+                IOExtension.MoveFile(wemFile, Path.Combine(toolkitDir, Path.GetFileName(wemFile)));
 
-                if (a1.Length > b1.Length)
-                {
-                    File.Move(a1.FullName, Path.Combine(kitdir, SongName + ".wem"));
-                    File.Move(b1.FullName, Path.Combine(kitdir, SongName + "_preview.wem"));
-                }
-                else
-                {
-                    File.Move(b1.FullName, Path.Combine(kitdir, SongName + ".wem"));
-                    File.Move(a1.FullName, Path.Combine(kitdir, SongName + "_preview.wem"));
-                }
-            }
-            else
-                File.Move(a1.FullName, Path.Combine(kitdir, SongName + ".wem"));
-
-            //Move Appid for correct template generation.
+            // Move Appid for correct template generation.
             var appidFile = Directory.EnumerateFiles(unpackedDir, "*.appid", SearchOption.AllDirectories).FirstOrDefault();
-            if (appidFile != null)
-                File.Move(appidFile, Path.Combine(kitdir, Path.GetFileName(appidFile)));
+            if (!String.IsNullOrEmpty(appidFile))
+                IOExtension.MoveFile(appidFile, Path.Combine(toolkitDir, Path.GetFileName(appidFile)));
 
-            //Move toolkit.version
+            // Move toolkit.version
             var toolkitVersion = Directory.EnumerateFiles(unpackedDir, "toolkit.version", SearchOption.AllDirectories).FirstOrDefault();
-            if (toolkitVersion != null)
-                File.Move(toolkitVersion, Path.Combine(kitdir, Path.GetFileName(toolkitVersion)));
+            if (!String.IsNullOrEmpty(toolkitVersion))
+                IOExtension.MoveFile(toolkitVersion, Path.Combine(toolkitDir, Path.GetFileName(toolkitVersion)));
 
-            //Remove old folder
-            DirectoryExtension.SafeDelete(unpackedDir);
+            // Remove old unpackedDir
+            IOExtension.DeleteDirectory(unpackedDir);
+            // Move tmpProjectDir to unpackedDir
+            IOExtension.MoveDirectory(tmpProjectDir, unpackedDir);
 
-            return outdir;
+            return unpackedDir;
         }
         #endregion
     }

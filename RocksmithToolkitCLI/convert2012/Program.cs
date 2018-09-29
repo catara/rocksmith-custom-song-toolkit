@@ -64,11 +64,11 @@ namespace convert2012
                 var unpackedDest = Path.GetDirectoryName(cdlcFilePath);
 
                 if (Directory.Exists(unpackedDirPath))
-                    DirectoryExtension.SafeDelete(unpackedDirPath);
+                    IOExtension.DeleteDirectory(unpackedDirPath);
 
                 try
                 {
-                    Packer.Unpack(cdlcFilePath, unpackedDest, true);
+                    Packer.Unpack(cdlcFilePath, unpackedDest, null, true);
 
                     // Load Package Data
                     Console.WriteLine(@"Converting RS2012 CDLC to RS2014 CDLC ...");
@@ -97,7 +97,7 @@ namespace convert2012
                     Console.WriteLine(@"Repacking as RS2014 CDLC: " + cdlcFileName + @".psarc");
                     Console.WriteLine("");
                     DLCPackageCreator.Generate(cdlcSavePath, info, new Platform(GamePlatform.Pc, GameVersion.RS2014), pnum: 1);
-                    DirectoryExtension.SafeDelete(unpackedDirPath);
+                    IOExtension.DeleteDirectory(unpackedDirPath);
                 }
                 catch (Exception ex)
                 {

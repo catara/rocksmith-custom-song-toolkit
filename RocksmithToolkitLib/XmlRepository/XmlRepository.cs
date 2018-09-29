@@ -28,7 +28,8 @@ namespace RocksmithToolkitLib.XmlRepository
 
         public string FilePath
         {
-            get { return Path.Combine(Application.StartupPath, FileName); }
+            // path fixed for unit testing compatiblity
+            get { return Path.Combine(AppDomain.CurrentDomain.SetupInformation.ApplicationBase, FileName); }
         }
 
         /// <summary>
@@ -103,7 +104,7 @@ namespace RocksmithToolkitLib.XmlRepository
                     }
                 }
             }
-            else 
+            else
             {
                 lock (List)
                 {

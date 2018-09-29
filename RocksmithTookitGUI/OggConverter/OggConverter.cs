@@ -88,7 +88,11 @@ namespace RocksmithToolkitGUI.OggConverter
                                 break;
                             case ConverterType.Revorb:
                                 txtWwise2Ogg.Text = file;
-                                OggFile.Revorb(file, outputFileName, Path.GetDirectoryName(Application.ExecutablePath), (extension == ".ogg") ? OggFile.WwiseVersion.Wwise2010 : OggFile.WwiseVersion.Wwise2017);
+//<<<<<<< HEAD
+//                                OggFile.Revorb(file, outputFileName, Path.GetDirectoryName(Application.ExecutablePath), (extension == ".ogg") ? OggFile.WwiseVersion.Wwise2010 : OggFile.WwiseVersion.Wwise2017);
+//=======
+                                OggFile.Revorb(file, outputFileName, (extension == ".ogg") ? OggFile.WwiseVersion.Wwise2010 : OggFile.WwiseVersion.Wwise2017);
+//>>>>>>> c7d902e63baa725649519d722a2c7540c837ad77
                                 break;
                             case ConverterType.WEM:
                                 txtWwiseConvert.Text = file;
@@ -114,7 +118,7 @@ namespace RocksmithToolkitGUI.OggConverter
                 else if (errorFiles.Count > 0 && successFiles.Count > 0)
                 {
                     StringBuilder alertMessage = new StringBuilder(
-                        "Conversion complete with errors." + Environment.NewLine + Environment.NewLine);
+                        "Conversion completed with errors ..." + Environment.NewLine + Environment.NewLine);
                     alertMessage.AppendLine(
                         "Files converted with success:" + Environment.NewLine);
 

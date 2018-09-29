@@ -17,24 +17,28 @@ namespace RocksmithToolkitLib.PsarcLoader
         }
 
         /// <summary>
-        /// Unpacks and Reads DLCPackageData
+        /// Loads DLCPackageData from unpacked archive (RS1 and RS2014 Compatible)
         /// </summary>
         /// <param name="fixMultitoneEx">convert multi tones to single tone, prevents some in-game hangs</param>
         /// <param name="fixLowBass">fix low bass tuning issues</param>
         /// <param name="decodeAudio">converts wem to ogg files</param>
         /// <returns>DLCPackageData</returns>
-        public DLCPackageData ReadPackage(string srcPath, bool fixMultitoneEx = false, bool fixLowBass = false, bool decodeAudio = false)
+        public DLCPackageData ReadPackage(string srcPath, bool fixMultiTone = false, bool fixLowBass = false, bool decodeAudio = false)
         {
             // UNPACK
-            packageDir = Packer.Unpack(srcPath, Path.GetTempPath(), decodeAudio);
+            packageDir = Packer.Unpack(srcPath, Path.GetTempPath(), decodeAudio: decodeAudio);
 
-            // REORGANIZE
-            packageDir = DLCPackageData.DoLikeProject(packageDir);
-
-            // LOAD DATA
-            DLCPackageData info = new DLCPackageData();
-            var packagePlatform = srcPath.GetPlatform();
-            info = DLCPackageData.LoadFromFolder(packageDir, packagePlatform, packagePlatform, fixMultitoneEx, fixLowBass);
+            // LOAD DLCPackageData
+            var srcPlatform = Packer.GetPlatform(srcPath);
+            DLCPackageData info = null; 
+            if (srcPlatform.version == GameVersion.RS2014)
+            {
+                // REORGANIZE (RS2014)
+                packageDir = DLCPackageData.DoLikeProject(packageDir);
+                info = DLCPackageData.LoadFromFolder(packageDir, srcPlatform, srcPlatform, fixMultiTone, fixLowBass);
+            }
+            else
+                info = DLCPackageData.RS1LoadFromFolder(packageDir, srcPlatform, false);
 
             return info;
         }
@@ -59,8 +63,8 @@ namespace RocksmithToolkitLib.PsarcLoader
         protected virtual void Dispose(Boolean disposing)
         {
             if (disposing)
-                if (_deleteOnClose)
-                    DirectoryExtension.SafeDelete(packageDir);
+                if (_deleteOnClose && Directory.Exists(packageDir))
+                    IOExtension.DeleteDirectory(packageDir);
         }
 
         public void Dispose()

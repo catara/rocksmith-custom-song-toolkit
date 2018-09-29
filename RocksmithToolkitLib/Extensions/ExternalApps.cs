@@ -1,43 +1,75 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Forms;
+using System.Text;
+using System.Diagnostics;
 
 namespace RocksmithToolkitLib.Extensions
 {
     public static class ExternalApps
     {
-        private const string APP_ROOT = @"tools\";
-        private const string APP_TOPNG = APP_ROOT + "topng.exe";
-        private const string APP_7Z = APP_ROOT + "7za.exe";
-        private const string APP_NVDXT = APP_ROOT + "nvdxt.exe";
-        private const string APP_PACKER = APP_ROOT + "packer.exe";
-        private const string APP_OGGCUT = APP_ROOT + "oggCut.exe";
-        private const string APP_OGGDEC = APP_ROOT + "oggdec.exe";
-        private const string APP_OGGENC = APP_ROOT + "oggenc.exe";
+        // path fixed for unit testing compatiblity
+        public static readonly string TOOLKIT_ROOT = AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
+        public static readonly string TOOLS_DIR = "tools";
+        public static readonly string APP_TOPNG = Path.Combine(TOOLS_DIR, "topng.exe");
+        public static readonly string APP_7Z = Path.Combine(TOOLS_DIR, "7za.exe");
+        public static readonly string APP_NVDXT = Path.Combine(TOOLS_DIR, "nvdxt.exe");
+        public static readonly string APP_OGGCUT = Path.Combine(TOOLS_DIR, "oggCut.exe");
+        public static readonly string APP_OGGDEC = Path.Combine(TOOLS_DIR, "oggdec.exe");
+        public static readonly string APP_OGGENC = Path.Combine(TOOLS_DIR, "oggenc.exe");
+        public static readonly string APP_WW2OGG = Path.Combine(TOOLS_DIR, "ww2ogg.exe");
+        public static readonly string APP_REVORB = Path.Combine(TOOLS_DIR, "revorb.exe");
+        public static readonly string APP_CODEBOOKS = Path.Combine(TOOLS_DIR, "packed_codebooks.bin");
+        public static readonly string APP_CODEBOOKS_603 = Path.Combine(TOOLS_DIR, "packed_codebooks_aoTuV_603.bin");
+        public static readonly string APP_COREJAR = Path.Combine(TOOLS_DIR, "core.jar");
+        public static readonly string DDC_DIR = "ddc";
+        public static readonly string APP_DDC = Path.Combine(DDC_DIR, "ddc.exe");
 
-        public static void VerifyExternalApps()
+        public static bool VerifyExternalApps()
         {
-            // Verifying if third party app is in root application directory
-            if (!File.Exists(Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), APP_TOPNG)))
-                throw new FileNotFoundException("topng.exe not found!");
+            var errMsg = new StringBuilder();
 
-            if (!File.Exists(Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), APP_7Z)))
-                throw new FileNotFoundException("7za.exe not found!");
+            // Verifying third party apps exist where toolkit expects to find them
+            if (!File.Exists(Path.Combine(TOOLKIT_ROOT, APP_TOPNG)))
+                errMsg.AppendLine(APP_TOPNG);
 
-            if (!File.Exists(Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), APP_NVDXT)))
-                throw new FileNotFoundException("nvdxt.exe not found!");
+            if (!File.Exists(Path.Combine(TOOLKIT_ROOT, APP_7Z)))
+                errMsg.AppendLine(APP_7Z);
 
-            if (!File.Exists(Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), APP_PACKER)))
-                throw new FileNotFoundException("packer.exe not found!");
+            if (!File.Exists(Path.Combine(TOOLKIT_ROOT, APP_NVDXT)))
+                errMsg.AppendLine(APP_NVDXT);
 
-            if (!File.Exists(Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), APP_OGGCUT)))
-                throw new FileNotFoundException("oggCut.exe not found!");
+            if (!File.Exists(Path.Combine(TOOLKIT_ROOT, APP_OGGDEC)))
+                errMsg.AppendLine(APP_OGGDEC);
 
-            if (!File.Exists(Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), APP_OGGDEC)))
-                throw new FileNotFoundException("oggdec.exe not found!");
+            if (!File.Exists(Path.Combine(TOOLKIT_ROOT, APP_OGGCUT)))
+                errMsg.AppendLine(APP_OGGCUT);
 
-            if (!File.Exists(Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), APP_OGGENC)))
-                throw new FileNotFoundException("oggenc.exe not found!");
+            if (!File.Exists(Path.Combine(TOOLKIT_ROOT, APP_OGGENC)))
+                errMsg.AppendLine(APP_OGGENC);
+
+            if (!File.Exists(Path.Combine(TOOLKIT_ROOT, APP_COREJAR)))
+                errMsg.AppendLine(APP_COREJAR);
+
+            if (!File.Exists(Path.Combine(TOOLKIT_ROOT, APP_WW2OGG)))
+                errMsg.AppendLine(APP_WW2OGG);
+
+            if (!File.Exists(Path.Combine(TOOLKIT_ROOT, APP_REVORB)))
+                errMsg.AppendLine(APP_REVORB);
+
+            if (!File.Exists(Path.Combine(TOOLKIT_ROOT, APP_CODEBOOKS)))
+                errMsg.AppendLine(APP_CODEBOOKS);
+
+            if (!File.Exists(Path.Combine(TOOLKIT_ROOT, APP_CODEBOOKS_603)))
+                errMsg.AppendLine(APP_CODEBOOKS_603);
+
+            if (!File.Exists(Path.Combine(TOOLKIT_ROOT, APP_DDC)))
+                errMsg.AppendLine(APP_DDC);
+
+            if (!String.IsNullOrEmpty(errMsg.ToString()))
+                throw new FileNotFoundException("<ERROR> Critical toolkit files not found:" + Environment.NewLine + errMsg.ToString());
+
+            return true;
         }
 
         public static void Dds2Png(string sourcePath, string destinationPath = null)
@@ -75,13 +107,13 @@ namespace RocksmithToolkitLib.Extensions
         public static void UnpackPsarc(string sourcePath, string destinationPath, string targetPlatform)
         {
             var cmdArgs = String.Format(" --unpack --input=\"{0}\" --platform={2} --version=RS2014 --output=\"{1}\"", sourcePath, destinationPath, targetPlatform);
-            GeneralExtensions.RunExternalExecutable(APP_PACKER, true, true, true, cmdArgs);
+            GeneralExtensions.RunExternalExecutable(Path.Combine(TOOLKIT_ROOT, "packer.exe"), true, true, true, cmdArgs);
         }
-        //TODO: faster to use direct lib calls?? If this works lib calls will too.
+
         public static void RepackPsarc(string sourcePath, string destinationPath, string targetPlatform)
         {
             var cmdArgs = String.Format(" --pack --input=\"{0}\" --platform={2} --version=RS2014 --output=\"{1}\"", sourcePath, destinationPath, targetPlatform);
-            GeneralExtensions.RunExternalExecutable(APP_PACKER, true, true, true, cmdArgs);
+            GeneralExtensions.RunExternalExecutable(Path.Combine(TOOLKIT_ROOT, "packer.exe"), true, true, true, cmdArgs);
         }
 
         public static void InjectZip(string sourcePath, string destinationPath, bool recurseDir = false, bool filesOnly = false)
@@ -169,16 +201,27 @@ namespace RocksmithToolkitLib.Extensions
             GeneralExtensions.RunExternalExecutable(APP_OGGDEC, true, false, true, cmdArgs);
         }
 
-        public static void Wav2Wem(string wwiseCLIPath, string wwiseTemplateDir)
+        public static void Wav2Wem(string wwiseCLIPath, string wwiseTemplateDir, int magicDust = 0)
         {
             var templatePath = Path.Combine(wwiseTemplateDir, "Template.wproj");
             // -NoWwiseDat ignores cached wem's and will generate each time.
             // -ClearAudioFileCache force re-generate for wem's also deletes old and creates fresh new file.
             // -Save should help with updating project to new schema (may loose quality factor field)
-            var cmdArgs = String.Format(" \"{0}\" -GenerateSoundBanks -Platform Windows -Language English(US) -NoWwiseDat -ClearAudioFileCache -Save", templatePath);
+            var cmdArgs = String.Format("\"{0}\" -GenerateSoundBanks -Platform Windows -Language English(US) -NoWwiseDat -ClearAudioFileCache -Save", templatePath);
+            var output = GeneralExtensions.RunExternalExecutable(wwiseCLIPath, true, true, true, cmdArgs);//bcapi 2nd param hidding conversion windows
 
-            GeneralExtensions.RunExternalExecutable(wwiseCLIPath, true, true, true, cmdArgs); //bcapi hidding conversion windows
+            //bcapi diff after 2.9
+            //GeneralExtensions.RunExternalExecutable(wwiseCLIPath, true, true, true, cmdArgs); 
+
+            if (output.Contains("Error: Project migration needed") && magicDust > 0)
+            {
+                Debug.WriteLine("WwiseCLI.exe Conversion Failed ...");
+                Debug.WriteLine("Applying Magic Dust #" + magicDust);
+                magicDust--;
+                Wav2Wem(wwiseCLIPath, wwiseTemplateDir, magicDust);
+            }
         }
+
 
     }
 }

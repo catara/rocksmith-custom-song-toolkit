@@ -24,14 +24,12 @@ namespace RocksmithToolkitLib.Extensions
     {
         private static readonly Random randomNumber = new Random();
 
-        public static string _wine()
+        public static bool IsWine()
         {
-            //if (Environment.OSVersion.Platform == PlatformID.MacOSX)
             if (Environment.GetEnvironmentVariable("WINE_INSTALLED") == "1")
-            {
-                return "wine ";
-            }
-            return string.Empty;
+                return true;
+
+            return false;
         }
 
         public static bool Contains(this String obj, char[] chars)
@@ -95,6 +93,7 @@ namespace RocksmithToolkitLib.Extensions
 
             var tkInfo = new ToolkitInfo();
             string line = null;
+            reader.BaseStream.Position = 0;
             while ((line = reader.ReadLine()) != null)
             {
                 // we need to decipher what this line contains;
@@ -246,11 +245,11 @@ namespace RocksmithToolkitLib.Extensions
             var rootPath = toolkitRootFolder ? toolkitRootPath : Path.GetDirectoryName(exeFileName);
 
             // for Mac Mono/Wine use old process command window
-            if (Environment.OSVersion.Platform == PlatformID.MacOSX || Environment.GetEnvironmentVariable("WINE_INSTALLED") == "1")
+            if (Environment.OSVersion.Platform == PlatformID.MacOSX || IsWine())
             {
                 var startInfo = new ProcessStartInfo
-                {//use wine prefix here
-                    FileName = _wine() + Path.Combine(rootPath, exeFileName),
+                {
+                    FileName = Path.Combine(rootPath, exeFileName),
                     WorkingDirectory = rootPath
                 };
 
@@ -282,8 +281,8 @@ namespace RocksmithToolkitLib.Extensions
                 {
                     // use custom Third Party Application Process window
                     var startInfo = new ProcessStartInfo
-                    {//use wine prefix here
-                        FileName = _wine() + Path.Combine(rootPath, exeFileName),
+                    {
+                        FileName = Path.Combine(rootPath, exeFileName),
                         WorkingDirectory = rootPath,
                         CreateNoWindow = true,
                         RedirectStandardOutput = true,
@@ -355,10 +354,15 @@ namespace RocksmithToolkitLib.Extensions
                 }
                 catch (Exception ex) // for Mac Wine/Mono compatiblity
                 {
-                    GlobalExtension.Log.Info("RunExternalExecutable ...");
-                    GlobalExtension.Log.Info(ex.Message);
+                    var errMsg = new StringBuilder();
+                    errMsg.AppendLine("");
+                    errMsg.AppendLine("RunExternalExecutable ...");
+                    errMsg.AppendLine("If you are running toolkit on Mac Wine make sure Environmental Variable 'WINE_INSTALLED' is set to '1'");
+                    errMsg.AppendLine(ex.Message);
+                    throw new SystemException(errMsg.ToString() + Environment.NewLine);
                 }
             }
+
             return output;
         }
 
@@ -376,8 +380,12 @@ namespace RocksmithToolkitLib.Extensions
             }
             catch (Exception ex) // for Mac Wine/Mono compatiblity
             {
-                GlobalExtension.Log.Info("RunExternalExecutable ...");
-                GlobalExtension.Log.Info(ex.Message);
+                var errMsg = new StringBuilder();
+                errMsg.AppendLine("");
+                errMsg.AppendLine("UpdateCmdWin ...");
+                errMsg.AppendLine("If you are running toolkit on Mac Wine make sure Environmental Variable 'WINE_INSTALLED' is set to '1'");
+                errMsg.AppendLine("");
+                throw new SystemException(errMsg.ToString() + ex.Message + Environment.NewLine);
             }
 
             Debug.WriteLine(line);

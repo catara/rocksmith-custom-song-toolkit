@@ -36,7 +36,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.restartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -122,10 +121,6 @@
 //=======
 //>>>>>>> c7d902e63baa725649519d722a2c7540c837ad77
             this.SuspendLayout();
-            // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.FileName = "openFileDialog1";
             // 
             // menuStrip1
             // 
@@ -252,7 +247,7 @@
             this.btnUpdate.TabIndex = 0;
             this.btnUpdate.Text = "Click here to update";
             this.toolTip.SetToolTip(this.btnUpdate, "Toolkit Auto Updater Status\r\n\r\nNOTE:\r\nAuto updater uses TLS 1.2\r\nWin10 users may " +
-                    "need to \r\nmanually activate TLS 1.2\r\n\r\n\r\n");
+                    "need to \r\nmanually activate TLS 1.2");
             this.btnUpdate.UseVisualStyleBackColor = false;
             this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
@@ -261,6 +256,7 @@
             this.toolTip.AutomaticDelay = 100;
             this.toolTip.AutoPopDelay = 8000;
             this.toolTip.InitialDelay = 100;
+            this.toolTip.IsBalloon = true;
             this.toolTip.ReshowDelay = 20;
             // 
             // btnDevTestMethod
@@ -468,30 +464,13 @@
             this.dlcPackageCreator1.Artist = "";
             this.dlcPackageCreator1.ArtistSort = "";
             this.dlcPackageCreator1.AverageTempo = "";
-            this.dlcPackageCreator1.CurrentGameVersion = RocksmithToolkitLib.GameVersion.RS2014;
-            this.dlcPackageCreator1.DestPath = null;
             this.dlcPackageCreator1.DLCKey = "";
-            this.dlcPackageCreator1.IsDirty = false;
-            this.dlcPackageCreator1.JapaneseArtistName = "";
-            this.dlcPackageCreator1.JapaneseSongTitle = "";
-            this.dlcPackageCreator1.JavaBool = false;
             this.dlcPackageCreator1.Location = new System.Drawing.Point(17, 1);
-            this.dlcPackageCreator1.LyricArtPath = null;
             this.dlcPackageCreator1.Name = "dlcPackageCreator1";
-            this.dlcPackageCreator1.PackageAuthor = null;
-            this.dlcPackageCreator1.PackageComment = "(Remastered by CDLC Creator)";
-            this.dlcPackageCreator1.PackageVersion = "";
-            this.dlcPackageCreator1.PlatformMAC = false;
-            this.dlcPackageCreator1.PlatformPC = false;
-            this.dlcPackageCreator1.PlatformPS3 = false;
-            this.dlcPackageCreator1.PlatformXBox360 = false;
-            this.dlcPackageCreator1.PreviousGameVersion = RocksmithToolkitLib.GameVersion.RS2012;
             this.dlcPackageCreator1.Size = new System.Drawing.Size(507, 560);
             this.dlcPackageCreator1.SongTitle = "";
             this.dlcPackageCreator1.SongTitleSort = "";
             this.dlcPackageCreator1.TabIndex = 0;
-            this.dlcPackageCreator1.ToolkitVers = null;
-            this.dlcPackageCreator1.UnpackedDir = null;
             // 
             // tabControl1
             // 
@@ -522,7 +501,7 @@
             this.DDCTab.Location = new System.Drawing.Point(4, 22);
             this.DDCTab.Name = "DDCTab";
             this.DDCTab.Padding = new System.Windows.Forms.Padding(3);
-            this.DDCTab.Size = new System.Drawing.Size(542, 564);
+            this.DDCTab.Size = new System.Drawing.Size(192, 74);
             this.DDCTab.TabIndex = 3;
             this.DDCTab.Text = "DDC";
             this.DDCTab.ToolTipText = "Generate dynamic difficulty for arrangements.";
@@ -589,7 +568,6 @@
 
         #endregion
 
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.MenuStrip menuStrip1;

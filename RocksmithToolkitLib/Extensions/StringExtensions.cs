@@ -160,6 +160,7 @@ namespace RocksmithToolkitLib.Extensions
 
         /// <summary>
         /// Format string as valid DLCKey (aka SongKey), or ToneKey
+        /// <para>CRITICAL: Provide 'songTitle' to prevent RS1 in-game hanging after tuning</para>
         /// </summary>
         /// <param name="value">DLCKey or ToneKey for verification</param>
         /// <param name="songTitle">optional SongTitle varification comparison for DLCKey </param>
@@ -171,12 +172,14 @@ namespace RocksmithToolkitLib.Extensions
                 return String.Empty;
 
             value = value.StripNonAlpaNumeric();
-            // check if they are the same, if so add 'Song' to end
-            if (value == songTitle.Replace(" ", ""))
-                value = value + "Song";
+
+            // CRITICAL: prevents RS1 in game hanging after tuning
+            // check if same, if so then add 'Song' to make key unique, skip check if isTone
+            if (value == songTitle.StripNonAlpaNumeric() && !isTone)
+                value = "Song" + value;
 
             // limit max Key length to 30
-            value = value.Substring(0, Math.Min(30, value.Length));
+            value = value.Substring(0, Math.Min(30, value.Length)).Trim();
 
             // ensure min DLCKey length is 6, skip check if isTone
             if (value.Length < 7 && !isTone)
@@ -224,6 +227,9 @@ namespace RocksmithToolkitLib.Extensions
         {
             if (String.IsNullOrEmpty(artist) || String.IsNullOrEmpty(title) || String.IsNullOrEmpty(version))
                 throw new DataException("Artist, title, or version field is null or empty ...");
+
+            // cleanup version numbering
+            version = version.Replace(".", "_");
 
             string value;
             if (!acronym)
@@ -279,6 +285,33 @@ namespace RocksmithToolkitLib.Extensions
 
             // force user to make entry rather than defaulting
             return "";
+        }
+
+        public static bool IsVolumeValid(this float? value, float defaultVolume = -7.0F)
+        {
+            if (value == null)
+                return false;
+
+            // check for valid volume
+            float volume = (float)Math.Round((double)value, 1);
+            if (volume > -30.0F && volume < 30.0F)
+                return true;
+
+            return false;
+        }
+
+        public static float GetValidVolume(this float? value, float defaultVolume = -7.0F)
+        {
+            if (value == null)
+                return defaultVolume;
+
+            // check for valid volume
+            float volume = (float)Math.Round((double)value, 1);
+            if (volume > -30.0F && volume < 30.0F)
+                return volume;
+
+            // use default volume
+            return defaultVolume;
         }
 
         public static string GetValidYear(this string value)

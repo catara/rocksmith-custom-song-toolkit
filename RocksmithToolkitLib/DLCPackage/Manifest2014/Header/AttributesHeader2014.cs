@@ -19,7 +19,7 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest2014.Header
         public static readonly string URN_TEMPLATE_SHORT = "urn:{0}:{1}";
 
         internal bool IsVocal = false;
-        internal Song2014 SongContent = null;
+        internal Song2014 song2014 = null;
 
         public string AlbumArt { get; set; }
         public string AlbumName { get; set; }
@@ -31,11 +31,11 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest2014.Header
         public int BassPick { get; set; } // added to resolve issue #272, header only
         public decimal CapoFret { get; set; }
         public double? CentOffset { get; set; } // tuning frequency, see Cents2Frequency method
-        public bool DLC { get; set; }
+        public bool DLC { get; set; } // tags DLC in setlist
         // usually DLCKey = SongKey, except that songs.psarc does not contain a DLCKey
         // in compatiblity packs DLCKey is always equal to RS1CompatibilityDisc
         // in ODLC/CDLC DLCKey is always equal to SongKey which is SongName with all spaces removed
-        public string DLCKey { get; set; } 
+        public string DLCKey { get; set; }
         public double? DNA_Chords { get; set; }
         public double? DNA_Riffs { get; set; }
         public double? DNA_Solo { get; set; }
@@ -55,7 +55,7 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest2014.Header
         public int? Representative { get; set; } // Header only
         public int? RouteMask { get; set; } // Header only
         public bool Shipping { get; set; }
-        public string SKU { get; set; }
+        public string SKU { get; set; } // determines tag text in setlist
         public double? SongDiffEasy { get; set; }
         public double? SongDiffHard { get; set; }
         public double? SongDiffMed { get; set; }
@@ -85,7 +85,7 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest2014.Header
                 return;
 
             IsVocal = arrangement.ArrangementType == ArrangementType.Vocal;
-            SongContent = (IsVocal) ? null : Song2014.LoadFromFile(arrangement.SongXml.File);
+            song2014 = (IsVocal) ? null : Song2014.LoadFromFile(arrangement.SongXml.File);
             var dlcName = info.Name.ToLower();
 
             var albumUrn = String.Format(URN_TEMPLATE, TagValue.Image.GetDescription(), TagValue.DDS.GetDescription(), String.Format("album_{0}", dlcName));
@@ -93,19 +93,33 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest2014.Header
 
             //FILL ATTRIBUTES
             this.AlbumArt = albumUrn;
-            JapaneseVocal |= arrangement.Name == Sng.ArrangementName.JVocals;
-            ArrangementName = IsVocal ? Sng.ArrangementName.Vocals.ToString() : arrangement.Name.ToString(); //HACK: weird vocals stuff
-            DLC = true;
-            DLCKey = info.Name;
+            JapaneseVocal |= arrangement.ArrangementName == Sng.ArrangementName.JVocals;
+            ArrangementName = IsVocal ? Sng.ArrangementName.Vocals.ToString() : arrangement.ArrangementName.ToString(); //HACK: weird vocals stuff
+            DLCKey = info.Name; // in RS2 DLCKey = SongKey, in RS1 they are different
+            SongKey = info.Name;
             LeaderboardChallengeRating = 0;
             ManifestUrn = jsonUrn;
-            MasterID_RDV = arrangement.MasterId;
+            MasterID_RDV = arrangement.MasterId; // must be unique else in-game hang occures
             PersistentID = arrangement.Id.ToString().Replace("-", "").ToUpper();
             Shipping = true;
-            SKU = "RS2";
-            SongKey = info.Name; // proof same same
 
-            if (IsVocal) return;
+            // DLC controls wheter album artwork marker is shown in-game setlist, but has
+            // negative effect that 'Alternate Arrangements' are locked for new player profiles
+            DLC = true;
+
+            // TODO: monitor this change
+            if (info.ToolkitInfo == null || info.ToolkitInfo.PackageAuthor == "Ubisoft")
+                SKU = "RS2"; // shows purple marker w/ "DLC" text overlay
+            else
+                SKU = ""; // hides album artwork marker in-game setlist
+
+            // this SKU and DLCKey combination shows black marker w/ "RS1" text overlay on album artwork in-game setlist
+            // SKU = "RS1";
+            // DLCKey = "RS1CompatibilityDisc";
+
+            if (IsVocal)
+                return;
+
             // added better AlbumNameSort feature
             AlbumName = info.SongInfo.Album;
             AlbumNameSort = info.SongInfo.AlbumSort;
@@ -128,9 +142,9 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest2014.Header
             Representative = Convert.ToInt32(!arrangement.BonusArr);
             RouteMask = (int)arrangement.RouteMask;
 
-            ManifestFunctions.GetSongDifficulty(this, SongContent);
+            ManifestFunctions.GetSongDifficulty(this, song2014);
 
-            SongLength = Math.Round(SongContent.SongLength, 3, MidpointRounding.AwayFromZero);
+            SongLength = Math.Round(song2014.SongLength, 3, MidpointRounding.AwayFromZero);
             SongName = info.SongInfo.SongDisplayName;
             SongNameSort = info.SongInfo.SongDisplayNameSort;
             JapaneseSongName = string.IsNullOrEmpty(info.SongInfo.JapaneseSongName) ? null : info.SongInfo.JapaneseSongName;
@@ -138,7 +152,7 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest2014.Header
             SongYear = info.SongInfo.SongYear;
 
             //Detect tuning
-            var tuning = TuningDefinitionRepository.Instance.Detect(SongContent.Tuning, platform.version, arrangement.ArrangementType == ArrangementType.Bass);
+            var tuning = TuningDefinitionRepository.Instance.Detect(song2014.Tuning, platform.version, arrangement.ArrangementType == ArrangementType.Bass);
             Tuning = tuning.Tuning; //can we just use SongContent.Tuning
         }
 

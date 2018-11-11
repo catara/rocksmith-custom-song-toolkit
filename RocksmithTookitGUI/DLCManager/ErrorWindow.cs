@@ -101,6 +101,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // ErrorWindow
             // 
+            this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(583, 148);
             this.Controls.Add(this.txt_Description);
             this.Controls.Add(this.btn_StopImport);

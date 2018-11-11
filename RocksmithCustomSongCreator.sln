@@ -39,9 +39,60 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "packer", "ConsoleApp1\packe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "artistfolders", "RocksmithToolkitCLI\artistfolders\artistfolders.csproj", "{E742753F-9DC3-4AB7-B129-DC11EB2302CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RocksmithToolkitGUI.Tests", "RocksmithToolkitGUI.Tests\RocksmithToolkitGUI.Tests.csproj", "{1940BBE3-640F-499C-80BC-2291585406D2}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Third-party Apps", "Third-party Apps", "{9D9C6573-FADA-4CF1-88B1-05794AC5E74D}"
+	ProjectSection(SolutionItems) = preProject
+		Third-party Apps\CLI_CdlcConverter.bat = Third-party Apps\CLI_CdlcConverter.bat
+		Third-party Apps\CLI_PackageCreator.bat = Third-party Apps\CLI_PackageCreator.bat
+		Third-party Apps\CLI_Packer.bat = Third-party Apps\CLI_Packer.bat
+		Third-party Apps\CLI_ReadPID.bat = Third-party Apps\CLI_ReadPID.bat
+		Third-party Apps\CLI_RestorePID.bat = Third-party Apps\CLI_RestorePID.bat
+		Third-party Apps\CLI_Unpacker.bat = Third-party Apps\CLI_Unpacker.bat
+		Third-party Apps\CLI_WritePID.bat = Third-party Apps\CLI_WritePID.bat
+		Third-party Apps\Wwise2010.tar.bz2 = Third-party Apps\Wwise2010.tar.bz2
+		Third-party Apps\Wwise2013.tar.bz2 = Third-party Apps\Wwise2013.tar.bz2
+		Third-party Apps\Wwise2014.tar.bz2 = Third-party Apps\Wwise2014.tar.bz2
+		Third-party Apps\Wwise2015.tar.bz2 = Third-party Apps\Wwise2015.tar.bz2
+		Third-party Apps\Wwise2016.tar.bz2 = Third-party Apps\Wwise2016.tar.bz2
+		Third-party Apps\Wwise2017.tar.bz2 = Third-party Apps\Wwise2017.tar.bz2
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RocksmithToolkitLib.Tests", "RocksmithToolkitLib.Tests\RocksmithToolkitLib.Tests.csproj", "{B3C42137-BB4C-4CBC-875F-F7104145598B}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{68A001D7-F5BF-4D2C-9FF9-4C0A62D4118F}"
+	ProjectSection(SolutionItems) = preProject
+		Third-party Apps\tools\7za.exe = Third-party Apps\tools\7za.exe
+		Third-party Apps\tools\core.jar = Third-party Apps\tools\core.jar
+		Third-party Apps\tools\nvdxt.exe = Third-party Apps\tools\nvdxt.exe
+		Third-party Apps\tools\oggCut.exe = Third-party Apps\tools\oggCut.exe
+		Third-party Apps\tools\oggdec.exe = Third-party Apps\tools\oggdec.exe
+		Third-party Apps\tools\oggenc.exe = Third-party Apps\tools\oggenc.exe
+		Third-party Apps\tools\packed_codebooks.bin = Third-party Apps\tools\packed_codebooks.bin
+		Third-party Apps\tools\packed_codebooks_aoTuV_603.bin = Third-party Apps\tools\packed_codebooks_aoTuV_603.bin
+		Third-party Apps\tools\readme.txt = Third-party Apps\tools\readme.txt
+		Third-party Apps\tools\revorb.exe = Third-party Apps\tools\revorb.exe
+		Third-party Apps\tools\topng.exe = Third-party Apps\tools\topng.exe
+		Third-party Apps\tools\ww2ogg.exe = Third-party Apps\tools\ww2ogg.exe
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ddc", "ddc", "{6517160C-A8F8-4DB0-AFFD-24E9A7DC1DCA}"
+	ProjectSection(SolutionItems) = preProject
+		Third-party Apps\ddc\ddc.exe = Third-party Apps\ddc\ddc.exe
+		Third-party Apps\ddc\ddc_chords_protector.xml = Third-party Apps\ddc\ddc_chords_protector.xml
+		Third-party Apps\ddc\ddc_chords_remover.xml = Third-party Apps\ddc\ddc_chords_remover.xml
+		Third-party Apps\ddc\ddc_dd_remover.xml = Third-party Apps\ddc\ddc_dd_remover.xml
+		Third-party Apps\ddc\ddc_default.cfg = Third-party Apps\ddc\ddc_default.cfg
+		Third-party Apps\ddc\ddc_default.xml = Third-party Apps\ddc\ddc_default.xml
+		Third-party Apps\ddc\ddc_keep_all_levels.cfg = Third-party Apps\ddc\ddc_keep_all_levels.cfg
+		Third-party Apps\ddc\ddc_merge_all_levels.cfg = Third-party Apps\ddc\ddc_merge_all_levels.cfg
+		Third-party Apps\ddc\license.txt = Third-party Apps\ddc\license.txt
+		Third-party Apps\ddc\readme.txt = Third-party Apps\ddc\readme.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cgm", "cgm", "{DC2300A9-3B99-47D9-86A4-3326CED50C1F}"
+	ProjectSection(SolutionItems) = preProject
+		Third-party Apps\cgm\Default_Inlay_24_CGM.cgm = Third-party Apps\cgm\Default_Inlay_24_CGM.cgm
+		Third-party Apps\cgm\Default_Inlay_CGM.cgm = Third-party Apps\cgm\Default_Inlay_CGM.cgm
+		Third-party Apps\cgm\Fret_Notes_24_Cozy1.cgm = Third-party Apps\cgm\Fret_Notes_24_Cozy1.cgm
+		Third-party Apps\cgm\Fret_Notes_Cozy1.cgm = Third-party Apps\cgm\Fret_Notes_Cozy1.cgm
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -292,32 +343,6 @@ Global
 		{E742753F-9DC3-4AB7-B129-DC11EB2302CA}.ReleaseMac|Any CPU.Build.0 = Release|x86
 		{E742753F-9DC3-4AB7-B129-DC11EB2302CA}.ReleaseMac|x86.ActiveCfg = Release|x86
 		{E742753F-9DC3-4AB7-B129-DC11EB2302CA}.ReleaseMac|x86.Build.0 = Release|x86
-		{1940BBE3-640F-499C-80BC-2291585406D2}.Debug Build CLI|Any CPU.ActiveCfg = Release|x86
-		{1940BBE3-640F-499C-80BC-2291585406D2}.Debug Build CLI|Any CPU.Build.0 = Release|x86
-		{1940BBE3-640F-499C-80BC-2291585406D2}.Debug Build CLI|x86.ActiveCfg = Debug|x86
-		{1940BBE3-640F-499C-80BC-2291585406D2}.Debug Build CLI|x86.Build.0 = Debug|x86
-		{1940BBE3-640F-499C-80BC-2291585406D2}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{1940BBE3-640F-499C-80BC-2291585406D2}.Debug|x86.ActiveCfg = Debug|x86
-		{1940BBE3-640F-499C-80BC-2291585406D2}.Debug|x86.Build.0 = Debug|x86
-		{1940BBE3-640F-499C-80BC-2291585406D2}.Release|Any CPU.ActiveCfg = Release|x86
-		{1940BBE3-640F-499C-80BC-2291585406D2}.Release|x86.ActiveCfg = Release|x86
-		{1940BBE3-640F-499C-80BC-2291585406D2}.ReleaseMac|Any CPU.ActiveCfg = Release|x86
-		{1940BBE3-640F-499C-80BC-2291585406D2}.ReleaseMac|Any CPU.Build.0 = Release|x86
-		{1940BBE3-640F-499C-80BC-2291585406D2}.ReleaseMac|x86.ActiveCfg = Release|x86
-		{1940BBE3-640F-499C-80BC-2291585406D2}.ReleaseMac|x86.Build.0 = Release|x86
-		{B3C42137-BB4C-4CBC-875F-F7104145598B}.Debug Build CLI|Any CPU.ActiveCfg = Release|x86
-		{B3C42137-BB4C-4CBC-875F-F7104145598B}.Debug Build CLI|Any CPU.Build.0 = Release|x86
-		{B3C42137-BB4C-4CBC-875F-F7104145598B}.Debug Build CLI|x86.ActiveCfg = Debug|x86
-		{B3C42137-BB4C-4CBC-875F-F7104145598B}.Debug Build CLI|x86.Build.0 = Debug|x86
-		{B3C42137-BB4C-4CBC-875F-F7104145598B}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{B3C42137-BB4C-4CBC-875F-F7104145598B}.Debug|x86.ActiveCfg = Debug|x86
-		{B3C42137-BB4C-4CBC-875F-F7104145598B}.Debug|x86.Build.0 = Debug|x86
-		{B3C42137-BB4C-4CBC-875F-F7104145598B}.Release|Any CPU.ActiveCfg = Release|x86
-		{B3C42137-BB4C-4CBC-875F-F7104145598B}.Release|x86.ActiveCfg = Release|x86
-		{B3C42137-BB4C-4CBC-875F-F7104145598B}.ReleaseMac|Any CPU.ActiveCfg = Release|x86
-		{B3C42137-BB4C-4CBC-875F-F7104145598B}.ReleaseMac|Any CPU.Build.0 = Release|x86
-		{B3C42137-BB4C-4CBC-875F-F7104145598B}.ReleaseMac|x86.ActiveCfg = Release|x86
-		{B3C42137-BB4C-4CBC-875F-F7104145598B}.ReleaseMac|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -335,6 +360,9 @@ Global
 		{CE48B5DF-398B-47D8-96D6-198566521104} = {7CFB8499-8B82-40B3-89EA-7971F5FD1E0C}
 		{B06BDA26-2BF3-4E55-8E04-81EB01242767} = {7CFB8499-8B82-40B3-89EA-7971F5FD1E0C}
 		{E742753F-9DC3-4AB7-B129-DC11EB2302CA} = {7CFB8499-8B82-40B3-89EA-7971F5FD1E0C}
+		{68A001D7-F5BF-4D2C-9FF9-4C0A62D4118F} = {9D9C6573-FADA-4CF1-88B1-05794AC5E74D}
+		{6517160C-A8F8-4DB0-AFFD-24E9A7DC1DCA} = {9D9C6573-FADA-4CF1-88B1-05794AC5E74D}
+		{DC2300A9-3B99-47D9-86A4-3326CED50C1F} = {9D9C6573-FADA-4CF1-88B1-05794AC5E74D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C2426BEE-CD03-4B23-847A-7BD951E5F1A3}

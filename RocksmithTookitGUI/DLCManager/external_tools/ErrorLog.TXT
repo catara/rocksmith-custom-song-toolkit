@@ -1,4 +1,1 @@
-02/09/2018 12:51:45 UNIT:[Unit1.pas] ERROR:Missing Connection or ConnectionString
-02/09/2018 12:52:14 UNIT:[Unit1.pas] ERROR:Could not find file 'X:\HFS\Users\bogdan\GitHub\RocksmithDB\RocksmithDB.accdb'
-02/09/2018 12:52:23 UNIT:[Unit1.pas] ERROR:Could not find file 'X:\HFS\Users\bogdan\GitHub\RocksmithDB\RocksmithDB.accdb'
-02/09/2018 14:09:44 UNIT:[Unit1.pas] ERROR:Could not find file 'X:\HFS\Users\bogdan\GitHub\Files.accdb'
+27/10/2018 18:54:55 UNIT:[Unit1.pas] ERROR:There is no default printer currently selected

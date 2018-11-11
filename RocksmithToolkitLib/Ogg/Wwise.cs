@@ -40,7 +40,6 @@ namespace RocksmithToolkitLib.Ogg
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
                 //overridden ex, can't get real ex/msg, use log + throw;
                 throw new Exception("Wwise audio file conversion failed: " + ex.Message + Environment.NewLine);
             }
@@ -102,11 +101,12 @@ namespace RocksmithToolkitLib.Ogg
             else
                 Selected = OggFile.WwiseVersion.None;
 
-             if (Selected == OggFile.WwiseVersion.None)
-                throw new FileNotFoundException("You have no compatible version of Audiokinetic Wwise installed." + Environment.NewLine + 
-                    "Install supportend Wwise version, which are v2013.2.x || v2014.1.x || v2015.1.x || v2016.2.x series || v2017.1.x series " + Environment.NewLine + 
-                    "if you would like to use toolkit's Wwise autoconvert feature.   Did you remember to set the Wwise" + Environment.NewLine + 
-                    "installation path in the toolkit General Config menu?");
+            if (Selected == OggFile.WwiseVersion.None)
+                throw new FileNotFoundException("You have no compatible version of Audiokinetic Wwise installed." + Environment.NewLine +
+                    "Install supportend Wwise version, which are v2013.2.x || v2014.1.x || v2015.1.x || v2016.2.x series  " + Environment.NewLine +
+                    "if you would like to use toolkit's Wwise autoconvert feature.   Did you remember to set the Wwise" + Environment.NewLine +
+                    "installation path in the toolkit General Config menu?" + Environment.NewLine);
+
             return wwiseCLIexe;
         }
 
@@ -179,27 +179,6 @@ namespace RocksmithToolkitLib.Ogg
 
             if (Selected != OggFile.WwiseVersion.Wwise2010)
             {
-                try //bcapi 
-                {
-                    Directory.Delete(cache, true);
-                    // WwiseCLI requires full .cache path be present??? Usually not.
-                    Directory.CreateDirectory(Path.Combine(templateDir, ".cache\\Windows\\SFX"));
-                }
-                catch (Exception ex) //bcapi 
-                { Console.Write(ex); }
-            //}
-
-            // cleanup gives new hex value to WEM files
-            var bnk = Path.Combine(templateDir, "GeneratedSoundBanks");
-            if (Directory.Exists(bnk))
-                try //bcapi 
-                {
-                    Directory.Delete(bnk, true);
-                }
-                catch (Exception ex) //bcapi 
-                { Console.Write(ex); }
-
-
                 var dirName = Path.GetDirectoryName(sourcePath);
                 var fileName = Path.GetFileNameWithoutExtension(sourcePath);
                 var dirFileName = Path.Combine(dirName, fileName);
@@ -209,12 +188,6 @@ namespace RocksmithToolkitLib.Ogg
 
             IOExtension.CopyFile(sourcePath, Path.Combine(orgSfxDir, "Audio.wav"), true, false);
 
-
-            try
-            {
-                File.Copy(sourcePreviewWave, Path.Combine(orgSfxDir, "Audio_preview.wav"), true);
-            }
-            catch (Exception ex) { Console.Write(ex); } //bcapi
             return templateDir;
         }
 

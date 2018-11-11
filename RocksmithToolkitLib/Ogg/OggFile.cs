@@ -1,7 +1,11 @@
 ﻿using System;
-using System.Diagnostics;
-using System.IO;
 using System.Text;
+using System.IO;
+using System.Windows.Forms;
+using MiscUtil.Conversion;
+using MiscUtil.IO;
+using System.Diagnostics;
+using RocksmithToolkitLib.Extensions;
 
 namespace RocksmithToolkitLib.Ogg
 {
@@ -67,17 +71,12 @@ namespace RocksmithToolkitLib.Ogg
                 case WwiseVersion.Wwise2013:
                     ww2oggProcess.StartInfo.Arguments = String.Format("\"{0}\" -o \"{1}\" --pcb \"{2}\"", file, outputFileName, Path.Combine(ExternalApps.TOOLKIT_ROOT, ExternalApps.APP_CODEBOOKS_603));
                     break;
-                case WwiseVersion.Wwise2016:
-                    ww2oggProcess.StartInfo.Arguments = String.Format("\"{0}\" -o \"{1}\" --pcb \"{2}\"", file, outputFileName, Path.Combine(ExternalApps.TOOLKIT_ROOT, ExternalApps.APP_CODEBOOKS_603));
-                    break;
-                case WwiseVersion.Wwise2017:
+                case WwiseVersion.Wwise2017: // bcapi
                     ww2oggProcess.StartInfo.Arguments = String.Format("\"{0}\" -o \"{1}\" --pcb \"{2}\"", file, outputFileName, Path.Combine(ExternalApps.TOOLKIT_ROOT, ExternalApps.APP_CODEBOOKS_603));
                     break;
                 default:
                     throw new InvalidOperationException("Wwise version not supported or invalid input file.");
             }
-
-
 
             ww2oggProcess.StartInfo.UseShellExecute = false;
             ww2oggProcess.StartInfo.CreateNoWindow = true;
@@ -328,7 +327,6 @@ namespace RocksmithToolkitLib.Ogg
                 Wwise.Wav2Wem(audioPath, wemPath, audioQuality);
                 audioPath = wemPath;
             }
-
 
             if (audioPath.Substring(audioPath.Length - 4).ToLower() == ".wem" && !File.Exists(wemPreviewPath))
             {

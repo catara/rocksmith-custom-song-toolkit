@@ -1,7 +1,25 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+using System.Xml.Linq;
+using RocksmithToolkitLib.DLCPackage.AggregateGraph;
+using RocksmithToolkitLib.DLCPackage.Manifest.Functions;
+using RocksmithToolkitLib.DLCPackage.Manifest2014;
+using RocksmithToolkitLib.DLCPackage.Manifest2014.Header;
+using RocksmithToolkitLib.XML;
+using X360.STFS;
+using X360.Other;
+using RocksmithToolkitLib.Sng;
+using RocksmithToolkitLib.Extensions;
+using RocksmithToolkitLib.Sng2014HSL;
+using RocksmithToolkitLib.Ogg;
+using RocksmithToolkitLib.DLCPackage.Manifest;
+using RocksmithToolkitLib.XmlRepository;
 
 
 namespace RocksmithToolkitLib.DLCPackage
@@ -74,14 +92,10 @@ namespace RocksmithToolkitLib.DLCPackage
         /// <returns>Unpacked Directory Path</returns>
         public static string Unpack(string srcPath, string destDirPath, Platform predefinedPlatform = null, bool decodeAudio = false, bool overwriteSongXml = false)
         {
-            //<<<<<<< HEAD
             var ps4 = false;
-            //            Platform platform = sourceFileName.GetPlatform();
-            //=======
             ExternalApps.VerifyExternalApps();
             Platform srcPlatform = srcPath.GetPlatform();
 
-            //>>>>>>> c7d902e63baa725649519d722a2c7540c837ad77
             if (predefinedPlatform != null && predefinedPlatform.platform != GamePlatform.None && predefinedPlatform.version != GameVersion.None)
                 srcPlatform = predefinedPlatform;
 
@@ -117,13 +131,8 @@ namespace RocksmithToolkitLib.DLCPackage
                     unpackedDir = UnpackXBox360Package(srcPath, destDirPath, srcPlatform);
                     break;
                 case GamePlatform.PS3:
-                    //<<<<<<< HEAD
-                    //                    UnpackPS3Package(sourceFileName, savePath, platform);
-
-                    //=======
                     unpackedDir = UnpackPS3Package(srcPath, destDirPath, srcPlatform);
-                    if (platform.version == GameVersion.None) { platform.version = GameVersion.RS2014; ps4 = true; } //bcapi
-                                                                                                                     //>>>>>>> c7d902e63baa725649519d722a2c7540c837ad77
+                    if (srcPlatform.version == GameVersion.None) { srcPlatform.version = GameVersion.RS2014; ps4 = true; } //bcapi
                     break;
                 case GamePlatform.None:
                     throw new InvalidOperationException("Platform not found :(");
@@ -189,7 +198,7 @@ namespace RocksmithToolkitLib.DLCPackage
 
                     if (!ps4) //bcapi
                     {// create the xml file from sng file
-                        var sngContent = Sng2014File.LoadFromFile(sngFile, platform);
+                        var sngContent = Sng2014File.LoadFromFile(sngFile, srcPlatform);
                         using (var outputStream = new FileStream(xmlSngFile, FileMode.Create, FileAccess.ReadWrite))
                         {
                             dynamic xmlContent = null;
@@ -201,6 +210,7 @@ namespace RocksmithToolkitLib.DLCPackage
 
                             xmlContent.Serialize(outputStream);
                         }
+
                         // capture/preserve any existing xml comments
                         IEnumerable<XComment> xmlComments = null;
                         if (File.Exists(xmlEofFile))
@@ -214,6 +224,7 @@ namespace RocksmithToolkitLib.DLCPackage
                             if (eofSong.Tuning != sngSong.Tuning)
                             {
                                 eofSong.Tuning = sngSong.Tuning;
+
                                 using (var stream = File.Open(xmlEofFile, FileMode.Create))
                                     eofSong.Serialize(stream, true);
 
@@ -230,18 +241,20 @@ namespace RocksmithToolkitLib.DLCPackage
                         {
                             if (!isODLC)
                                 Song2014.WriteXmlComments(xmlSngFile, xmlComments, customComment: "Generated from SNG file");
+
                             File.Copy(xmlSngFile, xmlEofFile, true);
                         }
 
                         if (File.Exists(xmlSngFile))
                             File.Delete(xmlSngFile);
                     }
-
                     progress += step;
                     GlobalExtension.UpdateProgress.Value = (int)progress;
                 }
+
                 //GlobalExtension.HideProgress();
             }
+
             return unpackedDir;
         }
 
@@ -334,10 +347,10 @@ namespace RocksmithToolkitLib.DLCPackage
                     UpdateManifest2014(srcDirPath, platform);
 
                 WalkThroughDirectory("", srcDirPath, (a, b) =>
-               {
-                   var fileStream = File.OpenRead(b);
-                   psarc.AddEntry(a, fileStream);
-               });
+                {
+                    var fileStream = File.OpenRead(b);
+                    psarc.AddEntry(a, fileStream);
+                });
 
                 psarc.Write(psarcStream, !platform.IsConsole);
 
@@ -587,18 +600,6 @@ namespace RocksmithToolkitLib.DLCPackage
             if (outputMessage.IndexOf("Decrypt all EDAT files successfully") < 0)
                 throw new InvalidOperationException("Rebuilder error, please check if .edat files are created correctly and see output below:" + Environment.NewLine + outputMessage + Environment.NewLine + Environment.NewLine);
 
-//<<<<<<< HEAD
-//            if (File.Exists(outputFilename))
-//                ;//File.Delete(outputFilename);
-
-//            foreach (var fileName in Directory.EnumerateFiles(PS3_WORKDIR, "*.psarc.edat"))
-//            {
-//                using (var outputFileStream = File.OpenRead(fileName))
-//                {
-//                    ExtractPSARC(fileName, Path.GetDirectoryName(fileName), outputFileStream, new Platform(GamePlatform.PS3, GameVersion.None));
-//                }
-
-//=======
             var psarcDatPaths = Directory.EnumerateFiles(PS3_EDAT, "*.psarc.dat").ToList();
             if (!psarcDatPaths.Any())
                 throw new FileLoadException("<ERROR> UnpackPS3Package Failed.  Could not find psarc.dat archive. " + Environment.NewLine + "Verify the OS Environmental Variable 'PATH' is configured properly for Java ..." + Environment.NewLine + Environment.NewLine);
@@ -608,677 +609,677 @@ namespace RocksmithToolkitLib.DLCPackage
             // FIXME: this will blowup for RS1 PS3 files if/when implimented
             var psarcDatPath = psarcDatPaths.First();
             var artifactsDir = String.Empty;
-//>>>>>>> c7d902e63baa725649519d722a2c7540c837ad77
-                using (var outputFileStream = File.OpenRead(psarcDatPath))
-                    artifactsDir = ExtractPSARC(psarcDatPath, Path.GetDirectoryName(psarcDatPath), outputFileStream, new Platform(GamePlatform.PS3, GameVersion.None));
 
-                // cleanup
-                if (File.Exists(outputFilename))
-                    File.Delete(outputFilename);
+            using (var outputFileStream = File.OpenRead(psarcDatPath))
+                artifactsDir = ExtractPSARC(psarcDatPath, Path.GetDirectoryName(psarcDatPath), outputFileStream, new Platform(GamePlatform.PS3, GameVersion.None));
 
-                if (File.Exists(psarcDatPath))
-                    File.Delete(psarcDatPath);
+            // cleanup
+            if (File.Exists(outputFilename))
+                File.Delete(outputFilename);
 
-                // start fresh
-                var unpackedDir = GetUnpackedDir(srcPath, destDirPath, platform);
-                IOExtension.DeleteDirectory(unpackedDir);
-                Directory.CreateDirectory(unpackedDir);
+            if (File.Exists(psarcDatPath))
+                File.Delete(psarcDatPath);
 
-                foreach (var edatDir in Directory.EnumerateDirectories(PS3_EDAT))
-                    IOExtension.MoveDirectory(edatDir, unpackedDir, true);
+            // start fresh
+            var unpackedDir = GetUnpackedDir(srcPath, destDirPath, platform);
+            IOExtension.DeleteDirectory(unpackedDir);
+            Directory.CreateDirectory(unpackedDir);
 
-                return unpackedDir;
-            }
+            foreach (var edatDir in Directory.EnumerateDirectories(PS3_EDAT))
+                IOExtension.MoveDirectory(edatDir, unpackedDir, true);
 
-            #endregion
+            return unpackedDir;
+        }
 
-            #region COMMON FUNCTIONS
+        #endregion
 
-            private static string ExtractPSARC(string srcPath, string destPath, Stream inputStream, Platform platform, bool isInitialCall = true)
+        #region COMMON FUNCTIONS
+
+        private static string ExtractPSARC(string srcPath, string destPath, Stream inputStream, Platform platform, bool isInitialCall = true)
+        {
+            // start fresh on initial call and internalize destPath for recursion
+            if (isInitialCall)
+                destPath = GetUnpackedDir(srcPath, destPath, platform);
+
+            var psarc = new PSARC.PSARC();
+            psarc.Read(inputStream, true);
+
+            var step = Math.Round(1.0 / (psarc.TOC.Count + 2) * 100, 3);
+            double progress = 0;
+            GlobalExtension.ShowProgress("Inflating Entries ...");
+
+            // InflateEntries - compatible with RS1 and RS2014 files
+            foreach (var entry in psarc.TOC)
             {
-                // start fresh on initial call and internalize destPath for recursion
-                if (isInitialCall)
-                    destPath = GetUnpackedDir(srcPath, destPath, platform);
+                var inputPath = Path.Combine(destPath, entry.Name);
 
-                var psarc = new PSARC.PSARC();
-                psarc.Read(inputStream, true);
+                // for dev debugging invalid symbol usage in CDLC
+                // inputPath = inputPath.Replace("?", "i");
+                // inputPath = Path.Combine(destPath, StringExtensions.GetValidFileName(entry.Name));
 
-                var step = Math.Round(1.0 / (psarc.TOC.Count + 2) * 100, 3);
-                double progress = 0;
-                GlobalExtension.ShowProgress("Inflating Entries ...");
-
-                // InflateEntries - compatible with RS1 and RS2014 files
-                foreach (var entry in psarc.TOC)
+                if (Path.GetExtension(entry.Name).ToLower() == ".psarc")
                 {
-                    var inputPath = Path.Combine(destPath, entry.Name);
-
-                    // for dev debugging invalid symbol usage in CDLC
-                    // inputPath = inputPath.Replace("?", "i");
-                    // inputPath = Path.Combine(destPath, StringExtensions.GetValidFileName(entry.Name));
-
-                    if (Path.GetExtension(entry.Name).ToLower() == ".psarc")
-                    {
-                        psarc.InflateEntry(entry);
-                        var outputPath = Path.Combine(destPath, Path.GetFileNameWithoutExtension(entry.Name));
-                        var debugMe = ExtractPSARC(inputPath, outputPath, entry.Data, platform, false);
-                    }
-                    else
-                    {
-                        Directory.CreateDirectory(Path.GetDirectoryName(inputPath));
-                        psarc.InflateEntry(entry, inputPath);
-                        // Close
-                        if (entry.Data != null)
-                            entry.Data.Dispose();
-                    }
-
-                    if (!String.IsNullOrEmpty(psarc.ErrMSG)) throw new InvalidDataException(psarc.ErrMSG);
-
-                    progress += step;
-                    GlobalExtension.UpdateProgress.Value = (int)progress;
+                    psarc.InflateEntry(entry);
+                    var outputPath = Path.Combine(destPath, Path.GetFileNameWithoutExtension(entry.Name));
+                    var debugMe = ExtractPSARC(inputPath, outputPath, entry.Data, platform, false);
+                }
+                else
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(inputPath));
+                    psarc.InflateEntry(entry, inputPath);
+                    // Close
+                    if (entry.Data != null)
+                        entry.Data.Dispose();
                 }
 
-                return destPath;
-                // GlobalExtension.HideProgress();
+                if (!String.IsNullOrEmpty(psarc.ErrMSG)) throw new InvalidDataException(psarc.ErrMSG);
+
+                progress += step;
+                GlobalExtension.UpdateProgress.Value = (int)progress;
             }
 
-            public static void DeleteFixedAudio(string sourcePath)
+            return destPath;
+            // GlobalExtension.HideProgress();
+        }
+
+        public static void DeleteFixedAudio(string sourcePath)
+        {
+            try
             {
-                try
-                {
-                    // delete template xml remnants that may have been added by SaveTemplateFile method
-                    var templateFiles = Directory.EnumerateFiles(sourcePath, "*", SearchOption.AllDirectories).Where(fn => fn.EndsWith("RS2012.dlc.xml") || fn.EndsWith("RS2014.dlc.xml")).ToList();
-                    foreach (var templateFile in templateFiles)
-                        File.Delete(templateFile);
+                // delete template xml remnants that may have been added by SaveTemplateFile method
+                var templateFiles = Directory.EnumerateFiles(sourcePath, "*", SearchOption.AllDirectories).Where(fn => fn.EndsWith("RS2012.dlc.xml") || fn.EndsWith("RS2014.dlc.xml")).ToList();
+                foreach (var templateFile in templateFiles)
+                    File.Delete(templateFile);
 
-                    // delete friendly name audio files that may have been added by new LoadFromFolder method
-                    var audioFiles = Directory.EnumerateFiles(sourcePath, "song_*.*", SearchOption.AllDirectories).Where(fn => fn.EndsWith(".ogg") || fn.EndsWith(".wem")).ToList();
-                    foreach (var audioFile in audioFiles)
-                        File.Delete(audioFile);
+                // delete friendly name audio files that may have been added by new LoadFromFolder method
+                var audioFiles = Directory.EnumerateFiles(sourcePath, "song_*.*", SearchOption.AllDirectories).Where(fn => fn.EndsWith(".ogg") || fn.EndsWith(".wem")).ToList();
+                foreach (var audioFile in audioFiles)
+                    File.Delete(audioFile);
 
-                    // delete _fixed.ogg audio files that may have been added by old LoadFromFolder method
-                    var fixedOggFiles = Directory.EnumerateFiles(sourcePath, "*", SearchOption.AllDirectories).Where(fn => fn.EndsWith("_fixed.ogg")).ToList();
-                    foreach (var fixedOggFile in fixedOggFiles)
-                        File.Delete(fixedOggFile);
+                // delete _fixed.ogg audio files that may have been added by old LoadFromFolder method
+                var fixedOggFiles = Directory.EnumerateFiles(sourcePath, "*", SearchOption.AllDirectories).Where(fn => fn.EndsWith("_fixed.ogg")).ToList();
+                foreach (var fixedOggFile in fixedOggFiles)
+                    File.Delete(fixedOggFile);
 
-                    // delete png album artwork files that may have been added by Unpack method (DO NOT DELETE any Xbox360 images)
-                    var pngFiles = Directory.EnumerateFiles(sourcePath, "*.png", SearchOption.AllDirectories).Where(fp => !Path.GetFileName(fp).Equals("Package Image.png") && !Path.GetFileName(fp).Equals("Content Image.png")).ToList();
-                    foreach (var pngFile in pngFiles)
-                        File.Delete(pngFile);
-                }
-                catch (Exception ex)
-                {
-                    throw new InvalidOperationException(String.Format("Can't delete extraneous audio files!\r\n {0}", ex));
-                }
+                // delete png album artwork files that may have been added by Unpack method (DO NOT DELETE any Xbox360 images)
+                var pngFiles = Directory.EnumerateFiles(sourcePath, "*.png", SearchOption.AllDirectories).Where(fp => !Path.GetFileName(fp).Equals("Package Image.png") && !Path.GetFileName(fp).Equals("Content Image.png")).ToList();
+                foreach (var pngFile in pngFiles)
+                    File.Delete(pngFile);
             }
-
-            private static void WalkThroughDirectory(string baseDir, string directory, Action<string, string> action)
+            catch (Exception ex)
             {
-                foreach (var fl in Directory.EnumerateFiles(directory))
-                    action(String.Format("{0}/{1}", baseDir, Path.GetFileName(fl)).TrimStart('/'), fl);
-
-                foreach (var dr in Directory.EnumerateDirectories(Path.Combine(baseDir, directory)))
-                    WalkThroughDirectory(String.Format("{0}/{1}", baseDir, Path.GetFileName(dr)), dr, action);
+                throw new InvalidOperationException(String.Format("Can't delete extraneous audio files!\r\n {0}", ex));
             }
+        }
 
-            /// <summary>
-            /// Get platform from a source path
-            /// </summary>
-            /// <param name="srcPath"></param>
-            /// <returns></returns>
-            public static Platform GetPlatform(this string srcPath)
+        private static void WalkThroughDirectory(string baseDir, string directory, Action<string, string> action)
+        {
+            foreach (var fl in Directory.EnumerateFiles(directory))
+                action(String.Format("{0}/{1}", baseDir, Path.GetFileName(fl)).TrimStart('/'), fl);
+
+            foreach (var dr in Directory.EnumerateDirectories(Path.Combine(baseDir, directory)))
+                WalkThroughDirectory(String.Format("{0}/{1}", baseDir, Path.GetFileName(dr)), dr, action);
+        }
+
+        /// <summary>
+        /// Get platform from a source path
+        /// </summary>
+        /// <param name="srcPath"></param>
+        /// <returns></returns>
+        public static Platform GetPlatform(this string srcPath)
+        {
+            //TODO: Rewrite this method, validate Files by MIME type
+            if (File.Exists(srcPath))
             {
-                //TODO: Rewrite this method, validate Files by MIME type
-                if (File.Exists(srcPath))
+                // Get PLATFORM by Extension + Get PLATFORM by pkg EndName
+                switch (Path.GetExtension(srcPath))
                 {
-                    // Get PLATFORM by Extension + Get PLATFORM by pkg EndName
-                    switch (Path.GetExtension(srcPath))
-                    {
-                        case ".dat":
-                            return new Platform(GamePlatform.Pc, GameVersion.RS2012);
-                        case "":
-                            var fileName = Path.GetFileName(srcPath);
-                            if (!fileName.EndsWith("_xbox") && fileName.Length != 42)
-                                break; // keep looking
-                                       // must get game version from ConfigRepository for UnitTest compatibility
-                            GameVersion xboxVersion = (GameVersion)Enum.Parse(typeof(GameVersion), ConfigRepository.Instance()["general_defaultgameversion"]);
-                            return new Platform(GamePlatform.XBox360, xboxVersion);
-                        case ".edat":
-                            // must get game version from ConfigRepository for UnitTest compatibility
-                            GameVersion ps3Version = (GameVersion)Enum.Parse(typeof(GameVersion), ConfigRepository.Instance()["general_defaultgameversion"]);
-                            return new Platform(GamePlatform.PS3, ps3Version);
-                        case ".psarc":
-                            return TryGetPlatformByEndName(srcPath);
-                        default:
-                            return new Platform(GamePlatform.None, GameVersion.None);
-                    }
-                }
-
-                if (Directory.Exists(srcPath))
-                {
-                    var fullPathInfo = new DirectoryInfo(srcPath);
-                    // GET PLATFORM BY PACKAGE ROOT DIRECTORY
-                    if (File.Exists(Path.Combine(srcPath, "APP_ID")))
-                    {
-                        // PC 2012
+                    case ".dat":
                         return new Platform(GamePlatform.Pc, GameVersion.RS2012);
-                    }
-
-                    string agg;
-
-                    if (File.Exists(Path.Combine(srcPath, "appid.appid")))
-                    {
-                        // PC / MAC 2014
-                        agg = fullPathInfo.EnumerateFiles("*.nt", SearchOption.TopDirectoryOnly).FirstOrDefault().FullName;
-                        var aggContent = File.ReadAllText(agg);
-
-                        if (aggContent.Contains("\"dx9\""))
-                            return new Platform(GamePlatform.Pc, GameVersion.RS2014);
-                        if (aggContent.Contains("\"macos\""))
-                            return new Platform(GamePlatform.Mac, GameVersion.RS2014);
-
-                        return new Platform(GamePlatform.Pc, GameVersion.RS2014); // Because appid.appid have only in RS2014
-                    }
-
-                    if (Directory.Exists(Path.Combine(srcPath, ROOT_XBOX360)))
-                    {
-                        // XBOX 2012/2014
-                        var hTxt = fullPathInfo.EnumerateFiles("*.txt", SearchOption.TopDirectoryOnly).FirstOrDefault().FullName;
-                        var hTxtContent = File.ReadAllText(hTxt);
-
-                        if (hTxtContent.Contains("Title ID: 55530873"))
-                            return new Platform(GamePlatform.XBox360, GameVersion.RS2012);
-                        if (hTxtContent.Contains("Title ID: 555308C0"))
-                            return new Platform(GamePlatform.XBox360, GameVersion.RS2014);
-
-                        return new Platform(GamePlatform.XBox360, GameVersion.None);
-                    }
-
-                    if (srcPath.ToLower().EndsWith("_p") || srcPath.ToLower().EndsWith("_pc"))
-                    {
-                        return new Platform(GamePlatform.Pc, GameVersion.RS2014);
-                    }
-
-                    if (srcPath.ToLower().EndsWith("_m") || srcPath.ToLower().EndsWith("_mac"))
-                    {
-                        return new Platform(GamePlatform.Mac, GameVersion.RS2014);
-                    }
-
-                    // some RS1 detection
-                    if (srcPath.ToLower().EndsWith("_rs1_xbox"))
-                    {
-                        return new Platform(GamePlatform.XBox360, GameVersion.RS2012);
-                    }
-
-
-                    // PS3 2012/2014
-                    agg = fullPathInfo.EnumerateFiles("*.nt", SearchOption.TopDirectoryOnly).FirstOrDefault().FullName;
-
-                    if (agg.Any())
-                    {
-                        var aggContent = File.ReadAllText(agg);
-
-                        if (aggContent.Contains("\"PS3\""))
-                            return new Platform(GamePlatform.PS3, GameVersion.RS2012);
-                        if (aggContent.Contains("\"ps3\""))
-                            return new Platform(GamePlatform.PS3, GameVersion.RS2014);
-
+                    case "":
+                        var fileName = Path.GetFileName(srcPath);
+                        if (!fileName.EndsWith("_xbox") && fileName.Length != 42)
+                            break; // keep looking
+                        // must get game version from ConfigRepository for UnitTest compatibility
+                        GameVersion xboxVersion = (GameVersion)Enum.Parse(typeof(GameVersion), ConfigRepository.Instance()["general_defaultgameversion"]);
+                        return new Platform(GamePlatform.XBox360, xboxVersion);
+                    case ".edat":
+                        // must get game version from ConfigRepository for UnitTest compatibility
+                        GameVersion ps3Version = (GameVersion)Enum.Parse(typeof(GameVersion), ConfigRepository.Instance()["general_defaultgameversion"]);
+                        return new Platform(GamePlatform.PS3, ps3Version);
+                    case ".psarc":
                         return TryGetPlatformByEndName(srcPath);
-                    }
+                    default:
+                        return new Platform(GamePlatform.None, GameVersion.None);
+                }
+            }
+
+            if (Directory.Exists(srcPath))
+            {
+                var fullPathInfo = new DirectoryInfo(srcPath);
+                // GET PLATFORM BY PACKAGE ROOT DIRECTORY
+                if (File.Exists(Path.Combine(srcPath, "APP_ID")))
+                {
+                    // PC 2012
+                    return new Platform(GamePlatform.Pc, GameVersion.RS2012);
+                }
+
+                string agg;
+
+                if (File.Exists(Path.Combine(srcPath, "appid.appid")))
+                {
+                    // PC / MAC 2014
+                    agg = fullPathInfo.EnumerateFiles("*.nt", SearchOption.TopDirectoryOnly).FirstOrDefault().FullName;
+                    var aggContent = File.ReadAllText(agg);
+
+                    if (aggContent.Contains("\"dx9\""))
+                        return new Platform(GamePlatform.Pc, GameVersion.RS2014);
+                    if (aggContent.Contains("\"macos\""))
+                        return new Platform(GamePlatform.Mac, GameVersion.RS2014);
+
+                    return new Platform(GamePlatform.Pc, GameVersion.RS2014); // Because appid.appid have only in RS2014
+                }
+
+                if (Directory.Exists(Path.Combine(srcPath, ROOT_XBOX360)))
+                {
+                    // XBOX 2012/2014
+                    var hTxt = fullPathInfo.EnumerateFiles("*.txt", SearchOption.TopDirectoryOnly).FirstOrDefault().FullName;
+                    var hTxtContent = File.ReadAllText(hTxt);
+
+                    if (hTxtContent.Contains("Title ID: 55530873"))
+                        return new Platform(GamePlatform.XBox360, GameVersion.RS2012);
+                    if (hTxtContent.Contains("Title ID: 555308C0"))
+                        return new Platform(GamePlatform.XBox360, GameVersion.RS2014);
+
+                    return new Platform(GamePlatform.XBox360, GameVersion.None);
+                }
+
+                if (srcPath.ToLower().EndsWith("_p") || srcPath.ToLower().EndsWith("_pc"))
+                {
+                    return new Platform(GamePlatform.Pc, GameVersion.RS2014);
+                }
+
+                if (srcPath.ToLower().EndsWith("_m") || srcPath.ToLower().EndsWith("_mac"))
+                {
+                    return new Platform(GamePlatform.Mac, GameVersion.RS2014);
+                }
+
+                // some RS1 detection
+                if (srcPath.ToLower().EndsWith("_rs1_xbox"))
+                {
+                    return new Platform(GamePlatform.XBox360, GameVersion.RS2012);
+                }
+
+
+                // PS3 2012/2014
+                agg = fullPathInfo.EnumerateFiles("*.nt", SearchOption.TopDirectoryOnly).FirstOrDefault().FullName;
+
+                if (agg.Any())
+                {
+                    var aggContent = File.ReadAllText(agg);
+
+                    if (aggContent.Contains("\"PS3\""))
+                        return new Platform(GamePlatform.PS3, GameVersion.RS2012);
+                    if (aggContent.Contains("\"ps3\""))
+                        return new Platform(GamePlatform.PS3, GameVersion.RS2014);
 
                     return TryGetPlatformByEndName(srcPath);
                 }
 
-                return new Platform(GamePlatform.None, GameVersion.None);
+                return TryGetPlatformByEndName(srcPath);
             }
 
-            /// <summary>
-            /// Gets platform from source path or file name ending
-            /// </summary>
-            /// <param name="srcPath">Folder of File</param>
-            /// <returns>Platform(DetectedPlatform, RS2014 ? None)</returns>
-            public static Platform TryGetPlatformByEndName(string srcPath)
-            {
-                var p = GamePlatform.None;
-                var v = GameVersion.RS2014;
-                var name = Path.GetFileName(srcPath);
-                var pIndex = name.LastIndexOf("_", StringComparison.Ordinal);
+            return new Platform(GamePlatform.None, GameVersion.None);
+        }
 
-                if (Directory.Exists(srcPath))
-                {// Pc, Mac, XBox360, PS3
-                    var platformString = name.Substring(pIndex + 1);
-                    var isValid = Enum.TryParse(platformString, true, out p);
+        /// <summary>
+        /// Gets platform from source path or file name ending
+        /// </summary>
+        /// <param name="srcPath">Folder of File</param>
+        /// <returns>Platform(DetectedPlatform, RS2014 ? None)</returns>
+        public static Platform TryGetPlatformByEndName(string srcPath)
+        {
+            var p = GamePlatform.None;
+            var v = GameVersion.RS2014;
+            var name = Path.GetFileName(srcPath);
+            var pIndex = name.LastIndexOf("_", StringComparison.Ordinal);
 
-                    return isValid ? new Platform(p, v) : new Platform(GamePlatform.None, GameVersion.None);
-                }
-                else
-                {//_p, _m, _ps3, _xbox
-                    var platformString = pIndex > -1 ? name.Substring(pIndex) : "";
-                    switch (platformString.ToLower())
-                    {
-                        case "_p":
-                        case "_p.psarc":
-                            return new Platform(GamePlatform.Pc, v);
-                        case "_m":
-                        case "_m.psarc":
-                            return new Platform(GamePlatform.Mac, v);
-                        case "_ps3":
-                        case "_ps3.edat":
-                            return new Platform(GamePlatform.PS3, v);
-                        case "_xbox":
-                            return new Platform(GamePlatform.XBox360, v);
-                        default:
-                            return new Platform(GamePlatform.Pc, v);
-                    }
-                }
+            if (Directory.Exists(srcPath))
+            {// Pc, Mac, XBox360, PS3
+                var platformString = name.Substring(pIndex + 1);
+                var isValid = Enum.TryParse(platformString, true, out p);
+
+                return isValid ? new Platform(p, v) : new Platform(GamePlatform.None, GameVersion.None);
             }
-
-            private static void UpdateSng(string songDirectory, Platform targetPlatform)
-            {
-                var xmlFiles = Directory.EnumerateFiles(Path.Combine(songDirectory, @"GR\Behaviors\Songs"));
-
-                foreach (var xmlFile in xmlFiles)
+            else
+            {//_p, _m, _ps3, _xbox
+                var platformString = pIndex > -1 ? name.Substring(pIndex) : "";
+                switch (platformString.ToLower())
                 {
-                    if (File.Exists(xmlFile) && Path.GetExtension(xmlFile) == ".xml")
+                    case "_p":
+                    case "_p.psarc":
+                        return new Platform(GamePlatform.Pc, v);
+                    case "_m":
+                    case "_m.psarc":
+                        return new Platform(GamePlatform.Mac, v);
+                    case "_ps3":
+                    case "_ps3.edat":
+                        return new Platform(GamePlatform.PS3, v);
+                    case "_xbox":
+                        return new Platform(GamePlatform.XBox360, v);
+                    default:
+                        return new Platform(GamePlatform.Pc, v);
+                }
+            }
+        }
+
+        private static void UpdateSng(string songDirectory, Platform targetPlatform)
+        {
+            var xmlFiles = Directory.EnumerateFiles(Path.Combine(songDirectory, @"GR\Behaviors\Songs"));
+
+            foreach (var xmlFile in xmlFiles)
+            {
+                if (File.Exists(xmlFile) && Path.GetExtension(xmlFile) == ".xml")
+                {
+                    var sngFile = Path.Combine(songDirectory, "GRExports", targetPlatform.GetPathName()[1], Path.GetFileNameWithoutExtension(xmlFile) + ".sng");
+                    var arrType = ArrangementType.Guitar;
+
+                    if (Path.GetFileName(xmlFile).ToLower().Contains("vocal"))
                     {
-                        var sngFile = Path.Combine(songDirectory, "GRExports", targetPlatform.GetPathName()[1], Path.GetFileNameWithoutExtension(xmlFile) + ".sng");
-                        var arrType = ArrangementType.Guitar;
-
-                        if (Path.GetFileName(xmlFile).ToLower().Contains("vocal"))
-                        {
-                            arrType = ArrangementType.Vocal;
-                            SngFileWriter.Write(xmlFile, sngFile, arrType, targetPlatform);
-                        }
-                        else
-                        {
-                            Song song = Song.LoadFromFile(xmlFile);
-
-                            if (!Enum.TryParse<ArrangementType>(song.Arrangement, out arrType))
-                                if (song.Arrangement.ToLower().Contains("bass"))
-                                    arrType = ArrangementType.Bass;
-                        }
-
+                        arrType = ArrangementType.Vocal;
                         SngFileWriter.Write(xmlFile, sngFile, arrType, targetPlatform);
                     }
                     else
                     {
-                        throw new ArgumentException(String.Format("'{0}' is not a valid XML file.", xmlFile));
-                    }
-                }
-            }
+                        Song song = Song.LoadFromFile(xmlFile);
 
-            private static void UpdateSng2014(string artifactsPath, Platform targetPlatform)
-            {
-                var xmlFiles = Directory.EnumerateFiles(artifactsPath, "*_*.xml", SearchOption.AllDirectories).ToList();
-                var sngFolder = Path.GetDirectoryName(Directory.EnumerateFiles(artifactsPath, "*_*.sng", SearchOption.AllDirectories).Where(fp => fp.Contains("songs\\bin")).FirstOrDefault());
-                if (String.IsNullOrEmpty(sngFolder))
-                    throw new DirectoryNotFoundException("<ERROR> Did not find 'songs\bin' folder ...");
-
-                foreach (var xmlFile in xmlFiles)
-                {
-                    var xmlName = Path.GetFileNameWithoutExtension(xmlFile);
-                    if (xmlName.ToLower().Contains("_showlights"))
-                        continue;
-
-                    var sngFile = Path.Combine(sngFolder, xmlName + ".sng");
-                    var arrType = ArrangementType.Guitar;
-
-                    if (xmlName.ToLower().Contains("vocal"))
-                        arrType = ArrangementType.Vocal;
-
-                    // TODO: Handle vocals custom font
-                    string fontSng = null;
-                    if (arrType == ArrangementType.Vocal)
-                    {
-                        //var vocSng = Sng2014File.LoadFromFile(sngFile, GetPlatform(songDirectory));
-                        //if (vocSng.IsCustomFont())
-                        //{
-                        //    vocSng.WriteChartData((fontSng = Path.GetTempFileName()), new Platform(GamePlatform.Pc, GameVersion.None));
-                        //}
+                        if (!Enum.TryParse<ArrangementType>(song.Arrangement, out arrType))
+                            if (song.Arrangement.ToLower().Contains("bass"))
+                                arrType = ArrangementType.Bass;
                     }
 
-                    using (var fs = new FileStream(sngFile, FileMode.Create))
-                    {
-                        var sng = Sng2014File.ConvertXML(xmlFile, arrType, fontSng);
-                        sng.WriteSng(fs, targetPlatform);
-                    }
-                }
-            }
-
-            // Regenerates the aggregategraph file
-            private static void UpdateAggegrateGraph(string songDirectory, Platform targetPlatform, DLCPackageData info)
-            {
-                var dlcName = info.Name.ToLower();
-                var aggregateGraphFileName = Path.Combine(songDirectory, String.Format("{0}_aggregategraph.nt", dlcName));
-                var aggregateGraph = new AggregateGraph2014.AggregateGraph2014(info, targetPlatform);
-
-                using (var fs = new FileStream(aggregateGraphFileName, FileMode.Create))
-                using (var aggregateGraphStream = new MemoryStream())
-                {
-                    aggregateGraph.Serialize(aggregateGraphStream);
-                    aggregateGraphStream.Flush();
-                    aggregateGraphStream.Seek(0, SeekOrigin.Begin);
-                    aggregateGraphStream.CopyTo(fs);
-                }
-            }
-
-            // Fixes missing and updates showlights to current standards
-            private static void UpdateShowlights(string srcPath, Platform targetPlatform)
-            {
-                bool hasShowlights = true;
-                // TODO: provide some pb feedback for long process
-                var info = DLCPackageData.LoadFromFolder(srcPath, targetPlatform);
-                var showlightsArr = info.Arrangements.Where(x => x.ArrangementType == ArrangementType.ShowLight).FirstOrDefault();
-                var showlightFilePath = showlightsArr.SongXml.File;
-
-                if (String.IsNullOrEmpty(showlightFilePath))
-                {
-                    var xmlFilePath = info.Arrangements[0].SongXml.File;
-                    var xmlName = Path.GetFileNameWithoutExtension(xmlFilePath);
-                    showlightFilePath = Path.Combine(Path.GetDirectoryName(xmlFilePath), xmlName.Split('_')[0] + "_showlights.xml");
-                    hasShowlights = false;
-                }
-
-                // Generate Showlights
-                var showlight = new Showlights();
-                showlight.CreateShowlights(info);
-                // need at least two showlight elements to be valid
-                if (showlight.ShowlightList.Count > 1)
-                {
-                    var showlightStream = new MemoryStream();
-                    showlight.Serialize(showlightStream);
-
-                    using (FileStream file = new FileStream(showlightFilePath, FileMode.Create, FileAccess.Write))
-                        showlightStream.WriteTo(file);
-
-                    // write xml comments
-                    Song2014.WriteXmlComments(showlightFilePath);
+                    SngFileWriter.Write(xmlFile, sngFile, arrType, targetPlatform);
                 }
                 else
                 {
-                    // insufficient showlight changes may crash game
-                    throw new InvalidOperationException("Detected insufficient showlight changes: " + showlight.ShowlightList.Count);
+                    throw new ArgumentException(String.Format("'{0}' is not a valid XML file.", xmlFile));
                 }
-
-                if (!hasShowlights) // better not happen!
-                    UpdateAggegrateGraph(srcPath, targetPlatform, info);
             }
-
-            private static void UpdateManifest2014(string srcPath, Platform targetPlatform)
-            {
-                if (targetPlatform.version != GameVersion.RS2014)
-                    return;
-
-                string[] fileExt = new string[] { "hsan", "hson" };
-                var hsanFiles = Directory.EnumerateFiles(srcPath, "*", SearchOption.AllDirectories).Where(fi => fileExt.Any(fi.ToLower().EndsWith)).ToList();
-                if (!hsanFiles.Any())
-                    throw new DataException("Error: could not find hsan/hson file");
-                if (hsanFiles.Count > 1)
-                    throw new DataException("Error: there is more than one hsan/hson file");
-
-                var manifestHeader = new ManifestHeader2014<AttributesHeader2014>(targetPlatform);
-                var hsanFile = hsanFiles.First();
-                var jsonFiles = Directory.EnumerateFiles(srcPath, "*.json", SearchOption.AllDirectories).ToList();
-                var xmlFiles = Directory.EnumerateFiles(srcPath, "*.xml", SearchOption.AllDirectories).ToList();
-                //var songFiles = xmlFiles.Where(x => !x.ToLower().Contains("showlight") && !x.ToLower().Contains("vocal")).ToList();
-                //var vocalFiles = xmlFiles.Where(x => x.ToLower().Contains("vocal")).ToList();
-
-                foreach (var xmlFile in xmlFiles)
-                {
-                    var xmlName = Path.GetFileNameWithoutExtension(xmlFile);
-                    if (xmlName.ToLower().Contains("showlight"))
-                        continue;
-
-                    var json = jsonFiles.FirstOrDefault(name => Path.GetFileNameWithoutExtension(name) == xmlName);
-                    if (String.IsNullOrEmpty(json))
-                        continue;
-
-                    var attr = Manifest2014<Attributes2014>.LoadFromFile(json).Entries.First().Value.First().Value;
-
-                    if (!xmlName.ToLower().Contains("vocal"))
-                    {
-                        var manifestFunctions = new ManifestFunctions(targetPlatform.version);
-                        var xmlContent = Song2014.LoadFromFile(xmlFile);
-
-                        attr.PhraseIterations = new List<Manifest.PhraseIteration>();
-                        manifestFunctions.GeneratePhraseIterationsData(attr, xmlContent, targetPlatform.version);
-
-                        attr.Phrases = new List<Manifest.Phrase>();
-                        manifestFunctions.GeneratePhraseData(attr, xmlContent);
-
-                        attr.Sections = new List<Manifest.Section>();
-                        manifestFunctions.GenerateSectionData(attr, xmlContent);
-
-                        attr.Tuning = new TuningStrings { String0 = 0, String1 = 0, String2 = 0, String3 = 0, String4 = 0, String5 = 0 };
-                        manifestFunctions.GenerateTuningData(attr, xmlContent);
-
-                        attr.MaxPhraseDifficulty = manifestFunctions.GetMaxDifficulty(xmlContent);
-                    }
-
-                    // else { // TODO: good place to update vocals }
-
-                    // write updated json file
-                    var attributeDictionary = new Dictionary<string, Attributes2014> { { "Attributes", attr } };
-                    var manifest = new Manifest2014<Attributes2014>();
-                    manifest.Entries.Add(attr.PersistentID, attributeDictionary);
-                    manifest.SaveToFile(json);
-
-                    // update manifestHeader (hsan) entry
-                    var attributeHeaderDictionary = new Dictionary<string, AttributesHeader2014> { { "Attributes", new AttributesHeader2014(attr) } };
-                    if (targetPlatform.IsConsole)
-                    {
-                        // One for each arrangements (Xbox360/PS3)
-                        manifestHeader = new ManifestHeader2014<AttributesHeader2014>(targetPlatform);
-                        manifestHeader.Entries.Add(attr.PersistentID, attributeHeaderDictionary);
-                    }
-                    else
-                        manifestHeader.Entries.Add(attr.PersistentID, attributeHeaderDictionary);
-                }
-
-                // write updated hsan file
-                manifestHeader.SaveToFile(hsanFile);
-
-                // fix missing or upgrade existing showlights
-                UpdateShowlights(srcPath, targetPlatform);
-            }
-
-            /// <summary>
-            /// Get unpacked directory path name or folder name with platform identifiers 
-            /// </summary>
-            /// <param name="srcPath">Source Path</param>
-            /// <param name="destPath">Destination Path (if 'null' returns an unpacked folder name)</param>
-            /// <param name="targetPlatform">Target Platform</param>
-            /// <param name="safeDelete">Delete unpacked directory if it already exists</param>
-            /// <returns>Unpacked Directory Path or Folder Name</returns>
-            public static string GetUnpackedDir(string srcPath, string destPath, Platform targetPlatform, bool safeDelete = true)
-            {
-                // org Xbox360 packages have random hexidecimal file name with no extension
-                var fnameWithoutExt = Path.GetFileName(srcPath);
-                string[] extensions = { "_p.psarc", "_m.psarc", "_ps3.psarc.edat", "_xbox", ".dat" };
-
-                foreach (string extension in extensions)
-                {
-                    if (Path.GetFileName(srcPath).EndsWith(extension))
-                    {
-                        fnameWithoutExt = Path.GetFileName(srcPath).Replace(extension, "");
-                        break;
-                    }
-                }
-
-                var unpackedDir = String.Format("{0}_{1}", fnameWithoutExt, targetPlatform);
-
-                if (!String.IsNullOrEmpty(destPath))
-                {
-                    unpackedDir = Path.Combine(destPath, unpackedDir);
-                    if (Directory.Exists(unpackedDir) && safeDelete)
-                        IOExtension.DeleteDirectory(unpackedDir);
-                }
-
-                return unpackedDir;
-            }
-
-            /// <summary>
-            /// Recycle an unpacked directory path or folder into archive file path or name
-            /// </summary>
-            /// <param name="srcPath"></param>
-            /// <returns>Archive File Path or Name</returns>
-            public static string RecycleUnpackedDir(string srcPath)
-            {
-                var destPath = String.Empty;
-
-                // populate a lookup dictionary with all posible version_platform (keys) and archive file extension (values)
-                var versionPlatformExtension = new Dictionary<string, string>();
-                var versions = Enum.GetValues(typeof(GameVersion)).Cast<GameVersion>().ToList();
-                var platforms = Enum.GetValues(typeof(GamePlatform)).Cast<GamePlatform>().ToList();
-
-                foreach (var platform in platforms)
-                {
-                    foreach (var version in versions)
-                    {
-                        var versionPlatform = String.Format("_{0}_{1}", version, platform);
-                        var fileExtension = ".TBD"; // To Be Determined
-
-                        if (version == GameVersion.RS2014)
-                        {
-                            switch (platform)
-                            {
-                                case GamePlatform.Pc:
-                                    fileExtension = "_p.psarc";
-                                    break;
-                                case GamePlatform.Mac:
-                                    fileExtension = "_m.psarc";
-                                    break;
-                                case GamePlatform.PS3:
-                                    fileExtension = "_ps3.psarc.edat";
-                                    break;
-                                case GamePlatform.XBox360:
-                                    fileExtension = "_xbox";
-                                    break;
-                                default:
-                                    fileExtension = ".TBD"; // To Be Determined
-                                    break;
-                            }
-                        }
-                        else if (version == GameVersion.RS2012)
-                        {
-                            switch (platform)
-                            {
-                                case GamePlatform.Pc:
-                                    fileExtension = ".dat";
-                                    break;
-                                case GamePlatform.PS3:
-                                    fileExtension = "_ps3.dat"; // TODO: confirm extension
-                                    break;
-                                case GamePlatform.XBox360:
-                                    fileExtension = "_xbox";
-                                    break;
-                                default:
-                                    fileExtension = ".TBD"; // To Be Determined
-                                    break;
-                            }
-                        }
-                        else if (version == GameVersion.None)
-                        {
-                            switch (platform)
-                            {
-                                default:
-                                    fileExtension = ".TBD"; // To Be Determined
-                                    break;
-                            }
-                        }
-
-                        versionPlatformExtension.Add(versionPlatform, fileExtension);
-                    }
-                }
-
-                // now use the lookup dictionary to find the correct archive file extension
-                foreach (KeyValuePair<string, string> item in versionPlatformExtension)
-                {
-                    if (srcPath.EndsWith(item.Key))
-                    {
-                        var vpIndex = srcPath.LastIndexOf(item.Key, StringComparison.Ordinal);
-                        var pathWoVP = srcPath.Substring(0, vpIndex);
-                        destPath = String.Format("{0}{1}", pathWoVP, item.Value);
-                        break;
-                    }
-                }
-
-                return destPath;
-            }
-
-            public static string StripPlatformEndName(this string filePath)
-            {
-
-                if (filePath.EndsWith(GamePlatform.Pc.GetPathName()[2]) ||
-                   filePath.EndsWith(GamePlatform.Mac.GetPathName()[2]) ||
-                   filePath.EndsWith(GamePlatform.XBox360.GetPathName()[2]) ||
-                   filePath.EndsWith(GamePlatform.PS3.GetPathName()[2]) ||
-                   filePath.EndsWith(GamePlatform.PS3.GetPathName()[2] + ".psarc"))
-                {
-                    return filePath.Substring(0, filePath.LastIndexOf("_"));
-                }
-
-                return filePath;
-            }
-
-            public static string GetPlatformEndName(Platform srcPlatform)
-            {
-                var version = srcPlatform.version;
-                var platform = srcPlatform.platform;
-                var fileExtension = ".TBD"; // To Be Determined
-
-                if (version == GameVersion.RS2014)
-                {
-                    switch (platform)
-                    {
-                        case GamePlatform.Pc:
-                            fileExtension = "_p.psarc";
-                            break;
-                        case GamePlatform.Mac:
-                            fileExtension = "_m.psarc";
-                            break;
-                        case GamePlatform.PS3:
-                            fileExtension = "_ps3.psarc.edat";
-                            break;
-                        case GamePlatform.XBox360:
-                            fileExtension = "_xbox";
-                            break;
-                        default:
-                            fileExtension = ".TBD"; // To Be Determined
-                            break;
-                    }
-                }
-                else if (version == GameVersion.RS2012)
-                {
-                    switch (platform)
-                    {
-                        case GamePlatform.Pc:
-                            fileExtension = ".dat";
-                            break;
-                        case GamePlatform.PS3:
-                            fileExtension = "_ps3.dat"; // TODO: confirm extension
-                            break;
-                        case GamePlatform.XBox360:
-                            fileExtension = "_xbox";
-                            break;
-                        default:
-                            fileExtension = ".TBD"; // To Be Determined
-                            break;
-                    }
-                }
-                else if (version == GameVersion.None)
-                {
-                    switch (platform)
-                    {
-                        default:
-                            fileExtension = ".TBD"; // To Be Determined
-                            break;
-                    }
-                }
-
-                return fileExtension;
-            }
-
-            #endregion
-
         }
+
+        private static void UpdateSng2014(string artifactsPath, Platform targetPlatform)
+        {
+            var xmlFiles = Directory.EnumerateFiles(artifactsPath, "*_*.xml", SearchOption.AllDirectories).ToList();
+            var sngFolder = Path.GetDirectoryName(Directory.EnumerateFiles(artifactsPath, "*_*.sng", SearchOption.AllDirectories).Where(fp => fp.Contains("songs\\bin")).FirstOrDefault());
+            if (String.IsNullOrEmpty(sngFolder))
+                throw new DirectoryNotFoundException("<ERROR> Did not find 'songs\bin' folder ...");
+
+            foreach (var xmlFile in xmlFiles)
+            {
+                var xmlName = Path.GetFileNameWithoutExtension(xmlFile);
+                if (xmlName.ToLower().Contains("_showlights"))
+                    continue;
+
+                var sngFile = Path.Combine(sngFolder, xmlName + ".sng");
+                var arrType = ArrangementType.Guitar;
+
+                if (xmlName.ToLower().Contains("vocal"))
+                    arrType = ArrangementType.Vocal;
+
+                // TODO: Handle vocals custom font
+                string fontSng = null;
+                if (arrType == ArrangementType.Vocal)
+                {
+                    //var vocSng = Sng2014File.LoadFromFile(sngFile, GetPlatform(songDirectory));
+                    //if (vocSng.IsCustomFont())
+                    //{
+                    //    vocSng.WriteChartData((fontSng = Path.GetTempFileName()), new Platform(GamePlatform.Pc, GameVersion.None));
+                    //}
+                }
+
+                using (var fs = new FileStream(sngFile, FileMode.Create))
+                {
+                    var sng = Sng2014File.ConvertXML(xmlFile, arrType, fontSng);
+                    sng.WriteSng(fs, targetPlatform);
+                }
+            }
+        }
+
+        // Regenerates the aggregategraph file
+        private static void UpdateAggegrateGraph(string songDirectory, Platform targetPlatform, DLCPackageData info)
+        {
+            var dlcName = info.Name.ToLower();
+            var aggregateGraphFileName = Path.Combine(songDirectory, String.Format("{0}_aggregategraph.nt", dlcName));
+            var aggregateGraph = new AggregateGraph2014.AggregateGraph2014(info, targetPlatform);
+
+            using (var fs = new FileStream(aggregateGraphFileName, FileMode.Create))
+            using (var aggregateGraphStream = new MemoryStream())
+            {
+                aggregateGraph.Serialize(aggregateGraphStream);
+                aggregateGraphStream.Flush();
+                aggregateGraphStream.Seek(0, SeekOrigin.Begin);
+                aggregateGraphStream.CopyTo(fs);
+            }
+        }
+
+        // Fixes missing and updates showlights to current standards
+        private static void UpdateShowlights(string srcPath, Platform targetPlatform)
+        {
+            bool hasShowlights = true;
+            // TODO: provide some pb feedback for long process
+            var info = DLCPackageData.LoadFromFolder(srcPath, targetPlatform);
+            var showlightsArr = info.Arrangements.Where(x => x.ArrangementType == ArrangementType.ShowLight).FirstOrDefault();
+            var showlightFilePath = showlightsArr.SongXml.File;
+
+            if (String.IsNullOrEmpty(showlightFilePath))
+            {
+                var xmlFilePath = info.Arrangements[0].SongXml.File;
+                var xmlName = Path.GetFileNameWithoutExtension(xmlFilePath);
+                showlightFilePath = Path.Combine(Path.GetDirectoryName(xmlFilePath), xmlName.Split('_')[0] + "_showlights.xml");
+                hasShowlights = false;
+            }
+
+            // Generate Showlights
+            var showlight = new Showlights();
+            showlight.CreateShowlights(info);
+            // need at least two showlight elements to be valid
+            if (showlight.ShowlightList.Count > 1)
+            {
+                var showlightStream = new MemoryStream();
+                showlight.Serialize(showlightStream);
+
+                using (FileStream file = new FileStream(showlightFilePath, FileMode.Create, FileAccess.Write))
+                    showlightStream.WriteTo(file);
+
+                // write xml comments
+                Song2014.WriteXmlComments(showlightFilePath);
+            }
+            else
+            {
+                // insufficient showlight changes may crash game
+                throw new InvalidOperationException("Detected insufficient showlight changes: " + showlight.ShowlightList.Count);
+            }
+
+            if (!hasShowlights) // better not happen!
+                UpdateAggegrateGraph(srcPath, targetPlatform, info);
+        }
+
+        private static void UpdateManifest2014(string srcPath, Platform targetPlatform)
+        {
+            if (targetPlatform.version != GameVersion.RS2014)
+                return;
+
+            string[] fileExt = new string[] { "hsan", "hson" };
+            var hsanFiles = Directory.EnumerateFiles(srcPath, "*", SearchOption.AllDirectories).Where(fi => fileExt.Any(fi.ToLower().EndsWith)).ToList();
+            if (!hsanFiles.Any())
+                throw new DataException("Error: could not find hsan/hson file");
+            if (hsanFiles.Count > 1)
+                throw new DataException("Error: there is more than one hsan/hson file");
+
+            var manifestHeader = new ManifestHeader2014<AttributesHeader2014>(targetPlatform);
+            var hsanFile = hsanFiles.First();
+            var jsonFiles = Directory.EnumerateFiles(srcPath, "*.json", SearchOption.AllDirectories).ToList();
+            var xmlFiles = Directory.EnumerateFiles(srcPath, "*.xml", SearchOption.AllDirectories).ToList();
+            //var songFiles = xmlFiles.Where(x => !x.ToLower().Contains("showlight") && !x.ToLower().Contains("vocal")).ToList();
+            //var vocalFiles = xmlFiles.Where(x => x.ToLower().Contains("vocal")).ToList();
+
+            foreach (var xmlFile in xmlFiles)
+            {
+                var xmlName = Path.GetFileNameWithoutExtension(xmlFile);
+                if (xmlName.ToLower().Contains("showlight"))
+                    continue;
+
+                var json = jsonFiles.FirstOrDefault(name => Path.GetFileNameWithoutExtension(name) == xmlName);
+                if (String.IsNullOrEmpty(json))
+                    continue;
+
+                var attr = Manifest2014<Attributes2014>.LoadFromFile(json).Entries.First().Value.First().Value;
+
+                if (!xmlName.ToLower().Contains("vocal"))
+                {
+                    var manifestFunctions = new ManifestFunctions(targetPlatform.version);
+                    var xmlContent = Song2014.LoadFromFile(xmlFile);
+
+                    attr.PhraseIterations = new List<Manifest.PhraseIteration>();
+                    manifestFunctions.GeneratePhraseIterationsData(attr, xmlContent, targetPlatform.version);
+
+                    attr.Phrases = new List<Manifest.Phrase>();
+                    manifestFunctions.GeneratePhraseData(attr, xmlContent);
+
+                    attr.Sections = new List<Manifest.Section>();
+                    manifestFunctions.GenerateSectionData(attr, xmlContent);
+
+                    attr.Tuning = new TuningStrings { String0 = 0, String1 = 0, String2 = 0, String3 = 0, String4 = 0, String5 = 0 };
+                    manifestFunctions.GenerateTuningData(attr, xmlContent);
+
+                    attr.MaxPhraseDifficulty = manifestFunctions.GetMaxDifficulty(xmlContent);
+                }
+
+                // else { // TODO: good place to update vocals }
+
+                // write updated json file
+                var attributeDictionary = new Dictionary<string, Attributes2014> { { "Attributes", attr } };
+                var manifest = new Manifest2014<Attributes2014>();
+                manifest.Entries.Add(attr.PersistentID, attributeDictionary);
+                manifest.SaveToFile(json);
+
+                // update manifestHeader (hsan) entry
+                var attributeHeaderDictionary = new Dictionary<string, AttributesHeader2014> { { "Attributes", new AttributesHeader2014(attr) } };
+                if (targetPlatform.IsConsole)
+                {
+                    // One for each arrangements (Xbox360/PS3)
+                    manifestHeader = new ManifestHeader2014<AttributesHeader2014>(targetPlatform);
+                    manifestHeader.Entries.Add(attr.PersistentID, attributeHeaderDictionary);
+                }
+                else
+                    manifestHeader.Entries.Add(attr.PersistentID, attributeHeaderDictionary);
+            }
+
+            // write updated hsan file
+            manifestHeader.SaveToFile(hsanFile);
+
+            // fix missing or upgrade existing showlights
+            UpdateShowlights(srcPath, targetPlatform);
+        }
+
+        /// <summary>
+        /// Get unpacked directory path name or folder name with platform identifiers 
+        /// </summary>
+        /// <param name="srcPath">Source Path</param>
+        /// <param name="destPath">Destination Path (if 'null' returns an unpacked folder name)</param>
+        /// <param name="targetPlatform">Target Platform</param>
+        /// <param name="safeDelete">Delete unpacked directory if it already exists</param>
+        /// <returns>Unpacked Directory Path or Folder Name</returns>
+        public static string GetUnpackedDir(string srcPath, string destPath, Platform targetPlatform, bool safeDelete = true)
+        {
+            // org Xbox360 packages have random hexidecimal file name with no extension
+            var fnameWithoutExt = Path.GetFileName(srcPath);
+            string[] extensions = { "_p.psarc", "_m.psarc", "_ps3.psarc.edat", "_xbox", ".dat" };
+
+            foreach (string extension in extensions)
+            {
+                if (Path.GetFileName(srcPath).EndsWith(extension))
+                {
+                    fnameWithoutExt = Path.GetFileName(srcPath).Replace(extension, "");
+                    break;
+                }
+            }
+
+            var unpackedDir = String.Format("{0}_{1}", fnameWithoutExt, targetPlatform);
+
+            if (!String.IsNullOrEmpty(destPath))
+            {
+                unpackedDir = Path.Combine(destPath, unpackedDir);
+                if (Directory.Exists(unpackedDir) && safeDelete)
+                    IOExtension.DeleteDirectory(unpackedDir);
+            }
+
+            return unpackedDir;
+        }
+
+        /// <summary>
+        /// Recycle an unpacked directory path or folder into archive file path or name
+        /// </summary>
+        /// <param name="srcPath"></param>
+        /// <returns>Archive File Path or Name</returns>
+        public static string RecycleUnpackedDir(string srcPath)
+        {
+            var destPath = String.Empty;
+
+            // populate a lookup dictionary with all posible version_platform (keys) and archive file extension (values)
+            var versionPlatformExtension = new Dictionary<string, string>();
+            var versions = Enum.GetValues(typeof(GameVersion)).Cast<GameVersion>().ToList();
+            var platforms = Enum.GetValues(typeof(GamePlatform)).Cast<GamePlatform>().ToList();
+
+            foreach (var platform in platforms)
+            {
+                foreach (var version in versions)
+                {
+                    var versionPlatform = String.Format("_{0}_{1}", version, platform);
+                    var fileExtension = ".TBD"; // To Be Determined
+
+                    if (version == GameVersion.RS2014)
+                    {
+                        switch (platform)
+                        {
+                            case GamePlatform.Pc:
+                                fileExtension = "_p.psarc";
+                                break;
+                            case GamePlatform.Mac:
+                                fileExtension = "_m.psarc";
+                                break;
+                            case GamePlatform.PS3:
+                                fileExtension = "_ps3.psarc.edat";
+                                break;
+                            case GamePlatform.XBox360:
+                                fileExtension = "_xbox";
+                                break;
+                            default:
+                                fileExtension = ".TBD"; // To Be Determined
+                                break;
+                        }
+                    }
+                    else if (version == GameVersion.RS2012)
+                    {
+                        switch (platform)
+                        {
+                            case GamePlatform.Pc:
+                                fileExtension = ".dat";
+                                break;
+                            case GamePlatform.PS3:
+                                fileExtension = "_ps3.dat"; // TODO: confirm extension
+                                break;
+                            case GamePlatform.XBox360:
+                                fileExtension = "_xbox";
+                                break;
+                            default:
+                                fileExtension = ".TBD"; // To Be Determined
+                                break;
+                        }
+                    }
+                    else if (version == GameVersion.None)
+                    {
+                        switch (platform)
+                        {
+                            default:
+                                fileExtension = ".TBD"; // To Be Determined
+                                break;
+                        }
+                    }
+
+                    versionPlatformExtension.Add(versionPlatform, fileExtension);
+                }
+            }
+
+            // now use the lookup dictionary to find the correct archive file extension
+            foreach (KeyValuePair<string, string> item in versionPlatformExtension)
+            {
+                if (srcPath.EndsWith(item.Key))
+                {
+                    var vpIndex = srcPath.LastIndexOf(item.Key, StringComparison.Ordinal);
+                    var pathWoVP = srcPath.Substring(0, vpIndex);
+                    destPath = String.Format("{0}{1}", pathWoVP, item.Value);
+                    break;
+                }
+            }
+
+            return destPath;
+        }
+
+        public static string StripPlatformEndName(this string filePath)
+        {
+
+            if (filePath.EndsWith(GamePlatform.Pc.GetPathName()[2]) ||
+               filePath.EndsWith(GamePlatform.Mac.GetPathName()[2]) ||
+               filePath.EndsWith(GamePlatform.XBox360.GetPathName()[2]) ||
+               filePath.EndsWith(GamePlatform.PS3.GetPathName()[2]) ||
+               filePath.EndsWith(GamePlatform.PS3.GetPathName()[2] + ".psarc"))
+            {
+                return filePath.Substring(0, filePath.LastIndexOf("_"));
+            }
+
+            return filePath;
+        }
+
+        public static string GetPlatformEndName(Platform srcPlatform)
+        {
+            var version = srcPlatform.version;
+            var platform = srcPlatform.platform;
+            var fileExtension = ".TBD"; // To Be Determined
+
+            if (version == GameVersion.RS2014)
+            {
+                switch (platform)
+                {
+                    case GamePlatform.Pc:
+                        fileExtension = "_p.psarc";
+                        break;
+                    case GamePlatform.Mac:
+                        fileExtension = "_m.psarc";
+                        break;
+                    case GamePlatform.PS3:
+                        fileExtension = "_ps3.psarc.edat";
+                        break;
+                    case GamePlatform.XBox360:
+                        fileExtension = "_xbox";
+                        break;
+                    default:
+                        fileExtension = ".TBD"; // To Be Determined
+                        break;
+                }
+            }
+            else if (version == GameVersion.RS2012)
+            {
+                switch (platform)
+                {
+                    case GamePlatform.Pc:
+                        fileExtension = ".dat";
+                        break;
+                    case GamePlatform.PS3:
+                        fileExtension = "_ps3.dat"; // TODO: confirm extension
+                        break;
+                    case GamePlatform.XBox360:
+                        fileExtension = "_xbox";
+                        break;
+                    default:
+                        fileExtension = ".TBD"; // To Be Determined
+                        break;
+                }
+            }
+            else if (version == GameVersion.None)
+            {
+                switch (platform)
+                {
+                    default:
+                        fileExtension = ".TBD"; // To Be Determined
+                        break;
+                }
+            }
+
+            return fileExtension;
+        }
+
+        #endregion
+
     }
+}

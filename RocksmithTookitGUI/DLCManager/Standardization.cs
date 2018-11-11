@@ -352,7 +352,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //DLCManager v1 = new DLCManager();
             string txt = DB_Path;//.Replace("\\AccessDB.accdb", "");
             //MessageBox.Show(txt);
-            GenericFunctions.Translation_And_Correction(txt, pB_ReadDLCs, cnb);
+            GenericFunctions.Translation_And_Correction(txt, pB_ReadDLCs, cnb, null);
             //advance or step back in the song list
             int i = 0;
             if (databox.Rows.Count > 1 && databox.SelectedCells.Count > 0)

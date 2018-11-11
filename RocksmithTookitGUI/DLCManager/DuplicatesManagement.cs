@@ -1605,7 +1605,7 @@ namespace RocksmithToolkitGUI.DLCManager
             startInfo.FileName = Path.Combine(AppWD, "oggdec2.exe");
             startInfo.WorkingDirectory = AppWD;// Path.GetDirectoryName();
             //var t = filed.OggPath;//"C:\\GitHub\\tmp\\0\\0_dlcpacks\\rs1compatibilitydisc_PS3\\audio\\ps3\\149627248.ogg";//txt_TempPath.Text + "\\0_dlcpacks\\rs1compatibilitydlc.psarc";
-            var t = datas.OggPath.Replace(".wem", "_fixed.ogg"); ;//"C:\\GitHub\\tmp\\0\\0_dlcpacks\\rs1compatibilitydisc_PS3\\audio\\ps3\\149627248.ogg";//txt_TempPath.Text + "\\0_dlcpacks\\rs1compatibilitydlc.psarc";
+            var t = datas.OggPath.Replace(".wem", ".ogg"); ;//_fixed"C:\\GitHub\\tmp\\0\\0_dlcpacks\\rs1compatibilitydisc_PS3\\audio\\ps3\\149627248.ogg";//txt_TempPath.Text + "\\0_dlcpacks\\rs1compatibilitydlc.psarc";
             //var tt = t.Replace(".ogg", "_preview.ogg");
             startInfo.Arguments = String.Format(" -p \"{0}\"", t);
             startInfo.UseShellExecute = true; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
@@ -1624,7 +1624,7 @@ namespace RocksmithToolkitGUI.DLCManager
             var startInfo = new ProcessStartInfo();
             startInfo.FileName = Path.Combine(AppWD, "oggdec2.exe");
             startInfo.WorkingDirectory = AppWD;// Path.GetDirectoryName();
-            var t = datas.OggPath.Replace(".wem", "_fixed.ogg"); ;//"C:\\GitHub\\tmp\\0\\0_dlcpacks\\rs1compatibilitydisc_PS3\\audio\\ps3\\149627248.ogg";//txt_TempPath.Text + "\\0_dlcpacks\\rs1compatibilitydlc.psarc";
+            var t = datas.OggPath.Replace(".wem", ".ogg"); ;//_fixed"C:\\GitHub\\tmp\\0\\0_dlcpacks\\rs1compatibilitydisc_PS3\\audio\\ps3\\149627248.ogg";//txt_TempPath.Text + "\\0_dlcpacks\\rs1compatibilitydlc.psarc";
             var tt = t.Replace(".ogg", "_preview.ogg");
             //var t = filed.oggPreviewPath;//"C:\\GitHub\\tmp\\0\\0_dlcpacks\\rs1compatibilitydisc_PS3\\audio\\ps3\\149627248.ogg";//txt_TempPath.Text + "\\0_dlcpacks\\rs1compatibilitydlc.psarc";
             startInfo.Arguments = String.Format(" -p \"{0}\"",

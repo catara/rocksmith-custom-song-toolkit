@@ -752,9 +752,9 @@ namespace RocksmithToolkitGUI.DLCManager
             this.label1.Location = new System.Drawing.Point(1252, 375);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(120, 25);
+            this.label1.Size = new System.Drawing.Size(182, 25);
             this.label1.TabIndex = 310;
-            this.label1.Text = "Description";
+            this.label1.Text = "Description (New)";
             // 
             // label2
             // 
@@ -765,6 +765,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.label2.Size = new System.Drawing.Size(103, 25);
             this.label2.TabIndex = 311;
             this.label2.Text = "Comment";
+            this.label2.Visible = false;
             // 
             // chbx_IsOriginal
             // 

@@ -89,6 +89,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_OldFolder = new System.Windows.Forms.Button();
             this.chbx_AutoSave = new System.Windows.Forms.CheckBox();
             this.btn_Duplicate = new System.Windows.Forms.Button();
+            this.chbx_UseInternalDDRemovalLogic = new System.Windows.Forms.CheckBox();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.Panel1 = new System.Windows.Forms.Panel();
@@ -228,7 +229,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.txt_SpotifyLog = new System.Windows.Forms.RichTextBox();
             this.btn_ActivateSpotify = new System.Windows.Forms.Button();
-            this.chbx_UseInternalDDRemovalLogic = new System.Windows.Forms.CheckBox();
             this.txt_FilesMissingIssues = new RocksmithToolkitGUI.CueTextBox();
             this.txt_OldPath = new RocksmithToolkitGUI.CueTextBox();
             this.txt_Lyrics = new RocksmithToolkitGUI.CueTextBox();
@@ -994,8 +994,8 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // chbx_Cover
             // 
+            this.chbx_Cover.AutoCheck = false;
             this.chbx_Cover.AutoSize = true;
-            this.chbx_Cover.Enabled = false;
             this.chbx_Cover.Location = new System.Drawing.Point(12, 141);
             this.chbx_Cover.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.chbx_Cover.Name = "chbx_Cover";
@@ -1045,6 +1045,17 @@ namespace RocksmithToolkitGUI.DLCManager
             this.toolTip1.SetToolTip(this.btn_Duplicate, "Duplicate song/CDLC");
             this.btn_Duplicate.UseVisualStyleBackColor = true;
             this.btn_Duplicate.Click += new System.EventHandler(this.btn_Duplicate_Click);
+            // 
+            // chbx_UseInternalDDRemovalLogic
+            // 
+            this.chbx_UseInternalDDRemovalLogic.AutoSize = true;
+            this.chbx_UseInternalDDRemovalLogic.Location = new System.Drawing.Point(224, 36);
+            this.chbx_UseInternalDDRemovalLogic.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.chbx_UseInternalDDRemovalLogic.Name = "chbx_UseInternalDDRemovalLogic";
+            this.chbx_UseInternalDDRemovalLogic.Size = new System.Drawing.Size(28, 27);
+            this.chbx_UseInternalDDRemovalLogic.TabIndex = 337;
+            this.toolTip1.SetToolTip(this.chbx_UseInternalDDRemovalLogic, "Use internal logic to remove the DD");
+            this.chbx_UseInternalDDRemovalLogic.UseVisualStyleBackColor = true;
             // 
             // tabControl
             // 
@@ -1536,8 +1547,8 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // chbx_Bass
             // 
+            this.chbx_Bass.AutoCheck = false;
             this.chbx_Bass.AutoSize = true;
-            this.chbx_Bass.Enabled = false;
             this.chbx_Bass.Location = new System.Drawing.Point(132, 66);
             this.chbx_Bass.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.chbx_Bass.Name = "chbx_Bass";
@@ -1548,8 +1559,8 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // chbx_Lead
             // 
+            this.chbx_Lead.AutoCheck = false;
             this.chbx_Lead.AutoSize = true;
-            this.chbx_Lead.Enabled = false;
             this.chbx_Lead.ForeColor = System.Drawing.SystemColors.MenuHighlight;
             this.chbx_Lead.Location = new System.Drawing.Point(7, 32);
             this.chbx_Lead.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -1557,12 +1568,13 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_Lead.Size = new System.Drawing.Size(92, 29);
             this.chbx_Lead.TabIndex = 74;
             this.chbx_Lead.Text = "Lead";
+            this.toolTip1.SetToolTip(this.chbx_Lead, "Show Lead track availability.");
             this.chbx_Lead.UseVisualStyleBackColor = true;
             // 
             // chbx_Combo
             // 
+            this.chbx_Combo.AutoCheck = false;
             this.chbx_Combo.AutoSize = true;
-            this.chbx_Combo.Enabled = false;
             this.chbx_Combo.Location = new System.Drawing.Point(132, 32);
             this.chbx_Combo.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.chbx_Combo.Name = "chbx_Combo";
@@ -1573,8 +1585,8 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // chbx_Rhythm
             // 
+            this.chbx_Rhythm.AutoCheck = false;
             this.chbx_Rhythm.AutoSize = true;
-            this.chbx_Rhythm.Enabled = false;
             this.chbx_Rhythm.Location = new System.Drawing.Point(7, 66);
             this.chbx_Rhythm.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.chbx_Rhythm.Name = "chbx_Rhythm";
@@ -1640,8 +1652,8 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // chbx_Lyrics
             // 
+            this.chbx_Lyrics.AutoCheck = false;
             this.chbx_Lyrics.AutoSize = true;
-            this.chbx_Lyrics.Enabled = false;
             this.chbx_Lyrics.Location = new System.Drawing.Point(152, 208);
             this.chbx_Lyrics.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.chbx_Lyrics.Name = "chbx_Lyrics";
@@ -1664,8 +1676,8 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // chbx_DD
             // 
+            this.chbx_DD.AutoCheck = false;
             this.chbx_DD.AutoSize = true;
-            this.chbx_DD.Enabled = false;
             this.chbx_DD.Location = new System.Drawing.Point(12, 76);
             this.chbx_DD.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.chbx_DD.Name = "chbx_DD";
@@ -1695,8 +1707,8 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // chbx_Sections
             // 
+            this.chbx_Sections.AutoCheck = false;
             this.chbx_Sections.AutoSize = true;
-            this.chbx_Sections.Enabled = false;
             this.chbx_Sections.Location = new System.Drawing.Point(152, 176);
             this.chbx_Sections.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.chbx_Sections.Name = "chbx_Sections";
@@ -1707,8 +1719,8 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // chbx_Preview
             // 
+            this.chbx_Preview.AutoCheck = false;
             this.chbx_Preview.AutoSize = true;
-            this.chbx_Preview.Enabled = false;
             this.chbx_Preview.Location = new System.Drawing.Point(12, 208);
             this.chbx_Preview.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.chbx_Preview.Name = "chbx_Preview";
@@ -1719,8 +1731,8 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // chbx_Author
             // 
+            this.chbx_Author.AutoCheck = false;
             this.chbx_Author.AutoSize = true;
-            this.chbx_Author.Enabled = false;
             this.chbx_Author.Location = new System.Drawing.Point(12, 108);
             this.chbx_Author.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.chbx_Author.Name = "chbx_Author";
@@ -1731,8 +1743,8 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // chbx_BassDD
             // 
+            this.chbx_BassDD.AutoCheck = false;
             this.chbx_BassDD.AutoSize = true;
-            this.chbx_BassDD.Enabled = false;
             this.chbx_BassDD.Location = new System.Drawing.Point(12, 36);
             this.chbx_BassDD.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.chbx_BassDD.Name = "chbx_BassDD";
@@ -1743,8 +1755,8 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // chbx_Bonus
             // 
+            this.chbx_Bonus.AutoCheck = false;
             this.chbx_Bonus.AutoSize = true;
-            this.chbx_Bonus.Enabled = false;
             this.chbx_Bonus.Location = new System.Drawing.Point(152, 109);
             this.chbx_Bonus.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.chbx_Bonus.Name = "chbx_Bonus";
@@ -2223,7 +2235,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_PreviewEnd.Location = new System.Drawing.Point(339, 71);
             this.txt_PreviewEnd.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.txt_PreviewEnd.Maximum = new decimal(new int[] {
-            60,
+            999,
             0,
             0,
             0});
@@ -3014,17 +3026,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_ActivateSpotify.Text = "Authentificate with Spotify";
             this.btn_ActivateSpotify.UseVisualStyleBackColor = true;
             this.btn_ActivateSpotify.Click += new System.EventHandler(this.btn_ActivateSpotify_Click);
-            // 
-            // chbx_UseInternalDDRemovalLogic
-            // 
-            this.chbx_UseInternalDDRemovalLogic.AutoSize = true;
-            this.chbx_UseInternalDDRemovalLogic.Location = new System.Drawing.Point(224, 36);
-            this.chbx_UseInternalDDRemovalLogic.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.chbx_UseInternalDDRemovalLogic.Name = "chbx_UseInternalDDRemovalLogic";
-            this.chbx_UseInternalDDRemovalLogic.Size = new System.Drawing.Size(28, 27);
-            this.chbx_UseInternalDDRemovalLogic.TabIndex = 337;
-            this.toolTip1.SetToolTip(this.chbx_UseInternalDDRemovalLogic, "Use internal logic to remove the DD");
-            this.chbx_UseInternalDDRemovalLogic.UseVisualStyleBackColor = true;
             // 
             // txt_FilesMissingIssues
             // 

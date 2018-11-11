@@ -203,6 +203,21 @@ add dynamic filter for all tunnings in Arrangements:)
 [-] added use internal logic flag per song
 [x] fixe for packing with arang&tones details (amp and cab settings)
 [x] fix for using internal logic not being selected
+fix dont show lyrics 
+Could not find file 'C:\GitHub\new\0\0_repacked\PS3\CDLC-Godsmack-2018-When_Legends_Rise-00-Someday_ps3.psarc.edat'.DB Open in Design Mode, or Missing, or you need to Download the 32bit Connectivity library @ 
+Could not find file 'C:\GitHub\new\0\0_repacked\PS3\CDLC-Godsmack-2018-When_Legends_Rise-00-Say_My_Name_ps3.psarc.edat'.DB Open in Design Mode, or Missing, or you need to Download the 32bit Connectivity library @ 
+Could not find file 'C:\GitHub\new\0\0_repacked\PS3\CDLC-Interpol-2014-El_Pintor-00-My_Desire_ps3.psarc.edat'.
+Could not find file 'C:\GitHub\new\0\0_repacked\PS3\CDLC-Jimmy_Eat_World-2001-Jimmy_Eat_World-00-The_Middle_ps3.psarc.edat'.DB Open in Design Mode, or Missing, or you need to Download the 32bit Connectivity library @ 
+Could not find file 'C:\GitHub\new\0\0_repacked\PS3\CDLC-Sting-1993-Ten_Summoner's_Tales-00-Heavy_Cloud_No_Rain_[BRLV]_ps3.psarc.edat'.DB Open in Design Mode, or Missing, or you need to Download the 32bit Connectivity library @ 
+Could not find file 'C:\GitHub\new\0\0_repacked\PS3\CDLC-Metallica-2008-Death_Magnetic-00-The_Day_That_Never_Comes_ps3.psarc.edat'.DB Open in Design Mode, or Missing, or you need to Download the 32bit Connectivity library @ 
+Could not find file 'C:\GitHub\new\0\0_repacked\PS3\ORIG-Ghost-2015-Meliora-00-He_Is_ps3.psarc.edat
+add tag timeing in file&song name
+show start time with each track
+show bonus/part/
+fix add sort artist 
+1. finalise duplicates
+2. replace spotify
+3. finalise import library ()
 
 ## done:
 (prev release)

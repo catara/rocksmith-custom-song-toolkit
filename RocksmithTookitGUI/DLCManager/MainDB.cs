@@ -5,6 +5,9 @@ using RocksmithToolkitLib.Extensions;
 //using Newtonsoft.Json;
 using RocksmithToolkitLib.Sng;
 using RocksmithToolkitLib.Sng2014HSL;
+using RocksmithToolkitLib.XML; //For xml read library
+using RocksmithToolkitLib.XmlRepository;
+using RocksmithToTabLib;
 //using RocksmithToolkitGUI.OggConverter;//convert ogg to wem
 using SpotifyAPI.Web; //Base Namespace
 using SpotifyAPI.Web.Auth; //All Authentication-related classes
@@ -15,8 +18,6 @@ using System.Collections.Generic;
 using System.Collections.Specialized;//webparsing
 using System.ComponentModel;
 using System.Data;
-using RocksmithToolkitLib.XML; //For xml read library
-using RocksmithToolkitLib.XmlRepository;
 //using HtmlAgilityPack;
 //bcapi
 using System.Data.OleDb;
@@ -27,6 +28,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net; //4ftp
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -35,8 +37,6 @@ using System.Windows.Forms;
 //using ScrapySharp.Extensions;
 //using ScrapySharp.Html;
 using static RocksmithToolkitGUI.DLCManager.GenericFunctions;
-using RocksmithToTabLib;
-using System.Net.Http;
 
 //yb
 
@@ -45,7 +45,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
     public partial class MainDB : Form
     {
-    //private readonly SpotifyWebBuilder _builder;
+        //private readonly SpotifyWebBuilder _builder;
         public MainDB(string txt_DBFolder, string txt_TempPath, bool updateDB, string txt_RocksmithDLCPath, bool AllowEncript, bool AllowORIGDelete, OleDbConnection cnnb)
         {
             InitializeComponent();
@@ -276,9 +276,13 @@ namespace RocksmithToolkitGUI.DLCManager
                     //DataViewGrid.Rows[0].Selected = true;
                     //row = DataViewGrid.Rows[0];
                     tmpp = "\\CDLC";
-
                 }
             Update_Selected();
+            //var SearchCmd22 = "SELECT FROM Main u WHERE Selected=\"Yes\";
+            //DataSet dsz2 = new DataSet();
+            //dsz2 = SelectFromDB("Main", SearchCmd22, "", cnb);
+            //tst = "Stop gettin Selected... "; timestamp = UpdateLog(timestamp, tst, false, logPath, TempPath, "", "MainDB", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+
             tst = "Stop cheking if the repository of decompressed songs has been moving... "; timestamp = UpdateLog(timestamp, tst, false, logPath, TempPath, "", "MainDB", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
         }
 
@@ -673,9 +677,9 @@ namespace RocksmithToolkitGUI.DLCManager
                     " Rating, ScrollSpeed, Comments, XMLFilePath FROM Arrangements WHERE CDLC_ID=" + txt_ID.Text + " ORDER BY ID DESC;";
                 DataSet ddr = new DataSet(); ddr = SelectFromDB("Arrangements", sel, "", cnb);
                 rec = ddr.Tables.Count > 0 ? ddr.Tables[0].Rows.Count : 0;
-                
+
                 //toolTip10.SetToolTip(chbx_Lead, "");
-                toolTip10.RemoveAll();toolTip11.RemoveAll();toolTip11.RemoveAll();toolTip12.RemoveAll();toolTip14.RemoveAll();
+                toolTip10.RemoveAll(); toolTip11.RemoveAll(); toolTip11.RemoveAll(); toolTip12.RemoveAll(); toolTip14.RemoveAll();
                 if (rec > 0)
                 {
                     for (var j = 0; j <= rec - 1; j++)
@@ -687,18 +691,18 @@ namespace RocksmithToolkitGUI.DLCManager
                         var HasSections = ddr.Tables[0].Rows[j].ItemArray[4].ToString().ToLower().IndexOf("yes") >= 0 ? " with " + ddr.Tables[0].Rows[j].ItemArray[4].ToString().Replace("Yes", "") + " Sections" : "";
                         var MaxDifficulty = ddr.Tables[0].Rows[j].ItemArray[5].ToString().ToLower() != "0" ? ", with Diffculty " + ddr.Tables[0].Rows[j].ItemArray[5].ToString().ToLower() : "";
                         var Tones = ", with tones: " + ddr.Tables[0].Rows[j].ItemArray[6] + ", " + ddr.Tables[0].Rows[j].ItemArray[7] + ", " + ddr.Tables[0].Rows[j].ItemArray[8] + ", " + ddr.Tables[0].Rows[j].ItemArray[9] + ", " + ddr.Tables[0].Rows[j].ItemArray[10];
-                        var Tunings = ddr.Tables[0].Rows[j].ItemArray[11] != null ? ", " + ddr.Tables[0].Rows[j].ItemArray[11]:"";
-                        var TuningPitch = ddr.Tables[0].Rows[j].ItemArray[12].ToString() != null ? (", pitch: " + ddr.Tables[0].Rows[j].ItemArray[12]):"";
-                        var lastConversion = ddr.Tables[0].Rows[j].ItemArray[13].ToString()  != "" ? ", lastconv: " + ddr.Tables[0].Rows[j].ItemArray[13]:"";
-                        var Rating = ddr.Tables[0].Rows[j].ItemArray[14]  != null && ddr.Tables[0].Rows[j].ItemArray[14].ToString() != ""  ? (", rating " + ddr.Tables[0].Rows[j].ItemArray[14].ToString() ):"";
-                        var ScroolSpeed = ddr.Tables[0].Rows[j].ItemArray[15].ToString()  != null ? (", scroolspeed: " + ddr.Tables[0].Rows[j].ItemArray[15]): "";
-                        var Comment = ddr.Tables[0].Rows[j].ItemArray[16] != null && ddr.Tables[0].Rows[j].ItemArray[16].ToString()  != "" ? (", comment: " + ddr.Tables[0].Rows[j].ItemArray[16].ToString()) :"";
-                        var XMLFilePath = ", " + ddr.Tables[0].Rows[j].ItemArray[17].ToString() ;
+                        var Tunings = ddr.Tables[0].Rows[j].ItemArray[11] != null ? ", " + ddr.Tables[0].Rows[j].ItemArray[11] : "";
+                        var TuningPitch = ddr.Tables[0].Rows[j].ItemArray[12].ToString() != null ? (", pitch: " + ddr.Tables[0].Rows[j].ItemArray[12]) : "";
+                        var lastConversion = ddr.Tables[0].Rows[j].ItemArray[13].ToString() != "" ? ", lastconv: " + ddr.Tables[0].Rows[j].ItemArray[13] : "";
+                        var Rating = ddr.Tables[0].Rows[j].ItemArray[14] != null && ddr.Tables[0].Rows[j].ItemArray[14].ToString() != "" ? (", rating " + ddr.Tables[0].Rows[j].ItemArray[14].ToString()) : "";
+                        var ScroolSpeed = ddr.Tables[0].Rows[j].ItemArray[15].ToString() != null ? (", scroolspeed: " + ddr.Tables[0].Rows[j].ItemArray[15]) : "";
+                        var Comment = ddr.Tables[0].Rows[j].ItemArray[16] != null && ddr.Tables[0].Rows[j].ItemArray[16].ToString() != "" ? (", comment: " + ddr.Tables[0].Rows[j].ItemArray[16].ToString()) : "";
+                        var XMLFilePath = ", " + ddr.Tables[0].Rows[j].ItemArray[17].ToString();
 
                         // Set up the ToolTip text for the Button and Checkbox.
-                        var txtt = Start_Time + Bonus + Part + HasSections + MaxDifficulty + Tones + Tunings+ TuningPitch + lastConversion + Rating + ScroolSpeed + Comment;
+                        var txtt = Start_Time + Bonus + Part + HasSections + MaxDifficulty + Tones + Tunings + TuningPitch + lastConversion + Rating + ScroolSpeed + Comment;
                         txtt = txtt.Replace(", , ", ", ").Replace(", , ", ", ").Replace(", , ", ", ").Replace(", , ", ", ");
-                        if (Arrangement_Name == "0") toolTip10.SetToolTip(chbx_Lead, toolTip10.GetToolTip(chbx_Lead)+ txtt);
+                        if (Arrangement_Name == "0") toolTip10.SetToolTip(chbx_Lead, toolTip10.GetToolTip(chbx_Lead) + txtt);
                         else if (Arrangement_Name == "1") toolTip11.SetToolTip(chbx_Rhythm, toolTip11.GetToolTip(chbx_Rhythm) + txtt);
                         //else if (Arrangement_Name == "2") toolTip10.SetToolTip(chbx_Lead, Start_Time);
                         else if (Arrangement_Name == "3") toolTip12.SetToolTip(chbx_Bass, toolTip12.GetToolTip(chbx_Bass) + txtt);
@@ -1200,6 +1204,8 @@ namespace RocksmithToolkitGUI.DLCManager
 
             var noOfSelRec = ""; if (dsz2.Tables.Count > 0) if (dsz2.Tables[0].Rows.Count > 0) noOfSelRec = dsz2.Tables[0].Rows[0].ItemArray[0].ToString();
             lbl_NoRec.Text = noOfSelRec.ToString() + "/" + noOfRec.ToString() + " songs.";
+
+            txt_NoOfSplits.Text = Math.Ceiling(decimal.Parse(noOfRec.ToString()) / 5).ToString();
             tst = "Exitin updatin Selected... "; timestamp = UpdateLog(timestamp, tst, false, logPath, TempPath, "", "MainDB", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
         }
 
@@ -5344,7 +5350,6 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private async Task ActivateSpotify_ClickAsync()
         {
-            var status = "NOK";
             //try
             //{
             //    Ping myPing = new Ping();
@@ -5457,8 +5462,6 @@ namespace RocksmithToolkitGUI.DLCManager
 
             SpotifyWebBuilder _builder;
             _builder = new SpotifyWebBuilder();
-            bool UseAuth = true;
-            SpotifyAPI.ProxyConfig proxyConfig = null;
 
             //WebClient = new SpotifyWebClient(proxyConfig)
             ////_hspotify = new SpotifyWebClient(proxyConfig)
@@ -5472,7 +5475,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //};
         }
 
-         void SpotifyMain()
+        void SpotifyMain()
         {
             _clientId = string.IsNullOrEmpty(_clientId)
                 ? Environment.GetEnvironmentVariable("SPOTIFY_CLIENT_ID")
@@ -6376,6 +6379,15 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             var cmd1 = "UPDATE Main SET Split4Pack = \"\"";
             DataSet dgt = UpdateDB("Main", cmd1 + ";", cnb);
+
+            var sel = "a";
+            DataSet dct = SelectFromDB("Main", sel + ";", ConfigRepository.Instance()["dlcm_DBFolder"], cnb);
+            var noOfRecs =  dct.Tables.Count > 0 ? (dct.Tables[0].Rows[0].ItemArray[0].ToString()==""? 0:int.Parse(dct.Tables[0].Rows[0].ItemArray[0].ToString())) : 0;
+            for (var j = 1; j <= noOfRecs; j++)
+            {
+                var dest = AppWD.Substring(0, AppWD.Replace("\\DLCManager\\external_tools", "").LastIndexOf("\\")) + "\\RK" + ("j" + 1);
+                DeleteDirectory(dest);
+            }
         }
 
         private void btn_AddPackSplit_Click(object sender, EventArgs e)
@@ -6395,21 +6407,48 @@ namespace RocksmithToolkitGUI.DLCManager
             var c = sel.Length;
             var l = sel.Substring(t, c - t);
 
-            sel = "SELECT top " + txt_NoOfSplits.Value + " ID FROM (SELECT ID,Split4Pack " + l.Replace(";", "") + ") WHERE Split4Pack= \"\"";
-
             var j = 0;
             //var tt = Math.Ceiling(noOfRecs / txt_NoOfSplits.Value);
-            for (j = 0; j < Math.Ceiling(noOfRecs / txt_NoOfSplits.Value); j++)
+            for (j = 1; j < Math.Ceiling(noOfRecs / txt_NoOfSplits.Value) + 1; j++)
             {
+                sel = "SELECT top " + txt_NoOfSplits.Value + " ID FROM (SELECT ID,Split4Pack " + l.Replace(";", "") + ") WHERE Split4Pack= \"\"";
                 var cmd2 = "UPDATE Main SET Split4Pack = \"" + j + "\" WHERE ID in (" + sel + ")";
                 DataSet dbt = UpdateDB("Main", cmd2 + ";", cnb);
+                //var dest=AppWD.Replace("", "") + "\\RK" + (j + 1);
+                var dest = AppWD.Substring(0, AppWD.Replace("\\DLCManager\\external_tools", "").LastIndexOf("\\")) + "\\RK" + j;
+                CopyFolder(AppWD + "\\..\\..", dest);
+
+                //change no of order
+                var fxml = File.OpenText(dest + "\\RocksmithToolkitLib.Config.xml");
+                string line;
+                string header = "";
+                //Read and Save Header
+                while ((line = fxml.ReadLine()) != null)
+                {
+                    if (line.Contains("dlcm_Spli4Pack")) header += System.Environment.NewLine + "<Config Key=\"dlcm_Spli4Pack\" Value=\"" + j + "\" />";
+                    else header += line + System.Environment.NewLine;
+                }
+                fxml.Close();
+                File.WriteAllText(dest + "\\RocksmithToolkitLib.Config.xml", header);
+
+                var xx = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, dest + "\\RocksmithToolkitGUI.exe");
+                try
+                {
+                    Process process = Process.Start(@xx);
+                }
+                catch (Exception ex)
+                {
+                    var tsst = "Error ..." + ex; UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_LogPath"], ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
+                    MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Can not open External tool for phase beats and section fixes ! " + xx);
+                }
             }
 
             Populate(ref databox, ref Main);
             //DataViewGrid.EditingControlShowing += DataGridView1_EditingControlShowing;
             databox.Refresh();
             Update_Selected();
-            MessageBox.Show(j.ToString() + " packs of songs have been created/marked.");
+            MessageBox.Show((j - 1).ToString() + " packs of songs have been created/marked.");
         }
 
         private void chbx_PS3HAN_CheckedChanged(object sender, EventArgs e)

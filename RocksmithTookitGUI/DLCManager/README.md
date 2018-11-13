@@ -211,9 +211,9 @@ Could not find file 'C:\GitHub\new\0\0_repacked\PS3\CDLC-Jimmy_Eat_World-2001-Ji
 Could not find file 'C:\GitHub\new\0\0_repacked\PS3\CDLC-Sting-1993-Ten_Summoner's_Tales-00-Heavy_Cloud_No_Rain_[BRLV]_ps3.psarc.edat'.DB Open in Design Mode, or Missing, or you need to Download the 32bit Connectivity library @ 
 Could not find file 'C:\GitHub\new\0\0_repacked\PS3\CDLC-Metallica-2008-Death_Magnetic-00-The_Day_That_Never_Comes_ps3.psarc.edat'.DB Open in Design Mode, or Missing, or you need to Download the 32bit Connectivity library @ 
 Could not find file 'C:\GitHub\new\0\0_repacked\PS3\ORIG-Ghost-2015-Meliora-00-He_Is_ps3.psarc.edat
-add tag timeing in file&song name
+[x] add tag timeing in file&song name
 show start time with each track
-show bonus/part/
+[x] show bonus/part/
 fix add sort artist 
 1. finalise duplicates
 2. replace spotify

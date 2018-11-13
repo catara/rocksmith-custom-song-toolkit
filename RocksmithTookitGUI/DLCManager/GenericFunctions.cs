@@ -18,7 +18,6 @@ using RocksmithToolkitLib.XmlRepository;
 //using SpotifyAPI.Web.Models; //Models for the JSON-responses
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
 using System.Data.OleDb;
@@ -200,15 +199,6 @@ namespace RocksmithToolkitGUI.DLCManager
                     PingOptions pingOptions = new PingOptions();
                     PingReply reply = myPing.Send(host, timeout, buffer, pingOptions);
                     status = (reply.Status == IPStatus.Success) ? "OK" : "NOK";
-
-                    //WebAPIFactory webApiFactory = new WebAPIFactory(
-                    //    "http://localhost",
-                    //    8000,
-                    //    "34392dbf46d04a94b778de26f2324472 ",
-                    //    Scope.UserReadPrivate | Scope.UserReadEmail | Scope.PlaylistReadPrivate | Scope.UserLibraryRead |
-                    //    Scope.UserReadPrivate | Scope.UserFollowRead | Scope.UserReadBirthdate | Scope.UserTopRead | Scope.PlaylistReadCollaborative |
-                    //    Scope.UserReadRecentlyPlayed | Scope.UserReadPlaybackState | Scope.UserModifyPlaybackState);
-                    var tsst = "";
                     //if (status == "OK")
                     //    try
                     //    {
@@ -3326,7 +3316,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                 if (info.Arrangements.Capacity < norec)
                                     data.Arrangements.Add(new RocksmithToolkitLib.DLCPackage.Arrangement
                                     {
-                                        Name = RocksmithToolkitLib.Sng.ArrangementName.Vocals,
+                                        ArrangementName = RocksmithToolkitLib.Sng.ArrangementName.Vocals,
                                         ArrangementType = ArrangementType.Vocal,
                                         ScrollSpeed = 20,
 
@@ -3347,7 +3337,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                     // Add Vocal Arrangement
                                     data.Arrangements.Add(new Arrangement
                                     {
-                                        Name = ArrangementName.Vocals,
+                                        ArrangementName = ArrangementName.Vocals,
                                         ArrangementType = ArrangementType.Vocal,
                                         ScrollSpeed = 20,
                                         //SongXml = new SongXML { File = xmlFile },
@@ -3366,7 +3356,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                     sds = ds.Tables[0].Rows[n].ItemArray[1].ToString();
                                     //data.Arrangements[n].Name = ArrangementName.Vocals;
                                     //data.Arrangements[n].Name = ds.Tables[0].Rows[n].ItemArray[1].ToString() == "Bass" ? RocksmithToolkitLib.Sng.ArrangementName.Bass : ds.Tables[0].Rows[n].ItemArray[1].ToString() == "Lead" ? RocksmithToolkitLib.Sng.ArrangementName.Lead : ds.Tables[0].Rows[n].ItemArray[1].ToString() == "Vocals" ? RocksmithToolkitLib.Sng.ArrangementName.Vocals : ds.Tables[0].Rows[n].ItemArray[1].ToString() == "Rhythm" ? RocksmithToolkitLib.Sng.ArrangementName.Rhythm : ds.Tables[0].Rows[n].ItemArray[12].ToString() == "ShowLights" ? RocksmithToolkitLib.Sng.ArrangementName.ShowLights : RocksmithToolkitLib.Sng.ArrangementName.Combo;
-                                    data.Arrangements[n].Name = (sds == "3" ? ArrangementName.Bass : (sds == "0" ? ArrangementName.Lead : (sds == "4" ? ArrangementName.Vocals : (sds == "1" ? ArrangementName.Rhythm : (sds == "6" ? ArrangementName.ShowLights : ArrangementName.Combo)))));
+                                    data.Arrangements[n].ArrangementName = (sds == "3" ? ArrangementName.Bass : (sds == "0" ? ArrangementName.Lead : (sds == "4" ? ArrangementName.Vocals : (sds == "1" ? ArrangementName.Rhythm : (sds == "6" ? ArrangementName.ShowLights : ArrangementName.Combo)))));
                                     data.Arrangements[n].BonusArr = ds.Tables[0].Rows[n].ItemArray[3].ToString().ToLower() == "true" ? true : false;
                                     sds = ds.Tables[0].Rows[n].ItemArray[4].ToString();
                                     data.Arrangements[n].SongFile = new SongFile { File = ds.Tables[0].Rows[n].ItemArray[4].ToString() == "" ? ds.Tables[0].Rows[n].ItemArray[5].ToString().Replace(".xml", ".json") : ds.Tables[0].Rows[n].ItemArray[4].ToString() }; // if (File.Exists(sds))

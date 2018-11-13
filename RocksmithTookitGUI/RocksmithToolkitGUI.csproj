@@ -224,6 +224,7 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="DLCManager\external_tools\eof1.8RC12\.DS_Store" />
     <None Include="DLCManager\external_tools\eof1.8RC12\memwatch.log">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -2302,6 +2303,7 @@
     <Content Include="DLCManager\external_tools\bpr_v0.3\bpr.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="DLCManager\external_tools\eof1.8RC12\clone_hero.panel.txt" />
     <Content Include="DLCManager\external_tools\eof1.8RC12\temp\image10.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

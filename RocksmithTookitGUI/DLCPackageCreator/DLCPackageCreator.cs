@@ -1698,7 +1698,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             }
 
             // TODO: monitor this change
-            var illegalRepresent = packageData.Arrangements.Any(ar => ar.Represent && ar.BonusArr);
+            var invalidRepresent = packageData.Arrangements.Any(ar => ar.Represent && ar.BonusArr);
             var hasRepresent = packageData.Arrangements.Any(ar => ar.Represent == true);
 
             // TODO: confirm before releasing
@@ -1739,9 +1739,9 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             //    }
             //}
 
-            if (illegalRepresent && !hasRepresent)
+            if (invalidRepresent && !hasRepresent)
             {
-                var diaMsg = "Illegal Arrangement Default/Bonus/Alternate Conditon ..." + Environment.NewLine + Environment.NewLine +
+                var diaMsg = "Invalid Arrangement Default/Bonus/Alternate Conditon ..." + Environment.NewLine + Environment.NewLine +
                              "Reauthor using EOF, or open each arrangement seperately" + Environment.NewLine +
                              "using toolkit Edit Arrangement and make necessary changes.  ";
                 if (DialogResult.No == BetterDialog2.ShowDialog(diaMsg, "<WARNING> Arrangement Represent", null, "Ignore", "Abort", Bitmap.FromHicon(SystemIcons.Warning.Handle), "Warning", 150, 150))

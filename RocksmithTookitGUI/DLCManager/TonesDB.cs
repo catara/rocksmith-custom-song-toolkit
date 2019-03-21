@@ -312,7 +312,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 ////Read Tones
                 var nrc = 0;
                 DataSet dtc = new DataSet(); dtc = SelectFromDB("Tones_GearList", "SELECT Gear_Name FROM Tones_GearList WHERE CDLC_ID=" + txt_ID.Text + ";", "", cnb);
-                nrc = dtc.Tables[0].Rows.Count; var TID = "";
+                nrc = dtc.Tables[0].Rows.Count; /*var TID = "";*/
                 if (nrc > 0)
                 {
                     for (int k = cbx_Gear_Name.Items.Count - 1; k >= 0; --k) cbx_Gear_Name.Items.RemoveAt(k);
@@ -910,7 +910,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 ////Read Tones
                 var nrc = 0;
                 DataSet dtc = new DataSet(); dtc = SelectFromDB("Tones_GearList", "SELECT Gear_Name FROM Tones_GearList WHERE CDLC_ID=" + files[i].ID + ";", "", cnb);
-                nrc = dtc.Tables[0].Rows.Count; var TID = "";
+                nrc = dtc.Tables[0].Rows.Count; /*var TID = "";*/
                 if (nrc > 0)
                 {
                     for (int k = 0; k < nrc; k++)

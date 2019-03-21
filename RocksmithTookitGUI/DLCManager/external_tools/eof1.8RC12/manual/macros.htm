@@ -241,7 +241,11 @@ See the detailed explanation earlier in this document for instructions on how to
 </tr>
 <tr>
 <td>%IF_NOTE_IS_SELECTED%</td>
-<td>Evaluates as true if a note is currently selected by mouse click.  Using select functions does not count towards this condition.</td>
+<td>Evaluates as true if a note is specifically selected by mouse click.  Using select functions does not count towards this condition.</td>
+</tr>
+<tr>
+<td>%IF_SELECTED_NOTES%</td>
+<td>Evaluates as true if at least one note is currently selected by any means (even without clicking on notes with the mouse).</td>
 </tr>
 <tr>
 <td>%IF_HOVER_NOTE%</td>
@@ -312,6 +316,14 @@ See the detailed explanation earlier in this document for instructions on how to
 <td>Evaluates as true if the active difficulty is "Expert" by Rock Band standards ("Amazing" in Frets on Fire).</td>
 </tr>
 <tr>
+<td>%IF_ACTIVE_DIFFICULTY_HAS_EMPTY_SOLO%</td>
+<td>Evaluates as true if the active difficulty has any solo sections that don't have at least one note, even if the solos have notes in other difficulties.  This condition may prevent the chart from working in Clone Hero.</td>
+</tr>
+<tr>
+<td>%IF_ANY_SOLOS_CLOSER_THAN_1_SECOND%</td>
+<td>Evaluates as true if any solo sections begin less than one second after an earlier one.  This condition may prevent the solo bonus from displaying long enough to be visible in Clone Hero.</td>
+</tr>
+<tr>
 <td>%IF_TRACK_DIFF_HAS_NOTES_WITH_GEM_COUNT_[NUMBER]%</td>
 <td>Evaluates as true if the active track difficulty has at least one note with the specified [NUMBER] of gems.  Specify 0 to check for open strum notes.  This can be used to quality check a chart by looking for the presence of 4 or 5 lane chords.</td>
 </tr>
@@ -332,6 +344,10 @@ See the detailed explanation earlier in this document for instructions on how to
 <td>Evaluates as true if the active track does not have any star power sections.</td>
 </tr>
 <tr>
+<td>%IF_TRACK_HAS_NO_SLIDERS%</td>
+<td>Evaluates as true if the active track does not have any slider sections.</td>
+</tr>
+<tr>
 <td>%IF_NO_LOADING_TEXT%</td>
 <td>Evaluates as true if the project has no loading text defined or the text that is defined is just whitespace.</td>
 </tr>
@@ -342,6 +358,35 @@ See the detailed explanation earlier in this document for instructions on how to
 <tr>
 <td>%IF_NOTE_GAP_IS_IN_MS%</td>
 <td>Evaluates as true if EOF's configured <a href="configure.htm#notegap">Min. note distance</a> setting (analogous to the note gap setting in Moonscraper) in File>Preferences>Preferences is set to # ms instead of a 1/# beat or measure interval as is typically recommended for Clone Hero authoring.</td>
+</tr>
+<tr>
+<td>%IF_CH_SP_TS_MISSING%</td>
+<td>Evaluates as true if star power scoring information can't be determined due to the first beat marker having no time signature.</td>
+</tr>
+<tr>
+<td>%IF_CH_SP_TS_DEFINED%</td>
+<td>Evaluates as true if the first beat marker has a defined time signature.</td>
+</tr>
+<tr>
+<tr>
+<td>%IF_CH_SP_PATH_VALID%</td>
+<td>Evaluates as true if a star power path is defined (either automatically with "Track>Find optimal CH star power path" or manually with "Note>Clone Hero>SP deploy") and it is valid.</td>
+</tr>
+<tr>
+<td>%IF_CH_SP_DEPLOYMENTS_MISSING%</td>
+<td>Evaluates as true if no star power deployments are defined.</td>
+</tr>
+<tr>
+<td>%IF_CH_SP_PATH_INVALID%</td>
+<td>Evaluates as true if one or more star power deployments are defined but it is considered an invalid star power path, such as if a deployment is designated without sufficient star power, deploying while star power is already deployed, etc.</td>
+</tr>
+<tr>
+<td>%IF_CH_SP_STATS_AVAILABLE%</td>
+<td>Evaluates as true if star power related information is available (the star power pathing logic calculated a score) to be displayed by applicable expansion macros.</td>
+</tr>
+<tr>
+<td>%IF_GRID_SNAP_ENABLED%</td>
+<td>Evaluates as true as long as grid snap isn't set to off.</td>
 </tr>
 </tbody>
 </table><br>
@@ -536,8 +581,16 @@ These macros are "expanded" into (replaced with) appropriate text which is print
 <td>Prints statistics about the number of notes in the active track's star power sections:  The minimum number among all star power sections, the maximum number among all star power sections and the mean number (the total number of star power notes divided by the number of star power sections).  If there aren't any, "None" is printed.</td>
 </tr>
 <tr>
+<td>%TRACK_SLIDER_COUNT%</td>
+<td>Prints the number of slider sections in the active track.  If there aren't any, "None" is printed.</td>
+</tr>
+<tr>
 <td>%TRACK_SLIDER_NOTE_COUNT%</td>
 <td>Prints the number of slider notes in the active track, and the percentage of the track's total note count that represents.  If there aren't any, "None" is printed.</td>
+</tr>
+<tr>
+<td>%TRACK_SLIDER_NOTE_STATS%</td>
+<td>Prints statistics about the number of notes in the active track's slider sections:  The minimum number among all slider sections, the maximum number among all slider sections and the mean number (the total number of slider notes divided by the number of slider sections).  If there aren't any, "None" is printed.</td>
 </tr>
 
 <tr>
@@ -622,6 +675,10 @@ These macros are "expanded" into (replaced with) appropriate text which is print
 <tr>
 <td>%SELECTED_NOTE_VALUE%</td>
 <td>Prints the internal note value of the selected note.  If the active track is the vocal track, this value is the pitch of the selected lyric.  If the active track is not a vocal track, this is a bitmask defining which lanes the note uses.  If no note is selected, "None" is printed.</td>
+</tr>
+<tr>
+<td>%SELECTED_NOTE_FLAGS%</td>
+<td>Prints the internal flags value of the selected note/lyric.  If no note/lyric is selected, "None" is printed.</td>
 </tr>
 <tr>
 <td>%SELECTED_LYRIC_TONE_NAME%</td>
@@ -715,6 +772,10 @@ These macros are "expanded" into (replaced with) appropriate text which is print
 <td>%COUNT_LYRICS_WITH_PITCH_NUMBER_[PITCH]%</td>
 <td>Prints the number of lyrics with the specified pitch.  If the vocal track is not active, "None" is printed.</td>
 </tr>
+<tr>
+<td>%TRACK_COUNT_HIGHLIGHTED_NOTES%</td>
+<td>Prints the number of notes/lyrics in the active track that are dynamically (ie. with "Song>Highlight non grid snapped notes") or statically (ie. with Note>Highlight>On or by various functions) highlighted.</td>
+</tr>
 
 <tr>
 <td align="center"><b><u>Pro guitar information</u></b></td>
@@ -730,6 +791,42 @@ These macros are "expanded" into (replaced with) appropriate text which is print
 <tr>
 <td>%FRET_VALUE_SHORTCUTS_SETTING%</td>
 <td>Prints a string indicating which strings will be affected by the keyboard functions to set/increment/decrement the fret number or toggle the ghost status of selected pro guitar notes.</td>
+</tr>
+
+<tr>
+<td align="center"><b><u>Star power path information</u></b></td>
+</tr>
+<tr>
+<td>%CH_SP_PATH_SCORE%</td>
+<td>If a valid star power path is defined, prints the estimated score for the solution in Clone Hero.  If no star power path is defined, or the defined path is invalid, "None" is printed.</td>
+</tr>
+<tr>
+<td>%CH_SP_PATH_BASE_SCORE%</td>
+<td>If a valid star power path is defined, prints the base score (point values of gems and sustains without any bonuses, used to calculate the number of awarded stars) for the solution in Clone Hero.  If no star power path is defined, or the defined path is invalid, "None" is printed.</td>
+</tr>
+<tr>
+<td>%CH_SP_PATH_AVG_MULTIPLIER%</td>
+<td>If a valid star power path is defined, prints the average multiplier (the estimated in-game score (minus solo bonuses) divided by the base score) used to determine the number of awarded stars) for the solution in Clone Hero.  If no star power path is defined, or the defined path is invalid, "None" is printed.</td>
+</tr>
+<tr>
+<td>%CH_SP_PATH_STARS%</td>
+<td>If a valid star power path is defined, prints the number of stars (ie. as "1 star" or "7 stars") estimated for this star power path in Clone Hero.  If no star power path is defined, or the defined path is invalid, "None" is printed.</td>
+</tr>
+<tr>
+<td>%CH_SP_PATH_DEPLOYMENT_NOTES%</td>
+<td>If a valid star power path is defined, prints the estimated maximum number of notes that can be played during the star power deployments, and the percentage of the track difficulty's total note count that represents.  If no star power path is defined, or the defined path is invalid, "None" is printed.</td>
+</tr>
+<tr>
+<td>%CH_SP_SEEK_SP_PATH_STATUS%</td>
+<td>Prints whether or not the seek position is within the estimated scope of any defined star power deployment, and if so, that deployments start and stop timestamps.</td>
+</tr>
+<tr>
+<td>%CH_SP_MAX_DEPLOYMENT_COUNT_AND_RATIO%</td>
+<td>Prints the active track difficulty's maximum number of star power deployments and the ratio of deployments to notes, based on the currently defined star power phrases.</td>
+</tr>
+<tr>
+<td>%CH_SP_METER_AFTER_LAST_NOTE_HIT%</td>
+<td>Prints the star power meter level in effect after hitting the note immediately at/before the seek position.</td>
 </tr>
 
 <tr>
@@ -810,6 +907,30 @@ These macros are "expanded" into (replaced with) appropriate text which is print
 <tr>
 <td>%ACTIVE_DIFFICULTY_NAME%</td>
 <td>Prints the name of the active difficulty, taking the "Use FoF difficulty naming" preference into account.</td>
+</tr>
+<tr>
+<td>%3D_MAX_DEPTH%</td>
+<td>Prints the current maximum depth of the 3D preview's camera (ie. how far back the displayed track goes), as controlled by ALT+numpad minus, ALT+numpad plus.</td>
+</tr>
+<tr>
+<td>%MOUSE_X%</td>
+<td>Prints the mouse X coordinate, as well as the relative X coordinate and name of whichever sub-window the mouse is in.</td>
+</tr>
+<tr>
+<td>%MOUSE_Y%</td>
+<td>Prints the mouse Y coordinate, as well as the relative Y coordinate and name of whichever sub-window the mouse is in.</td>
+</tr>
+<tr>
+<td>%EOF_HOVER_PIECE%</td>
+<td>Prints the lane number the mouse is currently hovered over, or -1 if the mouse isn't hovered directly over any lane.</td>
+</tr>
+<tr>
+<td>%EOF_FPS%</td>
+<td>Prints the number of frames per second rendered in the main loop of EOF (ie. doesn't count benchmarking, while dialogs are open, etc).</td>
+</tr>
+<tr>
+<td>%GRID_SNAP_SEEK_POS_LENGTH_NPS%</td>
+<td>Prints the length and effective note per second rate of the current grid snap length at the current seek position.  If no grid snap is enabled, "None" is printed.</td>
 </tr>
 </tbody>
 </table>

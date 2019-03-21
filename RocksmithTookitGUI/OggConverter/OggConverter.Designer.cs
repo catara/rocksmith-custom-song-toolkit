@@ -88,7 +88,7 @@
             this.groupBox1.Size = new System.Drawing.Size(477, 45);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Input OGG (Wwise 2017.1.x) file or directory to fix header:";
+            this.groupBox1.Text = "Input OGG (Wwise 2018.1.x) file or directory to fix header:";
             // 
             // groupBox2
             // 
@@ -100,7 +100,7 @@
             this.groupBox2.Size = new System.Drawing.Size(477, 47);
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Input OGG (Wwise 2017) or WEM (Wwise 2017) file or directory to convert to Vobis " +
+            this.groupBox2.Text = "Input OGG or WEM (Wwise 2018) file or directory to convert to Vobis " +
                 "OGG:";
             // 
             // btnWwise2Ogg

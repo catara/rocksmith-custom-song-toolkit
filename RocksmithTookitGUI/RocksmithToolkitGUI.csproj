@@ -62,40 +62,35 @@
     <NoWin32Manifest>false</NoWin32Manifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CFSM.AudioTools, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>DLCManager\external_tools\remastered\bin\Release\CFSM.AudioTools.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="FSharp.Core, Version=4.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\FSharp.Core.4.5.2\lib\net45\FSharp.Core.dll</HintPath>
+    <Reference Include="FSharp.Core, Version=4.6.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\FSharp.Core.4.6.2\lib\net45\FSharp.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Google.Apis, Version=1.36.1.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
-      <HintPath>..\packages\Google.Apis.1.36.1\lib\net45\Google.Apis.dll</HintPath>
+    <Reference Include="Google.Apis, Version=1.38.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.1.38.0\lib\net45\Google.Apis.dll</HintPath>
     </Reference>
-    <Reference Include="Google.Apis.Auth, Version=1.36.1.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
-      <HintPath>..\packages\Google.Apis.Auth.1.36.1\lib\net45\Google.Apis.Auth.dll</HintPath>
+    <Reference Include="Google.Apis.Auth, Version=1.38.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Auth.1.38.0\lib\net45\Google.Apis.Auth.dll</HintPath>
     </Reference>
-    <Reference Include="Google.Apis.Auth.PlatformServices, Version=1.36.1.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
-      <HintPath>..\packages\Google.Apis.Auth.1.36.1\lib\net45\Google.Apis.Auth.PlatformServices.dll</HintPath>
+    <Reference Include="Google.Apis.Auth.PlatformServices, Version=1.38.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Auth.1.38.0\lib\net45\Google.Apis.Auth.PlatformServices.dll</HintPath>
     </Reference>
-    <Reference Include="Google.Apis.Core, Version=1.36.1.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
-      <HintPath>..\packages\Google.Apis.Core.1.36.1\lib\net45\Google.Apis.Core.dll</HintPath>
+    <Reference Include="Google.Apis.Core, Version=1.38.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Core.1.38.0\lib\net45\Google.Apis.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Google.Apis.PlatformServices, Version=1.36.1.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
-      <HintPath>..\packages\Google.Apis.1.36.1\lib\net45\Google.Apis.PlatformServices.dll</HintPath>
+    <Reference Include="Google.Apis.PlatformServices, Version=1.38.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.1.38.0\lib\net45\Google.Apis.PlatformServices.dll</HintPath>
     </Reference>
-    <Reference Include="Google.Apis.YouTube.v3, Version=1.36.1.1226, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
-      <HintPath>..\packages\Google.Apis.YouTube.v3.1.36.1.1226\lib\net45\Google.Apis.YouTube.v3.dll</HintPath>
+    <Reference Include="Google.Apis.YouTube.v3, Version=1.38.0.1488, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.YouTube.v3.1.38.0.1488\lib\net45\Google.Apis.YouTube.v3.dll</HintPath>
     </Reference>
-    <Reference Include="HtmlAgilityPack, Version=1.8.10.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
-      <HintPath>..\packages\HtmlAgilityPack.1.8.10\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    <Reference Include="HtmlAgilityPack, Version=1.11.0.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.11.0\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -110,7 +105,7 @@
       <HintPath>..\lib\NDesk\NDesk.Options.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.1-beta1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NLog">
       <HintPath>..\lib\NLog\NLog.dll</HintPath>
@@ -125,6 +120,9 @@
     <Reference Include="PSTaskDialog">
       <HintPath>..\lib\PSTaskDialog\PSTaskDialog.dll</HintPath>
     </Reference>
+    <Reference Include="RocksmithToTabLib">
+      <HintPath>..\lib\RocksmithToTabLib\bin\Release\RocksmithToTabLib.dll</HintPath>
+    </Reference>
     <Reference Include="ScrapySharp, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ScrapySharp.3.0.0\lib\netstandard2.0\ScrapySharp.dll</HintPath>
     </Reference>
@@ -135,10 +133,10 @@
       <HintPath>..\lib\SharpConfig\SharpConfig.dll</HintPath>
     </Reference>
     <Reference Include="SpotifyAPI.Web, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\SpotifyAPI.Web.3.1.0\lib\net46\SpotifyAPI.Web.dll</HintPath>
+      <HintPath>..\packages\SpotifyAPI.Web.3.1.2\lib\net46\SpotifyAPI.Web.dll</HintPath>
     </Reference>
     <Reference Include="SpotifyAPI.Web.Auth, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\SpotifyAPI.Web.Auth.3.1.0\lib\net46\SpotifyAPI.Web.Auth.dll</HintPath>
+      <HintPath>..\packages\SpotifyAPI.Web.Auth.3.1.2\lib\net46\SpotifyAPI.Web.Auth.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -159,11 +157,11 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="Unosquare.Labs.EmbedIO, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\EmbedIO.2.0.0-rc4\lib\net47\Unosquare.Labs.EmbedIO.dll</HintPath>
+    <Reference Include="Unosquare.Labs.EmbedIO, Version=2.3.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\EmbedIO.2.3.1\lib\net462\Unosquare.Labs.EmbedIO.dll</HintPath>
     </Reference>
-    <Reference Include="Unosquare.Swan.Lite, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Unosquare.Swan.Lite.0.35.0\lib\net452\Unosquare.Swan.Lite.dll</HintPath>
+    <Reference Include="Unosquare.Swan.Lite, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unosquare.Swan.Lite.1.1.1\lib\net462\Unosquare.Swan.Lite.dll</HintPath>
     </Reference>
     <Reference Include="X360">
       <HintPath>..\lib\X360\X360.dll</HintPath>
@@ -182,6 +180,11 @@
     </Compile>
     <Compile Include="AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AccessDBDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AccessDBDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="CDLC2Tab\CDLC2Gp5.cs" />
     <Compile Include="Config\ConfigGlobals.cs" />
@@ -221,6 +224,17 @@
     <Compile Include="DLCManager\DuplicatesManagement.Designer.cs">
       <DependentUpon>DuplicatesManagement.cs</DependentUpon>
     </Compile>
+    <None Include="AccessDBDataSet.xsc">
+      <DependentUpon>AccessDBDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="AccessDBDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>AccessDBDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="AccessDBDataSet.xss">
+      <DependentUpon>AccessDBDataSet.xsd</DependentUpon>
+    </None>
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
@@ -639,12 +653,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="DLCManager\external_tools\PKG_Linker_V2.0\bin\settings">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="DLCManager\external_tools\PKG_Linker_V2.0\bin\UniServerZ\.DS_Store">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="DLCManager\external_tools\PKG_Linker_V2.0\bin\UniServerZ\core\.DS_Store">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="DLCManager\external_tools\PKG_Linker_V2.0\bin\UniServerZ\core\apache2\bin\dbmmanage.pl">
@@ -1992,7 +2000,6 @@
     <None Include="DLCManager\external_tools\PS3xploit-resigner-master\idps.hex">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="DLCManager\external_tools\PS3xploit-resigner-master\input\.DS_Store" />
     <None Include="DLCManager\external_tools\PS3xploit-resigner-master\input\act_dat\.gitignore" />
     <None Include="DLCManager\external_tools\PS3xploit-resigner-master\input\act_dat\act.dat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -2001,19 +2008,10 @@
     <None Include="DLCManager\external_tools\PS3xploit-resigner-master\input\idps_hex\idps.hex">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="DLCManager\external_tools\PS3xploit-resigner-master\input\pkgs\.DS_Store">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="DLCManager\external_tools\PS3xploit-resigner-master\input\raps\.gitignore">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="DLCManager\external_tools\PS3xploit-resigner-master\LICENSE">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="DLCManager\external_tools\PS3xploit-resigner-master\output\.DS_Store">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="DLCManager\external_tools\PS3xploit-resigner-master\output\pkgs\.DS_Store">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="DLCManager\external_tools\PS3xploit-resigner-master\output\pkgs\.gitignore" />
@@ -2116,29 +2114,16 @@
     <None Include="DLCManager\external_tools\TrueAncestor_PKG_Repacker_v2.45\data\vsh_curves">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="DLCManager\external_tools\TrueAncestor_PKG_Repacker_v2.45\game\.DS_Store">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="DLCManager\external_tools\TrueAncestor_PKG_Repacker_v2.45\pkg\.DS_Store">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="DLCManager\external_tools\TrueAncestor_PKG_Repacker_v2.45\tmp\BLES01862\PARAM.SFO">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="DLCManager\external_tools\TrueAncestor_PKG_Repacker_v2.45\tmp\BLES01862\PS3LOGO.DAT">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="DLCManager\external_tools\TrueAncestor_PKG_Repacker_v2.45\tmp\BLES01862\USRDIR\.DS_Store" />
-    <None Include="DLCManager\external_tools\TrueAncestor_PKG_Repacker_v2.45\tmp\BLES01862\USRDIR\DLC\.DS_Store">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="DLCManager\external_tools\TrueAncestor_PKG_Repacker_v2.45\tmp\BLUS31182\PARAM.SFO">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="DLCManager\external_tools\TrueAncestor_PKG_Repacker_v2.45\tmp\BLUS31182\PS3LOGO.DAT">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="DLCManager\external_tools\TrueAncestor_PKG_Repacker_v2.45\tmp\BLUS31182\USRDIR\DLC\.DS_Store">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="DLCManager\external_tools\TrueAncestor_PKG_Repacker_v2.45\tool\PARAM.2P">
@@ -2253,13 +2238,37 @@
     <None Include="Resources\pick.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ConsoleApp1\packer.csproj">
+      <Project>{b06bda26-2bf3-4e55-8e04-81eb01242767}</Project>
+      <Name>packer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RocksmithToolkitCLI\artistfolders\artistfolders.csproj">
+      <Project>{e742753f-9dc3-4ab7-b129-dc11eb2302ca}</Project>
+      <Name>artistfolders</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RocksmithToolkitCLI\cdlcconverter\cdlcconverter.csproj">
+      <Project>{3ea40b0c-b63a-4670-bfc6-c6451c15f901}</Project>
+      <Name>cdlcconverter</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RocksmithToolkitCLI\convert2012\convert2012.csproj">
       <Project>{FE4E3BDA-2942-4009-9F42-07ECEF8DE350}</Project>
       <Name>convert2012</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RocksmithToolkitCLI\devtools\devtools.csproj">
+      <Project>{63fb3334-1e7e-42d7-a025-744bc387aad6}</Project>
+      <Name>devtools</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RocksmithToolkitCLI\PackageCreator\packagecreator.csproj">
       <Project>{ED268869-387A-477E-A652-C6E47BE2AC02}</Project>
       <Name>packagecreator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RocksmithToolkitCLI\pcdecrypt\pcdecrypt.csproj">
+      <Project>{9190164b-e755-4c8d-812e-70be8fa286dd}</Project>
+      <Name>pcdecrypt</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RocksmithToolkitCLI\pedalgen\pedalgen.csproj">
+      <Project>{54637c43-e331-443b-b30f-c181a5ca60a4}</Project>
+      <Name>pedalgen</Name>
     </ProjectReference>
     <ProjectReference Include="..\RocksmithToolkitCLI\sng2014\sng2014.csproj">
       <Project>{8FDBC548-DEBF-46D6-A933-33C8D72F33AB}</Project>
@@ -2269,13 +2278,17 @@
       <Project>{3AB6A6D5-B5AE-4319-9B57-2758D13EB042}</Project>
       <Name>sngtotab</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RocksmithToolkitCLI\toneliberator\toneliberator.csproj">
+      <Project>{c8bde9bb-f671-482e-97ab-5472f3c7d319}</Project>
+      <Name>toneliberator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RocksmithToolkitCLI\transferprofile\transferprofile.csproj">
+      <Project>{ce48b5df-398b-47d8-96d6-198566521104}</Project>
+      <Name>transferprofile</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RocksmithToolkitCLI\xml2sng\xml2sng.csproj">
       <Project>{48703F6C-9F98-4534-AB1D-67856A84D806}</Project>
       <Name>xml2sng</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\lib\RocksmithToTabLib\RocksmithToTabLib.csproj">
-      <Project>{A391030A-8289-4B6A-8117-1C7995808AD5}</Project>
-      <Name>RocksmithToTabLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\RocksmithToolkitLib\RocksmithToolkitLib.csproj">
       <Project>{2231C13A-14F6-478A-96D7-D1D3E1094CD6}</Project>
@@ -2304,6 +2317,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="DLCManager\external_tools\eof1.8RC12\clone_hero.panel.txt" />
+    <Content Include="DLCManager\external_tools\eof1.8RC12\grabber.exe" />
+    <Content Include="DLCManager\external_tools\eof1.8RC12\info.panel.txt" />
+    <Content Include="DLCManager\external_tools\eof1.8RC12\manual\macros.htm" />
+    <Content Include="DLCManager\external_tools\eof1.8RC12\resources\readme.txt" />
     <Content Include="DLCManager\external_tools\eof1.8RC12\temp\image10.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -4826,10 +4843,15 @@
     <Folder Include="DLCManager\external_tools\PKG_Linker_V2.0\bin\UniServerZ\db_backup_restore\" />
     <Folder Include="DLCManager\external_tools\PKG_Linker_V2.0\bin\UniServerZ\tmp\" />
     <Folder Include="DLCManager\external_tools\PKG_Linker_V2.0\unsigned\" />
+    <Folder Include="DLCManager\external_tools\PS3xploit-resigner-master\input\pkgs\" />
     <Folder Include="DLCManager\external_tools\TrueAncestor_PKG_Repacker_v2.45\avatar\" />
     <Folder Include="DLCManager\external_tools\TrueAncestor_PKG_Repacker_v2.45\edat\" />
+    <Folder Include="DLCManager\external_tools\TrueAncestor_PKG_Repacker_v2.45\game\" />
+    <Folder Include="DLCManager\external_tools\TrueAncestor_PKG_Repacker_v2.45\pkg\" />
     <Folder Include="DLCManager\external_tools\TrueAncestor_PKG_Repacker_v2.45\raps\" />
     <Folder Include="DLCManager\external_tools\TrueAncestor_PKG_Repacker_v2.45\theme\" />
+    <Folder Include="DLCManager\external_tools\TrueAncestor_PKG_Repacker_v2.45\tmp\BLES01862\USRDIR\DLC\" />
+    <Folder Include="DLCManager\external_tools\TrueAncestor_PKG_Repacker_v2.45\tmp\BLUS31182\USRDIR\DLC\" />
     <Folder Include="DLCManager\external_tools\WinMerge\Languages\" />
     <Folder Include="DLCManager\Temp\" />
   </ItemGroup>

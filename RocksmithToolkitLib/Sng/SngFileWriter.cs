@@ -135,8 +135,8 @@ namespace RocksmithToolkitLib.Sng
                     if (song.Tuning != null)
                         tuning = song.Tuning.ToArray();
                     else
-                        throw new DataException("<ERROR> Arrangement XML contains no tuning element" + Environment.NewLine +
-                                            "The arrangment will be defaulted to Standard E tuning" + Environment.NewLine);
+                        ///throw new DataException("<ERROR> Arrangement XML contains no tuning element" + Environment.NewLine +
+                           ////                 "The arrangment will be defaulted to Standard E tuning" + Environment.NewLine);
 
                     WriteSngFile(song, InstrumentTuningExtensions.GetTuningByOffsets(tuning), arrangementType, outputFile, bitConverter);
                 }

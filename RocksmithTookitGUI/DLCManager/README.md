@@ -1,4 +1,4 @@
-﻿## Rocksmith DLC Library Manager v0.7
+﻿## Rocksmith DLC Library Manager v0.7.1
 *(beta version-unreleased to the masses; branch of CSC)*
 # App Description: MASS Manipulation of Rocksmith DLC Library 
 		e.g. 1. in Rocksmith, in the Library, each song's Album, to contain a personal rating, if it has DD, instr. avail
@@ -57,7 +57,7 @@
 	[ ] save /offer the chance to reorder
 [ ] rename the Options and use the xml code inside the tool (removing the 03 14 35 dependency)
 [ ] ask if you wanna have the packing folder deleted
-[ ] fix/check changing path of library
+[x] fix/check changing path of library
 [ ] add info box with folders sizes
 [ ] if cover was from someone else please compare against that (save old cover)
 [ ] duplicate window reformat not to sent backand forth 1mio variables but on dataset
@@ -150,7 +150,7 @@
 [ ] what does audio mean in name "( audio)"
 [ ] add options to install missing tools (winmerge; pkg linker, reasigner, etc.)
 [ ] update screenshots
-[ ] update wwise to latest 2017.2.xx
+[x] update wwise to latest 2017.2.xx/2018
 [ ] check rape me no bass
 [ ] MAMAS AND PAPASE LEAD and back vocal split
 [ ] is combo lead track in lyrics?
@@ -159,10 +159,33 @@
 [ ] can we have a dupli assement window :) (all 5 dupli what happened if automated)
 [ ] single pack sometimes runs multiple times
 [ ] MAke Sure CHANGIN D THE AUDIO/PREVIEW DOES NOT deletes the old info useful for Duplciation comparison
-[ ] the rover preview issue , file get a weird name
+[ ] the rover preview issue , file gets a weird name
 [ ] consider multitasking DDC style
 report change in the house of flies remove ddd issue
 add dynamic filter for all tunnings in Arrangements:)
+set a proper window default$reactivate tooltip
+not &compound ruin the selection after first execution
+use memory disk for audio operations, access DB, what else?
+[] active accdb compress at CleanDB or adhoc by button (not import)
+take me now baby weird timing in lyric
+add multi select
+"C:\\t\\0\\0_repacked\\PS3\\CDLC-ACDC-1986-Who_Made_Who-00-D_T_"
+too many oggs
+add list of copies
+fix dont show lyrics 
+add tooltip that older newr is incomplete
+dupli author duplis spaces
+delete rk folders as split4pack and minus button
+new tag at pack add older or year
+clean songs w text(duplic..) after _p
+if old is found bbut no entr copy to import and archive
+if old is not found clean record rsaise alarm
+check broken
+CFSM.AudioTools
+PSARC packer refactored, 1:1 to offical compression ratio, but code n…
+1700 songs wo vocals
+find workaround for remote folders
+fix on leave folders
 
 ## WiP:
 (this release)
@@ -201,9 +224,8 @@ add dynamic filter for all tunnings in Arrangements:)
 [x] fix for delete song incl also gearlist
 [-] duplicate remov should clean title also for alt 1 alt 2
 [-] added use internal logic flag per song
-[x] fixe for packing with arang&tones details (amp and cab settings)
+[x] fix for packing with arrang&tones details (amp and cab settings)
 [x] fix for using internal logic not being selected
-fix dont show lyrics 
 Could not find file 'C:\GitHub\new\0\0_repacked\PS3\CDLC-Godsmack-2018-When_Legends_Rise-00-Someday_ps3.psarc.edat'.DB Open in Design Mode, or Missing, or you need to Download the 32bit Connectivity library @ 
 Could not find file 'C:\GitHub\new\0\0_repacked\PS3\CDLC-Godsmack-2018-When_Legends_Rise-00-Say_My_Name_ps3.psarc.edat'.DB Open in Design Mode, or Missing, or you need to Download the 32bit Connectivity library @ 
 Could not find file 'C:\GitHub\new\0\0_repacked\PS3\CDLC-Interpol-2014-El_Pintor-00-My_Desire_ps3.psarc.edat'.
@@ -212,12 +234,48 @@ Could not find file 'C:\GitHub\new\0\0_repacked\PS3\CDLC-Sting-1993-Ten_Summoner
 Could not find file 'C:\GitHub\new\0\0_repacked\PS3\CDLC-Metallica-2008-Death_Magnetic-00-The_Day_That_Never_Comes_ps3.psarc.edat'.DB Open in Design Mode, or Missing, or you need to Download the 32bit Connectivity library @ 
 Could not find file 'C:\GitHub\new\0\0_repacked\PS3\ORIG-Ghost-2015-Meliora-00-He_Is_ps3.psarc.edat
 [x] add tag timeing in file&song name
-show start time with each track
+[x] show start time with each track
 [x] show bonus/part/
-fix add sort artist 
+[x] fix add sort artist 
 1. finalise duplicates
 2. replace spotify
 3. finalise import library ()
+[x] add soundrtrack
+[-] add contextual menu
+[x] clean wrongly timed lyrics
+"Sweet Child O' Mine [BRL newer]"
+[x] Are You In
+[-] why there are tones with zero cdcl_id
+[x] remove time from dupli
+[x] no section (less or equyl w one)
+[x] fix enter to search
+[x] add minutes to somewhere
+[-] unplugged is live
+[-] fix/improve save profile
+[-] auto play as separate process
+[x] autoplay is gray
+[x] old is not gray on no searches
+[x] Added AlbumSort
+[] yb links are not consitently retrieved
+[x] ADD TAG AUTHOR TO other ogg compressing scripts
+[-] bring year and album sort into duplicates
+	what else 
+[x] colour song lenght & ALBUM YEAR
+[x] add log entrie in the right log file 
+[x] 4912 generic windw
+	[x] FixOggwDiffName
+	[x] improve copy safely for non hash simil files to still not be overitten (lots of Metallica_Fade-to-Black_v1_p.psarc same name)
+[x] error ok? not working
+	[x] whispers
+	[x] -Are_You_Gonna_Go_My_Way-00
+	[x] eric clapton
+	[x] judah priest is ps3?paclking
+	[x] Mamas_&_The_Papas,The
+	[x] moving x2
+[-] Black Rebel Motorcycle Club-Spread Your Love
+[x] sync album_sort if sync album
+[x] year diff, albbum sort diff
+[x] log spotify error 
 
 ## done:
 (prev release)

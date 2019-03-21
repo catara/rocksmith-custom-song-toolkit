@@ -38,7 +38,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.picbx_AlbumArtPath = new System.Windows.Forms.PictureBox();
             this.chbx_Save_All = new System.Windows.Forms.CheckBox();
             this.button8 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btn_OpenAccess = new System.Windows.Forms.Button();
             this.txt_AlbumArt_Correction = new RocksmithToolkitGUI.CueTextBox();
             this.txt_Album_Correction = new RocksmithToolkitGUI.CueTextBox();
             this.txt_Artist_Correction = new RocksmithToolkitGUI.CueTextBox();
@@ -56,7 +56,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_AutoSave = new System.Windows.Forms.CheckBox();
             this.btn_Delete = new System.Windows.Forms.Button();
             this.txt_Artist_Short = new RocksmithToolkitGUI.CueTextBox();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btn_GetSpotifyCover = new System.Windows.Forms.Button();
             this.txt_Year_Correction = new RocksmithToolkitGUI.CueTextBox();
             this.chbx_Default_Cover = new System.Windows.Forms.CheckBox();
             this.txt_Album_Short = new RocksmithToolkitGUI.CueTextBox();
@@ -67,10 +67,11 @@ namespace RocksmithToolkitGUI.DLCManager
             this.label2 = new System.Windows.Forms.Label();
             this.btn_CorrectWithSpotify = new System.Windows.Forms.Button();
             this.btn_DeleteAll = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btn_GetSpotifyAll = new System.Windows.Forms.Button();
             this.btn_CheckOnline = new System.Windows.Forms.Button();
             this.cbx_Groups = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.btn_ApplyCurrent = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.databox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPath)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pxbx_SavedSpotify)).BeginInit();
@@ -140,16 +141,16 @@ namespace RocksmithToolkitGUI.DLCManager
             this.button8.UseVisualStyleBackColor = true;
             this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
-            // button3
+            // btn_OpenAccess
             // 
-            this.button3.Location = new System.Drawing.Point(2206, 15);
-            this.button3.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(156, 90);
-            this.button3.TabIndex = 122;
-            this.button3.Text = "Open DB in M$ Access";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button1_Click);
+            this.btn_OpenAccess.Location = new System.Drawing.Point(2206, 15);
+            this.btn_OpenAccess.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btn_OpenAccess.Name = "btn_OpenAccess";
+            this.btn_OpenAccess.Size = new System.Drawing.Size(156, 90);
+            this.btn_OpenAccess.TabIndex = 122;
+            this.btn_OpenAccess.Text = "Open DB in M$ Access";
+            this.btn_OpenAccess.UseVisualStyleBackColor = true;
+            this.btn_OpenAccess.Click += new System.EventHandler(this.btn_OpenAccess_Click);
             // 
             // txt_AlbumArt_Correction
             // 
@@ -253,7 +254,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_Include_ArtistSort.Checked = true;
             this.chbx_Include_ArtistSort.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chbx_Include_ArtistSort.Enabled = false;
-            this.chbx_Include_ArtistSort.Location = new System.Drawing.Point(2342, 1013);
+            this.chbx_Include_ArtistSort.Location = new System.Drawing.Point(2366, 1011);
             this.chbx_Include_ArtistSort.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.chbx_Include_ArtistSort.Name = "chbx_Include_ArtistSort";
             this.chbx_Include_ArtistSort.Size = new System.Drawing.Size(174, 29);
@@ -266,11 +267,11 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_Apply.Location = new System.Drawing.Point(2100, 956);
             this.btn_Apply.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btn_Apply.Name = "btn_Apply";
-            this.btn_Apply.Size = new System.Drawing.Size(232, 90);
+            this.btn_Apply.Size = new System.Drawing.Size(252, 90);
             this.btn_Apply.TabIndex = 275;
             this.btn_Apply.Text = "Apply changes to the Main DB";
             this.btn_Apply.UseVisualStyleBackColor = true;
-            this.btn_Apply.Click += new System.EventHandler(this.button1_Click_1);
+            this.btn_Apply.Click += new System.EventHandler(this.Standardization_Click);
             // 
             // btn_DecompressAll
             // 
@@ -355,16 +356,15 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_Artist_Short.TabIndex = 386;
             this.txt_Artist_Short.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // button2
+            // btn_GetSpotifyCover
             // 
-            this.button2.Location = new System.Drawing.Point(2100, 744);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(248, 40);
-            this.button2.TabIndex = 387;
-            this.button2.Text = "Get Spotify Cover";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.btn_GetSpotifyCover.Location = new System.Drawing.Point(2100, 744);
+            this.btn_GetSpotifyCover.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btn_GetSpotifyCover.Name = "btn_GetSpotifyCover";
+            this.btn_GetSpotifyCover.Size = new System.Drawing.Size(248, 40);
+            this.btn_GetSpotifyCover.TabIndex = 387;
+            this.btn_GetSpotifyCover.Text = "Get Spotify Cover";
+            this.btn_GetSpotifyCover.UseVisualStyleBackColor = true;
             // 
             // txt_Year_Correction
             // 
@@ -405,17 +405,17 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_Comments.Location = new System.Drawing.Point(2356, 744);
             this.txt_Comments.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.txt_Comments.Name = "txt_Comments";
-            this.txt_Comments.Size = new System.Drawing.Size(336, 75);
+            this.txt_Comments.Size = new System.Drawing.Size(336, 84);
             this.txt_Comments.TabIndex = 392;
             this.txt_Comments.Text = "";
             // 
             // pB_ReadDLCs
             // 
-            this.pB_ReadDLCs.Location = new System.Drawing.Point(2102, 837);
+            this.pB_ReadDLCs.Location = new System.Drawing.Point(2360, 837);
             this.pB_ReadDLCs.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.pB_ReadDLCs.Maximum = 10000;
             this.pB_ReadDLCs.Name = "pB_ReadDLCs";
-            this.pB_ReadDLCs.Size = new System.Drawing.Size(590, 38);
+            this.pB_ReadDLCs.Size = new System.Drawing.Size(332, 38);
             this.pB_ReadDLCs.Step = 1;
             this.pB_ReadDLCs.TabIndex = 393;
             // 
@@ -456,7 +456,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_CorrectWithSpotify.TabIndex = 397;
             this.btn_CorrectWithSpotify.Text = "Correct with Spotify Cover";
             this.btn_CorrectWithSpotify.UseVisualStyleBackColor = true;
-            this.btn_CorrectWithSpotify.Click += new System.EventHandler(this.button1_Click_3);
+            this.btn_CorrectWithSpotify.Click += new System.EventHandler(this.Btn_CorrectWithSpotify_Click);
             // 
             // btn_DeleteAll
             // 
@@ -468,18 +468,18 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_DeleteAll.Text = "Delete All";
             this.btn_DeleteAll.UseVisualStyleBackColor = true;
             this.btn_DeleteAll.Visible = false;
-            this.btn_DeleteAll.Click += new System.EventHandler(this.button1_Click_4);
+            this.btn_DeleteAll.Click += new System.EventHandler(this.btn_DeleteAll_Click);
             // 
-            // button1
+            // btn_GetSpotifyAll
             // 
-            this.button1.Location = new System.Drawing.Point(2102, 883);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(250, 61);
-            this.button1.TabIndex = 399;
-            this.button1.Text = "Get Spotify info for All";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click_5);
+            this.btn_GetSpotifyAll.Location = new System.Drawing.Point(2100, 835);
+            this.btn_GetSpotifyAll.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btn_GetSpotifyAll.Name = "btn_GetSpotifyAll";
+            this.btn_GetSpotifyAll.Size = new System.Drawing.Size(252, 55);
+            this.btn_GetSpotifyAll.TabIndex = 399;
+            this.btn_GetSpotifyAll.Text = "Get Spotify info for All";
+            this.btn_GetSpotifyAll.UseVisualStyleBackColor = true;
+            this.btn_GetSpotifyAll.Click += new System.EventHandler(this.btn_GetSpotifyAll_Click);
             // 
             // btn_CheckOnline
             // 
@@ -512,16 +512,28 @@ namespace RocksmithToolkitGUI.DLCManager
             this.label3.TabIndex = 402;
             this.label3.Text = "Auto Group:";
             // 
+            // btn_ApplyCurrent
+            // 
+            this.btn_ApplyCurrent.Location = new System.Drawing.Point(2100, 898);
+            this.btn_ApplyCurrent.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btn_ApplyCurrent.Name = "btn_ApplyCurrent";
+            this.btn_ApplyCurrent.Size = new System.Drawing.Size(252, 50);
+            this.btn_ApplyCurrent.TabIndex = 403;
+            this.btn_ApplyCurrent.Text = "Apply current standard.";
+            this.btn_ApplyCurrent.UseVisualStyleBackColor = true;
+            this.btn_ApplyCurrent.Click += new System.EventHandler(this.btn_ApplyCurrent_Click);
+            // 
             // Standardization
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(192F, 192F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(2698, 1054);
+            this.Controls.Add(this.btn_ApplyCurrent);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.cbx_Groups);
             this.Controls.Add(this.btn_CheckOnline);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btn_GetSpotifyAll);
             this.Controls.Add(this.btn_DeleteAll);
             this.Controls.Add(this.btn_CorrectWithSpotify);
             this.Controls.Add(this.label2);
@@ -532,7 +544,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.Controls.Add(this.txt_Album_Short);
             this.Controls.Add(this.chbx_Default_Cover);
             this.Controls.Add(this.txt_Year_Correction);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.btn_GetSpotifyCover);
             this.Controls.Add(this.txt_Artist_Short);
             this.Controls.Add(this.btn_Delete);
             this.Controls.Add(this.chbx_AutoSave);
@@ -554,7 +566,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.Controls.Add(this.picbx_AlbumArtPath);
             this.Controls.Add(this.button8);
             this.Controls.Add(this.txt_ID);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.btn_OpenAccess);
             this.Controls.Add(this.txt_Album);
             this.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.Name = "Standardization";
@@ -573,7 +585,7 @@ namespace RocksmithToolkitGUI.DLCManager
         internal System.Windows.Forms.DataGridView databox;
         private System.Windows.Forms.CheckBox chbx_Save_All;
         private System.Windows.Forms.Button button8;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btn_OpenAccess;
         private CueTextBox txt_AlbumArtPath;
         private System.Windows.Forms.Button btn_ChangeCover;
         private CueTextBox txt_ID;
@@ -639,7 +651,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private System.Windows.Forms.CheckBox chbx_AutoSave;
         private System.Windows.Forms.Button btn_Delete;
         private CueTextBox txt_Artist_Short;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btn_GetSpotifyCover;
         private CueTextBox txt_Year_Correction;
         private System.Windows.Forms.CheckBox chbx_Default_Cover;
         private CueTextBox txt_Album_Short;
@@ -651,9 +663,10 @@ namespace RocksmithToolkitGUI.DLCManager
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btn_CorrectWithSpotify;
         private System.Windows.Forms.Button btn_DeleteAll;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btn_GetSpotifyAll;
         private System.Windows.Forms.Button btn_CheckOnline;
         private System.Windows.Forms.ComboBox cbx_Groups;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button btn_ApplyCurrent;
     }
 }

@@ -59,9 +59,9 @@ namespace RocksmithToolkitGUI.OggConverter
             using (var fd = new OpenFileDialog())
             {
                 fd.Multiselect = true;
-                fd.Filter = "Wwise 2017.1.x OGG files (*.ogg)|*.ogg";
+                fd.Filter = "Wwise 2018.1.x OGG files (*.ogg)|*.ogg";
                 if (converterType == ConverterType.Revorb || converterType == ConverterType.WEM)
-                    fd.Filter += "|Wwise 2017 WEM files (*.wem)|*.wem";
+                    fd.Filter += "|Wwise 2018 WEM files (*.wem)|*.wem";
                 else if (converterType == ConverterType.Ogg2Wem)
                     fd.Filter = "Vorbis Ogg or Wave files (*.ogg, *.wav)|*.ogg; *.wav";
 
@@ -91,7 +91,7 @@ namespace RocksmithToolkitGUI.OggConverter
 //<<<<<<< HEAD
 //                                OggFile.Revorb(file, outputFileName, Path.GetDirectoryName(Application.ExecutablePath), (extension == ".ogg") ? OggFile.WwiseVersion.Wwise2010 : OggFile.WwiseVersion.Wwise2017);
 //=======
-                                OggFile.Revorb(file, outputFileName, (extension == ".ogg") ? OggFile.WwiseVersion.Wwise2010 : OggFile.WwiseVersion.Wwise2017);
+                                OggFile.Revorb(file, outputFileName, OggFile.GetWwiseVersion(file));
 //>>>>>>> c7d902e63baa725649519d722a2c7540c837ad77
                                 break;
                             case ConverterType.WEM:

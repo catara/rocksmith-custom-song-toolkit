@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2026
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28606.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RocksmithToolkitGUI", "RocksmithTookitGUI\RocksmithToolkitGUI.csproj", "{1A3DEAD6-14F3-43C3-B15C-A866D48FEF61}"
 EndProject
@@ -31,8 +31,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cdlcconverter", "RocksmithT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "toneliberator", "RocksmithToolkitCLI\toneliberator\toneliberator.csproj", "{C8BDE9BB-F671-482E-97AB-5472F3C7D319}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RocksmithToTabLib", "lib\RocksmithToTabLib\RocksmithToTabLib.csproj", "{A391030A-8289-4B6A-8117-1C7995808AD5}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "transferprofile", "RocksmithToolkitCLI\transferprofile\transferprofile.csproj", "{CE48B5DF-398B-47D8-96D6-198566521104}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "packer", "ConsoleApp1\packer.csproj", "{B06BDA26-2BF3-4E55-8E04-81EB01242767}"
@@ -54,6 +52,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Third-party Apps", "Third-p
 		Third-party Apps\Wwise2015.tar.bz2 = Third-party Apps\Wwise2015.tar.bz2
 		Third-party Apps\Wwise2016.tar.bz2 = Third-party Apps\Wwise2016.tar.bz2
 		Third-party Apps\Wwise2017.tar.bz2 = Third-party Apps\Wwise2017.tar.bz2
+		Third-party Apps\Wwise2018.tar.bz2 = Third-party Apps\Wwise2018.tar.bz2
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{68A001D7-F5BF-4D2C-9FF9-4C0A62D4118F}"
@@ -286,19 +285,6 @@ Global
 		{C8BDE9BB-F671-482E-97AB-5472F3C7D319}.ReleaseMac|Any CPU.Build.0 = Release|x86
 		{C8BDE9BB-F671-482E-97AB-5472F3C7D319}.ReleaseMac|x86.ActiveCfg = Release|x86
 		{C8BDE9BB-F671-482E-97AB-5472F3C7D319}.ReleaseMac|x86.Build.0 = Release|x86
-		{A391030A-8289-4B6A-8117-1C7995808AD5}.Debug Build CLI|Any CPU.ActiveCfg = Debug Build CLI|x86
-		{A391030A-8289-4B6A-8117-1C7995808AD5}.Debug Build CLI|x86.ActiveCfg = Debug Build CLI|x86
-		{A391030A-8289-4B6A-8117-1C7995808AD5}.Debug Build CLI|x86.Build.0 = Debug Build CLI|x86
-		{A391030A-8289-4B6A-8117-1C7995808AD5}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{A391030A-8289-4B6A-8117-1C7995808AD5}.Debug|x86.ActiveCfg = Debug|x86
-		{A391030A-8289-4B6A-8117-1C7995808AD5}.Debug|x86.Build.0 = Debug|x86
-		{A391030A-8289-4B6A-8117-1C7995808AD5}.Release|Any CPU.ActiveCfg = Release|x86
-		{A391030A-8289-4B6A-8117-1C7995808AD5}.Release|x86.ActiveCfg = Release|x86
-		{A391030A-8289-4B6A-8117-1C7995808AD5}.Release|x86.Build.0 = Release|x86
-		{A391030A-8289-4B6A-8117-1C7995808AD5}.ReleaseMac|Any CPU.ActiveCfg = Release|x86
-		{A391030A-8289-4B6A-8117-1C7995808AD5}.ReleaseMac|Any CPU.Build.0 = Release|x86
-		{A391030A-8289-4B6A-8117-1C7995808AD5}.ReleaseMac|x86.ActiveCfg = Release|x86
-		{A391030A-8289-4B6A-8117-1C7995808AD5}.ReleaseMac|x86.Build.0 = Release|x86
 		{CE48B5DF-398B-47D8-96D6-198566521104}.Debug Build CLI|Any CPU.ActiveCfg = Release|x86
 		{CE48B5DF-398B-47D8-96D6-198566521104}.Debug Build CLI|Any CPU.Build.0 = Release|x86
 		{CE48B5DF-398B-47D8-96D6-198566521104}.Debug Build CLI|x86.ActiveCfg = Debug|x86

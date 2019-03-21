@@ -147,7 +147,7 @@ imported package is preserved.</value>
   </data>
   <data name="general_wwisepath.ToolTip" xml:space="preserve">
     <value>Compatible with Wwise v2013.2.x, v2014.1.x, 
-2015.1.x, 2016.2.x and 2017.1.x build series
+2015.1.x, 2016.2.x, 2017.1.x and 2018.1.x build series
 for RS2014 audio conversions, and Wwise
 v2010.3.3 (only) for RS1 audio conversions.
 

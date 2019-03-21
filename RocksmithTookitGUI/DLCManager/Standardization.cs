@@ -74,7 +74,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //MAYBE HERE CAN ACTIVATE THE INDIV CELLS
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btn_OpenAccess_Click(object sender, EventArgs e)
         {
             try
             {
@@ -144,7 +144,19 @@ namespace RocksmithToolkitGUI.DLCManager
             //{
             dssx.Clear();
             //DataSet ds = new DataSet();
-            dssx = SelectFromDB("Standardization", "SELECT ID, (SELECT IIF(count(*)>1,\"Yes\",\"\") as Suspect from Standardization AS O WHERE LCASE(S.Artist)=LCASE(O.Artist) and LCASE(S.Artist_Correction)=LCASE(O.Artist_Correction) and LCASE(S.Album_Correction)=LCASE(O.Album_Correction) and LCASE(S.Album)=LCASE(O.Album)) as Suspect, Artist, Artist_Correction, Album, Album_Correction, AlbumArt_Correction, Comments, Artist_Short, Album_Short, Year_Correction, SpotifyArtistID, SpotifyAlbumID, SpotifyAlbumURL, SpotifyAlbumPath, Default_Cover, Artist_AutoGroup FROM Standardization as S ORDER BY Artist, Album, Artist_Correction, Album_Correction;", "", cnb);
+
+            var similar = "UPDATE Standardization AS S SET Suspect=\"Yes\", Suspect_Reason=\"Different\" where (SELECT ID from Standardization AS O" +
+                 " WHERE LCASE(S.Artist)=LCASE(O.Artist) and LCASE(S.Artist_Correction)=LCASE(O.Artist_Correction)" +
+                 " and LCASE(S.Album_Correction)=LCASE(O.Album_Correction) and LCASE(S.Album)=LCASE(O.Album) )";
+            //IIF(count(*) > 1, ID,\"\") as Suspect 
+            var samecont = "UPDATE Standardization AS S SET Suspect=\"Yes\", Suspect_Reason=\"Different\" where (SELECT ID from Standardization AS O" +
+                 " WHERE LCASE(S.Artist)=LCASE(O.Artist) and LCASE(S.Artist_Correction)=LCASE(O.Artist_Correction)" +
+                 " and LCASE(S.Album_Correction)=LCASE(O.Album_Correction) and LCASE(S.Album)=LCASE(O.Album) )";
+
+
+            dssx = SelectFromDB("Standardization", "SELECT ID, Suspect, Suspect_Reason, Artist, Artist_Correction, Album, Album_Correction, AlbumArt_Correction, Comments, Artist_Short, Album_Short, Year_Correction, SpotifyArtistID," +
+                " SpotifyAlbumID, SpotifyAlbumURL, SpotifyAlbumPath, Default_Cover, Artist_AutoGroup FROM Standardization as S" +
+                " ORDER BY Artist, Album, Artist_Correction, Album_Correction;", "", cnb);
             //OleDbDataAdapter da = new OleDbDataAdapter(cmd, cn);
             //da.Fill(dssx, "Standardization");
             if (dssx.Tables.Count > 0)
@@ -154,6 +166,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 //}
                 DataGridViewTextBoxColumn ID = new DataGridViewTextBoxColumn { DataPropertyName = "ID", HeaderText = "ID ", Width = 35 };
                 DataGridViewTextBoxColumn Suspect = new DataGridViewTextBoxColumn { DataPropertyName = "Suspect", HeaderText = "Suspect ", Width = 35 };
+                DataGridViewTextBoxColumn Suspect_Reason = new DataGridViewTextBoxColumn { DataPropertyName = "Suspect_Reason", HeaderText = "Suspect_Reason ", Width = 35 };
                 DataGridViewTextBoxColumn Artist = new DataGridViewTextBoxColumn { DataPropertyName = "Artist", HeaderText = "Artist ", Width = 135 };
                 DataGridViewTextBoxColumn Artist_Correction = new DataGridViewTextBoxColumn { DataPropertyName = "Artist_Correction", HeaderText = "Artist_Correction ", Width = 135 };
                 DataGridViewTextBoxColumn Album = new DataGridViewTextBoxColumn { DataPropertyName = "Album", HeaderText = "Album ", Width = 165 };
@@ -189,7 +202,8 @@ namespace RocksmithToolkitGUI.DLCManager
                         SpotifyAlbumURL,
                         SpotifyAlbumPath,
                         Default_Cover,
-                        Artist_AutoGroup
+                        Artist_AutoGroup,
+                        Suspect_Reason
                     }
                 );
 
@@ -268,6 +282,7 @@ namespace RocksmithToolkitGUI.DLCManager
             public string SpotifyAlbumPath { get; set; }
             public string Default_Cover { get; set; }
             public string Artist_AutoGroup { get; set; }
+            public string Suspect_Reason { get; set; }
         }
 
         private Files[] files = new Files[10000];
@@ -300,6 +315,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 //rtxt_StatisticsOnReadDLCs.Text += "\n  a= " + i + MaximumSize+dataRow.ItemArray[0].ToString();
                 files[i].ID = dataRow.ItemArray[0].ToString();
                 files[i].Suspect = dataRow.ItemArray[1].ToString();
+                files[i].Suspect_Reason = dataRow.ItemArray[17].ToString();
                 files[i].Artist = dataRow.ItemArray[2].ToString();
                 files[i].Artist_Correction = dataRow.ItemArray[3].ToString();
                 files[i].Album = dataRow.ItemArray[4].ToString();
@@ -347,11 +363,13 @@ namespace RocksmithToolkitGUI.DLCManager
             frm.Show();
         }
 
-        public void button1_Click_1(object sender, EventArgs e)
+        public void Standardization_Click(object sender, EventArgs e)
         {
             //DLCManager v1 = new DLCManager();
             string txt = DB_Path;//.Replace("\\AccessDB.accdb", "");
-            //MessageBox.Show(txt);
+                                 //MessageBox.Show(txt);
+            string returned = GenericFunctions.OneTranslation_And_Correction(txt, pB_ReadDLCs, cnb, null, txt_Artist_Correction.Text, txt_Album_Correction.Text, txt_Year_Correction.Text);
+
             GenericFunctions.Translation_And_Correction(txt, pB_ReadDLCs, cnb, null);
             //advance or step back in the song list
             int i = 0;
@@ -446,10 +464,10 @@ namespace RocksmithToolkitGUI.DLCManager
             MessageBox.Show("TitleSort is now the same as Title");
         }
 
-        public void button1_Click_2(object sender, EventArgs e)
-        {
-            // MakeCover(DB_Path, txt_AlbumArt.Text, txt_Artist.Text, txt_Album.Text);
-        }
+        //public void button1_Click_2(object sender, EventArgs e)
+        //{
+        //    // MakeCover(DB_Path, txt_AlbumArt.Text, txt_Artist.Text, txt_Album.Text);
+        //}
 
         public static void MakeCover(OleDbConnection cnb)//(string DBs_Path)//, string AlbumArt, string Artist, string Albums)
         {
@@ -776,15 +794,15 @@ namespace RocksmithToolkitGUI.DLCManager
 
         }
 
-        private void button1_Click_3(object sender, EventArgs e)
+        private void btn_CorrectWithSpotify_Click(object sender, EventArgs e)
         {
             i = databox.SelectedCells[0].RowIndex;
             txt_AlbumArt_Correction.Text = databox.Rows[i].Cells[14].Value.ToString();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void Btn_CorrectWithSpotify_Click(object sender, EventArgs e)
         {
-            if (netstatus == "NOK" || netstatus == "") netstatus = ActivateSpotify_ClickAsync().Result.ToString();
+            if (netstatus == "NOK" || netstatus == "") netstatus = CheckIfConnectedToInternet().Result.ToString();
             var artist = txt_Artist_Correction.Text == "" ? txt_Artist.Text : txt_Artist_Correction.Text;
             var album = txt_Album_Correction.Text == "" ? txt_Album.Text : txt_Album_Correction.Text;
             pB_ReadDLCs.Maximum = 5;
@@ -845,7 +863,7 @@ namespace RocksmithToolkitGUI.DLCManager
             }
         }
 
-        private void button1_Click_4(object sender, EventArgs e)
+        private void btn_DeleteAll_Click(object sender, EventArgs e)
         {
             var result1 = MessageBox.Show("Are you sure you want to DELETE Standardizations (&Spotify downloaded info)?", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
             if (result1 == DialogResult.Yes)
@@ -857,9 +875,9 @@ namespace RocksmithToolkitGUI.DLCManager
             }
         }
 
-        private void button1_Click_5(object sender, EventArgs e)
+        private void btn_GetSpotifyAll_Click(object sender, EventArgs e)
         {
-            if (netstatus == "NOK" || netstatus == "") netstatus = ActivateSpotify_ClickAsync().Result.ToString();
+            if (netstatus == "NOK" || netstatus == "") netstatus = CheckIfConnectedToInternet().Result.ToString();
             DataSet SongRecord = new DataSet(); SongRecord = SelectFromDB("Standardization", "SELECT IIF(Artist_Correction is null,Artist,Artist_Correction), IIF(Album_Correction is null,Album,Album_Correction), ID FROM Standardization WHERE SpotifyArtistID = \"-\" OR SpotifyArtistID = \"\" OR SpotifyArtistID is null ORDER BY SpotifyArtistID ASC;", "", cnb);
             var noOfRec = SongRecord.Tables[0].Rows.Count;
             //var vFilesMissingIssues = "";
@@ -889,7 +907,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     cmds += " WHERE ID=" + SongRecord.Tables[0].Rows[i].ItemArray[2].ToString();
                     DataSet dis = new DataSet();
                     if (trackno > 0 && SpotifySongID != "" && SpotifySongID != "-") dis = UpdateDB("Standardization", cmds + ";", cnb);
-                    DateTime timestamp = UpdateLog(DateTime.Now, i + "/" + noOfRec + " Spotify details: " + trackno + " " + SpotifyAlbumPath, true, ConfigRepository.Instance()["dlcm_LogPath"], ConfigRepository.Instance()["dlcm_TempPath"], "", "DLCManager", pB_ReadDLCs, null);
+                    DateTime timestamp = UpdateLog(DateTime.Now, i + "/" + noOfRec + " Spotify details: " + trackno + " " + SpotifyAlbumPath, true, ConfigRepository.Instance()["dlcm_TempPath"], "", "DLCManager", pB_ReadDLCs, null);
                     //ADD STADARDISATION UPDATE
                     //Updating the Standardization table
                     //DataSet dzs = new DataSet(); dzs = SelectFromDB("Standardization", "SELECT * FROM Standardization WHERE StrComp(Artist,\""
@@ -905,7 +923,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     //}
 
                 }
-                catch (Exception ex) { var tust = "Spotify Error ..." + ex; UpdateLog(DateTime.Now, tust, false, ConfigRepository.Instance()["dlcm_LogPath"], ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null); }
+                catch (Exception ex) { var tust = "Spotify Error ..." + ex; UpdateLog(DateTime.Now, tust, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null); }
             }
 
             //Get Album Covers of Album Covers that went missing
@@ -961,7 +979,7 @@ namespace RocksmithToolkitGUI.DLCManager
             }
             catch (Exception ex)
             {
-                var tsst = "Error ..." + ex; UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_LogPath"], ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
+                var tsst = "Error ..." + ex; UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
                 MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 //MessageBox.Show("Can't not open Song Folder in Exporer ! ");
             }
@@ -1064,5 +1082,16 @@ namespace RocksmithToolkitGUI.DLCManager
             Populate(ref databox, ref Main);
             pB_ReadDLCs.Increment(1);
         }
+
+        private void btn_ApplyCurrent_Click(object sender, EventArgs e)
+        {
+            string txt = DB_Path;
+            string returned = GenericFunctions.OneTranslation_And_Correction(txt, pB_ReadDLCs, cnb, null, txt_Artist_Correction.Text, txt_Album_Correction.Text, txt_Year_Correction.Text);
+        }
+
+        //private void btn_GetSpotifyCover_Click(object sender, EventArgs e)
+        //{
+
+        //}
     }
 }

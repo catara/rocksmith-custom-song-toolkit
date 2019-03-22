@@ -1,0 +1,130 @@
+678: Logging started during program initialization at 09/10/18 01:28:56
+678: EOF v1.8RC12 (9-1-2018)
+678: eof_controller_load_config() entered
+678: eof_controller_read_button_names() entered
+678: eof_controller_load_config() entered
+678: eof_controller_read_button_names() entered
+678: Logging level set to normal
+678: 	Importing chord shape definitions
+678: eof_load_chord_shape_definitions() entered
+678: 	54 chord shape definitions imported
+678: eof_set_display_mode() entered
+678: eof_window_create() entered
+678: eof_window_create() entered
+678: eof_window_create() entered
+678: eof_window_create() entered
+678: eof_window_create() entered
+678: eof_load_data() entered
+678: eof_init_colors() entered
+678: eof_undo_reset() entered
+678: 	Initializing audio
+678: eof_mix_init() entered
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_36_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_37_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_38_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_39_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_40_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_41_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_42_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_43_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_44_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_45_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_46_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_47_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_48_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_49_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_50_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_51_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_52_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_53_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_54_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_55_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_56_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_57_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_58_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_59_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_60_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_61_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_62_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_63_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_64_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_65_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_66_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_67_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_68_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_69_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_70_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_71_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_72_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_73_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_74_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_75_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_76_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_77_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_78_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_79_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_80_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_81_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_82_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_83_OGG"
+678: 	Buffering file:  "eof.dat#piano.esp/NOTE_84_OGG"
+678: 	Buffering file:  "percussion.dat#cowbell.ogg"
+678: 	Buffering file:  "percussion.dat#tambourine1.ogg"
+678: 	Buffering file:  "percussion.dat#tambourine2.ogg"
+678: 	Buffering file:  "percussion.dat#tambourine3.ogg"
+678: 	Buffering file:  "percussion.dat#triangle1.ogg"
+678: 	Buffering file:  "percussion.dat#triangle2.ogg"
+678: 	Buffering file:  "percussion.dat#woodblock1.ogg"
+678: 	Buffering file:  "percussion.dat#woodblock2.ogg"
+678: 	Buffering file:  "percussion.dat#woodblock3.ogg"
+678: 	Buffering file:  "percussion.dat#woodblock4.ogg"
+678: 	Buffering file:  "percussion.dat#woodblock5.ogg"
+678: 	Buffering file:  "percussion.dat#woodblock6.ogg"
+678: 	Buffering file:  "percussion.dat#woodblock7.ogg"
+678: 	Buffering file:  "percussion.dat#woodblock8.ogg"
+678: 	Buffering file:  "percussion.dat#woodblock9.ogg"
+678: 	Buffering file:  "percussion.dat#woodblock10.ogg"
+678: 	Buffering file:  "percussion.dat#clap1.ogg"
+678: 	Buffering file:  "percussion.dat#clap2.ogg"
+678: 	Buffering file:  "percussion.dat#clap3.ogg"
+678: 	Buffering file:  "percussion.dat#clap4.ogg"
+678: 	Checking for crash recovery files
+678: 	Entering main program loop
+678: eof_menu_file_load() entered
+678: eof_destroy_ogg() entered
+678: 	Loading project
+678: eof_load_song() entered
+678: eof_create_song() entered
+678: eof_load_song_pf() entered
+678: 	Project loaded
+678: 	Set eof_song_path to "C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\Freak Power - Turn On, Tune In, Cop Out\"
+678: eof_import_ini() entered
+678: 	Buffering INI file into memory
+678: 	Buffering file:  "C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\Freak Power - Turn On, Tune In, Cop Out\song.ini"
+678: 	Tokenizing INI file buffer
+678: 	Parsing INI file buffer
+678: 	Processing INI file contents
+678: 	Freeing INI buffer
+678: eof_load_ogg_quick() entered
+678: eof_destroy_ogg() entered
+678: 	Buffering file:  "C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\Freak Power - Turn On, Tune In, Cop Out\guitar.ogg"
+678: 	Loading OGG file "C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\Freak Power - Turn On, Tune In, Cop Out\guitar.ogg"
+678: 		Unsupported sample rate detected:  44000
+678: eof_truncate_chart() entered
+678: 	Deleting beats
+678: eof_truncate_chart() exiting
+678: 	Initializing after load
+678: eof_init_after_load() entered
+678: eof_truncate_chart() entered
+678: 	Deleting beats
+678: eof_truncate_chart() exiting
+678: eof_select_beat() entered
+678: eof_undo_reset() entered
+678: eof_sort_notes() entered
+678: eof_fixup_notes() entered
+678: eof_cleanup_beat_flags() entered
+678: eof_sort_events() entered
+678: eof_delete_blank_events() entered
+678: 	Removed 0 empty text events
+678: 	Initialization after load complete
+678: eof_fixup_notes() entered

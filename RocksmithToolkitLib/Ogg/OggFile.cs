@@ -12,7 +12,7 @@ namespace RocksmithToolkitLib.Ogg
     public static class OggFile//wwRIFF
     {
         // Add support for newer versions of Wwise here
-        public enum WwiseVersion { None, Wwise2010, Wwise2013, Wwise2014, Wwise2015, Wwise2016, Wwise2017 };
+        public enum WwiseVersion { None, Wwise2010, Wwise2013, Wwise2014, Wwise2015, Wwise2016, Wwise2017, Wwise2018 };
 
         #region RS1
 
@@ -71,6 +71,12 @@ namespace RocksmithToolkitLib.Ogg
                 case WwiseVersion.Wwise2013:
                     ww2oggProcess.StartInfo.Arguments = String.Format("\"{0}\" -o \"{1}\" --pcb \"{2}\"", file, outputFileName, Path.Combine(ExternalApps.TOOLKIT_ROOT, ExternalApps.APP_CODEBOOKS_603));
                     break;
+                case WwiseVersion.Wwise2017: // bcapi
+                    ww2oggProcess.StartInfo.Arguments = String.Format("\"{0}\" -o \"{1}\" --pcb \"{2}\"", file, outputFileName, Path.Combine(ExternalApps.TOOLKIT_ROOT, ExternalApps.APP_CODEBOOKS_603));
+                    break;
+                case WwiseVersion.Wwise2018: // bcapi
+                    ww2oggProcess.StartInfo.Arguments = String.Format("\"{0}\" -o \"{1}\" --pcb \"{2}\"", file, outputFileName, Path.Combine(ExternalApps.TOOLKIT_ROOT, ExternalApps.APP_CODEBOOKS_603));
+                    break;//
                 default:
                     throw new InvalidOperationException("Wwise version not supported or invalid input file.");
             }
@@ -346,13 +352,14 @@ namespace RocksmithToolkitLib.Ogg
         {
             var platform = inputFile.GetAudioPlatform();
             var bitConverter = platform.GetBitConverter;
-
+            //return;
             using (var inputFileStream = File.Open(inputFile, FileMode.Open))
             using (var reader = new EndianBinaryReader(bitConverter, inputFileStream))
             {
                 reader.Seek(4, SeekOrigin.Begin);
                 if (reader.ReadUInt32() != reader.BaseStream.Length - 8)
                     throw new InvalidDataException("The input OGG file appears to be truncated.");
+                    
 
                 if (Encoding.ASCII.GetString(reader.ReadBytes(4)) != "WAVE")
                     throw new InvalidDataException("Error reading input file - expected WAVE");
@@ -367,20 +374,20 @@ namespace RocksmithToolkitLib.Ogg
                 if (fmtLength == 24)
                 {
                     if (reader.ReadUInt16() != 0xFFFF)
-                        throw new InvalidDataException("Error reading input file - expected Format Tag of 0xFFFF");
+                             throw new InvalidDataException("Error reading input file - expected Format Tag of 0xFFFF");
 
                     reader.BaseStream.Seek(14, SeekOrigin.Current);
 
                     if (reader.ReadUInt16() != 6)
-                        throw new InvalidDataException("Error reading input file - expected cbSize of 6");
+                            throw new InvalidDataException("Error reading input file - expected cbSize of 6");
 
                     reader.BaseStream.Seek(6, SeekOrigin.Current);
 
                     if (Encoding.ASCII.GetString(reader.ReadBytes(4)) != "vorb")
-                        throw new InvalidDataException("Error reading input file - expected vorb");
+                            throw new InvalidDataException("Error reading input file - expected vorb");
 
                     if (reader.ReadUInt32() != 42)
-                        throw new InvalidDataException("Error reading input file - expected vorb length of 42");
+                           throw new InvalidDataException("Error reading input file - expected vorb length of 42");
                 }
             }
         }
@@ -442,7 +449,7 @@ namespace RocksmithToolkitLib.Ogg
                 case ".ogg":
                     return WwiseVersion.Wwise2010;
                 case ".wem":
-                    return WwiseVersion.Wwise2013;
+                    return WwiseVersion.Wwise2018;//bcapi
                 default:
                     throw new InvalidOperationException("Audio file not supported.");
             }

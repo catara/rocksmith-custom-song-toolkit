@@ -232,7 +232,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                     default:
                         filter = CurrentRocksmithTitle + " PC Package (*.dat)|*.dat|";
                         filter += CurrentRocksmithTitle + " XBox360 Package (*_xbox, *.*)|*_xbox; *.*|";
-                        // TODO: add support for RS1 PS3    
+                        // TODO: add support for RS1 PS3
                         // filter + CurrentRocksmithTitle + " PS3 Package (*.edat)|*.edat|";
                         filter += CurrentRocksmithTitle + " All Files (*.*)|*.*";
                         break;
@@ -329,9 +329,19 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 {
                     case GameVersion.None:
                     case GameVersion.RS2014:
-                        return "All Supported Files|*.wem;*.ogg;*.wav|Wwise 2013 audio files (*.wem)|*.wem|Ogg Vorbis audio files (*.ogg)|*.ogg|Wave audio files (*.wav)|*.wav";
+//<<<<<<< HEAD
+                        // TODO: Test WEM generation with non-PC Platforms
+                        if (chkPlatformMAC.Checked == chkPlatformPS3.Checked == chkPlatformXBox360.Checked == false)
+                            return "All Supported Files|*.wem;*.ogg;*.wav|Wwise 2017 audio files (*.wem)|*.wem|Ogg Vorbis audio files (*.ogg)|*.ogg|Wave audio files (*.wav)|*.wav";
+
+                    //    return "Wwise 2017 audio files (*.wem)|*.wem";
+                    //default:
+                    //    return "Wwise 2017 audio files (*.ogg)|*.ogg";
+                        //=======
+                        return "All Supported Files|*.wem;*.ogg;*.wav|Wwise 2017 audio files (*.wem)|*.wem|Ogg Vorbis audio files (*.ogg)|*.ogg|Wave audio files (*.wav)|*.wav";
                     default:
-                        return "All Supported Files|*.ogg;*.wav|Wwise 2010 audio files (*.ogg)|*.ogg|Ogg Vorbis audio files (*.ogg)|*.ogg|Wave audio files (*.wav)|*.wav";
+                        return "All Supported Files|*.ogg;*.wav|Wwise 2017 audio files (*.ogg)|*.ogg|Ogg Vorbis audio files (*.ogg)|*.ogg|Wave audio files (*.wav)|*.wav";
+                        //>>>>>>> c7d902e63baa725649519d722a2c7540c837ad77
                 }
             }
         }
@@ -481,7 +491,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                         continue;
 
                     var bassFix = false;
-                    //Low tuning fix for bass, If lowest string is B and bass fix not applied 
+                    //Low tuning fix for bass, If lowest string is B and bass fix not applied
                     if (arr.TuningStrings.String0 < -4 && arr.TuningPitch != 220.00)
                         if (fixLowBass)
                             bassFix = true;
@@ -866,7 +876,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
 
                     foreach (var tone in info.Tones)
                     {
-                        if (String.IsNullOrEmpty(tone.Key)) // JIC should never happen 
+                        if (String.IsNullOrEmpty(tone.Key)) // JIC should never happen
                             tone.Key = tone.Name.GetValidKey(isTone: true);
 
                         lstTones.Items.Add(tone);
@@ -1486,20 +1496,19 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                         txtAudioPath.Text = "";
                     if (!PlatformMAC && !PlatformPS3 && !PlatformXBox360)
                     {//PC only
-                        txtAudioPath.Cue = "Audio to Wwise 2013 converter for Windows (*.wem, *.ogg, *.wav)";
+                        txtAudioPath.Cue = "Audio to Wwise 2017 converter for Windows (*.wem, *.ogg, *.wav)";
                         label2.Text = @"Song preview is generated automatically if not provided in format 'filename_preview.wem'";
                     }
                     else
                     {
-                        txtAudioPath.Cue = "Converted audio on Wwise 2013 for Windows, Mac, XBox360 or PS3 (*.wem)";
+                        txtAudioPath.Cue = "Converted audio on Wwise 2017 for Windows, Mac, XBox360 or PS3 (*.wem)";
                         label2.Text = @"Song preview must have the same file name with '_preview' in the end, eg. 'filename_preview.wem'";
                     }
                     break;
                 case GameVersion.RS2012:
                     if (oldGameVersion != GameVersion.RS2012)
                         txtAudioPath.Text = "";
-
-                    txtAudioPath.Cue = "Converted audio on Wwise 2010 for Windows, XBox360 or PS3 (*.ogg)";
+                    txtAudioPath.Cue = "Converted audio on Wwise 2017 for Windows, XBox360 or PS3 (*.ogg)";
                     label2.Text = "";
                     break;
             }
@@ -1820,7 +1829,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             ShowCurrentOperation("Updating package data  ...");
             Application.DoEvents();
 
-            // (RS2014 ONLY) 
+            // (RS2014 ONLY)
             if (ConfigRepository.Instance().GetBoolean("ddc_autogen") && packageData.GameVersion != GameVersion.RS2012)
             {
                 // add TKI_DDC comment
@@ -1843,7 +1852,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
 
             packageData.ToolkitInfo.PackageComment = remasterComment;
 
-            // declare one time for DDC generation   
+            // declare one time for DDC generation
             var consoleOutput = String.Empty;
             DDCSettings.Instance.LoadConfigXml();
             var phraseLen = DDCSettings.Instance.PhraseLen;
@@ -2021,7 +2030,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             Thread.Sleep(100); // give Globals a chance to initialize
             Application.DoEvents();
 
-            // UNPACK            
+            // UNPACK
             var srcPlatform = srcPath.GetPlatform();
             if (Path.GetFileNameWithoutExtension(srcPath).EndsWith("_xbox"))
                 srcPlatform.version = CurrentGameVersion;
@@ -2151,7 +2160,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             if (PreviousGameVersion == GameVersion.None || PreviousGameVersion == GameVersion.RS2012)
                 ResetPackageCreatorForm(PreviousGameVersion);
 
-            // ======== Convert Song2014 XML to Song XML ======== 
+            // ======== Convert Song2014 XML to Song XML ========
             if (!String.IsNullOrEmpty(DLCKey))
             {
                 var packageDataError = String.Empty;
@@ -2174,7 +2183,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                         obj.Song2014File2SongFile(songXmlPath, true);
                 }
 
-                // Convert Tones2014 to Tone 
+                // Convert Tones2014 to Tone
                 var tonesRS2014 = lstTones.Items.OfType<Tone2014>().ToList();
                 lstTones.Items.Clear();
 
@@ -2187,7 +2196,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                     }
                 }
 
-                // Convert RS2014 to RS1 Audio 
+                // Convert RS2014 to RS1 Audio
                 var wwisePath = Wwise.GetWwisePath();
                 var wwiseVersion = FileVersionInfo.GetVersionInfo(wwisePath).ProductVersion;
                 if (!wwiseVersion.StartsWith("2010.3"))
@@ -2211,7 +2220,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 // add toolkit conversion comment
                 packageData.ToolkitInfo.PackageComment += "(RS2014 to RS1 by CDLC Creator)";
 
-                // ======== End Convert ======== 
+                // ======== End Convert ========
             }
             else
             {

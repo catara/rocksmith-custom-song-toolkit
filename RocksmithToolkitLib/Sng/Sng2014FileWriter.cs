@@ -619,7 +619,7 @@ namespace RocksmithToolkitLib.Sng2014HSL
                     s.EndTime = xml.SongLength;
                 s.StartPhraseIterationId = getPhraseIterationId(xml, s.StartTime, false);
                 s.EndPhraseIterationId = getPhraseIterationId(xml, s.EndTime, true);
-                for (int j = getMaxDifficulty(xml); j >= 0; j--)
+                for (int j = getMaxDifficulty(xml); j >= 0; j--)//bcapi -1 as to compensate when the ddc remover messes things up :)
                 {
                     // used string mask for section at all difficulty j
                     Byte mask = 0;

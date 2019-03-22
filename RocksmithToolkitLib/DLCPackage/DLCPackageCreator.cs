@@ -27,7 +27,6 @@ using Tone = RocksmithToolkitLib.DLCPackage.Manifest.Tone.Tone;
 using RocksmithToolkitLib.PsarcLoader;
 using System.Diagnostics;
 
-
 namespace RocksmithToolkitLib.DLCPackage
 {
     public enum DLCPackageType { Song = 0, Lesson = 1, Inlay = 2 }
@@ -352,7 +351,7 @@ namespace RocksmithToolkitLib.DLCPackage
 
         #region Generate PSARC RS2014
 
-        private static void GenerateRS2014SongPsarc(Stream output, DLCPackageData info, Platform platform, int pnum = -1)
+        public static void GenerateRS2014SongPsarc(Stream output, DLCPackageData info, Platform platform, int pnum = -1)
         {
             // TODO: Benchmark processes and optimize speed
             dlcName = info.Name.ToLower();
@@ -647,8 +646,21 @@ namespace RocksmithToolkitLib.DLCPackage
 
                     // WRITE PACKAGE
                     packPsarc.Write(output, !platform.IsConsole);
+                    //}
                     output.WriteTmpFile(String.Format("{0}.psarc", dlcName), platform);
                 }
+            }
+            catch (Exception ex)
+            {
+                //if (ex.Message.IndexOf("No JDK or JRE") > 0)//Help\\WwiseHelp_en.chm"))//
+                //{
+                //    ErrorWindow frm1 = new ErrorWindow("Please Install Java" + Environment.NewLine + "A restart is required" + Environment.NewLine, "http://www.java.com/en/download/win10.jsp", "Error at Packing", false, false);
+                //    frm1.ShowDialog();
+                //}
+                //string ss = String.Format("Error 2generate PS3 package: {0}{1}. {0}PS3 package require 'JAVA x86' (32 bits) installed on your machine to generate properly.{0}", Environment.NewLine, ex.StackTrace);
+                //MessageBox.Show(ex.Message);
+                var tgst = "Error ..." + ex; UpdateLog(DateTime.Now, tgst, false, ConfigRepository.Instance()["dlcm_TempPath"], null, null, null, null);
+                //errorsFound.AppendLine(ss);
             }
             finally
             {
@@ -665,6 +677,42 @@ namespace RocksmithToolkitLib.DLCPackage
                     DeleteTmpFiles(TMPFILES_ART);
                 DeleteTmpFiles(TMPFILES_SNG);
             }
+        }
+
+        public static DateTime UpdateLog(DateTime dt, string txt, bool bbl, string tmpPath, string MultithreadNo, string form, ProgressBar pB_ReadDLCs, RichTextBox rtxt_StatisticsOnReadDLCs)
+        {
+            DateTime dtt = System.DateTime.Now;
+            string logPath = ConfigRepository.Instance()["dlcm_LogPath"] == "" ? ConfigRepository.Instance()["dlcm_TempPath"] + "\\0_log" : ConfigRepository.Instance()["dlcm_LogPath"];
+            var ismaindb = "";
+            if (pB_ReadDLCs != null)
+            {
+                pB_ReadDLCs.CreateGraphics().Clear(System.Drawing.Color.HotPink);
+                pB_ReadDLCs.CreateGraphics().DrawString(txt, new Font("Arial", 7, FontStyle.Bold), Brushes.Blue, new PointF(1, pB_ReadDLCs.Height / 4));
+            }
+
+            var ii = Math.Abs(Math.Round((dt - dtt).TotalSeconds, 2)).ToString().PadLeft(4, '0');
+            if (form != null && form != "" && rtxt_StatisticsOnReadDLCs != null)
+                rtxt_StatisticsOnReadDLCs.Text = dtt + " - " + ii + " - " + txt + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+
+            if (form == "MainDB")
+                ismaindb = "maindb";
+            
+            Random randomp = new Random();// Write the string to a file. packid+
+            var packid = 0;
+            packid = randomp.Next(0, 100000);
+            var fn = (logPath == null || !Directory.Exists(logPath) ? tmpPath + "\\0_log" : logPath) + "\\" + "current_" + ismaindb + "temp" + MultithreadNo + ".txt";
+            try
+            {
+                if (File.Exists(fn))
+                {
+                    using (StreamWriter sw = File.AppendText(fn))
+                    {
+                        sw.WriteLine(dtt.ToString() + " - " + ii.ToString() + " - " + txt.ToString());// This text is always added, making the file longer over time if it is not deleted.
+                    }
+                }
+            }
+            catch (Exception ex) { var tsst = "Error ..." + ex; UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null); }
+            return dtt;
         }
 
         private static void GenerateRS2014InlayPsarc(Stream output, DLCPackageData info, Platform platform)

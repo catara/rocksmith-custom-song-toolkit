@@ -271,7 +271,7 @@
     <EmbeddedResource Include="Resources\TreeViewOfd.ico" />
     <Content Include="RocksmithToolkitLib.Config.xml">
       <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="RocksmithToolkitLib.TuningDefinition.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

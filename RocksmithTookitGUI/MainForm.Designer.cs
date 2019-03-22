@@ -43,7 +43,34 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.configurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.configurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();            this.dLCLibraryManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dlcManager1 = new RocksmithToolkitGUI.DLCManager.DLCManager();
+            this.DLCManagerTab = new System.Windows.Forms.TabPage();
+//<<<<<<< HEAD
+
+//            this.tabControl1 = new System.Windows.Forms.TabControl();
+//            this.dlcPackageCreatorTab = new System.Windows.Forms.TabPage();
+//            this.dlcPackageCreator1 = new RocksmithToolkitGUI.DLCPackageCreator.DLCPackageCreator();
+//            this.dlcPackerUnpackerTab = new System.Windows.Forms.TabPage();
+//            this.dlcPackerUnpacker1 = new RocksmithToolkitGUI.DLCPackerUnpacker.DLCPackerUnpacker();
+//            this.dlcConverterTab = new System.Windows.Forms.TabPage();
+//            this.dlcConverter1 = new RocksmithToolkitGUI.DLCConverter.DLCConverter();
+//            this.DDCTab = new System.Windows.Forms.TabPage();
+//            this.ddc1 = new RocksmithToolkitGUI.DDC.DDC();
+//            this.dlcInlayCreatorTab = new System.Windows.Forms.TabPage();
+//            this.dlcInlayCreator1 = new RocksmithToolkitGUI.DLCInlayCreator.DLCInlayCreator();
+//            this.sngConverterTab = new System.Windows.Forms.TabPage();
+//            this.sngConverter1 = new RocksmithToolkitGUI.SngConverter.SngConverter();
+//            this.oggConverterTab = new System.Windows.Forms.TabPage();
+//            this.oggConverter1 = new RocksmithToolkitGUI.OggConverter.OggConverter();
+//            this.cdlcConverterTab = new System.Windows.Forms.TabPage();
+//            this.cdlC2Tab1 = new RocksmithToolkitGUI.CDLC2Tab.CDLC2Tab();
+//            this.zigProConverterTab = new System.Windows.Forms.TabPage();
+//            this.zpeConverter1 = new RocksmithToolkitGUI.ZpeConverter.ZpeConverter();
+//            this.GeneralConfigTab = new System.Windows.Forms.TabPage();
+//            this.generalConfig1 = new RocksmithToolkitGUI.Config.GeneralConfig();
+//=======
+//>>>>>>> c7d902e63baa725649519d722a2c7540c837ad77
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnUpdate = new System.Windows.Forms.Button();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
@@ -82,6 +109,17 @@
             this.dlcPackageCreatorTab.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.DDCTab.SuspendLayout();
+            this.DLCManagerTab.SuspendLayout();
+//<<<<<<< HEAD
+//            this.dlcInlayCreatorTab.SuspendLayout();
+//            this.sngConverterTab.SuspendLayout();
+//            this.oggConverterTab.SuspendLayout();
+//            this.cdlcConverterTab.SuspendLayout();
+//            this.zigProConverterTab.SuspendLayout();
+//            this.GeneralConfigTab.SuspendLayout();
+//            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+//=======
+//>>>>>>> c7d902e63baa725649519d722a2c7540c837ad77
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -89,7 +127,8 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.aboutToolStripMenuItem,
-            this.configurationToolStripMenuItem});
+            this.configurationToolStripMenuItem,
+            this.dLCLibraryManagerToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
@@ -149,7 +188,39 @@
             this.configurationToolStripMenuItem.Size = new System.Drawing.Size(84, 20);
             this.configurationToolStripMenuItem.Text = "Configuration";
             this.configurationToolStripMenuItem.Click += new System.EventHandler(this.configurationToolStripMenuItem_Click);
+            //             // dLCLibraryManagerToolStripMenuItem
             // 
+            this.dLCLibraryManagerToolStripMenuItem.Name = "dLCLibraryManagerToolStripMenuItem";
+            this.dLCLibraryManagerToolStripMenuItem.Size = new System.Drawing.Size(130, 20);
+            this.dLCLibraryManagerToolStripMenuItem.Text = "DLC Library Manager";
+            this.dLCLibraryManagerToolStripMenuItem.Click += new System.EventHandler(this.dLCLibraryManagerToolStripMenuItem_Click);
+            // 
+//<<<<<<< HEAD
+
+//            // tabControl1
+//            // 
+//            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+//                        | System.Windows.Forms.AnchorStyles.Left)
+//                        | System.Windows.Forms.AnchorStyles.Right)));
+//            this.tabControl1.Controls.Add(this.dlcPackageCreatorTab);
+//            this.tabControl1.Controls.Add(this.dlcPackerUnpackerTab);
+//            this.tabControl1.Controls.Add(this.dlcConverterTab);
+//            this.tabControl1.Controls.Add(this.DDCTab);
+//            this.tabControl1.Controls.Add(this.dlcInlayCreatorTab);
+//            this.tabControl1.Controls.Add(this.sngConverterTab);
+//            this.tabControl1.Controls.Add(this.oggConverterTab);
+//            this.tabControl1.Controls.Add(this.cdlcConverterTab);
+//            this.tabControl1.Controls.Add(this.zigProConverterTab);
+//            this.tabControl1.Controls.Add(this.GeneralConfigTab);
+//            this.tabControl1.Controls.Add(this.DLCManagerTab);
+//            this.tabControl1.Location = new System.Drawing.Point(17, 100);
+//            this.tabControl1.Margin = new System.Windows.Forms.Padding(8);
+//            this.tabControl1.MinimumSize = new System.Drawing.Size(550, 590);
+//            this.tabControl1.Name = "tabControl1";
+//            this.tabControl1.SelectedIndex = 0;
+//            this.tabControl1.Size = new System.Drawing.Size(550, 590);
+//            this.tabControl1.TabIndex = 16;
+//=======
             // pictureBox1
             // 
             this.pictureBox1.Anchor = System.Windows.Forms.AnchorStyles.Top;
@@ -161,6 +232,7 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 14;
             this.pictureBox1.TabStop = false;
+//>>>>>>> c7d902e63baa725649519d722a2c7540c837ad77
             // 
             // btnUpdate
             // 
@@ -363,7 +435,24 @@
             this.dlcPackageCreatorTab.Text = "CDLC Creator";
             this.dlcPackageCreatorTab.UseVisualStyleBackColor = true;
             // 
-            // dlcPackageCreator1
+            // DLCManagerTab
+            // 
+            // dlcManager1
+            // 
+            this.dlcManager1.CurrentGameVersion = RocksmithToolkitLib.GameVersion.RS2014;
+            this.dlcManager1.Location = new System.Drawing.Point(-4, 0);
+            this.dlcManager1.Name = "dlcManagers";
+            this.dlcManager1.Size = new System.Drawing.Size(613, 794);
+            this.dlcManager1.TabIndex = 0;
+            // 
+            this.DLCManagerTab.Controls.Add(this.dlcManager1);
+            this.DLCManagerTab.Location = new System.Drawing.Point(4, 22);
+            this.DLCManagerTab.Name = "DLCManagerTab";
+            this.DLCManagerTab.Padding = new System.Windows.Forms.Padding(3);
+            this.DLCManagerTab.Size = new System.Drawing.Size(192, 74);
+            this.DLCManagerTab.TabIndex = 11;
+            this.DLCManagerTab.Text = "Manage DLCs";
+            this.DLCManagerTab.UseVisualStyleBackColor = true;
             // 
             this.dlcPackageCreator1.Album = "";
             this.dlcPackageCreator1.AlbumSort = "";
@@ -463,6 +552,17 @@
             this.dlcPackageCreatorTab.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.DDCTab.ResumeLayout(false);
+            this.DLCManagerTab.ResumeLayout(false);
+//<<<<<<< HEAD
+//            this.dlcInlayCreatorTab.ResumeLayout(false);
+//            this.sngConverterTab.ResumeLayout(false);
+//            this.oggConverterTab.ResumeLayout(false);
+//            this.cdlcConverterTab.ResumeLayout(false);
+//            this.zigProConverterTab.ResumeLayout(false);
+//            this.GeneralConfigTab.ResumeLayout(false);
+//            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+//=======
+//>>>>>>> c7d902e63baa725649519d722a2c7540c837ad77
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -490,7 +590,21 @@
         private CDLC2Tab.CDLC2Tab cdlC2Tab1;
         private System.Windows.Forms.TabPage oggConverterTab;
         private OggConverter.OggConverter oggConverter1;
+        private System.Windows.Forms.ToolStripMenuItem dLCLibraryManagerToolStripMenuItem;
+        private DLCManager.DLCManager dlcManager1;
+        private System.Windows.Forms.TabPage DLCManagerTab;
         private System.Windows.Forms.TabPage sngConverterTab;
+//<<<<<<< HEAD
+
+        
+
+//        private DLCInlayCreator.DLCInlayCreator dlcInlayCreator1;
+//        private Config.GeneralConfig generalConfig1;
+//        private ZpeConverter.ZpeConverter zpeConverter1;
+//        private DDC.DDC ddc1;
+//=======
+        
+//>>>>>>> c7d902e63baa725649519d722a2c7540c837ad77
         private SngConverter.SngConverter sngConverter1;
         private System.Windows.Forms.TabPage dlcInlayCreatorTab;
         private DLCInlayCreator.DLCInlayCreator dlcInlayCreator1;

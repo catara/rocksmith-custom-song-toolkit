@@ -2,12 +2,12 @@
 {
     partial class DLCPackageCreator
     {
-        /// <summary> 
+        /// <summary>
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary> 
+        /// <summary>
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
@@ -22,8 +22,8 @@
 
         #region Component Designer generated code
 
-        /// <summary> 
-        /// Required method for Designer support - do not modify 
+        /// <summary>
+        /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
@@ -105,9 +105,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.numVolSong)).BeginInit();
             this.gbGameVersion.SuspendLayout();
             this.SuspendLayout();
-            // 
+            //
             // btnAlbumArt
-            // 
+            //
             this.btnAlbumArt.Location = new System.Drawing.Point(404, 17);
             this.btnAlbumArt.Name = "btnAlbumArt";
             this.btnAlbumArt.Size = new System.Drawing.Size(34, 23);
@@ -115,9 +115,9 @@
             this.btnAlbumArt.Text = "...";
             this.btnAlbumArt.UseVisualStyleBackColor = true;
             this.btnAlbumArt.Click += new System.EventHandler(this.btnAlbumArt_Click);
-            // 
+            //
             // btnPackageGenerate
-            // 
+            //
             this.btnPackageGenerate.BackColor = System.Drawing.Color.LightSteelBlue;
             this.btnPackageGenerate.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnPackageGenerate.Location = new System.Drawing.Point(396, 500);
@@ -127,9 +127,9 @@
             this.btnPackageGenerate.Text = "Generate";
             this.btnPackageGenerate.UseVisualStyleBackColor = false;
             this.btnPackageGenerate.Click += new System.EventHandler(this.btnPackageGenerate_Click);
-            // 
+            //
             // btnAudio
-            // 
+            //
             this.btnAudio.Location = new System.Drawing.Point(404, 43);
             this.btnAudio.Name = "btnAudio";
             this.btnAudio.Size = new System.Drawing.Size(34, 23);
@@ -137,9 +137,9 @@
             this.btnAudio.Text = "...";
             this.btnAudio.UseVisualStyleBackColor = true;
             this.btnAudio.Click += new System.EventHandler(this.btnAudio_Click);
-            // 
+            //
             // btnArrangementRemove
-            // 
+            //
             this.btnArrangementRemove.ForeColor = System.Drawing.Color.IndianRed;
             this.btnArrangementRemove.Location = new System.Drawing.Point(400, 64);
             this.btnArrangementRemove.Name = "btnArrangementRemove";
@@ -148,9 +148,9 @@
             this.btnArrangementRemove.Text = "Remove";
             this.btnArrangementRemove.UseVisualStyleBackColor = true;
             this.btnArrangementRemove.Click += new System.EventHandler(this.btnArrangementRemove_Click);
-            // 
+            //
             // btnArrangementAdd
-            // 
+            //
             this.btnArrangementAdd.ForeColor = System.Drawing.Color.IndianRed;
             this.btnArrangementAdd.Location = new System.Drawing.Point(401, 39);
             this.btnArrangementAdd.Name = "btnArrangementAdd";
@@ -159,9 +159,9 @@
             this.btnArrangementAdd.Text = "Add";
             this.btnArrangementAdd.UseVisualStyleBackColor = true;
             this.btnArrangementAdd.Click += new System.EventHandler(this.btnArrangementAdd_Click);
-            // 
+            //
             // lstArrangements
-            // 
+            //
             this.lstArrangements.FormattingEnabled = true;
             this.lstArrangements.Location = new System.Drawing.Point(7, 17);
             this.lstArrangements.Name = "lstArrangements";
@@ -172,9 +172,9 @@
                     "der of the Arrangements list.");
             this.lstArrangements.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ListBox_KeyDown);
             this.lstArrangements.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstArrangement_MouseDoubleClick);
-            // 
+            //
             // btnTemplateSave
-            // 
+            //
             this.btnTemplateSave.BackColor = System.Drawing.SystemColors.Control;
             this.btnTemplateSave.ForeColor = System.Drawing.Color.IndianRed;
             this.btnTemplateSave.Location = new System.Drawing.Point(116, 500);
@@ -184,9 +184,9 @@
             this.btnTemplateSave.Text = "Save Template";
             this.btnTemplateSave.UseVisualStyleBackColor = false;
             this.btnTemplateSave.Click += new System.EventHandler(this.btnTemplateSave_Click);
-            // 
+            //
             // btnTemplateLoad
-            // 
+            //
             this.btnTemplateLoad.BackColor = System.Drawing.SystemColors.Control;
             this.btnTemplateLoad.ForeColor = System.Drawing.Color.IndianRed;
             this.btnTemplateLoad.Location = new System.Drawing.Point(10, 500);
@@ -196,9 +196,9 @@
             this.btnTemplateLoad.Text = "Load Template";
             this.btnTemplateLoad.UseVisualStyleBackColor = false;
             this.btnTemplateLoad.Click += new System.EventHandler(this.btnTemplateLoad_Click);
-            // 
+            //
             // cmbAppIds
-            // 
+            //
             this.cmbAppIds.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbAppIds.DropDownWidth = 320;
             this.cmbAppIds.Location = new System.Drawing.Point(233, 69);
@@ -207,9 +207,9 @@
             this.cmbAppIds.Size = new System.Drawing.Size(156, 21);
             this.cmbAppIds.TabIndex = 12;
             this.cmbAppIds.SelectedIndexChanged += new System.EventHandler(this.cmbAppIds_SelectedValueChanged);
-            // 
+            //
             // btnToneRemove
-            // 
+            //
             this.btnToneRemove.ForeColor = System.Drawing.Color.IndianRed;
             this.btnToneRemove.Location = new System.Drawing.Point(449, 43);
             this.btnToneRemove.Name = "btnToneRemove";
@@ -219,9 +219,9 @@
             this.toolTip.SetToolTip(this.btnToneRemove, "Removes the selected tone.");
             this.btnToneRemove.UseVisualStyleBackColor = true;
             this.btnToneRemove.Click += new System.EventHandler(this.btnToneRemove_Click);
-            // 
+            //
             // btnToneAdd
-            // 
+            //
             this.btnToneAdd.ForeColor = System.Drawing.Color.IndianRed;
             this.btnToneAdd.Location = new System.Drawing.Point(400, 18);
             this.btnToneAdd.Name = "btnToneAdd";
@@ -230,9 +230,9 @@
             this.btnToneAdd.Text = "Add";
             this.btnToneAdd.UseVisualStyleBackColor = true;
             this.btnToneAdd.Click += new System.EventHandler(this.btnToneAdd_Click);
-            // 
+            //
             // lstTones
-            // 
+            //
             this.lstTones.FormattingEnabled = true;
             this.lstTones.Location = new System.Drawing.Point(7, 19);
             this.lstTones.Name = "lstTones";
@@ -243,9 +243,9 @@
                     " of the Tones list.");
             this.lstTones.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ListBox_KeyDown);
             this.lstTones.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstTone_MouseDoubleClick);
-            // 
+            //
             // btnArrangementEdit
-            // 
+            //
             this.btnArrangementEdit.ForeColor = System.Drawing.Color.IndianRed;
             this.btnArrangementEdit.Location = new System.Drawing.Point(447, 39);
             this.btnArrangementEdit.Name = "btnArrangementEdit";
@@ -254,9 +254,9 @@
             this.btnArrangementEdit.Text = "Edit";
             this.btnArrangementEdit.UseVisualStyleBackColor = true;
             this.btnArrangementEdit.Click += new System.EventHandler(this.btnArrangementEdit_Click);
-            // 
+            //
             // btnToneEdit
-            // 
+            //
             this.btnToneEdit.ForeColor = System.Drawing.Color.IndianRed;
             this.btnToneEdit.Location = new System.Drawing.Point(401, 43);
             this.btnToneEdit.Name = "btnToneEdit";
@@ -265,9 +265,9 @@
             this.btnToneEdit.Text = "Edit";
             this.btnToneEdit.UseVisualStyleBackColor = true;
             this.btnToneEdit.Click += new System.EventHandler(this.btnToneEdit_Click);
-            // 
+            //
             // btnToneImport
-            // 
+            //
             this.btnToneImport.ForeColor = System.Drawing.Color.IndianRed;
             this.btnToneImport.Location = new System.Drawing.Point(449, 68);
             this.btnToneImport.Name = "btnToneImport";
@@ -277,9 +277,9 @@
             this.toolTip.SetToolTip(this.btnToneImport, "Import tone from file");
             this.btnToneImport.UseVisualStyleBackColor = true;
             this.btnToneImport.Click += new System.EventHandler(this.btnToneImport_Click);
-            // 
+            //
             // chkPlatformPC
-            // 
+            //
             this.chkPlatformPC.AutoSize = true;
             this.chkPlatformPC.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkPlatformPC.ForeColor = System.Drawing.SystemColors.ControlText;
@@ -290,9 +290,9 @@
             this.chkPlatformPC.Text = "PC";
             this.chkPlatformPC.UseVisualStyleBackColor = true;
             this.chkPlatformPC.CheckedChanged += new System.EventHandler(this.chkPlatform_CheckedChanged);
-            // 
+            //
             // chkPlatformXBox360
-            // 
+            //
             this.chkPlatformXBox360.AutoSize = true;
             this.chkPlatformXBox360.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkPlatformXBox360.ForeColor = System.Drawing.SystemColors.ControlText;
@@ -303,9 +303,9 @@
             this.chkPlatformXBox360.Text = "XBox360";
             this.chkPlatformXBox360.UseVisualStyleBackColor = true;
             this.chkPlatformXBox360.CheckedChanged += new System.EventHandler(this.chkPlatform_CheckedChanged);
-            // 
+            //
             // chkPlatformPS3
-            // 
+            //
             this.chkPlatformPS3.AutoSize = true;
             this.chkPlatformPS3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkPlatformPS3.ForeColor = System.Drawing.SystemColors.ControlText;
@@ -316,9 +316,9 @@
             this.chkPlatformPS3.Text = "PS3";
             this.chkPlatformPS3.UseVisualStyleBackColor = true;
             this.chkPlatformPS3.CheckedChanged += new System.EventHandler(this.chkPlatform_CheckedChanged);
-            // 
+            //
             // label3
-            // 
+            //
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.SystemColors.ControlText;
@@ -328,9 +328,9 @@
             this.label3.TabIndex = 13;
             this.label3.Text = "LF";
             this.toolTip.SetToolTip(this.label3, "Loudness Factor");
-            // 
+            //
             // rbRs2012
-            // 
+            //
             this.rbRs2012.AutoSize = true;
             this.rbRs2012.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rbRs2012.ForeColor = System.Drawing.SystemColors.ControlText;
@@ -341,9 +341,9 @@
             this.rbRs2012.TabStop = true;
             this.rbRs2012.Text = "Rocksmith";
             this.rbRs2012.UseVisualStyleBackColor = true;
-            // 
+            //
             // rbRs2014
-            // 
+            //
             this.rbRs2014.AutoSize = true;
             this.rbRs2014.Checked = true;
             this.rbRs2014.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -355,9 +355,9 @@
             this.rbRs2014.TabStop = true;
             this.rbRs2014.Text = "Rocksmith 2014";
             this.rbRs2014.UseVisualStyleBackColor = true;
-            // 
+            //
             // gbPlatform
-            // 
+            //
             this.gbPlatform.Controls.Add(this.chkPlatformMAC);
             this.gbPlatform.Controls.Add(this.chkPlatformPS3);
             this.gbPlatform.Controls.Add(this.chkPlatformXBox360);
@@ -370,9 +370,9 @@
             this.gbPlatform.TabIndex = 1;
             this.gbPlatform.TabStop = false;
             this.gbPlatform.Text = "Platform:";
-            // 
+            //
             // chkPlatformMAC
-            // 
+            //
             this.chkPlatformMAC.AutoSize = true;
             this.chkPlatformMAC.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkPlatformMAC.ForeColor = System.Drawing.SystemColors.ControlText;
@@ -383,9 +383,9 @@
             this.chkPlatformMAC.Text = "MAC";
             this.chkPlatformMAC.UseVisualStyleBackColor = true;
             this.chkPlatformMAC.CheckedChanged += new System.EventHandler(this.chkPlatform_CheckedChanged);
-            // 
+            //
             // gbFiles
-            // 
+            //
             this.gbFiles.Controls.Add(this.label7);
             this.gbFiles.Controls.Add(this.label2);
             this.gbFiles.Controls.Add(this.txtAlbumArtPath);
@@ -400,9 +400,9 @@
             this.gbFiles.TabIndex = 4;
             this.gbFiles.TabStop = false;
             this.gbFiles.Text = "Files";
-            // 
+            //
             // label7
-            // 
+            //
             this.label7.AutoSize = true;
             this.label7.ForeColor = System.Drawing.Color.MediumSlateBlue;
             this.label7.Location = new System.Drawing.Point(445, 17);
@@ -412,9 +412,9 @@
             this.label7.Text = "Audio\r\nQuality";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.label7.MouseHover += new System.EventHandler(this.AudioQuality_MouseEnter);
-            // 
+            //
             // label2
-            // 
+            //
             this.label2.AutoSize = true;
             this.label2.ForeColor = System.Drawing.Color.MediumSlateBlue;
             this.label2.Location = new System.Drawing.Point(4, 69);
@@ -423,9 +423,9 @@
             this.label2.TabIndex = 6;
             this.label2.Text = "Song preview is generated automatically if not provided in format \'filename_previ" +
                 "ew.wem\'\r\n";
-            // 
+            //
             // txtAlbumArtPath
-            // 
+            //
             this.txtAlbumArtPath.BackColor = System.Drawing.SystemColors.Window;
             this.txtAlbumArtPath.Cue = "Album Art [use 512x512 image size] (*.dds, *.gif, *.jpg, *.png)";
             this.txtAlbumArtPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
@@ -436,9 +436,9 @@
             this.txtAlbumArtPath.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtAlbumArtPath.Size = new System.Drawing.Size(389, 20);
             this.txtAlbumArtPath.TabIndex = 4;
-            // 
+            //
             // numAudioQuality
-            // 
+            //
             this.numAudioQuality.ForeColor = System.Drawing.SystemColors.ControlText;
             this.numAudioQuality.Location = new System.Drawing.Point(447, 46);
             this.numAudioQuality.Maximum = new decimal(new int[] {
@@ -461,9 +461,9 @@
             0,
             0});
             this.numAudioQuality.Enter += new System.EventHandler(this.AudioQuality_MouseEnter);
-            // 
+            //
             // txtAudioPath
-            // 
+            //
             this.txtAudioPath.BackColor = System.Drawing.SystemColors.Window;
             this.txtAudioPath.Cue = "Convert compatible audio to Wwise 2013 (*.wem, *.ogg, *.wav)";
             this.txtAudioPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
@@ -475,9 +475,8 @@
             this.txtAudioPath.Size = new System.Drawing.Size(389, 20);
             this.txtAudioPath.TabIndex = 5;
             this.toolTip.SetToolTip(this.txtAudioPath, resources.GetString("txtAudioPath.ToolTip"));
-            // 
             // gbTones
-            // 
+            //
             this.gbTones.Controls.Add(this.btnToneDuplicate);
             this.gbTones.Controls.Add(this.label1);
             this.gbTones.Controls.Add(this.lstTones);
@@ -492,9 +491,9 @@
             this.gbTones.TabIndex = 5;
             this.gbTones.TabStop = false;
             this.gbTones.Text = "Tones";
-            // 
+            //
             // btnToneDuplicate
-            // 
+            //
             this.btnToneDuplicate.ForeColor = System.Drawing.Color.IndianRed;
             this.btnToneDuplicate.Location = new System.Drawing.Point(401, 68);
             this.btnToneDuplicate.Name = "btnToneDuplicate";
@@ -504,9 +503,9 @@
             this.toolTip.SetToolTip(this.btnToneDuplicate, "Duplicate selected tone");
             this.btnToneDuplicate.UseVisualStyleBackColor = true;
             this.btnToneDuplicate.Click += new System.EventHandler(this.btnToneDuplicate_Click);
-            // 
+            //
             // label1
-            // 
+            //
             this.label1.AutoSize = true;
             this.label1.ForeColor = System.Drawing.Color.MediumSlateBlue;
             this.label1.Location = new System.Drawing.Point(2, 106);
@@ -515,9 +514,9 @@
             this.label1.TabIndex = 6;
             this.label1.Text = "Use \"Up/Down\" keys to change order of the tones, use \"Delete\" to delete and \"D\" t" +
                 "o duplicate a tone.";
-            // 
+            //
             // gbArrangements
-            // 
+            //
             this.gbArrangements.Controls.Add(this.chkShowlights);
             this.gbArrangements.Controls.Add(this.btnArrangementQuick);
             this.gbArrangements.Controls.Add(this.keyboardDescArrLabel);
@@ -532,9 +531,9 @@
             this.gbArrangements.TabIndex = 3;
             this.gbArrangements.TabStop = false;
             this.gbArrangements.Text = "Arrangements";
-            // 
+            //
             // chkShowlights
-            // 
+            //
             this.chkShowlights.AutoSize = true;
             this.chkShowlights.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.chkShowlights.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -546,9 +545,9 @@
             this.chkShowlights.Text = "Default Showlights";
             this.toolTip.SetToolTip(this.chkShowlights, resources.GetString("chkShowlights.ToolTip"));
             this.chkShowlights.UseVisualStyleBackColor = true;
-            // 
+            //
             // btnArrangementQuick
-            // 
+            //
             this.btnArrangementQuick.ForeColor = System.Drawing.Color.IndianRed;
             this.btnArrangementQuick.Location = new System.Drawing.Point(401, 14);
             this.btnArrangementQuick.Name = "btnArrangementQuick";
@@ -558,9 +557,9 @@
             this.btnArrangementQuick.UseVisualStyleBackColor = true;
             this.btnArrangementQuick.Click += new System.EventHandler(this.btnArrangementQuick_Click);
             this.btnArrangementQuick.MouseEnter += new System.EventHandler(this.btnArrangementQuick_MouseEnter);
-            // 
+            //
             // keyboardDescArrLabel
-            // 
+            //
             this.keyboardDescArrLabel.AutoSize = true;
             this.keyboardDescArrLabel.ForeColor = System.Drawing.Color.MediumSlateBlue;
             this.keyboardDescArrLabel.Location = new System.Drawing.Point(2, 89);
@@ -568,9 +567,9 @@
             this.keyboardDescArrLabel.Size = new System.Drawing.Size(336, 13);
             this.keyboardDescArrLabel.TabIndex = 6;
             this.keyboardDescArrLabel.Text = "Use keyboard \"Up/Down\" keys to change order of the arrangements.";
-            // 
+            //
             // gbSongInformation
-            // 
+            //
             this.gbSongInformation.Controls.Add(this.chkJapaneseTitle);
             this.gbSongInformation.Controls.Add(this.label8);
             this.gbSongInformation.Controls.Add(this.cmbAppIds);
@@ -601,9 +600,9 @@
             this.gbSongInformation.TabIndex = 2;
             this.gbSongInformation.TabStop = false;
             this.gbSongInformation.Text = "Song Information";
-            // 
+            //
             // chkJapaneseTitle
-            // 
+            //
             this.chkJapaneseTitle.AutoCheck = false;
             this.chkJapaneseTitle.AutoSize = true;
             this.chkJapaneseTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -618,9 +617,9 @@
             this.chkJapaneseTitle.UseVisualStyleBackColor = true;
             this.chkJapaneseTitle.CheckStateChanged += new System.EventHandler(this.cbJapaneseTitle_CheckedChanged);
             this.chkJapaneseTitle.Click += new System.EventHandler(this.cbJapaneseTitle_Click);
-            // 
+            //
             // label8
-            // 
+            //
             this.label8.AutoSize = true;
             this.label8.ForeColor = System.Drawing.Color.MediumSlateBlue;
             this.label8.Location = new System.Drawing.Point(216, 91);
@@ -628,9 +627,147 @@
             this.label8.Size = new System.Drawing.Size(83, 13);
             this.label8.TabIndex = 18;
             this.label8.Text = "Package AppID";
-            // 
+            //
+            // label6
+            //
+            this.label6.AutoSize = true;
+            this.label6.ForeColor = System.Drawing.Color.MediumSlateBlue;
+            this.label6.Location = new System.Drawing.Point(68, 91);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(65, 13);
+            this.label6.TabIndex = 17;
+            this.label6.Text = "Preview vol.";
+            //
+            // label5
+            //
+            this.label5.AutoSize = true;
+            this.label5.ForeColor = System.Drawing.Color.MediumSlateBlue;
+            this.label5.Location = new System.Drawing.Point(4, 91);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(52, 13);
+            this.label5.TabIndex = 16;
+            this.label5.Text = "Song vol.";
+            //
+            // txtAppId
+            //
+            this.txtAppId.BackColor = System.Drawing.SystemColors.Window;
+            this.txtAppId.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txtAppId.ForeColor = System.Drawing.Color.Gray;
+            this.txtAppId.Location = new System.Drawing.Point(168, 70);
+            this.txtAppId.Name = "txtAppId";
+            this.txtAppId.Size = new System.Drawing.Size(59, 20);
+            this.txtAppId.TabIndex = 11;
+            this.txtAppId.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.toolTip.SetToolTip(this.txtAppId, "Specify any valid App ID for a song\r\nthat you own by typing it into this box");
+            this.txtAppId.Validating += new System.ComponentModel.CancelEventHandler(this.txtAppId_Validating);
+            //
+            // label4
+            //
+            this.label4.AutoSize = true;
+//            this.label4.ForeColor = System.Drawing.SystemColors.ControlText;
+//            this.label4.Location = new System.Drawing.Point(116, 73);
+//            this.label4.Name = "label4";
+//            this.label4.Size = new System.Drawing.Size(20, 13);
+//            this.label4.TabIndex = 14;
+//            this.label4.Text = "dB";
+            //
+            // label9
+            //
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label9.ForeColor = System.Drawing.Color.MediumSlateBlue;
+            this.label9.Location = new System.Drawing.Point(139, 92);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(32, 12);
+            this.label9.TabIndex = 21;
+            this.label9.Text = "EN/JP";
+            //
+            // gbGameVersion
+            //
+            this.gbGameVersion.Controls.Add(this.rbConvert);
+            this.gbGameVersion.Controls.Add(this.rbRs2014);
+            this.gbGameVersion.Controls.Add(this.rbRs2012);
+            this.gbGameVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gbGameVersion.ForeColor = System.Drawing.Color.IndianRed;
+            this.gbGameVersion.Location = new System.Drawing.Point(3, 0);
+            this.gbGameVersion.Name = "gbGameVersion";
+            this.gbGameVersion.Size = new System.Drawing.Size(261, 41);
+            this.gbGameVersion.TabIndex = 0;
+            this.gbGameVersion.TabStop = false;
+            this.gbGameVersion.Text = "Game Version";
+            //
+            // rbConvert
+            //
+            this.rbConvert.AutoSize = true;
+            this.rbConvert.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rbConvert.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.rbConvert.Location = new System.Drawing.Point(195, 17);
+            this.rbConvert.Name = "rbConvert";
+            this.rbConvert.Size = new System.Drawing.Size(62, 17);
+            this.rbConvert.TabIndex = 1;
+            this.rbConvert.TabStop = true;
+            this.rbConvert.Text = "Convert";
+            this.rbConvert.UseVisualStyleBackColor = true;
+            //
+            // btnPackageImport
+            //
+            this.btnPackageImport.BackColor = System.Drawing.SystemColors.Control;
+            this.btnPackageImport.ForeColor = System.Drawing.Color.IndianRed;
+            this.btnPackageImport.Location = new System.Drawing.Point(222, 503);
+            this.btnPackageImport.Name = "btnPackageImport";
+            this.btnPackageImport.Size = new System.Drawing.Size(97, 29);
+            this.btnPackageImport.TabIndex = 0;
+            this.btnPackageImport.Text = "Import Package";
+            this.toolTip.SetToolTip(this.btnPackageImport, resources.GetString("btnPackageImport.ToolTip"));
+            this.btnPackageImport.UseVisualStyleBackColor = false;
+            this.btnPackageImport.Click += new System.EventHandler(this.btnPackageImport_Click);
+            //
+            // lblCurrentOperation
+            //
+            this.lblCurrentOperation.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.lblCurrentOperation.Location = new System.Drawing.Point(8, 538);
+            this.lblCurrentOperation.Name = "lblCurrentOperation";
+            this.lblCurrentOperation.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.lblCurrentOperation.Size = new System.Drawing.Size(205, 17);
+            this.lblCurrentOperation.TabIndex = 10;
+            this.lblCurrentOperation.Text = "...";
+            this.lblCurrentOperation.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblCurrentOperation.Visible = false;
+            //
+            // pbUpdateProgress
+            //
+            this.pbUpdateProgress.Location = new System.Drawing.Point(222, 538);
+            this.pbUpdateProgress.Name = "pbUpdateProgress";
+            this.pbUpdateProgress.Size = new System.Drawing.Size(271, 17);
+            this.pbUpdateProgress.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            this.pbUpdateProgress.TabIndex = 11;
+            this.pbUpdateProgress.Visible = false;
+            //
+            // toolTip
+            //
+            this.toolTip.AutomaticDelay = 300;
+            this.toolTip.AutoPopDelay = 15000;
+            this.toolTip.InitialDelay = 300;
+            this.toolTip.IsBalloon = true;
+            this.toolTip.ReshowDelay = 300;
+            //
+            // btnDevUse
+            //
+            this.btnDevUse.BackColor = System.Drawing.SystemColors.Control;
+            this.btnDevUse.ForeColor = System.Drawing.Color.IndianRed;
+            this.btnDevUse.Location = new System.Drawing.Point(331, 503);
+            this.btnDevUse.Name = "btnDevUse";
+            this.btnDevUse.Size = new System.Drawing.Size(47, 29);
+            this.btnDevUse.TabIndex = 8;
+            this.btnDevUse.Text = "DEV";
+            this.toolTip.SetToolTip(this.btnDevUse, "Developer User Only - For Debugging\r\nUse to load a folder containing song artifac" +
+                    "ts\r\n(a previously unpacked CDLC archive)");
+            this.btnDevUse.UseVisualStyleBackColor = false;
+            this.btnDevUse.Visible = false;
+            this.btnDevUse.Click += new System.EventHandler(this.btnDevUse_Click);
+            //
             // txtDlcKey
-            // 
+            //
             this.txtDlcKey.BackColor = System.Drawing.Color.Snow;
             this.txtDlcKey.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtDlcKey.Cue = "DLC Key";
@@ -645,9 +782,9 @@
             this.toolTip.SetToolTip(this.txtDlcKey, "DLC Key (aka Song Key):\nA unique humanly readable song key.\nNo spaces or special " +
                     "characters allowed.\n\nUse the Configuration menu to \nsave your Charter Name so th" +
                     "at \nDLC Key is auto formatted properly.");
-            // 
+            //
             // txtAlbumSort
-            // 
+            //
             this.txtAlbumSort.BackColor = System.Drawing.SystemColors.Window;
             this.txtAlbumSort.Cue = "Album Sort";
             this.txtAlbumSort.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
@@ -657,9 +794,9 @@
             this.txtAlbumSort.Size = new System.Drawing.Size(118, 20);
             this.txtAlbumSort.TabIndex = 6;
             this.toolTip.SetToolTip(this.txtAlbumSort, "Album Sort");
-            // 
+            //
             // label6
-            // 
+            //
             this.label6.AutoSize = true;
             this.label6.ForeColor = System.Drawing.Color.MediumSlateBlue;
             this.label6.Location = new System.Drawing.Point(68, 91);
@@ -667,9 +804,9 @@
             this.label6.Size = new System.Drawing.Size(65, 13);
             this.label6.TabIndex = 17;
             this.label6.Text = "Preview vol.";
-            // 
+            //
             // txtSongTitleSort
-            // 
+            //
             this.txtSongTitleSort.BackColor = System.Drawing.SystemColors.Window;
             this.txtSongTitleSort.Cue = "Song Title Sort";
             this.txtSongTitleSort.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
@@ -679,9 +816,9 @@
             this.txtSongTitleSort.Size = new System.Drawing.Size(149, 20);
             this.txtSongTitleSort.TabIndex = 5;
             this.toolTip.SetToolTip(this.txtSongTitleSort, "Song Title Sort");
-            // 
+            //
             // label5
-            // 
+            //
             this.label5.AutoSize = true;
             this.label5.ForeColor = System.Drawing.Color.MediumSlateBlue;
             this.label5.Location = new System.Drawing.Point(4, 91);
@@ -689,9 +826,9 @@
             this.label5.Size = new System.Drawing.Size(52, 13);
             this.label5.TabIndex = 16;
             this.label5.Text = "Song vol.";
-            // 
+            //
             // numVolPreview
-            // 
+            //
             this.numVolPreview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.numVolPreview.DecimalPlaces = 1;
             this.numVolPreview.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -722,9 +859,9 @@
             0,
             -2147483648});
             this.numVolPreview.Enter += new System.EventHandler(this.Volume_MouseEnter);
-            // 
+            //
             // txtVersion
-            // 
+            //
             this.txtVersion.BackColor = System.Drawing.SystemColors.Window;
             this.txtVersion.Cue = "Version";
             this.txtVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
@@ -737,9 +874,9 @@
             this.txtVersion.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.toolTip.SetToolTip(this.txtVersion, "Song Version");
             this.txtVersion.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtVersion_KeyPress);
-            // 
+            //
             // txtAlbum
-            // 
+            //
             this.txtAlbum.BackColor = System.Drawing.SystemColors.Window;
             this.txtAlbum.Cue = "Album";
             this.txtAlbum.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
@@ -749,9 +886,9 @@
             this.txtAlbum.Size = new System.Drawing.Size(147, 20);
             this.txtAlbum.TabIndex = 2;
             this.toolTip.SetToolTip(this.txtAlbum, "Album");
-            // 
+            //
             // txtYear
-            // 
+            //
             this.txtYear.BackColor = System.Drawing.SystemColors.Window;
             this.txtYear.Cue = "Year";
             this.txtYear.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
@@ -762,9 +899,9 @@
             this.txtYear.TabIndex = 7;
             this.txtYear.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.toolTip.SetToolTip(this.txtYear, "Year");
-            // 
+            //
             // txtTempo
-            // 
+            //
             this.txtTempo.BackColor = System.Drawing.SystemColors.Window;
             this.txtTempo.Cue = "Tempo";
             this.txtTempo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
@@ -775,9 +912,9 @@
             this.txtTempo.TabIndex = 13;
             this.txtTempo.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.toolTip.SetToolTip(this.txtTempo, "Average Tempo");
-            // 
+            //
             // numVolSong
-            // 
+            //
             this.numVolSong.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.numVolSong.DecimalPlaces = 1;
             this.numVolSong.ForeColor = System.Drawing.SystemColors.ControlText;
@@ -808,9 +945,9 @@
             -2147483648});
             this.numVolSong.ValueChanged += new System.EventHandler(this.numVolSong_ValueChanged);
             this.numVolSong.Enter += new System.EventHandler(this.Volume_MouseEnter);
-            // 
+            //
             // txtAppId
-            // 
+            //
             this.txtAppId.BackColor = System.Drawing.SystemColors.Window;
             this.txtAppId.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txtAppId.ForeColor = System.Drawing.Color.Gray;
@@ -821,9 +958,9 @@
             this.txtAppId.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.toolTip.SetToolTip(this.txtAppId, "Specify any valid App ID for a song\r\nthat you own by typing it into this box");
             this.txtAppId.Validating += new System.ComponentModel.CancelEventHandler(this.txtAppId_Validating);
-            // 
+            //
             // txtArtistSort
-            // 
+            //
             this.txtArtistSort.BackColor = System.Drawing.SystemColors.Window;
             this.txtArtistSort.Cue = "Artist Sort";
             this.txtArtistSort.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
@@ -833,9 +970,9 @@
             this.txtArtistSort.Size = new System.Drawing.Size(154, 20);
             this.txtArtistSort.TabIndex = 4;
             this.toolTip.SetToolTip(this.txtArtistSort, "Artist Sort");
-            // 
+            //
             // label4
-            // 
+            //
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.SystemColors.ControlText;
@@ -845,9 +982,9 @@
             this.label4.TabIndex = 14;
             this.label4.Text = "LF";
             this.toolTip.SetToolTip(this.label4, "Loudness Factor");
-            // 
+            //
             // label9
-            // 
+            //
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label9.ForeColor = System.Drawing.Color.MediumSlateBlue;
@@ -856,9 +993,9 @@
             this.label9.Size = new System.Drawing.Size(32, 12);
             this.label9.TabIndex = 21;
             this.label9.Text = "EN/JP";
-            // 
+            //
             // txtArtist
-            // 
+            //
             this.txtArtist.BackColor = System.Drawing.SystemColors.Window;
             this.txtArtist.Cue = "Artist";
             this.txtArtist.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
@@ -868,9 +1005,9 @@
             this.txtArtist.Size = new System.Drawing.Size(154, 20);
             this.txtArtist.TabIndex = 0;
             this.toolTip.SetToolTip(this.txtArtist, "Artist");
-            // 
+            //
             // txtSongTitle
-            // 
+            //
             this.txtSongTitle.BackColor = System.Drawing.SystemColors.Window;
             this.txtSongTitle.Cue = "Song Title";
             this.txtSongTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
@@ -880,9 +1017,9 @@
             this.txtSongTitle.Size = new System.Drawing.Size(170, 20);
             this.txtSongTitle.TabIndex = 1;
             this.toolTip.SetToolTip(this.txtSongTitle, "Song Title");
-            // 
+            //
             // txtJapaneseArtistName
-            // 
+            //
             this.txtJapaneseArtistName.BackColor = System.Drawing.SystemColors.Window;
             this.txtJapaneseArtistName.Cue = "日本語 Artist";
             this.txtJapaneseArtistName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
@@ -893,9 +1030,9 @@
             this.txtJapaneseArtistName.TabIndex = 20;
             this.toolTip.SetToolTip(this.txtJapaneseArtistName, "日本語 Artist");
             this.txtJapaneseArtistName.Validating += new System.ComponentModel.CancelEventHandler(this.txtJapaneseSongTitle_Validating);
-            // 
+            //
             // txtJapaneseSongTitle
-            // 
+            //
             this.txtJapaneseSongTitle.BackColor = System.Drawing.SystemColors.Window;
             this.txtJapaneseSongTitle.Cue = "日本語 Title";
             this.txtJapaneseSongTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
@@ -906,9 +1043,9 @@
             this.txtJapaneseSongTitle.TabIndex = 19;
             this.toolTip.SetToolTip(this.txtJapaneseSongTitle, "日本語 Song Title");
             this.txtJapaneseSongTitle.Validating += new System.ComponentModel.CancelEventHandler(this.txtJapaneseSongTitle_Validating);
-            // 
+            //
             // gbGameVersion
-            // 
+            //
             this.gbGameVersion.Controls.Add(this.rbConvert);
             this.gbGameVersion.Controls.Add(this.rbRs2014);
             this.gbGameVersion.Controls.Add(this.rbRs2012);
@@ -921,9 +1058,8 @@
             this.gbGameVersion.TabStop = false;
             this.gbGameVersion.Text = "Game Version";
             this.gbGameVersion.Enter += new System.EventHandler(this.GameVersion_MouseEnter);
-            // 
             // rbConvert
-            // 
+            //
             this.rbConvert.AutoSize = true;
             this.rbConvert.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rbConvert.ForeColor = System.Drawing.SystemColors.ControlText;
@@ -934,9 +1070,9 @@
             this.rbConvert.TabStop = true;
             this.rbConvert.Text = "Convert";
             this.rbConvert.UseVisualStyleBackColor = true;
-            // 
+            //
             // btnPackageImport
-            // 
+            //
             this.btnPackageImport.BackColor = System.Drawing.SystemColors.Control;
             this.btnPackageImport.ForeColor = System.Drawing.Color.IndianRed;
             this.btnPackageImport.Location = new System.Drawing.Point(222, 500);
@@ -947,9 +1083,9 @@
             this.toolTip.SetToolTip(this.btnPackageImport, resources.GetString("btnPackageImport.ToolTip"));
             this.btnPackageImport.UseVisualStyleBackColor = false;
             this.btnPackageImport.Click += new System.EventHandler(this.btnPackageImport_Click);
-            // 
+            //
             // lblCurrentOperation
-            // 
+            //
             this.lblCurrentOperation.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.lblCurrentOperation.Location = new System.Drawing.Point(8, 538);
             this.lblCurrentOperation.Name = "lblCurrentOperation";
@@ -959,26 +1095,26 @@
             this.lblCurrentOperation.Text = "...";
             this.lblCurrentOperation.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lblCurrentOperation.Visible = false;
-            // 
+            //
             // pbUpdateProgress
-            // 
+            //
             this.pbUpdateProgress.Location = new System.Drawing.Point(222, 538);
             this.pbUpdateProgress.Name = "pbUpdateProgress";
             this.pbUpdateProgress.Size = new System.Drawing.Size(271, 17);
             this.pbUpdateProgress.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             this.pbUpdateProgress.TabIndex = 11;
             this.pbUpdateProgress.Visible = false;
-            // 
+            //
             // toolTip
-            // 
+            //
             this.toolTip.AutomaticDelay = 300;
             this.toolTip.AutoPopDelay = 15000;
             this.toolTip.InitialDelay = 300;
             this.toolTip.IsBalloon = true;
             this.toolTip.ReshowDelay = 300;
-            // 
+            //
             // btnDevUse
-            // 
+            //
             this.btnDevUse.BackColor = System.Drawing.SystemColors.Control;
             this.btnDevUse.ForeColor = System.Drawing.Color.IndianRed;
             this.btnDevUse.Location = new System.Drawing.Point(331, 500);
@@ -991,9 +1127,9 @@
             this.btnDevUse.UseVisualStyleBackColor = false;
             this.btnDevUse.Visible = false;
             this.btnDevUse.Click += new System.EventHandler(this.btnDevUse_Click);
-            // 
+            //
             // DLCPackageCreator
-            // 
+            //
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoSize = true;
             this.Controls.Add(this.btnDevUse);

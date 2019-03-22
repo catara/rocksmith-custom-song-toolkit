@@ -92,6 +92,7 @@ namespace RocksmithToolkitLib.DLCPackage
         /// <returns>Unpacked Directory Path</returns>
         public static string Unpack(string srcPath, string destDirPath, Platform predefinedPlatform = null, bool decodeAudio = false, bool overwriteSongXml = false)
         {
+            var ps4 = false;
             ExternalApps.VerifyExternalApps();
             Platform srcPlatform = srcPath.GetPlatform();
 
@@ -130,6 +131,7 @@ namespace RocksmithToolkitLib.DLCPackage
                     break;
                 case GamePlatform.PS3:
                     unpackedDir = UnpackPS3Package(srcPath, destDirPath, srcPlatform);
+                    if (srcPlatform.version == GameVersion.None) { srcPlatform.version = GameVersion.RS2014; ps4 = true; } //bcapi
                     break;
                 case GamePlatform.None:
                     throw new InvalidOperationException("Platform not found :(");
@@ -193,57 +195,58 @@ namespace RocksmithToolkitLib.DLCPackage
                             att = Manifest2014<Attributes2014>.LoadFromFile(jsonFiles).Entries.ToArray()[0].Value.ToArray()[0].Value;
                     }
 
-                    // create the xml file from sng file
-                    var sngContent = Sng2014File.LoadFromFile(sngFile, srcPlatform);
-                    using (var outputStream = new FileStream(xmlSngFile, FileMode.Create, FileAccess.ReadWrite))
-                    {
-                        dynamic xmlContent = null;
-
-                        if (arrType == ArrangementType.Vocal)
-                            xmlContent = new Vocals(sngContent);
-                        else
-                            xmlContent = new Song2014(sngContent, att);
-
-                        xmlContent.Serialize(outputStream);
-                    }
-
-                    // capture/preserve any existing xml comments
-                    IEnumerable<XComment> xmlComments = null;
-                    if (File.Exists(xmlEofFile))
-                        xmlComments = Song2014.ReadXmlComments(xmlEofFile);
-
-                    // correct old toolkit/EOF xml (tuning) issues by syncing with SNG data
-                    if (File.Exists(xmlEofFile) && !overwriteSongXml && arrType != ArrangementType.Vocal)
-                    {
-                        var eofSong = Song2014.LoadFromFile(xmlEofFile);
-                        var sngSong = Song2014.LoadFromFile(xmlSngFile);
-                        if (eofSong.Tuning != sngSong.Tuning)
+                    if (!ps4) //bcapi
+                    {// create the xml file from sng file
+                        var sngContent = Sng2014File.LoadFromFile(sngFile, srcPlatform);
+                        using (var outputStream = new FileStream(xmlSngFile, FileMode.Create, FileAccess.ReadWrite))
                         {
-                            eofSong.Tuning = sngSong.Tuning;
+                            dynamic xmlContent = null;
 
-                            using (var stream = File.Open(xmlEofFile, FileMode.Create))
-                                eofSong.Serialize(stream, true);
+                            if (arrType == ArrangementType.Vocal)
+                                xmlContent = new Vocals(sngContent);
+                            else
+                                xmlContent = new Song2014(sngContent, att);
 
-                            Song2014.WriteXmlComments(xmlEofFile, xmlComments, customComment: "Synced with SNG file");
-                            Console.WriteLine("Fixed Tuning Descrepancies: " + xmlEofFile);
-                            GlobalExtension.ShowProgress("Fixed tuning descepancies ...");
+                            xmlContent.Serialize(outputStream);
                         }
-                    }
-                    else if (File.Exists(xmlEofFile) && !overwriteSongXml && arrType == ArrangementType.Vocal)
-                    {
-                        // preserves xml comments from vocals
-                    }
-                    else // SNG => XML
-                    {
-                        if (!isODLC)
-                            Song2014.WriteXmlComments(xmlSngFile, xmlComments, customComment: "Generated from SNG file");
 
-                        File.Copy(xmlSngFile, xmlEofFile, true);
+                        // capture/preserve any existing xml comments
+                        IEnumerable<XComment> xmlComments = null;
+                        if (File.Exists(xmlEofFile))
+                            xmlComments = Song2014.ReadXmlComments(xmlEofFile);
+
+                        // correct old toolkit/EOF xml (tuning) issues by syncing with SNG data
+                        if (File.Exists(xmlEofFile) && !overwriteSongXml && arrType != ArrangementType.Vocal)
+                        {
+                            var eofSong = Song2014.LoadFromFile(xmlEofFile);
+                            var sngSong = Song2014.LoadFromFile(xmlSngFile);
+                            if (eofSong.Tuning != sngSong.Tuning)
+                            {
+                                eofSong.Tuning = sngSong.Tuning;
+
+                                using (var stream = File.Open(xmlEofFile, FileMode.Create))
+                                    eofSong.Serialize(stream, true);
+
+                                Song2014.WriteXmlComments(xmlEofFile, xmlComments, customComment: "Synced with SNG file");
+                                Console.WriteLine("Fixed Tuning Descrepancies: " + xmlEofFile);
+                                GlobalExtension.ShowProgress("Fixed tuning descepancies ...");
+                            }
+                        }
+                        else if (File.Exists(xmlEofFile) && !overwriteSongXml && arrType == ArrangementType.Vocal)
+                        {
+                            // preserves xml comments from vocals
+                        }
+                        else // SNG => XML
+                        {
+                            if (!isODLC)
+                                Song2014.WriteXmlComments(xmlSngFile, xmlComments, customComment: "Generated from SNG file");
+
+                            File.Copy(xmlSngFile, xmlEofFile, true);
+                        }
+
+                        if (File.Exists(xmlSngFile))
+                            File.Delete(xmlSngFile);
                     }
-
-                    if (File.Exists(xmlSngFile))
-                        File.Delete(xmlSngFile);
-
                     progress += step;
                     GlobalExtension.UpdateProgress.Value = (int)progress;
                 }
@@ -340,10 +343,10 @@ namespace RocksmithToolkitLib.DLCPackage
                     UpdateManifest2014(srcDirPath, platform);
 
                 WalkThroughDirectory("", srcDirPath, (a, b) =>
-               {
-                   var fileStream = File.OpenRead(b);
-                   psarc.AddEntry(a, fileStream);
-               });
+                {
+                    var fileStream = File.OpenRead(b);
+                    psarc.AddEntry(a, fileStream);
+                });
 
                 psarc.Write(psarcStream, !platform.IsConsole);
 

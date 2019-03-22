@@ -160,6 +160,57 @@ namespace RocksmithToolkitLib.DLCPackage
             w.Write(chunkData);
         }
 
+//<<<<<<< HEAD
+        public static float? ReadBNKVolumee(Stream inputStream, Platform platform)
+        {
+            // RS2014 only
+            if (platform.version != GameVersion.RS2014)
+                return null;
+
+            // verify header + detect endianness
+            using (var v = new EndianBinaryReader(platform.GetBitConverter, inputStream))
+            {
+                if (v.ReadInt32() != 1145588546) // BKHD
+                {
+                    Debug.WriteLine("Unknown BNK file format: " + v.ReadInt32());
+                    return null;
+                }
+
+                v.ReadBytes(v.ReadInt32());
+
+                // offset till HRIC (chunk len+8)
+                while (v.ReadInt32() != 1129466184 && (inputStream.Position < inputStream.Length - 1))
+                    v.ReadBytes(v.ReadInt32());
+
+                // ok we're in Hric now, let's validate again!
+                v.BaseStream.Position -= 4;
+                if (v.ReadInt32() != 1129466184)
+                    throw new Exception("Something goes wrong with bnk parser.");
+
+                // get HRIC size
+                var len = v.ReadInt32();
+                var obj = v.ReadInt32();
+                for (var o = 0; o < obj; o++)
+                {
+                    var type = v.ReadByte();
+                    var length = v.ReadInt32();
+                    // find correct object type - SFXV
+                    if (type == 2)
+                    {
+                        //skip 46 bytes to find volume
+                        v.ReadBytes(46);
+
+                        return v.ReadSingle();
+                    }
+
+                    v.ReadBytes(length);
+                }
+            }
+
+            return null;
+        }
+//=======
+//>>>>>>> c7d902e63baa725649519d722a2c7540c837ad77
         private static byte[] Header(int id, int didxSize, bool isConsole)
         {
             int soundbankVersion = 91;

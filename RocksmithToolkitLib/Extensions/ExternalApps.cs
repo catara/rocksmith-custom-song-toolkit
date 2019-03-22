@@ -183,15 +183,13 @@ namespace RocksmithToolkitLib.Extensions
         public static void Ogg2Preview(string sourcePath, string destinationPath, long msLength = 30000, long msStart = 4000)
         {
             var cmdArgs = String.Format(" -s {2} -l {3} \"{0}\" \"{1}\"", sourcePath, destinationPath, msStart, msLength);
-
-            GeneralExtension.RunExternalExecutable(APP_OGGCUT, true, false, true, cmdArgs);
+            GeneralExtension.RunExternalExecutable(APP_OGGCUT, true, true, true, cmdArgs); //bcapi hidding conversion windows
         }
 
         public static void Ogg2Wav(string sourcePath, string destinationPath)
         {
             var cmdArgs = String.Format(" -o \"{1}\" \"{0}\"", sourcePath, destinationPath);
-
-            GeneralExtension.RunExternalExecutable(APP_OGGDEC, true, false, true, cmdArgs);
+            GeneralExtension.RunExternalExecutable(APP_OGGDEC, true, true, true, cmdArgs); //bcapi hidding conversion windows
         }
 
         public static void Preview2Wav(string sourcePath)
@@ -214,7 +212,7 @@ namespace RocksmithToolkitLib.Extensions
             // -ClearAudioFileCache force re-generate for wem's also deletes old and creates fresh new file.
             // -Save should help with updating project to new schema (may loose quality factor field)
             var cmdArgs = String.Format("\"{0}\" -GenerateSoundBanks -Platform Windows -Language English(US) -NoWwiseDat -ClearAudioFileCache -Save", templatePath);
-            var output = GeneralExtension.RunExternalExecutable(wwiseCLIPath, true, false, true, cmdArgs);
+            var output = GeneralExtension.RunExternalExecutable(wwiseCLIPath, true, true, true, cmdArgs);//bcapi 2nd param hidding conversion windows
 
             if (output.Contains("Error: Project migration needed") && magicDust > 0)
             {

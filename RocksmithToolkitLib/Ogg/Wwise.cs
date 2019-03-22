@@ -95,6 +95,8 @@ namespace RocksmithToolkitLib.Ogg
                 Selected = OggFile.WwiseVersion.Wwise2016;
             else if (wwiseVersion.StartsWith("2017.1"))
                 Selected = OggFile.WwiseVersion.Wwise2017;
+            else if (wwiseVersion.StartsWith("2018.1"))
+                Selected = OggFile.WwiseVersion.Wwise2018;
             // add support for new versions here, code is expandable
             //else if (wwiseVersion.StartsWith("xxxx.x"))
             //    Selected = OggFile.WwiseVersion.WwiseXXXX;
@@ -103,7 +105,7 @@ namespace RocksmithToolkitLib.Ogg
 
             if (Selected == OggFile.WwiseVersion.None)
                 throw new FileNotFoundException("You have no compatible version of Audiokinetic Wwise installed." + Environment.NewLine +
-                    "Install supportend Wwise version, which are v2013.2.x || v2014.1.x || v2015.1.x || v2016.2.x series  " + Environment.NewLine +
+                    "Install supportend Wwise version, which are v2013.2.x || v2014.1.x || v2015.1.x || v2016.2.x series || v2017.1.x series || v2018.1.x series  " + Environment.NewLine +
                     "if you would like to use toolkit's Wwise autoconvert feature.   Did you remember to set the Wwise" + Environment.NewLine +
                     "installation path in the toolkit General Config menu?" + Environment.NewLine);
 
@@ -132,8 +134,9 @@ namespace RocksmithToolkitLib.Ogg
                 case OggFile.WwiseVersion.Wwise2015:
                 case OggFile.WwiseVersion.Wwise2016:
                 case OggFile.WwiseVersion.Wwise2017:
-                    // for fewer headaches ... start with fresh Wwise 2010 Template
-                    if (Directory.Exists(templateDir) && Selected == OggFile.WwiseVersion.Wwise2010)
+                case OggFile.WwiseVersion.Wwise2018:
+                    // for fewer headaches ... start with fresh Wwise 2018 Template
+                    if (Directory.Exists(templateDir) && Selected == OggFile.WwiseVersion.Wwise2018) ///bcapi
                         IOExtension.DeleteDirectory(templateDir, true);
 
                     ExtractTemplate(Path.Combine(ExternalApps.TOOLKIT_ROOT, Selected + ".tar.bz2"));
@@ -183,7 +186,11 @@ namespace RocksmithToolkitLib.Ogg
                 var fileName = Path.GetFileNameWithoutExtension(sourcePath);
                 var dirFileName = Path.Combine(dirName, fileName);
                 var sourcePreviewWave = String.Format("{0}_{1}.wav", dirFileName, "preview");
-                IOExtension.CopyFile(sourcePreviewWave, Path.Combine(orgSfxDir, "Audio_preview.wav"), true, false);
+                 sourcePreviewWave = sourcePreviewWave.Replace("_preview_fixed_preview", "_preview_fixed");///bcapi
+
+                if (File.Exists(sourcePreviewWave)) //bcapi
+                    IOExtension.CopyFile(sourcePreviewWave, Path.Combine(orgSfxDir, "Audio_preview.wav"), true, false);
+                else IOExtension.CopyFile(sourcePath, Path.Combine(orgSfxDir, "Audio_preview.wav"), true, false); ///bcapi
             }
 
             IOExtension.CopyFile(sourcePath, Path.Combine(orgSfxDir, "Audio.wav"), true, false);
@@ -231,8 +238,8 @@ namespace RocksmithToolkitLib.Ogg
             var destPreviewPath = string.Format("{0}_preview.wem", destinationPath.Substring(0, destinationPath.LastIndexOf(".", StringComparison.Ordinal)));
             foreach (var srcPath in srcPaths)
             {
-                //fix headers for wwise v2016 wem's
-                if ((int)Selected >= (int)OggFile.WwiseVersion.Wwise2016)
+                //fix headers for wwise v2016 wem's //bcapi2018
+                if ((int)Selected >= (int)OggFile.WwiseVersion.Wwise2018)
                     OggFile.DowngradeWemVersion(srcPath.FullName, srcPath.Name.Contains("_preview_") ? destPreviewPath : destinationPath);
                 else
                     File.Copy(srcPath.FullName, srcPath.Name.Contains("_preview_") ? destPreviewPath : destinationPath, true);

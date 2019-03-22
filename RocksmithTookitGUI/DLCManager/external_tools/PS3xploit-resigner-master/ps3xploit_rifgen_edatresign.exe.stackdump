@@ -1,0 +1,9 @@
+Exception: STATUS_ACCESS_VIOLATION at eip=00439AB4
+eax=FF4B0000 ebx=00000000 ecx=FFFFFFFF edx=611FBD14 esi=FF4B0000 edi=00000000
+ebp=0074CB98 esp=0074B9D0 program=D:\PS3xploitv3.0\PS3xploit-resigner-master\source\pre-compiled\windows\ps3xploit_rifgen_edatresign.exe, pid 1700, thread main
+cs=0023 ds=002B es=002B fs=0053 gs=002B ss=002B
+Stack trace:
+Frame     Function  Args
+0074CB98  00439AB4 (00000002, 0074CBBC, 200280F0, 610079C2)
+0074CD18  61007A27 (00000000, 0074CD74, 61006A20, 00000000)
+End of stack trace

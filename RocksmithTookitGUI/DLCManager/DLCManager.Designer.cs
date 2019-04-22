@@ -184,7 +184,8 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_NoOfSplits.Size = new System.Drawing.Size(46, 21);
             this.txt_NoOfSplits.TabIndex = 410;
             this.toolTip1.SetToolTip(this.txt_NoOfSplits, "Setlists/Groups of CDLCs defined by the User.");
-            this.txt_NoOfSplits.SelectedIndexChanged += new System.EventHandler(this.txt_NoOfSplits_SelectedIndexChanged);
+            this.txt_NoOfSplits.DropDown += new System.EventHandler(this.Txt_NoOfSplits_DropDown);
+            this.txt_NoOfSplits.TextChanged += new System.EventHandler(this.txt_NoOfSplits_SelectedIndexChanged);
             // 
             // mainBindingSource
             // 
@@ -438,7 +439,7 @@ namespace RocksmithToolkitGUI.DLCManager
             "31. When removing DD use internal logic not DDC",
             "32. When importing alternates add newer/older instead of alt.0author",
             "33. Forcibly Update Import location of all DB fields",
-            "34. @Import Add Preview if missing (lenght as per config)",
+            "34. @Import Add Preview if missing (lenght> as per config)",
             "35. Remove illegal characters from Songs Metadata",
             "36. Keep the Uncompressed Songs superorganized",
             "37. Import other formats but PC",
@@ -459,7 +460,7 @@ namespace RocksmithToolkitGUI.DLCManager
             "52. @Pack keep Bass DD if indicated so",
             "53. @Pack keep All DD if indicated so",
             "54. @Pack consider All songs as beta (place them top of the list)",
-            "55. Gen Preview if Preview=Audio or Preview is longer than config",
+            "55. Gen Preview if Preview=Audio or Preview is longer than config (default 30s)",
             "56. Duplicate manag ignores Multitracks",
             "57. Don\'t save Author when generic (i.e. Custom Song Creator)",
             "58. @Pack try to get Track No again (&don\'t save)",
@@ -493,16 +494,16 @@ namespace RocksmithToolkitGUI.DLCManager
             "85. Apply standard naming to all duplicates",
             "86. Keep XML Manipulations",
             "87. Use Latest Spotify API (Web)",
-            "88. ",
+            "88. Gen Preview if Preview is shorter than config (default 10s)",
             "89. @Mass pack split into xxx (param in xml) songs",
             "90. When adding times into vocals(74) add only in seconds",
             "91. Add group to Filename",
             "92. Package for a HAN enabled PS3",
             "93. If packaging for a HAN En abled PS3 then also copy Retail(RS2012) Songs",
             "94. After lyrics manipulation Open them in Notepad",
-            "95. @Export add Lyricis",
-            "96. @Export add Tabs",
-            "97. @Export add Album Cover",
+            "95. @Export create Package (in@0_temp)",
+            "96. @Export create Tabs",
+            "97. ",
             "98. ",
             "99. ",
             "x100."});

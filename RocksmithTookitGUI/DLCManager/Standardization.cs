@@ -803,6 +803,9 @@ namespace RocksmithToolkitGUI.DLCManager
         private void Btn_CorrectWithSpotify_Click(object sender, EventArgs e)
         {
             if (netstatus == "NOK" || netstatus == "") netstatus = CheckIfConnectedToInternet().Result.ToString();
+            if (netstatus == "OK") netstatus = CheckIfConnectedToSpotify().Result.ToString();
+            if (netstatus == "NOK" || netstatus == "") return;
+
             var artist = txt_Artist_Correction.Text == "" ? txt_Artist.Text : txt_Artist_Correction.Text;
             var album = txt_Album_Correction.Text == "" ? txt_Album.Text : txt_Album_Correction.Text;
             pB_ReadDLCs.Maximum = 5;
@@ -878,6 +881,9 @@ namespace RocksmithToolkitGUI.DLCManager
         private void btn_GetSpotifyAll_Click(object sender, EventArgs e)
         {
             if (netstatus == "NOK" || netstatus == "") netstatus = CheckIfConnectedToInternet().Result.ToString();
+            if (netstatus == "OK") netstatus = CheckIfConnectedToSpotify().Result.ToString();
+            if (netstatus == "NOK" || netstatus == "") return;
+
             DataSet SongRecord = new DataSet(); SongRecord = SelectFromDB("Standardization", "SELECT IIF(Artist_Correction is null,Artist,Artist_Correction), IIF(Album_Correction is null,Album,Album_Correction), ID FROM Standardization WHERE SpotifyArtistID = \"-\" OR SpotifyArtistID = \"\" OR SpotifyArtistID is null ORDER BY SpotifyArtistID ASC;", "", cnb);
             var noOfRec = SongRecord.Tables[0].Rows.Count;
             //var vFilesMissingIssues = "";
@@ -930,7 +936,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //if (netstatus == "NOK" || netstatus == "") netstatus = ActivateSpotify_ClickAsync().Result.ToString();
             DataSet SongRecordC = new DataSet(); SongRecord = SelectFromDB("Standardization", "SELECT ID, Artist, Artist_Correction, Album, Album_Correction,SpotifyAlbumURL FROM Standardization WHERE SpotifyAlbumPath=\"\" AND SpotifyAlbumURL<>\"\" AND SpotifyAlbumURL != Null", "", cnb);
 
-            var noOfRecC = SongRecordC.Tables.Count==0 ? 0 : SongRecordC.Tables[0].Rows.Count;
+            var noOfRecC = SongRecordC.Tables.Count == 0 ? 0 : SongRecordC.Tables[0].Rows.Count;
             //var vFilesMissingIssues = "";
             pB_ReadDLCs.Value = 0; pB_ReadDLCs.Step = 1;
             pB_ReadDLCs.Maximum = noOfRec;

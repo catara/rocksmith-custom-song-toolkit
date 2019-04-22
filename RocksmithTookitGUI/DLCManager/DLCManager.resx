@@ -132,9 +132,6 @@
   <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>301, 17</value>
   </metadata>
-  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>301, 17</value>
-  </metadata>
   <data name="txt_TempPath.ToolTip" xml:space="preserve">
     <value>Will be used store decompressed version of all DLCs and the original version
 Please use a root location due to windows file lenght limitations. Location  to store any temp file(uncompressed audio, uncompressed Covers).

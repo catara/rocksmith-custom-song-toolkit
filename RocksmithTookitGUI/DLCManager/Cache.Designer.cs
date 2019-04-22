@@ -889,7 +889,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.Name = "Cache";
             this.Text = "List of songs delivered with the Retail version of Rocksmith";
-            this.Load += new System.EventHandler(this.Standardization_Load);
+            this.Load += new System.EventHandler(this.Cache_Load);
             ((System.ComponentModel.ISupportInitialize)(this.DataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPath)).EndInit();
             this.groupBox1.ResumeLayout(false);

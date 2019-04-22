@@ -502,7 +502,7 @@ namespace RocksmithToolkitLib.DLCPackage
             // Package Info
             var versionFile = Directory.EnumerateFiles(unpackedDir, "toolkit.version", SearchOption.AllDirectories).FirstOrDefault();
             if (versionFile != null)
-                data.ToolkitInfo = GeneralExtensions.ReadToolkitInfo(versionFile);
+                data.ToolkitInfo = GeneralExtension.ReadToolkitInfo(versionFile);
             else
                 data.ToolkitInfo = new ToolkitInfo();
 
@@ -704,7 +704,7 @@ namespace RocksmithToolkitLib.DLCPackage
                     bnkWemList.Add(bnkWemData);
                 }
 
-                // set volume from .bnk file
+                // get volume from .bnk file
                 if (bnkAudioVolume == null)
                     bnkAudioVolume = bnkWemList.Where(fn => !fn.BnkFileName.EndsWith("_preview.bnk")).Select(vf => vf.VolumeFactor).FirstOrDefault();
 
@@ -755,9 +755,9 @@ namespace RocksmithToolkitLib.DLCPackage
             {
                 var ddsFilesC = new List<DDSConvertedFile>();
                 foreach (var file in ddsFiles)
-                    switch (Path.GetFileNameWithoutExtension(file).Split('_')[2])
+                {
+                    switch (Path.GetFileNameWithoutExtension(file).Split('_').Last())
                     {
-
                         case "256":
                             data.AlbumArtPath = file;
                             ddsFilesC.Add(new DDSConvertedFile() { sizeX = 256, sizeY = 256, sourceFile = file, destinationFile = file.CopyToTempFile(".dds") });
@@ -769,6 +769,7 @@ namespace RocksmithToolkitLib.DLCPackage
                             ddsFilesC.Add(new DDSConvertedFile() { sizeX = 64, sizeY = 64, sourceFile = file, destinationFile = file.CopyToTempFile(".dds") });
                             break;
                     }
+                }
 
                 data.ArtFiles = ddsFilesC;
             }
@@ -880,15 +881,13 @@ namespace RocksmithToolkitLib.DLCPackage
             // Package Info
             var versionFile = Directory.EnumerateFiles(unpackedDir, "toolkit.version", SearchOption.AllDirectories).FirstOrDefault();
             if (versionFile != null)
-                data.ToolkitInfo = GeneralExtensions.ReadToolkitInfo(versionFile);
+                data.ToolkitInfo = GeneralExtension.ReadToolkitInfo(versionFile);
             else
             {
-                data.ToolkitInfo = new ToolkitInfo
-                {
-                    PackageVersion = "0",
-                    PackageAuthor = "Ubisoft",
-                    PackageRating = "0"
-                };
+                data.ToolkitInfo = new ToolkitInfo();
+                data.ToolkitInfo.PackageVersion = "0";
+                data.ToolkitInfo.PackageAuthor = "Ubisoft";
+                data.ToolkitInfo.PackageRating = "5";
             }
 
             return data;
@@ -980,6 +979,15 @@ namespace RocksmithToolkitLib.DLCPackage
             var artPngFiles = Directory.EnumerateFiles(unpackedDir, "*.png", SearchOption.AllDirectories).Where(fp => !Path.GetFileName(fp).Equals("Package Image.png") && !Path.GetFileName(fp).Equals("Content Image.png")).ToList();
             foreach (var pngFile in artPngFiles)
                 IOExtension.MoveFile(pngFile, Path.Combine(eofDir, Path.GetFileName(pngFile)));
+
+            // Convert tagger.org artwork to png and put into EOF folder
+            // Move original dds artwork to Toolkit folder
+            var taggerOrgFile = Directory.EnumerateFiles(unpackedDir, "tagger.org", SearchOption.AllDirectories).FirstOrDefault();
+            if (!String.IsNullOrEmpty(taggerOrgFile))
+            {
+                ExternalApps.Dds2Png(taggerOrgFile, Path.Combine(eofDir, "album_org_256.png"));
+                IOExtension.MoveFile(taggerOrgFile, Path.Combine(toolkitDir, "album_org_256.dds"));
+            }
 
             // Move _fixed.ogg to EOF folder
             var oggFiles = Directory.EnumerateFiles(unpackedDir, "*_fixed.ogg", SearchOption.AllDirectories).ToList();

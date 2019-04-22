@@ -1,130 +1,1440 @@
-678: Logging started during program initialization at 09/10/18 01:28:56
-678: EOF v1.8RC12 (9-1-2018)
-678: eof_controller_load_config() entered
-678: eof_controller_read_button_names() entered
-678: eof_controller_load_config() entered
-678: eof_controller_read_button_names() entered
-678: Logging level set to normal
-678: 	Importing chord shape definitions
-678: eof_load_chord_shape_definitions() entered
-678: 	54 chord shape definitions imported
-678: eof_set_display_mode() entered
-678: eof_window_create() entered
-678: eof_window_create() entered
-678: eof_window_create() entered
-678: eof_window_create() entered
-678: eof_window_create() entered
-678: eof_load_data() entered
-678: eof_init_colors() entered
-678: eof_undo_reset() entered
-678: 	Initializing audio
-678: eof_mix_init() entered
-678: 	Buffering file:  "eof.dat#piano.esp/NOTE_36_OGG"
-678: 	Buffering file:  "eof.dat#piano.esp/NOTE_37_OGG"
-678: 	Buffering file:  "eof.dat#piano.esp/NOTE_38_OGG"
-678: 	Buffering file:  "eof.dat#piano.esp/NOTE_39_OGG"
-678: 	Buffering file:  "eof.dat#piano.esp/NOTE_40_OGG"
-678: 	Buffering file:  "eof.dat#piano.esp/NOTE_41_OGG"
-678: 	Buffering file:  "eof.dat#piano.esp/NOTE_42_OGG"
-678: 	Buffering file:  "eof.dat#piano.esp/NOTE_43_OGG"
-678: 	Buffering file:  "eof.dat#piano.esp/NOTE_44_OGG"
-678: 	Buffering file:  "eof.dat#piano.esp/NOTE_45_OGG"
-678: 	Buffering file:  "eof.dat#piano.esp/NOTE_46_OGG"
-678: 	Buffering file:  "eof.dat#piano.esp/NOTE_47_OGG"
-678: 	Buffering file:  "eof.dat#piano.esp/NOTE_48_OGG"
-678: 	Buffering file:  "eof.dat#piano.esp/NOTE_49_OGG"
-678: 	Buffering file:  "eof.dat#piano.esp/NOTE_50_OGG"
-678: 	Buffering file:  "eof.dat#piano.esp/NOTE_51_OGG"
-678: 	Buffering file:  "eof.dat#piano.esp/NOTE_52_OGG"
-678: 	Buffering file:  "eof.dat#piano.esp/NOTE_53_OGG"
-678: 	Buffering file:  "eof.dat#piano.esp/NOTE_54_OGG"
-678: 	Buffering file:  "eof.dat#piano.esp/NOTE_55_OGG"
-678: 	Buffering file:  "eof.dat#piano.esp/NOTE_56_OGG"
-678: 	Buffering file:  "eof.dat#piano.esp/NOTE_57_OGG"
-678: 	Buffering file:  "eof.dat#piano.esp/NOTE_58_OGG"
-678: 	Buffering file:  "eof.dat#piano.esp/NOTE_59_OGG"
-678: 	Buffering file:  "eof.dat#piano.esp/NOTE_60_OGG"
-678: 	Buffering file:  "eof.dat#piano.esp/NOTE_61_OGG"
-678: 	Buffering file:  "eof.dat#piano.esp/NOTE_62_OGG"
-678: 	Buffering file:  "eof.dat#piano.esp/NOTE_63_OGG"
-678: 	Buffering file:  "eof.dat#piano.esp/NOTE_64_OGG"
-678: 	Buffering file:  "eof.dat#piano.esp/NOTE_65_OGG"
-678: 	Buffering file:  "eof.dat#piano.esp/NOTE_66_OGG"
-678: 	Buffering file:  "eof.dat#piano.esp/NOTE_67_OGG"
-678: 	Buffering file:  "eof.dat#piano.esp/NOTE_68_OGG"
-678: 	Buffering file:  "eof.dat#piano.esp/NOTE_69_OGG"
-678: 	Buffering file:  "eof.dat#piano.esp/NOTE_70_OGG"
-678: 	Buffering file:  "eof.dat#piano.esp/NOTE_71_OGG"
-678: 	Buffering file:  "eof.dat#piano.esp/NOTE_72_OGG"
-678: 	Buffering file:  "eof.dat#piano.esp/NOTE_73_OGG"
-678: 	Buffering file:  "eof.dat#piano.esp/NOTE_74_OGG"
-678: 	Buffering file:  "eof.dat#piano.esp/NOTE_75_OGG"
-678: 	Buffering file:  "eof.dat#piano.esp/NOTE_76_OGG"
-678: 	Buffering file:  "eof.dat#piano.esp/NOTE_77_OGG"
-678: 	Buffering file:  "eof.dat#piano.esp/NOTE_78_OGG"
-678: 	Buffering file:  "eof.dat#piano.esp/NOTE_79_OGG"
-678: 	Buffering file:  "eof.dat#piano.esp/NOTE_80_OGG"
-678: 	Buffering file:  "eof.dat#piano.esp/NOTE_81_OGG"
-678: 	Buffering file:  "eof.dat#piano.esp/NOTE_82_OGG"
-678: 	Buffering file:  "eof.dat#piano.esp/NOTE_83_OGG"
-678: 	Buffering file:  "eof.dat#piano.esp/NOTE_84_OGG"
-678: 	Buffering file:  "percussion.dat#cowbell.ogg"
-678: 	Buffering file:  "percussion.dat#tambourine1.ogg"
-678: 	Buffering file:  "percussion.dat#tambourine2.ogg"
-678: 	Buffering file:  "percussion.dat#tambourine3.ogg"
-678: 	Buffering file:  "percussion.dat#triangle1.ogg"
-678: 	Buffering file:  "percussion.dat#triangle2.ogg"
-678: 	Buffering file:  "percussion.dat#woodblock1.ogg"
-678: 	Buffering file:  "percussion.dat#woodblock2.ogg"
-678: 	Buffering file:  "percussion.dat#woodblock3.ogg"
-678: 	Buffering file:  "percussion.dat#woodblock4.ogg"
-678: 	Buffering file:  "percussion.dat#woodblock5.ogg"
-678: 	Buffering file:  "percussion.dat#woodblock6.ogg"
-678: 	Buffering file:  "percussion.dat#woodblock7.ogg"
-678: 	Buffering file:  "percussion.dat#woodblock8.ogg"
-678: 	Buffering file:  "percussion.dat#woodblock9.ogg"
-678: 	Buffering file:  "percussion.dat#woodblock10.ogg"
-678: 	Buffering file:  "percussion.dat#clap1.ogg"
-678: 	Buffering file:  "percussion.dat#clap2.ogg"
-678: 	Buffering file:  "percussion.dat#clap3.ogg"
-678: 	Buffering file:  "percussion.dat#clap4.ogg"
-678: 	Checking for crash recovery files
-678: 	Entering main program loop
-678: eof_menu_file_load() entered
-678: eof_destroy_ogg() entered
-678: 	Loading project
-678: eof_load_song() entered
-678: eof_create_song() entered
-678: eof_load_song_pf() entered
-678: 	Project loaded
-678: 	Set eof_song_path to "C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\Freak Power - Turn On, Tune In, Cop Out\"
-678: eof_import_ini() entered
-678: 	Buffering INI file into memory
-678: 	Buffering file:  "C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\Freak Power - Turn On, Tune In, Cop Out\song.ini"
-678: 	Tokenizing INI file buffer
-678: 	Parsing INI file buffer
-678: 	Processing INI file contents
-678: 	Freeing INI buffer
-678: eof_load_ogg_quick() entered
-678: eof_destroy_ogg() entered
-678: 	Buffering file:  "C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\Freak Power - Turn On, Tune In, Cop Out\guitar.ogg"
-678: 	Loading OGG file "C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\Freak Power - Turn On, Tune In, Cop Out\guitar.ogg"
-678: 		Unsupported sample rate detected:  44000
-678: eof_truncate_chart() entered
-678: 	Deleting beats
-678: eof_truncate_chart() exiting
-678: 	Initializing after load
-678: eof_init_after_load() entered
-678: eof_truncate_chart() entered
-678: 	Deleting beats
-678: eof_truncate_chart() exiting
-678: eof_select_beat() entered
-678: eof_undo_reset() entered
-678: eof_sort_notes() entered
-678: eof_fixup_notes() entered
-678: eof_cleanup_beat_flags() entered
-678: eof_sort_events() entered
-678: eof_delete_blank_events() entered
-678: 	Removed 0 empty text events
-678: 	Initialization after load complete
-678: eof_fixup_notes() entered
+169: Logging started during program initialization at 04/15/19 22:52:52
+169: EOF v1.8RC12 (2-20-2019)
+169: eof_controller_load_config() entered
+169: eof_controller_read_button_names() entered
+169: eof_controller_load_config() entered
+169: eof_controller_read_button_names() entered
+169: Logging level set to normal
+169: 	Importing chord shape definitions
+169: eof_load_chord_shape_definitions() entered
+169: 	54 chord shape definitions imported
+169: eof_set_display_mode() entered
+169: eof_window_create() entered
+169: eof_window_create() entered
+169: eof_window_create() entered
+169: eof_window_create() entered
+169: eof_window_create() entered
+169: eof_load_data() entered
+169: eof_init_colors() entered
+169: eof_undo_reset() entered
+169: 	Initializing audio
+169: eof_mix_init() entered
+169: 	Buffering file:  "eof.dat#piano.esp/NOTE_36_OGG"
+169: 	Buffering file:  "eof.dat#piano.esp/NOTE_37_OGG"
+169: 	Buffering file:  "eof.dat#piano.esp/NOTE_38_OGG"
+169: 	Buffering file:  "eof.dat#piano.esp/NOTE_39_OGG"
+169: 	Buffering file:  "eof.dat#piano.esp/NOTE_40_OGG"
+169: 	Buffering file:  "eof.dat#piano.esp/NOTE_41_OGG"
+169: 	Buffering file:  "eof.dat#piano.esp/NOTE_42_OGG"
+169: 	Buffering file:  "eof.dat#piano.esp/NOTE_43_OGG"
+169: 	Buffering file:  "eof.dat#piano.esp/NOTE_44_OGG"
+169: 	Buffering file:  "eof.dat#piano.esp/NOTE_45_OGG"
+169: 	Buffering file:  "eof.dat#piano.esp/NOTE_46_OGG"
+169: 	Buffering file:  "eof.dat#piano.esp/NOTE_47_OGG"
+169: 	Buffering file:  "eof.dat#piano.esp/NOTE_48_OGG"
+169: 	Buffering file:  "eof.dat#piano.esp/NOTE_49_OGG"
+169: 	Buffering file:  "eof.dat#piano.esp/NOTE_50_OGG"
+169: 	Buffering file:  "eof.dat#piano.esp/NOTE_51_OGG"
+169: 	Buffering file:  "eof.dat#piano.esp/NOTE_52_OGG"
+169: 	Buffering file:  "eof.dat#piano.esp/NOTE_53_OGG"
+169: 	Buffering file:  "eof.dat#piano.esp/NOTE_54_OGG"
+169: 	Buffering file:  "eof.dat#piano.esp/NOTE_55_OGG"
+169: 	Buffering file:  "eof.dat#piano.esp/NOTE_56_OGG"
+169: 	Buffering file:  "eof.dat#piano.esp/NOTE_57_OGG"
+169: 	Buffering file:  "eof.dat#piano.esp/NOTE_58_OGG"
+169: 	Buffering file:  "eof.dat#piano.esp/NOTE_59_OGG"
+169: 	Buffering file:  "eof.dat#piano.esp/NOTE_60_OGG"
+169: 	Buffering file:  "eof.dat#piano.esp/NOTE_61_OGG"
+169: 	Buffering file:  "eof.dat#piano.esp/NOTE_62_OGG"
+169: 	Buffering file:  "eof.dat#piano.esp/NOTE_63_OGG"
+169: 	Buffering file:  "eof.dat#piano.esp/NOTE_64_OGG"
+169: 	Buffering file:  "eof.dat#piano.esp/NOTE_65_OGG"
+169: 	Buffering file:  "eof.dat#piano.esp/NOTE_66_OGG"
+169: 	Buffering file:  "eof.dat#piano.esp/NOTE_67_OGG"
+169: 	Buffering file:  "eof.dat#piano.esp/NOTE_68_OGG"
+169: 	Buffering file:  "eof.dat#piano.esp/NOTE_69_OGG"
+169: 	Buffering file:  "eof.dat#piano.esp/NOTE_70_OGG"
+169: 	Buffering file:  "eof.dat#piano.esp/NOTE_71_OGG"
+169: 	Buffering file:  "eof.dat#piano.esp/NOTE_72_OGG"
+169: 	Buffering file:  "eof.dat#piano.esp/NOTE_73_OGG"
+169: 	Buffering file:  "eof.dat#piano.esp/NOTE_74_OGG"
+169: 	Buffering file:  "eof.dat#piano.esp/NOTE_75_OGG"
+169: 	Buffering file:  "eof.dat#piano.esp/NOTE_76_OGG"
+169: 	Buffering file:  "eof.dat#piano.esp/NOTE_77_OGG"
+169: 	Buffering file:  "eof.dat#piano.esp/NOTE_78_OGG"
+169: 	Buffering file:  "eof.dat#piano.esp/NOTE_79_OGG"
+169: 	Buffering file:  "eof.dat#piano.esp/NOTE_80_OGG"
+169: 	Buffering file:  "eof.dat#piano.esp/NOTE_81_OGG"
+169: 	Buffering file:  "eof.dat#piano.esp/NOTE_82_OGG"
+169: 	Buffering file:  "eof.dat#piano.esp/NOTE_83_OGG"
+169: 	Buffering file:  "eof.dat#piano.esp/NOTE_84_OGG"
+169: 	Buffering file:  "percussion.dat#cowbell.ogg"
+169: 	Buffering file:  "percussion.dat#tambourine1.ogg"
+169: 	Buffering file:  "percussion.dat#tambourine2.ogg"
+169: 	Buffering file:  "percussion.dat#tambourine3.ogg"
+169: 	Buffering file:  "percussion.dat#triangle1.ogg"
+169: 	Buffering file:  "percussion.dat#triangle2.ogg"
+169: 	Buffering file:  "percussion.dat#woodblock1.ogg"
+169: 	Buffering file:  "percussion.dat#woodblock2.ogg"
+169: 	Buffering file:  "percussion.dat#woodblock3.ogg"
+169: 	Buffering file:  "percussion.dat#woodblock4.ogg"
+169: 	Buffering file:  "percussion.dat#woodblock5.ogg"
+169: 	Buffering file:  "percussion.dat#woodblock6.ogg"
+169: 	Buffering file:  "percussion.dat#woodblock7.ogg"
+169: 	Buffering file:  "percussion.dat#woodblock8.ogg"
+169: 	Buffering file:  "percussion.dat#woodblock9.ogg"
+169: 	Buffering file:  "percussion.dat#woodblock10.ogg"
+169: 	Buffering file:  "percussion.dat#clap1.ogg"
+169: 	Buffering file:  "percussion.dat#clap2.ogg"
+169: 	Buffering file:  "percussion.dat#clap3.ogg"
+169: 	Buffering file:  "percussion.dat#clap4.ogg"
+169: 	Checking for crash recovery files
+169: 	Entering main program loop
+169: eof_menu_file_load() entered
+169: eof_menu_file_load() entered
+169: eof_destroy_ogg() entered
+169: 	Loading project
+169: eof_load_song() entered
+169: eof_create_song() entered
+169: eof_load_song_pf() entered
+169: 	Project loaded
+169: 	Set eof_song_path to "C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\Fun Lovin' Criminals - Scooby Snacks\"
+169: eof_import_ini() entered
+169: 	Buffering INI file into memory
+169: 	Buffering file:  "C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\Fun Lovin' Criminals - Scooby Snacks\song.ini"
+169: 	Tokenizing INI file buffer
+169: 	Parsing INI file buffer
+169: 	Processing INI file contents
+169: 	Freeing INI buffer
+169: eof_load_ogg_quick() entered
+169: eof_destroy_ogg() entered
+169: 	Buffering file:  "C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\Fun Lovin' Criminals - Scooby Snacks\guitar.ogg"
+169: 	Loading OGG file "C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\Fun Lovin' Criminals - Scooby Snacks\guitar.ogg"
+169: eof_truncate_chart() entered
+169: 	Deleting beats
+169: eof_truncate_chart() exiting
+169: 	Initializing after load
+169: eof_init_after_load() entered
+169: eof_truncate_chart() entered
+169: 	Deleting beats
+169: eof_truncate_chart() exiting
+169: eof_select_beat() entered
+169: eof_undo_reset() entered
+169: eof_sort_notes() entered
+169: eof_fixup_notes() entered
+169: eof_cleanup_beat_flags() entered
+169: eof_sort_events() entered
+169: eof_delete_blank_events() entered
+169: 	Removed 0 empty text events
+169: 	Initialization after load complete
+169: eof_fixup_notes() entered
+169: eof_music_play() entered
+169: 	Starting playback
+169: eof_mix_start() entered
+169: eof_music_play() entered
+169: 	Stopping playback
+169: eof_music_play() entered
+169: 	Starting playback
+169: eof_mix_start() entered
+169: eof_music_play() entered
+169: 	Stopping playback
+169: File>Save selected
+169: 	Saving chart
+169: eof_save_helper() entered
+169: eof_sort_notes() entered
+169: eof_fixup_notes() entered
+169: eof_check_fret_hand_positions_option() entered
+169: eof_copy_file() entered
+169: 	Saving project
+169: eof_save_song() entered
+169: Saving to file "C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\Fun Lovin' Criminals - Scooby Snacks\notes.eof"
+169: 	Save completed
+169: 	Project saved at 04/15/19 23:06:03
+169: eof_export_midi() entered
+169: eof_build_tempo_and_ts_lists() entered
+169: eof_create_ts_list() entered
+169: 	Building tempo and TS lists from project's tempo track
+169: eof_build_tempo_list() entered
+169: eof_build_ts_list() entered
+169: eof_create_ts_list() entered
+169: eof_build_ks_list() entered
+169: eof_create_ks_list() entered
+169: eof_sort_notes() entered
+169: eof_sort_events() entered
+169: eof_clear_midi_events() entered
+169: eof_check_for_note_overlap() entered
+169: eof_clear_midi_events() entered
+169: eof_sort_events() entered
+169: eof_dump_midi_track() entered
+169: eof_dump_midi_track() entered
+169: eof_destroy_tempo_list() entered
+169: eof_destroy_ts_list() entered
+169: eof_destroy_ks_list() entered
+169: eof_save_ini() entered
+169: Exporting Rocksmith XML files
+169: eof_export_rocksmith_2_track() entered
+169: Cannot export track "PART REAL_BASS"in Rocksmith format, it has no populated difficulties
+169: eof_export_rocksmith_2_track() entered
+169: Cannot export track "PART REAL_BASS_22"in Rocksmith format, it has no populated difficulties
+169: eof_export_rocksmith_2_track() entered
+169: Cannot export track "PART REAL_GUITAR"in Rocksmith format, it has no populated difficulties
+169: eof_export_rocksmith_2_track() entered
+169: Cannot export track "PART REAL_GUITAR_22"in Rocksmith format, it has no populated difficulties
+169: eof_export_rocksmith_2_track() entered
+169: Cannot export track "PART REAL_GUITAR_BONUS"in Rocksmith format, it has no populated difficulties
+169: EOF_EXPORT_TO_LC() entered
+169: eof_copy_file() entered
+169: 	Save completed
+169: eof_window_create() entered
+169: 	New notes panel window instance:  0x0686f360
+169: File>Save selected
+169: 	Saving chart
+169: eof_save_helper() entered
+169: eof_sort_notes() entered
+169: eof_fixup_notes() entered
+169: eof_check_fret_hand_positions_option() entered
+169: eof_copy_file() entered
+169: 	Saving project
+169: eof_save_song() entered
+169: Saving to file "C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\Fun Lovin' Criminals - Scooby Snacks\notes.eof"
+169: 	Save completed
+169: 	Project saved at 04/15/19 23:08:49
+169: eof_export_midi() entered
+169: eof_build_tempo_and_ts_lists() entered
+169: eof_create_ts_list() entered
+169: 	Building tempo and TS lists from project's tempo track
+169: eof_build_tempo_list() entered
+169: eof_build_ts_list() entered
+169: eof_create_ts_list() entered
+169: eof_build_ks_list() entered
+169: eof_create_ks_list() entered
+169: eof_sort_notes() entered
+169: eof_sort_events() entered
+169: eof_clear_midi_events() entered
+169: eof_check_for_note_overlap() entered
+169: eof_clear_midi_events() entered
+169: eof_sort_events() entered
+169: eof_dump_midi_track() entered
+169: eof_dump_midi_track() entered
+169: eof_destroy_tempo_list() entered
+169: eof_destroy_ts_list() entered
+169: eof_destroy_ks_list() entered
+169: eof_save_ini() entered
+169: Exporting Rocksmith XML files
+169: eof_export_rocksmith_2_track() entered
+169: Cannot export track "PART REAL_BASS"in Rocksmith format, it has no populated difficulties
+169: eof_export_rocksmith_2_track() entered
+169: Cannot export track "PART REAL_BASS_22"in Rocksmith format, it has no populated difficulties
+169: eof_export_rocksmith_2_track() entered
+169: Cannot export track "PART REAL_GUITAR"in Rocksmith format, it has no populated difficulties
+169: eof_export_rocksmith_2_track() entered
+169: Cannot export track "PART REAL_GUITAR_22"in Rocksmith format, it has no populated difficulties
+169: eof_export_rocksmith_2_track() entered
+169: Cannot export track "PART REAL_GUITAR_BONUS"in Rocksmith format, it has no populated difficulties
+169: EOF_EXPORT_TO_LC() entered
+169: eof_copy_file() entered
+169: 	Save completed
+169: eof_music_play() entered
+169: 	Starting playback
+169: eof_mix_start() entered
+169: eof_music_play() entered
+169: 	Stopping playback
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-000.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-001.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-002.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-003.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-004.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-005.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-006.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-007.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-008.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-009.undo"
+169: 	Save completed
+169: 	Saving periodic backup
+169: eof_save_song() entered
+169: Saving to file "C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\Fun Lovin' Criminals - Scooby Snacks\notes.backup.eof.bak"
+169: 	Save completed
+169: eof_music_play() entered
+169: 	Starting playback
+169: eof_mix_start() entered
+169: eof_music_play() entered
+169: 	Stopping playback
+169: eof_music_play() entered
+169: 	Starting playback
+169: eof_mix_start() entered
+169: eof_music_play() entered
+169: 	Stopping playback
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-010.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-011.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-012.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-013.undo"
+169: 	Save completed
+169: eof_music_play() entered
+169: 	Starting playback
+169: eof_mix_start() entered
+169: eof_music_play() entered
+169: 	Stopping playback
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-014.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-015.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-016.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-017.undo"
+169: 	Save completed
+169: eof_music_play() entered
+169: 	Starting playback
+169: eof_mix_start() entered
+169: eof_music_play() entered
+169: 	Stopping playback
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-018.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-019.undo"
+169: 	Save completed
+169: 	Saving periodic backup
+169: eof_save_song() entered
+169: Saving to file "C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\Fun Lovin' Criminals - Scooby Snacks\notes.backup.eof.bak"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-020.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-021.undo"
+169: 	Save completed
+169: eof_music_play() entered
+169: 	Starting playback
+169: eof_mix_start() entered
+169: eof_music_play() entered
+169: 	Stopping playback
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-022.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-023.undo"
+169: 	Save completed
+169: eof_music_play() entered
+169: 	Starting playback
+169: eof_mix_start() entered
+169: eof_music_play() entered
+169: 	Stopping playback
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-024.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-025.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-026.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-027.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-028.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-029.undo"
+169: 	Save completed
+169: 	Saving periodic backup
+169: eof_save_song() entered
+169: Saving to file "C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\Fun Lovin' Criminals - Scooby Snacks\notes.backup.eof.bak"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-030.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-031.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-032.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-033.undo"
+169: 	Save completed
+169: eof_music_play() entered
+169: 	Starting playback
+169: eof_mix_start() entered
+169: eof_music_play() entered
+169: 	Stopping playback
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-034.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-035.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-036.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-037.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-038.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-039.undo"
+169: 	Save completed
+169: 	Saving periodic backup
+169: eof_save_song() entered
+169: Saving to file "C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\Fun Lovin' Criminals - Scooby Snacks\notes.backup.eof.bak"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-040.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-041.undo"
+169: 	Save completed
+169: eof_music_play() entered
+169: 	Starting playback
+169: eof_mix_start() entered
+169: eof_music_play() entered
+169: 	Stopping playback
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-042.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-043.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-044.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-045.undo"
+169: 	Save completed
+169: eof_music_play() entered
+169: 	Starting playback
+169: eof_mix_start() entered
+169: eof_music_play() entered
+169: 	Stopping playback
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-046.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-047.undo"
+169: 	Save completed
+169: eof_music_play() entered
+169: 	Starting playback
+169: eof_mix_start() entered
+169: eof_music_play() entered
+169: 	Stopping playback
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-048.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-049.undo"
+169: 	Save completed
+169: 	Saving periodic backup
+169: eof_save_song() entered
+169: Saving to file "C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\Fun Lovin' Criminals - Scooby Snacks\notes.backup.eof.bak"
+169: 	Save completed
+169: eof_music_play() entered
+169: 	Starting playback
+169: eof_mix_start() entered
+169: eof_music_play() entered
+169: 	Stopping playback
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-050.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-051.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-052.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-053.undo"
+169: 	Save completed
+169: eof_music_play() entered
+169: 	Starting playback
+169: eof_mix_start() entered
+169: eof_music_play() entered
+169: 	Stopping playback
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-054.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-055.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-056.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-057.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-058.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-059.undo"
+169: 	Save completed
+169: 	Saving periodic backup
+169: eof_save_song() entered
+169: Saving to file "C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\Fun Lovin' Criminals - Scooby Snacks\notes.backup.eof.bak"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-060.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-061.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-062.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-063.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-064.undo"
+169: 	Save completed
+169: eof_music_play() entered
+169: 	Starting playback
+169: eof_mix_start() entered
+169: eof_music_play() entered
+169: 	Stopping playback
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-065.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-066.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-067.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-068.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-069.undo"
+169: 	Save completed
+169: 	Saving periodic backup
+169: eof_save_song() entered
+169: Saving to file "C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\Fun Lovin' Criminals - Scooby Snacks\notes.backup.eof.bak"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-070.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-071.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-072.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-073.undo"
+169: 	Save completed
+169: eof_music_play() entered
+169: 	Starting playback
+169: eof_mix_start() entered
+169: eof_music_play() entered
+169: 	Stopping playback
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-074.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-075.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-076.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-077.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-078.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-079.undo"
+169: 	Save completed
+169: 	Saving periodic backup
+169: eof_save_song() entered
+169: Saving to file "C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\Fun Lovin' Criminals - Scooby Snacks\notes.backup.eof.bak"
+169: 	Save completed
+169: eof_music_play() entered
+169: 	Starting playback
+169: eof_mix_start() entered
+169: eof_music_play() entered
+169: 	Stopping playback
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-080.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-081.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-082.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-083.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-084.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-085.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-086.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-087.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-088.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-089.undo"
+169: 	Save completed
+169: 	Saving periodic backup
+169: eof_save_song() entered
+169: Saving to file "C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\Fun Lovin' Criminals - Scooby Snacks\notes.backup.eof.bak"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-090.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-091.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-092.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-093.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-094.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-095.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-096.undo"
+169: 	Save completed
+169: eof_music_play() entered
+169: 	Starting playback
+169: eof_mix_start() entered
+169: eof_music_play() entered
+169: 	Stopping playback
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-097.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-098.undo"
+169: 	Save completed
+169: 	Added lyric:  (haste)
+169: eof_music_play() entered
+169: 	Starting playback
+169: eof_mix_start() entered
+169: eof_music_play() entered
+169: 	Stopping playback
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-099.undo"
+169: 	Save completed
+169: 	Saving periodic backup
+169: eof_save_song() entered
+169: Saving to file "C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\Fun Lovin' Criminals - Scooby Snacks\notes.backup.eof.bak"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-000.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-001.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-002.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-003.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-004.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-005.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-006.undo"
+169: 	Save completed
+169: eof_music_play() entered
+169: 	Starting playback
+169: eof_mix_start() entered
+169: eof_music_play() entered
+169: 	Stopping playback
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-007.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-008.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-009.undo"
+169: 	Save completed
+169: 	Saving periodic backup
+169: eof_save_song() entered
+169: Saving to file "C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\Fun Lovin' Criminals - Scooby Snacks\notes.backup.eof.bak"
+169: 	Save completed
+169: eof_music_play() entered
+169: 	Starting playback
+169: eof_mix_start() entered
+169: eof_music_play() entered
+169: 	Stopping playback
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-010.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-011.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-012.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-013.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-014.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-015.undo"
+169: 	Save completed
+169: eof_music_play() entered
+169: 	Starting playback
+169: eof_mix_start() entered
+169: eof_music_play() entered
+169: 	Stopping playback
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-016.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-017.undo"
+169: 	Save completed
+169: eof_music_play() entered
+169: 	Starting playback
+169: eof_mix_start() entered
+169: eof_music_play() entered
+169: 	Stopping playback
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-018.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-019.undo"
+169: 	Save completed
+169: 	Saving periodic backup
+169: eof_save_song() entered
+169: Saving to file "C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\Fun Lovin' Criminals - Scooby Snacks\notes.backup.eof.bak"
+169: 	Save completed
+169: eof_music_play() entered
+169: 	Starting playback
+169: eof_mix_start() entered
+169: eof_music_play() entered
+169: 	Stopping playback
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-020.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-021.undo"
+169: 	Save completed
+169: eof_music_play() entered
+169: 	Starting playback
+169: eof_mix_start() entered
+169: eof_music_play() entered
+169: 	Stopping playback
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-022.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-023.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-024.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-025.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-026.undo"
+169: 	Save completed
+169: eof_music_play() entered
+169: 	Starting playback
+169: eof_mix_start() entered
+169: eof_music_play() entered
+169: 	Stopping playback
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-027.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-028.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-029.undo"
+169: 	Save completed
+169: 	Saving periodic backup
+169: eof_save_song() entered
+169: Saving to file "C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\Fun Lovin' Criminals - Scooby Snacks\notes.backup.eof.bak"
+169: 	Save completed
+169: eof_music_play() entered
+169: 	Starting playback
+169: eof_mix_start() entered
+169: eof_music_play() entered
+169: 	Stopping playback
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-030.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-031.undo"
+169: 	Save completed
+169: eof_music_play() entered
+169: 	Starting playback
+169: eof_mix_start() entered
+169: eof_music_play() entered
+169: 	Stopping playback
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-032.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-033.undo"
+169: 	Save completed
+169: eof_music_play() entered
+169: 	Starting playback
+169: eof_mix_start() entered
+169: eof_music_play() entered
+169: 	Stopping playback
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-034.undo"
+169: 	Save completed
+169: eof_music_play() entered
+169: 	Starting playback
+169: eof_mix_start() entered
+169: eof_music_play() entered
+169: 	Starting playback
+169: eof_mix_start() entered
+169: eof_music_play() entered
+169: 	Stopping playback
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-035.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-036.undo"
+169: 	Save completed
+169: 	Added lyric:  this
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-037.undo"
+169: 	Save completed
+169: 	Added lyric:  is
+169: eof_music_play() entered
+169: 	Starting playback
+169: eof_mix_start() entered
+169: eof_music_play() entered
+169: 	Stopping playback
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-038.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-039.undo"
+169: 	Save completed
+169: 	Saving periodic backup
+169: eof_save_song() entered
+169: Saving to file "C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\Fun Lovin' Criminals - Scooby Snacks\notes.backup.eof.bak"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-040.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-041.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-042.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-043.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-044.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-045.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-046.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-047.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-048.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-049.undo"
+169: 	Save completed
+169: 	Saving periodic backup
+169: eof_save_song() entered
+169: Saving to file "C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\Fun Lovin' Criminals - Scooby Snacks\notes.backup.eof.bak"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-050.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-051.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-052.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-053.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-054.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-055.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-056.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-057.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-058.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-059.undo"
+169: 	Save completed
+169: 	Saving periodic backup
+169: eof_save_song() entered
+169: Saving to file "C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\Fun Lovin' Criminals - Scooby Snacks\notes.backup.eof.bak"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-060.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-061.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-062.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-063.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-064.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-065.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-066.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-067.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-068.undo"
+169: 	Save completed
+169: eof_music_play() entered
+169: 	Starting playback
+169: eof_mix_start() entered
+169: eof_music_play() entered
+169: 	Stopping playback
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-069.undo"
+169: 	Save completed
+169: 	Saving periodic backup
+169: eof_save_song() entered
+169: Saving to file "C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\Fun Lovin' Criminals - Scooby Snacks\notes.backup.eof.bak"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-070.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-071.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-072.undo"
+169: 	Save completed
+169: eof_music_play() entered
+169: 	Starting playback
+169: eof_mix_start() entered
+169: eof_music_play() entered
+169: 	Stopping playback
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-073.undo"
+169: 	Save completed
+169: eof_prepare_undo() entered
+169: eof_undo_add() entered
+169: eof_save_song() entered
+169: Saving to file "temp\eof169-074.undo"
+169: 	Save completed
+169: eof_music_play() entered
+169: 	Starting playback
+169: eof_mix_start() entered
+169: eof_music_play() entered
+169: 	Stopping playback
+169: eof_music_play() entered
+169: 	Starting playback
+169: eof_mix_start() entered
+169: eof_music_play() entered
+169: 	Stopping playback
+169: File>Save selected
+169: 	Saving chart
+169: eof_save_helper() entered
+169: eof_sort_notes() entered
+169: eof_fixup_notes() entered
+169: eof_check_fret_hand_positions_option() entered
+169: eof_copy_file() entered
+169: 	Saving project
+169: eof_save_song() entered
+169: Saving to file "C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\Fun Lovin' Criminals - Scooby Snacks\notes.eof"
+169: 	Save completed
+169: 	Project saved at 04/19/19 10:41:56
+169: eof_export_midi() entered
+169: eof_build_tempo_and_ts_lists() entered
+169: eof_create_ts_list() entered
+169: 	Building tempo and TS lists from project's tempo track
+169: eof_build_tempo_list() entered
+169: eof_build_ts_list() entered
+169: eof_create_ts_list() entered
+169: eof_build_ks_list() entered
+169: eof_create_ks_list() entered
+169: eof_sort_notes() entered
+169: eof_sort_events() entered
+169: eof_clear_midi_events() entered
+169: eof_check_for_note_overlap() entered
+169: eof_clear_midi_events() entered
+169: eof_sort_events() entered
+169: eof_dump_midi_track() entered
+169: eof_dump_midi_track() entered
+169: eof_destroy_tempo_list() entered
+169: eof_destroy_ts_list() entered
+169: eof_destroy_ks_list() entered
+169: eof_save_ini() entered
+169: Exporting Rocksmith XML files
+169: eof_export_rocksmith_2_track() entered
+169: Cannot export track "PART REAL_BASS"in Rocksmith format, it has no populated difficulties
+169: eof_export_rocksmith_2_track() entered
+169: Cannot export track "PART REAL_BASS_22"in Rocksmith format, it has no populated difficulties
+169: eof_export_rocksmith_2_track() entered
+169: Cannot export track "PART REAL_GUITAR"in Rocksmith format, it has no populated difficulties
+169: eof_export_rocksmith_2_track() entered
+169: Cannot export track "PART REAL_GUITAR_22"in Rocksmith format, it has no populated difficulties
+169: eof_export_rocksmith_2_track() entered
+169: Cannot export track "PART REAL_GUITAR_BONUS"in Rocksmith format, it has no populated difficulties
+169: EOF_EXPORT_TO_LC() entered
+169: eof_copy_file() entered
+169: 	Save completed
+169: eof_restore_oggs_helper() entered
+169: eof_exit() entered
+169: eof_save_config() entered
+169: eof_controller_save_config() entered
+169: eof_controller_save_config() entered
+169: eof_mix_exit() entered
+169: eof_destroy_data() entered
+169: eof_destroy_ogg() entered
+169: 	Closing project
+169: eof_destroy_song() entered
+169: eof_destroy_waveform() entered
+169: eof_destroy_spectrogram() entered
+169: eof_song_delete_track() entered
+169: eof_song_delete_track() entered
+169: eof_song_delete_track() entered
+169: eof_song_delete_track() entered
+169: eof_song_delete_track() entered
+169: eof_song_delete_track() entered
+169: eof_song_delete_track() entered
+169: eof_song_delete_track() entered
+169: eof_song_delete_track() entered
+169: eof_song_delete_track() entered
+169: eof_song_delete_track() entered
+169: eof_song_delete_track() entered
+169: eof_song_delete_track() entered
+169: eof_song_delete_track() entered
+169: eof_song_delete_track() entered
+169: eof_MIDI_empty_track_list() entered
+169: 	Project closed
+169: eof_destroy_waveform() entered
+169: eof_destroy_spectrogram() entered
+169: eof_window_destroy() entered
+169: eof_window_destroy() entered
+169: eof_window_destroy() entered
+169: eof_window_destroy() entered
+169: eof_window_destroy() entered
+169: eof_window_destroy() entered
+169: Logging stopped during program completion at 04/19/19 23:18:33

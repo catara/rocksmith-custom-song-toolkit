@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using RocksmithToolkitLib.DLCPackage;
 using RocksmithToolkitLib.Extensions;
-using zlib;
+//using zlib;
 
 namespace RocksmithToolkitLib.PSARC
 {

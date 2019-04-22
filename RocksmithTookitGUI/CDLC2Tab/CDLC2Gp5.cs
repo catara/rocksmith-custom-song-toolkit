@@ -263,8 +263,8 @@ namespace RocksmithToolkitGUI.CDLC2Tab
             }
 
         }
-
-        static void ExportArrangement(Score score, Song2014 arrangement, int difficulty,
+        
+        public static void ExportArrangement(Score score, Song2014 arrangement, int difficulty,
                string originalFile, ToolkitInfo toolkitInfo)
         {
             var track = Converter.ConvertArrangement(arrangement, arrangement.Part.ToString(), difficulty);
@@ -290,7 +290,7 @@ namespace RocksmithToolkitGUI.CDLC2Tab
         static GpxExporter gpxExporter = new GpxExporter();
         static GP5File gp5Exporter = new GP5File();
 
-        static void SaveScore(Score score, string baseFileName, string outputDirectory, string outputFormat)
+        public static void SaveScore(Score score, string baseFileName, string outputDirectory, string outputFormat)
         {
             string basePath = Path.Combine(outputDirectory, baseFileName);
             // create a separate file for each arrangement
@@ -310,7 +310,7 @@ namespace RocksmithToolkitGUI.CDLC2Tab
         }
 
 
-        static string CleanFileName(string fileName)
+        public static string CleanFileName(string fileName)
         {
             var invalidChars = Path.GetInvalidFileNameChars();
             var cleaned = fileName.Where(x => !invalidChars.Contains(x)).ToArray();

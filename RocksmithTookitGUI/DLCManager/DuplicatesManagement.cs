@@ -232,6 +232,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
             btn_Title2SortT.Text = char.ConvertFromUtf32(8595);
             btn_Artist2SortA.Text = char.ConvertFromUtf32(8595);
+            btn_Album2SortA.Text = char.ConvertFromUtf32(8595);
 
             chbx_Sort.Checked = ConfigRepository.Instance()["dlcm_DupliM_Sync"] == "Yes" ? true : false;
             chbx_Autosave.Checked = ConfigRepository.Instance()["dlcm_Autosave"] == "Yes" ? true : false;
@@ -1436,6 +1437,8 @@ namespace RocksmithToolkitGUI.DLCManager
             lbl_Album.ForeColor = lbl_diffCount.ForeColor;
             btn_AlbumExisting.Enabled = false;
             btn_AlbumNew.Enabled = false;
+            txt_YearNew.Text = txt_YearExisting.Text;
+            if (chbx_Sort.Checked) syncAlbum();
         }
 
         private void btn_AlbumExisting_Click(object sender, EventArgs e)
@@ -1445,6 +1448,8 @@ namespace RocksmithToolkitGUI.DLCManager
             lbl_Album.ForeColor = lbl_diffCount.ForeColor;
             btn_AlbumExisting.Enabled = false;
             btn_AlbumNew.Enabled = false;
+            txt_YearExisting.Text = txt_YearNew.Text;
+            if (chbx_Sort.Checked) syncAlbum();
         }
 
         private void button2_Click_1(object sender, EventArgs e)

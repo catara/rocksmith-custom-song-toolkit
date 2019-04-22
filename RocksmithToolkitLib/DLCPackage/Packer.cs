@@ -152,7 +152,7 @@ namespace RocksmithToolkitLib.DLCPackage
                     OggFile.Revorb(file, outputAudioFileName, Path.GetExtension(file).GetWwiseVersion());
                 }
 
-                // convert album artwork dds to common png
+                // convert album artwork dds to common friendly png
                 var ddsFiles = Directory.EnumerateFiles(unpackedDir, "*.dds", SearchOption.AllDirectories).ToList();
                 if (ddsFiles.Any())
                 {
@@ -668,7 +668,8 @@ namespace RocksmithToolkitLib.DLCPackage
                         entry.Data.Dispose();
                 }
 
-                if (!String.IsNullOrEmpty(psarc.ErrMSG)) throw new InvalidDataException(psarc.ErrMSG);
+                if (!String.IsNullOrEmpty(psarc.ErrMSG)) 
+                    throw new InvalidDataException(psarc.ErrMSG);
 
                 progress += step;
                 GlobalExtension.UpdateProgress.Value = (int)progress;
@@ -1042,7 +1043,7 @@ namespace RocksmithToolkitLib.DLCPackage
                     // TODO: monitor this change updates both json and hsan files
                     if (!String.IsNullOrEmpty(toolkitVersionFile))
                     {
-                        var tkInfo = GeneralExtensions.ReadToolkitInfo(toolkitVersionFile);
+                        var tkInfo = GeneralExtension.ReadToolkitInfo(toolkitVersionFile);
                         // hide album artwork marker in-game setlist
                         // while leaving Alternate Arrangements unlocked for new user profile
                         if (tkInfo != null && tkInfo.PackageAuthor != "Ubisoft")

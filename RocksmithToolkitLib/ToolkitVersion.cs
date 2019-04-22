@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 using System.IO;
+using RocksmithToolkitLib.Extensions;
 
 
 namespace RocksmithToolkitLib
@@ -27,14 +28,17 @@ namespace RocksmithToolkitLib
         // assemblyInformationVersion (aka gitSubVersion) e.g. "ce57ebea"
         public static string AssemblyInformationVersion = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyInformationalVersionAttribute), false).Cast<AssemblyInformationalVersionAttribute>().FirstOrDefault().InformationalVersion.ToString();
 
-        // assemblyConfigurate e.g. "BETA" or blank
+        // assemblyConfigurate e.g. "BUILD", "BETA", "RELEASE", or "" (blank) depending on RocksmithPreBuild.exe usage
         public static string AssemblyConfiguration = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyConfigurationAttribute), false).Cast<AssemblyConfigurationAttribute>().FirstOrDefault().Configuration.ToString() ?? "";
 
         public static string RSTKGuiVersion
         {
             get
             {
-                return String.Format("{0}-{1} {2}", AssemblyVersion, AssemblyInformationVersion, AssemblyConfiguration);
+                if (GeneralExtension.IsInDesignMode)
+                    AssemblyConfiguration = "DEBUG";
+
+                return String.Format("{0}-{1} {2}", AssemblyVersion, AssemblyInformationVersion, AssemblyConfiguration).Trim();
             }
         }
 
@@ -60,7 +64,7 @@ namespace RocksmithToolkitLib
             var assemblyInformationVersion = assembly.GetCustomAttributes(typeof(AssemblyInformationalVersionAttribute), false).Cast<AssemblyInformationalVersionAttribute>().FirstOrDefault().InformationalVersion.ToString();
             var assemblyConfiguration = assembly.GetCustomAttributes(typeof(AssemblyConfigurationAttribute), false).Cast<AssemblyConfigurationAttribute>().FirstOrDefault().Configuration.ToString() ?? "";
 
-            return String.Format("{0}-{1} {2}", assemblyVersion, assemblyInformationVersion, assemblyConfiguration);
+            return String.Format("{0}-{1} {2}", assemblyVersion, assemblyInformationVersion, assemblyConfiguration).Trim();
         }
 
         public static string RSTKUpdaterVersion()
@@ -70,7 +74,7 @@ namespace RocksmithToolkitLib
             var assemblyInformationVersion = assembly.GetCustomAttributes(typeof(AssemblyInformationalVersionAttribute), false).Cast<AssemblyInformationalVersionAttribute>().FirstOrDefault().InformationalVersion.ToString();
             var assemblyConfiguration = assembly.GetCustomAttributes(typeof(AssemblyConfigurationAttribute), false).Cast<AssemblyConfigurationAttribute>().FirstOrDefault().Configuration.ToString() ?? "";
 
-            return String.Format("{0}-{1} {2}", assemblyVersion, assemblyInformationVersion, assemblyConfiguration);
+            return String.Format("{0}-{1} {2}", assemblyVersion, assemblyInformationVersion, assemblyConfiguration).Trim();
         }
 
     }

@@ -150,6 +150,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             set { txtXmlPath.Text = value; }
         }
 
+        // get/set data for JSON arrangement
         public Arrangement Arrangement
         {
             get
@@ -201,12 +202,16 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 rbArrangementBonus.Checked = value.BonusArr;
                 rbArrangementAlternate.Checked = !value.BonusArr && !value.Represent ? true : false;
 
+                var debugMe = "StopHere";
+
                 chkMetronome.Checked = value.Metronome == Metronome.Generate;
                 RouteMask = value.RouteMask;
 
                 //DLC ID
                 txtPersistentId.Text = value.Id.ToString().Replace("-", "").ToUpper();
                 txtMasterId.Text = value.MasterId.ToString();
+
+                // TODO: confirm XML gets updated after this somewhere
             }
         }
 

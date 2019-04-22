@@ -120,7 +120,7 @@
             //
             this.btnPackageGenerate.BackColor = System.Drawing.Color.LightSteelBlue;
             this.btnPackageGenerate.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPackageGenerate.Location = new System.Drawing.Point(396, 503);
+            this.btnPackageGenerate.Location = new System.Drawing.Point(396, 500);
             this.btnPackageGenerate.Name = "btnPackageGenerate";
             this.btnPackageGenerate.Size = new System.Drawing.Size(97, 29);
             this.btnPackageGenerate.TabIndex = 9;
@@ -177,7 +177,7 @@
             //
             this.btnTemplateSave.BackColor = System.Drawing.SystemColors.Control;
             this.btnTemplateSave.ForeColor = System.Drawing.Color.IndianRed;
-            this.btnTemplateSave.Location = new System.Drawing.Point(116, 503);
+            this.btnTemplateSave.Location = new System.Drawing.Point(116, 500);
             this.btnTemplateSave.Name = "btnTemplateSave";
             this.btnTemplateSave.Size = new System.Drawing.Size(97, 29);
             this.btnTemplateSave.TabIndex = 7;
@@ -189,7 +189,7 @@
             //
             this.btnTemplateLoad.BackColor = System.Drawing.SystemColors.Control;
             this.btnTemplateLoad.ForeColor = System.Drawing.Color.IndianRed;
-            this.btnTemplateLoad.Location = new System.Drawing.Point(10, 503);
+            this.btnTemplateLoad.Location = new System.Drawing.Point(10, 500);
             this.btnTemplateLoad.Name = "btnTemplateLoad";
             this.btnTemplateLoad.Size = new System.Drawing.Size(97, 29);
             this.btnTemplateLoad.TabIndex = 6;
@@ -237,7 +237,7 @@
             this.lstTones.Location = new System.Drawing.Point(7, 19);
             this.lstTones.Name = "lstTones";
             this.lstTones.ScrollAlwaysVisible = true;
-            this.lstTones.Size = new System.Drawing.Size(389, 95);
+            this.lstTones.Size = new System.Drawing.Size(389, 82);
             this.lstTones.TabIndex = 0;
             this.toolTip.SetToolTip(this.lstTones, "Select (highlight) a tone and then \r\nuse Shift+Up/Down Arrow to change\r\nthe order" +
                     " of the Tones list.");
@@ -474,7 +474,7 @@
             this.txtAudioPath.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtAudioPath.Size = new System.Drawing.Size(389, 20);
             this.txtAudioPath.TabIndex = 5;
-            //
+            this.toolTip.SetToolTip(this.txtAudioPath, resources.GetString("txtAudioPath.ToolTip"));
             // gbTones
             //
             this.gbTones.Controls.Add(this.btnToneDuplicate);
@@ -487,7 +487,7 @@
             this.gbTones.ForeColor = System.Drawing.Color.IndianRed;
             this.gbTones.Location = new System.Drawing.Point(3, 367);
             this.gbTones.Name = "gbTones";
-            this.gbTones.Size = new System.Drawing.Size(498, 133);
+            this.gbTones.Size = new System.Drawing.Size(498, 126);
             this.gbTones.TabIndex = 5;
             this.gbTones.TabStop = false;
             this.gbTones.Text = "Tones";
@@ -508,7 +508,7 @@
             //
             this.label1.AutoSize = true;
             this.label1.ForeColor = System.Drawing.Color.MediumSlateBlue;
-            this.label1.Location = new System.Drawing.Point(2, 116);
+            this.label1.Location = new System.Drawing.Point(2, 106);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(495, 13);
             this.label1.TabIndex = 6;
@@ -664,22 +664,12 @@
             // label4
             //
             this.label4.AutoSize = true;
-//<<<<<<< HEAD
 //            this.label4.ForeColor = System.Drawing.SystemColors.ControlText;
 //            this.label4.Location = new System.Drawing.Point(116, 73);
 //            this.label4.Name = "label4";
 //            this.label4.Size = new System.Drawing.Size(20, 13);
 //            this.label4.TabIndex = 14;
 //            this.label4.Text = "dB";
-//=======
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label4.Location = new System.Drawing.Point(120, 73);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(16, 12);
-            this.label4.TabIndex = 14;
-            this.label4.Text = "LF";
-//>>>>>>> c7d902e63baa725649519d722a2c7540c837ad77
             //
             // label9
             //
@@ -1067,7 +1057,7 @@
             this.gbGameVersion.TabIndex = 0;
             this.gbGameVersion.TabStop = false;
             this.gbGameVersion.Text = "Game Version";
-            //
+            this.gbGameVersion.Enter += new System.EventHandler(this.GameVersion_MouseEnter);
             // rbConvert
             //
             this.rbConvert.AutoSize = true;
@@ -1085,7 +1075,7 @@
             //
             this.btnPackageImport.BackColor = System.Drawing.SystemColors.Control;
             this.btnPackageImport.ForeColor = System.Drawing.Color.IndianRed;
-            this.btnPackageImport.Location = new System.Drawing.Point(222, 503);
+            this.btnPackageImport.Location = new System.Drawing.Point(222, 500);
             this.btnPackageImport.Name = "btnPackageImport";
             this.btnPackageImport.Size = new System.Drawing.Size(97, 29);
             this.btnPackageImport.TabIndex = 0;
@@ -1127,7 +1117,7 @@
             //
             this.btnDevUse.BackColor = System.Drawing.SystemColors.Control;
             this.btnDevUse.ForeColor = System.Drawing.Color.IndianRed;
-            this.btnDevUse.Location = new System.Drawing.Point(331, 503);
+            this.btnDevUse.Location = new System.Drawing.Point(331, 500);
             this.btnDevUse.Name = "btnDevUse";
             this.btnDevUse.Size = new System.Drawing.Size(47, 29);
             this.btnDevUse.TabIndex = 8;
@@ -1141,6 +1131,7 @@
             // DLCPackageCreator
             //
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.AutoSize = true;
             this.Controls.Add(this.btnDevUse);
             this.Controls.Add(this.lblCurrentOperation);
             this.Controls.Add(this.pbUpdateProgress);
@@ -1155,7 +1146,7 @@
             this.Controls.Add(this.btnTemplateSave);
             this.Controls.Add(this.btnPackageGenerate);
             this.Name = "DLCPackageCreator";
-            this.Size = new System.Drawing.Size(507, 567);
+            this.Size = new System.Drawing.Size(511, 562);
             this.gbPlatform.ResumeLayout(false);
             this.gbPlatform.PerformLayout();
             this.gbFiles.ResumeLayout(false);

@@ -4,7 +4,7 @@
   <Config Key="general_configversion" Value="3" />
   <Config Key="general_firstrun" Value="true" />
   <Config Key="general_showrevnote" Value="true" />
-  <Config Key="general_autoupdate" Value="false" />
+  <Config Key="general_autoupdate" Value="true" />
   <Config Key="general_usebeta" Value="true" />
   <Config Key="general_replacerepo" Value="true" />
   <Config Key="general_urllastestrelease" Value="https://www.rscustom.net/builds/latest" />
@@ -165,9 +165,9 @@
   <Config Key="dlcm_Album_Sort" Value="&#60;Year&#62;&#60;Album&#62;&#60;Track No.&#62;&#60;Title Sort&#62;" />;
   <Config Key="dlcm_Lyric_Info" Value="&#60;AvailInstr&#62;&#60;TimeStamp&#62;&#60;Bonus&#62;&#60;DD&#62;&#60;BassHasDD&#62;&#60;Live&#62;&#60;MTrack Det.&#62;&#60;QA&#62;&#60;&#62;" />;
   <Config Key="dlcm_FTP" Value="US" />;
-  <Config Key="dlcm_FTP1" Value="ftp://192.168.1.14/dev_hdd0/game/BLES01862/USRDIR/DLC/" />;
-  <Config Key="dlcm_FTP2" Value="ftp://192.168.1.14/dev_hdd0/game/BLUS31182/USRDIR/DLC/" />;
-  <Config Key="dlcm_FTP3" Value="ftp://192.168.1.14/dev_hdd0/game/BLUS31182/USRDIR/DLC/" />;
+  <Config Key="dlcm_FTPEU" Value="ftp://192.168.1.14/dev_hdd0/game/BLES01862/USRDIR/DLC/" />;
+  <Config Key="dlcm_FTPUS" Value="ftp://192.168.1.14/dev_hdd0/game/BLUS31182/USRDIR/DLC/" />;
+  <Config Key="dlcm_FTPJP" Value="ftp://192.168.1.14/dev_hdd0/game/BLUS31182/USRDIR/DLC/" />;
   <Config Key="dlcm_RemoveBassDD" Value="Yes" />;
   <Config Key="dlcm_UniqueID" Value="Yes" />;
   <Config Key="dlcm_andCopy" Value="Yes" />;
@@ -175,6 +175,7 @@
   <Config Key="dlcm_DupliGTrack" Value="Yes" />;
   <Config Key="dlcm_PreviewLenght" Value="30" />;
   <Config Key="dlcm_MaxPreviewLenght" Value="32" />;
+  <Config Key="dlcm_MinPreviewLenght" Value="10" />;
   <Config Key="dlcm_PreviewStart" Value="00:30" />;
   <Config Key="dlcm_Debug" Value="No" />;
   <Config Key="dlcm_DebugProfile" Value="Temp" />;
@@ -220,6 +221,7 @@
   <Config Key="dlcm_0_archive" Value="\\192.168.1.100\Kits_Software\t\0" />;
   <Config Key="dlcm_0_albumCovers" Value="\\192.168.1.100\Kits_Software\t\0" />;
   <Config Key="dlcm_0_data" Value="\\192.168.1.100\Kits_Software\t\0" />;
+  <Config Key="dlcm_0_temp" Value="\\192.168.1.100\Kits_Software\t\0" />;<!-- unused-->
   <Config Key="dlcm_SearchFields" Value="ID, Artist, Song_Title, Track_No, Album, Album_Year, Author, Version, Import_Date, Is_Original, Selected, Tunning, Bass_Picking, Is_Beta, Platform, Has_DD, Bass_Has_DD,
 Is_Alternate, Is_Multitrack, Is_Live, Is_Acoustic, Is_Instrumental, Is_EP, Is_Soundtrack, Is_Single, Is_Broken, MultiTrack_Version, Alternate_Version_No, Live_Details, Groups, Rating, Description, PreviewTime, PreviewLenght,
 Song_Lenght, Comments, FilesMissingIssues, DLC_AppID, DLC_Name, Artist_Sort, Song_Title_Sort, Album_Sort, AverageTempo, Volume, Preview_Volume, SignatureType, ToolkitVersion, AlbumArtPath, AudioPath, 
@@ -230,7 +232,21 @@ CustomForge_Followers, CustomForge_Version, CustomsForge_Link,
 CustomsForge_Like, CustomsForge_ReleaseNotes, UniqueDLCName, Artist_ShortName, Album_ShortName, DLC, Is_OLD, Remote_Path, audioBitrate, audioSampleRate, Top10, Has_Other_Officials,
 Spotify_Song_ID, Spotify_Artist_ID, Spotify_Album_ID, Spotify_Album_URL, Audio_OrigHash, Audio_OrigPreviewHash, AlbumArt_OrigHash, Duplicate_Of, Split4Pack, UseInternalDDRemovalLogic
 "/>;
-  <!-- ACE.OLEDB.12.0 Access 2007, ACE.OLEDB.14.0 Access 2010, ACE.OLEDB.15.0 Access 2013, ACE.OLEDB.16.0 Access 2016 -->
+  <Config Key="dlcm_ExportFields" Value="ID, Artist, Song_Title, Track_No, Album, Album_Year, Tunning, YouTube_Link, Is_Original,
+IIF(Has_Lead='Yes','L') AS Lead, IIF(Has_Rhythm,'R') AS Rhythm, IIF(Has_Combo='Yes','C') AS Combo, IIF(Has_Bass='Yes','B') AS Bass,
+IIF(Has_Vocals='Yes','V') AS Vocal, Has_DD, oggPath, (SELECT TOP 1 PlayThoughYBLink FROM Arrangements WHERE Arrangement_Name='3' AND CDLC_ID='') AS YB_Bass,
+(SELECT TOP 1 PlayThoughYBLink FROM Arrangements WHERE Arrangement_Name='0' AND CDLC_ID='') AS YB_Lead,
+(SELECT TOP 1 PlayThoughYBLink FROM Arrangements WHERE Arrangement_Name='1' AND CDLC_ID='') AS YB_Rhythm,
+REPLACE(AlbumArtPath,'.dds','.png') as AlbumArt, (SELECT TOP 1 REPLACE(XMLFilePath,'','') FROM Arrangements WHERE Arrangement_Name='4' AND CDLC_ID='') AS Lyrics,
+(SELECT TOP 1 REPLACE(XMLFilePath,'','') FROM Arrangements WHERE Arrangement_Name='0' AND CDLC_ID='') AS Tab_Lead,
+(SELECT TOP 1 REPLACE(XMLFilePath,'','') FROM Arrangements WHERE Arrangement_Name='3' AND CDLC_ID='') AS Tab_Bass,
+(SELECT TOP 1 REPLACE(XMLFilePath,'','') FROM Arrangements WHERE Arrangement_Name='1' AND CDLC_ID='') AS Tab_Rhythm,
+(SELECT REPLACE(XMLFilePath,'','') FROM Arrangements WHERE Arrangement_Name='0' AND CDLC_ID='' AND XMLFilePath like '*2.xml') AS Tab_Lead2,
+(SELECT REPLACE(XMLFilePath,'','') FROM Arrangements WHERE Arrangement_Name='3' AND CDLC_ID='' AND XMLFilePath like '*2.xml') AS Tab_Bass2,
+(SELECT REPLACE(XMLFilePath,'','') FROM Arrangements WHERE Arrangement_Name='1' AND CDLC_ID='' AND XMLFilePath like '*2.xml') AS Tab_Rhythm2,
+ dlcm_0_old+'\0_old\'+Original_FileName as Old_File
+"/>;
+"<!-- ACE.OLEDB.12.0 Access 2007, ACE.OLEDB.14.0 Access 2010, ACE.OLEDB.15.0 Access 2013, ACE.OLEDB.16.0 Access 2016 -->
   <Config Key="dlcm_AccessDLLVersion" Value="ACE.OLEDB.16.0" />;
   <Config Key="dlcm_AccessACE.OLEDB.16.0" Value="https://www.microsoft.com/en-us/download/details.aspx?id=54920" />;
   <Config Key="cgm_coloredinlay" Value="true" />

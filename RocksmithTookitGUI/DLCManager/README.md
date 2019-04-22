@@ -179,25 +179,55 @@ delete rk folders as split4pack and minus button
 new tag at pack add older or year
 clean songs w text(duplic..) after _p
 if old is found bbut no entr copy to import and archive
-if old is not found clean record rsaise alarm
+if old is not found clean record raise alarm
 check broken
 CFSM.AudioTools
 PSARC packer refactored, 1:1 to offical compression ratio, but code n…
 1700 songs wo vocals
 find workaround for remote folders
 fix on leave folders
-
+duplicate add old values as tooltip
 ## WiP:
 (this release)
+[x] remove sogs remove from groups too
+[x] apply 55 to fix all audio if bigger than the set lenght (fix why review lenghts is not 30?)
+[x] added minimal preview
+[x] FTP should also consider if net is up a,lso eliminating errors e.g."C:\\t\\0\\0_repacked\\PS3\\To_TryCDLC-Aerosmith-1974-Single-00-Come_Together"
+[-] fix autoplay preview
+[x] fixed bug when missing preview but gen one at pack
+[x] added remove all packed based on POack_Trail when copying/FTP to a location
+[x] fixed adding group to sort artist
+[x] duplicate sync albbum and sort arrow down
+[-] duplicate sync albubm doesnt sync dwn sort+year
+[-] fix internet check not to be dependent on new spotify
+[-] change/shift timing to any other track
+[x] add any track from a Alternative to current song
+[x] fix pickl up tonal&arranegemnts from DB
+[x] fixed net check (fixed not transfering fils automatically)
+[x] added logic to read always correctly the FTP
+[x] removing extra ogg/wem files at pack
+[x] fix a save title issue
+[x] made visual studio ignore dpi http://www.visualstudioextensibility.com/2017/01/13/running-visual-studio-or-setups-with-dpi-virtualization-dpi-unaware-on-high-dpi-displays/
+[x] removed directories when removing Pack
+[x] improved the select pack an d show no
+[x] added open all instance is existing
+[x] improve export as webpage ()added parameterisable columns, Create pack
+[x] the search fucks it up sometimes (means and error at CahngeRow//Load happens)
+[x] added remove arrangement
+compound breaks the select
+multiple repacks still occur
+add manualy modified same lyrics chenge flag (maybe based on hash)
+fix selct is pack
+fix if group selected and value already there also select
+counter of import-s seems to be failing
+improve youtub e matching
+
+## done:
+(prev release)
 [-] added dupli button in maindb 
 [x] fix import current month
 [-] File Name should be standardised.. 
 [x] add warning if lyrics added not to forget to select add new arangement
-[-] add auto groups
-[-] add maybe chery love to favs
-[-] at import get youtube rksmith link (unsolved bug: async stays in waiting)
-[-] at import get youtube song link (unsolved bug: async stays in waiting)
-[-] compare/dupli manag 2-x selected songs
 [-] add java 64bit if windows is for 64b https://www.java.com/en/download/manual.jsp
 [-] 1st feeling inc. not coverting
 [-] add better initial setup options & messages
@@ -277,33 +307,6 @@ Could not find file 'C:\GitHub\new\0\0_repacked\PS3\ORIG-Ghost-2015-Meliora-00-H
 [x] year diff, albbum sort diff
 [x] log spotify error 
 
-## done:
-(prev release)
-[x] add filter/show show the All Others (reverse current filter)
-[x] add misfits to favs
-[x] another one bytest the dust freeses at bullets rip (bass issue?sustain note)(issue:bass bend 0.5 sec not only 1 sec)
-[x] come together crashing (bend info is not transported in the DD free internal version)
-[x] come together lyrics
-[x] double /time remove from vocals
-[x] enable multi instance packing using DLCManager
-[x] fix additional stuff to lyrics sometimes breaking the song (make a limit for 50 char)
-[x] fix audio at the end includes broken songs
-[x] fix monthly imports filter
-[x] fix one filter (all originals not in Setilist)
-[x] fixe single packing wont to break 
-[x] fixed add lyrics to include new fields
-[x] fixed an isssue at duplciate management where some dupli would be cosidered same quicker than expected
-[x] imported this month
-[x] increasedy of Song_Comments till the 1st lyric
-[x] is there a Pc_CDLC_The Offspring_1998_Americana_0_The Kid's Aren't Alright_2109 (name typo fixed)
-[x] lengthen the start of 1,2,3 lines of intro vocal text
-[x] no zero added if 87 and 88 are on
-[x] ps3 special beginning of lyrics lyrics dont always(ps3, 2nd line not indipendendt) display
-[x] removed artist folder (fixed)
-[x] shorten start of track to seconds
-[x] talk issue w double bass
-[x] why single threading happens 4 time at pack from maindb (fixed using a global variab)
-[x] MAYBE  WHAT IF i wanna structure my files based on group anyway line 3858 (MAYBEno need for 0&Group at the beginning) 
 
 # Version History(release date):
 	0.1(12.08.2014) prototype, 
@@ -331,7 +334,9 @@ Could not find file 'C:\GitHub\new\0\0_repacked\PS3\ORIG-Ghost-2015-Meliora-00-H
 	0.4 (21.11.2016) Major improvements	and features
 	0.5 (15.03.2017) Implement a logic to properly read DLCManager manipulated DLCs	
 	0.6 (28.10.2017) Modify Lyrics, get tool ready for multithreading, 
-	0.7 (28.01.2018) Code review
+	0.7 (01.07.2018) Code review
+	0.7.2 (26.03.2019) Code review (+'19 Toolkit code base)
+	0.8 (xx.0x.2019) Reactivating Spotify checks, all params are in the Groups table
 # Implementation Tracking for the Main Features:
 		+1. Ability to Generate a Database with all DLC
 			Design description:
@@ -400,6 +405,7 @@ mainfor.designer
 ### Dev Tips:
 + Toolkit version flag does not sync to&from Github: Run RunMeFirst.bat
 + activate debug: set RocksmithToolkitGUI Folder as Start-up project
+± if dpi is problematic add registry entry http://www.visualstudioextensibility.com/2017/01/13/running-visual-studio-or-setups-with-dpi-virtualization-dpi-unaware-on-high-dpi-displays/
 + When having GitHub conficting issue
  https://help.github.com/articles/resolving-a-merge-conflict-from-the-command-line/
  git status

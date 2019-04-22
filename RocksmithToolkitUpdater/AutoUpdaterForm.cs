@@ -14,10 +14,13 @@ using System.Drawing;
 // DO NOT reference any file or library that is being updated because it becomes locked
 // instead use AssemblyCaller.Call or AssemblyCaller.CallStatic to access external app variables
 //
+// DO NOT add any third party 'References' (dependencies) to AutoUpdater 
+//
 // AutoUpdater performs clean toolkit installation and merges some (TODO: all) user customized files for latest revsion
 //
-// Verbose messaging and exception handling is for use in debugging the executable
+// Verbose messaging via the boolean isDebugMe can be turned on/off for debugging the executable
 //
+
 namespace RocksmithToolkitUpdater
 {
     public partial class AutoUpdaterForm : Form
@@ -46,12 +49,15 @@ namespace RocksmithToolkitUpdater
         private string latestZipPath;
         private string latestZipUrl;
         private string localToolkitDir;
+        private string newLocalToolkitDir;
+        private string localToolkitDirRoot;
         private string tempToolkitDir;
         private string lastError;
         private string appExecPath;
         private string appExecDir;
         private string appExecFile;
         private bool isInDesignMode;
+        private bool isDebugMe;
 
         /// <summary>
         /// AutoUpdater with command line args for localToolkitDir and tempToolkitDir
@@ -97,30 +103,35 @@ namespace RocksmithToolkitUpdater
                 //sb.AppendLine("");
                 sb.AppendLine("Continue running AutoUpdater in Alternate Usage mode?   ");
 
-                if (DialogResult.No == MessageBox.Show(sb.ToString(), "AutoUpdater", MessageBoxButtons.YesNo, MessageBoxIcon.Information))
-                {
+                if (DialogResult.Yes != MessageBox.Show(sb.ToString(), "AutoUpdater", MessageBoxButtons.YesNo, MessageBoxIcon.Information))
                     Environment.Exit(0);
-                }
 
                 // confirm toolkit process is not running before continuing
                 Thread.Sleep(500);
                 Process[] processesByName = Process.GetProcessesByName("RocksmithToolkitGUI");
                 if (processesByName.Length != 0)
                 {
-                    MessageBox.Show("<ERROR> Detected that RocksmithToolkitGUI is running ..." + Environment.NewLine + "The toolkit must be closed before running the AutoUpdater.  ", "RocksmithToolkit AutoUpdater", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("<ERROR> Detected that RocksmithToolkitGUI is running ..." + Environment.NewLine +
+                        "The toolkit must be closed before running the AutoUpdater.  ", "RocksmithToolkit AutoUpdater", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                     Environment.Exit(2);
                 }
             }
 
+            // turn on/off debugging MessageBox displays
+            isDebugMe = false;
+            isInDesignMode = Helpers.IsInDesignMode;
             appExecPath = Application.ExecutablePath;
             appExecDir = Path.GetDirectoryName(appExecPath);
             appExecFile = Path.GetFileName(appExecPath);
-            isInDesignMode = Helpers.IsInDesignMode;
+            // if (isInDesignMode) debugMe = true; // overrides initiation
 
             // running RocksmithToolkitUpdating.exe programatically (Primary Usage Mode)
             if (args.Length == 2 && appExecFile.Equals(APP_UPDATING, StringComparison.InvariantCultureIgnoreCase) || appExecFile.Equals(APP_RSGUI, StringComparison.InvariantCultureIgnoreCase))
             {
+                if (isDebugMe)
+                    MessageBox.Show("Starting Auto Update ... Primary Usage", "DPDM");
+
                 localToolkitDir = args[0];
                 tempToolkitDir = args[1];
             }
@@ -139,6 +150,9 @@ namespace RocksmithToolkitUpdater
                 // copy required files for debugging the AutoUpdater as a standalone project in VS IDE Debug mode
                 if (isInDesignMode)
                 {
+                    if (isDebugMe)
+                        MessageBox.Show("Starting Alternate Usage In Design Mode ...", "DPDM");
+
                     try
                     {
                         var rootBinDebugDir = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName, "RocksmithTookitGUI\\bin\\Debug");
@@ -151,20 +165,23 @@ namespace RocksmithToolkitUpdater
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("<ERROR> Can not find required file(s) to run AutoUpdater project in VS IDE Debug mode.  " + Environment.NewLine + "Make sure the RocksmithToolkitGUI project has been run in VS IDE Debug mode first. " + Environment.NewLine + Environment.NewLine + 
-                            ex.Message, "DEBUG ME");
+                        MessageBox.Show("<ERROR> Can not find required file(s) to run AutoUpdater project in VS IDE Debug mode.  " + Environment.NewLine + "Make sure the RocksmithToolkitGUI project has been run in VS IDE Debug mode first. " + Environment.NewLine + Environment.NewLine + ex.Message, "DPDM");
 
                         Environment.Exit(1);
                     }
                 }
                 else
                 {
-                    // use some whacky, hacky, trickery in Alternate Mode
+                    // use some whacky, hacky, trickery
                     // make a copy of AutoUpdater to prevent locking the process during update
                     var updaterAppPath = Path.Combine(localToolkitDir, APP_UPDATER);
                     var updatingAppPath = Path.Combine(tempToolkitDir, APP_UPDATING);
                     File.Copy(updaterAppPath, updatingAppPath, true);
                     var cmdArgs = String.Format("\"{0}\" \"{1}\"", localToolkitDir, tempToolkitDir);
+
+                    if (isDebugMe)
+                        MessageBox.Show("Starting Auto Update ... Alternate Usage Release Mode" + Environment.NewLine + "cmdArgs = " + cmdArgs, "DPDM");
+
                     var startInfo = new ProcessStartInfo
                     {
                         FileName = updatingAppPath,
@@ -180,7 +197,8 @@ namespace RocksmithToolkitUpdater
                     }
 
                     Thread.Sleep(500);
-                    // Kill current process now that AutoUpdater process is started
+                    // Kill current process (RocksmithToolkitUpdater.exe) now
+                    // that new process (RocksmithToolkitUpdating.exe) is started
                     Environment.Exit(0);
                 }
             }
@@ -191,8 +209,12 @@ namespace RocksmithToolkitUpdater
                 Environment.Exit(1);
             }
 
-            if (isInDesignMode)
-                MessageBox.Show("Application.ExecutablePath: " + appExecPath + Environment.NewLine + "IsDesignMode = " + isInDesignMode.ToString() + Environment.NewLine + "localToolkitDir = " + localToolkitDir + Environment.NewLine + "tempToolkitDir = " + tempToolkitDir, "DEBUG ME");
+            localToolkitDirRoot = Path.GetDirectoryName(localToolkitDir);
+            // toolkit archive directory/file structure effects newLocalToolkitDir path
+            newLocalToolkitDir = Path.Combine(localToolkitDirRoot, "RocksmithToolkit");
+
+            if (isDebugMe)
+                MessageBox.Show("IsDesignMode = " + isInDesignMode.ToString() + Environment.NewLine + "Currently running: " + Application.ExecutablePath + Environment.NewLine + "localToolkitDir = " + localToolkitDir + Environment.NewLine + "newlocalToolkitDir = " + newLocalToolkitDir + Environment.NewLine + "localToolkitDirRoot = " + localToolkitDirRoot + Environment.NewLine + "tempToolkitDir = " + tempToolkitDir + Environment.NewLine + "args[0] = " + args[0] + Environment.NewLine + "args[1] = " + args[1], "DPDM");
 
             // switch progress bar style
             pbUpdate.Style = ProgressBarStyle.Continuous;
@@ -212,8 +234,8 @@ namespace RocksmithToolkitUpdater
 
             try
             {
-                // www.rcustom.net/builds/latest.zip or *.tar.gz
-                // www.rcustom.net/builds/latest_test.zip or *.tar.gz
+                // www.rscustom.net/builds/latest.zip or *.tar.gz
+                // www.rscustom.net/builds/latest_test.zip or *.tar.gz
                 // get latest zip url
                 latestZipUrl = (string)AssemblyCaller.Call(Path.Combine(appExecDir, APP_RSLIB), "RocksmithToolkitLib.ToolkitVersionOnline", "GetFileUrl", null, true);
 
@@ -229,17 +251,16 @@ namespace RocksmithToolkitUpdater
 
             var latestZipUri = new Uri(latestZipUrl);
             latestZipPath = Path.Combine(tempToolkitDir, Path.GetFileName(latestZipUri.LocalPath));
-
-            if (isInDesignMode)
-            {
-                MessageBox.Show("Check backup files: " + tempToolkitDir, "DEBUG ME");
-                //MessageBox.Show("Debugging MergeXmlRepository next ...", "DEBUG ME");
-                //MergeXmlRepository(tempToolkitDir, localToolkitDir);
-                //MessageBox.Show("Debugging ExtractFile next ...", "DEBUG ME");
-                //ExtractFile(latestZipPath, localToolkitDir);
-            }
-
             DownloadFile(latestZipUri, latestZipPath);
+
+            if (isDebugMe)
+            {
+                MessageBox.Show("Check backup files: " + tempToolkitDir + Environment.NewLine + "latestZipUri dlStatus: " + dlStatus.ToString() + Environment.NewLine + "latestZipPath: " + latestZipPath, "DPDM");
+                //ExtractFile(latestZipPath, localToolkitDirRoot);
+                //MessageBox.Show("Check ExtractFile destination: " + localToolkitDirRoot, "DPDM");
+                //MergeXmlRepository(tempToolkitDir, newLocalToolkitDir);
+                //MessageBox.Show("Check MergeXmlRepository destination: " + newLocalToolkitDir, "DPDM");
+            }
 
             if (dlStatus == DownloadStatus.SUCCESS && File.Exists(latestZipPath))
             {
@@ -249,39 +270,42 @@ namespace RocksmithToolkitUpdater
                     var lockedLocalFiles = DeleteDirectory(localToolkitDir);
                     if (lockedLocalFiles.Any())
                     {
-                        ShowCurrentOperation("<ERROR> Local toolkit directory cleanup failed ...");
-                        ShowLockedFiles(lockedLocalFiles);
-                        Environment.Exit(1);
+                        ShowCurrentOperation("<WARNING> localToolkitDir cleanup failed ...");
+                        if (!ShowLockedFilesAndContinue(lockedLocalFiles))
+                            Environment.Exit(1);
                     }
                 }
-
-                if (isInDesignMode)
-                    MessageBox.Show("Check purged directory: " + localToolkitDir, "DEBUG ME");
 
                 try
                 {
-                    // extract latest toolkit revision to the original process directory
-                    ExtractFile(latestZipPath, localToolkitDir);
+                    // extract latest toolkit revision to the localToolkitDirRoot
+                    // revised archive directory structure to be more like an installer
+                    ExtractFile(latestZipPath, localToolkitDirRoot);
+
+                    if (isDebugMe)
+                        MessageBox.Show("Check unzipped files in: " + localToolkitDirRoot, "DPDM");
                 }
                 catch (Exception ex)
                 {
-                    if (MessageBox.Show("<ERROR> Could not unzip file: " + Path.GetFileName(latestZipPath) + Environment.NewLine + "The AutoUpdater can not continue." + Environment.NewLine + "Do you want to roll back the installation process?" + Environment.NewLine + ex.Message, "RocksmithToolkit AutoUpdater", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.No)
-                    {
+                    if (DialogResult.No == MessageBox.Show("<ERROR> Could not unzip file: " + Path.GetFileName(latestZipPath) + Environment.NewLine +
+                        "The AutoUpdater can not continue." + Environment.NewLine +
+                        "Do you want to roll back the installation process?" + Environment.NewLine +
+                        ex.Message, "RocksmithToolkit AutoUpdater", MessageBoxButtons.YesNo, MessageBoxIcon.Error))
                         Environment.Exit(1);
-                    }
 
                     // rollback the process to its original state
-                    RollBack(tempToolkitDir, localToolkitDir);
-                    RestartToolkitGUI();
-                }
+                    DeleteDirectory(newLocalToolkitDir);
+                    if (!Directory.Exists(localToolkitDir))
+                        Directory.CreateDirectory(localToolkitDir);
 
-                if (isInDesignMode)
-                    MessageBox.Show("Check unzipped files: " + localToolkitDir, "DEBUG ME");
+                    RollBack(tempToolkitDir, localToolkitDir);
+                    RestartToolkitGUI(localToolkitDir);
+                }
 
                 try
                 {
                     // merge xml repo files
-                    MergeXmlRepository(tempToolkitDir, localToolkitDir);
+                    MergeXmlRepository(tempToolkitDir, newLocalToolkitDir);
                 }
                 catch (Exception ex)
                 {
@@ -294,40 +318,68 @@ namespace RocksmithToolkitUpdater
                 {
                     try
                     {
-                        File.Copy(cgmFile, cgmFile.Replace(tempToolkitDir, localToolkitDir));
+                        File.Copy(cgmFile, cgmFile.Replace(tempToolkitDir, newLocalToolkitDir));
                     }
-                    catch
-                    {
-                        /* Do nothing */
-                    }
+                    catch {/* Do nothing */}
                 }
 
                 // TODO: merge custom/user dds xml/cfg files
 
                 // cleanup tempToolkitDir
                 var lockedTempFiles = DeleteDirectory(tempToolkitDir);
-
-                // debug locked files
-                if (isInDesignMode && lockedTempFiles.Any())
+                if (lockedTempFiles.Any())
                 {
-                    ShowCurrentOperation("<ERROR> Temp toolkit directory cleanup failed ...");
-                    ShowLockedFiles(lockedTempFiles);
+                    ShowCurrentOperation("<WARNING> tempToolkitDir cleanup failed ...");
+                    if (!ShowLockedFilesAndContinue(lockedTempFiles))
+                        Environment.Exit(1);
                 }
             }
 
-            if (!isInDesignMode)
-            {
-                if (File.Exists(latestZipPath))
-                    File.Delete(latestZipPath);
+            if (File.Exists(latestZipPath))
+                File.Delete(latestZipPath);
 
-                ShowCurrentOperation("Please wait ... Restarting ToolkitGUI ...");
-                Thread.Sleep(3000); // settle down before restart
-                RestartToolkitGUI();
+            if (localToolkitDir != newLocalToolkitDir)
+            {
+                // find open localToolkitDir and attempt to close it so it can be deleted
+                var shellWindows = new SHDocVw.ShellWindows();
+                foreach (SHDocVw.InternetExplorer shellWindow in shellWindows)
+                {
+                    var processType = Path.GetFileNameWithoutExtension(shellWindow.FullName).ToLower();
+                    var cleanLocationUrl = shellWindow.LocationURL.ToLower().Replace(@"/", @"\");
+                    if (processType.Equals("explorer") && cleanLocationUrl.Contains(localToolkitDir.ToLower()))
+                    {
+                        shellWindow.Quit();
+                        Thread.Sleep(100);
+                        shellWindow.Quit();
+                        Thread.Sleep(100);
+
+                        MessageBox.Show("The old local toolkit directory should now be closed: " + Environment.NewLine +
+                                        localToolkitDir + Environment.NewLine + Environment.NewLine +
+                                        "Manually close the directory if it is still open" + Environment.NewLine +
+                                        "before pressing 'OK' to continue.  The old toolkit" + Environment.NewLine +
+                                        "may be deleted after the update finishes ...", "Close Toolkit Directory ...", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                        break;
+                    }
+                }
+
+                // attempt to delete the closed directory
+                DeleteDirectory(localToolkitDir);
             }
+
+            if (isDebugMe)
+                MessageBox.Show("Before Restart: " + Environment.NewLine +
+                                "Check localToolkitDir deleted: " + localToolkitDir + Environment.NewLine +
+                                "Check tempToolkitDir deleted: " + tempToolkitDir + Environment.NewLine +
+                                "Check latestZipPath deleted: " + latestZipPath, "DPDM");
+
+            ShowCurrentOperation("Please wait ... Restarting ToolkitGUI ...");
+            Thread.Sleep(1000); // settle down before restart
+            RestartToolkitGUI(newLocalToolkitDir);
         }
 
         private void DownloadFile(Uri downloadUri, string destPath, int attempts = 4)
         {
+            ShowCurrentOperation("Downloading: " + Path.GetFileName(destPath) + " ...");
             pbUpdate.Style = ProgressBarStyle.Continuous;
             pbUpdate.Refresh();
 
@@ -399,7 +451,7 @@ namespace RocksmithToolkitUpdater
             else if (e.Cancelled == true)
             {
                 dlStatus = DownloadStatus.CANCEL;
-                ShowCurrentOperation("Download cancelled ...");
+                ShowCurrentOperation("<WARNING> Download cancelled ...");
                 MessageBox.Show("Download has been canceled.");
             }
             else
@@ -417,7 +469,7 @@ namespace RocksmithToolkitUpdater
         {
             ShowCurrentOperation("Preparing to merge repositories ...");
 
-            // this check must happen after download has been unzipped to the localToolkitPath
+            // this check must happen after download has been unzipped to the newLocalToolkitPath
             try
             {
                 bool? replaceRepo = null;
@@ -426,7 +478,7 @@ namespace RocksmithToolkitUpdater
                 // get old config version from old ConfigRepo
                 var xmlConfigVersion = (string)AssemblyCaller.CallStatic(Path.Combine(appExecDir, APP_RSLIB), "RocksmithToolkitLib.XmlRepository.ConfigRepository", "GetString", "general_configversion");
                 // get new config version from new GeneralConfig
-                var generalConfigVersion = (string)AssemblyCaller.CallStatic(Path.Combine(localToolkitDir, APP_RSGUI), "RocksmithToolkitGUI.Config.GeneralConfig", "GetConfigVersion", null);
+                var generalConfigVersion = (string)AssemblyCaller.CallStatic(Path.Combine(appExecDir, APP_RSGUI), "RocksmithToolkitGUI.Config.GeneralConfig", "GetConfigVersion", null);
 
                 if (String.IsNullOrEmpty(xmlConfigVersion))
                     replaceRepo = true;
@@ -439,7 +491,7 @@ namespace RocksmithToolkitUpdater
 
                 if (replaceRepo == true)
                 {
-                    if (isInDesignMode)
+                    if (isDebugMe)
                         MessageBox.Show("XmlRepositories were not merged ..." + Environment.NewLine +
                             "replaceRepo = " + replaceRepo.ToString() + Environment.NewLine +
                             "xmlConfigVersion = " + xmlConfigVersion + Environment.NewLine +
@@ -450,7 +502,7 @@ namespace RocksmithToolkitUpdater
             }
             catch (Exception ex)
             {
-                MessageBox.Show("<WARNING> XmlRepositories can not be merged ..." + Environment.NewLine +
+                MessageBox.Show("<WARNING> XmlRepositories could not be merged ..." + Environment.NewLine +
                     ex.Message, "RocksmithToolkit AutoUpdater", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 return;
@@ -487,12 +539,15 @@ namespace RocksmithToolkitUpdater
             }
         }
 
-        private void RestartToolkitGUI()
+        private void RestartToolkitGUI(string toolkitDir)
         {
-            var toolkitRootDir = localToolkitDir;
+            if (isDebugMe)
+                MessageBox.Show("Attempting to RestartToolkitGUI: " + Environment.NewLine +
+                                Path.Combine(toolkitDir, APP_RSGUI));
+
             Process updaterProcess = new Process();
-            updaterProcess.StartInfo.FileName = Path.Combine(toolkitRootDir, APP_RSGUI);
-            updaterProcess.StartInfo.WorkingDirectory = toolkitRootDir;
+            updaterProcess.StartInfo.FileName = Path.Combine(toolkitDir, APP_RSGUI);
+            updaterProcess.StartInfo.WorkingDirectory = toolkitDir;
             updaterProcess.Start();
 
             Environment.Exit(0);
@@ -514,9 +569,11 @@ namespace RocksmithToolkitUpdater
             var lockedFiles = CopyDirectory(srcDir, destDir);
             if (lockedFiles.Any())
             {
-                ShowCurrentOperation("<ERROR> Backup failed, locked destination path ...");
-                ShowLockedFiles(lockedFiles);
-                return false;
+                ShowCurrentOperation("<ERROR> Backup failed ...");
+                if (!ShowLockedFilesAndContinue(lockedFiles))
+                    return false;
+
+                return true;
             }
 
             ShowCurrentOperation("Backup was sucessful ...");
@@ -534,7 +591,7 @@ namespace RocksmithToolkitUpdater
             if (!Directory.Exists(rootDir))
                 Directory.CreateDirectory(rootDir);
 
-            // MessageBox.Show("rootDir = " + rootDir, "DEBUG ME");
+            if (isDebugMe) MessageBox.Show("CopyDirectory rootDir = " + rootDir, "DPDM");
 
             // create backup subdirectories
             var dirPaths = Directory.EnumerateDirectories(srcDir, "*", SearchOption.AllDirectories);
@@ -544,7 +601,7 @@ namespace RocksmithToolkitUpdater
                 if (!Directory.Exists(subDir))
                     Directory.CreateDirectory(subDir);
 
-                // MessageBox.Show("subDir = " + subDir, "DEBUG ME");
+                if (isDebugMe) MessageBox.Show("CopyDirectory subDir = " + subDir, "DPDM");
             }
 
             // copy all files
@@ -586,11 +643,28 @@ namespace RocksmithToolkitUpdater
             return lockedFiles;
         }
 
+        /// <summary>
+        /// This is a permenant delete.  Double check the srcDir is set correctly.
+        /// </summary>
+        /// <param name="srcDir"></param>
+        /// <returns></returns>
         private List<string> DeleteDirectory(string srcDir)
         {
             var lockedFiles = new List<string>();
             if (!Directory.Exists(srcDir))
                 return lockedFiles;
+
+            if (isInDesignMode)
+            {
+                if (DialogResult.Yes != MessageBox.Show("<WARNING> About to permenantly delete srcDir: " + Environment.NewLine +
+                    srcDir + Environment.NewLine +
+                    "Including all files, subdirectories, and the srcDir path too!" + Environment.NewLine +
+                    "Are you sure you want to continue?", "<WARNING> README ...", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                {
+                    lockedFiles.Add("DeleteDirectory was cancelled by developer ...");
+                    return lockedFiles;
+                }
+            }
 
             var filePaths = Directory.EnumerateFiles(srcDir, "*", SearchOption.AllDirectories);
             // create some progress bar movement
@@ -648,27 +722,33 @@ namespace RocksmithToolkitUpdater
 
             if (lockedFiles.Any())
             {
-                ShowCurrentOperation("<ERROR> Rollback failed, locked files ...");
-                ShowLockedFiles(lockedFiles);
-                Environment.Exit(0);
+                ShowCurrentOperation("<ERROR> Rollback failed ...");
+                if (!ShowLockedFilesAndContinue(lockedFiles))
+                    Environment.Exit(0);
             }
         }
 
-        private void ShowLockedFiles(List<string> lockedFiles)
+        private bool ShowLockedFilesAndContinue(List<string> lockedFiles)
         {
             if (!lockedFiles.Any())
-                return;
+                return true;
 
             var sb = new StringBuilder();
-            sb.AppendLine("<ERROR> The following file(s) are locked,");
-            sb.AppendLine("so they could not be processed correctly ...");
+            sb.AppendLine("<WARNING> Some files could not be programmatically deleted!");
+            sb.AppendLine("Please remember to deleted these after auto update is finished ...  ");
             sb.AppendLine("");
 
             foreach (var lockedFile in lockedFiles)
                 sb.AppendLine(lockedFile);
 
-            MessageBox.Show(sb.ToString(), "RocksmithToolkit AutoUpdater",
-                MessageBoxButtons.OK, MessageBoxIcon.Error);
+            sb.AppendLine();
+            sb.AppendLine("Do you want continue?");
+
+            if (DialogResult.OK != MessageBox.Show(sb.ToString(), "RocksmithToolkit AutoUpdater",
+                 MessageBoxButtons.OKCancel, MessageBoxIcon.Error))
+                return false;
+
+            return true;
         }
 
         private void AutoUpdaterForm_FormClosing(object sender, FormClosingEventArgs e)

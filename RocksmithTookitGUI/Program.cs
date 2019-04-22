@@ -26,6 +26,9 @@ namespace RocksmithToolkitGUI
             // TODO: figure out way for native mac\linux OS
             var logPath = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "_RSToolkit_" + DateTime.Now.ToString("yyyy-MM-dd") + ".log");
 
+            // verify external apps in 'tools' and 'ddc' directory
+            ExternalApps.VerifyExternalApps(); // throws necessary exception if missing
+
             // workaround fix for Win10 NET4.6 compatiblity issue
             var updaterVersion = "Null";
             try
@@ -46,7 +49,7 @@ namespace RocksmithToolkitGUI
                 String.Format("OS: {0} ({1} bit)\r\n ", Environment.OSVersion, Environment.Is64BitOperatingSystem ? "64" : "32") +
                 String.Format(".NET Framework Runtime: v{0}\r\n ", Environment.Version) +
                 String.Format("JIT: {0}\r\n ", JitVersionInfo.GetJitVersion()) +
-                String.Format("WINE_INSTALLED: {0}\r\n ", GeneralExtensions.IsWine()) +
+                String.Format("WINE_INSTALLED: {0}\r\n ", GeneralExtension.IsWine()) +
                 String.Format("MacOSX: {0}\r\n ", Environment.OSVersion.Platform == PlatformID.MacOSX)
                 );
 

@@ -28,7 +28,6 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
     <TargetFrameworkProfile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -44,7 +43,9 @@
     <WarningLevel>4</WarningLevel>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <CodeAnalysisRuleSet>..\CodeAnalysis.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
+    <NoWarn>
+    </NoWarn>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -53,13 +54,28 @@
     <OutputPath>bin\Release\</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <NoWarn>0169, 0162</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>songcreator.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'RocksmithToolkitMac|x86' ">
+    <OutputPath>bin\RocksmithToolkit\</OutputPath>
+    <Optimize>true</Optimize>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
   <PropertyGroup>
-    <NoWin32Manifest>false</NoWin32Manifest>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ProjectConfigFileName>App.config</ProjectConfigFileName>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -71,26 +87,26 @@
     <Reference Include="FSharp.Core, Version=4.6.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\FSharp.Core.4.6.2\lib\net45\FSharp.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Google.Apis, Version=1.38.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
-      <HintPath>..\packages\Google.Apis.1.38.0\lib\net45\Google.Apis.dll</HintPath>
+    <Reference Include="Google.Apis, Version=1.38.2.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.1.38.2\lib\net45\Google.Apis.dll</HintPath>
     </Reference>
-    <Reference Include="Google.Apis.Auth, Version=1.38.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
-      <HintPath>..\packages\Google.Apis.Auth.1.38.0\lib\net45\Google.Apis.Auth.dll</HintPath>
+    <Reference Include="Google.Apis.Auth, Version=1.38.2.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Auth.1.38.2\lib\net45\Google.Apis.Auth.dll</HintPath>
     </Reference>
-    <Reference Include="Google.Apis.Auth.PlatformServices, Version=1.38.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
-      <HintPath>..\packages\Google.Apis.Auth.1.38.0\lib\net45\Google.Apis.Auth.PlatformServices.dll</HintPath>
+    <Reference Include="Google.Apis.Auth.PlatformServices, Version=1.38.2.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Auth.1.38.2\lib\net45\Google.Apis.Auth.PlatformServices.dll</HintPath>
     </Reference>
-    <Reference Include="Google.Apis.Core, Version=1.38.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
-      <HintPath>..\packages\Google.Apis.Core.1.38.0\lib\net45\Google.Apis.Core.dll</HintPath>
+    <Reference Include="Google.Apis.Core, Version=1.38.2.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Core.1.38.2\lib\net45\Google.Apis.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Google.Apis.PlatformServices, Version=1.38.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
-      <HintPath>..\packages\Google.Apis.1.38.0\lib\net45\Google.Apis.PlatformServices.dll</HintPath>
+    <Reference Include="Google.Apis.PlatformServices, Version=1.38.2.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.1.38.2\lib\net45\Google.Apis.PlatformServices.dll</HintPath>
     </Reference>
-    <Reference Include="Google.Apis.YouTube.v3, Version=1.38.0.1488, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
-      <HintPath>..\packages\Google.Apis.YouTube.v3.1.38.0.1488\lib\net45\Google.Apis.YouTube.v3.dll</HintPath>
+    <Reference Include="Google.Apis.YouTube.v3, Version=1.38.2.1488, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.YouTube.v3.1.38.2.1488\lib\net45\Google.Apis.YouTube.v3.dll</HintPath>
     </Reference>
-    <Reference Include="HtmlAgilityPack, Version=1.11.0.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
-      <HintPath>..\packages\HtmlAgilityPack.1.11.0\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    <Reference Include="HtmlAgilityPack, Version=1.11.3.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.11.3\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -105,7 +121,7 @@
       <HintPath>..\lib\NDesk\NDesk.Options.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2-beta3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NLog">
       <HintPath>..\lib\NLog\NLog.dll</HintPath>
@@ -133,10 +149,10 @@
       <HintPath>..\lib\SharpConfig\SharpConfig.dll</HintPath>
     </Reference>
     <Reference Include="SpotifyAPI.Web, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\SpotifyAPI.Web.3.1.2\lib\net46\SpotifyAPI.Web.dll</HintPath>
+      <HintPath>..\packages\SpotifyAPI.Web.4.0.0\lib\net46\SpotifyAPI.Web.dll</HintPath>
     </Reference>
     <Reference Include="SpotifyAPI.Web.Auth, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\SpotifyAPI.Web.Auth.3.1.2\lib\net46\SpotifyAPI.Web.Auth.dll</HintPath>
+      <HintPath>..\packages\SpotifyAPI.Web.Auth.4.0.0\lib\net46\SpotifyAPI.Web.Auth.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -157,18 +173,14 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="Unosquare.Labs.EmbedIO, Version=2.3.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\EmbedIO.2.3.1\lib\net462\Unosquare.Labs.EmbedIO.dll</HintPath>
+    <Reference Include="Unosquare.Labs.EmbedIO, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\EmbedIO.2.5.0\lib\net462\Unosquare.Labs.EmbedIO.dll</HintPath>
     </Reference>
-    <Reference Include="Unosquare.Swan.Lite, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Unosquare.Swan.Lite.1.1.1\lib\net462\Unosquare.Swan.Lite.dll</HintPath>
+    <Reference Include="Unosquare.Swan.Lite, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unosquare.Swan.Lite.1.1.2\lib\net461\Unosquare.Swan.Lite.dll</HintPath>
     </Reference>
     <Reference Include="X360">
       <HintPath>..\lib\X360\X360.dll</HintPath>
-    </Reference>
-    <Reference Include="zlib.net, Version=1.0.3.0, Culture=neutral, PublicKeyToken=47d7877cb3620160">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>DLCManager\external_tools\remastered\bin\Release\zlib.net.dll</HintPath>
     </Reference>
     <Reference Include="Zlib.Portable, Version=1.11.0.0, Culture=neutral, PublicKeyToken=431cba815f6a8b5b, processorArchitecture=MSIL">
       <HintPath>..\packages\Zlib.Portable.Signed.1.11.0\lib\portable-net4+sl5+wp8+win8+wpa81+MonoTouch+MonoAndroid\Zlib.Portable.dll</HintPath>
@@ -550,6 +562,12 @@
     <EmbeddedResource Include="ZpeConverter\ZpeConverter.resx">
       <DependentUpon>ZpeConverter.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="app.manifest">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="DLCManager\external_tools\CDLCEnablers\RUN_PATCH_RS.orig.command">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -2232,64 +2250,14 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Resources\logo_small.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\pick.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ConsoleApp1\packer.csproj">
-      <Project>{b06bda26-2bf3-4e55-8e04-81eb01242767}</Project>
-      <Name>packer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RocksmithToolkitCLI\artistfolders\artistfolders.csproj">
-      <Project>{e742753f-9dc3-4ab7-b129-dc11eb2302ca}</Project>
-      <Name>artistfolders</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RocksmithToolkitCLI\cdlcconverter\cdlcconverter.csproj">
-      <Project>{3ea40b0c-b63a-4670-bfc6-c6451c15f901}</Project>
-      <Name>cdlcconverter</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RocksmithToolkitCLI\convert2012\convert2012.csproj">
-      <Project>{FE4E3BDA-2942-4009-9F42-07ECEF8DE350}</Project>
-      <Name>convert2012</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RocksmithToolkitCLI\devtools\devtools.csproj">
-      <Project>{63fb3334-1e7e-42d7-a025-744bc387aad6}</Project>
-      <Name>devtools</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RocksmithToolkitCLI\PackageCreator\packagecreator.csproj">
-      <Project>{ED268869-387A-477E-A652-C6E47BE2AC02}</Project>
-      <Name>packagecreator</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RocksmithToolkitCLI\pcdecrypt\pcdecrypt.csproj">
-      <Project>{9190164b-e755-4c8d-812e-70be8fa286dd}</Project>
-      <Name>pcdecrypt</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RocksmithToolkitCLI\pedalgen\pedalgen.csproj">
-      <Project>{54637c43-e331-443b-b30f-c181a5ca60a4}</Project>
-      <Name>pedalgen</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RocksmithToolkitCLI\sng2014\sng2014.csproj">
-      <Project>{8FDBC548-DEBF-46D6-A933-33C8D72F33AB}</Project>
-      <Name>sng2014</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RocksmithToolkitCLI\sngtotab\sngtotab.csproj">
-      <Project>{3AB6A6D5-B5AE-4319-9B57-2758D13EB042}</Project>
-      <Name>sngtotab</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RocksmithToolkitCLI\toneliberator\toneliberator.csproj">
-      <Project>{c8bde9bb-f671-482e-97ab-5472f3c7d319}</Project>
-      <Name>toneliberator</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RocksmithToolkitCLI\transferprofile\transferprofile.csproj">
-      <Project>{ce48b5df-398b-47d8-96d6-198566521104}</Project>
-      <Name>transferprofile</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RocksmithToolkitCLI\xml2sng\xml2sng.csproj">
-      <Project>{48703F6C-9F98-4534-AB1D-67856A84D806}</Project>
-      <Name>xml2sng</Name>
-    </ProjectReference>
     <ProjectReference Include="..\RocksmithToolkitLib\RocksmithToolkitLib.csproj">
       <Project>{2231C13A-14F6-478A-96D7-D1D3E1094CD6}</Project>
       <Name>RocksmithToolkitLib</Name>
@@ -2303,13 +2271,9 @@
     <None Include="Resources\toolkit_logo.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\colored.png" />
-    <None Include="Resources\brasil_logo.png" />
-    <None Include="Resources\ddc-512.png" />
-    <None Include="Resources\guitar_256.png" />
-    <None Include="Resources\flipXc.png" />
-    <None Include="Resources\flipYc.png" />
-    <None Include="Resources\music_edit.png" />
+    <Content Include="ReleaseNotes.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="DLCManager\AccessDB.accdb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -4829,14 +4793,16 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Service References\" />
-    <Content Include="..\VersionInfo.txt">
-      <Link>VersionInfo.txt</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="songcreator.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\colored.png" />
+    <None Include="Resources\brasil_logo.png" />
+    <None Include="Resources\ddc-512.png" />
+    <None Include="Resources\guitar_256.png" />
+    <None Include="Resources\flipXc.png" />
+    <None Include="Resources\flipYc.png" />
+    <None Include="Resources\music_edit.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DLCManager\external_tools\PKG_Linker_V2.0\bin\raps\" />
@@ -4856,20 +4822,13 @@
     <Folder Include="DLCManager\Temp\" />
   </ItemGroup>
   <ItemGroup>
-    <COMReference Include="VBIDE">
-      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
-      <VersionMajor>5</VersionMajor>
-      <VersionMinor>3</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>primary</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
     <Content Include="..\VersionInfo.txt">
       <Link>VersionInfo.txt</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="songcreator.ico" />
+    <None Include="ReadMe.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
@@ -4895,25 +4854,44 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
+    <PreBuildEvent>REM cleanup the TargetDir before starting the build
+del /S /Q "$(TargetDir)*.*
+
+REM copy support files
+xcopy /E /S /Y "$(SolutionDir)ThirdPartyApps\*.*" "$(TargetDir)*.*"
+
+</PreBuildEvent>
     <!-- be sure to address all build types in the PostBuildEvent -->
     <PostBuildEvent Condition=" '$(OS)' != 'Unix' ">
       xcopy /S /Y "$(SolutionDir)Third-party Apps"
     </PostBuildEvent>
     <PostBuildEvent Condition=" '$(OS)' == 'Unix' ">
-
       cp -Rf "$(SolutionDir)Third-party Apps" "$(TargetDir)"
     </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>REM copy support files
-xcopy /S /Y "$(SolutionDir)Third-party Apps"
+    <PostBuildEvent>REM copy ToolkitUpdater App.config to Release folder
+copy /Y "$(SolutionDir)RocksmithToolkitUpdater\$(OutDir)*.exe.config" "$(TargetDir)*.*"
 
-rem do some cleanup only if Release
+REM Cleanup for Release (AppVeyor) Build
 
 if $(ConfigurationName) == Release (
-   del /S /Q "$(TargetDir)*.exe.config"
+   del /S /Q "$(TargetDir)*.pdb"
+   del /S /Q "$(TargetDir)*.vshost.exe"
+   del /S /Q "$(SolutionDir)*.pdb"
+
+   REM used by appVeyor so commented out
+   REM del /S /Q "$(SolutionDir)*.vshost.exe"
+
+   del /S /Q "$(TargetDir)MiscUtil.xml"
+   del /S /Q "$(TargetDir)NLog.xml"
+   del /S /Q "$(TargetDir)Newtonsoft.Json.xml"
+   del /S /Q "$(TargetDir)X360.xml"   
+ )
+
+REM Cleanup for Release (Mac Wineskin) Build
+
+if $(ConfigurationName) == RocksmithToolkitMac (
    del /S /Q "$(TargetDir)*.pdb"
    del /S /Q "$(TargetDir)*.vshost.exe"
 
@@ -4924,7 +4902,15 @@ if $(ConfigurationName) == Release (
    del /S /Q "$(TargetDir)NLog.xml"
    del /S /Q "$(TargetDir)Newtonsoft.Json.xml"
    del /S /Q "$(TargetDir)X360.xml"
- )</PostBuildEvent>
+
+   del /S /Q "$(TargetDir)*.bat"
+   del /S /Q "$(TargetDir)ReadMe.txt"
+   del /S /Q "$(TargetDir)Tools\CreateToolkitShortcut.exe"
+   copy /Y "$(ProjectDir)songcreator.icns" "$(TargetDir)songcreator.icns"
+ )
+
+
+</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

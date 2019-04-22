@@ -11,6 +11,8 @@ using System.Globalization;
 using RocksmithToolkitLib.Extensions;
 using RocksmithToolkitLib.XmlRepository;
 using System.Threading;
+using RocksmithToolkitGUI.Config;
+using System.Configuration;
 //
 // DEVNOTE: WHEN ISSUING NEW RELEASE VERION OF TOOLKIT ...
 // Modify the RocksmithToolkitLib prebuild event which will update
@@ -34,11 +36,8 @@ namespace RocksmithToolkitGUI
             //Application.CurrentInputLanguage = InputLanguage.FromCulture(ci); //may cause issues for non us cultures esp on wineMAC build got report of such issue.
 
             // it is better to be hidden initially and then unhide when needed
-            if (GeneralExtensions.IsInDesignMode)
+            if (GeneralExtension.IsInDesignMode)
                 btnDevTestMethod.Visible = true;
-
-            // verify external apps in 'tools' and 'ddc' directory
-            ExternalApps.VerifyExternalApps();
 
             InitMainForm();
         }
@@ -54,7 +53,7 @@ namespace RocksmithToolkitGUI
 
             try
             {
-                // always disable updates on Mac or according to general_autoupdate setting
+                // updates are disabled on real Mac platform, or according to general_autoupdate setting                
                 if (Environment.OSVersion.Platform != PlatformID.MacOSX &&
                     ConfigRepository.Instance().GetBoolean("general_autoupdate"))
                 {
@@ -87,6 +86,8 @@ namespace RocksmithToolkitGUI
                 this.Location = new Point((Screen.PrimaryScreen.WorkingArea.Width - this.Width) / 2, (Screen.PrimaryScreen.WorkingArea.Height - this.Height) / 2);
             else
                 this.Location = new Point((Screen.PrimaryScreen.WorkingArea.Width - this.Width) / 2, 0);
+
+            // this.AutoScaleMode = AutoScaleMode.None; // preserve integrity of form dimensional layout
         }
 
         private void CheckForUpdate(object sender, DoWorkEventArgs e)
@@ -94,7 +95,7 @@ namespace RocksmithToolkitGUI
             // CHECK FOR NEW AVAILABLE REVISION AND ENABLE UPDATE
             try
             {
-                onlineVersion = ToolkitVersionOnline.Load();
+                onlineVersion = ToolkitVersionOnline.GetVersionInfo();
             }
             catch (WebException) { /* Do nothing on 404 */ }
             catch (Exception)
@@ -227,7 +228,7 @@ namespace RocksmithToolkitGUI
         {
             //manageToolStripMenuItem.Enabled = false;
             //bcapi (temp)Renaming this Fork
-            this.Text = String.Format("bcapi's v0.7.1 Custom Song Creator Toolkit (v{0} '18 beta)", ToolkitVersion.RSTKGuiVersion);
+            this.Text = String.Format("bcapi's v0.7.2 Custom Song Creator Toolkit (v{0} '19 beta)", ToolkitVersion.RSTKGuiVersion);
 
             // Remove all tabs
             tabControl1.TabPages.Clear();
@@ -244,7 +245,7 @@ namespace RocksmithToolkitGUI
             //    dlcPackageCreator1.SaveTemplateFile(dlcPackageCreator1.UnpackedDir, false);
 
             // leave temp folder contents for developer debugging
-            if (GeneralExtensions.IsInDesignMode)
+            if (GeneralExtension.IsInDesignMode)
                 return;
 
             // cleanup temp folder garbage carefully
@@ -273,30 +274,38 @@ namespace RocksmithToolkitGUI
 
         private void MainForm_Shown(object sender, EventArgs e)
         {
+            // check for first run
+            bool firstRun = ConfigRepository.Instance().GetBoolean("general_firstrun");
+
+            // confirm and log App.config was properly loaded at runtime
+            var appConfigStatus = "<ERROR> Load Failed";
+            if (Convert.ToBoolean(ConfigurationSettings.AppSettings["key"]))
+                appConfigStatus = "Load Successful";
+
+            ConfigGlobals.Log.Info(" - App.config Status (" + appConfigStatus + ")");
+
+            // validate and log runtime display setting
+            ConfigGlobals.Log.Info(" - System Display DPI Setting (" + GeneralExtension.GetDisplayDpi(this) + ")");
+            ConfigGlobals.Log.Info(" - System Display Screen Scale Factor (" + GeneralExtension.GetDisplayScalingFactor(this) * 100 + "%)");
+            if (!GeneralExtension.ValidateDisplaySettings(this, this, false, firstRun))
+                ConfigGlobals.Log.Info(" - Adjusted AutoScaleDimensions, AutoScaleMode, and AutoSize ...");
+
             // don't bug the Developers when in design mode ;)
-            if (GeneralExtensions.IsInDesignMode)
-                return;
-
             bool showRevNote = ConfigRepository.Instance().GetBoolean("general_showrevnote");
-            if (showRevNote)
+            if (showRevNote && !GeneralExtension.IsInDesignMode)
             {
-                if (this.Text.ToUpper().Contains("BETA"))
-                    ShowHelpForm();
-
+                ShowHelpForm();
                 ConfigRepository.Instance()["general_showrevnote"] = "false";
             }
 
-            this.Refresh();
-
-
-            // check for first run //Check if author set at least, then it's not a first run tho, but let it show msg anyways...
-            bool firstRun = ConfigRepository.Instance().GetBoolean("general_firstrun");
-            if (!firstRun)
+            // don't bug the Developers when in design mode ;)
+            if (!firstRun || GeneralExtension.IsInDesignMode)
                 return;
 
+            this.Refresh();
             MessageBox.Show(new Form { TopMost = true },
-                "    Welcome to the Song Creator Toolkit for Rocksmith." + Environment.NewLine +
-                "          Commonly known as, 'the toolkit'." + Environment.NewLine + Environment.NewLine +
+                "Welcome to the Song Creator Toolkit for Rocksmith ..." + Environment.NewLine +
+                "Commonly known as, 'the toolkit'." + Environment.NewLine + Environment.NewLine +
                 "It looks like this may be your first time running the toolkit.  " + Environment.NewLine +
                 "Please fill in the Configuration menu with your selections.",
                 "Song Creator Toolkit for Rocksmith - FIRST RUN", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -307,21 +316,24 @@ namespace RocksmithToolkitGUI
 
         private void ShowHelpForm()
         {
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            using (Stream streamBetaInfo = assembly.GetManifestResourceStream("RocksmithToolkitGUI.BetaInfo.rtf")) //RocksmithToolkitGUI.Resources.
+            using (var helpViewer = new HelpForm())
             {
-                using (var helpViewer = new HelpForm())
-                {
-                    helpViewer.Text = String.Format("{0}", "TOOLKIT BETA REVISION MESSAGE ...");
-                    helpViewer.PopulateRichText(streamBetaInfo);
-                    helpViewer.ShowDialog();
-                }
+                helpViewer.Text = String.Format("{0}", "Viewing ReleaseNotes.txt ...");
+                // using ascii text file for web browser viewing
+                helpViewer.PopulateAsciiText(File.ReadAllText("ReleaseNotes.txt"));
+                helpViewer.ShowDialog();
             }
         }
 
-        // area for developer testing 
         private void DevTestMethod()
         {
+            // developer sandbox debugging area
+            GeneralExtension.ValidateDisplaySettings(this, this, true, true);
+            return;
+
+            ShowHelpForm();
+            return;
+
             var args = new string[]
             {
                 "-u",
@@ -339,7 +351,7 @@ namespace RocksmithToolkitGUI
             var cliPath = Path.Combine(appDir, "packer.exe");
 
             if (File.Exists(cliPath))
-                GeneralExtensions.RunExternalExecutable(cliPath, arguments: cmdArgs);
+                GeneralExtension.RunExternalExecutable(cliPath, arguments: cmdArgs);
             else
                 MessageBox.Show("'Build, Rebuild Solution' while configuration is set to 'Debug w CLI'", "WRONG CONFIGURATION IS SELECTED ...", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }

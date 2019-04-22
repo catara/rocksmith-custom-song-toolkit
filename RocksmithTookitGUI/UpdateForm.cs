@@ -12,6 +12,7 @@ using RocksmithToolkitUpdater;
 using System.Diagnostics;
 using RocksmithToolkitLib.XmlRepository;
 using System.Threading.Tasks;
+using System.Text;
 
 namespace RocksmithToolkitGUI
 {
@@ -20,12 +21,16 @@ namespace RocksmithToolkitGUI
         // TODO: users may need to add both files to AV whitelist to run updater
         private const string APP_UPDATER = "RocksmithToolkitUpdater.exe";
         private const string APP_UPDATING = "RocksmithToolkitUpdating.exe";
+        private const string APP_CONFIG_EXT = ".config";
 
-        private string localToolkitDir
+        private string LocalToolkitDir
         {
             get
             {
-                return Path.GetDirectoryName(Application.ExecutablePath);
+                // e.g. Application.ExecutablePath => C:/Programs Files/RocksmithToolkit/RocksmithToolkitGUI.exe
+                //var localToolkitDir = Path.GetDirectoryName(Path.GetDirectoryName(Application.ExecutablePath));
+                var localToolkitDir = Path.GetDirectoryName(Application.ExecutablePath);
+                return localToolkitDir;
             }
         }
 
@@ -36,14 +41,23 @@ namespace RocksmithToolkitGUI
 
         public void Init(ToolkitVersionOnline onlineVersion)
         {
-            // DELETE OLD UPDATER APP IF EXISTS
-            var updatingAppPath = Path.Combine(localToolkitDir, APP_UPDATING);
+            if (onlineVersion.UpdateAvailable)
+                this.Text = "Toolkit update is available ...";
+            else
+                this.Text = "Toolkit is already up to date ...";
+
+            // delete old updater application
+            var updatingAppPath = Path.Combine(LocalToolkitDir, APP_UPDATING);
             if (File.Exists(updatingAppPath))
                 File.Delete(updatingAppPath);
 
+            var updatingConfigPath = Path.Combine(LocalToolkitDir, APP_UPDATING + APP_CONFIG_EXT);
+            if (File.Exists(updatingConfigPath))
+                File.Delete(updatingConfigPath);
+
             var useBeta = ConfigRepository.Instance().GetBoolean("general_usebeta");
             lblCurrentVersion.Text = ToolkitVersion.RSTKGuiVersion;
-            lblNewVersion.Text = String.Format("{0}-{1} {2}", onlineVersion.Version, onlineVersion.Revision, useBeta ? "BETA" : "");
+            lblNewVersion.Text = String.Format("{0}-{1} {2}", onlineVersion.OnlineVersion, onlineVersion.Revision, useBeta ? "" : "DISABLED");
             lblNewVersionDate.Text = onlineVersion.Date.ToShortDateString();
 
             if (onlineVersion.CommitMessages != null)
@@ -70,8 +84,10 @@ namespace RocksmithToolkitGUI
             ConfigRepository.Instance()["general_showrevnote"] = "true";
 
             var tempToolkitDir = Path.Combine(Path.GetTempPath(), "RocksmithToolkit");
-            var updaterAppPath = Path.Combine(localToolkitDir, APP_UPDATER);
+            var updaterAppPath = Path.Combine(LocalToolkitDir, APP_UPDATER);
             var updatingAppPath = Path.Combine(tempToolkitDir, APP_UPDATING);
+            var updaterConfigPath = Path.Combine(LocalToolkitDir, APP_UPDATER + APP_CONFIG_EXT);
+            var updatingConfigPath = Path.Combine(tempToolkitDir, APP_UPDATING + APP_CONFIG_EXT);
 
             if (!File.Exists(updaterAppPath))
             {
@@ -90,16 +106,17 @@ namespace RocksmithToolkitGUI
             {
                 // make a copy of AutoUpdater to prevent locking the process during update
                 File.Copy(updaterAppPath, updatingAppPath, true);
+                File.Copy(updaterConfigPath, updatingConfigPath, true);
 
                 // normal operation
-                if (!GeneralExtensions.IsInDesignMode)
+                if (!GeneralExtension.IsInDesignMode)
                 {
                     // passing args for process and backup directories to RocksmithToolkitUpdating.exe (Primary Usage Mode)
-                    var cmdArgs = String.Format("\"{0}\" \"{1}\"", localToolkitDir, tempToolkitDir);
+                    var cmdArgs = String.Format("\"{0}\" \"{1}\"", LocalToolkitDir, tempToolkitDir);
 
                     try // different AutoUpdater shells for MacWine testing
                     {
-                        GeneralExtensions.RunExternalExecutable(updatingAppPath, arguments: cmdArgs);
+                        GeneralExtension.RunExternalExecutable(updatingAppPath, arguments: cmdArgs);
                     }
                     catch (Exception ex)
                     {
@@ -124,9 +141,10 @@ namespace RocksmithToolkitGUI
                     // Kill current toolkit process now that AutoUpdater process is started
                     Environment.Exit(0);
                 }
-                else // allow updater to be run in design mode for developers
+                else // allows updater to be run in design mode for developers
                 {
-                    var args = new string[] { localToolkitDir, tempToolkitDir };
+                    var args = new string[] { LocalToolkitDir, tempToolkitDir };
+                    // args = new string[0]; // to debug CLI help
                     using (var autoUpdater = new AutoUpdaterForm(args))
                         autoUpdater.Show();
                 }

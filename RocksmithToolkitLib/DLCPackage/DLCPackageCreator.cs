@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlTypes;
 using System.Drawing;
 using System.IO;
@@ -24,7 +25,7 @@ using RocksmithToolkitLib.Properties;
 using RocksmithToolkitLib.Ogg;
 using Tone = RocksmithToolkitLib.DLCPackage.Manifest.Tone.Tone;
 using RocksmithToolkitLib.PsarcLoader;
-//using RocksmithToolkitGUI.DLCManager.GenericFunctions;
+using System.Diagnostics;
 
 namespace RocksmithToolkitLib.DLCPackage
 {
@@ -401,7 +402,7 @@ namespace RocksmithToolkitLib.DLCPackage
                     {
                         using (var albumArtStream = new MemoryStream(Resources.albumart2014_256))
                         {
-                            albumArtPath = GeneralExtensions.GetTempFileName(".dds");
+                            albumArtPath = GeneralExtension.GetTempFileName(".dds");
                             albumArtStream.WriteFile(albumArtPath);
                             TMPFILES_ART.Add(albumArtPath);
                         }
@@ -409,9 +410,9 @@ namespace RocksmithToolkitLib.DLCPackage
 
                     ddsfiles = new List<DDSConvertedFile>
                     {
-                        new DDSConvertedFile() { sizeX = 64, sizeY = 64, sourceFile = albumArtPath, destinationFile = GeneralExtensions.GetTempFileName(".dds") },
-                        new DDSConvertedFile() { sizeX = 128, sizeY = 128, sourceFile = albumArtPath, destinationFile = GeneralExtensions.GetTempFileName(".dds") },
-                        new DDSConvertedFile() { sizeX = 256, sizeY = 256, sourceFile = albumArtPath, destinationFile = GeneralExtensions.GetTempFileName(".dds") }
+                        new DDSConvertedFile() { sizeX = 64, sizeY = 64, sourceFile = albumArtPath, destinationFile = GeneralExtension.GetTempFileName(".dds") },
+                        new DDSConvertedFile() { sizeX = 128, sizeY = 128, sourceFile = albumArtPath, destinationFile = GeneralExtension.GetTempFileName(".dds") },
+                        new DDSConvertedFile() { sizeX = 256, sizeY = 256, sourceFile = albumArtPath, destinationFile = GeneralExtension.GetTempFileName(".dds") }
                     };
 
                     // Convert to DDS
@@ -541,8 +542,9 @@ namespace RocksmithToolkitLib.DLCPackage
                         // MANIFEST
                         var manifest = new Manifest2014<Attributes2014>();
                         var attribute = new Attributes2014(arrangementFileName, arr, info, platform);
-
-                        // Commented out - EOF properly sets the bonus/represent elements
+                    
+                        // TODO: monitor this change
+                        // Commented out - EOF now properly sets the bonus/represent elements
                         //if (arrangement.ArrangementType == ArrangementType.Bass || arrangement.ArrangementType == ArrangementType.Guitar)
                         //{
                         //    // TODO: monitor this new code for bugs
@@ -753,18 +755,18 @@ namespace RocksmithToolkitLib.DLCPackage
                     {
                         using (var inlayStream = new MemoryStream(Resources.cgm_default_inlay))
                         {
-                            inlayPath = GeneralExtensions.GetTempFileName(".png");
+                            inlayPath = GeneralExtension.GetTempFileName(".png");
                             inlayStream.WriteFile(inlayPath);
                             TMPFILES_ART.Add(inlayPath);
                         }
                     }
 
                     ddsfiles = new List<DDSConvertedFile>();
-                    ddsfiles.Add(new DDSConvertedFile() { sizeX = 64, sizeY = 64, sourceFile = iconPath, destinationFile = GeneralExtensions.GetTempFileName(".dds") });
-                    ddsfiles.Add(new DDSConvertedFile() { sizeX = 128, sizeY = 128, sourceFile = iconPath, destinationFile = GeneralExtensions.GetTempFileName(".dds") });
-                    ddsfiles.Add(new DDSConvertedFile() { sizeX = 256, sizeY = 256, sourceFile = iconPath, destinationFile = GeneralExtensions.GetTempFileName(".dds") });
-                    ddsfiles.Add(new DDSConvertedFile() { sizeX = 512, sizeY = 512, sourceFile = iconPath, destinationFile = GeneralExtensions.GetTempFileName(".dds") });
-                    ddsfiles.Add(new DDSConvertedFile() { sizeX = 1024, sizeY = 512, sourceFile = inlayPath, destinationFile = GeneralExtensions.GetTempFileName(".dds") });
+                    ddsfiles.Add(new DDSConvertedFile() { sizeX = 64, sizeY = 64, sourceFile = iconPath, destinationFile = GeneralExtension.GetTempFileName(".dds") });
+                    ddsfiles.Add(new DDSConvertedFile() { sizeX = 128, sizeY = 128, sourceFile = iconPath, destinationFile = GeneralExtension.GetTempFileName(".dds") });
+                    ddsfiles.Add(new DDSConvertedFile() { sizeX = 256, sizeY = 256, sourceFile = iconPath, destinationFile = GeneralExtension.GetTempFileName(".dds") });
+                    ddsfiles.Add(new DDSConvertedFile() { sizeX = 512, sizeY = 512, sourceFile = iconPath, destinationFile = GeneralExtension.GetTempFileName(".dds") });
+                    ddsfiles.Add(new DDSConvertedFile() { sizeX = 1024, sizeY = 512, sourceFile = inlayPath, destinationFile = GeneralExtension.GetTempFileName(".dds") });
 
                     // Convert to DDS
                     ToDDS(ddsfiles, DLCPackageType.Inlay);
@@ -983,7 +985,7 @@ namespace RocksmithToolkitLib.DLCPackage
                 {
                     using (var defaultArtStream = new MemoryStream(Resources.albumart))
                     {
-                        albumArtPath = GeneralExtensions.GetTempFileName(".dds");
+                        albumArtPath = GeneralExtension.GetTempFileName(".dds");
                         defaultArtStream.WriteFile(albumArtPath);
                         TMPFILES_ART.Add(albumArtPath);
                     }
@@ -993,7 +995,7 @@ namespace RocksmithToolkitLib.DLCPackage
                 if (ddsfiles == null)
                 {
                     ddsfiles = new List<DDSConvertedFile>();
-                    ddsfiles.Add(new DDSConvertedFile() { sizeX = 512, sizeY = 512, sourceFile = albumArtPath, destinationFile = GeneralExtensions.GetTempFileName(".dds") });
+                    ddsfiles.Add(new DDSConvertedFile() { sizeX = 512, sizeY = 512, sourceFile = albumArtPath, destinationFile = GeneralExtension.GetTempFileName(".dds") });
                     ToDDS(ddsfiles);
 
                     // Save for reuse
@@ -1162,7 +1164,7 @@ namespace RocksmithToolkitLib.DLCPackage
             }
 
             foreach (var item in filesToConvert)
-                GeneralExtensions.RunExternalExecutable(ExternalApps.APP_NVDXT, true, true, true, String.Format(args, item.sourceFile, item.destinationFile, item.sizeX, item.sizeY));
+                GeneralExtension.RunExternalExecutable(ExternalApps.APP_NVDXT, true, true, true, String.Format(args, item.sourceFile, item.destinationFile, item.sizeX, item.sizeY));
         }
 
         /// <summary>

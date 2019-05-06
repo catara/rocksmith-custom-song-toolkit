@@ -2894,6 +2894,6 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
         }
 
 
- 
+
     }
 }

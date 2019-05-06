@@ -571,6 +571,15 @@ namespace RocksmithToolkitLib.DLCPackage
                 var xmlName = attr.SongXml.Split(':')[3];
                 var xmlFile = Directory.EnumerateFiles(unpackedDir, xmlName + ".xml", SearchOption.AllDirectories).FirstOrDefault();
 
+                if (!File.Exists(xmlFile))
+                {
+                    throw new DataException(Environment.NewLine + Environment.NewLine + "*** READ ME *** READ ME *** READ ME ***" + Environment.NewLine + Environment.NewLine +
+                        "<WARNING> CDLC artifact file naming is corrupt ..." + Environment.NewLine +
+                        "1) Open the artifacts folder: " + Path.Combine(unpackedDir, "EOF") + Environment.NewLine +
+                        "2) Look for and rename any artifact file names that contain the '~' tilde character" + Environment.NewLine +
+                        "3) (re)Author the CDLC like from an EOF project using: >CDLC Creator>Add>Edit>Generate" + Environment.NewLine + Environment.NewLine);
+                }
+
                 if (attr.Phrases != null)
                 {
                     if (data.SongInfo == null)
@@ -583,7 +592,19 @@ namespace RocksmithToolkitLib.DLCPackage
                         bnkPreviewVolume = attr.PreviewVolume;
 
                         // Fill SongInfo
-                        data.SongInfo = new SongInfo { JapaneseArtistName = attr.JapaneseArtistName, JapaneseSongName = attr.JapaneseSongName, SongDisplayName = attr.SongName, SongDisplayNameSort = attr.SongNameSort, Album = attr.AlbumName, AlbumSort = attr.AlbumNameSort, SongYear = attr.SongYear ?? 0, Artist = attr.ArtistName, ArtistSort = attr.ArtistNameSort, AverageTempo = (int)attr.SongAverageTempo };
+                        data.SongInfo = new SongInfo
+                            {
+                                JapaneseArtistName = attr.JapaneseArtistName,
+                                JapaneseSongName = attr.JapaneseSongName,
+                                SongDisplayName = attr.SongName,
+                                SongDisplayNameSort = attr.SongNameSort,
+                                Album = attr.AlbumName,
+                                AlbumSort = attr.AlbumNameSort,
+                                SongYear = attr.SongYear ?? 0,
+                                Artist = attr.ArtistName,
+                                ArtistSort = attr.ArtistNameSort,
+                                AverageTempo = (int)attr.SongAverageTempo
+                            };
                     }
 
                     // Adding Arrangement
@@ -923,6 +944,7 @@ namespace RocksmithToolkitLib.DLCPackage
                 a.ClearCache();
         }
 
+        // finalizer (C++ destructor syntax)
         ~DLCPackageData()
         {
             CleanCache();

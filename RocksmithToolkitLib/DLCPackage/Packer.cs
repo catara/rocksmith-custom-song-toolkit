@@ -20,6 +20,7 @@ using RocksmithToolkitLib.Sng2014HSL;
 using RocksmithToolkitLib.Ogg;
 using RocksmithToolkitLib.DLCPackage.Manifest;
 using RocksmithToolkitLib.XmlRepository;
+using System.Drawing;
 
 
 namespace RocksmithToolkitLib.DLCPackage
@@ -159,7 +160,7 @@ namespace RocksmithToolkitLib.DLCPackage
                     // use the best quality (largest) dds file for the conversion
                     FileInfo[] fileInfos = ddsFiles.Select(fi => new FileInfo(fi)).ToArray();
                     var ddsFile = fileInfos.OrderByDescending(fl => fl.Length).Select(fn => fn.FullName).FirstOrDefault();
-                    ExternalApps.Dds2Png(ddsFile);
+                    ExternalApps.Dds2Png(ddsFile, isQuiet: true);
                 }
             }
 
@@ -647,16 +648,14 @@ namespace RocksmithToolkitLib.DLCPackage
             // InflateEntries - compatible with RS1 and RS2014 files
             foreach (var entry in psarc.TOC)
             {
-                var inputPath = Path.Combine(destPath, entry.Name);
-
-                // for dev debugging invalid symbol usage in CDLC
-                // inputPath = inputPath.Replace("?", "i");
-                // inputPath = Path.Combine(destPath, StringExtensions.GetValidFileName(entry.Name));
+                // remove invalid characters from entry.Name so CDLC can be unpacked
+                var validEntryName = entry.Name.Replace("?", "~");
+                var inputPath = Path.Combine(destPath, validEntryName);
 
                 if (Path.GetExtension(entry.Name).ToLower() == ".psarc")
                 {
                     psarc.InflateEntry(entry);
-                    var outputPath = Path.Combine(destPath, Path.GetFileNameWithoutExtension(entry.Name));
+                    var outputPath = Path.Combine(destPath, Path.GetFileNameWithoutExtension(validEntryName));
                     ExtractPSARC(inputPath, outputPath, entry.Data, platform, false);
                 }
                 else
@@ -668,7 +667,7 @@ namespace RocksmithToolkitLib.DLCPackage
                         entry.Data.Dispose();
                 }
 
-                if (!String.IsNullOrEmpty(psarc.ErrMSG)) 
+                if (!String.IsNullOrEmpty(psarc.ErrMSG))
                     throw new InvalidDataException(psarc.ErrMSG);
 
                 progress += step;

@@ -185,7 +185,7 @@
   <Config Key="dlcm_Activ_Artist" Value="Yes" />;
   <Config Key="dlcm_Activ_ArtistSort" Value="Yes" />;
   <Config Key="dlcm_Activ_Album" Value="Yes" />;
-  <Config Key="dlcm_Activ_Album_Sort" Value="Yes" />;
+  <Config Key="dlcm_Activ_AlbumSort" Value="Yes" />;
   <Config Key="dlcm_Activ_FileName" Value="Yes" />;
   <Config Key="dlcm_Activ_LyricInfo" Value="Yes" />;
   <Config Key="dlcm_Autosave" Value="Yes" />;
@@ -201,14 +201,27 @@
   <Config Key="dlcm_Split4Pack" Value="0" />;
   <Config Key="dlcm_GlobalTempVariable" Value="44000" />;
   <Config Key="dlcm_EoFPath" Value="DLCManager\external_tools\eof1.8RC12\eof.exe" />;
-  <Config Key="dlcm_UltraStarCreator" Value="\DLCManager\external_tools\UltraStar Creator\usc.exe" />;
-  <Config Key="dlcm_WinMerge" Value="DLCManager\external_tools\WinMerge" />;
+  <Config Key="dlcm_EoFPath_www" Value="http://ignition.customsforge.com/eof" />;
+  <Config Key="dlcm_UltraStarCreator" Value="DLCManager\external_tools\UltraStar Creator\usc.exe" />;
+  <Config Key="dlcm_UltraStarCreator_www" Value="https://sourceforge.net/projects/usc/" />;
+  <Config Key="dlcm_WinMerge" Value="DLCManager\external_tools\WinMerge\\winmergeu.exe" />;
+  <Config Key="dlcm_WinMerge_www" Value="http://winmerge.org/?lang=en" />;
   <Config Key="dlcm_TCommander" Value="DLCManager\external_tools\totalcmd\TOTALCMD64.EXE" />;
+  <Config Key="dlcm_TCommander_www" Value="https://www.ghisler.com" />;
   <Config Key="dlcm_PathForBRM" Value="DLCManager\external_tools\bpr_v0.3\bpr.exe" />;
+  <Config Key="dlcm_PathForBRM_www" Value="" />;
   <Config Key="dlcm_TrueAncestor_PKG_Repacker" Value="DLCManager\external_tools\TrueAncestor_PKG_Repacker_v2.45\repacker.exe" />;
+  <Config Key="dlcm_TrueAncestor_PKG_Repacker_www" Value="https://www.psx-place.com/threads/trueancestor-pkg-repacker-v2-45-by-jjkkyu.10067/" />;
   <Config Key="dlcm_PS3xploit-resigner" Value="DLCManager\external_tools\PS3xploit-resigner-master\resign_windows.bat"/>;
-  <Config Key="dlcm_MediaInfo_CLI" Value="DLCManager\external_tools\MediaInfo_CLI_17.12_Windows_x64" />;
+  <Config Key="dlcm_PS3xploit-resigner_www" Value="https://github.com/PS3Xploit/PS3xploit-resigner"/>;
+  <Config Key="dlcm_MediaInfo_CLI" Value="DLCManager\external_tools\MediaInfo_CLI_17.12_Windows_x64\MediaInfo.exe" />;
+  <Config Key="dlcm_MediaInfo_CLI_www" Value="https://mediaarea.net/MediaInfo" />;
   <Config Key="dlcm_PKG_Linker" Value="DLCManager\external_tools\PKG_Linker_V2.0\PKG Linker V2.0.exe" />;
+  <Config Key="dlcm_PKG_Linker_www" Value="https://www.psx-place.com/resources/pkg-linker-2-0-serve-packages-to-your-ps3-han-cfw.640/" />;
+  <Config Key="dlcm_RockBand" Value="DLCManager\external_tools\C3CONToolsv400\C3CONTools.exe" />;
+  <Config Key="dlcm_RockBand_www" Value="http://customscreators.com/index.php?/topic/9095-c3-con-tools-v400-012518/" />;
+  <Config Key="dlcm_MDBPlus" Value="DLCManager\external_tools\MDBPlus.exe" />;
+  <Config Key="dlcm_MDBPlus_www" Value="http://www.alexnolan.net/software/mdb_viewer_plus.htm" />;
   <Config Key="dlcm_DupliUseDates" Value="Yes" />;
   <Config Key="dlcm_netstatus" Value="Yes" />;
   <Config Key="dlcm_Configurations" Value="New" />;
@@ -232,19 +245,29 @@ CustomForge_Followers, CustomForge_Version, CustomsForge_Link,
 CustomsForge_Like, CustomsForge_ReleaseNotes, UniqueDLCName, Artist_ShortName, Album_ShortName, DLC, Is_OLD, Remote_Path, audioBitrate, audioSampleRate, Top10, Has_Other_Officials,
 Spotify_Song_ID, Spotify_Artist_ID, Spotify_Album_ID, Spotify_Album_URL, Audio_OrigHash, Audio_OrigPreviewHash, AlbumArt_OrigHash, Duplicate_Of, Split4Pack, UseInternalDDRemovalLogic
 "/>;
-  <Config Key="dlcm_ExportFields" Value="ID, Artist, Song_Title, Track_No, Album, Album_Year, Tunning, YouTube_Link, Is_Original,
+  <Config Key="dlcm_ExportFields" Value="REPLACE(AlbumArtPath,'.dds','.png') as AlbumArt, ID, Artist, Song_Title, Track_No, Album, Album_Year, Tunning, YouTube_Link, Is_Original,
 IIF(Has_Lead='Yes','L') AS Lead, IIF(Has_Rhythm,'R') AS Rhythm, IIF(Has_Combo='Yes','C') AS Combo, IIF(Has_Bass='Yes','B') AS Bass,
-IIF(Has_Vocals='Yes','V') AS Vocal, Has_DD, oggPath, (SELECT TOP 1 PlayThoughYBLink FROM Arrangements WHERE Arrangement_Name='3' AND CDLC_ID='') AS YB_Bass,
+IIF(Has_Vocals='Yes','V') AS Vocal, Has_DD, oggPreviewPath, oggPath, (SELECT TOP 1 PlayThoughYBLink FROM Arrangements WHERE Arrangement_Name='3' AND CDLC_ID='') AS YB_Bass,
 (SELECT TOP 1 PlayThoughYBLink FROM Arrangements WHERE Arrangement_Name='0' AND CDLC_ID='') AS YB_Lead,
 (SELECT TOP 1 PlayThoughYBLink FROM Arrangements WHERE Arrangement_Name='1' AND CDLC_ID='') AS YB_Rhythm,
-REPLACE(AlbumArtPath,'.dds','.png') as AlbumArt, (SELECT TOP 1 REPLACE(XMLFilePath,'','') FROM Arrangements WHERE Arrangement_Name='4' AND CDLC_ID='') AS Lyrics,
 (SELECT TOP 1 REPLACE(XMLFilePath,'','') FROM Arrangements WHERE Arrangement_Name='0' AND CDLC_ID='') AS Tab_Lead,
 (SELECT TOP 1 REPLACE(XMLFilePath,'','') FROM Arrangements WHERE Arrangement_Name='3' AND CDLC_ID='') AS Tab_Bass,
 (SELECT TOP 1 REPLACE(XMLFilePath,'','') FROM Arrangements WHERE Arrangement_Name='1' AND CDLC_ID='') AS Tab_Rhythm,
+(SELECT TOP 1 REPLACE(XMLFilePath,'','') FROM Arrangements WHERE Arrangement_Name='2' AND CDLC_ID='') AS Tab_Combo,
+(SELECT TOP 1 REPLACE(XMLFilePath,'','') FROM Arrangements WHERE Arrangement_Name='0' AND CDLC_ID='') AS GP5_Lead,
+(SELECT TOP 1 REPLACE(XMLFilePath,'','') FROM Arrangements WHERE Arrangement_Name='3' AND CDLC_ID='') AS GP5_Bass,
+(SELECT TOP 1 REPLACE(XMLFilePath,'','') FROM Arrangements WHERE Arrangement_Name='1' AND CDLC_ID='') AS GP5_Rhythm,
+(SELECT TOP 1 REPLACE(XMLFilePath,'','') FROM Arrangements WHERE Arrangement_Name='2' AND CDLC_ID='') AS GP5_Combo,
 (SELECT REPLACE(XMLFilePath,'','') FROM Arrangements WHERE Arrangement_Name='0' AND CDLC_ID='' AND XMLFilePath like '*2.xml') AS Tab_Lead2,
 (SELECT REPLACE(XMLFilePath,'','') FROM Arrangements WHERE Arrangement_Name='3' AND CDLC_ID='' AND XMLFilePath like '*2.xml') AS Tab_Bass2,
 (SELECT REPLACE(XMLFilePath,'','') FROM Arrangements WHERE Arrangement_Name='1' AND CDLC_ID='' AND XMLFilePath like '*2.xml') AS Tab_Rhythm2,
- dlcm_0_old+'\0_old\'+Original_FileName as Old_File
+(SELECT REPLACE(XMLFilePath,'','') FROM Arrangements WHERE Arrangement_Name='2' AND CDLC_ID='' AND XMLFilePath like '*2.xml') AS Tab_Combo2,
+ dlcm_0_old+'\0_old\'+Original_FileName as Original_File,
+(SELECT TOP 1 REPLACE(PackPath+'\'+FileName,'','') FROM Pack_AuditTrail WHERE Platform='Pc' AND CDLC_ID='' ORDER BY ID DESC) AS PC_Song,
+(SELECT TOP 1 REPLACE(PackPath+'\'+FileName,'','') FROM Pack_AuditTrail WHERE Platform='Mac' AND CDLC_ID='' ORDER BY ID DESC) AS Mac_Song,
+(SELECT TOP 1 REPLACE(PackPath+'\'+FileName,'','') FROM Pack_AuditTrail WHERE Platform='PS3' AND CDLC_ID='' ORDER BY ID DESC) AS PS3_Song,
+(SELECT TOP 1 REPLACE(PackPath+'\'+FileName,'','') FROM Pack_AuditTrail WHERE Platform='XBOX360' AND CDLC_ID='' ORDER BY ID DESC) AS XBOX360_Song,
+(SELECT TOP 1 REPLACE(XMLFilePath,'','') FROM Arrangements WHERE Arrangement_Name='4' AND CDLC_ID='') AS Lyrics
 "/>;
 "<!-- ACE.OLEDB.12.0 Access 2007, ACE.OLEDB.14.0 Access 2010, ACE.OLEDB.15.0 Access 2013, ACE.OLEDB.16.0 Access 2016 -->
   <Config Key="dlcm_AccessDLLVersion" Value="ACE.OLEDB.16.0" />;

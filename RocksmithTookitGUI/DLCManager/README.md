@@ -180,15 +180,52 @@ new tag at pack add older or year
 clean songs w text(duplic..) after _p
 if old is found bbut no entr copy to import and archive
 if old is not found clean record raise alarm
-check broken
+[-]check broken
 CFSM.AudioTools
 PSARC packer refactored, 1:1 to offical compression ratio, but code n…
 1700 songs wo vocals
-find workaround for remote folders
+[-]find workaround for remote folders
 fix on leave folders
 duplicate add old values as tooltip
+add export to excel (maybe not as u could simply export from access :) )
+
+compound breaks the select
+multiple repacks still occur
+add manualy modified same lyrics chenge flag (maybe based on hash)
+preview starts twice bug
+[ ] remove group seems gbroken roups--------DELETE * FROM Groups WHERE Type="DLC" AND Groups= "" LEFT JOIN Main on Main.ID=Groups.CDLC_ID and Main.Selected='Yes'--------------Syntax error (missing operator) in query expression 'Type="DLC" AND Groups= "" LEFT JOIN Main on Main.ID=Groups.CDLC_ID and Main.Selected='Yes''.DB Open in Design Mode, or Missing, or you need to Download the 32bit Connectivity libraryACE.OLEDB.16.0 @ 
+
+	[ ] clean lyrics
+	[ ] if year/album is the same of prev dont display img
+
 ## WiP:
 (this release)
+[x] adding images to export
+[x] fix selct is pack
+[x] fix if group selected and value already there also select
+[x] counter of import-s seems to be failing (not na issue)
+[x] improve youtube matching (implemented soundex)
+	[x] update also missing yb
+[x] export webpage:
+	[x]make href point internally,
+	[x]add created tabs&gp5,
+	[x]make folder like html;
+	[x]add last other conv files
+	[x]add play ogg files
+	[x]add cover
+[x] fixed when packing multiple
+[x] capture error on fix preview audio
+[x] fixed netstatus after group was changed :)
+[x] fixed audio should be anbled also if yr info is missing
+[x] finalizing implement album_sort
+[x] harmonize DLC_ID naming to CDCL_ID in packauditrail and import tables
+[x] if volcas missing button says add
+[x] No Playthrough doesnt show previous song value
+[x] add add to group date (in main also to sort on)
+[x] add filter on dates, from this date
+
+## done:
+(prev release)
 [x] remove sogs remove from groups too
 [x] apply 55 to fix all audio if bigger than the set lenght (fix why review lenghts is not 30?)
 [x] added minimal preview
@@ -214,99 +251,6 @@ duplicate add old values as tooltip
 [x] improve export as webpage ()added parameterisable columns, Create pack
 [x] the search fucks it up sometimes (means and error at CahngeRow//Load happens)
 [x] added remove arrangement
-compound breaks the select
-multiple repacks still occur
-add manualy modified same lyrics chenge flag (maybe based on hash)
-fix selct is pack
-fix if group selected and value already there also select
-counter of import-s seems to be failing
-improve youtub e matching
-
-## done:
-(prev release)
-[-] added dupli button in maindb 
-[x] fix import current month
-[-] File Name should be standardised.. 
-[x] add warning if lyrics added not to forget to select add new arangement
-[-] add java 64bit if windows is for 64b https://www.java.com/en/download/manual.jsp
-[-] 1st feeling inc. not coverting
-[-] add better initial setup options & messages
-[-] replaced way to call DDC to latest standard
-[-] mamas and papas bonus (Added Part Field)
-[-] mMa nd pPAS VOCALS (1st lyris ismissin)
-[-] mMa nd pPAS VOCALS (1st lyric has the same start at second ()
-[-] instead of old and new maybe add timestamp
-[-] add song lenght in the duplicate management window
-[-] tomahawk is not imported w the right version (same hash; any update/overrite of a song updates also original_filehash)
-[-] search again should work if returning nada
-[x] dlc name should only be unique after all dupli have been assesed
-[x] cassius breaks (added stauff to lyrics from 0.o01 and dynamically size them)
-[x] fix duplicate songs to incl new fields
-[x] fix add vocals with new path
-[x] if gearlist is NOT there disable use of db arg&tones values
-[-] add dificulty field in arrangements
-[-] check the in sort titles (re-enable it as lost in the single pack to multipack functions)
-[-] clean lyrics doesnt clear some end empty lines
-[-] renablin 1 and 2 option
-[-] fascination stret bass is not properly removed (check if it really has DD as if the bonus/2nd track has the flag is set)
-[-] love cats remove bass removal has issues (check if it really has DD as if the bonus/2nd track has the flag is set)
-[x] change from pc to ps3 loses the ftp address (save only if PS3 is last format)
-[x] fix for delete song incl also gearlist
-[-] duplicate remov should clean title also for alt 1 alt 2
-[-] added use internal logic flag per song
-[x] fix for packing with arrang&tones details (amp and cab settings)
-[x] fix for using internal logic not being selected
-Could not find file 'C:\GitHub\new\0\0_repacked\PS3\CDLC-Godsmack-2018-When_Legends_Rise-00-Someday_ps3.psarc.edat'.DB Open in Design Mode, or Missing, or you need to Download the 32bit Connectivity library @ 
-Could not find file 'C:\GitHub\new\0\0_repacked\PS3\CDLC-Godsmack-2018-When_Legends_Rise-00-Say_My_Name_ps3.psarc.edat'.DB Open in Design Mode, or Missing, or you need to Download the 32bit Connectivity library @ 
-Could not find file 'C:\GitHub\new\0\0_repacked\PS3\CDLC-Interpol-2014-El_Pintor-00-My_Desire_ps3.psarc.edat'.
-Could not find file 'C:\GitHub\new\0\0_repacked\PS3\CDLC-Jimmy_Eat_World-2001-Jimmy_Eat_World-00-The_Middle_ps3.psarc.edat'.DB Open in Design Mode, or Missing, or you need to Download the 32bit Connectivity library @ 
-Could not find file 'C:\GitHub\new\0\0_repacked\PS3\CDLC-Sting-1993-Ten_Summoner's_Tales-00-Heavy_Cloud_No_Rain_[BRLV]_ps3.psarc.edat'.DB Open in Design Mode, or Missing, or you need to Download the 32bit Connectivity library @ 
-Could not find file 'C:\GitHub\new\0\0_repacked\PS3\CDLC-Metallica-2008-Death_Magnetic-00-The_Day_That_Never_Comes_ps3.psarc.edat'.DB Open in Design Mode, or Missing, or you need to Download the 32bit Connectivity library @ 
-Could not find file 'C:\GitHub\new\0\0_repacked\PS3\ORIG-Ghost-2015-Meliora-00-He_Is_ps3.psarc.edat
-[x] add tag timeing in file&song name
-[x] show start time with each track
-[x] show bonus/part/
-[x] fix add sort artist 
-1. finalise duplicates
-2. replace spotify
-3. finalise import library ()
-[x] add soundrtrack
-[-] add contextual menu
-[x] clean wrongly timed lyrics
-"Sweet Child O' Mine [BRL newer]"
-[x] Are You In
-[-] why there are tones with zero cdcl_id
-[x] remove time from dupli
-[x] no section (less or equyl w one)
-[x] fix enter to search
-[x] add minutes to somewhere
-[-] unplugged is live
-[-] fix/improve save profile
-[-] auto play as separate process
-[x] autoplay is gray
-[x] old is not gray on no searches
-[x] Added AlbumSort
-[] yb links are not consitently retrieved
-[x] ADD TAG AUTHOR TO other ogg compressing scripts
-[-] bring year and album sort into duplicates
-	what else 
-[x] colour song lenght & ALBUM YEAR
-[x] add log entrie in the right log file 
-[x] 4912 generic windw
-	[x] FixOggwDiffName
-	[x] improve copy safely for non hash simil files to still not be overitten (lots of Metallica_Fade-to-Black_v1_p.psarc same name)
-[x] error ok? not working
-	[x] whispers
-	[x] -Are_You_Gonna_Go_My_Way-00
-	[x] eric clapton
-	[x] judah priest is ps3?paclking
-	[x] Mamas_&_The_Papas,The
-	[x] moving x2
-[-] Black Rebel Motorcycle Club-Spread Your Love
-[x] sync album_sort if sync album
-[x] year diff, albbum sort diff
-[x] log spotify error 
-
 
 # Version History(release date):
 	0.1(12.08.2014) prototype, 
@@ -336,6 +280,7 @@ Could not find file 'C:\GitHub\new\0\0_repacked\PS3\ORIG-Ghost-2015-Meliora-00-H
 	0.6 (28.10.2017) Modify Lyrics, get tool ready for multithreading, 
 	0.7 (01.07.2018) Code review
 	0.7.2 (26.03.2019) Code review (+'19 Toolkit code base)
+	0.7.3 (6.05.2019) Code review (+'19 Toolkit code base)
 	0.8 (xx.0x.2019) Reactivating Spotify checks, all params are in the Groups table
 # Implementation Tracking for the Main Features:
 		+1. Ability to Generate a Database with all DLC
@@ -510,11 +455,13 @@ of this folder should be directed to the respective developer.
 		http://www.psx-place.com/threads/pkg-linker-2-0-serve-packages-to-your-ps3-han-cfw.17252/page-20#post-125162
 
 		-DevOnly additional software
-			EOF v1.8b (c)2008-2010 T³ Software eof1.8RC11(5-19-2016) http://ignition.customsforge.com/eof http://customsforge.com/topic/1529-latest-eof-releases-5-19-2016/page-86 -4 transforming lyrics into RS Vocals
+			EOF v1.8b (c)2008-2010 T³ Software eof1.8RC11(2-20-2019) http://ignition.customsforge.com/eof http://customsforge.com/topic/1529-latest-eof-releases-5-19-2016/page-86 -4 transforming lyrics into RS Vocals
 			UltraStar Creator 1.2 https://sourceforge.net/projects/usc/ -4creati ng lyrics files to import in EoF
 			TotalCommander https://gisler.com -4Encripting PS3 Retail Sog PSARCS (0 encription level only avail here)
 			MediaInfo https://sourceforge.net/projects/mediainfo/ -4checking wem bitrate
-
+			WinMerge http://winmerge.org/?lang=en -used in comparing duplicates (and their respecitve differential track)
+			C3 CON Tools http://customscreators.com/index.php?/topic/9095-c3-con-tools-v400-012518/ -used to decompress songs made for Rockband to quickly copy their vocal track to Rocksmith
+			Beats and Phrases Resynchronizer for RS Custom DownLoadable Contents
 ## Contact
 
 mailto:bogdan@capi.ro  

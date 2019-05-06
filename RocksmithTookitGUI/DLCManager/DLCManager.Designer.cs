@@ -34,6 +34,8 @@ namespace RocksmithToolkitGUI.DLCManager
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DLCManager));
             this.cbx_Export = new System.Windows.Forms.ComboBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.chbx_iOS = new System.Windows.Forms.CheckBox();
+            this.chbx_PS4 = new System.Windows.Forms.CheckBox();
             this.txt_NoOfSplits = new System.Windows.Forms.ComboBox();
             this.mainBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.rbtn_Population_PackNO = new System.Windows.Forms.RadioButton();
@@ -152,6 +154,8 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.chbx_iOS);
+            this.panel2.Controls.Add(this.chbx_PS4);
             this.panel2.Controls.Add(this.txt_NoOfSplits);
             this.panel2.Controls.Add(this.rbtn_Population_PackNO);
             this.panel2.Controls.Add(this.btm_GoRepack);
@@ -173,6 +177,30 @@ namespace RocksmithToolkitGUI.DLCManager
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(381, 69);
             this.panel2.TabIndex = 204;
+            // 
+            // chbx_iOS
+            // 
+            this.chbx_iOS.AutoSize = true;
+            this.chbx_iOS.Enabled = false;
+            this.chbx_iOS.Location = new System.Drawing.Point(243, 4);
+            this.chbx_iOS.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.chbx_iOS.Name = "chbx_iOS";
+            this.chbx_iOS.Size = new System.Drawing.Size(43, 17);
+            this.chbx_iOS.TabIndex = 412;
+            this.chbx_iOS.Text = "iOS";
+            this.chbx_iOS.UseVisualStyleBackColor = true;
+            // 
+            // chbx_PS4
+            // 
+            this.chbx_PS4.AutoSize = true;
+            this.chbx_PS4.Enabled = false;
+            this.chbx_PS4.Location = new System.Drawing.Point(199, 4);
+            this.chbx_PS4.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.chbx_PS4.Name = "chbx_PS4";
+            this.chbx_PS4.Size = new System.Drawing.Size(46, 17);
+            this.chbx_PS4.TabIndex = 411;
+            this.chbx_PS4.Text = "PS4";
+            this.chbx_PS4.UseVisualStyleBackColor = true;
             // 
             // txt_NoOfSplits
             // 
@@ -211,7 +239,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.btm_GoRepack.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.helpProvider1.SetHelpKeyword(this.btm_GoRepack, "Open the folder contaning Repack-ed CDLCs.");
-            this.btm_GoRepack.Location = new System.Drawing.Point(203, 3);
+            this.btm_GoRepack.Location = new System.Drawing.Point(283, 2);
             this.btm_GoRepack.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.btm_GoRepack.Name = "btm_GoRepack";
             this.helpProvider1.SetShowHelp(this.btm_GoRepack, true);
@@ -421,14 +449,15 @@ namespace RocksmithToolkitGUI.DLCManager
             "13. Import all Duplicates as Alternates",
             "14. Import any Custom as Alternate if an Original exists",
             "15. Move the Imported files to temp/0_old",
-            "16. Import with Artist/Title same as Artist/Title Sort",
-            "17. Repack with Artist/Title same as Artist/Title Sort",
-            "18. Import without The/Die at the beginning of Artist/Title Sort",
-            "19. Pack without The/Die at the beginning of Artist/Title Sort",
-            "20. Import with the The/Die at the end of Artist/Title Sort",
-            "21. Pack with The/Die at the end of Title Sort",
-            "22. Import with the The/Die only at the end of Artist Sort",
-            "23. Pack with The/Die only at the end of Artist Sort",
+            "16. Import with Artist/Title same as Artist/Title/Album Sort",
+            "17. Repack with Artist/Title same as Artist/Title/Album Sort",
+            "18. <Import without The/Die at the beginning of Artist/Title Sort>",
+            "19. <Pack without The/Die at the beginning of Artist/Title Sort>",
+            "20. Import with the The/Die at the end of Title Sort (Option 22 is also selected)" +
+                "",
+            "21. Pack with The/Die at the end of Title Sort (Option 23 is also selected)",
+            "22. Import with the The/Die only at the end of Artist/Album Sort",
+            "23. Pack with The/Die only at the end of Artist/Album Sort",
             "24. @Import Use translation tables for naming standardization",
             "25. If Original don\'t add QAs (NOs;DLC/ORIG;etc.)",
             "26. When packing Add 5 Levels of DD only to Guitar tracks",
@@ -499,12 +528,12 @@ namespace RocksmithToolkitGUI.DLCManager
             "90. When adding times into vocals(74) add only in seconds",
             "91. Add group to Filename",
             "92. Package for a HAN enabled PS3",
-            "93. If packaging for a HAN En abled PS3 then also copy Retail(RS2012) Songs",
+            "93. If packaging for a HAN Enabled PS3 then also copy Retail(RS2012) Songs",
             "94. After lyrics manipulation Open them in Notepad",
             "95. @Export create Package (in@0_temp)",
             "96. @Export create Tabs",
-            "97. ",
-            "98. ",
+            "97. <Pack only first time packed Songs>",
+            "98. <Pack anew instead of covnerting (e.g. Pack Orig file)>",
             "99. ",
             "x100."});
             this.chbx_Additional_Manipulations.Location = new System.Drawing.Point(8, 359);
@@ -2004,6 +2033,8 @@ namespace RocksmithToolkitGUI.DLCManager
         private Label lbl_AlbumSort;
         private ComboBox cbx_Album_Sort;
         private TextBox txt_Album_Sort;
+        private CheckBox chbx_iOS;
+        private CheckBox chbx_PS4;
         //public static ProgressBar pB_ReadDLCs;
     }
 }

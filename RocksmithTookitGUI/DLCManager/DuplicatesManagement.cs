@@ -137,7 +137,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.liveDetails = LiveDetails;
             this.isLive = IsLive;
             this.isAcoustic = IsAcoustic;
-            InitializeComponent();
             //MessageBox.Show(DB_Path);
             //DB_Path = text;
             //MessageBox.Show(DB_Path);
@@ -148,6 +147,8 @@ namespace RocksmithToolkitGUI.DLCManager
             this.allothers = allothers;
             //this.yearalbum = yeara;
             //this.albumsort = albums;
+
+            InitializeComponent();
         }
         //public string GetAlternateNo()
         //{
@@ -1104,7 +1105,7 @@ namespace RocksmithToolkitGUI.DLCManager
             Version = (txt_VersionNew.Text == "" ? "1" : txt_VersionNew.Text);
             DLCID = txt_DLCIDNew.Text;
             Title = txt_TitleNew.Text;
-            //Comment = txt_DescriptionExistig.Text;
+            Comment = txt_DescriptionExistig.Text;//not used
             Description = txt_Description.Text;
             Is_Alternate = (chbx_IsAlternateNew.Checked ? (txt_IsOriginalNew.Text == "Yes" ? "Yes" : "No") : "No");
             Title_Sort = txt_TitleSortNew.Text;
@@ -1756,6 +1757,7 @@ namespace RocksmithToolkitGUI.DLCManager
             var xx = "";
             if (File.Exists(paath)) xx = paath;
             else xx = Path.Combine(AppWD, "WinMerge\\winmergeu.exe");
+            if (File.Exists(xx)) { ErrorWindow frm1 = new ErrorWindow("Install WinMerge if you want to use it.", ConfigRepository.Instance()["dlcm_WinMerge_www"], "Missing WinMerge", false, false); frm1.ShowDialog(); return; }
 
             var startInfo = new ProcessStartInfo();
             startInfo.FileName = xx;

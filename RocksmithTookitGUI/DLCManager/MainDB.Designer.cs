@@ -61,14 +61,17 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_TotalCommander = new System.Windows.Forms.Button();
             this.btn_PKGSigner = new System.Windows.Forms.Button();
             this.btn_TrueRepacker = new System.Windows.Forms.Button();
-            this.btm_PKGLinker = new System.Windows.Forms.Button();
+            this.btn_PKGLinker = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.chbx_Duplicate_Official = new System.Windows.Forms.CheckBox();
             this.btn_RemoveSelectedRemote = new System.Windows.Forms.Button();
             this.btn_AddInstrumental = new System.Windows.Forms.Button();
             this.txt_Description = new System.Windows.Forms.RichTextBox();
             this.bth_ShiftVocalNotes = new System.Windows.Forms.Button();
-            this.brn_CompactDB = new System.Windows.Forms.Button();
+            this.btn_CompactDB = new System.Windows.Forms.Button();
+            this.btn_SearchYB = new System.Windows.Forms.Button();
+            this.btn_ShowLyrics = new System.Windows.Forms.Button();
+            this.btn_RockBand = new System.Windows.Forms.Button();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -202,7 +205,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_CustomForge_Vwersion = new System.Windows.Forms.NumericUpDown();
             this.label11 = new System.Windows.Forms.Label();
             this.txt_CustomsForge_ReleaseNotes = new System.Windows.Forms.RichTextBox();
-            this.label10 = new System.Windows.Forms.Label();
             this.btn_Like = new System.Windows.Forms.Button();
             this.txt_Followers = new System.Windows.Forms.NumericUpDown();
             this.label9 = new System.Windows.Forms.Label();
@@ -212,10 +214,11 @@ namespace RocksmithToolkitGUI.DLCManager
             this.rtxt_StatisticsOnReadDLCs = new System.Windows.Forms.RichTextBox();
             this.label59 = new System.Windows.Forms.Label();
             this.btn_Debug = new System.Windows.Forms.Button();
-            this.lbfl_YouTube_Link = new System.Windows.Forms.Label();
             this.label33 = new System.Windows.Forms.Label();
             this.label32 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.btn_WinMerge = new System.Windows.Forms.Button();
+            this.btn_SearchLyrics = new System.Windows.Forms.Button();
             this.btn_OpenMulti = new System.Windows.Forms.Button();
             this.btn_BRM = new System.Windows.Forms.Button();
             this.btn_SongOnFire = new System.Windows.Forms.Button();
@@ -287,7 +290,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_Spotify_Artist_ID = new RocksmithToolkitGUI.CueTextBox();
             this.txt_Spotify_Song_ID = new RocksmithToolkitGUI.CueTextBox();
             this.txt_SpotifyStatus = new RocksmithToolkitGUI.CueTextBox();
-            this.btn_SearchLyrics = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
@@ -615,7 +617,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_Fix_AudioIssues.Location = new System.Drawing.Point(6, 82);
             this.btn_Fix_AudioIssues.Margin = new System.Windows.Forms.Padding(2);
             this.btn_Fix_AudioIssues.Name = "btn_Fix_AudioIssues";
-            this.btn_Fix_AudioIssues.Size = new System.Drawing.Size(86, 22);
+            this.btn_Fix_AudioIssues.Size = new System.Drawing.Size(68, 22);
             this.btn_Fix_AudioIssues.TabIndex = 334;
             this.btn_Fix_AudioIssues.Text = "Fix Audio";
             this.toolTip1.SetToolTip(this.btn_Fix_AudioIssues, "Adds Preview; Shortens Preview; Reduces the bitrate; Gets Spotify info (Track no;" +
@@ -631,7 +633,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_GarageBand.Name = "btn_GarageBand";
             this.btn_GarageBand.Size = new System.Drawing.Size(48, 20);
             this.btn_GarageBand.TabIndex = 333;
-            this.btn_GarageBand.Text = "GB";
+            this.btn_GarageBand.Text = "GarageBand";
             this.toolTip1.SetToolTip(this.btn_GarageBand, "Generates a GarageBand compatible AudioFile to load as a additional track to the " +
         "intruments and mic tracks.");
             this.btn_GarageBand.UseVisualStyleBackColor = true;
@@ -667,7 +669,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // btn_Beta
             // 
             this.btn_Beta.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Beta.Location = new System.Drawing.Point(340, 14);
+            this.btn_Beta.Location = new System.Drawing.Point(354, 14);
             this.btn_Beta.Margin = new System.Windows.Forms.Padding(2);
             this.btn_Beta.Name = "btn_Beta";
             this.btn_Beta.Size = new System.Drawing.Size(56, 22);
@@ -689,6 +691,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.toolTip1.SetToolTip(this.btn_TotalCommander, "Opemn total Commander 64  bits for file management or opening or repacking EREtai" +
         "l packages (specially PS3 cache.psarc LZMA 0 compression rate)");
             this.btn_TotalCommander.UseVisualStyleBackColor = true;
+            this.btn_TotalCommander.Visible = false;
             this.btn_TotalCommander.Click += new System.EventHandler(this.btn_TotalCommander_Click);
             // 
             // btn_PKGSigner
@@ -701,6 +704,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_PKGSigner.Text = "PKG Signer";
             this.toolTip1.SetToolTip(this.btn_PKGSigner, "Used to resign packages for HAN eanble devices (e.g. PS3 SUPER Slim)");
             this.btn_PKGSigner.UseVisualStyleBackColor = true;
+            this.btn_PKGSigner.Visible = false;
             this.btn_PKGSigner.Click += new System.EventHandler(this.btn_PKGSigner_Click);
             // 
             // btn_TrueRepacker
@@ -714,20 +718,22 @@ namespace RocksmithToolkitGUI.DLCManager
             this.toolTip1.SetToolTip(this.btn_TrueRepacker, "btn_TrueRepacker 2.45 used to package DLCs, or games specvially for the HAn (vuln" +
         "erability) enabled device (e.g. PS3 SUPER slim)");
             this.btn_TrueRepacker.UseVisualStyleBackColor = true;
+            this.btn_TrueRepacker.Visible = false;
             this.btn_TrueRepacker.Click += new System.EventHandler(this.btn_TrueRepacker_Click);
             // 
-            // btm_PKGLinker
+            // btn_PKGLinker
             // 
-            this.btm_PKGLinker.Location = new System.Drawing.Point(393, 138);
-            this.btm_PKGLinker.Margin = new System.Windows.Forms.Padding(2);
-            this.btm_PKGLinker.Name = "btm_PKGLinker";
-            this.btm_PKGLinker.Size = new System.Drawing.Size(140, 20);
-            this.btm_PKGLinker.TabIndex = 352;
-            this.btm_PKGLinker.Text = "PKG Linker";
-            this.toolTip1.SetToolTip(this.btm_PKGLinker, "Opens PKG Linker webserver for serving opackages to HAN (vulnerability) enabled d" +
+            this.btn_PKGLinker.Location = new System.Drawing.Point(393, 138);
+            this.btn_PKGLinker.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_PKGLinker.Name = "btn_PKGLinker";
+            this.btn_PKGLinker.Size = new System.Drawing.Size(140, 20);
+            this.btn_PKGLinker.TabIndex = 352;
+            this.btn_PKGLinker.Text = "PKG Linker";
+            this.toolTip1.SetToolTip(this.btn_PKGLinker, "Opens PKG Linker webserver for serving opackages to HAN (vulnerability) enabled d" +
         "evices (e.g. PS3 SUPER Slim)");
-            this.btm_PKGLinker.UseVisualStyleBackColor = true;
-            this.btm_PKGLinker.Click += new System.EventHandler(this.btm_PKGLinker_Click);
+            this.btn_PKGLinker.UseVisualStyleBackColor = true;
+            this.btn_PKGLinker.Visible = false;
+            this.btn_PKGLinker.Click += new System.EventHandler(this.btm_PKGLinker_Click);
             // 
             // button5
             // 
@@ -808,17 +814,57 @@ namespace RocksmithToolkitGUI.DLCManager
             this.bth_ShiftVocalNotes.UseVisualStyleBackColor = true;
             this.bth_ShiftVocalNotes.Click += new System.EventHandler(this.bth_ShiftVocalNotes_Click);
             // 
-            // brn_CompactDB
+            // btn_CompactDB
             // 
-            this.brn_CompactDB.Location = new System.Drawing.Point(393, 223);
-            this.brn_CompactDB.Margin = new System.Windows.Forms.Padding(2);
-            this.brn_CompactDB.Name = "brn_CompactDB";
-            this.brn_CompactDB.Size = new System.Drawing.Size(140, 22);
-            this.brn_CompactDB.TabIndex = 359;
-            this.brn_CompactDB.Text = "Compact DB";
-            this.toolTip1.SetToolTip(this.brn_CompactDB, "Used to resign packages for HAN eanble devices (e.g. PS3 SUPER Slim)");
-            this.brn_CompactDB.UseVisualStyleBackColor = true;
-            this.brn_CompactDB.Click += new System.EventHandler(this.Brn_CompactDB_Click);
+            this.btn_CompactDB.Location = new System.Drawing.Point(393, 218);
+            this.btn_CompactDB.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_CompactDB.Name = "btn_CompactDB";
+            this.btn_CompactDB.Size = new System.Drawing.Size(140, 22);
+            this.btn_CompactDB.TabIndex = 359;
+            this.btn_CompactDB.Text = "Compact DB";
+            this.toolTip1.SetToolTip(this.btn_CompactDB, "Used to resign packages for HAN eanble devices (e.g. PS3 SUPER Slim)");
+            this.btn_CompactDB.UseVisualStyleBackColor = true;
+            this.btn_CompactDB.Visible = false;
+            this.btn_CompactDB.Click += new System.EventHandler(this.Brn_CompactDB_Click);
+            // 
+            // btn_SearchYB
+            // 
+            this.btn_SearchYB.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_SearchYB.Location = new System.Drawing.Point(74, 85);
+            this.btn_SearchYB.Margin = new System.Windows.Forms.Padding(0);
+            this.btn_SearchYB.Name = "btn_SearchYB";
+            this.btn_SearchYB.Size = new System.Drawing.Size(18, 16);
+            this.btn_SearchYB.TabIndex = 421;
+            this.btn_SearchYB.Text = ">";
+            this.toolTip1.SetToolTip(this.btn_SearchYB, "Search Youtube links");
+            this.btn_SearchYB.UseVisualStyleBackColor = true;
+            this.btn_SearchYB.Click += new System.EventHandler(this.Btn_SearchYB_Click);
+            // 
+            // btn_ShowLyrics
+            // 
+            this.btn_ShowLyrics.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_ShowLyrics.Location = new System.Drawing.Point(169, 67);
+            this.btn_ShowLyrics.Margin = new System.Windows.Forms.Padding(0);
+            this.btn_ShowLyrics.Name = "btn_ShowLyrics";
+            this.btn_ShowLyrics.Size = new System.Drawing.Size(18, 16);
+            this.btn_ShowLyrics.TabIndex = 422;
+            this.btn_ShowLyrics.Text = ">";
+            this.toolTip1.SetToolTip(this.btn_ShowLyrics, "Search Youtube links");
+            this.btn_ShowLyrics.UseVisualStyleBackColor = true;
+            this.btn_ShowLyrics.Click += new System.EventHandler(this.Button3_Click_2);
+            // 
+            // btn_RockBand
+            // 
+            this.btn_RockBand.Location = new System.Drawing.Point(393, 244);
+            this.btn_RockBand.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_RockBand.Name = "btn_RockBand";
+            this.btn_RockBand.Size = new System.Drawing.Size(140, 22);
+            this.btn_RockBand.TabIndex = 361;
+            this.btn_RockBand.Text = "RockBand ";
+            this.toolTip1.SetToolTip(this.btn_RockBand, "Used to resign packages for HAN eanble devices (e.g. PS3 SUPER Slim)");
+            this.btn_RockBand.UseVisualStyleBackColor = true;
+            this.btn_RockBand.Visible = false;
+            this.btn_RockBand.Click += new System.EventHandler(this.Button4_Click_1);
             // 
             // splitContainer2
             // 
@@ -1380,7 +1426,9 @@ namespace RocksmithToolkitGUI.DLCManager
             "PS3",
             "Mac",
             "XBOX360",
-            "<All>"});
+            "<All>",
+            "PS4",
+            "iOS"});
             this.chbx_Format.Location = new System.Drawing.Point(66, 14);
             this.chbx_Format.Margin = new System.Windows.Forms.Padding(2);
             this.chbx_Format.Name = "chbx_Format";
@@ -1495,6 +1543,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.btn_ShowLyrics);
             this.groupBox4.Controls.Add(this.chbx_IsInstrumental);
             this.groupBox4.Controls.Add(this.chbbx_IsEP);
             this.groupBox4.Controls.Add(this.chbx_IsSingle);
@@ -1616,9 +1665,9 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_EOF.Location = new System.Drawing.Point(129, 12);
             this.btn_EOF.Margin = new System.Windows.Forms.Padding(2);
             this.btn_EOF.Name = "btn_EOF";
-            this.btn_EOF.Size = new System.Drawing.Size(36, 18);
+            this.btn_EOF.Size = new System.Drawing.Size(74, 18);
             this.btn_EOF.TabIndex = 332;
-            this.btn_EOF.Text = "EoF";
+            this.btn_EOF.Text = "Editor on Fire";
             this.btn_EOF.UseVisualStyleBackColor = true;
             this.btn_EOF.Click += new System.EventHandler(this.btn_EOF_Click);
             // 
@@ -2183,6 +2232,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // cmb_Filter
             // 
+            this.cmb_Filter.DropDownWidth = 250;
             this.cmb_Filter.FormattingEnabled = true;
             this.cmb_Filter.Items.AddRange(new object[] {
             "0ALL",
@@ -2231,9 +2281,19 @@ namespace RocksmithToolkitGUI.DLCManager
             "Main_NoOLD",
             "Imported Current Month",
             "Packed Last",
-            "Packing Errors"});
+            "Packing Errors",
+            "Songs IMPORTED later than current song value",
+            "Songs ADDED later to the DropDown indicated Group than the import date of the cur" +
+                "rent song value",
+            "Lyrics Changed",
+            "Instrumental",
+            "Single",
+            "Soundtrack",
+            "EP",
+            "Audio Changed"});
             this.cmb_Filter.Location = new System.Drawing.Point(35, 19);
             this.cmb_Filter.Margin = new System.Windows.Forms.Padding(2);
+            this.cmb_Filter.MaxDropDownItems = 15;
             this.cmb_Filter.Name = "cmb_Filter";
             this.cmb_Filter.Size = new System.Drawing.Size(163, 21);
             this.cmb_Filter.TabIndex = 275;
@@ -2253,6 +2313,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btn_SearchYB);
             this.groupBox1.Controls.Add(this.cmb_Tracks);
             this.groupBox1.Controls.Add(this.txt_Playthough);
             this.groupBox1.Controls.Add(this.btn_Playthrough);
@@ -2308,13 +2369,14 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.btn_Playthrough.Enabled = false;
             this.btn_Playthrough.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Playthrough.Location = new System.Drawing.Point(74, 125);
+            this.btn_Playthrough.Location = new System.Drawing.Point(74, 127);
             this.btn_Playthrough.Margin = new System.Windows.Forms.Padding(0);
             this.btn_Playthrough.Name = "btn_Playthrough";
             this.btn_Playthrough.Size = new System.Drawing.Size(18, 16);
             this.btn_Playthrough.TabIndex = 419;
             this.btn_Playthrough.Text = ">";
             this.btn_Playthrough.UseVisualStyleBackColor = true;
+            this.btn_Playthrough.Click += new System.EventHandler(this.btn_Playthrough_Click);
             // 
             // txt_Volume
             // 
@@ -2339,13 +2401,14 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.btn_Youtube.Enabled = false;
             this.btn_Youtube.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Youtube.Location = new System.Drawing.Point(74, 105);
+            this.btn_Youtube.Location = new System.Drawing.Point(74, 106);
             this.btn_Youtube.Margin = new System.Windows.Forms.Padding(0);
             this.btn_Youtube.Name = "btn_Youtube";
             this.btn_Youtube.Size = new System.Drawing.Size(18, 16);
             this.btn_Youtube.TabIndex = 417;
             this.btn_Youtube.Text = ">";
             this.btn_Youtube.UseVisualStyleBackColor = true;
+            this.btn_Youtube.Click += new System.EventHandler(this.btn_Youtube_Click);
             // 
             // txt_Preview_Volume
             // 
@@ -2696,7 +2759,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.groupBox7.Controls.Add(this.txt_CustomForge_Vwersion);
             this.groupBox7.Controls.Add(this.label11);
             this.groupBox7.Controls.Add(this.txt_CustomsForge_ReleaseNotes);
-            this.groupBox7.Controls.Add(this.label10);
             this.groupBox7.Controls.Add(this.btn_Like);
             this.groupBox7.Controls.Add(this.txt_Followers);
             this.groupBox7.Controls.Add(this.label9);
@@ -2707,7 +2769,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.groupBox7.Controls.Add(this.label59);
             this.groupBox7.Controls.Add(this.btn_Debug);
             this.groupBox7.Controls.Add(this.txt_CustomsForge_Link);
-            this.groupBox7.Controls.Add(this.lbfl_YouTube_Link);
             this.groupBox7.Controls.Add(this.label33);
             this.groupBox7.Controls.Add(this.label32);
             this.groupBox7.Location = new System.Drawing.Point(2, 6);
@@ -2754,22 +2815,12 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_CustomsForge_ReleaseNotes
             // 
-            this.txt_CustomsForge_ReleaseNotes.Location = new System.Drawing.Point(228, 10);
+            this.txt_CustomsForge_ReleaseNotes.Location = new System.Drawing.Point(88, 17);
             this.txt_CustomsForge_ReleaseNotes.Margin = new System.Windows.Forms.Padding(2);
             this.txt_CustomsForge_ReleaseNotes.Name = "txt_CustomsForge_ReleaseNotes";
-            this.txt_CustomsForge_ReleaseNotes.Size = new System.Drawing.Size(110, 24);
+            this.txt_CustomsForge_ReleaseNotes.Size = new System.Drawing.Size(260, 37);
             this.txt_CustomsForge_ReleaseNotes.TabIndex = 382;
             this.txt_CustomsForge_ReleaseNotes.Text = "";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(20, 42);
-            this.label10.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(63, 13);
-            this.label10.TabIndex = 387;
-            this.label10.Text = "Playthrough";
             // 
             // btn_Like
             // 
@@ -2871,7 +2922,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.rtxt_StatisticsOnReadDLCs.Location = new System.Drawing.Point(164, 58);
             this.rtxt_StatisticsOnReadDLCs.Margin = new System.Windows.Forms.Padding(2);
             this.rtxt_StatisticsOnReadDLCs.Name = "rtxt_StatisticsOnReadDLCs";
-            this.rtxt_StatisticsOnReadDLCs.Size = new System.Drawing.Size(246, 180);
+            this.rtxt_StatisticsOnReadDLCs.Size = new System.Drawing.Size(652, 180);
             this.rtxt_StatisticsOnReadDLCs.TabIndex = 328;
             this.rtxt_StatisticsOnReadDLCs.Text = "";
             this.rtxt_StatisticsOnReadDLCs.Visible = false;
@@ -2879,7 +2930,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // label59
             // 
             this.label59.AutoSize = true;
-            this.label59.Location = new System.Drawing.Point(152, 18);
+            this.label59.Location = new System.Drawing.Point(10, 17);
             this.label59.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label59.Name = "label59";
             this.label59.Size = new System.Drawing.Size(77, 13);
@@ -2889,7 +2940,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // btn_Debug
             // 
             this.btn_Debug.ForeColor = System.Drawing.Color.DarkRed;
-            this.btn_Debug.Location = new System.Drawing.Point(156, 34);
+            this.btn_Debug.Location = new System.Drawing.Point(352, 37);
             this.btn_Debug.Margin = new System.Windows.Forms.Padding(2);
             this.btn_Debug.Name = "btn_Debug";
             this.btn_Debug.Size = new System.Drawing.Size(58, 22);
@@ -2898,16 +2949,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_Debug.UseVisualStyleBackColor = true;
             this.btn_Debug.Visible = false;
             this.btn_Debug.Click += new System.EventHandler(this.btn_Debug_Click);
-            // 
-            // lbfl_YouTube_Link
-            // 
-            this.lbfl_YouTube_Link.AutoSize = true;
-            this.lbfl_YouTube_Link.Location = new System.Drawing.Point(26, 18);
-            this.lbfl_YouTube_Link.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lbfl_YouTube_Link.Name = "lbfl_YouTube_Link";
-            this.lbfl_YouTube_Link.Size = new System.Drawing.Size(51, 13);
-            this.lbfl_YouTube_Link.TabIndex = 322;
-            this.lbfl_YouTube_Link.Text = "YouTube";
             // 
             // label33
             // 
@@ -2931,15 +2972,17 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.btn_WinMerge);
+            this.tabPage3.Controls.Add(this.btn_RockBand);
             this.tabPage3.Controls.Add(this.btn_SearchLyrics);
-            this.tabPage3.Controls.Add(this.brn_CompactDB);
+            this.tabPage3.Controls.Add(this.btn_CompactDB);
             this.tabPage3.Controls.Add(this.btn_OpenMulti);
             this.tabPage3.Controls.Add(this.btn_BRM);
             this.tabPage3.Controls.Add(this.btn_SongOnFire);
             this.tabPage3.Controls.Add(this.btn_TotalCommander);
             this.tabPage3.Controls.Add(this.btn_PKGSigner);
             this.tabPage3.Controls.Add(this.btn_TrueRepacker);
-            this.tabPage3.Controls.Add(this.btm_PKGLinker);
+            this.tabPage3.Controls.Add(this.btn_PKGLinker);
             this.tabPage3.Controls.Add(this.button5);
             this.tabPage3.Controls.Add(this.txt_NoOfSplits);
             this.tabPage3.Controls.Add(this.btn_AddPackSplit);
@@ -2965,6 +3008,33 @@ namespace RocksmithToolkitGUI.DLCManager
             this.tabPage3.Text = "GameData";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // btn_WinMerge
+            // 
+            this.btn_WinMerge.Enabled = false;
+            this.btn_WinMerge.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_WinMerge.Location = new System.Drawing.Point(537, 244);
+            this.btn_WinMerge.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_WinMerge.Name = "btn_WinMerge";
+            this.btn_WinMerge.Size = new System.Drawing.Size(140, 22);
+            this.btn_WinMerge.TabIndex = 362;
+            this.btn_WinMerge.Text = "WinMerge";
+            this.btn_WinMerge.UseVisualStyleBackColor = true;
+            this.btn_WinMerge.Visible = false;
+            this.btn_WinMerge.Click += new System.EventHandler(this.Btn_WinMerge_Click);
+            // 
+            // btn_SearchLyrics
+            // 
+            this.btn_SearchLyrics.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_SearchLyrics.Location = new System.Drawing.Point(537, 218);
+            this.btn_SearchLyrics.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_SearchLyrics.Name = "btn_SearchLyrics";
+            this.btn_SearchLyrics.Size = new System.Drawing.Size(140, 22);
+            this.btn_SearchLyrics.TabIndex = 360;
+            this.btn_SearchLyrics.Text = "GGL Lyrics";
+            this.btn_SearchLyrics.UseVisualStyleBackColor = true;
+            this.btn_SearchLyrics.Visible = false;
+            this.btn_SearchLyrics.Click += new System.EventHandler(this.Btn_SearchLyrics_Click);
+            // 
             // btn_OpenMulti
             // 
             this.btn_OpenMulti.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -2987,6 +3057,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_BRM.TabIndex = 357;
             this.btn_BRM.Text = "BRM Arrangement Editor";
             this.btn_BRM.UseVisualStyleBackColor = true;
+            this.btn_BRM.Visible = false;
             this.btn_BRM.Click += new System.EventHandler(this.btn_BRM_Click);
             // 
             // btn_SongOnFire
@@ -2999,6 +3070,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_SongOnFire.TabIndex = 356;
             this.btn_SongOnFire.Text = "Song on Fire";
             this.btn_SongOnFire.UseVisualStyleBackColor = true;
+            this.btn_SongOnFire.Visible = false;
             this.btn_SongOnFire.Click += new System.EventHandler(this.btn_SongOnFire_Click);
             // 
             // txt_NoOfSplits
@@ -3329,7 +3401,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_Art_Hash.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_Art_Hash.ForeColor = System.Drawing.Color.Gray;
             this.txt_Art_Hash.HideSelection = false;
-            this.txt_Art_Hash.Location = new System.Drawing.Point(923, 260);
+            this.txt_Art_Hash.Location = new System.Drawing.Point(928, 260);
             this.txt_Art_Hash.Margin = new System.Windows.Forms.Padding(2);
             this.txt_Art_Hash.Name = "txt_Art_Hash";
             this.txt_Art_Hash.ReadOnly = true;
@@ -3361,7 +3433,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_Lyrics_Hash.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_Lyrics_Hash.ForeColor = System.Drawing.Color.Gray;
             this.txt_Lyrics_Hash.HideSelection = false;
-            this.txt_Lyrics_Hash.Location = new System.Drawing.Point(892, 260);
+            this.txt_Lyrics_Hash.Location = new System.Drawing.Point(894, 261);
             this.txt_Lyrics_Hash.Margin = new System.Windows.Forms.Padding(2);
             this.txt_Lyrics_Hash.Name = "txt_Lyrics_Hash";
             this.txt_Lyrics_Hash.ReadOnly = true;
@@ -3837,18 +3909,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_SpotifyStatus.Size = new System.Drawing.Size(206, 20);
             this.txt_SpotifyStatus.TabIndex = 400;
             // 
-            // btn_SearchLyrics
-            // 
-            this.btn_SearchLyrics.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_SearchLyrics.Location = new System.Drawing.Point(537, 223);
-            this.btn_SearchLyrics.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_SearchLyrics.Name = "btn_SearchLyrics";
-            this.btn_SearchLyrics.Size = new System.Drawing.Size(140, 22);
-            this.btn_SearchLyrics.TabIndex = 360;
-            this.btn_SearchLyrics.Text = "GGL Lyrics";
-            this.btn_SearchLyrics.UseVisualStyleBackColor = true;
-            this.btn_SearchLyrics.Click += new System.EventHandler(this.Btn_SearchLyrics_Click);
-            // 
             // MainDB
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -4086,7 +4146,6 @@ namespace RocksmithToolkitGUI.DLCManager
         private NumericUpDown txt_CustomForge_Vwersion;
         private Label label11;
         private RichTextBox txt_CustomsForge_ReleaseNotes;
-        private Label label10;
         private Button btn_Like;
         private NumericUpDown txt_Followers;
         private Label label9;
@@ -4097,7 +4156,6 @@ namespace RocksmithToolkitGUI.DLCManager
         private Label label59;
         private Button btn_Debug;
         private CueTextBox txt_CustomsForge_Link;
-        private Label lbfl_YouTube_Link;
         private Label label33;
         private Label label32;
         private TabPage tabPage3;
@@ -4107,7 +4165,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private Button btn_TotalCommander;
         private Button btn_PKGSigner;
         private Button btn_TrueRepacker;
-        private Button btm_PKGLinker;
+        private Button btn_PKGLinker;
         private Button button5;
         private NumericUpDown txt_NoOfSplits;
         private Button btn_AddPackSplit;
@@ -4169,9 +4227,13 @@ namespace RocksmithToolkitGUI.DLCManager
         private CueTextBox txt_Lyrics_Hash;
         private CueTextBox txt_Art_Hash;
         private Button btn_Sort;
-        private Button brn_CompactDB;
+        private Button btn_CompactDB;
         private ComboBox cmb_Tracks;
         private CueTextBox txt_DuplicateOf;
         private Button btn_SearchLyrics;
+        private Button btn_SearchYB;
+        private Button btn_ShowLyrics;
+        private Button btn_WinMerge;
+        private Button btn_RockBand;
     }
 }

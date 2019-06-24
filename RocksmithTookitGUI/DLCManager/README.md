@@ -1,4 +1,10 @@
-﻿## Rocksmith DLC Library Manager v0.7.1
+﻿		# Date: 12.06.2019
+		# Document Name: Rocksmith DLC Management tool README
+						(fork of rocksmith-custom-song-toolkit)
+		# Document purpose: To describe the functionailities and the way to change, the NEW tab that enable MASS Manipulation of Rocksmith DLC Library
+							(DLC folder; including customs(CDLC), DLCs and songs embeded in the ready to ship version of Rocksmith 2014) 
+
+## Rocksmith DLC Library Manager v0.7.4
 *(beta version-unreleased to the masses; branch of CSC)*
 # App Description: MASS Manipulation of Rocksmith DLC Library 
 		e.g. 1. in Rocksmith, in the Library, each song's Album, to contain a personal rating, if it has DD, instr. avail
@@ -24,6 +30,9 @@
 - Read Current Game Library and match it to the DLCManager Library (incl. PS3) (NEW)
 - Mass rename songs(Standardization) e.g. Black Keys->The Black Keys and maintain changes in a local DB
 - Manipulates the Retail songs list of Rocksmith (Rocksmith 2014 disc, or Rocksmith 2012 DLC, or Rocksmith 2012 Import disc)
+
+<img src="/RocksmithTookitGUI/DLCManager/Screenshot1.png" alt="Rocksmith DLC Library Manager Import&Pack"/> //width="400px"/
+<img src="/RocksmithTookitGUI/DLCManager/Screenshot2.png" alt="Song Metadata DB Screen"/>
 <img src="/RocksmithTookitGUI/DLCManager/Screenshot3.png" alt="Song Metadata Standardization Screen"/>
 <img src="/RocksmithTookitGUI/DLCManager/Screenshot4.png" alt="Rocksmith Retail Manipulation Scree"/>
 <img src="/RocksmithTookitGUI/DLCManager/Screenshot5.png" alt="Duplicate Management Import Screen"/>
@@ -31,14 +40,12 @@
 
 
 ## Known Issues:
--+ Packing of Rocksmith 2014 Retail manipulated files has 1 manual step for RS14 Retail songsC & Mac & PS3)
+-+ Packing of Rocksmith 2014 Retail manipulated files has 1 manual step for RS14 Retail songs for PS3
 
-<img src="/RocksmithTookitGUI/DLCManager/Screenshot1.png" alt="Rocksmith DLC Library Manager Import&Pack"/> //width="400px"/
-<img src="/RocksmithTookitGUI/DLCManager/Screenshot2.png" alt="Song Metadata DB Screen"/>
-
-# Official tool / MAster Branch bugs:
+# Official tool / Master Branch bugs:
 [-] CICAGO 26 25 original SONG FAILS AT PACK
 [-] open ticket for the dlcpackagedata crash for 311 down in
+[-] DDC remover does not work correctly
 
 ## ToDos/bugs:
 [ ] feat:		 Alternate No for duplicates logic
@@ -57,7 +64,6 @@
 	[ ] save /offer the chance to reorder
 [ ] rename the Options and use the xml code inside the tool (removing the 03 14 35 dependency)
 [ ] ask if you wanna have the packing folder deleted
-[x] fix/check changing path of library
 [ ] add info box with folders sizes
 [ ] if cover was from someone else please compare against that (save old cover)
 [ ] duplicate window reformat not to sent backand forth 1mio variables but on dataset
@@ -88,7 +94,6 @@
 [ ] check db also checks arrangements, standardization, tones,
 [-] vs blue maybe also yes blue (blu happens also when small 1bite amybe 2 diff in filesize
 [-] small improv: add the proper lasconvdate in the db 
-[-] fix songs w only bass and dd attached
 [-] select incl groups has a small error (userissues)
 [-] test replace ....
 [-] add copy last and initial to mass pack
@@ -100,12 +105,9 @@
 	[-] Delete All
 	[ ] add simple logic to add sections
 	[ ] check and fix the Sections flag
-	[+] add sections (bored to death; Renabled BPR program)
-	[x] add conter of sections
 [-] mac song gen errors at read dlc library
 [+] remove all dd in Cache/Retails screen
 [-] generate a garageband _(curently the mp3 is converted to wav for GB Import)
-[ ] at import gather
 [ ] make processing static
 [ ] make all unique check(02-05 look the same) at mass pack
 [ ] orion changed cover
@@ -113,7 +115,6 @@
 [ ] improve maybe tone diff message
 [ ] add a 4 sec timestamp in each song
 [-] is dupli marked as ignore/ duplicate decompressed folder deleted?
-[-] small feature: when opening MainDB and detecting directory check runs, if next directory exists (give a change to empty the db then if possible)
 [x] clean up the saving settings logic
     [ ] at open it gets records for 3 times
 [ ] progress bar having it overelayed text overlayered bug error
@@ -133,124 +134,116 @@
 [ ] Add option not to import CDLC packed by Catara/DLCMANAGER
 [ ] Viva la Vida or Death and All His Friends did not get into standardization with all its different spellings
 [ ] add 46&2 lyrics from old one
-[ ] add starting times as tooltip on instruments
 [ ] change profile saves old setting on new profile
 [ ] fix color instr that doesnt change
 [ ] if 89 selected the show right no in stats
 [ ] kids orig was not replaced
 [ ] korn for you arrangement insert break
-[ ] mass dont copy single do
 [ ] pack as a group (incl. ps3)
 [ ] ps3 decompression fail cause json manifest missing
-[ ] replace not always work..
-[ ] saving remote not working
 [ ] standardization suggest similar album names based on capitalisation
 [ ] think of adding that ref point for all tracks to be synced
 [ ] version is not being saved?
 [ ] what does audio mean in name "( audio)"
-[ ] add options to install missing tools (winmerge; pkg linker, reasigner, etc.)
-[ ] update screenshots
-[x] update wwise to latest 2017.2.xx/2018
 [ ] check rape me no bass
 [ ] MAMAS AND PAPASE LEAD and back vocal split
-[ ] is combo lead track in lyrics?
-[ ] why eu us is not changing
-[ ] why sometimes ps3 ftp is not transmited
 [ ] can we have a dupli assement window :) (all 5 dupli what happened if automated)
-[ ] single pack sometimes runs multiple times
 [ ] MAke Sure CHANGIN D THE AUDIO/PREVIEW DOES NOT deletes the old info useful for Duplciation comparison
 [ ] the rover preview issue , file gets a weird name
 [ ] consider multitasking DDC style
-report change in the house of flies remove ddd issue
-add dynamic filter for all tunnings in Arrangements:)
-set a proper window default$reactivate tooltip
-not &compound ruin the selection after first execution
-use memory disk for audio operations, access DB, what else?
-[] active accdb compress at CleanDB or adhoc by button (not import)
-take me now baby weird timing in lyric
-add multi select
-"C:\\t\\0\\0_repacked\\PS3\\CDLC-ACDC-1986-Who_Made_Who-00-D_T_"
-too many oggs
-add list of copies
-fix dont show lyrics 
-add tooltip that older newr is incomplete
-dupli author duplis spaces
-delete rk folders as split4pack and minus button
-new tag at pack add older or year
-clean songs w text(duplic..) after _p
-if old is found bbut no entr copy to import and archive
-if old is not found clean record raise alarm
-[-]check broken
-CFSM.AudioTools
-PSARC packer refactored, 1:1 to offical compression ratio, but code n…
-1700 songs wo vocals
-[-]find workaround for remote folders
-fix on leave folders
-duplicate add old values as tooltip
-add export to excel (maybe not as u could simply export from access :) )
-
-compound breaks the select
-multiple repacks still occur
-add manualy modified same lyrics chenge flag (maybe based on hash)
-preview starts twice bug
+[ ] report change in the house of flies remove ddd issue
+[ ] use memory disk for audio operations, access DB, what else?
+[ ] take me now baby weird timing in lyric
+[ ] add multi select
+[ ] "C:\\t\\0\\0_repacked\\PS3\\CDLC-ACDC-1986-Who_Made_Who-00-D_T_"
+[ ] too many oggs
+[ ] add list of copies
+[ ] fix dont show lyrics 
+[ ] add tooltip that older newr is incomplete
+[ ] dupli author duplis spaces
+[ ] new tag at pack add older or year
+[ ] clean songs w text(duplic..) after _p
+[ ] if old is found bbut no entr copy to import and archive
+[ ] if old is not found clean record raise alarm
+[-] check broken
+[ ] CFSM.AudioTools
+[ ] PSARC packer refactored, 1:1 to offical compression ratio, but code n…
+[ ] 1700 songs wo vocals
+[-] find workaround for remote folders
+[-] saving remote not working
+[ ] fix on leave folders
+[ ] duplicate add old values as tooltip
+[ ] add export to excel (maybe not as u could simply export from access :) )
+[ ] multiple repacks still occur
+[ ] single pack sometimes runs multiple times
+[ ] add manualy modified same lyrics chenge flag (maybe based on hash)
+[ ] preview starts twice bug
 [ ] remove group seems gbroken roups--------DELETE * FROM Groups WHERE Type="DLC" AND Groups= "" LEFT JOIN Main on Main.ID=Groups.CDLC_ID and Main.Selected='Yes'--------------Syntax error (missing operator) in query expression 'Type="DLC" AND Groups= "" LEFT JOIN Main on Main.ID=Groups.CDLC_ID and Main.Selected='Yes''.DB Open in Design Mode, or Missing, or you need to Download the 32bit Connectivity libraryACE.OLEDB.16.0 @ 
 
-	[ ] clean lyrics
-	[ ] if year/album is the same of prev dont display img
 
 ## WiP:
 (this release)
-[x] adding images to export
-[x] fix selct is pack
-[x] fix if group selected and value already there also select
-[x] counter of import-s seems to be failing (not na issue)
-[x] improve youtube matching (implemented soundex)
-	[x] update also missing yb
-[x] export webpage:
-	[x]make href point internally,
-	[x]add created tabs&gp5,
-	[x]make folder like html;
-	[x]add last other conv files
-	[x]add play ogg files
-	[x]add cover
-[x] fixed when packing multiple
-[x] capture error on fix preview audio
-[x] fixed netstatus after group was changed :)
-[x] fixed audio should be anbled also if yr info is missing
-[x] finalizing implement album_sort
-[x] harmonize DLC_ID naming to CDCL_ID in packauditrail and import tables
-[x] if volcas missing button says add
-[x] No Playthrough doesnt show previous song value
-[x] add add to group date (in main also to sort on)
-[x] add filter on dates, from this date
+[ ] compound breaks the select
+[ ] at import gather
+[ ] not &compound ruin the selection after first execution
+[ ] Feeling Good_158, Rape Me_3573, Pixies_1987_Come on Pilgrim_0_Nimrod's Son_3793
+[ ] fixed saving or yb main/arrangement not to have https:\\yb.comhttps:\\yb.com
+[ ] add text to audio fixing on progress ar
+[ ] mass dont copy single do
+[ ] update screenshots
+[ ] is combo lead track in lyrics?
 
 ## done:
 (prev release)
-[x] remove sogs remove from groups too
-[x] apply 55 to fix all audio if bigger than the set lenght (fix why review lenghts is not 30?)
-[x] added minimal preview
-[x] FTP should also consider if net is up a,lso eliminating errors e.g."C:\\t\\0\\0_repacked\\PS3\\To_TryCDLC-Aerosmith-1974-Single-00-Come_Together"
-[-] fix autoplay preview
-[x] fixed bug when missing preview but gen one at pack
-[x] added remove all packed based on POack_Trail when copying/FTP to a location
-[x] fixed adding group to sort artist
-[x] duplicate sync albbum and sort arrow down
-[-] duplicate sync albubm doesnt sync dwn sort+year
-[-] fix internet check not to be dependent on new spotify
-[-] change/shift timing to any other track
-[x] add any track from a Alternative to current song
-[x] fix pickl up tonal&arranegemnts from DB
-[x] fixed net check (fixed not transfering fils automatically)
-[x] added logic to read always correctly the FTP
-[x] removing extra ogg/wem files at pack
-[x] fix a save title issue
-[x] made visual studio ignore dpi http://www.visualstudioextensibility.com/2017/01/13/running-visual-studio-or-setups-with-dpi-virtualization-dpi-unaware-on-high-dpi-displays/
-[x] removed directories when removing Pack
-[x] improved the select pack an d show no
-[x] added open all instance is existing
-[x] improve export as webpage ()added parameterisable columns, Create pack
-[x] the search fucks it up sometimes (means and error at CahngeRow//Load happens)
-[x] added remove arrangement
+[x] export as webbpage improvements
+	[x] clean lyrics
+	[x] if year/album is the same of prev dont display img
+[x] fix on selects as view_fields had some spaces in the xml for redabiltiy but then the replace with id was failing
+[x] fix issues with get path of 3rd parties
+[x] fix replace () with asquare brakets
+[x] fix set multitrack
+[x] if no lyrics dont try to display
+[x] fixed disabled add instrumental
+[x] fixed disabled add track
+[x] fixed add isntrumental 
+[x] fixed regression issue at mac and pc repack
+[x] delete rk folders as split4pack and minus button
+[x] active accdb compress at CleanDB or adhoc by button (not import)
+[x] update wwise to latest 2017.2.xx/2018
+[-] why eu us is not changing
+[-] why sometimes ps3 ftp is not transmited
+[-] replace not always work..
+[-] add options to install missing tools (winmerge; pkg linker, reasigner, etc.)
+[x] extract tabs+lyrics
+[x] extract gp5
+[x] add starting times as tooltip on instruments
+[+] add sections (bored to death; Renabled BPR program)
+[x] add conter of sections
+[-] select deselect group is fixed using new way of adding groups incl date
+[-] restore spotify access
+[x] fixed lyrics issue if lyric start txt is longer than max platform
+[-] after import only show last imported
+[-] after read libb only show read lib
+[x] set a proper window default
+[x] reactivate tooltip
+[x] fix/check changing path of library
+[-] fix songs w only bass and dd attached
+[-] small feature: when opening MainDB and detecting directory check runs, if next directory exists (give a change to empty the db then if possible)
+[x] add dynamic filter for all tunnings in Arrangements:)
+[x] made versioning dynamic
+[x] added uft7 when readin g from FTP
+[x] fix deselect if already selected and removed
+[x] fix autoplay flag
+[x] improve open folder to add option to create
+[x] Added a Pack as pc/mac/etc. Filter mainDB
+[x] fix albbum sort smaller than 4 charwhy do you call me when youre high
+[x] disabled more fields at search
+[x] renamed playthrough field&boxes
+[x] added Main playthrough save
+[x] added arangement playthrough save if containing Rhythm/Lead/Combo/Bass
+[x] improved error window
+[x] fixed regression on add lyric file
+[x] improved add lyric process (also fixed ultrastar creator that did not start)
 
 # Version History(release date):
 	0.1(12.08.2014) prototype, 
@@ -277,11 +270,12 @@ preview starts twice bug
 	0.3 (10.05.2016) full release (anyone can download and use the tool..no bugs..and all un-implemented features disabled), repack wo bugs, edit screens functional
 	0.4 (21.11.2016) Major improvements	and features
 	0.5 (15.03.2017) Implement a logic to properly read DLCManager manipulated DLCs	
-	0.6 (28.10.2017) Modify Lyrics, get tool ready for multithreading, 
+	0.6 (28.10.2017) Modify Lyrics, get tool ready for multithreading
 	0.7 (01.07.2018) Code review
 	0.7.2 (26.03.2019) Code review (+'19 Toolkit code base)
-	0.7.3 (6.05.2019) Code review (+'19 Toolkit code base)
+	0.7.3 (6.05.2019) Find YB videos and export as webpage imrovements
 	0.8 (xx.0x.2019) Reactivating Spotify checks, all params are in the Groups table
+
 # Implementation Tracking for the Main Features:
 		+1. Ability to Generate a Database with all DLC
 			Design description:
@@ -366,13 +360,6 @@ mainfor.designer
 	tbr: 0.8.3 ?move Access code to project? or from hardcoded to views	
 	wip: 0.8.4 (03.10.2017) (10%) use parameterized SQL everywhere (&/ integrate template DB into project or a SQL DB)
 
-
-
-		# Date: 12.01.2018
-		# Document Name: Rocksmith DLC Management tool README
-						(fork of rocksmith-custom-song-toolkit)
-		# Document purpose: To describe the functionailities and the way to change, the NEW tab that enable MASS Manipulation of Rocksmith DLC Library
-							(DLC folder; including customs(CDLC), DLCs and songs embeded in the ready to ship version of Rocksmith 2014) 
 		# Legend:
 		- to be implemented
 		+ done
@@ -404,10 +391,6 @@ mainfor.designer
 *or supported.  Rocksmith users should remember to support Ubisoft® and*
 *Steam by purchasing original game content and software releases so that*
 *these companies may continue making products that we enjoy.*
-
-Additioanlly, No modification have been applied to Rocksmith Custom Song Project sourcecode (besides new UI tab).
-  Except:
-  -  1 fix for 311 Down In dlcpackagedata crash
 
 This software makes use of Applications not made
 by developers who are part of this project.

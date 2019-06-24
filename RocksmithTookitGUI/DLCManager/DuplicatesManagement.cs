@@ -1342,7 +1342,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private void btn_DecompressAll_Click(object sender, EventArgs e)
         {
             //txt_Description.Text = DB_Path;
-            MainDB frm = new MainDB(DB_Path, TempPath, false, RocksmithDLCPath, AllowEncriptb, AllowORIGDeleteb, cnb);//.Replace("\\AccessDB.accdb;", "")
+            MainDB frm = new MainDB(cnb,false);//.Replace("\\AccessDB.accdb;", "")
             frm.Show();
         }
 
@@ -1757,7 +1757,7 @@ namespace RocksmithToolkitGUI.DLCManager
             var xx = "";
             if (File.Exists(paath)) xx = paath;
             else xx = Path.Combine(AppWD, "WinMerge\\winmergeu.exe");
-            if (File.Exists(xx)) { ErrorWindow frm1 = new ErrorWindow("Install WinMerge if you want to use it.", ConfigRepository.Instance()["dlcm_WinMerge_www"], "Missing WinMerge", false, false); frm1.ShowDialog(); return; }
+            if (!File.Exists(xx)) { ErrorWindow frm1 = new ErrorWindow("Install WinMerge if you want to use it.", ConfigRepository.Instance()["dlcm_WinMerge_www"], "Missing WinMerge", false, false, true, "", "", ""); frm1.ShowDialog(); return; }
 
             var startInfo = new ProcessStartInfo();
             startInfo.FileName = xx;
@@ -1908,7 +1908,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btn_ShowInfoOthers_Click(object sender, EventArgs e)
         {
-            ErrorWindow frm1 = new ErrorWindow(this.allothers, "", "List of all other Duplicates being assesed", false, false);
+            ErrorWindow frm1 = new ErrorWindow(this.allothers, "", "List of all other Duplicates being assesed", false, false, true, "", "", "");
             frm1.ShowDialog();
         }
 

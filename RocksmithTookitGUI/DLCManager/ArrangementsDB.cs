@@ -164,7 +164,7 @@ namespace RocksmithToolkitGUI.DLCManager
             DataGridViewTextBoxColumn ScrollSpeed = new DataGridViewTextBoxColumn { DataPropertyName = "ScrollSpeed", HeaderText = "ScrollSpeed " };
             DataGridViewTextBoxColumn Tunning = new DataGridViewTextBoxColumn { DataPropertyName = "Tunning", HeaderText = "Tunning " };
             DataGridViewTextBoxColumn Rating = new DataGridViewTextBoxColumn { DataPropertyName = "Rating", HeaderText = "Rating " };
-            DataGridViewTextBoxColumn PlayThoughYBLink = new DataGridViewTextBoxColumn { DataPropertyName = "PlayThoughYBLink", HeaderText = "PlayThoughYBLink " };
+            DataGridViewTextBoxColumn PlaythroughYBLink = new DataGridViewTextBoxColumn { DataPropertyName = "PlaythroughYBLink", HeaderText = "PlaythroughYBLink " };
             DataGridViewTextBoxColumn CustomsForge_Link = new DataGridViewTextBoxColumn { DataPropertyName = "CustomsForge_Link", HeaderText = "CustomsForge_Link " };
             DataGridViewTextBoxColumn ArrangementSort = new DataGridViewTextBoxColumn { DataPropertyName = "ArrangementSort", HeaderText = "ArrangementSort " };
             DataGridViewTextBoxColumn TuningPitch = new DataGridViewTextBoxColumn { DataPropertyName = "TuningPitch", HeaderText = "TuningPitch " };
@@ -242,7 +242,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //    ScrollSpeed,
             //    Tunning,
             //    Rating,
-            //    PlayThoughYBLink,
+            //    PlaythroughYBLink,
             //    CustomsForge_Link,
             //    ArrangementSort,
             //    TuningPitch,
@@ -323,7 +323,7 @@ namespace RocksmithToolkitGUI.DLCManager
             public string ScrollSpeed { get; set; }
             public string Tunning { get; set; }
             public string Rating { get; set; }
-            public string PlayThoughYBLink { get; set; }
+            public string PlaythroughYBLink { get; set; }
             public string CustomsForge_Link { get; set; }
             public string ArrangementSort { get; set; }
             public string TuningPitch { get; set; }
@@ -398,7 +398,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 files[i].ScrollSpeed = dataRow.ItemArray[8].ToString();
                 files[i].Tunning = dataRow.ItemArray[9].ToString();
                 files[i].Rating = dataRow.ItemArray[10].ToString();
-                files[i].PlayThoughYBLink = dataRow.ItemArray[11].ToString();
+                files[i].PlaythroughYBLink = dataRow.ItemArray[11].ToString();
                 files[i].CustomsForge_Link = dataRow.ItemArray[12].ToString();
                 files[i].ArrangementSort = dataRow.ItemArray[13].ToString();
                 files[i].TuningPitch = dataRow.ItemArray[14].ToString();
@@ -817,7 +817,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 command.CommandText += "ScrollSpeed = @param7, ";
                 command.CommandText += "Tunning = @param8, ";
                 command.CommandText += "Rating = @param9, ";
-                //command.CommandText += "PlayThoughYBLink = @param10, ";
+                //command.CommandText += "PlaythroughYBLink = @param10, ";
                 //command.CommandText += "CustomsForge_Link = @param11, ";
                 //command.CommandText += "ArrangementSort = @param12, ";
                 command.CommandText += "TuningPitch = @param13, ";
@@ -983,7 +983,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btn_Youtube_Click(object sender, EventArgs e)
         {
-            Process.Start("IExplore.exe", txt_Playthough.Text);
+            Process.Start("IExplore.exe", txt_Playthrough.Text);
         }
 
         private void Button1_Click_1(object sender, EventArgs e)
@@ -1039,13 +1039,13 @@ namespace RocksmithToolkitGUI.DLCManager
 
                 if (txt_ID.Text != DLCID)
                 {
-                    var insertcmdd = "Arrangement_Name, CDLC_ID, Bonus, SNGFilePath, XMLFilePath, XMLFile_Hash, ScrollSpeed, Tunning, Rating, PlayThoughYBLink, CustomsForge_Link," +
+                    var insertcmdd = "Arrangement_Name, CDLC_ID, Bonus, SNGFilePath, XMLFilePath, XMLFile_Hash, ScrollSpeed, Tunning, Rating, PlaythroughYBLink, CustomsForge_Link," +
                         "ArrangementSort, TuningPitch, ToneBase, Idd, MasterId, ArrangementType, String0, String1, String2, String3, String4, String5, PluckedType, RouteMask," +
                         "XMLFileName, XMLFileLLID, XMLFileUUID, SNGFileName, SNGFileLLID, SNGFileUUID, ToneMultiplayer, ToneA, ToneB, ToneC, ToneD, lastConversionDateTime," +
                         "SNGFileHash, Has_Sections, Comments, Start_Time, SNGFileHash_Orig, XMLFile_Hash_Orig, Part, MaxDifficulty";
                     var insertvalues = "SELECT Arrangement_Name, " + txt_ID.Text + ", Bonus, \"" + destination_dir + "\\manifests\\\"+right(SNGFilePath,len(SNGFilePath)-" +
                         "instr(SNGFilePath, 'manifests')-9), \"" + destination_dir + "\\songs\\arr\\\"+right(XMLFilePath,len(XMLFilePath)-instr(XMLFilePath, '\\songs\\arr\\')-10)," +
-                        " XMLFile_Hash, ScrollSpeed, Tunning, Rating, PlayThoughYBLink, CustomsForge_Link, ArrangementSort, TuningPitch, ToneBase, Idd, MasterId, ArrangementType," +
+                        " XMLFile_Hash, ScrollSpeed, Tunning, Rating, PlaythroughYBLink, CustomsForge_Link, ArrangementSort, TuningPitch, ToneBase, Idd, MasterId, ArrangementType," +
                         " String0, String1, String2, String3, String4, String5, PluckedType, RouteMask, XMLFileName, XMLFileLLID, XMLFileUUID, SNGFileName, SNGFileLLID," +
                         " SNGFileUUID, ToneMultiplayer, ToneA, ToneB, ToneC, ToneD, lastConversionDateTime, SNGFileHash, Has_Sections, \"added from" + txt_CDLC_ID.Text + " " + txt_XMLFilePath.Text + "\", Start_Time, SNGFileHash_Orig," +
                         " XMLFile_Hash_Orig, Part, MaxDifficulty FROM Arrangements WHERE ID = " + ArrangID;

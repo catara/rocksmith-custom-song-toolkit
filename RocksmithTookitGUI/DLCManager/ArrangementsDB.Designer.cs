@@ -32,7 +32,7 @@
             this.Panel1 = new System.Windows.Forms.Panel();
             this.btn_Remove = new System.Windows.Forms.Button();
             this.btn_Youtube = new System.Windows.Forms.Button();
-            this.txt_Playthough = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_Playthrough = new RocksmithToolkitGUI.CueTextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.btn_Tones = new System.Windows.Forms.Button();
             this.label26 = new System.Windows.Forms.Label();
@@ -139,7 +139,7 @@
             this.Panel1.Controls.Add(this.num_Lyrics);
             this.Panel1.Controls.Add(this.btn_Remove);
             this.Panel1.Controls.Add(this.btn_Youtube);
-            this.Panel1.Controls.Add(this.txt_Playthough);
+            this.Panel1.Controls.Add(this.txt_Playthrough);
             this.Panel1.Controls.Add(this.label12);
             this.Panel1.Controls.Add(this.btn_Tones);
             this.Panel1.Controls.Add(this.label26);
@@ -237,15 +237,15 @@
             this.btn_Youtube.UseVisualStyleBackColor = true;
             this.btn_Youtube.Click += new System.EventHandler(this.btn_Youtube_Click);
             // 
-            // txt_Playthough
+            // txt_Playthrough
             // 
-            this.txt_Playthough.Cue = "Playthrough Youtube Link";
-            this.txt_Playthough.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_Playthough.ForeColor = System.Drawing.Color.Gray;
-            this.txt_Playthough.Location = new System.Drawing.Point(870, 88);
-            this.txt_Playthough.Name = "txt_Playthough";
-            this.txt_Playthough.Size = new System.Drawing.Size(123, 20);
-            this.txt_Playthough.TabIndex = 366;
+            this.txt_Playthrough.Cue = "Playthrough Youtube Link";
+            this.txt_Playthrough.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_Playthrough.ForeColor = System.Drawing.Color.Gray;
+            this.txt_Playthrough.Location = new System.Drawing.Point(870, 88);
+            this.txt_Playthrough.Name = "txt_Playthrough";
+            this.txt_Playthrough.Size = new System.Drawing.Size(123, 20);
+            this.txt_Playthrough.TabIndex = 366;
             // 
             // label12
             // 
@@ -1101,7 +1101,7 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Button btn_Tones;
-        private CueTextBox txt_Playthough;
+        private CueTextBox txt_Playthrough;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Button btn_Youtube;
         private System.Windows.Forms.Button btn_Remove;

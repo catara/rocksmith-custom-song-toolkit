@@ -595,7 +595,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private void btn_DecompressAll_Click(object sender, EventArgs e)
         {
             //txt_Description.Text = DB_Path;
-            MainDB frm = new MainDB(DB_Path, TempPath, false, RocksmithDLCPath, AllowEncriptb, AllowORIGDeleteb, cnb);//.Replace("\\AccessDB.accdb", "")
+            MainDB frm = new MainDB(cnb, false);//.Replace("\\AccessDB.accdb", "")
             frm.Show();
         }
 

@@ -1174,7 +1174,7 @@ namespace RocksmithToolkitGUI {
             
             private global::System.Data.DataColumn columnRating;
             
-            private global::System.Data.DataColumn columnPlayThoughYBLink;
+            private global::System.Data.DataColumn columnPlaythroughYBLink;
             
             private global::System.Data.DataColumn columnCustomsForge_Link;
             
@@ -1361,9 +1361,9 @@ namespace RocksmithToolkitGUI {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn PlayThoughYBLinkColumn {
+            public global::System.Data.DataColumn PlaythroughYBLinkColumn {
                 get {
-                    return this.columnPlayThoughYBLink;
+                    return this.columnPlaythroughYBLink;
                 }
             }
             
@@ -1694,7 +1694,7 @@ namespace RocksmithToolkitGUI {
                         string ScrollSpeed, 
                         string Tunning, 
                         string Rating, 
-                        string PlayThoughYBLink, 
+                        string PlaythroughYBLink, 
                         string CustomsForge_Link, 
                         string ArrangementSort, 
                         string TuningPitch, 
@@ -1742,7 +1742,7 @@ namespace RocksmithToolkitGUI {
                         ScrollSpeed,
                         Tunning,
                         Rating,
-                        PlayThoughYBLink,
+                        PlaythroughYBLink,
                         CustomsForge_Link,
                         ArrangementSort,
                         TuningPitch,
@@ -1817,7 +1817,7 @@ namespace RocksmithToolkitGUI {
                 this.columnScrollSpeed = base.Columns["ScrollSpeed"];
                 this.columnTunning = base.Columns["Tunning"];
                 this.columnRating = base.Columns["Rating"];
-                this.columnPlayThoughYBLink = base.Columns["PlayThoughYBLink"];
+                this.columnPlaythroughYBLink = base.Columns["PlaythroughYBLink"];
                 this.columnCustomsForge_Link = base.Columns["CustomsForge_Link"];
                 this.columnArrangementSort = base.Columns["ArrangementSort"];
                 this.columnTuningPitch = base.Columns["TuningPitch"];
@@ -1878,8 +1878,8 @@ namespace RocksmithToolkitGUI {
                 base.Columns.Add(this.columnTunning);
                 this.columnRating = new global::System.Data.DataColumn("Rating", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnRating);
-                this.columnPlayThoughYBLink = new global::System.Data.DataColumn("PlayThoughYBLink", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnPlayThoughYBLink);
+                this.columnPlaythroughYBLink = new global::System.Data.DataColumn("PlaythroughYBLink", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPlaythroughYBLink);
                 this.columnCustomsForge_Link = new global::System.Data.DataColumn("CustomsForge_Link", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnCustomsForge_Link);
                 this.columnArrangementSort = new global::System.Data.DataColumn("ArrangementSort", typeof(string), null, global::System.Data.MappingType.Element);
@@ -1965,7 +1965,7 @@ namespace RocksmithToolkitGUI {
                 this.columnScrollSpeed.MaxLength = 255;
                 this.columnTunning.MaxLength = 255;
                 this.columnRating.MaxLength = 255;
-                this.columnPlayThoughYBLink.MaxLength = 255;
+                this.columnPlaythroughYBLink.MaxLength = 255;
                 this.columnCustomsForge_Link.MaxLength = 255;
                 this.columnArrangementSort.MaxLength = 255;
                 this.columnTuningPitch.MaxLength = 255;
@@ -17292,17 +17292,17 @@ namespace RocksmithToolkitGUI {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string PlayThoughYBLink {
+            public string PlaythroughYBLink {
                 get {
                     try {
-                        return ((string)(this[this.tableArrangements.PlayThoughYBLinkColumn]));
+                        return ((string)(this[this.tableArrangements.PlaythroughYBLinkColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'PlayThoughYBLink\' in table \'Arrangements\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'PlaythroughYBLink\' in table \'Arrangements\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableArrangements.PlayThoughYBLinkColumn] = value;
+                    this[this.tableArrangements.PlaythroughYBLinkColumn] = value;
                 }
             }
             
@@ -17976,14 +17976,14 @@ namespace RocksmithToolkitGUI {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsPlayThoughYBLinkNull() {
-                return this.IsNull(this.tableArrangements.PlayThoughYBLinkColumn);
+            public bool IsPlaythroughYBLinkNull() {
+                return this.IsNull(this.tableArrangements.PlaythroughYBLinkColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetPlayThoughYBLinkNull() {
-                this[this.tableArrangements.PlayThoughYBLinkColumn] = global::System.Convert.DBNull;
+            public void SetPlaythroughYBLinkNull() {
+                this[this.tableArrangements.PlaythroughYBLinkColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -35446,7 +35446,7 @@ namespace RocksmithToolkitGUI.AccessDBDataSetTableAdapters {
             tableMapping.ColumnMappings.Add("ScrollSpeed", "ScrollSpeed");
             tableMapping.ColumnMappings.Add("Tunning", "Tunning");
             tableMapping.ColumnMappings.Add("Rating", "Rating");
-            tableMapping.ColumnMappings.Add("PlayThoughYBLink", "PlayThoughYBLink");
+            tableMapping.ColumnMappings.Add("PlaythroughYBLink", "PlaythroughYBLink");
             tableMapping.ColumnMappings.Add("CustomsForge_Link", "CustomsForge_Link");
             tableMapping.ColumnMappings.Add("ArrangementSort", "ArrangementSort");
             tableMapping.ColumnMappings.Add("TuningPitch", "TuningPitch");
@@ -35491,34 +35491,34 @@ namespace RocksmithToolkitGUI.AccessDBDataSetTableAdapters {
                 "XMLFile_Hash` IS NULL) OR (`XMLFile_Hash` = ?)) AND ((? = 1 AND `ScrollSpeed` IS" +
                 " NULL) OR (`ScrollSpeed` = ?)) AND ((? = 1 AND `Tunning` IS NULL) OR (`Tunning` " +
                 "= ?)) AND ((? = 1 AND `Rating` IS NULL) OR (`Rating` = ?)) AND ((? = 1 AND `Play" +
-                "ThoughYBLink` IS NULL) OR (`PlayThoughYBLink` = ?)) AND ((? = 1 AND `CustomsForg" +
-                "e_Link` IS NULL) OR (`CustomsForge_Link` = ?)) AND ((? = 1 AND `ArrangementSort`" +
-                " IS NULL) OR (`ArrangementSort` = ?)) AND ((? = 1 AND `TuningPitch` IS NULL) OR " +
-                "(`TuningPitch` = ?)) AND ((? = 1 AND `ToneBase` IS NULL) OR (`ToneBase` = ?)) AN" +
-                "D ((? = 1 AND `Idd` IS NULL) OR (`Idd` = ?)) AND ((? = 1 AND `MasterId` IS NULL)" +
-                " OR (`MasterId` = ?)) AND ((? = 1 AND `ArrangementType` IS NULL) OR (`Arrangemen" +
-                "tType` = ?)) AND ((? = 1 AND `String0` IS NULL) OR (`String0` = ?)) AND ((? = 1 " +
-                "AND `String1` IS NULL) OR (`String1` = ?)) AND ((? = 1 AND `String2` IS NULL) OR" +
-                " (`String2` = ?)) AND ((? = 1 AND `String3` IS NULL) OR (`String3` = ?)) AND ((?" +
-                " = 1 AND `String4` IS NULL) OR (`String4` = ?)) AND ((? = 1 AND `String5` IS NUL" +
-                "L) OR (`String5` = ?)) AND ((? = 1 AND `PluckedType` IS NULL) OR (`PluckedType` " +
-                "= ?)) AND ((? = 1 AND `RouteMask` IS NULL) OR (`RouteMask` = ?)) AND ((? = 1 AND" +
-                " `XMLFileName` IS NULL) OR (`XMLFileName` = ?)) AND ((? = 1 AND `XMLFileLLID` IS" +
-                " NULL) OR (`XMLFileLLID` = ?)) AND ((? = 1 AND `XMLFileUUID` IS NULL) OR (`XMLFi" +
-                "leUUID` = ?)) AND ((? = 1 AND `SNGFileName` IS NULL) OR (`SNGFileName` = ?)) AND" +
-                " ((? = 1 AND `SNGFileLLID` IS NULL) OR (`SNGFileLLID` = ?)) AND ((? = 1 AND `SNG" +
-                "FileUUID` IS NULL) OR (`SNGFileUUID` = ?)) AND ((? = 1 AND `ToneMultiplayer` IS " +
-                "NULL) OR (`ToneMultiplayer` = ?)) AND ((? = 1 AND `ToneA` IS NULL) OR (`ToneA` =" +
-                " ?)) AND ((? = 1 AND `ToneB` IS NULL) OR (`ToneB` = ?)) AND ((? = 1 AND `ToneC` " +
-                "IS NULL) OR (`ToneC` = ?)) AND ((? = 1 AND `ToneD` IS NULL) OR (`ToneD` = ?)) AN" +
-                "D ((? = 1 AND `lastConversionDateTime` IS NULL) OR (`lastConversionDateTime` = ?" +
-                ")) AND ((? = 1 AND `SNGFileHash` IS NULL) OR (`SNGFileHash` = ?)) AND ((? = 1 AN" +
-                "D `Has_Sections` IS NULL) OR (`Has_Sections` = ?)) AND ((? = 1 AND `Comments` IS" +
-                " NULL) OR (`Comments` = ?)) AND ((? = 1 AND `Start_Time` IS NULL) OR (`Start_Tim" +
-                "e` = ?)) AND ((? = 1 AND `SNGFileHash_Orig` IS NULL) OR (`SNGFileHash_Orig` = ?)" +
-                ") AND ((? = 1 AND `XMLFile_Hash_Orig` IS NULL) OR (`XMLFile_Hash_Orig` = ?)) AND" +
-                " ((? = 1 AND `Part` IS NULL) OR (`Part` = ?)) AND ((? = 1 AND `MaxDifficulty` IS" +
-                " NULL) OR (`MaxDifficulty` = ?)))";
+                "throughYBLink` IS NULL) OR (`PlaythroughYBLink` = ?)) AND ((? = 1 AND `CustomsFo" +
+                "rge_Link` IS NULL) OR (`CustomsForge_Link` = ?)) AND ((? = 1 AND `ArrangementSor" +
+                "t` IS NULL) OR (`ArrangementSort` = ?)) AND ((? = 1 AND `TuningPitch` IS NULL) O" +
+                "R (`TuningPitch` = ?)) AND ((? = 1 AND `ToneBase` IS NULL) OR (`ToneBase` = ?)) " +
+                "AND ((? = 1 AND `Idd` IS NULL) OR (`Idd` = ?)) AND ((? = 1 AND `MasterId` IS NUL" +
+                "L) OR (`MasterId` = ?)) AND ((? = 1 AND `ArrangementType` IS NULL) OR (`Arrangem" +
+                "entType` = ?)) AND ((? = 1 AND `String0` IS NULL) OR (`String0` = ?)) AND ((? = " +
+                "1 AND `String1` IS NULL) OR (`String1` = ?)) AND ((? = 1 AND `String2` IS NULL) " +
+                "OR (`String2` = ?)) AND ((? = 1 AND `String3` IS NULL) OR (`String3` = ?)) AND (" +
+                "(? = 1 AND `String4` IS NULL) OR (`String4` = ?)) AND ((? = 1 AND `String5` IS N" +
+                "ULL) OR (`String5` = ?)) AND ((? = 1 AND `PluckedType` IS NULL) OR (`PluckedType" +
+                "` = ?)) AND ((? = 1 AND `RouteMask` IS NULL) OR (`RouteMask` = ?)) AND ((? = 1 A" +
+                "ND `XMLFileName` IS NULL) OR (`XMLFileName` = ?)) AND ((? = 1 AND `XMLFileLLID` " +
+                "IS NULL) OR (`XMLFileLLID` = ?)) AND ((? = 1 AND `XMLFileUUID` IS NULL) OR (`XML" +
+                "FileUUID` = ?)) AND ((? = 1 AND `SNGFileName` IS NULL) OR (`SNGFileName` = ?)) A" +
+                "ND ((? = 1 AND `SNGFileLLID` IS NULL) OR (`SNGFileLLID` = ?)) AND ((? = 1 AND `S" +
+                "NGFileUUID` IS NULL) OR (`SNGFileUUID` = ?)) AND ((? = 1 AND `ToneMultiplayer` I" +
+                "S NULL) OR (`ToneMultiplayer` = ?)) AND ((? = 1 AND `ToneA` IS NULL) OR (`ToneA`" +
+                " = ?)) AND ((? = 1 AND `ToneB` IS NULL) OR (`ToneB` = ?)) AND ((? = 1 AND `ToneC" +
+                "` IS NULL) OR (`ToneC` = ?)) AND ((? = 1 AND `ToneD` IS NULL) OR (`ToneD` = ?)) " +
+                "AND ((? = 1 AND `lastConversionDateTime` IS NULL) OR (`lastConversionDateTime` =" +
+                " ?)) AND ((? = 1 AND `SNGFileHash` IS NULL) OR (`SNGFileHash` = ?)) AND ((? = 1 " +
+                "AND `Has_Sections` IS NULL) OR (`Has_Sections` = ?)) AND ((? = 1 AND `Comments` " +
+                "IS NULL) OR (`Comments` = ?)) AND ((? = 1 AND `Start_Time` IS NULL) OR (`Start_T" +
+                "ime` = ?)) AND ((? = 1 AND `SNGFileHash_Orig` IS NULL) OR (`SNGFileHash_Orig` = " +
+                "?)) AND ((? = 1 AND `XMLFile_Hash_Orig` IS NULL) OR (`XMLFile_Hash_Orig` = ?)) A" +
+                "ND ((? = 1 AND `Part` IS NULL) OR (`Part` = ?)) AND ((? = 1 AND `MaxDifficulty` " +
+                "IS NULL) OR (`MaxDifficulty` = ?)))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_ID", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "ID", global::System.Data.DataRowVersion.Original, false, null));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_Arrangement_Name", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Arrangement_Name", global::System.Data.DataRowVersion.Original, true, null));
@@ -35535,8 +35535,8 @@ namespace RocksmithToolkitGUI.AccessDBDataSetTableAdapters {
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_Tunning", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Tunning", global::System.Data.DataRowVersion.Original, false, null));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_Rating", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Rating", global::System.Data.DataRowVersion.Original, true, null));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_Rating", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Rating", global::System.Data.DataRowVersion.Original, false, null));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_PlayThoughYBLink", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "PlayThoughYBLink", global::System.Data.DataRowVersion.Original, true, null));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_PlayThoughYBLink", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "PlayThoughYBLink", global::System.Data.DataRowVersion.Original, false, null));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_PlaythroughYBLink", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "PlaythroughYBLink", global::System.Data.DataRowVersion.Original, true, null));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_PlaythroughYBLink", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "PlaythroughYBLink", global::System.Data.DataRowVersion.Original, false, null));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_CustomsForge_Link", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "CustomsForge_Link", global::System.Data.DataRowVersion.Original, true, null));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_CustomsForge_Link", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "CustomsForge_Link", global::System.Data.DataRowVersion.Original, false, null));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_ArrangementSort", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "ArrangementSort", global::System.Data.DataRowVersion.Original, true, null));
@@ -35609,7 +35609,7 @@ namespace RocksmithToolkitGUI.AccessDBDataSetTableAdapters {
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_MaxDifficulty", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "MaxDifficulty", global::System.Data.DataRowVersion.Original, false, null));
             this._adapter.InsertCommand = new global::System.Data.OleDb.OleDbCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = @"INSERT INTO `Arrangements` (`Arrangement_Name`, `CDLC_ID`, `Bonus`, `SNGFilePath`, `XMLFilePath`, `XMLFile_Hash`, `ScrollSpeed`, `Tunning`, `Rating`, `PlayThoughYBLink`, `CustomsForge_Link`, `ArrangementSort`, `TuningPitch`, `ToneBase`, `Idd`, `MasterId`, `ArrangementType`, `String0`, `String1`, `String2`, `String3`, `String4`, `String5`, `PluckedType`, `RouteMask`, `XMLFileName`, `XMLFileLLID`, `XMLFileUUID`, `SNGFileName`, `SNGFileLLID`, `SNGFileUUID`, `ToneMultiplayer`, `ToneA`, `ToneB`, `ToneC`, `ToneD`, `lastConversionDateTime`, `SNGFileHash`, `Has_Sections`, `Comments`, `Start_Time`, `SNGFileHash_Orig`, `XMLFile_Hash_Orig`, `Part`, `MaxDifficulty`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            this._adapter.InsertCommand.CommandText = @"INSERT INTO `Arrangements` (`Arrangement_Name`, `CDLC_ID`, `Bonus`, `SNGFilePath`, `XMLFilePath`, `XMLFile_Hash`, `ScrollSpeed`, `Tunning`, `Rating`, `PlaythroughYBLink`, `CustomsForge_Link`, `ArrangementSort`, `TuningPitch`, `ToneBase`, `Idd`, `MasterId`, `ArrangementType`, `String0`, `String1`, `String2`, `String3`, `String4`, `String5`, `PluckedType`, `RouteMask`, `XMLFileName`, `XMLFileLLID`, `XMLFileUUID`, `SNGFileName`, `SNGFileLLID`, `SNGFileUUID`, `ToneMultiplayer`, `ToneA`, `ToneB`, `ToneC`, `ToneD`, `lastConversionDateTime`, `SNGFileHash`, `Has_Sections`, `Comments`, `Start_Time`, `SNGFileHash_Orig`, `XMLFile_Hash_Orig`, `Part`, `MaxDifficulty`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Arrangement_Name", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Arrangement_Name", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("CDLC_ID", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "CDLC_ID", global::System.Data.DataRowVersion.Current, false, null));
@@ -35620,7 +35620,7 @@ namespace RocksmithToolkitGUI.AccessDBDataSetTableAdapters {
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("ScrollSpeed", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "ScrollSpeed", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Tunning", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Tunning", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Rating", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Rating", global::System.Data.DataRowVersion.Current, false, null));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("PlayThoughYBLink", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "PlayThoughYBLink", global::System.Data.DataRowVersion.Current, false, null));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("PlaythroughYBLink", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "PlaythroughYBLink", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("CustomsForge_Link", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "CustomsForge_Link", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("ArrangementSort", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "ArrangementSort", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("TuningPitch", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "TuningPitch", global::System.Data.DataRowVersion.Current, false, null));
@@ -35660,48 +35660,48 @@ namespace RocksmithToolkitGUI.AccessDBDataSetTableAdapters {
             this._adapter.UpdateCommand.Connection = this.Connection;
             this._adapter.UpdateCommand.CommandText = "UPDATE `Arrangements` SET `Arrangement_Name` = ?, `CDLC_ID` = ?, `Bonus` = ?, `SN" +
                 "GFilePath` = ?, `XMLFilePath` = ?, `XMLFile_Hash` = ?, `ScrollSpeed` = ?, `Tunni" +
-                "ng` = ?, `Rating` = ?, `PlayThoughYBLink` = ?, `CustomsForge_Link` = ?, `Arrange" +
-                "mentSort` = ?, `TuningPitch` = ?, `ToneBase` = ?, `Idd` = ?, `MasterId` = ?, `Ar" +
-                "rangementType` = ?, `String0` = ?, `String1` = ?, `String2` = ?, `String3` = ?, " +
-                "`String4` = ?, `String5` = ?, `PluckedType` = ?, `RouteMask` = ?, `XMLFileName` " +
-                "= ?, `XMLFileLLID` = ?, `XMLFileUUID` = ?, `SNGFileName` = ?, `SNGFileLLID` = ?," +
-                " `SNGFileUUID` = ?, `ToneMultiplayer` = ?, `ToneA` = ?, `ToneB` = ?, `ToneC` = ?" +
-                ", `ToneD` = ?, `lastConversionDateTime` = ?, `SNGFileHash` = ?, `Has_Sections` =" +
-                " ?, `Comments` = ?, `Start_Time` = ?, `SNGFileHash_Orig` = ?, `XMLFile_Hash_Orig" +
-                "` = ?, `Part` = ?, `MaxDifficulty` = ? WHERE ((`ID` = ?) AND ((? = 1 AND `Arrang" +
-                "ement_Name` IS NULL) OR (`Arrangement_Name` = ?)) AND ((? = 1 AND `CDLC_ID` IS N" +
-                "ULL) OR (`CDLC_ID` = ?)) AND ((? = 1 AND `Bonus` IS NULL) OR (`Bonus` = ?)) AND " +
-                "((? = 1 AND `XMLFile_Hash` IS NULL) OR (`XMLFile_Hash` = ?)) AND ((? = 1 AND `Sc" +
-                "rollSpeed` IS NULL) OR (`ScrollSpeed` = ?)) AND ((? = 1 AND `Tunning` IS NULL) O" +
-                "R (`Tunning` = ?)) AND ((? = 1 AND `Rating` IS NULL) OR (`Rating` = ?)) AND ((? " +
-                "= 1 AND `PlayThoughYBLink` IS NULL) OR (`PlayThoughYBLink` = ?)) AND ((? = 1 AND" +
-                " `CustomsForge_Link` IS NULL) OR (`CustomsForge_Link` = ?)) AND ((? = 1 AND `Arr" +
-                "angementSort` IS NULL) OR (`ArrangementSort` = ?)) AND ((? = 1 AND `TuningPitch`" +
-                " IS NULL) OR (`TuningPitch` = ?)) AND ((? = 1 AND `ToneBase` IS NULL) OR (`ToneB" +
-                "ase` = ?)) AND ((? = 1 AND `Idd` IS NULL) OR (`Idd` = ?)) AND ((? = 1 AND `Maste" +
-                "rId` IS NULL) OR (`MasterId` = ?)) AND ((? = 1 AND `ArrangementType` IS NULL) OR" +
-                " (`ArrangementType` = ?)) AND ((? = 1 AND `String0` IS NULL) OR (`String0` = ?))" +
-                " AND ((? = 1 AND `String1` IS NULL) OR (`String1` = ?)) AND ((? = 1 AND `String2" +
-                "` IS NULL) OR (`String2` = ?)) AND ((? = 1 AND `String3` IS NULL) OR (`String3` " +
-                "= ?)) AND ((? = 1 AND `String4` IS NULL) OR (`String4` = ?)) AND ((? = 1 AND `St" +
-                "ring5` IS NULL) OR (`String5` = ?)) AND ((? = 1 AND `PluckedType` IS NULL) OR (`" +
-                "PluckedType` = ?)) AND ((? = 1 AND `RouteMask` IS NULL) OR (`RouteMask` = ?)) AN" +
-                "D ((? = 1 AND `XMLFileName` IS NULL) OR (`XMLFileName` = ?)) AND ((? = 1 AND `XM" +
-                "LFileLLID` IS NULL) OR (`XMLFileLLID` = ?)) AND ((? = 1 AND `XMLFileUUID` IS NUL" +
-                "L) OR (`XMLFileUUID` = ?)) AND ((? = 1 AND `SNGFileName` IS NULL) OR (`SNGFileNa" +
-                "me` = ?)) AND ((? = 1 AND `SNGFileLLID` IS NULL) OR (`SNGFileLLID` = ?)) AND ((?" +
-                " = 1 AND `SNGFileUUID` IS NULL) OR (`SNGFileUUID` = ?)) AND ((? = 1 AND `ToneMul" +
-                "tiplayer` IS NULL) OR (`ToneMultiplayer` = ?)) AND ((? = 1 AND `ToneA` IS NULL) " +
-                "OR (`ToneA` = ?)) AND ((? = 1 AND `ToneB` IS NULL) OR (`ToneB` = ?)) AND ((? = 1" +
-                " AND `ToneC` IS NULL) OR (`ToneC` = ?)) AND ((? = 1 AND `ToneD` IS NULL) OR (`To" +
-                "neD` = ?)) AND ((? = 1 AND `lastConversionDateTime` IS NULL) OR (`lastConversion" +
-                "DateTime` = ?)) AND ((? = 1 AND `SNGFileHash` IS NULL) OR (`SNGFileHash` = ?)) A" +
-                "ND ((? = 1 AND `Has_Sections` IS NULL) OR (`Has_Sections` = ?)) AND ((? = 1 AND " +
-                "`Comments` IS NULL) OR (`Comments` = ?)) AND ((? = 1 AND `Start_Time` IS NULL) O" +
-                "R (`Start_Time` = ?)) AND ((? = 1 AND `SNGFileHash_Orig` IS NULL) OR (`SNGFileHa" +
-                "sh_Orig` = ?)) AND ((? = 1 AND `XMLFile_Hash_Orig` IS NULL) OR (`XMLFile_Hash_Or" +
-                "ig` = ?)) AND ((? = 1 AND `Part` IS NULL) OR (`Part` = ?)) AND ((? = 1 AND `MaxD" +
-                "ifficulty` IS NULL) OR (`MaxDifficulty` = ?)))";
+                "ng` = ?, `Rating` = ?, `PlaythroughYBLink` = ?, `CustomsForge_Link` = ?, `Arrang" +
+                "ementSort` = ?, `TuningPitch` = ?, `ToneBase` = ?, `Idd` = ?, `MasterId` = ?, `A" +
+                "rrangementType` = ?, `String0` = ?, `String1` = ?, `String2` = ?, `String3` = ?," +
+                " `String4` = ?, `String5` = ?, `PluckedType` = ?, `RouteMask` = ?, `XMLFileName`" +
+                " = ?, `XMLFileLLID` = ?, `XMLFileUUID` = ?, `SNGFileName` = ?, `SNGFileLLID` = ?" +
+                ", `SNGFileUUID` = ?, `ToneMultiplayer` = ?, `ToneA` = ?, `ToneB` = ?, `ToneC` = " +
+                "?, `ToneD` = ?, `lastConversionDateTime` = ?, `SNGFileHash` = ?, `Has_Sections` " +
+                "= ?, `Comments` = ?, `Start_Time` = ?, `SNGFileHash_Orig` = ?, `XMLFile_Hash_Ori" +
+                "g` = ?, `Part` = ?, `MaxDifficulty` = ? WHERE ((`ID` = ?) AND ((? = 1 AND `Arran" +
+                "gement_Name` IS NULL) OR (`Arrangement_Name` = ?)) AND ((? = 1 AND `CDLC_ID` IS " +
+                "NULL) OR (`CDLC_ID` = ?)) AND ((? = 1 AND `Bonus` IS NULL) OR (`Bonus` = ?)) AND" +
+                " ((? = 1 AND `XMLFile_Hash` IS NULL) OR (`XMLFile_Hash` = ?)) AND ((? = 1 AND `S" +
+                "crollSpeed` IS NULL) OR (`ScrollSpeed` = ?)) AND ((? = 1 AND `Tunning` IS NULL) " +
+                "OR (`Tunning` = ?)) AND ((? = 1 AND `Rating` IS NULL) OR (`Rating` = ?)) AND ((?" +
+                " = 1 AND `PlaythroughYBLink` IS NULL) OR (`PlaythroughYBLink` = ?)) AND ((? = 1 " +
+                "AND `CustomsForge_Link` IS NULL) OR (`CustomsForge_Link` = ?)) AND ((? = 1 AND `" +
+                "ArrangementSort` IS NULL) OR (`ArrangementSort` = ?)) AND ((? = 1 AND `TuningPit" +
+                "ch` IS NULL) OR (`TuningPitch` = ?)) AND ((? = 1 AND `ToneBase` IS NULL) OR (`To" +
+                "neBase` = ?)) AND ((? = 1 AND `Idd` IS NULL) OR (`Idd` = ?)) AND ((? = 1 AND `Ma" +
+                "sterId` IS NULL) OR (`MasterId` = ?)) AND ((? = 1 AND `ArrangementType` IS NULL)" +
+                " OR (`ArrangementType` = ?)) AND ((? = 1 AND `String0` IS NULL) OR (`String0` = " +
+                "?)) AND ((? = 1 AND `String1` IS NULL) OR (`String1` = ?)) AND ((? = 1 AND `Stri" +
+                "ng2` IS NULL) OR (`String2` = ?)) AND ((? = 1 AND `String3` IS NULL) OR (`String" +
+                "3` = ?)) AND ((? = 1 AND `String4` IS NULL) OR (`String4` = ?)) AND ((? = 1 AND " +
+                "`String5` IS NULL) OR (`String5` = ?)) AND ((? = 1 AND `PluckedType` IS NULL) OR" +
+                " (`PluckedType` = ?)) AND ((? = 1 AND `RouteMask` IS NULL) OR (`RouteMask` = ?))" +
+                " AND ((? = 1 AND `XMLFileName` IS NULL) OR (`XMLFileName` = ?)) AND ((? = 1 AND " +
+                "`XMLFileLLID` IS NULL) OR (`XMLFileLLID` = ?)) AND ((? = 1 AND `XMLFileUUID` IS " +
+                "NULL) OR (`XMLFileUUID` = ?)) AND ((? = 1 AND `SNGFileName` IS NULL) OR (`SNGFil" +
+                "eName` = ?)) AND ((? = 1 AND `SNGFileLLID` IS NULL) OR (`SNGFileLLID` = ?)) AND " +
+                "((? = 1 AND `SNGFileUUID` IS NULL) OR (`SNGFileUUID` = ?)) AND ((? = 1 AND `Tone" +
+                "Multiplayer` IS NULL) OR (`ToneMultiplayer` = ?)) AND ((? = 1 AND `ToneA` IS NUL" +
+                "L) OR (`ToneA` = ?)) AND ((? = 1 AND `ToneB` IS NULL) OR (`ToneB` = ?)) AND ((? " +
+                "= 1 AND `ToneC` IS NULL) OR (`ToneC` = ?)) AND ((? = 1 AND `ToneD` IS NULL) OR (" +
+                "`ToneD` = ?)) AND ((? = 1 AND `lastConversionDateTime` IS NULL) OR (`lastConvers" +
+                "ionDateTime` = ?)) AND ((? = 1 AND `SNGFileHash` IS NULL) OR (`SNGFileHash` = ?)" +
+                ") AND ((? = 1 AND `Has_Sections` IS NULL) OR (`Has_Sections` = ?)) AND ((? = 1 A" +
+                "ND `Comments` IS NULL) OR (`Comments` = ?)) AND ((? = 1 AND `Start_Time` IS NULL" +
+                ") OR (`Start_Time` = ?)) AND ((? = 1 AND `SNGFileHash_Orig` IS NULL) OR (`SNGFil" +
+                "eHash_Orig` = ?)) AND ((? = 1 AND `XMLFile_Hash_Orig` IS NULL) OR (`XMLFile_Hash" +
+                "_Orig` = ?)) AND ((? = 1 AND `Part` IS NULL) OR (`Part` = ?)) AND ((? = 1 AND `M" +
+                "axDifficulty` IS NULL) OR (`MaxDifficulty` = ?)))";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Arrangement_Name", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Arrangement_Name", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("CDLC_ID", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "CDLC_ID", global::System.Data.DataRowVersion.Current, false, null));
@@ -35712,7 +35712,7 @@ namespace RocksmithToolkitGUI.AccessDBDataSetTableAdapters {
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("ScrollSpeed", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "ScrollSpeed", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Tunning", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Tunning", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Rating", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Rating", global::System.Data.DataRowVersion.Current, false, null));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("PlayThoughYBLink", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "PlayThoughYBLink", global::System.Data.DataRowVersion.Current, false, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("PlaythroughYBLink", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "PlaythroughYBLink", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("CustomsForge_Link", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "CustomsForge_Link", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("ArrangementSort", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "ArrangementSort", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("TuningPitch", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "TuningPitch", global::System.Data.DataRowVersion.Current, false, null));
@@ -35763,8 +35763,8 @@ namespace RocksmithToolkitGUI.AccessDBDataSetTableAdapters {
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_Tunning", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Tunning", global::System.Data.DataRowVersion.Original, false, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_Rating", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Rating", global::System.Data.DataRowVersion.Original, true, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_Rating", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Rating", global::System.Data.DataRowVersion.Original, false, null));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_PlayThoughYBLink", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "PlayThoughYBLink", global::System.Data.DataRowVersion.Original, true, null));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_PlayThoughYBLink", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "PlayThoughYBLink", global::System.Data.DataRowVersion.Original, false, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_PlaythroughYBLink", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "PlaythroughYBLink", global::System.Data.DataRowVersion.Original, true, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_PlaythroughYBLink", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "PlaythroughYBLink", global::System.Data.DataRowVersion.Original, false, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_CustomsForge_Link", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "CustomsForge_Link", global::System.Data.DataRowVersion.Original, true, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_CustomsForge_Link", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "CustomsForge_Link", global::System.Data.DataRowVersion.Original, false, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_ArrangementSort", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "ArrangementSort", global::System.Data.DataRowVersion.Original, true, null));
@@ -35850,7 +35850,7 @@ namespace RocksmithToolkitGUI.AccessDBDataSetTableAdapters {
             this._commandCollection = new global::System.Data.OleDb.OleDbCommand[1];
             this._commandCollection[0] = new global::System.Data.OleDb.OleDbCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = @"SELECT ID, Arrangement_Name, CDLC_ID, Bonus, SNGFilePath, XMLFilePath, XMLFile_Hash, ScrollSpeed, Tunning, Rating, PlayThoughYBLink, CustomsForge_Link, ArrangementSort, TuningPitch, ToneBase, Idd, MasterId, ArrangementType, String0, String1, String2, String3, String4, String5, PluckedType, RouteMask, XMLFileName, XMLFileLLID, XMLFileUUID, SNGFileName, SNGFileLLID, SNGFileUUID, ToneMultiplayer, ToneA, ToneB, ToneC, ToneD, lastConversionDateTime, SNGFileHash, Has_Sections, Comments, Start_Time, SNGFileHash_Orig, XMLFile_Hash_Orig, Part, MaxDifficulty FROM Arrangements";
+            this._commandCollection[0].CommandText = @"SELECT ID, Arrangement_Name, CDLC_ID, Bonus, SNGFilePath, XMLFilePath, XMLFile_Hash, ScrollSpeed, Tunning, Rating, PlaythroughYBLink, CustomsForge_Link, ArrangementSort, TuningPitch, ToneBase, Idd, MasterId, ArrangementType, String0, String1, String2, String3, String4, String5, PluckedType, RouteMask, XMLFileName, XMLFileLLID, XMLFileUUID, SNGFileName, SNGFileLLID, SNGFileUUID, ToneMultiplayer, ToneA, ToneB, ToneC, ToneD, lastConversionDateTime, SNGFileHash, Has_Sections, Comments, Start_Time, SNGFileHash_Orig, XMLFile_Hash_Orig, Part, MaxDifficulty FROM Arrangements";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -35920,7 +35920,7 @@ namespace RocksmithToolkitGUI.AccessDBDataSetTableAdapters {
                     string Original_ScrollSpeed, 
                     string Original_Tunning, 
                     string Original_Rating, 
-                    string Original_PlayThoughYBLink, 
+                    string Original_PlaythroughYBLink, 
                     string Original_CustomsForge_Link, 
                     string Original_ArrangementSort, 
                     string Original_TuningPitch, 
@@ -36013,13 +36013,13 @@ namespace RocksmithToolkitGUI.AccessDBDataSetTableAdapters {
                 this.Adapter.DeleteCommand.Parameters[13].Value = ((object)(0));
                 this.Adapter.DeleteCommand.Parameters[14].Value = ((string)(Original_Rating));
             }
-            if ((Original_PlayThoughYBLink == null)) {
+            if ((Original_PlaythroughYBLink == null)) {
                 this.Adapter.DeleteCommand.Parameters[15].Value = ((object)(1));
                 this.Adapter.DeleteCommand.Parameters[16].Value = global::System.DBNull.Value;
             }
             else {
                 this.Adapter.DeleteCommand.Parameters[15].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[16].Value = ((string)(Original_PlayThoughYBLink));
+                this.Adapter.DeleteCommand.Parameters[16].Value = ((string)(Original_PlaythroughYBLink));
             }
             if ((Original_CustomsForge_Link == null)) {
                 this.Adapter.DeleteCommand.Parameters[17].Value = ((object)(1));
@@ -36331,7 +36331,7 @@ namespace RocksmithToolkitGUI.AccessDBDataSetTableAdapters {
                     string ScrollSpeed, 
                     string Tunning, 
                     string Rating, 
-                    string PlayThoughYBLink, 
+                    string PlaythroughYBLink, 
                     string CustomsForge_Link, 
                     string ArrangementSort, 
                     string TuningPitch, 
@@ -36421,11 +36421,11 @@ namespace RocksmithToolkitGUI.AccessDBDataSetTableAdapters {
             else {
                 this.Adapter.InsertCommand.Parameters[8].Value = ((string)(Rating));
             }
-            if ((PlayThoughYBLink == null)) {
+            if ((PlaythroughYBLink == null)) {
                 this.Adapter.InsertCommand.Parameters[9].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.InsertCommand.Parameters[9].Value = ((string)(PlayThoughYBLink));
+                this.Adapter.InsertCommand.Parameters[9].Value = ((string)(PlaythroughYBLink));
             }
             if ((CustomsForge_Link == null)) {
                 this.Adapter.InsertCommand.Parameters[10].Value = global::System.DBNull.Value;
@@ -36667,7 +36667,7 @@ namespace RocksmithToolkitGUI.AccessDBDataSetTableAdapters {
                     string ScrollSpeed, 
                     string Tunning, 
                     string Rating, 
-                    string PlayThoughYBLink, 
+                    string PlaythroughYBLink, 
                     string CustomsForge_Link, 
                     string ArrangementSort, 
                     string TuningPitch, 
@@ -36711,7 +36711,7 @@ namespace RocksmithToolkitGUI.AccessDBDataSetTableAdapters {
                     string Original_ScrollSpeed, 
                     string Original_Tunning, 
                     string Original_Rating, 
-                    string Original_PlayThoughYBLink, 
+                    string Original_PlaythroughYBLink, 
                     string Original_CustomsForge_Link, 
                     string Original_ArrangementSort, 
                     string Original_TuningPitch, 
@@ -36801,11 +36801,11 @@ namespace RocksmithToolkitGUI.AccessDBDataSetTableAdapters {
             else {
                 this.Adapter.UpdateCommand.Parameters[8].Value = ((string)(Rating));
             }
-            if ((PlayThoughYBLink == null)) {
+            if ((PlaythroughYBLink == null)) {
                 this.Adapter.UpdateCommand.Parameters[9].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[9].Value = ((string)(PlayThoughYBLink));
+                this.Adapter.UpdateCommand.Parameters[9].Value = ((string)(PlaythroughYBLink));
             }
             if ((CustomsForge_Link == null)) {
                 this.Adapter.UpdateCommand.Parameters[10].Value = global::System.DBNull.Value;
@@ -37074,13 +37074,13 @@ namespace RocksmithToolkitGUI.AccessDBDataSetTableAdapters {
                 this.Adapter.UpdateCommand.Parameters[58].Value = ((object)(0));
                 this.Adapter.UpdateCommand.Parameters[59].Value = ((string)(Original_Rating));
             }
-            if ((Original_PlayThoughYBLink == null)) {
+            if ((Original_PlaythroughYBLink == null)) {
                 this.Adapter.UpdateCommand.Parameters[60].Value = ((object)(1));
                 this.Adapter.UpdateCommand.Parameters[61].Value = global::System.DBNull.Value;
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[60].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[61].Value = ((string)(Original_PlayThoughYBLink));
+                this.Adapter.UpdateCommand.Parameters[61].Value = ((string)(Original_PlaythroughYBLink));
             }
             if ((Original_CustomsForge_Link == null)) {
                 this.Adapter.UpdateCommand.Parameters[62].Value = ((object)(1));

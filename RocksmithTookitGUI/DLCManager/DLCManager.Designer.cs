@@ -239,7 +239,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.btm_GoRepack.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.helpProvider1.SetHelpKeyword(this.btm_GoRepack, "Open the folder contaning Repack-ed CDLCs.");
-            this.btm_GoRepack.Location = new System.Drawing.Point(283, 2);
+            this.btm_GoRepack.Location = new System.Drawing.Point(285, 2);
             this.btm_GoRepack.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.btm_GoRepack.Name = "btm_GoRepack";
             this.helpProvider1.SetShowHelp(this.btm_GoRepack, true);

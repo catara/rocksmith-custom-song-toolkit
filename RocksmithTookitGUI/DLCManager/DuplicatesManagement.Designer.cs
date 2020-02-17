@@ -232,6 +232,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.btn_AlbumSortNew = new System.Windows.Forms.Button();
             this.btn_AlbumSortExisting = new System.Windows.Forms.Button();
+            this.btn_Album2SortA = new System.Windows.Forms.Button();
             this.lbl_Covers = new System.Windows.Forms.Label();
             this.lbl_LenghtNew = new System.Windows.Forms.Label();
             this.lbl_LenghtExisting = new System.Windows.Forms.Label();
@@ -278,7 +279,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_TitleNew = new RocksmithToolkitGUI.CueTextBox();
             this.lbl_YearExisting = new System.Windows.Forms.Label();
             this.lbl_YearNew = new System.Windows.Forms.Label();
-            this.btn_Album2SortA = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPathNew)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPathExisting)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -528,6 +528,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.lbl_ArtistSort.Size = new System.Drawing.Size(22, 13);
             this.lbl_ArtistSort.TabIndex = 285;
             this.lbl_ArtistSort.Text = "Vs.";
+            this.lbl_ArtistSort.Click += new System.EventHandler(this.Lbl_ArtistSort_Click);
             // 
             // lbl_FileName
             // 
@@ -922,7 +923,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_DecompressAll.BackColor = System.Drawing.SystemColors.MenuHighlight;
             this.btn_DecompressAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_DecompressAll.Location = new System.Drawing.Point(702, 700);
-            this.btn_DecompressAll.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_DecompressAll.Margin = new System.Windows.Forms.Padding(2);
             this.btn_DecompressAll.Name = "btn_DecompressAll";
             this.btn_DecompressAll.Size = new System.Drawing.Size(74, 34);
             this.btn_DecompressAll.TabIndex = 327;
@@ -1045,7 +1046,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.btn_TitleNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_TitleNew.Location = new System.Drawing.Point(520, 93);
-            this.btn_TitleNew.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_TitleNew.Margin = new System.Windows.Forms.Padding(2);
             this.btn_TitleNew.Name = "btn_TitleNew";
             this.btn_TitleNew.Size = new System.Drawing.Size(18, 16);
             this.btn_TitleNew.TabIndex = 349;
@@ -1058,7 +1059,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.btn_TitleExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_TitleExisting.Location = new System.Drawing.Point(540, 93);
-            this.btn_TitleExisting.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_TitleExisting.Margin = new System.Windows.Forms.Padding(2);
             this.btn_TitleExisting.Name = "btn_TitleExisting";
             this.btn_TitleExisting.Size = new System.Drawing.Size(18, 16);
             this.btn_TitleExisting.TabIndex = 348;
@@ -1072,7 +1073,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_TitleSortNew.Enabled = false;
             this.btn_TitleSortNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_TitleSortNew.Location = new System.Drawing.Point(520, 112);
-            this.btn_TitleSortNew.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_TitleSortNew.Margin = new System.Windows.Forms.Padding(2);
             this.btn_TitleSortNew.Name = "btn_TitleSortNew";
             this.btn_TitleSortNew.Size = new System.Drawing.Size(18, 16);
             this.btn_TitleSortNew.TabIndex = 351;
@@ -1086,7 +1087,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_TitleSortExisting.Enabled = false;
             this.btn_TitleSortExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_TitleSortExisting.Location = new System.Drawing.Point(540, 112);
-            this.btn_TitleSortExisting.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_TitleSortExisting.Margin = new System.Windows.Forms.Padding(2);
             this.btn_TitleSortExisting.Name = "btn_TitleSortExisting";
             this.btn_TitleSortExisting.Size = new System.Drawing.Size(18, 16);
             this.btn_TitleSortExisting.TabIndex = 350;
@@ -1100,7 +1101,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_AuthorNew.Enabled = false;
             this.btn_AuthorNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_AuthorNew.Location = new System.Drawing.Point(418, 236);
-            this.btn_AuthorNew.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_AuthorNew.Margin = new System.Windows.Forms.Padding(2);
             this.btn_AuthorNew.Name = "btn_AuthorNew";
             this.btn_AuthorNew.Size = new System.Drawing.Size(18, 16);
             this.btn_AuthorNew.TabIndex = 353;
@@ -1113,7 +1114,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_AuthorExisting.Enabled = false;
             this.btn_AuthorExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_AuthorExisting.Location = new System.Drawing.Point(438, 236);
-            this.btn_AuthorExisting.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_AuthorExisting.Margin = new System.Windows.Forms.Padding(2);
             this.btn_AuthorExisting.Name = "btn_AuthorExisting";
             this.btn_AuthorExisting.Size = new System.Drawing.Size(18, 16);
             this.btn_AuthorExisting.TabIndex = 352;
@@ -1148,7 +1149,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_AlbumNew.Enabled = false;
             this.btn_AlbumNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_AlbumNew.Location = new System.Drawing.Point(520, 73);
-            this.btn_AlbumNew.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_AlbumNew.Margin = new System.Windows.Forms.Padding(2);
             this.btn_AlbumNew.Name = "btn_AlbumNew";
             this.btn_AlbumNew.Size = new System.Drawing.Size(18, 16);
             this.btn_AlbumNew.TabIndex = 359;
@@ -1162,7 +1163,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_AlbumExisting.Enabled = false;
             this.btn_AlbumExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_AlbumExisting.Location = new System.Drawing.Point(540, 73);
-            this.btn_AlbumExisting.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_AlbumExisting.Margin = new System.Windows.Forms.Padding(2);
             this.btn_AlbumExisting.Name = "btn_AlbumExisting";
             this.btn_AlbumExisting.Size = new System.Drawing.Size(18, 16);
             this.btn_AlbumExisting.TabIndex = 358;
@@ -1176,7 +1177,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_ArtistNew.Enabled = false;
             this.btn_ArtistNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_ArtistNew.Location = new System.Drawing.Point(520, 52);
-            this.btn_ArtistNew.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_ArtistNew.Margin = new System.Windows.Forms.Padding(2);
             this.btn_ArtistNew.Name = "btn_ArtistNew";
             this.btn_ArtistNew.Size = new System.Drawing.Size(18, 16);
             this.btn_ArtistNew.TabIndex = 361;
@@ -1190,7 +1191,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_ArtistExisting.Enabled = false;
             this.btn_ArtistExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_ArtistExisting.Location = new System.Drawing.Point(540, 52);
-            this.btn_ArtistExisting.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_ArtistExisting.Margin = new System.Windows.Forms.Padding(2);
             this.btn_ArtistExisting.Name = "btn_ArtistExisting";
             this.btn_ArtistExisting.Size = new System.Drawing.Size(18, 16);
             this.btn_ArtistExisting.TabIndex = 360;
@@ -1224,7 +1225,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_ArtistSortNew.Enabled = false;
             this.btn_ArtistSortNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_ArtistSortNew.Location = new System.Drawing.Point(520, 134);
-            this.btn_ArtistSortNew.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_ArtistSortNew.Margin = new System.Windows.Forms.Padding(2);
             this.btn_ArtistSortNew.Name = "btn_ArtistSortNew";
             this.btn_ArtistSortNew.Size = new System.Drawing.Size(18, 16);
             this.btn_ArtistSortNew.TabIndex = 366;
@@ -1238,7 +1239,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_ArtistSortExisting.Enabled = false;
             this.btn_ArtistSortExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_ArtistSortExisting.Location = new System.Drawing.Point(540, 133);
-            this.btn_ArtistSortExisting.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_ArtistSortExisting.Margin = new System.Windows.Forms.Padding(2);
             this.btn_ArtistSortExisting.Name = "btn_ArtistSortExisting";
             this.btn_ArtistSortExisting.Size = new System.Drawing.Size(18, 16);
             this.btn_ArtistSortExisting.TabIndex = 365;
@@ -1494,7 +1495,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_AddAge.BackColor = System.Drawing.SystemColors.Control;
             this.btn_AddAge.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_AddAge.Location = new System.Drawing.Point(344, 18);
-            this.btn_AddAge.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_AddAge.Margin = new System.Windows.Forms.Padding(2);
             this.btn_AddAge.Name = "btn_AddAge";
             this.btn_AddAge.Size = new System.Drawing.Size(14, 14);
             this.btn_AddAge.TabIndex = 390;
@@ -1743,7 +1744,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // txt_AlternateNoExisting
             // 
             this.txt_AlternateNoExisting.Location = new System.Drawing.Point(348, 188);
-            this.txt_AlternateNoExisting.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txt_AlternateNoExisting.Margin = new System.Windows.Forms.Padding(2);
             this.txt_AlternateNoExisting.Maximum = new decimal(new int[] {
             9,
             0,
@@ -1756,7 +1757,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // txt_AlternateNoNew
             // 
             this.txt_AlternateNoNew.Location = new System.Drawing.Point(146, 189);
-            this.txt_AlternateNoNew.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txt_AlternateNoNew.Margin = new System.Windows.Forms.Padding(2);
             this.txt_AlternateNoNew.Maximum = new decimal(new int[] {
             9,
             0,
@@ -1842,7 +1843,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_CoverNew.Enabled = false;
             this.btn_CoverNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_CoverNew.Location = new System.Drawing.Point(598, 412);
-            this.btn_CoverNew.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_CoverNew.Margin = new System.Windows.Forms.Padding(2);
             this.btn_CoverNew.Name = "btn_CoverNew";
             this.btn_CoverNew.Size = new System.Drawing.Size(18, 16);
             this.btn_CoverNew.TabIndex = 378;
@@ -1855,7 +1856,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_CoverExisting.Enabled = false;
             this.btn_CoverExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_CoverExisting.Location = new System.Drawing.Point(598, 444);
-            this.btn_CoverExisting.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_CoverExisting.Margin = new System.Windows.Forms.Padding(2);
             this.btn_CoverExisting.Name = "btn_CoverExisting";
             this.btn_CoverExisting.Size = new System.Drawing.Size(18, 16);
             this.btn_CoverExisting.TabIndex = 377;
@@ -1979,7 +1980,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_AddDD.BackColor = System.Drawing.SystemColors.Control;
             this.btn_AddDD.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_AddDD.Location = new System.Drawing.Point(324, 16);
-            this.btn_AddDD.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_AddDD.Margin = new System.Windows.Forms.Padding(2);
             this.btn_AddDD.Name = "btn_AddDD";
             this.btn_AddDD.Size = new System.Drawing.Size(14, 14);
             this.btn_AddDD.TabIndex = 386;
@@ -1992,7 +1993,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_AddTracks.BackColor = System.Drawing.SystemColors.Control;
             this.btn_AddTracks.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_AddTracks.Location = new System.Drawing.Point(324, 44);
-            this.btn_AddTracks.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_AddTracks.Margin = new System.Windows.Forms.Padding(2);
             this.btn_AddTracks.Name = "btn_AddTracks";
             this.btn_AddTracks.Size = new System.Drawing.Size(14, 14);
             this.btn_AddTracks.TabIndex = 385;
@@ -2161,7 +2162,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.button5.Enabled = false;
             this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button5.Location = new System.Drawing.Point(322, 76);
-            this.button5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button5.Margin = new System.Windows.Forms.Padding(2);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(18, 16);
             this.button5.TabIndex = 369;
@@ -2173,7 +2174,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.button4.Enabled = false;
             this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button4.Location = new System.Drawing.Point(322, 56);
-            this.button4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button4.Margin = new System.Windows.Forms.Padding(2);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(18, 16);
             this.button4.TabIndex = 368;
@@ -2185,7 +2186,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.button3.Enabled = false;
             this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button3.Location = new System.Drawing.Point(322, 32);
-            this.button3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button3.Margin = new System.Windows.Forms.Padding(2);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(18, 16);
             this.button3.TabIndex = 367;
@@ -2197,7 +2198,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.button2.Enabled = false;
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button2.Location = new System.Drawing.Point(322, 8);
-            this.button2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button2.Margin = new System.Windows.Forms.Padding(2);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(18, 16);
             this.button2.TabIndex = 366;
@@ -2390,7 +2391,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_AddTunning.BackColor = System.Drawing.SystemColors.Control;
             this.btn_AddTunning.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_AddTunning.Location = new System.Drawing.Point(418, 308);
-            this.btn_AddTunning.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_AddTunning.Margin = new System.Windows.Forms.Padding(2);
             this.btn_AddTunning.Name = "btn_AddTunning";
             this.btn_AddTunning.Size = new System.Drawing.Size(14, 14);
             this.btn_AddTunning.TabIndex = 387;
@@ -2403,7 +2404,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_AddVersion1.BackColor = System.Drawing.SystemColors.Control;
             this.btn_AddVersion1.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_AddVersion1.Location = new System.Drawing.Point(346, 260);
-            this.btn_AddVersion1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_AddVersion1.Margin = new System.Windows.Forms.Padding(2);
             this.btn_AddVersion1.Name = "btn_AddVersion1";
             this.btn_AddVersion1.Size = new System.Drawing.Size(14, 14);
             this.btn_AddVersion1.TabIndex = 388;
@@ -2416,7 +2417,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_AddAuthor.BackColor = System.Drawing.SystemColors.Control;
             this.btn_AddAuthor.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_AddAuthor.Location = new System.Drawing.Point(456, 236);
-            this.btn_AddAuthor.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_AddAuthor.Margin = new System.Windows.Forms.Padding(2);
             this.btn_AddAuthor.Name = "btn_AddAuthor";
             this.btn_AddAuthor.Size = new System.Drawing.Size(14, 14);
             this.btn_AddAuthor.TabIndex = 389;
@@ -2474,7 +2475,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_AddAlternate.BackColor = System.Drawing.SystemColors.Control;
             this.btn_AddAlternate.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_AddAlternate.Location = new System.Drawing.Point(450, 189);
-            this.btn_AddAlternate.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_AddAlternate.Margin = new System.Windows.Forms.Padding(2);
             this.btn_AddAlternate.Name = "btn_AddAlternate";
             this.btn_AddAlternate.Size = new System.Drawing.Size(14, 14);
             this.btn_AddAlternate.TabIndex = 396;
@@ -2509,7 +2510,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.btn_Title2SortT.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_Title2SortT.Location = new System.Drawing.Point(560, 94);
-            this.btn_Title2SortT.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_Title2SortT.Margin = new System.Windows.Forms.Padding(2);
             this.btn_Title2SortT.Name = "btn_Title2SortT";
             this.btn_Title2SortT.Size = new System.Drawing.Size(18, 16);
             this.btn_Title2SortT.TabIndex = 400;
@@ -2522,7 +2523,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.btn_Artist2SortA.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_Artist2SortA.Location = new System.Drawing.Point(560, 52);
-            this.btn_Artist2SortA.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_Artist2SortA.Margin = new System.Windows.Forms.Padding(2);
             this.btn_Artist2SortA.Name = "btn_Artist2SortA";
             this.btn_Artist2SortA.Size = new System.Drawing.Size(18, 16);
             this.btn_Artist2SortA.TabIndex = 401;
@@ -2591,7 +2592,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_AddPlatform.BackColor = System.Drawing.SystemColors.Control;
             this.btn_AddPlatform.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_AddPlatform.Location = new System.Drawing.Point(468, 210);
-            this.btn_AddPlatform.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_AddPlatform.Margin = new System.Windows.Forms.Padding(2);
             this.btn_AddPlatform.Name = "btn_AddPlatform";
             this.btn_AddPlatform.Size = new System.Drawing.Size(14, 14);
             this.btn_AddPlatform.TabIndex = 411;
@@ -2656,8 +2657,8 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.btn_AlbumSortNew.Enabled = false;
             this.btn_AlbumSortNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_AlbumSortNew.Location = new System.Drawing.Point(92, 153);
-            this.btn_AlbumSortNew.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_AlbumSortNew.Location = new System.Drawing.Point(520, 154);
+            this.btn_AlbumSortNew.Margin = new System.Windows.Forms.Padding(2);
             this.btn_AlbumSortNew.Name = "btn_AlbumSortNew";
             this.btn_AlbumSortNew.Size = new System.Drawing.Size(18, 16);
             this.btn_AlbumSortNew.TabIndex = 425;
@@ -2670,8 +2671,8 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.btn_AlbumSortExisting.Enabled = false;
             this.btn_AlbumSortExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_AlbumSortExisting.Location = new System.Drawing.Point(460, 152);
-            this.btn_AlbumSortExisting.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_AlbumSortExisting.Location = new System.Drawing.Point(538, 154);
+            this.btn_AlbumSortExisting.Margin = new System.Windows.Forms.Padding(2);
             this.btn_AlbumSortExisting.Name = "btn_AlbumSortExisting";
             this.btn_AlbumSortExisting.Size = new System.Drawing.Size(18, 16);
             this.btn_AlbumSortExisting.TabIndex = 424;
@@ -2679,6 +2680,19 @@ namespace RocksmithToolkitGUI.DLCManager
             this.toolTip1.SetToolTip(this.btn_AlbumSortExisting, "Overrite Existing Artist SORT name with New Artist SORT name");
             this.btn_AlbumSortExisting.UseVisualStyleBackColor = true;
             this.btn_AlbumSortExisting.Click += new System.EventHandler(this.Btn_AlbumSortExisting_Click);
+            // 
+            // btn_Album2SortA
+            // 
+            this.btn_Album2SortA.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Album2SortA.Location = new System.Drawing.Point(560, 73);
+            this.btn_Album2SortA.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_Album2SortA.Name = "btn_Album2SortA";
+            this.btn_Album2SortA.Size = new System.Drawing.Size(18, 16);
+            this.btn_Album2SortA.TabIndex = 428;
+            this.btn_Album2SortA.Text = ">";
+            this.toolTip1.SetToolTip(this.btn_Album2SortA, "Replicate all Artist names to Artists SORT names");
+            this.btn_Album2SortA.UseVisualStyleBackColor = true;
+            this.btn_Album2SortA.Click += new System.EventHandler(this.Btn_Album2SortA_Click);
             // 
             // lbl_Covers
             // 
@@ -2751,7 +2765,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_AlbumSortExisting.Location = new System.Drawing.Point(298, 153);
             this.txt_AlbumSortExisting.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.txt_AlbumSortExisting.Name = "txt_AlbumSortExisting";
-            this.txt_AlbumSortExisting.Size = new System.Drawing.Size(160, 20);
+            this.txt_AlbumSortExisting.Size = new System.Drawing.Size(184, 20);
             this.txt_AlbumSortExisting.TabIndex = 421;
             this.txt_AlbumSortExisting.TextChanged += new System.EventHandler(this.ExistingChanged);
             // 
@@ -2760,10 +2774,10 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_AlbumSortNew.Cue = "Album Sort New";
             this.txt_AlbumSortNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_AlbumSortNew.ForeColor = System.Drawing.Color.Gray;
-            this.txt_AlbumSortNew.Location = new System.Drawing.Point(110, 153);
+            this.txt_AlbumSortNew.Location = new System.Drawing.Point(93, 153);
             this.txt_AlbumSortNew.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.txt_AlbumSortNew.Name = "txt_AlbumSortNew";
-            this.txt_AlbumSortNew.Size = new System.Drawing.Size(164, 20);
+            this.txt_AlbumSortNew.Size = new System.Drawing.Size(181, 20);
             this.txt_AlbumSortNew.TabIndex = 420;
             this.txt_AlbumSortNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txt_AlbumSortNew.TextChanged += new System.EventHandler(this.ExistingChanged);
@@ -3227,7 +3241,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // lbl_YearExisting
             // 
             this.lbl_YearExisting.AutoSize = true;
-            this.lbl_YearExisting.Location = new System.Drawing.Point(520, 154);
+            this.lbl_YearExisting.Location = new System.Drawing.Point(565, 234);
             this.lbl_YearExisting.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_YearExisting.Name = "lbl_YearExisting";
             this.lbl_YearExisting.Size = new System.Drawing.Size(29, 13);
@@ -3244,19 +3258,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.lbl_YearNew.TabIndex = 427;
             this.lbl_YearNew.Text = "Year";
             this.lbl_YearNew.Visible = false;
-            // 
-            // btn_Album2SortA
-            // 
-            this.btn_Album2SortA.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Album2SortA.Location = new System.Drawing.Point(560, 73);
-            this.btn_Album2SortA.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_Album2SortA.Name = "btn_Album2SortA";
-            this.btn_Album2SortA.Size = new System.Drawing.Size(18, 16);
-            this.btn_Album2SortA.TabIndex = 428;
-            this.btn_Album2SortA.Text = ">";
-            this.toolTip1.SetToolTip(this.btn_Album2SortA, "Replicate all Artist names to Artists SORT names");
-            this.btn_Album2SortA.UseVisualStyleBackColor = true;
-            this.btn_Album2SortA.Click += new System.EventHandler(this.Btn_Album2SortA_Click);
             // 
             // frm_Duplicates_Management
             // 

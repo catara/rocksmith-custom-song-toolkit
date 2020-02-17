@@ -120,6 +120,12 @@
   <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>19, 0</value>
   </metadata>
+  <data name="btn_ReadGameLibrary.ToolTip" xml:space="preserve">
+    <value>Reads (Parses) though a location(folder or ftp as per Repack Copy&amp;FTP Path indicated) with songs that matches against DB if created by the tool or imported within, and marks them as such (Filter on FilesMissingIssues atribute) and copys them into To Import folder if missing.</value>
+  </data>
+  <data name="chbx_Format_Originals.ToolTip" xml:space="preserve">
+    <value>Dropdown of Files considered as duplicates (at import saved into 0_duplciates as considered identical with already imported songs cause of automatical decision based on hash or manual decision from Duplicates Management screen)</value>
+  </data>
   <metadata name="cMS_RightClick.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>179, 0</value>
   </metadata>

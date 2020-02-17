@@ -23,10 +23,11 @@ using System.IO;
 
 namespace RocksmithToolkitGUI.DLCManager
 {
-    public partial class btn_Save : Form
+    public partial class Standardization : Form
     {
-        public btn_Save(string txt_DBFolder, string txt_TempPath, string txt_RocksmithDLCPath, bool AllowEncript, bool AllowORIGDelete, OleDbConnection cnnb)
+        public Standardization(string txt_DBFolder, string txt_TempPath, string txt_RocksmithDLCPath, bool AllowEncript, bool AllowORIGDelete, OleDbConnection cnnb, string artist)
         {
+            this.Artist = artist;
             InitializeComponent();
             //MessageBox.Show("test0");
             DB_Path = txt_DBFolder;
@@ -47,6 +48,7 @@ namespace RocksmithToolkitGUI.DLCManager
         //bcapi
         public string DB_Path = "";
         public string TempPath = "";
+        public string Artist = "";
         public string RocksmithDLCPath = "";
         public DataSet dssx = new DataSet();
         public bool AllowORIGDeleteb = false;
@@ -54,11 +56,33 @@ namespace RocksmithToolkitGUI.DLCManager
         public OleDbConnection cnb;
         bool updateAutoGroups = true;
 
+
         private void Standardization_Load(object sender, EventArgs e)
         {
             Populate(ref databox, ref Main);
             databox.EditingControlShowing += DataGridView1_EditingControlShowing;
             chbx_AutoSave.Checked = ConfigRepository.Instance()["dlcm_Autosave"] == "Yes" ? true : false;
+            if (Artist != null && Artist != "")
+            {
+                int i = 0;
+                if (databox.SelectedCells.Count > 0 && txt_ID.Text != "")
+
+                    i = databox.SelectedCells[0].RowIndex;
+                do
+                {
+                    //DataViewGrid.SelectedCells[/*0*/].RowIndex
+                    if (databox.Rows[i].Cells[2].Value.ToString() == Artist)
+                    {
+                        //databox.Rows[0].Selected = false; databox.Rows[i];
+                        databox.CurrentCell = databox.Rows[i].Cells[0];
+                        //ChangeRow();
+                        break;
+                    }
+                    i++;
+                }
+                while (i > 0 && databox.RowCount > 1 && i < databox.RowCount);
+            }
+
         }
 
         private void DataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
@@ -366,8 +390,6 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btn_Close_Click(object sender, EventArgs e)
         {
-            if (chbx_AutoSave.Checked) SaveRecord();
-            ConfigRepository.Instance()["dlcm_Autosave"] = chbx_AutoSave.Checked == true ? "Yes" : "No";
             this.Close();
         }
 
@@ -384,46 +406,49 @@ namespace RocksmithToolkitGUI.DLCManager
             //DLCManager v1 = new DLCManager();
             string txt = DB_Path;//.Replace("\\AccessDB.accdb", "");
                                  //MessageBox.Show(txt);
-            string returned = GenericFunctions.OneTranslation_And_Correction(txt, pB_ReadDLCs, cnb, null, txt_Artist_Correction.Text, txt_Album_Correction.Text, txt_Year_Correction.Text);
+                                 //string returned = GenericFunctions.OneTranslation_And_Correction(txt, pB_ReadDLCs, cnb, null, txt_Artist_Correction.Text, txt_Album_Correction.Text, txt_Year_Correction.Text);
 
             GenericFunctions.Translation_And_Correction(txt, pB_ReadDLCs, cnb, null);
+            //refresh 
+            Populate(ref databox, ref Main);
+            databox.Refresh();
             //advance or step back in the song list
-            int i = 0;
-            if (databox.Rows.Count > 1 && databox.SelectedCells.Count > 0)
-            {
-                var prev = databox.SelectedCells[0].RowIndex;
-                if (databox.Rows.Count == prev + 2)
-                    if (prev == 0) return;
-                    else
-                    {
-                        int rowindex;
-                        DataGridViewRow row;
-                        i = databox.SelectedCells[0].RowIndex;
-                        rowindex = i;
-                        databox.Rows[rowindex - 1].Selected = true;
-                        databox.Rows[rowindex].Selected = false;
-                        row = databox.Rows[rowindex - 1];
-                    }
-                else
-                {
-                    int rowindex;
-                    DataGridViewRow row;
-                    i = databox.SelectedCells[0].RowIndex;
-                    rowindex = i;
-                    databox.Rows[rowindex + 1].Selected = true;
-                    databox.Rows[rowindex].Selected = false;
-                    row = databox.Rows[rowindex + 1];
-                }
-            }
-            else if (databox.Rows.Count > 1)
-            {
-                int rowindex = 1;
-                DataGridViewRow row;
-                databox.Rows[rowindex + 1].Selected = true;
-                databox.Rows[rowindex].Selected = false;
-                row = databox.Rows[rowindex + 1];
-            }
-            ChangeRow();
+            //int i = 0;
+            //if (databox.Rows.Count > 1 && databox.SelectedCells.Count > 0)
+            //{
+            //    var prev = databox.SelectedCells[0].RowIndex;
+            //    if (databox.Rows.Count == prev + 2)
+            //        if (prev == 0) return;
+            //        else
+            //        {
+            //            int rowindex;
+            //            DataGridViewRow row;
+            //            i = databox.SelectedCells[0].RowIndex;
+            //            rowindex = i;
+            //            databox.Rows[rowindex - 1].Selected = true;
+            //            databox.Rows[rowindex].Selected = false;
+            //            row = databox.Rows[rowindex - 1];
+            //        }
+            //    else
+            //    {
+            //        int rowindex;
+            //        DataGridViewRow row;
+            //        i = databox.SelectedCells[0].RowIndex;
+            //        rowindex = i;
+            //        databox.Rows[rowindex + 1].Selected = true;
+            //        databox.Rows[rowindex].Selected = false;
+            //        row = databox.Rows[rowindex + 1];
+            //    }
+            //}
+            //else if (databox.Rows.Count > 1)
+            //{
+            //    int rowindex = 1;
+            //    DataGridViewRow row;
+            //    databox.Rows[rowindex + 1].Selected = true;
+            //    databox.Rows[rowindex].Selected = false;
+            //    row = databox.Rows[rowindex + 1];
+            //}
+            //ChangeRow();
         }
 
         private void btn_CopyArtist2ArtistSort_Click(object sender, EventArgs e)
@@ -545,6 +570,61 @@ namespace RocksmithToolkitGUI.DLCManager
             // lbl_NoRec = noOfRec.ToString() + " records.";
             //MessageBox.Show("Cover has been defaulted as Cover to " + NoRec.ToString() + " songs");
         }
+        public static void MultiplyAndApplyYear(OleDbConnection cnb)
+        {
+
+            //Multiply
+            var cmd = "SELECT o.ID, iif(o.Artist_Correction <> \"\", o.Artist_Correction, o.Artist), iif(o.Album_Correction <> \"\", o.Album_Correction, o.Album), o.Year_Correction" +
+                        " FROM Standardization AS o LEFT JOIN (SELECT count(artist) as c, artist FROM Standardization group by artist, album)  AS f ON o.Artist = f.Artist" +
+                        " WHERE o.Year_Correction<>\"\"" +
+                        " GROUP BY  o.ID, iif(o.Artist_Correction <> \"\", o.Artist_Correction, o.Artist), iif(o.Album_Correction <> \"\", o.Album_Correction, o.Album), o.Year_Correction" +
+                        " ORDER BY iif(o.Artist_Correction <> \"\", o.Artist_Correction, o.Artist), iif(o.Album_Correction <> \"\", o.Album_Correction, o.Album)";
+            DataSet dfz = new DataSet(); dfz = SelectFromDB("Standardization", cmd, "", cnb);
+            var artist_c = "";
+            var album_c = "";
+            if (dfz.Tables.Count > 0)
+                foreach (DataRow dataRow in dfz.Tables[0].Rows)
+                {
+                    if (artist_c == dataRow.ItemArray[1].ToString() && album_c == dataRow.ItemArray[2].ToString())
+                        continue;
+                    artist_c = dataRow.ItemArray[1].ToString();
+                    album_c = dataRow.ItemArray[2].ToString();
+                    //var SpotifyArtistID = dataRow.ItemArray[2].ToString();
+                    //var SpotifyAlbumID = dataRow.ItemArray[3].ToString();
+                    //var SpotifyAlbumURL = dataRow.ItemArray[4].ToString();
+                    //var SpotifyAlbumPath = dataRow.ItemArray[5].ToString();
+                    var SpotifyYear = dataRow.ItemArray[3].ToString();
+                    //var cmd1 = "UPDATE Main SET Spotify_Artist_ID = \"" + SpotifyArtistID + "\",Spotify_Album_ID = \"" + SpotifyAlbumID + "\",Spotify_Album_URL = \"" + SpotifyAlbumURL + "\",Spotify_Album_Path = \"" + SpotifyAlbumPath + "\", WHERE Album=\"" + SpotifyAlbumID + "\"";
+                    //DataSet dus = UpdateDB("Main", cmd1 + ";");
+                    //dus = SelectFromDB("Main", "SELECT * FROM Main WHERE Artist=\"" + artist_c + "\"", ""); try { norec = dus.Tables[0].Rows.Count; } catch { }
+                    var cmd1 = "UPDATE Standardization SET Year_Correction = \"" + SpotifyYear + "\" WHERE (Artist=\"" + artist_c + "\" OR Artist_Correction=\""
+                        + artist_c + "\") and (Album=\"" + album_c + "\" OR Album_Correction=\"" + album_c + "\")";
+                    //SpotifyArtistID = \"" + SpotifyArtistID + "\",SpotifyAlbumID = \"" + SpotifyAlbumID + "\",SpotifyAlbumURL = \""
+                    //+ SpotifyAlbumURL + "\",SpotifyAlbumPath = \"" + SpotifyAlbumPath + "\",
+                    var dus = UpdateDB("Standardization", cmd1 + ";", cnb);
+                }
+
+            var NoRec = 0;
+
+            //DataSet dgt = new DataSet(); dgt = SelectFromDB("Standardization", "SELECT iif(o.Artist_Correction <> \"\", o.Artist_Correction, o.Artist), iif(o.Album_Correction <> \"\", o.Album_Correction, o.Album), o.Year_Correction" +
+            cmd = "SELECT iif(o.Artist_Correction <> \"\", o.Artist_Correction, o.Artist), iif(o.Album_Correction <> \"\", o.Album_Correction, o.Album), o.Year_Correction" +
+                " FROM Standardization o WHERE o.Year_Correction<>\"\"" +
+                " GROUP BY iif(o.Artist_Correction <> \"\", o.Artist_Correction, o.Artist), iif(o.Album_Correction <> \"\", o.Album_Correction, o.Album), o.Year_Correction;";
+            DataSet dgt = new DataSet(); dgt = SelectFromDB("Standardization", cmd, "", cnb);
+
+            if (dgt.Tables.Count > 0)
+                foreach (DataRow dataRow in dgt.Tables[0].Rows)
+                {
+                    artist_c = dataRow.ItemArray[0].ToString();
+                    album_c = dataRow.ItemArray[1].ToString();
+                    var year_c = dataRow.ItemArray[2].ToString();
+                    var cmd1 = "";
+                    cmd1 = "UPDATE Main SET Album_Year = \"" + year_c + "\" WHERE Artist=\"" + artist_c + "\" AND (Album=\"" + album_c + "\")";
+                    dgt = UpdateDB("Main", cmd1 + ";", cnb);
+                    //if (artist_c != "" && album_c != "" && year_c != "") dgt = SelectFromDB("Main", "SELECT * FROM Main WHERE Artist=\"" + artist_c + "\" and Album=\"" + album_c + "\"", "", cnb);
+                    //try { NoRec = dgt.Tables[0].Rows.Count; } catch { }
+                }
+        }
 
         public static void ApplyArtistShort(OleDbConnection cnb)//(string DBs_Path)//, string AlbumArt, string Artist, string Albums)
         {//continue;
@@ -576,24 +656,29 @@ namespace RocksmithToolkitGUI.DLCManager
         }
 
         public static void ApplyArtistAutoGroup(OleDbConnection cnb)//(string DBs_Path)//, string AlbumArt, string Artist, string Albums)
-        {//continue;
-            //}
-
-            var norec = 0;
-            DataSet dfz = new DataSet();
-            dfz = SelectFromDB("Standardization", "SELECT ID, Artist_AutoGroup FROM Standardization" +
-                "WHERE (Artist_AutoGroup <> \"\") GROUP BY iif(Artist_Correction<>\"\", Artist_Correction, Artist), Artist_AutoGroup;", "", cnb);
-
-            //pB_ReadDLCs.Maximum = norec;
-            //pB_ReadDLCs.Value = 0;
-            if (dfz.Tables.Count > 0) foreach (DataRow dataRow in dfz.Tables[0].Rows)
+        {
+            DataSet df = new DataSet();
+            df = SelectFromDB("Standardization", "SELECT DISTINCT Artist_AutoGroup FROM Standardization WHERE Artist_AutoGroup<>\"\"", "", cnb);
+            if (df.Tables.Count > 0) foreach (DataRow defaultgrp in df.Tables[0].Rows)
                 {
-                    var insertcmdd = "CDLC_ID, Groups, Type";
-                    var insertvalues = "\"" + dataRow.ItemArray[0].ToString() + "\",\"" + dataRow.ItemArray[1].ToString() + "\",\"DLC\"";
-                    //insertvalues = SearchCmd.Replace("*", "");
-                    InsertIntoDBwValues("Groups", insertcmdd, insertvalues, cnb, 0);
-                }
+                    string grp = defaultgrp.ItemArray[0].ToString();
 
+                    var norec = 0;
+                    DataSet dfz = new DataSet();
+                    dfz = SelectFromDB("Standardization", "SELECT ID FROM Main WHERE Artist+Album IN (SELECT iif(Artist_Correction<>\"\", Artist_Correction, Artist)+iif(Album_Correction<>\"\", Album_Correction, Album) FROM Standardization" +
+                        " WHERE (Artist_AutoGroup = \"" + grp + "\") GROUP BY iif(Artist_Correction<>\"\", Artist_Correction, Artist)+iif(Album_Correction<>\"\", Album_Correction, Album));", "", cnb); /*Artist_AutoGroup /*, Artist_AutoGroup,*/
+
+                    DeleteFromDB("Standardization", "DELETE * FROM Groups WHERE Groups=\"" + grp + "\" AND Type=\"DLC\" ", cnb);
+                    //pB_ReadDLCs.Maximum = norec;
+                    //pB_ReadDLCs.Value = 0;
+                    if (dfz.Tables.Count > 0) foreach (DataRow dataRow in dfz.Tables[0].Rows)
+                        {
+                            var insertcmdd = "CDLC_ID, Groups, Type";
+                            var insertvalues = "\"" + dataRow.ItemArray[0].ToString() + "\",\"" + grp + "\",\"DLC\"";
+                            //insertvalues = SearchCmd.Replace("*", "");
+                            InsertIntoDBwValues("Groups", insertcmdd, insertvalues, cnb, 0);
+                        }
+                }
             //MessageBox.Show("Artist Short Name has been defaulted onto " + norec.ToString() + " songs");
         }
 
@@ -674,18 +759,18 @@ namespace RocksmithToolkitGUI.DLCManager
                     var artist_c = dataRow.ItemArray[4].ToString();
                     var cmd1 = "UPDATE Standardization SET Year_Correction = \"" + year_c + "\"" +
                         " WHERE (Artist=\"" + artist + "\" OR Artist=\"" + artist_c + "\" OR ((Artist_Correction=\"" + artist + "\" OR Artist_Correction=\"" + artist_c + "\") AND Artist_Correction <> NULL))" +
-                        " AND (Album=\"" + album + "\" OR Album=\"" + album_c + "\" OR ((Album_Correction=\"" + album + "\" OR Album_Correction=\"" + album_c + "\") AND Album_Correction <> Null))"; 
-                        //" AND Year_Correction=\"" + year_c + "\")";
+                        " AND (Album=\"" + album + "\" OR Album=\"" + album_c + "\" OR ((Album_Correction=\"" + album + "\" OR Album_Correction=\"" + album_c + "\") AND Album_Correction <> Null))";
+                    //" AND Year_Correction=\"" + year_c + "\")";
                     var dus = UpdateDB("Standardization", cmd1 + ";", cnb);
                 }
         }
 
-        public static void ApplySpotify(OleDbConnection cnb)//(string DBs_Path)//, string AlbumArt, string Artist, string Albums)
+        public static void MultiplySpotify(OleDbConnection cnb)//(string DBs_Path)//, string AlbumArt, string Artist, string Albums)
         {//continue;
             //}
 
             //var norec = 0;
-            DataSet dfz = new DataSet(); dfz = SelectFromDB("Standardization", "SELECT iif(Artist_Correction<>\"\", Artist_Correction, Artist), iif(Album_Correction<>\"\", Album_Correction, Album), SpotifyArtistID, SpotifyAlbumID, SpotifyAlbumURL,SpotifyAlbumPath FROM Standardization WHERE (SpotifyArtistID <> \"\") GROUP BY iif(Artist_Correction<>\"\", Artist_Correction, Artist), iif(Album_Correction<>\"\", Album_Correction, Album), SpotifyArtistID, SpotifyAlbumID, SpotifyAlbumURL,SpotifyAlbumPath;", "", cnb);
+            DataSet dfz = new DataSet(); dfz = SelectFromDB("Standardization", "SELECT iif(Artist_Correction<>\"\", Artist_Correction, Artist), iif(Album_Correction<>\"\", Album_Correction, Album), SpotifyArtistID, SpotifyAlbumID, SpotifyAlbumURL, SpotifyAlbumPath, Year_Correction FROM Standardization WHERE (SpotifyArtistID <> \"\") GROUP BY iif(Artist_Correction<>\"\", Artist_Correction, Artist), iif(Album_Correction<>\"\", Album_Correction, Album), SpotifyArtistID, SpotifyAlbumID, SpotifyAlbumURL,SpotifyAlbumPath, Year_Correction;", "", cnb);
             if (dfz.Tables.Count > 0)
                 foreach (DataRow dataRow in dfz.Tables[0].Rows)
                 {
@@ -695,10 +780,13 @@ namespace RocksmithToolkitGUI.DLCManager
                     var SpotifyAlbumID = dataRow.ItemArray[3].ToString();
                     var SpotifyAlbumURL = dataRow.ItemArray[4].ToString();
                     var SpotifyAlbumPath = dataRow.ItemArray[5].ToString();
+                    var SpotifyYear = dataRow.ItemArray[6].ToString();
                     //var cmd1 = "UPDATE Main SET Spotify_Artist_ID = \"" + SpotifyArtistID + "\",Spotify_Album_ID = \"" + SpotifyAlbumID + "\",Spotify_Album_URL = \"" + SpotifyAlbumURL + "\",Spotify_Album_Path = \"" + SpotifyAlbumPath + "\", WHERE Album=\"" + SpotifyAlbumID + "\"";
                     //DataSet dus = UpdateDB("Main", cmd1 + ";");
                     //dus = SelectFromDB("Main", "SELECT * FROM Main WHERE Artist=\"" + artist_c + "\"", ""); try { norec = dus.Tables[0].Rows.Count; } catch { }
-                    var cmd1 = "UPDATE Standardization SET SpotifyArtistID = \"" + SpotifyArtistID + "\",SpotifyAlbumID = \"" + SpotifyAlbumID + "\",SpotifyAlbumURL = \"" + SpotifyAlbumURL + "\",SpotifyAlbumPath = \"" + SpotifyAlbumPath + "\" WHERE (Artist=\"" + artist_c + "\" OR Artist_Correction=\"" + artist_c + "\") and (Album=\"" + album_c + "\" OR Album_Correction=\"" + album_c + "\")";
+                    var cmd1 = "UPDATE Standardization SET SpotifyArtistID = \"" + SpotifyArtistID + "\",SpotifyAlbumID = \"" + SpotifyAlbumID + "\",SpotifyAlbumURL = \""
+                        + SpotifyAlbumURL + "\",SpotifyAlbumPath = \"" + SpotifyAlbumPath + "\" WHERE (Artist=\"" + artist_c + "\" OR Artist_Correction=\""
+                        + artist_c + "\") and (Album=\"" + album_c + "\" OR Album_Correction=\"" + album_c + "\")";/*+ "\",Year_Correction = \"" + SpotifyYear +*/
                     var dus = UpdateDB("Standardization", cmd1 + ";", cnb);
                 }
 
@@ -1114,15 +1202,26 @@ namespace RocksmithToolkitGUI.DLCManager
             {
                 updateAutoGroups = true; return;
             }
-            pB_ReadDLCs.Maximum = 3; pB_ReadDLCs.Value = 1; pB_ReadDLCs.Step = 1;
+
+            i = databox.SelectedCells[0].RowIndex;
+
+            //pB_ReadDLCs.Maximum = 3; pB_ReadDLCs.Value = 1; pB_ReadDLCs.Step = 1;
             var cmd1 = "UPDATE Standardization SET Artist_AutoGroup = \"" + cbx_Groups.Text + "\" WHERE (Artist=\"" + txt_Artist.Text + "\") OR (Artist_Correction=\"" + txt_Artist.Text + "\" AND Artist_Correction <> NULL AND Artist_Correction <> \"\") OR (Artist_Correction=\"" + txt_Artist_Correction.Text + "\" AND Artist_Correction <> NULL AND Artist_Correction <> \"\") OR (Artist=\"" + txt_Artist_Correction.Text + "\")";
             DataSet dus = UpdateDB("Standardization", cmd1 + ";", cnb);
             updateAutoGroups = false;
-            pB_ReadDLCs.Increment(1);
+            //pB_ReadDLCs.Increment(1);
             //cmd1 = "UPDATE Main SET Artist_AutoGroup = \"" + cbx_Groups.Text + "\" WHERE Artist=\"" + txt_Artist.Text + "\" AND Album=\"" + txt_Album.Text + "\"";
             //DataSet dhj = UpdateDB("Main", cmd1 + ";", cnb);
-            cnb.Close();
-            cnb = new OleDbConnection("Provider=Microsoft." + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Persist Security Info=False;Mode= Share Deny None;Data Source=" + ConfigRepository.Instance()["dlcm_DBFolder"]);
+
+            //probably here to make sure changes are saved
+            //cnb.Close();
+            //cnb = new OleDbConnection("Provider=Microsoft." + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Persist Security Info=False;Mode= Share Deny None;Data Source=" + ConfigRepository.Instance()["dlcm_DBFolder"]);
+
+            Populate(ref databox, ref Main);
+
+            databox.Rows[i].Selected = true;
+            databox.CurrentCell = databox.Rows[i].Cells[0];
+            //pB_ReadDLCs.Increment(1);
 
             //int i = 0;
             //if (databox.Rows.Count > 1 && databox.SelectedCells.Count > 0)
@@ -1170,14 +1269,15 @@ namespace RocksmithToolkitGUI.DLCManager
             //dssx.Dispose();
             //ChangeRow();
             //ChangeRow();
-            Populate(ref databox, ref Main);
-            pB_ReadDLCs.Increment(1);
         }
 
         private void btn_ApplyCurrent_Click(object sender, EventArgs e)
         {
             string txt = DB_Path;
-            string returned = GenericFunctions.OneTranslation_And_Correction(txt, pB_ReadDLCs, cnb, null, txt_Artist_Correction.Text, txt_Album_Correction.Text, txt_Year_Correction.Text);
+            string returned = GenericFunctions.OneTranslation_And_Correction(txt, pB_ReadDLCs, cnb, null, txt_Artist.Text, txt_Album.Text, txt_Year_Correction.Text, txt_AlbumArt_Correction.Text, txt_Artist_Correction.Text, txt_Album_Correction.Text);
+            //refresh 
+            Populate(ref databox, ref Main);
+            databox.Refresh();
         }
 
         private void Pxbx_SavedSpotify_Click(object sender, EventArgs e)
@@ -1193,6 +1293,22 @@ namespace RocksmithToolkitGUI.DLCManager
         private void PB_ReadDLCs_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void Bbtn_ApplyYear_Click(object sender, EventArgs e)
+        {
+            MultiplyAndApplyYear(cnb);
+        }
+
+        private void Btn_ApplyDefault_Click(object sender, EventArgs e)
+        {
+            ApplyArtistAutoGroup(cnb);
+        }
+
+        private void btn_Save_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (chbx_AutoSave.Checked) SaveRecord();
+            ConfigRepository.Instance()["dlcm_Autosave"] = chbx_AutoSave.Checked == true ? "Yes" : "No";
         }
 
         //private void btn_GetSpotifyCover_Click(object sender, EventArgs e)

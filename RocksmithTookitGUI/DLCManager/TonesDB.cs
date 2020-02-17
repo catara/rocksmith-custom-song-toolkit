@@ -1432,8 +1432,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btn_Close_Click(object sender, EventArgs e)
         {
-            if (chbx_AutoSave.Checked && txt_CDLC_ID.Text != "" && txt_CDLC_ID.Text != null) { SaveOK = true; SaveRecord(); }
-            else SaveOK = false;
+
             this.Close();
         }
 
@@ -1567,6 +1566,12 @@ namespace RocksmithToolkitGUI.DLCManager
                 insertvalues += "\", \"" + NullHandler(chbx_SkinIndex.Text) + "\"";
                 InsertIntoDBwValues("Tones_GearList", insertcmdd, insertvalues, cnb, 0);
             }
+        }
+
+        private void TonesDB_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (chbx_AutoSave.Checked && txt_CDLC_ID.Text != "" && txt_CDLC_ID.Text != null) { SaveOK = true; SaveRecord(); }
+            else SaveOK = false;
         }
     }
 }

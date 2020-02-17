@@ -17,7 +17,7 @@
   <Config Key="general_rs2014path" Value="C:\PROGRAM FILES (x86)\Steam\steamapps\common\Rocksmith2014" />
   <Config Key="general_wwisepath" Value="" />
   <Config Key="general_defaultgameversion" Value="RS2014" />
-  <Config Key="general_defaultplatform" Value="Pc" />
+  <Config Key="general_defaultplatform" Value="PS3" />
   <!-- creator config key count = 10 -->"
   <Config Key="creator_scrollspeed" Value="1.3" />
   <Config Key="creator_qualityfactor" Value="4.0" />
@@ -31,7 +31,7 @@
   <Config Key="creator_autosavetemplate" Value="true" />
   <!-- converter config key count = 2 -->"
   <Config Key="converter_source" Value="Pc" />
-  <Config Key="converter_target" Value="Mac" />
+  <Config Key="converter_target" Value="PS3" />
   <!-- ddc config key count = 5 -->"
   <Config Key="ddc_config" Value="ddc_default" />
   <Config Key="ddc_rampup" Value="ddc_default" />
@@ -146,9 +146,6 @@
   <Config Key="dlcm_AdditionalManipul98" Value="Yes" />
   <Config Key="dlcm_AdditionalManipul99" Value="No" />
   <Config Key="dlcm_AdditionalManipul100" Value="Yes" />
-  <Config Key="dlcm_Album" Value="&#60;Broken&#62;&#60;Year&#62; - &#60;Album&#62; - &#60;Rating&#62; - &#60;Avail. Tracks and ShortTimings&#62; - &#60;DD&#62; - &#60;Tuning&#62;-&#60;Group&#62;" />;
-  <Config Key="dlcm_Artist" Value="&#60;Artist&#62;-&#60;CDLC&#62;-&#60;Avail. Tracks&#62;-&#60;DD&#62;-&#60;QAs&#62;-&#60;Bass_HasDD&#62;" />;
-  <Config Key="dlcm_Artist_Sort" Value="&#60;Beta&#62;&#60;Group&#62;&#60;Artist Sort&#62;" />;
   <Config Key="dlcm_Groups" Value="" />;
   <Config Key="dlcm_chbx_Mac" Value="No" />;
   <Config Key="dlcm_chbx_PC" Value="No" />;
@@ -158,16 +155,24 @@
   <Config Key="dlcm_DBFolder" Value="C:\t\0\AccessDB.accdb" />;
   <Config Key="dlcm_RocksmithDLCPath" Value="X:\HFS\Users\bogdan\GitHub\to import" />;
   <Config Key="dlcm_TempPath" Value="C:\t\0" />;
-  <Config Key="dlcm_File_Name" Value="&#60;CDLC&#62;-&#60;Artist Short&#62;-&#60;Year&#62;-&#60;Album Short&#62;&#60;Track No.&#62;-&#60;Title&#62;&#60;Live&#62;&#60;MTrack Det.&#62;" />;
+<Config Key="dlcm_Album" Value="&#60;Broken&#62;&#60;Year&#62; - &#60;Album&#62; - &#60;Rating&#62; - &#60;Avail. Tracks and ShortTimings&#62; - &#60;DD&#62; - &#60;Tuning&#62;-&#60;Group&#62;" />;
+  <Config Key="dlcm_Artist" Value="&#60;Artist&#62;-&#60;CDLC&#62;-&#60;Avail. Tracks w Bonus&#62;-&#60;DD&#62;-&#60;QAs&#62;-&#60;Bass_HasDD&#62;v&#60;DLCM Version&#62;" />;
+  <Config Key="dlcm_Artist_Sort" Value="&#60;Beta&#62;&#60;Group&#62;&#60;Artist Sort&#62;" />;
+    <Config Key="dlcm_File_Name" Value="&#60;CDLC&#62;-&#60;Artist Short&#62;-&#60;Year&#62;-&#60;Album Short&#62;&#60;Track No.&#62;-&#60;Title&#62;&#60;Live&#62;&#60;MTrack Det.&#62;" />;
   <Config Key="dlcm_File_Name_old" Value="&#60;Beta&#62;&#60;Broken&#62;&#60;CDLC&#62;-&#60;Artist Short&#62;-&#60;Year&#62;-&#60;Album Short&#62;&#60;Track No.&#62;-&#60;Title&#62;&#60;Live&#62;-&#60;DD&#62;-&#60;Avail. Tracks&#62;-v&#60;Version&#62;-&#60;Bass_HasDD&#62;&#60;QA&#62;&#60;Bonus&#62;" />;
-  <Config Key="dlcm_Title" Value="&#60;Title&#62;&#60;QA&#62;&#60;Bonus&#62;&#60;Live&#62;" />;
+  <Config Key="dlcm_Title" Value="&#60;Title&#62;&#60;QA&#62;&#60;Bonus&#62;&#60;Live&#62;&#60;" />;
   <Config Key="dlcm_Title_Sort" Value="&#60;Year&#62;&#60;Album&#62;&#60;Track No.&#62;&#60;Title Sort&#62;" />;
   <Config Key="dlcm_Album_Sort" Value="&#60;Year&#62;&#60;Album&#62;&#60;Track No.&#62;&#60;Title Sort&#62;" />;
   <Config Key="dlcm_Lyric_Info" Value="&#60;AvailInstr&#62;&#60;TimeStamp&#62;&#60;Bonus&#62;&#60;DD&#62;&#60;BassHasDD&#62;&#60;Live&#62;&#60;MTrack Det.&#62;&#60;QA&#62;&#60;&#62;" />;
-  <Config Key="dlcm_FTP" Value="US" />;
+  <Config Key="dlcm_MainDBFormat" Value="PS3_US" />;
   <Config Key="dlcm_FTPEU" Value="ftp://192.168.1.14/dev_hdd0/game/BLES01862/USRDIR/DLC/" />;
   <Config Key="dlcm_FTPUS" Value="ftp://192.168.1.14/dev_hdd0/game/BLUS31182/USRDIR/DLC/" />;
   <Config Key="dlcm_FTPJP" Value="ftp://192.168.1.14/dev_hdd0/game/BLUS31182/USRDIR/DLC/" />;
+  <Config Key="dlcm_Mac" Value="\\Mac\Volumes\\HFS\SteamLibrary\steamapps\common\Rocksmith2014\dlc" />;
+  <Config Key="dlcm_PC" Value="\\Mac\Volumes\\HFS\SteamLibrary\steamapps\common\Rocksmith2014\dlc" />;
+  <Config Key="dlcm_XBOX" Value="" />;
+  <Config Key="dlcm_PS4" Value="" />;
+  <Config Key="dlcm_IOS" Value="" />;
   <Config Key="dlcm_RemoveBassDD" Value="Yes" />;
   <Config Key="dlcm_UniqueID" Value="Yes" />;
   <Config Key="dlcm_andCopy" Value="Yes" />;
@@ -224,10 +229,12 @@
   <Config Key="dlcm_MDBPlus_www" Value="http://www.alexnolan.net/software/mdb_viewer_plus.htm" />;
   <Config Key="dlcm_DupliUseDates" Value="Yes" />;
   <Config Key="dlcm_netstatus" Value="Yes" />;
+  <Config Key="dlcm_spotistatus" Value="Yes" />;
   <Config Key="dlcm_Configurations" Value="New" />;
   <Config Key="dlcm_Grouping" Value="All" />;
   <Config Key="dlcm_MaxLyricLenght_PS3" Value="46" />;
-  <Config Key="dlcm_DLCManager_Version" Value="0.7.4" />;
+  <Config Key="dlcm_DLCManager_Version" Value="0.7.5" />;
+  <Config Key="dlcm_MuliThreading" Value="No" />;
   <Config Key="dlcm_0_duplicate" Value="\\192.168.1.100\Kits_Software\t\0" />;
   <Config Key="dlcm_0_old" Value="\\192.168.1.100\Kits_Software\t\0" />;
   <Config Key="dlcm_0_repacked" Value="\\192.168.1.100\Kits_Software\t\0" />;
@@ -235,7 +242,12 @@
   <Config Key="dlcm_0_archive" Value="\\192.168.1.100\Kits_Software\t\0" />;
   <Config Key="dlcm_0_albumCovers" Value="\\192.168.1.100\Kits_Software\t\0" />;
   <Config Key="dlcm_0_data" Value="\\192.168.1.100\Kits_Software\t\0" />;
-  <Config Key="dlcm_0_temp" Value="\\192.168.1.100\Kits_Software\t\0" />;<!-- unused-->
+  <Config Key="dlcm_0_temp" Value="\\192.168.1.100\Kits_Software\t\0\0_temp" />;<!-- unused-->
+  <Config Key="dlcm_wwise" Value="Wwise 2019.1.6.7110" />;
+  <Config Key="dlcm_SpotifyClientAPI" Value="54e6763b87844e6b9a17a050c5d16d7b" />;
+  <Config Key="dlcm_SpotifySecretAPI" Value="b18b7ee58d234c799081b8ed5133d670" />;
+  <Config Key="dlcm_OrderOfFields" Value="Artist, Album_Year, Album, Track_No, Song_Title" />;
+  <Config Key="dlcm_YoutubeAPI" Value="AIzaSyC9BxDgykbp3UHhH_Yrnyz60uted6oq3TM" />;
   <Config Key="dlcm_SearchFields" Value="ID, Artist, Song_Title, Track_No, Album, Album_Year, Author, Version, Import_Date, Is_Original, Selected, Tunning, Bass_Picking, Is_Beta, Platform, Has_DD, Bass_Has_DD, Is_Alternate, Is_Multitrack, Is_Live, Is_Acoustic, Is_Instrumental, Is_EP, Is_Soundtrack, Is_Single, Is_Broken, MultiTrack_Version, Alternate_Version_No, Live_Details, Groups, Rating, Description, PreviewTime, PreviewLenght, Song_Lenght, Comments, FilesMissingIssues, DLC_AppID, DLC_Name, Artist_Sort, Song_Title_Sort, Album_Sort, AverageTempo, Volume, Preview_Volume, SignatureType, ToolkitVersion, AlbumArtPath, AudioPath, audioPreviewPath, OggPath, oggPreviewPath, AlbumArt_Hash, Audio_Hash, audioPreview_Hash, File_Size, Current_FileName, Original_FileName, Import_Path, Folder_Name, File_Hash, Original_File_Hash, Has_Bass, Has_Guitar, Has_Lead, Has_Rhythm, Has_Combo, Has_Vocals, Has_Bonus_Arrangement, Has_Sections, Has_Cover, Has_Preview, Has_Custom_Tone, Has_Version, Has_Author, Has_Track_No, File_Creation_Date, Has_Been_Corrected, Has_Had_Lyrics_Changed, Has_Had_Audio_Changed, Pack, Available_Old, Available_Duplicate, Tones, Keep_BassDD, Keep_DD, Keep_Original, Original, YouTube_Link, Youtube_Playthrough, CustomForge_Followers, CustomForge_Version, CustomsForge_Link, CustomsForge_Like, CustomsForge_ReleaseNotes, UniqueDLCName, Artist_ShortName, Album_ShortName, DLC, Is_OLD, Remote_Path, audioBitrate, audioSampleRate, Top10, Has_Other_Officials, Spotify_Song_ID, Spotify_Artist_ID, Spotify_Album_ID, Spotify_Album_URL, Audio_OrigHash, Audio_OrigPreviewHash, AlbumArt_OrigHash, Duplicate_Of, Split4Pack, UseInternalDDRemovalLogic
 "/>;
   <Config Key="dlcm_ExportFields" Value="REPLACE(AlbumArtPath,'.dds','.png') as AlbumArt, ID, Artist, Song_Title, Track_No, Album, Album_Year, Tunning, YouTube_Link, Is_Original,

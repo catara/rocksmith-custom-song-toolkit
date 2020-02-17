@@ -68,7 +68,7 @@ namespace RocksmithToolkitGUI.DLCManager
             Populate(ref DataGridView1, ref Main);//, ref bsPositions, ref bsBadges);
             DataGridView1.EditingControlShowing += DataGridView1_EditingControlShowing;
             chbx_Autosave.Checked = ConfigRepository.Instance()["dlcm_Autosave"] == "Yes" ? true : false;
-            txt_FTPPath.Text = ConfigRepository.Instance()["dlcm_FTP" + chbx_PreSavedFTP.Text];
+            txt_FTPPath.Text = c("dlcm_FTP" + c("dlcm_MainDBFormat").Replace("PS3_", ""));// ConfigRepository.Instance()["dlcm_FTP" + chbx_PreSavedFTP.Text];
             if (ConfigRepository.Instance()["dlcm_RemoveBassDD"] == "Yes") chbx_RemoveBassDD.Checked = true;
             else chbx_RemoveBassDD.Checked = false;
             if (ConfigRepository.Instance()["dlcm_Debug"] == "Yes")
@@ -587,8 +587,6 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btn_Close_Click(object sender, EventArgs e)
         {
-            if (chbx_Autosave.Checked) SaveRecord();
-            chbx_Autosave.Checked = ConfigRepository.Instance()["dlcm_Autosave"] == "Yes" ? true : false;
             this.Close();
         }
 
@@ -1810,7 +1808,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void chbx_PreSavedFTP_SelectedIndexChanged(object sender, EventArgs e)
         {
-            txt_FTPPath.Text = ConfigRepository.Instance()["dlcm_FTP" + chbx_PreSavedFTP.Text];
+            //txt_FTPPath.Text = c("dlcm_FTP" + cbx_Format.Replace("PS3_", ""));// ConfigRepository.Instance()["dlcm_FTP" + chbx_PreSavedFTP.Text];
             //if ( == "EU") 1";//"ftp://192.168.1.12/" + "dev_hdd0/game/BLUS31182/USRDIR/DLC/";
             //else txt_FTPPath.Text = ConfigRepository.Instance()["dlcm_FTP2"];//"ftp://192.168.1.12/" + "dev_hdd0/game/BLES01862/USRDIR/DLC/";
         }
@@ -1820,6 +1818,12 @@ namespace RocksmithToolkitGUI.DLCManager
             //txt_Description.Text = DB_Path;
             WEM2OGGCorrespondence frm = new WEM2OGGCorrespondence(DB_Path, TempPath, RocksmithDLCPath, cnb);//.Replace("\\AccessDB.accdb", "")
             frm.Show();
+        }
+
+        private void Cache_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (chbx_Autosave.Checked) SaveRecord();
+            chbx_Autosave.Checked = ConfigRepository.Instance()["dlcm_Autosave"] == "Yes" ? true : false;
         }
     }
 }

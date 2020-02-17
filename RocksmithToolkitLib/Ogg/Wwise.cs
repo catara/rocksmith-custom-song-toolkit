@@ -56,7 +56,7 @@ namespace RocksmithToolkitLib.Ogg
 
             if (String.IsNullOrEmpty(wwiseRoot))
                 throw new FileNotFoundException("Could not find Audiokinetic Wwise installation." + Environment.NewLine +
-                    "Please confirm that either Wwise v2013.2.x v2014.1.x 2015.1.x or 2016.2.x series is installed." + Environment.NewLine);
+                    "Please confirm that either Wwise v2013.2.x v2014.1.x 2015.1.x or 2016.2.xx or 2017.1.xx or 2018.1.x or 2019.1.x series is installed." + Environment.NewLine);
 
             var wwiseCLIPath = Directory.EnumerateFiles(wwiseRoot, "WwiseCLI.exe", SearchOption.AllDirectories);
             if (!wwiseCLIPath.Any())
@@ -68,7 +68,7 @@ namespace RocksmithToolkitLib.Ogg
 
             if (!wwiseCLIPath.Any())
                 throw new FileNotFoundException("Could not find WwiseCLI.exe in " + wwiseRoot + Environment.NewLine +
-                    "Please confirm that either Wwise v2013.2.x v2014.1.x 2015.1.x or 2016.2.x series is installed." + Environment.NewLine);
+                    "Please confirm that either Wwise v2013.2.x v2014.1.x 2015.1.x or 2016.2.x or 2017.1.xx or 2019.1.xx or 2018.1.x series is installed." + Environment.NewLine);
 
             //win32 = 32bit x64 = 64bit
             string wwiseCLIexe = wwiseCLIPath.AsParallel().SingleOrDefault(e => e.Contains("Authoring\\Win32"));
@@ -97,6 +97,8 @@ namespace RocksmithToolkitLib.Ogg
                 Selected = OggFile.WwiseVersion.Wwise2017;
             else if (wwiseVersion.StartsWith("2018.1"))
                 Selected = OggFile.WwiseVersion.Wwise2018;
+            else if (wwiseVersion.StartsWith("2019.1"))
+                Selected = OggFile.WwiseVersion.Wwise2019;
             // add support for new versions here, code is expandable
             //else if (wwiseVersion.StartsWith("xxxx.x"))
             //    Selected = OggFile.WwiseVersion.WwiseXXXX;
@@ -105,7 +107,7 @@ namespace RocksmithToolkitLib.Ogg
 
             if (Selected == OggFile.WwiseVersion.None)
                 throw new FileNotFoundException("You have no compatible version of Audiokinetic Wwise installed." + Environment.NewLine +
-                    "Install supportend Wwise version, which are v2013.2.x || v2014.1.x || v2015.1.x || v2016.2.x series || v2017.1.x series || v2018.1.x series  " + Environment.NewLine +
+                    "Install supportend Wwise version, which are v2013.2.x || v2014.1.x || v2015.1.x || v2016.2.x series || v2017.1.x series || v2018.1.x series || v2019.1.x series  " + Environment.NewLine +
                     "if you would like to use toolkit's Wwise autoconvert feature.   Did you remember to set the Wwise" + Environment.NewLine +
                     "installation path in the toolkit General Config menu?" + Environment.NewLine);
 
@@ -135,10 +137,12 @@ namespace RocksmithToolkitLib.Ogg
                 case OggFile.WwiseVersion.Wwise2016:
                 case OggFile.WwiseVersion.Wwise2017:
                 case OggFile.WwiseVersion.Wwise2018:
-                    // for fewer headaches ... start with fresh Wwise 2018 Template
-                    if (Directory.Exists(templateDir) && Selected == OggFile.WwiseVersion.Wwise2018) ///bcapi
+                case OggFile.WwiseVersion.Wwise2019:
+                    // for fewer headaches ... start with fresh Wwise 2019 Template
+                    if (Directory.Exists(templateDir) && Selected == OggFile.WwiseVersion.Wwise2019) ///bcapi
                         IOExtension.DeleteDirectory(templateDir, true);
 
+                
                     ExtractTemplate(Path.Combine(ExternalApps.TOOLKIT_ROOT, Selected + ".tar.bz2"));
                     break;
                 default:
@@ -238,8 +242,8 @@ namespace RocksmithToolkitLib.Ogg
             var destPreviewPath = string.Format("{0}_preview.wem", destinationPath.Substring(0, destinationPath.LastIndexOf(".", StringComparison.Ordinal)));
             foreach (var srcPath in srcPaths)
             {
-                //fix headers for wwise v2016 wem's //bcapi2018
-                if ((int)Selected >= (int)OggFile.WwiseVersion.Wwise2018)
+                //fix headers for wwise v2016 wem's //bcapi2019
+                if ((int)Selected >= (int)OggFile.WwiseVersion.Wwise2019)
                     OggFile.DowngradeWemVersion(srcPath.FullName, srcPath.Name.Contains("_preview_") ? destPreviewPath : destinationPath);
                 else
                     File.Copy(srcPath.FullName, srcPath.Name.Contains("_preview_") ? destPreviewPath : destinationPath, true);

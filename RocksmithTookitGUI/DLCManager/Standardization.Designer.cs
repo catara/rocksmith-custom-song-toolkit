@@ -5,7 +5,7 @@ using System.Data.OleDb;
 
 namespace RocksmithToolkitGUI.DLCManager
 {
-    partial class btn_Save
+    partial class Standardization
     {
         /// <summary>
         /// Required designer variable.
@@ -73,6 +73,8 @@ namespace RocksmithToolkitGUI.DLCManager
             this.label3 = new System.Windows.Forms.Label();
             this.btn_ApplyCurrent = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.btn_ApplyDefault = new System.Windows.Forms.Button();
+            this.bbtn_ApplyYear = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.databox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPath)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pxbx_SavedSpotify)).BeginInit();
@@ -96,7 +98,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.databox.MultiSelect = false;
             this.databox.Name = "databox";
             this.databox.RowHeadersWidth = 61;
-            this.databox.Size = new System.Drawing.Size(594, 518);
+            this.databox.Size = new System.Drawing.Size(670, 513);
             this.databox.TabIndex = 38;
             this.databox.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick_1);
             this.databox.CellLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellLeave);
@@ -198,11 +200,11 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_Artist.Cue = "Artist";
             this.txt_Artist.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_Artist.ForeColor = System.Drawing.Color.Gray;
-            this.txt_Artist.Location = new System.Drawing.Point(94, 92);
+            this.txt_Artist.Location = new System.Drawing.Point(95, 92);
             this.txt_Artist.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.txt_Artist.Name = "txt_Artist";
             this.txt_Artist.ReadOnly = true;
-            this.txt_Artist.Size = new System.Drawing.Size(205, 20);
+            this.txt_Artist.Size = new System.Drawing.Size(204, 20);
             this.txt_Artist.TabIndex = 131;
             // 
             // txt_AlbumArtPath
@@ -211,10 +213,10 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_AlbumArtPath.Enabled = false;
             this.txt_AlbumArtPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_AlbumArtPath.ForeColor = System.Drawing.Color.Gray;
-            this.txt_AlbumArtPath.Location = new System.Drawing.Point(105, 171);
+            this.txt_AlbumArtPath.Location = new System.Drawing.Point(95, 171);
             this.txt_AlbumArtPath.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.txt_AlbumArtPath.Name = "txt_AlbumArtPath";
-            this.txt_AlbumArtPath.Size = new System.Drawing.Size(194, 20);
+            this.txt_AlbumArtPath.Size = new System.Drawing.Size(204, 20);
             this.txt_AlbumArtPath.TabIndex = 130;
             this.txt_AlbumArtPath.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -381,7 +383,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_Year_Correction.Location = new System.Drawing.Point(5, 171);
             this.txt_Year_Correction.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.txt_Year_Correction.Name = "txt_Year_Correction";
-            this.txt_Year_Correction.Size = new System.Drawing.Size(94, 20);
+            this.txt_Year_Correction.Size = new System.Drawing.Size(82, 20);
             this.txt_Year_Correction.TabIndex = 389;
             // 
             // chbx_Default_Cover
@@ -546,6 +548,8 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.btn_ApplyDefault);
+            this.splitContainer1.Panel2.Controls.Add(this.bbtn_ApplyYear);
             this.splitContainer1.Panel2.Controls.Add(this.btn_CheckOnline);
             this.splitContainer1.Panel2.Controls.Add(this.btn_ApplyCurrent);
             this.splitContainer1.Panel2.Controls.Add(this.txt_Album);
@@ -584,20 +588,44 @@ namespace RocksmithToolkitGUI.DLCManager
             this.splitContainer1.Panel2.Controls.Add(this.btn_CopyTitle2TitleSort);
             this.splitContainer1.Panel2.Controls.Add(this.chbx_AutoSave);
             this.splitContainer1.Panel2.Controls.Add(this.lbl_NoRec);
-            this.splitContainer1.Size = new System.Drawing.Size(901, 518);
-            this.splitContainer1.SplitterDistance = 594;
+            this.splitContainer1.Size = new System.Drawing.Size(977, 513);
+            this.splitContainer1.SplitterDistance = 670;
             this.splitContainer1.TabIndex = 404;
             // 
-            // btn_Save
+            // btn_ApplyDefault
+            // 
+            this.btn_ApplyDefault.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_ApplyDefault.Location = new System.Drawing.Point(256, 392);
+            this.btn_ApplyDefault.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.btn_ApplyDefault.Name = "btn_ApplyDefault";
+            this.btn_ApplyDefault.Size = new System.Drawing.Size(43, 17);
+            this.btn_ApplyDefault.TabIndex = 405;
+            this.btn_ApplyDefault.Text = "Apply Default";
+            this.btn_ApplyDefault.UseVisualStyleBackColor = true;
+            this.btn_ApplyDefault.Click += new System.EventHandler(this.Btn_ApplyDefault_Click);
+            // 
+            // bbtn_ApplyYear
+            // 
+            this.bbtn_ApplyYear.Location = new System.Drawing.Point(217, 366);
+            this.bbtn_ApplyYear.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.bbtn_ApplyYear.Name = "bbtn_ApplyYear";
+            this.bbtn_ApplyYear.Size = new System.Drawing.Size(82, 25);
+            this.bbtn_ApplyYear.TabIndex = 404;
+            this.bbtn_ApplyYear.Text = "Apply Year Corr";
+            this.bbtn_ApplyYear.UseVisualStyleBackColor = true;
+            this.bbtn_ApplyYear.Click += new System.EventHandler(this.Bbtn_ApplyYear_Click);
+            // 
+            // Standardization
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(901, 518);
+            this.ClientSize = new System.Drawing.Size(977, 513);
             this.Controls.Add(this.splitContainer1);
             this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.Name = "btn_Save";
+            this.Name = "Standardization";
             this.Text = "Standardization";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.btn_Save_FormClosing);
             this.Load += new System.EventHandler(this.Standardization_Load);
             ((System.ComponentModel.ISupportInitialize)(this.databox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPath)).EndInit();
@@ -647,8 +675,8 @@ namespace RocksmithToolkitGUI.DLCManager
         private List<string> blist;
         //private OleDbConnection cnnb;
 
-        internal btn_Save(string txt_DBFolder, MainDBfields filed, DLCPackageData datas, string author, string tkversion, string dD, string bass, string guitar, string combo, string rhythm, string lead, string tunnings, int i, int norows, string original_FileName, string art_hash, string audio_hash, string audioPreview_hash, List<string> alist, List<string> blist, string txt_TempPath, string txt_RocksmithDLCPath, bool AllowEncript, bool AllowORIGDelete, OleDbConnection cnnb)
-            : this(txt_DBFolder, txt_TempPath, txt_RocksmithDLCPath, AllowEncript, AllowORIGDelete, cnnb)
+        internal Standardization(string txt_DBFolder, MainDBfields filed, DLCPackageData datas, string author, string tkversion, string dD, string bass, string guitar, string combo, string rhythm, string lead, string tunnings, int i, int norows, string original_FileName, string art_hash, string audio_hash, string audioPreview_hash, List<string> alist, List<string> blist, string txt_TempPath, string txt_RocksmithDLCPath, bool AllowEncript, bool AllowORIGDelete, OleDbConnection cnnb)
+            : this(txt_DBFolder, txt_TempPath, txt_RocksmithDLCPath, AllowEncript, AllowORIGDelete, cnnb,null)
         {
             this.filed = filed;
             this.datas = datas;
@@ -700,5 +728,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btn_ApplyCurrent;
         private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.Button bbtn_ApplyYear;
+        private System.Windows.Forms.Button btn_ApplyDefault;
     }
 }

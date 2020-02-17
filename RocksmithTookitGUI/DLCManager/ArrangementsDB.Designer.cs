@@ -30,6 +30,10 @@
         {
             this.databox = new System.Windows.Forms.DataGridView();
             this.Panel1 = new System.Windows.Forms.Panel();
+            this.label27 = new System.Windows.Forms.Label();
+            this.cmb_Tracks = new System.Windows.Forms.ComboBox();
+            this.bth_ShiftVocalNotes = new System.Windows.Forms.Button();
+            this.num_Lyrics = new System.Windows.Forms.NumericUpDown();
             this.btn_Remove = new System.Windows.Forms.Button();
             this.btn_Youtube = new System.Windows.Forms.Button();
             this.txt_Playthrough = new RocksmithToolkitGUI.CueTextBox();
@@ -101,15 +105,11 @@
             this.txt_CDLC_ID = new RocksmithToolkitGUI.CueTextBox();
             this.txt_Arrangement_Name = new RocksmithToolkitGUI.CueTextBox();
             this.CheckBox1 = new System.Windows.Forms.CheckBox();
-            this.cmb_Tracks = new System.Windows.Forms.ComboBox();
-            this.bth_ShiftVocalNotes = new System.Windows.Forms.Button();
-            this.num_Lyrics = new System.Windows.Forms.NumericUpDown();
-            this.label27 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.databox)).BeginInit();
             this.Panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.num_Lyrics)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txt_Rating)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.num_Lyrics)).BeginInit();
             this.SuspendLayout();
             // 
             // databox
@@ -213,6 +213,67 @@
             this.Panel1.Name = "Panel1";
             this.Panel1.Size = new System.Drawing.Size(1194, 122);
             this.Panel1.TabIndex = 40;
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(176, 103);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(54, 13);
+            this.label27.TabIndex = 424;
+            this.label27.Text = "TimeShift:";
+            // 
+            // cmb_Tracks
+            // 
+            this.cmb_Tracks.DropDownWidth = 800;
+            this.cmb_Tracks.FormattingEnabled = true;
+            this.cmb_Tracks.Location = new System.Drawing.Point(241, 100);
+            this.cmb_Tracks.Margin = new System.Windows.Forms.Padding(0);
+            this.cmb_Tracks.MaxDropDownItems = 100;
+            this.cmb_Tracks.Name = "cmb_Tracks";
+            this.cmb_Tracks.Size = new System.Drawing.Size(78, 21);
+            this.cmb_Tracks.TabIndex = 423;
+            // 
+            // bth_ShiftVocalNotes
+            // 
+            this.bth_ShiftVocalNotes.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bth_ShiftVocalNotes.Location = new System.Drawing.Point(377, 102);
+            this.bth_ShiftVocalNotes.Margin = new System.Windows.Forms.Padding(0);
+            this.bth_ShiftVocalNotes.Name = "bth_ShiftVocalNotes";
+            this.bth_ShiftVocalNotes.Size = new System.Drawing.Size(18, 18);
+            this.bth_ShiftVocalNotes.TabIndex = 421;
+            this.bth_ShiftVocalNotes.Text = "+";
+            this.bth_ShiftVocalNotes.UseVisualStyleBackColor = true;
+            this.bth_ShiftVocalNotes.Click += new System.EventHandler(this.Bth_ShiftVocalNotes_Click);
+            // 
+            // num_Lyrics
+            // 
+            this.num_Lyrics.DecimalPlaces = 3;
+            this.num_Lyrics.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.num_Lyrics.Location = new System.Drawing.Point(321, 101);
+            this.num_Lyrics.Margin = new System.Windows.Forms.Padding(2);
+            this.num_Lyrics.Maximum = new decimal(new int[] {
+            200,
+            0,
+            0,
+            0});
+            this.num_Lyrics.Minimum = new decimal(new int[] {
+            200,
+            0,
+            0,
+            -2147483648});
+            this.num_Lyrics.Name = "num_Lyrics";
+            this.num_Lyrics.Size = new System.Drawing.Size(54, 20);
+            this.num_Lyrics.TabIndex = 422;
+            this.num_Lyrics.Value = new decimal(new int[] {
+            4,
+            0,
+            0,
+            0});
             // 
             // btn_Remove
             // 
@@ -948,67 +1009,6 @@
             this.CheckBox1.Text = "Show only MessageBox";
             this.CheckBox1.UseVisualStyleBackColor = true;
             // 
-            // cmb_Tracks
-            // 
-            this.cmb_Tracks.DropDownWidth = 800;
-            this.cmb_Tracks.FormattingEnabled = true;
-            this.cmb_Tracks.Location = new System.Drawing.Point(241, 100);
-            this.cmb_Tracks.Margin = new System.Windows.Forms.Padding(0);
-            this.cmb_Tracks.MaxDropDownItems = 100;
-            this.cmb_Tracks.Name = "cmb_Tracks";
-            this.cmb_Tracks.Size = new System.Drawing.Size(78, 21);
-            this.cmb_Tracks.TabIndex = 423;
-            // 
-            // bth_ShiftVocalNotes
-            // 
-            this.bth_ShiftVocalNotes.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bth_ShiftVocalNotes.Location = new System.Drawing.Point(377, 102);
-            this.bth_ShiftVocalNotes.Margin = new System.Windows.Forms.Padding(0);
-            this.bth_ShiftVocalNotes.Name = "bth_ShiftVocalNotes";
-            this.bth_ShiftVocalNotes.Size = new System.Drawing.Size(18, 18);
-            this.bth_ShiftVocalNotes.TabIndex = 421;
-            this.bth_ShiftVocalNotes.Text = "+";
-            this.bth_ShiftVocalNotes.UseVisualStyleBackColor = true;
-            this.bth_ShiftVocalNotes.Click += new System.EventHandler(this.Bth_ShiftVocalNotes_Click);
-            // 
-            // num_Lyrics
-            // 
-            this.num_Lyrics.DecimalPlaces = 3;
-            this.num_Lyrics.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            65536});
-            this.num_Lyrics.Location = new System.Drawing.Point(321, 101);
-            this.num_Lyrics.Margin = new System.Windows.Forms.Padding(2);
-            this.num_Lyrics.Maximum = new decimal(new int[] {
-            200,
-            0,
-            0,
-            0});
-            this.num_Lyrics.Minimum = new decimal(new int[] {
-            200,
-            0,
-            0,
-            -2147483648});
-            this.num_Lyrics.Name = "num_Lyrics";
-            this.num_Lyrics.Size = new System.Drawing.Size(54, 20);
-            this.num_Lyrics.TabIndex = 422;
-            this.num_Lyrics.Value = new decimal(new int[] {
-            4,
-            0,
-            0,
-            0});
-            // 
-            // label27
-            // 
-            this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(176, 103);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(54, 13);
-            this.label27.TabIndex = 424;
-            this.label27.Text = "TimeShift:";
-            // 
             // ArrangementsDB
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -1020,13 +1020,14 @@
             this.Controls.Add(this.databox);
             this.Name = "ArrangementsDB";
             this.Text = "ArrangementsDB";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ArrangementsDB_FormClosing);
             this.Load += new System.EventHandler(this.ArrangementsDB_Load);
             ((System.ComponentModel.ISupportInitialize)(this.databox)).EndInit();
             this.Panel1.ResumeLayout(false);
             this.Panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.num_Lyrics)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txt_Rating)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.num_Lyrics)).EndInit();
             this.ResumeLayout(false);
 
         }

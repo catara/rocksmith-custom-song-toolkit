@@ -73,6 +73,7 @@ namespace RocksmithToolkitGUI.DLCManager
         public string yearalbum { get; set; }
         public string albumsort { get; set; }
         public OleDbConnection cnb { get; set; }
+        public int reffy { get; set; }
 
         //public bool newold { get; set; }
         //public string clist { get; set; }
@@ -92,7 +93,7 @@ namespace RocksmithToolkitGUI.DLCManager
             List<string> dlist, bool newold, string Is_Original, string altvert, string txt_RocksmithDLCPath, bool AllowEncript, bool AllowORIGDelete,
             string FileSize, string unpackedDir, string Is_MultiTrack, string MultiTrack_Version, string FileDate, string title_duplic,
             string original_Platform, string IsLive, string LiveDetails, string IsAcoustic, OleDbConnection cnnb, string dupli_reasons
-            , string lengty, string allothers)//, string yeara, string albumsa)//string Is_MultiTracking, string Multitracking, 
+            , string lengty, string allothers, int reff)//, string yeara, string albumsa)//string Is_MultiTracking, string Multitracking, 
         //file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, Tunings, b, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, alist, blist, DB_Path, clist, dlist, newold, Is_Original, altver
         {
             //Text = text;
@@ -145,6 +146,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.cnb = cnnb;
             this.lengty = lengty;
             this.allothers = allothers;
+            this.reffy = reff;
             //this.yearalbum = yeara;
             //this.albumsort = albums;
 
@@ -339,8 +341,8 @@ namespace RocksmithToolkitGUI.DLCManager
 
             if (datas.SongInfo.SongYear.ToString() != filed.Album_Year)
             {
-                lbl_YearExisting.ForeColor = System.Drawing.Color.Red; lbl_YearExisting.Font = new Font(lbl_YearExisting.Font.Name, 9, FontStyle.Bold | FontStyle.Underline);
-                lbl_YearNew.ForeColor = System.Drawing.Color.Red; lbl_YearNew.Font = new Font(lbl_YearNew.Font.Name, 9, FontStyle.Bold | FontStyle.Underline);
+                txt_YearExisting.ForeColor = System.Drawing.Color.Red; txt_YearExisting.Font = new Font(txt_YearExisting.Font.Name, 9, FontStyle.Bold | FontStyle.Underline);
+                txt_YearNew.ForeColor = System.Drawing.Color.Red; txt_YearNew.Font = new Font(txt_YearNew.Font.Name, 9, FontStyle.Bold | FontStyle.Underline);
             }
             //{ lbl_TitleSort.ForeColor = lbl_Reference.ForeColor; btn_TitleSortExisting.Enabled = true; btn_TitleSortNew.Enabled = true; }
             //else if (datas.SongInfo.SongDisplayNameSort == "" && "" == filed.Song_Title_Sort) lbl_TitleSort.Text = "";
@@ -1201,6 +1203,54 @@ namespace RocksmithToolkitGUI.DLCManager
             sel += " WHERE ID=" + lbl_IDExisting.Text;
             //txt_Description.Text = sel;
             DataSet ddr = new DataSet(); ddr = UpdateDB("Main", sel + ";", cnb);
+            if (reffy != 0)
+                UpdateCompareBase();
+            //OleDbDataAdapter dat = new OleDbDataAdapter(sel, cnn);
+
+                //dat.Fill(ddr, "Main");
+                //dat.Dispose();
+                //MessageBox.Show(DB_Path);
+                //    }
+                //}
+                //catch (System.IO.FileNotFoundException ee)
+                //{
+                //    MessageBox.Show(ee.Message + "Can not open Main DB connection ! " + sel);
+                //    //MessageBox.Show(ee.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //}
+            if (!chbx_Autosave.Checked) MessageBox.Show("Existing Record updated");
+
+        }
+        public void UpdateCompareBase()
+        {
+            var sel = "";
+            //var cmd = "";
+            // in case a similar artist covered the song ...don't attach wrong names
+            var al = txt_AlbumNew.Text;
+            var ar = txt_ArtistNew.Text;
+            //if (filed.Album != datas.SongInfo.Album) al = datas.SongInfo.Album;
+            //if (filed.Artist != datas.SongInfo.Artist) ar = datas.SongInfo.Artist;
+            var alt = chbx_IsAlternateNew.Checked ? txt_AlternateNoNew.Value.ToString() : null;
+
+            //try
+            //{
+            //    //MessageBox.Show(DB_Path);
+            //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
+            //    {
+            sel = "UPDATE Main SET Artist=\"" + ar + "\", Artist_Sort=\"" + txt_ArtistSortNew.Text + "\", Album=\"" + al + "\", Song_Title=\"" + txt_TitleNew.Text;
+            sel += "\", Song_Title_Sort=\"" + txt_TitleSortNew.Text + "\", Author=\"" + (txt_AuthorNew.Text == "" ? (ConfigRepository.Instance()["dlcm_AdditionalManipul47"] == "Yes" ? "" : "Custom Song Creator") : txt_AuthorNew.Text);
+            sel += "\", Version=\"" + (txt_VersionNew.Text == "" ? "1" : txt_VersionNew.Text) + "\", DLC_Name=\"" + txt_DLCIDNew.Text + "\",";
+            sel += (txt_DescriptionExistig.Text == "" ? "" : " Description = \"" + txt_DescriptionExistig.Text + "\",");/// + (txt_DescriptionExistig.Text == "" ? "" : " Comments = \"" + txt_DescriptionExistig.Text + "\","); //"\"," +
+            sel += " Is_Alternate = \"" + (chbx_IsAlternateNew.Checked ? "Yes" : "No") + "\", Alternate_Version_No = \"" + alt + "\",";// + "\"", AlbumArtPath = \"" + (rbtn_CoverNew.Checked ? picbx_AlbumArtPathNew.ImageLocation : picbx_AlbumArtPathNew.ImageLocation);// + "\", Is_Original = \"" + (chbx_IsOriginal.Checked ? "Yes" : "No");
+            sel += " Is_MultiTrack = \"" + (chbx_MultiTrackNew.Checked ? "Yes" : "No") + "\", MultiTrack_Version = \"" + (chbx_MultiTrackNew.Checked ? txt_MultiTrackNew.Text : "") + "\",";// + "\"", AlbumArtPath = \"" + (rbtn_CoverNew.Checked ? picbx_AlbumArtPathNew.ImageLocation : picbx_AlbumArtPathNew.ImageLocation);// + "\", Is_Original = \"" + (chbx_IsOriginal.Checked ? "Yes" : "No");
+            sel += " Is_Live = \"" + (chbx_LiveNew.Checked ? "Yes" : "No") + "\", Live_Details = \"" + (chbx_LiveNew.Checked ? txt_LiveDetailsNew.Text : "") + "\",";// + "\"", AlbumArtPath = \"" + (rbtn_CoverNew.Checked ? picbx_AlbumArtPathNew.ImageLocation : picbx_AlbumArtPathNew.ImageLocation);// + "\", Is_Original = \"" + (chbx_IsOriginal.Checked ? "Yes" : "No");
+            sel += " Is_Acoustic = \"" + (chbx_AcousticNew.Checked ? "Yes" : "No") + "\"," + " Album_Year = \"" + txt_YearNew.Text + "\",";
+            sel += " AlbumArtPath = \"" + picbx_AlbumArtPathNew.ImageLocation.Replace(".png", ".dds") + "\", AlbumArt_Hash = \"" + GetHash(picbx_AlbumArtPathNew.ImageLocation.Replace(".png", ".dds")) + "\",";// + "\"", AlbumArtPath = \"" + (rbtn_CoverNew.Checked ? picbx_AlbumArtPathNew.ImageLocation : picbx_AlbumArtPathNew.ImageLocation);// + "\", Is_Original = \"" + (chbx_IsOriginal.Checked ? "Yes" : "No");
+            sel += " YouTube_Link = \"" + txt_YouTube_LinkNew.Text + "\", CustomsForge_Link = \"" + txt_CustomsForge_LinkNew.Text + "\",";
+            sel += " CustomsForge_Like = \"" + txt_CustomsForge_LikeNew.Text + "\", CustomsForge_ReleaseNotes = \"" + txt_CustomsForge_ReleaseNotesNew.Text + "\"";
+            //sel += "\", AlbumArt_Hash = \"" + (rbtn_CoverNew.Checked ? art_hash : filed.AlbumArt_Hash);
+            sel += " WHERE ID=" + reffy;
+            //txt_Description.Text = sel;
+            DataSet ddr = new DataSet(); ddr = UpdateDB("Main", sel + ";", cnb);
             //OleDbDataAdapter dat = new OleDbDataAdapter(sel, cnn);
 
             //dat.Fill(ddr, "Main");
@@ -1213,7 +1263,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //    MessageBox.Show(ee.Message + "Can not open Main DB connection ! " + sel);
             //    //MessageBox.Show(ee.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
             //}
-            if (!chbx_Autosave.Checked) MessageBox.Show("Existing Record updated");
+            if (!chbx_Autosave.Checked) MessageBox.Show("New Record updated");
 
         }
 
@@ -1248,6 +1298,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 btn_ArtistSortNew.Enabled = true;
                 lbl_ArtistSort.ForeColor = lbl_Reference.ForeColor;
             }
+
             if (txt_TitleSortExisting.Text == txt_TitleSortNew.Text)
             {
                 btn_TitleSortExisting.Enabled = false;
@@ -1260,6 +1311,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 btn_TitleSortNew.Enabled = true;
                 lbl_TitleSort.ForeColor = lbl_Reference.ForeColor;
             }
+
             if (txt_TitleExisting.Text == txt_TitleNew.Text)
             {
                 btn_TitleExisting.Enabled = false;
@@ -1272,6 +1324,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 btn_TitleNew.Enabled = true;
                 lbl_Title.ForeColor = lbl_Reference.ForeColor;
             }
+
             if (txt_AlbumExisting.Text == txt_AlbumNew.Text)
             {
                 btn_AlbumExisting.Enabled = false;
@@ -1284,6 +1337,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 btn_AlbumNew.Enabled = true;
                 lbl_Album.ForeColor = lbl_Reference.ForeColor;
             }
+
             if (txt_ArtistExisting.Text == txt_ArtistNew.Text)
             {
                 btn_ArtistExisting.Enabled = false;
@@ -1296,6 +1350,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 btn_ArtistNew.Enabled = true;
                 lbl_Artist.ForeColor = lbl_Reference.ForeColor;
             }
+
             if (txt_AuthorExisting.Text == txt_AuthorNew.Text)
             {
                 btn_AuthorExisting.Enabled = false;
@@ -1308,12 +1363,18 @@ namespace RocksmithToolkitGUI.DLCManager
                 btn_AuthorNew.Enabled = true;
                 lbl_Author.ForeColor = lbl_Reference.ForeColor;
             }
+
             if (txt_AlbumSortExisting.Text == txt_AlbumSortNew.Text)
             {
                 btn_AlbumSortExisting.Enabled = false;
                 btn_AlbumSortNew.Enabled = false;
                 lbl_AlbumSort.ForeColor = lbl_diffCount.ForeColor;
             }
+            else
+            {
+                lbl_AlbumSort.ForeColor = lbl_Reference.ForeColor;
+            }
+
             if (txt_YearExisting.Text == txt_YearNew.Text)
             {
                 lbl_YearExisting.ForeColor = lbl_diffCount.ForeColor;
@@ -1324,6 +1385,16 @@ namespace RocksmithToolkitGUI.DLCManager
                 btn_AlbumSortNew.Enabled = true;
                 lbl_AlbumSort.ForeColor = lbl_Reference.ForeColor;
             }
+
+            if (txt_LenghtNew.Text == txt_LenghtExisting.Text)
+            {
+                lbl_LenghtNew.ForeColor = lbl_diffCount.ForeColor;
+            }
+            else
+            {
+                lbl_LenghtNew.ForeColor = lbl_Reference.ForeColor;
+            }
+
             ExistChng = true;
         }
 
@@ -1968,20 +2039,31 @@ namespace RocksmithToolkitGUI.DLCManager
             btn_AlbumSortNew.Enabled = false;
             lbl_AlbumSort.ForeColor = lbl_diffCount.ForeColor;
             txt_YearNew.Text = txt_YearExisting.Text;
-            lbl_YearExisting.ForeColor = lbl_diffCount.ForeColor;
+
+            txt_YearNew.ForeColor = lbl_diffCount.ForeColor;
+            txt_YearExisting.ForeColor = lbl_diffCount.ForeColor;
         }
 
         private void Btn_AlbumSortExisting_Click(object sender, EventArgs e)
         {
             txt_AlbumSortExisting.Text = txt_AlbumSortNew.Text;
+            txt_YearExisting.Text = txt_YearNew.Text;
             btn_AlbumSortExisting.Enabled = false;
             btn_AlbumSortNew.Enabled = false;
             lbl_AlbumSort.ForeColor = lbl_diffCount.ForeColor;
+
+            txt_YearNew.ForeColor = lbl_diffCount.ForeColor;
+            txt_YearExisting.ForeColor = lbl_diffCount.ForeColor;
         }
 
         private void Btn_Album2SortA_Click(object sender, EventArgs e)
         {
             syncAlbum();
+        }
+
+        private void Lbl_ArtistSort_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

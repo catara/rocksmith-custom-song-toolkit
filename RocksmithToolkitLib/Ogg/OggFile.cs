@@ -12,7 +12,7 @@ namespace RocksmithToolkitLib.Ogg
     public static class OggFile//wwRIFF
     {
         // Add support for newer versions of Wwise here
-        public enum WwiseVersion { None, Wwise2010, Wwise2013, Wwise2014, Wwise2015, Wwise2016, Wwise2017, Wwise2018 };
+        public enum WwiseVersion { None, Wwise2010, Wwise2013, Wwise2014, Wwise2015, Wwise2016, Wwise2017, Wwise2018, Wwise2019 };
 
         #region RS1
 
@@ -75,6 +75,9 @@ namespace RocksmithToolkitLib.Ogg
                     ww2oggProcess.StartInfo.Arguments = String.Format("\"{0}\" -o \"{1}\" --pcb \"{2}\"", file, outputFileName, Path.Combine(ExternalApps.TOOLKIT_ROOT, ExternalApps.APP_CODEBOOKS_603));
                     break;
                 case WwiseVersion.Wwise2018: // bcapi
+                    ww2oggProcess.StartInfo.Arguments = String.Format("\"{0}\" -o \"{1}\" --pcb \"{2}\"", file, outputFileName, Path.Combine(ExternalApps.TOOLKIT_ROOT, ExternalApps.APP_CODEBOOKS_603));
+                    break;
+                case WwiseVersion.Wwise2019: // bcapi
                     ww2oggProcess.StartInfo.Arguments = String.Format("\"{0}\" -o \"{1}\" --pcb \"{2}\"", file, outputFileName, Path.Combine(ExternalApps.TOOLKIT_ROOT, ExternalApps.APP_CODEBOOKS_603));
                     break;//
                 default:

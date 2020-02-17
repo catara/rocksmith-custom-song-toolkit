@@ -1,11 +1,11 @@
-﻿		# Date: 12.06.2019
+﻿		# Date: 20.02.2020
 		# Document Name: Rocksmith DLC Management tool README
 						(fork of rocksmith-custom-song-toolkit)
 		# Document purpose: To describe the functionailities and the way to change, the NEW tab that enable MASS Manipulation of Rocksmith DLC Library
-							(DLC folder; including customs(CDLC), DLCs and songs embeded in the ready to ship version of Rocksmith 2014) 
+							(DLC folder; including customs(CDLC), DLCs and songs embeded in the ready to ship version of Rocksmith (2014 Remastered version)) 
 
-## Rocksmith DLC Library Manager v0.7.4
-*(beta version-unreleased to the masses; branch of CSC)*
+## Rocksmith DLC Library Manager v0.7.5
+*(alpha version- unnoficially, but available, version unreleased to the masses)*
 # App Description: MASS Manipulation of Rocksmith DLC Library 
 		e.g. 1. in Rocksmith, in the Library, each song's Album, to contain a personal rating, if it has DD, instr. avail
 		e.g. 2. in Rocksmith, in the Library, each song to be sorted by Album(Year) and Track No
@@ -19,22 +19,22 @@
 		- Preview
 		- Cover
 		- Lyrics
-		- the stanndard 128kb bitrate
+		- the standard sufficient Audio qualkity (>128kb bitrate)
 	- Listen to songs Audio/Preview
-	- Gathers Track No./Cover/Year from Spotify
+	- Gathers Track No./Cover/Year from Spotify & Youtube
 - Mass Modify songdetails/metadata @repack per each Rocksmith song
 	*e.g. Album Field: "<Broken><Year> - <Album> - r<Rating> - <Avail. Instr.> - <DD> - <Tuning>"
 	- Copies songs/packs directly to the PS3 by means of FTP
 - Mass add/remove DD @repack (inc. Bass only option)(incl. Official DLCs)
-- Setlists (NEW)
+- Setlists/Groups (NEW)
 - Read Current Game Library and match it to the DLCManager Library (incl. PS3) (NEW)
 - Mass rename songs(Standardization) e.g. Black Keys->The Black Keys and maintain changes in a local DB
 - Manipulates the Retail songs list of Rocksmith (Rocksmith 2014 disc, or Rocksmith 2012 DLC, or Rocksmith 2012 Import disc)
 
-<img src="/RocksmithTookitGUI/DLCManager/Screenshot1.png" alt="Rocksmith DLC Library Manager Import&Pack"/> //width="400px"/
+<img src="/RocksmithTookitGUI/DLCManager/Screenshot1.png" alt="Rocksmith DLC Library Manager Import&Pack"/>
 <img src="/RocksmithTookitGUI/DLCManager/Screenshot2.png" alt="Song Metadata DB Screen"/>
 <img src="/RocksmithTookitGUI/DLCManager/Screenshot3.png" alt="Song Metadata Standardization Screen"/>
-<img src="/RocksmithTookitGUI/DLCManager/Screenshot4.png" alt="Rocksmith Retail Manipulation Scree"/>
+<img src="/RocksmithTookitGUI/DLCManager/Screenshot4.png" alt="Rocksmith Retail Manipulation Screen"/>
 <img src="/RocksmithTookitGUI/DLCManager/Screenshot5.png" alt="Duplicate Management Import Screen"/>
 <img src="/RocksmithTookitGUI/DLCManager/Screenshot6.png" alt="Rocksmith EndScreen Sample"/>
 
@@ -156,7 +156,7 @@
 [ ] take me now baby weird timing in lyric
 [ ] add multi select
 [ ] "C:\\t\\0\\0_repacked\\PS3\\CDLC-ACDC-1986-Who_Made_Who-00-D_T_"
-[ ] too many oggs
+[ ] too many oggs check and workaround celannup
 [ ] add list of copies
 [ ] fix dont show lyrics 
 [ ] add tooltip that older newr is incomplete
@@ -176,74 +176,95 @@
 [ ] add export to excel (maybe not as u could simply export from access :) )
 [ ] multiple repacks still occur
 [ ] single pack sometimes runs multiple times
-[ ] add manualy modified same lyrics chenge flag (maybe based on hash)
+[ ] add manualy modified same lyrics change flag (maybe based on hash)
 [ ] preview starts twice bug
 [ ] remove group seems gbroken roups--------DELETE * FROM Groups WHERE Type="DLC" AND Groups= "" LEFT JOIN Main on Main.ID=Groups.CDLC_ID and Main.Selected='Yes'--------------Syntax error (missing operator) in query expression 'Type="DLC" AND Groups= "" LEFT JOIN Main on Main.ID=Groups.CDLC_ID and Main.Selected='Yes''.DB Open in Design Mode, or Missing, or you need to Download the 32bit Connectivity libraryACE.OLEDB.16.0 @ 
-
+[ ] at import gather info and display
 
 ## WiP:
 (this release)
-[ ] compound breaks the select
-[ ] at import gather
-[ ] not &compound ruin the selection after first execution
 [ ] Feeling Good_158, Rape Me_3573, Pixies_1987_Come on Pilgrim_0_Nimrod's Son_3793
+	[ ] "C:\\t\\f\\0\\0_data\\Pc_CDLC_Elton John_1983_Too Low for Zero_0_I'm Still Standing_16\\gfxassets\\album_art\\album_reaejimstillstanding_256.dds"
+	var attribute = new Attributes2014(arrangementFileName, arr, info, platform);
+	C:\GitHub\rocksmith-custom-song-toolkit\RocksmithToolkitLib\DLCPackage\DLCPackageCreator.cs
+	543
 [ ] fixed saving or yb main/arrangement not to have https:\\yb.comhttps:\\yb.com
 [ ] add text to audio fixing on progress ar
 [ ] mass dont copy single do
 [ ] update screenshots
 [ ] is combo lead track in lyrics?
+[ ] reubild s0ngds.psarc
+[ ] db change doesnt not db change when leaving cell
+[ ] to finish spotify status and yb status at geenraste?
+[ ] at exxport diff tunnings should be displayed if avail
+[ ] reduced update selected? in mai db as nnot to run more than once (or five times :) )
+[ ] fix pack id?
+[ ] antthenum pneuma issues wwitth hash but still it should have been up to assement
+[ ] zipdb every day
+[ ] make all folders remote 0_temp=c("0_temp")
+[ ] fix log
+[ ] fix import moves to archive not old
+[ ] add read only
+[ ] add info on aseessing for duplicates
+[ ] lsit duplicates not imported
+[ ] https://explore.amd.com/e/659533/m-medium-email-utm-term-btn-tp/9mcnp/237446456?h=sGd69neOaxNCEXHNo4reoAoV2gv6Rm-q2kv1Cph14bk
+[ ] copy latest meta from db to xml
+[ ] same files not recog as dupli in the import file
+[ ] implement a goto
 
 ## done:
-(prev release)
-[x] export as webbpage improvements
-	[x] clean lyrics
-	[x] if year/album is the same of prev dont display img
-[x] fix on selects as view_fields had some spaces in the xml for redabiltiy but then the replace with id was failing
-[x] fix issues with get path of 3rd parties
-[x] fix replace () with asquare brakets
-[x] fix set multitrack
-[x] if no lyrics dont try to display
-[x] fixed disabled add instrumental
-[x] fixed disabled add track
-[x] fixed add isntrumental 
-[x] fixed regression issue at mac and pc repack
-[x] delete rk folders as split4pack and minus button
-[x] active accdb compress at CleanDB or adhoc by button (not import)
-[x] update wwise to latest 2017.2.xx/2018
-[-] why eu us is not changing
-[-] why sometimes ps3 ftp is not transmited
-[-] replace not always work..
-[-] add options to install missing tools (winmerge; pkg linker, reasigner, etc.)
-[x] extract tabs+lyrics
-[x] extract gp5
-[x] add starting times as tooltip on instruments
-[+] add sections (bored to death; Renabled BPR program)
-[x] add conter of sections
-[-] select deselect group is fixed using new way of adding groups incl date
-[-] restore spotify access
-[x] fixed lyrics issue if lyric start txt is longer than max platform
-[-] after import only show last imported
-[-] after read libb only show read lib
-[x] set a proper window default
-[x] reactivate tooltip
-[x] fix/check changing path of library
-[-] fix songs w only bass and dd attached
-[-] small feature: when opening MainDB and detecting directory check runs, if next directory exists (give a change to empty the db then if possible)
-[x] add dynamic filter for all tunnings in Arrangements:)
-[x] made versioning dynamic
-[x] added uft7 when readin g from FTP
-[x] fix deselect if already selected and removed
-[x] fix autoplay flag
-[x] improve open folder to add option to create
-[x] Added a Pack as pc/mac/etc. Filter mainDB
-[x] fix albbum sort smaller than 4 charwhy do you call me when youre high
-[x] disabled more fields at search
-[x] renamed playthrough field&boxes
-[x] added Main playthrough save
-[x] added arangement playthrough save if containing Rhythm/Lead/Combo/Bass
-[x] improved error window
-[x] fixed regression on add lyric file
-[x] improved add lyric process (also fixed ultrastar creator that did not start)
+(prev release)[x] update dbs
+[x] de-activate extra cleanup of standardization
+[x] add cut song to lenghty (nin hurt)
+[x] fix apply default grouping
+[x] multiply year
+[x] max issue w spaces
+	[ ] altertnate does not increase
+[x] fixed issue w artist title too short and comparison would fail for duplication cause checking for  removal of [ ] 
+[x] fix webpage creation when having multiple songs from the same album
+[x] colour year in duplicte managgement
+[x] colout time (duplicates)
+[x] trim manipulated text of -
+[x] added version of packing
+[x] added date of packing
+[x] fixed issue that would trigger preview regen and break the files
+[x] colour changes in instr in main and lenght in duplicate screen
+[x] added ftp status and frtp checck
+[x] fix mac (updated patch and added isntructions)
+	[x] fixed mac script customozation
+[x] add path for mac, and pc if none set globaly
+	[x] consolid
+[x] further mor eimprov add to ylrics
+[x] adding things to defualt ins tandardization should bring you ack tto artist you were edditing
+[x] make preview hash visible
+[x] nirv year improv year duplication)
+[x] unselect add messageg if ggroups selcted but not inputted
+[x] ccorrected packid ni logpack audit trail
+[x] add filter to sselect all last packed bubt with issues
+[x] when packig a group dont pack if song in other groups?
+[x] fix add track based on other song (vocal)
+[-] if name changes flag should change (add duplicate management;others)
+[x] rename shift vocal to shift track ...
+[x] when closing windows capture closeure
+[-] when closing dialogs capture closure
+[x] add tooltip to thinigs
+[x] improv show ftp files
+[x] added the open repacked dir
+[-] missing save and refresh
+[x] improve clean db&temp (mss, no access delete if the same tempdb path )
+[x] improve compact&repair (overrite apparently was default mss when asking to compress now fixing ina  new name that then overrites old file)
+[x] move wwise to 2018 and mark 2019 as beta/not working
+[x] activate check spotify
+[x] add log details to delete/Check fodlers
+[x] songs w no lyrics not packed
+[x] when selecting standardization open at current artist name
+[x] add second bonus signs
+[x] Add Album_Sort
+[x] removed extra "-" from metadatas (param)
+[x] wwise 2019 bbreaks coversion
+[x] compound breaks the select
+[x] not &compound ruin the selection after first execution
+[x] samer name filter
 
 # Version History(release date):
 	0.1(12.08.2014) prototype, 
@@ -274,6 +295,8 @@
 	0.7 (01.07.2018) Code review
 	0.7.2 (26.03.2019) Code review (+'19 Toolkit code base)
 	0.7.3 (6.05.2019) Find YB videos and export as webpage imrovements
+	0.7.4 (6.05.2019) Find YB videos and export as webpage imrovements
+	0.7.5 (20.02.2020) 
 	0.8 (xx.0x.2019) Reactivating Spotify checks, all params are in the Groups table
 
 # Implementation Tracking for the Main Features:
@@ -438,7 +461,7 @@ of this folder should be directed to the respective developer.
 		http://www.psx-place.com/threads/pkg-linker-2-0-serve-packages-to-your-ps3-han-cfw.17252/page-20#post-125162
 
 		-DevOnly additional software
-			EOF v1.8b (c)2008-2010 T³ Software eof1.8RC11(2-20-2019) http://ignition.customsforge.com/eof http://customsforge.com/topic/1529-latest-eof-releases-5-19-2016/page-86 -4 transforming lyrics into RS Vocals
+			EOF v1.8b (c)2008-2010 T³ Software eof1.8RC11(1-14-2020) http://ignition.customsforge.com/eof http://customsforge.com/topic/1529-latest-eof-releases-5-19-2016/page-86 -4 transforming lyrics into RS Vocals
 			UltraStar Creator 1.2 https://sourceforge.net/projects/usc/ -4creati ng lyrics files to import in EoF
 			TotalCommander https://gisler.com -4Encripting PS3 Retail Sog PSARCS (0 encription level only avail here)
 			MediaInfo https://sourceforge.net/projects/mediainfo/ -4checking wem bitrate

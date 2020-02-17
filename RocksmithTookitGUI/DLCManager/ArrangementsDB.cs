@@ -680,7 +680,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 if (cmb_Tracks.Items.Count > 0) for (int k = cmb_Tracks.Items.Count - 1; k >= 0; --k) cmb_Tracks.Items.RemoveAt(k);//remove items
 
                 //get dupli&songlenght
-                var scmd = "SELECT Duplicate_Of,Song_Lenght,Song_Title FROM Main WHERE ID="+txt_CDLC_ID.Text+";";
+                var scmd = "SELECT Duplicate_Of,Song_Lenght,Song_Title FROM Main WHERE ID=" + txt_CDLC_ID.Text + ";";
                 DataSet dzvs = new DataSet(); dzvs = SelectFromDB("Main", scmd, "", cnb);
                 var sl = dzvs.Tables[0].Rows[0].ItemArray[1].ToString();
                 var dupl = dzvs.Tables[0].Rows[0].ItemArray[0].ToString();
@@ -694,7 +694,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 for (var j = 0; j <= norecs - 1; j++) IDs += "," + dzs.Tables[0].Rows[j].ItemArray[0].ToString();
 
                 //same name
-                scmd = "SELECT ID FROM Main WHERE SongTitle=\""+CleanTitle(sname)+"\" AND ID not in ("+IDs+");";
+                scmd = "SELECT ID FROM Main WHERE SongTitle=\"" + CleanTitle(sname) + "\" AND ID not in (" + IDs + ");";
                 DataSet dzcs = new DataSet(); dzcs = SelectFromDB("Main", scmd, "", cnb);
                 norecs = dzcs.Tables.Count == 0 ? 0 : dzcs.Tables[0].Rows.Count;
                 for (var j = 0; j <= norecs - 1; j++) IDs += "," + dzcs.Tables[0].Rows[j].ItemArray[0].ToString();
@@ -729,8 +729,6 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btn_Close_Click(object sender, EventArgs e)
         {
-            if (chbx_AutoSave.Checked && txt_CDLC_ID.Text != "" && txt_CDLC_ID.Text != null) { SaveOK = true; SaveRecord(); }
-            else SaveOK = false;
             this.Close();
         }
 
@@ -762,140 +760,143 @@ namespace RocksmithToolkitGUI.DLCManager
             int i;
             DataSet dis = new DataSet();
 
-            i = databox.SelectedCells[0].RowIndex;
-
-            databox.Rows[i].Cells["ID"].Value = txt_ID.Text;
-            databox.Rows[i].Cells["Arrangement_Name"].Value = txt_Arrangement_Name.Text;
-            databox.Rows[i].Cells["CDLC_ID"].Value = txt_CDLC_ID.Text;
-            //DataGridView1.Rows[i].Cells["SNGFilePath"].Value = txt_SNGFilePath.Text;
-            //DataGridView1.Rows[i].Cells["XMLFilePath"].Value = txt_XMLFilePath.Text;
-            databox.Rows[i].Cells["ScrollSpeed"].Value = txt_ScrollSpeed.Text;
-            databox.Rows[i].Cells["Tunning"].Value = chbx_Tunning.Text;
-            databox.Rows[i].Cells["Rating"].Value = txt_Rating.Text;
-            databox.Rows[i].Cells["TuningPitch"].Value = txt_TuningPitch.Text;
-            databox.Rows[i].Cells["ToneBase"].Value = chbx_ToneBase.Text;
-            //DataGridView1.Rows[i].Cells[""].Value = txt_Idd.Text;
-            databox.Rows[i].Cells["ArrangementType"].Value = txt_ArrangementType.Text;
-            databox.Rows[i].Cells["String0"].Value = txt_String0.Text;
-            databox.Rows[i].Cells["String1"].Value = txt_String1.Text;
-            databox.Rows[i].Cells["String2"].Value = txt_String2.Text;
-            databox.Rows[i].Cells["String3"].Value = txt_String3.Text;
-            databox.Rows[i].Cells["String4"].Value = txt_String4.Text;
-            databox.Rows[i].Cells["String5"].Value = txt_String5.Text;
-            databox.Rows[i].Cells["PluckedType"].Value = chbx_BassPicking.Text;
-            databox.Rows[i].Cells["RouteMask"].Value = txt_RouteMask.Text;
-            databox.Rows[i].Cells["ToneA"].Value = chbx_ToneA.Text;
-            databox.Rows[i].Cells["ToneB"].Value = chbx_ToneB.Text;
-            databox.Rows[i].Cells["ToneC"].Value = chbx_ToneC.Text;
-            databox.Rows[i].Cells["ToneD"].Value = chbx_ToneD.Text;
-            databox.Rows[i].Cells["lastConversionDateTime"].Value = txt_lastConversionDateTime.Text;
-            databox.Rows[i].Cells["Comments"].Value = txt_Description.Text;
-            databox.Rows[i].Cells["Has_Sections"].Value = chbx_HasSection.Checked ? "Yes" : "No";
-            databox.Rows[i].Cells["Comments"].Value = txt_Description.Text;
-            //if (chbx_Bonus.Checked) DataGridView1.Rows[i].Cells["Bonus"].Value = "Yes";
-            //else DataGridView1.Rows[i].Cells["Bonus"].Value = "No";
-
-
-            //var DB_Path = "../../../../tmp\\AccessDB.accdb;";
-            var connection = new OleDbConnection("Provider=Microsoft." + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path); //+ ";Persist Security Info=False"
-            var command = connection.CreateCommand();
-            //dssx = DataGridView1;
-            using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft." + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
+            if (databox.SelectedCells.Count > 0 && txt_ID.Text != "")
             {
-                //OleDbCommand command = new OleDbCommand(); ;
-                //Update MainDB
-                //SqlCommand cmds = new SqlCommand(sqlCmd, conn2);
-                command.CommandText = "UPDATE Arrangements SET ";
+                i = databox.SelectedCells[0].RowIndex;
 
-                //command.CommandText += "ID = @param0, ";
-                command.CommandText += "Arrangement_Name = @param1, ";
-                command.CommandText += "CDLC_ID = @param2, ";
-                command.CommandText += "Bonus = @param3, ";
-                //command.CommandText += "SNGFilePath = @param4, ";
-                //command.CommandText += "XMLFilePath = @param5, ";
-                //command.CommandText += "XMLFile_Hash = @param6, ";
-                command.CommandText += "ScrollSpeed = @param7, ";
-                command.CommandText += "Tunning = @param8, ";
-                command.CommandText += "Rating = @param9, ";
-                //command.CommandText += "PlaythroughYBLink = @param10, ";
-                //command.CommandText += "CustomsForge_Link = @param11, ";
-                //command.CommandText += "ArrangementSort = @param12, ";
-                command.CommandText += "TuningPitch = @param13, ";
-                command.CommandText += "ToneBase = @param14, ";
-                //command.CommandText += "Idd = @param15, ";
-                //command.CommandText += "MasterId = @param16, ";
-                command.CommandText += "ArrangementType = @param17, ";
-                command.CommandText += "String0 = @param18, ";
-                command.CommandText += "String1 = @param19, ";
-                command.CommandText += "String2 = @param20, ";
-                command.CommandText += "String3 = @param21, ";
-                command.CommandText += "String4 = @param22, ";
-                command.CommandText += "String5 = @param23, ";
-                command.CommandText += "PluckedType = @param24, ";
-                command.CommandText += "RouteMask = @param25, ";
-                //command.CommandText += "XMLFileName = @param26, ";
-                //command.CommandText += "XMLFileLLID = @param27, ";
-                //command.CommandText += "XMLFileUUID = @param28, ";
-                //command.CommandText += "SNGFileName = @param29, ";
-                //command.CommandText += "SNGFileLLID = @param30, ";
-                //command.CommandText += "SNGFileUUID = @param31, ";
-                //command.CommandText += "ToneMultiplayer = @param32, ";
-                command.CommandText += "ToneA = @param33, ";
-                command.CommandText += "ToneB = @param34, ";
-                command.CommandText += "ToneC = @param35, ";
-                command.CommandText += "ToneD = @param36, ";
-                command.CommandText += "lastConversionDateTime = @param37, ";
-                //command.CommandText += "SNGFileHash = @param38 ";
-                //command.CommandText += "Has_Sections = @param39 ";
-                command.CommandText += "Comments = @param40 ";
+                databox.Rows[i].Cells["ID"].Value = txt_ID.Text;
+                databox.Rows[i].Cells["Arrangement_Name"].Value = txt_Arrangement_Name.Text;
+                databox.Rows[i].Cells["CDLC_ID"].Value = txt_CDLC_ID.Text;
+                //DataGridView1.Rows[i].Cells["SNGFilePath"].Value = txt_SNGFilePath.Text;
+                //DataGridView1.Rows[i].Cells["XMLFilePath"].Value = txt_XMLFilePath.Text;
+                databox.Rows[i].Cells["ScrollSpeed"].Value = txt_ScrollSpeed.Text;
+                databox.Rows[i].Cells["Tunning"].Value = chbx_Tunning.Text;
+                databox.Rows[i].Cells["Rating"].Value = txt_Rating.Text;
+                databox.Rows[i].Cells["TuningPitch"].Value = txt_TuningPitch.Text;
+                databox.Rows[i].Cells["ToneBase"].Value = chbx_ToneBase.Text;
+                //DataGridView1.Rows[i].Cells[""].Value = txt_Idd.Text;
+                databox.Rows[i].Cells["ArrangementType"].Value = txt_ArrangementType.Text;
+                databox.Rows[i].Cells["String0"].Value = txt_String0.Text;
+                databox.Rows[i].Cells["String1"].Value = txt_String1.Text;
+                databox.Rows[i].Cells["String2"].Value = txt_String2.Text;
+                databox.Rows[i].Cells["String3"].Value = txt_String3.Text;
+                databox.Rows[i].Cells["String4"].Value = txt_String4.Text;
+                databox.Rows[i].Cells["String5"].Value = txt_String5.Text;
+                databox.Rows[i].Cells["PluckedType"].Value = chbx_BassPicking.Text;
+                databox.Rows[i].Cells["RouteMask"].Value = txt_RouteMask.Text;
+                databox.Rows[i].Cells["ToneA"].Value = chbx_ToneA.Text;
+                databox.Rows[i].Cells["ToneB"].Value = chbx_ToneB.Text;
+                databox.Rows[i].Cells["ToneC"].Value = chbx_ToneC.Text;
+                databox.Rows[i].Cells["ToneD"].Value = chbx_ToneD.Text;
+                databox.Rows[i].Cells["lastConversionDateTime"].Value = txt_lastConversionDateTime.Text;
+                databox.Rows[i].Cells["Comments"].Value = txt_Description.Text;
+                databox.Rows[i].Cells["Has_Sections"].Value = chbx_HasSection.Checked ? "Yes" : "No";
+                databox.Rows[i].Cells["Comments"].Value = txt_Description.Text;
+                //if (chbx_Bonus.Checked) DataGridView1.Rows[i].Cells["Bonus"].Value = "Yes";
+                //else DataGridView1.Rows[i].Cells["Bonus"].Value = "No";
 
-                command.CommandText += "WHERE ID = " + txt_ID.Text;
 
-                command.Parameters.AddWithValue("@param1", databox.Rows[i].Cells["Arrangement_Name"].Value.ToString() ?? DBNull.Value.ToString());
-                command.Parameters.AddWithValue("@param2", databox.Rows[i].Cells["CDLC_ID"].Value.ToString() ?? DBNull.Value.ToString());
-                command.Parameters.AddWithValue("@param3", databox.Rows[i].Cells["Bonus"].Value.ToString() ?? DBNull.Value.ToString());
-                command.Parameters.AddWithValue("@param7", databox.Rows[i].Cells["ScrollSpeed"].Value.ToString() ?? DBNull.Value.ToString());
-                command.Parameters.AddWithValue("@param8", databox.Rows[i].Cells["Tunning"].Value.ToString() ?? DBNull.Value.ToString());
-                command.Parameters.AddWithValue("@param9", databox.Rows[i].Cells["Rating"].Value.ToString() ?? DBNull.Value.ToString());
-                command.Parameters.AddWithValue("@param13", databox.Rows[i].Cells["TuningPitch"].Value.ToString() ?? DBNull.Value.ToString());
-                command.Parameters.AddWithValue("@param14", databox.Rows[i].Cells["ToneBase"].Value.ToString() ?? DBNull.Value.ToString());
-                command.Parameters.AddWithValue("@param17", databox.Rows[i].Cells["ArrangementType"].Value.ToString() ?? DBNull.Value.ToString());
-                command.Parameters.AddWithValue("@param18", databox.Rows[i].Cells["String0"].Value.ToString() ?? DBNull.Value.ToString());
-                command.Parameters.AddWithValue("@param19", databox.Rows[i].Cells["String1"].Value.ToString() ?? DBNull.Value.ToString());
-                command.Parameters.AddWithValue("@param20", databox.Rows[i].Cells["String2"].Value.ToString() ?? DBNull.Value.ToString());
-                command.Parameters.AddWithValue("@param21", databox.Rows[i].Cells["String3"].Value.ToString() ?? DBNull.Value.ToString());
-                command.Parameters.AddWithValue("@param22", databox.Rows[i].Cells["String4"].Value.ToString() ?? DBNull.Value.ToString());
-                command.Parameters.AddWithValue("@param23", databox.Rows[i].Cells["String5"].Value.ToString() ?? DBNull.Value.ToString());
-                command.Parameters.AddWithValue("@param24", databox.Rows[i].Cells["PluckedType"].Value.ToString() ?? DBNull.Value.ToString());
-                command.Parameters.AddWithValue("@param25", databox.Rows[i].Cells["RouteMask"].Value.ToString() ?? DBNull.Value.ToString());
-                command.Parameters.AddWithValue("@param33", databox.Rows[i].Cells["ToneA"].Value.ToString() ?? DBNull.Value.ToString());
-                command.Parameters.AddWithValue("@param34", databox.Rows[i].Cells["ToneB"].Value.ToString() ?? DBNull.Value.ToString());
-                command.Parameters.AddWithValue("@param35", databox.Rows[i].Cells["ToneC"].Value.ToString() ?? DBNull.Value.ToString());
-                command.Parameters.AddWithValue("@param36", databox.Rows[i].Cells["ToneD"].Value.ToString() ?? DBNull.Value.ToString());
-                command.Parameters.AddWithValue("@param37", databox.Rows[i].Cells["lastConversionDateTime"].Value.ToString() ?? DBNull.Value.ToString());
-                command.Parameters.AddWithValue("@param40", databox.Rows[i].Cells["Comments"].Value.ToString() ?? DBNull.Value.ToString());
-                try
+                //var DB_Path = "../../../../tmp\\AccessDB.accdb;";
+                var connection = new OleDbConnection("Provider=Microsoft." + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path); //+ ";Persist Security Info=False"
+                var command = connection.CreateCommand();
+                //dssx = DataGridView1;
+                using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft." + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
                 {
-                    command.CommandType = CommandType.Text;
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    MessageBox.Show("Can not open Arrangements DB connection in Arrangement Edit screen ! " + DB_Path + "-" + command.CommandText);
+                    //OleDbCommand command = new OleDbCommand(); ;
+                    //Update MainDB
+                    //SqlCommand cmds = new SqlCommand(sqlCmd, conn2);
+                    command.CommandText = "UPDATE Arrangements SET ";
 
-                    //throw;
+                    //command.CommandText += "ID = @param0, ";
+                    command.CommandText += "Arrangement_Name = @param1, ";
+                    command.CommandText += "CDLC_ID = @param2, ";
+                    command.CommandText += "Bonus = @param3, ";
+                    //command.CommandText += "SNGFilePath = @param4, ";
+                    //command.CommandText += "XMLFilePath = @param5, ";
+                    //command.CommandText += "XMLFile_Hash = @param6, ";
+                    command.CommandText += "ScrollSpeed = @param7, ";
+                    command.CommandText += "Tunning = @param8, ";
+                    command.CommandText += "Rating = @param9, ";
+                    //command.CommandText += "PlaythroughYBLink = @param10, ";
+                    //command.CommandText += "CustomsForge_Link = @param11, ";
+                    //command.CommandText += "ArrangementSort = @param12, ";
+                    command.CommandText += "TuningPitch = @param13, ";
+                    command.CommandText += "ToneBase = @param14, ";
+                    //command.CommandText += "Idd = @param15, ";
+                    //command.CommandText += "MasterId = @param16, ";
+                    command.CommandText += "ArrangementType = @param17, ";
+                    command.CommandText += "String0 = @param18, ";
+                    command.CommandText += "String1 = @param19, ";
+                    command.CommandText += "String2 = @param20, ";
+                    command.CommandText += "String3 = @param21, ";
+                    command.CommandText += "String4 = @param22, ";
+                    command.CommandText += "String5 = @param23, ";
+                    command.CommandText += "PluckedType = @param24, ";
+                    command.CommandText += "RouteMask = @param25, ";
+                    //command.CommandText += "XMLFileName = @param26, ";
+                    //command.CommandText += "XMLFileLLID = @param27, ";
+                    //command.CommandText += "XMLFileUUID = @param28, ";
+                    //command.CommandText += "SNGFileName = @param29, ";
+                    //command.CommandText += "SNGFileLLID = @param30, ";
+                    //command.CommandText += "SNGFileUUID = @param31, ";
+                    //command.CommandText += "ToneMultiplayer = @param32, ";
+                    command.CommandText += "ToneA = @param33, ";
+                    command.CommandText += "ToneB = @param34, ";
+                    command.CommandText += "ToneC = @param35, ";
+                    command.CommandText += "ToneD = @param36, ";
+                    command.CommandText += "lastConversionDateTime = @param37, ";
+                    //command.CommandText += "SNGFileHash = @param38 ";
+                    //command.CommandText += "Has_Sections = @param39 ";
+                    command.CommandText += "Comments = @param40 ";
+
+                    command.CommandText += "WHERE ID = " + txt_ID.Text;
+
+                    command.Parameters.AddWithValue("@param1", databox.Rows[i].Cells["Arrangement_Name"].Value.ToString() ?? DBNull.Value.ToString());
+                    command.Parameters.AddWithValue("@param2", databox.Rows[i].Cells["CDLC_ID"].Value.ToString() ?? DBNull.Value.ToString());
+                    command.Parameters.AddWithValue("@param3", databox.Rows[i].Cells["Bonus"].Value.ToString() ?? DBNull.Value.ToString());
+                    command.Parameters.AddWithValue("@param7", databox.Rows[i].Cells["ScrollSpeed"].Value.ToString() ?? DBNull.Value.ToString());
+                    command.Parameters.AddWithValue("@param8", databox.Rows[i].Cells["Tunning"].Value.ToString() ?? DBNull.Value.ToString());
+                    command.Parameters.AddWithValue("@param9", databox.Rows[i].Cells["Rating"].Value.ToString() ?? DBNull.Value.ToString());
+                    command.Parameters.AddWithValue("@param13", databox.Rows[i].Cells["TuningPitch"].Value.ToString() ?? DBNull.Value.ToString());
+                    command.Parameters.AddWithValue("@param14", databox.Rows[i].Cells["ToneBase"].Value.ToString() ?? DBNull.Value.ToString());
+                    command.Parameters.AddWithValue("@param17", databox.Rows[i].Cells["ArrangementType"].Value.ToString() ?? DBNull.Value.ToString());
+                    command.Parameters.AddWithValue("@param18", databox.Rows[i].Cells["String0"].Value.ToString() ?? DBNull.Value.ToString());
+                    command.Parameters.AddWithValue("@param19", databox.Rows[i].Cells["String1"].Value.ToString() ?? DBNull.Value.ToString());
+                    command.Parameters.AddWithValue("@param20", databox.Rows[i].Cells["String2"].Value.ToString() ?? DBNull.Value.ToString());
+                    command.Parameters.AddWithValue("@param21", databox.Rows[i].Cells["String3"].Value.ToString() ?? DBNull.Value.ToString());
+                    command.Parameters.AddWithValue("@param22", databox.Rows[i].Cells["String4"].Value.ToString() ?? DBNull.Value.ToString());
+                    command.Parameters.AddWithValue("@param23", databox.Rows[i].Cells["String5"].Value.ToString() ?? DBNull.Value.ToString());
+                    command.Parameters.AddWithValue("@param24", databox.Rows[i].Cells["PluckedType"].Value.ToString() ?? DBNull.Value.ToString());
+                    command.Parameters.AddWithValue("@param25", databox.Rows[i].Cells["RouteMask"].Value.ToString() ?? DBNull.Value.ToString());
+                    command.Parameters.AddWithValue("@param33", databox.Rows[i].Cells["ToneA"].Value.ToString() ?? DBNull.Value.ToString());
+                    command.Parameters.AddWithValue("@param34", databox.Rows[i].Cells["ToneB"].Value.ToString() ?? DBNull.Value.ToString());
+                    command.Parameters.AddWithValue("@param35", databox.Rows[i].Cells["ToneC"].Value.ToString() ?? DBNull.Value.ToString());
+                    command.Parameters.AddWithValue("@param36", databox.Rows[i].Cells["ToneD"].Value.ToString() ?? DBNull.Value.ToString());
+                    command.Parameters.AddWithValue("@param37", databox.Rows[i].Cells["lastConversionDateTime"].Value.ToString() ?? DBNull.Value.ToString());
+                    command.Parameters.AddWithValue("@param40", databox.Rows[i].Cells["Comments"].Value.ToString() ?? DBNull.Value.ToString());
+                    try
+                    {
+                        command.CommandType = CommandType.Text;
+                        connection.Open();
+                        command.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Can not open Arrangements DB connection in Arrangement Edit screen ! " + DB_Path + "-" + command.CommandText);
+
+                        //throw;
+                    }
+                    finally
+                    {
+                        if (connection != null) connection.Close();
+                    }
+                    ////OleDbDataAdapter das = new OleDbDataAdapter(command.CommandText, cnn);
+                    if (!chbx_AutoSave.Checked) MessageBox.Show("Arrangement Saved");
+                    //das.SelectCommand.CommandText = "SELECT * FROM Main";
+                    //// das.Update(dssx, "Main");
+                    dis.Dispose();
                 }
-                finally
-                {
-                    if (connection != null) connection.Close();
-                }
-                ////OleDbDataAdapter das = new OleDbDataAdapter(command.CommandText, cnn);
-                if (!chbx_AutoSave.Checked) MessageBox.Show("Arrangement Saved");
-                //das.SelectCommand.CommandText = "SELECT * FROM Main";
-                //// das.Update(dssx, "Main");
-                dis.Dispose();
             }
         }
 
@@ -1104,6 +1105,12 @@ namespace RocksmithToolkitGUI.DLCManager
 
 
             return;
+        }
+
+        private void ArrangementsDB_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (chbx_AutoSave.Checked && txt_CDLC_ID.Text != "" && txt_CDLC_ID.Text != null) { SaveOK = true; SaveRecord(); }
+            else SaveOK = false;
         }
     }
 }

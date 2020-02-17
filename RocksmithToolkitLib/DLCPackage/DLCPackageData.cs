@@ -16,11 +16,12 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Xml.Serialization;
-using X360.STFS;
-using Tone = RocksmithToolkitLib.DLCPackage.Manifest.Tone.Tone;
+//using System.IO;
+//using System.Linq;
+//using System.Xml.Serialization;
+//using X360.STFS;
+//using Tone = RocksmithToolkitLib.DLCPackage.Manifest.Tone.Tone;
+using System.Reflection;
 
 namespace RocksmithToolkitLib.DLCPackage
 {
@@ -219,7 +220,6 @@ namespace RocksmithToolkitLib.DLCPackage
                         ScrollSpeed = 20,
                         SongXml = new SongXML { File = xmlFilePath },
                         SongFile = new SongFile { File = "" },
-                        CustomFont = false
                     });
                 }
                 else
@@ -231,11 +231,11 @@ namespace RocksmithToolkitLib.DLCPackage
                     // Detect Arrangement XML Version
                     var xmlVersion = GameVersion.None;
                     var verAttrib = Convert.ToInt32(song2014.Version);
-                    if (verAttrib < 7) // RS1 format
+                    if (verAttrib == 0 || verAttrib == 4) // RS1 is null (0) or 4
                     {
                         xmlVersion = GameVersion.RS2012;
                     }
-                    else if (verAttrib > 6) // RS2014 format
+                    else if (verAttrib >= 7) // RS2014 is 7 or above
                     {
                         // CAUTION newer RS1 may use RS2014 XML Arrangement format
                         xmlVersion = GameVersion.RS2014;
@@ -533,7 +533,6 @@ namespace RocksmithToolkitLib.DLCPackage
 
         public List<Tone2014> TonesRS2014 { get; set; }
         public float? PreviewVolume { get; set; }
-        public string LyricArtPath { get; set; }
 
         // Cache art image conversion
         public List<DDSConvertedFile> ArtFiles { get; set; }
@@ -547,7 +546,6 @@ namespace RocksmithToolkitLib.DLCPackage
         /// <param name = "sourcePlatform"></param>
         /// <param name="fixMultiTone">If set to <c>true</c> fix low bass tuning </param>
         /// <param name="fixLowBass">If set to <c>true</c> fix multitone exceptions </param>
-        /// <param name="renameAudioPreview">If set to <c>true</c> rename preview audio with friendly name </param>
         public static DLCPackageData LoadFromFolder(string unpackedDir, Platform targetPlatform, Platform sourcePlatform = null, bool fixMultiTone = false, bool fixLowBass = false)
         {
             if (sourcePlatform == null || sourcePlatform.platform == GamePlatform.None || sourcePlatform.version == GameVersion.None)
@@ -571,17 +569,28 @@ namespace RocksmithToolkitLib.DLCPackage
                 var xmlName = attr.SongXml.Split(':')[3];
                 var xmlFile = Directory.EnumerateFiles(unpackedDir, xmlName + ".xml", SearchOption.AllDirectories).FirstOrDefault();
 
+                // throw exception for corrupt/missing XML file names
                 if (!File.Exists(xmlFile))
                 {
-                    throw new DataException(Environment.NewLine + Environment.NewLine + "*** READ ME *** READ ME *** READ ME ***" + Environment.NewLine + Environment.NewLine +
-                        "<WARNING> CDLC artifact file naming is corrupt ..." + Environment.NewLine +
-                        "1) Open the artifacts folder: " + Path.Combine(unpackedDir, "EOF") + Environment.NewLine +
-                        "2) Look for and rename any artifact file names that contain the '~' tilde character" + Environment.NewLine +
-                        "3) (re)Author the CDLC like from an EOF project using: >CDLC Creator>Add>Edit>Generate" + Environment.NewLine + Environment.NewLine);
+                    GlobalExtension.HideProgress();
+                    var artifactsDir = unpackedDir;
+                    StackTrace stackTrace = new StackTrace();
+                    var callerName = stackTrace.GetFrame(1).GetMethod().Name;
+
+                    if (callerName.Equals("PackageImport") && ConfigRepository.Instance().GetBoolean("creator_structured"))
+                        artifactsDir = Path.Combine(unpackedDir, "EOF");
+
+                    throw new DataException("Corrupt CDLC artifact file naming." + Environment.NewLine + Environment.NewLine +
+                        "1) Open the artifacts folder: " + artifactsDir + "   " + Environment.NewLine +
+                        "2) Look for and rename any artifact file names that contain special characters, e.g. '~' tilde" + Environment.NewLine +
+                        "3) Reauthor the CDLC using: >CDLC Creator>Add>Edit>Generate" + Environment.NewLine);
                 }
 
-                if (attr.Phrases != null)
+                ArrangementType arrType = Song2014.DetectArrangementType(xmlFile);
+
+                if (arrType == ArrangementType.Bass || arrType == ArrangementType.Guitar)
                 {
+                    // only done 1X to speed up process
                     if (data.SongInfo == null)
                     {
                         // Fill Package Data
@@ -591,7 +600,7 @@ namespace RocksmithToolkitLib.DLCPackage
                         bnkAudioVolume = attr.SongVolume;
                         bnkPreviewVolume = attr.PreviewVolume;
 
-                        // Fill SongInfo
+                        // Fill SongInfo from Manifest
                         data.SongInfo = new SongInfo
                             {
                                 JapaneseArtistName = attr.JapaneseArtistName,
@@ -614,7 +623,7 @@ namespace RocksmithToolkitLib.DLCPackage
                     var tuningName = TuningDefinitionRepository.Instance.Detect(attr.Tuning, GameVersion.RS2014);
                     data.Arrangements.Last().Tuning = tuningName.UIName;
 
-                    // make a list of tone names used in arrangements
+                    // make a list of tone names used in arrangements                    
                     var toneNames = new List<string>();
                     foreach (var arr in data.Arrangements)
                     {
@@ -651,33 +660,19 @@ namespace RocksmithToolkitLib.DLCPackage
                         }
                     }
                 }
-                else if (xmlFile.ToLower().Contains("vocals")) // detect both jvocals and vocals
+                else if (arrType == ArrangementType.Vocal) // detects jvocals and vocals
                 {
                     var voc = new Arrangement
-                        {
-                            ArrangementName = attr.JapaneseVocal == true ? ArrangementName.JVocals : ArrangementName.Vocals,
-                            ArrangementType = ArrangementType.Vocal,
-                            ScrollSpeed = 20,
-                            SongXml = new SongXML { File = xmlFile },
-                            SongFile = new SongFile { File = "" },
-                            CustomFont = attr.JapaneseVocal == true,
-                            XmlComments = Song2014.ReadXmlComments(xmlFile)
-                        };
-
-                    // Get symbols stuff from vocals.xml
-                    var fontSng = Path.Combine(unpackedDir, xmlName + ".sng");
-                    var vocSng = Sng2014FileWriter.ReadVocals(xmlFile);
-
-                    // TODO: explain/confirm function/usage of this conditional check
-                    if (vocSng.IsCustomFont()) // always seems to be false, even for jvocals
                     {
-                        voc.CustomFont = true;
-                        voc.FontSng = fontSng;
-                        vocSng.WriteChartData(fontSng, new Platform(GamePlatform.Pc, GameVersion.None));
-                        throw new Exception("<CRITICAL ERROR> vocSng.IsCustomFont: " + xmlFile + Environment.NewLine + "Please report this error to the toolkit developers along with the song that you are currently working on." + Environment.NewLine + "This is important!");
-                    }
-
-                    voc.Sng2014 = Sng2014File.ConvertXML(xmlFile, ArrangementType.Vocal, voc.FontSng);
+                        ArrangementName = attr.JapaneseVocal ? ArrangementName.JVocals : ArrangementName.Vocals,
+                        ArrangementType = ArrangementType.Vocal,
+                        ScrollSpeed = 20,
+                        SongXml = new SongXML { File = xmlFile },
+                        SongFile = new SongFile { File = "" },
+                        XmlComments = Song2014.ReadXmlComments(xmlFile)
+                    };
+                    
+                    GlyphDefinitions.UpdateCustomFontStatus(ref voc);
 
                     // Adding Arrangement
                     data.Arrangements.Add(voc);
@@ -693,7 +688,7 @@ namespace RocksmithToolkitLib.DLCPackage
                 BetterDialog2.ShowDialog(errMsg, MESSAGEBOX_CAPTION, null, null, "OK", Bitmap.FromHicon(SystemIcons.Warning.Handle), "Warning ...", 150, 150);
             }
             else if (bnkFiles.Count > 2)
-                throw new FileLoadException("<ERROR> Found too many *.bnk files ..." + Environment.NewLine + Environment.NewLine);
+                throw new FileLoadException("<ERROR> Found too many *.bnk files.  SongPacks can not be auto loaded ..." + Environment.NewLine);
             else
             {
                 // extract .bnk file data
@@ -795,14 +790,20 @@ namespace RocksmithToolkitLib.DLCPackage
                 data.ArtFiles = ddsFilesC;
             }
 
-            // Lyric Art
-            var lyricArt = Directory.EnumerateFiles(unpackedDir, "lyrics_*.dds", SearchOption.AllDirectories).ToArray();
-            if (lyricArt.Any())
-                data.LyricArtPath = lyricArt.FirstOrDefault();
+//<<<<<<< HEAD
+//            // Lyric Art
+//            var lyricArt = Directory.EnumerateFiles(unpackedDir, "lyrics_*.dds", SearchOption.AllDirectories).ToArray();
+//            if (lyricArt.Any())
+//                data.LyricArtPath = lyricArt.FirstOrDefault();
 
-            // Audio Files
-            // Give ogg files friendly names
-            var fixedOggFiles = Directory.EnumerateFiles(unpackedDir, "*.ogg", SearchOption.AllDirectories).ToList();
+//            // Audio Files
+//            // Give ogg files friendly names
+//            var fixedOggFiles = Directory.EnumerateFiles(unpackedDir, "*.ogg", SearchOption.AllDirectories).ToList();
+//=======
+            // Audio Files 
+            // Give ogg files friendly names  
+            var fixedOggFiles = Directory.EnumerateFiles(unpackedDir, "*_fixed.ogg", SearchOption.AllDirectories).ToList();
+//>>>>>>> pr/40
             if (fixedOggFiles.Any())
             {
                 if (fixedOggFiles.Count > 2)
@@ -975,7 +976,7 @@ namespace RocksmithToolkitLib.DLCPackage
             // Gather up the project files and songName
             var xmlFiles = Directory.EnumerateFiles(unpackedDir, "*.xml", SearchOption.AllDirectories).ToArray();
             var jsonFiles = Directory.EnumerateFiles(unpackedDir, "*.json", SearchOption.AllDirectories).ToArray();
-            string songName = "SongName";
+            string songName = "SongName"; // dumby default
             var attr = Manifest2014<Attributes2014>.LoadFromFile(jsonFiles[0]).Entries.ToArray()[0].Value.ToArray()[0].Value;
             songName = attr.FullName.Split('_')[0];
             attr = null; // dispose
@@ -1026,9 +1027,17 @@ namespace RocksmithToolkitLib.DLCPackage
             foreach (var art in artFiles)
                 IOExtension.MoveFile(art, Path.Combine(toolkitDir, Path.GetFileName(art)));
 
-            var lyricArt = Directory.EnumerateFiles(unpackedDir, "lyrics_*.dds", SearchOption.AllDirectories).ToList();
-            foreach (var art in lyricArt)
-                IOExtension.MoveFile(art, Path.Combine(toolkitDir, Path.GetFileName(art)));
+            // Move custom lyric art files to eof folder
+            // D:\Temp\RS Root\dlc\Nanase-Aikawa_Yumemiru-Shoujo-ja-Irarenai_v2_RS2014_Pc\assets\ui\lyrics\innayumemirushoujojairarenai\lyrics_innayumemirushoujojairarenai.dds
+            var lyricArtFiles = Directory.EnumerateFiles(unpackedDir, "lyrics_*.dds", SearchOption.AllDirectories).ToList();
+            foreach (var lyricArtFile in lyricArtFiles)
+                IOExtension.MoveFile(lyricArtFile, Path.Combine(eofDir, Path.GetFileName(lyricArtFile)));
+
+            // Move glyph definition files to eof folder 
+            // D:\Temp\RS Root\dlc\Nanase-Aikawa_Yumemiru-Shoujo-ja-Irarenai_v2_RS2014_Pc\songs\arr\jvocals.glyphs.xml
+            var glyphFiles = Directory.EnumerateFiles(unpackedDir, "*.glyphs.xml", SearchOption.AllDirectories).ToList();
+            foreach (var glyphFile in glyphFiles)
+                IOExtension.MoveFile(glyphFile, Path.Combine(eofDir, Path.GetFileName(glyphFile)));
 
             // Move song_*.bnk to Toolkit folder
             var bnkFiles = Directory.EnumerateFiles(unpackedDir, "song_*.bnk", SearchOption.AllDirectories).ToList();

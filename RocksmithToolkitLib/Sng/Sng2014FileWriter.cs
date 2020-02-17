@@ -9,6 +9,7 @@ using RocksmithToolkitLib.XML;
 using MiscUtil.IO;
 using MiscUtil.Conversion;
 using CON = RocksmithToolkitLib.Sng.Constants;
+using System.Diagnostics;
 
 
 namespace RocksmithToolkitLib.Sng2014HSL
@@ -73,6 +74,7 @@ namespace RocksmithToolkitLib.Sng2014HSL
         {
             return GetMidiNote(tuning, str, fret, bass, capo, false);
         }
+
         public static Int32 GetMidiNote(Int16[] tuning, Byte str, Byte fret, bool bass, int capo, bool template = false)
         {
             if (fret == unchecked((Byte)(-1)))
@@ -511,10 +513,6 @@ namespace RocksmithToolkitLib.Sng2014HSL
 
                 try
                 {
-                    if (String.IsNullOrEmpty(xml.ToneBase))
-                        throw new InvalidDataException("ToneBase must be defined.");
-
-                    // fix for undefined tone name (tone name should be shorter)
                     if (xml.ToneBase.ToLower() == tn.Name.ToLower())
                         t.ToneId = 0;
 
@@ -529,10 +527,19 @@ namespace RocksmithToolkitLib.Sng2014HSL
 
                     sng.Tones.Tones[i] = t;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    throw new InvalidDataException("There is tone name error in XML Arrangement: " + xml.Arrangement + "  " + tn.Name + " is not properly defined." + Environment.NewLine +
-                        "Use EOF to re-author custom tones or Notepad to attempt manual repair.");
+                    Debug.WriteLine(ex.Message);
+
+                    if (String.IsNullOrEmpty(xml.ToneBase))
+                        throw new InvalidDataException("Missing XML <tonebase> element in arrangement '" + xml.Arrangement + "'" + Environment.NewLine +
+                            "Use EOF to re-author arrangement custom tones, or Notepad to attempt manual repair of XML <tonebase> element ...  " + Environment.NewLine);
+                    else if (String.IsNullOrEmpty(xml.ToneA) || String.IsNullOrEmpty(xml.ToneB) || String.IsNullOrEmpty(xml.ToneC) || String.IsNullOrEmpty(xml.ToneD))
+                        throw new InvalidDataException("Corrupt XML multitone elements in arrangement '" + xml.Arrangement + "'" + Environment.NewLine +
+                            "Use toolkit 'CDLC Creator' to restore XML <tonea> thru <toned> elements, or re-author arrangement with EOF ...  " + Environment.NewLine);
+                    else
+                        throw new InvalidDataException("There is tone name matching error in XML arrangement '" + xml.Arrangement + "'.  Tone name '" + tn.Name + "' is not properly defined ..." + Environment.NewLine +
+                            "Use EOF to re-author arrangement custom tones, or Notepad to attempt manual repair of XML <tonebase> thru <toned> elements ...  " + Environment.NewLine);
                 }
             }
 
@@ -994,6 +1001,7 @@ namespace RocksmithToolkitLib.Sng2014HSL
                         {
                             if (note.Ignore == 0)
                                 ++a.NotesInIteration1[j - 1];
+
                             ++a.NotesInIteration2[j - 1];
                             break;
                         }
@@ -1308,13 +1316,21 @@ namespace RocksmithToolkitLib.Sng2014HSL
                     continue;
                 }
 
-                // are we past phrase iteration boundary?
-                if (current.Time > sng.PhraseIterations.PhraseIterations[p].NextPhraseTime)
+                try
                 {
-                    // advance and re-run
-                    // will be repeated through empty iterations
-                    ++p;
-                    o = o - 1;
+                    // are we past phrase iteration boundary?
+                    if (current.Time > sng.PhraseIterations.PhraseIterations[p].NextPhraseTime)
+                    {
+                        // advance and re-run
+                        // will be repeated through empty iterations
+                        ++p;
+                        o = o - 1;
+                        continue;
+                    }
+                }
+                catch
+                {
+                    // workaround for rare conversion exception 'Index was outside the bounds of the array' 
                     continue;
                 }
 

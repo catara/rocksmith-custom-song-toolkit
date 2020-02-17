@@ -67,15 +67,22 @@ namespace RocksmithToolkitLib.Extensions
                 return string.Join(string.Empty, v.Select(s => s[0])).ToUpper();
 
             value = value.ReplaceDiacritics();
-            value = value.StripNonAlpaNumeric();
+            value = value.StripNonAlphaNumeric();
             return value;
         }
 
         public static string GetValidAppIdSixDigits(this string value)
-        {
+        {            
             value = value.Trim();
+            
+            // social engineering code
+            if (value.Equals("221680"))
+                throw new InvalidDataException("<WARNING> Sentinel has detected futile human resistance ..." + Environment.NewLine +
+                    "Buy Cherub Rock and you wont have to mess around changing AppId's.");
+
             // simple six digit number validation, eg. 248750
-            if (Regex.IsMatch(value, ("^([0-9]{6})$")))
+            // can be seven digits too eg. 1089163
+            if (Regex.IsMatch(value, ("^([0-9]{6}|[0-9]{7})$")))
                 return value;
 
             return "";
@@ -98,7 +105,7 @@ namespace RocksmithToolkitLib.Extensions
             // allow use of only these special characters \\-_ /&.:',!?()\"#
             // allow use of alphanumerics a-zA-Z0-9
             // tested and working ... Üuber!@#$%^&*()_+=-09{}][":';<>.,?/ñice 
-
+            value = value.ReplaceSpecialCharacters();
             Regex rgx = new Regex("[^a-zA-Z0-9\\-_/&:',!.?()\"#\\p{L} ]*");
             value = rgx.Replace(value, "");
             // commented out because some ODLC have these
@@ -171,11 +178,11 @@ namespace RocksmithToolkitLib.Extensions
             if (String.IsNullOrEmpty(value))
                 return String.Empty;
 
-            value = value.StripNonAlpaNumeric();
+            value = value.StripNonAlphaNumeric();
 
             // CRITICAL: prevents RS1 in game hanging after tuning
             // check if same, if so then add 'Song' to make key unique, skip check if isTone
-            if (value == songTitle.StripNonAlpaNumeric() && !isTone)
+            if (value == songTitle.StripNonAlphaNumeric() && !isTone)
                 value = "Song" + value;
 
             // limit max Key length to 30
@@ -200,7 +207,7 @@ namespace RocksmithToolkitLib.Extensions
         {
             // standard ODLC valid lyric character set, i.e., ã can not be used (confirmed by testing)
             //!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_abcdefghijklmnopqrstuvwxyz{|}~¡¢¥¦§¨ª«°²³´•¸¹º»¼½¾¿ÀÁÂÄÅÆÇÈÉÊËÌÎÏÑÒÓÔÖØÙÚÛÜÞßàáâäåæçèéêëìíîïñòóôöøùúûüŒœŠšž„…€™␀★➨
-            string validSpecialCharacters = " !\"#$%&'()*+,-./:;<=>?@[\\]^_{|}~¡¢¥¦§¨ª«°²³´•¸¹º»¼½¾¿ÀÁÂÄÅÆÇÈÉÊËÌÎÏÑÒÓÔÖØÙÚÛÜÞßàáâäåæçèéêëìíîïñòóôöøùúûüŒœŠšž€™␀﻿﻿﻿﻿﻿﻿";
+            string validSpecialCharacters = " !\"#$%&'()*+,-./:;<=>?@[\\]^_{|}~¡¢¥¦§¨ª«°²³´•¸¹º»¼½¾¿ÀÁÂÄÅÆÇÈÉÊËÌÎÏÑÒÓÔÖØÙÚÛÜÞßàáâäåæçèéêëìíîïñòóôöøùúûüŒœŠšž€™␀★➨";
             string validAlphaNumerics = "a-zA-Z0-9";
 
             Regex rgx = new Regex("[^" + validAlphaNumerics + validSpecialCharacters + "]*");
@@ -247,6 +254,7 @@ namespace RocksmithToolkitLib.Extensions
                 return String.Empty;
 
             // processing order is important to achieve output like ODLC
+            value = value.ReplaceSpecialCharacters();
             value = value.ReplaceAbbreviations();
             value = value.ReplaceDiacritics();
             value = value.StripSpecialCharacters();
@@ -308,7 +316,7 @@ namespace RocksmithToolkitLib.Extensions
 
             // check for valid volume
             float volume = (float)Math.Round((double)value, 1);
-            if (volume > -30.0F && volume < 30.0F)
+            if (volume >= -30.0F && volume <= 30.0F)
                 return volume;
 
             // use default volume
@@ -321,7 +329,7 @@ namespace RocksmithToolkitLib.Extensions
                 return String.Empty;
 
             // check for valid four digit song year 
-            if (!Regex.IsMatch(value, "^(15[0-9][0-9]|16[0-9][0-9]|17[0-9][0-9]|18[0-9][0-9]|19[0-9][0-9]|20[0-1][0-9])"))
+            if (!Regex.IsMatch(value, "^(15[0-9][0-9]|16[0-9][0-9]|17[0-9][0-9]|18[0-9][0-9]|19[0-9][0-9]|20[0-3][0-9])"))
                 value = ""; // clear if not valid
 
             return value;
@@ -538,6 +546,14 @@ namespace RocksmithToolkitLib.Extensions
             return result;
         }
 
+
+        public static string ReplaceSpecialCharacters(this string value)
+        {
+            // tilde not used in ODLC
+            var result = value.Replace('~', '-');
+            return result;
+        }
+
         public static string RestoreCRLF(this string value)
         {
             // replace single lf with crlf
@@ -627,9 +643,13 @@ namespace RocksmithToolkitLib.Extensions
             return result;
         }
 
-        public static string StripNonAlpaNumeric(this string value)
+        /// <summary>
+        /// removes all non alphanumeric and all white space
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static string StripNonAlphaNumeric(this string value)
         {
-            // removes all non alphanumeric and all white space
             Regex rgx = new Regex("[^a-zA-Z0-9_]+");
             var result = rgx.Replace(value, "");
             return result;
@@ -714,6 +734,19 @@ namespace RocksmithToolkitLib.Extensions
             }
 
             return finalString;
+        }
+
+        /// <summary>
+        /// Split contiguous string on caps and insert spaces
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static string SplitCamelCase(string source)
+        {
+            string[] resultArray = Regex.Split(source, @"(?<!^)(?=[A-Z])");
+            var result = String.Join(" ", resultArray).Trim();
+
+            return result;
         }
 
         #endregion

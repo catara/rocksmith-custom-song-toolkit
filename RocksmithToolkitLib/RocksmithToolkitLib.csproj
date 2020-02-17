@@ -20,7 +20,7 @@
     <WarningLevel>4</WarningLevel>
     <Optimize>false</Optimize>
     <DebugType>full</DebugType>
-    <DefineConstants>TRACE;DEBUG;CODE_ANALYSIS</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;PREBUILD</DefineConstants>
     <NoWarn>
     </NoWarn>
     <UseVSHostingProcess>false</UseVSHostingProcess>
@@ -33,13 +33,15 @@
     <DebugType>none</DebugType>
     <NoWarn>0169, 0162</NoWarn>
     <UseVSHostingProcess>false</UseVSHostingProcess>
+    <DefineConstants>
+    </DefineConstants>
   </PropertyGroup>
   <PropertyGroup>
     <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug Build CLI|x86'">
     <OutputPath>bin\x86\Debug Build CLI\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;CODE_ANALYSIS</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;PREBUILD</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
@@ -72,9 +74,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GlobalsLib.cs" />
     <Compile Include="Conversion\Rs1Converter.cs" />
     <Compile Include="Conversion\Rs2014Converter.cs" />
     <Compile Include="DLCPackage\DDCreator.cs" />
+    <Compile Include="XML\GlyphDefinitions.cs" />
     <Compile Include="Extensions\HelpForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -91,6 +95,10 @@
     <Compile Include="Extensions\TreeViewOfd.designer.cs">
       <DependentUpon>TreeViewOfd.cs</DependentUpon>
     </Compile>
+    <Compile Include="Ogg\WemFile.cs" />
+    <Compile Include="PSARC\PsarcExtensions.cs" />
+    <Compile Include="PSARC\PsarcLoader.cs" />
+    <Compile Include="PSARC\PsarcPackager.cs" />
     <Compile Include="SngToTab\Common.cs" />
     <Compile Include="SngToTab\Sng2Tab.cs" />
     <Compile Include="SngToTab\TabBeat.cs" />
@@ -128,11 +136,6 @@
     <Compile Include="Extensions\JitVersionInfo.cs" />
     <Compile Include="Extensions\MemoryStreamExtension.cs" />
     <Compile Include="Ogg\Wwise.cs" />
-    <Compile Include="PsarcLoader\Entry.cs" />
-    <Compile Include="PsarcLoader\PSARC.cs" />
-    <Compile Include="PsarcLoader\PsarcExtensions.cs" />
-    <Compile Include="PsarcLoader\PsarcLoader.cs" />
-    <Compile Include="PsarcLoader\PsarcPackager.cs" />
     <Compile Include="Sng\Constants.cs" />
     <Compile Include="ToolkitVersionOnline.cs" />
     <Compile Include="DLCPackage\DLCPackageConverter.cs" />
@@ -277,7 +280,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Resources\pedals.json" />
+    <None Include="Resources\pedals.json" />
     <Content Include="RocksmithToolkitLib.SongAppId.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
@@ -289,15 +292,12 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- CUSTOM PREBUILD EVENT - DO NOT MODIFY -->
   <PropertyGroup>
-    <PreBuildEvent Condition=" '$(OS)' == 'Unix' ">
-      "$(SolutionDir)prebuild.sh" "$(ProjectDir)" "$(ProjectDir)ToolkitVersion.cs"
-    </PreBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup>
-    <PreBuildEvent>rem Only need to  make changes to version information below
-rem RocksmithPreBuild.exe automatically updates Assembly.cs files and AppVeyor versioning information
+    <PreBuildEvent>rem RocksmithPreBuild.exe automatically updates Assembly.cs files and 
+rem AppVeyor versioning information in PatchAssemblyVersion.ps1 file
+rem Make sure all Assembly.cs files are closed before running in IDE Debug Mode
+
+if $(DefineConstants.Contains('PREBUILD')) == false goto :End
 
 if $(ConfigurationName) == Debug (
 CD "$(SolutionDir)"
@@ -308,14 +308,17 @@ rem resyncing the commit usual fixes the error
 
 rem there are several alternate usages for RocksmithPreBuild.exe
 
+rem the next cmd is used for normal development mode (default - reuse version information, sortable ISO8601 DateTime written to Assembly.Configuration)
+cmd /c "RocksmithPreBuild.exe PREBUILD READ READ" &gt; prebuild.log
+
+rem  reset the PatchAssemblyVersion.ps1 $Assembly_Configuration = $env:APPVEYOR_REPO_COMMIT_TIMESTAMP
+rem cmd /c "RocksmithPreBuild.exe PREBUILD 2.9.2.1 DATE"
+
 rem the next cmd is used for test Auto Update feature by setting git subversion to 00000000
 rem cmd /c "RocksmithPreBuild.exe PREBUILD READ READ 00000000"
 
-rem the next cmd is used for normal development mode (default - reuse the existing version/type information)
-cmd /c "RocksmithPreBuild.exe PREBUILD READ READ"
-
 rem before issuing new (blank, i.e. no version type) make next cmd active and comment out the others
-rem cmd /c "RocksmithPreBuild.exe PREBUILD 2.9.2.0 NONE"
+rem cmd /c "RocksmithPreBuild.exe PREBUILD 1.2.3.4 NONE"
 
 rem before issuing new build make next cmd active and comment out the others
 rem cmd /c "RocksmithPreBuild.exe PREBUILD 2.9.2.0 BUILD"
@@ -325,9 +328,21 @@ rem cmd /c "RocksmithPreBuild.exe PREBUILD 2.9.1.0 BETA"
 
 rem before issuing new release make next cmd active and comment out the others
 rem cmd /c "RocksmithPreBuild.exe PREBUILD 2.9.0.0 RELEASE"
+rem )
 )
 
-rem there are some hidden prebuild commands for OSX and Linux in the RocksmithToolkitLib.csproj these call the 'prebuild.sh' file</PreBuildEvent>
+rem there are some hidden prebuild commands for OSX and Linux in the RocksmithToolkitLib.csproj these call the 'prebuild.sh' file
+
+:End
+echo ------------------
+echo That's All Folks!
+echo ------------------</PreBuildEvent>
+  </PropertyGroup>
+  <!-- BEGIN CUSTOM PREBUILD EVENT - DO NOT MODIFY -->
+  <PropertyGroup>
+    <PreBuildEvent Condition=" '$(OS)' == 'Unix' ">
+      "$(SolutionDir)prebuild.sh" "$(ProjectDir)" "$(ProjectDir)ToolkitVersion.cs"
+    </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent>

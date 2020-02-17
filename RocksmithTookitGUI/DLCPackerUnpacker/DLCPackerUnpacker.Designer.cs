@@ -76,6 +76,7 @@
             this.btnUnpack.Size = new System.Drawing.Size(75, 23);
             this.btnUnpack.TabIndex = 2;
             this.btnUnpack.Text = "Unpack";
+            this.toolTip.SetToolTip(this.btnUnpack, "Make sure the correct Game Version and\r\nPlatform are selected in GeneralConfig.");
             this.btnUnpack.UseVisualStyleBackColor = true;
             this.btnUnpack.Click += new System.EventHandler(this.btnUnpack_Click);
             // 
@@ -191,7 +192,7 @@
             this.chkDecodeAudio.Size = new System.Drawing.Size(94, 17);
             this.chkDecodeAudio.TabIndex = 0;
             this.chkDecodeAudio.Text = "Decode Audio";
-            this.toolTip.SetToolTip(this.chkDecodeAudio, "If checked, decodes audio\r\nto a playable ogg format.");
+            this.toolTip.SetToolTip(this.chkDecodeAudio, resources.GetString("chkDecodeAudio.ToolTip"));
             this.chkDecodeAudio.UseVisualStyleBackColor = true;
             // 
             // chkUpdateSng
@@ -433,7 +434,7 @@
             // toolTip
             // 
             this.toolTip.AutomaticDelay = 100;
-            this.toolTip.AutoPopDelay = 15000;
+            this.toolTip.AutoPopDelay = 20000;
             this.toolTip.InitialDelay = 100;
             this.toolTip.IsBalloon = true;
             this.toolTip.ReshowDelay = 10;

@@ -2,7 +2,11 @@ using System;
 using System.Linq;
 using System.Reflection;
 using System.IO;
+using System.Security.Authentication;
 using RocksmithToolkitLib.Extensions;
+using System.Diagnostics;
+using System.Globalization;
+using System.Drawing;
 
 
 namespace RocksmithToolkitLib
@@ -36,9 +40,9 @@ namespace RocksmithToolkitLib
             get
             {
                 if (GeneralExtension.IsInDesignMode)
-                    AssemblyConfiguration = "DEBUG";
+                    return String.Format("{0}-{1} {2}", AssemblyVersion, AssemblyInformationVersion, "DEBUG").Trim();
 
-                return String.Format("{0}-{1} {2}", AssemblyVersion, AssemblyInformationVersion, AssemblyConfiguration).Trim();
+                return String.Format("{0}-{1}", AssemblyVersion, AssemblyInformationVersion).Trim();
             }
         }
 
@@ -64,7 +68,7 @@ namespace RocksmithToolkitLib
             var assemblyInformationVersion = assembly.GetCustomAttributes(typeof(AssemblyInformationalVersionAttribute), false).Cast<AssemblyInformationalVersionAttribute>().FirstOrDefault().InformationalVersion.ToString();
             var assemblyConfiguration = assembly.GetCustomAttributes(typeof(AssemblyConfigurationAttribute), false).Cast<AssemblyConfigurationAttribute>().FirstOrDefault().Configuration.ToString() ?? "";
 
-            return String.Format("{0}-{1} {2}", assemblyVersion, assemblyInformationVersion, assemblyConfiguration).Trim();
+            return String.Format("{0}-{1}", assemblyVersion, assemblyInformationVersion).Trim();
         }
 
         public static string RSTKUpdaterVersion()
@@ -74,8 +78,46 @@ namespace RocksmithToolkitLib
             var assemblyInformationVersion = assembly.GetCustomAttributes(typeof(AssemblyInformationalVersionAttribute), false).Cast<AssemblyInformationalVersionAttribute>().FirstOrDefault().InformationalVersion.ToString();
             var assemblyConfiguration = assembly.GetCustomAttributes(typeof(AssemblyConfigurationAttribute), false).Cast<AssemblyConfigurationAttribute>().FirstOrDefault().Configuration.ToString() ?? "";
 
-            return String.Format("{0}-{1} {2}", assemblyVersion, assemblyInformationVersion, assemblyConfiguration).Trim();
+            return String.Format("{0}-{1}", assemblyVersion, assemblyInformationVersion).Trim();
         }
+        
+        public static bool IsRSTKLibValid(double shelfLifeDays = 180)
+        {
+            var assembly = Assembly.LoadFile(typeof(RocksmithToolkitLib.ToolkitVersion).Assembly.Location);
+            var assemblyConfiguration = assembly.GetCustomAttributes(typeof(AssemblyConfigurationAttribute), false).Cast<AssemblyConfigurationAttribute>().FirstOrDefault().Configuration.ToString() ?? "";
 
+            // check if AssemblyConfiguration contains a parsable DateTime
+            DateTime temp;
+            if (!DateTime.TryParse(assemblyConfiguration, out temp))
+                return false;
+
+            // working with UTC to avoid regional DateTime issues
+            DateTime dtuAssemblyConfig = DateTime.Parse(assemblyConfiguration, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal);
+            var dtuNow = DateTime.UtcNow;
+            var dtuRemaining = dtuAssemblyConfig.AddDays(shelfLifeDays) - dtuNow;
+
+            if (dtuRemaining.Days < 0)
+                return false;
+
+            return true;
+        }
     }
+
+    public static class Startup
+    {
+        //  hackery used to create class library entry point
+        public static void Start()
+        {
+            if (!ToolkitVersion.IsRSTKLibValid())
+            {
+                // throw new ApplicationException("This version of RocksmithToolkitLib.dll has expired.  " + Environment.NewLine +
+                //    "Please download and install the latest toolkit library.  " + Environment.NewLine);
+
+                var diaMsg = "This version of RocksmithToolkitLib.dll is no longer supported." + Environment.NewLine +
+                             "Please download and install the latest version of the toolkit.";
+                BetterDialog2.ShowDialog(diaMsg, "Time To Update ...", null, null, "Ok", Bitmap.FromHicon(SystemIcons.Warning.Handle), "WARNING ...", 0, 150);
+            }
+        }
+    }
+
 }

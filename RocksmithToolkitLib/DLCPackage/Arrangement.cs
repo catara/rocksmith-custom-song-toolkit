@@ -48,8 +48,6 @@ namespace RocksmithToolkitLib.DLCPackage
         public decimal CapoFret { get; set; }
         public int ScrollSpeed { get; set; }
         public PluckedType PluckedType { get; set; }
-        public bool CustomFont { get; set; } //true for JVocals and custom fonts (planned)
-        public string FontSng { get; set; }
         // cache parsing results (speeds up generating for multiple platforms)
         public Sng2014File Sng2014 { get; set; }
         // Gameplay Path
@@ -72,6 +70,18 @@ namespace RocksmithToolkitLib.DLCPackage
         [IgnoreDataMember] // required for SaveTemplate feature to work
         public IEnumerable<XComment> XmlComments { get; set; }
 
+        public string LyricsArtPath { get; set; }
+        public string GlyphsXmlPath { get; set; }
+        // both LyricsArtPath and GlyphsXmlPath are required to produce CDLC with CustomFont
+        public bool HasCustomFont
+        {
+            get
+            {
+                var hasCustomFont = !String.IsNullOrEmpty(LyricsArtPath) && !String.IsNullOrEmpty(GlyphsXmlPath);
+                return hasCustomFont;
+            }
+        }
+
         public Arrangement()
         {
             Id = IdGenerator.Guid();
@@ -91,7 +101,7 @@ namespace RocksmithToolkitLib.DLCPackage
             var song = Song2014.LoadFromFile(xmlSongFile);
             this.SongFile = new SongFile { File = "" };
             // TODO: monitor this change
-            this.SongXml = new SongXML { File = xmlSongFile , Version = song.Version};
+            this.SongXml = new SongXML { File = xmlSongFile, Version = song.Version };
 
             //Properties
             Debug.Assert(attr.ArrangementType != null, "Missing information from manifest (ArrangementType)");
@@ -174,16 +184,27 @@ namespace RocksmithToolkitLib.DLCPackage
                     if (song.Tones != null)
                         foreach (var xmlTone in song.Tones)
                         {
-                            // fix some old toolkit behavior
-                            if (xmlTone.Name == "ToneA")
+                            // auto fix some old toolkit behavior that causes multitone exceptions
+                            if (xmlTone.Name == "ToneA"  || xmlTone.Name == "tone_a")
+                            {
                                 xmlTone.Name = attr.Tone_A;
-                            if (xmlTone.Name == "ToneB")
+                                xmlTone.Id = 0;
+                            }
+                            if (xmlTone.Name == "ToneB" || xmlTone.Name == "tone_b")
+                            {
                                 xmlTone.Name = attr.Tone_B;
-                            if (xmlTone.Name == "ToneC")
+                                xmlTone.Id = 1; 
+                            }
+                            if (xmlTone.Name == "ToneC" || xmlTone.Name == "tone_c")
+                            {
                                 xmlTone.Name = attr.Tone_C;
-                            if (xmlTone.Name == "ToneD")
+                                xmlTone.Id = 2;
+                            }
+                            if (xmlTone.Name == "ToneD" || xmlTone.Name == "tone_d")
+                            {
                                 xmlTone.Name = attr.Tone_D;
-
+                                xmlTone.Id = 3;
+                            }
                             if (xmlTone.Name.ToLower() == jsonTone.Name.ToLower() || jsonTone.Name.ToLower().EndsWith(xmlTone.Name.ToLower())) //todo: SAMENAME tone fix?
                             {
                                 xmlTone.Name = jsonTone.Name;
@@ -201,7 +222,11 @@ namespace RocksmithToolkitLib.DLCPackage
                             isDirty = true;
                         }
                         else
-                            throw new InvalidDataException("Tone data is missing in CDLC and multitones will not change properly in game." + Environment.NewLine + "Please re-author XML arrangements in EOF and repair multitones name and time changes.");
+                        {
+                            throw new InvalidDataException("Tone data is missing, and multitones will not change properly in game." + Environment.NewLine +
+                                "Please re-author XML arrangement '" + attr.ArrangementName + "' in EOF, and repair multitone names and time changes." + Environment.NewLine +
+                                "NOTE: toolkit can fix this error by converting to single tone if you check: tookit>General Config>Fix Multitone Errors" + Environment.NewLine);
+                        }
                     }
                 }
 
@@ -285,7 +310,7 @@ namespace RocksmithToolkitLib.DLCPackage
 
         public override string ToString()
         {
-            // generates lstArrangement string format
+            // generates lstArrangement identifier string format
             var toneDesc = String.Empty;
             if (!String.IsNullOrEmpty(ToneBase))
                 toneDesc = ToneBase;
@@ -311,11 +336,16 @@ namespace RocksmithToolkitLib.DLCPackage
             if (Metronome == Metronome.Generate)
                 metDesc = " +Metronome";
 
+            var custFont = String.Empty;
+            if (HasCustomFont)
+                custFont = "(Custom Font)"; // either jvocals or vocals may have a CustomFont
+
             switch (ArrangementType)
             {
                 case ArrangementType.Bass:
                     return String.Format("{0} [{1}{2}{3}] ({4}){5}", ArrangementType, Tuning, pitchInfo, capoInfo, toneDesc, metDesc);
                 case ArrangementType.Vocal:
+                    return String.Format("{0} {1}", ArrangementName, custFont);
                 case ArrangementType.ShowLight:
                     return String.Format("{0}", ArrangementName);
                 default:

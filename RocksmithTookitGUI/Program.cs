@@ -9,6 +9,9 @@ using RocksmithToolkitLib.XmlRepository;
 using System.Threading;
 using RocksmithToolkitGUI.Config;
 using NLog;
+using System.Globalization;
+using System.Linq;
+using System.Reflection;
 
 namespace RocksmithToolkitGUI
 {
@@ -22,7 +25,7 @@ namespace RocksmithToolkitGUI
         static void Main(string[] args)
         {
             // make the logger available globally in application
-            ConfigGlobals.Log = LogManager.GetCurrentClassLogger();
+            GlobalsConfig.Log = LogManager.GetCurrentClassLogger();
             // TODO: figure out way for native mac\linux OS
             var logPath = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "_RSToolkit_" + DateTime.Now.ToString("yyyy-MM-dd") + ".log");
 
@@ -41,16 +44,23 @@ namespace RocksmithToolkitGUI
                 /* DO NOTHING */
             }
 
-            ConfigGlobals.Log.Info(//OSVersion on unix will return it's Kernel version, urgh.
-                String.Format("RocksmithToolkitGUI: v{0}\r\n ", ToolkitVersion.RSTKGuiVersion) +
-                String.Format("RocksmithToolkitLib: v{0}\r\n ", ToolkitVersion.RSTKLibVersion()) +
-                String.Format("RocksmithToolkitUpdater: v{0}\r\n ", updaterVersion) +
-                String.Format("Dynamic Difficulty Creator: v{0}\r\n ", FileVersionInfo.GetVersionInfo(Path.Combine(ExternalApps.TOOLKIT_ROOT, ExternalApps.APP_DDC)).ProductVersion) +
-                String.Format("OS: {0} ({1} bit)\r\n ", Environment.OSVersion, Environment.Is64BitOperatingSystem ? "64" : "32") +
-                String.Format(".NET Framework Runtime: v{0}\r\n ", Environment.Version) +
-                String.Format("JIT: {0}\r\n ", JitVersionInfo.GetJitVersion()) +
-                String.Format("WINE_INSTALLED: {0}\r\n ", GeneralExtension.IsWine()) +
-                String.Format("MacOSX: {0}\r\n ", Environment.OSVersion.Platform == PlatformID.MacOSX)
+            var assembly = Assembly.LoadFile(typeof(RocksmithToolkitLib.ToolkitVersion).Assembly.Location);
+            var assemblyConfiguration = assembly.GetCustomAttributes(typeof(AssemblyConfigurationAttribute), false).Cast<AssemblyConfigurationAttribute>().FirstOrDefault().Configuration.ToString() ?? "";
+            var dtuLib = DateTime.Parse(assemblyConfiguration, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal);
+
+            GlobalsConfig.Log.Info(//OSVersion on unix will return it's Kernel version, urgh.
+                String.Format(" - RocksmithToolkitGUI: v{0}\r\n ", ToolkitVersion.RSTKGuiVersion) +
+                String.Format(" - RocksmithToolkitLib: v{0} [{1}]\r\n ", ToolkitVersion.RSTKLibVersion(), dtuLib) +
+                String.Format(" - RocksmithToolkitUpdater: v{0}\r\n ", updaterVersion) +
+                String.Format(" - Dynamic Difficulty Creator: v{0}\r\n ", FileVersionInfo.GetVersionInfo(Path.Combine(ExternalApps.TOOLKIT_ROOT, ExternalApps.APP_DDC)).ProductVersion) +
+                String.Format(" - OS: {0} ({1} bit)\r\n ", Environment.OSVersion, Environment.Is64BitOperatingSystem ? "64" : "32") +
+                String.Format(" - .NET Framework Runtime: v{0}\r\n ", Environment.Version) +
+                String.Format(" - CultureInfo: ({0}) \r\n ", CultureInfo.CurrentCulture.ToString()) +
+                String.Format(" - Current Local DateTime: [{0}]\r\n ", DateTime.Now.ToString()) +
+                String.Format(" - Current UTC DateTime: [{0}]\r\n ", DateTime.UtcNow.ToString()) +
+                String.Format(" - JIT: {0}\r\n ", JitVersionInfo.GetJitVersion()) +
+                String.Format(" - WINE_INSTALLED: {0}\r\n ", GeneralExtension.IsWine()) +
+                String.Format(" - MacOSX: {0} ", Environment.OSVersion.Platform == PlatformID.MacOSX)
                 );
 
             if (!Environment.Version.ToString().Contains("4.0.30319") &&
@@ -73,37 +83,55 @@ namespace RocksmithToolkitGUI
                 }
             }
 
-            Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
-            AppDomain.CurrentDomain.UnhandledException += (s, e) =>
+            // use custom event handlers
+            if (!GeneralExtension.IsInDesignMode)
             {
-                var exception = e.ExceptionObject as Exception;
-                ConfigGlobals.Log.Error(exception, "\n{0}\n{1}\nException cached:\n{2}\n\n", exception.Source, exception.TargetSite, exception.InnerException);
-                //Log.Error("Application Stdout:\n\n{0}", new StreamReader(_stdout.ToString()).ReadToEnd());
-
-                if (MessageBox.Show(String.Format("Application.ThreadException met.\n\n\"{0}\"\n\n{1}\n\nPlease send us \"{2}\", open log file now?",
-                    exception.ToString(), exception.Message.ToString(), Path.GetFileName(logPath)), "Unhandled Exception", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+                AppDomain.CurrentDomain.UnhandledException += (s, e) =>
                 {
-                    //figure out how to call it single time
-                    //Process.Start("explorer.exe", string.Format("/select,\"{0}\"", logPath));
-                    Process.Start(logPath);
-                }
-                //Console.SetOut(new StreamWriter(Console.OpenStandardOutput()) { AutoFlush = true }); //write back to Stdout in console could use custom streamwriter so you could write to console from there
-            };
+                    var exception = e.ExceptionObject as Exception;
+                    GlobalsConfig.Log.Error(" - Unhandled.Exception:\n\nSource: {0}\nTarget: {1}\n{2}", exception.Source, exception.TargetSite, exception.ToString());
 
-            // UI thread exceptions handling.
-            Application.ThreadException += (s, e) =>
-            {
-                var exception = e.Exception;
-                ConfigGlobals.Log.Error(exception, "\n{0}\n{1}\nException cached:\n{2}\n\n", exception.Source, exception.TargetSite, exception.InnerException);
-                //Log.Error("Application Stdout:\n\n{0}", new StreamReader(_stdout.ToString()).ReadToEnd());
+                    if (MessageBox.Show(String.Format("Unhandled.Exception:\n\n{0}\nPlease send us the {1} file if you need help.  Open log file now?", 
+                        exception.Message.ToString(), Path.GetFileName(logPath)), 
+                        "Please Read This Important Message Completely ...", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                    {
+                        Process.Start(logPath);
+                    }
 
-                if (MessageBox.Show(String.Format("Application.ThreadException met.\n\n\"{0}\"\n\n{1}\n\nPlease send us \"{2}\", open log file now?",
-                    exception.ToString(), exception.Message.ToString(), Path.GetFileName(logPath)), "Thread Exception", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    GlobalExtension.HideProgress();
+                };
+
+                // UI thread exceptions handling.
+                Application.ThreadException += (s, e) =>
                 {
-                    //Process.Start("explorer.exe", string.Format("/select,\"{0}\"", logPath));
-                    Process.Start(logPath);
-                }
-            };
+                    var exception = e.Exception;
+                    var packerErrMsg = RocksmithToolkitLib.DLCPackage.Packer.ErrMsg.ToString();
+
+                    if (String.IsNullOrEmpty(packerErrMsg))
+                        GlobalsConfig.Log.Error(" - Application.ThreadException\n\nSource: {0}\nTarget: {1}\n{2}", exception.Source, exception.TargetSite, exception.ToString());
+                    else
+                        GlobalsConfig.Log.Error(" - Application.ThreadException\n\nSource: {0}\nTarget: {1}\n{2}\n\nPacker.ThreadException (Corrupt CDLC): {3}", exception.Source, exception.TargetSite, exception.ToString(), packerErrMsg.Trim());
+
+                    if (exception.Message != null && exception.Message.Contains("expired"))
+                    {
+                        MessageBox.Show(String.Format("Activation.ThreadException:\n\n{0}", exception.Message), 
+                            "Please Read This Important Message Completely ...", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        Application.Exit();
+                    }
+                    else
+                    {
+                        var exMessage = String.IsNullOrEmpty(packerErrMsg) ? exception.Message : String.Format("{0}\nPacker.ThreadException (Corrupt CDLC):\n{1}\n", exception.Message, packerErrMsg.Trim());
+                        if (MessageBox.Show(String.Format("Application.ThreadException:\n\n{0}\n\nPlease send us the {1} file if you need help.  Open log file now?", exMessage, Path.GetFileName(logPath)), 
+                            "Please Read This Important Message Completely ...", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                        {
+                            Process.Start(logPath);
+                        }
+                    }
+
+                    GlobalExtension.HideProgress();
+                };
+            }
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

@@ -85,6 +85,7 @@ namespace RocksmithToolkitLib.DLCPackage
         };
 
         #endregion
+
         /// <summary>
         /// Unpacks zipped data.
         /// </summary>
@@ -97,17 +98,20 @@ namespace RocksmithToolkitLib.DLCPackage
             int len;
             var buffer = new byte[65536];
             var zOutputStream = new ZInputStream(str);
+
             while ((len = zOutputStream.read(buffer, 0, buffer.Length)) > 0)
-            {
                 outStream.Write(buffer, 0, len);
-            }
-            zOutputStream.Close(); buffer = null;
+
+            zOutputStream.Close();
+            buffer = null;
+
             if (rewind)
             {
                 outStream.Position = 0;
                 outStream.Flush();
             }
         }
+
         public static void Unzip(byte[] array, Stream outStream, bool rewind = true)
         {
             Unzip(new MemoryStream(array), outStream, rewind);
@@ -278,8 +282,15 @@ namespace RocksmithToolkitLib.DLCPackage
             }
         }
 
+        private static bool activated = false;
         private static void InitRijndael(Rijndael rij, byte[] key, CipherMode cipher)
         {
+            if (!activated)
+            {
+                Startup.Start(); // invoke Start method
+                activated = true;
+            }
+
             rij.Padding = PaddingMode.None;
             rij.Mode = cipher;
             rij.BlockSize = 128;
@@ -298,6 +309,7 @@ namespace RocksmithToolkitLib.DLCPackage
                 input.Read(buffer, 0, size);
                 coder.Write(buffer, 0, size);
             }
+            
             if (pad > 0)
                 coder.Write(new byte[pad], 0, pad);
 

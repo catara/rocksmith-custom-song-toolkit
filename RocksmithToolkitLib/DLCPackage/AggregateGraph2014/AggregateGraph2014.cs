@@ -240,8 +240,13 @@ namespace RocksmithToolkitLib.DLCPackage.AggregateGraph2014
                 ImageArt.Add(dds);
             }
 
-            // Lyrics Font Texture
-            if (!String.IsNullOrEmpty(info.LyricArtPath))
+            // Lyrics Font Texture (DDS)
+            var lyricArtPath = String.Empty;
+            if (info.Arrangements.Any(arr => arr.HasCustomFont))
+                lyricArtPath = info.Arrangements.Find(arr => arr.HasCustomFont).LyricsArtPath;           
+            
+            // TOC ENTRY /assets/ui/lyrics/[dlcName]/lyrics_[dlcName].dds
+            if (!String.IsNullOrEmpty(lyricArtPath))
             {
                 var dds = new GraphItemLLID();
                 dds.Canonical = String.Format(CANONICAL_LYRIC, dlcName);

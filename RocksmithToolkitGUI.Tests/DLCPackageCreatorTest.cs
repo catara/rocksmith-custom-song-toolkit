@@ -4,6 +4,7 @@ using RocksmithToolkitGUI.Config;
 using System;
 using RocksmithToolkitLib.DLCPackage;
 using RocksmithToolkitLib.Extensions;
+using RocksmithToolkitLib.PSARC;
 using RocksmithToolkitLib.XmlRepository;
 using System.IO;
 using RocksmithToolkitLib;
@@ -11,7 +12,6 @@ using NUnit.Framework;
 using System.Windows.Forms;
 using System.Reflection;
 using System.Diagnostics;
-using RocksmithToolkitLib.PsarcLoader;
 using RocksmithToolkitLib.Tests;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,7 +50,7 @@ namespace RocksmithToolkitGUI.Tests
             if (!TestSettings.Instance.ResourcePaths.Any())
                 Assert.Fail("TestSettings Load Failed ...");
 
-            ConfigGlobals.IsUnitTest = true;
+            GlobalsLib.IsUnitTest = true;
             packageCreator = new DLCPackageCreator.DLCPackageCreator();
 
             // empty the 'Local Settings/Temp/UnitTest' directory before starting
@@ -61,7 +61,7 @@ namespace RocksmithToolkitGUI.Tests
         public void Dispose()
         {
             packageCreator.Dispose();
-            ConfigGlobals.IsUnitTest = false;
+            GlobalsLib.IsUnitTest = false;
         }
 
         /// <summary>

@@ -2,14 +2,16 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Resources;
-// General Information about an assembly is controlled through the following
+using System;
+
+// General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("RocksmithToolkitLib")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyCompany("Rocksmith Custom Song Project")]
 [assembly: AssemblyProduct("RocksmithToolkitLib")]
-[assembly: AssemblyCopyright("Copyright © 2017")]
+[assembly: AssemblyCopyright("Copyright © 2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 // Setting ComVisible to false makes the types in this assembly not visible
@@ -26,6 +28,6 @@ using System.Resources;
 //      Revision
 //
 // THESE VALUES ARE PROGRAMMATICALLY GENERATED - DO NOT EDIT
-[assembly: AssemblyVersion("2.9.2.0")]
-[assembly: AssemblyInformationalVersion("613ddde2")]
-[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyVersion("2.9.2.1")]
+[assembly: AssemblyInformationalVersion("0b6278e4")]
+[assembly: AssemblyConfiguration("2020-02-14T16:26:02")]

@@ -59,6 +59,8 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="Resources\HowToUnitTest.txt" />
+    <None Include="Resources\CustomFont_jvocals_v1_p.psarc" />
+    <None Include="Resources\CustomFont_vocals_v1_p.psarc" />
     <None Include="Resources\Peppa-Pig_v1_m.psarc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

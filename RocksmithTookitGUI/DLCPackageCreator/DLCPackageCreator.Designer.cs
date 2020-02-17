@@ -200,7 +200,7 @@
             // cmbAppIds
             //
             this.cmbAppIds.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbAppIds.DropDownWidth = 320;
+            this.cmbAppIds.DropDownWidth = 420;
             this.cmbAppIds.Location = new System.Drawing.Point(233, 69);
             this.cmbAppIds.Margin = new System.Windows.Forms.Padding(2);
             this.cmbAppIds.Name = "cmbAppIds";
@@ -615,9 +615,8 @@
             this.toolTip.SetToolTip(this.chkJapaneseTitle, "日本のタイトルを使う");
             this.chkJapaneseTitle.UseMnemonic = false;
             this.chkJapaneseTitle.UseVisualStyleBackColor = true;
-            this.chkJapaneseTitle.CheckStateChanged += new System.EventHandler(this.cbJapaneseTitle_CheckedChanged);
-            this.chkJapaneseTitle.Click += new System.EventHandler(this.cbJapaneseTitle_Click);
-            //
+            this.chkJapaneseTitle.CheckStateChanged += new System.EventHandler(this.chkJapaneseTitle_CheckedChanged);
+            this.chkJapaneseTitle.Click += new System.EventHandler(this.chkJapaneseTitle_Click);
             // label8
             //
             this.label8.AutoSize = true;

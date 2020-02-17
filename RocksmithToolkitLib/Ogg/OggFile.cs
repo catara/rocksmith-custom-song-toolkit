@@ -171,18 +171,19 @@ namespace RocksmithToolkitLib.Ogg
 
             EndianBitConverter bitConverter;
             EndianBitConverter targetbitConverter;
-            if (!platform.IsConsole) // little endian
-            {
-                bitConverter = EndianBitConverter.Little;
-                targetbitConverter = EndianBitConverter.Big;
-            }
+
+            if (platform.platform == GamePlatform.None)
+                throw new InvalidDataException("The input file doesn't appear to be a valid Wwise file.");
             else if (platform.IsConsole) // big endian
             {
                 bitConverter = EndianBitConverter.Big;
                 targetbitConverter = EndianBitConverter.Little;
             }
-            else
-                throw new InvalidDataException("The input file doesn't appear to be a valid Wwise file.");
+            else // little endian
+            {
+                bitConverter = EndianBitConverter.Little;
+                targetbitConverter = EndianBitConverter.Big;
+            }
 
             using (var outputFileStream = new MemoryStream())
             using (var inputFileStream = File.Open(inputFile, FileMode.Open))
@@ -236,7 +237,7 @@ namespace RocksmithToolkitLib.Ogg
                 // Process DATA section - contains size, seektable, codebook, stream (biggest part)
                 //raw data
                 writer.Write(reader.ReadBytes(4)); // the word data
-                writer.Write(reader.ReadUInt32()); //data size
+                writer.Write(reader.ReadUInt32()); // data size
 
                 //seektable
                 var y = seektablesize / 4;
@@ -461,3 +462,6 @@ namespace RocksmithToolkitLib.Ogg
         #endregion
     }
 }
+
+
+

@@ -1,6 +1,35 @@
 Rocksmith Toolkit Release Notes
 
-- fix invalid artifact naming so that unpacker can extract recoverable data
+- updated RocksmithToolkitLib.SongAppId.xml dlc AppIDs
+- improved auto repair of some old toolkit multitone exceptions
+- volume ranges settable from 0 to -30 with better defaults
+- fixed packer/unpacker PromptComplete now comes to front
+- autoconvert old template relative path format to the new format
+- added additional exception handling for corrupt '*.dlc.xml' templates
+- fixed LoadFromFolder custom font handling
+- improved arrangement detection/validation
+- improvements to Xbox360 GameVersion detection
+- added optionalProperties metadata to Song2014 xml for Japanese Artist and Song
+- improved error checking in CDLC Creator
+- fixed issues with the way CDCL Creator handles jvocal repackaging
+- improved compatibility with CustomFontGenerator (special thanks to iminashi)
+- added CultureInfo to log
+- simplified custom exception messages to encourage users to read them
+- added toolkit library validation check
+- improved tone name error handling
+- unpacker audio naming fixes
+- restored missing toolkit CLI executables
+- added DDC Unit Testing to RocksmithToolkitGUI.Tests
+- merged PsarcLoader into PSARC namespace
+- improved robustness of unpacker exception handling
+- extract remaining salvageable artifacts if archive is corrupt
+- fixed Quick Add to work with directory names that contain '.' periods
+- fixed representative arrangement bug
+- DDC tab menu reports errors correctly instead of throwing a misleading exception
+- Import Package will autosave xml template if General Config>Autosave Templates is enabled
+  (turn off autosave if you do not want to unknowingly overwrite existing xml templates)
+- use existing wem files if provided without checking for Wwise installation
+- fix invalid artifact naming so that unpacker can extract any recoverable data
 - prevent Unpacker CLI from redirecting standard output for dds to png conversions
 - added error handler for TreeViewOfd exceptions
 - added additional flexibility to Quick Add feature

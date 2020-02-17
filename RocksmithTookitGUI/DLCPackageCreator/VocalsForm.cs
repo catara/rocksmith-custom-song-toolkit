@@ -1,26 +1,18 @@
 using Ookii.Dialogs;
 using System;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Text;
-using System.Windows;
-using Microsoft.Win32;
 using System.Windows.Forms;
 using RocksmithToolkitLib.Extensions;
-using RocksmithToolkitLib.XML;
-using System.Text.RegularExpressions;
-
 
 namespace RocksmithToolkitGUI.DLCPackageCreator
 {
     public partial class VocalsForm : Form
     {
-        public VocalsForm(string fontSngPath, string lyricArtPath, bool isCustom, string vocalsXmlPath)
+        public VocalsForm(string lyricArtPath, string vocalsXmlPath)
         {
             InitializeComponent();
-            SngPath = fontSngPath;
             ArtPath = lyricArtPath;
-            IsCustom = isCustom;
             VocalsPath = vocalsXmlPath;
             PopulateKey();
             PopulateRichText();
@@ -30,18 +22,6 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
         {
             get { return txtVocalsDdsPath.Text; }
             set { txtVocalsDdsPath.Text = value; }
-        }
-
-        public bool IsCustom
-        {
-            get { return chkCustomFont.Checked; }
-            set { chkCustomFont.Checked = value; }
-        }
-
-        public string SngPath
-        {
-            get { return txtVocalsSngPath.Text; }
-            set { txtVocalsSngPath.Text = value; }
         }
 
         public string VocalsPath
@@ -104,12 +84,12 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
 
         private void btnVocalsDdsPath_Click(object sender, EventArgs e)
         {
-
-            // toolkit writes this artifact to: /assets/ui/lyrics/girigirichop/lyrics_SONGNAME.dds
+            // The Toolkit writes this artifact to: /assets/ui/lyrics/[dlcName]/lyrics_[dlcName].dds
             using (var f = new VistaOpenFileDialog())
             {
+                f.InitialDirectory = Path.GetDirectoryName(VocalsPath);
                 f.FileName = ArtPath;
-                f.Title = "Select a Custom Lyric Font DDS Texture (512x1024)";
+                f.Title = "Select a Custom Lyric Font DDS Texture";
                 f.Filter = "Custom Lyrics Font Files (*.dds)|*.dds";
                 if (f.ShowDialog() == DialogResult.OK)
                 {
@@ -118,24 +98,11 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             }
         }
 
-        private void btnVocalsSngPath_Click(object sender, EventArgs e)
-        {
-            using (var f = new VistaOpenFileDialog())
-            {
-                f.FileName = SngPath;
-                f.Filter = "Rocksmith SNG Custom Font Files (*.sng)|*.sng";
-                if (f.ShowDialog() == DialogResult.OK)
-                {
-                    ArtPath = f.FileName;
-                    IsCustom = true; //possible jvocals and regular vocals, but supported only one custom font texture
-                }
-            }
-        }
-
         private void btnVocalsXmlPath_Click(object sender, EventArgs e)
         {
             using (var f = new VistaOpenFileDialog())
             {
+                f.InitialDirectory = Path.GetDirectoryName(VocalsPath);
                 f.FileName = VocalsPath;
                 f.Filter = "Rocksmith XML Vocals or JVocals Files (*vocals.xml)|*vocals.xml";
                 if (f.ShowDialog() == DialogResult.OK)
@@ -146,33 +113,10 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             }
         }
 
-        private void txtVocalsXmlPath_TextChanged(object sender, EventArgs e)
+        private void btnRemoveFont_Click(object sender, EventArgs e)
         {
-            ValidateGui();
+            ArtPath = null;
         }
-
-        private void chkCustomFont_CheckedChanged(object sender, EventArgs e)
-        {
-            ValidateGui();
-        }
-
-        private void ValidateGui()
-        {
-            // checking for custom fonts
-            if (txtVocalsXmlPath.Text.ToLower().EndsWith("_jvocals.xml"))
-            {
-                btnVocalsDdsPath.Enabled = true;
-                txtVocalsDdsPath.Enabled = true;
-                chkCustomFont.Checked = true;
-            }
-            else
-            {
-                btnVocalsDdsPath.Enabled = false;
-                txtVocalsDdsPath.Enabled = false;
-            }
-
-        }
-
     }
 }
 

@@ -24,7 +24,6 @@ using RocksmithToolkitLib.Extensions;
 using RocksmithToolkitLib.Properties;
 using RocksmithToolkitLib.Ogg;
 using Tone = RocksmithToolkitLib.DLCPackage.Manifest.Tone.Tone;
-using RocksmithToolkitLib.PsarcLoader;
 using System.Diagnostics;
 
 namespace RocksmithToolkitLib.DLCPackage
@@ -431,9 +430,13 @@ namespace RocksmithToolkitLib.DLCPackage
                     }
                 }
 
-                // Lyric Art Texture
-                if (File.Exists(info.LyricArtPath))
-                    packPsarc.AddEntry(String.Format("assets/ui/lyrics/{0}/lyrics_{0}.dds", dlcName), new FileStream(info.LyricArtPath, FileMode.Open, FileAccess.Read, FileShare.Read));
+                // FIND ART TEXTURE
+                var lyricArtPath = String.Empty;
+                if (info.Arrangements.Any(arr => arr.HasCustomFont))
+                    lyricArtPath = info.Arrangements.Find(arr => arr.HasCustomFont).LyricsArtPath;
+                // SET CORRECT TOC ENTRY PATH
+                if (!String.IsNullOrEmpty(lyricArtPath))
+                    packPsarc.AddEntry(String.Format("assets/ui/lyrics/{0}/lyrics_{0}.dds", dlcName), new FileStream(lyricArtPath, FileMode.Open, FileAccess.Read, FileShare.Read));
 
                 // AUDIO
                 var audioFile = info.OggPath;
@@ -542,7 +545,7 @@ namespace RocksmithToolkitLib.DLCPackage
                         // MANIFEST
                         var manifest = new Manifest2014<Attributes2014>();
                         var attribute = new Attributes2014(arrangementFileName, arr, info, platform);
-                    
+
                         // TODO: monitor this change
                         // Commented out - EOF now properly sets the bonus/represent elements
                         //if (arrangement.ArrangementType == ArrangementType.Bass || arrangement.ArrangementType == ArrangementType.Guitar)
@@ -1238,13 +1241,19 @@ namespace RocksmithToolkitLib.DLCPackage
                     if (arr.Sng2014 == null)
                     {
                         // cache results
-                        arr.Sng2014 = Sng2014File.ConvertXML(arr.SongXml.File, arr.ArrangementType, arr.FontSng);
-                        if (arr.CustomFont)
+                        arr.Sng2014 = Sng2014File.ConvertXML(arr.SongXml.File, arr.ArrangementType);
+
+                        // GlyphDefinitions.UpdateCustomFontStatus(ref arr);
+                        if (arr.HasCustomFont)
+                        {
                             arr.Sng2014.PopFontPath(dlcName);
+                            GlyphDefinitions.WriteToSng(arr.Sng2014, arr.GlyphsXmlPath);
+                        }
                     }
 
                     using (var fs = new FileStream(sngFile, FileMode.Create))
                         arr.Sng2014.WriteSng(fs, platform);
+
                     break;
                 default:
                     throw new InvalidOperationException("Unexpected game version value");

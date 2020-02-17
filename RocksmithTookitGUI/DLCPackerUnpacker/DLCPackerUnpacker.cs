@@ -13,11 +13,11 @@ using RocksmithToolkitLib.DLCPackage;
 using RocksmithToolkitLib;
 using RocksmithToolkitLib.DLCPackage.AggregateGraph2014;
 using RocksmithToolkitLib.Extensions;
+using RocksmithToolkitLib.PSARC;
 using RocksmithToolkitLib.Sng;
 using RocksmithToolkitLib.XML;
 using RocksmithToolkitLib.XmlRepository;
 using RocksmithToolkitGUI.Config;
-using RocksmithToolkitLib.PsarcLoader;
 using PackageCreator = RocksmithToolkitLib.DLCPackage.DLCPackageCreator;
 
 namespace RocksmithToolkitGUI.DLCPackerUnpacker
@@ -117,14 +117,14 @@ namespace RocksmithToolkitGUI.DLCPackerUnpacker
                 actionMsg = "Unpacking";
 
             if (String.IsNullOrEmpty(errMsg))
-                errMsg = actionMsg + " is complete." + Environment.NewLine;
+                errMsg = actionMsg + " is complete." + Environment.NewLine + Environment.NewLine;
             else
-                errMsg = actionMsg + " is complete with the following errors:" + Environment.NewLine +
-                         errMsg + Environment.NewLine;
+                errMsg = actionMsg + " is complete with the following errors:" + Environment.NewLine + Environment.NewLine +
+                         errMsg;
 
             errMsg += "Would you like to open the destination path?  ";
 
-            if (MessageBox.Show(new Form { TopMost = true }, errMsg, MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+            if (MessageBox.Show(errMsg, MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                 Process.Start(destDirPath);
         }
 
@@ -173,6 +173,7 @@ namespace RocksmithToolkitGUI.DLCPackerUnpacker
         public List<string> UnpackSongs(IEnumerable<string> srcPaths, string destPath)
         {
             ToggleUIControls(false);
+            Packer.ErrMsg = new StringBuilder();
             errorsFound = new StringBuilder();
             GlobalExtension.UpdateProgress = this.pbUpdateProgress;
             GlobalExtension.CurrentOperationLabel = this.lblCurrentOperation;
@@ -190,68 +191,95 @@ namespace RocksmithToolkitGUI.DLCPackerUnpacker
                 Application.DoEvents();
                 progress += step;
                 GlobalExtension.ShowProgress(String.Format("Unpacking: '{0}'", Path.GetFileName(srcPath)), progress);
+                Platform srcPlatform = srcPath.GetPlatform();
+                var unpackedDir = String.Empty;
 
                 try
                 {
-                    Platform srcPlatform = srcPath.GetPlatform();
-                    var unpackedDir = Packer.Unpack(srcPath, destPath, srcPlatform, DecodeAudio, OverwriteSongXml);
-
-                    // added a bulk process to create template xml files here so unpacked folders may be loaded quickly in CDLC Creator if desired
-                    progress += step;
-                    GlobalExtension.ShowProgress(String.Format("Creating Template XML file for: '{0}'", Path.GetFileName(srcPath)), progress);
-                    using (var packageCreator = new DLCPackageCreator.DLCPackageCreator())
-                    {
-                        DLCPackageData info = null;
-                        if (srcPlatform.version == GameVersion.RS2014)
-                            info = DLCPackageData.LoadFromFolder(unpackedDir, srcPlatform, srcPlatform, true, true);
-                        else
-                            info = DLCPackageData.RS1LoadFromFolder(unpackedDir, srcPlatform, false);
-
-                        info.GameVersion = srcPlatform.version;
-
-                        switch (srcPlatform.platform)
-                        {
-                            case GamePlatform.Pc:
-                                info.Pc = true;
-                                break;
-                            case GamePlatform.Mac:
-                                info.Mac = true;
-                                break;
-                            case GamePlatform.XBox360:
-                                info.XBox360 = true;
-                                break;
-                            case GamePlatform.PS3:
-                                info.PS3 = true;
-                                break;
-                        }
-
-                        packageCreator.FillPackageCreatorForm(info, unpackedDir);
-                        // fix descrepancies
-                        packageCreator.CurrentGameVersion = srcPlatform.version;
-                        // console files do not have an AppId
-                        if (!srcPlatform.IsConsole)
-                            packageCreator.AppId = info.AppId;
-                        //packageCreator.SelectComboAppId(info.AppId);
-                        // save template xml file except when SongPack
-                        if (!srcPath.Contains("_sp_") && !srcPath.Contains("_songpack_"))
-                            packageCreator.SaveTemplateFile(unpackedDir, false);
-
-                    }
-
+                    unpackedDir = Packer.Unpack(srcPath, destPath, srcPlatform, DecodeAudio, OverwriteSongXml);
                     unpackedDirs.Add(unpackedDir);
                 }
                 catch (Exception ex)
                 {
-                    // ignore any 'Index out of range' exceptions
-                    if (!ex.Message.StartsWith("Index"))
-                        errorsFound.AppendLine(String.Format("<ERROR> Unpacking file: '{0}' ... {1}", Path.GetFileName(srcPath), ex.Message));
+                    errorsFound.AppendLine(String.Format("<ERROR> Unpacking file: {0}{1}{2}", Path.GetFileName(srcPath), Environment.NewLine, ex.Message));
+                    continue;
+                }
+
+                // added bulk process to create template xml files here so unpacked folders may be loaded quickly in CDLC Creator if desired
+                if (ConfigRepository.Instance().GetBoolean("creator_autosavetemplate")) // && !srcPath.Contains("_sp_") && !srcPath.Contains("_songpack_"))
+                {
+                    try
+                    {
+                        var isSongPack = Directory.EnumerateFiles(unpackedDir, "*.wem", SearchOption.AllDirectories).Count() > 2;
+                        if (isSongPack)
+                            throw new Exception("<ERROR> Found too many *.wem files for template to" + Environment.NewLine +
+                                                "process and load.  Uncheck the Autosave Template" + Environment.NewLine +
+                                                "checkbox in General Config to prevent this exception." + Environment.NewLine);
+
+                        //var isODLC = !Directory.EnumerateFiles(unpackedDir, "toolkit.version", SearchOption.AllDirectories).Any();
+                        //if (isODLC)
+                        //    throw new Exception("Uncheck 'Autosave Templates' in 'General Config' to avoid this error.");
+
+                        if (srcPlatform.platform == GamePlatform.None)
+                            throw new Exception("Could not determine GamePlatform.");
+
+                        progress += step;
+                        GlobalExtension.ShowProgress(String.Format("Creating Template XML file for: '{0}'", Path.GetFileName(srcPath)), progress);
+
+                        using (var packageCreator = new DLCPackageCreator.DLCPackageCreator())
+                        {
+                            DLCPackageData info = null;
+                            if (srcPlatform.version == GameVersion.RS2014)
+                                info = DLCPackageData.LoadFromFolder(unpackedDir, srcPlatform, srcPlatform, true, true);
+                            else
+                                info = DLCPackageData.RS1LoadFromFolder(unpackedDir, srcPlatform, false);
+
+                            info.GameVersion = srcPlatform.version;
+
+                            switch (srcPlatform.platform)
+                            {
+                                case GamePlatform.Pc:
+                                    info.Pc = true;
+                                    break;
+                                case GamePlatform.Mac:
+                                    info.Mac = true;
+                                    break;
+                                case GamePlatform.XBox360:
+                                    info.XBox360 = true;
+                                    break;
+                                case GamePlatform.PS3:
+                                    info.PS3 = true;
+                                    break;
+                            }
+
+                            packageCreator.FillPackageCreatorForm(info, unpackedDir);
+                            // fix descrepancies
+                            packageCreator.CurrentGameVersion = srcPlatform.version;
+                            // console files do not have an AppId
+                            if (!srcPlatform.IsConsole)
+                                packageCreator.AppId = info.AppId;
+
+                            packageCreator.SaveTemplateFile(unpackedDir, false);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ex.Message.Contains("Object reference"))
+                            errorsFound.AppendLine(String.Format("Could not create Template XML file for:{0}{1}", Environment.NewLine, Path.GetFileName(srcPath) + new string(' ', 5)));
+                        else
+                            errorsFound.AppendLine(String.Format("Could not create Template XML file for:{0}{1}{0}{0}{2}", Environment.NewLine, Path.GetFileName(srcPath) + new string(' ', 5), ex.Message));
+                    }
                 }
             }
 
             sw.Stop();
             GlobalExtension.ShowProgress("Finished unpacking archive (elapsed time): " + sw.Elapsed, 100);
 
-            if (!ConfigGlobals.IsUnitTest)
+            // insert any Packer error messages
+            if (!String.IsNullOrEmpty(Packer.ErrMsg.ToString()))
+                errorsFound.Insert(0, Packer.ErrMsg.ToString());
+
+            if (!GlobalsLib.IsUnitTest)
                 PromptComplete(destPath, false, errorsFound.ToString());
 
             GlobalExtension.Dispose();
@@ -418,11 +446,11 @@ namespace RocksmithToolkitGUI.DLCPackerUnpacker
                 string unpackedDir;
                 try
                 {
-                    unpackedDir = Packer.Unpack(srcPath, tmpPath, overwriteSongXml: true, predefinedPlatform: packagePlatform);
+                    unpackedDir = Packer.Unpack(srcPath, tmpPath, overwriteSongXml: true, overridePlatform: packagePlatform);
                 }
                 catch (Exception ex)
                 {
-                    errorsFound.AppendLine(String.Format("Error trying unpack file '{0}': {1}", Path.GetFileName(srcPath), ex.Message));
+                    errorsFound.AppendLine(String.Format("<Error> unpacking file '{0}': {1}", Path.GetFileName(srcPath), ex.Message));
                     continue;
                 }
 
@@ -589,8 +617,8 @@ namespace RocksmithToolkitGUI.DLCPackerUnpacker
 
                 var songPackDir = AggregateGraph2014.DoLikeSongPack(srcPath, NewAppId);
                 destPath = Path.Combine(Path.GetDirectoryName(srcPath), String.Format("{0}_songpack_p.psarc", Path.GetFileName(srcPath)));
-                // PC Only for now can't mix platform packages
-                Packer.Pack(songPackDir, destPath, predefinedPlatform: new Platform(GamePlatform.Pc, GameVersion.RS2014));
+                // Pc:RS2014 Only for now can't mix platform packages
+                Packer.Pack(songPackDir, destPath, overridePlatform: new Platform(GamePlatform.Pc, GameVersion.RS2014));
 
                 // clean up now (song pack folder)
                 if (Directory.Exists(songPackDir))
@@ -613,7 +641,6 @@ namespace RocksmithToolkitGUI.DLCPackerUnpacker
         private void btnPack_Click(object sender, EventArgs e)
         {
             var srcPath = String.Empty;
-            var destPath = String.Empty;
 
             using (var fbd = new VistaFolderBrowserDialog())
             {
@@ -655,17 +682,18 @@ namespace RocksmithToolkitGUI.DLCPackerUnpacker
             {
                 Stopwatch sw = new Stopwatch();
                 sw.Restart();
-                var srcPlatform = srcPath.GetPlatform();
-                archivePath = Packer.Pack(srcPath, destPath, srcPlatform, UpdateSng, UpdateManifest);
+                archivePath = Packer.Pack(srcPath, destPath, updateSng: UpdateSng, updateManifest: UpdateManifest);
                 sw.Stop();
                 GlobalExtension.ShowProgress("Finished packing archive (elapsed time): " + sw.Elapsed, 100);
             }
             catch (Exception ex)
             {
-                errMsg = String.Format("{0}\n{1}", ex.Message, ex.InnerException);
+                errMsg = String.Format("{0}\n{1}", ex.Message, ex.InnerException) + Environment.NewLine + Environment.NewLine +
+                "Confirm GamePlatform and GameVersion are set correctly for" + Environment.NewLine +
+                "the desired destination in the toolkit Configuration settings." + Environment.NewLine + Environment.NewLine;
             }
 
-            if (!ConfigGlobals.IsUnitTest)
+            if (!GlobalsLib.IsUnitTest)
                 PromptComplete(destPath, true, errMsg);
 
             GlobalExtension.Dispose();
@@ -765,10 +793,11 @@ namespace RocksmithToolkitGUI.DLCPackerUnpacker
 
             using (var ofd = new OpenFileDialog())
             {
-                ofd.Filter = "All Files (*.*)|*.*|Rocksmith 1|*.dat|Rocksmith 2014 PC|*_p.psarc|Rocksmith 2014 Mac|*_m.psarc|Rocksmith 2014 Xbox|*_xbox|Rocksmith 2014 PS3|*.edat";
+                ofd.Filter = "All Files (*.*)|*.*|Rocksmith 2012|*.dat|Rocksmith 2014 PC|*_p.psarc|Rocksmith 2014 Mac|*_m.psarc|Rocksmith 2014 Xbox|*_xbox|Rocksmith 2014 PS3|*.edat";
                 ofd.Multiselect = true;
                 ofd.FilterIndex = 1;
-                ofd.FileName = destPath;
+                if (File.Exists(destPath))
+                    ofd.FileName = destPath;
 
                 if (ofd.ShowDialog() != DialogResult.OK)
                     return;

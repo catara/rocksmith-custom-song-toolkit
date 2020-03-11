@@ -441,7 +441,7 @@ namespace RocksmithToolkitGUI.DLCManager
             "01. @Pack Add Increment to all songs Title per artist",
             "02. @Pack Make all DLC IDs unique (&save)",
             "03. @Pack Remove DD",
-            "04. <Import and remove DD only for Bass>",
+            "04. Backup DB during Startup",
             "05. @Pack Remove DD only for Bass Guitar",
             "06. When converting Audio use local folder structure",
             "07. @Pack skip Broken songs",

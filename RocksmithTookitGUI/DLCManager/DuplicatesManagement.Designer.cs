@@ -279,6 +279,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_TitleNew = new RocksmithToolkitGUI.CueTextBox();
             this.lbl_YearExisting = new System.Windows.Forms.Label();
             this.lbl_YearNew = new System.Windows.Forms.Label();
+            this.lbl_IDNew = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPathNew)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPathExisting)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -465,7 +466,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_Update.Name = "btn_Update";
             this.btn_Update.Size = new System.Drawing.Size(120, 34);
             this.btn_Update.TabIndex = 214;
-            this.btn_Update.Text = "Update and Overrite";
+            this.btn_Update.Text = "Update and Overrite Existing";
             this.toolTip1.SetToolTip(this.btn_Update, "Archive previously imported sopng and replace its entries with the new CDLC");
             this.btn_Update.UseVisualStyleBackColor = true;
             this.btn_Update.Click += new System.EventHandler(this.btn_Update_Click);
@@ -491,7 +492,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_Alternate.Name = "btn_Alternate";
             this.btn_Alternate.Size = new System.Drawing.Size(120, 34);
             this.btn_Alternate.TabIndex = 212;
-            this.btn_Alternate.Text = "Import as Alternate";
+            this.btn_Alternate.Text = "Import New as Alternate";
             this.toolTip1.SetToolTip(this.btn_Alternate, "Import and mark it as Alternate (add Alt or Author ; make dlc name/id unique)");
             this.btn_Alternate.UseVisualStyleBackColor = true;
             this.btn_Alternate.Click += new System.EventHandler(this.btn_Alternate_Click);
@@ -503,7 +504,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_Ignore.Name = "btn_Ignore";
             this.btn_Ignore.Size = new System.Drawing.Size(120, 34);
             this.btn_Ignore.TabIndex = 213;
-            this.btn_Ignore.Text = "Ignore as OLD/Duplicate";
+            this.btn_Ignore.Text = "Ignore New as OLD/Duplicate";
             this.btn_Ignore.UseVisualStyleBackColor = true;
             this.btn_Ignore.Click += new System.EventHandler(this.btn_Ignore_Click);
             // 
@@ -2635,7 +2636,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_NotADuplicate.Name = "btn_NotADuplicate";
             this.btn_NotADuplicate.Size = new System.Drawing.Size(120, 34);
             this.btn_NotADuplicate.TabIndex = 415;
-            this.btn_NotADuplicate.Text = "NOT a Duplicate";
+            this.btn_NotADuplicate.Text = "(neither) NOT a Duplicate";
             this.toolTip1.SetToolTip(this.btn_NotADuplicate, "Consider the current song as not a duplciate (NOT the same Artist and Title, OR D" +
         "LCName)");
             this.btn_NotADuplicate.UseVisualStyleBackColor = true;
@@ -3259,6 +3260,17 @@ namespace RocksmithToolkitGUI.DLCManager
             this.lbl_YearNew.Text = "Year";
             this.lbl_YearNew.Visible = false;
             // 
+            // lbl_IDNew
+            // 
+            this.lbl_IDNew.AutoSize = true;
+            this.lbl_IDNew.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lbl_IDNew.Location = new System.Drawing.Point(129, 31);
+            this.lbl_IDNew.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbl_IDNew.Name = "lbl_IDNew";
+            this.lbl_IDNew.Size = new System.Drawing.Size(45, 15);
+            this.lbl_IDNew.TabIndex = 429;
+            this.lbl_IDNew.Text = "ID New";
+            // 
             // frm_Duplicates_Management
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -3266,6 +3278,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.AutoScroll = true;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(802, 744);
+            this.Controls.Add(this.lbl_IDNew);
             this.Controls.Add(this.btn_Album2SortA);
             this.Controls.Add(this.lbl_YearNew);
             this.Controls.Add(this.lbl_YearExisting);
@@ -3668,5 +3681,6 @@ namespace RocksmithToolkitGUI.DLCManager
         private Label lbl_YearExisting;
         private Label lbl_YearNew;
         private Button btn_Album2SortA;
+        private Label lbl_IDNew;
     }
 }

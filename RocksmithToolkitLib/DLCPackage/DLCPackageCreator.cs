@@ -561,7 +561,7 @@ namespace RocksmithToolkitLib.DLCPackage
                         //        // for alternate arrangement then both represent and bonus are set to "0"
                         //        attribute.Representative = 0;
                         //        attribute.ArrangementProperties.Represent = 0;
-                        //    }
+                        //    }‰‰frk
                         //}
 
                         var attributeDictionary = new Dictionary<string, Attributes2014> { { "Attributes", attribute } };

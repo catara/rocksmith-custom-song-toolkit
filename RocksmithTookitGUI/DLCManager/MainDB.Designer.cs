@@ -174,7 +174,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_DefaultCover = new System.Windows.Forms.Button();
             this.btn_AddCoverFlags = new System.Windows.Forms.Button();
             this.btn_Sort = new System.Windows.Forms.Button();
-            this.chbx_PreSavedFTP = new System.Windows.Forms.ComboBox();
             this.btn_Copy_Orig = new System.Windows.Forms.Button();
             this.txt_Platform = new System.Windows.Forms.ComboBox();
             this.txt_Track_No = new System.Windows.Forms.NumericUpDown();
@@ -2034,6 +2033,10 @@ namespace RocksmithToolkitGUI.DLCManager
             "Other Tunings",
             "Live",
             "Acoustic",
+            "Instrumental",
+            "Single",
+            "Soundtrack",
+            "EP",
             "Imported as Pc",
             "Imported as PS3",
             "Imported as Mac",
@@ -2043,6 +2046,10 @@ namespace RocksmithToolkitGUI.DLCManager
             "DLCID diff than Default",
             "Same DLCName",
             "Same Title",
+            "Same Title (no [])",
+            "Same Artist/Album different Year",
+            "Same Title(no[]) different Year",
+            "Same Artist/Title(no[]) different Album",
             "Automatically generated Preview",
             "Any DLCManager generated Preview",
             "With Duplicates",
@@ -2054,10 +2061,6 @@ namespace RocksmithToolkitGUI.DLCManager
             "Songs ADDED later to the DropDown indicated Group than the import date of the cur" +
                 "rent song value",
             "Lyrics Changed",
-            "Instrumental",
-            "Single",
-            "Soundtrack",
-            "EP",
             "Audio Changed",
             "Packed as Pc",
             "Packed as PS3",
@@ -2208,7 +2211,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.Panel1.Controls.Add(this.txt_AudioPath);
             this.Panel1.Controls.Add(this.txt_AudioPreviewPath);
             this.Panel1.Controls.Add(this.txt_AlbumSort);
-            this.Panel1.Controls.Add(this.chbx_PreSavedFTP);
             this.Panel1.Controls.Add(this.btn_Refresh);
             this.Panel1.Controls.Add(this.btn_AssesIfDuplicate);
             this.Panel1.Controls.Add(this.btn_GarageBand);
@@ -2398,24 +2400,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_Sort.Text = "Sort";
             this.btn_Sort.UseVisualStyleBackColor = true;
             this.btn_Sort.Click += new System.EventHandler(this.btn_Sort_Click);
-            // 
-            // chbx_PreSavedFTP
-            // 
-            this.chbx_PreSavedFTP.FormattingEnabled = true;
-            this.chbx_PreSavedFTP.Items.AddRange(new object[] {
-            "EU",
-            "US",
-            "JAP",
-            "PC",
-            "Mac"});
-            this.chbx_PreSavedFTP.Location = new System.Drawing.Point(1143, 33);
-            this.chbx_PreSavedFTP.Margin = new System.Windows.Forms.Padding(2);
-            this.chbx_PreSavedFTP.Name = "chbx_PreSavedFTP";
-            this.chbx_PreSavedFTP.Size = new System.Drawing.Size(46, 21);
-            this.chbx_PreSavedFTP.TabIndex = 328;
-            this.chbx_PreSavedFTP.Text = "US";
-            this.chbx_PreSavedFTP.Visible = false;
-            this.chbx_PreSavedFTP.SelectedIndexChanged += new System.EventHandler(this.chbx_PreSavedFTP_SelectedIndexChanged);
             // 
             // btn_Copy_Orig
             // 
@@ -4188,7 +4172,6 @@ namespace RocksmithToolkitGUI.DLCManager
         private CheckBox chbx_CopyOld;
         private CheckBox chbx_RemoveBassDD;
         public ProgressBar pB_ReadDLCs;
-        private ComboBox chbx_PreSavedFTP;
         private Button btn_Package;
         private ComboBox chbx_Format;
         private CheckBox chbx_Copy;

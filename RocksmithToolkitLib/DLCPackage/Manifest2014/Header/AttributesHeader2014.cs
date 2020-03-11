@@ -110,7 +110,7 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest2014.Header
             DLC = true; // false = requires UPlay to unlock
 
             // TODO: monitor this change
-            if (info.ToolkitInfo == null || info.ToolkitInfo.PackageAuthor == "Ubisoft")
+             if (info.ToolkitInfo == null || info.ToolkitInfo.PackageAuthor == "Ubisoft")
                 SKU = "RS2"; // shows purple marker w/ "DLC" text overlay
             else
                 SKU = ""; // hides album artwork marker in-game setlist
@@ -141,7 +141,14 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest2014.Header
             Metronome = arrangement.Metronome == Sng.Metronome.None ? null : (int?)arrangement.Metronome;
 
             // TODO: monitor this change
-            Representative = arrangement.ArrangementPropeties.Represent;
+            try //bcapi
+            {
+                Representative = arrangement.ArrangementPropeties.Represent;
+            }
+            catch (Exception ex)
+            {
+                Representative = 1;
+            }
 
             RouteMask = (int)arrangement.RouteMask;
 

@@ -187,11 +187,11 @@ namespace RocksmithToolkitGUI.DLCManager
             AccessToken = null,
             TokenType = null
         };
-        public string _trackno;
-        public string _year;
-        public static PrivateProfile _profile;
-        public List<FullTrack> _savedTracks;
-        public List<SimplePlaylist> _playlists;
+        //public string _trackno;
+        //public string _year;
+        //public static PrivateProfile _profile;
+        //public List<FullTrack> _savedTracks;
+        //public List<SimplePlaylist> _playlists;
         public static object NullHandler(object instance)
         {
             if (instance != null)
@@ -1775,7 +1775,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         public static DialogResult CreateTempFolderStructure(string TempPathImport, string oldPathImport, string brokenPathImport, string dupliPathImport,
             string dlcpacks, string pathDLC, string repackedpath, string repackedXBOXPath, string repackedPCPath, string repackedMACPath, string repackedPSPath,
-            string logPath, string albumCoversPSPath, string LogPSPath, string ArchivePath, string dataPath, string TempPath)
+            string logPath, string albumCoversPSPath, string LogPSPath, string ArchivePath, string dataPath, string TempPath, string dflt_Path_Import)
         {
             DialogResult result1 = DialogResult.Yes;
             if (!Directory.Exists(TempPathImport) || !Directory.Exists(pathDLC) || !Directory.Exists(oldPathImport) || !Directory.Exists(brokenPathImport) ||
@@ -1813,6 +1813,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         if (!Directory.Exists(ArchivePath) && (ArchivePath != null)) di = Directory.CreateDirectory(ArchivePath);
                         if (!Directory.Exists(dataPath) && (dataPath != null)) di = Directory.CreateDirectory(dataPath);
                         if (!Directory.Exists(TempPath) && (TempPath != null)) di = Directory.CreateDirectory(TempPath);
+                        if (!Directory.Exists(dflt_Path_Import) && (dflt_Path_Import != null)) di = Directory.CreateDirectory(dflt_Path_Import);
                     }
                     else if (result1 == DialogResult.No) return result1;
                     else System.Windows.Forms.Application.Exit();
@@ -1821,7 +1822,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 {
                     var tsst = "Error9 ..." + ex; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", null, null);
                     MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    MessageBox.Show("Can not open create folders " + TempPathImport + "-" + pathDLC + "-" + oldPathImport + "-" + brokenPathImport + "-" + dupliPathImport + "-" + dlcpacks + "-" + repackedpath + "-" + albumCoversPSPath + "-" + LogPSPath + "-" + ArchivePath + "-" + dataPath + "-" + TempPath);
+                    MessageBox.Show("Can not open create folders " + TempPathImport + "-" + pathDLC + "-" + oldPathImport + "-" + brokenPathImport + "-" + dupliPathImport + "-" + dlcpacks + "-" + repackedpath + "-" + albumCoversPSPath + "-" + LogPSPath + "-" + ArchivePath + "-" + dataPath + "-" + TempPath + "-" + dflt_Path_Import);
                 }
             }
             return result1;
@@ -3058,7 +3059,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 string Groupss = args[9];
                 TempPath = args[10];
                 bool chbx_UniqueID = args[11].ToLower() == "true" ? true : false;
-                bool chbx_Last_Packed =args[12].ToLower() == "true" ? true : false;
+                bool chbx_Last_Packed = args[12].ToLower() == "true" ? true : false;
                 bool chbx_Last_PackedEnabled = args[13].ToLower() == "true" ? true : false;
                 bool chbx_CopyOld = args[14].ToLower() == "true" ? true : false;
                 bool chbx_CopyOldEnabled = args[15].ToLower() == "true" ? true : false;
@@ -3403,7 +3404,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             ArtFiles = info.ArtFiles, //not complete
                                                       //Showlights = true,//info.Showlights, //apparently this info is not read..also the tone base is removed/not read also
                             Inlay = info.Inlay,
-                            LyricArtPath = info.LyricArtPath,
+                            //LyricArtPath = info.LyricArtPath,
 
                             //USEFUL CMDs String.IsNullOrEmpty(
                             SongInfo = new RocksmithToolkitLib.DLCPackage.SongInfo
@@ -4028,7 +4029,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             var d1 = WwiseInstalled("Convert Audio if bitrate> ConfigRepository");
                             if (d1.Split(';')[0] == "1")
                             {
-
+                                if (PreviewLenght == null || PreviewLenght == "") PreviewLenght = "0";
                                 if ((ConfigRepository.Instance()["dlcm_AdditionalManipul9"] == "Yes" && (info.OggPreviewPath == null || info.OggPreviewPath == ""))
                                     || (ConfigRepository.Instance()["dlcm_AdditionalManipul55"] == "Yes" && float.Parse(PreviewLenght, NumberStyles.Float, CultureInfo.CurrentCulture)
                                     > float.Parse(ConfigRepository.Instance()["dlcm_MaxPreviewLenght"], NumberStyles.Float, CultureInfo.CurrentCulture))
@@ -4347,7 +4348,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         timestamp = UpdateLog(timestamp, "Packing" + PreviewLenght, true, tmpPath, multithreadname, form, null, null);
 
                         //check if already packed
-                        if (c("dlcm_AdditionalManipul98") == "Yes")
+                        if (c("dlcm_AdditionalManipul98") == "Yes" && form != "MainDB")
                         {
                             DataSet dvr = new DataSet(); if (chbx_PC == "PC") dvr = SelectFromDB("Pack_AuditTrail", "SELECT * FROM Pack_AuditTrail WHERE CDLC_ID=" + filez.ID + " AND Platform =\"Pc\"", "", cnb);
                             if (dvr.Tables.Count > 0) if (dvr.Tables[0].Rows.Count > 0) chbx_PC = "";
@@ -5536,7 +5537,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 {
                     File.Copy(t, c("dlcm_TempPath") + "\\0_temp\\" + Path.GetFileName(t), true);
                     t = c("dlcm_TempPath") + "\\0_temp\\" + Path.GetFileName(t);
-                    File.Copy(tt, c("dlcm_TempPath") + "\\0_temp\\" + Path.GetFileName(tt), true);
+                    if (File.Exists(tt)) File.Copy(tt, c("dlcm_TempPath") + "\\0_temp\\" + Path.GetFileName(tt), true);
                     tt = c("dlcm_TempPath") + "\\0_temp\\" + Path.GetFileName(tt);
                     remote = true;
                 }
@@ -6211,7 +6212,7 @@ namespace RocksmithToolkitGUI.DLCManager
         public async Task<string> YoutubeRun(MainDBfields SongRecord, int i, OleDbConnection cnb, string windw)
         {
             var ybAddress = SongRecord.YouTube_Link; //original song
-            return "";
+            //return "";
             var ybSAddress = SongRecord.Youtube_Playthrough; //generic playthrough
             var ybLAddress = "-"; //Lead
             var ybBAddress = "-"; //Bass
@@ -6538,8 +6539,8 @@ namespace RocksmithToolkitGUI.DLCManager
                 var ybCAddress = yAddress.Split(';')[4];
                 var ybSAddress = yAddress.Split(';')[5];
                 var cmdz = "UPDATE Main SET ";
-                cmdz += ybSAddress == "-" ? "" : "Youtube_Playthrough =\"https://www.youtube.com/watch?v=" + ybSAddress + "\"";//YouTube_Link
-                cmdz += ybAddress == "-" ? "" : ((ybSAddress == "-" ? "" : ",") + " YouTube_Link=\"https://www.youtube.com/watch?v=" + ybAddress + "\"");
+                cmdz += ybSAddress == "-" ? "" : "Youtube_Playthrough =\"https://www.youtube.com/watch?v=" + ybSAddress.Replace("https://www.youtube.com/watch?v=", "") + "\"";//YouTube_Link
+                cmdz += ybAddress == "-" ? "" : ((ybSAddress == "-" ? "" : ",") + " YouTube_Link=\"https://www.youtube.com/watch?v=" + ybAddress.Replace("https://www.youtube.com/watch?v=", "") + "\"");
                 cmdz += " WHERE ID=" + SongRecord.ID;
                 DataSet dos = new DataSet();
                 if (ybAddress != "-" || ybSAddress != "-")
@@ -6547,22 +6548,22 @@ namespace RocksmithToolkitGUI.DLCManager
 
                 if (SongRecord.ID != null || SongRecord.ID != null)
                 {
-                    cmdz = "UPDATE Arrangements SET PlaythroughYBLink=\"https://www.youtube.com/watch?v=" + ybLAddress + "\"";//YouTube_Link
+                    cmdz = "UPDATE Arrangements SET PlaythroughYBLink=\"https://www.youtube.com/watch?v=" + ybLAddress.Replace("https://www.youtube.com/watch?v=", "") + "\"";//YouTube_Link
                     cmdz += " WHERE CDLC_ID=" + SongRecord.ID + " AND RouteMask=\"Lead\"";
                     dos = new DataSet();
                     if (ybLAddress != "-") dos = UpdateDB("Arrangements", cmdz + ";", cnb);
 
-                    cmdz = "UPDATE Arrangements SET PlaythroughYBLink=\"https://www.youtube.com/watch?v=" + ybRAddress + "\"";//YouTube_Link
+                    cmdz = "UPDATE Arrangements SET PlaythroughYBLink=\"https://www.youtube.com/watch?v=" + ybRAddress.Replace("https://www.youtube.com/watch?v=", "") + "\"";//YouTube_Link
                     cmdz += " WHERE CDLC_ID=" + SongRecord.ID + " AND RouteMask=\"Rhythm\"";
                     dos = new DataSet();
                     if (ybRAddress != "-") dos = UpdateDB("Arrangements", cmdz + ";", cnb);
 
-                    cmdz = "UPDATE Arrangements SET PlaythroughYBLink=\"https://www.youtube.com/watch?v=" + ybBAddress + "\"";//YouTube_Link
+                    cmdz = "UPDATE Arrangements SET PlaythroughYBLink=\"https://www.youtube.com/watch?v=" + ybBAddress.Replace("https://www.youtube.com/watch?v=", "") + "\"";//YouTube_Link
                     cmdz += " WHERE CDLC_ID=" + SongRecord.ID + " AND RouteMask=\"Bass\"";
                     dos = new DataSet();
                     if (ybBAddress != "-") dos = UpdateDB("Arrangements", cmdz + ";", cnb);
 
-                    cmdz = "UPDATE Arrangements SET PlaythroughYBLink=\"https://www.youtube.com/watch?v=" + ybCAddress + "\"";//YouTube_Link
+                    cmdz = "UPDATE Arrangements SET PlaythroughYBLink=\"https://www.youtube.com/watch?v=" + ybCAddress.Replace("https://www.youtube.com/watch?v=", "") + "\"";//YouTube_Link
                     cmdz += " WHERE CDLC_ID=" + SongRecord.ID + " AND RouteMask=\"Combo\"";
                     dos = new DataSet();
                     if (ybCAddress != "-") dos = UpdateDB("Arrangements", cmdz + ";", cnb);

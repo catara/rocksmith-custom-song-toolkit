@@ -178,7 +178,6 @@
 [ ] single pack sometimes runs multiple times
 [ ] add manualy modified same lyrics change flag (maybe based on hash)
 [ ] preview starts twice bug
-[ ] remove group seems gbroken roups--------DELETE * FROM Groups WHERE Type="DLC" AND Groups= "" LEFT JOIN Main on Main.ID=Groups.CDLC_ID and Main.Selected='Yes'--------------Syntax error (missing operator) in query expression 'Type="DLC" AND Groups= "" LEFT JOIN Main on Main.ID=Groups.CDLC_ID and Main.Selected='Yes''.DB Open in Design Mode, or Missing, or you need to Download the 32bit Connectivity libraryACE.OLEDB.16.0 @ 
 [ ] at import gather info and display
 
 ## WiP:
@@ -200,7 +199,7 @@
 [ ] reduced update selected? in mai db as nnot to run more than once (or five times :) )
 [ ] fix pack id?
 [ ] antthenum pneuma issues wwitth hash but still it should have been up to assement
-[ ] zipdb every day
+[-] zipdb every day
 [ ] make all folders remote 0_temp=c("0_temp")
 [ ] fix log
 [ ] fix import moves to archive not old
@@ -211,60 +210,31 @@
 [ ] copy latest meta from db to xml
 [ ] same files not recog as dupli in the import file
 [ ] implement a goto
+[-] move keys to accdb
+fix fix not saving current record
+fix (manual) search yb buton
+check 10 audio not downsized
+check search normal search song yb link
+
+groups cdlc id not incresed correctly as string
+
+main db duplicate needs to saves the other cdlc id in dupi field
+same album different year filter
 
 ## done:
-(prev release)[x] update dbs
-[x] de-activate extra cleanup of standardization
-[x] add cut song to lenghty (nin hurt)
-[x] fix apply default grouping
-[x] multiply year
-[x] max issue w spaces
-	[ ] altertnate does not increase
-[x] fixed issue w artist title too short and comparison would fail for duplication cause checking for  removal of [ ] 
-[x] fix webpage creation when having multiple songs from the same album
-[x] colour year in duplicte managgement
-[x] colout time (duplicates)
-[x] trim manipulated text of -
-[x] added version of packing
-[x] added date of packing
-[x] fixed issue that would trigger preview regen and break the files
-[x] colour changes in instr in main and lenght in duplicate screen
-[x] added ftp status and frtp checck
-[x] fix mac (updated patch and added isntructions)
-	[x] fixed mac script customozation
-[x] add path for mac, and pc if none set globaly
-	[x] consolid
-[x] further mor eimprov add to ylrics
-[x] adding things to defualt ins tandardization should bring you ack tto artist you were edditing
-[x] make preview hash visible
-[x] nirv year improv year duplication)
-[x] unselect add messageg if ggroups selcted but not inputted
-[x] ccorrected packid ni logpack audit trail
-[x] add filter to sselect all last packed bubt with issues
-[x] when packig a group dont pack if song in other groups?
-[x] fix add track based on other song (vocal)
-[-] if name changes flag should change (add duplicate management;others)
-[x] rename shift vocal to shift track ...
-[x] when closing windows capture closeure
-[-] when closing dialogs capture closure
-[x] add tooltip to thinigs
-[x] improv show ftp files
-[x] added the open repacked dir
-[-] missing save and refresh
-[x] improve clean db&temp (mss, no access delete if the same tempdb path )
-[x] improve compact&repair (overrite apparently was default mss when asking to compress now fixing ina  new name that then overrites old file)
-[x] move wwise to 2018 and mark 2019 as beta/not working
-[x] activate check spotify
-[x] add log details to delete/Check fodlers
-[x] songs w no lyrics not packed
-[x] when selecting standardization open at current artist name
-[x] add second bonus signs
-[x] Add Album_Sort
-[x] removed extra "-" from metadatas (param)
-[x] wwise 2019 bbreaks coversion
-[x] compound breaks the select
-[x] not &compound ruin the selection after first execution
-[x] samer name filter
+(prev release)
+[-] transforms Filter-selects into in ()
+[-] creat to import folder too
+[-] test new grp and export field not saving
+[-] fix clean groups of links to songs that dont exist
+[-] remove old ps3 combox
+[-] clean temp audiofiles from 0_temp
+[-] fixed to_import and 0_temp delete
+[-] fix some create preview
+[-] year is not correctly transported on dupli maindb
+[-] current song is not saved on duplciate mqindb
+[-] fixed&i34mproved duplicate management when comparing real files
+[-] remove group seems gbroken roups--------DELETE * FROM Groups WHERE Type="DLC" AND Groups= "" LEFT JOIN Main on Main.ID=Groups.CDLC_ID and Main.Selected='Yes'--------------Syntax error (missing operator) in query expression 'Type="DLC" AND Groups= "" LEFT JOIN Main on Main.ID=Groups.CDLC_ID and Main.Selected='Yes''.DB Open in Design Mode, or Missing, or you need to Download the 32bit Connectivity libraryACE.OLEDB.16.0 @ 
 
 # Version History(release date):
 	0.1(12.08.2014) prototype, 
@@ -295,8 +265,10 @@
 	0.7 (01.07.2018) Code review
 	0.7.2 (26.03.2019) Code review (+'19 Toolkit code base)
 	0.7.3 (6.05.2019) Find YB videos and export as webpage imrovements
-	0.7.4 (6.05.2019) Find YB videos and export as webpage imrovements
-	0.7.5 (20.02.2020) 
+	0.7.4 (6.05.2019) 
+	0.7.5 (20.02.2020) Small improvemkents 2020
+	0.7.6 (20.02.2020) Fixes after reintegration of base changes
+	0.7.7 (20.03.2020) improvemkents to duplicate management
 	0.8 (xx.0x.2019) Reactivating Spotify checks, all params are in the Groups table
 
 # Implementation Tracking for the Main Features:

@@ -330,15 +330,15 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
 //<<<<<<< HEAD
                         // TODO: Test WEM generation with non-PC Platforms
                         if (chkPlatformMAC.Checked == chkPlatformPS3.Checked == chkPlatformXBox360.Checked == false)
-                            return "All Supported Files|*.wem;*.ogg;*.wav|Wwise 2017 audio files (*.wem)|*.wem|Ogg Vorbis audio files (*.ogg)|*.ogg|Wave audio files (*.wav)|*.wav";
+                            return "All Supported Files|*.wem;*.ogg;*.wav|Wwise 2019 audio files (*.wem)|*.wem|Ogg Vorbis audio files (*.ogg)|*.ogg|Wave audio files (*.wav)|*.wav";
 
                     //    return "Wwise 2017 audio files (*.wem)|*.wem";
                     //default:
                     //    return "Wwise 2017 audio files (*.ogg)|*.ogg";
                         //=======
-                        return "All Supported Files|*.wem;*.ogg;*.wav|Wwise 2017 audio files (*.wem)|*.wem|Ogg Vorbis audio files (*.ogg)|*.ogg|Wave audio files (*.wav)|*.wav";
+                        return "All Supported Files|*.wem;*.ogg;*.wav|Wwise 2019 audio files (*.wem)|*.wem|Ogg Vorbis audio files (*.ogg)|*.ogg|Wave audio files (*.wav)|*.wav";
                     default:
-                        return "All Supported Files|*.ogg;*.wav|Wwise 2017 audio files (*.ogg)|*.ogg|Ogg Vorbis audio files (*.ogg)|*.ogg|Wave audio files (*.wav)|*.wav";
+                        return "All Supported Files|*.ogg;*.wav|Wwise 2019 audio files (*.ogg)|*.ogg|Ogg Vorbis audio files (*.ogg)|*.ogg|Wave audio files (*.wav)|*.wav";
                         //>>>>>>> c7d902e63baa725649519d722a2c7540c837ad77
                 }
             }

@@ -30,8 +30,4 @@ using RocksmithToolkitLib;
 // THESE VALUES ARE PROGRAMMATICALLY GENERATED - DO NOT EDIT
 [assembly: AssemblyVersion("2.9.2.1")]
 [assembly: AssemblyInformationalVersion("e0ae91b4")]
-<<<<<<< HEAD
 [assembly: AssemblyConfiguration("2020-09-25T12:27:06")]
-=======
-[assembly: AssemblyConfiguration("2020-03-10T18:41:15")]
->>>>>>> 028dc70314e5cde885c7cde67ccbaf09be2ad218

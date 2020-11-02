@@ -2193,7 +2193,6 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_Version
             // 
-<<<<<<< HEAD
             this.txt_Version.Cue = "Version";
             this.txt_Version.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_Version.ForeColor = System.Drawing.Color.Gray;
@@ -2203,86 +2202,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_Version.Size = new System.Drawing.Size(42, 20);
             this.txt_Version.TabIndex = 73;
             this.toolTip1.SetToolTip(this.txt_Version, "Version");
-=======
-            this.cmb_Filter.DropDownWidth = 250;
-            this.cmb_Filter.FormattingEnabled = true;
-            this.cmb_Filter.Items.AddRange(new object[] {
-            "0ALL",
-            "ALL Others",
-            "Songs in Rocksmith Game Lib",
-            "Show Songs with FilesMissing Issues",
-            "Reverse current Filter",
-            "Imported Last",
-            "No Cover",
-            "No Guitar",
-            "No Preview",
-            "No Section",
-            "No Vocals",
-            "No Track No.",
-            "No Version",
-            "No Author",
-            "No Bass DD",
-            "No Bass",
-            "No DD",
-            "With DD",
-            "Alternate",
-            "Duplicated",
-            "Beta",
-            "Broken",
-            "Selected",
-            "With Bonus",
-            "Original",
-            "CDLC",
-            "Drop D",
-            "E Standard",
-            "Eb Standard",
-            "Other Tunings",
-            "Live",
-            "Acoustic",
-            "Instrumental",
-            "Single",
-            "Soundtrack",
-            "EP",
-            "Imported as Pc",
-            "Imported as PS3",
-            "Imported as Mac",
-            "Imported as XBOX360",
-            "Packed (curr. Platform)",
-            "with Errors at Packing",
-            "DLCID diff than Default",
-            "Same DLCName",
-            "Same Title",
-            "Same Title (no [])",
-            "Same Artist/Album different Year",
-            "Same Title(no[]) different Year",
-            "Same Artist/Title(no[]) different Album",
-            "Automatically generated Preview",
-            "Any DLCManager generated Preview",
-            "With Duplicates",
-            "Main_NoOLD",
-            "Imported Current Month",
-            "Packed Last",
-            "Packing Errors",
-            "Songs IMPORTED later than current song value",
-            "Songs ADDED later to the DropDown indicated Group than the import date of the cur" +
-                "rent song value",
-            "Lyrics Changed",
-            "Audio Changed",
-            "Packed as Pc",
-            "Packed as PS3",
-            "<Packed as PS4>",
-            "Packed as Mac",
-            "Packed XBOX360",
-            "with Errors at Last Packing"});
-            this.cmb_Filter.Location = new System.Drawing.Point(35, 19);
-            this.cmb_Filter.Margin = new System.Windows.Forms.Padding(2);
-            this.cmb_Filter.MaxDropDownItems = 15;
-            this.cmb_Filter.Name = "cmb_Filter";
-            this.cmb_Filter.Size = new System.Drawing.Size(163, 21);
-            this.cmb_Filter.TabIndex = 275;
-            this.toolTip1.SetToolTip(this.cmb_Filter, "Different Listing filters");
-            this.cmb_Filter.SelectedIndexChanged += new System.EventHandler(this.cmb_Filter_SelectedIndexChanged);
->>>>>>> 028dc70314e5cde885c7cde67ccbaf09be2ad218
             // 
             // txt_Album
             // 

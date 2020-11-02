@@ -1,0 +1,8 @@
+
+<h2>Seek Percent</h2>
+<p>The seek position expressed as a percentage of the sound&rsquo;s total duration. This duration takes looping into account. For example, seeking to 50% of a sound that loops twice over itself will bring the cursor to the beginning of the second loop.</p>
+<p>Sounds that loop infinitely are an exception, because their duration is infinite. In such a case, the effective position is computed as if they were not looping, and is then applied by taking looping into account. Consequently, it is impossible to seek after a looping region (in the &ldquo;outro portion&rdquo;) of an infinitely looping sound.</p>
+<p>When seeking within a Music Segment, the position is relative to the Entry Cue, and the object&rsquo;s duration is defined by the duration between the Entry and Exit Cues. It is thus impossible to seek before the Entry Cue (Pre-Entry) or after the Exit Cue (Post-Exit).</p>
+<p>Default value: 0<br/>
+Range: 0 to 100<br/>
+Units: % <br/></p>

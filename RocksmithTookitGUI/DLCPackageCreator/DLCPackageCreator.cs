@@ -1982,7 +1982,8 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 Song2014.WriteXmlComments(arr.SongXml.File);
             }
 
-            if (Path.GetFileName(DestPath).Contains(" ") && PlatformPS3)
+            if (DestPath!="" && DestPath!=null)
+                if (Path.GetFileName(DestPath).Contains(" ") && PlatformPS3)
             {
                 if (!ConfigRepository.Instance().GetBoolean("creator_ps3pkgnamewarn"))
                     MessageBox.Show(String.Format("PS3 package name can't support space character due to encryption limitation. {0} Spaces will be automatic removed for your PS3 package name.", Environment.NewLine), MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);

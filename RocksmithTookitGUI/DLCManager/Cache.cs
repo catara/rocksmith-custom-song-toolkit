@@ -236,7 +236,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 //catch (Exception ex)
                 //{
                 //    MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                //    ErrorWindow frm1 = new ErrorWindow("DB Open in Design Mode, or Missing, or you need to Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error when opening the Retail DB", false, false);
+                //    ErrorWindow frm1 = new ErrorWindow("DB Open in Design Mode, or Missing, or You need to Download Connectivity patch 32/64 bit to match your version of Office @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error when opening the Retail DB", false, false);
                 //    frm1.ShowDialog();
                 //    return;
                 //}
@@ -1463,7 +1463,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //    //MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
             //    //MessageBox.Show("Can not Delete Song folder ! ");
             //}
-            DeleteFromDB("Groups", "DELETE FROM Groups WHERE Type=\"Retail\" AND Groups= \"" + chbx_Group.Text + "\"", cnb);
+            DeleteFromDB("Groups", "DELETE * FROM Groups WHERE Type=\"Retail\" AND Groups= \"" + chbx_Group.Text + "\"", cnb);
             GroupChanged = true;
             ChangeRow();
         }
@@ -1503,7 +1503,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 //    //da = new OleDbDataAdapter("SELECT Identifier, Badge FROM Badge", cn);
                 //    //da.Fill(ds, "Badge");
                 //}
-                DeleteFromDB("Groups", "DELETE FROM Groups WHERE Type=\"Retail\" AND Groups= \"" + chbx_Group.Text + "\"", cnb);
+                DeleteFromDB("Groups", "DELETE * FROM Groups WHERE Type=\"Retail\" AND Groups= \"" + chbx_Group.Text + "\"", cnb);
                 DataSet ds = new DataSet(); ds = SelectFromDB("Cache", "SELECT * from Cache AS O", "", cnb);
                 var recs = dssx.Tables[0].Rows.Count;
                 pB_ReadDLCs.Value = 0;

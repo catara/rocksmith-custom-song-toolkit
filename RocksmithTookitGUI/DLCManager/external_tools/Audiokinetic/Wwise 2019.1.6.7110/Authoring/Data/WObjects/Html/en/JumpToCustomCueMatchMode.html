@@ -1,0 +1,19 @@
+
+<h2>Match source cue name</h2>
+<p>Determines which custom cues are eligible as the start position in the destination segment. Only the custom cues whose name matches the name of the cue that was used in the transition&rsquo;s source constitute potential start positions. For example, if the source exits at a custom cue named &lsquo;A&rsquo;, the destination will start at a custom cue named &lsquo;A&rsquo;.</p>
+<p>String comparison is not case-sensitive, but it must be exact (there is no wildcard).</p>
+<p>This option can only be used when &lsquo;Sync to&rsquo; is set to &lsquo;Random Cue&rsquo; or &lsquo;Random Custom Cue&rsquo;.</p>
+<p>If no match is found, the entry cue will be used.</p>
+<p>This option will only work correctly when:</p>
+<ul>
+<li>The &lsquo;Exit Source At&rsquo; setting is set to &lsquo;Next Cue&rsquo; or &lsquo;Next Custom Cue&rsquo;.</li>
+<li>The &lsquo;Source&rsquo; object is different from &lsquo;nothing&rsquo;.</li>
+</ul>
+<p>Name matching affects the selection of custom cues only; it has no effect on the eligibility of the entry cue. If you use &lsquo;Random Cue&rsquo; as the &lsquo;Sync to&rsquo; property, the selected destination cue will be either a custom cue whose name matches that of the cue where the source exited, or the entry cue. Use &lsquo;Random Custom Cue&rsquo; as the &lsquo;Sync to&rsquo; property to remove the entry cue from the possible destinations.</p>
+<p><strong>Match (specify cue name)</strong>
+Determines which custom cues are eligible as the start position in the destination segment. Among the custom cues, only those whose name matches the string in the edit box constitute potential start positions. If no name is specified, any custom cue will match.</p>
+<p>String comparison is not case-sensitive, but it must be exact (there is no wildcard).</p>
+<p>This option can only be used when &lsquo;Sync to&rsquo; is set to &lsquo;Random Cue&rsquo; or &lsquo;Random Custom Cue&rsquo;.</p>
+<p>If no match is found, the entry cue will be used.</p>
+<p>Name matching affects the selection of custom cues only; it has no effect on the eligibility of the entry cue. If you use &lsquo;Random Cue&rsquo; as the &lsquo;Sync to&rsquo; property, the selected destination cue will be either a custom cue whose name corresponds to the string entered in the &lsquo;Match&rsquo; text field, or the entry cue. Use &lsquo;Random Custom Cue&rsquo; as the &lsquo;Sync to&rsquo; property to remove the entry cue from the possible destinations.</p>
+<p>Default value: Match specific name<br/></p>

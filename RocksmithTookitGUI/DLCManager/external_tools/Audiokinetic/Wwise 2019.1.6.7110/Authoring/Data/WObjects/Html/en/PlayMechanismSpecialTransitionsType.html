@@ -1,0 +1,16 @@
+
+<h2>Type</h2>
+<p>A list of transitions that can be applied between objects in the container.</p>
+<ul>
+<li><strong>Xfade (amp)</strong> - Adds a crossfade between two objects using constant amplitude.</li>
+<li><strong>Xfade (power)</strong> - Adds a crossfade between two objects using constant power.</li>
+<li><strong>Delay</strong> - Adds a silence between two objects.</li>
+<li><strong>Sample accurate</strong> - Creates seamless transitions with no latency between objects.</li>
+<li><strong>Trigger rate</strong> - Determines the rate at which new objects within the container will be played. This option is useful for simulating rapid gun fire.</li>
+</ul>
+<p><strong>Note</strong>: There are some limitations and restrictions when using Xfade, Sample accurate, and Trigger rate transitions. A couple of notable ones are:</p>
+<ul>
+<li>Blend and Switch Containers do not work with crossfades (Xfade). A Random/Sequence Container&rsquo;s Xfade will fail when any of its child Blend or Switch Containers play; and</li>
+<li>Fade outs of stop Actions do not propagate on containers using Xfade or Trigger rate transitions. Whenever a StopEvent is called on the container, with a fade out value that is longer than the current segment that&rsquo;s playing, the sound will just cut off abruptly when that segment ends. The workaround to this is to use a Set Voice Volume action to create the fade and delay the Stop action.</li>
+</ul>
+<p>Default value: Xfade (amp)<br/></p>

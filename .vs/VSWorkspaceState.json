@@ -4,9 +4,8 @@
     "\\RocksmithTookitGUI",
     "\\RocksmithTookitGUI\\DLCManager",
     "\\RocksmithTookitGUI\\DLCManager\\external_tools",
-    "\\RocksmithTookitGUI\\DLCManager\\external_tools\\C3CONToolsv400",
     "\\RocksmithToolkitCLI"
   ],
-  "SelectedNode": "\\RocksmithTookitGUI\\DLCManager\\external_tools\\edattool.exe",
+  "SelectedNode": "\\RocksmithTookitGUI\\DLCManager\\external_tools\\Audiokinetic",
   "PreviewInSolutionExplorer": false
 }

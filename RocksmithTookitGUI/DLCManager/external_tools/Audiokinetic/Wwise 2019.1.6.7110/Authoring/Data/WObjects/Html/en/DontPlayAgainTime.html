@@ -1,0 +1,8 @@
+
+<h2>Don&rsquo;t play this Stinger again for x seconds.</h2>
+<p>The number of seconds that must elapse before the Stinger can be used again.</p>
+<p>If the Trigger calls this Stinger within the specified number of seconds, the Trigger is ignored or dropped. A message saying that the Stinger could not be played will appear in the Capture Log. Note that the &ldquo;don&rsquo;t play Stinger again for&rdquo; time is relative to the stinger&rsquo;s synchronization point, that is, the moment in time where the stinger&rsquo;s entry cue occurs.</p>
+<p>For example, say you have a segment with 1 second-long beats, which defines a Stinger that has a 1.5 second long pre-entry, a &ldquo;next beat&rdquo; synchronization rule, and a &ldquo;don&rsquo;t play Stinger again&rdquo; property of 3 seconds. Imagine now that this segment is playing and that the cursor is precisely over a beat boundary when the Trigger is posted. Because of its 1.5 second long pre-entry, the stinger&rsquo;s entry cue cannot be synchronized to the next segment&rsquo;s beat, so it is synchronized to the next beat instead (that is, in 2 seconds). Consequently, all Triggers that will be posted for the next 5 seconds (2 seconds before synchronization time, plus 3 seconds of &ldquo;don&rsquo;t play again time&rdquo;) will be dropped.</p>
+<p>Furthermore, this time value is inclusive. For example, with a &ldquo;don&rsquo;t play again&rdquo; time of 0, all Triggers are dropped until the synchronization point is reached, inclusively. It is thus impossible to have two or more Stingers scheduled precisely at the same time.</p>
+<p>Default value: 0<br/>
+Range: 0 to 3600<br/></p>

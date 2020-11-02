@@ -16,12 +16,14 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
-//using System.IO;
-//using System.Linq;
-//using System.Xml.Serialization;
-//using X360.STFS;
-//using Tone = RocksmithToolkitLib.DLCPackage.Manifest.Tone.Tone;
+using System.IO;
+using System.Linq;
+using System.Xml.Serialization;
+using X360.STFS;
+using Tone = RocksmithToolkitLib.DLCPackage.Manifest.Tone.Tone;
 using System.Reflection;
+using System.Diagnostics;
+using RocksmithToolkitLib.PSARC;
 
 namespace RocksmithToolkitLib.DLCPackage
 {

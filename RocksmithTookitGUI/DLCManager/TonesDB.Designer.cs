@@ -68,6 +68,8 @@
             this.button3 = new System.Windows.Forms.Button();
             this.chbx_Broken = new System.Windows.Forms.CheckBox();
             this.CheckBox1 = new System.Windows.Forms.CheckBox();
+            this.chbx_Favorite = new System.Windows.Forms.CheckBox();
+            this.lbl_NoRec = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridView1)).BeginInit();
             this.Panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txt_Volume)).BeginInit();
@@ -95,6 +97,8 @@
             // 
             // Panel1
             // 
+            this.Panel1.Controls.Add(this.lbl_NoRec);
+            this.Panel1.Controls.Add(this.chbx_Favorite);
             this.Panel1.Controls.Add(this.label12);
             this.Panel1.Controls.Add(this.label13);
             this.Panel1.Controls.Add(this.btn_Arrangements);
@@ -143,7 +147,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(69, 92);
+            this.label12.Location = new System.Drawing.Point(2, 30);
             this.label12.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(49, 13);
@@ -153,7 +157,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(2, 91);
+            this.label13.Location = new System.Drawing.Point(1, 7);
             this.label13.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(18, 13);
@@ -162,7 +166,7 @@
             // 
             // btn_Arrangements
             // 
-            this.btn_Arrangements.Location = new System.Drawing.Point(2, 62);
+            this.btn_Arrangements.Location = new System.Drawing.Point(78, 84);
             this.btn_Arrangements.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.btn_Arrangements.Name = "btn_Arrangements";
             this.btn_Arrangements.Size = new System.Drawing.Size(120, 25);
@@ -174,7 +178,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(376, 3);
+            this.label10.Location = new System.Drawing.Point(371, 5);
             this.label10.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(61, 13);
@@ -184,7 +188,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(593, 86);
+            this.label8.Location = new System.Drawing.Point(593, 67);
             this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(55, 13);
@@ -194,7 +198,7 @@
             // chbx_KnobKeys
             // 
             this.chbx_KnobKeys.FormattingEnabled = true;
-            this.chbx_KnobKeys.Location = new System.Drawing.Point(694, 82);
+            this.chbx_KnobKeys.Location = new System.Drawing.Point(694, 63);
             this.chbx_KnobKeys.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.chbx_KnobKeys.Name = "chbx_KnobKeys";
             this.chbx_KnobKeys.Size = new System.Drawing.Size(122, 21);
@@ -239,7 +243,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(594, 20);
+            this.label6.Location = new System.Drawing.Point(593, 6);
             this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(28, 13);
@@ -249,7 +253,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(593, 42);
+            this.label9.Location = new System.Drawing.Point(593, 26);
             this.label9.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(54, 13);
@@ -259,7 +263,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(164, 42);
+            this.label11.Location = new System.Drawing.Point(139, 52);
             this.label11.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(63, 13);
@@ -268,17 +272,17 @@
             // 
             // txt_Description
             // 
-            this.txt_Description.Location = new System.Drawing.Point(226, 38);
+            this.txt_Description.Location = new System.Drawing.Point(206, 46);
             this.txt_Description.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.txt_Description.Name = "txt_Description";
-            this.txt_Description.Size = new System.Drawing.Size(136, 64);
+            this.txt_Description.Size = new System.Drawing.Size(158, 64);
             this.txt_Description.TabIndex = 342;
             this.txt_Description.Text = "";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(371, 75);
+            this.label5.Location = new System.Drawing.Point(371, 65);
             this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(52, 13);
@@ -288,7 +292,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(593, 66);
+            this.label4.Location = new System.Drawing.Point(593, 45);
             this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(64, 13);
@@ -298,7 +302,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(371, 55);
+            this.label2.Location = new System.Drawing.Point(371, 45);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(49, 13);
@@ -308,7 +312,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(371, 34);
+            this.label1.Location = new System.Drawing.Point(371, 24);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(31, 13);
@@ -318,7 +322,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(254, 22);
+            this.label3.Location = new System.Drawing.Point(254, 25);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(42, 13);
@@ -328,7 +332,7 @@
             // txt_Volume
             // 
             this.txt_Volume.DecimalPlaces = 2;
-            this.txt_Volume.Location = new System.Drawing.Point(300, 21);
+            this.txt_Volume.Location = new System.Drawing.Point(300, 24);
             this.txt_Volume.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.txt_Volume.Minimum = new decimal(new int[] {
             100,
@@ -361,7 +365,7 @@
             this.chbx_AutoSave.AutoSize = true;
             this.chbx_AutoSave.Checked = true;
             this.chbx_AutoSave.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chbx_AutoSave.Location = new System.Drawing.Point(822, 68);
+            this.chbx_AutoSave.Location = new System.Drawing.Point(822, 64);
             this.chbx_AutoSave.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.chbx_AutoSave.Name = "chbx_AutoSave";
             this.chbx_AutoSave.Size = new System.Drawing.Size(73, 17);
@@ -371,22 +375,22 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(2, 38);
+            this.button1.Location = new System.Drawing.Point(2, 85);
             this.button1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(120, 23);
+            this.button1.Size = new System.Drawing.Size(72, 23);
             this.button1.TabIndex = 274;
-            this.button1.Text = "Open File";
+            this.button1.Text = "Open JSON";
             this.button1.UseVisualStyleBackColor = true;
             // 
             // btn_Close
             // 
             this.btn_Close.BackColor = System.Drawing.Color.LightSteelBlue;
             this.btn_Close.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Close.Location = new System.Drawing.Point(902, 82);
-            this.btn_Close.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_Close.Location = new System.Drawing.Point(902, 85);
+            this.btn_Close.Margin = new System.Windows.Forms.Padding(2);
             this.btn_Close.Name = "btn_Close";
-            this.btn_Close.Size = new System.Drawing.Size(84, 20);
+            this.btn_Close.Size = new System.Drawing.Size(81, 24);
             this.btn_Close.TabIndex = 273;
             this.btn_Close.Text = "Close";
             this.btn_Close.UseVisualStyleBackColor = false;
@@ -407,17 +411,17 @@
             // chbx_PedalKey
             // 
             this.chbx_PedalKey.FormattingEnabled = true;
-            this.chbx_PedalKey.Location = new System.Drawing.Point(458, 72);
+            this.chbx_PedalKey.Location = new System.Drawing.Point(439, 62);
             this.chbx_PedalKey.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.chbx_PedalKey.Name = "chbx_PedalKey";
-            this.chbx_PedalKey.Size = new System.Drawing.Size(122, 21);
+            this.chbx_PedalKey.Size = new System.Drawing.Size(145, 21);
             this.chbx_PedalKey.TabIndex = 138;
             this.chbx_PedalKey.SelectedIndexChanged += new System.EventHandler(this.chbx_AmpPedalKey_SelectedIndexChanged);
             // 
             // chbx_KnobValues
             // 
             this.chbx_KnobValues.FormattingEnabled = true;
-            this.chbx_KnobValues.Location = new System.Drawing.Point(694, 60);
+            this.chbx_KnobValues.Location = new System.Drawing.Point(694, 43);
             this.chbx_KnobValues.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.chbx_KnobValues.Name = "chbx_KnobValues";
             this.chbx_KnobValues.Size = new System.Drawing.Size(122, 21);
@@ -427,27 +431,27 @@
             // chbx_Category
             // 
             this.chbx_Category.FormattingEnabled = true;
-            this.chbx_Category.Location = new System.Drawing.Point(458, 52);
+            this.chbx_Category.Location = new System.Drawing.Point(439, 42);
             this.chbx_Category.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.chbx_Category.Name = "chbx_Category";
-            this.chbx_Category.Size = new System.Drawing.Size(122, 21);
+            this.chbx_Category.Size = new System.Drawing.Size(145, 21);
             this.chbx_Category.TabIndex = 136;
             this.chbx_Category.SelectedIndexChanged += new System.EventHandler(this.chbx_AmpCategory_SelectedIndexChanged);
             // 
             // cbx_Type
             // 
             this.cbx_Type.FormattingEnabled = true;
-            this.cbx_Type.Location = new System.Drawing.Point(458, 32);
+            this.cbx_Type.Location = new System.Drawing.Point(439, 22);
             this.cbx_Type.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.cbx_Type.Name = "cbx_Type";
-            this.cbx_Type.Size = new System.Drawing.Size(122, 21);
+            this.cbx_Type.Size = new System.Drawing.Size(145, 21);
             this.cbx_Type.TabIndex = 135;
             this.cbx_Type.SelectedIndexChanged += new System.EventHandler(this.chbx_AmpType_SelectedIndexChanged);
             // 
             // chbx_Skin
             // 
             this.chbx_Skin.FormattingEnabled = true;
-            this.chbx_Skin.Location = new System.Drawing.Point(694, 18);
+            this.chbx_Skin.Location = new System.Drawing.Point(694, 3);
             this.chbx_Skin.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.chbx_Skin.Name = "chbx_Skin";
             this.chbx_Skin.Size = new System.Drawing.Size(122, 21);
@@ -456,7 +460,7 @@
             // chbx_SkinIndex
             // 
             this.chbx_SkinIndex.FormattingEnabled = true;
-            this.chbx_SkinIndex.Location = new System.Drawing.Point(694, 38);
+            this.chbx_SkinIndex.Location = new System.Drawing.Point(694, 23);
             this.chbx_SkinIndex.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.chbx_SkinIndex.Name = "chbx_SkinIndex";
             this.chbx_SkinIndex.Size = new System.Drawing.Size(122, 21);
@@ -477,7 +481,7 @@
             // 
             this.chbx_Custom.AutoSize = true;
             this.chbx_Custom.Enabled = false;
-            this.chbx_Custom.Location = new System.Drawing.Point(822, 49);
+            this.chbx_Custom.Location = new System.Drawing.Point(438, 85);
             this.chbx_Custom.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.chbx_Custom.Name = "chbx_Custom";
             this.chbx_Custom.Size = new System.Drawing.Size(61, 17);
@@ -491,7 +495,7 @@
             this.txt_ID.Enabled = false;
             this.txt_ID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_ID.ForeColor = System.Drawing.Color.Gray;
-            this.txt_ID.Location = new System.Drawing.Point(20, 90);
+            this.txt_ID.Location = new System.Drawing.Point(19, 6);
             this.txt_ID.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.txt_ID.Name = "txt_ID";
             this.txt_ID.Size = new System.Drawing.Size(46, 20);
@@ -503,9 +507,10 @@
             this.txt_CDLC_ID.Enabled = false;
             this.txt_CDLC_ID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_CDLC_ID.ForeColor = System.Drawing.Color.Gray;
-            this.txt_CDLC_ID.Location = new System.Drawing.Point(118, 90);
+            this.txt_CDLC_ID.Location = new System.Drawing.Point(55, 27);
             this.txt_CDLC_ID.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.txt_CDLC_ID.Name = "txt_CDLC_ID";
+            this.txt_CDLC_ID.ReadOnly = true;
             this.txt_CDLC_ID.Size = new System.Drawing.Size(56, 20);
             this.txt_CDLC_ID.TabIndex = 126;
             // 
@@ -527,7 +532,7 @@
             this.button8.Location = new System.Drawing.Point(902, 58);
             this.button8.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(84, 26);
+            this.button8.Size = new System.Drawing.Size(81, 26);
             this.button8.TabIndex = 123;
             this.button8.Text = "Save";
             this.button8.UseVisualStyleBackColor = true;
@@ -535,20 +540,21 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(2, 5);
+            this.button3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.button3.Location = new System.Drawing.Point(2, 50);
             this.button3.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(120, 32);
             this.button3.TabIndex = 122;
             this.button3.Text = "Open DB in M$ Access";
-            this.button3.UseVisualStyleBackColor = true;
+            this.button3.UseVisualStyleBackColor = false;
             this.button3.Click += new System.EventHandler(this.button1_Click);
             // 
             // chbx_Broken
             // 
             this.chbx_Broken.AutoSize = true;
             this.chbx_Broken.Enabled = false;
-            this.chbx_Broken.Location = new System.Drawing.Point(822, 86);
+            this.chbx_Broken.Location = new System.Drawing.Point(374, 85);
             this.chbx_Broken.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.chbx_Broken.Name = "chbx_Broken";
             this.chbx_Broken.Size = new System.Drawing.Size(60, 17);
@@ -562,12 +568,32 @@
             this.CheckBox1.AutoSize = true;
             this.CheckBox1.Enabled = false;
             this.CheckBox1.Location = new System.Drawing.Point(-154, 92);
-            this.CheckBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.CheckBox1.Margin = new System.Windows.Forms.Padding(2);
             this.CheckBox1.Name = "CheckBox1";
             this.CheckBox1.Size = new System.Drawing.Size(139, 17);
             this.CheckBox1.TabIndex = 34;
             this.CheckBox1.Text = "Show only MessageBox";
             this.CheckBox1.UseVisualStyleBackColor = true;
+            // 
+            // chbx_Favorite
+            // 
+            this.chbx_Favorite.AutoSize = true;
+            this.chbx_Favorite.Location = new System.Drawing.Point(503, 85);
+            this.chbx_Favorite.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.chbx_Favorite.Name = "chbx_Favorite";
+            this.chbx_Favorite.Size = new System.Drawing.Size(64, 17);
+            this.chbx_Favorite.TabIndex = 356;
+            this.chbx_Favorite.Text = "Favorite";
+            this.chbx_Favorite.UseVisualStyleBackColor = true;
+            // 
+            // lbl_NoRec
+            // 
+            this.lbl_NoRec.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_NoRec.Location = new System.Drawing.Point(70, 11);
+            this.lbl_NoRec.Name = "lbl_NoRec";
+            this.lbl_NoRec.Size = new System.Drawing.Size(68, 11);
+            this.lbl_NoRec.TabIndex = 357;
+            this.lbl_NoRec.Text = " Records";
             // 
             // TonesDB
             // 
@@ -633,5 +659,7 @@
         private System.Windows.Forms.Button btn_Arrangements;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.CheckBox chbx_Favorite;
+        private System.Windows.Forms.Label lbl_NoRec;
     }
 }

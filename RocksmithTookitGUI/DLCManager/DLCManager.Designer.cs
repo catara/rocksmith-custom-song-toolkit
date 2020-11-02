@@ -125,6 +125,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_Save = new System.Windows.Forms.Button();
             this.btn_Preview_Lyric_Info = new System.Windows.Forms.Button();
             this.btn_Preview_Album_Sort = new System.Windows.Forms.Button();
+            this.btn_Album2SortA = new System.Windows.Forms.Button();
             this.lbl_Settings = new System.Windows.Forms.Label();
             this.lbl_Log = new System.Windows.Forms.Label();
             this.cbx_Activ_Lyric_Info = new System.Windows.Forms.CheckBox();
@@ -208,6 +209,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_NoOfSplits.FormattingEnabled = true;
             this.txt_NoOfSplits.Location = new System.Drawing.Point(334, 20);
             this.txt_NoOfSplits.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.txt_NoOfSplits.MaxDropDownItems = 100;
             this.txt_NoOfSplits.Name = "txt_NoOfSplits";
             this.txt_NoOfSplits.Size = new System.Drawing.Size(46, 21);
             this.txt_NoOfSplits.TabIndex = 410;
@@ -441,7 +443,7 @@ namespace RocksmithToolkitGUI.DLCManager
             "01. @Pack Add Increment to all songs Title per artist",
             "02. @Pack Make all DLC IDs unique (&save)",
             "03. @Pack Remove DD",
-            "04. <Import and remove DD only for Bass>",
+            "04. Backup DB during Startup",
             "05. @Pack Remove DD only for Bass Guitar",
             "06. When converting Audio use local folder structure",
             "07. @Pack skip Broken songs",
@@ -621,6 +623,9 @@ namespace RocksmithToolkitGUI.DLCManager
             "<Instr. Rating.>",
             "<MTrack Det.>",
             "<Group>",
+            "<Groups>",
+            "<GroupIndex>",
+            "<BetaOrGroupIndex>",
             "<Beta>",
             "<DD>",
             "<Broken>",
@@ -642,7 +647,14 @@ namespace RocksmithToolkitGUI.DLCManager
             "<Timestamp>",
             "<Live>",
             "<Acoustic>",
-            "<Random5>",
+            "<Instrumental>",
+            "<EP>",
+            "<Uncensored>",
+            "<SoundTrack>",
+            "<Single>",
+            "<Track version>",
+            "<LyricsLanguage>",
+            "<IntheWorks>",
             "<CDLC_ID>",
             "<DLCM Version>",
             "<Date>"});
@@ -843,6 +855,9 @@ namespace RocksmithToolkitGUI.DLCManager
             "<Instr. Rating.>",
             "<MTrack Det.>",
             "<Group>",
+            "<Groups>",
+            "<GroupIndex>",
+            "<BetaOrGroupIndex>",
             "<Beta>",
             "<DD>",
             "<Broken>",
@@ -864,7 +879,14 @@ namespace RocksmithToolkitGUI.DLCManager
             "<Timestamp>",
             "<Live>",
             "<Acoustic>",
-            "<Random5>",
+            "<Instrumental>",
+            "<EP>",
+            "<Uncensored>",
+            "<SoundTrack>",
+            "<Single>",
+            "<Track version>",
+            "<LyricsLanguage>",
+            "<IntheWorks>",
             "<CDLC_ID>",
             "<DLCM Version>",
             "<Date>"});
@@ -907,6 +929,9 @@ namespace RocksmithToolkitGUI.DLCManager
             "<Instr. Rating.>",
             "<MTrack Det.>",
             "<Group>",
+            "<Groups>",
+            "<GroupIndex>",
+            "<BetaOrGroupIndex>",
             "<Beta>",
             "<DD>",
             "<Broken>",
@@ -928,7 +953,14 @@ namespace RocksmithToolkitGUI.DLCManager
             "<Timestamp>",
             "<Live>",
             "<Acoustic>",
-            "<Random5>",
+            "<Instrumental>",
+            "<EP>",
+            "<Uncensored>",
+            "<SoundTrack>",
+            "<Single>",
+            "<Track version>",
+            "<LyricsLanguage>",
+            "<IntheWorks>",
             "<CDLC_ID>",
             "<DLCM Version>",
             "<Date>"});
@@ -1007,6 +1039,9 @@ namespace RocksmithToolkitGUI.DLCManager
             "<Instr. Rating.>",
             "<MTrack Det.>",
             "<Group>",
+            "<Groups>",
+            "<GroupIndex>",
+            "<BetaOrGroupIndex>",
             "<Beta>",
             "<DD>",
             "<Broken>",
@@ -1028,7 +1063,14 @@ namespace RocksmithToolkitGUI.DLCManager
             "<Timestamp>",
             "<Live>",
             "<Acoustic>",
-            "<Random5>",
+            "<Instrumental>",
+            "<EP>",
+            "<Uncensored>",
+            "<SoundTrack>",
+            "<Single>",
+            "<Track version>",
+            "<LyricsLanguage>",
+            "<IntheWorks>",
             "<CDLC_ID>",
             "<DLCM Version>",
             "<Date>"});
@@ -1072,6 +1114,9 @@ namespace RocksmithToolkitGUI.DLCManager
             "<Instr. Rating.>",
             "<MTrack Det.>",
             "<Group>",
+            "<Groups>",
+            "<GroupIndex>",
+            "<BetaOrGroupIndex>",
             "<Beta>",
             "<DD>",
             "<Broken>",
@@ -1093,7 +1138,14 @@ namespace RocksmithToolkitGUI.DLCManager
             "<Timestamp>",
             "<Live>",
             "<Acoustic>",
-            "<Random5>",
+            "<Instrumental>",
+            "<EP>",
+            "<Uncensored>",
+            "<SoundTrack>",
+            "<Single>",
+            "<Track version>",
+            "<LyricsLanguage>",
+            "<IntheWorks>",
             "<CDLC_ID>",
             "<DLCM Version>",
             "<Date>"});
@@ -1136,6 +1188,9 @@ namespace RocksmithToolkitGUI.DLCManager
             "<Instr. Rating.>",
             "<MTrack Det.>",
             "<Group>",
+            "<Groups>",
+            "<GroupIndex>",
+            "<BetaOrGroupIndex>",
             "<Beta>",
             "<DD>",
             "<Broken>",
@@ -1157,7 +1212,14 @@ namespace RocksmithToolkitGUI.DLCManager
             "<Timestamp>",
             "<Live>",
             "<Acoustic>",
-            "<Random5>",
+            "<Instrumental>",
+            "<EP>",
+            "<Uncensored>",
+            "<SoundTrack>",
+            "<Single>",
+            "<Track version>",
+            "<LyricsLanguage>",
+            "<IntheWorks>",
             "<CDLC_ID>",
             "<DLCM Version>",
             "<Date>"});
@@ -1226,7 +1288,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_DBFolder.Size = new System.Drawing.Size(22, 20);
             this.btn_DBFolder.TabIndex = 9;
             this.btn_DBFolder.Text = "...";
-            this.toolTip1.SetToolTip(this.btn_DBFolder, "Select an M$ Access DB Folder to store the CDLC & User metadata.");
+            this.toolTip1.SetToolTip(this.btn_DBFolder, "Select an M$ Access DB File to store the CDLC & User metadata.");
             this.btn_DBFolder.UseVisualStyleBackColor = true;
             this.btn_DBFolder.Click += new System.EventHandler(this.btn_DBFolder_Click);
             // 
@@ -1264,6 +1326,8 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_RocksmithDLCPath.TabIndex = 2;
             this.toolTip1.SetToolTip(this.txt_RocksmithDLCPath, "Import Location.\r\nIf it is the Rocksmith Location then Files will be moved out an" +
         "d only replaced with Manged version at Repack.");
+            this.txt_RocksmithDLCPath.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_RocksmithDLCPath_KeyPress);
+            this.txt_RocksmithDLCPath.Leave += new System.EventHandler(this.txt_RocksmithDLCPath_Leave);
             // 
             // txt_TempPath
             // 
@@ -1278,12 +1342,12 @@ namespace RocksmithToolkitGUI.DLCManager
             // chbx_CleanTemp
             // 
             this.chbx_CleanTemp.AutoSize = true;
-            this.chbx_CleanTemp.Location = new System.Drawing.Point(309, 25);
+            this.chbx_CleanTemp.Location = new System.Drawing.Point(328, 25);
             this.chbx_CleanTemp.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.chbx_CleanTemp.Name = "chbx_CleanTemp";
-            this.chbx_CleanTemp.Size = new System.Drawing.Size(110, 17);
+            this.chbx_CleanTemp.Size = new System.Drawing.Size(104, 17);
             this.chbx_CleanTemp.TabIndex = 17;
-            this.chbx_CleanTemp.Text = "Clean DB && Temp";
+            this.chbx_CleanTemp.Text = "Clean DB&&Temp";
             this.toolTip1.SetToolTip(this.chbx_CleanTemp, "Cleans the Temp, Old, Duplicate, Repacked, Broken Folders");
             this.chbx_CleanTemp.UseVisualStyleBackColor = true;
             this.chbx_CleanTemp.Visible = false;
@@ -1665,6 +1729,19 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_Preview_Album_Sort.UseVisualStyleBackColor = false;
             this.btn_Preview_Album_Sort.Click += new System.EventHandler(this.Btn_Album_Sort_Click);
             // 
+            // btn_Album2SortA
+            // 
+            this.btn_Album2SortA.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Album2SortA.Location = new System.Drawing.Point(309, 25);
+            this.btn_Album2SortA.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_Album2SortA.Name = "btn_Album2SortA";
+            this.btn_Album2SortA.Size = new System.Drawing.Size(18, 16);
+            this.btn_Album2SortA.TabIndex = 429;
+            this.btn_Album2SortA.Text = ">";
+            this.toolTip1.SetToolTip(this.btn_Album2SortA, "Copy path DB folder");
+            this.btn_Album2SortA.UseVisualStyleBackColor = true;
+            this.btn_Album2SortA.Click += new System.EventHandler(this.btn_Album2SortA_Click);
+            // 
             // lbl_Settings
             // 
             this.lbl_Settings.AutoSize = true;
@@ -1734,6 +1811,9 @@ namespace RocksmithToolkitGUI.DLCManager
             "<Instr. Rating.>",
             "<MTrack Det.>",
             "<Group>",
+            "<Groups>",
+            "<GroupIndex>",
+            "<BetaOrGroupIndex>",
             "<Beta>",
             "<DD>",
             "<Broken>",
@@ -1755,7 +1835,14 @@ namespace RocksmithToolkitGUI.DLCManager
             "<Timestamp>",
             "<Live>",
             "<Acoustic>",
-            "<Random5>",
+            "<Instrumental>",
+            "<EP>",
+            "<Uncensored>",
+            "<SoundTrack>",
+            "<Single>",
+            "<Track version>",
+            "<LyricsLanguage>",
+            "<IntheWorks>",
             "<CDLC_ID>",
             "<DLCM Version>",
             "<Date>"});
@@ -1823,6 +1910,9 @@ namespace RocksmithToolkitGUI.DLCManager
             "<Instr. Rating.>",
             "<MTrack Det.>",
             "<Group>",
+            "<Groups>",
+            "<GroupIndex>",
+            "<BetaOrGroupIndex>",
             "<Beta>",
             "<DD>",
             "<Broken>",
@@ -1844,7 +1934,14 @@ namespace RocksmithToolkitGUI.DLCManager
             "<Timestamp>",
             "<Live>",
             "<Acoustic>",
-            "<Random5>",
+            "<Instrumental>",
+            "<EP>",
+            "<Uncensored>",
+            "<SoundTrack>",
+            "<Single>",
+            "<Track version>",
+            "<LyricsLanguage>",
+            "<IntheWorks>",
             "<CDLC_ID>",
             "<DLCM Version>",
             "<Date>"});
@@ -1869,6 +1966,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.Controls.Add(this.btn_Album2SortA);
             this.Controls.Add(this.btn_Preview_Album_Sort);
             this.Controls.Add(this.cbx_Activ_Album_Sort);
             this.Controls.Add(this.lbl_AlbumSort);
@@ -2071,6 +2169,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private TextBox txt_Album_Sort;
         private CheckBox chbx_iOS;
         private CheckBox chbx_PS4;
+        private Button btn_Album2SortA;
         //public static ProgressBar pB_ReadDLCs;
     }
 }

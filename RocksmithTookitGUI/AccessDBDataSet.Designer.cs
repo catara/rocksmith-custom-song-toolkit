@@ -1162,7 +1162,7 @@ namespace RocksmithToolkitGUI {
             
             private global::System.Data.DataColumn columnBonus;
             
-            private global::System.Data.DataColumn columnSNGFilePath;
+            private global::System.Data.DataColumn columnJSONFilePath;
             
             private global::System.Data.DataColumn columnXMLFilePath;
             
@@ -1238,9 +1238,9 @@ namespace RocksmithToolkitGUI {
             
             private global::System.Data.DataColumn columnStart_Time;
             
-            private global::System.Data.DataColumn columnSNGFileHash_Orig;
+            private global::System.Data.DataColumn columnCleanedXML_Hash;
             
-            private global::System.Data.DataColumn columnXMLFile_Hash_Orig;
+            private global::System.Data.DataColumn columnJson_Hash;
             
             private global::System.Data.DataColumn columnPart;
             
@@ -1313,9 +1313,9 @@ namespace RocksmithToolkitGUI {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn SNGFilePathColumn {
+            public global::System.Data.DataColumn JSONFilePathColumn {
                 get {
-                    return this.columnSNGFilePath;
+                    return this.columnJSONFilePath;
                 }
             }
             
@@ -1617,17 +1617,17 @@ namespace RocksmithToolkitGUI {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn SNGFileHash_OrigColumn {
+            public global::System.Data.DataColumn CleanedXML_HashColumn {
                 get {
-                    return this.columnSNGFileHash_Orig;
+                    return this.columnCleanedXML_Hash;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn XMLFile_Hash_OrigColumn {
+            public global::System.Data.DataColumn Json_HashColumn {
                 get {
-                    return this.columnXMLFile_Hash_Orig;
+                    return this.columnJson_Hash;
                 }
             }
             
@@ -1688,7 +1688,7 @@ namespace RocksmithToolkitGUI {
                         string Arrangement_Name, 
                         int CDLC_ID, 
                         string Bonus, 
-                        string SNGFilePath, 
+                        string JSONFilePath, 
                         string XMLFilePath, 
                         string XMLFile_Hash, 
                         string ScrollSpeed, 
@@ -1726,8 +1726,8 @@ namespace RocksmithToolkitGUI {
                         string Has_Sections, 
                         string Comments, 
                         string Start_Time, 
-                        string SNGFileHash_Orig, 
-                        string XMLFile_Hash_Orig, 
+                        string CleanedXML_Hash, 
+                        string Json_Hash, 
                         string Part, 
                         string MaxDifficulty) {
                 ArrangementsRow rowArrangementsRow = ((ArrangementsRow)(this.NewRow()));
@@ -1736,7 +1736,7 @@ namespace RocksmithToolkitGUI {
                         Arrangement_Name,
                         CDLC_ID,
                         Bonus,
-                        SNGFilePath,
+                        JSONFilePath,
                         XMLFilePath,
                         XMLFile_Hash,
                         ScrollSpeed,
@@ -1774,8 +1774,8 @@ namespace RocksmithToolkitGUI {
                         Has_Sections,
                         Comments,
                         Start_Time,
-                        SNGFileHash_Orig,
-                        XMLFile_Hash_Orig,
+                        CleanedXML_Hash,
+                        Json_Hash,
                         Part,
                         MaxDifficulty};
                 rowArrangementsRow.ItemArray = columnValuesArray;
@@ -1811,7 +1811,7 @@ namespace RocksmithToolkitGUI {
                 this.columnArrangement_Name = base.Columns["Arrangement_Name"];
                 this.columnCDLC_ID = base.Columns["CDLC_ID"];
                 this.columnBonus = base.Columns["Bonus"];
-                this.columnSNGFilePath = base.Columns["SNGFilePath"];
+                this.columnJSONFilePath = base.Columns["JSONFilePath"];
                 this.columnXMLFilePath = base.Columns["XMLFilePath"];
                 this.columnXMLFile_Hash = base.Columns["XMLFile_Hash"];
                 this.columnScrollSpeed = base.Columns["ScrollSpeed"];
@@ -1849,8 +1849,8 @@ namespace RocksmithToolkitGUI {
                 this.columnHas_Sections = base.Columns["Has_Sections"];
                 this.columnComments = base.Columns["Comments"];
                 this.columnStart_Time = base.Columns["Start_Time"];
-                this.columnSNGFileHash_Orig = base.Columns["SNGFileHash_Orig"];
-                this.columnXMLFile_Hash_Orig = base.Columns["XMLFile_Hash_Orig"];
+                this.columnCleanedXML_Hash = base.Columns["CleanedXML_Hash"];
+                this.columnJson_Hash = base.Columns["Json_Hash"];
                 this.columnPart = base.Columns["Part"];
                 this.columnMaxDifficulty = base.Columns["MaxDifficulty"];
             }
@@ -1866,8 +1866,8 @@ namespace RocksmithToolkitGUI {
                 base.Columns.Add(this.columnCDLC_ID);
                 this.columnBonus = new global::System.Data.DataColumn("Bonus", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnBonus);
-                this.columnSNGFilePath = new global::System.Data.DataColumn("SNGFilePath", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnSNGFilePath);
+                this.columnJSONFilePath = new global::System.Data.DataColumn("JSONFilePath", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnJSONFilePath);
                 this.columnXMLFilePath = new global::System.Data.DataColumn("XMLFilePath", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnXMLFilePath);
                 this.columnXMLFile_Hash = new global::System.Data.DataColumn("XMLFile_Hash", typeof(string), null, global::System.Data.MappingType.Element);
@@ -1942,10 +1942,10 @@ namespace RocksmithToolkitGUI {
                 base.Columns.Add(this.columnComments);
                 this.columnStart_Time = new global::System.Data.DataColumn("Start_Time", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnStart_Time);
-                this.columnSNGFileHash_Orig = new global::System.Data.DataColumn("SNGFileHash_Orig", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnSNGFileHash_Orig);
-                this.columnXMLFile_Hash_Orig = new global::System.Data.DataColumn("XMLFile_Hash_Orig", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnXMLFile_Hash_Orig);
+                this.columnCleanedXML_Hash = new global::System.Data.DataColumn("CleanedXML_Hash", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCleanedXML_Hash);
+                this.columnJson_Hash = new global::System.Data.DataColumn("Json_Hash", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnJson_Hash);
                 this.columnPart = new global::System.Data.DataColumn("Part", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnPart);
                 this.columnMaxDifficulty = new global::System.Data.DataColumn("MaxDifficulty", typeof(string), null, global::System.Data.MappingType.Element);
@@ -1959,7 +1959,7 @@ namespace RocksmithToolkitGUI {
                 this.columnID.Unique = true;
                 this.columnArrangement_Name.MaxLength = 255;
                 this.columnBonus.MaxLength = 255;
-                this.columnSNGFilePath.MaxLength = 536870910;
+                this.columnJSONFilePath.MaxLength = 536870910;
                 this.columnXMLFilePath.MaxLength = 536870910;
                 this.columnXMLFile_Hash.MaxLength = 255;
                 this.columnScrollSpeed.MaxLength = 255;
@@ -1997,8 +1997,8 @@ namespace RocksmithToolkitGUI {
                 this.columnHas_Sections.MaxLength = 255;
                 this.columnComments.MaxLength = 255;
                 this.columnStart_Time.MaxLength = 255;
-                this.columnSNGFileHash_Orig.MaxLength = 255;
-                this.columnXMLFile_Hash_Orig.MaxLength = 255;
+                this.columnCleanedXML_Hash.MaxLength = 255;
+                this.columnJson_Hash.MaxLength = 255;
                 this.columnPart.MaxLength = 255;
                 this.columnMaxDifficulty.MaxLength = 255;
             }
@@ -17196,17 +17196,17 @@ namespace RocksmithToolkitGUI {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string SNGFilePath {
+            public string JSONFilePath {
                 get {
                     try {
-                        return ((string)(this[this.tableArrangements.SNGFilePathColumn]));
+                        return ((string)(this[this.tableArrangements.JSONFilePathColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'SNGFilePath\' in table \'Arrangements\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'JSONFilePath\' in table \'Arrangements\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableArrangements.SNGFilePathColumn] = value;
+                    this[this.tableArrangements.JSONFilePathColumn] = value;
                 }
             }
             
@@ -17804,33 +17804,33 @@ namespace RocksmithToolkitGUI {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string SNGFileHash_Orig {
+            public string CleanedXML_Hash {
                 get {
                     try {
-                        return ((string)(this[this.tableArrangements.SNGFileHash_OrigColumn]));
+                        return ((string)(this[this.tableArrangements.CleanedXML_HashColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'SNGFileHash_Orig\' in table \'Arrangements\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'CleanedXML_Hash\' in table \'Arrangements\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableArrangements.SNGFileHash_OrigColumn] = value;
+                    this[this.tableArrangements.CleanedXML_HashColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string XMLFile_Hash_Orig {
+            public string Json_Hash {
                 get {
                     try {
-                        return ((string)(this[this.tableArrangements.XMLFile_Hash_OrigColumn]));
+                        return ((string)(this[this.tableArrangements.Json_HashColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'XMLFile_Hash_Orig\' in table \'Arrangements\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'Json_Hash\' in table \'Arrangements\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableArrangements.XMLFile_Hash_OrigColumn] = value;
+                    this[this.tableArrangements.Json_HashColumn] = value;
                 }
             }
             
@@ -17904,14 +17904,14 @@ namespace RocksmithToolkitGUI {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsSNGFilePathNull() {
-                return this.IsNull(this.tableArrangements.SNGFilePathColumn);
+            public bool IsJSONFilePathNull() {
+                return this.IsNull(this.tableArrangements.JSONFilePathColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetSNGFilePathNull() {
-                this[this.tableArrangements.SNGFilePathColumn] = global::System.Convert.DBNull;
+            public void SetJSONFilePathNull() {
+                this[this.tableArrangements.JSONFilePathColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -18360,26 +18360,26 @@ namespace RocksmithToolkitGUI {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsSNGFileHash_OrigNull() {
-                return this.IsNull(this.tableArrangements.SNGFileHash_OrigColumn);
+            public bool IsCleanedXML_HashNull() {
+                return this.IsNull(this.tableArrangements.CleanedXML_HashColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetSNGFileHash_OrigNull() {
-                this[this.tableArrangements.SNGFileHash_OrigColumn] = global::System.Convert.DBNull;
+            public void SetCleanedXML_HashNull() {
+                this[this.tableArrangements.CleanedXML_HashColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsXMLFile_Hash_OrigNull() {
-                return this.IsNull(this.tableArrangements.XMLFile_Hash_OrigColumn);
+            public bool IsJson_HashNull() {
+                return this.IsNull(this.tableArrangements.Json_HashColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetXMLFile_Hash_OrigNull() {
-                this[this.tableArrangements.XMLFile_Hash_OrigColumn] = global::System.Convert.DBNull;
+            public void SetJson_HashNull() {
+                this[this.tableArrangements.Json_HashColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -35440,7 +35440,7 @@ namespace RocksmithToolkitGUI.AccessDBDataSetTableAdapters {
             tableMapping.ColumnMappings.Add("Arrangement_Name", "Arrangement_Name");
             tableMapping.ColumnMappings.Add("CDLC_ID", "CDLC_ID");
             tableMapping.ColumnMappings.Add("Bonus", "Bonus");
-            tableMapping.ColumnMappings.Add("SNGFilePath", "SNGFilePath");
+            tableMapping.ColumnMappings.Add("JSONFilePath", "JSONFilePath");
             tableMapping.ColumnMappings.Add("XMLFilePath", "XMLFilePath");
             tableMapping.ColumnMappings.Add("XMLFile_Hash", "XMLFile_Hash");
             tableMapping.ColumnMappings.Add("ScrollSpeed", "ScrollSpeed");
@@ -35478,8 +35478,8 @@ namespace RocksmithToolkitGUI.AccessDBDataSetTableAdapters {
             tableMapping.ColumnMappings.Add("Has_Sections", "Has_Sections");
             tableMapping.ColumnMappings.Add("Comments", "Comments");
             tableMapping.ColumnMappings.Add("Start_Time", "Start_Time");
-            tableMapping.ColumnMappings.Add("SNGFileHash_Orig", "SNGFileHash_Orig");
-            tableMapping.ColumnMappings.Add("XMLFile_Hash_Orig", "XMLFile_Hash_Orig");
+            tableMapping.ColumnMappings.Add("CleanedXML_Hash", "CleanedXML_Hash");
+            tableMapping.ColumnMappings.Add("Json_Hash", "Json_Hash");
             tableMapping.ColumnMappings.Add("Part", "Part");
             tableMapping.ColumnMappings.Add("MaxDifficulty", "MaxDifficulty");
             this._adapter.TableMappings.Add(tableMapping);
@@ -35515,10 +35515,10 @@ namespace RocksmithToolkitGUI.AccessDBDataSetTableAdapters {
                 " ?)) AND ((? = 1 AND `SNGFileHash` IS NULL) OR (`SNGFileHash` = ?)) AND ((? = 1 " +
                 "AND `Has_Sections` IS NULL) OR (`Has_Sections` = ?)) AND ((? = 1 AND `Comments` " +
                 "IS NULL) OR (`Comments` = ?)) AND ((? = 1 AND `Start_Time` IS NULL) OR (`Start_T" +
-                "ime` = ?)) AND ((? = 1 AND `SNGFileHash_Orig` IS NULL) OR (`SNGFileHash_Orig` = " +
-                "?)) AND ((? = 1 AND `XMLFile_Hash_Orig` IS NULL) OR (`XMLFile_Hash_Orig` = ?)) A" +
-                "ND ((? = 1 AND `Part` IS NULL) OR (`Part` = ?)) AND ((? = 1 AND `MaxDifficulty` " +
-                "IS NULL) OR (`MaxDifficulty` = ?)))";
+                "ime` = ?)) AND ((? = 1 AND `CleanedXML_Hash` IS NULL) OR (`CleanedXML_Hash` = ?)" +
+                ") AND ((? = 1 AND `Json_Hash` IS NULL) OR (`Json_Hash` = ?)) AND" +
+                " ((? = 1 AND `Part` IS NULL) OR (`Part` = ?)) AND ((? = 1 AND `MaxDifficulty` IS" +
+                " NULL) OR (`MaxDifficulty` = ?)))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_ID", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "ID", global::System.Data.DataRowVersion.Original, false, null));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_Arrangement_Name", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Arrangement_Name", global::System.Data.DataRowVersion.Original, true, null));
@@ -35599,22 +35599,22 @@ namespace RocksmithToolkitGUI.AccessDBDataSetTableAdapters {
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_Comments", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Comments", global::System.Data.DataRowVersion.Original, false, null));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_Start_Time", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Start_Time", global::System.Data.DataRowVersion.Original, true, null));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_Start_Time", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Start_Time", global::System.Data.DataRowVersion.Original, false, null));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_SNGFileHash_Orig", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "SNGFileHash_Orig", global::System.Data.DataRowVersion.Original, true, null));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_SNGFileHash_Orig", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "SNGFileHash_Orig", global::System.Data.DataRowVersion.Original, false, null));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_XMLFile_Hash_Orig", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "XMLFile_Hash_Orig", global::System.Data.DataRowVersion.Original, true, null));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_XMLFile_Hash_Orig", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "XMLFile_Hash_Orig", global::System.Data.DataRowVersion.Original, false, null));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_CleanedXML_Hash", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "CleanedXML_Hash", global::System.Data.DataRowVersion.Original, true, null));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_CleanedXML_Hash", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "CleanedXML_Hash", global::System.Data.DataRowVersion.Original, false, null));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_Json_Hash", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Json_Hash", global::System.Data.DataRowVersion.Original, true, null));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_Json_Hash", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Json_Hash", global::System.Data.DataRowVersion.Original, false, null));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_Part", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Part", global::System.Data.DataRowVersion.Original, true, null));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_Part", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Part", global::System.Data.DataRowVersion.Original, false, null));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_MaxDifficulty", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "MaxDifficulty", global::System.Data.DataRowVersion.Original, true, null));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_MaxDifficulty", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "MaxDifficulty", global::System.Data.DataRowVersion.Original, false, null));
             this._adapter.InsertCommand = new global::System.Data.OleDb.OleDbCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = @"INSERT INTO `Arrangements` (`Arrangement_Name`, `CDLC_ID`, `Bonus`, `SNGFilePath`, `XMLFilePath`, `XMLFile_Hash`, `ScrollSpeed`, `Tunning`, `Rating`, `PlaythroughYBLink`, `CustomsForge_Link`, `ArrangementSort`, `TuningPitch`, `ToneBase`, `Idd`, `MasterId`, `ArrangementType`, `String0`, `String1`, `String2`, `String3`, `String4`, `String5`, `PluckedType`, `RouteMask`, `XMLFileName`, `XMLFileLLID`, `XMLFileUUID`, `SNGFileName`, `SNGFileLLID`, `SNGFileUUID`, `ToneMultiplayer`, `ToneA`, `ToneB`, `ToneC`, `ToneD`, `lastConversionDateTime`, `SNGFileHash`, `Has_Sections`, `Comments`, `Start_Time`, `SNGFileHash_Orig`, `XMLFile_Hash_Orig`, `Part`, `MaxDifficulty`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            this._adapter.InsertCommand.CommandText = @"INSERT INTO `Arrangements` (`Arrangement_Name`, `CDLC_ID`, `Bonus`, `JSONFilePath`, `XMLFilePath`, `XMLFile_Hash`, `ScrollSpeed`, `Tunning`, `Rating`, `PlaythroughYBLink`, `CustomsForge_Link`, `ArrangementSort`, `TuningPitch`, `ToneBase`, `Idd`, `MasterId`, `ArrangementType`, `String0`, `String1`, `String2`, `String3`, `String4`, `String5`, `PluckedType`, `RouteMask`, `XMLFileName`, `XMLFileLLID`, `XMLFileUUID`, `SNGFileName`, `SNGFileLLID`, `SNGFileUUID`, `ToneMultiplayer`, `ToneA`, `ToneB`, `ToneC`, `ToneD`, `lastConversionDateTime`, `SNGFileHash`, `Has_Sections`, `Comments`, `Start_Time`, `CleanedXML_Hash`, `Json_Hash`, `Part`, `MaxDifficulty`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Arrangement_Name", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Arrangement_Name", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("CDLC_ID", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "CDLC_ID", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Bonus", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Bonus", global::System.Data.DataRowVersion.Current, false, null));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("SNGFilePath", global::System.Data.OleDb.OleDbType.LongVarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "SNGFilePath", global::System.Data.DataRowVersion.Current, false, null));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("JSONFilePath", global::System.Data.OleDb.OleDbType.LongVarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "JSONFilePath", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("XMLFilePath", global::System.Data.OleDb.OleDbType.LongVarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "XMLFilePath", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("XMLFile_Hash", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "XMLFile_Hash", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("ScrollSpeed", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "ScrollSpeed", global::System.Data.DataRowVersion.Current, false, null));
@@ -35652,22 +35652,22 @@ namespace RocksmithToolkitGUI.AccessDBDataSetTableAdapters {
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Has_Sections", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Has_Sections", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Comments", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Comments", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Start_Time", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Start_Time", global::System.Data.DataRowVersion.Current, false, null));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("SNGFileHash_Orig", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "SNGFileHash_Orig", global::System.Data.DataRowVersion.Current, false, null));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("XMLFile_Hash_Orig", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "XMLFile_Hash_Orig", global::System.Data.DataRowVersion.Current, false, null));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("CleanedXML_Hash", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "CleanedXML_Hash", global::System.Data.DataRowVersion.Current, false, null));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Json_Hash", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Json_Hash", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Part", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Part", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("MaxDifficulty", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "MaxDifficulty", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.UpdateCommand = new global::System.Data.OleDb.OleDbCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = "UPDATE `Arrangements` SET `Arrangement_Name` = ?, `CDLC_ID` = ?, `Bonus` = ?, `SN" +
-                "GFilePath` = ?, `XMLFilePath` = ?, `XMLFile_Hash` = ?, `ScrollSpeed` = ?, `Tunni" +
-                "ng` = ?, `Rating` = ?, `PlaythroughYBLink` = ?, `CustomsForge_Link` = ?, `Arrang" +
-                "ementSort` = ?, `TuningPitch` = ?, `ToneBase` = ?, `Idd` = ?, `MasterId` = ?, `A" +
-                "rrangementType` = ?, `String0` = ?, `String1` = ?, `String2` = ?, `String3` = ?," +
-                " `String4` = ?, `String5` = ?, `PluckedType` = ?, `RouteMask` = ?, `XMLFileName`" +
-                " = ?, `XMLFileLLID` = ?, `XMLFileUUID` = ?, `SNGFileName` = ?, `SNGFileLLID` = ?" +
-                ", `SNGFileUUID` = ?, `ToneMultiplayer` = ?, `ToneA` = ?, `ToneB` = ?, `ToneC` = " +
-                "?, `ToneD` = ?, `lastConversionDateTime` = ?, `SNGFileHash` = ?, `Has_Sections` " +
-                "= ?, `Comments` = ?, `Start_Time` = ?, `SNGFileHash_Orig` = ?, `XMLFile_Hash_Ori" +
+            this._adapter.UpdateCommand.CommandText = "UPDATE `Arrangements` SET `Arrangement_Name` = ?, `CDLC_ID` = ?, `Bonus` = ?, `JS" +
+                "ONFilePath` = ?, `XMLFilePath` = ?, `XMLFile_Hash` = ?, `ScrollSpeed` = ?, `Tunn" +
+                "ing` = ?, `Rating` = ?, `PlaythroughYBLink` = ?, `CustomsForge_Link` = ?, `Arran" +
+                "gementSort` = ?, `TuningPitch` = ?, `ToneBase` = ?, `Idd` = ?, `MasterId` = ?, `" +
+                "ArrangementType` = ?, `String0` = ?, `String1` = ?, `String2` = ?, `String3` = ?" +
+                ", `String4` = ?, `String5` = ?, `PluckedType` = ?, `RouteMask` = ?, `XMLFileName" +
+                "` = ?, `XMLFileLLID` = ?, `XMLFileUUID` = ?, `SNGFileName` = ?, `SNGFileLLID` = " +
+                "?, `SNGFileUUID` = ?, `ToneMultiplayer` = ?, `ToneA` = ?, `ToneB` = ?, `ToneC` =" +
+                " ?, `ToneD` = ?, `lastConversionDateTime` = ?, `SNGFileHash` = ?, `Has_Sections`" +
+                " = ?, `Comments` = ?, `Start_Time` = ?, `CleanedXML_Hash` = ?, `XMLFile_Hash_Ori" +
                 "g` = ?, `Part` = ?, `MaxDifficulty` = ? WHERE ((`ID` = ?) AND ((? = 1 AND `Arran" +
                 "gement_Name` IS NULL) OR (`Arrangement_Name` = ?)) AND ((? = 1 AND `CDLC_ID` IS " +
                 "NULL) OR (`CDLC_ID` = ?)) AND ((? = 1 AND `Bonus` IS NULL) OR (`Bonus` = ?)) AND" +
@@ -35698,15 +35698,15 @@ namespace RocksmithToolkitGUI.AccessDBDataSetTableAdapters {
                 "ionDateTime` = ?)) AND ((? = 1 AND `SNGFileHash` IS NULL) OR (`SNGFileHash` = ?)" +
                 ") AND ((? = 1 AND `Has_Sections` IS NULL) OR (`Has_Sections` = ?)) AND ((? = 1 A" +
                 "ND `Comments` IS NULL) OR (`Comments` = ?)) AND ((? = 1 AND `Start_Time` IS NULL" +
-                ") OR (`Start_Time` = ?)) AND ((? = 1 AND `SNGFileHash_Orig` IS NULL) OR (`SNGFil" +
-                "eHash_Orig` = ?)) AND ((? = 1 AND `XMLFile_Hash_Orig` IS NULL) OR (`XMLFile_Hash" +
-                "_Orig` = ?)) AND ((? = 1 AND `Part` IS NULL) OR (`Part` = ?)) AND ((? = 1 AND `M" +
-                "axDifficulty` IS NULL) OR (`MaxDifficulty` = ?)))";
+                ") OR (`Start_Time` = ?)) AND ((? = 1 AND `CleanedXML_Hash` IS NULL) OR (`Cleaned" +
+                "XML_Hash` = ?)) AND ((? = 1 AND `Json_Hash` IS NULL) OR (`XMLFile_Hash_O" +
+                "rig` = ?)) AND ((? = 1 AND `Part` IS NULL) OR (`Part` = ?)) AND ((? = 1 AND `Max" +
+                "Difficulty` IS NULL) OR (`MaxDifficulty` = ?)))";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Arrangement_Name", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Arrangement_Name", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("CDLC_ID", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "CDLC_ID", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Bonus", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Bonus", global::System.Data.DataRowVersion.Current, false, null));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("SNGFilePath", global::System.Data.OleDb.OleDbType.LongVarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "SNGFilePath", global::System.Data.DataRowVersion.Current, false, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("JSONFilePath", global::System.Data.OleDb.OleDbType.LongVarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "JSONFilePath", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("XMLFilePath", global::System.Data.OleDb.OleDbType.LongVarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "XMLFilePath", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("XMLFile_Hash", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "XMLFile_Hash", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("ScrollSpeed", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "ScrollSpeed", global::System.Data.DataRowVersion.Current, false, null));
@@ -35744,8 +35744,8 @@ namespace RocksmithToolkitGUI.AccessDBDataSetTableAdapters {
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Has_Sections", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Has_Sections", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Comments", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Comments", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Start_Time", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Start_Time", global::System.Data.DataRowVersion.Current, false, null));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("SNGFileHash_Orig", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "SNGFileHash_Orig", global::System.Data.DataRowVersion.Current, false, null));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("XMLFile_Hash_Orig", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "XMLFile_Hash_Orig", global::System.Data.DataRowVersion.Current, false, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("CleanedXML_Hash", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "CleanedXML_Hash", global::System.Data.DataRowVersion.Current, false, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Json_Hash", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Json_Hash", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Part", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Part", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("MaxDifficulty", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "MaxDifficulty", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_ID", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "ID", global::System.Data.DataRowVersion.Original, false, null));
@@ -35827,10 +35827,10 @@ namespace RocksmithToolkitGUI.AccessDBDataSetTableAdapters {
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_Comments", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Comments", global::System.Data.DataRowVersion.Original, false, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_Start_Time", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Start_Time", global::System.Data.DataRowVersion.Original, true, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_Start_Time", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Start_Time", global::System.Data.DataRowVersion.Original, false, null));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_SNGFileHash_Orig", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "SNGFileHash_Orig", global::System.Data.DataRowVersion.Original, true, null));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_SNGFileHash_Orig", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "SNGFileHash_Orig", global::System.Data.DataRowVersion.Original, false, null));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_XMLFile_Hash_Orig", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "XMLFile_Hash_Orig", global::System.Data.DataRowVersion.Original, true, null));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_XMLFile_Hash_Orig", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "XMLFile_Hash_Orig", global::System.Data.DataRowVersion.Original, false, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_CleanedXML_Hash", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "CleanedXML_Hash", global::System.Data.DataRowVersion.Original, true, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_CleanedXML_Hash", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "CleanedXML_Hash", global::System.Data.DataRowVersion.Original, false, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_Json_Hash", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Json_Hash", global::System.Data.DataRowVersion.Original, true, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_Json_Hash", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Json_Hash", global::System.Data.DataRowVersion.Original, false, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_Part", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Part", global::System.Data.DataRowVersion.Original, true, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_Part", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Part", global::System.Data.DataRowVersion.Original, false, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_MaxDifficulty", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "MaxDifficulty", global::System.Data.DataRowVersion.Original, true, null));
@@ -35850,7 +35850,7 @@ namespace RocksmithToolkitGUI.AccessDBDataSetTableAdapters {
             this._commandCollection = new global::System.Data.OleDb.OleDbCommand[1];
             this._commandCollection[0] = new global::System.Data.OleDb.OleDbCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = @"SELECT ID, Arrangement_Name, CDLC_ID, Bonus, SNGFilePath, XMLFilePath, XMLFile_Hash, ScrollSpeed, Tunning, Rating, PlaythroughYBLink, CustomsForge_Link, ArrangementSort, TuningPitch, ToneBase, Idd, MasterId, ArrangementType, String0, String1, String2, String3, String4, String5, PluckedType, RouteMask, XMLFileName, XMLFileLLID, XMLFileUUID, SNGFileName, SNGFileLLID, SNGFileUUID, ToneMultiplayer, ToneA, ToneB, ToneC, ToneD, lastConversionDateTime, SNGFileHash, Has_Sections, Comments, Start_Time, SNGFileHash_Orig, XMLFile_Hash_Orig, Part, MaxDifficulty FROM Arrangements";
+            this._commandCollection[0].CommandText = @"SELECT ID, Arrangement_Name, CDLC_ID, Bonus, JSONFilePath, XMLFilePath, XMLFile_Hash, ScrollSpeed, Tunning, Rating, PlaythroughYBLink, CustomsForge_Link, ArrangementSort, TuningPitch, ToneBase, Idd, MasterId, ArrangementType, String0, String1, String2, String3, String4, String5, PluckedType, RouteMask, XMLFileName, XMLFileLLID, XMLFileUUID, SNGFileName, SNGFileLLID, SNGFileUUID, ToneMultiplayer, ToneA, ToneB, ToneC, ToneD, lastConversionDateTime, SNGFileHash, Has_Sections, Comments, Start_Time, CleanedXML_Hash, Json_Hash, Part, MaxDifficulty FROM Arrangements";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -35952,8 +35952,8 @@ namespace RocksmithToolkitGUI.AccessDBDataSetTableAdapters {
                     string Original_Has_Sections, 
                     string Original_Comments, 
                     string Original_Start_Time, 
-                    string Original_SNGFileHash_Orig, 
-                    string Original_XMLFile_Hash_Orig, 
+                    string Original_CleanedXML_Hash, 
+                    string Original_Json_Hash, 
                     string Original_Part, 
                     string Original_MaxDifficulty) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_ID));
@@ -36269,21 +36269,21 @@ namespace RocksmithToolkitGUI.AccessDBDataSetTableAdapters {
                 this.Adapter.DeleteCommand.Parameters[77].Value = ((object)(0));
                 this.Adapter.DeleteCommand.Parameters[78].Value = ((string)(Original_Start_Time));
             }
-            if ((Original_SNGFileHash_Orig == null)) {
+            if ((Original_CleanedXML_Hash == null)) {
                 this.Adapter.DeleteCommand.Parameters[79].Value = ((object)(1));
                 this.Adapter.DeleteCommand.Parameters[80].Value = global::System.DBNull.Value;
             }
             else {
                 this.Adapter.DeleteCommand.Parameters[79].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[80].Value = ((string)(Original_SNGFileHash_Orig));
+                this.Adapter.DeleteCommand.Parameters[80].Value = ((string)(Original_CleanedXML_Hash));
             }
-            if ((Original_XMLFile_Hash_Orig == null)) {
+            if ((Original_Json_Hash == null)) {
                 this.Adapter.DeleteCommand.Parameters[81].Value = ((object)(1));
                 this.Adapter.DeleteCommand.Parameters[82].Value = global::System.DBNull.Value;
             }
             else {
                 this.Adapter.DeleteCommand.Parameters[81].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[82].Value = ((string)(Original_XMLFile_Hash_Orig));
+                this.Adapter.DeleteCommand.Parameters[82].Value = ((string)(Original_Json_Hash));
             }
             if ((Original_Part == null)) {
                 this.Adapter.DeleteCommand.Parameters[83].Value = ((object)(1));
@@ -36325,7 +36325,7 @@ namespace RocksmithToolkitGUI.AccessDBDataSetTableAdapters {
                     string Arrangement_Name, 
                     global::System.Nullable<int> CDLC_ID, 
                     string Bonus, 
-                    string SNGFilePath, 
+                    string JSONFilePath, 
                     string XMLFilePath, 
                     string XMLFile_Hash, 
                     string ScrollSpeed, 
@@ -36363,8 +36363,8 @@ namespace RocksmithToolkitGUI.AccessDBDataSetTableAdapters {
                     string Has_Sections, 
                     string Comments, 
                     string Start_Time, 
-                    string SNGFileHash_Orig, 
-                    string XMLFile_Hash_Orig, 
+                    string CleanedXML_Hash, 
+                    string Json_Hash, 
                     string Part, 
                     string MaxDifficulty) {
             if ((Arrangement_Name == null)) {
@@ -36385,11 +36385,11 @@ namespace RocksmithToolkitGUI.AccessDBDataSetTableAdapters {
             else {
                 this.Adapter.InsertCommand.Parameters[2].Value = ((string)(Bonus));
             }
-            if ((SNGFilePath == null)) {
+            if ((JSONFilePath == null)) {
                 this.Adapter.InsertCommand.Parameters[3].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.InsertCommand.Parameters[3].Value = ((string)(SNGFilePath));
+                this.Adapter.InsertCommand.Parameters[3].Value = ((string)(JSONFilePath));
             }
             if ((XMLFilePath == null)) {
                 this.Adapter.InsertCommand.Parameters[4].Value = global::System.DBNull.Value;
@@ -36613,17 +36613,17 @@ namespace RocksmithToolkitGUI.AccessDBDataSetTableAdapters {
             else {
                 this.Adapter.InsertCommand.Parameters[40].Value = ((string)(Start_Time));
             }
-            if ((SNGFileHash_Orig == null)) {
+            if ((CleanedXML_Hash == null)) {
                 this.Adapter.InsertCommand.Parameters[41].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.InsertCommand.Parameters[41].Value = ((string)(SNGFileHash_Orig));
+                this.Adapter.InsertCommand.Parameters[41].Value = ((string)(CleanedXML_Hash));
             }
-            if ((XMLFile_Hash_Orig == null)) {
+            if ((Json_Hash == null)) {
                 this.Adapter.InsertCommand.Parameters[42].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.InsertCommand.Parameters[42].Value = ((string)(XMLFile_Hash_Orig));
+                this.Adapter.InsertCommand.Parameters[42].Value = ((string)(Json_Hash));
             }
             if ((Part == null)) {
                 this.Adapter.InsertCommand.Parameters[43].Value = global::System.DBNull.Value;
@@ -36661,7 +36661,7 @@ namespace RocksmithToolkitGUI.AccessDBDataSetTableAdapters {
                     string Arrangement_Name, 
                     global::System.Nullable<int> CDLC_ID, 
                     string Bonus, 
-                    string SNGFilePath, 
+                    string JSONFilePath, 
                     string XMLFilePath, 
                     string XMLFile_Hash, 
                     string ScrollSpeed, 
@@ -36699,8 +36699,8 @@ namespace RocksmithToolkitGUI.AccessDBDataSetTableAdapters {
                     string Has_Sections, 
                     string Comments, 
                     string Start_Time, 
-                    string SNGFileHash_Orig, 
-                    string XMLFile_Hash_Orig, 
+                    string CleanedXML_Hash, 
+                    string Json_Hash, 
                     string Part, 
                     string MaxDifficulty, 
                     int Original_ID, 
@@ -36743,8 +36743,8 @@ namespace RocksmithToolkitGUI.AccessDBDataSetTableAdapters {
                     string Original_Has_Sections, 
                     string Original_Comments, 
                     string Original_Start_Time, 
-                    string Original_SNGFileHash_Orig, 
-                    string Original_XMLFile_Hash_Orig, 
+                    string Original_CleanedXML_Hash, 
+                    string Original_Json_Hash, 
                     string Original_Part, 
                     string Original_MaxDifficulty) {
             if ((Arrangement_Name == null)) {
@@ -36765,11 +36765,11 @@ namespace RocksmithToolkitGUI.AccessDBDataSetTableAdapters {
             else {
                 this.Adapter.UpdateCommand.Parameters[2].Value = ((string)(Bonus));
             }
-            if ((SNGFilePath == null)) {
+            if ((JSONFilePath == null)) {
                 this.Adapter.UpdateCommand.Parameters[3].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[3].Value = ((string)(SNGFilePath));
+                this.Adapter.UpdateCommand.Parameters[3].Value = ((string)(JSONFilePath));
             }
             if ((XMLFilePath == null)) {
                 this.Adapter.UpdateCommand.Parameters[4].Value = global::System.DBNull.Value;
@@ -36993,17 +36993,17 @@ namespace RocksmithToolkitGUI.AccessDBDataSetTableAdapters {
             else {
                 this.Adapter.UpdateCommand.Parameters[40].Value = ((string)(Start_Time));
             }
-            if ((SNGFileHash_Orig == null)) {
+            if ((CleanedXML_Hash == null)) {
                 this.Adapter.UpdateCommand.Parameters[41].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[41].Value = ((string)(SNGFileHash_Orig));
+                this.Adapter.UpdateCommand.Parameters[41].Value = ((string)(CleanedXML_Hash));
             }
-            if ((XMLFile_Hash_Orig == null)) {
+            if ((Json_Hash == null)) {
                 this.Adapter.UpdateCommand.Parameters[42].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[42].Value = ((string)(XMLFile_Hash_Orig));
+                this.Adapter.UpdateCommand.Parameters[42].Value = ((string)(Json_Hash));
             }
             if ((Part == null)) {
                 this.Adapter.UpdateCommand.Parameters[43].Value = global::System.DBNull.Value;
@@ -37330,21 +37330,21 @@ namespace RocksmithToolkitGUI.AccessDBDataSetTableAdapters {
                 this.Adapter.UpdateCommand.Parameters[122].Value = ((object)(0));
                 this.Adapter.UpdateCommand.Parameters[123].Value = ((string)(Original_Start_Time));
             }
-            if ((Original_SNGFileHash_Orig == null)) {
+            if ((Original_CleanedXML_Hash == null)) {
                 this.Adapter.UpdateCommand.Parameters[124].Value = ((object)(1));
                 this.Adapter.UpdateCommand.Parameters[125].Value = global::System.DBNull.Value;
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[124].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[125].Value = ((string)(Original_SNGFileHash_Orig));
+                this.Adapter.UpdateCommand.Parameters[125].Value = ((string)(Original_CleanedXML_Hash));
             }
-            if ((Original_XMLFile_Hash_Orig == null)) {
+            if ((Original_Json_Hash == null)) {
                 this.Adapter.UpdateCommand.Parameters[126].Value = ((object)(1));
                 this.Adapter.UpdateCommand.Parameters[127].Value = global::System.DBNull.Value;
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[126].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[127].Value = ((string)(Original_XMLFile_Hash_Orig));
+                this.Adapter.UpdateCommand.Parameters[127].Value = ((string)(Original_Json_Hash));
             }
             if ((Original_Part == null)) {
                 this.Adapter.UpdateCommand.Parameters[128].Value = ((object)(1));

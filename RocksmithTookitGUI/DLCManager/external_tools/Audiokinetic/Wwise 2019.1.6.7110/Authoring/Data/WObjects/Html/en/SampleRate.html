@@ -1,0 +1,10 @@
+
+<h2>Sample Rate</h2>
+<p>The number of times per second a digital audio signal is sampled, defined in Hertz (Hz).</p>
+<p>You can select any one of the following options:</p>
+<ul>
+<li><strong>As Input</strong> - Converts the file using the same sample rate as the original file. If the sample rate is not available for a particular platform or audio format, then the closest sample rate available will be used.</li>
+<li><strong>Auto (Low/Medium/High)</strong> - Converts the file using a sample rate selected by Wwise after performing an FFT analysis of the file. The difference between the low, medium, and high quality settings is the cutoff threshold value that identifies the frequency used to determine the best sample rate at which to convert your file. You can tweak the quality level of each setting by defining their threshold values in the Project Settings dialog box.</li>
+<li><strong>300 to 48,000</strong> - Converts the file using a specific sample rate. <span class="condition" name="Feature_Platforms"> The sample rate range can vary for each platform and format. </span></li>
+</ul>
+<p>Default value: 0<br/></p>

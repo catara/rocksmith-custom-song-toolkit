@@ -561,7 +561,7 @@ namespace RocksmithToolkitLib.DLCPackage
                         //        // for alternate arrangement then both represent and bonus are set to "0"
                         //        attribute.Representative = 0;
                         //        attribute.ArrangementProperties.Represent = 0;
-                        //    }
+                        //    }‰‰frk
                         //}
 
                         var attributeDictionary = new Dictionary<string, Attributes2014> { { "Attributes", attribute } };
@@ -662,7 +662,7 @@ namespace RocksmithToolkitLib.DLCPackage
                 //}
                 //string ss = String.Format("Error 2generate PS3 package: {0}{1}. {0}PS3 package require 'JAVA x86' (32 bits) installed on your machine to generate properly.{0}", Environment.NewLine, ex.StackTrace);
                 //MessageBox.Show(ex.Message);
-                var tgst = "Error ..." + ex; UpdateLog(DateTime.Now, tgst, false, ConfigRepository.Instance()["dlcm_TempPath"], null, null, null, null);
+                var tgst = "Error during rocksmith lib internal packaging..." + ex; UpdateLog(DateTime.Now, tgst, false, ConfigRepository.Instance()["dlcm_TempPath"], null, null, null, null);
                 //errorsFound.AppendLine(ss);
             }
             finally

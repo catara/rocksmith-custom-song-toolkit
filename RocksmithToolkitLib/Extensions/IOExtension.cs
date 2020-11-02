@@ -284,7 +284,7 @@ namespace RocksmithToolkitLib.Extensions
             }
             catch (IOException e)
             {
-                if (!overWrite) return true; // be nice don't throw error
+                if (!overWrite || !verbose) return true; // be nice don't throw error
                 BetterDialog2.ShowDialog(
                     "Could not copy file " + fileFrom + "\r\nError Code: " + e.Message +
                     "\r\nMake sure associated file/folders are closed.",

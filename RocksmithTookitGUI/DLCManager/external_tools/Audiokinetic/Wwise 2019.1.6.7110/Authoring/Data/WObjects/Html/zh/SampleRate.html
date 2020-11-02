@@ -1,0 +1,10 @@
+
+<h2>Sample Rate</h2>
+<p>数字音频信号每秒采样的次数，单位为赫兹 (Hz)。</p>
+<p>您可以选择以下选项中的任何一个选项：</p>
+<ul>
+<li><strong>As Input</strong> - 使用与原始音频文件相同的采样率对文件做转码。如果特定平台或音频格式不支持该采样率，则会改用最接近的可用采样率。</li>
+<li><strong>Auto (Low/Medium/High)</strong> - 在对文件执行 FFT 分析后，使用 Wwise 选定的采样率对文件做转码。低品质、中品质和高品质设置之间的区别是截止频率阈值，该阈值将用于确定转码结果文件的最佳采样率。您可以通过在 Project Setting（工程设置）对话框中定义频率阈值，来微调各个品质设置的品质高低。</li>
+<li><strong>300 to 48,000</strong> &ndash; 300 至 48,000。使用特定采样率对文件做转码。<span class="condition" name="Feature_Platforms">各种平台和格式对应的采样率范围可能有所不同。</span></li>
+</ul>
+<p>Default value: 0<br/></p>

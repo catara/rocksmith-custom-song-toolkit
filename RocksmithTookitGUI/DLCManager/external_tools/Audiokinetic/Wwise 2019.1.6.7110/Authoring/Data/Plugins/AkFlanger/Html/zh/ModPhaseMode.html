@@ -1,0 +1,12 @@
+
+<h2>LFO Spread Mode</h2>
+<p>散布模式。定义初始阶段散布（参见参数“Spread”）如何应用于所有声道。 例如，将 Spread Mode 设置为“Front-Rear”时，所有前置声道开始使用等于 0 的相位进行播放，所有后置声道开始使用等于“Spread”的相位进行播放。 如果存在（并已处理），则 LFE 声道总是与左前声道同步。</p>
+<p>值：</p>
+<ul>
+<li><strong>Left-Right</strong>:左前声道和左后声道从偏置 0 开始播放，右前和右后声道从偏置“Spread”开始播放。 如果存在，则中置声道会从偏置“Spread”/2 开始播放。</li>
+<li><strong>Front-Rear</strong>:前置和中置声道采用偏置 0 开始播放，后置声道采用偏置“Spread”开始播放。</li>
+<li><strong>Circular</strong>:该模式在 1.x、2.x 和 3.x 配置的左声道和右声道之间，以及在 4.x 和 5.x 配置的左前声道和右后声道之间应用两极扩散 。 例如，3.0 信号将从以下相位开始：L=0、C=“Spread”/2、R=“Spread”。 5.0 信号将从以下相位开始：FL=0、C=“Spread”/4、FR=“Spread”/2、RL=“Spread”/2、RR=“Spread”。</li>
+<li><strong>Random</strong>:各个声道将从均匀分布在 0 和“Spread”之间的随机相位开始。</li>
+</ul>
+<p><strong>备注</strong>:虽然在运行时可通过 RTPC 更改该参数，但在该效果器的实例已经开始播放后设置该参数时，该参数不会产生任何效果。</p>
+<p>Default value: Left-Right<br/></p>

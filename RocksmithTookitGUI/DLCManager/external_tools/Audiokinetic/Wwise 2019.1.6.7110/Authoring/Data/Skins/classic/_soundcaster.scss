@@ -1,0 +1,24 @@
+@import "global";
+
+@mixin soundcaster_exports {
+    GridControl_Background: $Global_Background;
+    GridControl_DisabledBackground: $Global_DisabledText;
+    GridControl_Dot: applyTint(rgb(175, 175, 175));
+    GridControl_Hover: applyTint($Global_DropHover);
+    GridControl_TextColor: $Global_NormalText;
+
+    SoundcasterModule_Border: applyTint(rgb(180, 180, 180));
+    SoundcasterModule_SelectedBorder: applyTint(rgb(220, 220, 220));
+    SoundcasterModule_CenterBackground: applyTint(rgb(132, 132, 132));
+    SoundcasterModule_SelectedCenterBackground: applyTint(rgb(132, 132, 132));
+    SoundcasterModule_TitleBar: applyTint(rgb(180, 180, 180));
+    SoundcasterModule_TitleBarSelected: applyTint(rgb(219, 219, 219));
+    SoundcasterModule_Text: $Global_Text;
+    SoundcasterModule_SelectedText: $Global_Text;
+    SoundcasterModule_ErrorText: $Global_WarningTextOverLightBackground;
+    SoundcasterModule_SelectedErrorText: $Global_WarningTextOverLightBackground;
+
+    // Alpha is used to specify how much of the background color is blended with the object color (if any).
+    SoundcasterModule_Background: applyTint(rgba(180, 180, 180, 0));
+    SoundcasterModule_SelectedBackground: applyTint(rgba(220, 220, 220, 0.3));
+}

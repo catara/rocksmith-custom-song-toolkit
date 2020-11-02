@@ -63,7 +63,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_PKGSigner = new System.Windows.Forms.Button();
             this.btn_TrueRepacker = new System.Windows.Forms.Button();
             this.btn_PKGLinker = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
+            this.btn_RemoveMultiPacksinstances = new System.Windows.Forms.Button();
             this.chbx_Duplicate_Official = new System.Windows.Forms.CheckBox();
             this.btn_RemoveSelectedRemote = new System.Windows.Forms.Button();
             this.btn_AddInstrumental = new System.Windows.Forms.Button();
@@ -78,32 +78,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_Playthrough = new System.Windows.Forms.Button();
             this.btn_Youtube = new System.Windows.Forms.Button();
             this.btn_ReduceLenght = new System.Windows.Forms.Button();
-            this.txt_AlbumArtPath = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_Art_Hash = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_Preview_Hash = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_Lyrics_Hash = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_AudioPath = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_AudioPreviewPath = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_AlbumSort = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_OldPath = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_OggPath = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_OggPreviewPath = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_Lyrics = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_Author = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_Tuning = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_Live_Details = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_YouTube_Link = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_Artist_ShortName = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_Album_ShortName = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_Album_Year = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_APP_ID = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_DLC_ID = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_Version = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_Album = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_Title_Sort = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_Title = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_Artist_Sort = new RocksmithToolkitGUI.CueTextBox();
-            this.txt_Artist = new RocksmithToolkitGUI.CueTextBox();
             this.btn_OpenSongFolder = new System.Windows.Forms.Button();
             this.btn_OpenRepackedFolder = new System.Windows.Forms.Button();
             this.btm_GoTemp = new System.Windows.Forms.Button();
@@ -116,7 +90,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_Refresh = new System.Windows.Forms.Button();
             this.btn_ReadGameLibrary = new System.Windows.Forms.Button();
             this.bth_GetTrackNo = new System.Windows.Forms.Button();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.pB_ReadDLCs = new System.Windows.Forms.ProgressBar();
             this.chbx_UseInternalDDRemovalLogic = new System.Windows.Forms.CheckBox();
             this.btn_EOF = new System.Windows.Forms.Button();
@@ -125,7 +98,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_AddDD = new System.Windows.Forms.Button();
             this.btn_RemoveDD = new System.Windows.Forms.Button();
             this.btn_RemoveBassDD = new System.Windows.Forms.Button();
-            this.txt_DuplicateOf = new RocksmithToolkitGUI.CueTextBox();
             this.chbx_AudioChanged = new System.Windows.Forms.CheckBox();
             this.chbx_Format_Originals = new System.Windows.Forms.ComboBox();
             this.chbx_Originals_Available = new System.Windows.Forms.CheckBox();
@@ -138,13 +110,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_ChangeLyrics = new System.Windows.Forms.Button();
             this.btn_Delete = new System.Windows.Forms.Button();
             this.gbox_Cover = new System.Windows.Forms.PictureBox();
-            this.txt_FilesMissingIssues = new RocksmithToolkitGUI.CueTextBox();
             this.txt_Top10 = new System.Windows.Forms.NumericUpDown();
-            this.chbx_IsInstrumental = new System.Windows.Forms.CheckBox();
-            this.chbx_IsSingle = new System.Windows.Forms.CheckBox();
-            this.chbx_IsSoundtrack = new System.Windows.Forms.CheckBox();
-            this.chbx_Is_Acoustic = new System.Windows.Forms.CheckBox();
-            this.chbx_Is_Live = new System.Windows.Forms.CheckBox();
             this.chbx_Sections = new System.Windows.Forms.CheckBox();
             this.chbx_Bonus = new System.Windows.Forms.CheckBox();
             this.txt_Rating = new System.Windows.Forms.NumericUpDown();
@@ -160,6 +126,49 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_Search = new System.Windows.Forms.Button();
             this.btn_Tones = new System.Windows.Forms.Button();
             this.btn_Arrangements = new System.Windows.Forms.Button();
+            this.chbx_LyricsLanguage = new System.Windows.Forms.ComboBox();
+            this.chbx_InclLanguage = new System.Windows.Forms.CheckBox();
+            this.btn_GoTo = new System.Windows.Forms.Button();
+            this.chbx_KeepDD = new System.Windows.Forms.CheckBox();
+            this.chbx_IsLive = new System.Windows.Forms.CheckBox();
+            this.chbx_IsInstrumental = new System.Windows.Forms.CheckBox();
+            this.chbx_IsSoundtrack = new System.Windows.Forms.CheckBox();
+            this.chbx_IsSingle = new System.Windows.Forms.CheckBox();
+            this.chbx_IsAcoustic = new System.Windows.Forms.CheckBox();
+            this.chbx_IsEP = new System.Windows.Forms.CheckBox();
+            this.chbx_IntheWorks = new System.Windows.Forms.CheckBox();
+            this.chbx_IsUncensored = new System.Windows.Forms.CheckBox();
+            this.chbx_ImprovedWithDM = new System.Windows.Forms.CheckBox();
+            this.chbx_Instaces = new System.Windows.Forms.CheckBox();
+            this.chbx_FullAlbum = new System.Windows.Forms.CheckBox();
+            this.txt_AlbumArtPath = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_FilesMissingIssues = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_Art_Hash = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_Preview_Hash = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_Lyrics_Hash = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_AudioPath = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_AudioPreviewPath = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_AlbumSort = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_OldPath = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_OggPath = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_OggPreviewPath = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_Lyrics = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_Author = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_Tuning = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_Live_Details = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_DuplicateOf = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_YouTube_Link = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_Artist_ShortName = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_Album_ShortName = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_Album_Year = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_APP_ID = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_DLC_ID = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_Version = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_Album = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_Title_Sort = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_Title = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_Artist_Sort = new RocksmithToolkitGUI.CueTextBox();
+            this.txt_Artist = new RocksmithToolkitGUI.CueTextBox();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -174,7 +183,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_DefaultCover = new System.Windows.Forms.Button();
             this.btn_AddCoverFlags = new System.Windows.Forms.Button();
             this.btn_Sort = new System.Windows.Forms.Button();
-            this.chbx_PreSavedFTP = new System.Windows.Forms.ComboBox();
             this.btn_Copy_Orig = new System.Windows.Forms.Button();
             this.txt_Platform = new System.Windows.Forms.ComboBox();
             this.txt_Track_No = new System.Windows.Forms.NumericUpDown();
@@ -194,14 +202,12 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_Rhythm = new System.Windows.Forms.CheckBox();
             this.txt_BassPicking = new RocksmithToolkitGUI.CueTextBox();
             this.gbox_QualityChecks = new System.Windows.Forms.GroupBox();
-            this.chbbx_IsEP = new System.Windows.Forms.CheckBox();
-            this.chbx_KeepDD = new System.Windows.Forms.CheckBox();
+            this.chbx_Original = new System.Windows.Forms.CheckBox();
             this.btn_AddSections = new System.Windows.Forms.Button();
             this.chbx_Lyrics = new System.Windows.Forms.CheckBox();
             this.chbx_TrackNo = new System.Windows.Forms.CheckBox();
             this.chbx_DD = new System.Windows.Forms.CheckBox();
             this.txt_AddDD = new System.Windows.Forms.NumericUpDown();
-            this.chbx_Original = new System.Windows.Forms.CheckBox();
             this.chbx_Preview = new System.Windows.Forms.CheckBox();
             this.chbx_Author = new System.Windows.Forms.CheckBox();
             this.chbx_BassDD = new System.Windows.Forms.CheckBox();
@@ -254,6 +260,12 @@ namespace RocksmithToolkitGUI.DLCManager
             this.label33 = new System.Windows.Forms.Label();
             this.label32 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txt_No4Splitting = new System.Windows.Forms.NumericUpDown();
+            this.txt_ValueSetting = new System.Windows.Forms.RichTextBox();
+            this.btn_UltraStarCreator = new System.Windows.Forms.Button();
             this.btn_WinMerge = new System.Windows.Forms.Button();
             this.btn_SearchLyrics = new System.Windows.Forms.Button();
             this.btn_OpenMulti = new System.Windows.Forms.Button();
@@ -266,9 +278,11 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_Ignore_Officials = new System.Windows.Forms.CheckBox();
             this.btn_Remove_AllDuplicates = new System.Windows.Forms.Button();
             this.btn_Remove_All_Packed = new System.Windows.Forms.Button();
+            this.chbx_Setting = new System.Windows.Forms.ComboBox();
             this.cmb_Packed = new System.Windows.Forms.ComboBox();
             this.txt_CoundofPacked = new System.Windows.Forms.NumericUpDown();
             this.btn_Remove_Packed = new System.Windows.Forms.Button();
+            this.btn_SaveSetting = new System.Windows.Forms.Button();
             this.btn_RemoveAllRemoteSongs = new System.Windows.Forms.Button();
             this.btn_RemoveRemoteSong = new System.Windows.Forms.Button();
             this.txt_RemotePath = new RocksmithToolkitGUI.CueTextBox();
@@ -325,6 +339,7 @@ namespace RocksmithToolkitGUI.DLCManager
             ((System.ComponentModel.ISupportInitialize)(this.txt_Followers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txt_CustomsForge_Like)).BeginInit();
             this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txt_No4Splitting)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txt_NoOfSplits)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txt_CoundofPacked)).BeginInit();
             this.tabPage4.SuspendLayout();
@@ -341,7 +356,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // btn_AssesIfDuplicate
             // 
-            this.btn_AssesIfDuplicate.Location = new System.Drawing.Point(1071, 96);
+            this.btn_AssesIfDuplicate.Location = new System.Drawing.Point(1071, 99);
             this.btn_AssesIfDuplicate.Margin = new System.Windows.Forms.Padding(0);
             this.btn_AssesIfDuplicate.Name = "btn_AssesIfDuplicate";
             this.btn_AssesIfDuplicate.Size = new System.Drawing.Size(73, 22);
@@ -354,7 +369,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // btn_FixAudioAll
             // 
             this.btn_FixAudioAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.125F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_FixAudioAll.Location = new System.Drawing.Point(986, 96);
+            this.btn_FixAudioAll.Location = new System.Drawing.Point(986, 99);
             this.btn_FixAudioAll.Margin = new System.Windows.Forms.Padding(0);
             this.btn_FixAudioAll.Name = "btn_FixAudioAll";
             this.btn_FixAudioAll.Size = new System.Drawing.Size(82, 22);
@@ -399,7 +414,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.cbx_Instrumental.Name = "cbx_Instrumental";
             this.cbx_Instrumental.Size = new System.Drawing.Size(90, 26);
             this.cbx_Instrumental.TabIndex = 411;
-            this.cbx_Instrumental.Text = "Check Library consitency";
+            this.cbx_Instrumental.Text = "Check Filtered Library consitency";
             this.toolTip1.SetToolTip(this.cbx_Instrumental, "Run thourgh a series of DB integrity checks");
             this.cbx_Instrumental.UseVisualStyleBackColor = true;
             this.cbx_Instrumental.Click += new System.EventHandler(this.btn_Find_FilesMissingIssues_Click);
@@ -487,7 +502,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.chbx_PS3HAN.AutoSize = true;
             this.chbx_PS3HAN.Enabled = false;
-            this.chbx_PS3HAN.Location = new System.Drawing.Point(66, 34);
+            this.chbx_PS3HAN.Location = new System.Drawing.Point(55, 34);
             this.chbx_PS3HAN.Margin = new System.Windows.Forms.Padding(2);
             this.chbx_PS3HAN.Name = "chbx_PS3HAN";
             this.chbx_PS3HAN.Size = new System.Drawing.Size(49, 17);
@@ -541,7 +556,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.chbx_CopyOld.AutoSize = true;
             this.chbx_CopyOld.Enabled = false;
-            this.chbx_CopyOld.Location = new System.Drawing.Point(4, 80);
+            this.chbx_CopyOld.Location = new System.Drawing.Point(2, 80);
             this.chbx_CopyOld.Margin = new System.Windows.Forms.Padding(2);
             this.chbx_CopyOld.Name = "chbx_CopyOld";
             this.chbx_CopyOld.Size = new System.Drawing.Size(50, 17);
@@ -742,24 +757,24 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_PKGLinker.Visible = false;
             this.btn_PKGLinker.Click += new System.EventHandler(this.btm_PKGLinker_Click);
             // 
-            // button5
+            // btn_RemoveMultiPacksinstances
             // 
-            this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button5.Location = new System.Drawing.Point(199, 226);
-            this.button5.Margin = new System.Windows.Forms.Padding(2);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(22, 20);
-            this.button5.TabIndex = 351;
-            this.button5.Text = "-";
-            this.toolTip1.SetToolTip(this.button5, "Clear Split Pack Mnemonic");
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click_1);
+            this.btn_RemoveMultiPacksinstances.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_RemoveMultiPacksinstances.Location = new System.Drawing.Point(273, 190);
+            this.btn_RemoveMultiPacksinstances.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_RemoveMultiPacksinstances.Name = "btn_RemoveMultiPacksinstances";
+            this.btn_RemoveMultiPacksinstances.Size = new System.Drawing.Size(22, 20);
+            this.btn_RemoveMultiPacksinstances.TabIndex = 351;
+            this.btn_RemoveMultiPacksinstances.Text = "-";
+            this.toolTip1.SetToolTip(this.btn_RemoveMultiPacksinstances, "Clear Split Pack Mnemonic");
+            this.btn_RemoveMultiPacksinstances.UseVisualStyleBackColor = true;
+            this.btn_RemoveMultiPacksinstances.Click += new System.EventHandler(this.button5_Click_1);
             // 
             // chbx_Duplicate_Official
             // 
             this.chbx_Duplicate_Official.AutoSize = true;
             this.chbx_Duplicate_Official.Enabled = false;
-            this.chbx_Duplicate_Official.Location = new System.Drawing.Point(448, 110);
+            this.chbx_Duplicate_Official.Location = new System.Drawing.Point(460, 111);
             this.chbx_Duplicate_Official.Margin = new System.Windows.Forms.Padding(2);
             this.chbx_Duplicate_Official.Name = "chbx_Duplicate_Official";
             this.chbx_Duplicate_Official.Size = new System.Drawing.Size(58, 17);
@@ -772,7 +787,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // btn_RemoveSelectedRemote
             // 
             this.btn_RemoveSelectedRemote.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_RemoveSelectedRemote.Location = new System.Drawing.Point(186, 58);
+            this.btn_RemoveSelectedRemote.Location = new System.Drawing.Point(198, 59);
             this.btn_RemoveSelectedRemote.Margin = new System.Windows.Forms.Padding(2);
             this.btn_RemoveSelectedRemote.Name = "btn_RemoveSelectedRemote";
             this.btn_RemoveSelectedRemote.Size = new System.Drawing.Size(22, 20);
@@ -936,6 +951,930 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_ReduceLenght.Text = "-";
             this.toolTip1.SetToolTip(this.btn_ReduceLenght, "Reduce lengt of a Song to 3 sec after last note");
             this.btn_ReduceLenght.UseVisualStyleBackColor = true;
+            this.btn_ReduceLenght.Visible = false;
+            this.btn_ReduceLenght.Click += new System.EventHandler(this.btn_ReduceLenght_Click);
+            // 
+            // btn_OpenSongFolder
+            // 
+            this.btn_OpenSongFolder.Location = new System.Drawing.Point(2, 136);
+            this.btn_OpenSongFolder.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_OpenSongFolder.Name = "btn_OpenSongFolder";
+            this.btn_OpenSongFolder.Size = new System.Drawing.Size(130, 20);
+            this.btn_OpenSongFolder.TabIndex = 331;
+            this.btn_OpenSongFolder.Text = "Open Song Folder";
+            this.toolTip1.SetToolTip(this.btn_OpenSongFolder, "Open Folder where the ecompressed Rocksmith song is storred");
+            this.btn_OpenSongFolder.UseVisualStyleBackColor = true;
+            this.btn_OpenSongFolder.Click += new System.EventHandler(this.btn_OpenSongFolder_Click);
+            // 
+            // btn_OpenRepackedFolder
+            // 
+            this.btn_OpenRepackedFolder.Location = new System.Drawing.Point(143, 14);
+            this.btn_OpenRepackedFolder.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_OpenRepackedFolder.Name = "btn_OpenRepackedFolder";
+            this.btn_OpenRepackedFolder.Size = new System.Drawing.Size(11, 20);
+            this.btn_OpenRepackedFolder.TabIndex = 413;
+            this.btn_OpenRepackedFolder.Text = "...";
+            this.toolTip1.SetToolTip(this.btn_OpenRepackedFolder, "Go to Internal Repacked Location");
+            this.btn_OpenRepackedFolder.UseVisualStyleBackColor = true;
+            this.btn_OpenRepackedFolder.Click += new System.EventHandler(this.btn_OpenRepackedFolder_Click);
+            // 
+            // btm_GoTemp
+            // 
+            this.btm_GoTemp.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F);
+            this.btm_GoTemp.Location = new System.Drawing.Point(122, 14);
+            this.btm_GoTemp.Margin = new System.Windows.Forms.Padding(0);
+            this.btm_GoTemp.Name = "btm_GoTemp";
+            this.btm_GoTemp.Size = new System.Drawing.Size(18, 20);
+            this.btm_GoTemp.TabIndex = 412;
+            this.btm_GoTemp.Text = ">";
+            this.toolTip1.SetToolTip(this.btm_GoTemp, "Go to Repacked & Copied locatioj");
+            this.btm_GoTemp.UseVisualStyleBackColor = true;
+            this.btm_GoTemp.Click += new System.EventHandler(this.btm_GoTemp_Click);
+            // 
+            // btn_Package
+            // 
+            this.btn_Package.Enabled = false;
+            this.btn_Package.Location = new System.Drawing.Point(2, 14);
+            this.btn_Package.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_Package.Name = "btn_Package";
+            this.btn_Package.Size = new System.Drawing.Size(49, 34);
+            this.btn_Package.TabIndex = 39;
+            this.btn_Package.Text = "Pack";
+            this.toolTip1.SetToolTip(this.btn_Package, "Repack");
+            this.btn_Package.UseVisualStyleBackColor = true;
+            this.btn_Package.Click += new System.EventHandler(this.btn_Package_Click);
+            // 
+            // chbx_Copy
+            // 
+            this.chbx_Copy.AutoSize = true;
+            this.chbx_Copy.Checked = true;
+            this.chbx_Copy.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chbx_Copy.Location = new System.Drawing.Point(2, 52);
+            this.chbx_Copy.Margin = new System.Windows.Forms.Padding(2);
+            this.chbx_Copy.Name = "chbx_Copy";
+            this.chbx_Copy.Size = new System.Drawing.Size(56, 17);
+            this.chbx_Copy.TabIndex = 326;
+            this.chbx_Copy.Text = "&&Copy";
+            this.toolTip1.SetToolTip(this.chbx_Copy, "&Copy or FTP");
+            this.chbx_Copy.UseVisualStyleBackColor = true;
+            // 
+            // btn_SteamDLCFolder
+            // 
+            this.btn_SteamDLCFolder.Location = new System.Drawing.Point(143, 70);
+            this.btn_SteamDLCFolder.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_SteamDLCFolder.Name = "btn_SteamDLCFolder";
+            this.btn_SteamDLCFolder.Size = new System.Drawing.Size(11, 10);
+            this.btn_SteamDLCFolder.TabIndex = 311;
+            this.btn_SteamDLCFolder.Text = "...";
+            this.toolTip1.SetToolTip(this.btn_SteamDLCFolder, "Open now Repack&Copied Location");
+            this.btn_SteamDLCFolder.UseVisualStyleBackColor = true;
+            this.btn_SteamDLCFolder.Click += new System.EventHandler(this.btn_SteamDLCFolder_Click_1);
+            // 
+            // btn_OpenRetail
+            // 
+            this.btn_OpenRetail.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.btn_OpenRetail.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_OpenRetail.Location = new System.Drawing.Point(136, 191);
+            this.btn_OpenRetail.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_OpenRetail.Name = "btn_OpenRetail";
+            this.btn_OpenRetail.Size = new System.Drawing.Size(66, 40);
+            this.btn_OpenRetail.TabIndex = 278;
+            this.btn_OpenRetail.Text = "Open Retail DB";
+            this.toolTip1.SetToolTip(this.btn_OpenRetail, "Open Scree to edit the Original Song List from the Retail/CD version of the Game");
+            this.btn_OpenRetail.UseVisualStyleBackColor = false;
+            this.btn_OpenRetail.Click += new System.EventHandler(this.btn_OpenRetail_Click);
+            // 
+            // btn_OpenStandardization
+            // 
+            this.btn_OpenStandardization.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.btn_OpenStandardization.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_OpenStandardization.Location = new System.Drawing.Point(2, 208);
+            this.btn_OpenStandardization.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_OpenStandardization.Name = "btn_OpenStandardization";
+            this.btn_OpenStandardization.Size = new System.Drawing.Size(130, 22);
+            this.btn_OpenStandardization.TabIndex = 110;
+            this.btn_OpenStandardization.Text = "Open Standarization DB";
+            this.toolTip1.SetToolTip(this.btn_OpenStandardization, "Open screen to manage textual corrections and standardization (Song Title, Year, " +
+        "etc.)");
+            this.btn_OpenStandardization.UseVisualStyleBackColor = false;
+            this.btn_OpenStandardization.Click += new System.EventHandler(this.btn_OpenStandardization_Click);
+            // 
+            // btn_OpenDB
+            // 
+            this.btn_OpenDB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.btn_OpenDB.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_OpenDB.Location = new System.Drawing.Point(136, 157);
+            this.btn_OpenDB.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_OpenDB.Name = "btn_OpenDB";
+            this.btn_OpenDB.Size = new System.Drawing.Size(66, 32);
+            this.btn_OpenDB.TabIndex = 37;
+            this.btn_OpenDB.Text = "Open DB in M$ Access";
+            this.toolTip1.SetToolTip(this.btn_OpenDB, "Use Microsoft Access to view and edit the DB with most if not all of Songs Metada" +
+        "ta or attributes added at and after inport (youtube,spotify etc.))");
+            this.btn_OpenDB.UseVisualStyleBackColor = false;
+            this.btn_OpenDB.Click += new System.EventHandler(this.btn_OpenDB_Click);
+            // 
+            // btn_Refresh
+            // 
+            this.btn_Refresh.ForeColor = System.Drawing.Color.Purple;
+            this.btn_Refresh.Location = new System.Drawing.Point(2, 253);
+            this.btn_Refresh.Margin = new System.Windows.Forms.Padding(0);
+            this.btn_Refresh.Name = "btn_Refresh";
+            this.btn_Refresh.Size = new System.Drawing.Size(104, 24);
+            this.btn_Refresh.TabIndex = 420;
+            this.btn_Refresh.Text = "Refresh";
+            this.toolTip1.SetToolTip(this.btn_Refresh, "Refresh the Song List below as meta data @Save doesnt get replicated into it, jus" +
+        "t the DB.");
+            this.btn_Refresh.UseVisualStyleBackColor = true;
+            this.btn_Refresh.Click += new System.EventHandler(this.btn_Refresh_Click);
+            // 
+            // btn_ReadGameLibrary
+            // 
+            this.btn_ReadGameLibrary.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_ReadGameLibrary.Location = new System.Drawing.Point(986, 28);
+            this.btn_ReadGameLibrary.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_ReadGameLibrary.Name = "btn_ReadGameLibrary";
+            this.btn_ReadGameLibrary.Size = new System.Drawing.Size(158, 24);
+            this.btn_ReadGameLibrary.TabIndex = 410;
+            this.btn_ReadGameLibrary.Text = "Read Target Game DLC Library";
+            this.toolTip1.SetToolTip(this.btn_ReadGameLibrary, resources.GetString("btn_ReadGameLibrary.ToolTip"));
+            this.btn_ReadGameLibrary.UseVisualStyleBackColor = true;
+            this.btn_ReadGameLibrary.Click += new System.EventHandler(this.btn_ReadGameLibrary_Click);
+            // 
+            // bth_GetTrackNo
+            // 
+            this.bth_GetTrackNo.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F);
+            this.bth_GetTrackNo.Location = new System.Drawing.Point(542, 2);
+            this.bth_GetTrackNo.Margin = new System.Windows.Forms.Padding(0);
+            this.bth_GetTrackNo.Name = "bth_GetTrackNo";
+            this.bth_GetTrackNo.Size = new System.Drawing.Size(18, 16);
+            this.bth_GetTrackNo.TabIndex = 329;
+            this.bth_GetTrackNo.Text = "<";
+            this.toolTip1.SetToolTip(this.bth_GetTrackNo, "Get from Spotify the Album (name & year based) track no listing.");
+            this.bth_GetTrackNo.UseVisualStyleBackColor = true;
+            this.bth_GetTrackNo.Click += new System.EventHandler(this.bth_GetTrackNo_Click);
+            // 
+            // pB_ReadDLCs
+            // 
+            this.pB_ReadDLCs.Location = new System.Drawing.Point(2, 120);
+            this.pB_ReadDLCs.Margin = new System.Windows.Forms.Padding(2);
+            this.pB_ReadDLCs.Maximum = 10000;
+            this.pB_ReadDLCs.Name = "pB_ReadDLCs";
+            this.pB_ReadDLCs.Size = new System.Drawing.Size(152, 35);
+            this.pB_ReadDLCs.Step = 1;
+            this.pB_ReadDLCs.TabIndex = 330;
+            this.toolTip1.SetToolTip(this.pB_ReadDLCs, "Progress bar for different activities initiated in this screen");
+            // 
+            // chbx_UseInternalDDRemovalLogic
+            // 
+            this.chbx_UseInternalDDRemovalLogic.AutoSize = true;
+            this.chbx_UseInternalDDRemovalLogic.Location = new System.Drawing.Point(111, 16);
+            this.chbx_UseInternalDDRemovalLogic.Margin = new System.Windows.Forms.Padding(2);
+            this.chbx_UseInternalDDRemovalLogic.Name = "chbx_UseInternalDDRemovalLogic";
+            this.chbx_UseInternalDDRemovalLogic.Size = new System.Drawing.Size(15, 14);
+            this.chbx_UseInternalDDRemovalLogic.TabIndex = 337;
+            this.toolTip1.SetToolTip(this.chbx_UseInternalDDRemovalLogic, "When removing Bass Difficulty level, use DLC Manager logic to remove, and not ");
+            this.chbx_UseInternalDDRemovalLogic.UseVisualStyleBackColor = true;
+            // 
+            // btn_EOF
+            // 
+            this.btn_EOF.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.6F);
+            this.btn_EOF.Location = new System.Drawing.Point(129, 12);
+            this.btn_EOF.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_EOF.Name = "btn_EOF";
+            this.btn_EOF.Size = new System.Drawing.Size(74, 18);
+            this.btn_EOF.TabIndex = 332;
+            this.btn_EOF.Text = "Editor on Fire";
+            this.toolTip1.SetToolTip(this.btn_EOF, "Open Song Editor (EoF/Editor on Fire))");
+            this.btn_EOF.UseVisualStyleBackColor = true;
+            this.btn_EOF.Click += new System.EventHandler(this.btn_EOF_Click);
+            // 
+            // btn_CreateLyrics
+            // 
+            this.btn_CreateLyrics.Enabled = false;
+            this.btn_CreateLyrics.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_CreateLyrics.Location = new System.Drawing.Point(147, 66);
+            this.btn_CreateLyrics.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_CreateLyrics.Name = "btn_CreateLyrics";
+            this.btn_CreateLyrics.Size = new System.Drawing.Size(18, 18);
+            this.btn_CreateLyrics.TabIndex = 331;
+            this.btn_CreateLyrics.Text = "+";
+            this.toolTip1.SetToolTip(this.btn_CreateLyrics, "Adds lyrics (instructs the User how to search, obtain or generate his own lyrics " +
+        "XML file)");
+            this.btn_CreateLyrics.UseVisualStyleBackColor = true;
+            this.btn_CreateLyrics.Click += new System.EventHandler(this.btn_CreateLyrics_Click);
+            // 
+            // chbx_KeepBassDD
+            // 
+            this.chbx_KeepBassDD.AutoSize = true;
+            this.chbx_KeepBassDD.Enabled = false;
+            this.chbx_KeepBassDD.Location = new System.Drawing.Point(93, 16);
+            this.chbx_KeepBassDD.Margin = new System.Windows.Forms.Padding(2);
+            this.chbx_KeepBassDD.Name = "chbx_KeepBassDD";
+            this.chbx_KeepBassDD.Size = new System.Drawing.Size(15, 14);
+            this.chbx_KeepBassDD.TabIndex = 329;
+            this.toolTip1.SetToolTip(this.chbx_KeepBassDD, "If at repack is indicated to remove Bass Dificulty levels, this overrites that be" +
+        "havior.");
+            this.chbx_KeepBassDD.UseVisualStyleBackColor = true;
+            // 
+            // btn_AddDD
+            // 
+            this.btn_AddDD.Enabled = false;
+            this.btn_AddDD.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_AddDD.Location = new System.Drawing.Point(117, 32);
+            this.btn_AddDD.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_AddDD.Name = "btn_AddDD";
+            this.btn_AddDD.Size = new System.Drawing.Size(18, 18);
+            this.btn_AddDD.TabIndex = 316;
+            this.btn_AddDD.Text = "+";
+            this.toolTip1.SetToolTip(this.btn_AddDD, "Add Levels of dificulty");
+            this.btn_AddDD.UseVisualStyleBackColor = true;
+            this.btn_AddDD.Click += new System.EventHandler(this.btn_AddDD_Click);
+            // 
+            // btn_RemoveDD
+            // 
+            this.btn_RemoveDD.Enabled = false;
+            this.btn_RemoveDD.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_RemoveDD.Location = new System.Drawing.Point(42, 32);
+            this.btn_RemoveDD.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_RemoveDD.Name = "btn_RemoveDD";
+            this.btn_RemoveDD.Size = new System.Drawing.Size(18, 18);
+            this.btn_RemoveDD.TabIndex = 315;
+            this.btn_RemoveDD.Text = "-";
+            this.toolTip1.SetToolTip(this.btn_RemoveDD, "Removes Levels of Dificulty");
+            this.btn_RemoveDD.UseVisualStyleBackColor = true;
+            this.btn_RemoveDD.Click += new System.EventHandler(this.btn_RemoveDD_Click);
+            // 
+            // btn_RemoveBassDD
+            // 
+            this.btn_RemoveBassDD.Enabled = false;
+            this.btn_RemoveBassDD.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_RemoveBassDD.Location = new System.Drawing.Point(71, 14);
+            this.btn_RemoveBassDD.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_RemoveBassDD.Name = "btn_RemoveBassDD";
+            this.btn_RemoveBassDD.Size = new System.Drawing.Size(18, 18);
+            this.btn_RemoveBassDD.TabIndex = 85;
+            this.btn_RemoveBassDD.Text = "-";
+            this.toolTip1.SetToolTip(this.btn_RemoveBassDD, "Removed the Bass level of difficulty (ujually not so challenging)");
+            this.btn_RemoveBassDD.UseVisualStyleBackColor = true;
+            this.btn_RemoveBassDD.Click += new System.EventHandler(this.btn_RemoveBassDD_Click);
+            // 
+            // chbx_AudioChanged
+            // 
+            this.chbx_AudioChanged.AutoSize = true;
+            this.chbx_AudioChanged.Enabled = false;
+            this.chbx_AudioChanged.Location = new System.Drawing.Point(2, 30);
+            this.chbx_AudioChanged.Margin = new System.Windows.Forms.Padding(2);
+            this.chbx_AudioChanged.Name = "chbx_AudioChanged";
+            this.chbx_AudioChanged.Size = new System.Drawing.Size(101, 17);
+            this.chbx_AudioChanged.TabIndex = 415;
+            this.chbx_AudioChanged.Text = "Audio corrected";
+            this.toolTip1.SetToolTip(this.chbx_AudioChanged, "Marks the song as having its audio filers manipulated by the tool (bitrate reduce" +
+        "d to 128/135 kbs.");
+            this.chbx_AudioChanged.UseVisualStyleBackColor = true;
+            // 
+            // chbx_Format_Originals
+            // 
+            this.chbx_Format_Originals.FormattingEnabled = true;
+            this.chbx_Format_Originals.Location = new System.Drawing.Point(84, 63);
+            this.chbx_Format_Originals.Margin = new System.Windows.Forms.Padding(2);
+            this.chbx_Format_Originals.Name = "chbx_Format_Originals";
+            this.chbx_Format_Originals.Size = new System.Drawing.Size(50, 21);
+            this.chbx_Format_Originals.TabIndex = 414;
+            this.toolTip1.SetToolTip(this.chbx_Format_Originals, resources.GetString("chbx_Format_Originals.ToolTip"));
+            // 
+            // chbx_Originals_Available
+            // 
+            this.chbx_Originals_Available.AutoSize = true;
+            this.chbx_Originals_Available.Enabled = false;
+            this.chbx_Originals_Available.Location = new System.Drawing.Point(2, 65);
+            this.chbx_Originals_Available.Margin = new System.Windows.Forms.Padding(2);
+            this.chbx_Originals_Available.Name = "chbx_Originals_Available";
+            this.chbx_Originals_Available.Size = new System.Drawing.Size(87, 17);
+            this.chbx_Originals_Available.TabIndex = 329;
+            this.chbx_Originals_Available.Text = "Official Avail.";
+            this.toolTip1.SetToolTip(this.chbx_Originals_Available, "Songs was internally indicated as Official release by Ubisoft");
+            this.chbx_Originals_Available.UseVisualStyleBackColor = true;
+            // 
+            // btn_DuplicateFolder
+            // 
+            this.btn_DuplicateFolder.Enabled = false;
+            this.btn_DuplicateFolder.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F);
+            this.btn_DuplicateFolder.Location = new System.Drawing.Point(95, 46);
+            this.btn_DuplicateFolder.Margin = new System.Windows.Forms.Padding(0);
+            this.btn_DuplicateFolder.Name = "btn_DuplicateFolder";
+            this.btn_DuplicateFolder.Size = new System.Drawing.Size(18, 16);
+            this.btn_DuplicateFolder.TabIndex = 327;
+            this.btn_DuplicateFolder.Text = ">";
+            this.toolTip1.SetToolTip(this.btn_DuplicateFolder, "Open 0_duplicates location.");
+            this.btn_DuplicateFolder.UseVisualStyleBackColor = true;
+            this.btn_DuplicateFolder.Click += new System.EventHandler(this.btn_DuplicateFolder_Click);
+            // 
+            // chbx_Avail_Old
+            // 
+            this.chbx_Avail_Old.AutoSize = true;
+            this.chbx_Avail_Old.Enabled = false;
+            this.chbx_Avail_Old.Location = new System.Drawing.Point(2, 14);
+            this.chbx_Avail_Old.Margin = new System.Windows.Forms.Padding(2);
+            this.chbx_Avail_Old.Name = "chbx_Avail_Old";
+            this.chbx_Avail_Old.Size = new System.Drawing.Size(88, 17);
+            this.chbx_Avail_Old.TabIndex = 112;
+            this.chbx_Avail_Old.Text = "Old Available";
+            this.toolTip1.SetToolTip(this.chbx_Avail_Old, "Availability of originally Imported file.");
+            this.chbx_Avail_Old.UseVisualStyleBackColor = true;
+            // 
+            // chbx_Has_Been_Corrected
+            // 
+            this.chbx_Has_Been_Corrected.AutoSize = true;
+            this.chbx_Has_Been_Corrected.Enabled = false;
+            this.chbx_Has_Been_Corrected.Location = new System.Drawing.Point(2, 83);
+            this.chbx_Has_Been_Corrected.Margin = new System.Windows.Forms.Padding(2);
+            this.chbx_Has_Been_Corrected.Name = "chbx_Has_Been_Corrected";
+            this.chbx_Has_Been_Corrected.Size = new System.Drawing.Size(66, 17);
+            this.chbx_Has_Been_Corrected.TabIndex = 274;
+            this.chbx_Has_Been_Corrected.Text = "Info Corr";
+            this.toolTip1.SetToolTip(this.chbx_Has_Been_Corrected, "Song had had its metdata related to Song naming details changed by the tool or us" +
+        "er");
+            this.chbx_Has_Been_Corrected.UseVisualStyleBackColor = true;
+            // 
+            // chbx_Beta
+            // 
+            this.chbx_Beta.AutoSize = true;
+            this.chbx_Beta.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.chbx_Beta.Location = new System.Drawing.Point(152, 40);
+            this.chbx_Beta.Margin = new System.Windows.Forms.Padding(2);
+            this.chbx_Beta.Name = "chbx_Beta";
+            this.chbx_Beta.Size = new System.Drawing.Size(48, 17);
+            this.chbx_Beta.TabIndex = 82;
+            this.chbx_Beta.Text = "Beta";
+            this.toolTip1.SetToolTip(this.chbx_Beta, "Beta songs appear 1st when Rocksmith sorts song by Title as having had adde a zer" +
+        "o (0) to its metadata at repack.");
+            this.chbx_Beta.UseVisualStyleBackColor = true;
+            // 
+            // btn_AddPreview
+            // 
+            this.btn_AddPreview.Enabled = false;
+            this.btn_AddPreview.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_AddPreview.Location = new System.Drawing.Point(180, 37);
+            this.btn_AddPreview.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_AddPreview.Name = "btn_AddPreview";
+            this.btn_AddPreview.Size = new System.Drawing.Size(72, 22);
+            this.btn_AddPreview.TabIndex = 94;
+            this.btn_AddPreview.Text = "Add Preview";
+            this.toolTip1.SetToolTip(this.btn_AddPreview, "Select a new Preview File (OGG)");
+            this.btn_AddPreview.UseVisualStyleBackColor = true;
+            this.btn_AddPreview.Click += new System.EventHandler(this.btn_AddPreview_Click);
+            // 
+            // chbx_AutoPlay
+            // 
+            this.chbx_AutoPlay.AutoSize = true;
+            this.chbx_AutoPlay.Checked = true;
+            this.chbx_AutoPlay.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chbx_AutoPlay.Location = new System.Drawing.Point(244, 16);
+            this.chbx_AutoPlay.Margin = new System.Windows.Forms.Padding(2);
+            this.chbx_AutoPlay.Name = "chbx_AutoPlay";
+            this.chbx_AutoPlay.Size = new System.Drawing.Size(68, 17);
+            this.chbx_AutoPlay.TabIndex = 291;
+            this.chbx_AutoPlay.Text = "AutoPlay";
+            this.toolTip1.SetToolTip(this.chbx_AutoPlay, "Plays the Preview automaticall when selecting a song from the below list.");
+            this.chbx_AutoPlay.UseVisualStyleBackColor = true;
+            // 
+            // btn_ChangeLyrics
+            // 
+            this.btn_ChangeLyrics.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            this.btn_ChangeLyrics.Location = new System.Drawing.Point(6, 60);
+            this.btn_ChangeLyrics.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_ChangeLyrics.Name = "btn_ChangeLyrics";
+            this.btn_ChangeLyrics.Size = new System.Drawing.Size(86, 22);
+            this.btn_ChangeLyrics.TabIndex = 404;
+            this.btn_ChangeLyrics.Text = "Change Lyrics";
+            this.toolTip1.SetToolTip(this.btn_ChangeLyrics, "Select a new Lyrics File (XML)");
+            this.btn_ChangeLyrics.UseVisualStyleBackColor = true;
+            this.btn_ChangeLyrics.Click += new System.EventHandler(this.btn_ChangeLyrics_Click);
+            // 
+            // btn_Delete
+            // 
+            this.btn_Delete.Enabled = false;
+            this.btn_Delete.Location = new System.Drawing.Point(986, 53);
+            this.btn_Delete.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_Delete.Name = "btn_Delete";
+            this.btn_Delete.Size = new System.Drawing.Size(82, 22);
+            this.btn_Delete.TabIndex = 40;
+            this.btn_Delete.Text = "Delete";
+            this.toolTip1.SetToolTip(this.btn_Delete, "Delets songs from DB (original psarc is moved to 0_archive folder)");
+            this.btn_Delete.UseVisualStyleBackColor = true;
+            this.btn_Delete.Click += new System.EventHandler(this.btn_Delete_Click);
+            // 
+            // gbox_Cover
+            // 
+            this.gbox_Cover.Location = new System.Drawing.Point(3, 13);
+            this.gbox_Cover.Margin = new System.Windows.Forms.Padding(2);
+            this.gbox_Cover.Name = "gbox_Cover";
+            this.gbox_Cover.Size = new System.Drawing.Size(120, 124);
+            this.gbox_Cover.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.gbox_Cover.TabIndex = 91;
+            this.gbox_Cover.TabStop = false;
+            this.toolTip1.SetToolTip(this.gbox_Cover, "Song/album Cover");
+            // 
+            // txt_Top10
+            // 
+            this.txt_Top10.Enabled = false;
+            this.txt_Top10.Location = new System.Drawing.Point(566, 2);
+            this.txt_Top10.Margin = new System.Windows.Forms.Padding(2);
+            this.txt_Top10.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.txt_Top10.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.txt_Top10.Name = "txt_Top10";
+            this.txt_Top10.Size = new System.Drawing.Size(34, 20);
+            this.txt_Top10.TabIndex = 335;
+            this.toolTip1.SetToolTip(this.txt_Top10, "Another Way to track the best songs in the DB");
+            this.txt_Top10.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            // 
+            // chbx_Sections
+            // 
+            this.chbx_Sections.AutoCheck = false;
+            this.chbx_Sections.AutoSize = true;
+            this.chbx_Sections.Location = new System.Drawing.Point(84, 88);
+            this.chbx_Sections.Margin = new System.Windows.Forms.Padding(2);
+            this.chbx_Sections.Name = "chbx_Sections";
+            this.chbx_Sections.Size = new System.Drawing.Size(67, 17);
+            this.chbx_Sections.TabIndex = 48;
+            this.chbx_Sections.Text = "Sections";
+            this.toolTip1.SetToolTip(this.chbx_Sections, "Song is split in different sections to help with ");
+            this.chbx_Sections.UseVisualStyleBackColor = true;
+            // 
+            // chbx_Bonus
+            // 
+            this.chbx_Bonus.AutoCheck = false;
+            this.chbx_Bonus.AutoSize = true;
+            this.chbx_Bonus.Location = new System.Drawing.Point(151, 52);
+            this.chbx_Bonus.Margin = new System.Windows.Forms.Padding(2);
+            this.chbx_Bonus.Name = "chbx_Bonus";
+            this.chbx_Bonus.Size = new System.Drawing.Size(56, 17);
+            this.chbx_Bonus.TabIndex = 101;
+            this.chbx_Bonus.Text = "Bonus";
+            this.toolTip1.SetToolTip(this.chbx_Bonus, "If there are any bonus tracks (e.g. Lead 2)");
+            this.chbx_Bonus.UseVisualStyleBackColor = true;
+            // 
+            // txt_Rating
+            // 
+            this.txt_Rating.Location = new System.Drawing.Point(176, 32);
+            this.txt_Rating.Margin = new System.Windows.Forms.Padding(2);
+            this.txt_Rating.Maximum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.txt_Rating.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.txt_Rating.Name = "txt_Rating";
+            this.txt_Rating.Size = new System.Drawing.Size(26, 20);
+            this.txt_Rating.TabIndex = 332;
+            this.toolTip1.SetToolTip(this.txt_Rating, "Rate the DLC in overall quality");
+            this.txt_Rating.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            // 
+            // chbx_LyricsChanged
+            // 
+            this.chbx_LyricsChanged.AutoSize = true;
+            this.chbx_LyricsChanged.Enabled = false;
+            this.chbx_LyricsChanged.Location = new System.Drawing.Point(74, 84);
+            this.chbx_LyricsChanged.Margin = new System.Windows.Forms.Padding(2);
+            this.chbx_LyricsChanged.Name = "chbx_LyricsChanged";
+            this.chbx_LyricsChanged.Size = new System.Drawing.Size(74, 17);
+            this.chbx_LyricsChanged.TabIndex = 416;
+            this.chbx_LyricsChanged.Text = "Lyrics corr";
+            this.toolTip1.SetToolTip(this.chbx_LyricsChanged, "Lyrics added or Modified with this tool/DLCManager");
+            this.chbx_LyricsChanged.UseVisualStyleBackColor = true;
+            // 
+            // btn_CopyOld
+            // 
+            this.btn_CopyOld.Enabled = false;
+            this.btn_CopyOld.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F);
+            this.btn_CopyOld.Location = new System.Drawing.Point(110, 14);
+            this.btn_CopyOld.Margin = new System.Windows.Forms.Padding(0);
+            this.btn_CopyOld.Name = "btn_CopyOld";
+            this.btn_CopyOld.Size = new System.Drawing.Size(18, 16);
+            this.btn_CopyOld.TabIndex = 328;
+            this.btn_CopyOld.Text = "<-";
+            this.toolTip1.SetToolTip(this.btn_CopyOld, "Copy song ot import Folder");
+            this.btn_CopyOld.UseVisualStyleBackColor = true;
+            this.btn_CopyOld.Click += new System.EventHandler(this.btn_CopyOld_Click);
+            // 
+            // chbx_Avail_Duplicate
+            // 
+            this.chbx_Avail_Duplicate.AutoSize = true;
+            this.chbx_Avail_Duplicate.Enabled = false;
+            this.chbx_Avail_Duplicate.Location = new System.Drawing.Point(2, 46);
+            this.chbx_Avail_Duplicate.Margin = new System.Windows.Forms.Padding(2);
+            this.chbx_Avail_Duplicate.Name = "chbx_Avail_Duplicate";
+            this.chbx_Avail_Duplicate.Size = new System.Drawing.Size(100, 17);
+            this.chbx_Avail_Duplicate.TabIndex = 111;
+            this.chbx_Avail_Duplicate.Text = "Duplicate Avail.";
+            this.toolTip1.SetToolTip(this.chbx_Avail_Duplicate, "Songs has an automatically at import decided as duplciate(same Title, album, auth" +
+        "or, lover version) or manually through -Duplciate Management window");
+            this.chbx_Avail_Duplicate.UseVisualStyleBackColor = true;
+            // 
+            // btn_OldFolder
+            // 
+            this.btn_OldFolder.Enabled = false;
+            this.btn_OldFolder.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F);
+            this.btn_OldFolder.Location = new System.Drawing.Point(84, 14);
+            this.btn_OldFolder.Margin = new System.Windows.Forms.Padding(0);
+            this.btn_OldFolder.Name = "btn_OldFolder";
+            this.btn_OldFolder.Size = new System.Drawing.Size(18, 16);
+            this.btn_OldFolder.TabIndex = 326;
+            this.btn_OldFolder.Text = ">";
+            this.toolTip1.SetToolTip(this.btn_OldFolder, "Open Exporere at the song in 0_old folder");
+            this.btn_OldFolder.UseVisualStyleBackColor = true;
+            this.btn_OldFolder.Click += new System.EventHandler(this.btn_OldFolder_Click);
+            // 
+            // txt_MultiTrackType
+            // 
+            this.txt_MultiTrackType.Enabled = false;
+            this.txt_MultiTrackType.FormattingEnabled = true;
+            this.txt_MultiTrackType.Items.AddRange(new object[] {
+            "",
+            "No Bass",
+            "No Lead",
+            "No Rhythm",
+            "No Vocal",
+            "(No Guitars)",
+            "Only Bass",
+            "Only Lead",
+            "Only Rhythm",
+            "Only Drums",
+            "Only Vocal",
+            "(Only BackTrack)"});
+            this.txt_MultiTrackType.Location = new System.Drawing.Point(112, 108);
+            this.txt_MultiTrackType.Margin = new System.Windows.Forms.Padding(2);
+            this.txt_MultiTrackType.Name = "txt_MultiTrackType";
+            this.txt_MultiTrackType.Size = new System.Drawing.Size(86, 21);
+            this.txt_MultiTrackType.TabIndex = 377;
+            this.toolTip1.SetToolTip(this.txt_MultiTrackType, "Multitrack type");
+            this.txt_MultiTrackType.SelectedIndexChanged += new System.EventHandler(this.txt_MultiTrackType_SelectedIndexChanged);
+            // 
+            // btn_NextItem
+            // 
+            this.btn_NextItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_NextItem.Location = new System.Drawing.Point(96, 92);
+            this.btn_NextItem.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_NextItem.Name = "btn_NextItem";
+            this.btn_NextItem.Size = new System.Drawing.Size(18, 16);
+            this.btn_NextItem.TabIndex = 318;
+            this.btn_NextItem.Text = ">";
+            this.toolTip1.SetToolTip(this.btn_NextItem, "Move Selection cursor one Down");
+            this.btn_NextItem.UseVisualStyleBackColor = true;
+            this.btn_NextItem.Click += new System.EventHandler(this.btn_NextItem_Click);
+            // 
+            // cmb_Filter
+            // 
+            this.cmb_Filter.DropDownWidth = 250;
+            this.cmb_Filter.FormattingEnabled = true;
+            this.cmb_Filter.Items.AddRange(new object[] {
+            "0ALL",
+            "ALL Others",
+            "Songs in Rocksmith Game Lib",
+            "Show Songs with FilesMissing Issues",
+            "Reverse current Filter",
+            "Imported Last",
+            "No Cover",
+            "No Guitar",
+            "No Preview",
+            "No Section",
+            "No Vocals",
+            "No Track No.",
+            "No Version",
+            "No Author",
+            "No Bass DD",
+            "No Bass",
+            "No DD",
+            "With DD",
+            "In the works",
+            "Improved wIth DLC Manager",
+            "Same (imported/old) File Name",
+            "Same hash File Name",
+            "Different Artist/Album/Title vs Sort counterparts",
+            "Alternate",
+            "Duplicated",
+            "Beta",
+            "Broken",
+            "Selected",
+            "With Bonus",
+            "Original",
+            "CDLC",
+            "Drop D",
+            "E Standard",
+            "Eb Standard",
+            "Other Tunings",
+            "Live",
+            "Acoustic",
+            "Instrumental",
+            "Single",
+            "Soundtrack",
+            "EP",
+            "Uncensored",
+            "Imported as Pc",
+            "Imported as PS3",
+            "Imported as Mac",
+            "Imported as XBOX360",
+            "Packed (curr. Platform)",
+            "with Errors at Packing",
+            "DLCID diff than Default",
+            "Same DLCName",
+            "Same Title&Artist",
+            "Same Title(no[])&Artist",
+            "Same Artist&Album different Year",
+            "Same Artist&Title(no[]) different Year",
+            "Same Artist&Title(no[]) different Album",
+            "Automatically generated Preview",
+            "Any DLCManager generated Preview",
+            "With Duplicates",
+            "Main_NoOLD",
+            "Imported Current Month",
+            "Packed Last",
+            "Packing Errors",
+            "Songs IMPORTED later than current song value",
+            "Songs ADDED later to the Groups value/group than the import date of the current s" +
+                "ong value",
+            "Sorted by Groups value/Group added date",
+            "Lyrics Changed",
+            "Audio Changed",
+            "Packed as Pc",
+            "Packed as PS3",
+            "<Packed as PS4>",
+            "Packed as Mac",
+            "Packed XBOX360",
+            "with Errors at Last Packing"});
+            this.cmb_Filter.Location = new System.Drawing.Point(35, 19);
+            this.cmb_Filter.Margin = new System.Windows.Forms.Padding(2);
+            this.cmb_Filter.MaxDropDownItems = 15;
+            this.cmb_Filter.Name = "cmb_Filter";
+            this.cmb_Filter.Size = new System.Drawing.Size(163, 21);
+            this.cmb_Filter.TabIndex = 275;
+            this.toolTip1.SetToolTip(this.cmb_Filter, "Different Listing filters");
+            this.cmb_Filter.SelectedIndexChanged += new System.EventHandler(this.cmb_Filter_SelectedIndexChanged);
+            // 
+            // btn_Prev
+            // 
+            this.btn_Prev.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Prev.Location = new System.Drawing.Point(80, 92);
+            this.btn_Prev.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_Prev.Name = "btn_Prev";
+            this.btn_Prev.Size = new System.Drawing.Size(18, 16);
+            this.btn_Prev.TabIndex = 319;
+            this.btn_Prev.Text = "<";
+            this.toolTip1.SetToolTip(this.btn_Prev, "Move Selection Cursor one Up");
+            this.btn_Prev.UseVisualStyleBackColor = true;
+            this.btn_Prev.Click += new System.EventHandler(this.btn_Prev_Click);
+            // 
+            // btn_SearchReset
+            // 
+            this.btn_SearchReset.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_SearchReset.Location = new System.Drawing.Point(434, 64);
+            this.btn_SearchReset.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_SearchReset.Name = "btn_SearchReset";
+            this.btn_SearchReset.Size = new System.Drawing.Size(50, 20);
+            this.btn_SearchReset.TabIndex = 56;
+            this.btn_SearchReset.Text = "Reset";
+            this.toolTip1.SetToolTip(this.btn_SearchReset, "Reset Search/Filter");
+            this.btn_SearchReset.UseVisualStyleBackColor = true;
+            this.btn_SearchReset.Click += new System.EventHandler(this.btn_SearchReset_Click);
+            // 
+            // btn_Search
+            // 
+            this.btn_Search.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Search.Location = new System.Drawing.Point(434, 22);
+            this.btn_Search.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_Search.Name = "btn_Search";
+            this.btn_Search.Size = new System.Drawing.Size(50, 20);
+            this.btn_Search.TabIndex = 51;
+            this.btn_Search.Text = "Search";
+            this.toolTip1.SetToolTip(this.btn_Search, "Search for a songg by title, album, filename,etc.");
+            this.btn_Search.UseVisualStyleBackColor = true;
+            this.btn_Search.Click += new System.EventHandler(this.btn_Search_Click);
+            // 
+            // btn_Tones
+            // 
+            this.btn_Tones.Location = new System.Drawing.Point(2, 184);
+            this.btn_Tones.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_Tones.Name = "btn_Tones";
+            this.btn_Tones.Size = new System.Drawing.Size(130, 22);
+            this.btn_Tones.TabIndex = 36;
+            this.btn_Tones.Text = "Open Tones";
+            this.toolTip1.SetToolTip(this.btn_Tones, "Open screen listing and allowing change for the Guitar tones used by each track");
+            this.btn_Tones.UseVisualStyleBackColor = true;
+            this.btn_Tones.Click += new System.EventHandler(this.btn_Tones_Click);
+            // 
+            // btn_Arrangements
+            // 
+            this.btn_Arrangements.Location = new System.Drawing.Point(2, 157);
+            this.btn_Arrangements.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_Arrangements.Name = "btn_Arrangements";
+            this.btn_Arrangements.Size = new System.Drawing.Size(130, 26);
+            this.btn_Arrangements.TabIndex = 35;
+            this.btn_Arrangements.Text = "Open Arrangements";
+            this.toolTip1.SetToolTip(this.btn_Arrangements, "Open a window Listing the Tracks and details to change or just observe");
+            this.btn_Arrangements.UseVisualStyleBackColor = true;
+            this.btn_Arrangements.Click += new System.EventHandler(this.btn_Arrangements_Click);
+            // 
+            // chbx_LyricsLanguage
+            // 
+            this.chbx_LyricsLanguage.FormattingEnabled = true;
+            this.chbx_LyricsLanguage.Items.AddRange(new object[] {
+            "EN",
+            "FR",
+            "RO",
+            "DE"});
+            this.chbx_LyricsLanguage.Location = new System.Drawing.Point(81, 108);
+            this.chbx_LyricsLanguage.Margin = new System.Windows.Forms.Padding(2);
+            this.chbx_LyricsLanguage.Name = "chbx_LyricsLanguage";
+            this.chbx_LyricsLanguage.Size = new System.Drawing.Size(33, 21);
+            this.chbx_LyricsLanguage.TabIndex = 431;
+            this.toolTip1.SetToolTip(this.chbx_LyricsLanguage, resources.GetString("chbx_LyricsLanguage.ToolTip"));
+            // 
+            // chbx_InclLanguage
+            // 
+            this.chbx_InclLanguage.AutoSize = true;
+            this.chbx_InclLanguage.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chbx_InclLanguage.Location = new System.Drawing.Point(140, 41);
+            this.chbx_InclLanguage.Margin = new System.Windows.Forms.Padding(2);
+            this.chbx_InclLanguage.Name = "chbx_InclLanguage";
+            this.chbx_InclLanguage.Size = new System.Drawing.Size(15, 14);
+            this.chbx_InclLanguage.TabIndex = 432;
+            this.toolTip1.SetToolTip(this.chbx_InclLanguage, "Adds Language To Be (un)Selected");
+            this.chbx_InclLanguage.UseVisualStyleBackColor = true;
+            // 
+            // btn_GoTo
+            // 
+            this.btn_GoTo.Enabled = false;
+            this.btn_GoTo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_GoTo.Location = new System.Drawing.Point(434, 43);
+            this.btn_GoTo.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_GoTo.Name = "btn_GoTo";
+            this.btn_GoTo.Size = new System.Drawing.Size(50, 20);
+            this.btn_GoTo.TabIndex = 431;
+            this.btn_GoTo.Text = "Go To";
+            this.toolTip1.SetToolTip(this.btn_GoTo, "Search for a songg by title, album, filename,etc.");
+            this.btn_GoTo.UseVisualStyleBackColor = true;
+            this.btn_GoTo.Click += new System.EventHandler(this.btn_GoTo_Click);
+            // 
+            // chbx_KeepDD
+            // 
+            this.chbx_KeepDD.AutoSize = true;
+            this.chbx_KeepDD.Location = new System.Drawing.Point(139, 34);
+            this.chbx_KeepDD.Margin = new System.Windows.Forms.Padding(2);
+            this.chbx_KeepDD.Name = "chbx_KeepDD";
+            this.chbx_KeepDD.Size = new System.Drawing.Size(15, 14);
+            this.chbx_KeepDD.TabIndex = 330;
+            this.toolTip1.SetToolTip(this.chbx_KeepDD, "Keep the DD");
+            this.chbx_KeepDD.UseVisualStyleBackColor = true;
+            // 
+            // chbx_IsLive
+            // 
+            this.chbx_IsLive.AutoSize = true;
+            this.chbx_IsLive.Location = new System.Drawing.Point(151, 121);
+            this.chbx_IsLive.Margin = new System.Windows.Forms.Padding(2);
+            this.chbx_IsLive.Name = "chbx_IsLive";
+            this.chbx_IsLive.Size = new System.Drawing.Size(46, 17);
+            this.chbx_IsLive.TabIndex = 426;
+            this.chbx_IsLive.Text = "Live";
+            this.toolTip1.SetToolTip(this.chbx_IsLive, "Song version based on a Live version");
+            this.chbx_IsLive.UseVisualStyleBackColor = true;
+            // 
+            // chbx_IsInstrumental
+            // 
+            this.chbx_IsInstrumental.AutoSize = true;
+            this.chbx_IsInstrumental.Location = new System.Drawing.Point(1, 105);
+            this.chbx_IsInstrumental.Margin = new System.Windows.Forms.Padding(2);
+            this.chbx_IsInstrumental.Name = "chbx_IsInstrumental";
+            this.chbx_IsInstrumental.Size = new System.Drawing.Size(83, 17);
+            this.chbx_IsInstrumental.TabIndex = 430;
+            this.chbx_IsInstrumental.Text = "Instrumental";
+            this.toolTip1.SetToolTip(this.chbx_IsInstrumental, "with No Lyrics as an instrumental song");
+            this.chbx_IsInstrumental.UseVisualStyleBackColor = true;
+            // 
+            // chbx_IsSoundtrack
+            // 
+            this.chbx_IsSoundtrack.AutoSize = true;
+            this.chbx_IsSoundtrack.Location = new System.Drawing.Point(1, 121);
+            this.chbx_IsSoundtrack.Margin = new System.Windows.Forms.Padding(2);
+            this.chbx_IsSoundtrack.Name = "chbx_IsSoundtrack";
+            this.chbx_IsSoundtrack.Size = new System.Drawing.Size(81, 17);
+            this.chbx_IsSoundtrack.TabIndex = 431;
+            this.chbx_IsSoundtrack.Text = "Soundtrack";
+            this.toolTip1.SetToolTip(this.chbx_IsSoundtrack, "PArt of a soundtrack (version)");
+            this.chbx_IsSoundtrack.UseVisualStyleBackColor = true;
+            // 
+            // chbx_IsSingle
+            // 
+            this.chbx_IsSingle.AutoSize = true;
+            this.chbx_IsSingle.Location = new System.Drawing.Point(84, 105);
+            this.chbx_IsSingle.Margin = new System.Windows.Forms.Padding(2);
+            this.chbx_IsSingle.Name = "chbx_IsSingle";
+            this.chbx_IsSingle.Size = new System.Drawing.Size(55, 17);
+            this.chbx_IsSingle.TabIndex = 432;
+            this.chbx_IsSingle.Text = "Single";
+            this.toolTip1.SetToolTip(this.chbx_IsSingle, "Single version");
+            this.chbx_IsSingle.UseVisualStyleBackColor = true;
+            // 
+            // chbx_IsAcoustic
+            // 
+            this.chbx_IsAcoustic.AutoSize = true;
+            this.chbx_IsAcoustic.Location = new System.Drawing.Point(84, 121);
+            this.chbx_IsAcoustic.Margin = new System.Windows.Forms.Padding(2);
+            this.chbx_IsAcoustic.Name = "chbx_IsAcoustic";
+            this.chbx_IsAcoustic.Size = new System.Drawing.Size(67, 17);
+            this.chbx_IsAcoustic.TabIndex = 433;
+            this.chbx_IsAcoustic.Text = "Acoustic";
+            this.toolTip1.SetToolTip(this.chbx_IsAcoustic, "Acoustic version");
+            this.chbx_IsAcoustic.UseVisualStyleBackColor = true;
+            // 
+            // chbx_IsEP
+            // 
+            this.chbx_IsEP.AutoSize = true;
+            this.chbx_IsEP.Location = new System.Drawing.Point(170, 86);
+            this.chbx_IsEP.Margin = new System.Windows.Forms.Padding(2);
+            this.chbx_IsEP.Name = "chbx_IsEP";
+            this.chbx_IsEP.Size = new System.Drawing.Size(40, 17);
+            this.chbx_IsEP.TabIndex = 434;
+            this.chbx_IsEP.Text = "EP";
+            this.toolTip1.SetToolTip(this.chbx_IsEP, "Extended Play version");
+            this.chbx_IsEP.UseVisualStyleBackColor = true;
+            // 
+            // chbx_IntheWorks
+            // 
+            this.chbx_IntheWorks.AutoSize = true;
+            this.chbx_IntheWorks.Location = new System.Drawing.Point(65, 52);
+            this.chbx_IntheWorks.Margin = new System.Windows.Forms.Padding(2);
+            this.chbx_IntheWorks.Name = "chbx_IntheWorks";
+            this.chbx_IntheWorks.Size = new System.Drawing.Size(15, 14);
+            this.chbx_IntheWorks.TabIndex = 435;
+            this.toolTip1.SetToolTip(this.chbx_IntheWorks, "In the works");
+            this.chbx_IntheWorks.UseVisualStyleBackColor = true;
+            // 
+            // chbx_IsUncensored
+            // 
+            this.chbx_IsUncensored.AutoSize = true;
+            this.chbx_IsUncensored.Location = new System.Drawing.Point(65, 70);
+            this.chbx_IsUncensored.Margin = new System.Windows.Forms.Padding(2);
+            this.chbx_IsUncensored.Name = "chbx_IsUncensored";
+            this.chbx_IsUncensored.Size = new System.Drawing.Size(15, 14);
+            this.chbx_IsUncensored.TabIndex = 436;
+            this.toolTip1.SetToolTip(this.chbx_IsUncensored, "Audio and-or Lyrics have been brought back to their original Matured content");
+            this.chbx_IsUncensored.UseVisualStyleBackColor = true;
+            // 
+            // chbx_ImprovedWithDM
+            // 
+            this.chbx_ImprovedWithDM.AutoSize = true;
+            this.chbx_ImprovedWithDM.Location = new System.Drawing.Point(65, 88);
+            this.chbx_ImprovedWithDM.Margin = new System.Windows.Forms.Padding(2);
+            this.chbx_ImprovedWithDM.Name = "chbx_ImprovedWithDM";
+            this.chbx_ImprovedWithDM.Size = new System.Drawing.Size(15, 14);
+            this.chbx_ImprovedWithDM.TabIndex = 437;
+            this.toolTip1.SetToolTip(this.chbx_ImprovedWithDM, "Improved locally with DLC Manager  (lyrics, trck,instrumntal)");
+            this.chbx_ImprovedWithDM.UseVisualStyleBackColor = true;
+            // 
+            // chbx_Instaces
+            // 
+            this.chbx_Instaces.AutoSize = true;
+            this.chbx_Instaces.Location = new System.Drawing.Point(162, 211);
+            this.chbx_Instaces.Margin = new System.Windows.Forms.Padding(2);
+            this.chbx_Instaces.Name = "chbx_Instaces";
+            this.chbx_Instaces.Size = new System.Drawing.Size(147, 17);
+            this.chbx_Instaces.TabIndex = 398;
+            this.chbx_Instaces.Text = "Incl. Multiply the Manager";
+            this.toolTip1.SetToolTip(this.chbx_Instaces, "Shows if Duplicates of DLC exists that are actually Official songs but from a Dif" +
+        "ferent Platform");
+            this.chbx_Instaces.UseVisualStyleBackColor = true;
+            // 
+            // chbx_FullAlbum
+            // 
+            this.chbx_FullAlbum.AutoSize = true;
+            this.chbx_FullAlbum.Location = new System.Drawing.Point(192, 121);
+            this.chbx_FullAlbum.Margin = new System.Windows.Forms.Padding(2);
+            this.chbx_FullAlbum.Name = "chbx_FullAlbum";
+            this.chbx_FullAlbum.Size = new System.Drawing.Size(15, 14);
+            this.chbx_FullAlbum.TabIndex = 438;
+            this.toolTip1.SetToolTip(this.chbx_FullAlbum, "Full Album");
+            this.chbx_FullAlbum.UseVisualStyleBackColor = true;
             // 
             // txt_AlbumArtPath
             // 
@@ -952,6 +1891,22 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_AlbumArtPath.TabIndex = 107;
             this.toolTip1.SetToolTip(this.txt_AlbumArtPath, "Album art Path");
             this.txt_AlbumArtPath.Visible = false;
+            // 
+            // txt_FilesMissingIssues
+            // 
+            this.txt_FilesMissingIssues.Cue = "FilesMissingIssues";
+            this.txt_FilesMissingIssues.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_FilesMissingIssues.ForeColor = System.Drawing.Color.Gray;
+            this.txt_FilesMissingIssues.HideSelection = false;
+            this.txt_FilesMissingIssues.Location = new System.Drawing.Point(3, 210);
+            this.txt_FilesMissingIssues.Margin = new System.Windows.Forms.Padding(2);
+            this.txt_FilesMissingIssues.Name = "txt_FilesMissingIssues";
+            this.txt_FilesMissingIssues.ReadOnly = true;
+            this.txt_FilesMissingIssues.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
+            this.txt_FilesMissingIssues.Size = new System.Drawing.Size(120, 20);
+            this.txt_FilesMissingIssues.TabIndex = 334;
+            this.toolTip1.SetToolTip(this.txt_FilesMissingIssues, "Containes details fi any database/file system issues is observed with the importe" +
+        "d song");
             // 
             // txt_Art_Hash
             // 
@@ -1150,6 +2105,18 @@ namespace RocksmithToolkitGUI.DLCManager
             this.toolTip1.SetToolTip(this.txt_Live_Details, "Live/Acoustic Details");
             this.txt_Live_Details.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Txt_Live_Details_KeyPress);
             // 
+            // txt_DuplicateOf
+            // 
+            this.txt_DuplicateOf.Cue = "Alternate Of";
+            this.txt_DuplicateOf.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_DuplicateOf.ForeColor = System.Drawing.Color.Gray;
+            this.txt_DuplicateOf.Location = new System.Drawing.Point(115, 42);
+            this.txt_DuplicateOf.Margin = new System.Windows.Forms.Padding(2);
+            this.txt_DuplicateOf.Name = "txt_DuplicateOf";
+            this.txt_DuplicateOf.Size = new System.Drawing.Size(33, 20);
+            this.txt_DuplicateOf.TabIndex = 430;
+            this.toolTip1.SetToolTip(this.txt_DuplicateOf, "DLC considered as Similar in naming details");
+            // 
             // txt_YouTube_Link
             // 
             this.txt_YouTube_Link.Cue = "YouTube Link";
@@ -1304,839 +2271,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_Artist.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_Artist_KeyPress);
             this.txt_Artist.Leave += new System.EventHandler(this.Txt_Artist_Leave);
             // 
-            // btn_OpenSongFolder
-            // 
-            this.btn_OpenSongFolder.Location = new System.Drawing.Point(2, 136);
-            this.btn_OpenSongFolder.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_OpenSongFolder.Name = "btn_OpenSongFolder";
-            this.btn_OpenSongFolder.Size = new System.Drawing.Size(130, 20);
-            this.btn_OpenSongFolder.TabIndex = 331;
-            this.btn_OpenSongFolder.Text = "Open Song Folder";
-            this.toolTip1.SetToolTip(this.btn_OpenSongFolder, "Open Folder where the ecompressed Rocksmith song is storred");
-            this.btn_OpenSongFolder.UseVisualStyleBackColor = true;
-            this.btn_OpenSongFolder.Click += new System.EventHandler(this.btn_OpenSongFolder_Click);
-            // 
-            // btn_OpenRepackedFolder
-            // 
-            this.btn_OpenRepackedFolder.Location = new System.Drawing.Point(143, 24);
-            this.btn_OpenRepackedFolder.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_OpenRepackedFolder.Name = "btn_OpenRepackedFolder";
-            this.btn_OpenRepackedFolder.Size = new System.Drawing.Size(11, 10);
-            this.btn_OpenRepackedFolder.TabIndex = 413;
-            this.btn_OpenRepackedFolder.Text = "...";
-            this.toolTip1.SetToolTip(this.btn_OpenRepackedFolder, "Go to Internal Repacked Location");
-            this.btn_OpenRepackedFolder.UseVisualStyleBackColor = true;
-            this.btn_OpenRepackedFolder.Click += new System.EventHandler(this.btn_OpenRepackedFolder_Click);
-            // 
-            // btm_GoTemp
-            // 
-            this.btm_GoTemp.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F);
-            this.btm_GoTemp.Location = new System.Drawing.Point(122, 14);
-            this.btm_GoTemp.Margin = new System.Windows.Forms.Padding(0);
-            this.btm_GoTemp.Name = "btm_GoTemp";
-            this.btm_GoTemp.Size = new System.Drawing.Size(18, 16);
-            this.btm_GoTemp.TabIndex = 412;
-            this.btm_GoTemp.Text = ">";
-            this.toolTip1.SetToolTip(this.btm_GoTemp, "Go to Repacked & Copied locatioj");
-            this.btm_GoTemp.UseVisualStyleBackColor = true;
-            this.btm_GoTemp.Click += new System.EventHandler(this.btm_GoTemp_Click);
-            // 
-            // btn_Package
-            // 
-            this.btn_Package.Enabled = false;
-            this.btn_Package.Location = new System.Drawing.Point(4, 14);
-            this.btn_Package.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_Package.Name = "btn_Package";
-            this.btn_Package.Size = new System.Drawing.Size(58, 34);
-            this.btn_Package.TabIndex = 39;
-            this.btn_Package.Text = "Package";
-            this.toolTip1.SetToolTip(this.btn_Package, "Repack");
-            this.btn_Package.UseVisualStyleBackColor = true;
-            this.btn_Package.Click += new System.EventHandler(this.btn_Package_Click);
-            // 
-            // chbx_Copy
-            // 
-            this.chbx_Copy.AutoSize = true;
-            this.chbx_Copy.Checked = true;
-            this.chbx_Copy.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chbx_Copy.Location = new System.Drawing.Point(4, 52);
-            this.chbx_Copy.Margin = new System.Windows.Forms.Padding(2);
-            this.chbx_Copy.Name = "chbx_Copy";
-            this.chbx_Copy.Size = new System.Drawing.Size(56, 17);
-            this.chbx_Copy.TabIndex = 326;
-            this.chbx_Copy.Text = "&&Copy";
-            this.toolTip1.SetToolTip(this.chbx_Copy, "&Copy or FTP");
-            this.chbx_Copy.UseVisualStyleBackColor = true;
-            // 
-            // btn_SteamDLCFolder
-            // 
-            this.btn_SteamDLCFolder.Location = new System.Drawing.Point(143, 14);
-            this.btn_SteamDLCFolder.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_SteamDLCFolder.Name = "btn_SteamDLCFolder";
-            this.btn_SteamDLCFolder.Size = new System.Drawing.Size(11, 10);
-            this.btn_SteamDLCFolder.TabIndex = 311;
-            this.btn_SteamDLCFolder.Text = "...";
-            this.toolTip1.SetToolTip(this.btn_SteamDLCFolder, "Open now Repack&Copied Location");
-            this.btn_SteamDLCFolder.UseVisualStyleBackColor = true;
-            this.btn_SteamDLCFolder.Click += new System.EventHandler(this.btn_SteamDLCFolder_Click_1);
-            // 
-            // btn_OpenRetail
-            // 
-            this.btn_OpenRetail.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.btn_OpenRetail.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_OpenRetail.Location = new System.Drawing.Point(136, 191);
-            this.btn_OpenRetail.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_OpenRetail.Name = "btn_OpenRetail";
-            this.btn_OpenRetail.Size = new System.Drawing.Size(66, 40);
-            this.btn_OpenRetail.TabIndex = 278;
-            this.btn_OpenRetail.Text = "Open Retail DB";
-            this.toolTip1.SetToolTip(this.btn_OpenRetail, "Open Scree to edit the Original Song List from the Retail/CD version of the Game");
-            this.btn_OpenRetail.UseVisualStyleBackColor = false;
-            this.btn_OpenRetail.Click += new System.EventHandler(this.btn_OpenRetail_Click);
-            // 
-            // btn_OpenStandardization
-            // 
-            this.btn_OpenStandardization.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.btn_OpenStandardization.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_OpenStandardization.Location = new System.Drawing.Point(2, 208);
-            this.btn_OpenStandardization.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_OpenStandardization.Name = "btn_OpenStandardization";
-            this.btn_OpenStandardization.Size = new System.Drawing.Size(130, 22);
-            this.btn_OpenStandardization.TabIndex = 110;
-            this.btn_OpenStandardization.Text = "Open Standarization DB";
-            this.toolTip1.SetToolTip(this.btn_OpenStandardization, "Open screen to manage textual corrections and standardization (Song Title, Year, " +
-        "etc.)");
-            this.btn_OpenStandardization.UseVisualStyleBackColor = false;
-            this.btn_OpenStandardization.Click += new System.EventHandler(this.btn_OpenStandardization_Click);
-            // 
-            // btn_OpenDB
-            // 
-            this.btn_OpenDB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.btn_OpenDB.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_OpenDB.Location = new System.Drawing.Point(136, 157);
-            this.btn_OpenDB.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_OpenDB.Name = "btn_OpenDB";
-            this.btn_OpenDB.Size = new System.Drawing.Size(66, 32);
-            this.btn_OpenDB.TabIndex = 37;
-            this.btn_OpenDB.Text = "Open DB in M$ Access";
-            this.toolTip1.SetToolTip(this.btn_OpenDB, "Use Microsoft Access to view and edit the DB with most if not all of Songs Metada" +
-        "ta or attributes added at and after inport (youtube,spotify etc.))");
-            this.btn_OpenDB.UseVisualStyleBackColor = false;
-            this.btn_OpenDB.Click += new System.EventHandler(this.btn_OpenDB_Click);
-            // 
-            // btn_Refresh
-            // 
-            this.btn_Refresh.ForeColor = System.Drawing.Color.Purple;
-            this.btn_Refresh.Location = new System.Drawing.Point(2, 253);
-            this.btn_Refresh.Margin = new System.Windows.Forms.Padding(0);
-            this.btn_Refresh.Name = "btn_Refresh";
-            this.btn_Refresh.Size = new System.Drawing.Size(104, 24);
-            this.btn_Refresh.TabIndex = 420;
-            this.btn_Refresh.Text = "Refresh";
-            this.toolTip1.SetToolTip(this.btn_Refresh, "Refresh the Song List below as meta data @Save doesnt get replicated into it, jus" +
-        "t the DB.");
-            this.btn_Refresh.UseVisualStyleBackColor = true;
-            this.btn_Refresh.Click += new System.EventHandler(this.btn_Refresh_Click);
-            // 
-            // btn_ReadGameLibrary
-            // 
-            this.btn_ReadGameLibrary.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_ReadGameLibrary.Location = new System.Drawing.Point(986, 28);
-            this.btn_ReadGameLibrary.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_ReadGameLibrary.Name = "btn_ReadGameLibrary";
-            this.btn_ReadGameLibrary.Size = new System.Drawing.Size(158, 24);
-            this.btn_ReadGameLibrary.TabIndex = 410;
-            this.btn_ReadGameLibrary.Text = "Read Target Game DLC Library";
-            this.toolTip1.SetToolTip(this.btn_ReadGameLibrary, resources.GetString("btn_ReadGameLibrary.ToolTip"));
-            this.btn_ReadGameLibrary.UseVisualStyleBackColor = true;
-            this.btn_ReadGameLibrary.Click += new System.EventHandler(this.btn_ReadGameLibrary_Click);
-            // 
-            // bth_GetTrackNo
-            // 
-            this.bth_GetTrackNo.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F);
-            this.bth_GetTrackNo.Location = new System.Drawing.Point(542, 2);
-            this.bth_GetTrackNo.Margin = new System.Windows.Forms.Padding(0);
-            this.bth_GetTrackNo.Name = "bth_GetTrackNo";
-            this.bth_GetTrackNo.Size = new System.Drawing.Size(18, 16);
-            this.bth_GetTrackNo.TabIndex = 329;
-            this.bth_GetTrackNo.Text = "<";
-            this.toolTip1.SetToolTip(this.bth_GetTrackNo, "Get from Spotify the Album (name & year based) track no listing.");
-            this.bth_GetTrackNo.UseVisualStyleBackColor = true;
-            this.bth_GetTrackNo.Click += new System.EventHandler(this.bth_GetTrackNo_Click);
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.Enabled = false;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(4, 119);
-            this.comboBox1.Margin = new System.Windows.Forms.Padding(2);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(152, 21);
-            this.comboBox1.TabIndex = 416;
-            this.toolTip1.SetToolTip(this.comboBox1, "No Idea what this was all about.");
-            // 
-            // pB_ReadDLCs
-            // 
-            this.pB_ReadDLCs.Location = new System.Drawing.Point(4, 141);
-            this.pB_ReadDLCs.Margin = new System.Windows.Forms.Padding(2);
-            this.pB_ReadDLCs.Maximum = 10000;
-            this.pB_ReadDLCs.Name = "pB_ReadDLCs";
-            this.pB_ReadDLCs.Size = new System.Drawing.Size(152, 14);
-            this.pB_ReadDLCs.Step = 1;
-            this.pB_ReadDLCs.TabIndex = 330;
-            this.toolTip1.SetToolTip(this.pB_ReadDLCs, "Progress bar for different activities initiated in this screen");
-            // 
-            // chbx_UseInternalDDRemovalLogic
-            // 
-            this.chbx_UseInternalDDRemovalLogic.AutoSize = true;
-            this.chbx_UseInternalDDRemovalLogic.Location = new System.Drawing.Point(111, 16);
-            this.chbx_UseInternalDDRemovalLogic.Margin = new System.Windows.Forms.Padding(2);
-            this.chbx_UseInternalDDRemovalLogic.Name = "chbx_UseInternalDDRemovalLogic";
-            this.chbx_UseInternalDDRemovalLogic.Size = new System.Drawing.Size(15, 14);
-            this.chbx_UseInternalDDRemovalLogic.TabIndex = 337;
-            this.toolTip1.SetToolTip(this.chbx_UseInternalDDRemovalLogic, "When removing Bass Difficulty level, use DLC Manager logic to remove, and not ");
-            this.chbx_UseInternalDDRemovalLogic.UseVisualStyleBackColor = true;
-            // 
-            // btn_EOF
-            // 
-            this.btn_EOF.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.6F);
-            this.btn_EOF.Location = new System.Drawing.Point(129, 12);
-            this.btn_EOF.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_EOF.Name = "btn_EOF";
-            this.btn_EOF.Size = new System.Drawing.Size(74, 18);
-            this.btn_EOF.TabIndex = 332;
-            this.btn_EOF.Text = "Editor on Fire";
-            this.toolTip1.SetToolTip(this.btn_EOF, "Open Song Editor (EoF/Editor on Fire))");
-            this.btn_EOF.UseVisualStyleBackColor = true;
-            this.btn_EOF.Click += new System.EventHandler(this.btn_EOF_Click);
-            // 
-            // btn_CreateLyrics
-            // 
-            this.btn_CreateLyrics.Enabled = false;
-            this.btn_CreateLyrics.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_CreateLyrics.Location = new System.Drawing.Point(147, 66);
-            this.btn_CreateLyrics.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_CreateLyrics.Name = "btn_CreateLyrics";
-            this.btn_CreateLyrics.Size = new System.Drawing.Size(18, 18);
-            this.btn_CreateLyrics.TabIndex = 331;
-            this.btn_CreateLyrics.Text = "+";
-            this.toolTip1.SetToolTip(this.btn_CreateLyrics, "Adds lyrics (instructs the User how to search, obtain or generate his own lyrics " +
-        "XML file)");
-            this.btn_CreateLyrics.UseVisualStyleBackColor = true;
-            this.btn_CreateLyrics.Click += new System.EventHandler(this.btn_CreateLyrics_Click);
-            // 
-            // chbx_KeepBassDD
-            // 
-            this.chbx_KeepBassDD.AutoSize = true;
-            this.chbx_KeepBassDD.Enabled = false;
-            this.chbx_KeepBassDD.Location = new System.Drawing.Point(93, 16);
-            this.chbx_KeepBassDD.Margin = new System.Windows.Forms.Padding(2);
-            this.chbx_KeepBassDD.Name = "chbx_KeepBassDD";
-            this.chbx_KeepBassDD.Size = new System.Drawing.Size(15, 14);
-            this.chbx_KeepBassDD.TabIndex = 329;
-            this.toolTip1.SetToolTip(this.chbx_KeepBassDD, "If at repack is indicated to remove Bass Dificulty levels, this overrites that be" +
-        "havior.");
-            this.chbx_KeepBassDD.UseVisualStyleBackColor = true;
-            // 
-            // btn_AddDD
-            // 
-            this.btn_AddDD.Enabled = false;
-            this.btn_AddDD.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_AddDD.Location = new System.Drawing.Point(117, 32);
-            this.btn_AddDD.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_AddDD.Name = "btn_AddDD";
-            this.btn_AddDD.Size = new System.Drawing.Size(18, 18);
-            this.btn_AddDD.TabIndex = 316;
-            this.btn_AddDD.Text = "+";
-            this.toolTip1.SetToolTip(this.btn_AddDD, "Add Levels of dificulty");
-            this.btn_AddDD.UseVisualStyleBackColor = true;
-            this.btn_AddDD.Click += new System.EventHandler(this.btn_AddDD_Click);
-            // 
-            // btn_RemoveDD
-            // 
-            this.btn_RemoveDD.Enabled = false;
-            this.btn_RemoveDD.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_RemoveDD.Location = new System.Drawing.Point(42, 32);
-            this.btn_RemoveDD.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_RemoveDD.Name = "btn_RemoveDD";
-            this.btn_RemoveDD.Size = new System.Drawing.Size(18, 18);
-            this.btn_RemoveDD.TabIndex = 315;
-            this.btn_RemoveDD.Text = "-";
-            this.toolTip1.SetToolTip(this.btn_RemoveDD, "Removes Levels of Dificulty");
-            this.btn_RemoveDD.UseVisualStyleBackColor = true;
-            this.btn_RemoveDD.Click += new System.EventHandler(this.btn_RemoveDD_Click);
-            // 
-            // btn_RemoveBassDD
-            // 
-            this.btn_RemoveBassDD.Enabled = false;
-            this.btn_RemoveBassDD.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_RemoveBassDD.Location = new System.Drawing.Point(71, 14);
-            this.btn_RemoveBassDD.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_RemoveBassDD.Name = "btn_RemoveBassDD";
-            this.btn_RemoveBassDD.Size = new System.Drawing.Size(18, 18);
-            this.btn_RemoveBassDD.TabIndex = 85;
-            this.btn_RemoveBassDD.Text = "-";
-            this.toolTip1.SetToolTip(this.btn_RemoveBassDD, "Removed the Bass level of difficulty (ujually not so challenging)");
-            this.btn_RemoveBassDD.UseVisualStyleBackColor = true;
-            this.btn_RemoveBassDD.Click += new System.EventHandler(this.btn_RemoveBassDD_Click);
-            // 
-            // txt_DuplicateOf
-            // 
-            this.txt_DuplicateOf.Cue = "Alternate Of";
-            this.txt_DuplicateOf.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_DuplicateOf.ForeColor = System.Drawing.Color.Gray;
-            this.txt_DuplicateOf.Location = new System.Drawing.Point(115, 42);
-            this.txt_DuplicateOf.Margin = new System.Windows.Forms.Padding(2);
-            this.txt_DuplicateOf.Name = "txt_DuplicateOf";
-            this.txt_DuplicateOf.Size = new System.Drawing.Size(33, 20);
-            this.txt_DuplicateOf.TabIndex = 430;
-            this.toolTip1.SetToolTip(this.txt_DuplicateOf, "DLC considered as Similar in naming details");
-            // 
-            // chbx_AudioChanged
-            // 
-            this.chbx_AudioChanged.AutoSize = true;
-            this.chbx_AudioChanged.Enabled = false;
-            this.chbx_AudioChanged.Location = new System.Drawing.Point(2, 30);
-            this.chbx_AudioChanged.Margin = new System.Windows.Forms.Padding(2);
-            this.chbx_AudioChanged.Name = "chbx_AudioChanged";
-            this.chbx_AudioChanged.Size = new System.Drawing.Size(101, 17);
-            this.chbx_AudioChanged.TabIndex = 415;
-            this.chbx_AudioChanged.Text = "Audio corrected";
-            this.toolTip1.SetToolTip(this.chbx_AudioChanged, "Marks the song as having its audio filers manipulated by the tool (bitrate reduce" +
-        "d to 128/135 kbs.");
-            this.chbx_AudioChanged.UseVisualStyleBackColor = true;
-            // 
-            // chbx_Format_Originals
-            // 
-            this.chbx_Format_Originals.FormattingEnabled = true;
-            this.chbx_Format_Originals.Location = new System.Drawing.Point(84, 63);
-            this.chbx_Format_Originals.Margin = new System.Windows.Forms.Padding(2);
-            this.chbx_Format_Originals.Name = "chbx_Format_Originals";
-            this.chbx_Format_Originals.Size = new System.Drawing.Size(50, 21);
-            this.chbx_Format_Originals.TabIndex = 414;
-            this.toolTip1.SetToolTip(this.chbx_Format_Originals, resources.GetString("chbx_Format_Originals.ToolTip"));
-            // 
-            // chbx_Originals_Available
-            // 
-            this.chbx_Originals_Available.AutoSize = true;
-            this.chbx_Originals_Available.Enabled = false;
-            this.chbx_Originals_Available.Location = new System.Drawing.Point(2, 65);
-            this.chbx_Originals_Available.Margin = new System.Windows.Forms.Padding(2);
-            this.chbx_Originals_Available.Name = "chbx_Originals_Available";
-            this.chbx_Originals_Available.Size = new System.Drawing.Size(87, 17);
-            this.chbx_Originals_Available.TabIndex = 329;
-            this.chbx_Originals_Available.Text = "Official Avail.";
-            this.toolTip1.SetToolTip(this.chbx_Originals_Available, "Songs was internally indicated as Official release by Ubisoft");
-            this.chbx_Originals_Available.UseVisualStyleBackColor = true;
-            // 
-            // btn_DuplicateFolder
-            // 
-            this.btn_DuplicateFolder.Enabled = false;
-            this.btn_DuplicateFolder.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F);
-            this.btn_DuplicateFolder.Location = new System.Drawing.Point(95, 46);
-            this.btn_DuplicateFolder.Margin = new System.Windows.Forms.Padding(0);
-            this.btn_DuplicateFolder.Name = "btn_DuplicateFolder";
-            this.btn_DuplicateFolder.Size = new System.Drawing.Size(18, 16);
-            this.btn_DuplicateFolder.TabIndex = 327;
-            this.btn_DuplicateFolder.Text = ">";
-            this.toolTip1.SetToolTip(this.btn_DuplicateFolder, "Open 0_duplicates location.");
-            this.btn_DuplicateFolder.UseVisualStyleBackColor = true;
-            this.btn_DuplicateFolder.Click += new System.EventHandler(this.btn_DuplicateFolder_Click);
-            // 
-            // chbx_Avail_Old
-            // 
-            this.chbx_Avail_Old.AutoSize = true;
-            this.chbx_Avail_Old.Enabled = false;
-            this.chbx_Avail_Old.Location = new System.Drawing.Point(2, 14);
-            this.chbx_Avail_Old.Margin = new System.Windows.Forms.Padding(2);
-            this.chbx_Avail_Old.Name = "chbx_Avail_Old";
-            this.chbx_Avail_Old.Size = new System.Drawing.Size(88, 17);
-            this.chbx_Avail_Old.TabIndex = 112;
-            this.chbx_Avail_Old.Text = "Old Available";
-            this.toolTip1.SetToolTip(this.chbx_Avail_Old, "Availability of originally Imported file.");
-            this.chbx_Avail_Old.UseVisualStyleBackColor = true;
-            // 
-            // chbx_Has_Been_Corrected
-            // 
-            this.chbx_Has_Been_Corrected.AutoSize = true;
-            this.chbx_Has_Been_Corrected.Enabled = false;
-            this.chbx_Has_Been_Corrected.Location = new System.Drawing.Point(2, 83);
-            this.chbx_Has_Been_Corrected.Margin = new System.Windows.Forms.Padding(2);
-            this.chbx_Has_Been_Corrected.Name = "chbx_Has_Been_Corrected";
-            this.chbx_Has_Been_Corrected.Size = new System.Drawing.Size(66, 17);
-            this.chbx_Has_Been_Corrected.TabIndex = 274;
-            this.chbx_Has_Been_Corrected.Text = "Info Corr";
-            this.toolTip1.SetToolTip(this.chbx_Has_Been_Corrected, "Song had had its metdata related to Song naming details changed by the tool or us" +
-        "er");
-            this.chbx_Has_Been_Corrected.UseVisualStyleBackColor = true;
-            // 
-            // chbx_Beta
-            // 
-            this.chbx_Beta.AutoSize = true;
-            this.chbx_Beta.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.chbx_Beta.Location = new System.Drawing.Point(152, 40);
-            this.chbx_Beta.Margin = new System.Windows.Forms.Padding(2);
-            this.chbx_Beta.Name = "chbx_Beta";
-            this.chbx_Beta.Size = new System.Drawing.Size(48, 17);
-            this.chbx_Beta.TabIndex = 82;
-            this.chbx_Beta.Text = "Beta";
-            this.toolTip1.SetToolTip(this.chbx_Beta, "Beta songs appear 1st when Rocksmith sorts song by Title as having had adde a zer" +
-        "o (0) to its metadata at repack.");
-            this.chbx_Beta.UseVisualStyleBackColor = true;
-            // 
-            // btn_AddPreview
-            // 
-            this.btn_AddPreview.Enabled = false;
-            this.btn_AddPreview.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_AddPreview.Location = new System.Drawing.Point(180, 37);
-            this.btn_AddPreview.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_AddPreview.Name = "btn_AddPreview";
-            this.btn_AddPreview.Size = new System.Drawing.Size(72, 22);
-            this.btn_AddPreview.TabIndex = 94;
-            this.btn_AddPreview.Text = "Add Preview";
-            this.toolTip1.SetToolTip(this.btn_AddPreview, "Select a new Preview File (OGG)");
-            this.btn_AddPreview.UseVisualStyleBackColor = true;
-            this.btn_AddPreview.Click += new System.EventHandler(this.btn_AddPreview_Click);
-            // 
-            // chbx_AutoPlay
-            // 
-            this.chbx_AutoPlay.AutoSize = true;
-            this.chbx_AutoPlay.Checked = true;
-            this.chbx_AutoPlay.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chbx_AutoPlay.Location = new System.Drawing.Point(244, 16);
-            this.chbx_AutoPlay.Margin = new System.Windows.Forms.Padding(2);
-            this.chbx_AutoPlay.Name = "chbx_AutoPlay";
-            this.chbx_AutoPlay.Size = new System.Drawing.Size(68, 17);
-            this.chbx_AutoPlay.TabIndex = 291;
-            this.chbx_AutoPlay.Text = "AutoPlay";
-            this.toolTip1.SetToolTip(this.chbx_AutoPlay, "Plays the Preview automaticall when selecting a song from the below list.");
-            this.chbx_AutoPlay.UseVisualStyleBackColor = true;
-            // 
-            // btn_ChangeLyrics
-            // 
-            this.btn_ChangeLyrics.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            this.btn_ChangeLyrics.Location = new System.Drawing.Point(6, 60);
-            this.btn_ChangeLyrics.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_ChangeLyrics.Name = "btn_ChangeLyrics";
-            this.btn_ChangeLyrics.Size = new System.Drawing.Size(86, 22);
-            this.btn_ChangeLyrics.TabIndex = 404;
-            this.btn_ChangeLyrics.Text = "Change Lyrics";
-            this.toolTip1.SetToolTip(this.btn_ChangeLyrics, "Select a new Lyrics File (XML)");
-            this.btn_ChangeLyrics.UseVisualStyleBackColor = true;
-            this.btn_ChangeLyrics.Click += new System.EventHandler(this.btn_ChangeLyrics_Click);
-            // 
-            // btn_Delete
-            // 
-            this.btn_Delete.Enabled = false;
-            this.btn_Delete.Location = new System.Drawing.Point(986, 53);
-            this.btn_Delete.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_Delete.Name = "btn_Delete";
-            this.btn_Delete.Size = new System.Drawing.Size(82, 22);
-            this.btn_Delete.TabIndex = 40;
-            this.btn_Delete.Text = "Delete";
-            this.toolTip1.SetToolTip(this.btn_Delete, "Delets songs from DB (original psarc is moved to 0_archive folder)");
-            this.btn_Delete.UseVisualStyleBackColor = true;
-            this.btn_Delete.Click += new System.EventHandler(this.btn_Delete_Click);
-            // 
-            // gbox_Cover
-            // 
-            this.gbox_Cover.Location = new System.Drawing.Point(3, 13);
-            this.gbox_Cover.Margin = new System.Windows.Forms.Padding(2);
-            this.gbox_Cover.Name = "gbox_Cover";
-            this.gbox_Cover.Size = new System.Drawing.Size(120, 124);
-            this.gbox_Cover.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.gbox_Cover.TabIndex = 91;
-            this.gbox_Cover.TabStop = false;
-            this.toolTip1.SetToolTip(this.gbox_Cover, "Song/album Cover");
-            // 
-            // txt_FilesMissingIssues
-            // 
-            this.txt_FilesMissingIssues.Cue = "FilesMissingIssues";
-            this.txt_FilesMissingIssues.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txt_FilesMissingIssues.ForeColor = System.Drawing.Color.Gray;
-            this.txt_FilesMissingIssues.HideSelection = false;
-            this.txt_FilesMissingIssues.Location = new System.Drawing.Point(3, 210);
-            this.txt_FilesMissingIssues.Margin = new System.Windows.Forms.Padding(2);
-            this.txt_FilesMissingIssues.Name = "txt_FilesMissingIssues";
-            this.txt_FilesMissingIssues.ReadOnly = true;
-            this.txt_FilesMissingIssues.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
-            this.txt_FilesMissingIssues.Size = new System.Drawing.Size(120, 20);
-            this.txt_FilesMissingIssues.TabIndex = 334;
-            this.toolTip1.SetToolTip(this.txt_FilesMissingIssues, "Containes details fi any database/file system issues is observed with the importe" +
-        "d song");
-            // 
-            // txt_Top10
-            // 
-            this.txt_Top10.Enabled = false;
-            this.txt_Top10.Location = new System.Drawing.Point(566, 2);
-            this.txt_Top10.Margin = new System.Windows.Forms.Padding(2);
-            this.txt_Top10.Maximum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.txt_Top10.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.txt_Top10.Name = "txt_Top10";
-            this.txt_Top10.Size = new System.Drawing.Size(34, 20);
-            this.txt_Top10.TabIndex = 335;
-            this.toolTip1.SetToolTip(this.txt_Top10, "Another Way to track the best songs in the DB");
-            this.txt_Top10.Value = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            // 
-            // chbx_IsInstrumental
-            // 
-            this.chbx_IsInstrumental.AutoCheck = false;
-            this.chbx_IsInstrumental.AutoSize = true;
-            this.chbx_IsInstrumental.Location = new System.Drawing.Point(1, 106);
-            this.chbx_IsInstrumental.Margin = new System.Windows.Forms.Padding(2);
-            this.chbx_IsInstrumental.Name = "chbx_IsInstrumental";
-            this.chbx_IsInstrumental.Size = new System.Drawing.Size(83, 17);
-            this.chbx_IsInstrumental.TabIndex = 342;
-            this.chbx_IsInstrumental.Text = "Instrumental";
-            this.toolTip1.SetToolTip(this.chbx_IsInstrumental, "Song has a lyrics file that is empty or containes one lyric (e.g. Isntrumental/no" +
-        "Lyrics)");
-            this.chbx_IsInstrumental.UseVisualStyleBackColor = true;
-            // 
-            // chbx_IsSingle
-            // 
-            this.chbx_IsSingle.AutoCheck = false;
-            this.chbx_IsSingle.AutoSize = true;
-            this.chbx_IsSingle.Location = new System.Drawing.Point(84, 106);
-            this.chbx_IsSingle.Margin = new System.Windows.Forms.Padding(2);
-            this.chbx_IsSingle.Name = "chbx_IsSingle";
-            this.chbx_IsSingle.Size = new System.Drawing.Size(55, 17);
-            this.chbx_IsSingle.TabIndex = 339;
-            this.chbx_IsSingle.Text = "Single";
-            this.toolTip1.SetToolTip(this.chbx_IsSingle, "Song was maked as audio is from the single release version of the song");
-            this.chbx_IsSingle.UseVisualStyleBackColor = true;
-            // 
-            // chbx_IsSoundtrack
-            // 
-            this.chbx_IsSoundtrack.AutoCheck = false;
-            this.chbx_IsSoundtrack.AutoSize = true;
-            this.chbx_IsSoundtrack.Location = new System.Drawing.Point(1, 123);
-            this.chbx_IsSoundtrack.Margin = new System.Windows.Forms.Padding(2);
-            this.chbx_IsSoundtrack.Name = "chbx_IsSoundtrack";
-            this.chbx_IsSoundtrack.Size = new System.Drawing.Size(81, 17);
-            this.chbx_IsSoundtrack.TabIndex = 338;
-            this.chbx_IsSoundtrack.Text = "Soundtrack";
-            this.toolTip1.SetToolTip(this.chbx_IsSoundtrack, "Song was indicated as being part of a soundtrack");
-            this.chbx_IsSoundtrack.UseVisualStyleBackColor = true;
-            // 
-            // chbx_Is_Acoustic
-            // 
-            this.chbx_Is_Acoustic.AutoSize = true;
-            this.chbx_Is_Acoustic.Location = new System.Drawing.Point(84, 122);
-            this.chbx_Is_Acoustic.Margin = new System.Windows.Forms.Padding(2);
-            this.chbx_Is_Acoustic.Name = "chbx_Is_Acoustic";
-            this.chbx_Is_Acoustic.Size = new System.Drawing.Size(67, 17);
-            this.chbx_Is_Acoustic.TabIndex = 336;
-            this.chbx_Is_Acoustic.Text = "Acoustic";
-            this.toolTip1.SetToolTip(this.chbx_Is_Acoustic, "Song was indicated as based on the Acoustic version of the song");
-            this.chbx_Is_Acoustic.UseVisualStyleBackColor = true;
-            // 
-            // chbx_Is_Live
-            // 
-            this.chbx_Is_Live.AutoSize = true;
-            this.chbx_Is_Live.Location = new System.Drawing.Point(151, 122);
-            this.chbx_Is_Live.Margin = new System.Windows.Forms.Padding(2);
-            this.chbx_Is_Live.Name = "chbx_Is_Live";
-            this.chbx_Is_Live.Size = new System.Drawing.Size(46, 17);
-            this.chbx_Is_Live.TabIndex = 334;
-            this.chbx_Is_Live.Text = "Live";
-            this.toolTip1.SetToolTip(this.chbx_Is_Live, "Audio version is based on a Live version");
-            this.chbx_Is_Live.UseVisualStyleBackColor = true;
-            // 
-            // chbx_Sections
-            // 
-            this.chbx_Sections.AutoCheck = false;
-            this.chbx_Sections.AutoSize = true;
-            this.chbx_Sections.Location = new System.Drawing.Point(84, 88);
-            this.chbx_Sections.Margin = new System.Windows.Forms.Padding(2);
-            this.chbx_Sections.Name = "chbx_Sections";
-            this.chbx_Sections.Size = new System.Drawing.Size(67, 17);
-            this.chbx_Sections.TabIndex = 48;
-            this.chbx_Sections.Text = "Sections";
-            this.toolTip1.SetToolTip(this.chbx_Sections, "Song is split in different sections to help with ");
-            this.chbx_Sections.UseVisualStyleBackColor = true;
-            // 
-            // chbx_Bonus
-            // 
-            this.chbx_Bonus.AutoCheck = false;
-            this.chbx_Bonus.AutoSize = true;
-            this.chbx_Bonus.Location = new System.Drawing.Point(151, 52);
-            this.chbx_Bonus.Margin = new System.Windows.Forms.Padding(2);
-            this.chbx_Bonus.Name = "chbx_Bonus";
-            this.chbx_Bonus.Size = new System.Drawing.Size(56, 17);
-            this.chbx_Bonus.TabIndex = 101;
-            this.chbx_Bonus.Text = "Bonus";
-            this.toolTip1.SetToolTip(this.chbx_Bonus, "If there are any bonus tracks (e.g. Lead 2)");
-            this.chbx_Bonus.UseVisualStyleBackColor = true;
-            // 
-            // txt_Rating
-            // 
-            this.txt_Rating.Location = new System.Drawing.Point(176, 32);
-            this.txt_Rating.Margin = new System.Windows.Forms.Padding(2);
-            this.txt_Rating.Maximum = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
-            this.txt_Rating.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.txt_Rating.Name = "txt_Rating";
-            this.txt_Rating.Size = new System.Drawing.Size(26, 20);
-            this.txt_Rating.TabIndex = 332;
-            this.toolTip1.SetToolTip(this.txt_Rating, "Rate the DLC in overall quality");
-            this.txt_Rating.Value = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
-            // 
-            // chbx_LyricsChanged
-            // 
-            this.chbx_LyricsChanged.AutoSize = true;
-            this.chbx_LyricsChanged.Enabled = false;
-            this.chbx_LyricsChanged.Location = new System.Drawing.Point(74, 84);
-            this.chbx_LyricsChanged.Margin = new System.Windows.Forms.Padding(2);
-            this.chbx_LyricsChanged.Name = "chbx_LyricsChanged";
-            this.chbx_LyricsChanged.Size = new System.Drawing.Size(74, 17);
-            this.chbx_LyricsChanged.TabIndex = 416;
-            this.chbx_LyricsChanged.Text = "Lyrics corr";
-            this.toolTip1.SetToolTip(this.chbx_LyricsChanged, "Lyrics added or Modified with this tool/DLCManager");
-            this.chbx_LyricsChanged.UseVisualStyleBackColor = true;
-            // 
-            // btn_CopyOld
-            // 
-            this.btn_CopyOld.Enabled = false;
-            this.btn_CopyOld.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F);
-            this.btn_CopyOld.Location = new System.Drawing.Point(110, 14);
-            this.btn_CopyOld.Margin = new System.Windows.Forms.Padding(0);
-            this.btn_CopyOld.Name = "btn_CopyOld";
-            this.btn_CopyOld.Size = new System.Drawing.Size(18, 16);
-            this.btn_CopyOld.TabIndex = 328;
-            this.btn_CopyOld.Text = "<-";
-            this.toolTip1.SetToolTip(this.btn_CopyOld, "Copy song ot import Folder");
-            this.btn_CopyOld.UseVisualStyleBackColor = true;
-            this.btn_CopyOld.Click += new System.EventHandler(this.btn_CopyOld_Click);
-            // 
-            // chbx_Avail_Duplicate
-            // 
-            this.chbx_Avail_Duplicate.AutoSize = true;
-            this.chbx_Avail_Duplicate.Enabled = false;
-            this.chbx_Avail_Duplicate.Location = new System.Drawing.Point(2, 46);
-            this.chbx_Avail_Duplicate.Margin = new System.Windows.Forms.Padding(2);
-            this.chbx_Avail_Duplicate.Name = "chbx_Avail_Duplicate";
-            this.chbx_Avail_Duplicate.Size = new System.Drawing.Size(100, 17);
-            this.chbx_Avail_Duplicate.TabIndex = 111;
-            this.chbx_Avail_Duplicate.Text = "Duplicate Avail.";
-            this.toolTip1.SetToolTip(this.chbx_Avail_Duplicate, "Songs has an automatically at import decided as duplciate(same Title, album, auth" +
-        "or, lover version) or manually through -Duplciate Management window");
-            this.chbx_Avail_Duplicate.UseVisualStyleBackColor = true;
-            // 
-            // btn_OldFolder
-            // 
-            this.btn_OldFolder.Enabled = false;
-            this.btn_OldFolder.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F);
-            this.btn_OldFolder.Location = new System.Drawing.Point(84, 14);
-            this.btn_OldFolder.Margin = new System.Windows.Forms.Padding(0);
-            this.btn_OldFolder.Name = "btn_OldFolder";
-            this.btn_OldFolder.Size = new System.Drawing.Size(18, 16);
-            this.btn_OldFolder.TabIndex = 326;
-            this.btn_OldFolder.Text = ">";
-            this.toolTip1.SetToolTip(this.btn_OldFolder, "Open Exporere at the song in 0_old folder");
-            this.btn_OldFolder.UseVisualStyleBackColor = true;
-            this.btn_OldFolder.Click += new System.EventHandler(this.btn_OldFolder_Click);
-            // 
-            // txt_MultiTrackType
-            // 
-            this.txt_MultiTrackType.Enabled = false;
-            this.txt_MultiTrackType.FormattingEnabled = true;
-            this.txt_MultiTrackType.Items.AddRange(new object[] {
-            "",
-            "No Bass",
-            "No Lead",
-            "No Rhythm",
-            "No Vocal",
-            "(No Guitars)",
-            "Only Bass",
-            "Only Lead",
-            "Only Rhythm",
-            "Only Drums",
-            "Only Vocal",
-            "(Only BackTrack)"});
-            this.txt_MultiTrackType.Location = new System.Drawing.Point(112, 108);
-            this.txt_MultiTrackType.Margin = new System.Windows.Forms.Padding(2);
-            this.txt_MultiTrackType.Name = "txt_MultiTrackType";
-            this.txt_MultiTrackType.Size = new System.Drawing.Size(86, 21);
-            this.txt_MultiTrackType.TabIndex = 377;
-            this.toolTip1.SetToolTip(this.txt_MultiTrackType, "Multitrack type");
-            this.txt_MultiTrackType.SelectedIndexChanged += new System.EventHandler(this.txt_MultiTrackType_SelectedIndexChanged);
-            // 
-            // btn_NextItem
-            // 
-            this.btn_NextItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_NextItem.Location = new System.Drawing.Point(96, 92);
-            this.btn_NextItem.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_NextItem.Name = "btn_NextItem";
-            this.btn_NextItem.Size = new System.Drawing.Size(18, 16);
-            this.btn_NextItem.TabIndex = 318;
-            this.btn_NextItem.Text = ">";
-            this.toolTip1.SetToolTip(this.btn_NextItem, "Move Selection cursor one Down");
-            this.btn_NextItem.UseVisualStyleBackColor = true;
-            this.btn_NextItem.Click += new System.EventHandler(this.btn_NextItem_Click);
-            // 
-            // cmb_Filter
-            // 
-            this.cmb_Filter.DropDownWidth = 250;
-            this.cmb_Filter.FormattingEnabled = true;
-            this.cmb_Filter.Items.AddRange(new object[] {
-            "0ALL",
-            "ALL Others",
-            "Songs in Rocksmith Game Lib",
-            "Show Songs with FilesMissing Issues",
-            "Reverse current Filter",
-            "Imported Last",
-            "No Cover",
-            "No Guitar",
-            "No Preview",
-            "No Section",
-            "No Vocals",
-            "No Track No.",
-            "No Version",
-            "No Author",
-            "No Bass DD",
-            "No Bass",
-            "No DD",
-            "With DD",
-            "Alternate",
-            "Duplicated",
-            "Beta",
-            "Broken",
-            "Selected",
-            "With Bonus",
-            "Original",
-            "CDLC",
-            "Drop D",
-            "E Standard",
-            "Eb Standard",
-            "Other Tunings",
-            "Live",
-            "Acoustic",
-            "Imported as Pc",
-            "Imported as PS3",
-            "Imported as Mac",
-            "Imported as XBOX360",
-            "Packed (curr. Platform)",
-            "with Errors at Packing",
-            "DLCID diff than Default",
-            "Same DLCName",
-            "Same Title",
-            "Automatically generated Preview",
-            "Any DLCManager generated Preview",
-            "With Duplicates",
-            "Main_NoOLD",
-            "Imported Current Month",
-            "Packed Last",
-            "Packing Errors",
-            "Songs IMPORTED later than current song value",
-            "Songs ADDED later to the DropDown indicated Group than the import date of the cur" +
-                "rent song value",
-            "Lyrics Changed",
-            "Instrumental",
-            "Single",
-            "Soundtrack",
-            "EP",
-            "Audio Changed",
-            "Packed as Pc",
-            "Packed as PS3",
-            "<Packed as PS4>",
-            "Packed as Mac",
-            "Packed XBOX360",
-            "with Errors at Last Packing"});
-            this.cmb_Filter.Location = new System.Drawing.Point(35, 19);
-            this.cmb_Filter.Margin = new System.Windows.Forms.Padding(2);
-            this.cmb_Filter.MaxDropDownItems = 15;
-            this.cmb_Filter.Name = "cmb_Filter";
-            this.cmb_Filter.Size = new System.Drawing.Size(163, 21);
-            this.cmb_Filter.TabIndex = 275;
-            this.toolTip1.SetToolTip(this.cmb_Filter, "Different Listing filters");
-            this.cmb_Filter.SelectedIndexChanged += new System.EventHandler(this.cmb_Filter_SelectedIndexChanged);
-            // 
-            // btn_Prev
-            // 
-            this.btn_Prev.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Prev.Location = new System.Drawing.Point(80, 92);
-            this.btn_Prev.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_Prev.Name = "btn_Prev";
-            this.btn_Prev.Size = new System.Drawing.Size(18, 16);
-            this.btn_Prev.TabIndex = 319;
-            this.btn_Prev.Text = "<";
-            this.toolTip1.SetToolTip(this.btn_Prev, "Move Selection Cursor one Up");
-            this.btn_Prev.UseVisualStyleBackColor = true;
-            this.btn_Prev.Click += new System.EventHandler(this.btn_Prev_Click);
-            // 
-            // btn_SearchReset
-            // 
-            this.btn_SearchReset.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_SearchReset.Location = new System.Drawing.Point(434, 52);
-            this.btn_SearchReset.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_SearchReset.Name = "btn_SearchReset";
-            this.btn_SearchReset.Size = new System.Drawing.Size(50, 28);
-            this.btn_SearchReset.TabIndex = 56;
-            this.btn_SearchReset.Text = "Reset";
-            this.toolTip1.SetToolTip(this.btn_SearchReset, "Reset Search/Filter");
-            this.btn_SearchReset.UseVisualStyleBackColor = true;
-            this.btn_SearchReset.Click += new System.EventHandler(this.btn_SearchReset_Click);
-            // 
-            // btn_Search
-            // 
-            this.btn_Search.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Search.Location = new System.Drawing.Point(434, 22);
-            this.btn_Search.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_Search.Name = "btn_Search";
-            this.btn_Search.Size = new System.Drawing.Size(50, 28);
-            this.btn_Search.TabIndex = 51;
-            this.btn_Search.Text = "Search";
-            this.toolTip1.SetToolTip(this.btn_Search, "Search for a songg by title, album, filename,etc.");
-            this.btn_Search.UseVisualStyleBackColor = true;
-            this.btn_Search.Click += new System.EventHandler(this.btn_Search_Click);
-            // 
-            // btn_Tones
-            // 
-            this.btn_Tones.Location = new System.Drawing.Point(2, 184);
-            this.btn_Tones.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_Tones.Name = "btn_Tones";
-            this.btn_Tones.Size = new System.Drawing.Size(130, 22);
-            this.btn_Tones.TabIndex = 36;
-            this.btn_Tones.Text = "Open Tones";
-            this.toolTip1.SetToolTip(this.btn_Tones, "Open screen listing and allowing change for the Guitar tones used by each track");
-            this.btn_Tones.UseVisualStyleBackColor = true;
-            this.btn_Tones.Click += new System.EventHandler(this.btn_Tones_Click);
-            // 
-            // btn_Arrangements
-            // 
-            this.btn_Arrangements.Location = new System.Drawing.Point(2, 157);
-            this.btn_Arrangements.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_Arrangements.Name = "btn_Arrangements";
-            this.btn_Arrangements.Size = new System.Drawing.Size(130, 26);
-            this.btn_Arrangements.TabIndex = 35;
-            this.btn_Arrangements.Text = "Open Arrangements";
-            this.toolTip1.SetToolTip(this.btn_Arrangements, "Open a window Listing the Tracks and details to change or just observe");
-            this.btn_Arrangements.UseVisualStyleBackColor = true;
-            this.btn_Arrangements.Click += new System.EventHandler(this.btn_Arrangements_Click);
-            // 
             // splitContainer2
             // 
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -2159,7 +2293,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.splitContainer2.Panel2.Controls.Add(this.databox);
             this.splitContainer2.Panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer2_Panel2_Paint);
             this.splitContainer2.Panel2MinSize = 200;
-            this.splitContainer2.Size = new System.Drawing.Size(1212, 596);
+            this.splitContainer2.Size = new System.Drawing.Size(1222, 659);
             this.splitContainer2.SplitterDistance = 300;
             this.splitContainer2.SplitterWidth = 2;
             this.splitContainer2.TabIndex = 7;
@@ -2197,6 +2331,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // Panel1
             // 
+            this.Panel1.Controls.Add(this.btn_GoTo);
             this.Panel1.Controls.Add(this.txt_Description);
             this.Panel1.Controls.Add(this.gbox_Groups);
             this.Panel1.Controls.Add(this.txt_AlbumArtPath);
@@ -2208,7 +2343,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.Panel1.Controls.Add(this.txt_AudioPath);
             this.Panel1.Controls.Add(this.txt_AudioPreviewPath);
             this.Panel1.Controls.Add(this.txt_AlbumSort);
-            this.Panel1.Controls.Add(this.chbx_PreSavedFTP);
             this.Panel1.Controls.Add(this.btn_Refresh);
             this.Panel1.Controls.Add(this.btn_AssesIfDuplicate);
             this.Panel1.Controls.Add(this.btn_GarageBand);
@@ -2399,24 +2533,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_Sort.UseVisualStyleBackColor = true;
             this.btn_Sort.Click += new System.EventHandler(this.btn_Sort_Click);
             // 
-            // chbx_PreSavedFTP
-            // 
-            this.chbx_PreSavedFTP.FormattingEnabled = true;
-            this.chbx_PreSavedFTP.Items.AddRange(new object[] {
-            "EU",
-            "US",
-            "JAP",
-            "PC",
-            "Mac"});
-            this.chbx_PreSavedFTP.Location = new System.Drawing.Point(1143, 33);
-            this.chbx_PreSavedFTP.Margin = new System.Windows.Forms.Padding(2);
-            this.chbx_PreSavedFTP.Name = "chbx_PreSavedFTP";
-            this.chbx_PreSavedFTP.Size = new System.Drawing.Size(46, 21);
-            this.chbx_PreSavedFTP.TabIndex = 328;
-            this.chbx_PreSavedFTP.Text = "US";
-            this.chbx_PreSavedFTP.Visible = false;
-            this.chbx_PreSavedFTP.SelectedIndexChanged += new System.EventHandler(this.chbx_PreSavedFTP_SelectedIndexChanged);
-            // 
             // btn_Copy_Orig
             // 
             this.btn_Copy_Orig.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -2517,7 +2633,6 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // gbox_Pack
             // 
-            this.gbox_Pack.Controls.Add(this.comboBox1);
             this.gbox_Pack.Controls.Add(this.chbx_PS3Retail);
             this.gbox_Pack.Controls.Add(this.chbx_PS3HAN);
             this.gbox_Pack.Controls.Add(this.btn_OpenRepackedFolder);
@@ -2548,7 +2663,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_RemoveBassDD.AutoSize = true;
             this.chbx_RemoveBassDD.Checked = true;
             this.chbx_RemoveBassDD.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chbx_RemoveBassDD.Location = new System.Drawing.Point(4, 66);
+            this.chbx_RemoveBassDD.Location = new System.Drawing.Point(2, 66);
             this.chbx_RemoveBassDD.Margin = new System.Windows.Forms.Padding(2);
             this.chbx_RemoveBassDD.Name = "chbx_RemoveBassDD";
             this.chbx_RemoveBassDD.Size = new System.Drawing.Size(82, 17);
@@ -2566,16 +2681,16 @@ namespace RocksmithToolkitGUI.DLCManager
             "Mac",
             "XBOX360",
             "<All>",
-            "PS4",
-            "iOS",
+            "<PS4>",
+            "<iOS>",
             "PS3_EU",
-            "PS3_JP"});
-            this.chbx_Format.Location = new System.Drawing.Point(66, 14);
+            "<PS3_JP>"});
+            this.chbx_Format.Location = new System.Drawing.Point(55, 14);
             this.chbx_Format.Margin = new System.Windows.Forms.Padding(2);
             this.chbx_Format.Name = "chbx_Format";
-            this.chbx_Format.Size = new System.Drawing.Size(54, 20);
+            this.chbx_Format.Size = new System.Drawing.Size(66, 20);
             this.chbx_Format.TabIndex = 108;
-            this.chbx_Format.Text = "PS3";
+            this.chbx_Format.Text = "PS3_US";
             this.chbx_Format.SelectedIndexChanged += new System.EventHandler(this.cbx_Format_SelectedValueChanged);
             // 
             // txt_FTPPath
@@ -2583,7 +2698,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_FTPPath.Cue = "Copy&FTP_Path";
             this.txt_FTPPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_FTPPath.ForeColor = System.Drawing.Color.Gray;
-            this.txt_FTPPath.Location = new System.Drawing.Point(4, 98);
+            this.txt_FTPPath.Location = new System.Drawing.Point(2, 98);
             this.txt_FTPPath.Margin = new System.Windows.Forms.Padding(2);
             this.txt_FTPPath.Name = "txt_FTPPath";
             this.txt_FTPPath.Size = new System.Drawing.Size(152, 20);
@@ -2688,14 +2803,19 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // gbox_QualityChecks
             // 
-            this.gbox_QualityChecks.Controls.Add(this.btn_ShowLyrics);
-            this.gbox_QualityChecks.Controls.Add(this.chbx_IsInstrumental);
-            this.gbox_QualityChecks.Controls.Add(this.chbbx_IsEP);
+            this.gbox_QualityChecks.Controls.Add(this.chbx_FullAlbum);
+            this.gbox_QualityChecks.Controls.Add(this.chbx_ImprovedWithDM);
+            this.gbox_QualityChecks.Controls.Add(this.chbx_IsUncensored);
+            this.gbox_QualityChecks.Controls.Add(this.chbx_IntheWorks);
+            this.gbox_QualityChecks.Controls.Add(this.chbx_IsEP);
+            this.gbox_QualityChecks.Controls.Add(this.chbx_IsAcoustic);
             this.gbox_QualityChecks.Controls.Add(this.chbx_IsSingle);
             this.gbox_QualityChecks.Controls.Add(this.chbx_IsSoundtrack);
+            this.gbox_QualityChecks.Controls.Add(this.chbx_IsInstrumental);
+            this.gbox_QualityChecks.Controls.Add(this.chbx_IsLive);
+            this.gbox_QualityChecks.Controls.Add(this.chbx_Original);
+            this.gbox_QualityChecks.Controls.Add(this.btn_ShowLyrics);
             this.gbox_QualityChecks.Controls.Add(this.chbx_UseInternalDDRemovalLogic);
-            this.gbox_QualityChecks.Controls.Add(this.chbx_Is_Acoustic);
-            this.gbox_QualityChecks.Controls.Add(this.chbx_Is_Live);
             this.gbox_QualityChecks.Controls.Add(this.btn_EOF);
             this.gbox_QualityChecks.Controls.Add(this.btn_CreateLyrics);
             this.gbox_QualityChecks.Controls.Add(this.chbx_KeepDD);
@@ -2707,7 +2827,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.gbox_QualityChecks.Controls.Add(this.btn_RemoveDD);
             this.gbox_QualityChecks.Controls.Add(this.chbx_DD);
             this.gbox_QualityChecks.Controls.Add(this.txt_AddDD);
-            this.gbox_QualityChecks.Controls.Add(this.chbx_Original);
             this.gbox_QualityChecks.Controls.Add(this.chbx_Sections);
             this.gbox_QualityChecks.Controls.Add(this.chbx_Preview);
             this.gbox_QualityChecks.Controls.Add(this.chbx_Author);
@@ -2726,27 +2845,17 @@ namespace RocksmithToolkitGUI.DLCManager
             this.gbox_QualityChecks.TabStop = false;
             this.gbox_QualityChecks.Text = "Quality Checks";
             // 
-            // chbbx_IsEP
+            // chbx_Original
             // 
-            this.chbbx_IsEP.AutoCheck = false;
-            this.chbbx_IsEP.AutoSize = true;
-            this.chbbx_IsEP.Location = new System.Drawing.Point(169, 90);
-            this.chbbx_IsEP.Margin = new System.Windows.Forms.Padding(2);
-            this.chbbx_IsEP.Name = "chbbx_IsEP";
-            this.chbbx_IsEP.Size = new System.Drawing.Size(40, 17);
-            this.chbbx_IsEP.TabIndex = 341;
-            this.chbbx_IsEP.Text = "EP";
-            this.chbbx_IsEP.UseVisualStyleBackColor = true;
-            // 
-            // chbx_KeepDD
-            // 
-            this.chbx_KeepDD.AutoSize = true;
-            this.chbx_KeepDD.Location = new System.Drawing.Point(139, 34);
-            this.chbx_KeepDD.Margin = new System.Windows.Forms.Padding(2);
-            this.chbx_KeepDD.Name = "chbx_KeepDD";
-            this.chbx_KeepDD.Size = new System.Drawing.Size(15, 14);
-            this.chbx_KeepDD.TabIndex = 330;
-            this.chbx_KeepDD.UseVisualStyleBackColor = true;
+            this.chbx_Original.AutoSize = true;
+            this.chbx_Original.ForeColor = System.Drawing.SystemColors.MenuHighlight;
+            this.chbx_Original.Location = new System.Drawing.Point(151, 103);
+            this.chbx_Original.Margin = new System.Windows.Forms.Padding(2);
+            this.chbx_Original.Name = "chbx_Original";
+            this.chbx_Original.Size = new System.Drawing.Size(58, 17);
+            this.chbx_Original.TabIndex = 425;
+            this.chbx_Original.Text = "Official";
+            this.chbx_Original.UseVisualStyleBackColor = true;
             // 
             // btn_AddSections
             // 
@@ -2816,18 +2925,6 @@ namespace RocksmithToolkitGUI.DLCManager
             0,
             0,
             0});
-            // 
-            // chbx_Original
-            // 
-            this.chbx_Original.AutoSize = true;
-            this.chbx_Original.ForeColor = System.Drawing.SystemColors.MenuHighlight;
-            this.chbx_Original.Location = new System.Drawing.Point(151, 104);
-            this.chbx_Original.Margin = new System.Windows.Forms.Padding(2);
-            this.chbx_Original.Name = "chbx_Original";
-            this.chbx_Original.Size = new System.Drawing.Size(58, 17);
-            this.chbx_Original.TabIndex = 44;
-            this.chbx_Original.Text = "Official";
-            this.chbx_Original.UseVisualStyleBackColor = true;
             // 
             // chbx_Preview
             // 
@@ -2911,6 +3008,8 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.chbx_InclLanguage);
+            this.groupBox2.Controls.Add(this.chbx_LyricsLanguage);
             this.groupBox2.Controls.Add(this.chbx_FilterCompound);
             this.groupBox2.Controls.Add(this.chbx_FilterNot);
             this.groupBox2.Controls.Add(this.chbx_InclBroken);
@@ -3265,7 +3364,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_Close.Location = new System.Drawing.Point(1071, 75);
             this.btn_Close.Margin = new System.Windows.Forms.Padding(0);
             this.btn_Close.Name = "btn_Close";
-            this.btn_Close.Size = new System.Drawing.Size(73, 20);
+            this.btn_Close.Size = new System.Drawing.Size(73, 24);
             this.btn_Close.TabIndex = 273;
             this.btn_Close.Text = "Close";
             this.btn_Close.UseVisualStyleBackColor = false;
@@ -3294,6 +3393,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_Alternate.TabIndex = 46;
             this.chbx_Alternate.Text = "Alternate";
             this.chbx_Alternate.UseVisualStyleBackColor = true;
+            this.chbx_Alternate.CheckedChanged += new System.EventHandler(this.chbx_Alternate_CheckStateChanged);
             // 
             // CheckBox1
             // 
@@ -3560,6 +3660,13 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.label10);
+            this.tabPage3.Controls.Add(this.label7);
+            this.tabPage3.Controls.Add(this.label3);
+            this.tabPage3.Controls.Add(this.chbx_Instaces);
+            this.tabPage3.Controls.Add(this.txt_No4Splitting);
+            this.tabPage3.Controls.Add(this.txt_ValueSetting);
+            this.tabPage3.Controls.Add(this.btn_UltraStarCreator);
             this.tabPage3.Controls.Add(this.Btn_ExportGuitarPro);
             this.tabPage3.Controls.Add(this.btn_WinMerge);
             this.tabPage3.Controls.Add(this.btn_RockBand);
@@ -3572,7 +3679,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.tabPage3.Controls.Add(this.btn_PKGSigner);
             this.tabPage3.Controls.Add(this.btn_TrueRepacker);
             this.tabPage3.Controls.Add(this.btn_PKGLinker);
-            this.tabPage3.Controls.Add(this.button5);
+            this.tabPage3.Controls.Add(this.btn_RemoveMultiPacksinstances);
             this.tabPage3.Controls.Add(this.txt_NoOfSplits);
             this.tabPage3.Controls.Add(this.btn_AddPackSplit);
             this.tabPage3.Controls.Add(this.button2);
@@ -3582,9 +3689,11 @@ namespace RocksmithToolkitGUI.DLCManager
             this.tabPage3.Controls.Add(this.chbx_Ignore_Officials);
             this.tabPage3.Controls.Add(this.btn_Remove_AllDuplicates);
             this.tabPage3.Controls.Add(this.btn_Remove_All_Packed);
+            this.tabPage3.Controls.Add(this.chbx_Setting);
             this.tabPage3.Controls.Add(this.cmb_Packed);
             this.tabPage3.Controls.Add(this.txt_CoundofPacked);
             this.tabPage3.Controls.Add(this.btn_Remove_Packed);
+            this.tabPage3.Controls.Add(this.btn_SaveSetting);
             this.tabPage3.Controls.Add(this.btn_RemoveAllRemoteSongs);
             this.tabPage3.Controls.Add(this.btn_RemoveRemoteSong);
             this.tabPage3.Controls.Add(this.txt_RemotePath);
@@ -3597,9 +3706,79 @@ namespace RocksmithToolkitGUI.DLCManager
             this.tabPage3.Text = "GameData";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // label10
+            // 
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(162, 192);
+            this.label10.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(32, 20);
+            this.label10.TabIndex = 401;
+            this.label10.Text = "Split";
+            // 
+            // label7
+            // 
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(230, 192);
+            this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(39, 20);
+            this.label7.TabIndex = 400;
+            this.label7.Text = "times";
+            // 
+            // label3
+            // 
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(208, 229);
+            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(39, 20);
+            this.label3.TabIndex = 399;
+            this.label3.Text = "Songs";
+            // 
+            // txt_No4Splitting
+            // 
+            this.txt_No4Splitting.Location = new System.Drawing.Point(195, 191);
+            this.txt_No4Splitting.Margin = new System.Windows.Forms.Padding(2);
+            this.txt_No4Splitting.Maximum = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.txt_No4Splitting.Name = "txt_No4Splitting";
+            this.txt_No4Splitting.Size = new System.Drawing.Size(31, 20);
+            this.txt_No4Splitting.TabIndex = 397;
+            this.txt_No4Splitting.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.txt_No4Splitting.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
+            // 
+            // txt_ValueSetting
+            // 
+            this.txt_ValueSetting.Location = new System.Drawing.Point(825, 162);
+            this.txt_ValueSetting.Margin = new System.Windows.Forms.Padding(2);
+            this.txt_ValueSetting.Name = "txt_ValueSetting";
+            this.txt_ValueSetting.Size = new System.Drawing.Size(295, 48);
+            this.txt_ValueSetting.TabIndex = 396;
+            this.txt_ValueSetting.Text = "";
+            // 
+            // btn_UltraStarCreator
+            // 
+            this.btn_UltraStarCreator.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_UltraStarCreator.Location = new System.Drawing.Point(681, 165);
+            this.btn_UltraStarCreator.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_UltraStarCreator.Name = "btn_UltraStarCreator";
+            this.btn_UltraStarCreator.Size = new System.Drawing.Size(140, 22);
+            this.btn_UltraStarCreator.TabIndex = 365;
+            this.btn_UltraStarCreator.Text = "UltraStar Creator";
+            this.btn_UltraStarCreator.UseVisualStyleBackColor = true;
+            this.btn_UltraStarCreator.Visible = false;
+            this.btn_UltraStarCreator.Click += new System.EventHandler(this.button1_Click_1);
+            // 
             // btn_WinMerge
             // 
-            this.btn_WinMerge.Enabled = false;
             this.btn_WinMerge.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_WinMerge.Location = new System.Drawing.Point(537, 244);
             this.btn_WinMerge.Margin = new System.Windows.Forms.Padding(2);
@@ -3627,7 +3806,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // btn_OpenMulti
             // 
             this.btn_OpenMulti.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_OpenMulti.Location = new System.Drawing.Point(150, 192);
+            this.btn_OpenMulti.Location = new System.Drawing.Point(251, 229);
             this.btn_OpenMulti.Margin = new System.Windows.Forms.Padding(2);
             this.btn_OpenMulti.Name = "btn_OpenMulti";
             this.btn_OpenMulti.Size = new System.Drawing.Size(100, 20);
@@ -3664,7 +3843,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_NoOfSplits
             // 
-            this.txt_NoOfSplits.Location = new System.Drawing.Point(150, 228);
+            this.txt_NoOfSplits.Location = new System.Drawing.Point(162, 228);
             this.txt_NoOfSplits.Margin = new System.Windows.Forms.Padding(2);
             this.txt_NoOfSplits.Maximum = new decimal(new int[] {
             500,
@@ -3672,13 +3851,14 @@ namespace RocksmithToolkitGUI.DLCManager
             0,
             0});
             this.txt_NoOfSplits.Name = "txt_NoOfSplits";
-            this.txt_NoOfSplits.Size = new System.Drawing.Size(45, 20);
+            this.txt_NoOfSplits.Size = new System.Drawing.Size(46, 20);
             this.txt_NoOfSplits.TabIndex = 350;
             this.txt_NoOfSplits.Value = new decimal(new int[] {
             100,
             0,
             0,
             0});
+            this.txt_NoOfSplits.ValueChanged += new System.EventHandler(this.txt_NoOfSplits_ValueChanged);
             // 
             // btn_AddPackSplit
             // 
@@ -3686,7 +3866,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_AddPackSplit.Location = new System.Drawing.Point(4, 190);
             this.btn_AddPackSplit.Margin = new System.Windows.Forms.Padding(2);
             this.btn_AddPackSplit.Name = "btn_AddPackSplit";
-            this.btn_AddPackSplit.Size = new System.Drawing.Size(140, 56);
+            this.btn_AddPackSplit.Size = new System.Drawing.Size(154, 56);
             this.btn_AddPackSplit.TabIndex = 349;
             this.btn_AddPackSplit.Text = "Add a Split no for MassPack with multiple instances of the DLCManager";
             this.btn_AddPackSplit.UseVisualStyleBackColor = true;
@@ -3697,7 +3877,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.button2.Location = new System.Drawing.Point(4, 100);
             this.button2.Margin = new System.Windows.Forms.Padding(2);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(140, 38);
+            this.button2.Size = new System.Drawing.Size(149, 38);
             this.button2.TabIndex = 348;
             this.button2.Text = "Remove All Marked (by readLib) as Missing";
             this.button2.UseVisualStyleBackColor = true;
@@ -3706,7 +3886,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // btn_Remove_HashDuplicates
             // 
-            this.btn_Remove_HashDuplicates.Location = new System.Drawing.Point(150, 110);
+            this.btn_Remove_HashDuplicates.Location = new System.Drawing.Point(162, 111);
             this.btn_Remove_HashDuplicates.Margin = new System.Windows.Forms.Padding(2);
             this.btn_Remove_HashDuplicates.Name = "btn_Remove_HashDuplicates";
             this.btn_Remove_HashDuplicates.Size = new System.Drawing.Size(150, 20);
@@ -3720,7 +3900,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_Ignore_Officials.AutoSize = true;
             this.chbx_Ignore_Officials.Checked = true;
             this.chbx_Ignore_Officials.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chbx_Ignore_Officials.Location = new System.Drawing.Point(448, 88);
+            this.chbx_Ignore_Officials.Location = new System.Drawing.Point(460, 89);
             this.chbx_Ignore_Officials.Margin = new System.Windows.Forms.Padding(2);
             this.chbx_Ignore_Officials.Name = "chbx_Ignore_Officials";
             this.chbx_Ignore_Officials.Size = new System.Drawing.Size(149, 17);
@@ -3730,7 +3910,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // btn_Remove_AllDuplicates
             // 
-            this.btn_Remove_AllDuplicates.Location = new System.Drawing.Point(304, 84);
+            this.btn_Remove_AllDuplicates.Location = new System.Drawing.Point(316, 85);
             this.btn_Remove_AllDuplicates.Margin = new System.Windows.Forms.Padding(2);
             this.btn_Remove_AllDuplicates.Name = "btn_Remove_AllDuplicates";
             this.btn_Remove_AllDuplicates.Size = new System.Drawing.Size(140, 20);
@@ -3741,7 +3921,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // btn_Remove_All_Packed
             // 
-            this.btn_Remove_All_Packed.Location = new System.Drawing.Point(150, 84);
+            this.btn_Remove_All_Packed.Location = new System.Drawing.Point(162, 85);
             this.btn_Remove_All_Packed.Margin = new System.Windows.Forms.Padding(2);
             this.btn_Remove_All_Packed.Name = "btn_Remove_All_Packed";
             this.btn_Remove_All_Packed.Size = new System.Drawing.Size(150, 20);
@@ -3750,11 +3930,21 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_Remove_All_Packed.UseVisualStyleBackColor = true;
             this.btn_Remove_All_Packed.Click += new System.EventHandler(this.btn_Remove_All_Packed_Click);
             // 
+            // chbx_Setting
+            // 
+            this.chbx_Setting.FormattingEnabled = true;
+            this.chbx_Setting.Location = new System.Drawing.Point(825, 139);
+            this.chbx_Setting.Margin = new System.Windows.Forms.Padding(2);
+            this.chbx_Setting.Name = "chbx_Setting";
+            this.chbx_Setting.Size = new System.Drawing.Size(295, 21);
+            this.chbx_Setting.TabIndex = 341;
+            this.chbx_Setting.SelectedIndexChanged += new System.EventHandler(this.chbx_Setting_SelectedIndexChanged);
+            // 
             // cmb_Packed
             // 
             this.cmb_Packed.Enabled = false;
             this.cmb_Packed.FormattingEnabled = true;
-            this.cmb_Packed.Location = new System.Drawing.Point(212, 58);
+            this.cmb_Packed.Location = new System.Drawing.Point(224, 59);
             this.cmb_Packed.Margin = new System.Windows.Forms.Padding(2);
             this.cmb_Packed.Name = "cmb_Packed";
             this.cmb_Packed.Size = new System.Drawing.Size(686, 21);
@@ -3762,7 +3952,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_CoundofPacked
             // 
-            this.txt_CoundofPacked.Location = new System.Drawing.Point(150, 60);
+            this.txt_CoundofPacked.Location = new System.Drawing.Point(162, 61);
             this.txt_CoundofPacked.Margin = new System.Windows.Forms.Padding(2);
             this.txt_CoundofPacked.Maximum = new decimal(new int[] {
             99,
@@ -3783,18 +3973,29 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_Remove_Packed.Location = new System.Drawing.Point(4, 58);
             this.btn_Remove_Packed.Margin = new System.Windows.Forms.Padding(2);
             this.btn_Remove_Packed.Name = "btn_Remove_Packed";
-            this.btn_Remove_Packed.Size = new System.Drawing.Size(140, 34);
+            this.btn_Remove_Packed.Size = new System.Drawing.Size(149, 34);
             this.btn_Remove_Packed.TabIndex = 338;
             this.btn_Remove_Packed.Text = "Remove All but the Selected Packed Song";
             this.btn_Remove_Packed.UseVisualStyleBackColor = true;
             this.btn_Remove_Packed.Click += new System.EventHandler(this.btn_Remove_Packed_Click);
+            // 
+            // btn_SaveSetting
+            // 
+            this.btn_SaveSetting.Location = new System.Drawing.Point(980, 214);
+            this.btn_SaveSetting.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_SaveSetting.Name = "btn_SaveSetting";
+            this.btn_SaveSetting.Size = new System.Drawing.Size(140, 46);
+            this.btn_SaveSetting.TabIndex = 333;
+            this.btn_SaveSetting.Text = "Save Setting";
+            this.btn_SaveSetting.UseVisualStyleBackColor = true;
+            this.btn_SaveSetting.Click += new System.EventHandler(this.btn_SaveSetting_Click);
             // 
             // btn_RemoveAllRemoteSongs
             // 
             this.btn_RemoveAllRemoteSongs.Location = new System.Drawing.Point(4, 30);
             this.btn_RemoveAllRemoteSongs.Margin = new System.Windows.Forms.Padding(2);
             this.btn_RemoveAllRemoteSongs.Name = "btn_RemoveAllRemoteSongs";
-            this.btn_RemoveAllRemoteSongs.Size = new System.Drawing.Size(140, 20);
+            this.btn_RemoveAllRemoteSongs.Size = new System.Drawing.Size(149, 20);
             this.btn_RemoveAllRemoteSongs.TabIndex = 333;
             this.btn_RemoveAllRemoteSongs.Text = "Remove All Remote Songs";
             this.btn_RemoveAllRemoteSongs.UseVisualStyleBackColor = true;
@@ -3805,7 +4006,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_RemoveRemoteSong.Location = new System.Drawing.Point(4, 6);
             this.btn_RemoveRemoteSong.Margin = new System.Windows.Forms.Padding(2);
             this.btn_RemoveRemoteSong.Name = "btn_RemoveRemoteSong";
-            this.btn_RemoveRemoteSong.Size = new System.Drawing.Size(140, 20);
+            this.btn_RemoveRemoteSong.Size = new System.Drawing.Size(149, 20);
             this.btn_RemoveRemoteSong.TabIndex = 332;
             this.btn_RemoveRemoteSong.Text = "Remove Remote Song";
             this.btn_RemoveRemoteSong.UseVisualStyleBackColor = true;
@@ -3817,7 +4018,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_RemotePath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_RemotePath.ForeColor = System.Drawing.Color.Gray;
             this.txt_RemotePath.HideSelection = false;
-            this.txt_RemotePath.Location = new System.Drawing.Point(150, 6);
+            this.txt_RemotePath.Location = new System.Drawing.Point(162, 7);
             this.txt_RemotePath.Margin = new System.Windows.Forms.Padding(2);
             this.txt_RemotePath.Name = "txt_RemotePath";
             this.txt_RemotePath.ReadOnly = true;
@@ -3944,7 +4145,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_SavedPlaylists.Location = new System.Drawing.Point(624, 34);
             this.txt_SavedPlaylists.Margin = new System.Windows.Forms.Padding(2);
             this.txt_SavedPlaylists.Name = "txt_SavedPlaylists";
-            this.txt_SavedPlaylists.Size = new System.Drawing.Size(214, 43);
+            this.txt_SavedPlaylists.Size = new System.Drawing.Size(214, 30);
             this.txt_SavedPlaylists.TabIndex = 397;
             // 
             // txt_SavedTracks
@@ -3954,6 +4155,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.columnHeader5,
             this.columnHeader6});
             this.txt_SavedTracks.FullRowSelect = true;
+            this.txt_SavedTracks.HideSelection = false;
             this.txt_SavedTracks.Location = new System.Drawing.Point(406, 30);
             this.txt_SavedTracks.Margin = new System.Windows.Forms.Padding(2);
             this.txt_SavedTracks.Name = "txt_SavedTracks";
@@ -4010,10 +4212,12 @@ namespace RocksmithToolkitGUI.DLCManager
             this.databox.MinimumSize = new System.Drawing.Size(1200, 300);
             this.databox.Name = "databox";
             this.databox.ReadOnly = true;
+            this.databox.RowHeadersWidth = 82;
             this.databox.RowTemplate.Height = 33;
             this.databox.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.databox.Size = new System.Drawing.Size(1212, 300);
+            this.databox.Size = new System.Drawing.Size(1222, 357);
             this.databox.TabIndex = 8;
+            this.databox.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.databox_CellMouseEnter);
             this.databox.ColumnSortModeChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.Databox_ColumnSortModeChanged);
             this.databox.SelectionChanged += new System.EventHandler(this.databox_SelectionChanged);
             this.databox.Sorted += new System.EventHandler(this.Databox_Sorted);
@@ -4075,11 +4279,11 @@ namespace RocksmithToolkitGUI.DLCManager
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(1212, 596);
+            this.ClientSize = new System.Drawing.Size(1222, 659);
             this.Controls.Add(this.splitContainer2);
             this.Margin = new System.Windows.Forms.Padding(2);
-            this.MaximumSize = new System.Drawing.Size(3448, 3327);
-            this.MinimumSize = new System.Drawing.Size(837, 425);
+            this.MaximumSize = new System.Drawing.Size(3443, 3311);
+            this.MinimumSize = new System.Drawing.Size(806, 409);
             this.Name = "MainDB";
             this.Text = "0";
             this.HelpButtonClicked += new System.ComponentModel.CancelEventHandler(this.MainDB_FormClosed);
@@ -4127,6 +4331,7 @@ namespace RocksmithToolkitGUI.DLCManager
             ((System.ComponentModel.ISupportInitialize)(this.txt_CustomsForge_Like)).EndInit();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txt_No4Splitting)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txt_NoOfSplits)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txt_CoundofPacked)).EndInit();
             this.tabPage4.ResumeLayout(false);
@@ -4188,7 +4393,6 @@ namespace RocksmithToolkitGUI.DLCManager
         private CheckBox chbx_CopyOld;
         private CheckBox chbx_RemoveBassDD;
         public ProgressBar pB_ReadDLCs;
-        private ComboBox chbx_PreSavedFTP;
         private Button btn_Package;
         private ComboBox chbx_Format;
         private CheckBox chbx_Copy;
@@ -4205,8 +4409,6 @@ namespace RocksmithToolkitGUI.DLCManager
         private CueTextBox txt_Tuning;
         private GroupBox gbox_QualityChecks;
         private CheckBox chbx_UseInternalDDRemovalLogic;
-        private CheckBox chbx_Is_Acoustic;
-        private CheckBox chbx_Is_Live;
         private Button btn_EOF;
         private Button btn_CreateLyrics;
         private CheckBox chbx_KeepDD;
@@ -4218,7 +4420,6 @@ namespace RocksmithToolkitGUI.DLCManager
         private Button btn_RemoveDD;
         private CheckBox chbx_DD;
         private NumericUpDown txt_AddDD;
-        private CheckBox chbx_Original;
         private CheckBox chbx_Sections;
         private CheckBox chbx_Preview;
         private CheckBox chbx_Author;
@@ -4328,7 +4529,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private Button btn_PKGSigner;
         private Button btn_TrueRepacker;
         private Button btn_PKGLinker;
-        private Button button5;
+        private Button btn_RemoveMultiPacksinstances;
         private NumericUpDown txt_NoOfSplits;
         private Button btn_AddPackSplit;
         private Button button2;
@@ -4370,16 +4571,11 @@ namespace RocksmithToolkitGUI.DLCManager
         private NumericUpDown num_Lyrics;
         private Button btn_Youtube;
         private CueTextBox txt_YouTube_Link;
-        private CheckBox chbx_IsSoundtrack;
         private CheckBox checkBox4;
-        private CheckBox chbx_IsSingle;
         private CheckBox chbx_LyricsChanged;
         private CheckBox chbx_AudioChanged;
-        private CheckBox chbbx_IsEP;
-        private CheckBox chbx_IsInstrumental;
         private Button btn_Refresh;
         private ToolStripMenuItem tlSMI_Refresh;
-        private ComboBox comboBox1;
         private ComboBox txt_Playthrough;
         private DataGridView databox;
         private CueTextBox txt_AlbumSort;
@@ -4402,5 +4598,28 @@ namespace RocksmithToolkitGUI.DLCManager
         private GroupBox gbox_Groups;
         private RichTextBox txt_Description;
         private Button btn_ReduceLenght;
+        private Button btn_UltraStarCreator;
+        private ComboBox chbx_Setting;
+        private Button btn_SaveSetting;
+        private RichTextBox txt_ValueSetting;
+        private ComboBox chbx_LyricsLanguage;
+        private CheckBox chbx_InclLanguage;
+        private Button btn_GoTo;
+        private CheckBox chbx_IsLive;
+        private CheckBox chbx_Original;
+        private CheckBox chbx_IsInstrumental;
+        private CheckBox chbx_IsEP;
+        private CheckBox chbx_IsAcoustic;
+        private CheckBox chbx_IsSingle;
+        private CheckBox chbx_IsSoundtrack;
+        private CheckBox chbx_IsUncensored;
+        private CheckBox chbx_IntheWorks;
+        private CheckBox chbx_ImprovedWithDM;
+        private Label label10;
+        private Label label7;
+        private Label label3;
+        private CheckBox chbx_Instaces;
+        private NumericUpDown txt_No4Splitting;
+        private CheckBox chbx_FullAlbum;
     }
 }

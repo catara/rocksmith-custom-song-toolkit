@@ -141,7 +141,9 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest2014.Header
             Metronome = arrangement.Metronome == Sng.Metronome.None ? null : (int?)arrangement.Metronome;
 
             // TODO: monitor this change
-            Representative = arrangement.ArrangementPropeties.Represent;
+            if (arrangement.ArrangementPropeties != null) Representative = arrangement.ArrangementPropeties.Represent;//bcapi
+            else
+                Representative = 1;
 
             RouteMask = (int)arrangement.RouteMask;
 
@@ -158,7 +160,7 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest2014.Header
 
             // optional properties
             JapaneseSongName = string.IsNullOrEmpty(info.SongInfo.JapaneseSongName) ? null : info.SongInfo.JapaneseSongName;
-            JapaneseArtistName = string.IsNullOrEmpty(info.SongInfo.JapaneseArtistName) ? null : info.SongInfo.JapaneseArtistName;            
+            JapaneseArtistName = string.IsNullOrEmpty(info.SongInfo.JapaneseArtistName) ? null : info.SongInfo.JapaneseArtistName;
         }
 
         // Conditionally serialized properties

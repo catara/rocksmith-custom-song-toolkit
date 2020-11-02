@@ -1,0 +1,13 @@
+
+<h2>Volume Threshold</h2>
+<p>音量阈值。在低于该默认音量电平时，将按照 Property Editor 的 Advanced Settings 中所定义行为管理声部。例如，可对低于音量阈值的声部执行以下任何操作：</p>
+<ul>
+<li>Continue to play</li>
+<li>Be killed</li>
+<li><span class="condition" name="Feature_VirtualVoice">Sent to the virtual voice list</span></li>
+</ul>
+<p>可使用 Wwise SDK API 而不沿用该值。</p>
+<p><strong>备注</strong>:即便继续播放或变为虚声部，只要低于音量阈值，声部就不会被听到。
+<strong>备注</strong>:默认滑杆范围为 -96 至 0。您可以通过直接输入值，或在编辑控件上移动鼠标来输入超出限制范围的值。</p>
+<p>Default value: -80<br/>
+Range: -96 to 0<br/></p>

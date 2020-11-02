@@ -39,7 +39,7 @@ namespace RocksmithToolkitGUI.DLCManager
         }
 
         private string Filename = System.IO.Path.Combine(Application.StartupPath, "Text.txt");
-
+        DateTime timestamp;
         public string netstatus = ConfigRepository.Instance()["dlcm_netstatus"];
 
         private BindingSource Main = new BindingSource();
@@ -258,7 +258,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 ////catch (Exception ex)
                 ////{
                 ////    MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                ////    ErrorWindow frm1 = new ErrorWindow("DB Open in Design Mode, or Missing, or you need to Download Connectivity patch @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error when opening the Standardization DB", false, false);
+                ////    ErrorWindow frm1 = new ErrorWindow("DB Open in Design Mode, or Missing, or You need to Download Connectivity patch 32/64 bit to match your version of Office @ ", "https://www.microsoft.com/en-us/download/confirmation.aspx?id=23734", "Error when opening the Standardization DB", false, false);
                 ////    frm1.ShowDialog();
                 ////    return;
                 ////}
@@ -607,7 +607,7 @@ namespace RocksmithToolkitGUI.DLCManager
             var NoRec = 0;
 
             //DataSet dgt = new DataSet(); dgt = SelectFromDB("Standardization", "SELECT iif(o.Artist_Correction <> \"\", o.Artist_Correction, o.Artist), iif(o.Album_Correction <> \"\", o.Album_Correction, o.Album), o.Year_Correction" +
-            cmd = "SELECT iif(o.Artist_Correction <> \"\", o.Artist_Correction, o.Artist), iif(o.Album_Correction <> \"\", o.Album_Correction, o.Album), o.Year_Correction" +
+            cmd = "SELECT distinct iif(o.Artist_Correction <> \"\", o.Artist_Correction, o.Artist), iif(o.Album_Correction <> \"\", o.Album_Correction, o.Album), o.Year_Correction" +
                 " FROM Standardization o WHERE o.Year_Correction<>\"\"" +
                 " GROUP BY iif(o.Artist_Correction <> \"\", o.Artist_Correction, o.Artist), iif(o.Album_Correction <> \"\", o.Album_Correction, o.Album), o.Year_Correction;";
             DataSet dgt = new DataSet(); dgt = SelectFromDB("Standardization", cmd, "", cnb);
@@ -673,8 +673,8 @@ namespace RocksmithToolkitGUI.DLCManager
                     //pB_ReadDLCs.Value = 0;
                     if (dfz.Tables.Count > 0) foreach (DataRow dataRow in dfz.Tables[0].Rows)
                         {
-                            var insertcmdd = "CDLC_ID, Groups, Type";
-                            var insertvalues = "\"" + dataRow.ItemArray[0].ToString() + "\",\"" + grp + "\",\"DLC\"";
+                            var insertcmdd = "CDLC_ID, Groups, Type, Date_Added";
+                            var insertvalues = "\"" + dataRow.ItemArray[0].ToString() + "\",\"" + grp + "\",\"DLC\""+ ",\""+DateTime.Now.ToString("yyyyMMdd HHmmssfff") + "\"";
                             //insertvalues = SearchCmd.Replace("*", "");
                             InsertIntoDBwValues("Groups", insertcmdd, insertvalues, cnb, 0);
                         }
@@ -718,7 +718,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 {
                     var artist = dataRow.ItemArray[0].ToString();
                     var artist_c = dataRow.ItemArray[1].ToString();
-                    var cmd1 = "UPDATE Standardization SET Artist_Correction = \"" + artist_c + "\"" +
+                    var cmd1 = "UPDATE Standardization SET Artist_Correction = \"" + artist_c + "\" , Has_Been_Corrected=\"Yes\"" +
                         " WHERE Artist=\"" + artist + "\"" +
                     // OR Artist_Correction=\"" + artist_c + "\" OR Artist=\"" + artist_c + "\" " +
                         "AND Artist_correction <> Null";
@@ -736,7 +736,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     var album_c = dataRow.ItemArray[1].ToString();
                     var artist = dataRow.ItemArray[2].ToString();
                     var artist_c = dataRow.ItemArray[3].ToString();
-                    var cmd1 = "UPDATE Standardization SET Album_Correction = \"" + album_c + "\"" +
+                    var cmd1 = "UPDATE Standardization SET Album_Correction = \"" + album_c + "\", Has_Been_Corrected=\"Yes\"" +
                         " WHERE Artist=\"" + artist + "\"" +
                     //OR Artist_Correction=\"" + artist_c + "\" OR Artist=\"" + artist_c + "\" OR Artist_Correction=\"" + artist + "\")" +
                         " AND Album=\"" + album + "\"";
@@ -757,7 +757,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     var album_c = dataRow.ItemArray[2].ToString();
                     var artist = dataRow.ItemArray[3].ToString();
                     var artist_c = dataRow.ItemArray[4].ToString();
-                    var cmd1 = "UPDATE Standardization SET Year_Correction = \"" + year_c + "\"" +
+                    var cmd1 = "UPDATE Standardization SET Year_Correction = \"" + year_c + "\", Has_Been_Corrected=\"Yes\"" +
                         " WHERE (Artist=\"" + artist + "\" OR Artist=\"" + artist_c + "\" OR ((Artist_Correction=\"" + artist + "\" OR Artist_Correction=\"" + artist_c + "\") AND Artist_Correction <> NULL))" +
                         " AND (Album=\"" + album + "\" OR Album=\"" + album_c + "\" OR ((Album_Correction=\"" + album + "\" OR Album_Correction=\"" + album_c + "\") AND Album_Correction <> Null))";
                     //" AND Year_Correction=\"" + year_c + "\")";
@@ -770,7 +770,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //}
 
             //var norec = 0;
-            DataSet dfz = new DataSet(); dfz = SelectFromDB("Standardization", "SELECT iif(Artist_Correction<>\"\", Artist_Correction, Artist), iif(Album_Correction<>\"\", Album_Correction, Album), SpotifyArtistID, SpotifyAlbumID, SpotifyAlbumURL, SpotifyAlbumPath, Year_Correction FROM Standardization WHERE (SpotifyArtistID <> \"\") GROUP BY iif(Artist_Correction<>\"\", Artist_Correction, Artist), iif(Album_Correction<>\"\", Album_Correction, Album), SpotifyArtistID, SpotifyAlbumID, SpotifyAlbumURL,SpotifyAlbumPath, Year_Correction;", "", cnb);
+            DataSet dfz = new DataSet(); dfz = SelectFromDB("Standardization", "SELECT distinct iif(Artist_Correction<>\"\", Artist_Correction, Artist), iif(Album_Correction<>\"\", Album_Correction, Album), SpotifyArtistID, SpotifyAlbumID, SpotifyAlbumURL, SpotifyAlbumPath, Year_Correction FROM Standardization WHERE (SpotifyArtistID <> \"\") GROUP BY iif(Artist_Correction<>\"\", Artist_Correction, Artist), iif(Album_Correction<>\"\", Album_Correction, Album), SpotifyArtistID, SpotifyAlbumID, SpotifyAlbumURL,SpotifyAlbumPath, Year_Correction;", "", cnb);
             if (dfz.Tables.Count > 0)
                 foreach (DataRow dataRow in dfz.Tables[0].Rows)
                 {
@@ -1086,7 +1086,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     cmds += " WHERE ID=" + SongRecord.Tables[0].Rows[i].ItemArray[2].ToString();
                     DataSet dis = new DataSet();
                     if (trackno > 0 && SpotifySongID != "" && SpotifySongID != "-") dis = UpdateDB("Standardization", cmds + ";", cnb);
-                    DateTime timestamp = UpdateLog(DateTime.Now, i + "/" + noOfRec + " Spotify details: " + trackno + " " + SpotifyAlbumPath, true, ConfigRepository.Instance()["dlcm_TempPath"], "", "DLCManager", pB_ReadDLCs, null);
+                    timestamp = UpdateLog(timestamp, i + "/" + noOfRec + " Spotify details: " + trackno + " " + SpotifyAlbumPath, true, ConfigRepository.Instance()["dlcm_TempPath"], "", "DLCManager", pB_ReadDLCs, null);
                     //ADD STADARDISATION UPDATE
                     //Updating the Standardization table
                     //DataSet dzs = new DataSet(); dzs = SelectFromDB("Standardization", "SELECT * FROM Standardization WHERE StrComp(Artist,\""
@@ -1102,7 +1102,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     //}
 
                 }
-                catch (Exception ex) { var tust = "Spotify Error ..." + ex; UpdateLog(DateTime.Now, tust, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null); }
+                catch (Exception ex) { var tust = "Spotify Error ..." + ex; UpdateLog(timestamp, tust, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null); }
             }
 
             //Get Album Covers of Album Covers that went missing
@@ -1158,7 +1158,7 @@ namespace RocksmithToolkitGUI.DLCManager
             }
             catch (Exception ex)
             {
-                var tsst = "Error ..." + ex; UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
+                var tsst = "Error ..." + ex; UpdateLog(timestamp, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
                 MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 //MessageBox.Show("Can't not open Song Folder in Exporer ! ");
             }

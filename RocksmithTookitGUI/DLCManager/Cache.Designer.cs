@@ -915,8 +915,8 @@ namespace RocksmithToolkitGUI.DLCManager
         private CueTextBox txt_Artist;
         private CueTextBox txt_Title;
         private CueTextBox txt_Arrangements;
-        //private DLCManager.Files filed;
-        //private DLCPackageData datas;
+        //private DLCManager.Files eXisting;
+        //private DLCPackageData dataNew;
 
         private System.Windows.Forms.Button btn_Close;
         private System.Windows.Forms.Button btn_DecompressAll;

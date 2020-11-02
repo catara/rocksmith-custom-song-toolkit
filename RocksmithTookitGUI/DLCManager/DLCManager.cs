@@ -1,4 +1,4 @@
-﻿using ICSharpCode.SharpZipLib.Zip;
+using ICSharpCode.SharpZipLib.Zip;
 using Microsoft.VisualBasic;
 using Ookii.Dialogs; //cue text
 using RocksmithToolkitLib;
@@ -202,25 +202,25 @@ namespace RocksmithToolkitGUI.DLCManager
 
             //Enable Preview generation
             if (ConfigRepository.Instance()["general_wwisepath"] == "")
-                    if (ConfigRepository.Instance()["dlcm_localwwise"] == "") ConfigRepository.Instance()["general_wwisepath"] = "C:\\Program Files (x86)\\Audiokinetic\\" + c("dlcm_wwise");// 2017.2.0.6500";
-            else ConfigRepository.Instance()["general_wwisepath"] = AppWD + "\\"+c("dlcm_localwwise")+"\\" + c("dlcm_wwise");
+                if (ConfigRepository.Instance()["dlcm_localwwise"] == "") ConfigRepository.Instance()["general_wwisepath"] = "C:\\Program Files (x86)\\Audiokinetic\\" + c("dlcm_wwise");// 2017.2.0.6500";
+                else ConfigRepository.Instance()["general_wwisepath"] = AppWD + "\\" + c("dlcm_localwwise") + "\\" + c("dlcm_wwise");
             //enable ps3 encryption
             var startInfo = new ProcessStartInfo
             {
                 FileName = Path.Combine(AppWD, "cmd"),
                 WorkingDirectory = AppWD
             };
-            var tr =  AppWD + "\\" + c("dlcm_localjava");
+            var tr = AppWD + "\\" + c("dlcm_localjava");
             //startInfo.FileName = "cmd.exe";
             startInfo.Arguments = string.Format("setx - m JAVA_HOME \"{0}\"", tr);
             startInfo.UseShellExecute = true; startInfo.CreateNoWindow = true;
             Process DDC = new Process();
-            if (c("dlcm_localjava")!="")
+            if (c("dlcm_localjava") != "")
             {
                 DDC.StartInfo = startInfo;
                 //DDC.Start(); DDC.WaitForExit(1000 * 60 * 1); //wait 1min
             }
-            
+
             if (!Directory.Exists(ConfigRepository.Instance()["general_rs2014path"])) ConfigRepository.Instance()["general_rs2014path"] = "D:\\SteamLibrary\\steamapps\\common\\Rocksmith2014";
             if (ConfigRepository.Instance()["general_defaultauthor"] == "") ConfigRepository.Instance()["general_defaultauthor"] = "catara";
 
@@ -1764,7 +1764,7 @@ namespace RocksmithToolkitGUI.DLCManager
             if (ImportPackNo == "" || ImportPackNo == "0") ImportPackNo = "1";
             var invalid = "No";
             string[] filez = new string[30000];
-            var viles="";
+            var viles = "";
             if (!chbx_Additional_Manipulations.GetItemChecked(38)) //39. Use only unpacked songs already in the 0/0_Import folder folder
             {
                 //GetDirList and calcualte hash for the IMPORTED file
@@ -1781,7 +1781,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     foreach (var fg in files)
                     {
                         filez[ig] = fg;
-                        viles += (ig+1)+fg + "\n";
+                        viles += (ig + 1) + fg + "\n";
                         ig++;
                     }
                 }
@@ -1790,7 +1790,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
                 pB_ReadDLCs.Maximum = countFilez(filez);
 
-                totalFiles = countFilez(filez)-1;
+                totalFiles = countFilez(filez) - 1;
 
                 var tre = countFilez(filez);
                 var doneEvent = new AutoResetEvent(false);
@@ -1818,15 +1818,15 @@ namespace RocksmithToolkitGUI.DLCManager
                                                  //while (bwbVAlid.IsBusy);//keep singlethread as toolkit not multithread abled
                     Application.DoEvents();
                     i++;
-                    tst = "Assesing if CheckValidityGetHASH Add 2 Import" + i + "/" + (i-1) + "..." + "/" + Path.GetFileNameWithoutExtension(s); timestamp = UpdateLog(timestamp, tst, true, Temp_Path_Import, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+                    tst = "Assesing if CheckValidityGetHASH Add 2 Import" + i + "/" + (i - 1) + "..." + "/" + Path.GetFileNameWithoutExtension(s); timestamp = UpdateLog(timestamp, tst, true, Temp_Path_Import, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
                     //if (i==500) System.Threading.Thread.Sleep(20000);
                 }
-                pB_ReadDLCs.Maximum =i-1 ; pB_ReadDLCs.Step = 1; pB_ReadDLCs.Value = 0;
+                pB_ReadDLCs.Maximum = i - 1; pB_ReadDLCs.Step = 1; pB_ReadDLCs.Value = 0;
                 do
                     pB_ReadDLCs.Value = mutit;
-                while (mutit < i-1);//multithreading background workers --WAIT TILL ALL are done- 10
-                                             //wait 10more sec 
-                                             //mutit = 0;
+                while (mutit < i - 1);//multithreading background workers --WAIT TILL ALL are done- 10
+                                      //wait 10more sec 
+                                      //mutit = 0;
                 pB_ReadDLCs.Value = mutit;
                 tst = mutit + "/" + (i - 1) + "CheckValidityGetHASH Add 2 Import"; timestamp = UpdateLog(timestamp, tst, true, Temp_Path_Import, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
 
@@ -1906,7 +1906,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     {
                         var tsst = "Error ..." + ex; timestamp = UpdateLog(timestamp, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
                     }
-                    no ++;
+                    no++;
                 }
                 totalFiles = no;
                 tst += "end create import based on already decompressed..." + no + " songas"; timestamp = UpdateLog(timestamp, tst, true, Temp_Path_Import, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
@@ -2379,7 +2379,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 //"\nInvalids : " + invalids2.ToString() +
                 "\n\nWith issues at decompresion: " + invalids3.ToString() + "\n" + invalids3names +
                 "\n\nDuplicate manually managed: " + manualdec.ToString() + "\n" + manualdecnames +
-                "\n\nDuplicates automatically managed: " + automdec.ToString() + "\n" + automdecnames+
+                "\n\nDuplicates automatically managed: " + automdec.ToString() + "\n" + automdecnames +
                 "\n\nList of inititally marked as to be imported files:\n" + viles;
             ErrorWindow frm9 = new ErrorWindow(summary, "", "Import of NEW songs Summary", false, false, true, "", "", "");
             frm9.Show();
@@ -2532,7 +2532,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 pB_ReadDLCs.Increment(1);
 
                 //calculate if has DD (Dynamic Dificulty)..if at least 1 track has a difficulty bigger than 1 then it has
-                var xmlFiles = Directory.GetFiles(unpackedDir +(platformTXT=="XBox360"? "\\Root" : "")+ "\\songs", "*.xml", System.IO.SearchOption.AllDirectories);
+                var xmlFiles = Directory.GetFiles(unpackedDir + (platformTXT == "XBox360" ? "\\Root" : "") + "\\songs", "*.xml", System.IO.SearchOption.AllDirectories);
                 List<string> clist = new List<string>();
                 List<string> dlist = new List<string>();
                 List<string> elist = new List<string>();
@@ -4749,7 +4749,7 @@ namespace RocksmithToolkitGUI.DLCManager
             var packapth = "";
             for (var k = 0; k < noOfRecs; k++)
             {
-                ListP += cmz.Tables[0].Rows[k].ItemArray[2].ToString() + " - "+ cmz.Tables[0].Rows[k].ItemArray[0].ToString() + "\n";
+                ListP += cmz.Tables[0].Rows[k].ItemArray[2].ToString() + " - " + cmz.Tables[0].Rows[k].ItemArray[0].ToString() + "\n";
                 packapth = cmz.Tables[0].Rows[k].ItemArray[1].ToString();
             }
 
@@ -4761,7 +4761,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 "\nPacked All: " + (PS3P + PCP + MACP + XBOXP) + "/" + (PS3F + PCF + MACF + XBOXF) +
                 "\nBroken (Not considered4repacking/broken): " + brkn +
                 "\n\nFailed at packing: " + FailedP +
-                "\n\nList Not Packed Songs("+ packapth + "): " + ListNP +
+                "\n\nList Not Packed Songs(" + packapth + "): " + ListNP +
                 "\n\nList Packed Songs: " + ListP;
             ErrorWindow frm9 = new ErrorWindow(summary, "", "Summary of the Mass-Repack process", false, false, true, "", "", "");
 
@@ -6139,7 +6139,7 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             var j = 0;
             for (j = 0; j < filez.Count(); j++) { if (filez[j] == "" || filez[j] == null) break; }
-            return j+1;
+            return j + 1;
         }
         private void SetImportNo()
         {

@@ -650,7 +650,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 query[i].IntheWorks = dataRow.ItemArray[117].ToString();
                 query[i].LyricsLanguage = dataRow.ItemArray[118].ToString();
                 query[i].LastConversionDateTime = dataRow.ItemArray[119].ToString();
-                query[i].ImprovedWithDM = dataRow.ItemArray[120].ToString();                
+                query[i].ImprovedWithDM = dataRow.ItemArray[120].ToString();
                 query[i].Is_FullAlbum = dataRow.ItemArray[121].ToString();
                 i++;
                 query[i] = new MainDBfields();
@@ -1109,11 +1109,11 @@ namespace RocksmithToolkitGUI.DLCManager
                             break;
                         case "<Groups>":
                             DataSet dvs = new DataSet(); dvs = SelectFromDB("Group", "SELECT Groups FROM Groups WHERE CDLC_ID=\"" + SongRecord[k].ID + "\" AND Type=\"DLC\"", "", cnb);
-                            var noOfRect = dvs.Tables.Count>0 ? dvs.Tables[0].Rows.Count: 0;
+                            var noOfRect = dvs.Tables.Count > 0 ? dvs.Tables[0].Rows.Count : 0;
 
                             for (var j = 0; j <= noOfRect - 1; j++)
                             {
-                                var grp = dvs.Tables[0].Rows[j].ItemArray[0].ToString()+" ";
+                                var grp = dvs.Tables[0].Rows[j].ItemArray[0].ToString() + " ";
                                 tzt += grp;
                             }
                             break;
@@ -1755,281 +1755,281 @@ namespace RocksmithToolkitGUI.DLCManager
             Song2014 xmlContent = null;
             try
             {
-            xmlContent = Song2014.LoadFromFile(xml);
-            if (xmlContent.Arrangement.ToLower() == "bass")
-            {
-                platform.version = RocksmithToolkitLib.GameVersion.RS2014;
-                if (manifestFunctions.GetMaxDifficulty(xmlContent) <= 0)
-                    return "No";
-            }
+                xmlContent = Song2014.LoadFromFile(xml);
+                if (xmlContent.Arrangement.ToLower() == "bass")
+                {
+                    platform.version = RocksmithToolkitLib.GameVersion.RS2014;
+                    if (manifestFunctions.GetMaxDifficulty(xmlContent) <= 0)
+                        return "No";
+                }
 
-            //Save a copy
-            if (!File.Exists(xml + ".old")) File.Copy(xml, xml + ".old", false);
-            else File.Copy(xml, xml + ".old", true);
-            var json = jsons;
-            if (!File.Exists(json + ".old")) File.Copy(json, json + ".old", false);
-            else { File.Copy(json + ".old", json, true); }
+                //Save a copy
+                if (!File.Exists(xml + ".old")) File.Copy(xml, xml + ".old", false);
+                else File.Copy(xml, xml + ".old", true);
+                var json = jsons;
+                if (!File.Exists(json + ".old")) File.Copy(json, json + ".old", false);
+                else { File.Copy(json + ".old", json, true); }
 
-            var rampPath = Path.Combine(AppWD.Replace("DLCManager\\external_tools", ""), "ddc\\ddc_dd_remover.xml");
-            var cfgPath = Path.Combine(AppWD.Replace("DLCManager\\external_tools", ""), "ddc\\ddc_default.cfg");
+                var rampPath = Path.Combine(AppWD.Replace("DLCManager\\external_tools", ""), "ddc\\ddc_dd_remover.xml");
+                var cfgPath = Path.Combine(AppWD.Replace("DLCManager\\external_tools", ""), "ddc\\ddc_default.cfg");
 
-            var cmbPhraseLen = ConfigRepository.Instance().GetDecimal("ddc_phraselength");
-            var consoleOutput = string.Empty;
-            try
-            {
-                if (UseInternalLog != "Yes") DDCreator.ApplyDD(xml, (int)cmbPhraseLen, false, rampPath, cfgPath, out consoleOutput, true, false);
-            }
-            catch (Exception ex)
-            {
-                var tsst = "Error at remove DD..." + ex; UpdateLog(DateTime.Now, tsst, false, "", "", "", null, null);
-                UseInternalLog = "Yes";
-            }
-
-            if (Is_Original == "Yes" || !string.IsNullOrEmpty(consoleOutput) || UseInternalLog == "Yes")
+                var cmbPhraseLen = ConfigRepository.Instance().GetDecimal("ddc_phraselength");
+                var consoleOutput = string.Empty;
                 try
+                {
+                    if (UseInternalLog != "Yes") DDCreator.ApplyDD(xml, (int)cmbPhraseLen, false, rampPath, cfgPath, out consoleOutput, true, false);
+                }
+                catch (Exception ex)
+                {
+                    var tsst = "Error at remove DD..." + ex; UpdateLog(DateTime.Now, tsst, false, "", "", "", null, null);
+                    UseInternalLog = "Yes";
+                }
 
-                { //http://code.google.com/p/rocksmith-custom-song-creator/issues/detail?id=60
+                if (Is_Original == "Yes" || !string.IsNullOrEmpty(consoleOutput) || UseInternalLog == "Yes")
+                    try
 
-                    if (xml.Length > 0)
-                    {
-                        platform.version = RocksmithToolkitLib.GameVersion.RS2014;
-                        Song2014 xmlContent1 = Song2014.LoadFromFile(xml);
-                        var manifestFunctions1 = new ManifestFunctions(platform.version);
-                        var j = manifestFunctions1.GetMaxDifficulty(xmlContent1);
-                        string textfile = File.ReadAllText(xml);
+                    { //http://code.google.com/p/rocksmith-custom-song-creator/issues/detail?id=60
 
-                        //for each timestamp in the xml file take the highest level entry
-                        var fxml = File.OpenText(xml);
-                        string tecst = "";
-                        string line;
-                        var header = "";
-                        var footer = "";
-                        //Read and Save Header
-                        while ((line = fxml.ReadLine()) != null)
+                        if (xml.Length > 0)
                         {
-                            if (line.Contains("<levels")) break;
-                            header += line + "\n";
-                        }
-                        header += "\n<levels count=\"1\">\n";
-                        //level the maxdiff overall setting in the xml
-                        var m = 1;
-                        for (m = 1; m <= j; m++)
-                        {
-                            header = header.Replace("maxDifficulty=\"" + m + "\"", "maxDifficulty=\"0\"");
-                        }
+                            platform.version = RocksmithToolkitLib.GameVersion.RS2014;
+                            Song2014 xmlContent1 = Song2014.LoadFromFile(xml);
+                            var manifestFunctions1 = new ManifestFunctions(platform.version);
+                            var j = manifestFunctions1.GetMaxDifficulty(xmlContent1);
+                            string textfile = File.ReadAllText(xml);
 
-                        var v = 0; //difficulty level in the parsing
-                        var diff = 0;
-                        float[] timea = new float[10000]; //keeps the timestamp of each note
-                        float[] timeb = new float[10000]; //keeps the timestamp of each anchor
-                        string[] notes = new string[10000]; // keeps the full note details
-                        string[] bends = new string[10000]; // keeps the bends single note details
-                        string[] anchor = new string[10000]; // keeps the full note details
-                        int[] lvla = new int[10000]; //keeps the level of the note&timestamp
-                        string[] bnds = new string[10000]; //keeps the bends of the note&timestamp
-                        int[] lvlb = new int[10000]; //keeps the level of the note&timestamp
-                                                     //bool is_header = true; //to know when the header has been read and saved
-                                                     //var l = 0; //storage counter in the array
-                        float ts = 0; //timestamp parsed fro the <notes line
-                        int ea = 0; //top end of the storage array notes
-                        int eb = 0; //top end of the storage array anchor
-                        bool UpdateT = false;
-                        while ((line = fxml.ReadLine()) != null)
-                        {
-                            //header
-                            if (line.Contains("<level difficulty=\""))
+                            //for each timestamp in the xml file take the highest level entry
+                            var fxml = File.OpenText(xml);
+                            string tecst = "";
+                            string line;
+                            var header = "";
+                            var footer = "";
+                            //Read and Save Header
+                            while ((line = fxml.ReadLine()) != null)
                             {
-                                line = line.Replace("<level difficulty=\"", "").Trim();
-                                line = line.Replace("\">", "");
-                                try { diff = line.ToInt32(); }
-                                catch
-                                {
-                                    MessageBox.Show("Errors at DD lvl READ removal");
-                                }
-                                v = diff;
-                                continue;
+                                if (line.Contains("<levels")) break;
+                                header += line + "\n";
+                            }
+                            header += "\n<levels count=\"1\">\n";
+                            //level the maxdiff overall setting in the xml
+                            var m = 1;
+                            for (m = 1; m <= j; m++)
+                            {
+                                header = header.Replace("maxDifficulty=\"" + m + "\"", "maxDifficulty=\"0\"");
                             }
 
-                            //notes
-                            if (line.Contains("<note time=\""))
+                            var v = 0; //difficulty level in the parsing
+                            var diff = 0;
+                            float[] timea = new float[10000]; //keeps the timestamp of each note
+                            float[] timeb = new float[10000]; //keeps the timestamp of each anchor
+                            string[] notes = new string[10000]; // keeps the full note details
+                            string[] bends = new string[10000]; // keeps the bends single note details
+                            string[] anchor = new string[10000]; // keeps the full note details
+                            int[] lvla = new int[10000]; //keeps the level of the note&timestamp
+                            string[] bnds = new string[10000]; //keeps the bends of the note&timestamp
+                            int[] lvlb = new int[10000]; //keeps the level of the note&timestamp
+                                                         //bool is_header = true; //to know when the header has been read and saved
+                                                         //var l = 0; //storage counter in the array
+                            float ts = 0; //timestamp parsed fro the <notes line
+                            int ea = 0; //top end of the storage array notes
+                            int eb = 0; //top end of the storage array anchor
+                            bool UpdateT = false;
+                            while ((line = fxml.ReadLine()) != null)
                             {
-                                tecst = (line.Replace("<note time=\"", "")).TrimStart();
-                                tecst = tecst.Replace(tecst.Substring(tecst.IndexOf("\"")), "");
-                                try { ts = Convert.ToSingle(tecst); }
-                                catch (Exception ex)
+                                //header
+                                if (line.Contains("<level difficulty=\""))
                                 {
-                                    var tsst = "Error11 ..." + ex; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", null, null);
-                                    MessageBox.Show("Errors at DD time notes READ removal");
+                                    line = line.Replace("<level difficulty=\"", "").Trim();
+                                    line = line.Replace("\">", "");
+                                    try { diff = line.ToInt32(); }
+                                    catch
+                                    {
+                                        MessageBox.Show("Errors at DD lvl READ removal");
+                                    }
+                                    v = diff;
+                                    continue;
                                 }
 
-                                UpdateT = false;
-                                for (m = 0; m < ea; m++)
+                                //notes
+                                if (line.Contains("<note time=\""))
                                 {
-                                    if (ts == timea[m])
+                                    tecst = (line.Replace("<note time=\"", "")).TrimStart();
+                                    tecst = tecst.Replace(tecst.Substring(tecst.IndexOf("\"")), "");
+                                    try { ts = Convert.ToSingle(tecst); }
+                                    catch (Exception ex)
                                     {
-                                        if (v > lvla[m])
+                                        var tsst = "Error11 ..." + ex; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", null, null);
+                                        MessageBox.Show("Errors at DD time notes READ removal");
+                                    }
+
+                                    UpdateT = false;
+                                    for (m = 0; m < ea; m++)
+                                    {
+                                        if (ts == timea[m])
                                         {
-                                            notes[m] = line.Replace("\">", "\" />");
-                                            timea[m] = ts;
-                                            lvla[m] = v;
-                                            UpdateT = true;
-                                            if (line.IndexOf("bend=\"0\"") == -1 && line.IndexOf("bend=\"") > 0)
+                                            if (v > lvla[m])
                                             {
-                                                line = fxml.ReadLine();
-                                                if (line.IndexOf("bendValue") > 0 && line.IndexOf("bendValues>") > 0)
+                                                notes[m] = line.Replace("\">", "\" />");
+                                                timea[m] = ts;
+                                                lvla[m] = v;
+                                                UpdateT = true;
+                                                if (line.IndexOf("bend=\"0\"") == -1 && line.IndexOf("bend=\"") > 0)
                                                 {
                                                     line = fxml.ReadLine();
-                                                    if (line.IndexOf("bendValue time") > 0)
+                                                    if (line.IndexOf("bendValue") > 0 && line.IndexOf("bendValues>") > 0)
                                                     {
-                                                        bends[m] = line;
-                                                        m += 2;
+                                                        line = fxml.ReadLine();
+                                                        if (line.IndexOf("bendValue time") > 0)
+                                                        {
+                                                            bends[m] = line;
+                                                            m += 2;
+                                                        }
                                                     }
                                                 }
                                             }
+                                            break;
                                         }
-                                        break;
                                     }
-                                }
-                                if (!UpdateT) //if TimeStamp has not been found in the storage array then save it
-                                {
-                                    notes[ea] = line.Replace("\">", "\" />");
-                                    timea[ea] = ts;
-                                    lvla[ea] = v;
-                                    ea++;
-                                    if (line.IndexOf("bend=\"0\"") == -1 && line.IndexOf("bend=\"") > 0)
+                                    if (!UpdateT) //if TimeStamp has not been found in the storage array then save it
                                     {
-                                        line = fxml.ReadLine();
-                                        if (line.IndexOf("bendValue") > 0 && line.IndexOf("bendValues>") > 0)
+                                        notes[ea] = line.Replace("\">", "\" />");
+                                        timea[ea] = ts;
+                                        lvla[ea] = v;
+                                        ea++;
+                                        if (line.IndexOf("bend=\"0\"") == -1 && line.IndexOf("bend=\"") > 0)
                                         {
                                             line = fxml.ReadLine();
-                                            if (line.IndexOf("bendValue time") > 0)
+                                            if (line.IndexOf("bendValue") > 0 && line.IndexOf("bendValues>") > 0)
                                             {
-                                                bends[m] = line;
-                                                m += 2;
+                                                line = fxml.ReadLine();
+                                                if (line.IndexOf("bendValue time") > 0)
+                                                {
+                                                    bends[m] = line;
+                                                    m += 2;
+                                                }
                                             }
                                         }
                                     }
                                 }
-                            }
-                            //anchor
-                            if (line.Contains("<anchor time=\""))
-                            {
-                                tecst = (line.Replace("<anchor time=\"", "")).TrimStart();
-                                tecst = tecst.Replace(tecst.Substring(tecst.IndexOf("\"")), "");
-                                try { ts = Convert.ToSingle(tecst); }
-                                catch (Exception ex)
+                                //anchor
+                                if (line.Contains("<anchor time=\""))
                                 {
-                                    var tsst = "Error12 ..." + ex; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", null, null);
-                                    MessageBox.Show("Errors at DD time anchor READ removal");
-                                }
-                                UpdateT = false;
-                                for (m = 0; m < eb; m++)
-                                {
-                                    if (ts == timeb[m])
+                                    tecst = (line.Replace("<anchor time=\"", "")).TrimStart();
+                                    tecst = tecst.Replace(tecst.Substring(tecst.IndexOf("\"")), "");
+                                    try { ts = Convert.ToSingle(tecst); }
+                                    catch (Exception ex)
                                     {
-                                        if (v > lvlb[m])
+                                        var tsst = "Error12 ..." + ex; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", null, null);
+                                        MessageBox.Show("Errors at DD time anchor READ removal");
+                                    }
+                                    UpdateT = false;
+                                    for (m = 0; m < eb; m++)
+                                    {
+                                        if (ts == timeb[m])
                                         {
-                                            anchor[m] = line;
-                                            timeb[m] = ts;
-                                            lvlb[m] = v;
-                                            UpdateT = true;
+                                            if (v > lvlb[m])
+                                            {
+                                                anchor[m] = line;
+                                                timeb[m] = ts;
+                                                lvlb[m] = v;
+                                                UpdateT = true;
+                                            }
+                                            break;
                                         }
-                                        break;
+                                    }
+                                    if (!UpdateT) //if TimeStamp has not been found in the storage array then save it
+                                    {
+                                        anchor[eb] = line;
+                                        timeb[eb] = ts;
+                                        lvlb[eb] = v;
+                                        eb++;
                                     }
                                 }
-                                if (!UpdateT) //if TimeStamp has not been found in the storage array then save it
+                                if (line.Contains("<notes>")) continue;
+
+                            }
+
+                            //reorder the storage array
+                            var n = 0;
+                            string no;
+                            string be;
+                            int lv;
+                            float ti;
+                            for (m = 0; m <= ea - 1; m++)
+                            {
+                                for (n = m + 1; n <= ea; n++)
                                 {
-                                    anchor[eb] = line;
-                                    timeb[eb] = ts;
-                                    lvlb[eb] = v;
-                                    eb++;
+                                    if (timea[m] > timea[n]) //if TimeStamp is bigger reverse the order
+                                    {
+                                        no = notes[n];
+                                        ti = timea[n];
+                                        lv = lvla[n];
+                                        be = bends[n];
+                                        notes[n] = notes[m];
+                                        timea[n] = timea[m];
+                                        lvla[n] = lvla[m];
+                                        bends[n] = bends[m];
+                                        notes[m] = no;
+                                        timea[m] = ti;
+                                        lvla[m] = lv;
+                                        bends[m] = be;
+                                    }
                                 }
                             }
-                            if (line.Contains("<notes>")) continue;
-
-                        }
-
-                        //reorder the storage array
-                        var n = 0;
-                        string no;
-                        string be;
-                        int lv;
-                        float ti;
-                        for (m = 0; m <= ea - 1; m++)
-                        {
-                            for (n = m + 1; n <= ea; n++)
+                            //reorder the anchor storage array
+                            for (m = 0; m <= eb - 1; m++)
                             {
-                                if (timea[m] > timea[n]) //if TimeStamp is bigger reverse the order
+                                for (n = m + 1; n <= eb; n++)
                                 {
-                                    no = notes[n];
-                                    ti = timea[n];
-                                    lv = lvla[n];
-                                    be = bends[n];
-                                    notes[n] = notes[m];
-                                    timea[n] = timea[m];
-                                    lvla[n] = lvla[m];
-                                    bends[n] = bends[m];
-                                    notes[m] = no;
-                                    timea[m] = ti;
-                                    lvla[m] = lv;
-                                    bends[m] = be;
+                                    if (timeb[m] > timeb[n]) //if TimeStamp is bigger reverse the order
+                                    {
+                                        no = anchor[n];
+                                        ti = timeb[n];
+                                        lv = lvlb[n];
+                                        anchor[n] = anchor[m];
+                                        timeb[n] = timeb[m];
+                                        lvlb[n] = lvlb[m];
+                                        anchor[m] = no;
+                                        timeb[m] = ti;
+                                        lvlb[m] = lv;
+                                    }
                                 }
                             }
-                        }
-                        //reorder the anchor storage array
-                        for (m = 0; m <= eb - 1; m++)
-                        {
-                            for (n = m + 1; n <= eb; n++)
+                            //add level & notes to the footer
+                            footer += "    <level difficulty=\"0\">" + "\n" + "      <notes>" + "\n";
+                            for (m = 0; m <= ea; m++)
                             {
-                                if (timeb[m] > timeb[n]) //if TimeStamp is bigger reverse the order
+                                //footer += notes[m] + "\n";
+                                if (bends[m] != "" && bends[m] != null)
                                 {
-                                    no = anchor[n];
-                                    ti = timeb[n];
-                                    lv = lvlb[n];
-                                    anchor[n] = anchor[m];
-                                    timeb[n] = timeb[m];
-                                    lvlb[n] = lvlb[m];
-                                    anchor[m] = no;
-                                    timeb[m] = ti;
-                                    lvlb[m] = lv;
+                                    footer += notes[m].Replace("/>", ">") + "\n";
+                                    footer += "  <bendValues>\n";
+                                    footer += "   " + bends[m] + "\n";
+                                    footer += "  </bendValues>\n";
+                                    footer += " </note>\n";
                                 }
+                                else footer += notes[m] + "\n";
                             }
-                        }
-                        //add level & notes to the footer
-                        footer += "    <level difficulty=\"0\">" + "\n" + "      <notes>" + "\n";
-                        for (m = 0; m <= ea; m++)
-                        {
-                            //footer += notes[m] + "\n";
-                            if (bends[m] != "" && bends[m] != null)
+                            footer += "	  </notes>\n      <chords />\n      <anchors>\n";
+                            //add level & notes to the footer
+                            for (m = 0; m <= eb; m++)
                             {
-                                footer += notes[m].Replace("/>", ">") + "\n";
-                                footer += "  <bendValues>\n";
-                                footer += "   " + bends[m] + "\n";
-                                footer += "  </bendValues>\n";
-                                footer += " </note>\n";
+                                footer += anchor[m] + "\n";
                             }
-                            else footer += notes[m] + "\n";
-                        }
-                        footer += "	  </notes>\n      <chords />\n      <anchors>\n";
-                        //add level & notes to the footer
-                        for (m = 0; m <= eb; m++)
-                        {
-                            footer += anchor[m] + "\n";
-                        }
-                        footer += "      </anchors>" + "\n" + "      <handShapes />" + "\n" + "     </level>" + "\n" + "   </levels>" + "\n" + "</song>";
-                        fxml.Close();
-                        File.WriteAllText(xml, header + footer);
+                            footer += "      </anchors>" + "\n" + "      <handShapes />" + "\n" + "     </level>" + "\n" + "   </levels>" + "\n" + "</song>";
+                            fxml.Close();
+                            File.WriteAllText(xml, header + footer);
 
-                        //level the json as well
-                        textfile = File.ReadAllText(json);
-                        n = 0;
-                        for (n = 0; n < j; n++)
-                        {
-                            textfile = textfile.Replace("\"MaxPhraseDifficulty\": " + n + ",", "\"MaxPhraseDifficulty\": 0,");
+                            //level the json as well
+                            textfile = File.ReadAllText(json);
+                            n = 0;
+                            for (n = 0; n < j; n++)
+                            {
+                                textfile = textfile.Replace("\"MaxPhraseDifficulty\": " + n + ",", "\"MaxPhraseDifficulty\": 0,");
+                            }
+                            File.WriteAllText(json, textfile);
                         }
-                        File.WriteAllText(json, textfile);
-                    }
-                    Has_BassDD = "Yes";
+                        Has_BassDD = "Yes";
                     }
                     catch (Exception ex)
                     {
@@ -5025,7 +5025,7 @@ namespace RocksmithToolkitGUI.DLCManager
             var DB_Path = dbp;
             int aa = 0;
             pB_ReadDLCs.Value = 0; pB_ReadDLCs.Step = 1;
-             DataSet dus = new DataSet(); dus = SelectFromDB("Standardization", cmd1, ConfigRepository.Instance()["dlcm_DBFolder"].ToString(), cnb);
+            DataSet dus = new DataSet(); dus = SelectFromDB("Standardization", cmd1, ConfigRepository.Instance()["dlcm_DBFolder"].ToString(), cnb);
             var norec = dus.Tables[0].Rows.Count;
             pB_ReadDLCs.Maximum = 11; var cnt = 0;
             var tsst = "1/11 Applying " + norec + "corrections"; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs); pB_ReadDLCs.Increment(1);
@@ -5086,7 +5086,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         else if (artfound) break;
                     }
                     if (!found)
-                        InsertIntoDBwValues("Standardization", "Artist, Album", "\"" + dgs.Tables[0].Rows[l].ItemArray[0].ToString() + "\",\"" + dgs.Tables[0].Rows[l].ItemArray[1].ToString() + "\"", cnb, 0); 
+                        InsertIntoDBwValues("Standardization", "Artist, Album", "\"" + dgs.Tables[0].Rows[l].ItemArray[0].ToString() + "\",\"" + dgs.Tables[0].Rows[l].ItemArray[1].ToString() + "\"", cnb, 0);
                 }
 
             tsst = "3/11 Cleans out duplicates (prev" + tz + ")"; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs); pB_ReadDLCs.Increment(1);

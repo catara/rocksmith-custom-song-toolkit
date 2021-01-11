@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SpotifyAPI.Web.Auth</name>
+    </assembly>
+    <members>
+        <member name="P:SpotifyAPI.Web.Auth.ImplictGrantResponse.CreatedAt">
+            <summary>
+              Auto-Initalized to UTC Now
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:SpotifyAPI.Web.Ensure">
+            <summary>
+              Ensure input parameters
+            </summary>
+        </member>
+        <member name="M:SpotifyAPI.Web.Ensure.ArgumentNotNull(System.Object,System.String)">
+            <summary>
+              Checks an argument to ensure it isn't null.
+            </summary>
+            <param name = "value">The argument value to check</param>
+            <param name = "name">The name of the argument</param>
+        </member>
+        <member name="M:SpotifyAPI.Web.Ensure.ArgumentNotNullOrEmptyString(System.String,System.String)">
+            <summary>
+              Checks an argument to ensure it isn't null or an empty string
+            </summary>
+            <param name = "value">The argument value to check</param>
+            <param name = "name">The name of the argument</param>
+        </member>
+    </members>
+</doc>

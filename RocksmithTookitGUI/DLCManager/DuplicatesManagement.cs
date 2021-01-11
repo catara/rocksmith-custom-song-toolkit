@@ -449,7 +449,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //SAme hash (option 79 selected?)
             if (filehash == eXisting.File_Hash)
             {
-                if (GetHash(c("dlcm_RocksmithDLCPath") + "\\" + original_FileName) != GetHash(c("dlcm_TempPath") + "\\0_old\\" + eXisting.Original_FileName)) lbl_FileHash.Text = lbl_FileHash.Text + " but diff files :)";
+                if (GetHash(c("dlcm_RocksmithDLCPath") + "\\" + original_FileName) != GetHash(c("dlcm_TempPath") + "\\0_old\\" + eXisting.Original_FileName)) lbl_FileHash.Text = lbl_FileHash.Text + " saved, now different :)";
                 lbl_FileHash.Visible = true;
             }
 

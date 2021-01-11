@@ -40,6 +40,7 @@ namespace RocksmithToolkitGUI
                 btnDevTestMethod.Visible = true;
 
             InitMainForm();
+            if (ConfigRepository.Instance()["dlcm_StartInDLCM"] == "Yes")   ShowDLCManager();//bcapi autostart DLCManager
         }
 
         private void InitMainForm()
@@ -227,8 +228,10 @@ namespace RocksmithToolkitGUI
         private void ShowDLCManager()
         {
             //manageToolStripMenuItem.Enabled = false;
-            //bcapi (temp)Renaming this Fork
-            this.Text = String.Format("bcapi's v"+ ConfigRepository.Instance()["dlcm_DLCManager_Version"] + " Custom Song Creator Toolkit (v{0} '20 beta)", ToolkitVersion.RSTKGuiVersion);
+            //bcapi Renaming this Fork
+            this.Text = String.Format("bcapi's v" + ConfigRepository.Instance()["dlcm_DLCManager_Release"] + " aka " + ConfigRepository.Instance()["dlcm_DLCManager_ReleaseName"] +
+                " " + ConfigRepository.Instance()["dlcm_DLCManager_ReleaseVersion"] +
+                " based on v{0} of Custom Song Creator Toolkit", ToolkitVersion.RSTKGuiVersion);
 
             // Remove all tabs
             tabControl1.TabPages.Clear();
@@ -238,7 +241,7 @@ namespace RocksmithToolkitGUI
                 tabControl1.TabPages.Add(DLCManagerTab);
         }
 
-         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             // autosave the dlc.xml template on closing
             if (dlcPackageCreator1.IsDirty && ConfigRepository.Instance().GetBoolean("creator_autosavetemplate"))
@@ -341,8 +344,8 @@ namespace RocksmithToolkitGUI
             var args = new string[]
             {
                 "-u",
-                "-input=D:\\Temp\\PeppaPig_p.psarc", 
-                "-x", 
+                "-input=D:\\Temp\\PeppaPig_p.psarc",
+                "-x",
                 "-d",
                 "-f=Pc",
                 "-v=RS2014",

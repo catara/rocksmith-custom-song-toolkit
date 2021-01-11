@@ -169,10 +169,12 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_Title = new RocksmithToolkitGUI.CueTextBox();
             this.txt_Artist_Sort = new RocksmithToolkitGUI.CueTextBox();
             this.txt_Artist = new RocksmithToolkitGUI.CueTextBox();
+            this.chbx_PitchShift = new System.Windows.Forms.CheckBox();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.Panel1 = new System.Windows.Forms.Panel();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.gbox_Groups = new System.Windows.Forms.GroupBox();
             this.chbx_AllGroups = new System.Windows.Forms.CheckedListBox();
             this.chbx_Group = new System.Windows.Forms.ComboBox();
@@ -892,7 +894,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_Playthrough
             // 
-            this.txt_Playthrough.DropDownWidth = 300;
+            this.txt_Playthrough.DropDownWidth = 400;
             this.txt_Playthrough.FormattingEnabled = true;
             this.txt_Playthrough.Location = new System.Drawing.Point(204, 84);
             this.txt_Playthrough.Margin = new System.Windows.Forms.Padding(2);
@@ -1508,6 +1510,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_MultiTrackType
             // 
+            this.txt_MultiTrackType.DropDownWidth = 150;
             this.txt_MultiTrackType.Enabled = false;
             this.txt_MultiTrackType.FormattingEnabled = true;
             this.txt_MultiTrackType.Items.AddRange(new object[] {
@@ -1546,8 +1549,11 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // cmb_Filter
             // 
-            this.cmb_Filter.DropDownWidth = 250;
+            this.cmb_Filter.DropDownHeight = 600;
+            this.cmb_Filter.DropDownWidth = 600;
             this.cmb_Filter.FormattingEnabled = true;
+            this.cmb_Filter.IntegralHeight = false;
+            this.cmb_Filter.ItemHeight = 13;
             this.cmb_Filter.Items.AddRange(new object[] {
             "0ALL",
             "ALL Others",
@@ -1596,6 +1602,7 @@ namespace RocksmithToolkitGUI.DLCManager
             "Imported as Mac",
             "Imported as XBOX360",
             "Packed (curr. Platform)",
+            "Sorted by Last Packdate",
             "with Errors at Packing",
             "DLCID diff than Default",
             "Same DLCName",
@@ -1622,10 +1629,19 @@ namespace RocksmithToolkitGUI.DLCManager
             "<Packed as PS4>",
             "Packed as Mac",
             "Packed XBOX360",
-            "with Errors at Last Packing"});
+            "with Errors at Last Packing",
+            "Part of No Group",
+            "Part of Any Group",
+            "Digitech Drop compatible Guitar (Straight down conv from E Standard or Drop D)",
+            "Digitech Drop compatible Guitar (Straight down conv from E Standard)",
+            "Digitech Drop compatible Bass (Straight down conv from E Standard)",
+            "Digitech Drop compatible (Straight down conv from E Standard)",
+            "Digitech Drop compatible (Straight down conv from Drop D)",
+            "Digitech Drop compatible Guitar (Straight down conv from D Standard)",
+            "Digitech Drop compatible Bass (Straight down conv from D Standard)"});
             this.cmb_Filter.Location = new System.Drawing.Point(35, 19);
             this.cmb_Filter.Margin = new System.Windows.Forms.Padding(2);
-            this.cmb_Filter.MaxDropDownItems = 15;
+            this.cmb_Filter.MaxDropDownItems = 45;
             this.cmb_Filter.Name = "cmb_Filter";
             this.cmb_Filter.Size = new System.Drawing.Size(163, 21);
             this.cmb_Filter.TabIndex = 275;
@@ -2083,6 +2099,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // txt_Tuning
             // 
             this.txt_Tuning.Cue = "Tuning (All)";
+            this.txt_Tuning.Enabled = false;
             this.txt_Tuning.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_Tuning.ForeColor = System.Drawing.Color.Gray;
             this.txt_Tuning.Location = new System.Drawing.Point(4, 49);
@@ -2271,6 +2288,18 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_Artist.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_Artist_KeyPress);
             this.txt_Artist.Leave += new System.EventHandler(this.Txt_Artist_Leave);
             // 
+            // chbx_PitchShift
+            // 
+            this.chbx_PitchShift.AutoSize = true;
+            this.chbx_PitchShift.Location = new System.Drawing.Point(121, 15);
+            this.chbx_PitchShift.Margin = new System.Windows.Forms.Padding(2);
+            this.chbx_PitchShift.Name = "chbx_PitchShift";
+            this.chbx_PitchShift.Size = new System.Drawing.Size(15, 14);
+            this.chbx_PitchShift.TabIndex = 439;
+            this.toolTip1.SetToolTip(this.chbx_PitchShift, "Flags if&how to Pitch Shift (Using Digitec Drop pedal or another system like Line" +
+        " 6 HX Stomp on 3.0+ firmware)");
+            this.chbx_PitchShift.UseVisualStyleBackColor = true;
+            // 
             // splitContainer2
             // 
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -2331,6 +2360,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // Panel1
             // 
+            this.Panel1.Controls.Add(this.checkBox2);
             this.Panel1.Controls.Add(this.btn_GoTo);
             this.Panel1.Controls.Add(this.txt_Description);
             this.Panel1.Controls.Add(this.gbox_Groups);
@@ -2409,6 +2439,19 @@ namespace RocksmithToolkitGUI.DLCManager
             this.Panel1.Size = new System.Drawing.Size(1191, 285);
             this.Panel1.TabIndex = 4;
             // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoCheck = false;
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.25F);
+            this.checkBox2.ForeColor = System.Drawing.SystemColors.MenuHighlight;
+            this.checkBox2.Location = new System.Drawing.Point(572, 37);
+            this.checkBox2.Margin = new System.Windows.Forms.Padding(0);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(15, 14);
+            this.checkBox2.TabIndex = 440;
+            this.checkBox2.UseVisualStyleBackColor = true;
+            // 
             // gbox_Groups
             // 
             this.gbox_Groups.Controls.Add(this.chbx_AllGroups);
@@ -2438,6 +2481,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // chbx_Group
             // 
+            this.chbx_Group.DropDownWidth = 200;
             this.chbx_Group.FormattingEnabled = true;
             this.chbx_Group.Location = new System.Drawing.Point(5, 13);
             this.chbx_Group.Margin = new System.Windows.Forms.Padding(2);
@@ -2673,6 +2717,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // chbx_Format
             // 
+            this.chbx_Format.DropDownWidth = 100;
             this.chbx_Format.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
             this.chbx_Format.FormattingEnabled = true;
             this.chbx_Format.Items.AddRange(new object[] {
@@ -2720,6 +2765,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.chbx_PitchShift);
             this.groupBox5.Controls.Add(this.txt_Author);
             this.groupBox5.Controls.Add(this.txt_Tuning);
             this.groupBox5.Controls.Add(this.txt_Live_Details);
@@ -3051,6 +3097,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_ID.Name = "txt_ID";
             this.txt_ID.Size = new System.Drawing.Size(52, 20);
             this.txt_ID.TabIndex = 95;
+            this.txt_ID.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_ID_KeyPress);
             // 
             // btn_SelectInverted
             // 
@@ -4621,5 +4668,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private CheckBox chbx_Instaces;
         private NumericUpDown txt_No4Splitting;
         private CheckBox chbx_FullAlbum;
+        private CheckBox chbx_PitchShift;
+        private CheckBox checkBox2;
     }
 }

@@ -1,12 +1,12 @@
-﻿		# Date: 20.04.2020
+﻿		# Date: 02.12.2020
 		# Document Name: Rocksmith DLC Management tool README
 						(fork of rocksmith-custom-song-toolkit)
 		# Document purpose: To describe the functionailities and the way to change, the NEW tab that enable MASS Manipulation of Rocksmith DLC Library
 							(DLC folder; including customs(CDLC), DLCs and songs embeded in the ready to ship version of Rocksmith (2014 Remastered version)) 
 
-## Rocksmith DLC Library Manager v0.7.7
-*(alpha version- unnoficially, but available, version unreleased to the masses)*
-# App Description: MASS Manipulation of Rocksmith DLC Library 
+## Rocksmith DLC Library Manager v1
+*(forever alpha version- unnoficially, but available; version released for my own sake and not the masses's)*
+# App Description: MASS Manipulation of Rocksmith DLC Library (initial realised but not current problem definition)
 		e.g. 1. in Rocksmith, in the Library, each song's Album, to contain a personal rating, if it has DD, instr. avail
 		e.g. 2. in Rocksmith, in the Library, each song to be sorted by Album(Year) and Track No
 		e.g. 3. Eliminate all the songs you dont like/want to see, from the Play A Song Menu for RS14, RS12 & RS12 DLC
@@ -26,8 +26,8 @@
 	*e.g. Album Field: "<Broken><Year> - <Album> - r<Rating> - <Avail. Instr.> - <DD> - <Tuning>"
 	- Copies songs/packs directly to the PS3 by means of FTP
 - Mass add/remove DD @repack (inc. Bass only option)(incl. Official DLCs)
-- Setlists/Groups (NEW)
-- Read Current Game Library and match it to the DLCManager Library (incl. PS3) (NEW)
+- Setlists/Groups
+- Read Current Game Library and match it to the DLCManager Library (incl. PS3)
 - Mass rename songs(Standardization) e.g. Black Keys->The Black Keys and maintain changes in a local DB
 - Manipulates the Retail songs list of Rocksmith (Rocksmith 2014 disc, or Rocksmith 2012 DLC, or Rocksmith 2012 Import disc)
 
@@ -42,11 +42,14 @@
 ## Known Issues:
 -+ Packing of Rocksmith 2014 Retail manipulated files has 1 manual step for RS14 Retail songs for PS3
 - atm since compiled in 64b Access DB viewer not available
+- no yb parsing of links due to "no quota" Corona ggl lockdown
+- no spofity track&cover retrieval due to api change and not yet catchup w latest 3rdparty implementation 
 
 # Official tool / Master Branch bugs:
-[-] CICAGO 26 25 original SONG FAILS AT PACK
-[-] open ticket for the dlcpackagedata crash for 311 down in
-[-] DDC remover does not work correctly
+[ ] CICAGO 26 25 original SONG FAILS AT PACK
+[ ] open ticket for the dlcpackagedata crash for 311 down in
+[-] official DDC remover does not work correctly breaking the songs  (removal is not endorsed by community/remastered version)
+[-] usage of old old wwise 2013 vs /2019 (no known benefits for upgrading)
 
 ## ToDos/bugs:
 [ ] feat:		 Alternate No for duplicates logic
@@ -76,7 +79,6 @@
 [ ] why album id is the same as artist id
 [ ] if no delete then dont delete DBscocnvert and ftp is it working at mass packing
 [ ] mantra cannot be imported
-
 [-] test replace ....
 [-] add copy last and initial to mass pack
 [-] prepare the rebuild option
@@ -202,20 +204,52 @@
 [ ] check db also checks arrangements, standardization, tones,
 [ ] orion changed cover
 [ ] fixed a vocal at dupli missing 
-[] When setting a (base) tone copy json(&manifest?) too
+[ ] When setting a (base) tone copy json(&manifest?) too
 	[] recreate sng
-make latest x.2.x wwise to work
-java  can work if offline? (done & wwise)
-add release noteas at pack ...if normAL INPUT BOX..IF repack..default
-improving allow dlc in win (copy dll if missing)
-shift track in Arrangment or in main db should use the same code :)
-check how many imported dont have an audit trail
-check if hash doesnt match file hash
-perfect day merge lyrics&bass  
-fixing add standard in duplcaite was not removing older or adding doub along new id
+[ ] make latest x.2.x wwise to work
+[ ] java  can work if offline? (done & wwise)
+[ ] add release noteas at pack ...if normAL INPUT BOX..IF repack..default
+[ ] improving allow dlc in win (copy dll if missing)
+[ ] shift track in Arrangment or in main db should use the same code :)
+[ ] check how many imported dont have an audit trail
+[ ] check if hash doesnt match file hash
+[ ] perfect day merge lyrics&bass  
+[ ] fixing add standard in duplcaite was not removing older or adding doub along new id
+calculate all drop down options using pitch shifting systems and display it in maindb infobox
 
 ## WiP:
 (this release)
+[-] in any group filter
+[-] in no group filter
+[-] 10427 why no preview 
+[-] search by id had enter search function missing and does not laod fully the song and fucks it up (2nd part not anymore)
+[-] fixed packing summary
+[-] dont ftp delete if remote path not saved
+[-] actually delete ftp at mass repack (no id transmited :))
+[-] rename the debug button to give a clue why there :)
+[-] changed the Error at FTP file not filde to WArning as really not a codding issue and not to trigger debug in update log function
+[-] split version by number name and type :) (fixed Temp group to have same no of things as other, multiplied default to Bogdan as anyway onyl default will go live)
+[-] add Pitch Shifter/Digitec Drop Filter options and meta info or lyrics instructions
+[-] added check on overitting preview/albumart/lyric
+[-] improved meta tags adding to diff songs meta :)
+[-] removed defaulted [] meta seoparators vs adding it from the setup filed itself
+[-] added sorted by pack date
+[-] better reset filters
+[-] improved some of the calc of maindb and slected
+[-] saved historical data (connected also to main by id in import_audittrail)
+[-] displaying historical data
+[-] adding pitch shifting compatible flag from e standard down or from dropd down
+[-] adding multiselect right click inclusion
+[-] add a check after packing that you can psarc works
+[-] fixed owerrite duplciatr manag button text
+[-] if selecting a pack no but not having it selected dont refresh nos
+[-] 37756 repack has weird date
+[-] duplicate songs have "import" pack id in pack_auditrail
+[-] using multiselect for pack, beta
+[-] updates c3custom creators to https://rhythmgamingworld.com/forums/topic/c3-con-tools-v401-8142020-weve-only-just-begun/
+[-] updates Add lyrics instructions
+
+
 
 ## done:
 (prev release)
@@ -378,10 +412,11 @@ fixing add standard in duplcaite was not removing older or adding doub along new
 	0.7.2 (26.03.2019) Code review (+'19 Toolkit code base)
 	0.7.3 (6.05.2019) Find YB videos and export as webpage imrovements
 	0.7.4 (6.05.2019) 
-	0.7.5 (20.02.2020) Small improvemkents 2020
+	0.7.5 (20.02.2020) Small improvements 2020
 	0.7.6 (20.02.2020) Fixes after reintegration of base changes	
-	0.7.7 (20.04.2020) Fixes & improvements around internal dupication and filters
-	0.8 (xx.0x.2019) Reactivating Spotify checks, all params are in the Groups table
+	0.7.7 (20.04.2020) Fixes & improvements around internal duplication and filters (tons tons tons of fixes and polishing of existing "features", all params are in the Groups table)
+	1.0 (02.12.2020) Released on Customforge and GitHub Release "tab" (2 versions one w all 3rd party software, one without; can be installed/decompressed and quickly used; 1 60sec video describing why you should use this)
+	1.1 (xx.02.2021) Reactivating Spotify checks
 
 # Implementation Tracking for the Main Features:
 		+1. Ability to Generate a Database with all DLC
@@ -440,15 +475,21 @@ fixing add standard in duplcaite was not removing older or adding doub along new
 			+ Show duplicates and solve conflicts
 			+ Audio Preview full track&preview track
 			+ Remove DD (arragement dependent..e.g. only bass)
+			- Get Rocksmith playthough or original videos from youtube
+			- Get Trackno, Year, Cover for standarization from spotify (build your own playlists)
+			- Add songs to PS4/5 (jailbroken/?) existing songs.psarc
+			- PoC iPAD CDLC
 
-
-- diff between master and branch
+### Diff between master and branch
 DLCManager folder
 .xml
 mainform.cs
 mainfor.designer
+wwise twds 2019 upgrades and remplate
+some failsafes for 
 
 ### Dev Tips:
++ Use MS2019 community or whateva other older version
 + Toolkit version flag does not sync to&from Github: Run RunMeFirst.bat
 + activate debug: set RocksmithToolkitGUI Folder as Start-up project
 + Complile RocksmithToolkitGUI as AnyCPU (no 32bit)
@@ -460,7 +501,7 @@ mainfor.designer
  git add xxx.xxx
  git commit
 
- ### old goals
+### old goals
 	wip: 0.7.1 (03.06.2017) (90%) Remove getlastconversiondate from Duplicates as already coming from the arrangements table
 	wip: 0.7.2 (20.06.2017) (20%) has_section flag(to be tested with a song missing sections); 
 	wip: 0.8.1 (31.07.2017) (10%) HTML&Excel exports
@@ -468,15 +509,15 @@ mainfor.designer
 	tbr: 0.8.3 ?move Access code to project? or from hardcoded to views	
 	wip: 0.8.4 (03.10.2017) (10%) use parameterized SQL everywhere (&/ integrate template DB into project or a SQL DB)
 
-		# Legend:
-		- to be implemented
-		+ done
-		_ future release
-		-- WIP
-		{} old unimplemented feature
+# Legend:
+- to be implemented
++ done
+_ future release
+-- WIP
+{} old unimplemented feature
 
 # IDE-Setup <old>
-1. Download Git Client and Visual Studio 2013 Desktop Edition
+1. Download Git Client and Visual Studio 2013  Desktop Edition
 2. Update Visual Studio, SQL, download HELP, and FORM-Controls-Object reference
 3.0 Create a new Folder DLCManager
 3.1 Add a new Item README.txt

@@ -181,6 +181,8 @@ namespace RocksmithToolkitGUI.DLCManager
             public string LastConversionDateTime { get; set; }
             public string ImprovedWithDM { get; set; }
             public string Is_FullAlbum { get; set; }
+            public string PitchShiftableEsOrDd { get; set; }
+            public string Import_AuditTrail_ID { get; set; }
 
         }
 
@@ -652,6 +654,8 @@ namespace RocksmithToolkitGUI.DLCManager
                 query[i].LastConversionDateTime = dataRow.ItemArray[119].ToString();
                 query[i].ImprovedWithDM = dataRow.ItemArray[120].ToString();
                 query[i].Is_FullAlbum = dataRow.ItemArray[121].ToString();
+                query[i].PitchShiftableEsOrDd = dataRow.ItemArray[122].ToString();
+                query[i].Import_AuditTrail_ID = dataRow.ItemArray[123].ToString();
                 i++;
                 query[i] = new MainDBfields();
             }
@@ -1009,6 +1013,87 @@ namespace RocksmithToolkitGUI.DLCManager
                 return "1" + ";0;0";
         }
 
+        static public string GetDropTunningInstr(string Tunning)
+        {
+            var tzt = "";
+            switch (Tunning)
+            {
+                case "Eb":
+                    tzt += "Half Step down/ Led 1 on the Pedal from Es ";
+                    break;
+                case "Eb Standard":
+                    tzt += "Half Step down/ Led 1 on the Pedal from Es ";
+                    break;
+                case "D Standard":
+                    tzt += "1 Step down/ Led 2 on the Pedal from Es ";
+                    break;
+                case "C# Standard":
+                    tzt += "1 and a Half Step down/ Led 3 on the Pedal from Es ";
+                    break;
+                case "C Standard":
+                    tzt += "2 Steps down/ Led 4 on the Pedal from Es ";
+                    break;
+                case "B Standard":
+                    tzt += "2 and a Half Steps down/ Led 5 on the Pedal from Es ";
+                    break;
+                case "Bb Standard":
+                    tzt += "3 Steps down/ Led 6 on the Pedal from Es ";
+                    break;
+                case "AStandard":
+                    tzt += "3 and Half Steps down/ Led 7 on the Pedal from Es ";
+                    break;
+                case "AbStandard":
+                    tzt += "3 and Half Steps down/ Led 7 on the Pedal from Es ";
+                    break;
+                case "Eb Drop Db":
+                    tzt += "First Cord 2 Steps down the rest Half Step down/ Led 1 on the Pedal from dD ";
+                    break;
+                case "D Drop C":
+                    tzt += "First Cord 2 Steps down the rest Half Step down/ Led 2 on the Pedal from dD ";
+                    break;
+                case "C# Drop B":
+                    tzt += "First Cord 2 Steps down the rest 1 Step down/ Led 3 on the Pedal from dD ";
+                    break;
+                case "C Drop A#":
+                    tzt += "First Cord 2 Steps down the rest 1 and a Half Step down/ Led 4 on the Pedal from dD ";
+                    break;
+                case "B Drop A":
+                    tzt += "First Cord 2 Steps down the rest 2 Steps down/ Led 5 on the Pedal from dD ";
+                    break;
+                case "Bb Drop Ab":
+                    tzt += "First Cord 2 Steps down the rest 2 and a Half Steps down/ Led 6 on the Pedal from dD ";
+                    break;
+                case "A Drop G":
+                    tzt += "First Cord 2 Steps down the rest 3 Steps down/ Led 7 on the Pedal from dD ";
+                    break;
+                default:
+                    break;
+
+                    //<TuningDefinition Version="RS2012" Name="EFlat" UIName="Eb" >< Tuning string0="-1" string1="-1" string2="-1" string3="-1" string4="-1" string5 = "-1" />
+                    //<TuningDefinition Version="RS2014" Name="EbStandard" UIName="Eb Standard"> <Tuning string0="-1" string1="-1" string2="-1" string3="-1" string4="-1" string5="-1"/>
+                    //<TuningDefinition Version="RS2014" Name="DStandard" UIName="D Standard"><Tuning string0="-2" string1="-2" string2="-2" string3="-2" string4="-2" string5="-2"/>
+                    //<TuningDefinition Version="RS2014" Name="C#Standard" UIName="C# Standard"><Tuning string0="-3" string1="-3" string2="-3" string3="-3" string4="-3" string5="-3"/>
+                    //<TuningDefinition Version="RS2014" Name="CStandard" UIName="C Standard"><Tuning string0="-4" string1="-4" string2="-4" string3="-4" string4="-4" string5="-4"/>
+                    //<TuningDefinition Version="RS2014" Name="BStandard" UIName="B Standard" Custom="true"><Tuning string0="-5" string1="-5" string2="-5" string3="-5" string4="-5" string5="-5"/>
+                    //<TuningDefinition Version="RS2014" Name="BbStandard" UIName="Bb Standard" Custom="true"><Tuning string0="-6" string1="-6" string2="-6" string3="-6" string4="-6" string5="-6"/>
+                    //<TuningDefinition Version="RS2014" Name="AStandard" UIName="A Standard" Custom="true"><Tuning string0="-7" string1="-7" string2="-7" string3="-7" string4="-7" string5="-7"/>
+                    //<TuningDefinition Version="RS2014" Name="AbStandard" UIName="Ab Standard" Custom="true"><Tuning string0="-7" string1="-7" string2="-7" string3="-7" string4="-7" string5="-7"/>
+                    //        SearchCmd += "ID IN (SELECT DISTINCT CDLC_ID FROM Arrangements p WHERE p.Tunning IN (\"Eb\", \"Eb Standard\", \"D Standard\", \"C# Standard\", \"C Standard\", \"B Standard\"" +
+                    //            ", \"Bb Standard\", \"AStandard\", \"AbStandard\"))";
+
+                    //case "Digitech Drop compatible (Straight down conv from Drop D)":
+                    //    SearchCmd += "ID IN (SELECT DISTINCT CDLC_ID FROM Arrangements p WHERE p.Tunning IN (\"Eb Drop Db\", \"D Drop C\", \"C#DropB\", \"C Drop A#\", \"B Drop A\"" +
+                    //        ", \"BbDropAb\", \"A Drop G\"))";
+                    //<TuningDefinition Version="RS2014" Name="EbDropDb" UIName="Eb Drop Db"><Tuning string0="-3" string1="-1" string2="-1" string3="-1" string4="-1" string5="-1"/>
+                    //<TuningDefinition Version="RS2014" Name="DDropC" UIName="D Drop C"><Tuning string0="-4" string1="-2" string2="-2" string3="-2" string4="-2" string5="-2"/>
+                    //<TuningDefinition Version="RS2014" Name="C#DropB" UIName="C# Drop B" Custom="true"><Tuning string0="-5" string1="-3" string2="-3" string3="-3" string4="-3" string5="-3"/>
+                    //<TuningDefinition Version="RS2014" Name="CdropA#" UIName="C Drop A#" Custom="true"><Tuning string0="-6" string1="-4" string2="-4" string3="-4" string4="-4" string5="-4"/>
+                    //<TuningDefinition Version="RS2014" Name="BDropA" UIName="B Drop A" Custom="true"><Tuning string0="-7" string1="-5" string2="-5" string3="-5" string4="-5" string5="-5"/>
+                    //<TuningDefinition Version="RS2014" Name="BbDropAb" UIName="Bb Drop Ab" Custom="true"><Tuning string0="-8" string1="-6" string2="-6" string3="-6" string4="-6" string5="-6"/>
+            }
+            return tzt;
+        }
+
         public static string Manipulate_strings(string words, int k, bool ifn, bool orig_flag, bool bassRemoved, GenericFunctions.MainDBfields[] SongRecord, string sep1, string sep2, bool beta, bool sort)//, string always_grp, string grp)
         {
 
@@ -1020,7 +1105,7 @@ namespace RocksmithToolkitGUI.DLCManager
             var txt = words;
             var curtext = "";
             var curelem = "";
-            var fulltxt = sep1;
+            var fulltxt = "";// sep1;
             var readt = false;
             var oldtxt = "";
             var last_ = 0;
@@ -1033,6 +1118,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 {
                     readt = true;
                     curelem = "";
+                    last_ = fulltxt.Length;
                 }
 
                 if (readt == true)
@@ -1051,25 +1137,46 @@ namespace RocksmithToolkitGUI.DLCManager
                     {
                         case "<Artist>":
                             if (ConfigRepository.Instance()["dlcm_AdditionalManipul23"] == "Yes" && SongRecord[k].Artist.Length > 4 && sort)
-                                tzt = sep2 + MoveTheAtEnd(SongRecord[k].Artist) + sep1;
-                            else tzt = sep2 + SongRecord[k].Artist + sep1;
+                                tzt = MoveTheAtEnd(SongRecord[k].Artist);// sep1 +  + sep2;
+                            else tzt = SongRecord[k].Artist;// sep1 +  + sep2;
                             break;
                         case "<Title>":
-                            if (ConfigRepository.Instance()["dlcm_AdditionalManipul23"] == "Yes" && SongRecord[k].Song_Title.Length > 4 && sort)
-                                tzt = sep2 + MoveTheAtEnd(SongRecord[k].Song_Title) + sep1;
-                            else tzt = sep2 + SongRecord[k].Song_Title + sep1;
+                            if (ConfigRepository.Instance()["dlcm_AdditionalManipul21"] == "Yes" && SongRecord[k].Song_Title.Length > 4 && sort)
+                                tzt = MoveTheAtEnd(SongRecord[k].Song_Title);// sep1 +  + sep2;
+                            else tzt = SongRecord[k].Song_Title;// sep1 +  + sep2;
+                            break;
+                        case "<Album>":
+                            if (ConfigRepository.Instance()["dlcm_AdditionalManipul23"] == "Yes" && SongRecord[k].Album.Length > 4)                                                                                         //    data.SongInfo.SongDisplayNameSort = MoveTheAtEnd(data.SongInfo.SongDisplayNameSort);
+                                tzt = MoveTheAtEnd(SongRecord[k].Album);// sep1 +  + sep2;
+                            else tzt = SongRecord[k].Album;// sep1 + S + sep2;
                             break;
                         case "<Artist Sort>":
                             if (ConfigRepository.Instance()["dlcm_AdditionalManipul23"] == "Yes" && SongRecord[k].Artist_Sort.Length > 4)
-                                tzt = sep2 + MoveTheAtEnd(SongRecord[k].Artist_Sort) + sep1;
+                                tzt = MoveTheAtEnd(SongRecord[k].Artist_Sort);// + sep1 + sep2;
+                            else tzt = SongRecord[k].Artist_Sort;// sep1 +  + sep2;
                             break;
                         case "<Title Sort>":
                             if (ConfigRepository.Instance()["dlcm_AdditionalManipul21"] == "Yes" && SongRecord[k].Song_Title_Sort.Length > 4)                                                                                         //    data.SongInfo.SongDisplayNameSort = MoveTheAtEnd(data.SongInfo.SongDisplayNameSort);
-                                tzt = sep2 + MoveTheAtEnd(SongRecord[k].Song_Title_Sort) + sep1;
-                            else tzt = sep2 + SongRecord[k].Song_Title_Sort + sep1;
+                                tzt = MoveTheAtEnd(SongRecord[k].Song_Title_Sort);// sep1 +  + sep2;
+                            else tzt = SongRecord[k].Song_Title_Sort;// sep1 +  + sep2;
                             break;
-                        case "<Album>":
-                            tzt = sep2 + SongRecord[k].Album + sep1;
+                        case "<Album Sort>":
+                            if (ConfigRepository.Instance()["dlcm_AdditionalManipul21"] == "Yes" && SongRecord[k].Album_Sort.Length > 4)                                                                                         //    data.SongInfo.SongDisplayNameSort = MoveTheAtEnd(data.SongInfo.SongDisplayNameSort);
+                                tzt = MoveTheAtEnd(SongRecord[k].Album_Sort);// sep1 +  + sep2;
+                            else tzt = SongRecord[k].Album_Sort;// sep1 +  + sep2;
+                            break;
+                        case "<Artist Short>":
+                            if (ConfigRepository.Instance()["dlcm_AdditionalManipul23"] == "Yes" && SongRecord[k].Artist.Length > 4 && sort && SongRecord[k].Artist_ShortName == "")
+                                tzt = MoveTheAtEnd(SongRecord[k].Artist);// sep1 +  + sep2;
+                            else tzt = SongRecord[k].Artist_ShortName != "" ? SongRecord[k].Artist_ShortName : SongRecord[k].Artist;
+                            break;
+                        case "<Album Short>":
+                            if (ConfigRepository.Instance()["dlcm_AdditionalManipul23"] == "Yes" && SongRecord[k].Album.Length > 4 && sort && SongRecord[k].Album_ShortName == "")
+                                tzt = MoveTheAtEnd(SongRecord[k].Album);// sep1 +  + sep2;
+                            else tzt = SongRecord[k].Album_ShortName != "" ? SongRecord[k].Album_ShortName : SongRecord[k].Album;
+                            break;
+                        case "<Author>":
+                            tzt = SongRecord[k].Author;
                             break;
                         case "<Version>":
                             tzt = SongRecord[k].Version;
@@ -1187,27 +1294,130 @@ namespace RocksmithToolkitGUI.DLCManager
                         case "<CDLC_ID>":
                             tzt = SongRecord[k].ID;
                             break;
-                        case "<DLCM Version>":
-                            tzt = c("dlcm_DLCManager_Version");
+                        case "<DLCM Release>":
+                            tzt = c("dlcm_DLCManager_Release");
+                            break;
+                        case "<DLCM ReleaseName>":
+                            tzt = c("dlcm_DLCManager_ReleaseName");
+                            break;
+                        case "<DLCM ReleaseVersion>":
+                            tzt = c("dlcm_DLCManager_ReleaseVersion");
                             break;
                         case "<Date>":
                             tzt = DateTime.Now.ToString("yyyyMMdd HHmmssfff");
                             break;
+                        case "<DigitechDropFlag>":
+                            DataSet dys = new DataSet(); dys = SelectFromDB("Arrangements", "SELECT Tunning, Bonus, Comments, ArrangementType, RouteMask, Start_Time, Part FROM Arrangements WHERE CDLC_ID=" + SongRecord[k].ID + "", "", cnb);
+                            var noOfRekc = dys.Tables[0].Rows.Count;
+
+                            for (var j = 0; j <= noOfRekc - 1; j++)
+                            {
+                                var Tunning = dys.Tables[0].Rows[j].ItemArray[0].ToString();
+                                if (Tunning == "Eb" || Tunning == "Eb Standard" || Tunning == "D Standard" || Tunning == "C# Standard" || Tunning == "C Standard" || Tunning == "B Standard"
+                                     || Tunning == "Bb Standard" || Tunning == "AStandard" || Tunning == "AbStandard")
+                                {
+                                    tzt = "DigitechDropFromEs";
+                                    break;
+                                }
+                                else
+                                     if (Tunning == "Eb Drop Db" || Tunning == "D Drop C" || Tunning == "C# Drop B" || Tunning == "C Drop A#" || Tunning == "B Drop A" || Tunning == "Bb Drop Ab"
+                                     || Tunning == "Bb Standard")
+                                {
+                                    tzt = "DigitechDropFromDropD";
+                                    break;
+                                }
+                            }
+                            break;
+                        //case "<DigitechDropEstandardDirectFlag>":
+                        //    DataSet dhs = new DataSet(); dhs = SelectFromDB("Arrangements", "SELECT Tunning, Bonus, Comments, ArrangementType, RouteMask, Start_Time, Part FROM Arrangements WHERE CDLC_ID=" + SongRecord[k].ID + "", "", cnb);
+                        //    var noOfRemc = dhs.Tables[0].Rows.Count;
+
+                        //    for (var j = 0; j <= noOfRemc - 1; j++)
+                        //    {
+                        //        var Tunning = dhs.Tables[0].Rows[j].ItemArray[0].ToString();
+                        //        if (Tunning == "Eb" || Tunning == "Eb Standard" || Tunning == "D Standard" || Tunning == "C# Standard" || Tunning == "C Standard" || Tunning == "B Standard"
+                        //             || Tunning == "Bb Standard" || Tunning == "AStandard" || Tunning == "AbStandard")
+                        //        {
+                        //            tzt = "DigitechDropFromEs";
+                        //            break;
+                        //        }
+                        //    }
+                        //    break;
+                        case "<DigitechDropDetails>":/*EstandardDirect*/
+                            DataSet dns = new DataSet(); dns = SelectFromDB("Arrangements", "SELECT Tunning, Bonus, Comments, ArrangementType, RouteMask, Start_Time, Part FROM Arrangements WHERE CDLC_ID=" + SongRecord[k].ID + "", "", cnb);
+                            var noOfRenc = dns.Tables[0].Rows.Count;
+
+                            for (var j = 0; j <= noOfRenc - 1; j++)
+                            {
+                                var Tunning = dns.Tables[0].Rows[j].ItemArray[0].ToString();
+                                var ArrangementType = dns.Tables[0].Rows[j].ItemArray[3].ToString();
+                                var RouteMask = dns.Tables[0].Rows[j].ItemArray[4].ToString();
+                                if (ArrangementType == "Vocal" && ArrangementType == "ShowLight") continue;
+                                var instr = RouteMask == "Bass" ? " B-" : (RouteMask == "Lead" ? " L-" : (RouteMask == "Rhythm" ? " R-" : (RouteMask == "Combo" ? " C-" : "?")));
+                                tzt = instr + GetDropTunningInstr(Tunning);
+                            }
+                            break;
+                        //case "<DigitechDropDropDDirectFlag>":
+                        //    DataSet dhz = new DataSet(); dhz = SelectFromDB("Arrangements", "SELECT Tunning, Bonus, Comments, ArrangementType, RouteMask, Start_Time, Part FROM Arrangements WHERE CDLC_ID=" + SongRecord[k].ID + "", "", cnb);
+                        //    var noOfRezc = dhz.Tables[0].Rows.Count;
+
+                        //    for (var j = 0; j <= noOfRezc - 1; j++)
+                        //    {
+                        //        var Tunning = dhz.Tables[0].Rows[j].ItemArray[0].ToString();
+                        //        if (Tunning == "Eb" || Tunning == "Eb Standard" || Tunning == "D Standard" || Tunning == "C# Standard" || Tunning == "C Standard" || Tunning == "B Standard"
+                        //             || Tunning == "Bb Standard" || Tunning == "AStandard" || Tunning == "AbStandard")
+                        //        {
+                        //            tzt = "DigitechDropFromDropD";
+                        //            break;
+                        //        }
+                        //    }
+                        //    break;
+                        //case "<DigitechDropDDirectDetails>":
+                        //    DataSet drs = new DataSet(); dns = SelectFromDB("Arrangements", "SELECT Tunning, Bonus, Comments, ArrangementType, RouteMask, Start_Time, Part FROM Arrangements WHERE CDLC_ID=" + SongRecord[k].ID + "", "", cnb);
+                        //    var noOfRerc = drs.Tables[0].Rows.Count;
+
+                        //    for (var j = 0; j <= noOfRerc - 1; j++)
+                        //    {
+                        //        var Tunning = drs.Tables[0].Rows[j].ItemArray[0].ToString();
+                        //        var ArrangementType = drs.Tables[0].Rows[j].ItemArray[3].ToString();
+                        //        if (ArrangementType == "Vocal" && ArrangementType == "ShowLight") continue;
+                        //        var instr = ArrangementType == "Bass" ? "B-" : (ArrangementType == "Lead" ? "L-" : (ArrangementType == "Rhythm" ? "R-" : (ArrangementType == "Combo" ? "C-" : "?")));
+                        //        switch (Tunning)
+                        //        {
+                        //            case "Eb":
+                        //                tzt += instr + "Half Step down/ Led 1 on the Pedal from dD ";
+                        //                break;
+                        //            case "Eb Standard":
+                        //                tzt += instr + "Half Step down/ Led 1 on the Pedal from dD ";
+                        //                break;
+                        //            case "D Standard":
+                        //                tzt += instr + "1 Step down/ Led 2 on the Pedal from dD ";
+                        //                break;
+                        //            case "C# Standard":
+                        //                tzt += instr + "1 and a Half Step down/ Led 3 on the Pedal from dD ";
+                        //                break;
+                        //            case "C Standard":
+                        //                tzt += instr + "2 Steps down/ Led 4 on the Pedal from dD ";
+                        //                break;
+                        //            case "B Standard":
+                        //                tzt += instr + "2 and a Half Steps down/ Led 5 on the Pedal from dD ";
+                        //                break;
+                        //            case "Bb Standard":
+                        //                tzt += instr + "3 Steps down/ Led 6 on the Pedal from dD ";
+                        //                break;
+                        //            case "AStandard":
+                        //                tzt += instr + "3 and Half Steps down/ Led 7 on the Pedal from dD ";
+                        //                break;
+                        //            case "AbStandard":
+                        //                tzt += instr + "3 and Half Steps down/ Led 7 on the Pedal from dD ";
+                        //                break;
+                        //        }
+                        //    }
+                        //    break;
                         case "<Random5>":
                             Random randomp = new Random();
                             int rn = randomp.Next(0, 100000);
                             tzt = rn.ToString();
-                            break;
-                        case "<Artist Short>":
-                            if (ConfigRepository.Instance()["dlcm_AdditionalManipul23"] == "Yes" && SongRecord[k].Artist.Length > 4 && sort && SongRecord[k].Artist_ShortName == "")
-                                tzt = sep2 + MoveTheAtEnd(SongRecord[k].Artist) + sep1;
-                            else tzt = SongRecord[k].Artist_ShortName != "" ? SongRecord[k].Artist_ShortName : SongRecord[k].Artist;
-                            break;
-                        case "<Album Short>":
-                            tzt = SongRecord[k].Album_ShortName != "" ? SongRecord[k].Album_ShortName : SongRecord[k].Album;
-                            break;
-                        case "<Author>":
-                            tzt = SongRecord[k].Author;
                             break;
                         case "<Space>":
                             tzt = " ";
@@ -1319,7 +1529,10 @@ namespace RocksmithToolkitGUI.DLCManager
                             }
                             break;
                         case "<Timestamp>":
-                            tzt = DateTime.Now.ToString("yyyyMMdd HHmmssfff").Replace(":", "").Replace(" ", "").Replace(".", "");
+                            tzt = DateTime.Now.ToString("yyyy-MM-dd HH:mm.ss");//.Replace(":", "-");//.Replace(" ", "").Replace(".", "");
+                            break;
+                        case "<TimestampShort>":
+                            tzt = DateTime.Now.ToString("yyMMdd HHmms");//.Replace(":", "-");//.Replace(" ", "").Replace(".", "");
                             break;
                         default:
                             if ((origQAs) || (ifn))
@@ -1347,17 +1560,19 @@ namespace RocksmithToolkitGUI.DLCManager
                             break;
                     }
                     if (tzt != "")
-                        if (SongRecord[0].Album.ToLower().IndexOf("live at") < 0 || (curelem != "<Live>"))
-                            fulltxt = fulltxt.IndexOf("[") > 0 ? fulltxt.Replace(tzt.Replace("[", "").Replace("]", ""), "") + tzt : fulltxt + tzt;
-                        else fulltxt += tzt;
+                        //if (SongRecord[0].Album.ToLower().IndexOf("live at") < 0 || (curelem != "<Live>"))
+                        // fulltxt = fulltxt.IndexOf(sep1) > 0 ? fulltxt.Replace(tzt.Replace(sep1, "").Replace(sep2, ""), "") + tzt : fulltxt + tzt;
+                        //else
+                        fulltxt += tzt;
 
                     if (oldtxt == fulltxt && last_ > 0) fulltxt = fulltxt.Substring(0, last_);
                     last_ = fulltxt.Length;
                 }
             }
 
-            if ((sep1 + sep2).Length > 0) return (fulltxt + sep2).Replace(sep1 + sep2, "");
-            else return fulltxt.Trim('-');
+            if ((sep1 + sep2).Length > 0) return (fulltxt.Trim()).Replace(sep1 + sep2, "").Replace(sep1 + " " + sep2, "").Replace(sep1 + "-", sep1).Replace("-" + sep2, sep2).Replace(sep1 + " ", sep1).Replace(" " + sep2, sep2).Replace("--", "-").Replace("  ", " ").Replace("]-", "-").Replace("] -", "-");
+            // return (fulltxt + sep2).Replace(sep1 + sep2, "").Replace(sep1 + "-", sep1).Replace("-" + sep2, sep2).Replace(sep1 + " ", sep1).Replace(" " + sep2, sep2);
+            else return fulltxt.Trim().Replace("- ", "-");/*'-'*/
         }
 
         public static void DeleteRecords(string IDs, string cmd, string DBPath, string TempPath, string norows, string hash, OleDbConnection cnb)
@@ -2209,8 +2424,9 @@ namespace RocksmithToolkitGUI.DLCManager
         public static string DeleteFTPedSongs(string filen, string FTPPath, OleDbConnection cnb, string ID, string ftpstatus)
         {
             if (ftpstatus.ToLower() != "ok") return "not";
+            //return "";
 
-            DeleteFTPFiles(filen, FTPPath);//Delete latest remote file
+            if (filen != "") DeleteFTPFiles(filen, FTPPath);//Delete latest remote file
 
             DataSet dvr = new DataSet(); dvr = SelectFromDB("Pack_AuditTrail", "SELECT FileName FROM Pack_AuditTrail WHERE CDLC_ID=" + ID + " and Platform=\"PS3\" ORDER BY ID DESC;", "", cnb);
             var rec = dvr.Tables.Count == 0 ? 0 : dvr.Tables[0].Rows.Count;
@@ -2256,7 +2472,8 @@ namespace RocksmithToolkitGUI.DLCManager
             }
             catch (Exception ex)
             {
-                var tsst = "Error18 ..." + ex; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", null, null);
+                var f = ex.Message.Replace("error", "xrror"); var tsst = "Warning ..." + f;
+                UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", null, null);
                 if (ex.Message.ToLower().IndexOf("timed out") > 0) return "nok";
                 return "";
             }
@@ -2333,6 +2550,36 @@ namespace RocksmithToolkitGUI.DLCManager
                 return "Not ";
             }
         }
+
+        static public bool CheckSong(string song)
+        {
+            var Temp_Path = ConfigRepository.Instance()["dlcm_TempPath"] + "\\0_temp";
+            var unpackedDir = "";
+            DLCPackageData info = null;
+            var platform = song.GetPlatform();
+            var timestamp = UpdateLog(DateTime.Now, "Unpack song", true, Temp_Path, "", "", null, null);
+
+            try
+            {
+                if (ConfigRepository.Instance()["dlcm_AdditionalManipul51"] == "Yes")
+                    unpackedDir = Packer.Unpack(song, Temp_Path, platform, true, true);
+                else
+                    unpackedDir = Packer.Unpack(song, Temp_Path, platform, true, false);
+                timestamp = UpdateLog(timestamp, "Load song", true, Temp_Path, "", "DLCManager", null, null);
+                info = DLCPackageData.LoadFromFolder(unpackedDir, platform); //Generating preview with different name
+            }
+            catch (Exception ee)
+            {
+                timestamp = UpdateLog(timestamp, "Error" + ee.Message + " Broken Song Not Imported", true, Temp_Path, "", "", null, null);
+                //var Pathh = broken_Path_Import + "\\" + ds.Tables[0].Rows[i].ItemArray[2].ToString();
+                //if (chbx_Additional_Manipulations.GetItemChecked(30))
+                //    CopyMoveFileSafely(FullPath, Pathh, chbx_Additional_Manipulations.GetItemChecked(75), ds.Tables[0].Rows[i].ItemArray[3].ToString(), false);
+                return true;
+            }
+
+            timestamp = UpdateLog(timestamp, "Done check song", true, Temp_Path, "", "DLCManager", null, null);
+            return false;
+        }
         public static void Ogg2Wav(string sourcePath, string destinationPath)
         {
             var cmdArgs = string.Format(" -o \"{1}\" \"{0}\"", sourcePath, destinationPath);
@@ -2404,7 +2651,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     GenericFunctions.Ogg2Wav(oggPreviewPath, wavPreviewPath);
                 }
 
-                if (!File.Exists(wavPreviewPath) || !File.Exists(audioPath))
+                if (!File.Exists(wemPath) || File.Exists(audioPath))//weird behavior fixed 04.11
                 {
                     Wwise.Wav2Wem(audioPath, wemPath, audioQuality);
                     audioPath = wemPath;
@@ -2887,7 +3134,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         //modify lyrics
                         cleanlyrics(filez.ID, cnb);
                         string ttt2 = (ConfigRepository.Instance()["dlcm_AdditionalManipul73"] == "Yes" && filez.Has_Vocals == "Yes")
-                            ? AddStuffToLyrics(filez.ID, filez.Description, Groupss, filez.Has_DD, (filez.Has_BassDD == "Yes") ? "No" : "Yes", filez.Has_BassDD, filez.Author, filez.Is_Acoustic, filez.Is_Live, filez.Live_Details, filez.Is_Multitrack, filez.Is_Original, cnb) : "";
+                            ? AddStuffToLyrics(filez.ID, filez.Description, Groupss, filez.Has_DD, (filez.Has_BassDD == "Yes") ? "No" : "Yes", filez.Has_BassDD, filez.Author, filez.Is_Acoustic, filez.Is_Live, filez.Live_Details, filez.Is_Multitrack, filez.Is_Original, cnb, SongRecord, chbx_Beta) : "";
                         string ttt1 = (ConfigRepository.Instance()["dlcm_AdditionalManipul74"]).ToLower() == "Yes".ToLower() && filez.Has_Vocals.ToLower() == "Yes".ToLower()
                             ? AddTrackStart2Lyrics(filez.ID, cnb) : "";
                         if (ttt2 != "" || ttt1 != "") cleanlyrics(filez.ID, cnb);
@@ -3761,7 +4008,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                 error = true; error_reason = "@FTP";
                             }
 
-
+                            if (!error && ConfigRepository.Instance()["dlcm_AdditionalManipul101"] == "Yes") error = CheckSong(source);
                             ////Add Pack Audit Trail
                             if (!(chbx_CopyOld && chbx_CopyOldEnabled && needRebuildPackage) && !(chbx_Last_Packed && chbx_Last_PackedEnabled))
                                 copiedpath = dest + fi.Name;
@@ -3796,7 +4043,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                 error = true; error_reason = "mac filezise zero";
                             }
                             dest = RocksmithDLCPath + source.Substring(source.LastIndexOf("\\"));
-
+                            if (!error && ConfigRepository.Instance()["dlcm_AdditionalManipul101"] == "Yes") error = CheckSong(source);
                             ////Add Pack Audit Trail
                             if (!(chbx_CopyOld && chbx_CopyOldEnabled && needRebuildPackage) && !(chbx_Last_Packed && chbx_Last_PackedEnabled))
                                 copiedpath = dest.Replace(Path.GetDirectoryName(dest), File.Exists(c("general_rs2014path")) ? c("general_rs2014path") : c("dlcm_Mac"));
@@ -3857,6 +4104,17 @@ namespace RocksmithToolkitGUI.DLCManager
             return;
         }
 
+        public static string GetMax(string tab, string field, OleDbConnection cnb)
+        {
+            DataSet dms = new DataSet(); dms = SelectFromDB(tab, "SELECT max(val(" + field + ")) FROM " + tab, null, cnb);
+            if (dms.Tables.Count > 0)
+            {
+                if (dms.Tables[0].Rows.Count > 0) return (int.Parse(dms.Tables[0].Rows[0].ItemArray[0].ToString()) + 1).ToString();
+                else return "0";
+            }
+            else return "0";
+        }
+
         static public string Add2Pack(string multithreadname, string form, string platfrm, bool chbx_Replace, bool chbx_ReplaceEnabled, string txt_RemotePath,
             string source, string dest, OleDbConnection cnb, System.IO.FileInfo fi, string ID, string DLC_Name, string chbx_Format, string pack, string ftped)
         {
@@ -3870,8 +4128,8 @@ namespace RocksmithToolkitGUI.DLCManager
             {
                 var sourcedir = source.Replace(Path.GetFileName(source), "");
                 string insertcmdA = "CopyPath, PackPath, FileName, PackDate, FileHash, FileSize, CDLC_ID, DLC_Name, Platform, Pack, FTPed";
-                var insertA = "\"" + dest + "\",\"" + sourcedir.Remove(sourcedir.Length - 1) + "\",\"" + Path.GetFileName(source) + "\",\"" + DateTime.Today.ToString()
-                    + "\",\"" + FileHash + "\",\"" + fi.Length + "\"," + ID + ",\"" + DLC_Name + "\",\"" + chbx_Format + "\",\"" + pack + "\"" +
+                var insertA = "\"" + dest + "\",\"" + sourcedir.Remove(sourcedir.Length - 1) + "\",\"" + Path.GetFileName(source) + "\",\"" + DateTime.Now.ToString("yyyyMMdd HHmmssfff")
+                + "\",\"" + FileHash + "\",\"" + fi.Length + "\"," + ID + ",\"" + DLC_Name + "\",\"" + chbx_Format + "\",\"" + pack + "\"" +
                     ",\"" + (ftped.IndexOf("Truely") >= 0 ? "Yes" : "No") + "\"";
 
                 InsertIntoDBwValues("Pack_AuditTrail", insertcmdA, insertA, cnb, 0);
@@ -4252,7 +4510,8 @@ namespace RocksmithToolkitGUI.DLCManager
             return XMLFilePath;
         }
 
-        public static string AddStuffToLyrics(string SongID, string Comments, string Group, string Has_DD, string bassRemoved, string Has_BassDD, string Author, string Is_Acoustic, string Is_Live, string Live_Details, string Is_Multitrack, string Is_Original, OleDbConnection cnb)
+        public static string AddStuffToLyrics(string SongID, string Comments, string Group, string Has_DD, string bassRemoved, string Has_BassDD, string Author
+            , string Is_Acoustic, string Is_Live, string Live_Details, string Is_Multitrack, string Is_Original, OleDbConnection cnb, MainDBfields[] SongRecord, bool chbx_Beta)
         {
             var ST = "";
             var tgst = "";
@@ -4316,6 +4575,11 @@ namespace RocksmithToolkitGUI.DLCManager
             sdetails = sdetails.Replace(". ", ".").Replace(": ", ":");
             scomments = scomments.Replace("  ", " ").TrimEnd().Replace("(", "").Replace(")", "").Replace("[", "").Replace("]", "").Replace(":", "");
             sdetails = sdetails.Replace("  ", " ").TrimEnd().Replace("(", "").Replace(")", "").Replace("[", "").Replace("]", "").Replace(":", "");
+            if (c("dlcm_Lyric_Info") != "" && c("dlcm_Activ_LyricInfo") == "Yes")
+            {
+                sdetails = Manipulate_strings(ConfigRepository.Instance()["dlcm_Lyric_Info"], 0, false, false, bassRemoved == "Yes" ? true : false, SongRecord, "", "", chbx_Beta, false);
+                scomments = "";
+            }
 
             var spacetoadd = FirstLyric - 0.001;
             var rt = ST + ".old";
@@ -4630,11 +4894,11 @@ namespace RocksmithToolkitGUI.DLCManager
             if (File.Exists(AudioPath)) File.Copy(AudioPath, AudioPath + ".orig", true);
             else return;
             if (File.Exists(audioPreviewPath)) File.Copy(audioPreviewPath, audioPreviewPath + ".orig", true);
-            else return;
+            //else return;
             if (File.Exists(OggPath)) File.Copy(OggPath, OggPath + ".orig", true);
             else return;
             if (File.Exists(OggPreviewPath)) File.Copy(OggPreviewPath, OggPreviewPath + ".orig", true);
-            else return;
+            //else return;
 
             string g, gg; bool remote = false;
             g = t;
@@ -4745,8 +5009,8 @@ namespace RocksmithToolkitGUI.DLCManager
                             var rrr = true;
                             try
                             {
-                                File.Copy(t, g, true);
                                 File.Copy(tt, gg, true);
+                                File.Copy(tt.Replace(".ogg", ".wem"), gg.Replace(".ogg", ".wem"), true);
                                 rrr = false;
                             }
                             catch (Exception Ex5)
@@ -4986,14 +5250,15 @@ namespace RocksmithToolkitGUI.DLCManager
             var dus = UpdateDB("Main", cmd1, cnb);
 
             cmd1 = "UPDATE Standardization SET "
-+ (Year != "" ? " Year_Correction = \"" + Year + "\"" : "Year_Correction =Year_Correction");
+            + (Year != "" ? " Year_Correction = \"" + Year + "\"" : "Year_Correction =Year_Correction");
             cmd1 += " WHERE (Artist=\"" + Artist + "\" or Artist_Correction=\"" + Artist + "\") AND (Album=\"" + Album + "\" or Album_Correction=\"" + Album + "\")";
-
             var dis = UpdateDB("Standardization", cmd1, cnb);
 
             cmd1 = "UPDATE Standardization SET "
-              + (artist_c != "" ? "Artist_Correction = \"" + artist_c + "\"" : "")
-        + (album_c != "" ? (artist_c != "" ? "," : "") + " Album_Correction = \"" + album_c + "\"" : "") + (ArtPath != "" ? (artist_c != "" || album_c != "" ? "," : "") + " AlbumArtPath_Correction = \"" + ArtPath + "\"" : "");
+                + (artist_c != "" ? "Artist_Correction = \"" + artist_c + "\"" : "")
+                + (album_c != "" ? (artist_c != "" ? "," : "") + " Album_Correction = \"" + album_c + "\"" : "")
+                + (ArtPath != "" ? (artist_c != "" || album_c != "" ? "," : "") + " AlbumArtPath_Correction = \"" + ArtPath + "\"" : "")
+                        + (Year != "" ? (ArtPath != "" || artist_c != "" || album_c != "" ? "," : "") + " Year_Correction = \"" + Year + "\"" : "Year_Correction =Year_Correction");
             cmd1 += " WHERE (Artist=\"" + Artist + "\") AND (Album=\"" + Album + "\")";
             var dxxs = UpdateDB("Standardization", cmd1, cnb);
 

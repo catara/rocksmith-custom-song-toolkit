@@ -235,6 +235,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_Album2SortA = new System.Windows.Forms.Button();
             this.btn_CommentSimilar = new System.Windows.Forms.Button();
             this.lbl_FileHash = new System.Windows.Forms.Label();
+            this.btn_OpenStandardization = new System.Windows.Forms.Button();
             this.lbl_Covers = new System.Windows.Forms.Label();
             this.lbl_LenghtNew = new System.Windows.Forms.Label();
             this.lbl_LenghtExisting = new System.Windows.Forms.Label();
@@ -282,7 +283,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.lbl_YearExisting = new System.Windows.Forms.Label();
             this.lbl_YearNew = new System.Windows.Forms.Label();
             this.lbl_IDNew = new System.Windows.Forms.Label();
-            this.btn_OpenStandardization = new System.Windows.Forms.Button();
             this.lbl_ExistingIs_Original = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPathNew)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPathExisting)).BeginInit();
@@ -470,7 +470,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_Update.Name = "btn_Update";
             this.btn_Update.Size = new System.Drawing.Size(120, 34);
             this.btn_Update.TabIndex = 214;
-            this.btn_Update.Text = "Update and Overrite Existing";
+            this.btn_Update.Text = "Update and Overwrite Existing";
             this.toolTip1.SetToolTip(this.btn_Update, "Archive previously imported sopng and replace its entries with the new CDLC");
             this.btn_Update.UseVisualStyleBackColor = true;
             this.btn_Update.Click += new System.EventHandler(this.btn_Update_Click);
@@ -2724,6 +2724,21 @@ namespace RocksmithToolkitGUI.DLCManager
         "ave been selected");
             this.lbl_FileHash.Visible = false;
             // 
+            // btn_OpenStandardization
+            // 
+            this.btn_OpenStandardization.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.btn_OpenStandardization.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_OpenStandardization.Location = new System.Drawing.Point(554, 700);
+            this.btn_OpenStandardization.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_OpenStandardization.Name = "btn_OpenStandardization";
+            this.btn_OpenStandardization.Size = new System.Drawing.Size(88, 43);
+            this.btn_OpenStandardization.TabIndex = 431;
+            this.btn_OpenStandardization.Text = "Open Standarization DB";
+            this.toolTip1.SetToolTip(this.btn_OpenStandardization, "Open screen to manage textual corrections and standardization (Song Title, Year, " +
+        "etc.)");
+            this.btn_OpenStandardization.UseVisualStyleBackColor = false;
+            this.btn_OpenStandardization.Click += new System.EventHandler(this.btn_OpenStandardization_Click);
+            // 
             // lbl_Covers
             // 
             this.lbl_Covers.AutoSize = true;
@@ -3299,21 +3314,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.lbl_IDNew.Size = new System.Drawing.Size(45, 15);
             this.lbl_IDNew.TabIndex = 429;
             this.lbl_IDNew.Text = "ID New";
-            // 
-            // btn_OpenStandardization
-            // 
-            this.btn_OpenStandardization.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.btn_OpenStandardization.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_OpenStandardization.Location = new System.Drawing.Point(554, 700);
-            this.btn_OpenStandardization.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_OpenStandardization.Name = "btn_OpenStandardization";
-            this.btn_OpenStandardization.Size = new System.Drawing.Size(88, 43);
-            this.btn_OpenStandardization.TabIndex = 431;
-            this.btn_OpenStandardization.Text = "Open Standarization DB";
-            this.toolTip1.SetToolTip(this.btn_OpenStandardization, "Open screen to manage textual corrections and standardization (Song Title, Year, " +
-        "etc.)");
-            this.btn_OpenStandardization.UseVisualStyleBackColor = false;
-            this.btn_OpenStandardization.Click += new System.EventHandler(this.btn_OpenStandardization_Click);
             // 
             // lbl_ExistingIs_Original
             // 

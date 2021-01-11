@@ -276,12 +276,14 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // btn_Debbug
             // 
+            this.btn_Debbug.Font = new System.Drawing.Font("Microsoft Sans Serif", 5.5F);
             this.btn_Debbug.Location = new System.Drawing.Point(303, 44);
             this.btn_Debbug.Margin = new System.Windows.Forms.Padding(0);
             this.btn_Debbug.Name = "btn_Debbug";
             this.btn_Debbug.Size = new System.Drawing.Size(74, 23);
             this.btn_Debbug.TabIndex = 404;
-            this.btn_Debbug.Text = "Debug";
+            this.btn_Debbug.Text = "DebugRandomCode";
+            this.btn_Debbug.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btn_Debbug.UseVisualStyleBackColor = true;
             this.btn_Debbug.Visible = false;
             this.btn_Debbug.Click += new System.EventHandler(this.btn_Debbug_Click);
@@ -459,11 +461,10 @@ namespace RocksmithToolkitGUI.DLCManager
             "17. Repack with Artist/Title same as Artist/Title/Album Sort",
             "18. <Import without The/Die at the beginning of Artist/Title Sort>",
             "19. <Pack without The/Die at the beginning of Artist/Title Sort>",
-            "20. Import with the The/Die at the end of Title Sort (Option 22 is also selected)" +
-                "",
-            "21. Pack with The/Die at the end of Title Sort (Option 23 is also selected)",
-            "22. Import with the The/Die only at the end of Artist/Album Sort",
-            "23. Pack with The/Die only at the end of Artist/Album Sort",
+            "20. Import with the The/Die at the end of Title Sort",
+            "21. Pack with The/Die at the end of Title/Title Sort",
+            "22. Import with the The/Die only at the end of Artist/Album/xx Sort",
+            "23. Pack with The/Die only at the end of Artist/Album/xx Sort",
             "24. @Import Use translation tables for naming standardization",
             "25. If Original don\'t add QAs (NOs;DLC/ORIG;etc.)",
             "26. When packing Add 5 Levels of DD only to Guitar tracks",
@@ -541,7 +542,8 @@ namespace RocksmithToolkitGUI.DLCManager
             "97. Pack only never packed Songs (Overwrites 98)",
             "98. Pack only never packed Songs for the target Platform",
             "99. <If Group pack ignore songs that are also in other Groups>",
-            "x100. <Pack anew instead of converting (e.g. Pack Orig file)>"});
+            "x100. <Pack anew instead of converting (e.g. Pack Orig file)>",
+            "x101. After packing check song"});
             this.chbx_Additional_Manipulations.Location = new System.Drawing.Point(8, 359);
             this.chbx_Additional_Manipulations.Margin = new System.Windows.Forms.Padding(0);
             this.chbx_Additional_Manipulations.Name = "chbx_Additional_Manipulations";
@@ -604,6 +606,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // cbx_Artist_Sort
             // 
+            this.cbx_Artist_Sort.DropDownWidth = 200;
             this.cbx_Artist_Sort.FormattingEnabled = true;
             this.cbx_Artist_Sort.Items.AddRange(new object[] {
             "<Artist>",
@@ -635,6 +638,7 @@ namespace RocksmithToolkitGUI.DLCManager
             "<Album Short>",
             "<Title Sort>",
             "<Artist Sort>",
+            "<Album Sort>",
             "<Author>",
             "<QAs>",
             "<lastConversionDateTime>",
@@ -645,6 +649,7 @@ namespace RocksmithToolkitGUI.DLCManager
             "<Avail. Tracks and Timings&Bonus>",
             "<Bass_HasDD>",
             "<Timestamp>",
+            "<TimestampShort>",
             "<Live>",
             "<Acoustic>",
             "<Instrumental>",
@@ -656,8 +661,12 @@ namespace RocksmithToolkitGUI.DLCManager
             "<LyricsLanguage>",
             "<IntheWorks>",
             "<CDLC_ID>",
-            "<DLCM Version>",
-            "<Date>"});
+            "<DLCM Release>",
+            "<DLCM ReleaseName>",
+            "<DLCM ReleaseVersion>",
+            "<Date>",
+            "<DigitechDropFlag>",
+            "<DigitechDropDetails>"});
             this.cbx_Artist_Sort.Location = new System.Drawing.Point(398, 245);
             this.cbx_Artist_Sort.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.cbx_Artist_Sort.Name = "cbx_Artist_Sort";
@@ -836,6 +845,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // cbx_Artist
             // 
+            this.cbx_Artist.DropDownWidth = 200;
             this.cbx_Artist.FormattingEnabled = true;
             this.cbx_Artist.Items.AddRange(new object[] {
             "<Artist>",
@@ -867,6 +877,7 @@ namespace RocksmithToolkitGUI.DLCManager
             "<Album Short>",
             "<Title Sort>",
             "<Artist Sort>",
+            "<Album Sort>",
             "<Author>",
             "<QAs>",
             "<lastConversionDateTime>",
@@ -877,6 +888,7 @@ namespace RocksmithToolkitGUI.DLCManager
             "<Avail. Tracks and Timings&Bonus>",
             "<Bass_HasDD>",
             "<Timestamp>",
+            "<TimestampShort>",
             "<Live>",
             "<Acoustic>",
             "<Instrumental>",
@@ -888,8 +900,12 @@ namespace RocksmithToolkitGUI.DLCManager
             "<LyricsLanguage>",
             "<IntheWorks>",
             "<CDLC_ID>",
-            "<DLCM Version>",
-            "<Date>"});
+            "<DLCM Release>",
+            "<DLCM ReleaseName>",
+            "<DLCM ReleaseVersion>",
+            "<Date>",
+            "<DigitechDropFlag>",
+            "<DigitechDropDetails>"});
             this.cbx_Artist.Location = new System.Drawing.Point(398, 226);
             this.cbx_Artist.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.cbx_Artist.Name = "cbx_Artist";
@@ -910,6 +926,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // cbx_Title
             // 
+            this.cbx_Title.DropDownWidth = 200;
             this.cbx_Title.FormattingEnabled = true;
             this.cbx_Title.Items.AddRange(new object[] {
             "<Artist>",
@@ -941,6 +958,7 @@ namespace RocksmithToolkitGUI.DLCManager
             "<Album Short>",
             "<Title Sort>",
             "<Artist Sort>",
+            "<Album Sort>",
             "<Author>",
             "<QAs>",
             "<lastConversionDateTime>",
@@ -951,6 +969,7 @@ namespace RocksmithToolkitGUI.DLCManager
             "<Avail. Tracks and Timings&Bonus>",
             "<Bass_HasDD>",
             "<Timestamp>",
+            "<TimestampShort>",
             "<Live>",
             "<Acoustic>",
             "<Instrumental>",
@@ -962,8 +981,12 @@ namespace RocksmithToolkitGUI.DLCManager
             "<LyricsLanguage>",
             "<IntheWorks>",
             "<CDLC_ID>",
-            "<DLCM Version>",
-            "<Date>"});
+            "<DLCM Release>",
+            "<DLCM ReleaseName>",
+            "<DLCM ReleaseVersion>",
+            "<Date>",
+            "<DigitechDropFlag>",
+            "<DigitechDropDetails>"});
             this.cbx_Title.Location = new System.Drawing.Point(398, 188);
             this.cbx_Title.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.cbx_Title.Name = "cbx_Title";
@@ -1020,6 +1043,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // cbx_File_Name
             // 
+            this.cbx_File_Name.DropDownWidth = 200;
             this.cbx_File_Name.FormattingEnabled = true;
             this.cbx_File_Name.Items.AddRange(new object[] {
             "<Artist>",
@@ -1051,6 +1075,7 @@ namespace RocksmithToolkitGUI.DLCManager
             "<Album Short>",
             "<Title Sort>",
             "<Artist Sort>",
+            "<Album Sort>",
             "<Author>",
             "<QAs>",
             "<lastConversionDateTime>",
@@ -1061,6 +1086,7 @@ namespace RocksmithToolkitGUI.DLCManager
             "<Avail. Tracks and Timings&Bonus>",
             "<Bass_HasDD>",
             "<Timestamp>",
+            "<TimestampShort>",
             "<Live>",
             "<Acoustic>",
             "<Instrumental>",
@@ -1072,8 +1098,12 @@ namespace RocksmithToolkitGUI.DLCManager
             "<LyricsLanguage>",
             "<IntheWorks>",
             "<CDLC_ID>",
-            "<DLCM Version>",
-            "<Date>"});
+            "<DLCM Release>",
+            "<DLCM ReleaseName>",
+            "<DLCM ReleaseVersion>",
+            "<Date>",
+            "<DigitechDropFlag>",
+            "<DigitechDropDetails>"});
             this.cbx_File_Name.Location = new System.Drawing.Point(398, 299);
             this.cbx_File_Name.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.cbx_File_Name.Name = "cbx_File_Name";
@@ -1095,6 +1125,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // cbx_Album
             // 
+            this.cbx_Album.DropDownWidth = 200;
             this.cbx_Album.FormattingEnabled = true;
             this.cbx_Album.Items.AddRange(new object[] {
             "<Artist>",
@@ -1126,6 +1157,7 @@ namespace RocksmithToolkitGUI.DLCManager
             "<Album Short>",
             "<Title Sort>",
             "<Artist Sort>",
+            "<Album Sort>",
             "<Author>",
             "<QAs>",
             "<lastConversionDateTime>",
@@ -1136,6 +1168,7 @@ namespace RocksmithToolkitGUI.DLCManager
             "<Avail. Tracks and Timings&Bonus>",
             "<Bass_HasDD>",
             "<Timestamp>",
+            "<TimestampShort>",
             "<Live>",
             "<Acoustic>",
             "<Instrumental>",
@@ -1147,8 +1180,12 @@ namespace RocksmithToolkitGUI.DLCManager
             "<LyricsLanguage>",
             "<IntheWorks>",
             "<CDLC_ID>",
-            "<DLCM Version>",
-            "<Date>"});
+            "<DLCM Release>",
+            "<DLCM ReleaseName>",
+            "<DLCM ReleaseVersion>",
+            "<Date>",
+            "<DigitechDropFlag>",
+            "<DigitechDropDetails>"});
             this.cbx_Album.Location = new System.Drawing.Point(398, 264);
             this.cbx_Album.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.cbx_Album.Name = "cbx_Album";
@@ -1169,6 +1206,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // cbx_Title_Sort
             // 
+            this.cbx_Title_Sort.DropDownWidth = 200;
             this.cbx_Title_Sort.FormattingEnabled = true;
             this.cbx_Title_Sort.Items.AddRange(new object[] {
             "<Artist>",
@@ -1200,6 +1238,7 @@ namespace RocksmithToolkitGUI.DLCManager
             "<Album Short>",
             "<Title Sort>",
             "<Artist Sort>",
+            "<Album Sort>",
             "<Author>",
             "<QAs>",
             "<lastConversionDateTime>",
@@ -1210,6 +1249,7 @@ namespace RocksmithToolkitGUI.DLCManager
             "<Avail. Tracks and Timings&Bonus>",
             "<Bass_HasDD>",
             "<Timestamp>",
+            "<TimestampShort>",
             "<Live>",
             "<Acoustic>",
             "<Instrumental>",
@@ -1221,8 +1261,12 @@ namespace RocksmithToolkitGUI.DLCManager
             "<LyricsLanguage>",
             "<IntheWorks>",
             "<CDLC_ID>",
-            "<DLCM Version>",
-            "<Date>"});
+            "<DLCM Release>",
+            "<DLCM ReleaseName>",
+            "<DLCM ReleaseVersion>",
+            "<Date>",
+            "<DigitechDropFlag>",
+            "<DigitechDropDetails>"});
             this.cbx_Title_Sort.Location = new System.Drawing.Point(398, 207);
             this.cbx_Title_Sort.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.cbx_Title_Sort.Name = "cbx_Title_Sort";
@@ -1792,6 +1836,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // cbx_Lyric_Info
             // 
+            this.cbx_Lyric_Info.DropDownWidth = 200;
             this.cbx_Lyric_Info.FormattingEnabled = true;
             this.cbx_Lyric_Info.Items.AddRange(new object[] {
             "<Artist>",
@@ -1823,6 +1868,7 @@ namespace RocksmithToolkitGUI.DLCManager
             "<Album Short>",
             "<Title Sort>",
             "<Artist Sort>",
+            "<Album Sort>",
             "<Author>",
             "<QAs>",
             "<lastConversionDateTime>",
@@ -1833,6 +1879,7 @@ namespace RocksmithToolkitGUI.DLCManager
             "<Avail. Tracks and Timings&Bonus>",
             "<Bass_HasDD>",
             "<Timestamp>",
+            "<TimestampShort>",
             "<Live>",
             "<Acoustic>",
             "<Instrumental>",
@@ -1844,14 +1891,19 @@ namespace RocksmithToolkitGUI.DLCManager
             "<LyricsLanguage>",
             "<IntheWorks>",
             "<CDLC_ID>",
-            "<DLCM Version>",
-            "<Date>"});
+            "<DLCM Release>",
+            "<DLCM ReleaseName>",
+            "<DLCM ReleaseVersion>",
+            "<Date>",
+            "<DigitechDropFlag>",
+            "<DigitechDropDetails>"});
             this.cbx_Lyric_Info.Location = new System.Drawing.Point(398, 319);
             this.cbx_Lyric_Info.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.cbx_Lyric_Info.Name = "cbx_Lyric_Info";
             this.cbx_Lyric_Info.Size = new System.Drawing.Size(106, 21);
             this.cbx_Lyric_Info.TabIndex = 410;
             this.cbx_Lyric_Info.Visible = false;
+            this.cbx_Lyric_Info.SelectedIndexChanged += new System.EventHandler(this.cbx_Lyric_Info_SelectedIndexChanged);
             // 
             // txt_Lyric_Info
             // 
@@ -1891,6 +1943,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // cbx_Album_Sort
             // 
+            this.cbx_Album_Sort.DropDownWidth = 200;
             this.cbx_Album_Sort.FormattingEnabled = true;
             this.cbx_Album_Sort.Items.AddRange(new object[] {
             "<Artist>",
@@ -1922,6 +1975,7 @@ namespace RocksmithToolkitGUI.DLCManager
             "<Album Short>",
             "<Title Sort>",
             "<Artist Sort>",
+            "<Album Sort>",
             "<Author>",
             "<QAs>",
             "<lastConversionDateTime>",
@@ -1932,6 +1986,7 @@ namespace RocksmithToolkitGUI.DLCManager
             "<Avail. Tracks and Timings&Bonus>",
             "<Bass_HasDD>",
             "<Timestamp>",
+            "<TimestampShort>",
             "<Live>",
             "<Acoustic>",
             "<Instrumental>",
@@ -1943,8 +1998,12 @@ namespace RocksmithToolkitGUI.DLCManager
             "<LyricsLanguage>",
             "<IntheWorks>",
             "<CDLC_ID>",
-            "<DLCM Version>",
-            "<Date>"});
+            "<DLCM Release>",
+            "<DLCM ReleaseName>",
+            "<DLCM ReleaseVersion>",
+            "<Date>",
+            "<DigitechDropFlag>",
+            "<DigitechDropDetails>"});
             this.cbx_Album_Sort.Location = new System.Drawing.Point(398, 282);
             this.cbx_Album_Sort.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.cbx_Album_Sort.Name = "cbx_Album_Sort";

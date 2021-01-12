@@ -4113,7 +4113,7 @@ namespace RocksmithToolkitGUI.DLCManager
             var j = 0;
 
             if (chbx_Instaces.Checked) DeleteMultiInstances();
-            for (j = 1; j < Math.Ceiling(noOfRecs / txt_NoOfSplits.Value) + 1; j++)
+            for (j = 1; j < txt_No4Splitting.Value + 1; j++)
             {
                 sel = "SELECT top " + txt_NoOfSplits.Value + " ID FROM (SELECT ID,Split4Pack " + l.Replace(";", "") + ") WHERE Split4Pack= \"\"";
                 var cmd2 = "UPDATE Main SET Split4Pack = \"" + j + "\" WHERE ID in (" + sel + ")";
@@ -4124,20 +4124,22 @@ namespace RocksmithToolkitGUI.DLCManager
                     CopyFolder(AppWD + "\\..\\..", dest);
 
                     //change no of order
-                    var fxml = File.OpenText(dest + "\\RocksmithToolkitLib.Config.xml");
-                    string line = "";
-                    string header = ""; var ff = ConfigRepository.Instance()["dlcm_Configurations"];
-                    //Read and Save Header
-                    while ((line = fxml.ReadLine()) != null)
-                    {
-                        if (line.Contains("dlcm_Split4Pack"))
-                            header += "<Config Key=\"dlcm_Split4Pack\" Value=\"" + j + "\" />" + System.Environment.NewLine;
-                        else if (line.Contains("dlcm_Configurations")) header += "<Config Key=\"dlcm_Configurations\" Value=\"" + ff + "\" />" + System.Environment.NewLine;
-                        else if (line.Contains("dlcm_Grouping")) header += "<Config Key=\"dlcm_Grouping\" Value=\"Split\" />" + System.Environment.NewLine;
-                        else header += line + System.Environment.NewLine;
-                    }
-                    fxml.Close();
-                    File.WriteAllText(dest + "\\RocksmithToolkitLib.Config.xml", header);
+                    //var fxml = File.OpenText(dest + "\\RocksmithToolkitLib.Config.xml");
+                    //string line = "";
+                    //string header = "";
+                    var ff = ConfigRepository.Instance()["dlcm_Configurations"];
+                    ////Read and Save Header
+                    //while ((line = fxml.ReadLine()) != null)
+                    //{
+                    //    if (line.Contains("dlcm_Split4Pack"))
+                    //        header += "<Config Key=\"dlcm_Split4Pack\" Value=\"" + j + "\" />" + System.Environment.NewLine;
+                    //    else if (line.Contains("dlcm_Configurations")) header += "<Config Key=\"dlcm_Configurations\" Value=\"" + ff + "\" />" + System.Environment.NewLine;
+                    //    else if (line.Contains("dlcm_Grouping")) header += "<Config Key=\"dlcm_Grouping\" Value=\"Split\" />" + System.Environment.NewLine;
+                    //    else header += line + System.Environment.NewLine;
+                    //}
+                    //fxml.Close();
+                    //File.WriteAllText(dest + "\\RocksmithToolkitLib.Config.xml", header);
+                    ConfigRepository.Instance()["dlcm_Split4Pack"] = j.ToString(); savesettings();
 
                     var xx = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, dest + "\\RocksmithToolkitGUI.exe");
                     try
@@ -6300,7 +6302,10 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
-
+            var sel = SearchCmd;
+            DataSet SongRecord = new DataSet(); SongRecord = SelectFromDB("Main", sel, "", cnb);
+            var noOfRecs = SongRecord.Tables[0].Rows.Count;
+            txt_NoOfSplits.Value = Math.Ceiling(noOfRecs / txt_No4Splitting.Value);
         }
 
         private void txt_ID_KeyPress(object sender, KeyPressEventArgs e)

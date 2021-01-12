@@ -98,7 +98,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.databox.MultiSelect = false;
             this.databox.Name = "databox";
             this.databox.RowHeadersWidth = 61;
-            this.databox.Size = new System.Drawing.Size(670, 513);
+            this.databox.Size = new System.Drawing.Size(676, 583);
             this.databox.TabIndex = 38;
             this.databox.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick_1);
             this.databox.CellLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellLeave);
@@ -107,7 +107,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // btn_ChangeCover
             // 
-            this.btn_ChangeCover.Location = new System.Drawing.Point(131, 367);
+            this.btn_ChangeCover.Location = new System.Drawing.Point(214, 390);
             this.btn_ChangeCover.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.btn_ChangeCover.Name = "btn_ChangeCover";
             this.btn_ChangeCover.Size = new System.Drawing.Size(83, 25);
@@ -118,10 +118,10 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // picbx_AlbumArtPath
             // 
-            this.picbx_AlbumArtPath.Location = new System.Drawing.Point(7, 408);
+            this.picbx_AlbumArtPath.Location = new System.Drawing.Point(5, 437);
             this.picbx_AlbumArtPath.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.picbx_AlbumArtPath.Name = "picbx_AlbumArtPath";
-            this.picbx_AlbumArtPath.Size = new System.Drawing.Size(138, 108);
+            this.picbx_AlbumArtPath.Size = new System.Drawing.Size(140, 140);
             this.picbx_AlbumArtPath.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picbx_AlbumArtPath.TabIndex = 127;
             this.picbx_AlbumArtPath.TabStop = false;
@@ -248,7 +248,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.btn_Close.BackColor = System.Drawing.Color.LightSteelBlue;
             this.btn_Close.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Close.Location = new System.Drawing.Point(227, 310);
+            this.btn_Close.Location = new System.Drawing.Point(227, 336);
             this.btn_Close.Margin = new System.Windows.Forms.Padding(2);
             this.btn_Close.Name = "btn_Close";
             this.btn_Close.Size = new System.Drawing.Size(72, 23);
@@ -263,7 +263,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_Include_ArtistSort.Checked = true;
             this.chbx_Include_ArtistSort.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chbx_Include_ArtistSort.Enabled = false;
-            this.chbx_Include_ArtistSort.Location = new System.Drawing.Point(131, 351);
+            this.chbx_Include_ArtistSort.Location = new System.Drawing.Point(131, 395);
             this.chbx_Include_ArtistSort.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.chbx_Include_ArtistSort.Name = "chbx_Include_ArtistSort";
             this.chbx_Include_ArtistSort.Size = new System.Drawing.Size(89, 17);
@@ -273,7 +273,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // btn_Apply
             // 
-            this.btn_Apply.Location = new System.Drawing.Point(3, 351);
+            this.btn_Apply.Location = new System.Drawing.Point(3, 375);
             this.btn_Apply.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.btn_Apply.Name = "btn_Apply";
             this.btn_Apply.Size = new System.Drawing.Size(126, 40);
@@ -286,7 +286,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.btn_DecompressAll.BackColor = System.Drawing.SystemColors.MenuHighlight;
             this.btn_DecompressAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_DecompressAll.Location = new System.Drawing.Point(227, 330);
+            this.btn_DecompressAll.Location = new System.Drawing.Point(226, 356);
             this.btn_DecompressAll.Margin = new System.Windows.Forms.Padding(2);
             this.btn_DecompressAll.Name = "btn_DecompressAll";
             this.btn_DecompressAll.Size = new System.Drawing.Size(72, 33);
@@ -389,7 +389,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // chbx_Default_Cover
             // 
             this.chbx_Default_Cover.AutoSize = true;
-            this.chbx_Default_Cover.Location = new System.Drawing.Point(64, 392);
+            this.chbx_Default_Cover.Location = new System.Drawing.Point(62, 421);
             this.chbx_Default_Cover.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.chbx_Default_Cover.Name = "chbx_Default_Cover";
             this.chbx_Default_Cover.Size = new System.Drawing.Size(94, 17);
@@ -414,7 +414,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_Comments.Location = new System.Drawing.Point(131, 239);
             this.txt_Comments.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.txt_Comments.Name = "txt_Comments";
-            this.txt_Comments.Size = new System.Drawing.Size(168, 50);
+            this.txt_Comments.Size = new System.Drawing.Size(168, 70);
             this.txt_Comments.TabIndex = 392;
             this.txt_Comments.Text = "";
             // 
@@ -431,10 +431,10 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // pxbx_SavedSpotify
             // 
-            this.pxbx_SavedSpotify.Location = new System.Drawing.Point(161, 408);
+            this.pxbx_SavedSpotify.Location = new System.Drawing.Point(159, 437);
             this.pxbx_SavedSpotify.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.pxbx_SavedSpotify.Name = "pxbx_SavedSpotify";
-            this.pxbx_SavedSpotify.Size = new System.Drawing.Size(138, 108);
+            this.pxbx_SavedSpotify.Size = new System.Drawing.Size(140, 140);
             this.pxbx_SavedSpotify.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pxbx_SavedSpotify.TabIndex = 394;
             this.pxbx_SavedSpotify.TabStop = false;
@@ -442,7 +442,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // lbl_corrected
             // 
-            this.lbl_corrected.Location = new System.Drawing.Point(2, 392);
+            this.lbl_corrected.Location = new System.Drawing.Point(0, 421);
             this.lbl_corrected.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_corrected.Name = "lbl_corrected";
             this.lbl_corrected.Size = new System.Drawing.Size(58, 16);
@@ -451,7 +451,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // lbl_SpotifyCover
             // 
-            this.lbl_SpotifyCover.Location = new System.Drawing.Point(162, 392);
+            this.lbl_SpotifyCover.Location = new System.Drawing.Point(160, 421);
             this.lbl_SpotifyCover.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_SpotifyCover.Name = "lbl_SpotifyCover";
             this.lbl_SpotifyCover.Size = new System.Drawing.Size(99, 16);
@@ -494,19 +494,19 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // btn_CheckOnline
             // 
-            this.btn_CheckOnline.Location = new System.Drawing.Point(131, 322);
+            this.btn_CheckOnline.Location = new System.Drawing.Point(131, 346);
             this.btn_CheckOnline.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.btn_CheckOnline.Name = "btn_CheckOnline";
-            this.btn_CheckOnline.Size = new System.Drawing.Size(92, 25);
+            this.btn_CheckOnline.Size = new System.Drawing.Size(92, 41);
             this.btn_CheckOnline.TabIndex = 400;
-            this.btn_CheckOnline.Text = "Check on GGL";
+            this.btn_CheckOnline.Text = "Search and Check on GGL";
             this.btn_CheckOnline.UseVisualStyleBackColor = true;
             this.btn_CheckOnline.Click += new System.EventHandler(this.btn_CheckOnline_Click);
             // 
             // cbx_Groups
             // 
             this.cbx_Groups.FormattingEnabled = true;
-            this.cbx_Groups.Location = new System.Drawing.Point(173, 291);
+            this.cbx_Groups.Location = new System.Drawing.Point(173, 315);
             this.cbx_Groups.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.cbx_Groups.Name = "cbx_Groups";
             this.cbx_Groups.Size = new System.Drawing.Size(126, 21);
@@ -516,7 +516,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // label3
             // 
-            this.label3.Location = new System.Drawing.Point(128, 291);
+            this.label3.Location = new System.Drawing.Point(128, 315);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(45, 42);
@@ -588,14 +588,14 @@ namespace RocksmithToolkitGUI.DLCManager
             this.splitContainer1.Panel2.Controls.Add(this.btn_CopyTitle2TitleSort);
             this.splitContainer1.Panel2.Controls.Add(this.chbx_AutoSave);
             this.splitContainer1.Panel2.Controls.Add(this.lbl_NoRec);
-            this.splitContainer1.Size = new System.Drawing.Size(977, 513);
-            this.splitContainer1.SplitterDistance = 670;
+            this.splitContainer1.Size = new System.Drawing.Size(983, 583);
+            this.splitContainer1.SplitterDistance = 676;
             this.splitContainer1.TabIndex = 404;
             // 
             // btn_ApplyDefault
             // 
             this.btn_ApplyDefault.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_ApplyDefault.Location = new System.Drawing.Point(256, 392);
+            this.btn_ApplyDefault.Location = new System.Drawing.Point(254, 421);
             this.btn_ApplyDefault.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.btn_ApplyDefault.Name = "btn_ApplyDefault";
             this.btn_ApplyDefault.Size = new System.Drawing.Size(43, 17);
@@ -606,12 +606,12 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // bbtn_ApplyYear
             // 
-            this.bbtn_ApplyYear.Location = new System.Drawing.Point(217, 366);
+            this.bbtn_ApplyYear.Location = new System.Drawing.Point(3, 348);
             this.bbtn_ApplyYear.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.bbtn_ApplyYear.Name = "bbtn_ApplyYear";
-            this.bbtn_ApplyYear.Size = new System.Drawing.Size(82, 25);
+            this.bbtn_ApplyYear.Size = new System.Drawing.Size(126, 25);
             this.bbtn_ApplyYear.TabIndex = 404;
-            this.bbtn_ApplyYear.Text = "Apply Year Corr";
+            this.bbtn_ApplyYear.Text = "Apply \'n Multiply Year Corr";
             this.bbtn_ApplyYear.UseVisualStyleBackColor = true;
             this.bbtn_ApplyYear.Click += new System.EventHandler(this.Bbtn_ApplyYear_Click);
             // 
@@ -620,11 +620,11 @@ namespace RocksmithToolkitGUI.DLCManager
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(977, 513);
+            this.ClientSize = new System.Drawing.Size(983, 583);
             this.Controls.Add(this.splitContainer1);
             this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.Name = "Standardization";
-            this.Text = "Standardization";
+            this.Text = "Standardise/Correct Song/CDLC MetaData";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.btn_Save_FormClosing);
             this.Load += new System.EventHandler(this.Standardization_Load);
             ((System.ComponentModel.ISupportInitialize)(this.databox)).EndInit();

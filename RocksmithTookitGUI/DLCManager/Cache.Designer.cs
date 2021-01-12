@@ -142,7 +142,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.picbx_AlbumArtPath.Location = new System.Drawing.Point(810, 447);
             this.picbx_AlbumArtPath.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.picbx_AlbumArtPath.Name = "picbx_AlbumArtPath";
-            this.picbx_AlbumArtPath.Size = new System.Drawing.Size(126, 116);
+            this.picbx_AlbumArtPath.Size = new System.Drawing.Size(126, 126);
             this.picbx_AlbumArtPath.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picbx_AlbumArtPath.TabIndex = 127;
             this.picbx_AlbumArtPath.TabStop = false;
@@ -709,7 +709,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_AlbumArtPath.Cue = "Album Art Path";
             this.txt_AlbumArtPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_AlbumArtPath.ForeColor = System.Drawing.Color.Gray;
-            this.txt_AlbumArtPath.Location = new System.Drawing.Point(810, 568);
+            this.txt_AlbumArtPath.Location = new System.Drawing.Point(810, 574);
             this.txt_AlbumArtPath.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.txt_AlbumArtPath.Name = "txt_AlbumArtPath";
             this.txt_AlbumArtPath.ReadOnly = true;

@@ -425,7 +425,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.lbl_AlbumArt.AutoSize = true;
             this.lbl_AlbumArt.ForeColor = System.Drawing.Color.DarkGreen;
-            this.lbl_AlbumArt.Location = new System.Drawing.Point(596, 429);
+            this.lbl_AlbumArt.Location = new System.Drawing.Point(594, 429);
             this.lbl_AlbumArt.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_AlbumArt.Name = "lbl_AlbumArt";
             this.lbl_AlbumArt.Size = new System.Drawing.Size(22, 13);
@@ -448,17 +448,17 @@ namespace RocksmithToolkitGUI.DLCManager
             this.picbx_AlbumArtPathNew.Location = new System.Drawing.Point(430, 372);
             this.picbx_AlbumArtPathNew.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.picbx_AlbumArtPathNew.Name = "picbx_AlbumArtPathNew";
-            this.picbx_AlbumArtPathNew.Size = new System.Drawing.Size(166, 140);
+            this.picbx_AlbumArtPathNew.Size = new System.Drawing.Size(140, 140);
             this.picbx_AlbumArtPathNew.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picbx_AlbumArtPathNew.TabIndex = 216;
             this.picbx_AlbumArtPathNew.TabStop = false;
             // 
             // picbx_AlbumArtPathExisting
             // 
-            this.picbx_AlbumArtPathExisting.Location = new System.Drawing.Point(618, 372);
+            this.picbx_AlbumArtPathExisting.Location = new System.Drawing.Point(643, 372);
             this.picbx_AlbumArtPathExisting.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.picbx_AlbumArtPathExisting.Name = "picbx_AlbumArtPathExisting";
-            this.picbx_AlbumArtPathExisting.Size = new System.Drawing.Size(166, 140);
+            this.picbx_AlbumArtPathExisting.Size = new System.Drawing.Size(140, 140);
             this.picbx_AlbumArtPathExisting.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picbx_AlbumArtPathExisting.TabIndex = 215;
             this.picbx_AlbumArtPathExisting.TabStop = false;
@@ -1845,7 +1845,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.btn_CoverNew.Enabled = false;
             this.btn_CoverNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_CoverNew.Location = new System.Drawing.Point(598, 412);
+            this.btn_CoverNew.Location = new System.Drawing.Point(596, 412);
             this.btn_CoverNew.Margin = new System.Windows.Forms.Padding(2);
             this.btn_CoverNew.Name = "btn_CoverNew";
             this.btn_CoverNew.Size = new System.Drawing.Size(18, 16);
@@ -1858,7 +1858,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.btn_CoverExisting.Enabled = false;
             this.btn_CoverExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_CoverExisting.Location = new System.Drawing.Point(598, 444);
+            this.btn_CoverExisting.Location = new System.Drawing.Point(596, 444);
             this.btn_CoverExisting.Margin = new System.Windows.Forms.Padding(2);
             this.btn_CoverExisting.Name = "btn_CoverExisting";
             this.btn_CoverExisting.Size = new System.Drawing.Size(18, 16);

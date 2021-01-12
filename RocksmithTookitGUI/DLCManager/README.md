@@ -1,10 +1,10 @@
-﻿		# Date: 02.12.2020
+﻿		# Date: 11.01.2021
 		# Document Name: Rocksmith DLC Management tool README
 						(fork of rocksmith-custom-song-toolkit)
 		# Document purpose: To describe the functionailities and the way to change, the NEW tab that enable MASS Manipulation of Rocksmith DLC Library
 							(DLC folder; including customs(CDLC), DLCs and songs embeded in the ready to ship version of Rocksmith (2014 Remastered version)) 
 
-## Rocksmith DLC Library Manager v1
+## Rocksmith DLC Library Manager v1 b1 (compiled beta available in \RocksmithToolkitGUI\bin\RK1)
 *(forever alpha version- unnoficially, but available; version released for my own sake and not the masses's)*
 # App Description: MASS Manipulation of Rocksmith DLC Library (initial realised but not current problem definition)
 		e.g. 1. in Rocksmith, in the Library, each song's Album, to contain a personal rating, if it has DD, instr. avail
@@ -19,9 +19,9 @@
 		- Preview
 		- Cover
 		- Lyrics
-		- the standard sufficient Audio qualkity (>128kb bitrate)
+		- the standard sufficient Audio qualiity (>128kb bitrate)
 	- Listen to songs Audio/Preview
-	- Gathers Track No./Cover/Year from Spotify & Youtube
+	- Gathers Track No./Cover/Year from Spotify & original video and playthrough from Youtube
 - Mass Modify songdetails/metadata @repack per each Rocksmith song
 	*e.g. Album Field: "<Broken><Year> - <Album> - r<Rating> - <Avail. Instr.> - <DD> - <Tuning>"
 	- Copies songs/packs directly to the PS3 by means of FTP
@@ -219,6 +219,12 @@ calculate all drop down options using pitch shifting systems and display it in m
 
 ## WiP:
 (this release)
+
+
+
+
+## done:
+(prev release)
 [-] in any group filter
 [-] in no group filter
 [-] 10427 why no preview 
@@ -248,137 +254,6 @@ calculate all drop down options using pitch shifting systems and display it in m
 [-] using multiselect for pack, beta
 [-] updates c3custom creators to https://rhythmgamingworld.com/forums/topic/c3-con-tools-v401-8142020-weve-only-just-begun/
 [-] updates Add lyrics instructions
-
-
-
-## done:
-(prev release)
-[x] zipdb every day[x] fix log no being created if missing
-[-] add info on aseessing for duplicates
-[x] lsit duplicates not imported
-[x] implement a goto an artist/album in the list
-[x] transforms Filter-selects into in ()
-[x] same album different year filter
-[x] change to_import path should trigger recalc
-[x] startup selected recalc not triggered
-[x] add param change 1 dropdown w all
-[x] add in the works flag 
-[-] fixed some startup regression issues
-	[-] improved access db missing option
-[-] upgraded to .net 4.8 and all other projectjs (issue at opening)
-[-] fix open winmerge
-[-] added openm ultrastar
-[x] added button for similar dupi comment adding
-[x] unified and improved DB driver not installed error
-[x] remove group seems gbroken roups--------DELETE * FROM Groups WHERE Type="DLC" AND Groups= "" LEFT JOIN Main on Main.ID=Groups.CDLC_ID and Main.Selected='Yes'--------------Syntax error (missing operator) in query expression 'Type="DLC" AND Groups= "" LEFT JOIN Main on Main.ID=Groups.CDLC_ID and Main.Selected='Yes''.DB Open in Design Mode, or Missing, or you need to Download the 32bit Connectivity libraryACE.OLEDB.16.0 @ 
-[-] finalized Same Title(no[]), Same Artist/Title(no[]) different Album, Same Artist/Title(no[]) different Year
-	[x] improved new same title diff album/year/etc. filters by adding caseless comparison
-	apply on default filter
-[x] improved same dlc name filter speed and casless
-[-] maindb move to latest position after a delete (indiv or duplicate druvenn)
-[x] enhance delete main db to multiple selected rows
-[-] after dupli also refresh selected
-[-] add songs with the same file name filter
-[x] closing duplcaite gives error
-[-] album sort save in dupli management
-[-] added is uncensore & in theowrks
-[-] fixed save of isintrumental
-[-] improved change db
-[-] improved deleted profile
-[-] fixed (regression) create new profile
-[-] adding LyricsLanguage (lyrics..as to sort if interested on)
-[x] fixed some fields not beibng editable (live instrumental single,ep)
-[x] improve check lib and too long oath (make it dependent on filter)
-[x] improved timestamp in maindb and dlcmanger
-	[] add timestampm for generics (using config variable)
-[x] add import summary
-[x] remove comments
-[x] improve create dir by mentioning which dir is recreated :)
-[x] add new fileds to filename/comment (uncensored)
-[x] împroved maindb open speed
-[x] added full band as multitrack flag but not dropdown
-[x] improv Apply standardization speed (transformed from query to porgramable checks; removed dupli queries)
-[x] improv backup of audio when converting and failing 
-[x] when removing and no old file ask if ok as first you could export
-[x] reset defaulted to 0ALL as n ot always working
-[x] rename sng to json (no need if sng is mentioned as json)
-[x] hash of xml would be more useful if it would happend on an emptied file of comments
-[x] add default info also adds what are the similar info besides author...like audio hash etc.
-[x] fixed open repack (no dependency on global var)
-[-] improve the overlay
-[-] fix for rebuild missing file
-[-] all options should be a table
-[-] fix color instr that doesnt change
-[x] add multi select
-[-] restore old dd/xmls button in main db
-[-] duplicate dlcname?
-[-] add year to standardization (...maybe not so important)
-[-] is dupli marked as ignore/ duplicate decompressed folder deleted?
-[-] check librarty checks for sng existance as well
-[x] usa peaches long naming fails at packing (shortes folder the random id) (fixed 99%)
-[x] duplicate window should return last maximum conv date and save it (done at import)
-[x] increase the no of threads (no way unless importing 20 dlls as resoures)
-[x] year inconsitencies (check should show these as well)
-[-] vs blue maybe also yes blue (blu happens also when small 1bite amybe 2 diff in filesize
-[-] small improv: add the proper lasconvdate in the db 
-[-] select incl groups has a small error (userissues)
-[x] improve maybe tone diff message (JSON is tone no need for the box)
-[x] L:\Temp\Arctic-Monkeys_Perhaps-Vampires-Is-A-Bit-Strong-But_v2_p.psarc path too long (improve too long logic by 99%)
-[-] Add Ps3 to sng&JSON(&manifest?) when adding another track/arrangenment
-[-] Add Ps3 to sng path
-[-] add 46&2 lyrics from old one
-[-] added actions to the right click menu in main db databox/list
-[-] added tooltip with the hash in duplicate management VS labels
-[-] improved long filenames detection and fix 
-[-] same hash filkter
-[-] clean file name when checking for duplicates
-[-] add hash in dupli window
-[-] dont audio fix songs with file issues
-[-] if audio issues then add filesîssues issues with vvem or issues with ogîgî
-[-] adding imprved locally (add lyrics, shift, add other track, add instrumetal )
-[-] dont delete intheworks,improved
-[-] say what are deleted when checking lib (not imp as too late :))
-[-] indexed cdcl_id in groups
-[-] further improve add/shift procedure (vocal and dripdown clarification, sng)
-[-] add flagv (ocal, an no vocal as bonus if exising) when add track
-[-] dont crash if lyrics empty
-[-] restore if error at add stuff 2 lyrics
-[-] fixed save w shor Timings
-[-] QC should show broken and issues
-[-] improved speed of Arangement Loading (by loanding Dropdown at first use)
-[-] added latest tones fields (part,max difficulty, start_time)(improved a little layout)
-[-] added FAvorite tones fiels into window
-[-] aligned Tones and arrangement to MainDB design (no rec, button colours...)
-	maximise and layout for that
-[-] added saving pack id whenpacking/adding to pack audit trail table
-[-] added pack summary
-[-] add PAck FTP-ed flag in the audit trail
-[-] made 1 also a dd
-[-] added log for metadetails
-[-] improved Spliting
-[-] if search return nothing mss is shown (prev list is maintained)
-[-] fixedf delete grp (addev *  in others)
-[-] how many are actually imported
-[-] importing XBOX now too
-[-] added group index to diff beta groups
-[-] using local wwise
-[-] multiinstance also saves in its own log
-[-] if errorsare detected at DDremoval please do manual removal
-[-] fixed some audit trail not being saved
-[-]duplicate window increased x/x size and added standardization for thos alsbums suspected as not having a r8 year :)
-[-] check and justice for all year
-[-] add full album flag
-[-] added is original on new or existing in duplcaite management and improved alternate logic if original
-[-] implement youtube status nok stop asking
-[-] new filter Different Artist/Album/Title vs Sort counterparts
-[-] fixed save tones
-[-] "n" group added by default
-[-] when importing an alternate then add it to the same groups
-[-] sort by group adding
-[-] add date to groups when added from standardization
-[-] added pregress bar on spply standardization
-[-] added groups as metadata (list of all groups the songs is part of)
-[-] improved pack and imported summaries
 
 
 
@@ -415,8 +290,9 @@ calculate all drop down options using pitch shifting systems and display it in m
 	0.7.5 (20.02.2020) Small improvements 2020
 	0.7.6 (20.02.2020) Fixes after reintegration of base changes	
 	0.7.7 (20.04.2020) Fixes & improvements around internal duplication and filters (tons tons tons of fixes and polishing of existing "features", all params are in the Groups table)
-	1.0 (02.12.2020) Released on Customforge and GitHub Release "tab" (2 versions one w all 3rd party software, one without; can be installed/decompressed and quickly used; 1 60sec video describing why you should use this)
-	1.1 (xx.02.2021) Reactivating Spotify checks
+	1.0 b1 (11.01.2021) Adding Pitch Shift instructions based on E standard or DropD
+	1.0 (xx.04.2021) Released on Customforge and GitHub Release "tab" (2 versions one w all 3rd party software, one without; can be installed/decompressed and quickly used; 1 60sec video describing why you should use this)
+	1.1 (xx.06.2021) Reactivating Spotify checks
 
 # Implementation Tracking for the Main Features:
 		+1. Ability to Generate a Database with all DLC
@@ -475,8 +351,8 @@ calculate all drop down options using pitch shifting systems and display it in m
 			+ Show duplicates and solve conflicts
 			+ Audio Preview full track&preview track
 			+ Remove DD (arragement dependent..e.g. only bass)
-			- Get Rocksmith playthough or original videos from youtube
-			- Get Trackno, Year, Cover for standarization from spotify (build your own playlists)
+			-+ Get Rocksmith playthough or original videos from youtube
+			-+ Get Trackno, Year, Cover for standarization from spotify (build your own playlists)
 			- Add songs to PS4/5 (jailbroken/?) existing songs.psarc
 			- PoC iPAD CDLC
 
@@ -517,7 +393,7 @@ _ future release
 {} old unimplemented feature
 
 # IDE-Setup <old>
-1. Download Git Client and Visual Studio 2013  Desktop Edition
+1. Download Git Client and Visual Studio 2019 Community Edition
 2. Update Visual Studio, SQL, download HELP, and FORM-Controls-Object reference
 3.0 Create a new Folder DLCManager
 3.1 Add a new Item README.txt
@@ -571,7 +447,7 @@ of this folder should be directed to the respective developer.
 		https://github.com/Lovroman/RS-CDLC-Tagger/
 		http://customsforge.com/topic/20334-tool-cdlc-tagger/
 
-		- MDB Viewver - alternative view of mdb container DB
+		- MDB Viewver 2.63 - alternative view of mdb container DB
 		http://www.alexnolan.net/software/mdb_viewer_plus.htm
 
 		-NVORBIS library - reading ogg lenght
@@ -587,13 +463,13 @@ of this folder should be directed to the respective developer.
 		http://www.psx-place.com/threads/pkg-linker-2-0-serve-packages-to-your-ps3-han-cfw.17252/page-20#post-125162
 
 		-DevOnly additional software
-			EOF v1.8b (c)2008-2010 T³ Software eof1.8RC11(1-14-2020) http://ignition.customsforge.com/eof http://customsforge.com/topic/1529-latest-eof-releases-5-19-2016/page-86 -4 transforming lyrics into RS Vocals
+			EOF v1.8b (c)2008-2010 T³ Software eof1.8RC11(xx-09-2020) http://ignition.customsforge.com/eof http://customsforge.com/topic/1529-latest-eof-releases-5-19-2016/page-86 -4 transforming lyrics into RS Vocals
 			UltraStar Creator 1.2 https://sourceforge.net/projects/usc/ -4creati ng lyrics files to import in EoF
 			TotalCommander https://gisler.com -4Encripting PS3 Retail Sog PSARCS (0 encription level only avail here)
 			MediaInfo https://sourceforge.net/projects/mediainfo/ -4checking wem bitrate
 			WinMerge http://winmerge.org/?lang=en -used in comparing duplicates (and their respecitve differential track)
-			C3 CON Tools http://customscreators.com/index.php?/topic/9095-c3-con-tools-v400-012518/ -used to decompress songs made for Rockband to quickly copy their vocal track to Rocksmith
-			Beats and Phrases Resynchronizer for RS Custom DownLoadable Contents
+			C3 CON Tools 4.0.1 https://rhythmgamingworld.com/forums/topic/c3-con-tools-v401-8142020-weve-only-just-begun/ -used to decompress songs made for Rockband to quickly copy their vocal track to Rocksmith
+
 ## Contact
 
 mailto:bogdan@capi.ro  

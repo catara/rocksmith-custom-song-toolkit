@@ -5258,7 +5258,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 + (artist_c != "" ? "Artist_Correction = \"" + artist_c + "\"" : "")
                 + (album_c != "" ? (artist_c != "" ? "," : "") + " Album_Correction = \"" + album_c + "\"" : "")
                 + (ArtPath != "" ? (artist_c != "" || album_c != "" ? "," : "") + " AlbumArtPath_Correction = \"" + ArtPath + "\"" : "")
-                        + (Year != "" ? (ArtPath != "" || artist_c != "" || album_c != "" ? "," : "") + " Year_Correction = \"" + Year + "\"" : "Year_Correction =Year_Correction");
+                        + (Year != "" ? (ArtPath != "" || artist_c != "" || album_c != "" ? "," : "") + " Year_Correction = \"" + Year + "\"" : (ArtPath != "" || artist_c != "" || album_c != "" ? "," : "") + "Year_Correction =Year_Correction");
             cmd1 += " WHERE (Artist=\"" + Artist + "\") AND (Album=\"" + Album + "\")";
             var dxxs = UpdateDB("Standardization", cmd1, cnb);
 

@@ -5,11 +5,8 @@
 							(DLC folder; including customs(CDLC), DLCs and songs embeded in the ready to ship version of Rocksmith (2014 Remastered version)) 
 
 ## Rocksmith DLC Library Manager v1 b1 (compiled beta available in \RocksmithToolkitGUI\bin\RK1)
-*(forever alpha version- unnoficially, but available; version released for my own sake and not the masses's)*
-# App Description: MASS Manipulation of Rocksmith DLC Library (initial realised but not current problem definition)
-		e.g. 1. in Rocksmith, in the Library, each song's Album, to contain a personal rating, if it has DD, instr. avail
-		e.g. 2. in Rocksmith, in the Library, each song to be sorted by Album(Year) and Track No
-		e.g. 3. Eliminate all the songs you dont like/want to see, from the Play A Song Menu for RS14, RS12 & RS12 DLC
+*(forever to be unreleased version- for my own sake and not the masses's)*
+# App Description: MASS Manipulation of Rocksmith DLC Library
 
 #Main Features:
 - Gather all DLCs metadata into 1 Microsoft Access DB
@@ -36,7 +33,6 @@
 <img src="/RocksmithTookitGUI/DLCManager/Screenshot3.png" alt="Song Metadata Standardization Screen"/>
 <img src="/RocksmithTookitGUI/DLCManager/Screenshot4.png" alt="Rocksmith Retail Manipulation Screen"/>
 <img src="/RocksmithTookitGUI/DLCManager/Screenshot5.png" alt="Duplicate Management Import Screen"/>
-<img src="/RocksmithTookitGUI/DLCManager/Screenshot6.png" alt="Rocksmith EndScreen Sample"/>
 
 
 ## Known Issues:
@@ -366,6 +362,7 @@ some failsafes for
 
 ### Dev Tips:
 + Use MS2019 community or whateva other older version
++ Start Visual Studio with Admin rightsa
 + Toolkit version flag does not sync to&from Github: Run RunMeFirst.bat
 + activate debug: set RocksmithToolkitGUI Folder as Start-up project
 + Complile RocksmithToolkitGUI as AnyCPU (no 32bit)
@@ -476,5 +473,5 @@ mailto:bogdan@capi.ro
 http://capi.ro/  
 https://github.com/catara/rocksmith-custom-song-toolkit
 
-# Rksmith DLC Library Manager [![Latest release](http://img.shields.io/github/release/catara/rocksmith-custom-song-toolkit.svg)](https://github.com/catara/rocksmith-custom-song-toolkit/releases/)
+# Rocksmith DLC Library Manager [![Latest release](http://img.shields.io/github/release/catara/rocksmith-custom-song-toolkit.svg)](https://github.com/catara/rocksmith-custom-song-toolkit/releases/)
 

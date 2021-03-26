@@ -1,0 +1,49 @@
+$WwiseLib_Default: rgb(55, 81, 97);
+$WwiseLib_PropertyCategoryRed: rgb(242, 61, 61);
+$WwiseLib_PropertyCategoryOrange: rgb(242, 142, 61);
+$WwiseLib_PropertyCategoryYellow: rgb(242, 224, 61);
+$WwiseLib_PropertyCategoryGreen: rgb(151, 242, 61);
+$WwiseLib_PropertyCategoryBlue: rgb(40, 100, 161);
+$WwiseLib_PropertyCategoryLightBlue: rgb(128, 217, 255);
+$WwiseLib_PropertyCategoryPurple: rgb(151, 61, 242);
+$WwiseLib_PropertyCategoryPink: rgb(242, 61, 170);
+
+@mixin wwiselib_exports {
+    RTPC_PropertyCategoryRed: $Global_CurveColorRed;
+    RTPC_PropertyCategoryRedDark: $Global_CurveColorRedDarkened;
+    RTPC_PropertyCategoryRedDeepDark: $Global_CurveColorRedLightened;
+
+    RTPC_PropertyCategoryOrange: $Global_CurveColorOrange;
+    RTPC_PropertyCategoryOrangeDark: $Global_CurveColorOrangeDarkened;
+    RTPC_PropertyCategoryOrangeDeepDark: $Global_CurveColorOrangeLightened;
+
+    RTPC_PropertyCategoryYellow: $Global_CurveColorYellow;
+    RTPC_PropertyCategoryYellowDark: $Global_CurveColorYellowDarkened;
+    RTPC_PropertyCategoryYellowDeepDark: $Global_CurveColorYellowGreenDarkened;
+
+    RTPC_PropertyCategoryGreen: $Global_CurveColorGreen;
+    RTPC_PropertyCategoryGreenDark: $Global_CurveColorGreenDarkened;
+    RTPC_PropertyCategoryGreenDeepDark: $Global_CurveColorGreenLightened;
+
+    RTPC_PropertyCategoryBlue: $Global_CurveColorBlue;
+    RTPC_PropertyCategoryBlueDark: $Global_CurveColorBlueDarkened;
+    RTPC_PropertyCategoryBlueDeepDark: $Global_CurveColorBlueLightened;
+
+    RTPC_PropertyCategoryLightBlue: $Global_CurveColorLightBlue;
+    RTPC_PropertyCategoryLightBlueDark: $Global_CurveColorLightBlueDarkened;
+    RTPC_PropertyCategoryLightBlueDeepDark: $Global_CurveColorLightBlueLightened;
+
+    RTPC_PropertyCategoryPurple: $Global_CurveColorPurple;
+    RTPC_PropertyCategoryPurpleDark: $Global_CurveColorPurpleDarkened;
+    RTPC_PropertyCategoryPurpleDeepDark: $Global_CurveColorPurpleLightened;
+
+    RTPC_PropertyCategoryPink: $Global_CurveColorPink;
+    RTPC_PropertyCategoryPinkDark: $Global_CurveColorPinkDarkened;
+    RTPC_PropertyCategoryPinkDeepDark: $Global_CurveColorPinkLightened;
+
+    RTPC_PropertyCategoryDefault: $Global_CurveColorBrownGray;
+    RTPC_PropertyCategoryDefaultDark: $Global_CurveColorBrownGrayDarkened;
+    RTPC_PropertyCategoryDefaultDeepDark: $Global_CurveColorBrownGrayLightened;
+
+    DataCurve_Default: $Global_CurveColorBrownGray;
+}

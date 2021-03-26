@@ -1,0 +1,18 @@
+
+<h2>Channel Configuration Override</h2>
+<p>ソースのチャンネルコンフィギュレーションの選択肢を示し、選択するとグラフビューに表示される。</p>
+<span class="condition" name="WwiseLite"><p>
+<strong>注釈</strong>:While it is still possible to use and edit a large variety of channel configurations for your source, only the full version of Wwise can actually output these configurations. Wwise LTX will always downmix higher order configurations to stereo.
+</p></span>
+<p>オーディオ波形は常にWwiseの表示順序がある。5.1の場合、グラフビューの左側に示される通り、上から順に、L + R + C + SL + SR + LFE。1次アンビソニックスの場合、W + Y + Z + Xに該当する。</p>
+<p>Wwiseが選択されたチャンネルコンフィギュレーションを解釈して、表示順序に従ってグラフビューに出力する。ソースのチャンネルコンフィギュレーションの解釈は、以下のファイル順番の種類のどれでも可能:</p>
+<ul>
+<li><strong>SMPTE</strong>:デフォルトで、Wwiseはファイル順番をSMPTE（Microsoft標準）として解釈するが、アンビソニックスヘッダがある場合を除く。5.1の場合、5.1(L,R,C,LFE,SL,SR)と表示される。
+<br/>ただしデフォルトはリスト内にDetect [channelconfig]と表示され、この場合の&rdquo;channelconfig&rdquo;は検知されたコンフィギュレーションを示す。5.1の場合、Detect [5.1(L,R,C,LFE,SL,SR)]と表示される。</li>
+<li><strong>FuMa</strong>:デフォルトで、Ambisonics Component Orderingの場合、Wwiseはファイル順番をFuMaとして解釈する。1次アンビソニックスの場合、4(Ambisonics) (FuMa) と表示される。
+<br/>ただしデフォルトはリスト内にDetect [channelconfig]と表示され、この場合の&rdquo;channelconfig&rdquo;は検知されたコンフィギュレーションを示す。1次アンビソニックスの場合、Detect [4(Ambisonics)(FuMa)] と表示される。</li>
+<li><strong>Anonymous</strong>:AnonymousのChannel Configオプションは、表示順の通りにチャンネル数を割り振り、グラフビューに表示する。つまり、1次アンビソニックスのファイルは 4 (Anonymous) と表示され、グラフビューで単に 1 + 2 + 3 + 4 と表示される。同様に5.1ファイルはリスト内に6 (Anonymous)と表示され、グラフビューで単に1 + 2 + 3 + 4 + 5 + 6と表示される。</li>
+<li><strong>Film</strong>:リストにあるアンビソニックス以外の代替ファイル順番は、Film。5.1の場合は、5.1(L,C,R,SL,SR,LFE)と表示される。</li>
+<li><strong>AmbiX</strong>:リストにあるアンビソニックスの代替ファイル順番は、AmbiX（ACNオーダーとSN3Dノーマライゼーション）。1次アンビソニックスの場合、4(Ambisonics)(AmbiX) と表示される。</li>
+</ul>
+<p>Default value: 0<br/></p>

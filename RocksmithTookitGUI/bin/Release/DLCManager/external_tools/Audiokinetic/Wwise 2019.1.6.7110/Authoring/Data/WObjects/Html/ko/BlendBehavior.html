@@ -1,0 +1,5 @@
+
+<h2>Play mode</h2>
+<p><strong>Step</strong>: Blend Container는 Play에 따라 모든 하위 계층들의 재생을 시작합니다. Blend Container의 모든 하위 계층의 보이스가 재생을 멈출 때에 (혹은 Stop Action을 받았을 때에) 이 Blend Container의 재생이 끝난 것으로 간주됩니다.</p>
+<p><strong>Continuous</strong>: Blend Container는 크로스페이드 영역에 따라 하위 오브젝트의 Play와 Stop을 능동적으로 관리합니다 (RTPC의 값이 클립 영역 안에 있을 때 하위 오브젝트를 재생하며, 값이 클립 영역 밖에 있을 때 하위 오브젝트의 재생을 멈춥니다). 이 컨테이너는 Stop Action에 의해 정지되어야 합니다. 왜냐하면 아무 사운드도 재생되지 않을 때에도 이 컨테이너는 계속 현존한 채 RTPC의 변화를 모니터링 하기 때문입니다.</p>
+<p>Default value: Step<br/></p>

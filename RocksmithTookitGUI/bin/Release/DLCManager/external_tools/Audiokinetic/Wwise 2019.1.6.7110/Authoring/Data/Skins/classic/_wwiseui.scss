@@ -1,0 +1,212 @@
+@import "global";
+
+$NodeBackgroundColor: rgb(163,163,163);
+$NodeBackgroundHighlightedColor: rgb(120,120,120);
+$NodeInnerFrame: rgb(80,80,80);
+$NodeOuterFrame: rgb(120,120,120);
+
+@mixin wwiseui_exports {
+    TreeGraphControl_BackgroundColor: $Global_Background;
+    TreeGraphControl_MainPipeline: $Global_GraphNodeWire;
+
+    // Voices Graph Background
+    ColumnGraphControl_BackgroundColor: $Global_Background;
+
+    // Box Border and wire Hover Highlight
+    ColumnGraphControl_BoxBorderPen: $Global_GraphNodeWire;
+    
+    // Border of Node Box
+    ColumnGraphControl_NormalNodeBorderPen: rgb(100, 100, 100);
+    ColumnGraphControl_HoveredNodeBorderPen: rgb(30, 30, 30);
+    ColumnGraphControl_ActiveNodeBorderPen: rgb(0, 0, 0);
+    ColumnGraphControl_SelectedNodeBorderPen: rgb(0, 0, 0);
+
+    // Graph Line
+    ColumnGraphControl_NormalLinePen: rgb(90, 90, 90);
+    ColumnGraphControl_HoveredLinePen: rgb(60, 60, 60);
+    ColumnGraphControl_ActiveLinePen: rgb(0, 0, 0);
+    
+    // Red Graph lines which are shown when there is latency defined in the sound pipeline, e.g. feedback loop
+    ColumnGraphControl_FeedbackLinePen: $Global_GraphNodeWireFeedback;
+
+    //Mute color shown on the connection lines when an item is muted
+    ColumnGraphControl_MuteLinePen: $Global_GraphNodeWireMute;
+
+    //Solo color shown on the connection lines when an item is muted
+    ColumnGraphControl_SoloLinePen: $Global_GraphNodeWireSolo;
+    
+    UINode_BackgroundColor: $NodeBackgroundColor;
+    UINode_BackgroundSelectedOverlayColor: rgba(0, 0, 0, 0.4);
+    UINode_InnerFrameColor: $NodeInnerFrame;
+    UINode_OuterFrameColor: $NodeOuterFrame;
+    UINode_OuterFrameSelectedColor: $NodeOuterFrame; // Frame appearing around the outer frame
+    UINode_DefaultTextColor: $Global_Text;
+
+    UINodeGroup_BackgroundColor: rgb(136,136,136);
+    UINodeGroup_FrameColor: rgb(120,120,120);
+
+    GameObjectUINode_BackgroundColor: rgb(160,160,160);
+
+    MuteSoloNode_BackgroundColor: $NodeBackgroundColor;
+    MuteSoloNode_BackgroundHighlightedColor: $NodeBackgroundHighlightedColor;
+
+    MuteButtonWindow_BackgroundColor: $Global_Background;
+    
+    PropertyNode_BackgroundColor: applyTint(rgb(163, 163, 163));
+
+    ComboBoxProp_BackgroundColor: $Global_Background;
+
+    ProgressBar_BackgroundColor: $Global_Background;
+    ProgressBar_FillColor: applyTint(rgb(220, 220, 220));
+
+    ProgressBar2_BackgroundColor: $Global_Background;
+    ProgressBar2_FillColor: applyTint(rgb(210, 210, 210));
+
+    ProgressControl_BackgroundColor: $Global_Background;
+    ProgressControl_ProgressColor: applyTint(rgb(93, 93, 93));
+    ProgressControl_GradientTopColor: applyTint(rgb(125, 125, 125));
+    ProgressControl_GradientBottomColor: applyTint(rgb(155, 155, 155));
+
+    LightProgressControl_BackgroundColor: $Global_Background;
+    LightProgressControl_FrameColor: applyTint(#222222);
+    LightProgressControl_ProgressColor: applyTint(#555555);
+
+    UnknownProgressControl_BackgroundColor: applyTint(rgb(40, 40, 40));
+    UnknownProgressControl_TextColor: applyTint(rgb(255, 255, 255));
+
+    SuperRange_ObjectColorBackgroundBlendRatio: $Global_ObjectColorBackgroundBlendRatio;
+    SuperRange_BackgroundColor: $Global_Background;
+    SuperRange_DisabledBackgroundColor: $Global_EditTextDisabledBackground;
+    SuperRange_DisabledTextColor: $Global_EditTextDisabledText;
+    SuperRange_NormalTextColor: $Global_NormalText;
+
+    WarningLabel_BackgroundColor: $Global_Background;
+    WarningLabel_TextColor: applyTint(rgb(255, 230, 109));
+
+    MultiSelectionTreeControl_BackgroundColor: $Global_Background;
+    MultiSelectionTreeControl_SelectedBackgroundColor: $Global_BackgroundSelected;
+    MultiSelectionTreeControl_SelectedUnfocusBackgroundColor: $Global_BackgroundSelectedUnfocus;
+    MultiSelectionTreeControl_TextColor: $Global_NormalText;
+    MultiSelectionTreeControl_SelectedTextColor: $Global_NormalText;
+    MultiSelectionTreeControl_SelectedUnfocusedTextColor: $Global_NormalText;
+    MultiSelectionTreeControl_LogTextColor: $Global_Text;
+
+    ReferenceUICaption_BackgroundColor: $Global_Background;
+
+    WObjectTextUICaption_TextColor: applyTint(rgb(255, 230, 109));  // UIColor::crListWarningText
+
+    TreeCtrl_NormalText: $Global_NormalText;
+    TreeCtrl_UserDisabledText: applyTint(rgb(170, 170, 170));
+    TreeCtrl_UserDisabledFocusText: applyTint(rgb(170, 170, 170));
+    TreeCtrl_UserDisabledSelectedText: applyTint(rgb(180, 180, 180));
+    TreeCtrl_UserDisabledFocusSelectedText: applyTint(rgb(170, 170, 170));
+    TreeCtrl_ExcludedText: applyTint(rgb(170, 170, 170));
+    TreeCtrl_ExcludedFocusText: applyTint(rgb(170, 170, 170));
+    TreeCtrl_ExcludedSelectedText: applyTint(rgb(180, 180, 180));
+    TreeCtrl_ExcludedFocusSelectedText: applyTint(rgb(170, 170, 170));
+    TreeCtrl_SourceInvalidText: applyTint(rgb(1, 88, 129));             // Cell_blue
+    TreeCtrl_SourceInvalidFocusText: applyTint(rgb(1, 88, 129));
+    TreeCtrl_SourceInvalidSelectedText: applyTint(rgb(1, 88, 129));
+    TreeCtrl_SourceInvalidFocusSelectedText: applyTint(rgb(45, 147, 197));
+    TreeCtrl_MissingSourceText: applyTint(rgb(185, 0, 0));              // Cell_red
+    TreeCtrl_MissingSourceFocusText: applyTint(rgb(185, 0, 0));
+    TreeCtrl_MissingSourceSelectedText: applyTint(rgb(185, 0, 0));
+    TreeCtrl_MissingSourceFocusSelectedText: applyTint(rgb(100, 5, 0));
+    
+    // Windowless = WL
+    WindowLessView_LassoColor: applyTint(rgba(85, 178, 209, 70/255));
+    WindowLessView_BackgroundColor: $Global_Background;
+
+    WLBoxControl_BackgroundColor: $Global_Background;
+    WLBoxControl_FrameColor: applyTint(rgb(64, 64, 64));
+    WLBoxControl_TextColor: $Global_Text;
+
+    WLBoxControl_ObjectColorBackgroundSelectedOverlay: rgba(255, 255, 255, 0.3);
+    WLBoxControl_ObjectColorBackgroundBlendRatio: $Global_ObjectColorBackgroundBlendRatio;
+
+    WLResizableBox_BackgroundColor: applyTint(rgb(97, 171, 195));
+	WLResizableBox_FrameColor: applyTint(rgb(35, 82, 97));
+
+    WLImageButtonControl_BackgroundColor: $Global_Background;
+    WLImageButtonControl_DownColor: applyTint(rgb(200, 200, 200));
+    WLImageButtonControl_HotColor: applyTint(rgb(165, 165, 165));
+
+    WLObjectBoxControl_TextColor: $Global_Text;
+    WLObjectBoxControl_SelectedTextColor: $Global_NormalText;
+    WLObjectBoxControl_UnloadedTextColor: applyTint(rgb(135, 113, 16));     // UIColor::crWarningTextOverLightBG
+    WLObjectBoxControl_UnloadedSelectedTextColor: applyTint(rgb(255, 230, 109));       // UIColor::crListWarningText 
+
+    WLNotesEdit_FrameMouseOverColor: applyTint(#4e4e4e);
+
+    // Alpha is used to specify how much of the border color is blended with the palette color.
+    WLAudioSourceViewerControl_BackgroundColor: applyTint(rgba(#202020, 0));
+    WLAudioSourceViewerControl_SelectedBackgroundColor: applyTint(rgba(255, 255, 255, 0.1));
+    WLAudioSourceViewerControl_TextFrameColor: applyTint(rgba(#202020, 0));
+    WLAudioSourceViewerControl_SelectedTextFrameColor: applyTint(rgba($Global_BackgroundSelected, 0.3));
+    WLAudioSourceViewerControl_BorderColor: applyTint(rgba(255, 255, 255, 0.1));
+    WLAudioSourceViewerControl_SelectedBorderColor: applyTint(rgba(255, 255, 255, 0.3));
+
+    WLAudioSourceViewerControl_SourceNameColor: $Global_Text;
+    WLAudioSourceViewerControl_SourceNameMissingColor: applyTint(rgb(185, 0, 0));            // Cell_Red
+    WLAudioSourceViewerControl_SourceNameMissingSelectedColor: applyTint(rgb(100, 5, 0));
+    WLAudioSourceViewerControl_SourceNameInvalidColor: applyTint(rgb(1, 88, 129));            // Cell_Blue
+    WLAudioSourceViewerControl_SourceNameInvalidSelectedColor: applyTint(rgb(45, 147, 197));
+
+    WLButtonBase_TextColor: $Global_NormalText;
+    WLButtonBase_CheckedColor: $Global_Accent;
+
+    WLRulerControl_FrameColor: applyTint(rgb(120, 120, 120));
+    WLRulerControl_TextColor: $Global_RulerTextColor;
+    WLRulerControl_BackgroundColor: $Global_RulerBackgroundColor;
+    WLRulerControl_TickSmallColor: $Global_RulerTickSmallColor;
+    WLRulerControl_TickMediumColor: $Global_RulerTickMediumColor;
+    WLRulerControl_TickLargeColor: $Global_RulerTickLargeColor;
+
+    WLWavDbRulerControl_BackgroundColor: applyTint(#505050);
+    WLWavDbRulerControl_TextColor: applyTint(#bebebe);
+
+    WLWaveViewerControl_BackgroundColorForNonZero: applyTint(rgba(0,0,0,0.5));
+    WLWaveViewerControl_Transparency: applyTint(rgba(0, 0, 0, 0.3)); // Only alpha is used
+    
+    WLMuteButtonBase_TextColor: $Global_NormalText;
+    WLMuteButtonBase_ResetTextColor: $Global_DisabledText;
+    WLMuteButtonBase_Color: $Global_MuteButtonColor;
+    WLMuteButtonBase_HighlightedColor: $Global_MuteButtonHighlighted;
+    WLMuteButtonBase_CheckedColor: $Global_MuteButtonChecked;
+    WLSoloButtonBase_TextColor: $Global_NormalText;
+    WLSoloButtonBase_Color: $Global_SoloButtonColor;
+    WLSoloButtonBase_HighlightedColor: $Global_SoloButtonHighlighted;
+    WLSoloButtonBase_CheckedColor: $Global_SoloButtonChecked;
+    
+    WLResetMuteButtonBase_TextColor: $Global_NormalText;
+    WLResetMuteButtonBase_DisabledTextColor: $Global_DisabledText;
+    WLResetMuteButtonBase_Color: $Global_MuteButtonColor;
+    WLResetSoloButtonBase_TextColor: $Global_NormalText;
+    WLResetSoloButtonBase_DisabledTextColor: $Global_DisabledText;
+    WLResetSoloButtonBase_Color: $Global_SoloButtonColor;
+
+    // Cells
+    // Based on UIColor::cr*
+    Cell_NormalTextColor: $Global_NormalText;
+    Cell_NormalSelectedFocusedTextColor: $Global_NormalText;
+    Cell_NormalSelectedNotFocusedTextColor: $Global_NormalText;
+    Cell_RedTextColor: applyTint(rgb(185, 0, 0));
+    Cell_RedSelectedFocusedTextColor: applyTint(rgb(255, 115, 108));
+    Cell_RedSelectedNotFocusedTextColor: $Global_RedTextDark;
+    Cell_DisabledTextColor: applyTint(rgb(198,198,198));
+    Cell_DisabledSelectedFocusedTextColor: applyTint(rgb(198,198,198));
+    Cell_DisabledSelectedNotFocusedTextColor: applyTint(rgb(198,198,198));
+    Cell_BlueTextColor: applyTint(rgb(1, 88, 129));
+    Cell_BlueSelectedFocusedTextColor: applyTint(rgb(45, 147, 197));
+    Cell_BlueSelectedNotFocusedTextColor: applyTint(rgb(1, 74, 107));
+    Cell_WarningTextColor: $Global_ListWarningText;
+    Cell_WarningSelectedFocusedTextColor: applyTint(rgb(255, 255, 0));
+    Cell_WarningSelectedNotFocusedTextColor: applyTint(rgb(255, 255, 0));
+
+    LCChannelConfigOverride_InvalidValueColor: applyTint(rgb(185, 0, 0));
+
+    LCMeter_FrameColor: applyTint(rgb(80,80,80));   // UIColor::crFrameBk
+    LCMeter_ChannelColor: $Global_NormalText;
+
+    LCObjectReference_LinkUnlinkBackgroundColor: $Global_Background;
+}

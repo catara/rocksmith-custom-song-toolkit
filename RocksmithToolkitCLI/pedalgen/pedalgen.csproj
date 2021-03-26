@@ -44,6 +44,10 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\lib\Newtonsoft.Json\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="RocksmithToolkitLib, Version=2.9.2.1, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\RocksmithToolkitLib\bin\Release\RocksmithToolkitLib.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
@@ -56,12 +60,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="CLI.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\RocksmithToolkitLib\RocksmithToolkitLib.csproj">
-      <Project>{2231c13a-14f6-478a-96d7-d1d3e1094cd6}</Project>
-      <Name>RocksmithToolkitLib</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

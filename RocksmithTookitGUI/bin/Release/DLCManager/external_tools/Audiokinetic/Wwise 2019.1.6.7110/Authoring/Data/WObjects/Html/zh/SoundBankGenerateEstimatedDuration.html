@@ -1,0 +1,4 @@
+
+<h2>尝试确定音频包中每个事件的预期时长。对于各个事件，将包含 DurationType、MinDuration 和 MaxDuration 属性</h2>
+<p>将尝试计算 SoundBank 中每个 Event 的预期时长。对于各个事件，soundbanksinfo.xml 文件中将包含 DurationType、MinDuration 和 MaxDurations 属性。DurationType 可以是以下值：“OneShot”、“Infinite”、“Mixed”或“Unknown”。“OneShot”表示非循环声音；“Infinite”表示循环声音；“Mixed”表示声音可能无限循环（可能基于随机因素或切换开关）；“Unknown”表示 Wwise 无法确定时长。MinDuration 和 MaxDuration 属性表示事件的最短和最长时长。请注意，这些范围仅为估算值，根据运行时条件不同，可能并不完全准确。</p>
+<p>Default value: false<br/></p>

@@ -1,0 +1,16 @@
+
+<h2>Global Voice Instances Limit</h2>
+<p>最大声部实例数。同一时刻能够在整个工程中同时处于激活状态的声部的最大数量。<span class="condition" name="Feature_VirtualVoice">虚声部不会被计为活跃声部。超出这一限制后，具有最低优先级的声部将采取它们的虚声部行为。如果优先级相等，则出现时间早的声音将被认为有较高的优先级。</span>各个声音可不沿用其自身的虚声部行为，虚声部行为包括：</p>
+<span class="condition" name="Feature_VirtualVoice"><p></p>
+<ul>
+<li>Continue to play</li>
+<li>Be killed</li>
+<li>Send to virtual voice</li>
+</ul>
+<p></p></span>
+<span class="condition" name="Feature_VirtualVoice"><p>
+<strong>备注</strong>:如果某些声音的虚声部行为被设置为Continue to play，则不会受声部实例最大数目的限制。要遵守此限制，播放声部时需要将其虚声部行为设置为 Kill voice 或 Send to Virtual voice。
+</p></span>
+<p>可使用 Wwise SDK API 而不沿用该值。</p>
+<p>Default value: 256<br/>
+Range: 1 to 10000<br/></p>

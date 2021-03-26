@@ -1,0 +1,13 @@
+
+<h2>Volume Threshold</h2>
+<p>ボイスがこのデフォルトボリュームレベル未満になると、Property EditorのAdvanced Settingsタブで設定した動作に従う。例えばボリューム閾値未満のボイスに適用できる動作を、以下に示す。</p>
+<ul>
+<li>Continue to play</li>
+<li>Be killed</li>
+<li><span class="condition" name="Feature_VirtualVoice">Send to virtual voice</span></li>
+</ul>
+<p>この設定値はWwise SDK APIを使ってオーバーライドできる。</p>
+<p><strong>注釈</strong>:このボイスを再生し続ける場合もバーチャルになった場合も、ボリューム閾値未満である限り、聞こえない。
+<strong>注釈</strong>:デフォルトスライダレンジは、-96から0までとなっている。範囲を広げるには、数値を直接入力するか、編集コントロール部分にカーソルを当てたまま、マウスをスクロールする。</p>
+<p>Default value: -80<br/>
+Range: -96 to 0<br/></p>

@@ -708,7 +708,7 @@ namespace RocksmithToolkitGUI.DLCManager
         }
         public static void ApplyExistingTranlations(OleDbConnection cnb)//(string DBs_Path)//, string AlbumArt, string Artist, string Albums)
         {
-            var norec = 0;
+            //var norec = 0;
             DataSet dfz = new DataSet();
             var cmd = "SELECT Artist, Artist_Correction  FROM Standardization WHERE" +
                 " (Artist_Correction <> \"\") GROUP BY Artist, Artist_Correction;";

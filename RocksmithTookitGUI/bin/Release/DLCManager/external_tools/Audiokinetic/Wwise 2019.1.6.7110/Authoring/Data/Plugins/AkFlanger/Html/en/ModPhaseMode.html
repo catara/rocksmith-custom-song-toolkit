@@ -1,0 +1,12 @@
+
+<h2>LFO Spread Mode</h2>
+<p>Defines how initial phase spread (see parameter &ldquo;Spread&rdquo;) is applied across channels. For example, with the spread mode set to &ldquo;Front-Rear&rdquo;, all front channels start playing with a phase equal to 0, and all rear channels start playing with a phase equal to &ldquo;Spread&rdquo;. If present (and processed), the LFE channel is always synchronized with the Front Left channel.</p>
+<p>Values:</p>
+<ul>
+<li><strong>Left-Right</strong>: Front and rear left channels start with an offset of 0, front and rear right channels start with an offset of &ldquo;Spread&rdquo;. If present, the center channel starts with an offset of &ldquo;Spread&rdquo;/2.</li>
+<li><strong>Front-Rear</strong>: Front and center channels start with an offset of 0, and rear channels start with an offset of &ldquo;Spread&rdquo;.</li>
+<li><strong>Circular</strong>: This mode applies a spreading dipole between the left and right channels on 1.x, 2.x and 3.x configurations, and between the front left and rear right channel on 4.x and 5.x configurations. For example, a 3.0 signal would start with the following phases: L=0, C=&rdquo;Spread&rdquo;/2, R=&rdquo;Spread&rdquo;. A 5.0 signal would start with the following phases: FL=0, C=&rdquo;Spread&rdquo;/4, FR=&rdquo;Spread&rdquo;/2, RL=&rdquo;Spread&rdquo;/2, RR=&rdquo;Spread&rdquo;.</li>
+<li><strong>Random</strong>: Each channel starts with a random phase uniformly distributed between 0 and &ldquo;Spread&rdquo;.</li>
+</ul>
+<p><strong>Note</strong>: Although this parameter can be changed at run-time via RTPC, it has no effect when it is set after the instance of this effect has started playing.</p>
+<p>Default value: Left-Right<br/></p>

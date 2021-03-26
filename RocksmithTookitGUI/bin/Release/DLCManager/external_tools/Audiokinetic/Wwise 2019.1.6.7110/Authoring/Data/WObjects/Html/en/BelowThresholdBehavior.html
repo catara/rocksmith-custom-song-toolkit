@@ -1,0 +1,10 @@
+
+<h2>Virtual voice behavior</h2>
+<p>Determines the behavior of objects when their volume falls below the volume threshold or when their number goes over the playback limit. You can select one of the following options:</p>
+<ul>
+<li><strong>Continue to play</strong> to continue playing the object even though it will no longer be heard.</li>
+<li><strong>Kill voice</strong> to stop playing the object. No fade out is applied with this option.</li>
+<li><strong>Send to virtual voice</strong> to send the object to the virtual voice list. When an object is sent to the virtual voice list, certain parameters of the object are monitored by the sound engine, but no processing for audio or motion occurs.</li>
+<li><strong>Kill if finite else virtual</strong> to stop playing the object if it&rsquo;s not looping infinitely or, if it is, to send the object to the virtual voice list. For this option, the <strong>On return to physical voice</strong> behavior is automatically set to <strong>Play from elapsed time</strong>, regardless of the displayed behavior defined at a parent level.</li>
+</ul>
+<p>Default value: Continue to play<br/></p>

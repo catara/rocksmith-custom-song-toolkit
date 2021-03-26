@@ -1519,7 +1519,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                 var Arrangement_Name = dus.Tables[0].Rows[j].ItemArray[7].ToString();
                                 string shortstart = StartTime != "" && StartTime != null && StartTime.IndexOf(".") > 0 ? (StartTime.Substring(0, StartTime.IndexOf(".") + 2) + "s") : StartTime;
 
-                                var b = ""; var p = "";
+                                /*var b = "";*/ var p = "";
                                 if (noOfRecP > 1) p = Part;
 
                                 tzt += (Arrangement_Name == "2" ? " C" + p + shortstart : "") + (RouteMask == "Bass" ? " B" + p + shortstart : "") + (RouteMask == "Rhythm" ? " R" + p + shortstart : ((RouteMask == "None" && ArrangementType == "Vocal") ? " V" + p + shortstart : ((RouteMask == "Lead") ? " L" + p + shortstart : "")));
@@ -1692,7 +1692,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     cmmd = cmd.Replace(dhs.Tables[0].Rows[i].ItemArray[19].ToString(), "");
                 }
 
-                if (cmmd != cmmd)
+                if (cmd != cmmd)
                 {
                     DialogResult resultgf = MessageBox.Show(psarcPath + " have missing original files. Are you sure you want the records removed as atm you could still generate the songs?", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (resultgf == DialogResult.No) cmd = cmmd.Replace(", ,", ",").Replace(",,", ",").Replace(", )", ")").Replace(",)", ")");
@@ -5117,12 +5117,12 @@ namespace RocksmithToolkitGUI.DLCManager
                         if (remote)
                         {
 
-                            var rrr = true;
+                            //var rrr = true;
                             try
                             {
                                 File.Copy(tt, gg, true);
                                 File.Copy(tt.Replace(".ogg", ".wem"), gg.Replace(".ogg", ".wem"), true);
-                                rrr = false;
+                                //rrr = false;
                             }
                             catch (Exception Ex5)
                             {
@@ -5409,7 +5409,7 @@ namespace RocksmithToolkitGUI.DLCManager
             var album_c = "";
             var albumyear_c = "";
             var DB_Path = dbp;
-            int aa = 0;
+            //int aa = 0;
             pB_ReadDLCs.Value = 0; pB_ReadDLCs.Step = 1;
             DataSet dus = new DataSet(); dus = SelectFromDB("Standardization", cmd1, ConfigRepository.Instance()["dlcm_DBFolder"].ToString(), cnb);
             var norec = dus.Tables[0].Rows.Count;
@@ -5452,7 +5452,7 @@ namespace RocksmithToolkitGUI.DLCManager
             DataSet dg = new DataSet(); dg = SelectFromDB("Main", "SELECT DISTINCT(Switch([S].[Artist_Correction] <> \"\", [S].[Artist_Correction], 1=1, [S].[Artist])) AS ArtistN" +
                 ", (Switch(S.Album_Correction <> \"\", [S].[Album_Correction], 1=1, [S].[Album])) AS AlbumN FROM Standardization AS S ORDER BY Switch([S].[Artist_Correction] <> \"\", [S].[Artist_Correction], 1=1, [S].[Artist])", "", cnb);
             var noOfRecz = dg.Tables.Count == 0 ? 0 : dg.Tables[0].Rows.Count;
-            var found = false; var album = ""; var artist = ""; var tz = 0;
+            var found = false/*; var album = ""; var artist = ""*/; var tz = 0;
             if (noOfRec > 0 && noOfRecz > 0)
                 for (var l = 0; l < noOfRec; l++)
                 {

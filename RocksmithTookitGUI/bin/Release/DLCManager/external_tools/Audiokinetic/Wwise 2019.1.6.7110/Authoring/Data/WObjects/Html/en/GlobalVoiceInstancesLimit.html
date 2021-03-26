@@ -1,0 +1,16 @@
+
+<h2>Global Voice Instances Limit</h2>
+<p>The maximum number of simultaneous voices that can be active at the same time in the entire project. <span class="condition" name="Feature_VirtualVoice">Virtual voices do not count as active voices. Over this limit, voices with the lowest priority will adopt their virtual behavior. If priorities are equal, older sounds will be considered to have a higher priority.</span>Each sound can override its own virtual behavior, which can be:</p>
+<span class="condition" name="Feature_VirtualVoice"><p></p>
+<ul>
+<li>Continue to play</li>
+<li>Be killed</li>
+<li>Send to virtual voice</li>
+</ul>
+<p></p></span>
+<span class="condition" name="Feature_VirtualVoice"><p>
+<strong>Note</strong>: The Maximum number of voice instance may not be respected if the virtual behavior on some sounds is set to Continue to play. To have this limit respected, playing voices need to have their virtual behavior set to Kill voice or Send to Virtual voice.
+</p></span>
+<p>This value can be overridden by using the Wwise SDK API.</p>
+<p>Default value: 256<br/>
+Range: 1 to 10000<br/></p>

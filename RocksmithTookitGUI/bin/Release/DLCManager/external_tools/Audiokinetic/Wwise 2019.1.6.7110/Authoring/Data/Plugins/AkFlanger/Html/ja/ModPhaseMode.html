@@ -1,0 +1,12 @@
+
+<h2>LFO Spread Mode</h2>
+<p>初期位相拡散（パラメータ &ldquo;Spread&rdquo; を参照）がどのようにチャンネル間に適用されるかを定義。例えば、スプレッドモードが&rdquo;Front-Rear&rdquo;に設定されていると、全てのフロントチャンネルが0に等しい位相で再生を開始し、全てのリアチャンネルは&rdquo;Spread&rdquo;に等しい位相で再生を開始する。（処理済の）LFE チャンネルが存在する場合、これは常にフロントレフトチャンネルと同期する。</p>
+<p>値:</p>
+<ul>
+<li><strong>Left-Right</strong>:フロントよびリアのレフトチャンネルは0のオフセット、フロントおよびリアのライトチャンネルは &ldquo;Spread&rdquo;のオフセットで始まる。センターチャンネルがある場合は、&rdquo;Spread&rdquo;/2のオフセットで始まる。</li>
+<li><strong>Front-Rear</strong>:フロントおよびセンターチャンネルは0のオフセット、リアチャンネルは&rdquo;Spread&rdquo;のオフセットで始まる。</li>
+<li><strong>Circular</strong>:このモードは、1.x、2.x および3.x コンフィギュレーション上のレフトおよびライトチャンネル間と4.x および 5.x コンフィギュレーション上のフロントレフトおよびリアライトチャンネル間に拡散ダイポールを適用する。例えば、3.0信号は、次のような位相で始まる:L=0、C=&rdquo;Spread&rdquo;/2、R=&rdquo;Spread&rdquo;。5.0信号は、次のような位相で始まる:FL=0、C=&rdquo;Spread&rdquo;/4、FR=&rdquo;Spread&rdquo;/2、RL=&rdquo;Spread&rdquo;/2、RR=&rdquo;Spread&rdquo;。</li>
+<li><strong>Random</strong>:<strong>Random:</strong>各チャンネルは、0 と &ldquo;Spread&rdquo; 間に均一に分散されたランダム位相で始まる。</li>
+</ul>
+<p><strong>注釈</strong>:このパラメータはRTPC経由で実行時に変更することができるが、エフェクトのインスタンスが再生を開始した後に設定された場合は効果がない。</p>
+<p>Default value: Left-Right<br/></p>

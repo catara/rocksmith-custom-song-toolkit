@@ -1,0 +1,4 @@
+
+<h2>Attempts to determine the expected duration of each Event in a SoundBank. 각 Event에 DurationType, MinDuration, and MaxDurations 속성이 들어갑니다.</h2>
+<p>SoundBank 내 각 Event의 예상 길이 정하기를 시도합니다. 각 이벤트의 DurationType, MinDuration, MaxDurations 속성이 soundbanksinfo.xml 파일에 포함됩니다. DurationType은 반드시 &lsquo;OneShot&rsquo;, &lsquo;Infinite&rsquo;, &lsquo;Mixed&rsquo; 또는 &lsquo;Unknown&rsquo;으로 설정되어야 합니다. &lsquo;OneShot&rsquo;은 반복 재생하지 않는 사운드를 말하며, &lsquo;Infinite&rsquo;는 반복 재생하는 사운드를 말합니다. 그리고 &lsquo;Mixed&rsquo;는 (랜덤 확률 또는 Switch에 따라) 반복하지 않거나 또는 무한 반복 재생하는 사운드를 말하며, &lsquo;Unknown&rsquo;은 Wwise가 사운드의 길이를 결정하지 못하였음을 말합니다. MinDuration과 MaxDuration 속성은 이벤트의 하한계와 상한계의 측정을 시도합니다. 이 상/하한계는 측정값이기 때문에 런타임 상태에 따라 정확하지 않을 수도 있다는 점 기억해 주세요.</p>
+<p>Default value: false<br/></p>

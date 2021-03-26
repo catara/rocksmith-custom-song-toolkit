@@ -662,7 +662,7 @@ namespace RocksmithToolkitGUI.DLCManager
         public void ChangeRow()
         {
             if (chbx_AutoSave.Checked) SaveRecord();
-            var norec = 0;
+            //var norec = 0;
             //DataSet ds = new DataSet();
             //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
             //{

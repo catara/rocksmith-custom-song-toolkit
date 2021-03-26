@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 15 15" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.41421;">
+    <g transform="matrix(1,0,0,1,-49,-45)">
+        <g transform="matrix(1,0,0,1,9,27)">
+            <g id="MixingDesk_Bypass_on">
+                <g id="Trransparent-BG" serif:id="Trransparent BG" transform="matrix(1.36364,0,0,1.36364,40,18)">
+                    <rect x="0" y="0" width="11" height="11" style="fill:rgb(70,70,70);fill-opacity:0;"/>
+                </g>
+                <g transform="matrix(1,0,0,1,-9,-27)">
+                    <path d="M54.51,55.007L49,55.007L49,52.007L51.054,52.007C51.653,49.314 54.205,48 56.498,48C58.792,48 61.052,48.878 61.942,52.007L64,52.007L64,55.007L58.49,55.007C58.039,55.615 57.323,56.009 56.514,56.014C55.695,56.018 54.967,55.622 54.51,55.007Z" style="fill:rgb(76,76,76);fill-rule:nonzero;"/>
+                </g>
+                <g transform="matrix(0.85713,-0.00469961,0.00469961,0.85713,49,26.4918)">
+                    <path d="M0,0C0,0.966 -0.783,1.75 -1.75,1.75C-2.717,1.75 -3.5,0.966 -3.5,0C-3.5,-0.966 -2.717,-1.75 -1.75,-1.75C-0.783,-1.75 0,-0.966 0,0" style="fill:rgb(83,192,231);"/>
+                </g>
+                <g transform="matrix(1,0,0,1,-9,-7)">
+                    <path d="M63,34.007L59.587,34.007L59.587,33.007L59.586,33.007C59.319,31.385 58.169,30.246 56.498,30.246C54.827,30.246 53.75,31.385 53.482,33.007L53.482,34.007L50,34.007L50,33.007L52.054,33.007C52.333,30.751 54.205,29 56.498,29C58.792,29 60.663,30.751 60.942,33.007L63,33.007L63,34.007Z" style="fill:rgb(83,192,231);"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

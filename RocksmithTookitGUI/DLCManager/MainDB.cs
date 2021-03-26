@@ -3086,7 +3086,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                         {
                                             var fnn = t;
 
-                                            var i = 0;
+                                            //var i = 0;
                                             string insertcmdA = "CopyPath, PackPath, FileName, PackDate, FileHash, FileSize, CDLC_ID, DLC_Name, Platform, Pack";
                                             var fnnon = Path.GetFileName(fnn);
                                             var packn = fnn.Substring(0, fnn.IndexOf(fnnon));
@@ -3744,7 +3744,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private void btn_GetTrack_Click(object sender, EventArgs e)
         {
 
-            var trackno = 0;
+            //var trackno = 0;
             if (netstatus == "NOK" || netstatus == "") netstatus = GenericFunctions.CheckIfConnectedToInternet().Result.ToString();
             if (netstatus == "OK") netstatus = CheckIfConnectedToSpotify().Result.ToString();
             var sel = "SELECT Song_Title, Song_Title_Sort, Album, Artist, Album_Year, ID FROM Main WHERE (Track_No = \"0\" OR Track_No = \"00\" OR Track_No = \"-1\" OR Track_No = \"\" OR Track_No is null) "
@@ -3966,14 +3966,14 @@ namespace RocksmithToolkitGUI.DLCManager
             var SongRecord = GenericFunctions.GetRecord_s(sel, cnb);
             var norows = SongRecord[0].NoRec.ToInt32();
 
-            var b = 0;
+            //var b = 0;
             var dupli_assesment = "";
             var IDD = "";
             var folder_name = "";
             var DLCC = "";
             var Platformm = "";
             var filename = "";
-            var HasOrig = "";
+            //var HasOrig = "";
             var Duplic = 0;
             var maxDuplic = 0;
             //Calculate the dupli number
@@ -4079,8 +4079,8 @@ namespace RocksmithToolkitGUI.DLCManager
             var Duplicate_of = databox.SelectedRows[0].Cells["Duplicate_of"].Value.ToString();
             var AlbumArtPath = databox.SelectedRows[0].Cells["AlbumArtPath"].Value.ToString();
             var Is_Alternate = databox.SelectedRows[0].Cells["Is_Alternate"].Value.ToString();
-            var Rebuild = false;
-            var action = ""; var reas = "";
+            //var Rebuild = false;
+            var action = ""; //var reas = "";
             if (norows >= 1)
                 foreach (var file in SongRecord)
                 {
@@ -4377,6 +4377,7 @@ namespace RocksmithToolkitGUI.DLCManager
             }
             catch (Exception er)
             {
+                var tsst = "Issues at copy filestrem..." + er.Message.ToString(); timestamp = UpdateLog(timestamp, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
             }
             var startInfo = new ProcessStartInfo
             {
@@ -4477,7 +4478,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private void btn_Package_Click(object sender, EventArgs e)
         {
             var old = ConfigRepository.Instance()["dlcm_MuliThreading"];
-            var pack = ""; var norows = 0; var brkn = 0;
+            var pack = ""; /*var norows = 0; */var brkn = 0;
             if (chbx_Format.Text == "PS4" || chbx_Format.Text == "iOS") { MessageBox.Show("Not yet working. rEtail songs can be eliminated just new ones packaged\n\nWiP"); return; }
             pB_ReadDLCs.Value = 0;
             pB_ReadDLCs.Maximum = 4;
@@ -5312,7 +5313,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 case "Same Title(no[])&Artist":
                     DataSet dns = new DataSet(); dns = SelectFromDB("Main", "SELECT m.ID, Artist,m.Song_Title FROM Main AS m ORDER BY LCASE(Artist), LCASE(Song_Title)", "", cnb);
                     noOfRec = dns.Tables.Count == 0 ? 0 : dns.Tables[0].Rows.Count;
-                    var IDf = ""; bool done = false;
+                    var IDf = "";/* bool done = false;*/
                     if (noOfRec > 0)
                         for (var l = 0; l < noOfRec; l++)
                         {
@@ -5368,7 +5369,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 case "Same Artist&Title(no[]) different Album":
                     DataSet dws = new DataSet(); dws = SelectFromDB("Main", "SELECT m.ID,m.Artist, m.Song_Title, m.Album FROM Main AS m ORDER BY LCASE(Artist), LCASE(Song_Title), LCASE(Album)", "", cnb);
                     noOfRec = dws.Tables.Count == 0 ? 0 : dws.Tables[0].Rows.Count;
-                    var IDc = ""; var dones = false;
+                    var IDc = ""; /*var dones = false;*/
                     if (noOfRec > 0)
                         for (var l = 0; l < noOfRec; l++)
                             for (var v = l + 1; v < noOfRec; v++)
@@ -5403,7 +5404,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                         if (dts.Tables[0].Rows[l].ItemArray[3].ToString() != dts.Tables[0].Rows[v].ItemArray[3].ToString().ToLower())
                                             IDe += dts.Tables[0].Rows[l].ItemArray[0].ToString() + ", " + dts.Tables[0].Rows[v].ItemArray[0].ToString() + ", ";
                                 }
-                                else if (donez) { done = false; break; }
+                                else if (donez) { donez = false; break; }
 
                     var SearchCmd40 = "SELECT " + c("dlcm_SearchFields") + " FROM Main WHERE ID IN (" + IDe + ")";
                     SearchCmd40 = SearchCmd40.Replace(", )", ")");

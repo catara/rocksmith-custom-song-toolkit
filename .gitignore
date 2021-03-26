@@ -16,10 +16,7 @@ TestResults
 *.sln.docstates
 
 # Build results
-[Bb]in/
 [Dd]ebug/
-[Rr]elease/
-x64/
 *_i.c
 *_p.c
 *.ilk

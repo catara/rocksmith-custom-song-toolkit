@@ -1,0 +1,7 @@
+
+<h2>Channel Configuration</h2>
+<p>Specifies which channel configuration should be used in this bus. If set to anything other than Parent, it  forces a submix at this level of the hierarchy. Parent means that this Bus inherits the channel configuration of its parent. The channel configuration of the Master Audio Bus is implicitly set to Parent, because it inherits the channel configuration of the associated sink/audio output device.</p>
+<p>This setting is useful to save CPU for Effects that will be applied on this bus because reducing the number of channels usually reduces the required CPU to process the Effect.</p>
+<p>This option works only on software pipeline platforms.</p>
+<p>For more information, refer to <a href="HelpDoc=understanding_channel_configurations">Understanding Channel Configurations</a>.</p>
+<p>Default value: Parent<br/></p>

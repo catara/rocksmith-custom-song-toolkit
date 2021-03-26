@@ -262,6 +262,8 @@ namespace RocksmithToolkitGUI.DLCManager
             }
             catch (Exception exx)
             {
+
+                ShowConnectivityError(exx, "");
                 try
                 {
                     if (File.Exists(cnb.DataSource.ToString())) cnb.Open();
@@ -491,6 +493,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 }
                 catch (Exception es)
                 {
+                    var tsst = "Issues at copy filestrem..." + es.Message.ToString(); var timestamp = UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
                 }
             }
         }
@@ -520,7 +523,7 @@ namespace RocksmithToolkitGUI.DLCManager
         }
         public static void Remove_Content_Types_FromZip(string zipFileName)
         {
-            string contents;
+            //string contents;
             using (ZipFile zipFile = new ZipFile(File.Open(zipFileName, FileMode.Open)))
             {
                 /*
@@ -1567,13 +1570,13 @@ namespace RocksmithToolkitGUI.DLCManager
                 strHTMLBuilder.Append("\n<tr>");
                 col = 0; string hey = ""; i++;
                 idd = myRow["ID"].ToString();
-                var baseFileNamelead = ""; var baseFileName = ""; var baseFile = ""; var arrtype = ""; var baseFileNamebass2 = ""; var baseFileNamerhthym2 = "";
+               /* var baseFileNamelead = "";*/ var baseFileName = ""; var baseFile = "";/* var arrtype = ""; *//*var baseFileNamebass2 = "";*/ /*var baseFileNamerhthym2 = "";*/
                 repetrow = 0;
                 if (al == myRow["Album"].ToString()) samealum = true;
                 else samealum = false;
                 foreach (DataColumn myColumn in dt.Tables[0].Columns)
                 {
-                    baseFileName = ""; arrtype = ""; baseFile = ""; arrtype = "";
+                    baseFileName = ""; /*arrtype = ""; */baseFile = ""; /*arrtype = "";*/
                     var fileName = Path.GetFileName(myRow[myColumn.ColumnName].ToString());
                     var ffile = myRow[myColumn.ColumnName].ToString();
 
@@ -1588,7 +1591,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             // skip any files for vocals and/or showlights
                             if (arrangement.ToLower() == "showlights")/*arrangement.ToLower() == "vocals" || a*/
                                 continue;
-                            Song2014 rs2014Song;
+                            //Song2014 rs2014Song;
 
                             if (ConfigRepository.Instance()["dlcm_AdditionalManipul96"].ToLower() == "yes")
                                 hey = getGP5(dir, idd, fileName, myRow["Original_File"].ToString(),
@@ -1597,7 +1600,9 @@ namespace RocksmithToolkitGUI.DLCManager
                             baseFile = ret[0];
                             baseFileName = ret[1];
                         }
-                        catch (Exception Ex) { }
+                        catch (Exception Ex) {
+                            var tsst = "Issues at copy filestrem..." + Ex.Message.ToString(); timestamp = UpdateLog(timestamp, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
+                        }
 
                     col++;
 
@@ -1742,6 +1747,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     catch (Exception Ex)
                     {
                         vocal = false;
+                        var tsst = "Invalid XML..." + Ex.Message.ToString(); timestamp = UpdateLog(timestamp, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
                         try
                         {
                             var rrangemen = Song2014.LoadFromFile(xmlc);
@@ -1749,6 +1755,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         catch (Exception Exx)
                         {
                             validXML = false;
+                            tsst = "Invalid XML..." + Exx.Message.ToString(); timestamp = UpdateLog(timestamp, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
                         }
                     }
 
@@ -3088,7 +3095,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 var PluckedType = "";
                 var Tunings = "";
                 var PitchShiftableEsOrDd = "";
-                var Import_AuditTrail_ID = "";
+                //var Import_AuditTrail_ID = "";
                 var bonus = "No";
                 List<string> xmlhlist = new List<string>();
                 List<string> jsonhlist = new List<string>();
@@ -4577,7 +4584,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                 }
                                 catch (Exception ex)
                                 {
-                                    timestamp = UpdateLog(timestamp, "error at insert " + command.CommandText + "\n" + arg.ArrangementName + " " + arg.RouteMask.ToString(), true, Temp_Path_Import, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+                                    timestamp = UpdateLog(timestamp, "error at insert " + command.CommandText + "\n" + arg.ArrangementName + " " + arg.RouteMask.ToString() + ex.Message.ToString(), true, Temp_Path_Import, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
                                     throw;
                                 }
                                 finally
@@ -4587,7 +4594,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             }
                             catch (Exception ex)
                             {
-                                var tsst = "Error at updatee..." + ex; timestamp = UpdateLog(timestamp, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
+                                var tsst = "Error at updatee..." + ex.Message; timestamp = UpdateLog(timestamp, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
                             }
                         }
                         timestamp = UpdateLog(timestamp, "Arrangements Updated " + info.Arrangements.Count, true, Temp_Path_Import, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
@@ -6116,7 +6123,7 @@ namespace RocksmithToolkitGUI.DLCManager
             catch (Exception ex)
             {
                 DialogResult result1 = MessageBox.Show("Can not open Import folder in Exporer !\nDo you want to create folder?\n" + ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (result1 == DialogResult.Yes) { try { Directory.CreateDirectory(t); } catch (Exception Ex) { MessageBox.Show("Can not create Import folder in Exporer !\n" + ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error); } }
+                if (result1 == DialogResult.Yes) { try { Directory.CreateDirectory(t); } catch (Exception Ex) { MessageBox.Show("Can not create Import folder in Exporer !\n" + Ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error); } }
             }
         }
 
@@ -6130,7 +6137,7 @@ namespace RocksmithToolkitGUI.DLCManager
             catch (Exception ex)
             {
                 DialogResult result1 = MessageBox.Show("Can not open Temp folder in Exporer !\nDo you want to create folder?\n" + ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (result1 == DialogResult.Yes) { try { Directory.CreateDirectory(t); } catch (Exception Ex) { MessageBox.Show("Can not create Temp folder in Exporer !\n" + ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error); } }
+                if (result1 == DialogResult.Yes) { try { Directory.CreateDirectory(t); } catch (Exception Ex) { MessageBox.Show("Can not create Temp folder in Exporer !\n" + Ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error); } }
 
             }
         }
@@ -6574,8 +6581,8 @@ namespace RocksmithToolkitGUI.DLCManager
                 try { Process process = Process.Start(Path.GetDirectoryName(t)); }
                 catch (Exception Exx)
                 {
-                    DialogResult result1 = MessageBox.Show("Can not open DB folder in Exporer !\nDo you want to create folder?\n" + ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                    if (result1 == DialogResult.Yes) { try { Directory.CreateDirectory(t); } catch (Exception Ex) { MessageBox.Show("Can not create DB folder in Exporer !\n" + ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error); } }
+                    DialogResult result1 = MessageBox.Show("Can not open DB folder in Exporer !\nDo you want to create folder?\n" + Exx.Message + ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (result1 == DialogResult.Yes) { try { Directory.CreateDirectory(t); } catch (Exception Ex) { MessageBox.Show("Can not create DB folder in Exporer !\n" + Ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error); } }
                 }
             }
         }

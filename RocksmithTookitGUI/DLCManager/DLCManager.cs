@@ -39,6 +39,7 @@ namespace RocksmithToolkitGUI.DLCManager
         public BackgroundWorker bwConvert = new BackgroundWorker { WorkerReportsProgress = true, WorkerSupportsCancellation = true };
         string Groupss = "";
         public string netstatus = "NOK";
+        public bool FiltrParams = false;
         public bool ChanginProfile = true;
         public string SaveOK = "";
         public int mutit = 0;
@@ -100,6 +101,9 @@ namespace RocksmithToolkitGUI.DLCManager
         public string PreviewTime;
         public string PreviewLenght;
         public string AppIdD;
+        public string IsLive = ""; public string LiveDetails = ""; public string IsAcoustic = ""; public string IsSingle = ""; public string IsSoundtrack = "";
+        public string IsInstrumental = ""; public string IsEP = ""; public string IsUncensored = ""; public string IsFullAlbum = ""; public string IsRemastered = ""; public string InTheWorks = "";
+
         //public string manualdec;
         //public string automdec;
         public int manualdec = 0;
@@ -143,45 +147,6 @@ namespace RocksmithToolkitGUI.DLCManager
                 files = value;
             }
         }
-        public void RefreshSelectedStat(string db, string txt, string extrasplit)
-        {
-            if (File.Exists(txt_DBFolder.Text) && !nostatrefresh)
-            {
-                timestamp = UpdateLog(timestamp, "Start generating stats...", true, txt_TempPath.Text, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
-
-                //Find out All songs
-                var SearchCmd = "SELECT ID FROM Main u ";
-                DataSet dsz1 = new DataSet(); dsz1 = SelectFromDB(db, SearchCmd, txt_DBFolder.Text, cnb);
-                var noOfRec = 0;
-                if (dsz1.Tables.Count > 0) noOfRec = dsz1.Tables[0].Rows.Count;
-
-                timestamp = UpdateLog(timestamp, "End select all...", true, txt_TempPath.Text, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
-                var noOfSelRec = noOfRec;
-                if (txt != "" && txt != null)
-                {
-                    SearchCmd = "SELECT ID FROM " + db + " u " + " WHERE " + txt + ";";
-                    DataSet dsz2 = new DataSet(); dsz2 = SelectFromDB(db, SearchCmd, txt_DBFolder.Text, cnb);
-                    noOfSelRec = 0;
-                    if (dsz2.Tables.Count > 0) noOfSelRec = dsz2.Tables[0].Rows.Count;
-
-                    timestamp = UpdateLog(timestamp, "End selecting selected...", true, txt_TempPath.Text, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
-                }
-
-                var noOfSelRec3 = -1;
-                if (extrasplit != "" && extrasplit != null)
-                {
-                    SearchCmd = "SELECT ID FROM Main u " + " WHERE " + extrasplit + ";";
-                    DataSet dsz3 = new DataSet(); dsz3 = SelectFromDB(db, SearchCmd, txt_DBFolder.Text, cnb);
-
-
-                    timestamp = UpdateLog(timestamp, "End selecting extra", true, txt_TempPath.Text, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
-
-                    if (dsz3.Tables.Count > 0) noOfSelRec3 = dsz3.Tables[0].Rows.Count;
-                    else noOfSelRec3 = 0;
-                }
-                lbl_NoRec2.Text = noOfSelRec3 < 0 ? noOfSelRec.ToString() + "/" + noOfRec.ToString() + " records." : (noOfSelRec3.ToString() + "/") + noOfSelRec.ToString() + "/" + noOfRec.ToString() + " records.";
-            }
-        }
 
         public DLCManager()
         {
@@ -191,7 +156,20 @@ namespace RocksmithToolkitGUI.DLCManager
             cnb = new OleDbConnection("Provider=Microsoft." + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Persist Security" +
                 " Info=False;Mode= Share Deny None;Data Source=" + ConfigRepository.Instance()["dlcm_DBFolder"]);
 
+            cnb = new OleDbConnection("Provider=Microsoft." + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Persist Security" +
+    " Info=False;Mode= Share Deny None;Data Source=" + ConfigRepository.Instance()["dlcm_DBFolder"]);
+
             InitializeComponent();
+
+            DialogResult res = CreateTempFolderStructure(c("dlcm_TempPath"), c("dlcm_TempPath") + "\\0_old", c("dlcm_TempPath") + "\\0_broken", c("dlcm_TempPath") + "\\0_duplicates"
+                , c("dlcm_TempPath") + "\\0_dlcpacks", c("dlcm_RocksmithDLCPath"),
+    c("dlcm_TempPath") + "\\0_repacked", c("dlcm_TempPath") + "\\0_repacked\\XBOX360", c("dlcm_TempPath") + "\\0_repacked\\PC", c("dlcm_TempPath") + "\\0_repacked\\MAC", c("dlcm_TempPath") + "\\0_repacked\\PS3"
+    , c("dlcm_LogPath") == "" ? c("dlcm_TempPath") + "\\0_log" : c("dlcm_LogPath"), c("dlcm_TempPath") + "\\0_albumCovers", c("dlcm_TempPath") + "\\0_log", c("dlcm_TempPath") + "\\0_archive", c("dlcm_TempPath") + "0_data"
+    , c("dlcm_TempPath") + "\\0_temp", c("dlcm_TempPath") + "\\0_to_import");
+            if (res != DialogResult.No && res != DialogResult.Yes)
+                return;
+
+
             if (ConfigRepository.Instance()["dlcm_Configurations"] != "") ChanginProfile = true;
 
             //SAve template folder as sometimes it gets corrupted
@@ -308,6 +286,9 @@ namespace RocksmithToolkitGUI.DLCManager
                     ShowConnectivityError(ex, "");
                 }
             }
+            txt_DBFolder.Text = c("dlcm_DBFolder");
+            txt_TempPath.Text = c("dlcm_TempPath");
+            txt_RocksmithDLCPath.Text = c("dlcm_RocksmithDLCPath");
             if (!File.Exists(txt_DBFolder.Text))
                 chbx_DefaultDB.Checked = true;
             if (!Directory.Exists(txt_TempPath.Text)) txt_TempPath.Text = AppDomain.CurrentDomain.BaseDirectory + "DLCManager\\Temp";
@@ -317,7 +298,7 @@ namespace RocksmithToolkitGUI.DLCManager
             DateTime dtt = System.DateTime.Now;
 
             var zipFile = c("dlcm_TempPath") + "\\0_temp\\" + dtt.ToString().Replace("/", "").Replace(":", "").Substring(0, 8) + ".gz";// "C:\data\myzip.zip";
-            if (!File.Exists(zipFile) && chbx_Additional_Manipulations.GetItemChecked(4))
+            if (!File.Exists(zipFile) && GetParam(4))
             {
                 timestamp = UpdateLog(timestamp, "Create zip", true, c("dlcm_TempPath"), "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
                 cnb.Close();
@@ -332,6 +313,8 @@ namespace RocksmithToolkitGUI.DLCManager
                 catch (Exception ex) { ShowConnectivityError(ex, ""); }
             }
 
+            GenerateParamsList();
+
             SaveSettings();
 
             if (ConfigRepository.Instance()["dlcm_StartInDLCM"] == "Yes")
@@ -339,6 +322,151 @@ namespace RocksmithToolkitGUI.DLCManager
         }
 
         public const long BUFFER_SIZE = 4096;
+        public int GiveOrder(DataSet d, int n, string s)
+        {
+            for (int j = 0; j < n; j++)
+                if (d.Tables[0].Rows[j][1].ToString() == s) return j;
+            return 0;
+        }
+        public void GenerateParamsList()
+        {
+            //Get group and norder index
+            var n = 0;
+            var SearchCmd = "SELECT Type, Profile_Name, DisplayGroup FROM Groups u WHERE Type=\"Groups\" ORDER BY DisplayGroup ASC";
+            DataSet dv = new DataSet(); dv = SelectFromDB("Groups", SearchCmd, txt_DBFolder.Text, cnb);
+            if (dv.Tables.Count > 0) n = dv.Tables[0].Rows.Count;
+
+            //SELECT all Params for current Profile
+            var noOfRec = 0;
+            SearchCmd = "SELECT Type, Comments, DisplayName, DisplayGroup, DisplayPosition, Date_Added, Groups FROM Groups u WHERE Type=\"Profile\" AND Profile_Name=\"" + c("dlcm_Configurations") + "\" and Comments like \"%dlcm_AdditionalManipul%\"";
+            DataSet dsz1 = new DataSet(); dsz1 = SelectFromDB("Groups", SearchCmd, txt_DBFolder.Text, cnb);
+            if (dsz1.Tables.Count > 0) noOfRec = dsz1.Tables[0].Rows.Count;
+            //chbx_Additional_Manipulations.Items.Add("Group " + dsn.Tables[0].Rows[j][0].ToString());//add items
+
+            //clear PArams
+            chbx_Additional_Manipulations.DataSource = null;
+            for (int i = chbx_Additional_Manipulations.Items.Count - 1; i >= 0; --i)
+                chbx_Additional_Manipulations.Items.RemoveAt(i);
+
+            //AddOrderNo Group Index + order no in group
+            var DisplayGroup = "";
+            for (int j = 0; j < noOfRec; j++)/*chbx_Additional_Manipulations.Items.Count*/
+            {
+                DisplayGroup = dsz1.Tables[0].Rows[j][3].ToString();
+                var Comments = dsz1.Tables[0].Rows[j][4].ToString();//.Replace("dlcm_AdditionalManipul", "");
+                if (Comments.Length == 1) Comments = "0" + Comments;
+                dsz1.Tables[0].Rows[j][5] = GiveOrder(dv, n, DisplayGroup) + Comments;
+            }
+
+            //OrderList of Params based on Group order and then Item in the group order
+            var tmp = "";
+            //for (int j = 0; j < n; j++)/*chbx_Additional_Manipulations.Items.Count*/
+            //{
+            //    var grp = dv.Tables[0].Rows[j][0].ToString();
+            //if (grp == dsz1.Tables[0].Rows[l][3].ToString())
+            for (int l = 0; l < noOfRec; l++)
+                for (int m = l + 1; m < noOfRec; m++)
+                {
+                    if (dsz1.Tables[0].Rows[l][1].ToString() == "dlcm_AdditionalManipul89" || dsz1.Tables[0].Rows[m][1].ToString() == "dlcm_AdditionalManipul89")
+                        ;
+                    if (dsz1.Tables[0].Rows[m][5].ToString().ToInt32() < dsz1.Tables[0].Rows[l][5].ToString().ToInt32())
+                    {
+                        tmp = dsz1.Tables[0].Rows[l][0].ToString(); dsz1.Tables[0].Rows[l][0] = dsz1.Tables[0].Rows[m][0].ToString(); dsz1.Tables[0].Rows[m][0] = tmp;
+                        tmp = dsz1.Tables[0].Rows[l][1].ToString(); dsz1.Tables[0].Rows[l][1] = dsz1.Tables[0].Rows[m][1].ToString(); dsz1.Tables[0].Rows[m][1] = tmp;
+                        tmp = dsz1.Tables[0].Rows[l][2].ToString(); dsz1.Tables[0].Rows[l][2] = dsz1.Tables[0].Rows[m][2].ToString(); dsz1.Tables[0].Rows[m][2] = tmp;
+                        tmp = dsz1.Tables[0].Rows[l][3].ToString(); dsz1.Tables[0].Rows[l][3] = dsz1.Tables[0].Rows[m][3].ToString(); dsz1.Tables[0].Rows[m][3] = tmp;
+                        tmp = dsz1.Tables[0].Rows[l][4].ToString(); dsz1.Tables[0].Rows[l][4] = dsz1.Tables[0].Rows[m][4].ToString(); dsz1.Tables[0].Rows[m][4] = tmp;
+                        tmp = dsz1.Tables[0].Rows[l][5].ToString(); dsz1.Tables[0].Rows[l][5] = dsz1.Tables[0].Rows[m][5].ToString(); dsz1.Tables[0].Rows[m][5] = tmp;
+                        tmp = dsz1.Tables[0].Rows[l][6].ToString(); dsz1.Tables[0].Rows[l][6] = dsz1.Tables[0].Rows[m][6].ToString(); dsz1.Tables[0].Rows[m][6] = tmp;
+                    }
+                }
+            //}
+
+            //add items
+            DisplayGroup = "";
+            var z = 0;
+            for (int k = 0; k < noOfRec; k++)
+            {
+                var Type = dsz1.Tables[0].Rows[k][0].ToString();
+                var Comments = dsz1.Tables[0].Rows[k][1].ToString();
+
+                var DisplayName = dsz1.Tables[0].Rows[k][2].ToString();
+                if (DisplayName == "") continue;
+                if (DisplayGroup != dsz1.Tables[0].Rows[k][3].ToString())
+                {
+                    chbx_Additional_Manipulations.Items.Add(dsz1.Tables[0].Rows[k][3].ToString());
+                    chbx_Additional_Manipulations.SetItemCheckState(z, CheckState.Indeterminate);
+                    z++; /*break;*/
+                }
+                DisplayGroup = dsz1.Tables[0].Rows[k][3].ToString();
+                var DisplayPosition = dsz1.Tables[0].Rows[k][4].ToString();
+                //var DAte_Adde_NoOfOrder = dsz1.Tables[0].Rows[k][5].ToString();
+                var Groups = dsz1.Tables[0].Rows[k][6].ToString();
+                chbx_Additional_Manipulations.Items.Add(("Yes" == ConfigRepository.Instance()["dlcm_Debug"] ? DisplayPosition + ". " : "")
+                    + DisplayName + " {" + Comments.Replace("dlcm_AdditionalManipul", "") + "}");
+                chbx_Additional_Manipulations.SetItemCheckState(z, Groups.ToLower() == "no" ? CheckState.Unchecked : CheckState.Checked);
+                z++;
+            }
+            //    found = false;
+            //    for (var k = 0; k < noOfRecs; k++)
+            //    {
+            //        if (chbx_AllGroups.GetItemChecked(j) && grp.Tables[0].Rows[k].ItemArray[1].ToString() == chbx_AllGroups.Items[j].ToString())
+            //        {
+            //            grpsel += "," + grp.Tables[0].Rows[k].ItemArray[2].ToString() + ",";
+            //            found = true;
+            //            break;
+            //        }
+            //        if (!chbx_AllGroups.GetItemChecked(j) && grp.Tables[0].Rows[k].ItemArray[1].ToString() == chbx_AllGroups.Items[j].ToString())
+            //            grpdel += "," + grp.Tables[0].Rows[k].ItemArray[2].ToString() + ",";
+            //    }
+
+            //    if (!found && chbx_AllGroups.GetItemChecked(j))
+            //    {
+            //        var insertcmdd = "CDLC_ID, Groups, Type, Date_Added";
+            //        var insertvalues = "\"" + txt_ID.Text + "\", \"" + chbx_AllGroups.Items[j].ToString() + "\", \"DLC\", \"" + DateTime.Now.ToString("yyyyMMdd HHmmssfff") + "\"";
+            //        InsertIntoDBwValues("Groups", insertcmdd, insertvalues, cnb, 0);
+            //    }
+
+        }
+        public void RefreshSelectedStat(string db, string txt, string extrasplit)
+        {
+            if (File.Exists(txt_DBFolder.Text) && !nostatrefresh)
+            {
+                timestamp = UpdateLog(timestamp, "Start generating stats...", true, txt_TempPath.Text, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+
+                //Find out All songs
+                var SearchCmd = "SELECT ID FROM Main u ";
+                DataSet dsz1 = new DataSet(); dsz1 = SelectFromDB(db, SearchCmd, txt_DBFolder.Text, cnb);
+                var noOfRec = 0;
+                if (dsz1.Tables.Count > 0) noOfRec = dsz1.Tables[0].Rows.Count;
+
+                timestamp = UpdateLog(timestamp, "End select all...", true, txt_TempPath.Text, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+                var noOfSelRec = noOfRec;
+                if (txt != "" && txt != null)
+                {
+                    SearchCmd = "SELECT ID FROM " + db + " u " + " WHERE " + txt + ";";
+                    DataSet dsz2 = new DataSet(); dsz2 = SelectFromDB(db, SearchCmd, txt_DBFolder.Text, cnb);
+                    noOfSelRec = 0;
+                    if (dsz2.Tables.Count > 0) noOfSelRec = dsz2.Tables[0].Rows.Count;
+
+                    timestamp = UpdateLog(timestamp, "End selecting selected...", true, txt_TempPath.Text, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+                }
+
+                var noOfSelRec3 = -1;
+                if (extrasplit != "" && extrasplit != null)
+                {
+                    SearchCmd = "SELECT ID FROM Main u " + " WHERE " + extrasplit + ";";
+                    DataSet dsz3 = new DataSet(); dsz3 = SelectFromDB(db, SearchCmd, txt_DBFolder.Text, cnb);
+
+
+                    timestamp = UpdateLog(timestamp, "End selecting extra", true, txt_TempPath.Text, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+
+                    if (dsz3.Tables.Count > 0) noOfSelRec3 = dsz3.Tables[0].Rows.Count;
+                    else noOfSelRec3 = 0;
+                }
+                lbl_NoRec2.Text = noOfSelRec3 < 0 ? noOfSelRec.ToString() + "/" + noOfRec.ToString() + " records." : (noOfSelRec3.ToString() + "/") + noOfSelRec.ToString() + "/" + noOfRec.ToString() + " records.";
+            }
+        }
         public static void AddFileToZip(string zipFilename, string fileToAdd)
         {
             //think of adding a copy to archive if file read only ()e.g. when repssing save
@@ -430,9 +558,11 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_TempPath.Text = ConfigRepository.Instance()["dlcm_TempPath"];
             if (ChanginProfile)
                 for (int k = chbx_Configurations.Items.Count - 1; k >= 0; --k)
-                {
-                    if (chbx_Configurations.Items[k].ToString() == ConfigRepository.Instance()["dlcm_Configurations"]) chbx_Configurations.SelectedIndex = k;
-                }
+                    if (chbx_Configurations.Items[k].ToString() == ConfigRepository.Instance()["dlcm_Configurations"])
+                    {
+                        chbx_Configurations.SelectedIndex = k; break;
+                    }
+
             //chbx_Configurations.se = ConfigRepository.Instance()["dlcm_Configurations"];
             txt_Title.Text = ConfigRepository.Instance()["dlcm_Title"];
             txt_Title_Sort.Text = ConfigRepository.Instance()["dlcm_Title_Sort"];
@@ -473,210 +603,408 @@ namespace RocksmithToolkitGUI.DLCManager
             cbx_Activ_File_Name.Checked = (ConfigRepository.Instance()["dlcm_Activ_FileName"] == "Yes") ? true : false;
             cbx_Activ_Lyric_Info.Checked = (ConfigRepository.Instance()["dlcm_Activ_LyricInfo"] == "Yes") ? true : false;
             //cbx_Groups.Text = ConfigRepository.Instance()["dlcm_Groups"];
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul0"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(0, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(0, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul1"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(1, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(1, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul2"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(2, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(2, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul3"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(3, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(3, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul4"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(4, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(4, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul5"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(5, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(5, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul6"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(6, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(6, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul7"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(7, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(7, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul8"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(8, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(8, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul9"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(8, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(9, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul10"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(10, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(10, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul11"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(11, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(11, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul12"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(12, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(12, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul13"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(13, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(13, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul14"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(14, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(14, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul15"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(15, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(15, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul16"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(16, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(16, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul17"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(17, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(17, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul18"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(18, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(18, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul19"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(19, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(19, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul20"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(20, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(20, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul21"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(21, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(21, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul22"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(22, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(22, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul23"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(23, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(23, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul24"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(24, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(24, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul25"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(25, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(25, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul26"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(26, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(26, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul27"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(27, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(27, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul28"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(28, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(28, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul29"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(29, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(29, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul30"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(30, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(3, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul30"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(31, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(31, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul32"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(32, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(32, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul33"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(33, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(33, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul34"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(34, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(34, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul35"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(35, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(35, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul36"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(36, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(36, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul37"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(37, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(37, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul38"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(38, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(38, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul39"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(39, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(39, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul40"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(40, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(40, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul41"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(41, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(41, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul42"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(42, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(42, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul43"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(43, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(43, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul44"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(44, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(44, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul45"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(45, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(45, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul46"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(46, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(46, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul47"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(47, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(47, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul48"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(48, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(48, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul49"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(49, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(49, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul50"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(50, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(50, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul51"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(51, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(51, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul52"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(52, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(52, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul53"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(53, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(53, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul54"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(54, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(54, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul55"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(55, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(55, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul56"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(56, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(56, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul57"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(57, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(57, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul58"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(58, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(58, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul59"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(59, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(59, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul60"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(60, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(60, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul61"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(61, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(61, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul62"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(62, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(62, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul63"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(63, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(63, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul64"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(64, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(64, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul65"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(65, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(65, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul66"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(66, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(66, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul67"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(67, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(67, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul68"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(68, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(68, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul69"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(69, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(69, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul70"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(70, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(70, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul71"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(71, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(71, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul72"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(72, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(72, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul73"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(73, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(73, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul74"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(74, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(74, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul75"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(75, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(75, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul76"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(76, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(76, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul77"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(77, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(77, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul78"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(78, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(78, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul79"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(79, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(79, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul80"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(80, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(80, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul81"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(81, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(81, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul82"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(82, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(82, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul83"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(83, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(83, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul84"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(84, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(84, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul85"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(85, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(85, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul86"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(86, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(86, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul87"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(87, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(87, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul88"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(88, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(88, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul89"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(89, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(89, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul90"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(90, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(90, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul91"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(91, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(91, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul92"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(92, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(92, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul93"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(93, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(93, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul94"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(94, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(94, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul95"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(95, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(95, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul96"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(96, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(96, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul97"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(97, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(97, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul98"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(98, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(98, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul99"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(99, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(99, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul100"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(100, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(100, CheckState.Unchecked);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul101"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(101, CheckState.Checked);
-            else chbx_Additional_Manipulations.SetItemCheckState(101, CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul0"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(0), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(0), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul1"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(1), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(1), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul2"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(2), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(2), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul3"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(3), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(3), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul4"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(4), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(4), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul5"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(5), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(5), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul6"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(6), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(6), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul7"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(7), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(7), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul8"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(8), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(8), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul9"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(8), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(9), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul10"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(10), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(10), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul11"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(11), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(11), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul12"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(12), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(12), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul13"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(13), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(13), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul14"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(14), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(14), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul15"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(15), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(15), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul16"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(16), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(16), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul17"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(17), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(17), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul18"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(18), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(18), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul19"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(19), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(19), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul20"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(20), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(20), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul21"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(21), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(21), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul22"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(22), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(22), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul23"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(23), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(23), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul24"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(24), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(24), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul25"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(25), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(25), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul26"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(26), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(26), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul27"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(27), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(27), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul28"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(28), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(28), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul29"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(29), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(29), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul30"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(30), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(3), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul30"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(31), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(31), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul32"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(32), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(32), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul33"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(33), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(33), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul34"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(34), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(34), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul35"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(35), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(35), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul36"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(36), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(36), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul37"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(37), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(37), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul38"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(38), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(38), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul39"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(39), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(39), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul40"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(40), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(40), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul41"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(41), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(41), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul42"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(42), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(42), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul43"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(43), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(43), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul44"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(44), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(44), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul45"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(45), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(45), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul46"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(46), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(46), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul47"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(47), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(47), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul48"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(48), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(48), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul49"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(49), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(49), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul50"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(50), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(50), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul51"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(51), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(51), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul52"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(52), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(52), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul53"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(53), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(53), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul54"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(54), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(54), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul55"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(55), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(55), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul56"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(56), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(56), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul57"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(57), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(57), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul58"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(58), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(58), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul59"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(59), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(59), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul60"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(60), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(60), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul61"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(61), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(61), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul62"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(62), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(62), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul63"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(63), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(63), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul64"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(64), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(64), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul65"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(65), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(65), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul66"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(66), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(66), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul67"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(67), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(67), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul68"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(68), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(68), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul69"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(69), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(69), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul70"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(70), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(70), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul71"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(71), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(71), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul72"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(72), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(72), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul73"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(73), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(73), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul74"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(74), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(74), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul75"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(75), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(75), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul76"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(76), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(76), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul77"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(77), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(77), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul78"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(78), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(78), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul79"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(79), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(79), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul80"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(80), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(80), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul81"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(81), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(81), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul82"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(82), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(82), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul83"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(83), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(83), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul84"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(84), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(84), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul85"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(85), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(85), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul86"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(86), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(86), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul87"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(87), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(87), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul88"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(88), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(88), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul89"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(89), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(89), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul90"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(90), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(90), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul91"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(91), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(91), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul92"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(92), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(92), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul93"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(93), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(93), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul94"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(94), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(94), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul95"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(95), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(95), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul96"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(96), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(96), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul97"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(97), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(97), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul98"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(98), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(98), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul99"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(99), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(99), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul100"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(100), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(100), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul101"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(101), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(101), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul102"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(102), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(102), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul103"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(103), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(103), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul104"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(104), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(104), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul105"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(105), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(105), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul106"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(106), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(106), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul107"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(107), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(107), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul108"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(108), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(108), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul109"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(109), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(109), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul110"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(110), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(110), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul111"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(111), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(111), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul112"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(112), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(112), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul113"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(113), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(113), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul114"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(114), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(114), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul115"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(115), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(115), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul116"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(116), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(116), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul117"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(117), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(117), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul118"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(118), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(118), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul119"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(119), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(119), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul120"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(120), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(120), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul121"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(121), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(121), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul122"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(122), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(122), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul123"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(123), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(123), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul124"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(124), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(124), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul125"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(125), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(125), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul126"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(126), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(126), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul127"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(127), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(127), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul128"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(128), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(128), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul129"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(129), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(129), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul130"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(130), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(130), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul131"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(131), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(131), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul132"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(132), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(132), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul133"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(133), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(133), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul134"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(134), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(134), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul135"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(135), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(135), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul136"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(136), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(136), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul137"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(137), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(137), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul138"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(138), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(138), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul139"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(139), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(139), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul140"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(140), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(140), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul141"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(141), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(141), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul142"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(142), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(142), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul143"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(143), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(143), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul144"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(144), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(144), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul145"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(145), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(145), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul146"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(146), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(146), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul147"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(147), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(147), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul148"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(148), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(148), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul149"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(149), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(149), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul150"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(150), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(150), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul151"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(151), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(151), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul152"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(152), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(152), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul153"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(153), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(153), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul154"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(154), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(154), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul155"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(155), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(155), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul156"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(156), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(156), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul157"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(157), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(157), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul158"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(158), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(158), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul159"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(159), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(159), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul160"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(160), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(160), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul161"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(161), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(161), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul162"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(162), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(162), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul163"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(163), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(163), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul164"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(164), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(164), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul165"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(165), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(165), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul166"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(166), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(166), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul167"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(167), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(167), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul168"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(168), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(168), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul169"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(169), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(169), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul170"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(170), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(170), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul171"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(171), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(171), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul172"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(172), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(172), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul173"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(173), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(173), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul174"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(174), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(174), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul175"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(175), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(175), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul176"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(176), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(176), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul177"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(177), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(177), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul178"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(178), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(178), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul179"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(179), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(179), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul180"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(180), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(180), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul181"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(181), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(181), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul182"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(182), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(182), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul183"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(183), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(183), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul184"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(184), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(184), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul185"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(185), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(185), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul186"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(186), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(186), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul187"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(187), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(187), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul188"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(188), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(188), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul189"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(189), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(189), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul190"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(190), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(190), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul191"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(191), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(191), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul192"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(192), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(192), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul193"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(193), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(193), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul194"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(194), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(194), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul195"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(195), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(195), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul196"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(196), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(196), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul197"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(197), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(197), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul198"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(198), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(198), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul199"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(199), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(199), CheckState.Unchecked);
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul200"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(200), CheckState.Checked);
+            else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(200), CheckState.Unchecked);
 
             //a = ConfigRepository.Instance()["dlcm_DBFolder"];
             txt_DBFolder.Text = ConfigRepository.Instance()["dlcm_DBFolder"];//Make sure we change this at end as this will save
@@ -737,6 +1065,8 @@ namespace RocksmithToolkitGUI.DLCManager
                 chbx_Rebuild.Visible = true;
                 chbx_Additional_Manipulations.Visible = true;
                 rtxt_StatisticsOnReadDLCs.Visible = true;
+                txt_FilterParams.Visible = true;
+                btn_FilterParams.Visible = true;
 
                 chbx_PS4.Visible = true;
                 chbx_iOS.Visible = true;
@@ -798,6 +1128,8 @@ namespace RocksmithToolkitGUI.DLCManager
                 chbx_PS4.Visible = false;
                 chbx_iOS.Visible = false;
                 rtxt_StatisticsOnReadDLCs.Visible = false;
+                txt_FilterParams.Visible = false;
+                btn_FilterParams.Visible = false;
 
                 chbx_CleanTemp.Visible = false;
                 chbx_DefaultDB.Visible = false;
@@ -893,108 +1225,118 @@ namespace RocksmithToolkitGUI.DLCManager
             ConfigRepository.Instance()["dlcm_Groups"] = cbx_Groups.Text;
             ConfigRepository.Instance()["dlcm_Split4Pack"] = txt_NoOfSplits.Text;
             ConfigRepository.Instance()["dlcm_Grouping"] = rbtn_Population_All.Checked ? "All" : (rbtn_Population_Groups.Checked ? "Groups" : (rbtn_Population_Selected.Checked ? "Selected" : (rbtn_Population_PackNO.Checked ? "Split" : "")));
-            ConfigRepository.Instance()["dlcm_AdditionalManipul0"] = chbx_Additional_Manipulations.GetItemChecked(0) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul1"] = chbx_Additional_Manipulations.GetItemChecked(1) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul2"] = chbx_Additional_Manipulations.GetItemChecked(2) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul3"] = chbx_Additional_Manipulations.GetItemChecked(3) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul4"] = chbx_Additional_Manipulations.GetItemChecked(4) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul5"] = chbx_Additional_Manipulations.GetItemChecked(5) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul6"] = chbx_Additional_Manipulations.GetItemChecked(6) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul7"] = chbx_Additional_Manipulations.GetItemChecked(7) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul8"] = chbx_Additional_Manipulations.GetItemChecked(8) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul9"] = chbx_Additional_Manipulations.GetItemChecked(9) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul10"] = chbx_Additional_Manipulations.GetItemChecked(10) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul11"] = chbx_Additional_Manipulations.GetItemChecked(11) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul12"] = chbx_Additional_Manipulations.GetItemChecked(12) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul13"] = chbx_Additional_Manipulations.GetItemChecked(13) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul14"] = chbx_Additional_Manipulations.GetItemChecked(14) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul15"] = chbx_Additional_Manipulations.GetItemChecked(15) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul16"] = chbx_Additional_Manipulations.GetItemChecked(16) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul17"] = chbx_Additional_Manipulations.GetItemChecked(17) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul18"] = chbx_Additional_Manipulations.GetItemChecked(18) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul19"] = chbx_Additional_Manipulations.GetItemChecked(19) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul20"] = chbx_Additional_Manipulations.GetItemChecked(20) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul21"] = chbx_Additional_Manipulations.GetItemChecked(21) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul22"] = chbx_Additional_Manipulations.GetItemChecked(22) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul23"] = chbx_Additional_Manipulations.GetItemChecked(23) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul24"] = chbx_Additional_Manipulations.GetItemChecked(24) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul25"] = chbx_Additional_Manipulations.GetItemChecked(25) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul26"] = chbx_Additional_Manipulations.GetItemChecked(26) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul27"] = chbx_Additional_Manipulations.GetItemChecked(27) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul28"] = chbx_Additional_Manipulations.GetItemChecked(28) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul29"] = chbx_Additional_Manipulations.GetItemChecked(29) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul30"] = chbx_Additional_Manipulations.GetItemChecked(30) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul31"] = chbx_Additional_Manipulations.GetItemChecked(31) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul32"] = chbx_Additional_Manipulations.GetItemChecked(32) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul33"] = chbx_Additional_Manipulations.GetItemChecked(33) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul34"] = chbx_Additional_Manipulations.GetItemChecked(34) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul35"] = chbx_Additional_Manipulations.GetItemChecked(35) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul36"] = chbx_Additional_Manipulations.GetItemChecked(36) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul37"] = chbx_Additional_Manipulations.GetItemChecked(37) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul38"] = chbx_Additional_Manipulations.GetItemChecked(38) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul39"] = chbx_Additional_Manipulations.GetItemChecked(39) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul40"] = chbx_Additional_Manipulations.GetItemChecked(40) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul41"] = chbx_Additional_Manipulations.GetItemChecked(41) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul42"] = chbx_Additional_Manipulations.GetItemChecked(42) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul43"] = chbx_Additional_Manipulations.GetItemChecked(43) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul44"] = chbx_Additional_Manipulations.GetItemChecked(44) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul45"] = chbx_Additional_Manipulations.GetItemChecked(45) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul46"] = chbx_Additional_Manipulations.GetItemChecked(46) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul47"] = chbx_Additional_Manipulations.GetItemChecked(47) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul48"] = chbx_Additional_Manipulations.GetItemChecked(48) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul49"] = chbx_Additional_Manipulations.GetItemChecked(49) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul50"] = chbx_Additional_Manipulations.GetItemChecked(50) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul51"] = chbx_Additional_Manipulations.GetItemChecked(51) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul52"] = chbx_Additional_Manipulations.GetItemChecked(52) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul53"] = chbx_Additional_Manipulations.GetItemChecked(53) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul54"] = chbx_Additional_Manipulations.GetItemChecked(54) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul55"] = chbx_Additional_Manipulations.GetItemChecked(55) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul56"] = chbx_Additional_Manipulations.GetItemChecked(56) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul57"] = chbx_Additional_Manipulations.GetItemChecked(57) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul58"] = chbx_Additional_Manipulations.GetItemChecked(58) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul59"] = chbx_Additional_Manipulations.GetItemChecked(59) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul60"] = chbx_Additional_Manipulations.GetItemChecked(60) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul61"] = chbx_Additional_Manipulations.GetItemChecked(61) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul62"] = chbx_Additional_Manipulations.GetItemChecked(62) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul63"] = chbx_Additional_Manipulations.GetItemChecked(63) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul64"] = chbx_Additional_Manipulations.GetItemChecked(64) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul65"] = chbx_Additional_Manipulations.GetItemChecked(65) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul66"] = chbx_Additional_Manipulations.GetItemChecked(66) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul67"] = chbx_Additional_Manipulations.GetItemChecked(67) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul68"] = chbx_Additional_Manipulations.GetItemChecked(68) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul69"] = chbx_Additional_Manipulations.GetItemChecked(69) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul70"] = chbx_Additional_Manipulations.GetItemChecked(70) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul71"] = chbx_Additional_Manipulations.GetItemChecked(71) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul72"] = chbx_Additional_Manipulations.GetItemChecked(72) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul73"] = chbx_Additional_Manipulations.GetItemChecked(73) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul74"] = chbx_Additional_Manipulations.GetItemChecked(74) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul75"] = chbx_Additional_Manipulations.GetItemChecked(75) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul76"] = chbx_Additional_Manipulations.GetItemChecked(76) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul77"] = chbx_Additional_Manipulations.GetItemChecked(77) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul78"] = chbx_Additional_Manipulations.GetItemChecked(78) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul79"] = chbx_Additional_Manipulations.GetItemChecked(79) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul80"] = chbx_Additional_Manipulations.GetItemChecked(80) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul81"] = chbx_Additional_Manipulations.GetItemChecked(81) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul82"] = chbx_Additional_Manipulations.GetItemChecked(82) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul83"] = chbx_Additional_Manipulations.GetItemChecked(83) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul84"] = chbx_Additional_Manipulations.GetItemChecked(84) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul85"] = chbx_Additional_Manipulations.GetItemChecked(85) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul86"] = chbx_Additional_Manipulations.GetItemChecked(86) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul87"] = chbx_Additional_Manipulations.GetItemChecked(87) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul88"] = chbx_Additional_Manipulations.GetItemChecked(88) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul89"] = chbx_Additional_Manipulations.GetItemChecked(89) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul90"] = chbx_Additional_Manipulations.GetItemChecked(90) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul91"] = chbx_Additional_Manipulations.GetItemChecked(91) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul92"] = chbx_Additional_Manipulations.GetItemChecked(92) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul93"] = chbx_Additional_Manipulations.GetItemChecked(93) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul94"] = chbx_Additional_Manipulations.GetItemChecked(94) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul95"] = chbx_Additional_Manipulations.GetItemChecked(95) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul96"] = chbx_Additional_Manipulations.GetItemChecked(96) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul97"] = chbx_Additional_Manipulations.GetItemChecked(97) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul98"] = chbx_Additional_Manipulations.GetItemChecked(98) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul99"] = chbx_Additional_Manipulations.GetItemChecked(99) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul100"] = chbx_Additional_Manipulations.GetItemChecked(100) ? "Yes" : "No";
-            ConfigRepository.Instance()["dlcm_AdditionalManipul101"] = chbx_Additional_Manipulations.GetItemChecked(101) ? "Yes" : "No";
+
+            for (int j = 0; j < chbx_Additional_Manipulations.Items.Count; j++)
+            {
+                string orderno = chbx_Additional_Manipulations.Items[j].ToString();
+                if (orderno.IndexOf("{") <= 0 || orderno.IndexOf("}") <= 0) continue;
+                else orderno = orderno.Substring(orderno.IndexOf("{") + 1, orderno.IndexOf("}") - orderno.IndexOf("{") - 1);
+                if (orderno == "89")
+                    ;
+                ConfigRepository.Instance()["dlcm_AdditionalManipul" + orderno] = chbx_Additional_Manipulations.GetItemChecked(j) ? "Yes" : "No";/*GetParam(j)*/
+            }
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul0"] = GetParam(0) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul1"] = GetParam(1) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul2"] = GetParam(2) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul3"] = GetParam(3) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul4"] = GetParam(4) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul5"] = GetParam(5) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul6"] = GetParam(6) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul7"] = GetParam(7) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul8"] = GetParam(8) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul9"] = GetParam(9) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul10"] = GetParam(10) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul11"] = GetParam(11) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul12"] = GetParam(12) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul13"] = GetParam(13) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul14"] = GetParam(14) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul15"] = GetParam(15) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul16"] = GetParam(16) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul17"] = GetParam(17) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul18"] = GetParam(18) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul19"] = GetParam(19) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul20"] = GetParam(20) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul21"] = GetParam(21) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul22"] = GetParam(22) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul23"] = GetParam(23) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul24"] = GetParam(24) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul25"] = GetParam(25) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul26"] = GetParam(26) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul27"] = GetParam(27) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul28"] = GetParam(28) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul29"] = GetParam(29) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul30"] = GetParam(30) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul31"] = GetParam(31) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul32"] = GetParam(32) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul33"] = GetParam(33) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul34"] = GetParam(34) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul35"] = GetParam(35) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul36"] = GetParam(36) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul37"] = GetParam(37) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul38"] = GetParam(38) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul39"] = GetParam(39) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul40"] = GetParam(40) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul41"] = GetParam(41) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul42"] = GetParam(42) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul43"] = GetParam(43) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul44"] = GetParam(44) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul45"] = GetParam(45) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul46"] = GetParam(46) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul47"] = GetParam(47) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul48"] = GetParam(48) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul49"] = GetParam(49) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul50"] = GetParam(50) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul51"] = GetParam(51) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul52"] = GetParam(52) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul53"] = GetParam(53) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul54"] = GetParam(54) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul55"] = GetParam(55) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul56"] = GetParam(56) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul57"] = GetParam(57) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul58"] = GetParam(58) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul59"] = GetParam(59) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul60"] = GetParam(60) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul61"] = GetParam(61) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul62"] = GetParam(62) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul63"] = GetParam(63) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul64"] = GetParam(64) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul65"] = GetParam(65) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul66"] = GetParam(66) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul67"] = GetParam(67) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul68"] = GetParam(68) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul69"] = GetParam(69) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul70"] = GetParam(70) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul71"] = GetParam(71) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul72"] = GetParam(72) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul73"] = GetParam(73) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul74"] = GetParam(74) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul75"] = GetParam(75) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul76"] = GetParam(76) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul77"] = GetParam(77) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul78"] = GetParam(78) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul79"] = GetParam(79) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul80"] = GetParam(80) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul81"] = GetParam(81) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul82"] = GetParam(82) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul83"] = GetParam(83) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul84"] = GetParam(84) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul85"] = GetParam(85) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul86"] = GetParam(86) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul87"] = GetParam(87) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul88"] = GetParam(88) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul89"] = GetParam(89) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul90"] = GetParam(90) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul91"] = GetParam(91) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul92"] = GetParam(92) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul93"] = GetParam(93) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul94"] = GetParam(94) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul95"] = GetParam(95) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul96"] = GetParam(96) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul97"] = GetParam(97) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul98"] = GetParam(98) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul99"] = GetParam(99) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul100"] = GetParam(100) ? "Yes" : "No";
+            //ConfigRepository.Instance()["dlcm_AdditionalManipul101"] = GetParam(101) ? "Yes" : "No";
 
             //Save Profiles
             if (chbx_Configurations.SelectedIndex >= 0)
@@ -1015,6 +1357,8 @@ namespace RocksmithToolkitGUI.DLCManager
                         for (int j = 0; j < norecs; j++)
                             if (c(dsg.Tables[0].Rows[j].ItemArray[0].ToString()) != dsg.Tables[0].Rows[j].ItemArray[1].ToString())
                             {
+                                if (dsg.Tables[0].Rows[j].ItemArray[1].ToString() == "dlcm_AdditionalManipul89")
+                                    ;
                                 cmd = "UPDATE Groups SET Groups=\"" + c(dsg.Tables[0].Rows[j].ItemArray[0].ToString()) + "\" WHERE ID=" + dsg.Tables[0].Rows[j].ItemArray[2].ToString() + " " +
                                     "AND Type=\"Profile\"  AND Profile_Name=\"" + chbx_Configurations.Text + "\"";/*AND Comments=\"" + c(dss.Tables[0].Rows[j][0].ToString()) + "\"*/
                                 UpdateDB("Groups", cmd, cnb); rt++; //AltMet
@@ -1166,9 +1510,9 @@ namespace RocksmithToolkitGUI.DLCManager
             else if (rbtn_Population_PackNO.Checked)
             {
                 cmd += " WHERE Split4Pack='" + txt_NoOfSplits.Text + "'";
-                chbx_Additional_Manipulations.SetItemChecked(89, true);
+                chbx_Additional_Manipulations.SetItemChecked(GetParamLocation(89), true);
             }
-            else chbx_Additional_Manipulations.SetItemChecked(89, false);
+            else chbx_Additional_Manipulations.SetItemChecked(GetParamLocation(89), false);
             cmd += " ORDER BY Artist,Album_Year,Album,Track_No,ID;";
 
             DataSet dt;
@@ -1529,6 +1873,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btn_Cleanup_MainDB_Click(object sender, EventArgs e)
         {
+
             SaveSettings();
             string cmd = "SELECT * FROM Main ";
             if (rbtn_Population_Selected.Checked == true) cmd += "WHERE Selected = \"Yes\"";
@@ -1567,7 +1912,7 @@ namespace RocksmithToolkitGUI.DLCManager
             var DB_Path = (chbx_DefaultDB.Checked == true ? MyAppWD + "\\..\\AccessDB.accdb;" : txt_DBFolder.Text);
 
             var TempPath = txt_TempPath.Text;
-            DeleteRecords(ids, cmd, DB_Path, TempPath, norows.ToString(), hash, cnb);
+            DeleteRecords(ids, cmd, DB_Path, TempPath, norows.ToString(), hash, cnb, pB_ReadDLCs);
             SetImportNo();
         }
 
@@ -1614,7 +1959,7 @@ namespace RocksmithToolkitGUI.DLCManager
             DialogResult result2 = DialogResult.No;
 
             //Clean Temp Folder
-            if (chbx_CleanTemp.Checked && !chbx_Additional_Manipulations.GetItemChecked(38)) //39.Use only unpacked songs already in the 0 / dlcpacks folder
+            if (chbx_CleanTemp.Checked && !GetParam(38)) //39.Use only unpacked songs already in the 0 / dlcpacks folder
             {
                 result1 = MessageBox.Show("Are you sure you want to DELETE (to Recycle BIN) the following folders:\n\n"
                     + txt_TempPath.Text + "\n0\\0_old\n0\\0_duplicate\n0\\0_repacked\n0\\0_broken\n" + log_Path +
@@ -1776,14 +2121,14 @@ namespace RocksmithToolkitGUI.DLCManager
             var invalid = "No";
             string[] filez = new string[30000];
             var viles = "";
-            if (!chbx_Additional_Manipulations.GetItemChecked(38)) //39. Use only unpacked songs already in the 0/0_Import folder folder
+            if (!GetParam(38)) //39. Use only unpacked songs already in the 0/0_Import folder folder
             {
                 //GetDirList and calcualte hash for the IMPORTED file
                 var searchPattern = new Regex(
                         @"(psarc|xbox)",
                         RegexOptions.IgnoreCase);
-                if (chbx_Additional_Manipulations.GetItemChecked(37)) //38. Import other formats but PC, as well(separately of course)
-                                                                      //filez = System.IO.Directory.GetFiles(pathDLC, "*.psarc*");
+                if (GetParam(37)) //38. Import other formats but PC, as well(separately of course)
+                                  //filez = System.IO.Directory.GetFiles(pathDLC, "*.psarc*");
                 {
                     var files = Directory.EnumerateFiles(pathDLC)
                     .Where(f => searchPattern.IsMatch(f))
@@ -1927,7 +2272,7 @@ namespace RocksmithToolkitGUI.DLCManager
             var m = 0;
             //Remove werid files (smaller than 3ook, no consistent extension)
             var noOfRecs = 0; var frt = ""; var cmd = ""; var k = 0; var dt = "";
-            if (!chbx_Additional_Manipulations.GetItemChecked(67) && !chbx_Additional_Manipulations.GetItemChecked(79)) //68. Import duplicates(hash) //69. Delete obvious duplicates (hash) during dupli assesment
+            if (GetParam(11)) /*&& !GetParam(79)*/
             {
                 DataSet dry = new DataSet(); cmd = "SELECT ID, FullPath, FileName, FileSize FROM Import;";
                 dry = SelectFromDB("Import", cmd, txt_DBFolder.Text, cnb);
@@ -1955,7 +2300,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
                         if (not_r8)
                         {
-                            fnn = CopyMoveFileSafely(fnn, Archive_Path + "\\" + frt, chbx_Additional_Manipulations.GetItemChecked(75), dry.Tables[0].Rows[k].ItemArray[2].ToString(), false);
+                            fnn = CopyMoveFileSafely(fnn, Archive_Path + "\\" + frt, GetParam(75), dry.Tables[0].Rows[k].ItemArray[2].ToString(), false);
                             IDs = dry.Tables[0].Rows[k].ItemArray[0].ToString() + ";";
                             Weridfiles++; WeridfilesName += "\n" + frt;
                         }
@@ -1968,9 +2313,9 @@ namespace RocksmithToolkitGUI.DLCManager
                 tst = "end check&/delete same " + k + "hash from Import...Import_AuditTrail" + noOfRecs + dt; timestamp = UpdateLog(timestamp, tst, true, Temp_Path_Import, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
             }
 
-            //Remove duplicate DLCs from this Import?
+            //Remove HASH duplicate DLCs from this Import?
             noOfRecs = 0; frt = ""; cmd = ""; dt = "";
-            if (!chbx_Additional_Manipulations.GetItemChecked(67) && !chbx_Additional_Manipulations.GetItemChecked(79)) //68. Import duplicates(hash) //69. Delete obvious duplicates (hash) during dupli assesment
+            if (!GetParam(67) && (!GetParam(79) || GetParam(68)))
             {
                 DataSet dry = new DataSet(); cmd = "SELECT FullPath, FileName, FileHash, FullPath as CopyPath, \"" + broken_Path_Import + "\\\" as PackPath, ImportDate as PackDate, FileSize," +
                 " \"\" as CDLC_ID, \"\" as DLC_Name, Platform,\"Invalides\" as Reason" + " FROM Import" +
@@ -1986,7 +2331,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         fnn = dry.Tables[0].Rows[k].ItemArray[0].ToString();
                         frt = dry.Tables[0].Rows[k].ItemArray[1].ToString();
                         dt += "\n" + dry.Tables[0].Rows[k].ItemArray[0].ToString(); pB_ReadDLCs.Increment(1);
-                        fnn = CopyMoveFileSafely(fnn, Archive_Path + "\\" + frt, chbx_Additional_Manipulations.GetItemChecked(75),
+                        fnn = CopyMoveFileSafely(fnn, Archive_Path + "\\" + frt, GetParam(75),
                             dry.Tables[0].Rows[k].ItemArray[2].ToString(), false);
                         importhashdupli++; importhashduplinames = "\n" + frt;
                     }
@@ -1997,9 +2342,9 @@ namespace RocksmithToolkitGUI.DLCManager
                 tst = "end check&/delete same " + k + "hash from Import...Import_AuditTrail" + noOfRecs + dt; timestamp = UpdateLog(timestamp, tst, true, Temp_Path_Import, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
             }
 
-            //REmove duplicates from the import source/location
+            //REmove HASH duplicates from the import source/location
             noOfRecs = 0;
-            if (!chbx_Additional_Manipulations.GetItemChecked(67) && !chbx_Additional_Manipulations.GetItemChecked(79)) //68. Import duplicates(hash)
+            if (!GetParam(67) && (!GetParam(79) || GetParam(68)))
             {
                 DataSet drh = new DataSet(); cmd = "SELECT FullPath, FileName, FileHash, FullPath as CopyPath, \"" + broken_Path_Import + "\\\" as PackPath, ImportDate as PackDate, FileSize," +
                 " \"\" as CDLC_ID, \"\" as DLC_Name, Platform,\"Invalides\" as Reason" + " FROM Import" +
@@ -2016,7 +2361,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         trt += "\n" + drh.Tables[0].Rows[i].ItemArray[0].ToString(); pB_ReadDLCs.Increment(1);
 
                         CopyMoveFileSafely(drh.Tables[0].Rows[i].ItemArray[0].ToString(), txt_TempPath.Text + "\\0_archive\\" + drh.Tables[0].Rows[i].ItemArray[1].ToString()
-                            , chbx_Additional_Manipulations.GetItemChecked(75), drh.Tables[0].Rows[i].ItemArray[2].ToString(), false);
+                            , GetParam(75), drh.Tables[0].Rows[i].ItemArray[2].ToString(), false);
                         existhashdupli++; existhashduplinames += "\n" + drh.Tables[0].Rows[i].ItemArray[1].ToString();
                     }
 
@@ -2029,7 +2374,7 @@ namespace RocksmithToolkitGUI.DLCManager
                   "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
             }
 
-            //REmove invalides from the import source/location
+            //REmove invalids from the import source/location
             noOfRecs = 0;
             DataSet dzh = new DataSet(); cmd = "SELECT FullPath, FileName, FileHash, FullPath as CopyPath, \"" + broken_Path_Import + "\\\" as PackPath, ImportDate as PackDate, FileSize," +
                 " \"\" as CDLC_ID, \"\" as DLC_Name, Platform,\"Invalides\" as Reason" + " FROM Import WHERE Invalid=\"Yes\"";
@@ -2046,7 +2391,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     trt += "\n" + dzh.Tables[0].Rows[j].ItemArray[0].ToString(); pB_ReadDLCs.Increment(1);
 
                     CopyMoveFileSafely(dzh.Tables[0].Rows[j].ItemArray[0].ToString(), broken_Path_Import + "\\" + dzh.Tables[0].Rows[j].ItemArray[1].ToString()
-                        , chbx_Additional_Manipulations.GetItemChecked(75), dzh.Tables[0].Rows[j].ItemArray[2].ToString(), false);
+                        , GetParam(75), dzh.Tables[0].Rows[j].ItemArray[2].ToString(), false);
                     invalids++; invalidsnames += "\n" + dzh.Tables[0].Rows[j].ItemArray[1].ToString();
                 }
                 //Add to pack_audittrail duplicates from Current Import
@@ -2070,7 +2415,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
             var tft = "";
             var pack = GetMax("Pack_AuditTrail", "Pack", cnb);
-            if (chbx_Additional_Manipulations.GetItemChecked(29) && noOfRec > 0 && !chbx_Additional_Manipulations.GetItemChecked(67) && !chbx_Additional_Manipulations.GetItemChecked(79)) //30. When importing delete identical duplicates(same hash/filesize)
+            if (noOfRec > 0 && (!GetParam(67) && (!GetParam(79) || GetParam(68)))) //GetParam(29) && 30. When importing delete identical duplicates(same hash/filesize)!GetParam(67) && 
             {
                 tft = "";
                 for (m = 0; m < noOfRec; m++)
@@ -2079,19 +2424,18 @@ namespace RocksmithToolkitGUI.DLCManager
 
                     var newf = dns.Tables[0].Rows[m].ItemArray[0].ToString().Replace(pathDLC, Archive_Path);
                     tst = newf + "\n" + dns.Tables[0].Rows[m].ItemArray[0].ToString(); timestamp = UpdateLog(timestamp, tst, true, Temp_Path_Import, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
-                    if (chbx_Additional_Manipulations.GetItemChecked(29)) //&& !File.Exists(newf) //As the new file might have a different name e.g. (1) ....etc.
-                    {
-                        frt += "\n" + dns.Tables[0].Rows[m].ItemArray[0].ToString(); pB_ReadDLCs.Increment(1);
-                        CopyMoveFileSafely(dns.Tables[0].Rows[m].ItemArray[0].ToString(), newf, chbx_Additional_Manipulations.GetItemChecked(75)
-                            , dns.Tables[0].Rows[m].ItemArray[3].ToString(), false);
-                        importhashdupli2++; importhashdupli2names += "\n" + dns.Tables[0].Rows[m].ItemArray[2].ToString();
-                    }
+                    //if (GetParam(29)) //&& !File.Exists(newf) //As the new file might have a different name e.g. (1) ....etc.
+                    //{
+                    frt += "\n" + dns.Tables[0].Rows[m].ItemArray[0].ToString(); pB_ReadDLCs.Increment(1);
+                    CopyMoveFileSafely(dns.Tables[0].Rows[m].ItemArray[0].ToString(), newf, GetParam(75)
+                        , dns.Tables[0].Rows[m].ItemArray[3].ToString(), false);
+                    importhashdupli2++; importhashdupli2names += "\n" + dns.Tables[0].Rows[m].ItemArray[2].ToString();
+                    //}
                     tft += "\n Deleting " + dns.Tables[0].Rows[m].ItemArray[0].ToString() + " as imported on " + dns.Tables[0].Rows[m].ItemArray[5].ToString();
-
                 }
                 //Add to pack_audittrail duplicates from Current Import
                 var insertcmd = "CopyPath, PackPath, FileName, PackDate, FileHash, FileSize, CDLC_ID, DLC_Name, Platform, Reason, Pack";
-                InsertIntoDBwValues("Pack_AuditTrail", insertcmd, cmd + ",\"" + pack+ "\"", cnb, 0);
+                InsertIntoDBwValues("Pack_AuditTrail", insertcmd, cmd + ",\"" + pack + "\"", cnb, 0);
                 //Delete Duplicates from Current Import
                 DeleteFromDB("Import", "DELETE * FROM Import WHERE ID IN (SELECT ID FROM (" + cmd + "));", cnb);
                 tst = frt; timestamp = UpdateLog(timestamp, tst, true, Temp_Path_Import, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
@@ -2140,12 +2484,12 @@ namespace RocksmithToolkitGUI.DLCManager
                             timestamp = UpdateLog(timestamp, tst + " " + FullPath, true, Temp_Path_Import, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
 
                             errr = false;
-                            //    if (!chbx_Additional_Manipulations.GetItemChecked(37))
+                            //    if (!GetParam(37))
                             //    //if (!FullPath.IsValidPSARC())
                             //    {
                             //        //MessageBox.Show(String.Format("File '{0}' isn't valid. File extension was changed to '.invalid'", Path.GetFileName(FullPath)), MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
                             //        var Pathh = broken_Path_Import + "\\" + ds.Tables[0].Rows[i].ItemArray[2].ToString();
-                            //            if (chbx_Additional_Manipulations.GetItemChecked(30))
+                            //            if (GetParam(30))
                             //            {
                             //                File.Copy(FullPath.Replace(".psarc", ".invalid"), Pathh, true);
                             //                DeleteFile(FullPath.Replace(".psarc", ".invalid"));
@@ -2163,7 +2507,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             if (j == 1)
                                 unpackedDir = dupliSongs[1, i];
                             else
-                            if (!chbx_Additional_Manipulations.GetItemChecked(38)) //39. Use only unpacked songs already in the 0/dlcpacks folder
+                            if (!GetParam(38)) //39. Use only unpacked songs already in the 0/dlcpacks folder
                             {
                                 var wwisePath = "";
                                 if (!string.IsNullOrEmpty(ConfigRepository.Instance()["general_wwisepath"]))
@@ -2181,7 +2525,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                 {
                                     // UNPACK
                                     tst = stats + " start unpacking..." + Path.GetFileName(FullPath); timestamp = UpdateLog(timestamp, tst, true, Temp_Path_Import, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
-                                    if (chbx_Additional_Manipulations.GetItemChecked(51))
+                                    if (GetParam(51))
                                         unpackedDir = Packer.Unpack(FullPath, Temp_Path_Import, SourcePlatform, true, true);
                                     else
                                         unpackedDir = Packer.Unpack(FullPath, Temp_Path_Import, SourcePlatform, true, false);
@@ -2198,8 +2542,8 @@ namespace RocksmithToolkitGUI.DLCManager
                                     timestamp = UpdateLog(timestamp, ex.Message + "problem at unpacking" + FullPath + "---" + Temp_Path_Import, true, Temp_Path_Import, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
                                     errr = false;
                                     var Pathh = broken_Path_Import + "\\" + ds.Tables[0].Rows[i].ItemArray[2].ToString();
-                                    if (chbx_Additional_Manipulations.GetItemChecked(30))
-                                        CopyMoveFileSafely(FullPath, Pathh, chbx_Additional_Manipulations.GetItemChecked(75), ds.Tables[0].Rows[i].ItemArray[3].ToString(), false);
+                                    if (GetParam(30))
+                                        CopyMoveFileSafely(FullPath, Pathh, GetParam(75), ds.Tables[0].Rows[i].ItemArray[3].ToString(), false);
                                     invalids3++; invalids3names += "\n" + ds.Tables[0].Rows[i].ItemArray[2].ToString();
                                     UpdatePackingLog("LogImportingError", DB_Path, packid, "0", Pathh.Replace("'", "") + tst, cnb);
                                     var tsst = "Error ..." + ex; timestamp = UpdateLog(timestamp, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
@@ -2215,7 +2559,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             // REORGANIZE
                             //System.Threading.Thread.Sleep(1000);
                             var platform = FullPath.GetPlatform();
-                            if (chbx_Additional_Manipulations.GetItemChecked(36) && !errr) //37. Keep the Uncompressed Songs superorganized    
+                            if (GetParam(36) && !errr) //37. Keep the Uncompressed Songs superorganized    
                             {
                                 try
                                 {
@@ -2259,8 +2603,8 @@ namespace RocksmithToolkitGUI.DLCManager
                                     catch (Exception ee)
                                     {
                                         var Pathh = broken_Path_Import + "\\" + ds.Tables[0].Rows[i].ItemArray[2].ToString();
-                                        if (chbx_Additional_Manipulations.GetItemChecked(30))
-                                            CopyMoveFileSafely(FullPath, Pathh, chbx_Additional_Manipulations.GetItemChecked(75),
+                                        if (GetParam(30))
+                                            CopyMoveFileSafely(FullPath, Pathh, GetParam(75),
                                                 ds.Tables[0].Rows[i].ItemArray[3].ToString(), false);
                                         UpdatePackingLog("LogImportingError", DB_Path, packid, "0", Pathh.Replace("'", "") + tst, cnb);
 
@@ -2282,7 +2626,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             //Get Duplication assessment and its reason
                             string[] retunc = imported_status.Split(';');
                             var i_status = retunc[0]; var dupli_assesment_reason = ""; var dupli_assesment = ""; var CDLC_Name = "";
-                            if (retunc.Count() == 2 ) CDLC_Name = retunc[1];
+                            if (retunc.Count() == 2) CDLC_Name = retunc[1];
                             if (retunc.Count() == 3) dupli_assesment = retunc[2];
                             if (retunc.Count() == 4) dupli_assesment_reason = retunc[3];
                             if (retunc.Count() == 5) stopp = retunc[4] == "yes" ? true : false;
@@ -2319,7 +2663,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                 {
                                     //Generating the HASH code
                                     var FileHash = ""; var fpath = "";
-                                    if (chbx_Additional_Manipulations.GetItemChecked(15) || chbx_Additional_Manipulations.GetItemChecked(75)) fpath = FullPath.Replace(txt_RocksmithDLCPath.Text, old_Path_Import);
+                                    if (GetParam(15) || GetParam(75)) fpath = FullPath.Replace(txt_RocksmithDLCPath.Text, old_Path_Import);
                                     else fpath = FullPath;
 
                                     FileHash = GetHash(fpath);
@@ -2340,9 +2684,9 @@ namespace RocksmithToolkitGUI.DLCManager
                                         + ds.Tables[0].Rows[i].ItemArray[8].ToString() + ", \"" + ds.Tables[0].Rows[i].ItemArray[6].ToString() + "\")";
                                     InsertIntoDBwValues("Pack_AuditTrail", insertcmdA, insertA, cnb, mutit);
 
-                                    if (chbx_Additional_Manipulations.GetItemChecked(75))
+                                    if (GetParam(75))
                                     {
-                                        insertA = insertA.Substring(0, insertA.Length - ds.Tables[0].Rows[i].ItemArray[6].ToString().Length+1)+pack + "\")";
+                                        insertA = insertA.Substring(0, insertA.Length - ds.Tables[0].Rows[i].ItemArray[6].ToString().Length + 1) + pack + "\")";
                                         insertA = insertA.Replace(old_Path_Import, txt_RocksmithDLCPath.Text);
                                         InsertIntoDBwValues("Pack_AuditTrail", insertcmdA, insertA, cnb, mutit);
                                     }
@@ -2356,13 +2700,13 @@ namespace RocksmithToolkitGUI.DLCManager
             var endI = DateTime.Now.ToString("yyyyMMdd HHmmssfff"); ;
             timestamp = UpdateLog(timestamp, "Ended import" + endI, true, Temp_Path_Import, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
 
-            if (chbx_Additional_Manipulations.GetItemChecked(78))
+            if (GetParam(78))
             {
                 MainDB.FixAudioAll_Click(netstatus, cnb, AppWD, pB_ReadDLCs, rtxt_StatisticsOnReadDLCs, false, "SELECT * FROM Main ", "penisuri", "DLCManager", timestamp);
             }
 
             //Cleanup
-            if (chbx_Additional_Manipulations.GetItemChecked(24)) //25. Use translation tables for naming standardization
+            if (GetParam(24)) //25. Use translation tables for naming standardization
             {
                 tst = "Applying Standardizations";
                 GenericFunctions.Translation_And_Correction((chbx_DefaultDB.Checked == true ? MyAppWD : txt_DBFolder.Text), pB_ReadDLCs, cnb, rtxt_StatisticsOnReadDLCs);
@@ -2376,9 +2720,9 @@ namespace RocksmithToolkitGUI.DLCManager
             //Show Intro database window
             cnb.Close();
             MainDB frm = new MainDB(cnb, true);
-            if (chbx_Additional_Manipulations.GetItemChecked(77)) frm.Show();
+            if (GetParam(77)) frm.Show();
             var endT = DateTime.Now.ToString("yyyyMMdd HHmmssfff");
-            if (chbx_Additional_Manipulations.GetItemChecked(42)) //43. Save import Log
+            if (GetParam(42)) //43. Save import Log
             {
                 // Write the string to a file.
                 var fn = (log_Path == null || log_Path == "" ? Log_PSPath : log_Path) + "\\" + GetTimestamps(DateTime.Now).Replace(":", "_") + ".txt";
@@ -2438,7 +2782,7 @@ namespace RocksmithToolkitGUI.DLCManager
             var dupli_assesment = "Insert";
             var dupli_assesment_reason = "new";
             bool stopp = false;
-            infoorig=null;
+            infoorig = null;
             DLCPackageData info = null;
             bitrateorig = 0;
             SampleRateorig = 0;
@@ -2464,8 +2808,8 @@ namespace RocksmithToolkitGUI.DLCManager
                 {
                     timestamp = UpdateLog(timestamp, "Error" + ee.Message + " Broken Song Not Imported", true, Temp_Path_Import, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
                     var Pathh = broken_Path_Import + "\\" + ds.Tables[0].Rows[i].ItemArray[2].ToString();
-                    if (chbx_Additional_Manipulations.GetItemChecked(30))
-                        CopyMoveFileSafely(FullPath, Pathh, chbx_Additional_Manipulations.GetItemChecked(75), ds.Tables[0].Rows[i].ItemArray[3].ToString(), false);
+                    if (GetParam(30))
+                        CopyMoveFileSafely(FullPath, Pathh, GetParam(75), ds.Tables[0].Rows[i].ItemArray[3].ToString(), false);
                     return "0";
                 }
                 infoorig = info;
@@ -2483,7 +2827,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 info.SongInfo.SongDisplayNameSort = CleanTitle(info.SongInfo.SongDisplayNameSort);
                 info.SongInfo.Album = CleanTitle(info.SongInfo.Album);
                 string ff = info.SongInfo.Artist, gg = info.SongInfo.ArtistSort, hhh = info.SongInfo.SongDisplayName, jj = info.SongInfo.SongDisplayNameSort, kk = info.SongInfo.Album;
-                if (chbx_Additional_Manipulations.GetItemChecked(35)) //36.
+                if (GetParam(35)) //36.
                 {
                     //Remove weird/illegal characters
                     info.SongInfo.Artist = info.SongInfo.Artist.Trim().TrimEnd();
@@ -2534,7 +2878,15 @@ namespace RocksmithToolkitGUI.DLCManager
                     info.SongInfo.Album = info.SongInfo.Album.Replace(";", "");
                     info.SongInfo.Album = info.SongInfo.Album.Replace("\"", "'");
                     info.SongInfo.Album = info.SongInfo.Album.Replace("  ", "");
-                    info.SongInfo.Album = info.SongInfo.Album.Replace("\u009c", "");
+                    info.SongInfo.AlbumSort = info.SongInfo.Album.Replace("\u009c", "");
+                    info.SongInfo.AlbumSort = info.SongInfo.Album.Trim().TrimEnd();
+                    info.SongInfo.AlbumSort = info.SongInfo.Album.Replace("/", "");
+                    info.SongInfo.AlbumSort = info.SongInfo.Album.Replace("?", "");
+                    info.SongInfo.AlbumSort = info.SongInfo.Album.Replace(":", "");
+                    info.SongInfo.AlbumSort = info.SongInfo.Album.Replace(";", "");
+                    info.SongInfo.AlbumSort = info.SongInfo.Album.Replace("\"", "'");
+                    info.SongInfo.AlbumSort = info.SongInfo.Album.Replace("  ", "");
+                    info.SongInfo.AlbumSort = info.SongInfo.Album.Replace("\u009c", "");
 
                     //info.AlbumArtPath = info.SongInfo.Album.Replace("/", "");
                     if (ff != info.SongInfo.Artist) timestamp = UpdateLog(timestamp, "removed potentially illegal characters \\,\",/,?,: from Artist...", true, Temp_Path_Import, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
@@ -2543,12 +2895,13 @@ namespace RocksmithToolkitGUI.DLCManager
                     if (jj != info.SongInfo.SongDisplayNameSort) timestamp = UpdateLog(timestamp, "removed potentially illegal characters \\,\",/,?,: from TitleSort...", true, Temp_Path_Import, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
                     if (kk != info.SongInfo.Album) timestamp = UpdateLog(timestamp, "removed potentially illegal characters \\,\",/,?,: from Album...", true, Temp_Path_Import, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
                 }
-                if (chbx_Additional_Manipulations.GetItemChecked(16)) //17.Import with Artist/ Title same as Artist / Title Sort
+                if (GetParam(16)) //17.Import with Artist/ Title same as Artist / Title Sort
                 {
                     info.SongInfo.ArtistSort = info.SongInfo.Artist;
                     info.SongInfo.SongDisplayNameSort = info.SongInfo.SongDisplayName;
                     info.SongInfo.AlbumSort = info.SongInfo.Album;
                 }
+
                 if (ConfigRepository.Instance()["dlcm_AdditionalManipul19"] == "Yes") //21.Pack with The/ Die only at the end of Title Sort 
                 {
                     if (info.SongInfo.SongDisplayNameSort.ToInt32() > 4 && info.SongInfo.SongDisplayNameSort.ToLower().IndexOf("the") == 0 && info.SongInfo.SongDisplayNameSort.ToLower().IndexOf("die") == 0)
@@ -2556,13 +2909,18 @@ namespace RocksmithToolkitGUI.DLCManager
                     if (info.SongInfo.ArtistSort.ToInt32() > 4 && info.SongInfo.ArtistSort.ToLower().IndexOf("the") == 0 && info.SongInfo.ArtistSort.ToLower().IndexOf("die") == 0)
                         info.SongInfo.ArtistSort = info.SongInfo.ArtistSort.Substring(4, info.SongInfo.ArtistSort.Length - 3);
                 }
-                else
-                if (chbx_Additional_Manipulations.GetItemChecked(22) && info.SongInfo.ArtistSort.Length > 4) //23. Import with the The/Die only at the end of Title Sort     
+
+                if (GetParam(22)) //23. Import with the The/Die only at the end of Title/Artist/Album Sort
                 {
-                    if (chbx_Additional_Manipulations.GetItemChecked(20) && info.SongInfo.SongDisplayNameSort.Length > 4)
-                        info.SongInfo.SongDisplayNameSort = MoveTheAtEnd(info.SongInfo.SongDisplayNameSort);
-                    info.SongInfo.ArtistSort = MoveTheAtEnd(info.SongInfo.ArtistSort);
-                    info.SongInfo.AlbumSort = MoveTheAtEnd(info.SongInfo.AlbumSort);
+                    if (info.SongInfo.SongDisplayNameSort.Length > 4) info.SongInfo.SongDisplayNameSort = MoveTheAtEnd(info.SongInfo.SongDisplayNameSort);
+                    if (info.SongInfo.ArtistSort.Length > 4) info.SongInfo.ArtistSort = MoveTheAtEnd(info.SongInfo.ArtistSort);
+                    if (info.SongInfo.AlbumSort.Length > 4) info.SongInfo.AlbumSort = MoveTheAtEnd(info.SongInfo.AlbumSort);
+                }
+                if (GetParam(20)) //23. Import with the The/Die only at the end of Title/Artist/Album   
+                {
+                    if (info.SongInfo.SongDisplayName.Length > 4) info.SongInfo.SongDisplayName = MoveTheAtEnd(info.SongInfo.SongDisplayName);
+                    if (info.SongInfo.Artist.Length > 4) info.SongInfo.Artist = MoveTheAtEnd(info.SongInfo.Artist);
+                    if (info.SongInfo.Album.Length > 4) info.SongInfo.Album = MoveTheAtEnd(info.SongInfo.Album);
                 }
 
                 timestamp = UpdateLog(timestamp, "Song " + (i + 1) + ": " + info.SongInfo.Artist + " - " + info.SongInfo.SongDisplayName, true, Temp_Path_Import, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
@@ -2641,8 +2999,8 @@ namespace RocksmithToolkitGUI.DLCManager
                     {
                         timestamp = UpdateLog(timestamp, ee.Message + " Broken Song Not Imported" + "----", true, Temp_Path_Import, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
                         var Pathh = broken_Path_Import + "\\" + ds.Tables[0].Rows[i].ItemArray[2].ToString();
-                        if (chbx_Additional_Manipulations.GetItemChecked(30))
-                            CopyMoveFileSafely(FullPath, Pathh, chbx_Additional_Manipulations.GetItemChecked(75), ds.Tables[0].Rows[i].ItemArray[3].ToString()
+                        if (GetParam(30))
+                            CopyMoveFileSafely(FullPath, Pathh, GetParam(75), ds.Tables[0].Rows[i].ItemArray[3].ToString()
                                 , false);
                         continue;
                     }
@@ -2786,13 +3144,13 @@ namespace RocksmithToolkitGUI.DLCManager
                     xmlhlist.Add(GetHash(s1));
                     cxmlhlist.Add(GetHashCleanXML(arg.SongXml.File));
 
-                    if (chbx_Additional_Manipulations.GetItemChecked(36)) //37. Keep the Uncompressed Songs superorganized                                
+                    if (GetParam(36)) //37. Keep the Uncompressed Songs superorganized                                
                         s1 = (arg.SongXml.File.Replace(".xml", ".json").Replace("\\EOF\\", "\\Toolkit\\"));
                     else
                         s1 = arg.SongXml.File.Replace(".xml", ".json").Replace("\\songs\\arr", "\\" + calc_path(Directory.GetFiles(unpackedDir, "*.json", System.IO.SearchOption.AllDirectories)[0]));
                     jsonhlist.Add(GetHash(s1));
 
-                    if (chbx_Additional_Manipulations.GetItemChecked(36)) //37. Keep the Uncompressed Songs superorganized                                
+                    if (GetParam(36)) //37. Keep the Uncompressed Songs superorganized                                
                         s1 = (arg.SongXml.File.Replace(".xml", ".sng").Replace("\\EOF\\", "\\Toolkit\\"));
                     else
                         s1 = arg.SongXml.File.Replace(".xml", ".sng").Replace("\\songs\\arr", "\\" + calc_path_sng(Directory.GetFiles(unpackedDir, "*.sng", System.IO.SearchOption.AllDirectories)[0]));
@@ -2842,10 +3200,15 @@ namespace RocksmithToolkitGUI.DLCManager
                 }
                 if (author == "" && tkversion != "") { author = ""; Has_author = "No"; }
                 else if (author != "") Has_author = "Yes";
-                if (chbx_Additional_Manipulations.GetItemChecked(57))
+                if (GetParam(57))
                 {
                     if (author == "Custom Song Creator") Has_author = "No";
-                    author = author.Replace("Custom Song Creator", "");
+                    author = author.Replace("Custom Song Creator", "").Trim();
+                }
+                else if (GetParam(47))
+                {
+                    if (author == "") Has_author = "No";
+                    author = "Custom Song Creator";
                 }
 
                 if (versionFile.Length <= 0) Is_Original = "Yes";
@@ -2888,7 +3251,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 }
                 tst = "end song details readout like version author and tk versioning..."; timestamp = UpdateLog(timestamp, tst, true, Temp_Path_Import, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
                 //Set appID
-                if (chbx_Additional_Manipulations.GetItemChecked(43)) AppIdD = ConfigRepository.Instance()["general_defaultappid_RS2014"];
+                if (GetParam(43)) AppIdD = ConfigRepository.Instance()["general_defaultappid_RS2014"];
                 else AppIdD = info.AppId;
 
                 //Set MultiTrack absed on FileName                                
@@ -2905,78 +3268,94 @@ namespace RocksmithToolkitGUI.DLCManager
                 string origFN = ds.Tables[0].Rows[i].ItemArray[2].ToString().ToLower();
                 string noMFN = info.SongInfo.SongDisplayName;
                 string Titl, gom = noMFN;
+                IsLive = ""; LiveDetails = ""; IsAcoustic = ""; IsSingle = ""; IsSoundtrack = "";
+                IsInstrumental = ""; IsEP = ""; IsUncensored = ""; IsFullAlbum = ""; IsRemastered = ""; InTheWorks = "";
 
-                var multxt = "No Guitar"; Titl = Check4MultiT(origFN, noMFN, multxt); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = "(No Guitars)"; }
-                multxt = "No Band"; Titl = Check4MultiT(origFN, noMFN, multxt); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = "(No Guitars)"; }
-                multxt = "No Band Audio"; Titl = Check4MultiT(origFN, noMFN, multxt); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = "(No Guitars)"; }
-                multxt = "Lead"; Titl = Check4MultiT(origFN, noMFN, multxt); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = "Only Lead"; }
-                multxt = "(Lead)"; Titl = Check4MultiT(origFN, noMFN, multxt); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = "No Lead"; }
-                multxt = "No Lead"; Titl = Check4MultiT(origFN, noMFN, multxt); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = multxt; }
-                multxt = "Lead Only"; Titl = Check4MultiT(origFN, noMFN, multxt); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = "Only Lead"; }
-                multxt = "Only Lead"; Titl = Check4MultiT(origFN, noMFN, multxt); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = multxt; }
-                multxt = "No Bass"; Titl = Check4MultiT(origFN, noMFN, multxt); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = multxt; }
-                multxt = "(Bass)"; Titl = Check4MultiT(origFN, noMFN, multxt); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = "No Bass"; }
-                multxt = "No Bass Audio"; Titl = Check4MultiT(origFN, noMFN, multxt); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = "No Bass"; }
-                multxt = "Bass Only"; Titl = Check4MultiT(origFN, noMFN, multxt); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = "Only Bass"; }
-                multxt = "Only Bass"; Titl = Check4MultiT(origFN, noMFN, multxt); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = multxt; }
-                multxt = "No Rhythm"; Titl = Check4MultiT(origFN, noMFN, multxt); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = multxt; }
-                multxt = "Only Rhythm"; Titl = Check4MultiT(origFN, noMFN, multxt); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = multxt; }
-                multxt = "Rhythm Only"; Titl = Check4MultiT(origFN, noMFN, multxt); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = "Only Rhythm"; }
-                multxt = "(Only BackTrack)"; Titl = Check4MultiT(origFN, noMFN, multxt); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = multxt; }
-                multxt = "backing"; Titl = Check4MultiT(origFN, noMFN, multxt); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = "(Only BackTrack)"; }
-                multxt = "backingtrack"; Titl = Check4MultiT(origFN, noMFN, multxt); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = "(Only BackTrack)"; }
-                multxt = "backtrack"; Titl = Check4MultiT(origFN, noMFN, multxt); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = "(Only BackTrack)"; }
-                multxt = "backing only"; Titl = Check4MultiT(origFN, noMFN, multxt); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = "(Only BackTrack)"; }
-                multxt = "backing audio only"; Titl = Check4MultiT(origFN, noMFN, multxt); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = "(Only BackTrack)"; }
-                multxt = "backing track"; Titl = Check4MultiT(origFN, noMFN, multxt); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = "(Only BackTrack)"; }
-                multxt = "Only Band"; Titl = Check4MultiT(origFN, noMFN, multxt); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = "(Only BackTrack)"; }
-                multxt = "No Vocal"; Titl = Check4MultiT(origFN, noMFN, multxt); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = multxt; }
-                multxt = "FullBand"; Titl = Check4MultiT(origFN, noMFN, multxt); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = ""; }
-                multxt = "(FullBand)"; Titl = Check4MultiT(origFN, noMFN, multxt); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = ""; }
+
+                var multibool = ConfigRepository.Instance()["dlcm_AdditionalManipul48"] == "Yes" ? true : false;
+                var multxt = "No Guitar"; Titl = Check4MultiT(origFN, noMFN, multxt, multibool); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = "(No Guitars)"; }
+                multxt = "No Band"; Titl = Check4MultiT(origFN, noMFN, multxt, multibool); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = "(No Guitars)"; }
+                multxt = "No Band Audio"; Titl = Check4MultiT(origFN, noMFN, multxt, multibool); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = "(No Guitars)"; }
+                multxt = "Lead"; Titl = Check4MultiT(origFN, noMFN, multxt, multibool); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = "Only Lead"; }
+                multxt = "(Lead)"; Titl = Check4MultiT(origFN, noMFN, multxt, multibool); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = "No Lead"; }
+                multxt = "No Lead"; Titl = Check4MultiT(origFN, noMFN, multxt, multibool); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = multxt; }
+                multxt = "Lead Only"; Titl = Check4MultiT(origFN, noMFN, multxt, multibool); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = "Only Lead"; }
+                multxt = "Only Lead"; Titl = Check4MultiT(origFN, noMFN, multxt, multibool); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = multxt; }
+                multxt = "No Bass"; Titl = Check4MultiT(origFN, noMFN, multxt, multibool); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = multxt; }
+                multxt = "(Bass)"; Titl = Check4MultiT(origFN, noMFN, multxt, multibool); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = "No Bass"; }
+                multxt = "No Bass Audio"; Titl = Check4MultiT(origFN, noMFN, multxt, multibool); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = "No Bass"; }
+                multxt = "Bass Only"; Titl = Check4MultiT(origFN, noMFN, multxt, multibool); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = "Only Bass"; }
+                multxt = "Only Bass"; Titl = Check4MultiT(origFN, noMFN, multxt, multibool); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = multxt; }
+                multxt = "No Rhythm"; Titl = Check4MultiT(origFN, noMFN, multxt, multibool); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = multxt; }
+                multxt = "Only Rhythm"; Titl = Check4MultiT(origFN, noMFN, multxt, multibool); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = multxt; }
+                multxt = "Rhythm Only"; Titl = Check4MultiT(origFN, noMFN, multxt, multibool); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = "Only Rhythm"; }
+                multxt = "(Only BackTrack)"; Titl = Check4MultiT(origFN, noMFN, multxt, multibool); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = multxt; }
+                multxt = "(Only Back Track)"; Titl = Check4MultiT(origFN, noMFN, multxt, multibool); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = multxt; }
+                multxt = "backingtrack"; Titl = Check4MultiT(origFN, noMFN, multxt, multibool); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = "(Only BackTrack)"; }
+                multxt = "backing track"; Titl = Check4MultiT(origFN, noMFN, multxt, multibool); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = "(Only BackTrack)"; }
+                multxt = "backing"; Titl = Check4MultiT(origFN, noMFN, multxt, multibool); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = "(Only BackTrack)"; }
+                multxt = "backtrack"; Titl = Check4MultiT(origFN, noMFN, multxt, multibool); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = "(Only BackTrack)"; }
+                multxt = "backing only"; Titl = Check4MultiT(origFN, noMFN, multxt, multibool); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = "(Only BackTrack)"; }
+                multxt = "backing audio only"; Titl = Check4MultiT(origFN, noMFN, multxt, multibool); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = "(Only BackTrack)"; }
+                multxt = "backing track"; Titl = Check4MultiT(origFN, noMFN, multxt, multibool); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = "(Only BackTrack)"; }
+                multxt = "Only Band"; Titl = Check4MultiT(origFN, noMFN, multxt, multibool); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = "(Only BackTrack)"; }
+                multxt = "No Vocal"; Titl = Check4MultiT(origFN, noMFN, multxt, multibool); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = multxt; }
+                multxt = "FullBand"; Titl = Check4MultiT(origFN, noMFN, multxt, multibool); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = ""; }
+                multxt = "(FullBand)"; Titl = Check4MultiT(origFN, noMFN, multxt, multibool); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; gom = Titl.Split(';')[0]; MultiTrack_Version = ""; }
 
                 //detect minor types
-                var IsSingle = ""; var IsSoundtrack = ""; var IsInstrumental = ""; var IsEP = ""; var IsUncensored = ""; var IsFullAlbum = "";
-                multxt = "Instrumental"; Titl = Check4MultiT(origFN, info.SongInfo.SongDisplayName, multxt); if ("Yes" == Titl.Split(';')[1]) { IsInstrumental = "Yes"; gom = Titl.Split(';')[0]; }
-                multxt = "(Single)"; Titl = Check4MultiT(origFN, info.SongInfo.SongDisplayName, multxt); if ("Yes" == Titl.Split(';')[1]) { IsSingle = "Yes"; }/*gom = Titl.Split(';')[0];*/
-                multxt = "(Single-Edit)"; Titl = Check4MultiT(origFN, info.SongInfo.SongDisplayName, multxt); if ("Yes" == Titl.Split(';')[1]) { IsSingle = "Yes"; gom = Titl.Split(';')[0]; }
-                multxt = "Single"; Titl = Check4MultiT(origFN, info.SongInfo.Album, multxt); if ("Yes" == Titl.Split(';')[1]) IsSingle = "Yes";
-                multxt = "(EP)"; Titl = Check4MultiT(origFN, info.SongInfo.Album, multxt); if ("Yes" == Titl.Split(';')[1]) IsEP = "Yes";
-                multxt = "Soundtrack"; Titl = Check4MultiT(origFN, info.SongInfo.Album, multxt); if ("Yes" == Titl.Split(';')[1]) IsSoundtrack = "Yes";
-                multxt = "Uncensored"; Titl = Check4MultiT(origFN, info.SongInfo.SongDisplayName, multxt); if ("Yes" == Titl.Split(';')[1]) IsUncensored = "Yes";
-                multxt = "FullAlbum"; Titl = Check4MultiT(origFN, info.SongInfo.SongDisplayName, multxt); if ("Yes" == Titl.Split(';')[1]) IsFullAlbum = "Yes";
-                multxt = "Full Album"; Titl = Check4MultiT(origFN, info.SongInfo.SongDisplayName, multxt); if ("Yes" == Titl.Split(';')[1]) IsFullAlbum = "Yes";
+                multibool = ConfigRepository.Instance()["dlcm_AdditionalManipul104"] == "Yes" ? true : false;
+                multxt = "Instrumental"; Titl = Check4MultiT(origFN, info.SongInfo.SongDisplayName, multxt, multibool); if ("Yes" == Titl.Split(';')[1]) { IsInstrumental = "Yes"; gom = Titl.Split(';')[0]; }
+                multxt = "(Single)"; Titl = Check4MultiT(origFN, info.SongInfo.SongDisplayName, multxt, multibool); if ("Yes" == Titl.Split(';')[1]) { IsSingle = "Yes"; }/*gom = Titl.Split(';')[0];*/
+                multxt = "(Single)"; Titl = Check4MultiT(origFN, info.SongInfo.Album, multxt, multibool); if ("Yes" == Titl.Split(';')[1]) { IsSingle = "Yes"; }
+                multxt = "(Single-Edit)"; Titl = Check4MultiT(origFN, info.SongInfo.SongDisplayName, multxt, multibool); if ("Yes" == Titl.Split(';')[1]) { IsSingle = "Yes"; gom = Titl.Split(';')[0]; }
+                multxt = "Single"; Titl = Check4MultiT(origFN, info.SongInfo.Album, multxt, multibool); if ("Yes" == Titl.Split(';')[1]) IsSingle = "Yes";
+                multxt = "(EP)"; Titl = Check4MultiT(origFN, info.SongInfo.SongDisplayName, multxt, multibool); if ("Yes" == Titl.Split(';')[1]) IsEP = "Yes";
+                multxt = "(EP)"; Titl = Check4MultiT(origFN, info.SongInfo.Album, multxt, multibool); if ("Yes" == Titl.Split(';')[1]) IsEP = "Yes";
+                multxt = "Soundtrack"; Titl = Check4MultiT(origFN, info.SongInfo.Album, multxt, multibool); if ("Yes" == Titl.Split(';')[1]) IsSoundtrack = "Yes";
+                multxt = "Uncensored"; Titl = Check4MultiT(origFN, info.SongInfo.SongDisplayName, multxt, multibool); if ("Yes" == Titl.Split(';')[1]) IsUncensored = "Yes";
+                multxt = "FullAlbum"; Titl = Check4MultiT(origFN, info.SongInfo.SongDisplayName, multxt, multibool); if ("Yes" == Titl.Split(';')[1]) IsFullAlbum = "Yes";
+                multxt = "Full Album"; Titl = Check4MultiT(origFN, info.SongInfo.SongDisplayName, multxt, multibool); if ("Yes" == Titl.Split(';')[1]) IsFullAlbum = "Yes";
+                multxt = "Remastered"; Titl = Check4MultiT(origFN, info.SongInfo.SongDisplayName, multxt, multibool); if ("Yes" == Titl.Split(';')[1]) IsRemastered = "Yes";
+                multxt = "Remastered"; Titl = Check4MultiT(origFN, info.SongInfo.Album, multxt, multibool); if ("Yes" == Titl.Split(';')[1]) IsRemastered = "Yes";
+
+                //Set In the works if Author/Your name can be found somewhere
+                if (info.SongInfo.SongDisplayName.IndexOf(c("general_defaultauthor")) >= 0
+                    || info.ToolkitInfo.PackageAuthor.IndexOf(c("general_defaultauthor")) >= 0 ||
+                    info.Name.IndexOf(c("general_defaultauthor")) >= 0) InTheWorks = "Yes";
 
                 //Detect Live
-                var IsLive = "";
-                var LiveDetails = "";
-                multxt = "(Live)"; Titl = Check4MultiT(origFN, info.SongInfo.SongDisplayName, multxt);
+                multxt = "(Live)"; Titl = Check4MultiT(origFN, info.SongInfo.SongDisplayName, multxt, multibool);
                 if ("Yes" == Titl.Split(';')[1] && Titl.Split(';')[0].Length > 6)
                 { IsLive = "Yes"; gom = Titl.Split(';')[0].TrimEnd().TrimStart().Replace(" ()", ""); LiveDetails += gom.IndexOf(multxt) <= gom.Length - 4 ? "" : gom.Replace(gom.Substring(0, info.SongInfo.SongDisplayName.IndexOf(multxt) + 4), ""); }
-                multxt = "Unplugged"; Titl = Check4MultiT(origFN, info.SongInfo.SongDisplayName, multxt);
+                multxt = "Unplugged"; Titl = Check4MultiT(origFN, info.SongInfo.SongDisplayName, multxt, multibool);
                 if ("Yes" == Titl.Split(';')[1] && Titl.Split(';')[0].Length > 6)
                 { IsLive = "Yes"; gom = Titl.Split(';')[0].TrimEnd().TrimStart().Replace(" ()", ""); LiveDetails += gom.IndexOf(multxt) <= gom.Length - 4 ? "" : gom.Replace(gom.Substring(0, info.SongInfo.SongDisplayName.IndexOf(multxt) + 4), ""); }
-                multxt = "Live"; Titl = Check4MultiT(origFN, info.SongInfo.Album, multxt);
+                multxt = "Live"; Titl = Check4MultiT(origFN, info.SongInfo.Album, multxt, multibool);
                 if ("Yes" == Titl.Split(';')[1] && Titl.Split(';')[0].Length > 6)
                 { IsLive = "Yes"; LiveDetails += gom; }
-                multxt = "Unplugged"; Titl = Check4MultiT(origFN, info.SongInfo.Album, multxt);
+                multxt = "Unplugged"; Titl = Check4MultiT(origFN, info.SongInfo.Album, multxt, multibool);
                 if ("Yes" == Titl.Split(';')[1] && Titl.Split(';')[0].Length > 6)
                 { IsLive = "Yes"; LiveDetails += gom; }
 
                 //Detect Acoustic
-                var IsAcoustic = "";
-                multxt = "Acoustic"; Titl = Check4MultiT(origFN, info.SongInfo.SongDisplayName, multxt);
+                multxt = "Acoustic"; Titl = Check4MultiT(origFN, info.SongInfo.SongDisplayName, multxt, multibool);
                 if ("Yes" == Titl.Split(';')[1] && Titl.Split(';')[0].Length > 6)
                 { IsAcoustic = "Yes"; gom = Titl.Split(';')[0].TrimEnd().TrimStart().Replace(" ()", ""); LiveDetails += gom.IndexOf(multxt) <= gom.Length - 4 ? "" : gom.Replace(gom.Substring(0, info.SongInfo.SongDisplayName.IndexOf(multxt) + 4), ""); }
 
-                //Remove MultiTrack/Live/Others Info from Title
-                if (ConfigRepository.Instance()["dlcm_AdditionalManipul48"] == "Yes") info.SongInfo.SongDisplayName = gom.TrimEnd().Replace("()", "").TrimStart(); //(Regex.Replace(noMFN, "( audio)", "", RegexOptions.IgnoreCase)).TrimEnd().TrimStart().Replace(" ()", "");
-                else info.SongInfo.SongDisplayName = Regex.Replace(Regex.Replace(Regex.Replace(Regex.Replace(Regex.Replace(Regex.Replace(Regex.Replace(Regex.Replace(Regex.Replace(
-                    info.SongInfo.SongDisplayName, "(No.)", "[No.]"), "(Backing.)", "[Backing.]"), "(Only.)", "[Only.]"),
-                    "(Live.)", "[Live.]"), "(Acoustic.)", "[Acoustic.]"), "Unplugged", "[Unplugged.]"), "Uncensored", "[Uncensored.]"), "[Instrumental.]", "Instrumental."), "(Single.)", "[Single.]");
+                //Remove Live/Others Info from Title
+                if (ConfigRepository.Instance()["dlcm_AdditionalManipul104"] == "Yes") info.SongInfo.SongDisplayName = gom.TrimEnd().Replace("()", "").TrimStart(); //(Regex.Replace(noMFN, "( audio)", "", RegexOptions.IgnoreCase)).TrimEnd().TrimStart().Replace(" ()", "");
+                else
+                {
+                    info.SongInfo.SongDisplayName = ReplaceTxt(Regex.Replace(Regex.Replace(Regex.Replace(Regex.Replace(Regex.Replace(Regex.Replace(Regex.Replace(Regex.Replace(Regex.Replace(Regex.Replace(Regex.Replace(Regex.Replace(
+                     info.SongInfo.SongDisplayName, "(No.)", "[No.]"), "(Backing.)", "[Backing.]"), "(Only.)", "[Only.]"),
+                     "(Live.)", "[Live.]"), "(Acoustic.)", "[Acoustic.]"), "Unplugged", "[Unplugged.]"), "Uncensored", "[Uncensored.]"), "[Instrumental.]", "Instrumental."), "(Single.)", "[Single.]")
+                     , "(Remastered.)", "[Remastered.]"), "(FullAlbum.)", "[FullAlbum.]"), "(Full Album.)", "[Full Album.]"), info.SongInfo.SongDisplayName, ConfigRepository.Instance()["dlcm_AdditionalManipul103"] == "Yes" ? true : false);
+                }
 
                 tst = "end multitrackcheckin..."; timestamp = UpdateLog(timestamp, tst, true, Temp_Path_Import, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
 
-                if (chbx_Additional_Manipulations.GetItemChecked(16)) //17.Import with Artist/ Title same as Artist / Title Sort
+                if (GetParam(16)) //17.Import with  Artist / Title / album Sort same as Artist/ Title / Album
                 {
                     info.SongInfo.SongDisplayNameSort = info.SongInfo.SongDisplayName;
                     info.SongInfo.ArtistSort = info.SongInfo.Artist;
@@ -2989,7 +3368,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 if (netstatus == "OK")
                 {
                     netstatus = CheckIfConnectedToSpotify().Result.ToString();
-                    if (netstatus == "OK" && chbx_Additional_Manipulations.GetItemChecked(41))
+                    if (netstatus == "OK" && GetParam(41))
                     {
                         tst = "startgetting cover spotify..."; timestamp = UpdateLog(timestamp, tst, true, Temp_Path_Import, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
                         Task<string> sptyfy = StartToGetSpotifyDetails(info.SongInfo.Artist, info.SongInfo.Album, info.SongInfo.SongDisplayName, info.SongInfo.SongYear.ToString(), "");
@@ -3097,7 +3476,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 SongRecord2 = GenericFunctions.GetRecord_s(selduo, cnb);
                 var norowsduo = SongRecord2[0].NoRec.ToInt32();
 
-                var b = 0;
+                var b = -1;
                 dupli_assesment = "";
                 IDD = "";
                 var folder_name = "";
@@ -3109,9 +3488,54 @@ namespace RocksmithToolkitGUI.DLCManager
                 var SampleRate = 0;
                 var HasOrig = "";
                 var Duplic = 0;
-                bool newold = chbx_Additional_Manipulations.GetItemChecked(32);
+                bool newold = GetParam(32);
                 Random random = new Random();
                 DLCC = info.Name;
+
+                //Sort by author, AudioHash, PreviewHash, CoverHash, LenghtHash
+                int ord = 0;
+                if (norows > 0) foreach (var fil in SongRecord)
+                    {
+                        b++;if (b >= norows) break; if (b < ord) continue;
+                        if (fil.Author != "" && fil.Author != null && fil.Author == author)
+                        {
+                            var tmp = SongRecord[b]; SongRecord[b] = SongRecord[ord]; SongRecord[ord] = tmp; ord++; }                        
+                    }
+                b = -1;
+                if (norows > 0) foreach (var fil in SongRecord)
+                    {
+                        b++;if (b >= norows) break; if (b < ord) continue;
+                        if (fil.AlbumArt_OrigHash != "" && fil.AlbumArt_OrigHash != null && fil.AlbumArt_OrigHash == art_hash)
+                        {
+                            var tmp = SongRecord[b]; SongRecord[b] = SongRecord[ord]; SongRecord[ord] = tmp; ord++; }
+                        
+                    }
+                b = -1;
+                if (norows > 0) foreach (var fil in SongRecord)
+                    {
+                        b++;if (b >= norows) break; if (b < ord) continue;
+                        if (fil.Audio_OrigHash != "" && fil.Audio_OrigHash != null && fil.Audio_OrigHash == audio_hash)
+                        {
+                            var tmp = SongRecord[b]; SongRecord[b] = SongRecord[ord]; SongRecord[ord] = tmp; ord++; }                        
+                    }
+                b = -1;
+                if (norows > 0) foreach (var fil in SongRecord)
+                    {
+                        b++;if (b >= norows) break; if (b < ord) continue;
+                        if (fil.Audio_OrigPreviewHash != "" && fil.Audio_OrigPreviewHash != null && fil.Audio_OrigPreviewHash == audioPreview_hash)
+                        {
+                            var tmp = SongRecord[b]; SongRecord[b] = SongRecord[ord]; SongRecord[ord] = tmp; ord++; }                        
+                    }
+                b = -1;
+                if (norows > 0) foreach (var fil in SongRecord)
+                    {
+                        b++;if (b >= norows) break; if (b < ord) continue;
+                        if (fil.Song_Lenght != "" && fil.Song_Lenght != null && fil.Song_Lenght == SongLenght)
+                        {
+                            var tmp = SongRecord[b]; SongRecord[b] = SongRecord[ord]; SongRecord[ord] = tmp; ord++; }                        
+                    }
+
+                b = 0;
                 if (norows > 0)
                     foreach (var file in SongRecord)
                     {
@@ -3173,13 +3597,15 @@ namespace RocksmithToolkitGUI.DLCManager
                             AllOther += cnt + ". " + fil.Original_FileName + " - " + fil.Artist + " - " + fil.Album + " - " + fil.Song_Title + " - " + fil.Author
                                 + " - " + fil.Version + "\n";
                         }
+
                         timestamp = UpdateLog(timestamp, dupli_reason, true, Temp_Path_Import, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
                         dupli_assesment = AssessConflict(file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead,
                            Vocalss, Tunings, b, norows, original_FileName, art_hash, audio_hash, audioPreview_hash,
                            xmlhlist, jsonhlist, DB_Path, clist, dlist, newold, Is_Original, altvert.ToString(), fsz, unpackedDir,
                            Is_MultiTrack, MultiTrack_Version, ds.Tables[0].Rows[i].ItemArray[7].ToString(), duplicstat, Platformm, IsLive,
                            LiveDetails, IsAcoustic, HasOrig, dupli_reason, sel, Duplic, Rebuild, versio, norowsduo, hash, j,
-                           SongLenght, AllOther, cxmlhlist, snghlist, filehash);  //else if (dupli_assesment == "")                      
+                           SongLenght, AllOther, cxmlhlist, snghlist, filehash, IsUncensored, IsEP
+                           , IsSingle, IsSoundtrack, IsFullAlbum, IsRemastered, IsInstrumental, InTheWorks);  //else if (dupli_assesment == "")                      
 
                         string[] retunc = dupli_assesment.Split(';');//Get Duplication assessment and its reason
                         dupli_assesment = retunc[0];
@@ -3203,7 +3629,6 @@ namespace RocksmithToolkitGUI.DLCManager
                         if (AlbumYear != "") info.SongInfo.SongYear = AlbumYear.ToInt32();
                         if (Album != "") info.SongInfo.Album = Album;
                         if (PackageVersion != "") info.ToolkitInfo.PackageVersion = PackageVersion;
-                        if (Description != "") description = Description;
 
                         if (dupli_assesment == "Alternate")
                         {
@@ -3236,7 +3661,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             else
                             { alt = ""; Duplic = 0; Is_Alternate = ""; }
                         }
-                        if (chbx_Additional_Manipulations.GetItemChecked(16)) //17.Import with Artist/ Title same as Artist / Title Sort
+                        if (GetParam(16)) //17.Import with Artist/ Title same as Artist / Title Sort
                         {
                             info.SongInfo.SongDisplayNameSort = info.SongInfo.SongDisplayName;
                             info.SongInfo.ArtistSort = info.SongInfo.Artist;
@@ -3295,11 +3720,11 @@ namespace RocksmithToolkitGUI.DLCManager
                         + ds.Tables[0].Rows[i].ItemArray[3] + "\", \"" + ds.Tables[0].Rows[i].ItemArray[4] + "\", " + IDD + ", \"" + DLCC + "\", \"" + Platformm + "\", \"" + Is_Original + "\", \"" + dupli_assesment_reason + "\"" + ", \"" + ds.Tables[0].Rows[i].ItemArray[6] + "\"";
                     var dfn = txt_RocksmithDLCPath.Text + "\\" + original_FileName;
                     //Move file New file to duplicates Ignore is select
-                    if (dupli_assesment == "Ignore" && chbx_Additional_Manipulations.GetItemChecked(29))//30. When NOT importing a duplicate Move it to _duplicate
+                    if (dupli_assesment == "Ignore" && GetParam(29))//30. When NOT importing a duplicate Move it to _duplicate
                     {
                         Available_Duplicate = "Yes";
                         dfn = CopyMoveFileSafely(dfn, dupli_Path_Import + "\\" + original_FileName,
-                            chbx_Additional_Manipulations.GetItemChecked(75), ds.Tables[0].Rows[i].ItemArray[3].ToString(), false);
+                            GetParam(75), ds.Tables[0].Rows[i].ItemArray[3].ToString(), false);
                         insertA = "\"" + txt_RocksmithDLCPath.Text + "\\" + original_FileName + "\", \"" + dupli_Path_Import + "\", \"" + Path.GetFileName(dfn) + "\", \""
                             + ds.Tables[0].Rows[i].ItemArray[5] + "\", \"" + ds.Tables[0].Rows[i].ItemArray[3] + "\", \"" + ds.Tables[0].Rows[i].ItemArray[4]
                             + "\", " + IDD + ", \"" + DLCC + "\", \"" + Platformm + "\", \"" + Is_Original + "\", \"" + dupli_assesment_reason + "\"" + ", \"" + ds.Tables[0].Rows[i].ItemArray[6] + "\"";
@@ -3315,7 +3740,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         InsertIntoDBwValues("Pack_AuditTrail", insertcmdA, insertA, cnb, mutit);
                         string filePath = unpackedDir;
                         if (Directory.Exists(unpackedDir)) DeleteDirectory(filePath);
-                        if (chbx_Additional_Manipulations.GetItemChecked(75))
+                        if (GetParam(75))
                         {
                             insertA = insertA.Replace(dupli_Path_Import, txt_RocksmithDLCPath.Text);
                             InsertIntoDBwValues("Pack_AuditTrail", insertcmdA, insertA, cnb, mutit);
@@ -3323,7 +3748,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     }
 
                     //Move file Original file to duplicates if Main DB record is being overitten
-                    if (dupli_assesment == "Update" && chbx_Additional_Manipulations.GetItemChecked(29))//30. When NOT importing a duplicate Move it to _duplicate
+                    if (dupli_assesment == "Update" && GetParam(29))//30. When NOT importing a duplicate Move it to _duplicate
                     {
                         DataSet dzr = new DataSet(); dzr = SelectFromDB("Main", "SELECT Original_FileName, Available_Old FROM Main WHERE ID=" + IDD + ";", txt_DBFolder.Text, cnb);
                         var Original_FileName = dzr.Tables[0].Rows[0].ItemArray[0].ToString();
@@ -3331,13 +3756,13 @@ namespace RocksmithToolkitGUI.DLCManager
                         var fnn = Original_FileName;
 
                         CopyMoveFileSafely(txt_TempPath.Text + "\\0_old\\" + Original_FileName, txt_TempPath.Text + "\\0_duplicate\\" + fnn
-                            , chbx_Additional_Manipulations.GetItemChecked(75), ds.Tables[0].Rows[i].ItemArray[3].ToString(), false);
+                            , GetParam(75), ds.Tables[0].Rows[i].ItemArray[3].ToString(), false);
                         DeleteDirectory(folder_name);
                         if (File.Exists(txt_TempPath.Text + "\\0_old\\" + Original_FileName)) DeleteFile(txt_TempPath.Text + "\\0_old\\" + Original_FileName);
 
                         var cmdupd = "UPDATE Pack_AuditTrail Set FileName=\"" + fnn + "\", PackPath =REPLACE(PackPath,'\\0_old','\\0_duplicate') WHERE FileHash='" + oldfilehas + "' AND PackPath='" + txt_TempPath.Text + "\\0_old" + "'";
                         DataSet dus = new DataSet(); dus = UpdateDB("Pack_AuditTrail", cmdupd + ";", cnb);
-                        if (chbx_Additional_Manipulations.GetItemChecked(75))
+                        if (GetParam(75))
                         {
                             insertA = insertA.Replace(dupli_Path_Import, txt_RocksmithDLCPath.Text);
                             InsertIntoDBwValues("Pack_AuditTrail", insertcmdA, insertA, cnb, mutit);
@@ -3385,6 +3810,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                 SampleRate = vorbis.SampleRate;
                                 SampleRateorig = SampleRate;
                                 duration = vorbis.TotalTime.ToString();
+                                if (vorbis.TotalTime.TotalSeconds > 780) IsFullAlbum = "Yes";
                             }
                     }
 
@@ -3404,21 +3830,21 @@ namespace RocksmithToolkitGUI.DLCManager
                         command.CommandText += "File_Size = @param6, ";
                         command.CommandText += "Import_Date = @param7, ";
                         command.CommandText += "Folder_Name = @param8, ";
-                        if (chbx_Additional_Manipulations.GetItemChecked(60)) command.CommandText += "Song_Title = @param9, ";
-                        if (chbx_Additional_Manipulations.GetItemChecked(60)) command.CommandText += "Song_Title_Sort = @param10, ";
-                        if (chbx_Additional_Manipulations.GetItemChecked(60)) command.CommandText += "Album = @param11, ";
-                        if (chbx_Additional_Manipulations.GetItemChecked(60)) command.CommandText += "Artist = @param12, ";
-                        if (chbx_Additional_Manipulations.GetItemChecked(60)) command.CommandText += "Artist_Sort = @param13, ";
-                        if (chbx_Additional_Manipulations.GetItemChecked(61)) command.CommandText += "Album_Year = @param14, ";
+                        if (GetParam(60)) command.CommandText += "Song_Title = @param9, ";
+                        if (GetParam(60)) command.CommandText += "Song_Title_Sort = @param10, ";
+                        if (GetParam(60)) command.CommandText += "Album = @param11, ";
+                        if (GetParam(60)) command.CommandText += "Artist = @param12, ";
+                        if (GetParam(60)) command.CommandText += "Artist_Sort = @param13, ";
+                        if (GetParam(61)) command.CommandText += "Album_Year = @param14, ";
                         command.CommandText += "Version = @param15, ";
                         command.CommandText += "AverageTempo = @param16, ";
                         command.CommandText += "Volume = @param17, ";
                         command.CommandText += "Preview_Volume = @param18, ";
-                        if (chbx_Additional_Manipulations.GetItemChecked(60)) command.CommandText += "DLC_Name = @param19, ";
+                        if (GetParam(60)) command.CommandText += "DLC_Name = @param19, ";
                         command.CommandText += "DLC_AppID = @param20, ";
-                        if (chbx_Additional_Manipulations.GetItemChecked(61)) command.CommandText += "AlbumArtPath = @param21, ";
+                        if (GetParam(61)) command.CommandText += "AlbumArtPath = @param21, ";
                         command.CommandText += "AudioPath = @param22, ";
-                        if (chbx_Additional_Manipulations.GetItemChecked(60)) command.CommandText += "audioPreviewPath = @param23, ";
+                        if (GetParam(60)) command.CommandText += "audioPreviewPath = @param23, ";
                         command.CommandText += "Has_Bass = @param24, ";
                         command.CommandText += "Has_Guitar = @param25, ";
                         command.CommandText += "Has_Lead = @param26, ";
@@ -3426,32 +3852,32 @@ namespace RocksmithToolkitGUI.DLCManager
                         command.CommandText += "Has_Combo = @param28, ";
                         command.CommandText += "Has_Vocals = @param29, ";
                         command.CommandText += "Has_Sections = @param30, ";
-                        if (chbx_Additional_Manipulations.GetItemChecked(61)) command.CommandText += "Has_Cover = @param31, ";
-                        if (chbx_Additional_Manipulations.GetItemChecked(60)) command.CommandText += "Has_Preview = @param32, ";
+                        if (GetParam(61)) command.CommandText += "Has_Cover = @param31, ";
+                        if (GetParam(60)) command.CommandText += "Has_Preview = @param32, ";
                         command.CommandText += "Has_Custom_Tone = @param33, ";
                         command.CommandText += "Has_DD = @param34, ";
                         command.CommandText += "Has_Version = @param35, ";
-                        if (chbx_Additional_Manipulations.GetItemChecked(60)) command.CommandText += "Has_Author = @param36, ";
+                        if (GetParam(60)) command.CommandText += "Has_Author = @param36, ";
                         command.CommandText += "Tunning = @param37, ";
                         command.CommandText += "Bass_Picking = @param38, ";
                         command.CommandText += "DLC = @param39, ";
                         command.CommandText += "SignatureType = @param40, ";
-                        if (chbx_Additional_Manipulations.GetItemChecked(60)) command.CommandText += "Author = @param41, ";
+                        if (GetParam(60)) command.CommandText += "Author = @param41, ";
                         command.CommandText += "ToolkitVersion = @param42, ";
                         command.CommandText += "Is_Original = @param43, ";
                         command.CommandText += "Is_Alternate = @param44, ";
                         command.CommandText += "Alternate_Version_No = @param45, ";
-                        if (chbx_Additional_Manipulations.GetItemChecked(61)) command.CommandText += "AlbumArt_Hash = @param46, ";
+                        if (GetParam(61)) command.CommandText += "AlbumArt_Hash = @param46, ";
                         command.CommandText += "Audio_Hash = @param47, ";
-                        if (chbx_Additional_Manipulations.GetItemChecked(60)) command.CommandText += "audioPreview_Hash = @param48, ";
+                        if (GetParam(60)) command.CommandText += "audioPreview_Hash = @param48, ";
                         command.CommandText += "Bass_Has_DD = @param49, ";
                         command.CommandText += "Has_Bonus_Arrangement = @param50, ";
                         command.CommandText += "Available_Duplicate = @param51, ";
                         command.CommandText += "Available_Old = @param52, ";
-                        if (chbx_Additional_Manipulations.GetItemChecked(60)) command.CommandText += "Description = @param53, ";
-                        if (chbx_Additional_Manipulations.GetItemChecked(60)) command.CommandText += "Comments = @param54, ";
+                        if (GetParam(60)) command.CommandText += "Description = @param53, ";
+                        if (GetParam(60)) command.CommandText += "Comments = @param54, ";
                         command.CommandText += "OggPath = @param55, ";
-                        if (chbx_Additional_Manipulations.GetItemChecked(60)) command.CommandText += "OggPreviewPath = @param56, ";
+                        if (GetParam(60)) command.CommandText += "OggPreviewPath = @param56, ";
                         command.CommandText += "Has_Track_No = @param57, ";
                         command.CommandText += "Track_No = @param58, ";
                         command.CommandText += "Platform = @param59, ";
@@ -3461,8 +3887,8 @@ namespace RocksmithToolkitGUI.DLCManager
                         command.CommandText += "CustomsForge_Link = @param63, ";
                         command.CommandText += "CustomsForge_Like = @param64, ";
                         command.CommandText += "CustomsForge_ReleaseNotes = @param65, ";
-                        if (chbx_Additional_Manipulations.GetItemChecked(60)) command.CommandText += "PreviewTime = @param66, ";
-                        if (chbx_Additional_Manipulations.GetItemChecked(60)) command.CommandText += "PreviewLenght = @param67, ";
+                        if (GetParam(60)) command.CommandText += "PreviewTime = @param66, ";
+                        if (GetParam(60)) command.CommandText += "PreviewLenght = @param67, ";
                         command.CommandText += "Pack = @param68, ";
                         command.CommandText += "Song_Lenght = @param69, ";
                         command.CommandText += "File_Creation_Date = @param70,";
@@ -3475,14 +3901,14 @@ namespace RocksmithToolkitGUI.DLCManager
                         command.CommandText += "Spotify_Song_ID = @param77, ";
                         command.CommandText += "Spotify_Artist_ID = @param78, ";
                         command.CommandText += "Spotify_Album_ID = @param79, ";
-                        command.CommandText += "Spotify_Album_URL = @param80,";
-                        command.CommandText += "Is_Broken = @param81,";
+                        command.CommandText += "Spotify_Album_URL = @param80, ";
+                        command.CommandText += "Is_Broken = @param81,  ";
                         command.CommandText += "Audio_OrigHash = @param82,";
-                        command.CommandText += "Audio_OrigPreviewHash = @param83,";
-                        command.CommandText += "AlbumArt_OrigHash = @param84,";
-                        command.CommandText += "Duplicate_Of = @param85,";
-                        command.CommandText += "Youtube_Playthrough = @param86,";
-                        command.CommandText += "Is_Single = @param87,";
+                        command.CommandText += "Audio_OrigPreviewHash = @param83, ";
+                        command.CommandText += "AlbumArt_OrigHash = @param84, ";
+                        command.CommandText += "Duplicate_Of = @param85, ";
+                        command.CommandText += "Youtube_Playthrough = @param86, ";
+                        command.CommandText += "Is_Single = @param87, ";
                         command.CommandText += "Is_EP = @param88,";
                         command.CommandText += "Is_Soundtrack = @param89,";
                         command.CommandText += "Is_Instrumental = @param90,";
@@ -3494,6 +3920,8 @@ namespace RocksmithToolkitGUI.DLCManager
                         command.CommandText += "Is_FullAlbum = @param96,";
                         command.CommandText += "PitchShiftableEsOrDd = @param97,";
                         command.CommandText += "Import_AuditTrail_ID = @param98";
+                        command.CommandText += "Is_Remastered = @param99,";
+                        command.CommandText += "IntheWorks = @param100";
                         command.CommandText += " WHERE ID = " + IDD;
 
                         command.Parameters.AddWithValue("@param1", import_path);
@@ -3504,23 +3932,23 @@ namespace RocksmithToolkitGUI.DLCManager
                         command.Parameters.AddWithValue("@param6", ds.Tables[0].Rows[i].ItemArray[4].ToString());
                         command.Parameters.AddWithValue("@param7", ds.Tables[0].Rows[i].ItemArray[5].ToString());
                         command.Parameters.AddWithValue("@param8", unpackedDir);
-                        if (chbx_Additional_Manipulations.GetItemChecked(60)) command.Parameters.AddWithValue("@param9", info.SongInfo.SongDisplayName);
-                        if (chbx_Additional_Manipulations.GetItemChecked(60)) command.Parameters.AddWithValue("@param10", info.SongInfo.SongDisplayNameSort);
-                        if (chbx_Additional_Manipulations.GetItemChecked(60)) command.Parameters.AddWithValue("@param11", info.SongInfo.Album);
-                        if (chbx_Additional_Manipulations.GetItemChecked(60)) command.Parameters.AddWithValue("@param12", info.SongInfo.Artist);
-                        if (chbx_Additional_Manipulations.GetItemChecked(60)) command.Parameters.AddWithValue("@param13", info.SongInfo.ArtistSort);
-                        if (chbx_Additional_Manipulations.GetItemChecked(61)) command.Parameters.AddWithValue("@param14", info.SongInfo.SongYear);
+                        if (GetParam(60)) command.Parameters.AddWithValue("@param9", info.SongInfo.SongDisplayName);
+                        if (GetParam(60)) command.Parameters.AddWithValue("@param10", info.SongInfo.SongDisplayNameSort);
+                        if (GetParam(60)) command.Parameters.AddWithValue("@param11", info.SongInfo.Album);
+                        if (GetParam(60)) command.Parameters.AddWithValue("@param12", info.SongInfo.Artist);
+                        if (GetParam(60)) command.Parameters.AddWithValue("@param13", info.SongInfo.ArtistSort);
+                        if (GetParam(61)) command.Parameters.AddWithValue("@param14", info.SongInfo.SongYear);
                         command.Parameters.AddWithValue("@param15", (info.ToolkitInfo.PackageVersion ?? "1"));
                         command.Parameters.AddWithValue("@param16", info.SongInfo.AverageTempo);
                         command.Parameters.AddWithValue("@param17", TruncateExponentials(info.Volume.ToString()));
                         command.Parameters.AddWithValue("@param18", info.PreviewVolume != null ? TruncateExponentials(info.PreviewVolume.ToString()) : TruncateExponentials(info.Volume.ToString()));
                         //command.Parameters.AddWithValue("@param17", info.Volume);
                         //command.Parameters.AddWithValue("@param18", info.PreviewVolume != null ? info.PreviewVolume : info.Volume);
-                        if (chbx_Additional_Manipulations.GetItemChecked(60)) command.Parameters.AddWithValue("@param19", info.Name);
+                        if (GetParam(60)) command.Parameters.AddWithValue("@param19", info.Name);
                         command.Parameters.AddWithValue("@param20", AppIdD);
-                        if (chbx_Additional_Manipulations.GetItemChecked(61)) command.Parameters.AddWithValue("@param21", info.AlbumArtPath ?? DBNull.Value.ToString());
+                        if (GetParam(61)) command.Parameters.AddWithValue("@param21", info.AlbumArtPath ?? DBNull.Value.ToString());
                         command.Parameters.AddWithValue("@param22", info.OggPath);
-                        if (chbx_Additional_Manipulations.GetItemChecked(60)) command.Parameters.AddWithValue("@param23", (info.OggPreviewPath ?? DBNull.Value.ToString()));
+                        if (GetParam(60)) command.Parameters.AddWithValue("@param23", (info.OggPreviewPath ?? DBNull.Value.ToString()));
                         command.Parameters.AddWithValue("@param24", Bass);
                         command.Parameters.AddWithValue("@param25", Guitar);
                         command.Parameters.AddWithValue("@param26", ((Lead != "") ? Lead : "No"));
@@ -3528,32 +3956,32 @@ namespace RocksmithToolkitGUI.DLCManager
                         command.Parameters.AddWithValue("@param28", ((Combo != "") ? Combo : "No"));
                         command.Parameters.AddWithValue("@param29", ((Vocalss != "") ? Vocalss : "No"));
                         command.Parameters.AddWithValue("@param30", sect1on);
-                        if (chbx_Additional_Manipulations.GetItemChecked(61)) command.Parameters.AddWithValue("@param31", ((info.AlbumArtPath == "" || info.AlbumArtPath == null) ? "No" : "Yes"));
-                        if (chbx_Additional_Manipulations.GetItemChecked(60)) command.Parameters.AddWithValue("@param32", ((info.OggPreviewPath != null) ? "Yes" : "No"));
+                        if (GetParam(61)) command.Parameters.AddWithValue("@param31", ((info.AlbumArtPath == "" || info.AlbumArtPath == null) ? "No" : "Yes"));
+                        if (GetParam(60)) command.Parameters.AddWithValue("@param32", ((info.OggPreviewPath != null) ? "Yes" : "No"));
                         command.Parameters.AddWithValue("@param33", Tones_Custom);
                         command.Parameters.AddWithValue("@param34", DD);
                         command.Parameters.AddWithValue("@param35", ((info.ToolkitInfo.PackageVersion != null && tkversion != "" && Is_Original == "No") ? "Yes" : "No"));
-                        if (chbx_Additional_Manipulations.GetItemChecked(60)) command.Parameters.AddWithValue("@param36", Has_author);//((((author != "" && tkversion != "") || author == "Custom Song Creator") && Is_Original == "No") ? "Yes" : "No"));
+                        if (GetParam(60)) command.Parameters.AddWithValue("@param36", Has_author);//((((author != "" && tkversion != "") || author == "Custom Song Creator") && Is_Original == "No") ? "Yes" : "No"));
                         command.Parameters.AddWithValue("@param37", Tunings);
                         command.Parameters.AddWithValue("@param38", PluckedType);
                         command.Parameters.AddWithValue("@param39", ((Is_Original == "Yes") ? "ORIG" : "CDLC"));
                         command.Parameters.AddWithValue("@param40", info.SignatureType);
-                        if (chbx_Additional_Manipulations.GetItemChecked(60)) command.Parameters.AddWithValue("@param41", author);//
+                        if (GetParam(60)) command.Parameters.AddWithValue("@param41", author);//
                         command.Parameters.AddWithValue("@param42", tkversion);
                         command.Parameters.AddWithValue("@param43", Is_Original);
                         command.Parameters.AddWithValue("@param44", ((alt == "" || alt == null) ? "No" : "Yes"));
                         command.Parameters.AddWithValue("@param45", ((alt == "" || alt == null) ? "" : alt));
-                        if (chbx_Additional_Manipulations.GetItemChecked(61)) command.Parameters.AddWithValue("@param46", art_hash);
+                        if (GetParam(61)) command.Parameters.AddWithValue("@param46", art_hash);
                         command.Parameters.AddWithValue("@param47", audio_hash);
-                        if (chbx_Additional_Manipulations.GetItemChecked(60)) command.Parameters.AddWithValue("@param48", audioPreview_hash);
+                        if (GetParam(60)) command.Parameters.AddWithValue("@param48", audioPreview_hash);
                         command.Parameters.AddWithValue("@param49", Bass_Has_DD ?? DBNull.Value.ToString());
                         command.Parameters.AddWithValue("@param50", bonus ?? DBNull.Value.ToString());
                         command.Parameters.AddWithValue("@param51", Available_Duplicate ?? DBNull.Value.ToString());
                         command.Parameters.AddWithValue("@param52", Available_Old ?? DBNull.Value.ToString());
-                        if (chbx_Additional_Manipulations.GetItemChecked(60)) command.Parameters.AddWithValue("@param53", description ?? DBNull.Value.ToString());
-                        if (chbx_Additional_Manipulations.GetItemChecked(60)) command.Parameters.AddWithValue("@param54", comment ?? DBNull.Value.ToString());
+                        if (GetParam(60)) command.Parameters.AddWithValue("@param53", description ?? DBNull.Value.ToString());
+                        if (GetParam(60)) command.Parameters.AddWithValue("@param54", comment ?? DBNull.Value.ToString());
                         command.Parameters.AddWithValue("@param55", info.OggPath.Replace(".wem", "_fixed.ogg"));//_fixed//_fixed
-                        if (chbx_Additional_Manipulations.GetItemChecked(60)) command.Parameters.AddWithValue("@param56", (info.OggPreviewPath == null ? DBNull.Value.ToString() : (File.Exists(info.OggPreviewPath.Replace(".wem", "_fixed.ogg")) ? info.OggPreviewPath.Replace(".wem", "_fixed.ogg") : info.OggPreviewPath.Replace(".wem", "_fixed.ogg"))));
+                        if (GetParam(60)) command.Parameters.AddWithValue("@param56", (info.OggPreviewPath == null ? DBNull.Value.ToString() : (File.Exists(info.OggPreviewPath.Replace(".wem", "_fixed.ogg")) ? info.OggPreviewPath.Replace(".wem", "_fixed.ogg") : info.OggPreviewPath.Replace(".wem", "_fixed.ogg"))));
                         command.Parameters.AddWithValue("@param57", (trackno == 0 ? "No" : "Yes"));
                         command.Parameters.AddWithValue("@param58", trackno.ToString("D2"));
                         command.Parameters.AddWithValue("@param59", platformTXT);
@@ -3563,8 +3991,8 @@ namespace RocksmithToolkitGUI.DLCManager
                         command.Parameters.AddWithValue("@param63", CustomsForge_Link);
                         command.Parameters.AddWithValue("@param64", CustomsForge_Like);
                         command.Parameters.AddWithValue("@param65", CustomsForge_ReleaseNotes);
-                        if (chbx_Additional_Manipulations.GetItemChecked(60)) command.Parameters.AddWithValue("@param66", PreviewTime ?? DBNull.Value.ToString());
-                        if (chbx_Additional_Manipulations.GetItemChecked(60)) command.Parameters.AddWithValue("@param67", PreviewLenght ?? DBNull.Value.ToString());
+                        if (GetParam(60)) command.Parameters.AddWithValue("@param66", PreviewTime ?? DBNull.Value.ToString());
+                        if (GetParam(60)) command.Parameters.AddWithValue("@param67", PreviewLenght ?? DBNull.Value.ToString());
                         command.Parameters.AddWithValue("@param68", ds.Tables[0].Rows[i].ItemArray[6].ToString());
                         command.Parameters.AddWithValue("@param69", SongLenght);
                         command.Parameters.AddWithValue("@param70", ds.Tables[0].Rows[i].ItemArray[7].ToString());
@@ -3597,6 +4025,8 @@ namespace RocksmithToolkitGUI.DLCManager
                         command.Parameters.AddWithValue("@param96", IsFullAlbum);
                         command.Parameters.AddWithValue("@param97", PitchShiftableEsOrDd);
                         command.Parameters.AddWithValue("@param98", "");
+                        command.Parameters.AddWithValue("@param99", IsRemastered);
+                        command.Parameters.AddWithValue("@param100", InTheWorks);
                         //EXECUTE SQL/UPDATE
                         try
                         {
@@ -3719,25 +4149,27 @@ namespace RocksmithToolkitGUI.DLCManager
                         command.CommandText += "Spotify_Song_ID, ";
                         command.CommandText += "Spotify_Artist_ID, ";
                         command.CommandText += "Spotify_Album_ID, ";
-                        command.CommandText += "Spotify_Album_URL,";
-                        command.CommandText += "Is_Broken,";
-                        command.CommandText += "Audio_OrigHash,";
-                        command.CommandText += "Audio_OrigPreviewHash,";
-                        command.CommandText += "AlbumArt_OrigHash,";
-                        command.CommandText += "Duplicate_Of,";
-                        command.CommandText += "Youtube_Playthrough,";
+                        command.CommandText += "Spotify_Album_URL, ";
+                        command.CommandText += "Is_Broken, ";
+                        command.CommandText += "Audio_OrigHash, ";
+                        command.CommandText += "Audio_OrigPreviewHash, ";
+                        command.CommandText += "AlbumArt_OrigHash, ";
+                        command.CommandText += "Duplicate_Of, ";
+                        command.CommandText += "Youtube_Playthrough,  ";
                         command.CommandText += "Is_Single,";
-                        command.CommandText += "Is_EP,";
+                        command.CommandText += "Is_EP,  ";
                         command.CommandText += "Is_Soundtrack,";
-                        command.CommandText += "Is_Instrumental,";
-                        command.CommandText += "Has_Had_Audio_Changed,";
-                        command.CommandText += "Album_Sort,";
-                        command.CommandText += "Has_Been_Corrected,";
-                        command.CommandText += "Is_Uncensored,";
-                        command.CommandText += "LastConversionDateTime,";
-                        command.CommandText += "Is_FullAlbum,";
-                        command.CommandText += "PitchShiftableEsOrDd,";
-                        command.CommandText += "Import_AuditTrail_ID";
+                        command.CommandText += "Is_Instrumental, ";
+                        command.CommandText += "Has_Had_Audio_Changed, ";
+                        command.CommandText += "Album_Sort, ";
+                        command.CommandText += "Has_Been_Corrected, ";
+                        command.CommandText += "Is_Uncensored, ";
+                        command.CommandText += "LastConversionDateTime, ";
+                        command.CommandText += "Is_FullAlbum, ";
+                        command.CommandText += "PitchShiftableEsOrDd, ";
+                        command.CommandText += "Import_AuditTrail_ID, ";
+                        command.CommandText += "Is_Remastered,";
+                        command.CommandText += "IntheWorks";
                         command.CommandText += ") VALUES (@param1,@param2,@param3,@param4,@param5,@param6,@param7,@param8,@param9";
                         command.CommandText += ",@param10,@param11,@param12,@param13,@param14,@param15,@param16,@param17,@param18,@param19";
                         command.CommandText += ",@param20,@param21,@param22,@param23,@param24,@param25,@param26,@param27,@param28,@param29";
@@ -3747,7 +4179,8 @@ namespace RocksmithToolkitGUI.DLCManager
                         command.CommandText += ",@param60,@param61,@param62,@param63,@param64,@param65,@param66,@param67,@param68,@param69";
                         command.CommandText += ",@param70,@param71,@param72,@param73,@param74,@param75,@param76,@param77,@param78,@param79";
                         command.CommandText += ",@param80,@param81,@param82,@param83,@param84,@param85,@param86,@param87,@param88,@param89";
-                        command.CommandText += ",@param90,@param91,@param92,@param93,@param94,@param95,@param96,@param97,@param98" + ")";
+                        command.CommandText += ",@param90,@param91,@param92,@param93,@param94,@param95,@param96,@param97,@param98,@param99";
+                        command.CommandText += ",@param100" + ")";
 
                         command.Parameters.AddWithValue("@param1", import_path);
                         command.Parameters.AddWithValue("@param2", original_FileName);
@@ -3848,6 +4281,8 @@ namespace RocksmithToolkitGUI.DLCManager
                         command.Parameters.AddWithValue("@param96", IsFullAlbum);
                         command.Parameters.AddWithValue("@param97", PitchShiftableEsOrDd);
                         command.Parameters.AddWithValue("@param98", "");
+                        command.Parameters.AddWithValue("@param99", IsRemastered);
+                        command.Parameters.AddWithValue("@param99", InTheWorks);
 
                         var rt = (import_path) + "\",\"" + (original_FileName) + "\",\"" + (original_FileName) + "\",\"" + (ds.Tables[0].Rows[i].ItemArray[3])
                             + "\",\"" + (ds.Tables[0].Rows[i].ItemArray[3]) + "\",\"" + (ds.Tables[0].Rows[i].ItemArray[4]) + "\",\"" +
@@ -3974,7 +4409,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                 {
                                     poss = mss.ToString().LastIndexOf("\\") + 1;
 
-                                    if (chbx_Additional_Manipulations.GetItemChecked(36)) //37. Keep the Uncompressed Songs superorganized                                
+                                    if (GetParam(36)) //37. Keep the Uncompressed Songs superorganized                                
                                     {
                                         arg.SongXml.File = norm_path + "\\EOF\\" + mss.Substring(poss);
                                         arg.SongFile.File = norm_path + "\\Toolkit\\" + (mss.Substring(poss)).Replace(".xml", ".json");
@@ -4030,7 +4465,11 @@ namespace RocksmithToolkitGUI.DLCManager
                                     command.CommandText += "CleanedXML_Hash = @param39, ";
                                     command.CommandText += "Part = @param40, ";
                                     command.CommandText += "PlaythroughYBLink = @param41,";
-                                    command.CommandText += "MaxDifficulty = @param42";
+                                    command.CommandText += "MaxDifficulty = @param42,";
+                                    command.CommandText += "OrigSongTrack = @param43 ";
+                                    //command.CommandText += "Primary = @param40, ";
+                                    //command.CommandText += "Favorite = @param41,";
+                                    //command.CommandText += "Broken = @param42";
                                 }
                                 else
                                 {
@@ -4075,16 +4514,17 @@ namespace RocksmithToolkitGUI.DLCManager
                                     command.CommandText += "Json_Hash, ";
                                     command.CommandText += "CleanedXML_Hash, ";
                                     command.CommandText += "Part, ";
-                                    command.CommandText += "PlaythroughYBLink,";
-                                    command.CommandText += "MaxDifficulty";
-                                    command.CommandText += ") VALUES(@param1,@param2,@param3,@param4,@param5,@param6,@param7,@param8,@param9";
+                                    command.CommandText += "PlaythroughYBLink, ";
+                                    command.CommandText += "MaxDifficulty, ";/*,*/
+                                    command.CommandText += "OrigSongTrack";
+                                    command.CommandText += ") VALUES (@param1,@param2,@param3,@param4,@param5,@param6,@param7,@param8,@param9";
                                     command.CommandText += ",@param10,@param11,@param12,@param13,@param14,@param15,@param16,@param17,@param18,@param19";
                                     command.CommandText += ",@param20,@param21,@param22,@param23,@param24,@param25,@param26,@param27,@param28,@param29";
                                     command.CommandText += ",@param30,@param31,@param32,@param33,@param34,@param35,@param36,@param37,@param38,@param39";
-                                    command.CommandText += ",@param40,@param41,@param42)";
+                                    command.CommandText += ",@param40,@param41,@param42,@param43)";/**/
                                 }
                                 command.Parameters.AddWithValue("@param1", CDLC_ID);
-                                command.Parameters.AddWithValue("@param2", arg.ArrangementName);
+                                command.Parameters.AddWithValue("@param2", arg.ArrangementName.ToString());
                                 command.Parameters.AddWithValue("@param3", arg.Tuning ?? DBNull.Value.ToString());
                                 command.Parameters.AddWithValue("@param4", (arg.SongFile.File ?? DBNull.Value.ToString()));
                                 command.Parameters.AddWithValue("@param5", (arg.SongFile.Name ?? DBNull.Value.ToString()));
@@ -4124,7 +4564,8 @@ namespace RocksmithToolkitGUI.DLCManager
                                 command.Parameters.AddWithValue("@param39", (cxmlhlist[n].ToString() ?? DBNull.Value.ToString()));
                                 command.Parameters.AddWithValue("@param40", (string.IsNullOrEmpty(elist[n]) ? "1" : elist[n].ToString()));
                                 command.Parameters.AddWithValue("@param41", (arg.ArrangementType.ToString() == "Lead" ? ybLAddress : (arg.ArrangementType.ToString() == "Bass" ? ybBAddress : (arg.ArrangementType.ToString() == "Rhythm" ? ybRAddress : (arg.ArrangementType.ToString() == "Combo" ? ybCAddress : ""))) ?? DBNull.Value.ToString()));
-                                command.Parameters.AddWithValue("@param42", MaxDD);
+                                command.Parameters.AddWithValue("@param42", MaxDD ?? DBNull.Value.ToString());
+                                command.Parameters.AddWithValue("@param43", "Yes".ToString() ?? DBNull.Value.ToString());
                                 n++;
 
                                 //EXECUTE SQL/INSERT
@@ -4134,7 +4575,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                     connection.Open();
                                     command.ExecuteNonQuery();
                                 }
-                                catch (Exception)
+                                catch (Exception ex)
                                 {
                                     timestamp = UpdateLog(timestamp, "error at insert " + command.CommandText + "\n" + arg.ArrangementName + " " + arg.RouteMask.ToString(), true, Temp_Path_Import, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
                                     throw;
@@ -4402,10 +4843,10 @@ namespace RocksmithToolkitGUI.DLCManager
                         //add new filename if already existing
                         cmd = "UPDATE Main SET ";// Available_Old=\"" + Available_Old + "\",";
 
-                        if (chbx_Additional_Manipulations.GetItemChecked(15) || chbx_Additional_Manipulations.GetItemChecked(75)) //16. Move Original Imported files to temp/0_old                               
+                        if (GetParam(15) || GetParam(75)) //16. Move Original Imported files to temp/0_old                               
                         {//Move imported psarc into the old folder                            
                             var r = CopyMoveFileSafely(txt_RocksmithDLCPath.Text + "\\" + original_FileName, old_Path_Import + "\\" + original_FileName
-                                , chbx_Additional_Manipulations.GetItemChecked(15) && !chbx_Additional_Manipulations.GetItemChecked(75) ? false : true
+                                , GetParam(75) /*&& !GetParam(75) ? false : true*/
                                 , ds.Tables[0].Rows[i].ItemArray[3].ToString(), false);
                             if (r != old_Path_Import + "\\" + original_FileName && File.Exists(r)) cmd += "Original_FileName =\"" + Path.GetFileName(r) + "\", Current_FileName =\"" + Path.GetFileName(r) + "\",";
                             if (File.Exists(r)) cmd += " Available_Old=\"Yes\",";
@@ -4420,7 +4861,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         {
                             pos = ms.ToString().LastIndexOf("\\") + 1;
                             if (AlbumArtPath == info.AlbumArtPath)
-                                if (chbx_Additional_Manipulations.GetItemChecked(36)) //37. Keep the Uncompressed Songs superorganized                                
+                                if (GetParam(36)) //37. Keep the Uncompressed Songs superorganized                                
                                     cmd += " AlbumArtPath=\"" + (info.AlbumArtPath == "" ? "" : norm_path) + "\\Toolkit\\" + ms.Substring(pos) + "\"";
                                 else
                                     cmd += " AlbumArtPath=\"" + (info.AlbumArtPath == "" ? "" : norm_path) + (platformTXT == "XBox360" ? "\\Root" : "") + "\\gfxassets\\album_art\\" + ms.Substring(pos) + "\"";
@@ -4441,7 +4882,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
                         var path_decom1 = "";
                         var path_decom2 = "";
-                        if (chbx_Additional_Manipulations.GetItemChecked(36)) //37. Keep the Uncompressed Songs superorganized                                
+                        if (GetParam(36)) //37. Keep the Uncompressed Songs superorganized                                
                         {
                             path_decom1 = "\\Toolkit\\";
                             path_decom2 = "\\EOF\\";
@@ -4504,20 +4945,20 @@ namespace RocksmithToolkitGUI.DLCManager
                         var previewN = audioprevpath;
                         //Fixing any _preview_preview issue..End
                         //Convert Audio if bitrate> ConfigRepository.Instance()["dlcm_Bitrate"].ToInt32() +8000 
-                        if (!chbx_Additional_Manipulations.GetItemChecked(78))
-                            if ((chbx_Additional_Manipulations.GetItemChecked(69) && info.OggPath != null)
-                                || (((chbx_Additional_Manipulations.GetItemChecked(34) && (info.OggPreviewPath == null || info.OggPreviewPath == ""))
-                                || (chbx_Additional_Manipulations.GetItemChecked(55) && float.Parse(PreviewLenght, NumberStyles.Float, CultureInfo.CurrentCulture)
+                        if (!GetParam(78))
+                            if ((GetParam(69) && info.OggPath != null)
+                                || (((GetParam(34) && (info.OggPreviewPath == null || info.OggPreviewPath == ""))
+                                || (GetParam(55) && float.Parse(PreviewLenght, NumberStyles.Float, CultureInfo.CurrentCulture)
                                 > float.Parse(ConfigRepository.Instance()["dlcm_MaxPreviewLenght"], NumberStyles.Float, CultureInfo.CurrentCulture))
-                                || (chbx_Additional_Manipulations.GetItemChecked(88) && float.Parse(PreviewLenght, NumberStyles.Float, CultureInfo.CurrentCulture)
+                                || (GetParam(88) && float.Parse(PreviewLenght, NumberStyles.Float, CultureInfo.CurrentCulture)
                                 > float.Parse(ConfigRepository.Instance()["dlcm_MinPreviewLenght"], NumberStyles.Float, CultureInfo.CurrentCulture))
                                 && info.OggPath != null)))
                             {
                                 var d1 = WwiseInstalled("Convert Audio if bitrate> ConfigRepository");
                                 if (d1.Split(';')[0] == "1")
                                 {
-                                    if ((chbx_Additional_Manipulations.GetItemChecked(34) && (info.OggPreviewPath == null || info.OggPreviewPath == ""))
-                                        || (chbx_Additional_Manipulations.GetItemChecked(55)
+                                    if ((GetParam(34) && (info.OggPreviewPath == null || info.OggPreviewPath == ""))
+                                        || (GetParam(55)
                                         && float.Parse(PreviewLenght, NumberStyles.Float, CultureInfo.CurrentCulture)
                                         > float.Parse(ConfigRepository.Instance()["dlcm_MaxPreviewLenght"], NumberStyles.Float, CultureInfo.CurrentCulture))
                                         && info.OggPath != null)
@@ -4525,12 +4966,12 @@ namespace RocksmithToolkitGUI.DLCManager
                                         tst = "start set preview"; timestamp = UpdateLog(timestamp, tst, true, Temp_Path_Import, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
                                         cmd = "SELECT ID, AudioPath, audioBitrate, audioSampleRate, audioPreviewPath, Folder_Name, OggPath, oggPreviewPath FROM Main WHERE ";
                                         cmd += "FilesMissingIssues=\"\" AND ID=" + CDLC_ID + "";
-                                        if (chbx_Additional_Manipulations.GetItemChecked(55) && float.Parse(PreviewLenght, NumberStyles.Float, CultureInfo.CurrentCulture) > float.Parse(ConfigRepository.Instance()["dlcm_PreviewLenght"], NumberStyles.Float, CultureInfo.CurrentCulture) && info.OggPreviewPath != null) DeleteFile(info.OggPreviewPath);
+                                        if (GetParam(55) && float.Parse(PreviewLenght, NumberStyles.Float, CultureInfo.CurrentCulture) > float.Parse(ConfigRepository.Instance()["dlcm_PreviewLenght"], NumberStyles.Float, CultureInfo.CurrentCulture) && info.OggPreviewPath != null) DeleteFile(info.OggPreviewPath);
                                         FixMissingPreview(cmd, cnb, AppWD, pB_ReadDLCs, rtxt_StatisticsOnReadDLCs, false, "DLCManager");
                                     }
                                     tst = "end set preview ..."; timestamp = UpdateLog(timestamp, tst, true, Temp_Path_Import, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
 
-                                    if (chbx_Additional_Manipulations.GetItemChecked(69) && info.OggPath != null)
+                                    if (GetParam(69) && info.OggPath != null)
                                     {
                                         cmd = "SELECT ID, AudioPath, audioBitrate, audioSampleRate, audioPreviewPath, OggPath, oggPreviewPath FROM Main WHERE " +
                                             "FilesMissingIssues=\"\" AND (VAL(audioBitrate) > " + (ConfigRepository.Instance()["dlcm_MaxBitRate"]) + " or VAL(audioSampleRate) > " + (ConfigRepository.Instance()["dlcm_MaxSampleRate"]) + ")";
@@ -4559,7 +5000,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         //Set Preview
 
                         ////Create Preview //Fix Preview
-                        //if (chbx_Additional_Manipulations.GetItemChecked() && info.OggPath != null)
+                        //if (GetParam() && info.OggPath != null)
                         //{
                         //    cmd = "SELECT ID,AudioPath,audioBitrate,audioSampleRate,audioPreviewPath,Folder_Name FROM Main WHERE Has_Preview=\"No\"";
                         //    cmd += " AND ID=" + CDLC_ID + ";";
@@ -4687,8 +5128,8 @@ namespace RocksmithToolkitGUI.DLCManager
                 else if (rbtn_Population_Groups.Checked)
                 {
                     cmd += "WHERE cstr(ID) IN (SELECT CDLC_ID FROM Groups WHERE Type=\"DLC\" AND Groups=\"" + Groupss + "\")";
-                    if (chbx_Additional_Manipulations.GetItemChecked(97)) cmd += " AND ID NOT IN (SELECT ID FROM Pack_AuditTrail)";
-                    if (chbx_Additional_Manipulations.GetItemChecked(99)) cmd += " AND ID NOT IN (SELECT ID FROM Groups WHERE Type=\"DLC\" AND Groups=\"" + Groupss + "\")";
+                    if (GetParam(97)) cmd += " AND ID NOT IN (SELECT ID FROM Pack_AuditTrail)";
+                    if (GetParam(99)) cmd += " AND ID NOT IN (SELECT ID FROM Groups WHERE Type=\"DLC\" AND Groups=\"" + Groupss + "\")";
                 }
                 else if (rbtn_Population_PackNO.Checked)
                 {
@@ -4703,9 +5144,9 @@ namespace RocksmithToolkitGUI.DLCManager
                 norows = SongRecord[0].NoRec.ToInt32();
                 string spotystatus = "", ybstatus = "", ftpstatus = "";
                 if (netstatus == "NOK" || netstatus == "") netstatus = CheckIfConnectedToInternet().Result.ToString();
-                if ((chbx_Additional_Manipulations.GetItemChecked(58) || chbx_Additional_Manipulations.GetItemChecked(59)) && netstatus != "OK")
+                if ((GetParam(58) || GetParam(59)) && netstatus != "OK")
                 {
-                    if (chbx_Additional_Manipulations.GetItemChecked(82))
+                    if (GetParam(82))
                     {
                         DialogResult result3 = MessageBox.Show("As selected by option 41 Tool will connect to Spotify to retrieve Track No, album covers, Year information, etc.", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     }
@@ -4731,7 +5172,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     if (i == norows + 1) { i = 0; break; }
                     if ((file.Is_Broken == "Yes" && ConfigRepository.Instance()["dlcm_AdditionalManipul7"] == "Yes"))
                         continue;
-                    if (file.Is_Broken != "Yes" || (file.Is_Broken == "Yes" && !chbx_Additional_Manipulations.GetItemChecked(7))) //"8. Don't repack Broken songs")
+                    if (file.Is_Broken != "Yes" || (file.Is_Broken == "Yes" && !GetParam(7))) //"8. Don't repack Broken songs")
                     {
                         var args = file.ID + ";" + (file.Has_BassDD == "Yes" ? true : false) + ";";
                         args += (chbx_PC.Checked != false ? "PC" : "") + ";" + (chbx_PS3.Checked != false ? "PS3" : "") + ";" + (chbx_XBOX360.Checked != false ? "XBOX360" : "") + ";" + (chbx_Mac.Checked != false ? "Mac" : "") + ";" + netstatus + ";";
@@ -4790,7 +5231,7 @@ namespace RocksmithToolkitGUI.DLCManager
             if (dmz.Tables.Count > 0) if (dmz.Tables[0].Rows.Count > 0) XBOXF = dmz.Tables[0].Rows[0].ItemArray[0].ToString().ToInt32();
             dmz.Dispose(); dmz = new DataSet(); dmz = SelectFromDB("LogPackingError", "SELECT COUNT(ID) FROM LogPackingError where Pack=\"" + pack + "\"", txt_DBFolder.Text, cnb);
             if (dmz.Tables.Count > 0) if (dmz.Tables[0].Rows.Count > 0) FailedP = dmz.Tables[0].Rows[0].ItemArray[0].ToString().ToInt32();
-            
+
             dmz.Dispose(); dmz = new DataSet(); dmz = SelectFromDB("LogPackingError", "SELECT CDLC_ID, Comments FROM LogPackingError where Pack=\"" + pack + "\"", txt_DBFolder.Text, cnb);
             var noOfRecs = 0;
             if (dmz.Tables.Count > 0) if (dmz.Tables[0].Rows.Count > 0) noOfRecs = dmz.Tables.Count == 0 ? 0 : dmz.Tables[0].Rows.Count;
@@ -4806,7 +5247,7 @@ namespace RocksmithToolkitGUI.DLCManager
             }
 
             var cmz = new DataSet(); cmz = SelectFromDB("Pack_AuditTrail", "SELECT FileName, PackPath, CDLC_ID FROM Pack_AuditTrail where Pack=\"" + pack + "\"", txt_DBFolder.Text, cnb);
-             noOfRecs = dmz.Tables.Count == 0 ? 0 : cmz.Tables[0].Rows.Count;
+            noOfRecs = dmz.Tables.Count == 0 ? 0 : cmz.Tables[0].Rows.Count;
             for (var k = 0; k < noOfRecs; k++)
             {
                 ListP += cmz.Tables[0].Rows[k].ItemArray[2].ToString() + " - " + cmz.Tables[0].Rows[k].ItemArray[0].ToString() + "\n";
@@ -5019,7 +5460,7 @@ namespace RocksmithToolkitGUI.DLCManager
             SaveOK = "Ok";//Save settings
             SaveSettings();
             var DBb_Path = txt_DBFolder.Text;
-            Standardization frm = new Standardization(DBb_Path, txt_TempPath.Text, txt_RocksmithDLCPath.Text, chbx_Additional_Manipulations.GetItemChecked(39), chbx_Additional_Manipulations.GetItemChecked(40), cnb, null);
+            Standardization frm = new Standardization(DBb_Path, txt_TempPath.Text, txt_RocksmithDLCPath.Text, GetParam(39), GetParam(40), cnb, null);
             frm.Show();
         }
 
@@ -5131,7 +5572,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //Clean dlcpack Folders
             //Clean Temp Folder
             var oldvl = ConfigRepository.Instance()["dlcm_AdditionalManipul81"]; ConfigRepository.Instance()["dlcm_AdditionalManipul81"] = "Yes";
-            if (chbx_CleanTemp.Checked && !chbx_Additional_Manipulations.GetItemChecked(38)) //39.Use only unpacked songs already in the 0 / dlcpacks folder                
+            if (chbx_CleanTemp.Checked && !GetParam(38)) //39.Use only unpacked songs already in the 0 / dlcpacks folder                
             {
                 try
                 {
@@ -5197,7 +5638,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     {
                         inputFilePath = json; locat = "CACHE";
                         t = inputFilePath;
-                        if (!chbx_Additional_Manipulations.GetItemChecked(38)) //39. Use only unpacked songs already in the 0/dlcpacks folder
+                        if (!GetParam(38)) //39. Use only unpacked songs already in the 0/dlcpacks folder
                         {
                             try
                             {
@@ -5308,7 +5749,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     {
                         inputFilePath = json;
                         locat = "COMPATIBILITY";
-                        if (!chbx_Additional_Manipulations.GetItemChecked(38)) //39. Use only unpacked songs already in the 0/dlcpacks folder
+                        if (!GetParam(38)) //39. Use only unpacked songs already in the 0/dlcpacks folder
                         {
                             try // UNPACK
                             {
@@ -5355,7 +5796,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     else if (json == pathDLC + "\\rs1compatibilitydisc.psarc.edat" || (json == pathDLC + "\\rs1compatibilitydisc_p_Pc.psarc" && platformDLCP == "Pc") || (json == pathDLC + "\\rs1compatibilitydisc_m.psarc" && platformDLCP == "Mac")) //RS12 RETAIL
                     {
                         inputFilePath = json; locat = "RS1Retail";
-                        if (!chbx_Additional_Manipulations.GetItemChecked(38)) //39. Use only unpacked songs already in the 0/dlcpacks folder
+                        if (!GetParam(38)) //39. Use only unpacked songs already in the 0/dlcpacks folder
                         {
                             try // UNPACK
                             {
@@ -5565,7 +6006,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 }//END no cache.psarc to be decompressed
             }
             timestamp = UpdateLog(timestamp, "Ending Retail Songs processing ...." + DateTime.Now, true, Temp_Path_Import, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
-            Cache frm = new Cache(DBb_Path, txt_TempPath.Text, pathDLC, chbx_Additional_Manipulations.GetItemChecked(39), chbx_Additional_Manipulations.GetItemChecked(40), cnb);
+            Cache frm = new Cache(DBb_Path, txt_TempPath.Text, pathDLC, GetParam(39), GetParam(40), cnb);
             frm.Show();
         }
 
@@ -5573,7 +6014,7 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             //Save settings
             SaveSettings();
-            Cache frm = new Cache(txt_DBFolder.Text, txt_TempPath.Text, txt_RocksmithDLCPath.Text, chbx_Additional_Manipulations.GetItemChecked(39), chbx_Additional_Manipulations.GetItemChecked(40), cnb);
+            Cache frm = new Cache(txt_DBFolder.Text, txt_TempPath.Text, txt_RocksmithDLCPath.Text, GetParam(39), GetParam(40), cnb);
             frm.ShowDialog();
         }
 
@@ -5709,224 +6150,329 @@ namespace RocksmithToolkitGUI.DLCManager
 
                     norec = ds.Tables[0].Rows.Count;
                     var fnn = ds.Tables[0].Rows[0].ItemArray[0].ToString() + 1;
-                    string insertcmdA = "CDLC_ID, Groups, Type, Comments, Profile_Name";
+                    string insertcmdA = "CDLC_ID, Groups, Type, Comments, Profile_Name, DisplayName, DisplayGroup, DisplayPosition, Description";
 
-                    var insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Activ_Album"] + "\",\"Profile\",\"dlcm_Activ_Album\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_0_albumCovers"] + "\",\"Profile\",\"dlcm_0_albumCovers\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_0_archive"] + "\",\"Profile\",\"dlcm_0_archive\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_0_broken"] + "\",\"Profile\",\"dlcm_0_broken\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_0_data"] + "\",\"Profile\",\"dlcm_0_data\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_0_duplicate"] + "\",\"Profile\",\"dlcm_0_duplicate\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_0_old"] + "\",\"Profile\",\"dlcm_0_old\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_0_albumCovers"] + "\",\"Profile\",\"dlcm_0_albumCovers\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_0_repacked"] + "\",\"Profile\",\"dlcm_0_repacked\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_0_temp"] + "\",\"Profile\",\"dlcm_0_temp\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AccessACE.OLEDB.16.0"] + "\",\"Profile\",\"dlcm_AccessACE.OLEDB.16.0\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + "\",\"Profile\",\"dlcm_AccessDLLVersion\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Album"] + "\",\"Profile\",\"dlcm_Album\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Album_Sort"] + "\",\"Profile\",\"dlcm_Album_Sort\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Artist"] + "\",\"Profile\",\"dlcm_Artist\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Artist_Sort"] + "\",\"Profile\",\"dlcm_Artist_Sort\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AutoPlay"] + "\",\"Profile\",\"dlcm_AutoPlay\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Autosave"] + "\",\"Profile\",\"dlcm_Autosave\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_BitRate"] + "\",\"Profile\",\"dlcm_BitRate\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Configurations"] + "\",\"Profile\",\"dlcm_Configurations\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_CopyOld"] + "\",\"Profile\",\"dlcm_CopyOld\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_DLCManager_Version"] + "\",\"Profile\",\"dlcm_DLCManager_Version\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_DebugProfile"] + "\",\"Profile\",\"dlcm_DebugProfile\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_DupliUseDates"] + "\",\"Profile\",\"dlcm_DupliUseDates\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_DupliM_Sync"] + "\",\"Profile\",\"dlcm_DupliM_Sync\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_EoFPath"] + "\",\"Profile\",\"dlcm_EoFPath\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_EoFPath_www"] + "\",\"Profile\",\"dlcm_EoFPath_www\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_FTPEU"] + "\",\"Profile\",\"dlcm_FTPEU\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_FTPJP"] + "\",\"Profile\",\"dlcm_FTPJP\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_FTPUS"] + "\",\"Profile\",\"dlcm_FTPUS\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_IOS"] + "\",\"Profile\",\"dlcm_IOS\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_GlobalTempVariable"] + "\",\"Profile\",\"dlcm_GlobalTempVariable\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Last_Packed"] + "\",\"Profile\",\"dlcm_Last_Packed\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_LogPath"] + "\",\"Profile\",\"dlcm_LogPath\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Lyric_Info"] + "\",\"Profile\",\"dlcm_Lyric_Info\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_MDBPlus"] + "\",\"Profile\",\"dlcm_MDBPlus\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_MDBPlus_www"] + "\",\"Profile\",\"dlcm_MDBPlus_www\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Mac"] + "\",\"Profile\",\"dlcm_Mac\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_MainDBFormat"] + "\",\"Profile\",\"dlcm_MainDBFormat\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_MaxBitRate"] + "\",\"Profile\",\"dlcm_MaxBitRate\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_MaxLyricLenght_PS3"] + "\",\"Profile\",\"dlcm_MaxLyricLenght_PS3\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_MaxPreviewLenght"] + "\",\"Profile\",\"dlcm_MaxPreviewLenght\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_MaxSampleRate"] + "\",\"Profile\",\"dlcm_MaxSampleRate\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_MediaInfo_CLI"] + "\",\"Profile\",\"dlcm_MediaInfo_CLI\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_MediaInfo_CLI_www"] + "\",\"Profile\",\"dlcm_MediaInfo_CLI_www\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_MinPreviewLenght"] + "\",\"Profile\",\"dlcm_MinPreviewLenght\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_MuliThreading"] + "\",\"Profile\",\"dlcm_MuliThreading\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_OrderOfFields"] + "\",\"Profile\",\"dlcm_OrderOfFields\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_PC"] + "\",\"Profile\",\"dlcm_PC\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_PKG_Linker"] + "\",\"Profile\",\"dlcm_PKG_Linker\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_PKG_Linker_www"] + "\",\"Profile\",\"dlcm_PKG_Linker_www\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_PS3xploit-resigner"] + "\",\"Profile\",\"dlcm_PS3xploit-resigner\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_PS3xploit-resigner_www"] + "\",\"Profile\",\"dlcm_PS3xploit-resigner_www\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_PS4"] + "\",\"Profile\",\"dlcm_PS4\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_PathForBRM"] + "\",\"Profile\",\"dlcm_PathForBRM\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_PathForBRM_www"] + "\",\"Profile\",\"dlcm_PathForBRM_www\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_PreviewLenght"] + "\",\"Profile\",\"dlcm_PreviewLenght\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_PreviewStart"] + "\",\"Profile\",\"dlcm_PreviewStart\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Prof"] + "\",\"Profile\",\"dlcm_Prof\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_RemoveBassDD"] + "\",\"Profile\",\"dlcm_RemoveBassDD\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Replace"] + "\",\"Profile\",\"dlcm_Replace\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_RockBand"] + "\",\"Profile\",\"dlcm_RockBand\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_RockBand_www"] + "\",\"Profile\",\"dlcm_RockBand_www\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_RocksmithDLCPath"] + "\",\"Profile\",\"dlcm_RocksmithDLCPath\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_SampleRate"] + "\",\"Profile\",\"dlcm_SampleRate\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Split4Pack"] + "\",\"Profile\",\"dlcm_Split4Pack\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_SpotifyClientAPI"] + "\",\"Profile\",\"dlcm_SpotifyClientAPI\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_SpotifySecretAPI"] + "\",\"Profile\",\"dlcm_SpotifySecretAPI\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_TCommander"] + "\",\"Profile\",\"dlcm_TCommander\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_TCommander_www"] + "\",\"Profile\",\"dlcm_TCommander_www\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_TrueAncestor_PKG_Repacker"] + "\",\"Profile\",\"dlcm_TrueAncestor_PKG_Repacker\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_TrueAncestor_PKG_Repacker_www"] + "\",\"Profile\",\"dlcm_TrueAncestor_PKG_Repacker_www\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_UltraStarCreator"] + "\",\"Profile\",\"dlcm_UltraStarCreator\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_UltraStarCreator_www"] + "\",\"Profile\",\"dlcm_UltraStarCreator_www\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_UniqueID"] + "\",\"Profile\",\"dlcm_UniqueID\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_WinMerge"] + "\",\"Profile\",\"dlcm_WinMerge\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_WinMerge_www"] + "\",\"Profile\",\"dlcm_WinMerge_www\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_XBOX"] + "\",\"Profile\",\"dlcm_XBOX\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_YoutubeAPI"] + "\",\"Profile\",\"dlcm_YoutubeAPI\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_andCopy"] + "\",\"Profile\",\"dlcm_andCopy\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_spotistatus"] + "\",\"Profile\",\"dlcm_spotistatus\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_wwise"] + "\",\"Profile\",\"dlcm_wwise\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_localwwise"] + "\",\"Profile\",\"dlcm_localwwise\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Grouping"] + "\",\"Profile\",\"dlcm_Grouping\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_SearchFields"] + "\",\"Profile\",\"dlcm_SearchFields\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_ExportFields"] + "\",\"Profile\",\"dlcm_ExportFields\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Activ_Artist"] + "\",\"Profile\",\"dlcm_Activ_Artist\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Activ_ArtistSort"] + "\",\"Profile\",\"dlcm_Activ_ArtistSort\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Activ_FileName"] + "\",\"Profile\",\"dlcm_Activ_FileName\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Activ_Title"] + "\",\"Profile\",\"dlcm_Activ_Title\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Activ_TitleSort"] + "\",\"Profile\",\"dlcm_Activ_TitleSort\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul0"] + "\",\"Profile\",\"dlcm_AdditionalManipul0\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul1"] + "\",\"Profile\",\"dlcm_AdditionalManipul1\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul10"] + "\",\"Profile\",\"dlcm_AdditionalManipul10\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul11"] + "\",\"Profile\",\"dlcm_AdditionalManipul11\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul12"] + "\",\"Profile\",\"dlcm_AdditionalManipul12\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul13"] + "\",\"Profile\",\"dlcm_AdditionalManipul13\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul14"] + "\",\"Profile\",\"dlcm_AdditionalManipul14\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul15"] + "\",\"Profile\",\"dlcm_AdditionalManipul15\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul16"] + "\",\"Profile\",\"dlcm_AdditionalManipul16\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul17"] + "\",\"Profile\",\"dlcm_AdditionalManipul17\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul18"] + "\",\"Profile\",\"dlcm_AdditionalManipul18\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul19"] + "\",\"Profile\",\"dlcm_AdditionalManipul19\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul2"] + "\",\"Profile\",\"dlcm_AdditionalManipul2\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul20"] + "\",\"Profile\",\"dlcm_AdditionalManipul20\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul21"] + "\",\"Profile\",\"dlcm_AdditionalManipul21\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul22"] + "\",\"Profile\",\"dlcm_AdditionalManipul22\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul23"] + "\",\"Profile\",\"dlcm_AdditionalManipul23\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul24"] + "\",\"Profile\",\"dlcm_AdditionalManipul24\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul25"] + "\",\"Profile\",\"dlcm_AdditionalManipul25\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul26"] + "\",\"Profile\",\"dlcm_AdditionalManipul26\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul27"] + "\",\"Profile\",\"dlcm_AdditionalManipul27\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul28"] + "\",\"Profile\",\"dlcm_AdditionalManipul28\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul29"] + "\",\"Profile\",\"dlcm_AdditionalManipul29\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul3"] + "\",\"Profile\",\"dlcm_AdditionalManipul3\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul30"] + "\",\"Profile\",\"dlcm_AdditionalManipul30\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul31"] + "\",\"Profile\",\"dlcm_AdditionalManipul31\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul32"] + "\",\"Profile\",\"dlcm_AdditionalManipul32\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul33"] + "\",\"Profile\",\"dlcm_AdditionalManipul33\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul34"] + "\",\"Profile\",\"dlcm_AdditionalManipul34\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul35"] + "\",\"Profile\",\"dlcm_AdditionalManipul35\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul36"] + "\",\"Profile\",\"dlcm_AdditionalManipul36\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul37"] + "\",\"Profile\",\"dlcm_AdditionalManipul37\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul38"] + "\",\"Profile\",\"dlcm_AdditionalManipul38\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul39"] + "\",\"Profile\",\"dlcm_AdditionalManipul39\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul4"] + "\",\"Profile\",\"dlcm_AdditionalManipul4\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul40"] + "\",\"Profile\",\"dlcm_AdditionalManipul40\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul41"] + "\",\"Profile\",\"dlcm_AdditionalManipul41\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul42"] + "\",\"Profile\",\"dlcm_AdditionalManipul42\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul43"] + "\",\"Profile\",\"dlcm_AdditionalManipul43\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul44"] + "\",\"Profile\",\"dlcm_AdditionalManipul44\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul45"] + "\",\"Profile\",\"dlcm_AdditionalManipul45\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul46"] + "\",\"Profile\",\"dlcm_AdditionalManipul46\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul47"] + "\",\"Profile\",\"dlcm_AdditionalManipul47\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul48"] + "\",\"Profile\",\"dlcm_AdditionalManipul48\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul49"] + "\",\"Profile\",\"dlcm_AdditionalManipul49\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul5"] + "\",\"Profile\",\"dlcm_AdditionalManipul5\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul50"] + "\",\"Profile\",\"dlcm_AdditionalManipul50\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul51"] + "\",\"Profile\",\"dlcm_AdditionalManipul51\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul52"] + "\",\"Profile\",\"dlcm_AdditionalManipul52\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul53"] + "\",\"Profile\",\"dlcm_AdditionalManipul53\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul54"] + "\",\"Profile\",\"dlcm_AdditionalManipul54\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul55"] + "\",\"Profile\",\"dlcm_AdditionalManipul55\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul56"] + "\",\"Profile\",\"dlcm_AdditionalManipul56\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul57"] + "\",\"Profile\",\"dlcm_AdditionalManipul57\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul58"] + "\",\"Profile\",\"dlcm_AdditionalManipul58\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul59"] + "\",\"Profile\",\"dlcm_AdditionalManipul59\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul6"] + "\",\"Profile\",\"dlcm_AdditionalManipul6\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul60"] + "\",\"Profile\",\"dlcm_AdditionalManipul60\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul61"] + "\",\"Profile\",\"dlcm_AdditionalManipul61\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul62"] + "\",\"Profile\",\"dlcm_AdditionalManipul62\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul63"] + "\",\"Profile\",\"dlcm_AdditionalManipul63\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul64"] + "\",\"Profile\",\"dlcm_AdditionalManipul64\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul65"] + "\",\"Profile\",\"dlcm_AdditionalManipul65\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul66"] + "\",\"Profile\",\"dlcm_AdditionalManipul66\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul67"] + "\",\"Profile\",\"dlcm_AdditionalManipul67\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul68"] + "\",\"Profile\",\"dlcm_AdditionalManipul68\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul69"] + "\",\"Profile\",\"dlcm_AdditionalManipul69\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul7"] + "\",\"Profile\",\"dlcm_AdditionalManipul7\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul70"] + "\",\"Profile\",\"dlcm_AdditionalManipul70\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul71"] + "\",\"Profile\",\"dlcm_AdditionalManipul71\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul72"] + "\",\"Profile\",\"dlcm_AdditionalManipul72\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul73"] + "\",\"Profile\",\"dlcm_AdditionalManipul73\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul74"] + "\",\"Profile\",\"dlcm_AdditionalManipul74\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul75"] + "\",\"Profile\",\"dlcm_AdditionalManipul75\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul76"] + "\",\"Profile\",\"dlcm_AdditionalManipul76\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul77"] + "\",\"Profile\",\"dlcm_AdditionalManipul77\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul78"] + "\",\"Profile\",\"dlcm_AdditionalManipul78\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul79"] + "\",\"Profile\",\"dlcm_AdditionalManipul79\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul8"] + "\",\"Profile\",\"dlcm_AdditionalManipul8\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul80"] + "\",\"Profile\",\"dlcm_AdditionalManipul80\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul81"] + "\",\"Profile\",\"dlcm_AdditionalManipul81\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul82"] + "\",\"Profile\",\"dlcm_AdditionalManipul82\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul83"] + "\",\"Profile\",\"dlcm_AdditionalManipul83\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul84"] + "\",\"Profile\",\"dlcm_AdditionalManipul84\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul85"] + "\",\"Profile\",\"dlcm_AdditionalManipul85\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul86"] + "\",\"Profile\",\"dlcm_AdditionalManipul86\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul87"] + "\",\"Profile\",\"dlcm_AdditionalManipul87\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul88"] + "\",\"Profile\",\"dlcm_AdditionalManipul88\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul89"] + "\",\"Profile\",\"dlcm_AdditionalManipul89\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul90"] + "\",\"Profile\",\"dlcm_AdditionalManipul90\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul91"] + "\",\"Profile\",\"dlcm_AdditionalManipul91\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul92"] + "\",\"Profile\",\"dlcm_AdditionalManipul92\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul93"] + "\",\"Profile\",\"dlcm_AdditionalManipul93\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul94"] + "\",\"Profile\",\"dlcm_AdditionalManipul94\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul95"] + "\",\"Profile\",\"dlcm_AdditionalManipul95\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul96"] + "\",\"Profile\",\"dlcm_AdditionalManipul96\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul97"] + "\",\"Profile\",\"dlcm_AdditionalManipul97\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul98"] + "\",\"Profile\",\"dlcm_AdditionalManipul98\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul99"] + "\",\"Profile\",\"dlcm_AdditionalManipul99\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul100"] + "\",\"Profile\",\"dlcm_AdditionalManipul100\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul101"] + "\",\"Profile\",\"dlcm_AdditionalManipul101\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul9"] + "\",\"Profile\",\"dlcm_AdditionalManipul9\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Album"] + "\",\"Profile\",\"dlcm_Album\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Album_Sort"] + "\",\"Profile\",\"dlcm_Album_Sort\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Artist"] + "\",\"Profile\",\"dlcm_Artist\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Artist_Sort"] + "\",\"Profile\",\"dlcm_Artist_Sort\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Groups"] + "\",\"Profile\",\"dlcm_Groups\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_chbx_Mac"] + "\",\"Profile\",\"dlcm_chbx_Mac\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_chbx_PC"] + "\",\"Profile\",\"dlcm_chbx_PC\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_chbx_PS3"] + "\",\"Profile\",\"dlcm_chbx_PS3\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_chbx_XBOX360"] + "\",\"Profile\",\"dlcm_chbx_XBOX360\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_DBFolder"] + "\",\"Profile\",\"dlcm_DBFolder\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Debug"] + "\",\"Profile\",\"dlcm_Debug\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_DefaultDB"] + "\",\"Profile\",\"dlcm_DefaultDB\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_File_Name"] + "\",\"Profile\",\"dlcm_File_Name\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_netstatus"] + "\",\"Profile\",\"dlcm_netstatus\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_RocksmithDLCPath"] + "\",\"Profile\",\"dlcm_RocksmithDLCPath\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_TempPath"] + "\",\"Profile\",\"dlcm_TempPath\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Title"] + "\",\"Profile\",\"dlcm_Title\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Title_Sort"] + "\",\"Profile\",\"dlcm_Title_Sort\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_InclMultiplyManager"] + "\",\"Profile\",\"dlcm_InclMultiplyManager\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_No4Spliting"] + "\",\"Profile\",\"dlcm_No4Spliting\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_StartInDLCM"] + "\",\"Profile\",\"dlcm_StartInDLCM\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_timestamp"] + "\",\"Profile\",\"dlcm_timestamp\",\"" + chbx_Configurations.Text + "\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
-                   }
+                    var insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Activ_Album"] + "\",\"Profile\",\"dlcm_Activ_Album\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_0_albumCovers"] + "\",\"Profile\",\"dlcm_0_albumCovers\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_0_archive"] + "\",\"Profile\",\"dlcm_0_archive\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_0_broken"] + "\",\"Profile\",\"dlcm_0_broken\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_0_data"] + "\",\"Profile\",\"dlcm_0_data\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_0_duplicate"] + "\",\"Profile\",\"dlcm_0_duplicate\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_0_old"] + "\",\"Profile\",\"dlcm_0_old\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_0_albumCovers"] + "\",\"Profile\",\"dlcm_0_albumCovers\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_0_repacked"] + "\",\"Profile\",\"dlcm_0_repacked\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_0_temp"] + "\",\"Profile\",\"dlcm_0_temp\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AccessACE.OLEDB.16.0"] + "\",\"Profile\",\"dlcm_AccessACE.OLEDB.16.0\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + "\",\"Profile\",\"dlcm_AccessDLLVersion\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Album"] + "\",\"Profile\",\"dlcm_Album\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Album_Sort"] + "\",\"Profile\",\"dlcm_Album_Sort\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Artist"] + "\",\"Profile\",\"dlcm_Artist\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Artist_Sort"] + "\",\"Profile\",\"dlcm_Artist_Sort\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AutoPlay"] + "\",\"Profile\",\"dlcm_AutoPlay\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Autosave"] + "\",\"Profile\",\"dlcm_Autosave\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_BitRate"] + "\",\"Profile\",\"dlcm_BitRate\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Configurations"] + "\",\"Profile\",\"dlcm_Configurations\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_CopyOld"] + "\",\"Profile\",\"dlcm_CopyOld\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_DLCManager_Version"] + "\",\"Profile\",\"dlcm_DLCManager_Version\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_DebugProfile"] + "\",\"Profile\",\"dlcm_DebugProfile\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_DupliUseDates"] + "\",\"Profile\",\"dlcm_DupliUseDates\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_DupliM_Sync"] + "\",\"Profile\",\"dlcm_DupliM_Sync\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_EoFPath"] + "\",\"Profile\",\"dlcm_EoFPath\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_EoFPath_www"] + "\",\"Profile\",\"dlcm_EoFPath_www\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_FTPEU"] + "\",\"Profile\",\"dlcm_FTPEU\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_FTPJP"] + "\",\"Profile\",\"dlcm_FTPJP\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_FTPUS"] + "\",\"Profile\",\"dlcm_FTPUS\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_IOS"] + "\",\"Profile\",\"dlcm_IOS\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_GlobalTempVariable"] + "\",\"Profile\",\"dlcm_GlobalTempVariable\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Last_Packed"] + "\",\"Profile\",\"dlcm_Last_Packed\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_LogPath"] + "\",\"Profile\",\"dlcm_LogPath\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Lyric_Info"] + "\",\"Profile\",\"dlcm_Lyric_Info\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_MDBPlus"] + "\",\"Profile\",\"dlcm_MDBPlus\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_MDBPlus_www"] + "\",\"Profile\",\"dlcm_MDBPlus_www\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Mac"] + "\",\"Profile\",\"dlcm_Mac\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_MainDBFormat"] + "\",\"Profile\",\"dlcm_MainDBFormat\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_MaxBitRate"] + "\",\"Profile\",\"dlcm_MaxBitRate\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_MaxLyricLenght_PS3"] + "\",\"Profile\",\"dlcm_MaxLyricLenght_PS3\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_MaxPreviewLenght"] + "\",\"Profile\",\"dlcm_MaxPreviewLenght\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_MaxSampleRate"] + "\",\"Profile\",\"dlcm_MaxSampleRate\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_MediaInfo_CLI"] + "\",\"Profile\",\"dlcm_MediaInfo_CLI\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_MediaInfo_CLI_www"] + "\",\"Profile\",\"dlcm_MediaInfo_CLI_www\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_MinPreviewLenght"] + "\",\"Profile\",\"dlcm_MinPreviewLenght\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_MuliThreading"] + "\",\"Profile\",\"dlcm_MuliThreading\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_OrderOfFields"] + "\",\"Profile\",\"dlcm_OrderOfFields\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_PC"] + "\",\"Profile\",\"dlcm_PC\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_PKG_Linker"] + "\",\"Profile\",\"dlcm_PKG_Linker\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_PKG_Linker_www"] + "\",\"Profile\",\"dlcm_PKG_Linker_www\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_PS3xploit-resigner"] + "\",\"Profile\",\"dlcm_PS3xploit-resigner\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_PS3xploit-resigner_www"] + "\",\"Profile\",\"dlcm_PS3xploit-resigner_www\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_PS4"] + "\",\"Profile\",\"dlcm_PS4\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_PathForBRM"] + "\",\"Profile\",\"dlcm_PathForBRM\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_PathForBRM_www"] + "\",\"Profile\",\"dlcm_PathForBRM_www\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_PreviewLenght"] + "\",\"Profile\",\"dlcm_PreviewLenght\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_PreviewStart"] + "\",\"Profile\",\"dlcm_PreviewStart\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Prof"] + "\",\"Profile\",\"dlcm_Prof\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_RemoveBassDD"] + "\",\"Profile\",\"dlcm_RemoveBassDD\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Replace"] + "\",\"Profile\",\"dlcm_Replace\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_RockBand"] + "\",\"Profile\",\"dlcm_RockBand\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_RockBand_www"] + "\",\"Profile\",\"dlcm_RockBand_www\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_RocksmithDLCPath"] + "\",\"Profile\",\"dlcm_RocksmithDLCPath\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_SampleRate"] + "\",\"Profile\",\"dlcm_SampleRate\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Split4Pack"] + "\",\"Profile\",\"dlcm_Split4Pack\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_SpotifyClientAPI"] + "\",\"Profile\",\"dlcm_SpotifyClientAPI\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_SpotifySecretAPI"] + "\",\"Profile\",\"dlcm_SpotifySecretAPI\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_TCommander"] + "\",\"Profile\",\"dlcm_TCommander\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_TCommander_www"] + "\",\"Profile\",\"dlcm_TCommander_www\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_TrueAncestor_PKG_Repacker"] + "\",\"Profile\",\"dlcm_TrueAncestor_PKG_Repacker\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_TrueAncestor_PKG_Repacker_www"] + "\",\"Profile\",\"dlcm_TrueAncestor_PKG_Repacker_www\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_UltraStarCreator"] + "\",\"Profile\",\"dlcm_UltraStarCreator\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_UltraStarCreator_www"] + "\",\"Profile\",\"dlcm_UltraStarCreator_www\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_UniqueID"] + "\",\"Profile\",\"dlcm_UniqueID\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_WinMerge"] + "\",\"Profile\",\"dlcm_WinMerge\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_WinMerge_www"] + "\",\"Profile\",\"dlcm_WinMerge_www\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_XBOX"] + "\",\"Profile\",\"dlcm_XBOX\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_YoutubeAPI"] + "\",\"Profile\",\"dlcm_YoutubeAPI\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_andCopy"] + "\",\"Profile\",\"dlcm_andCopy\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_spotistatus"] + "\",\"Profile\",\"dlcm_spotistatus\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_wwise"] + "\",\"Profile\",\"dlcm_wwise\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_localwwise"] + "\",\"Profile\",\"dlcm_localwwise\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Grouping"] + "\",\"Profile\",\"dlcm_Grouping\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_SearchFields"] + "\",\"Profile\",\"dlcm_SearchFields\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_ExportFields"] + "\",\"Profile\",\"dlcm_ExportFields\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_ArangementFields"] + "\",\"Profile\",\"dlcm_ArangementFields\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Activ_Artist"] + "\",\"Profile\",\"dlcm_Activ_Artist\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Activ_ArtistSort"] + "\",\"Profile\",\"dlcm_Activ_ArtistSort\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Activ_FileName"] + "\",\"Profile\",\"dlcm_Activ_FileName\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Activ_Title"] + "\",\"Profile\",\"dlcm_Activ_Title\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Activ_TitleSort"] + "\",\"Profile\",\"dlcm_Activ_TitleSort\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    //Params
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul0"] + "\",\"Profile\",\"dlcm_AdditionalManipul0\",\"" + chbx_Configurations.Text + "\",\"Add Increment to all songs Title\",\"Pack\",\"1\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul1"] + "\",\"Profile\",\"dlcm_AdditionalManipul1\",\"" + chbx_Configurations.Text + "\",\"Add Increment to all songs Title per artist\",\"Pack\",\"2\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul2"] + "\",\"Profile\",\"dlcm_AdditionalManipul2\",\"" + chbx_Configurations.Text + "\",\"Make all DLC IDs unique (&save)\",\"Pack\",\"3\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul3"] + "\",\"Profile\",\"dlcm_AdditionalManipul3\",\"" + chbx_Configurations.Text + "\",\"Remove DD\",\"Pack\",\"4\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul4"] + "\",\"Profile\",\"dlcm_AdditionalManipul4\",\"" + chbx_Configurations.Text + "\",\"Backup DB during Startup\",\"General\",\"1\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul5"] + "\",\"Profile\",\"dlcm_AdditionalManipul5\",\"" + chbx_Configurations.Text + "\",\"Remove DD only for Bass Guitar\",\"Pack\",\"5\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul6"] + "\",\"Profile\",\"dlcm_AdditionalManipul6\",\"" + chbx_Configurations.Text + "\",\"When converting Audio use local folder structure\",\"General\",\"2\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul7"] + "\",\"Profile\",\"dlcm_AdditionalManipul7\",\"" + chbx_Configurations.Text + "\",\"Skip Broken songs\",\"Pack\",\"6\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul8"] + "\",\"Profile\",\"dlcm_AdditionalManipul8\",\"" + chbx_Configurations.Text + "\",\"Name to cross-platform Compatible Filenames\",\"Pack\",\"7\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul9"] + "\",\"Profile\",\"dlcm_AdditionalManipul9\",\"" + chbx_Configurations.Text + "\",\"Add Preview if missing 00:30 for 30sec (&save)\",\"Pack\",\"8\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul10"] + "\",\"Profile\",\"dlcm_AdditionalManipul10\",\"" + chbx_Configurations.Text + "\",\"Make all DLC IDs unique\",\"Pack\",\"9\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul11"] + "\",\"Profile\",\"dlcm_AdditionalManipul11\",\"" + chbx_Configurations.Text + "\",\"<Add DD (5 Levels)>\",\"Pack\",\"10\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul12"] + "\",\"Profile\",\"dlcm_AdditionalManipul12\",\"" + chbx_Configurations.Text + "\",\"<Add DD (5 Levels) when missing>\",\"Pack\",\"11\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul13"] + "\",\"Profile\",\"dlcm_AdditionalManipul13\",\"" + chbx_Configurations.Text + "\",\"All Duplicates as Alternates\",\"Import\",\"1\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul14"] + "\",\"Profile\",\"dlcm_AdditionalManipul14\",\"" + chbx_Configurations.Text + "\",\"Any Custom as Alternate if an Original exists\",\"Import\",\"2\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul15"] + "\",\"Profile\",\"dlcm_AdditionalManipul15\",\"" + chbx_Configurations.Text + "\",\"Move the Imported files to temp/0_old\",\"Import\",\"3\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul16"] + "\",\"Profile\",\"dlcm_AdditionalManipul16\",\"" + chbx_Configurations.Text + "\",\"Make Artist/Title same as Artist/Title/Album Sort\",\"Import\",\"4\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul17"] + "\",\"Profile\",\"dlcm_AdditionalManipul17\",\"" + chbx_Configurations.Text + "\",\"Make Artist/Title same as Artist/Title/Album Sort\",\"Pack\",\"12\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul18"] + "\",\"Profile\",\"dlcm_AdditionalManipul18\",\"" + chbx_Configurations.Text + "\",\"<Import without The/Die at the beginning of Artist/Title Sort>\",\"Import\",\"5\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul19"] + "\",\"Profile\",\"dlcm_AdditionalManipul19\",\"" + chbx_Configurations.Text + "\",\"<Pack without The/Die at the beginning of Artist/Title Sort>\",\"Pack\",\"13\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul20"] + "\",\"Profile\",\"dlcm_AdditionalManipul20\",\"" + chbx_Configurations.Text + "\",\"Move The/Die at the end of Title Sort\",\"Import\",\"6\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul21"] + "\",\"Profile\",\"dlcm_AdditionalManipul21\",\"" + chbx_Configurations.Text + "\",\"Move The/Die at the end of Title/Title Sort\",\"Pack\",\"14\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul22"] + "\",\"Profile\",\"dlcm_AdditionalManipul22\",\"" + chbx_Configurations.Text + "\",\"Move The/Die only at the end of Artist/Album/xx Sort\",\"Import\",\"7\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul23"] + "\",\"Profile\",\"dlcm_AdditionalManipul23\",\"" + chbx_Configurations.Text + "\",\"Pack with The/Die only at the end of Artist/Album/xx Sort\",\"Pack\",\"15\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul24"] + "\",\"Profile\",\"dlcm_AdditionalManipul24\",\"" + chbx_Configurations.Text + "\",\"Use translation tables for naming standardization\",\"Import\",\"8\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul25"] + "\",\"Profile\",\"dlcm_AdditionalManipul25\",\"" + chbx_Configurations.Text + "\",\"If Original don't add QAs (NOs;DLC/ORIG;etc.)\",\"Pack\",\"16\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul26"] + "\",\"Profile\",\"dlcm_AdditionalManipul26\",\"" + chbx_Configurations.Text + "\",\"Add 5 Levels of DD only to Guitar tracks\",\"Pack\",\"17\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul27"] + "\",\"Profile\",\"dlcm_AdditionalManipul27\",\"" + chbx_Configurations.Text + "\",\"Convert and Transfer/FTP\",\"Pack\",\"18\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul28"] + "\",\"Profile\",\"dlcm_AdditionalManipul28\",\"" + chbx_Configurations.Text + "\",\"If Original don't add QAs (NOs;DLC/ORIG;etc.) except for File Names\",\"Pack\",\"19\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul29"] + "\",\"Profile\",\"dlcm_AdditionalManipul29\",\"" + chbx_Configurations.Text + "\",\"Move Duplicates to _duplicate\",\"Import\",\"9\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul30"] + "\",\"Profile\",\"dlcm_AdditionalManipul30\",\"" + chbx_Configurations.Text + "\",\"Move broken songs to _broken\",\"Import\",\"10\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul31"] + "\",\"Profile\",\"dlcm_AdditionalManipul31\",\"" + chbx_Configurations.Text + "\",\"When removing DD use internal logic not DDC\",\"Import\",\"11\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul32"] + "\",\"Profile\",\"dlcm_AdditionalManipul32\",\"" + chbx_Configurations.Text + "\",\"When importing alternates add newer/older instead of alt.0author\",\"Import\",\"12\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul33"] + "\",\"Profile\",\"dlcm_AdditionalManipul33\",\"" + chbx_Configurations.Text + "\",\"Forcibly Update Import location of all DB fields\",\"Import\",\"13\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul34"] + "\",\"Profile\",\"dlcm_AdditionalManipul34\",\"" + chbx_Configurations.Text + "\",\"Add Preview if missing (lenght> as per config)\",\"Import\",\"14\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul35"] + "\",\"Profile\",\"dlcm_AdditionalManipul35\",\"" + chbx_Configurations.Text + "\",\"Remove illegal characters from Songs Metadata\",\"Import\",\"15\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul36"] + "\",\"Profile\",\"dlcm_AdditionalManipul36\",\"" + chbx_Configurations.Text + "\",\"Keep the Uncompressed Songs superorganized\",\"Import\",\"16\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul37"] + "\",\"Profile\",\"dlcm_AdditionalManipul37\",\"" + chbx_Configurations.Text + "\",\"Import other formats but PC\",\"Import\",\"17\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul38"] + "\",\"Profile\",\"dlcm_AdditionalManipul38\",\"" + chbx_Configurations.Text + "\",\"Import only the unpacked songs already in the 0_Temp folder\",\"Import\",\"18\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul39"] + "\",\"Profile\",\"dlcm_AdditionalManipul39\",\"" + chbx_Configurations.Text + "\",\"Encrypt PS3 Retails songs, with External tool\",\"Pack\",\"20\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul40"] + "\",\"Profile\",\"dlcm_AdditionalManipul40\",\"" + chbx_Configurations.Text + "\",\"Delete ORIG HSAN/OGG when Packing Retails songs\",\"Pack\",\"21\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul41"] + "\",\"Profile\",\"dlcm_AdditionalManipul41\",\"" + chbx_Configurations.Text + "\",\"Try to get Track No. &Details from Spotify (&yb links)\",\"General\",\"3\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul42"] + "\",\"Profile\",\"dlcm_AdditionalManipul42\",\"" + chbx_Configurations.Text + "\",\"Save Log After\",\"Import\",\"19\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul43"] + "\",\"Profile\",\"dlcm_AdditionalManipul43\",\"" + chbx_Configurations.Text + "\",\"Set the DLCID autom\",\"Import\",\"20\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul44"] + "\",\"Profile\",\"dlcm_AdditionalManipul44\",\"" + chbx_Configurations.Text + "\",\"Set the DLCID autom\",\"Pack\",\"22\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul45"] + "\",\"Profile\",\"dlcm_AdditionalManipul45\",\"" + chbx_Configurations.Text + "\",\"<Convert Originals>\",\"Pack\",\"23\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul46"] + "\",\"Profile\",\"dlcm_AdditionalManipul46\",\"" + chbx_Configurations.Text + "\",\"Duplicate Mangement, Title added info is inbetween separators: []\",\"General\",\"4\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul47"] + "\",\"Profile\",\"dlcm_AdditionalManipul47\",\"" + chbx_Configurations.Text + "\",\"Add New Toolkit v. and RePackedByAuthor\",\"General\",\"5\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul48"] + "\",\"Profile\",\"dlcm_AdditionalManipul48\",\"" + chbx_Configurations.Text + "\",\"Remove Multitrack/Live/Acoustic info from Title\",\"Import\",\"21\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul49"] + "\",\"Profile\",\"dlcm_AdditionalManipul49\",\"" + chbx_Configurations.Text + "\",\"Also Copy/FTP\",\"Pack\",\"24\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul50"] + "\",\"Profile\",\"dlcm_AdditionalManipul50\",\"" + chbx_Configurations.Text + "\",\"Manually assess duplicates at the end\",\"Import\",\"22\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul51"] + "\",\"Profile\",\"dlcm_AdditionalManipul51\",\"" + chbx_Configurations.Text + "\",\"@Unpack Overwrite the XML\",\"Import\",\"23\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul52"] + "\",\"Profile\",\"dlcm_AdditionalManipul52\",\"" + chbx_Configurations.Text + "\",\"keep Bass DD if indicated so\",\"Pack\",\"25\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul53"] + "\",\"Profile\",\"dlcm_AdditionalManipul53\",\"" + chbx_Configurations.Text + "\",\"keep All DD if indicated so\",\"Pack\",\"26\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul54"] + "\",\"Profile\",\"dlcm_AdditionalManipul54\",\"" + chbx_Configurations.Text + "\",\"consider All songs as beta (place them top of the list)\",\"Pack\",\"27\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul55"] + "\",\"Profile\",\"dlcm_AdditionalManipul55\",\"" + chbx_Configurations.Text + "\",\"Gen Preview if Preview=Audio or Preview is longer than config (default 30s)\",\"Import\",\"24\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul56"] + "\",\"Profile\",\"dlcm_AdditionalManipul56\",\"" + chbx_Configurations.Text + "\",\"Duplicate manag ignores Multitracks\",\"Import\",\"25\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul57"] + "\",\"Profile\",\"dlcm_AdditionalManipul57\",\"" + chbx_Configurations.Text + "\",\"Don't save Author when generic (i.e. Custom Song Creator)\",\"Import\",\"26\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul58"] + "\",\"Profile\",\"dlcm_AdditionalManipul58\",\"" + chbx_Configurations.Text + "\",\"try to get Track No again (&don't save)\",\"Pack\",\"28\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul59"] + "\",\"Profile\",\"dlcm_AdditionalManipul59\",\"" + chbx_Configurations.Text + "\",\"try to get Track No again (&save)\",\"Pack\",\"29\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul60"] + "\",\"Profile\",\"dlcm_AdditionalManipul60\",\"" + chbx_Configurations.Text + "\",\"At Rebuild don't overwrite Standard Song Info (Tit,Art,Alb,Prw,Aut,Des,Com)\",\"General\",\"6\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul61"] + "\",\"Profile\",\"dlcm_AdditionalManipul61\",\"" + chbx_Configurations.Text + "\",\"At Rebuild don't overwrite Standard Song Info (Cover,Year)\",\"General\",\"7\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul62"] + "\",\"Profile\",\"dlcm_AdditionalManipul62\",\"" + chbx_Configurations.Text + "\",\"< duplicate singleTracks L->R / R->L>\",\"Pack\",\"30\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul63"] + "\",\"Profile\",\"dlcm_AdditionalManipul63\",\"" + chbx_Configurations.Text + "\",\"Remove Remote File if GameData has been read\",\"Pack\",\"31\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul64"] + "\",\"Profile\",\"dlcm_AdditionalManipul64\",\"" + chbx_Configurations.Text + "\",\"ONLY Copy/FTP the Last Packed song\",\"Pack\",\"32\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul65"] + "\",\"Profile\",\"dlcm_AdditionalManipul65\",\"" + chbx_Configurations.Text + "\",\"ONLY Copy/FTP the Initially Imported song\",\"Pack\",\"33\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul66"] + "\",\"Profile\",\"dlcm_AdditionalManipul66\",\"" + chbx_Configurations.Text + "\",\"Duplicate manag. ignores Live Songs\",\"Import\",\"27\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul67"] + "\",\"Profile\",\"dlcm_AdditionalManipul67\",\"" + chbx_Configurations.Text + "\",\"Import duplicates (hash)\",\"Import\",\"28\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul68"] + "\",\"Profile\",\"dlcm_AdditionalManipul68\",\"" + chbx_Configurations.Text + "\",\"Delete obvious duplicates (hash) during dupli assesment\",\"Import\",\"29\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul69"] + "\",\"Profile\",\"dlcm_AdditionalManipul69\",\"" + chbx_Configurations.Text + "\",\"Compress AudioFiles to 128VBR /Import if bigger than 136k\",\"Import\",\"30\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul70"] + "\",\"Profile\",\"dlcm_AdditionalManipul70\",\"" + chbx_Configurations.Text + "\",\"Repack Preview (bugfix)\",\"Pack\",\"34\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul71"] + "\",\"Profile\",\"dlcm_AdditionalManipul71\",\"" + chbx_Configurations.Text + "\",\"<@Import/Repack check if Original flag is in the Official list and correct>\",\"Import\",\"31\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul72"] + "\",\"Profile\",\"dlcm_AdditionalManipul72\",\"" + chbx_Configurations.Text + "\",\"Import other formats but PC, as standalone\",\"Import\",\"32\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul73"] + "\",\"Profile\",\"dlcm_AdditionalManipul73\",\"" + chbx_Configurations.Text + "\",\"Add Track Info&Comments beginning of Lyrics\",\"Pack\",\"35\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul74"] + "\",\"Profile\",\"dlcm_AdditionalManipul74\",\"" + chbx_Configurations.Text + "\",\"Add Track start into Vocals\",\"Pack\",\"36\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul75"] + "\",\"Profile\",\"dlcm_AdditionalManipul75\",\"" + chbx_Configurations.Text + "\",\"Copy to \0\0_Old (Overwrites 15 Move to old)\",\"Import\",\"33\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul76"] + "\",\"Profile\",\"dlcm_AdditionalManipul76\",\"" + chbx_Configurations.Text + "\",\"Include Tones/arangements Db changes\",\"Pack\",\"37\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul77"] + "\",\"Profile\",\"dlcm_AdditionalManipul77\",\"" + chbx_Configurations.Text + "\",\"After Import open MainDB\",\"General\",\"8\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul78"] + "\",\"Profile\",\"dlcm_AdditionalManipul78\",\"" + chbx_Configurations.Text + "\",\"Fix Audio Issues at end\",\"Import\",\"34\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul79"] + "\",\"Profile\",\"dlcm_AdditionalManipul79\",\"" + chbx_Configurations.Text + "\",\"Manually Asses All Suspicious Duplicates\",\"Import\",\"35\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul80"] + "\",\"Profile\",\"dlcm_AdditionalManipul80\",\"" + chbx_Configurations.Text + "\",\"Duplicate manag. ignores Acoustic Songs\",\"Import\",\"36\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul81"] + "\",\"Profile\",\"dlcm_AdditionalManipul81\",\"" + chbx_Configurations.Text + "\",\"Any Delete (non psarc) goes to RecycleBin\",\"General\",\"9\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul82"] + "\",\"Profile\",\"dlcm_AdditionalManipul82\",\"" + chbx_Configurations.Text + "\",\"Show warning that It will connect to Spotify\",\"General\",\"10\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul83"] + "\",\"Profile\",\"dlcm_AdditionalManipul83\",\"" + chbx_Configurations.Text + "\",\"All suspicious Duplicates will be marked as Duplicates (Ignore)\",\"Import\",\"37\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul84"] + "\",\"Profile\",\"dlcm_AdditionalManipul84\",\"" + chbx_Configurations.Text + "\",\"When checking Songs validate wem bitrate (10% wem conversion raises the bitrate)\",\"General\",\"11\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul85"] + "\",\"Profile\",\"dlcm_AdditionalManipul85\",\"" + chbx_Configurations.Text + "\",\"Apply standard naming to all duplicates\",\"Import\",\"38\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul86"] + "\",\"Profile\",\"dlcm_AdditionalManipul86\",\"" + chbx_Configurations.Text + "\",\"Keep XML Manipulations\",\"Import\",\"39\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul87"] + "\",\"Profile\",\"dlcm_AdditionalManipul87\",\"" + chbx_Configurations.Text + "\",\"Use Latest Spotify API (Web)\",\"General\",\"12\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul88"] + "\",\"Profile\",\"dlcm_AdditionalManipul88\",\"" + chbx_Configurations.Text + "\",\"Gen Preview if Preview is shorter than config (default 10s)\",\"Import\",\"40\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul89"] + "\",\"Profile\",\"dlcm_AdditionalManipul89\",\"" + chbx_Configurations.Text + "\",\"Allow multiple instances of the DLC Manager (for faster repackaging)\",\"Internal\",\"41\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul90"] + "\",\"Profile\",\"dlcm_AdditionalManipul90\",\"" + chbx_Configurations.Text + "\",\"When adding times into vocals(74) add only in seconds\",\"Pack\",\"38\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul91"] + "\",\"Profile\",\"dlcm_AdditionalManipul91\",\"" + chbx_Configurations.Text + "\",\"Add group to Filename\",\"Pack\",\"39\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul92"] + "\",\"Profile\",\"dlcm_AdditionalManipul92\",\"" + chbx_Configurations.Text + "\",\"Package for a HAN enabled PS3\",\"Pack\",\"40\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul93"] + "\",\"Profile\",\"dlcm_AdditionalManipul93\",\"" + chbx_Configurations.Text + "\",\"for a HAN Enabled PS3 then also copy Retail(RS2012) Songs\",\"Pack\",\"41\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul94"] + "\",\"Profile\",\"dlcm_AdditionalManipul94\",\"" + chbx_Configurations.Text + "\",\"After lyrics manipulation Open them in Notepad\",\"Pack\",\"42\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul95"] + "\",\"Profile\",\"dlcm_AdditionalManipul95\",\"" + chbx_Configurations.Text + "\",\"@Export create Package (in@0_temp)\",\"General\",\"13\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul96"] + "\",\"Profile\",\"dlcm_AdditionalManipul96\",\"" + chbx_Configurations.Text + "\",\"@Export create Tabs\",\"General\",\"14\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul97"] + "\",\"Profile\",\"dlcm_AdditionalManipul97\",\"" + chbx_Configurations.Text + "\",\"Only never packed Songs (Overwrites 98)\",\"Pack\",\"43\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul98"] + "\",\"Profile\",\"dlcm_AdditionalManipul98\",\"" + chbx_Configurations.Text + "\",\"Only never packed Songs for the target Platform\",\"Pack\",\"44\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul99"] + "\",\"Profile\",\"dlcm_AdditionalManipul99\",\"" + chbx_Configurations.Text + "\",\"<If Group pack ignore songs that are also in other Groups>\",\"Pack\",\"45\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul100"] + "\",\"Profile\",\"dlcm_AdditionalManipul100\",\"" + chbx_Configurations.Text + "\",\"<Pack anew instead of converting (e.g. Pack Orig file)>\",\"Pack\",\"46\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul101"] + "\",\"Profile\",\"dlcm_AdditionalManipul101\",\"" + chbx_Configurations.Text + "\",\"Check song\",\"Pack\",\"47\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul102"] + "\",\"Profile\",\"dlcm_AdditionalManipul102\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul103"] + "\",\"Profile\",\"dlcm_AdditionalManipul103\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul104"] + "\",\"Profile\",\"dlcm_AdditionalManipul104\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul105"] + "\",\"Profile\",\"dlcm_AdditionalManipul105\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul106"] + "\",\"Profile\",\"dlcm_AdditionalManipul106\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul107"] + "\",\"Profile\",\"dlcm_AdditionalManipul107\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul108"] + "\",\"Profile\",\"dlcm_AdditionalManipul108\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul109"] + "\",\"Profile\",\"dlcm_AdditionalManipul109\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul110"] + "\",\"Profile\",\"dlcm_AdditionalManipul110\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul111"] + "\",\"Profile\",\"dlcm_AdditionalManipul111\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul112"] + "\",\"Profile\",\"dlcm_AdditionalManipul112\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul113"] + "\",\"Profile\",\"dlcm_AdditionalManipul113\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul114"] + "\",\"Profile\",\"dlcm_AdditionalManipul114\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul115"] + "\",\"Profile\",\"dlcm_AdditionalManipul115\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul116"] + "\",\"Profile\",\"dlcm_AdditionalManipul116\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul117"] + "\",\"Profile\",\"dlcm_AdditionalManipul117\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul118"] + "\",\"Profile\",\"dlcm_AdditionalManipul118\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul119"] + "\",\"Profile\",\"dlcm_AdditionalManipul119\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul120"] + "\",\"Profile\",\"dlcm_AdditionalManipul120\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul121"] + "\",\"Profile\",\"dlcm_AdditionalManipul121\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul122"] + "\",\"Profile\",\"dlcm_AdditionalManipul122\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul123"] + "\",\"Profile\",\"dlcm_AdditionalManipul123\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul124"] + "\",\"Profile\",\"dlcm_AdditionalManipul124\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul125"] + "\",\"Profile\",\"dlcm_AdditionalManipul125\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul126"] + "\",\"Profile\",\"dlcm_AdditionalManipul126\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul127"] + "\",\"Profile\",\"dlcm_AdditionalManipul127\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul128"] + "\",\"Profile\",\"dlcm_AdditionalManipul128\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul129"] + "\",\"Profile\",\"dlcm_AdditionalManipul129\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul130"] + "\",\"Profile\",\"dlcm_AdditionalManipul130\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul131"] + "\",\"Profile\",\"dlcm_AdditionalManipul131\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul132"] + "\",\"Profile\",\"dlcm_AdditionalManipul132\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul133"] + "\",\"Profile\",\"dlcm_AdditionalManipul133\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul134"] + "\",\"Profile\",\"dlcm_AdditionalManipul134\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul135"] + "\",\"Profile\",\"dlcm_AdditionalManipul135\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul136"] + "\",\"Profile\",\"dlcm_AdditionalManipul136\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul137"] + "\",\"Profile\",\"dlcm_AdditionalManipul137\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul138"] + "\",\"Profile\",\"dlcm_AdditionalManipul138\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul139"] + "\",\"Profile\",\"dlcm_AdditionalManipul139\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul140"] + "\",\"Profile\",\"dlcm_AdditionalManipul140\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul141"] + "\",\"Profile\",\"dlcm_AdditionalManipul141\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul142"] + "\",\"Profile\",\"dlcm_AdditionalManipul142\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul143"] + "\",\"Profile\",\"dlcm_AdditionalManipul143\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul144"] + "\",\"Profile\",\"dlcm_AdditionalManipul144\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul145"] + "\",\"Profile\",\"dlcm_AdditionalManipul145\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul146"] + "\",\"Profile\",\"dlcm_AdditionalManipul146\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul147"] + "\",\"Profile\",\"dlcm_AdditionalManipul147\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul148"] + "\",\"Profile\",\"dlcm_AdditionalManipul148\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul149"] + "\",\"Profile\",\"dlcm_AdditionalManipul149\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul150"] + "\",\"Profile\",\"dlcm_AdditionalManipul150\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul151"] + "\",\"Profile\",\"dlcm_AdditionalManipul151\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul152"] + "\",\"Profile\",\"dlcm_AdditionalManipul152\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul153"] + "\",\"Profile\",\"dlcm_AdditionalManipul153\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul154"] + "\",\"Profile\",\"dlcm_AdditionalManipul154\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul155"] + "\",\"Profile\",\"dlcm_AdditionalManipul155\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul156"] + "\",\"Profile\",\"dlcm_AdditionalManipul156\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul157"] + "\",\"Profile\",\"dlcm_AdditionalManipul157\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul158"] + "\",\"Profile\",\"dlcm_AdditionalManipul158\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul159"] + "\",\"Profile\",\"dlcm_AdditionalManipul159\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul160"] + "\",\"Profile\",\"dlcm_AdditionalManipul160\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul161"] + "\",\"Profile\",\"dlcm_AdditionalManipul161\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul162"] + "\",\"Profile\",\"dlcm_AdditionalManipul162\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul163"] + "\",\"Profile\",\"dlcm_AdditionalManipul163\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul164"] + "\",\"Profile\",\"dlcm_AdditionalManipul164\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul165"] + "\",\"Profile\",\"dlcm_AdditionalManipul165\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul166"] + "\",\"Profile\",\"dlcm_AdditionalManipul166\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul167"] + "\",\"Profile\",\"dlcm_AdditionalManipul167\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul168"] + "\",\"Profile\",\"dlcm_AdditionalManipul168\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul169"] + "\",\"Profile\",\"dlcm_AdditionalManipul169\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul170"] + "\",\"Profile\",\"dlcm_AdditionalManipul170\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul171"] + "\",\"Profile\",\"dlcm_AdditionalManipul171\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul172"] + "\",\"Profile\",\"dlcm_AdditionalManipul172\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul173"] + "\",\"Profile\",\"dlcm_AdditionalManipul173\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul174"] + "\",\"Profile\",\"dlcm_AdditionalManipul174\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul175"] + "\",\"Profile\",\"dlcm_AdditionalManipul175\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul176"] + "\",\"Profile\",\"dlcm_AdditionalManipul176\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul177"] + "\",\"Profile\",\"dlcm_AdditionalManipul177\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul178"] + "\",\"Profile\",\"dlcm_AdditionalManipul178\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul179"] + "\",\"Profile\",\"dlcm_AdditionalManipul179\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul180"] + "\",\"Profile\",\"dlcm_AdditionalManipul180\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul181"] + "\",\"Profile\",\"dlcm_AdditionalManipul181\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul182"] + "\",\"Profile\",\"dlcm_AdditionalManipul182\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul183"] + "\",\"Profile\",\"dlcm_AdditionalManipul183\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul184"] + "\",\"Profile\",\"dlcm_AdditionalManipul184\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul185"] + "\",\"Profile\",\"dlcm_AdditionalManipul185\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul186"] + "\",\"Profile\",\"dlcm_AdditionalManipul186\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul187"] + "\",\"Profile\",\"dlcm_AdditionalManipul187\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul188"] + "\",\"Profile\",\"dlcm_AdditionalManipul188\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul189"] + "\",\"Profile\",\"dlcm_AdditionalManipul189\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul190"] + "\",\"Profile\",\"dlcm_AdditionalManipul190\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul191"] + "\",\"Profile\",\"dlcm_AdditionalManipul191\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul192"] + "\",\"Profile\",\"dlcm_AdditionalManipul192\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul193"] + "\",\"Profile\",\"dlcm_AdditionalManipul193\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul194"] + "\",\"Profile\",\"dlcm_AdditionalManipul194\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul195"] + "\",\"Profile\",\"dlcm_AdditionalManipul195\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul196"] + "\",\"Profile\",\"dlcm_AdditionalManipul196\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul197"] + "\",\"Profile\",\"dlcm_AdditionalManipul197\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul198"] + "\",\"Profile\",\"dlcm_AdditionalManipul198\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul199"] + "\",\"Profile\",\"dlcm_AdditionalManipul199\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_AdditionalManipul200"] + "\",\"Profile\",\"dlcm_AdditionalManipul200\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+
+
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Album"] + "\",\"Profile\",\"dlcm_Album\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Album_Sort"] + "\",\"Profile\",\"dlcm_Album_Sort\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Artist"] + "\",\"Profile\",\"dlcm_Artist\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Artist_Sort"] + "\",\"Profile\",\"dlcm_Artist_Sort\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Groups"] + "\",\"Profile\",\"dlcm_Groups\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_chbx_Mac"] + "\",\"Profile\",\"dlcm_chbx_Mac\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_chbx_PC"] + "\",\"Profile\",\"dlcm_chbx_PC\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_chbx_PS3"] + "\",\"Profile\",\"dlcm_chbx_PS3\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_chbx_XBOX360"] + "\",\"Profile\",\"dlcm_chbx_XBOX360\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_DBFolder"] + "\",\"Profile\",\"dlcm_DBFolder\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Debug"] + "\",\"Profile\",\"dlcm_Debug\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_DefaultDB"] + "\",\"Profile\",\"dlcm_DefaultDB\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_File_Name"] + "\",\"Profile\",\"dlcm_File_Name\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_netstatus"] + "\",\"Profile\",\"dlcm_netstatus\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_RocksmithDLCPath"] + "\",\"Profile\",\"dlcm_RocksmithDLCPath\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_TempPath"] + "\",\"Profile\",\"dlcm_TempPath\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Title"] + "\",\"Profile\",\"dlcm_Title\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_Title_Sort"] + "\",\"Profile\",\"dlcm_Title_Sort\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_InclMultiplyManager"] + "\",\"Profile\",\"dlcm_InclMultiplyManager\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_No4Spliting"] + "\",\"Profile\",\"dlcm_No4Spliting\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_StartInDLCM"] + "\",\"Profile\",\"dlcm_StartInDLCM\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_timestamp"] + "\",\"Profile\",\"dlcm_timestamp\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_DBVersion"] + "\",\"Profile\",\"dlcm_DBVersion\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                    insertA = "\"" + fnn + "\",\"" + ConfigRepository.Instance()["dlcm_ThreadNo"] + "\",\"Profile\",\"dlcm_ThreadNo\",\"" + chbx_Configurations.Text + "\",\"\",\"\",\"\",\"\""; InsertIntoDBwValues("Groups", insertcmdA, insertA, cnb, mutit);
+                }
                 else
                 {
                     DialogResult result1 = MessageBox.Show("Do you Wanna rename the profile?", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -6216,8 +6762,8 @@ namespace RocksmithToolkitGUI.DLCManager
                 var searchPattern = new Regex(
                         @"(psarc|xbox)",
                         RegexOptions.IgnoreCase);
-                if (chbx_Additional_Manipulations.GetItemChecked(37)) //38. Import other formats but PC, as well(separately of course)
-                                                                      //filez = System.IO.Directory.GetFiles(pathDLC, "*.psarc*");
+                if (GetParam(37)) //38. Import other formats but PC, as well(separately of course)
+                                  //filez = System.IO.Directory.GetFiles(pathDLC, "*.psarc*");
                 {
                     var files = Directory.EnumerateFiles(txt_RocksmithDLCPath.Text)
                     .Where(f => searchPattern.IsMatch(f))
@@ -6308,6 +6854,43 @@ namespace RocksmithToolkitGUI.DLCManager
             toolTip1.SetToolTip(pB_ReadDLCs, "Progress bar for different operations of CDLC Manager.");
             Controls.Add(pB_ReadDLCs);
         }
+        private bool GetParam(int t)
+        {
+            if (chbx_Additional_Manipulations.Items[1].ToString().IndexOf("{") < 1) return chbx_Additional_Manipulations.GetItemChecked(t);
+            for (var i = 0; i < chbx_Additional_Manipulations.Items.Count; i++)
+            {
+                string k = chbx_Additional_Manipulations.Items[i].ToString();
+                if (k.IndexOf("{") < 1) continue;
+                var orderno = k.Substring(k.IndexOf("{") + 1, k.IndexOf("}") - k.IndexOf("{") - 1);
+                //string g = c("dlcm_AdditionalManipul" + t.ToString()).ToLower();
+                if (orderno.ToInt32() == t)
+                    //{
+                    return chbx_Additional_Manipulations.GetItemChecked(i);//.ToString() == "true" ? true : false;
+                                                                           //    break;
+                                                                           //}
+            }
+            //c("dlcm_AdditionalManipul" + t.ToString()).ToLower()=="yes"? true : false;
+            return false;
+        }
+
+        private int GetParamLocation(int t)
+        {
+            if (chbx_Additional_Manipulations.Items[1].ToString().IndexOf("{") < 1) return t;
+
+            for (var i = 0; i < chbx_Additional_Manipulations.Items.Count; i++)
+            {
+                string k = chbx_Additional_Manipulations.Items[i].ToString();
+                if (k.IndexOf("{") < 1) continue;
+                var orderno = k.Substring(k.IndexOf("{") + 1, k.IndexOf("}") - k.IndexOf("{") - 1);
+                if (orderno.ToInt32() == t)
+                {
+                    return i;
+                    break;
+                }
+            }
+
+            return t;
+        }
 
 
         // 1. If hash already exists do not insert
@@ -6325,14 +6908,15 @@ namespace RocksmithToolkitGUI.DLCManager
             string dbpathh, List<string> clist, List<string> dlist, bool newold, string Is_Original, string altver, string fsz, string unpackedDir,
             string Is_MultiTrack, string MultiTrack_Version, string FileDate, string title_duplic, string platform, string IsLive, string LiveDetails,
             string IsAcoustic, string has_Orig, string dupli_reason, string sel, int Duplic, bool Rebuild, float versio, float norowsduo, string fzg,
-            int j, string lengty, string allothers, List<string> cxmlhlist, List<string> snghlist, string filehash)
+            int j, string lengty, string allothers, List<string> cxmlhlist, List<string> snghlist, string filehash, string IsUncensored, string IsEP
+            , string IsSingle, string IsSoundtrack, string IsFullAlbum, string IsRemastered, string IsInstrumental, string InTheWorks)
         {
-            bool platform_doesnt_matters = chbx_Additional_Manipulations.GetItemChecked(72) == true ? (filed.Platform == platform ? true : false) : true;
-            if (!chbx_Additional_Manipulations.GetItemChecked(79))
+            bool platform_doesnt_matters = GetParam(72) == true ? (filed.Platform == platform ? true : false) : true;
+            if (!GetParam(79))
             {
                 if (Rebuild) return "Insert;new"; //At Rebuild ignore duplicates
                                                   //When impocleanrting a original when there is already a similar CDLC
-                else if (author == "" && tkversion == "" && Is_Original == "Yes" && chbx_Additional_Manipulations.GetItemChecked(14) && norowsduo >= 1 && (filed.Is_Original != "Yes"))
+                else if (author == "" && tkversion == "" && Is_Original == "Yes" && GetParam(14) && norowsduo >= 1 && (filed.Is_Original != "Yes"))
                 {
                     //Generate MAX Alternate NO
                     var fdf = (sel.Replace("ORDER BY Is_Original ASC", "")).Replace("SELECT *", "SELECT max(Alternate_Version_No)");
@@ -6347,7 +6931,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     DataSet dxf = new DataSet(); var cmd = "UPDATE Main SET Duplicate_Of = +\"" + Duplic + "\" WHERE ID=" + filed.ID + ";"; dxf = UpdateDB("Main", cmd, cnb);
                     return "Insert;autom: new";
                 }
-                else if (chbx_Additional_Manipulations.GetItemChecked(68) && fzg == filed.File_Hash) return "Ignore;autom: IGNORED as already imported(hash)"; //DUPLICATION DETECTION LOGIC (based on author and version .... more complex one in the asses procedure)
+                else if (GetParam(68) && fzg == filed.File_Hash) return "Ignore;autom: IGNORED as already imported(hash)"; //DUPLICATION DETECTION LOGIC (based on author and version .... more complex one in the asses procedure)
 
                 else if ((author.ToLower() == filed.Author.ToLower() && author != "" && filed.Author != "" && filed.Author != "Custom Song Creator" && author != "Custom Song Creator"))
                 {
@@ -6374,7 +6958,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 }
 
                 else if (((tkversion == "" && Is_Original == "Yes") || (filed.ToolkitVersion == "" && filed.Is_Original == "Yes"))
-                    && filed.Platform != platform && !chbx_Additional_Manipulations.GetItemChecked(72))
+                    && filed.Platform != platform && !GetParam(72))
                 {
                     UpdateDB("Main", "UPDATE Main SET Has_Other_Officials=\"Yes\" WHERE ID=" + filed.ID + "", cnb);
                     has_Orig = "Yes";
@@ -6383,7 +6967,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 }
 
                 else if (((tkversion == "" && Is_Original == "Yes") || (filed.ToolkitVersion == "" && filed.Is_Original == "Yes"))
-                    && filed.Platform != platform && chbx_Additional_Manipulations.GetItemChecked(72))
+                    && filed.Platform != platform && GetParam(72))
                 {
                     UpdateDB("Main", "UPDATE Main SET Has_Other_Officials=\"Yes\" WHERE ID=" + filed.ID + "", cnb);
                     has_Orig = "Yes";
@@ -6393,47 +6977,70 @@ namespace RocksmithToolkitGUI.DLCManager
 
                 else if (author.ToLower() == filed.Author.ToLower() && author != "" && filed.Author != "" && filed.Author != "Custom Song Creator" && author != "Custom Song Creator"
                 && filed.Version != datas.ToolkitInfo.PackageVersion.ToString() && platform != filed.Platform
-                && !chbx_Additional_Manipulations.GetItemChecked(72) && Is_Original != "Yes" && filed.Is_Original != "Yes")
+                && !GetParam(72) && Is_Original != "Yes" && filed.Is_Original != "Yes")
 
                 {
                     dupli_reason += "autom: Initially assed as duplicate cause same aothor but different platform."; timestamp = UpdateLog(timestamp, dupli_reason, true, txt_TempPath.Text, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
                     return "Ignore;" + dupli_reason;/*autom: Dupli_Different_Platform*/
                 }
 
-                else if ((chbx_Additional_Manipulations.GetItemChecked(13) && !chbx_Additional_Manipulations.GetItemChecked(85)) ||/* 13.Import all Duplicates as Alternates*/
-                    (chbx_Additional_Manipulations.GetItemChecked(14) && (tkversion != "" && Is_Original == "No") && (filed.ToolkitVersion == "" && filed.Is_Original == "Yes"))/*14. Import any Custom as Alternate if an Original exists*/
+                else if ((GetParam(13) && !GetParam(85)) ||/* 13.Import all Duplicates as Alternates*/
+                    (GetParam(14) && (tkversion != "" && Is_Original == "No") && (filed.ToolkitVersion == "" && filed.Is_Original == "Yes"))/*14. Import any Custom as Alternate if an Original exists*/
                     /*56.Duplicate manag ignores Multitracks*/
-                    || (chbx_Additional_Manipulations.GetItemChecked(56) && ((filed.Is_Multitrack == "Yes" && Is_MultiTrack != "Yes")
+                    || (GetParam(56) && ((filed.Is_Multitrack == "Yes" && Is_MultiTrack != "Yes")
                     || (Is_MultiTrack == "Yes" && filed.Is_Multitrack != "Yes") || (Is_MultiTrack == "Yes" && filed.Is_Multitrack == "Yes"
                     && MultiTrack_Version != filed.MultiTrack_Version)))
                     /*80.Duplicate manag.ignores Acoustic Songs */
-                    || (chbx_Additional_Manipulations.GetItemChecked(80) && ((filed.Is_Acoustic == "Yes" && IsAcoustic != "Yes")
-                    || (IsAcoustic == "Yes" && filed.Is_Acoustic != "Yes") || (IsAcoustic == "Yes" && filed.Is_Acoustic == "Yes" && LiveDetails != filed.Live_Details)))
+                    || (GetParam(66) && ((filed.Is_Acoustic == "Yes" && IsAcoustic != "Yes")
+                    || (IsAcoustic == "Yes" && filed.Is_Acoustic != "Yes") || (IsAcoustic == "Yes" && filed.Is_Acoustic == "Yes" && LiveDetails != filed.Live_Details))
                     /*66.Duplicate manag.ignores Live Songs */
-                    || (chbx_Additional_Manipulations.GetItemChecked(66) && ((filed.Is_Live == "Yes" && IsLive != "Yes")
-                    || (IsLive == "Yes" && filed.Is_Live != "Yes") || (IsLive == "Yes" && filed.Is_Live == "Yes" && LiveDetails != filed.Live_Details))))
+                    || (GetParam(66) && ((filed.Is_Live == "Yes" && IsLive != "Yes")
+                    || (IsLive == "Yes" && filed.Is_Live != "Yes") || (IsLive == "Yes" && filed.Is_Live == "Yes" && LiveDetails != filed.Live_Details))
+                    /*66.Duplicate manag.ignores Remastered Songs */
+                    || (GetParam(66) && ((filed.Is_Remastered == "Yes" && IsRemastered != "Yes")
+                    || (IsRemastered == "Yes" && filed.Is_Remastered != "Yes") || (IsRemastered == "Yes" && filed.Is_Remastered == "Yes"))
+                    /*66.Duplicate manag.ignores Single Songs */
+                    || (GetParam(66) && ((filed.Is_Single == "Yes" && IsSingle != "Yes")
+                    || (IsSingle == "Yes" && filed.Is_Single != "Yes") || (IsSingle == "Yes" && filed.Is_Single == "Yes"))
+                    /*66.Duplicate manag.ignores ÊP Songs */
+                    || (GetParam(66) && ((filed.Is_EP == "Yes" && IsEP != "Yes")
+                    || (IsEP == "Yes" && filed.Is_EP != "Yes") || (IsEP == "Yes" && filed.Is_EP == "Yes"))
+                    /*66.Duplicate manag.ignores Instrumental Songs */
+                    || (GetParam(66) && ((filed.Is_Instrumental == "Yes" && IsInstrumental != "Yes")
+                    || (IsInstrumental == "Yes" && filed.Is_Instrumental != "Yes") || (IsInstrumental == "Yes" && filed.Is_Instrumental == "Yes"))
+                    /*66.Duplicate manag.ignores SoundTrack Songs */
+                    || (GetParam(66) && ((filed.Is_Soundtrack == "Yes" && IsSoundtrack != "Yes")
+                    || (IsSoundtrack == "Yes" && filed.Is_Soundtrack != "Yes") || (IsSoundtrack == "Yes" && filed.Is_Soundtrack == "Yes"))
+                    /*66.Duplicate manag.ignores FullAlbum Songs */
+                    || (GetParam(66) && ((filed.Is_FullAlbum == "Yes" && IsFullAlbum != "Yes")
+                    || (IsFullAlbum == "Yes" && filed.Is_FullAlbum != "Yes") || (IsFullAlbum == "Yes" && filed.Is_FullAlbum == "Yes"))
+                    /*66.Duplicate manag.ignores Uncensored Songs */
+                    || (GetParam(66) && ((filed.Is_Uncensored == "Yes" && IsUncensored != "Yes")
+                    || (IsUncensored == "Yes" && filed.Is_Uncensored != "Yes") || (IsUncensored == "Yes" && filed.Is_Uncensored == "Yes"))))))))))))
                 {
                     dupli_reason += "autom: Initially assed as alternate cause multitrack/live/aCOUSRTIC."; timestamp = UpdateLog(timestamp, dupli_reason, true, txt_TempPath.Text, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
                     return "Alternate;" + dupli_reason;/*autom: alt*/
                 }
             }
-            if (chbx_Additional_Manipulations.GetItemChecked(50) && j == 0) return ";" + dupli_reason + " no automated filterin";
+            if (GetParam(50) && j == 0) return ";" + dupli_reason + " no automated filterin";
 
-            if (chbx_Additional_Manipulations.GetItemChecked(83)) return "Ignore;" + dupli_reason + " . Duplication defaulted by Option 83." +
+            if (GetParam(83)) return "Ignore;" + dupli_reason + " . Duplication defaulted by Option 83." +
                     "";
             frm_Duplicates_Management frm1 = new frm_Duplicates_Management(filed, datas, Fauthor, tkversion, DD, Bass, Guitar, Combo,
                 Rhythm, Lead, Vocalss, tunnings, i, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, xmlhlist, jsonhlist,
                 (chbx_DefaultDB.Checked == true ? MyAppWD : txt_DBFolder.Text), clist, dlist, newold, Is_Original, altver,
-                txt_RocksmithDLCPath.Text, chbx_Additional_Manipulations.GetItemChecked(39), chbx_Additional_Manipulations.GetItemChecked(40),
-                fsz, unpackedDir, Is_MultiTrack, MultiTrack_Version, FileDate, title_duplic, platform, IsLive, LiveDetails, IsAcoustic,
-                cnb, dupli_reason, lengty, allothers, 0, cxmlhlist, snghlist, filehash);
+                txt_RocksmithDLCPath.Text, GetParam(39), GetParam(40),
+                fsz, unpackedDir, Is_MultiTrack == "No" ? "" : Is_MultiTrack, MultiTrack_Version, FileDate, title_duplic, platform, IsLive == "No" ? "" : IsLive, LiveDetails, IsAcoustic == "No" ? "" : IsAcoustic,
+                cnb, dupli_reason, lengty, allothers, 0, cxmlhlist, snghlist, filehash
+                , IsInstrumental == "No" ? "" : IsInstrumental, IsSoundtrack == "No" ? "" : IsSoundtrack, IsFullAlbum == "No" ? "" : IsFullAlbum, IsSingle == "No" ? "" : IsSingle, IsEP == "No" ? "" : IsEP, IsUncensored == "No" ? "" : IsUncensored, IsRemastered == "No" ? "" : IsRemastered
+                , InTheWorks == "No" ? "" : InTheWorks);
             frm1.ShowDialog();
-            if (frm1.Author != author) if (frm1.Author == "Custom Song Creator" && chbx_Additional_Manipulations.GetItemChecked(47)) author = "";
-                else author = frm1.Author;
+            if (frm1.Author != author) if (frm1.Author == "Custom Song Creator" && GetParam(57)) author = "";
+                else author = frm1.Author == "Custom Song Creator" && GetParam(47) ? "Custom Song Creator" : frm1.Author;
             if (frm1.Description != description) description = frm1.Description;
             if (frm1.Comment != comment) comment = frm1.Comment;
             if (frm1.Title != SongDisplayName)
-                if (chbx_Additional_Manipulations.GetItemChecked(46)) SongDisplayName = frm1.Title;
+                if (GetParam(46)) SongDisplayName = frm1.Title;
             if (frm1.Version != tkversion) PackageVersion = frm1.Version;
             if (frm1.DLCID != Namee) Namee = frm1.DLCID;
             if (frm1.Is_Alternate != Is_Alternate) Is_Alternate = frm1.Is_Alternate;
@@ -6450,8 +7057,16 @@ namespace RocksmithToolkitGUI.DLCManager
             if (frm1.MultiTV != "") MultiTrack_Version = frm1.MultiTV;
 
             if (frm1.isLive != "") IsLive = frm1.isLive;
-            if (frm1.isAcoustic != "") IsLive = frm1.isAcoustic;
             if (frm1.liveDetails != "") LiveDetails = frm1.liveDetails;
+            if (frm1.isAcoustic != "") IsAcoustic = frm1.isAcoustic;
+            if (frm1.isInstrumental != "") IsInstrumental = frm1.isInstrumental;
+            if (frm1.isSoundtrack != "") IsSoundtrack = frm1.isSoundtrack;
+            if (frm1.isFullAlbum != "") IsFullAlbum = frm1.isFullAlbum;
+            if (frm1.isSingle != "") IsSingle = frm1.isSingle;
+            if (frm1.isEP != "") IsEP = frm1.isEP;
+            if (frm1.isUncensored != "") IsUncensored = frm1.isUncensored;
+            if (frm1.isRemastered != "") IsRemastered = frm1.isRemastered;
+            if (frm1.inTheWorks != "") InTheWorks = frm1.inTheWorks;
             if (frm1.YouTube_Link != "") YouTube_Link = frm1.YouTube_Link;
             if (frm1.CustomsForge_Link != "") CustomsForge_Link = frm1.CustomsForge_Link;
             if (frm1.CustomsForge_Like != "") CustomsForge_Like = frm1.CustomsForge_Like;
@@ -6516,23 +7131,22 @@ namespace RocksmithToolkitGUI.DLCManager
             var starttmp = DateTime.Now;
             var Log_PSPath = c("dlcm_TempPath") + "\\0_log";
             // Clean temp log
-            var fnl = (logPath == null || !Directory.Exists(logPath) ? c("dlcm_TempPath") + "\\0_log" : logPath) + "\\" + "current_temp.txt";
+            var fnl = (logPath == null || !Directory.Exists(logPath) ? c("dlcm_TempPath") + "\\0_log" : logPath) + "\\" + c("dlcm_Split4Pack") + "current_temp.txt";
             //var starttmp = DateTime.Now;
-            if (File.Exists((logPath == null || !Directory.Exists(logPath) ? Log_PSPath : logPath) + "\\" + "current_temp.txt"))
+            if (File.Exists((logPath == null || !Directory.Exists(logPath) ? Log_PSPath : logPath) + "\\" + c("dlcm_Split4Pack") + "current_temp.txt"))
             {
-                File.Copy((logPath == null || !Directory.Exists(logPath) ? Log_PSPath : logPath) + "\\" + "current_temp.txt"
-                      , (logPath == null || !Directory.Exists(logPath) ? Log_PSPath : logPath) + "\\" + "current_temp" + startT + ".txt", true);
-                FileStream swt = File.Open((logPath == null || !Directory.Exists(logPath) ? Log_PSPath : logPath) + "\\" + "current_temp.txt", FileMode.Create);
+                File.Copy((logPath == null || !Directory.Exists(logPath) ? Log_PSPath : logPath) + "\\" + c("dlcm_Split4Pack") + "current_temp.txt"
+                      , (logPath == null || !Directory.Exists(logPath) ? Log_PSPath : logPath) + "\\" + c("dlcm_Split4Pack") + "current_temp" + startT + ".txt", true);
+                FileStream swt = File.Open((logPath == null || !Directory.Exists(logPath) ? Log_PSPath : logPath) + "\\" + c("dlcm_Split4Pack") + "current_temp.txt", FileMode.Create);
                 swt.Dispose();
             }
             else
             {
-                FileStream swt = File.Open((logPath == null || !Directory.Exists(logPath) ? Log_PSPath : logPath) + "\\" + "current_temp.txt", FileMode.Create);
+                FileStream swt = File.Open((logPath == null || !Directory.Exists(logPath) ? Log_PSPath : logPath) + "\\" + c("dlcm_Split4Pack") + "current_temp.txt", FileMode.Create);
                 swt.Dispose();
             }
 
-            var tst = "Starting... " + startT; timestamp = UpdateLog(starttmp, tst, true, c("dlcm_TempPath"), "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
-
+            var tst = "Starting... " + startT; timestamp = UpdateLog(starttmp, tst, true, c("dlcm_TempPath"), c("dlcm_Split4Pack"), "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
         }
 
         private void DLCManager_Enter(object sender, EventArgs e)
@@ -6666,9 +7280,21 @@ namespace RocksmithToolkitGUI.DLCManager
             pB_ReadDLCs.Step = 1;
             pB_ReadDLCs.Value = 1;
             if (chbx_Configurations.Text == "Select Profile") return;
-            DataSet ds = new DataSet(); ds = SelectFromDB("Groups", "SELECT Groups, Comments FROM Groups WHERE Profile_Name=\"" + chbx_Configurations.Text + "\" ORDER BY Comments ASC", txt_DBFolder.Text, cnb);
+            DataSet ds = new DataSet(); ds = SelectFromDB("Groups", "SELECT Groups, Comments FROM Groups WHERE Profile_Name=\"" + chbx_Configurations.Text
+                + "\" ORDER BY Comments ASC", txt_DBFolder.Text, cnb);
             var norec = 0; var tst = "";
-            if (ds.Tables.Count > 0) norec = ds.Tables[0].Rows.Count;
+            if (ds.Tables.Count > 0)
+                norec = ds.Tables[0].Rows.Count;
+            else
+            {
+                ds = SelectFromDB("Groups", "SELECT Groups, Comments FROM Groups WHERE Profile_Name=\"Default\" ORDER BY Comments ASC", txt_DBFolder.Text, cnb);
+                if (ds.Tables.Count > 0)
+                {
+                    norec = ds.Tables[0].Rows.Count;
+                    MessageBox.Show("Since profile " + chbx_Configurations.Text + " is missing, defaulted to Default", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else MessageBox.Show("No profile name found for " + chbx_Configurations.Text, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
             if (norec > 0)
             {
                 ConfigRepository.Instance()["dlcm_Grouping"] = "";
@@ -6689,23 +7315,27 @@ namespace RocksmithToolkitGUI.DLCManager
                 }
                 else
                     for (int j = 0; j < norec; j++)
+                    {
+                        if (ds.Tables[0].Rows[j].ItemArray[1].ToString() == "dlcm_AdditionalManipul89")
+                            ;
                         ConfigRepository.Instance()[ds.Tables[0].Rows[j].ItemArray[1].ToString()] = ds.Tables[0].Rows[j].ItemArray[0].ToString();
+                    }
 
                 pB_ReadDLCs.Increment(1);
             }
 
             if (chbx_Configurations.Text == ConfigRepository.Instance()["dlcm_DebugProfile"])
             {
-                chbx_Additional_Manipulations.SetItemCheckState(15, CheckState.Unchecked);//move to old
-                chbx_Additional_Manipulations.SetItemCheckState(49, CheckState.Unchecked);//ftp
-                chbx_Additional_Manipulations.SetItemCheckState(24, CheckState.Unchecked);//apply standard
-                chbx_Additional_Manipulations.SetItemCheckState(77, CheckState.Unchecked);//dont open main db
-                chbx_Additional_Manipulations.SetItemCheckState(75, CheckState.Checked);//copy to old
-                chbx_Additional_Manipulations.SetItemCheckState(34, CheckState.Unchecked);//audio
-                chbx_Additional_Manipulations.SetItemCheckState(55, CheckState.Unchecked);//audio
-                chbx_Additional_Manipulations.SetItemCheckState(69, CheckState.Unchecked);//audio
-                chbx_Additional_Manipulations.SetItemCheckState(78, CheckState.Unchecked);//audio
-                                                                                          //chbx_CleanDB.Checked = true;
+                chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(15), CheckState.Unchecked);//move to old
+                chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(49), CheckState.Unchecked);//ftp
+                chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(24), CheckState.Unchecked);//apply standard
+                chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(77), CheckState.Unchecked);//dont open main db
+                chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(75), CheckState.Checked);//copy to old
+                chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(34), CheckState.Unchecked);//audio
+                chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(55), CheckState.Unchecked);//audio
+                chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(69), CheckState.Unchecked);//audio
+                chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(78), CheckState.Unchecked);//audio
+                                                                                                            //chbx_CleanDB.Checked = true;
                 chbx_CleanTemp.Checked = true;
                 chbx_DebugB.Checked = true;
             }
@@ -6826,6 +7456,24 @@ namespace RocksmithToolkitGUI.DLCManager
         private void cbx_Lyric_Info_SelectedIndexChanged(object sender, EventArgs e)
         {
             txt_Lyric_Info.Text += cbx_Lyric_Info.Items[cbx_Lyric_Info.SelectedIndex].ToString();
+        }
+
+        private void btn_FilterParams_Click(object sender, EventArgs e)
+        {
+            int i;
+            if (FiltrParams || chbx_Additional_Manipulations.SelectedIndex + 1 >= chbx_Additional_Manipulations.Items.Count) i = chbx_Additional_Manipulations.SelectedIndex + 1;
+            else i = 0;
+            FiltrParams = true;
+
+            var index = 0;
+            //int index = chbx_Additional_Manipulations.Items.IndexOf(txt_FilterParams.Text);
+            for (int j = i; j < chbx_Additional_Manipulations.Items.Count; j++)
+                if ((chbx_Additional_Manipulations.Items[j].ToString().ToLower()).IndexOf(txt_FilterParams.Text.ToLower()) >= 0)
+                {
+                    index = j;
+                    break;
+                }
+            if (index >= 0) chbx_Additional_Manipulations.SetSelected(index, true);
         }
     }
 }

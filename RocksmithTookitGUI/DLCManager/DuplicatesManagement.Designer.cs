@@ -236,6 +236,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_CommentSimilar = new System.Windows.Forms.Button();
             this.lbl_FileHash = new System.Windows.Forms.Label();
             this.btn_OpenStandardization = new System.Windows.Forms.Button();
+            this.chbx_DescriptionSave = new System.Windows.Forms.CheckBox();
             this.lbl_Covers = new System.Windows.Forms.Label();
             this.lbl_LenghtNew = new System.Windows.Forms.Label();
             this.lbl_LenghtExisting = new System.Windows.Forms.Label();
@@ -284,6 +285,26 @@ namespace RocksmithToolkitGUI.DLCManager
             this.lbl_YearNew = new System.Windows.Forms.Label();
             this.lbl_IDNew = new System.Windows.Forms.Label();
             this.lbl_ExistingIs_Original = new System.Windows.Forms.Label();
+            this.chbx_SingleNew = new System.Windows.Forms.CheckBox();
+            this.chbx_EPNew = new System.Windows.Forms.CheckBox();
+            this.chbx_SoundtrackNew = new System.Windows.Forms.CheckBox();
+            this.chbx_InstrumentalNew = new System.Windows.Forms.CheckBox();
+            this.chbx_UncensoredNew = new System.Windows.Forms.CheckBox();
+            this.chbx_FullAlbumNew = new System.Windows.Forms.CheckBox();
+            this.chbx_RemasteredNew = new System.Windows.Forms.CheckBox();
+            this.chbx_FullAlbumExisting = new System.Windows.Forms.CheckBox();
+            this.chbx_InstrumentalExisting = new System.Windows.Forms.CheckBox();
+            this.chbx_SoundtrackExisting = new System.Windows.Forms.CheckBox();
+            this.chbx_SingleExisting = new System.Windows.Forms.CheckBox();
+            this.chbx_UncensoredExisting = new System.Windows.Forms.CheckBox();
+            this.chbx_EPExisting = new System.Windows.Forms.CheckBox();
+            this.chbx_RemasteredExisting = new System.Windows.Forms.CheckBox();
+            this.lbl_P1 = new System.Windows.Forms.Label();
+            this.lbl_P2 = new System.Windows.Forms.Label();
+            this.lbl_P3 = new System.Windows.Forms.Label();
+            this.lbl_P4 = new System.Windows.Forms.Label();
+            this.chbx_InTheWorksNew = new System.Windows.Forms.CheckBox();
+            this.chbx_InTheWorksExisting = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPathNew)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbx_AlbumArtPathExisting)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -340,6 +361,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.lbl_AudioPreview.Size = new System.Drawing.Size(45, 13);
             this.lbl_AudioPreview.TabIndex = 274;
             this.lbl_AudioPreview.Text = "Preview";
+            this.toolTip1.SetToolTip(this.lbl_AudioPreview, "When green Strong Indication of Having the same Source, since Hash is the same.");
             // 
             // lbl_AudioMain
             // 
@@ -350,6 +372,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.lbl_AudioMain.Size = new System.Drawing.Size(34, 13);
             this.lbl_AudioMain.TabIndex = 273;
             this.lbl_AudioMain.Text = "Audio";
+            this.toolTip1.SetToolTip(this.lbl_AudioMain, "When green Strong Indication of Having the same Source, since Hash is the same.");
             // 
             // label12
             // 
@@ -425,7 +448,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.lbl_AlbumArt.AutoSize = true;
             this.lbl_AlbumArt.ForeColor = System.Drawing.Color.DarkGreen;
-            this.lbl_AlbumArt.Location = new System.Drawing.Point(594, 429);
+            this.lbl_AlbumArt.Location = new System.Drawing.Point(620, 430);
             this.lbl_AlbumArt.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_AlbumArt.Name = "lbl_AlbumArt";
             this.lbl_AlbumArt.Size = new System.Drawing.Size(22, 13);
@@ -445,7 +468,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // picbx_AlbumArtPathNew
             // 
-            this.picbx_AlbumArtPathNew.Location = new System.Drawing.Point(430, 372);
+            this.picbx_AlbumArtPathNew.Location = new System.Drawing.Point(478, 373);
             this.picbx_AlbumArtPathNew.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.picbx_AlbumArtPathNew.Name = "picbx_AlbumArtPathNew";
             this.picbx_AlbumArtPathNew.Size = new System.Drawing.Size(140, 140);
@@ -455,7 +478,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // picbx_AlbumArtPathExisting
             // 
-            this.picbx_AlbumArtPathExisting.Location = new System.Drawing.Point(643, 372);
+            this.picbx_AlbumArtPathExisting.Location = new System.Drawing.Point(644, 373);
             this.picbx_AlbumArtPathExisting.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.picbx_AlbumArtPathExisting.Name = "picbx_AlbumArtPathExisting";
             this.picbx_AlbumArtPathExisting.Size = new System.Drawing.Size(140, 140);
@@ -468,7 +491,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_Update.Location = new System.Drawing.Point(654, 116);
             this.btn_Update.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.btn_Update.Name = "btn_Update";
-            this.btn_Update.Size = new System.Drawing.Size(120, 34);
+            this.btn_Update.Size = new System.Drawing.Size(129, 34);
             this.btn_Update.TabIndex = 214;
             this.btn_Update.Text = "Update and Overwrite Existing";
             this.toolTip1.SetToolTip(this.btn_Update, "Archive previously imported sopng and replace its entries with the new CDLC");
@@ -477,11 +500,12 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // chbx_IsAlternateNew
             // 
+            this.chbx_IsAlternateNew.Appearance = System.Windows.Forms.Appearance.Button;
             this.chbx_IsAlternateNew.AutoSize = true;
             this.chbx_IsAlternateNew.Location = new System.Drawing.Point(78, 189);
             this.chbx_IsAlternateNew.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.chbx_IsAlternateNew.Name = "chbx_IsAlternateNew";
-            this.chbx_IsAlternateNew.Size = new System.Drawing.Size(68, 17);
+            this.chbx_IsAlternateNew.Size = new System.Drawing.Size(59, 23);
             this.chbx_IsAlternateNew.TabIndex = 211;
             this.chbx_IsAlternateNew.Text = "Alternate";
             this.chbx_IsAlternateNew.UseVisualStyleBackColor = true;
@@ -492,7 +516,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_Alternate.Location = new System.Drawing.Point(654, 51);
             this.btn_Alternate.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.btn_Alternate.Name = "btn_Alternate";
-            this.btn_Alternate.Size = new System.Drawing.Size(120, 34);
+            this.btn_Alternate.Size = new System.Drawing.Size(129, 34);
             this.btn_Alternate.TabIndex = 212;
             this.btn_Alternate.Text = "Import New as Alternate";
             this.toolTip1.SetToolTip(this.btn_Alternate, "Import and mark it as Alternate (add Alt or Author ; make dlc name/id unique)");
@@ -504,7 +528,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_Ignore.Location = new System.Drawing.Point(654, 82);
             this.btn_Ignore.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.btn_Ignore.Name = "btn_Ignore";
-            this.btn_Ignore.Size = new System.Drawing.Size(120, 34);
+            this.btn_Ignore.Size = new System.Drawing.Size(129, 34);
             this.btn_Ignore.TabIndex = 213;
             this.btn_Ignore.Text = "Ignore New as OLD/Duplicate";
             this.btn_Ignore.UseVisualStyleBackColor = true;
@@ -830,7 +854,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(36, 260);
+            this.label20.Location = new System.Drawing.Point(8, 261);
             this.label20.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(102, 13);
@@ -1044,6 +1068,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.lbl_txt_Vocals.Size = new System.Drawing.Size(39, 13);
             this.lbl_txt_Vocals.TabIndex = 341;
             this.lbl_txt_Vocals.Text = "Vocals";
+            this.toolTip1.SetToolTip(this.lbl_txt_Vocals, "When green Strong Indication of Having the same Source, since Hash is the same.");
             // 
             // btn_TitleNew
             // 
@@ -1303,11 +1328,11 @@ namespace RocksmithToolkitGUI.DLCManager
             this.groupBox2.Controls.Add(this.lbl_JSONCombo);
             this.groupBox2.Controls.Add(this.lbl_JSONRhythm);
             this.groupBox2.Controls.Add(this.label17);
-            this.groupBox2.Location = new System.Drawing.Point(22, 512);
+            this.groupBox2.Location = new System.Drawing.Point(22, 624);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.groupBox2.Size = new System.Drawing.Size(483, 231);
+            this.groupBox2.Size = new System.Drawing.Size(480, 231);
             this.groupBox2.TabIndex = 367;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "XML-notes(BIN/SNG & cleaned XML)/JSON-tone comparison on Last Conversion Date or " +
@@ -1734,11 +1759,12 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // chbx_IsAlternateExisting
             // 
+            this.chbx_IsAlternateExisting.Appearance = System.Windows.Forms.Appearance.Button;
             this.chbx_IsAlternateExisting.AutoSize = true;
-            this.chbx_IsAlternateExisting.Location = new System.Drawing.Point(442, 191);
+            this.chbx_IsAlternateExisting.Location = new System.Drawing.Point(442, 190);
             this.chbx_IsAlternateExisting.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.chbx_IsAlternateExisting.Name = "chbx_IsAlternateExisting";
-            this.chbx_IsAlternateExisting.Size = new System.Drawing.Size(68, 17);
+            this.chbx_IsAlternateExisting.Size = new System.Drawing.Size(59, 23);
             this.chbx_IsAlternateExisting.TabIndex = 368;
             this.chbx_IsAlternateExisting.Text = "Alternate";
             this.chbx_IsAlternateExisting.UseVisualStyleBackColor = true;
@@ -1772,11 +1798,12 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // chbx_MultiTrackExisting
             // 
+            this.chbx_MultiTrackExisting.Appearance = System.Windows.Forms.Appearance.Button;
             this.chbx_MultiTrackExisting.AutoSize = true;
             this.chbx_MultiTrackExisting.Location = new System.Drawing.Point(370, 282);
             this.chbx_MultiTrackExisting.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.chbx_MultiTrackExisting.Name = "chbx_MultiTrackExisting";
-            this.chbx_MultiTrackExisting.Size = new System.Drawing.Size(76, 17);
+            this.chbx_MultiTrackExisting.Size = new System.Drawing.Size(67, 23);
             this.chbx_MultiTrackExisting.TabIndex = 372;
             this.chbx_MultiTrackExisting.Text = "MultiTrack";
             this.chbx_MultiTrackExisting.UseVisualStyleBackColor = true;
@@ -1784,11 +1811,12 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // chbx_MultiTrackNew
             // 
+            this.chbx_MultiTrackNew.Appearance = System.Windows.Forms.Appearance.Button;
             this.chbx_MultiTrackNew.AutoSize = true;
             this.chbx_MultiTrackNew.Location = new System.Drawing.Point(138, 282);
             this.chbx_MultiTrackNew.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.chbx_MultiTrackNew.Name = "chbx_MultiTrackNew";
-            this.chbx_MultiTrackNew.Size = new System.Drawing.Size(76, 17);
+            this.chbx_MultiTrackNew.Size = new System.Drawing.Size(67, 23);
             this.chbx_MultiTrackNew.TabIndex = 373;
             this.chbx_MultiTrackNew.Text = "MultiTrack";
             this.chbx_MultiTrackNew.UseVisualStyleBackColor = true;
@@ -1812,7 +1840,7 @@ namespace RocksmithToolkitGUI.DLCManager
             "Only Drums",
             "Only Vocal",
             "(Only BackTrack)"});
-            this.txt_MultiTrackNew.Location = new System.Drawing.Point(210, 281);
+            this.txt_MultiTrackNew.Location = new System.Drawing.Point(208, 281);
             this.txt_MultiTrackNew.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.txt_MultiTrackNew.Name = "txt_MultiTrackNew";
             this.txt_MultiTrackNew.Size = new System.Drawing.Size(66, 21);
@@ -1845,7 +1873,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.btn_CoverNew.Enabled = false;
             this.btn_CoverNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_CoverNew.Location = new System.Drawing.Point(596, 412);
+            this.btn_CoverNew.Location = new System.Drawing.Point(622, 413);
             this.btn_CoverNew.Margin = new System.Windows.Forms.Padding(2);
             this.btn_CoverNew.Name = "btn_CoverNew";
             this.btn_CoverNew.Size = new System.Drawing.Size(18, 16);
@@ -1858,7 +1886,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.btn_CoverExisting.Enabled = false;
             this.btn_CoverExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_CoverExisting.Location = new System.Drawing.Point(596, 444);
+            this.btn_CoverExisting.Location = new System.Drawing.Point(622, 445);
             this.btn_CoverExisting.Margin = new System.Windows.Forms.Padding(2);
             this.btn_CoverExisting.Name = "btn_CoverExisting";
             this.btn_CoverExisting.Size = new System.Drawing.Size(18, 16);
@@ -1897,7 +1925,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.groupBox3.Controls.Add(this.txt_VocalsExisting);
             this.groupBox3.Controls.Add(this.lbl_txt_Vocals);
             this.groupBox3.Controls.Add(this.lbl_Vocals);
-            this.groupBox3.Location = new System.Drawing.Point(22, 372);
+            this.groupBox3.Location = new System.Drawing.Point(22, 484);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(2, 3, 2, 3);
@@ -2382,7 +2410,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // label32
             // 
             this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(10, 69);
+            this.label32.Location = new System.Drawing.Point(9, 69);
             this.label32.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label32.Name = "label32";
             this.label32.Size = new System.Drawing.Size(27, 13);
@@ -2465,7 +2493,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_UseBrakets.AutoSize = true;
             this.chbx_UseBrakets.Checked = true;
             this.chbx_UseBrakets.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chbx_UseBrakets.Location = new System.Drawing.Point(514, 354);
+            this.chbx_UseBrakets.Location = new System.Drawing.Point(514, 350);
             this.chbx_UseBrakets.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.chbx_UseBrakets.Name = "chbx_UseBrakets";
             this.chbx_UseBrakets.Size = new System.Drawing.Size(280, 17);
@@ -2564,13 +2592,12 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // chbx_LiveExisting
             // 
+            this.chbx_LiveExisting.Appearance = System.Windows.Forms.Appearance.Button;
             this.chbx_LiveExisting.AutoSize = true;
-            this.chbx_LiveExisting.Checked = true;
-            this.chbx_LiveExisting.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chbx_LiveExisting.Location = new System.Drawing.Point(442, 282);
             this.chbx_LiveExisting.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.chbx_LiveExisting.Name = "chbx_LiveExisting";
-            this.chbx_LiveExisting.Size = new System.Drawing.Size(46, 17);
+            this.chbx_LiveExisting.Size = new System.Drawing.Size(37, 23);
             this.chbx_LiveExisting.TabIndex = 407;
             this.chbx_LiveExisting.Text = "Live";
             this.chbx_LiveExisting.UseVisualStyleBackColor = true;
@@ -2578,13 +2605,12 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // chbx_LiveNew
             // 
+            this.chbx_LiveNew.Appearance = System.Windows.Forms.Appearance.Button;
             this.chbx_LiveNew.AutoSize = true;
-            this.chbx_LiveNew.Checked = true;
-            this.chbx_LiveNew.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chbx_LiveNew.Location = new System.Drawing.Point(92, 282);
             this.chbx_LiveNew.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.chbx_LiveNew.Name = "chbx_LiveNew";
-            this.chbx_LiveNew.Size = new System.Drawing.Size(46, 17);
+            this.chbx_LiveNew.Size = new System.Drawing.Size(37, 23);
             this.chbx_LiveNew.TabIndex = 409;
             this.chbx_LiveNew.Text = "Live";
             this.chbx_LiveNew.UseVisualStyleBackColor = true;
@@ -2605,13 +2631,12 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // chbx_AcousticExisting
             // 
+            this.chbx_AcousticExisting.Appearance = System.Windows.Forms.Appearance.Button;
             this.chbx_AcousticExisting.AutoSize = true;
-            this.chbx_AcousticExisting.Checked = true;
-            this.chbx_AcousticExisting.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chbx_AcousticExisting.Location = new System.Drawing.Point(474, 236);
+            this.chbx_AcousticExisting.Location = new System.Drawing.Point(298, 403);
             this.chbx_AcousticExisting.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.chbx_AcousticExisting.Name = "chbx_AcousticExisting";
-            this.chbx_AcousticExisting.Size = new System.Drawing.Size(67, 17);
+            this.chbx_AcousticExisting.Size = new System.Drawing.Size(58, 23);
             this.chbx_AcousticExisting.TabIndex = 413;
             this.chbx_AcousticExisting.Text = "Acoustic";
             this.chbx_AcousticExisting.UseVisualStyleBackColor = true;
@@ -2619,13 +2644,12 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // chbx_AcousticNew
             // 
+            this.chbx_AcousticNew.Appearance = System.Windows.Forms.Appearance.Button;
             this.chbx_AcousticNew.AutoSize = true;
-            this.chbx_AcousticNew.Checked = true;
-            this.chbx_AcousticNew.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chbx_AcousticNew.Location = new System.Drawing.Point(52, 236);
+            this.chbx_AcousticNew.Location = new System.Drawing.Point(216, 403);
             this.chbx_AcousticNew.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.chbx_AcousticNew.Name = "chbx_AcousticNew";
-            this.chbx_AcousticNew.Size = new System.Drawing.Size(67, 17);
+            this.chbx_AcousticNew.Size = new System.Drawing.Size(58, 23);
             this.chbx_AcousticNew.TabIndex = 414;
             this.chbx_AcousticNew.Text = "Acoustic";
             this.chbx_AcousticNew.UseVisualStyleBackColor = true;
@@ -2636,7 +2660,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_NotADuplicate.Location = new System.Drawing.Point(654, 151);
             this.btn_NotADuplicate.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.btn_NotADuplicate.Name = "btn_NotADuplicate";
-            this.btn_NotADuplicate.Size = new System.Drawing.Size(120, 34);
+            this.btn_NotADuplicate.Size = new System.Drawing.Size(129, 34);
             this.btn_NotADuplicate.TabIndex = 415;
             this.btn_NotADuplicate.Text = "(neither) NOT a Duplicate";
             this.toolTip1.SetToolTip(this.btn_NotADuplicate, "Consider the current song as not a duplciate (NOT the same Artist and Title, OR D" +
@@ -2739,15 +2763,30 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_OpenStandardization.UseVisualStyleBackColor = false;
             this.btn_OpenStandardization.Click += new System.EventHandler(this.btn_OpenStandardization_Click);
             // 
+            // chbx_DescriptionSave
+            // 
+            this.chbx_DescriptionSave.AutoSize = true;
+            this.chbx_DescriptionSave.Enabled = false;
+            this.chbx_DescriptionSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chbx_DescriptionSave.Location = new System.Drawing.Point(580, 73);
+            this.chbx_DescriptionSave.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.chbx_DescriptionSave.Name = "chbx_DescriptionSave";
+            this.chbx_DescriptionSave.Size = new System.Drawing.Size(62, 14);
+            this.chbx_DescriptionSave.TabIndex = 451;
+            this.chbx_DescriptionSave.Text = "DescrSave";
+            this.toolTip1.SetToolTip(this.chbx_DescriptionSave, "Copy Replaced Text into Description");
+            this.chbx_DescriptionSave.UseVisualStyleBackColor = true;
+            // 
             // lbl_Covers
             // 
             this.lbl_Covers.AutoSize = true;
-            this.lbl_Covers.Location = new System.Drawing.Point(430, 356);
+            this.lbl_Covers.Location = new System.Drawing.Point(430, 352);
             this.lbl_Covers.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_Covers.Name = "lbl_Covers";
             this.lbl_Covers.Size = new System.Drawing.Size(43, 13);
             this.lbl_Covers.TabIndex = 409;
             this.lbl_Covers.Text = "Covers:";
+            this.toolTip1.SetToolTip(this.lbl_Covers, "When green Strong Indication of Having the same Source, since Hash is the same.");
             // 
             // lbl_LenghtNew
             // 
@@ -2758,6 +2797,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.lbl_LenghtNew.Size = new System.Drawing.Size(40, 13);
             this.lbl_LenghtNew.TabIndex = 410;
             this.lbl_LenghtNew.Text = "Lenght";
+            this.toolTip1.SetToolTip(this.lbl_LenghtNew, "When green Soft Indication of Having the same Source, since lenght is the same.");
             // 
             // lbl_LenghtExisting
             // 
@@ -2882,7 +2922,6 @@ namespace RocksmithToolkitGUI.DLCManager
             // txt_VersionExisting
             // 
             this.txt_VersionExisting.Cue = "Version Existing";
-            this.txt_VersionExisting.Enabled = false;
             this.txt_VersionExisting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_VersionExisting.ForeColor = System.Drawing.Color.Gray;
             this.txt_VersionExisting.Location = new System.Drawing.Point(298, 256);
@@ -2895,10 +2934,9 @@ namespace RocksmithToolkitGUI.DLCManager
             // txt_VersionNew
             // 
             this.txt_VersionNew.Cue = "Version New";
-            this.txt_VersionNew.Enabled = false;
             this.txt_VersionNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_VersionNew.ForeColor = System.Drawing.Color.Gray;
-            this.txt_VersionNew.Location = new System.Drawing.Point(230, 256);
+            this.txt_VersionNew.Location = new System.Drawing.Point(232, 256);
             this.txt_VersionNew.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.txt_VersionNew.Name = "txt_VersionNew";
             this.txt_VersionNew.Size = new System.Drawing.Size(42, 20);
@@ -2959,11 +2997,11 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_FileDateNew.Cue = "Date File";
             this.txt_FileDateNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.2F);
             this.txt_FileDateNew.ForeColor = System.Drawing.Color.Gray;
-            this.txt_FileDateNew.Location = new System.Drawing.Point(146, 258);
+            this.txt_FileDateNew.Location = new System.Drawing.Point(113, 258);
             this.txt_FileDateNew.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.txt_FileDateNew.Name = "txt_FileDateNew";
             this.txt_FileDateNew.ReadOnly = true;
-            this.txt_FileDateNew.Size = new System.Drawing.Size(82, 18);
+            this.txt_FileDateNew.Size = new System.Drawing.Size(115, 18);
             this.txt_FileDateNew.TabIndex = 404;
             this.txt_FileDateNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -2976,7 +3014,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_FileDateExisting.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.txt_FileDateExisting.Name = "txt_FileDateExisting";
             this.txt_FileDateExisting.ReadOnly = true;
-            this.txt_FileDateExisting.Size = new System.Drawing.Size(78, 18);
+            this.txt_FileDateExisting.Size = new System.Drawing.Size(108, 18);
             this.txt_FileDateExisting.TabIndex = 403;
             // 
             // txt_SizeExisting
@@ -3325,13 +3363,271 @@ namespace RocksmithToolkitGUI.DLCManager
             this.lbl_ExistingIs_Original.TabIndex = 432;
             this.lbl_ExistingIs_Original.Text = "Is Official";
             // 
+            // chbx_SingleNew
+            // 
+            this.chbx_SingleNew.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chbx_SingleNew.AutoSize = true;
+            this.chbx_SingleNew.Location = new System.Drawing.Point(228, 375);
+            this.chbx_SingleNew.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.chbx_SingleNew.Name = "chbx_SingleNew";
+            this.chbx_SingleNew.Size = new System.Drawing.Size(46, 23);
+            this.chbx_SingleNew.TabIndex = 433;
+            this.chbx_SingleNew.Text = "Single";
+            this.chbx_SingleNew.UseVisualStyleBackColor = true;
+            // 
+            // chbx_EPNew
+            // 
+            this.chbx_EPNew.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chbx_EPNew.AutoSize = true;
+            this.chbx_EPNew.Location = new System.Drawing.Point(243, 431);
+            this.chbx_EPNew.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.chbx_EPNew.Name = "chbx_EPNew";
+            this.chbx_EPNew.Size = new System.Drawing.Size(31, 23);
+            this.chbx_EPNew.TabIndex = 434;
+            this.chbx_EPNew.Text = "EP";
+            this.chbx_EPNew.UseVisualStyleBackColor = true;
+            // 
+            // chbx_SoundtrackNew
+            // 
+            this.chbx_SoundtrackNew.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chbx_SoundtrackNew.AutoSize = true;
+            this.chbx_SoundtrackNew.Location = new System.Drawing.Point(202, 460);
+            this.chbx_SoundtrackNew.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.chbx_SoundtrackNew.Name = "chbx_SoundtrackNew";
+            this.chbx_SoundtrackNew.Size = new System.Drawing.Size(72, 23);
+            this.chbx_SoundtrackNew.TabIndex = 435;
+            this.chbx_SoundtrackNew.Text = "Soundtrack";
+            this.chbx_SoundtrackNew.UseVisualStyleBackColor = true;
+            // 
+            // chbx_InstrumentalNew
+            // 
+            this.chbx_InstrumentalNew.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chbx_InstrumentalNew.AutoSize = true;
+            this.chbx_InstrumentalNew.Location = new System.Drawing.Point(155, 375);
+            this.chbx_InstrumentalNew.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.chbx_InstrumentalNew.Name = "chbx_InstrumentalNew";
+            this.chbx_InstrumentalNew.Size = new System.Drawing.Size(74, 23);
+            this.chbx_InstrumentalNew.TabIndex = 436;
+            this.chbx_InstrumentalNew.Text = "Instrumental";
+            this.chbx_InstrumentalNew.UseVisualStyleBackColor = true;
+            // 
+            // chbx_UncensoredNew
+            // 
+            this.chbx_UncensoredNew.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chbx_UncensoredNew.AutoSize = true;
+            this.chbx_UncensoredNew.Location = new System.Drawing.Point(128, 460);
+            this.chbx_UncensoredNew.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.chbx_UncensoredNew.Name = "chbx_UncensoredNew";
+            this.chbx_UncensoredNew.Size = new System.Drawing.Size(75, 23);
+            this.chbx_UncensoredNew.TabIndex = 437;
+            this.chbx_UncensoredNew.Text = "Uncensored";
+            this.chbx_UncensoredNew.UseVisualStyleBackColor = true;
+            // 
+            // chbx_FullAlbumNew
+            // 
+            this.chbx_FullAlbumNew.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chbx_FullAlbumNew.AutoSize = true;
+            this.chbx_FullAlbumNew.Location = new System.Drawing.Point(153, 403);
+            this.chbx_FullAlbumNew.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.chbx_FullAlbumNew.Name = "chbx_FullAlbumNew";
+            this.chbx_FullAlbumNew.Size = new System.Drawing.Size(64, 23);
+            this.chbx_FullAlbumNew.TabIndex = 438;
+            this.chbx_FullAlbumNew.Text = "Full album";
+            this.chbx_FullAlbumNew.UseVisualStyleBackColor = true;
+            // 
+            // chbx_RemasteredNew
+            // 
+            this.chbx_RemasteredNew.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chbx_RemasteredNew.AutoSize = true;
+            this.chbx_RemasteredNew.Location = new System.Drawing.Point(170, 431);
+            this.chbx_RemasteredNew.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.chbx_RemasteredNew.Name = "chbx_RemasteredNew";
+            this.chbx_RemasteredNew.Size = new System.Drawing.Size(74, 23);
+            this.chbx_RemasteredNew.TabIndex = 439;
+            this.chbx_RemasteredNew.Text = "Remastered";
+            this.chbx_RemasteredNew.UseVisualStyleBackColor = true;
+            this.chbx_RemasteredNew.CheckedChanged += new System.EventHandler(this.checkBox7_CheckedChanged);
+            // 
+            // chbx_FullAlbumExisting
+            // 
+            this.chbx_FullAlbumExisting.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chbx_FullAlbumExisting.AutoSize = true;
+            this.chbx_FullAlbumExisting.Location = new System.Drawing.Point(355, 403);
+            this.chbx_FullAlbumExisting.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.chbx_FullAlbumExisting.Name = "chbx_FullAlbumExisting";
+            this.chbx_FullAlbumExisting.Size = new System.Drawing.Size(64, 23);
+            this.chbx_FullAlbumExisting.TabIndex = 440;
+            this.chbx_FullAlbumExisting.Text = "Full album";
+            this.chbx_FullAlbumExisting.UseVisualStyleBackColor = true;
+            // 
+            // chbx_InstrumentalExisting
+            // 
+            this.chbx_InstrumentalExisting.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chbx_InstrumentalExisting.AutoSize = true;
+            this.chbx_InstrumentalExisting.Location = new System.Drawing.Point(343, 375);
+            this.chbx_InstrumentalExisting.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.chbx_InstrumentalExisting.Name = "chbx_InstrumentalExisting";
+            this.chbx_InstrumentalExisting.Size = new System.Drawing.Size(74, 23);
+            this.chbx_InstrumentalExisting.TabIndex = 442;
+            this.chbx_InstrumentalExisting.Text = "Instrumental";
+            this.chbx_InstrumentalExisting.UseVisualStyleBackColor = true;
+            // 
+            // chbx_SoundtrackExisting
+            // 
+            this.chbx_SoundtrackExisting.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chbx_SoundtrackExisting.AutoSize = true;
+            this.chbx_SoundtrackExisting.Location = new System.Drawing.Point(298, 460);
+            this.chbx_SoundtrackExisting.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.chbx_SoundtrackExisting.Name = "chbx_SoundtrackExisting";
+            this.chbx_SoundtrackExisting.Size = new System.Drawing.Size(72, 23);
+            this.chbx_SoundtrackExisting.TabIndex = 441;
+            this.chbx_SoundtrackExisting.Text = "Soundtrack";
+            this.chbx_SoundtrackExisting.UseVisualStyleBackColor = true;
+            // 
+            // chbx_SingleExisting
+            // 
+            this.chbx_SingleExisting.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chbx_SingleExisting.AutoSize = true;
+            this.chbx_SingleExisting.Location = new System.Drawing.Point(298, 375);
+            this.chbx_SingleExisting.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.chbx_SingleExisting.Name = "chbx_SingleExisting";
+            this.chbx_SingleExisting.Size = new System.Drawing.Size(46, 23);
+            this.chbx_SingleExisting.TabIndex = 443;
+            this.chbx_SingleExisting.Text = "Single";
+            this.chbx_SingleExisting.UseVisualStyleBackColor = true;
+            // 
+            // chbx_UncensoredExisting
+            // 
+            this.chbx_UncensoredExisting.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chbx_UncensoredExisting.AutoSize = true;
+            this.chbx_UncensoredExisting.Location = new System.Drawing.Point(369, 460);
+            this.chbx_UncensoredExisting.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.chbx_UncensoredExisting.Name = "chbx_UncensoredExisting";
+            this.chbx_UncensoredExisting.Size = new System.Drawing.Size(75, 23);
+            this.chbx_UncensoredExisting.TabIndex = 444;
+            this.chbx_UncensoredExisting.Text = "Uncensored";
+            this.chbx_UncensoredExisting.UseVisualStyleBackColor = true;
+            // 
+            // chbx_EPExisting
+            // 
+            this.chbx_EPExisting.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chbx_EPExisting.AutoSize = true;
+            this.chbx_EPExisting.Location = new System.Drawing.Point(298, 431);
+            this.chbx_EPExisting.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.chbx_EPExisting.Name = "chbx_EPExisting";
+            this.chbx_EPExisting.Size = new System.Drawing.Size(31, 23);
+            this.chbx_EPExisting.TabIndex = 445;
+            this.chbx_EPExisting.Text = "EP";
+            this.chbx_EPExisting.UseVisualStyleBackColor = true;
+            // 
+            // chbx_RemasteredExisting
+            // 
+            this.chbx_RemasteredExisting.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chbx_RemasteredExisting.AutoSize = true;
+            this.chbx_RemasteredExisting.Location = new System.Drawing.Point(328, 431);
+            this.chbx_RemasteredExisting.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.chbx_RemasteredExisting.Name = "chbx_RemasteredExisting";
+            this.chbx_RemasteredExisting.Size = new System.Drawing.Size(74, 23);
+            this.chbx_RemasteredExisting.TabIndex = 446;
+            this.chbx_RemasteredExisting.Text = "Remastered";
+            this.chbx_RemasteredExisting.UseVisualStyleBackColor = true;
+            // 
+            // lbl_P1
+            // 
+            this.lbl_P1.AutoSize = true;
+            this.lbl_P1.ForeColor = System.Drawing.Color.DarkGreen;
+            this.lbl_P1.Location = new System.Drawing.Point(276, 380);
+            this.lbl_P1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbl_P1.Name = "lbl_P1";
+            this.lbl_P1.Size = new System.Drawing.Size(22, 13);
+            this.lbl_P1.TabIndex = 447;
+            this.lbl_P1.Text = "Vs.";
+            // 
+            // lbl_P2
+            // 
+            this.lbl_P2.AutoSize = true;
+            this.lbl_P2.ForeColor = System.Drawing.Color.DarkGreen;
+            this.lbl_P2.Location = new System.Drawing.Point(276, 408);
+            this.lbl_P2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbl_P2.Name = "lbl_P2";
+            this.lbl_P2.Size = new System.Drawing.Size(22, 13);
+            this.lbl_P2.TabIndex = 448;
+            this.lbl_P2.Text = "Vs.";
+            // 
+            // lbl_P3
+            // 
+            this.lbl_P3.AutoSize = true;
+            this.lbl_P3.ForeColor = System.Drawing.Color.DarkGreen;
+            this.lbl_P3.Location = new System.Drawing.Point(276, 436);
+            this.lbl_P3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbl_P3.Name = "lbl_P3";
+            this.lbl_P3.Size = new System.Drawing.Size(22, 13);
+            this.lbl_P3.TabIndex = 449;
+            this.lbl_P3.Text = "Vs.";
+            // 
+            // lbl_P4
+            // 
+            this.lbl_P4.AutoSize = true;
+            this.lbl_P4.ForeColor = System.Drawing.Color.DarkGreen;
+            this.lbl_P4.Location = new System.Drawing.Point(276, 465);
+            this.lbl_P4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbl_P4.Name = "lbl_P4";
+            this.lbl_P4.Size = new System.Drawing.Size(22, 13);
+            this.lbl_P4.TabIndex = 450;
+            this.lbl_P4.Text = "Vs.";
+            // 
+            // chbx_InTheWorksNew
+            // 
+            this.chbx_InTheWorksNew.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chbx_InTheWorksNew.AutoSize = true;
+            this.chbx_InTheWorksNew.Location = new System.Drawing.Point(95, 431);
+            this.chbx_InTheWorksNew.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.chbx_InTheWorksNew.Name = "chbx_InTheWorksNew";
+            this.chbx_InTheWorksNew.Size = new System.Drawing.Size(76, 23);
+            this.chbx_InTheWorksNew.TabIndex = 452;
+            this.chbx_InTheWorksNew.Text = "InTheWorks";
+            this.chbx_InTheWorksNew.UseVisualStyleBackColor = true;
+            // 
+            // chbx_InTheWorksExisting
+            // 
+            this.chbx_InTheWorksExisting.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chbx_InTheWorksExisting.AutoSize = true;
+            this.chbx_InTheWorksExisting.Location = new System.Drawing.Point(401, 431);
+            this.chbx_InTheWorksExisting.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.chbx_InTheWorksExisting.Name = "chbx_InTheWorksExisting";
+            this.chbx_InTheWorksExisting.Size = new System.Drawing.Size(76, 23);
+            this.chbx_InTheWorksExisting.TabIndex = 453;
+            this.chbx_InTheWorksExisting.Text = "InTheWorks";
+            this.chbx_InTheWorksExisting.UseVisualStyleBackColor = true;
+            // 
             // frm_Duplicates_Management
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(802, 744);
+            this.ClientSize = new System.Drawing.Size(796, 855);
+            this.Controls.Add(this.chbx_InTheWorksExisting);
+            this.Controls.Add(this.chbx_InTheWorksNew);
+            this.Controls.Add(this.chbx_DescriptionSave);
+            this.Controls.Add(this.lbl_P4);
+            this.Controls.Add(this.lbl_P3);
+            this.Controls.Add(this.lbl_P2);
+            this.Controls.Add(this.lbl_P1);
+            this.Controls.Add(this.chbx_RemasteredExisting);
+            this.Controls.Add(this.chbx_EPExisting);
+            this.Controls.Add(this.chbx_UncensoredExisting);
+            this.Controls.Add(this.chbx_SingleExisting);
+            this.Controls.Add(this.chbx_InstrumentalExisting);
+            this.Controls.Add(this.chbx_SoundtrackExisting);
+            this.Controls.Add(this.chbx_FullAlbumExisting);
+            this.Controls.Add(this.chbx_RemasteredNew);
+            this.Controls.Add(this.chbx_FullAlbumNew);
+            this.Controls.Add(this.chbx_UncensoredNew);
+            this.Controls.Add(this.chbx_InstrumentalNew);
+            this.Controls.Add(this.chbx_SoundtrackNew);
+            this.Controls.Add(this.chbx_EPNew);
+            this.Controls.Add(this.chbx_SingleNew);
             this.Controls.Add(this.lbl_ExistingIs_Original);
             this.Controls.Add(this.btn_OpenStandardization);
             this.Controls.Add(this.lbl_FileHash);
@@ -3744,5 +4040,26 @@ namespace RocksmithToolkitGUI.DLCManager
         private Label lbl_FileHash;
         private Button btn_OpenStandardization;
         private Label lbl_ExistingIs_Original;
+        private CheckBox chbx_SingleNew;
+        private CheckBox chbx_EPNew;
+        private CheckBox chbx_SoundtrackNew;
+        private CheckBox chbx_InstrumentalNew;
+        private CheckBox chbx_UncensoredNew;
+        private CheckBox chbx_FullAlbumNew;
+        private CheckBox chbx_RemasteredNew;
+        private CheckBox chbx_FullAlbumExisting;
+        private CheckBox chbx_InstrumentalExisting;
+        private CheckBox chbx_SoundtrackExisting;
+        private CheckBox chbx_SingleExisting;
+        private CheckBox chbx_UncensoredExisting;
+        private CheckBox chbx_EPExisting;
+        private CheckBox chbx_RemasteredExisting;
+        private Label lbl_P1;
+        private Label lbl_P2;
+        private Label lbl_P3;
+        private Label lbl_P4;
+        private CheckBox chbx_DescriptionSave;
+        private CheckBox chbx_InTheWorksNew;
+        private CheckBox chbx_InTheWorksExisting;
     }
 }

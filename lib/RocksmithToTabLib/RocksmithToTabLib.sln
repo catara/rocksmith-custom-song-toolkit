@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RocksmithToTabLib", "RocksmithToTabLib.csproj", "{A391030A-8289-4B6A-8117-1C7995808AD5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug Build CLI|x86 = Debug Build CLI|x86
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A391030A-8289-4B6A-8117-1C7995808AD5}.Debug Build CLI|x86.ActiveCfg = Debug Build CLI|x86
+		{A391030A-8289-4B6A-8117-1C7995808AD5}.Debug Build CLI|x86.Build.0 = Debug Build CLI|x86
+		{A391030A-8289-4B6A-8117-1C7995808AD5}.Debug|x86.ActiveCfg = Debug|x86
+		{A391030A-8289-4B6A-8117-1C7995808AD5}.Debug|x86.Build.0 = Debug|x86
+		{A391030A-8289-4B6A-8117-1C7995808AD5}.Release|x86.ActiveCfg = Release|x86
+		{A391030A-8289-4B6A-8117-1C7995808AD5}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C3FE8283-CCC9-4F49-98F5-A0F1D13F849B}
+	EndGlobalSection
+EndGlobal

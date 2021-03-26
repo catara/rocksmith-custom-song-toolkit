@@ -94,7 +94,7 @@ namespace RocksmithToolkitLib.DLCPackage
         /// <returns>Unpacked Directory Path</returns>
         public static string Unpack(string srcPath, string destDirPath, Platform overridePlatform = null, bool decodeAudio = false, bool overwriteSongXml = false)
         {
-            var ps4 = false;
+            var ps4 = false;//bcapi
             ExternalApps.VerifyExternalApps();
             Platform srcPlatform;
 
@@ -216,20 +216,6 @@ namespace RocksmithToolkitLib.DLCPackage
                             dynamic xmlContent = null;
 
                             if (arrType == ArrangementType.Vocal)
-//<<<<<<< HEAD
-//                                xmlContent = new Vocals(sngContent);
-//                            else
-//                                xmlContent = new Song2014(sngContent, att);
-
-//                            xmlContent.Serialize(outputStream);
-//                        }
-
-//                        // capture/preserve any existing xml comments
-//                        IEnumerable<XComment> xmlComments = null;
-//                        if (File.Exists(xmlEofFile))
-//                            xmlComments = Song2014.ReadXmlComments(xmlEofFile);
-
-//=======
                             {
                                 xmlContent = new Vocals(sngContent);
 
@@ -257,7 +243,6 @@ namespace RocksmithToolkitLib.DLCPackage
                         if (File.Exists(xmlEofFile))
                             xmlComments = Song2014.ReadXmlComments(xmlEofFile);
 
-//>>>>>>> pr/40
                         // correct old toolkit/EOF xml (tuning) issues by syncing with SNG data
                         if (File.Exists(xmlEofFile) && !overwriteSongXml && arrType != ArrangementType.Vocal)
                         {
@@ -668,8 +653,13 @@ namespace RocksmithToolkitLib.DLCPackage
             var psarcDatPath = psarcDatPaths.First();
             var artifactsDir = String.Empty;
 
+            if (!File.Exists(psarcDatPath) || psarcDatPath.IndexOf(",")>=0) //bcapi reducing file name to allow longe file names
+            {
+                File.Copy(psarcDatPath, psarcDatPath.Replace(Path.GetFileName(psarcDatPath),"1"), true);
+                psarcDatPath = psarcDatPath.Replace(Path.GetFileName(psarcDatPath), "1");
+            }
             using (var outputFileStream = File.OpenRead(psarcDatPath))
-                artifactsDir = ExtractPSARC(psarcDatPath, Path.GetDirectoryName(psarcDatPath), outputFileStream, new Platform(GamePlatform.PS3, GameVersion.None));
+                artifactsDir = ExtractPSARC(psarcDatPath, Path.GetDirectoryName(psarcDatPath), outputFileStream, new Platform(GamePlatform.PS3, GameVersion.RS2014)); //bcapi changed to 2014
 
             // cleanup
             if (File.Exists(outputFilename))
@@ -762,7 +752,7 @@ namespace RocksmithToolkitLib.DLCPackage
                     psarc = null;
                 }
 
-                //if (!String.IsNullOrEmpty(errMsg.ToString()))
+                //if (!String.IsNullOrEmpty(errMsg.ToString())) //bcapi
                 //    throw new InvalidDataException(errMsg.ToString());
             }
 

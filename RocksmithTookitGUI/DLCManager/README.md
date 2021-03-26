@@ -219,41 +219,30 @@ calculate all drop down options using pitch shifting systems and display it in m
 
 ## WiP:
 (this release)
-
-
+multi lyrics files (i wanna be your dog)
+check improv sections
+add column for order txt and 
+remove folders after file verification
+v0.9a not detected welcome home sanitarium
+show all same sanitisedtitle not alternate
+checkl Last
+add better sections improve lyrtics song für liam
+add guitar and lyrics to drums
+why is xbox loaded first ..?
+right click: delete, make 1st alternate, duplciate
 
 
 ## done:
 (prev release)
-[-] in any group filter
-[-] in no group filter
-[-] 10427 why no preview 
-[-] search by id had enter search function missing and does not laod fully the song and fucks it up (2nd part not anymore)
-[-] fixed packing summary
-[-] dont ftp delete if remote path not saved
-[-] actually delete ftp at mass repack (no id transmited :))
-[-] rename the debug button to give a clue why there :)
-[-] changed the Error at FTP file not filde to WArning as really not a codding issue and not to trigger debug in update log function
-[-] split version by number name and type :) (fixed Temp group to have same no of things as other, multiplied default to Bogdan as anyway onyl default will go live)
-[-] add Pitch Shifter/Digitec Drop Filter options and meta info or lyrics instructions
-[-] added check on overitting preview/albumart/lyric
-[-] improved meta tags adding to diff songs meta :)
-[-] removed defaulted [] meta seoparators vs adding it from the setup filed itself
-[-] added sorted by pack date
-[-] better reset filters
-[-] improved some of the calc of maindb and slected
-[-] saved historical data (connected also to main by id in import_audittrail)
-[-] displaying historical data
-[-] adding pitch shifting compatible flag from e standard down or from dropd down
-[-] adding multiselect right click inclusion
-[-] add a check after packing that you can psarc works
-[-] fixed owerrite duplciatr manag button text
-[-] if selecting a pack no but not having it selected dont refresh nos
-[-] 37756 repack has weird date
-[-] duplicate songs have "import" pack id in pack_auditrail
-[-] using multiselect for pack, beta
-[-] updates c3custom creators to https://rhythmgamingworld.com/forums/topic/c3-con-tools-v401-8142020-weve-only-just-begun/
-[-] updates Add lyrics instructions
+[-] add other non smilar instr timestamps in duplica mang screen
+[-] make date(to incl hour..seconds...) longer in dupli screen
+[-] add in the works (default also if local user is found) in dupli screen
+[-] load first duplciate iwth the same author
+[-] fix braking bonus
+[-] add max param
+[-] add arang and export into db
+[-] if no configuration is found default to default
+[-] add no groups excl default
 
 
 

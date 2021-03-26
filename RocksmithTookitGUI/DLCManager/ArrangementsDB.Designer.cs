@@ -31,6 +31,9 @@
             this.Panel1 = new System.Windows.Forms.Panel();
             this.CheckBox1 = new System.Windows.Forms.CheckBox();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.chbx_Favorite = new System.Windows.Forms.CheckBox();
+            this.chbx_Primary = new System.Windows.Forms.CheckBox();
+            this.chbx_Default = new System.Windows.Forms.CheckBox();
             this.pB_ReadDLCs = new System.Windows.Forms.ProgressBar();
             this.label30 = new System.Windows.Forms.Label();
             this.txt_MaxDifficulty = new RocksmithToolkitGUI.CueTextBox();
@@ -159,6 +162,9 @@
             // splitContainer2.Panel1
             // 
             this.splitContainer2.Panel1.AutoScroll = true;
+            this.splitContainer2.Panel1.Controls.Add(this.chbx_Favorite);
+            this.splitContainer2.Panel1.Controls.Add(this.chbx_Primary);
+            this.splitContainer2.Panel1.Controls.Add(this.chbx_Default);
             this.splitContainer2.Panel1.Controls.Add(this.pB_ReadDLCs);
             this.splitContainer2.Panel1.Controls.Add(this.label30);
             this.splitContainer2.Panel1.Controls.Add(this.txt_MaxDifficulty);
@@ -251,6 +257,36 @@
             this.splitContainer2.SplitterDistance = 160;
             this.splitContainer2.SplitterWidth = 2;
             this.splitContainer2.TabIndex = 432;
+            // 
+            // chbx_Favorite
+            // 
+            this.chbx_Favorite.AutoSize = true;
+            this.chbx_Favorite.Location = new System.Drawing.Point(991, 3);
+            this.chbx_Favorite.Name = "chbx_Favorite";
+            this.chbx_Favorite.Size = new System.Drawing.Size(64, 17);
+            this.chbx_Favorite.TabIndex = 515;
+            this.chbx_Favorite.Text = "Favorite";
+            this.chbx_Favorite.UseVisualStyleBackColor = true;
+            // 
+            // chbx_Primary
+            // 
+            this.chbx_Primary.AutoSize = true;
+            this.chbx_Primary.Location = new System.Drawing.Point(991, 21);
+            this.chbx_Primary.Name = "chbx_Primary";
+            this.chbx_Primary.Size = new System.Drawing.Size(60, 17);
+            this.chbx_Primary.TabIndex = 514;
+            this.chbx_Primary.Text = "Primary";
+            this.chbx_Primary.UseVisualStyleBackColor = true;
+            // 
+            // chbx_Default
+            // 
+            this.chbx_Default.AutoSize = true;
+            this.chbx_Default.Location = new System.Drawing.Point(935, 72);
+            this.chbx_Default.Name = "chbx_Default";
+            this.chbx_Default.Size = new System.Drawing.Size(60, 17);
+            this.chbx_Default.TabIndex = 513;
+            this.chbx_Default.Text = "Default";
+            this.chbx_Default.UseVisualStyleBackColor = true;
             // 
             // pB_ReadDLCs
             // 
@@ -388,7 +424,6 @@
             // chbx_Broken
             // 
             this.chbx_Broken.AutoSize = true;
-            this.chbx_Broken.Enabled = false;
             this.chbx_Broken.Location = new System.Drawing.Point(935, 23);
             this.chbx_Broken.Name = "chbx_Broken";
             this.chbx_Broken.Size = new System.Drawing.Size(60, 17);
@@ -411,7 +446,6 @@
             // chbx_Bonus
             // 
             this.chbx_Bonus.AutoSize = true;
-            this.chbx_Bonus.Enabled = false;
             this.chbx_Bonus.Location = new System.Drawing.Point(935, 7);
             this.chbx_Bonus.Name = "chbx_Bonus";
             this.chbx_Bonus.Size = new System.Drawing.Size(56, 17);
@@ -559,7 +593,7 @@
             // btn_AddDD
             // 
             this.btn_AddDD.Enabled = false;
-            this.btn_AddDD.Location = new System.Drawing.Point(1027, 28);
+            this.btn_AddDD.Location = new System.Drawing.Point(1049, 26);
             this.btn_AddDD.Name = "btn_AddDD";
             this.btn_AddDD.Size = new System.Drawing.Size(78, 20);
             this.btn_AddDD.TabIndex = 444;
@@ -996,7 +1030,7 @@
             // 
             // label10
             // 
-            this.label10.Location = new System.Drawing.Point(1058, 10);
+            this.label10.Location = new System.Drawing.Point(1108, 7);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(78, 17);
             this.label10.TabIndex = 478;
@@ -1005,7 +1039,7 @@
             // numericUpDown1
             // 
             this.numericUpDown1.Enabled = false;
-            this.numericUpDown1.Location = new System.Drawing.Point(1110, 30);
+            this.numericUpDown1.Location = new System.Drawing.Point(1132, 26);
             this.numericUpDown1.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             8,
@@ -1023,7 +1057,7 @@
             // 
             // txt_Rating
             // 
-            this.txt_Rating.Location = new System.Drawing.Point(1027, 10);
+            this.txt_Rating.Location = new System.Drawing.Point(1077, 7);
             this.txt_Rating.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.txt_Rating.Maximum = new decimal(new int[] {
             5,
@@ -1247,5 +1281,8 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.DataGridView databox;
+        private System.Windows.Forms.CheckBox chbx_Primary;
+        private System.Windows.Forms.CheckBox chbx_Default;
+        private System.Windows.Forms.CheckBox chbx_Favorite;
     }
 }

@@ -8,8 +8,16 @@ namespace RocksmithToolkitLib.XmlRepository
     {
         private const string FILENAME = "RocksmithToolkitLib.Config.xml";
         private static readonly Lazy<ConfigRepository> instance = new Lazy<ConfigRepository>(() => new ConfigRepository());
+        private static readonly Lazy<ConfigRepository> description = new Lazy<ConfigRepository>(() => new ConfigRepository());//bcapi expanding Configs
+        private static readonly Lazy<ConfigRepository> displayname = new Lazy<ConfigRepository>(() => new ConfigRepository());//bcapi expanding Configs
+        private static readonly Lazy<ConfigRepository> displaygroup = new Lazy<ConfigRepository>(() => new ConfigRepository());//bcapi expanding Configs
+        private static readonly Lazy<ConfigRepository> displayposition = new Lazy<ConfigRepository>(() => new ConfigRepository());//bcapi expanding Configs
 
         public static ConfigRepository Instance() { return instance.Value; }
+        //public static ConfigRepository Description() { return description.Description; }//bcapi expanding Configs
+        //public static ConfigRepository DisplayName() { return displayname.DisplayName; }//bcapi expanding Configs
+        //public static ConfigRepository DisplayGroup() { return displaygroup.DisplayGroup; }//bcapi expanding Configs
+        //public static ConfigRepository DisplayPosition() { return displayposition.DisplayPosition; }//bcapi expanding Configs
 
         public ConfigRepository() : base(FILENAME, new ConfigComparer()) { }
 

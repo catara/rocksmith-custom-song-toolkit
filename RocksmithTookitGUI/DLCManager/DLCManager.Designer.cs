@@ -126,6 +126,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_Preview_Lyric_Info = new System.Windows.Forms.Button();
             this.btn_Preview_Album_Sort = new System.Windows.Forms.Button();
             this.btn_Album2SortA = new System.Windows.Forms.Button();
+            this.btn_FilterParams = new System.Windows.Forms.Button();
             this.lbl_Settings = new System.Windows.Forms.Label();
             this.lbl_Log = new System.Windows.Forms.Label();
             this.cbx_Activ_Lyric_Info = new System.Windows.Forms.CheckBox();
@@ -136,6 +137,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.lbl_AlbumSort = new System.Windows.Forms.Label();
             this.cbx_Album_Sort = new System.Windows.Forms.ComboBox();
             this.txt_Album_Sort = new System.Windows.Forms.TextBox();
+            this.txt_FilterParams = new System.Windows.Forms.RichTextBox();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -543,12 +545,110 @@ namespace RocksmithToolkitGUI.DLCManager
             "98. Pack only never packed Songs for the target Platform",
             "99. <If Group pack ignore songs that are also in other Groups>",
             "x100. <Pack anew instead of converting (e.g. Pack Orig file)>",
-            "x101. After packing check song"});
+            "x101. After packing check song",
+            "<102. >",
+            "<103. >",
+            "<104. >",
+            "<105. >",
+            "<106. >",
+            "<107. >",
+            "<108. >",
+            "<109. >",
+            "<110. >",
+            "<111. >",
+            "<112. >",
+            "<113. >",
+            "<114. >",
+            "<115. >",
+            "<116. >",
+            "<117. >",
+            "<118. >",
+            "<119. >",
+            "<120. >",
+            "<121. >",
+            "<122. >",
+            "<123. >",
+            "<124. >",
+            "<125. >",
+            "<126. >",
+            "<127. >",
+            "<128. >",
+            "<129. >",
+            "<130. >",
+            "<131. >",
+            "<132. >",
+            "<133. >",
+            "<134. >",
+            "<135. >",
+            "<136. >",
+            "<137. >",
+            "<138. >",
+            "<139. >",
+            "<140. >",
+            "<141. >",
+            "<142. >",
+            "<143. >",
+            "<144. >",
+            "<145. >",
+            "<146. >",
+            "<147. >",
+            "<148. >",
+            "<149. >",
+            "<150. >",
+            "<151. >",
+            "<152. >",
+            "<153. >",
+            "<154. >",
+            "<155. >",
+            "<156. >",
+            "<157. >",
+            "<158. >",
+            "<159. >",
+            "<160. >",
+            "<161. >",
+            "<162. >",
+            "<163. >",
+            "<164. >",
+            "<165. >",
+            "<166. >",
+            "<167. >",
+            "<168. >",
+            "<169. >",
+            "<170. >",
+            "<171. >",
+            "<172. >",
+            "<173. >",
+            "<174. >",
+            "<175. >",
+            "<176. >",
+            "<177. >",
+            "<178. >",
+            "<179. >",
+            "<180. >",
+            "<181. >",
+            "<182. >",
+            "<183. >",
+            "<184. >",
+            "<185. >",
+            "<186. >",
+            "<187. >",
+            "<188. >",
+            "<189. >",
+            "<190. >",
+            "<191. >",
+            "<192. >",
+            "<193. >",
+            "<194. >",
+            "<195. >",
+            "<196. >",
+            "<197. >",
+            "<198. >",
+            "<199. >",
+            "<200. >"});
             this.chbx_Additional_Manipulations.Location = new System.Drawing.Point(8, 359);
             this.chbx_Additional_Manipulations.Margin = new System.Windows.Forms.Padding(0);
             this.chbx_Additional_Manipulations.Name = "chbx_Additional_Manipulations";
-            this.chbx_Additional_Manipulations.Size = new System.Drawing.Size(526, 124);
-            this.chbx_Additional_Manipulations.Sorted = true;
+            this.chbx_Additional_Manipulations.Size = new System.Drawing.Size(466, 124);
             this.chbx_Additional_Manipulations.TabIndex = 29;
             this.chbx_Additional_Manipulations.Visible = false;
             this.chbx_Additional_Manipulations.SelectedIndexChanged += new System.EventHandler(this.chbx_Additional_Manipualtions_SelectedIndexChanged);
@@ -644,9 +744,11 @@ namespace RocksmithToolkitGUI.DLCManager
             "<lastConversionDateTime>",
             "<Avail. Tracks>",
             "<Avail. Tracks w Bonus>",
+            "<Avail. Tracks w Favorite>",
             "<Avail. Tracks and Timings>",
             "<Avail. Tracks and ShortTimings>",
-            "<Avail. Tracks and Timings&Bonus>",
+            "<Avail. Tracks and ShortTimings&Bonus>",
+            "<Avail. Tracks and ShortTimings&Bonus&Favorite>",
             "<Bass_HasDD>",
             "<Timestamp>",
             "<TimestampShort>",
@@ -660,6 +762,8 @@ namespace RocksmithToolkitGUI.DLCManager
             "<Track version>",
             "<LyricsLanguage>",
             "<IntheWorks>",
+            "<FullAlbum>",
+            "<Manipulated>",
             "<CDLC_ID>",
             "<DLCM Release>",
             "<DLCM ReleaseName>",
@@ -883,9 +987,11 @@ namespace RocksmithToolkitGUI.DLCManager
             "<lastConversionDateTime>",
             "<Avail. Tracks>",
             "<Avail. Tracks w Bonus>",
+            "<Avail. Tracks w Favorite>",
             "<Avail. Tracks and Timings>",
             "<Avail. Tracks and ShortTimings>",
-            "<Avail. Tracks and Timings&Bonus>",
+            "<Avail. Tracks and ShortTimings&Bonus>",
+            "<Avail. Tracks and ShortTimings&Bonus&Favorite>",
             "<Bass_HasDD>",
             "<Timestamp>",
             "<TimestampShort>",
@@ -899,6 +1005,8 @@ namespace RocksmithToolkitGUI.DLCManager
             "<Track version>",
             "<LyricsLanguage>",
             "<IntheWorks>",
+            "<FullAlbum>",
+            "<Manipulated>",
             "<CDLC_ID>",
             "<DLCM Release>",
             "<DLCM ReleaseName>",
@@ -964,9 +1072,11 @@ namespace RocksmithToolkitGUI.DLCManager
             "<lastConversionDateTime>",
             "<Avail. Tracks>",
             "<Avail. Tracks w Bonus>",
+            "<Avail. Tracks w Favorite>",
             "<Avail. Tracks and Timings>",
             "<Avail. Tracks and ShortTimings>",
-            "<Avail. Tracks and Timings&Bonus>",
+            "<Avail. Tracks and ShortTimings&Bonus>",
+            "<Avail. Tracks and ShortTimings&Bonus&Favorite>",
             "<Bass_HasDD>",
             "<Timestamp>",
             "<TimestampShort>",
@@ -980,6 +1090,8 @@ namespace RocksmithToolkitGUI.DLCManager
             "<Track version>",
             "<LyricsLanguage>",
             "<IntheWorks>",
+            "<FullAlbum>",
+            "<Manipulated>",
             "<CDLC_ID>",
             "<DLCM Release>",
             "<DLCM ReleaseName>",
@@ -1081,9 +1193,11 @@ namespace RocksmithToolkitGUI.DLCManager
             "<lastConversionDateTime>",
             "<Avail. Tracks>",
             "<Avail. Tracks w Bonus>",
+            "<Avail. Tracks w Favorite>",
             "<Avail. Tracks and Timings>",
             "<Avail. Tracks and ShortTimings>",
-            "<Avail. Tracks and Timings&Bonus>",
+            "<Avail. Tracks and ShortTimings&Bonus>",
+            "<Avail. Tracks and ShortTimings&Bonus&Favorite>",
             "<Bass_HasDD>",
             "<Timestamp>",
             "<TimestampShort>",
@@ -1097,6 +1211,8 @@ namespace RocksmithToolkitGUI.DLCManager
             "<Track version>",
             "<LyricsLanguage>",
             "<IntheWorks>",
+            "<FullAlbum>",
+            "<Manipulated>",
             "<CDLC_ID>",
             "<DLCM Release>",
             "<DLCM ReleaseName>",
@@ -1163,9 +1279,11 @@ namespace RocksmithToolkitGUI.DLCManager
             "<lastConversionDateTime>",
             "<Avail. Tracks>",
             "<Avail. Tracks w Bonus>",
+            "<Avail. Tracks w Favorite>",
             "<Avail. Tracks and Timings>",
             "<Avail. Tracks and ShortTimings>",
-            "<Avail. Tracks and Timings&Bonus>",
+            "<Avail. Tracks and ShortTimings&Bonus>",
+            "<Avail. Tracks and ShortTimings&Bonus&Favorite>",
             "<Bass_HasDD>",
             "<Timestamp>",
             "<TimestampShort>",
@@ -1179,6 +1297,8 @@ namespace RocksmithToolkitGUI.DLCManager
             "<Track version>",
             "<LyricsLanguage>",
             "<IntheWorks>",
+            "<FullAlbum>",
+            "<Manipulated>",
             "<CDLC_ID>",
             "<DLCM Release>",
             "<DLCM ReleaseName>",
@@ -1244,9 +1364,11 @@ namespace RocksmithToolkitGUI.DLCManager
             "<lastConversionDateTime>",
             "<Avail. Tracks>",
             "<Avail. Tracks w Bonus>",
+            "<Avail. Tracks w Favorite>",
             "<Avail. Tracks and Timings>",
             "<Avail. Tracks and ShortTimings>",
-            "<Avail. Tracks and Timings&Bonus>",
+            "<Avail. Tracks and ShortTimings&Bonus>",
+            "<Avail. Tracks and ShortTimings&Bonus&Favorite>",
             "<Bass_HasDD>",
             "<Timestamp>",
             "<TimestampShort>",
@@ -1260,6 +1382,8 @@ namespace RocksmithToolkitGUI.DLCManager
             "<Track version>",
             "<LyricsLanguage>",
             "<IntheWorks>",
+            "<FullAlbum>",
+            "<Manipulated>",
             "<CDLC_ID>",
             "<DLCM Release>",
             "<DLCM ReleaseName>",
@@ -1786,22 +1910,35 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_Album2SortA.UseVisualStyleBackColor = true;
             this.btn_Album2SortA.Click += new System.EventHandler(this.btn_Album2SortA_Click);
             // 
+            // btn_FilterParams
+            // 
+            this.btn_FilterParams.Location = new System.Drawing.Point(476, 435);
+            this.btn_FilterParams.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.btn_FilterParams.Name = "btn_FilterParams";
+            this.btn_FilterParams.Size = new System.Drawing.Size(60, 48);
+            this.btn_FilterParams.TabIndex = 430;
+            this.btn_FilterParams.Text = "Filter Params";
+            this.toolTip1.SetToolTip(this.btn_FilterParams, "Screen to manage the Game Default Screens for RS1Retail, RS1DLC, or RS2014 Retail" +
+        " packs, Crossplatform songs.");
+            this.btn_FilterParams.UseVisualStyleBackColor = true;
+            this.btn_FilterParams.Click += new System.EventHandler(this.btn_FilterParams_Click);
+            // 
             // lbl_Settings
             // 
             this.lbl_Settings.AutoSize = true;
             this.lbl_Settings.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lbl_Settings.Location = new System.Drawing.Point(464, 361);
+            this.lbl_Settings.Location = new System.Drawing.Point(351, 362);
             this.lbl_Settings.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_Settings.Name = "lbl_Settings";
-            this.lbl_Settings.Size = new System.Drawing.Size(48, 13);
+            this.lbl_Settings.Size = new System.Drawing.Size(103, 13);
             this.lbl_Settings.TabIndex = 406;
-            this.lbl_Settings.Text = ":Settings";
+            this.lbl_Settings.Text = ":Settings  {ParamID}";
             // 
             // lbl_Log
             // 
             this.lbl_Log.AutoSize = true;
             this.lbl_Log.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lbl_Log.Location = new System.Drawing.Point(464, 488);
+            this.lbl_Log.Location = new System.Drawing.Point(464, 489);
             this.lbl_Log.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_Log.Name = "lbl_Log";
             this.lbl_Log.Size = new System.Drawing.Size(51, 13);
@@ -1874,9 +2011,11 @@ namespace RocksmithToolkitGUI.DLCManager
             "<lastConversionDateTime>",
             "<Avail. Tracks>",
             "<Avail. Tracks w Bonus>",
+            "<Avail. Tracks w Favorite>",
             "<Avail. Tracks and Timings>",
             "<Avail. Tracks and ShortTimings>",
-            "<Avail. Tracks and Timings&Bonus>",
+            "<Avail. Tracks and ShortTimings&Bonus>",
+            "<Avail. Tracks and ShortTimings&Bonus&Favorite>",
             "<Bass_HasDD>",
             "<Timestamp>",
             "<TimestampShort>",
@@ -1890,6 +2029,8 @@ namespace RocksmithToolkitGUI.DLCManager
             "<Track version>",
             "<LyricsLanguage>",
             "<IntheWorks>",
+            "<FullAlbum>",
+            "<Manipulated>",
             "<CDLC_ID>",
             "<DLCM Release>",
             "<DLCM ReleaseName>",
@@ -1981,9 +2122,11 @@ namespace RocksmithToolkitGUI.DLCManager
             "<lastConversionDateTime>",
             "<Avail. Tracks>",
             "<Avail. Tracks w Bonus>",
+            "<Avail. Tracks w Favorite>",
             "<Avail. Tracks and Timings>",
             "<Avail. Tracks and ShortTimings>",
-            "<Avail. Tracks and Timings&Bonus>",
+            "<Avail. Tracks and ShortTimings&Bonus>",
+            "<Avail. Tracks and ShortTimings&Bonus&Favorite>",
             "<Bass_HasDD>",
             "<Timestamp>",
             "<TimestampShort>",
@@ -1997,6 +2140,8 @@ namespace RocksmithToolkitGUI.DLCManager
             "<Track version>",
             "<LyricsLanguage>",
             "<IntheWorks>",
+            "<FullAlbum>",
+            "<Manipulated>",
             "<CDLC_ID>",
             "<DLCM Release>",
             "<DLCM ReleaseName>",
@@ -2021,10 +2166,22 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_Album_Sort.Text = "<Broken><Year> - <Album> - r<Rating> - <Avail. Instr.> - <DD> - <Tuning>";
             this.txt_Album_Sort.Visible = false;
             // 
+            // txt_FilterParams
+            // 
+            this.txt_FilterParams.Location = new System.Drawing.Point(476, 358);
+            this.txt_FilterParams.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
+            this.txt_FilterParams.Name = "txt_FilterParams";
+            this.txt_FilterParams.Size = new System.Drawing.Size(60, 72);
+            this.txt_FilterParams.TabIndex = 431;
+            this.txt_FilterParams.Text = "";
+            this.txt_FilterParams.Visible = false;
+            // 
             // DLCManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.Controls.Add(this.txt_FilterParams);
+            this.Controls.Add(this.btn_FilterParams);
             this.Controls.Add(this.btn_Album2SortA);
             this.Controls.Add(this.btn_Preview_Album_Sort);
             this.Controls.Add(this.cbx_Activ_Album_Sort);
@@ -2229,6 +2386,8 @@ namespace RocksmithToolkitGUI.DLCManager
         private CheckBox chbx_iOS;
         private CheckBox chbx_PS4;
         private Button btn_Album2SortA;
+        private Button btn_FilterParams;
+        public RichTextBox txt_FilterParams;
         //public static ProgressBar pB_ReadDLCs;
     }
 }

@@ -1,0 +1,16 @@
+
+<h2>Global Voice Instances Limit</h2>
+<p>プロジェクト全体で同時にアクティブとなる同時ボイス数の上限。<span class="condition" name="Feature_VirtualVoice">バーチャルボイスはアクティブボイスとして数えない。この上限を超えると、プライオリティが最も低いボイスが、バーチャル動作をとる。プライオリティが等しい場合は、古いサウンドほどプライオリティが高くなる。</span>どのサウンドも自身のバーチャル動作をオーバーライドでき、ここで設定できるバーチャル動作を以下に示す。</p>
+<span class="condition" name="Feature_VirtualVoice"><p></p>
+<ul>
+<li>Continue to play</li>
+<li>Be killed</li>
+<li>Send to virtual voice</li>
+</ul>
+<p></p></span>
+<span class="condition" name="Feature_VirtualVoice"><p>
+<strong>注釈</strong>:一部のサウンドのバーチャル動作がContinue to playの場合は、ボイスインスタンスの最大数を守れないことがある。この上限を守るためには、再生中のボイスのバーチャル動作がKill voice、またはSend to Virtual voiceでなければならない。
+</p></span>
+<p>この設定値はWwise SDK APIを使ってオーバーライドできる。</p>
+<p>Default value: 256<br/>
+Range: 1 to 10000<br/></p>

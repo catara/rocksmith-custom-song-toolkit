@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2006 Audiokinetic Inc. -->
+<PluginModule>
+  <EffectPlugin Name="Wwise Recorder" CompanyID="0" PluginID="132">
+    <PluginInfo MenuPath="50-Wwise">
+      <PlatformSupport>
+        <Platform Name="Any">
+          <CanBeInsertOnBusses>true</CanBeInsertOnBusses>
+          <CanBeInsertOnAudioObjects>true</CanBeInsertOnAudioObjects>
+        </Platform>
+      </PlatformSupport>
+    </PluginInfo>
+    <Properties>
+      <Property Name="Format" Type="int16" DisplayName="Format" DisplayGroup="File Attributes">
+        <DefaultValue>0</DefaultValue>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="int16">
+              <Value DisplayName="WAV">0</Value>
+              <Value DisplayName="WEM">1</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+        <AudioEnginePropertyID>7</AudioEnginePropertyID>
+      </Property>
+	  <Property Name="AmbisonicsChannelOrdering" Type="int16" DisplayName="Ambisonics Channel Ordering" DisplayGroup="File Attributes">
+		<DefaultValue>1</DefaultValue>
+		<Restrictions>
+		  <ValueRestriction>
+			<Enumeration Type="int16">
+			  <Value DisplayName="AmbiX">0</Value>
+			  <Value DisplayName="FuMa">1</Value>
+			</Enumeration>
+		  </ValueRestriction>
+		</Restrictions>
+		<AudioEnginePropertyID>10</AudioEnginePropertyID>
+	  </Property>
+      <Property Name="AuthoringFilename" Type="string" IsVisible="false">
+        <DefaultValue>Recorder.wav</DefaultValue>
+        <AudioEnginePropertyID>2</AudioEnginePropertyID>
+      </Property>
+      <Property Name="GameFilename" Type="string" IsVisible="false">
+        <DefaultValue/>
+        <AudioEnginePropertyID>9</AudioEnginePropertyID>
+      </Property>
+      <Property Name="DownmixToStereo" Type="bool" DisplayName="Downmix To Stereo" DisplayGroup="Stereo Downmix">
+        <DefaultValue>true</DefaultValue>
+        <AudioEnginePropertyID>3</AudioEnginePropertyID>
+      </Property>
+      <Property Name="Center" Type="Real32" DataMeaning="Decibels" DisplayName="Center" DisplayGroup="Stereo Downmix">
+        <DefaultValue>-3.0</DefaultValue>
+        <AudioEnginePropertyID>0</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-96.3</Min>
+              <Max>0</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="DownmixToStereo" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="Front" Type="Real32" DataMeaning="Decibels" DisplayName="Front" DisplayGroup="Stereo Downmix">
+        <DefaultValue>0.0</DefaultValue>
+        <AudioEnginePropertyID>4</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-96.3</Min>
+              <Max>0</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="DownmixToStereo" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="Surround" Type="Real32" DataMeaning="Decibels" DisplayName="Surround" DisplayGroup="Stereo Downmix">
+        <DefaultValue>-3.0</DefaultValue>
+        <AudioEnginePropertyID>5</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-96.3</Min>
+              <Max>0</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="DownmixToStereo" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="Rear" Type="Real32" DataMeaning="Decibels" DisplayName="Back" DisplayGroup="Stereo Downmix">
+        <DefaultValue>-3.0</DefaultValue>
+        <AudioEnginePropertyID>1</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-96.3</Min>
+              <Max>0</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="DownmixToStereo" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="LFE" Type="Real32" DataMeaning="Decibels" DisplayName="LFE" DisplayGroup="Stereo Downmix">
+        <DefaultValue>-96.3</DefaultValue>
+        <AudioEnginePropertyID>6</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-96.3</Min>
+              <Max>0</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="DownmixToStereo" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="ApplyDownstreamVolume" Type="bool" DisplayName="Apply Downstream Volume" DisplayGroup="Recorder Input">
+        <DefaultValue>false</DefaultValue>
+        <AudioEnginePropertyID>8</AudioEnginePropertyID>
+      </Property>
+    </Properties>
+  </EffectPlugin>
+</PluginModule>

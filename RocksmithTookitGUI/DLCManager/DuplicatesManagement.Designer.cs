@@ -2824,12 +2824,12 @@ namespace RocksmithToolkitGUI.DLCManager
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(6, 155);
+            this.label13.Location = new System.Drawing.Point(24, 156);
             this.label13.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(44, 13);
+            this.label13.Size = new System.Drawing.Size(49, 13);
             this.label13.TabIndex = 423;
-            this.label13.Text = "Alb Sort";
+            this.label13.Text = "/Alb Sort";
             // 
             // lbl_AlbumSort
             // 
@@ -2859,10 +2859,10 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_AlbumSortNew.Cue = "Album Sort New";
             this.txt_AlbumSortNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txt_AlbumSortNew.ForeColor = System.Drawing.Color.Gray;
-            this.txt_AlbumSortNew.Location = new System.Drawing.Point(93, 153);
+            this.txt_AlbumSortNew.Location = new System.Drawing.Point(111, 153);
             this.txt_AlbumSortNew.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.txt_AlbumSortNew.Name = "txt_AlbumSortNew";
-            this.txt_AlbumSortNew.Size = new System.Drawing.Size(181, 20);
+            this.txt_AlbumSortNew.Size = new System.Drawing.Size(163, 20);
             this.txt_AlbumSortNew.TabIndex = 420;
             this.txt_AlbumSortNew.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txt_AlbumSortNew.TextChanged += new System.EventHandler(this.ExistingChanged);
@@ -2872,10 +2872,10 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_YearNew.Cue = "Year New";
             this.txt_YearNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.2F);
             this.txt_YearNew.ForeColor = System.Drawing.Color.Gray;
-            this.txt_YearNew.Location = new System.Drawing.Point(52, 154);
+            this.txt_YearNew.Location = new System.Drawing.Point(77, 154);
             this.txt_YearNew.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.txt_YearNew.Name = "txt_YearNew";
-            this.txt_YearNew.Size = new System.Drawing.Size(40, 18);
+            this.txt_YearNew.Size = new System.Drawing.Size(34, 18);
             this.txt_YearNew.TabIndex = 419;
             this.txt_YearNew.TextChanged += new System.EventHandler(this.ExistingChanged);
             // 
@@ -3324,7 +3324,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // lbl_YearExisting
             // 
             this.lbl_YearExisting.AutoSize = true;
-            this.lbl_YearExisting.Location = new System.Drawing.Point(521, 174);
+            this.lbl_YearExisting.Location = new System.Drawing.Point(-2, 156);
             this.lbl_YearExisting.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_YearExisting.Name = "lbl_YearExisting";
             this.lbl_YearExisting.Size = new System.Drawing.Size(29, 13);

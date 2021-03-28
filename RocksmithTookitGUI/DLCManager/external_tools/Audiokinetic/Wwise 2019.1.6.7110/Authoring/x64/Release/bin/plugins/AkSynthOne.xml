@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (C) 2006 Audiokinetic Inc. -->
+<PluginModule>
+	<SourcePlugin Name="Wwise Synth One" CompanyID="0" PluginID="148">
+		<PluginInfo CanUnlink="true">
+			<PlatformSupport>
+				<Platform Name="Any"></Platform>
+			</PlatformSupport>
+		</PluginInfo>
+		<Properties>
+			<Property Name="FrequencyMode" Type="int32" ForceRTPCCurveSegmentShape="Constant" DisplayName="Frequency Mode" DisplayGroup="Input">
+				<UserInterface/>
+				<DefaultValue>0</DefaultValue>
+				<AudioEnginePropertyID>1</AudioEnginePropertyID>
+				<Restrictions>
+					<ValueRestriction>
+            <Enumeration Type="int32">
+              <Value DisplayName="Base Frequency">0</Value>
+              <Value DisplayName="MIDI Note">1</Value>
+            </Enumeration>
+					</ValueRestriction>
+				</Restrictions>
+			</Property>
+      <Property Name="BaseFrequency" Type="Real32" SupportRTPCType="Exclusive" DataMeaning="Frequency" DisplayName="Base Frequency" DisplayGroup="Input">
+        <UserInterface Decimals="1"/>
+        <DefaultValue>1000.0</DefaultValue>
+        <AudioEnginePropertyID>2</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>20</Min>
+              <Max>20000</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="FrequencyMode" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Base Frequency -->
+                <Value>0</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+
+      <Property Name="Osc1Waveform" DocId="OscWaveform" Type="int32" SupportRTPCType="Exclusive" ForceRTPCCurveSegmentShape="Constant" DisplayName="Osc1 Waveform" DisplayGroup="Oscillator 1">
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>7</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="int32">
+              <Value DisplayName="Sine">0</Value>
+              <Value DisplayName="Triangle">1</Value>
+              <Value DisplayName="Square">2</Value>
+              <Value DisplayName="Sawtooth">3</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="Osc1Transpose" DocId="OscTranspose" Type="int32" SupportRTPCType="Additive" DataMeaning="PitchCents" DisplayName="Osc1 Transpose" DisplayGroup="Oscillator 1">
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>8</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="int32">
+              <Min>-3600</Min>
+              <Max>3600</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="Osc1Level" DocId="OscLevel" Type="Real32" SupportRTPCType="Additive" DataMeaning="Decibels" DisplayName="Osc1 Level" DisplayGroup="Oscillator 1">
+        <UserInterface Decimals="1"/>
+        <DefaultValue>-6.0</DefaultValue>
+        <AudioEnginePropertyID>9</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-96.0</Min>
+              <Max>24.0</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="Osc1Pwm" DocId="OscPwm" Type="Real32" SupportRTPCType="Exclusive" DisplayName="Osc1 PWM" DisplayGroup="Oscillator 1">
+        <UserInterface Decimals="1"/>
+        <DefaultValue>50.0</DefaultValue>
+        <AudioEnginePropertyID>10</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0.0</Min>
+              <Max>100.0</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="Osc1Invert" DocId="OscInvert" Type="bool" SupportRTPCType="Exclusive" ForceRTPCCurveSegmentShape="Constant" DisplayName="Osc1 Invert" DisplayGroup="Oscillator 1">
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>11</AudioEnginePropertyID>
+      </Property>
+
+      <Property Name="Osc2Waveform" DocId="OscWaveform" Type="int32" SupportRTPCType="Exclusive" ForceRTPCCurveSegmentShape="Constant" DisplayName="Osc2 Waveform" DisplayGroup="Oscillator 2">
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>12</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="int32">
+              <Value DisplayName="Sine">0</Value>
+              <Value DisplayName="Triangle">1</Value>
+              <Value DisplayName="Square">2</Value>
+              <Value DisplayName="Sawtooth">3</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="Osc2Transpose" DocId="OscTranspose" Type="int32" SupportRTPCType="Additive" DataMeaning="PitchCents" DisplayName="Osc2 Transpose" DisplayGroup="Oscillator 2">
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>13</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="int32">
+              <Min>-3600</Min>
+              <Max>3600</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="Osc2Level" DocId="OscLevel" Type="Real32" SupportRTPCType="Additive" DataMeaning="Decibels" DisplayName="Osc2 Level" DisplayGroup="Oscillator 2">
+        <UserInterface Decimals="1"/>
+        <DefaultValue>-6.0</DefaultValue>
+        <AudioEnginePropertyID>14</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-96.0</Min>
+              <Max>24.0</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="Osc2Pwm" DocId="OscPwm" Type="Real32" SupportRTPCType="Exclusive" DisplayName="Osc2 PWM" DisplayGroup="Oscillator 2">
+        <UserInterface Decimals="1"/>
+        <DefaultValue>50</DefaultValue>
+        <AudioEnginePropertyID>15</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0.0</Min>
+              <Max>100.0</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="Osc2Invert" DocId="OscInvert" Type="bool" SupportRTPCType="Exclusive" ForceRTPCCurveSegmentShape="Constant" DisplayName="Osc2 Invert" DisplayGroup="Oscillator 2">
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>16</AudioEnginePropertyID>
+      </Property>
+
+      <Property Name="NoiseShape" Type="int32" SupportRTPCType="Exclusive" ForceRTPCCurveSegmentShape="Constant" DisplayName="Noise Shape" DisplayGroup="Noise">
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>5</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="int32">
+              <Value DisplayName="White Noise">0</Value>
+              <Value DisplayName="Pink Noise">1</Value>
+              <Value DisplayName="Red Noise">2</Value>
+              <Value DisplayName="Purple Noise">3</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="NoiseLevel" Type="Real32" SupportRTPCType="Additive" DataMeaning="Decibels" DisplayName="Noise Level" DisplayGroup="Noise">
+        <UserInterface Decimals="1"/>
+        <DefaultValue>-96.0</DefaultValue>
+        <AudioEnginePropertyID>6</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-96.0</Min>
+              <Max>24.0</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+
+      <Property Name="OverSampling" Type="bool" DisplayName="Over-sampling" DisplayGroup="Quality">
+        <DefaultValue>1</DefaultValue>
+        <AudioEnginePropertyID>18</AudioEnginePropertyID>
+      </Property>
+
+      <Property Name="OperationMode" Type="int32" SupportRTPCType="Exclusive" ForceRTPCCurveSegmentShape="Constant" DisplayName="Operation Mode" DisplayGroup="Output">
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>3</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="int32">
+              <Value DisplayName="Mix">0</Value>
+              <Value DisplayName="Ring">1</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="FmAmount" Type="Real32" SupportRTPCType="Additive" DisplayName="FM Amount" DisplayGroup="Output">
+        <UserInterface Decimals="2" Step="0.1" Fine="0.01"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>17</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0</Min>
+              <Max>100</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="OutputLevel" Type="Real32" SupportRTPCType="Additive" DataMeaning="Decibels" DisplayName="Output Level" DisplayGroup="Output">
+        <UserInterface Decimals="1"/>
+        <DefaultValue>0.0</DefaultValue>
+        <AudioEnginePropertyID>4</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-96.0</Min>
+              <Max>24.0</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+    </Properties>		
+	</SourcePlugin>
+</PluginModule>

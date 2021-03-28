@@ -1,0 +1,5 @@
+
+<h2>Play mode</h2>
+<p><strong>Step</strong>: The Blend Container starts playback of all children upon Play. The Blend Container playback is considered ended once all child voices have stopped playing (or when a Stop Action is received).</p>
+<p><strong>Continuous</strong>: The Blend Container actively manages Play and Stop of child objects based on crossfade regions (it plays the child when an RTPC value is inside the clip region and stops it when outside). The container has to be stopped with a Stop Action; it remains alive and monitors RTPC changes even when no voices are playing.</p>
+<p>Default value: Step<br/></p>

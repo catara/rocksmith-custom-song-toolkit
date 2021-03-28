@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2006 Audiokinetic Inc. -->
+<PluginModule>
+  <EffectPlugin Name="Wwise Meter" CompanyID="0" PluginID="129" EngineDllName="AkSoundEngineDLL">
+    <PluginInfo MenuPath="50-Wwise">
+      <PlatformSupport>
+        <Platform Name="Any">
+          <CanBeInsertOnBusses>true</CanBeInsertOnBusses>
+          <CanBeInsertOnAudioObjects>true</CanBeInsertOnAudioObjects>
+        </Platform>
+      </PlatformSupport>
+    </PluginInfo>
+    <Properties>
+      <Property Name="MeterMode" Type="int32" DisplayName="Mode">
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>2</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="int32">
+              <Value DisplayName="Peak">0</Value>
+              <Value DisplayName="RMS">1</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="MeterScope" Type="int32" DisplayName="RTPC Scope">
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>8</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="int32">
+              <Value DisplayName="Global">0</Value>
+              <Value DisplayName="Game Object">1</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="AttackTime" Type="Real32" SupportRTPCType="Additive" DisplayName="Attack Time" DisplayGroup="Dynamics">
+        <UserInterface Step="0.01" Fine="0.001" Decimals="3" />
+        <DefaultValue>0.0</DefaultValue>
+        <AudioEnginePropertyID>0</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0</Min>
+              <Max>10</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="Hold" Type="Real32" SupportRTPCType="Additive" DisplayName="Hold" DisplayGroup="Dynamics">
+        <UserInterface Step="0.01" Fine="0.001" Decimals="3" />
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>6</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0</Min>
+              <Max>10</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="ReleaseTime" Type="Real32" SupportRTPCType="Additive" DisplayName="Release Time" DisplayGroup="Dynamics">
+        <UserInterface Step="0.01" Fine="0.001" Decimals="3" />
+        <DefaultValue>0.1</DefaultValue>
+        <AudioEnginePropertyID>1</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0</Min>
+              <Max>10</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="Min" Type="Real32" SupportRTPCType="Additive" DisplayName="Min" DisplayGroup="Output Game Parameter">
+        <UserInterface Step="0.1" Fine="0.1" Decimals="2" />
+        <DefaultValue>-48</DefaultValue>
+        <AudioEnginePropertyID>4</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-96.3</Min>
+              <Max>0</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="Max" Type="Real32" SupportRTPCType="Additive" DisplayName="Max" DisplayGroup="Output Game Parameter">
+        <UserInterface Step="0.1" Fine="0.1" Decimals="2" />
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>5</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-96.3</Min>
+              <Max>12</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="ApplyDownstreamVolume" Type="bool" DisplayName="Apply Downstream Volume">
+        <DefaultValue>false</DefaultValue>
+        <AudioEnginePropertyID>7</AudioEnginePropertyID>
+      </Property>
+    </Properties>
+  </EffectPlugin>
+</PluginModule>

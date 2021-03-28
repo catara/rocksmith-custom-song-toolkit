@@ -1,0 +1,8 @@
+
+<h2>Seek Percent</h2>
+<p>seek 위치가 해당 사운드의 전체 길이의 백분율로 표현됩니다. 이 길이는 반복 재생 또한 고려합니다. 예를 들어 두 번 반복 재생 되는 사운드의 50%를 seek할 경우 커서의 위치는 반복 재생의 두 번째 출발 지점으로 지정됩니다.</p>
+<p>하지만 무한 반복 재생되는 사운드는 그 길이가 무제한이기 때문에 제외됩니다. 그럴 경우에 컴퓨터는 실재 seek 위치를 해당 사운드가 반복 재생이 되지 않는 것 처럼 계산한 후에 반복 재생을 고려하여 적용시킵니다. 그렇기 때문에 무제한 반복 재생되는 사운드의 반복 재생 구간 후의 부분은 (&ldquo;퇴장&rdquo; 부분)은 seek하는 것이 불가능합니다.</p>
+<p>Music Segment 내에서 seek할 때, seek 위치는 Entry Cue와 상대적이며 오브젝트의 길이는 Entry Cue와 Exit Cue 사이의 길이로 인해 정의됩니다. 그렇기 때문에 Entry Cue (Pre-Entry) 전이나 Entry Cue (Pre-Entry) 후를 seek하는 것은 불가능합니다.</p>
+<p>Default value: 0<br/>
+Range: 0 to 100<br/>
+Units: % <br/></p>

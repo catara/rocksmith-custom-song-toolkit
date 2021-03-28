@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2006 Audiokinetic Inc. -->
+<PluginModule>
+  <EffectPlugin Name="SoundSeed Impact" CompanyID="0" PluginID="116">
+    <PluginInfo MenuPath="40-SoundSeed">
+      <PlatformSupport>
+        <Platform Name="Any">
+          <CanBeInsertOnAudioObjects>true</CanBeInsertOnAudioObjects>
+          <CanBeRendered>true</CanBeRendered>
+        </Platform>
+      </PlatformSupport>
+    </PluginInfo>
+    <Properties>
+      <Property Name="ResidualLevel" Type="Real32" SupportRTPCType="Additive" DataMeaning="Decibels" DisplayName="Residual Level">
+        <UserInterface Step="1" Fine="0.1" Decimals="2" SliderType="1" />
+        <DefaultValue>-96.3</DefaultValue>
+        <AudioEnginePropertyID>0</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-96.3</Min>
+              <Max>0</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="FreqAmt" Type="Real32" SupportRTPCType="Additive" DisplayName="Frequency Stretching Amount">
+        <UserInterface UIMin="-400" UIMax="400" />
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>1</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-800</Min>
+              <Max>800</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="FreqVar" Type="Real32" SupportRTPCType="Additive" DisplayName="Frequency Stretching Variation">
+        <UserInterface UIMax="400" />
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>2</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0</Min>
+              <Max>800</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="BWAmt" Type="Real32" SupportRTPCType="Additive" DisplayName="Bandwidth Stretching Amount">
+        <UserInterface UIMin="-400" UIMax="400" />
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>3</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-800</Min>
+              <Max>800</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="BWVar" Type="Real32" SupportRTPCType="Additive" DisplayName="Bandwidth Stretching Variation">
+        <UserInterface UIMax="400" />
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>4</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0</Min>
+              <Max>800</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="MagVar" Type="Real32" SupportRTPCType="Additive" DisplayName="Magnitude Scaling Variation">
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>5</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0</Min>
+              <Max>96</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="FrequencyStretchEnable" Type="bool" SupportRTPCType="Boolean" ForceRTPCCurveSegmentShape="Constant" DisplayName="Frequency Streching Enable">
+        <DefaultValue>true</DefaultValue>
+        <AudioEnginePropertyID>6</AudioEnginePropertyID>
+      </Property>
+      <Property Name="BandwidthStretchEnable" Type="bool" SupportRTPCType="Boolean" ForceRTPCCurveSegmentShape="Constant" DisplayName="Bandwidth Streching Enable">
+        <DefaultValue>true</DefaultValue>
+        <AudioEnginePropertyID>7</AudioEnginePropertyID>
+      </Property>
+      <Property Name="MagnitudeScalingEnable" Type="bool" SupportRTPCType="Boolean" ForceRTPCCurveSegmentShape="Constant" DisplayName="Magnitude Scaling Enable">
+        <DefaultValue>true</DefaultValue>
+        <AudioEnginePropertyID>8</AudioEnginePropertyID>
+      </Property>
+      <Property Name="ModelQuality" Type="Real32" SupportRTPCType="Additive" DisplayName="Quality">
+        <AudioEnginePropertyID>9</AudioEnginePropertyID>
+        <DefaultValue>100</DefaultValue>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0</Min>
+              <Max>100</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="OutputLevel" Type="Real32" SupportRTPCType="Additive" DataMeaning="Decibels" DisplayName="Output Gain">
+        <UserInterface Step="0.5" Fine="0.1" Decimals="2" SliderType="15" />
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>10</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-24</Min>
+              <Max>24</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+    </Properties>
+  </EffectPlugin>
+</PluginModule>

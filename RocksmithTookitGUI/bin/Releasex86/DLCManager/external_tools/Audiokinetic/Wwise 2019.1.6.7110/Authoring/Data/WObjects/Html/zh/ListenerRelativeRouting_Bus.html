@@ -1,0 +1,6 @@
+
+<h2>Listener Relative Routing</h2>
+<p>听者相对通路。若启用，将针对该 Wwise 对象计算发声体与听者的关系。对于 Actor-Mixer Hierarchy 中的对象，一般都要评估发声体与听者的关系。不过对于总线对象，只有总线所输出的子混音代表独立的发声体，并且该发声体需要由游戏明确定位并针对听者进行 3D 空间化处理，才有必要启用 Listener Relative Routing。常见用例包括由 Wwise Spatial Audio 关联至 Room 的辅助总线和承载 Wwise Reflect 插件的早期反射总线。</p>
+<p>有关 Room 和 Wwise Reflect 的详细信息，请参阅 Wwise Spatial Audio 文档。</p>
+<p>发声体与听者关系的评估会对信号通路产生很大影响，对此可在 Wwise Profiler 的 Voice Graph 中一窥究竟。</p>
+<p>Default value: false<br/></p>

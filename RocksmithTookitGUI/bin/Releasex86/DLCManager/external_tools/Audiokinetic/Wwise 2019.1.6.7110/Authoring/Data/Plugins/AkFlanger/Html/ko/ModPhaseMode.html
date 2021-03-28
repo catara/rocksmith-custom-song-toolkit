@@ -1,0 +1,12 @@
+
+<h2>LFO Spread Mode</h2>
+<p>초기 위상 확산 (&lsquo;Spread&rsquo; 매개 변수 참조)이 어떻게 채널에 적용되는지를 정의합니다. 예를 들어 확산 모드가 &lsquo;Front-Rear&rsquo;로 설정된 경우 모든 앞 채널이 0의 위상을 가지고 재생을 시작하며 모든 뒷 채널이 &lsquo;Spread&rsquo;의 위상을 가지고 재생을 시작하게 됩니다. LFE 채널이 존재할 경우 (그리고 처리될 경우), LFE 채널은 항상 Front Left 채널과 동기화됩니다.</p>
+<p>Values:</p>
+<ul>
+<li><strong>Left-Right</strong>: 왼쪽 앞뒤 채널은 0의 상쇄값으로 재생을 시작하며 오른쪽 앞뒤 채널은 &lsquo;Spread&rsquo;의 상쇄값으로 시작합니다. 중앙 채널이 존재할 경우, 중앙 채널은 항상 &lsquo;Spread&rsquo;/2의 오프셋으로 재생을 시작합니다.</li>
+<li><strong>Front-Rear</strong>: 앞과 중앙 채널은 0의 상쇄값으로 시작하고 뒤쪽 채널은 &lsquo;Spread&rsquo;의 시작합니다.</li>
+<li><strong>Circular</strong>: 이 모드는 1.x, 2.x, 3.x 구성에서는 왼쪽과 오른쪽 채널 간에, 4.x, 5.x 구성에서는 왼쪽 앞과 오른쪽 뒤 채널 간에 확산하는 쌍극(spreading dipole)을 적용합니다. 예를 들어 신호가 3.0일 경우 L=0, C=&rdquo;Spread&rdquo;/2, R=&rsquo;Spread&rsquo;의 위상으로 재생을 시작합니다. 신호가 5.0일 경우 FL=0, C=&rsquo;Spread&rsquo;/4, FR=&rsquo;Spread&rsquo;/2, RL=&rsquo;Spread&rsquo;/2, RR=&rsquo;Spread&rsquo;의 위상으로 재생을 시작합니다.</li>
+<li><strong>Random</strong>: 각 채널이 0과 &lsquo;Spread&rsquo; 사이 균일하게 분배된 임의의 위상으로 시작합니다.</li>
+</ul>
+<p><strong>참고</strong>: 이 매개 변수는 RTPC를 통해 런타임 내에 변경될 수 있지만, 이 효과의 해당 인스턴스가 재생된 후 설정된 경우에는 변경 사항이 적용되지 않습니다.</p>
+<p>Default value: Left-Right<br/></p>

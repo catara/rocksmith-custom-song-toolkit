@@ -3328,8 +3328,8 @@ namespace RocksmithToolkitGUI.DLCManager
 
                 //Set In the works if Author/Your name can be found somewhere
                 if (info.SongInfo.SongDisplayName.IndexOf(c("general_defaultauthor")) >= 0
-                    || info.ToolkitInfo.PackageAuthor.IndexOf(c("general_defaultauthor")) >= 0 ||
-                    info.Name.IndexOf(c("general_defaultauthor")) >= 0) InTheWorks = "Yes";
+                    || info.Name.IndexOf(c("general_defaultauthor")) >= 0) InTheWorks = "Yes";
+                if (info.ToolkitInfo.PackageAuthor!=null) if (info.ToolkitInfo.PackageAuthor.IndexOf(c("general_defaultauthor")) >= 0) InTheWorks = "Yes";
 
                 //Detect Live
                 multxt = "(Live)"; Titl = Check4MultiT(origFN, info.SongInfo.SongDisplayName, multxt, multibool);

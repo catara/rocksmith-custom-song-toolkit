@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2006 Audiokinetic Inc. -->
+<PluginModule>
+  <EffectPlugin Name="Wwise Gain" CompanyID="0" PluginID="139">
+    <PluginInfo MenuPath="50-Wwise">
+      <PlatformSupport>
+        <Platform Name="Any">
+          <CanBeInsertOnBusses>true</CanBeInsertOnBusses>
+          <CanBeInsertOnAudioObjects>true</CanBeInsertOnAudioObjects>
+          <CanBeRendered>true</CanBeRendered>
+        </Platform>
+      </PlatformSupport>
+    </PluginInfo>
+    <Properties>
+      <Property Name="FullBandGain" Type="Real32" SupportRTPCType="Additive" DataMeaning="Decibels" DisplayName="Full Band Gain" DisplayGroup="Gain">
+        <UserInterface Step="0.5" Fine="0.1" Decimals="2" SliderType="16"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>0</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-96.3</Min>
+              <Max>24</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="LFEGain" Type="Real32" SupportRTPCType="Additive" DataMeaning="Decibels" DisplayName="LFE Gain" DisplayGroup="Gain">
+        <UserInterface Step="0.5" Fine="0.1" Decimals="2" SliderType="16"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>1</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-96.3</Min>
+              <Max>24</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+    </Properties>
+  </EffectPlugin>
+</PluginModule>

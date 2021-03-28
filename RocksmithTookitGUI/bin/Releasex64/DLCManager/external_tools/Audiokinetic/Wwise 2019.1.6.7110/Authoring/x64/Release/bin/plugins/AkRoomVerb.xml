@@ -1,0 +1,872 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2007 Audiokinetic Inc. -->
+<PluginModule>
+  <EffectPlugin Name="Wwise RoomVerb" CompanyID="0" PluginID="118">
+    <PluginInfo MenuPath="50-Wwise">
+      <PlatformSupport>
+        <Platform Name="Any">
+          <CanBeInsertOnBusses>true</CanBeInsertOnBusses>
+          <CanBeInsertOnAudioObjects>true</CanBeInsertOnAudioObjects>
+          <CanBeRendered>true</CanBeRendered>
+        </Platform>
+      </PlatformSupport>
+    </PluginInfo>
+    <Properties>
+      <!-- Early reflections panel -->
+      <Property Name="EnableEarlyReflections" Type="bool" DisplayName="Enable Early Reflections" DisplayGroup="Early Reflections">
+        <DefaultValue>true</DefaultValue>
+        <AudioEnginePropertyID>4</AudioEnginePropertyID>
+      </Property>
+      <Property Name="ERPattern" Type="int32" IsVisible="false" DisplayGroup="Early Reflections">
+        <DefaultValue>23</DefaultValue>
+        <AudioEnginePropertyID>0</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="int32">
+              <Min>0</Min>
+              <Max>30</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="EnableEarlyReflections" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="RoomSize" Type="Real32" DisplayName="ER Room Size" DisplayGroup="Early Reflections">
+        <UserInterface Step="1" Fine="0.1" Decimals="1"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>2</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-100</Min>
+              <Max>100</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="EnableEarlyReflections" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="ERFrontBackDelay" Type="Real32" DisplayName="ER Rear Delay" DisplayGroup="Early Reflections">
+        <UserInterface Step="1" Fine="0.1" Decimals="1"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>3</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0</Min>
+              <Max>100</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="EnableEarlyReflections" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <!-- Reverb panel -->
+      <Property Name="PreDelay" Type="Real32" DisplayName="Pre Delay" DisplayGroup="Reverb">
+        <UserInterface Step="1" Fine="0.1" Decimals="1" UIMax="200"/>
+        <DefaultValue>25</DefaultValue>
+        <AudioEnginePropertyID>1</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0</Min>
+              <Max>1000</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="DecayTime" Type="Real32" SupportRTPCType="Exclusive" DisplayName="Decay Time" DisplayGroup="Reverb">
+        <UserInterface Step="0.1" Fine="0.01" Decimals="2"/>
+        <DefaultValue>1.2</DefaultValue>
+        <AudioEnginePropertyID>10</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0.2</Min>
+              <Max>10</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="HFDamping" Type="Real32" SupportRTPCType="Exclusive" DisplayName="HF Damping" DisplayGroup="Reverb">
+        <UserInterface Step="0.05" Fine="0.01" Decimals="2"/>
+        <DefaultValue>2.25</DefaultValue>
+        <AudioEnginePropertyID>11</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0.5</Min>
+              <Max>10</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="Density" Type="Real32" DisplayName="Density" DisplayGroup="Reverb">
+        <UserInterface Step="1" Fine="0.1" Decimals="1"/>
+        <DefaultValue>80</DefaultValue>
+        <AudioEnginePropertyID>12</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0</Min>
+              <Max>100</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="RoomShape" Type="Real32" DisplayName="Room Shape" DisplayGroup="Reverb">
+        <UserInterface Step="1" Fine="0.1" Decimals="1"/>
+        <DefaultValue>100</DefaultValue>
+        <AudioEnginePropertyID>13</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0</Min>
+              <Max>100</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="Quality" Type="int32" DisplayName="Quality" DisplayGroup="Reverb">
+        <UserInterface Step="2" Fine="2" Decimals="0"/>
+        <DefaultValue>8</DefaultValue>
+        <AudioEnginePropertyID>14</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="int32">
+              <Min>2</Min>
+              <Max>16</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="Diffusion" Type="Real32" SupportRTPCType="Additive" DisplayName="Diffusion" DisplayGroup="Reverb">
+        <UserInterface Step="1" Fine="0.1" Decimals="1"/>
+        <DefaultValue>100</DefaultValue>
+        <AudioEnginePropertyID>15</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0</Min>
+              <Max>100</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="StereoWidth" Type="Real32" SupportRTPCType="Additive" DisplayName="Stereo Width" DisplayGroup="Reverb">
+        <UserInterface Step="1" Fine="0.1" Decimals="1"/>
+        <DefaultValue>180</DefaultValue>
+        <AudioEnginePropertyID>16</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0</Min>
+              <Max>180</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <!-- Tone controls panel -->
+      <Property Name="EnableToneControls" Type="bool" DisplayName="Enable Tone" DisplayGroup="Tone">
+        <DefaultValue>false</DefaultValue>
+        <AudioEnginePropertyID>20</AudioEnginePropertyID>
+      </Property>
+      <Property Name="Filter1InsertPos" DocId="FilterInsertPos" Type="int32" DisplayName="Filter Band 1 Insert" DisplayGroup="Tone/Filter/Band 1">
+        <DefaultValue>3</DefaultValue>
+        <AudioEnginePropertyID>21</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="int32">
+              <Value DisplayName="Off">0</Value>
+              <Value DisplayName="ER only">1</Value>
+              <Value DisplayName="Reverb only">2</Value>
+              <Value DisplayName="ER + Reverb">3</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="EnableToneControls" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="Filter1Curve" DocId="FilterCurve" Type="int32" DisplayName="Filter Band 1 Curve" DisplayGroup="Tone/Filter/Band 1">
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>22</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="int32">
+              <Value DisplayName="Low shelf">0</Value>
+              <Value DisplayName="Peaking">1</Value>
+              <Value DisplayName="High shelf">2</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="EnableToneControls" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="Filter1InsertPos" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- ER only -->
+                <Value>1</Value>
+                <!-- Reverb only -->
+                <Value>2</Value>
+                <!-- ER + Reverb -->
+                <Value>3</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="Filter1Gain" DocId="FilterGain" Type="Real32" SupportRTPCType="Additive" DisplayName="Filter Band 1 Gain" DisplayGroup="Tone/Filter/Band 1">
+        <UserInterface Step="0.5" Fine="0.1" Decimals="1" UIMin="-24" UIMax="24"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>23</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-32</Min>
+              <Max>32</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="EnableToneControls" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="Filter1InsertPos" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- ER only -->
+                <Value>1</Value>
+                <!-- Reverb only -->
+                <Value>2</Value>
+                <!-- ER + Reverb -->
+                <Value>3</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="Filter1Freq" DocId="FilterFreq" Type="Real32" SupportRTPCType="Exclusive" DataMeaning="Frequency" DisplayName="Filter Band 1 Frequency" DisplayGroup="Tone/Filter/Band 1">
+        <UserInterface Step="10" Fine="1" Decimals="0"/>
+        <DefaultValue>100</DefaultValue>
+        <AudioEnginePropertyID>24</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>20</Min>
+              <Max>20000</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="EnableToneControls" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="Filter1InsertPos" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- ER only -->
+                <Value>1</Value>
+                <!-- Reverb only -->
+                <Value>2</Value>
+                <!-- ER + Reverb -->
+                <Value>3</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="Filter1Q" DocId="FilterQ" Type="Real32" SupportRTPCType="Exclusive" DisplayName="Filter Band 1 Q" DisplayGroup="Tone/Filter/Band 1">
+        <UserInterface Step="0.1" Fine="0.01" Decimals="2"/>
+        <DefaultValue>1</DefaultValue>
+        <AudioEnginePropertyID>25</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0.1</Min>
+              <Max>10</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="EnableToneControls" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="Filter1InsertPos" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- ER only -->
+                <Value>1</Value>
+                <!-- Reverb only -->
+                <Value>2</Value>
+                <!-- ER + Reverb -->
+                <Value>3</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="Filter1Curve" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Peaking -->
+                <Value>1</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="Filter2InsertPos" DocId="FilterInsertPos" Type="int32" DisplayName="Filter Band 2 Insert" DisplayGroup="Tone/Filter/Band 2">
+        <DefaultValue>3</DefaultValue>
+        <AudioEnginePropertyID>26</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="int32">
+              <Value DisplayName="Off">0</Value>
+              <Value DisplayName="ER only">1</Value>
+              <Value DisplayName="Reverb only">2</Value>
+              <Value DisplayName="ER + Reverb">3</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="EnableToneControls" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="Filter2Curve" DocId="FilterCurve" Type="int32" DisplayName="Filter Band 2 Curve" DisplayGroup="Tone/Filter/Band 2">
+        <DefaultValue>1</DefaultValue>
+        <AudioEnginePropertyID>27</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="int32">
+              <Value DisplayName="Low shelf">0</Value>
+              <Value DisplayName="Peaking">1</Value>
+              <Value DisplayName="High shelf">2</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="EnableToneControls" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="Filter2InsertPos" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- ER only -->
+                <Value>1</Value>
+                <!-- Reverb only -->
+                <Value>2</Value>
+                <!-- ER + Reverb -->
+                <Value>3</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="Filter2Gain" DocId="FilterGain" Type="Real32" SupportRTPCType="Additive" DisplayName="Filter Band 2 Gain" DisplayGroup="Tone/Filter/Band 2">
+        <UserInterface Step="0.5" Fine="0.1" Decimals="1" UIMin="-24" UIMax="24"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>28</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-32</Min>
+              <Max>32</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="EnableToneControls" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="Filter2InsertPos" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- ER only -->
+                <Value>1</Value>
+                <!-- Reverb only -->
+                <Value>2</Value>
+                <!-- ER + Reverb -->
+                <Value>3</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="Filter2Freq" DocId="FilterFreq" Type="Real32" SupportRTPCType="Exclusive" DataMeaning="Frequency" DisplayName="Filter Band 2 Frequency" DisplayGroup="Tone/Filter/Band 2">
+        <UserInterface Step="10" Fine="1" Decimals="0"/>
+        <DefaultValue>1000</DefaultValue>
+        <AudioEnginePropertyID>29</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>20</Min>
+              <Max>20000</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="EnableToneControls" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="Filter2InsertPos" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- ER only -->
+                <Value>1</Value>
+                <!-- Reverb only -->
+                <Value>2</Value>
+                <!-- ER + Reverb -->
+                <Value>3</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="Filter2Q" DocId="FilterQ" Type="Real32" SupportRTPCType="Exclusive" DisplayName="Filter Band 2 Q" DisplayGroup="Tone/Filter/Band 2">
+        <UserInterface Step="0.1" Fine="0.01" Decimals="2"/>
+        <DefaultValue>1</DefaultValue>
+        <AudioEnginePropertyID>30</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0.1</Min>
+              <Max>10</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="EnableToneControls" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="Filter2InsertPos" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- ER only -->
+                <Value>1</Value>
+                <!-- Reverb only -->
+                <Value>2</Value>
+                <!-- ER + Reverb -->
+                <Value>3</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="Filter2Curve" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Peaking -->
+                <Value>1</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="Filter3InsertPos" DocId="FilterInsertPos" Type="int32" DisplayName="Filter Band 3 Insert" DisplayGroup="Tone/Filter/Band 3">
+        <DefaultValue>3</DefaultValue>
+        <AudioEnginePropertyID>31</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="int32">
+              <Value DisplayName="Off">0</Value>
+              <Value DisplayName="ER only">1</Value>
+              <Value DisplayName="Reverb only">2</Value>
+              <Value DisplayName="ER + Reverb">3</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="EnableToneControls" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="Filter3Curve" DocId="FilterCurve" Type="int32" DisplayName="Filter Band 3 Curve" DisplayGroup="Tone/Filter/Band 3">
+        <DefaultValue>2</DefaultValue>
+        <AudioEnginePropertyID>32</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="int32">
+              <Value DisplayName="Low shelf">0</Value>
+              <Value DisplayName="Peaking">1</Value>
+              <Value DisplayName="High shelf">2</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="EnableToneControls" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="Filter3InsertPos" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- ER only -->
+                <Value>1</Value>
+                <!-- Reverb only -->
+                <Value>2</Value>
+                <!-- ER + Reverb -->
+                <Value>3</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="Filter3Gain" DocId="FilterGain" Type="Real32" SupportRTPCType="Additive" DisplayName="Filter Band 3 Gain" DisplayGroup="Tone/Filter/Band 3">
+        <UserInterface Step="0.5" Fine="0.1" Decimals="1" UIMin="-24" UIMax="24"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>33</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-32</Min>
+              <Max>32</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="EnableToneControls" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="Filter3InsertPos" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- ER only -->
+                <Value>1</Value>
+                <!-- Reverb only -->
+                <Value>2</Value>
+                <!-- ER + Reverb -->
+                <Value>3</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="Filter3Freq" DocId="FilterFreq" Type="Real32" SupportRTPCType="Exclusive" DataMeaning="Frequency" DisplayName="Filter Band 3 Frequency" DisplayGroup="Tone/Filter/Band 3">
+        <UserInterface Step="10" Fine="1" Decimals="0"/>
+        <DefaultValue>10000</DefaultValue>
+        <AudioEnginePropertyID>34</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>20</Min>
+              <Max>20000</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="EnableToneControls" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="Filter3InsertPos" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- ER only -->
+                <Value>1</Value>
+                <!-- Reverb only -->
+                <Value>2</Value>
+                <!-- ER + Reverb -->
+                <Value>3</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="Filter3Q" DocId="FilterQ" Type="Real32" SupportRTPCType="Exclusive" DisplayName="Filter Band 3 Q" DisplayGroup="Tone/Filter/Band 3">
+        <UserInterface Step="0.1" Fine="0.01" Decimals="2"/>
+        <DefaultValue>1</DefaultValue>
+        <AudioEnginePropertyID>35</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0.1</Min>
+              <Max>10</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="EnableToneControls" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="Filter3InsertPos" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- ER only -->
+                <Value>1</Value>
+                <!-- Reverb only -->
+                <Value>2</Value>
+                <!-- ER + Reverb -->
+                <Value>3</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="Filter3Curve" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Peaking -->
+                <Value>1</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <!-- Input levels panel -->
+      <Property Name="InputCenterLevel" Type="Real32" DataMeaning="Decibels" DisplayName="Center Input Level" DisplayGroup="Input levels">
+        <UserInterface Step="1" Fine="0.1" Decimals="1"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>40</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-96.3</Min>
+              <Max>0</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="InputLFELevel" Type="Real32" DataMeaning="Decibels" DisplayName="LFE Input Level" DisplayGroup="Input levels">
+        <UserInterface Step="1" Fine="0.1" Decimals="1"/>
+        <DefaultValue>-96.3</DefaultValue>
+        <AudioEnginePropertyID>41</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-96.3</Min>
+              <Max>0</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <!-- Reverb levels panel -->
+      <Property Name="FrontLevel" Type="Real32" SupportRTPCType="Additive" DataMeaning="Decibels" DisplayName="Front Level" DisplayGroup="Reverb levels">
+        <UserInterface Step="1" Decimals="0"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>50</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-96.3</Min>
+              <Max>0</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="RearLevel" Type="Real32" SupportRTPCType="Additive" DataMeaning="Decibels" DisplayName="Rear Level" DisplayGroup="Reverb levels">
+        <UserInterface Step="1" Decimals="0"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>51</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-96.3</Min>
+              <Max>0</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="CenterLevel" Type="Real32" SupportRTPCType="Additive" DataMeaning="Decibels" DisplayName="Center Level" DisplayGroup="Reverb levels">
+        <UserInterface Step="1" Fine="0.1" Decimals="1"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>52</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-96.3</Min>
+              <Max>0</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="LFELevel" Type="Real32" SupportRTPCType="Additive" DataMeaning="Decibels" DisplayName="LFE Level" DisplayGroup="Reverb levels">
+        <UserInterface Step="1" Fine="0.1" Decimals="1"/>
+        <DefaultValue>-96.3</DefaultValue>
+        <AudioEnginePropertyID>53</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-96.3</Min>
+              <Max>0</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <!-- Output levels panel -->
+      <Property Name="DryLevel" Type="Real32" SupportRTPCType="Additive" DataMeaning="Decibels" DisplayName="Dry Level" DisplayGroup="Output levels">
+        <UserInterface Step="1" Fine="0.1" Decimals="1"/>
+        <DefaultValue>-96.3</DefaultValue>
+        <AudioEnginePropertyID>60</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-96.3</Min>
+              <Max>0</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="ERLevel" Type="Real32" SupportRTPCType="Additive" DataMeaning="Decibels" DisplayName="ER Level" DisplayGroup="Output levels">
+        <UserInterface Step="1" Fine="0.1" Decimals="1"/>
+        <DefaultValue>-20</DefaultValue>
+        <AudioEnginePropertyID>61</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-96.3</Min>
+              <Max>0</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="EnableEarlyReflections" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="ReverbLevel" Type="Real32" SupportRTPCType="Additive" DataMeaning="Decibels" DisplayName="Reverb Level" DisplayGroup="Output levels">
+        <UserInterface Step="1" Fine="0.1" Decimals="1"/>
+        <DefaultValue>-20</DefaultValue>
+        <AudioEnginePropertyID>62</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-96.3</Min>
+              <Max>0</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <!-- Tunings params -->
+      <Property Name="DensityDelayMin" Type="Real32" IsVisible="false">
+        <DefaultValue>8</DefaultValue>
+        <AudioEnginePropertyID>100</AudioEnginePropertyID>
+      </Property>
+      <Property Name="DensityDelayMax" Type="Real32" IsVisible="false">
+        <DefaultValue>50</DefaultValue>
+        <AudioEnginePropertyID>101</AudioEnginePropertyID>
+      </Property>
+      <Property Name="DensityDelayRdmPerc" Type="Real32" IsVisible="false">
+        <DefaultValue>2</DefaultValue>
+        <AudioEnginePropertyID>102</AudioEnginePropertyID>
+      </Property>
+      <Property Name="RoomShapeMin" Type="Real32" IsVisible="false">
+        <DefaultValue>0.1</DefaultValue>
+        <AudioEnginePropertyID>103</AudioEnginePropertyID>
+      </Property>
+      <Property Name="RoomShapeMax" Type="Real32" IsVisible="false">
+        <DefaultValue>0.8</DefaultValue>
+        <AudioEnginePropertyID>104</AudioEnginePropertyID>
+      </Property>
+      <Property Name="DiffusionDelayScalePerc" Type="Real32" IsVisible="false">
+        <DefaultValue>66</DefaultValue>
+        <AudioEnginePropertyID>105</AudioEnginePropertyID>
+      </Property>
+      <Property Name="DiffusionDelayMax" Type="Real32" IsVisible="false">
+        <DefaultValue>15</DefaultValue>
+        <AudioEnginePropertyID>106</AudioEnginePropertyID>
+      </Property>
+      <Property Name="DiffusionDelayRdmPerc" Type="Real32" IsVisible="false">
+        <DefaultValue>5</DefaultValue>
+        <AudioEnginePropertyID>107</AudioEnginePropertyID>
+      </Property>
+      <Property Name="DCFilterCutFreq" Type="Real32" IsVisible="false">
+        <DefaultValue>40</DefaultValue>
+        <AudioEnginePropertyID>108</AudioEnginePropertyID>
+      </Property>
+      <Property Name="ReverbUnitInputDelay" Type="Real32" IsVisible="false">
+        <DefaultValue>100</DefaultValue>
+        <AudioEnginePropertyID>109</AudioEnginePropertyID>
+      </Property>
+      <Property Name="ReverbUnitInputDelayRmdPerc" Type="Real32" IsVisible="false">
+        <DefaultValue>50</DefaultValue>
+        <AudioEnginePropertyID>110</AudioEnginePropertyID>
+      </Property>
+    </Properties>
+  </EffectPlugin>
+</PluginModule>

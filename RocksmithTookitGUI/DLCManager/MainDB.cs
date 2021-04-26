@@ -59,11 +59,12 @@ namespace RocksmithToolkitGUI.DLCManager
         public Platform SourcePlatform { get; set; }
 
         // Create the ToolTip and associate with the Form container.
-        ToolTip toolTip2 = new ToolTip();
-        ToolTip toolTip3 = new ToolTip();
-        ToolTip toolTip4 = new ToolTip();
-        ToolTip toolTip5 = new ToolTip();
-        ToolTip toolTip6 = new ToolTip();
+        //ToolTip toolTip2 = new ToolTip();
+        //ToolTip toolTip3 = new ToolTip();
+        //ToolTip toolTip4 = new ToolTip();
+        //ToolTip toolTip5 = new ToolTip();
+        //ToolTip toolTip6 = new ToolTip();
+        //ToolTip toolTip7 = new ToolTip();
 
         public Platform TargetPlatform { get; set; }
         public string AppWD = AppDomain.CurrentDomain.BaseDirectory + "DLCManager\\external_tools"; //when repacking
@@ -75,11 +76,11 @@ namespace RocksmithToolkitGUI.DLCManager
         public bool SearchExit = false;
         public bool AddPreview = false;
         ToolTip toolTip11 = new ToolTip();
-        ToolTip toolTip12 = new ToolTip();
-        ToolTip toolTip13 = new ToolTip();
-        ToolTip toolTip14 = new ToolTip();
-        ToolTip toolTip15 = new ToolTip();
-        ToolTip toolTip16 = new ToolTip();
+        //ToolTip toolTip12 = new ToolTip();
+        //ToolTip toolTip13 = new ToolTip();
+        //ToolTip toolTip14 = new ToolTip();
+        //ToolTip toolTip15 = new ToolTip();
+        //ToolTip toolTip16 = new ToolTip();
         string Groupss = "";
         static string debug = "";
         public string netstatus = c("dlcm_netstatus");
@@ -626,10 +627,10 @@ namespace RocksmithToolkitGUI.DLCManager
                         txt_Spotify_Album_URL.Text = SongRecord[0].Spotify_Album_URL;
 
                         // Set up the ToolTip text for the Button and Checkbox.
-                        toolTip2.SetToolTip(btn_PlayAudio, SongRecord[0].Audio_OrigHash);
-                        toolTip3.SetToolTip(btn_PlayPreview, SongRecord[0].Audio_OrigPreviewHash);
-                        toolTip4.SetToolTip(gbox_Cover, SongRecord[0].audioBitrate + " - " + SongRecord[0].audioSampleRate);
-                        toolTip5.SetToolTip(txt_PreviewStart, SongRecord[0].Song_Lenght);
+                        toolTip1.SetToolTip(btn_PlayAudio, SongRecord[0].Audio_OrigHash);
+                        toolTip1.SetToolTip(btn_PlayPreview, SongRecord[0].Audio_OrigPreviewHash);
+                        toolTip1.SetToolTip(gbox_Cover, SongRecord[0].audioBitrate + " - " + SongRecord[0].audioSampleRate);
+                        toolTip1.SetToolTip(txt_PreviewStart, SongRecord[0].Song_Lenght);
 
                         txt_Preview_Hash.Text = SongRecord[0].AudioPreview_Hash;
                         txt_Art_Hash.Text = SongRecord[0].AlbumArt_Hash;
@@ -720,8 +721,8 @@ namespace RocksmithToolkitGUI.DLCManager
                         DataSet ddr = new DataSet(); ddr = SelectFromDB("Arrangements", sel, "", cnb);
                         rec = ddr.Tables.Count > 0 ? ddr.Tables[0].Rows.Count : 0;
 
-                        toolTip11.RemoveAll(); toolTip12.RemoveAll(); toolTip13.RemoveAll(); toolTip14.RemoveAll(); toolTip15.RemoveAll();
-                        toolTip2.RemoveAll(); toolTip3.RemoveAll(); toolTip4.RemoveAll(); toolTip5.RemoveAll();
+                        //toolTip11.RemoveAll(); toolTip12.RemoveAll(); toolTip13.RemoveAll(); toolTip14.RemoveAll(); toolTip15.RemoveAll();
+                        //toolTip2.RemoveAll(); toolTip3.RemoveAll(); toolTip4.RemoveAll(); toolTip5.RemoveAll();
                         if (rec > 0)
                         {
                             var tzt = "";
@@ -746,18 +747,18 @@ namespace RocksmithToolkitGUI.DLCManager
                                 var txtt = Start_Time + Bonus + Part + HasSections + MaxDifficulty + Tones + Tunings + TuningPitch + lastConversion + Rating + ScroolSpeed + Comment;
                                 txtt = txtt.Replace(", , ", ", ").Replace(", , ", ", ").Replace(", , ", ", ").Replace(", , ", ", ");
                                 if (Arrangement_Name == "0") toolTip11.SetToolTip(chbx_Lead, toolTip11.GetToolTip(chbx_Lead) + txtt);
-                                else if (Arrangement_Name == "1") toolTip12.SetToolTip(chbx_Rhythm, toolTip12.GetToolTip(chbx_Rhythm) + txtt);
-                                else if (Arrangement_Name == "3") toolTip13.SetToolTip(chbx_Bass, toolTip13.GetToolTip(chbx_Bass) + txtt);
-                                else if (Arrangement_Name == "4") toolTip14.SetToolTip(chbx_Lyrics, toolTip14.GetToolTip(chbx_Lyrics) + txtt);
-                                else if (Arrangement_Name == "5") toolTip15.SetToolTip(chbx_Combo, toolTip15.GetToolTip(chbx_Combo) + txtt);
+                                else if (Arrangement_Name == "1") toolTip1.SetToolTip(chbx_Rhythm, toolTip1.GetToolTip(chbx_Rhythm) + txtt);
+                                else if (Arrangement_Name == "3") toolTip1.SetToolTip(chbx_Bass, toolTip1.GetToolTip(chbx_Bass) + txtt);
+                                else if (Arrangement_Name == "4") toolTip1.SetToolTip(chbx_Lyrics, toolTip1.GetToolTip(chbx_Lyrics) + txtt);
+                                else if (Arrangement_Name == "5") toolTip1.SetToolTip(chbx_Combo, toolTip1.GetToolTip(chbx_Combo) + txtt);
                                 var instr = Arrangement_Name == "0" ? "Lead" : (Arrangement_Name == "1" ? "Rhythm" : (Arrangement_Name == "3" ? "Bass" : (Arrangement_Name == "5" ? "Combo" : (""))));
                                 var bon = ddr.Tables[0].Rows[j].ItemArray[2].ToString().ToLower() == "true" ? "b" : "";
-                                toolTip16.SetToolTip(txt_Tuning, toolTip16.GetToolTip(txt_Tuning) + ", " + instr + ": " + (bon == "" ? "" : bon + "-") + Tunings);
+                                toolTip1.SetToolTip(txt_Tuning, toolTip1.GetToolTip(txt_Tuning) + ", " + instr + ": " + (bon == "" ? "" : bon + "-") + Tunings);
                                 tzt += GetDropTunningInstr(ddr.Tables[0].Rows[j].ItemArray[11].ToString());
                                 tzt += tzt != "" ? instr + tzt + "\n" : "";
                             }
-                            if (tzt != "") toolTip6.SetToolTip(chbx_PitchShift, tzt);
-                            else toolTip6.SetToolTip(chbx_PitchShift, "Not in any E standard or Drop D compatible drop(s) tunings");
+                            if (tzt != "") toolTip1.SetToolTip(chbx_PitchShift, tzt);
+                            else toolTip1.SetToolTip(chbx_PitchShift, "Not in any E standard or Drop D compatible drop(s) tunings");
                         }
                         //Populate all Packed versions of the song
                         var tht = "SELECT PackPath+'\\'+FileName FROM Pack_AuditTrail WHERE CDLC_ID=" + txt_ID.Text + " ORDER BY ID DESC;";
@@ -1376,6 +1377,12 @@ namespace RocksmithToolkitGUI.DLCManager
                 chbx_PS3HAN.Enabled = true;
             }
             else
+            if (chbx_Format.Text == "ImportFolder" && Directory.Exists(c("dlcm_RocksmithDLCPath")))
+            {
+                txt_FTPPath.Text = c("dlcm_RocksmithDLCPath");
+                chbx_PS3HAN.Enabled = true;
+            }
+            else
             if (chbx_Format.Text == "PS3_EU")
             {
                 txt_FTPPath.Text = c("dlcm_FTPEU");
@@ -1390,13 +1397,30 @@ namespace RocksmithToolkitGUI.DLCManager
             else
             {
                 chbx_PS3HAN.Enabled = false;
-                if (chbx_Format.Text == "Mac")
-                    txt_FTPPath.Text = File.Exists(c("general_rs2014path")) ? c("general_rs2014path") : c("dlcm_Mac");/// c("dlcm_RocksmithDLCPath");               
+                if (chbx_Format.Text == "PC" || chbx_Format.Text == "ImportFolder")
+                {
+                    var txt = "";
+                    if (chbx_Format.Text == "ImportFolder") txt += "ImportFolder not existing ergo defaulted to Pc!";
+                    if (!(Directory.Exists(c("general_rs2014path")) && c("general_rs2014path").IndexOf(":\\") >= 0)) txt += "Defaulted to DLCManager PC Path: " + c("dlcm_PC");
+                    DialogResult result1 = MessageBox.Show(txt, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    txt_FTPPath.Text = Directory.Exists(c("general_rs2014path")) && c("general_rs2014path").IndexOf(":\\") >= 0 ? c("general_rs2014path") : c("dlcm_PC");/// c("dlcm_RocksmithDLCPath");               
+                }
                 else
-                if (chbx_Format.Text == "PC")
-                    txt_FTPPath.Text = File.Exists(c("general_rs2014path")) && c("general_rs2014path").IndexOf(":\\") >= 0 ? c("general_rs2014path") : c("dlcm_PC");/// c("dlcm_RocksmithDLCPath");               
-                else txt_FTPPath.Text = "";
+                if (chbx_Format.Text == "Mac" || chbx_Format.Text == "ImportFolder")
+                {
+                    var txt = "";
+                    if (chbx_Format.Text == "ImportFolder") txt += "ImportFolder not existing ergo defaulted to Mac!";
+                    if (!(Directory.Exists(c("general_rs2014path")) && c("general_rs2014path").IndexOf(":\\") >= 0)) txt += "Defaulted to DLCManager PC Path: " + c("dlcm_Mac");
+                    DialogResult result1 = MessageBox.Show(txt, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    txt_FTPPath.Text = Directory.Exists(c("general_rs2014path")) ? c("general_rs2014path") : c("dlcm_Mac");/// c("dlcm_RocksmithDLCPath");        
+                }
+                else {
+                    DialogResult result1 = MessageBox.Show("No indicated Folder available", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    txt_FTPPath.Text = "";
+                }
             }
+
+            toolTip1.SetToolTip(txt_FTPPath, txt_FTPPath.Text); 
         }
 
         private void btn_Close_Click(object sender, EventArgs e)
@@ -2919,7 +2943,7 @@ namespace RocksmithToolkitGUI.DLCManager
             UpdateDB("Main", "Update Main Set Remote_Path = \"\";", cnb); logmss = "Cleared Remote Songs... "; timestamp = UpdateLog(timestamp, logmss, false, c("dlcm_TempPath"), "", "MainDB", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
             string[] fileEntries = new string[10000];
             string[] fileEntrie = new string[10000];
-            string[] dates = new string[10000];
+            string[] dates = new string[10000]; ConfigRepository.Instance()["dlcm_FTPstatus"] = "OK";
             if (chbx_Format.Text == "PS3_US" || chbx_Format.Text == "PS3_JP" || chbx_Format.Text == "PS3_EU") fileEntrie = GetFTPFiles(pathx);
             else try { fileEntries = Directory.GetFiles(pathx, "*" + (chbx_Format.Text == "PC" ? "_p." : chbx_Format.Text == "Mac" ? "_m." : chbx_Format.Text == "XBOX360" ? "" : "") + "psarc*", SearchOption.TopDirectoryOnly); }
                 catch (Exception ex) { var tsst = "Error ..." + ex; timestamp = UpdateLog(timestamp, tsst, false, c("dlcm_TempPath"), "", "", null, null); }

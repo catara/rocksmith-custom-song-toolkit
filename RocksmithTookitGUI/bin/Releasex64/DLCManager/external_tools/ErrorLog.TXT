@@ -1,6 +1,0 @@
-23/02/2020 00:47:41 UNIT:[Unit1.pas] ERROR:SearchSet: Field '' not found
-23/02/2020 00:47:52 UNIT:[Unit1.pas] ERROR:SearchSet: Field '' not found
-23/02/2020 00:48:13 UNIT:[Unit1.pas] ERROR:SearchSet: Field '' not found
-23/02/2020 00:48:18 UNIT:[Unit1.pas] ERROR:SearchSet: Field '' not found
-29/03/2021 00:52:22 UNIT:[Unit1.pas] ERROR:There is no default printer currently selected
-29/03/2021 00:53:12 UNIT:[Unit1.pas] ERROR:There is no default printer currently selected

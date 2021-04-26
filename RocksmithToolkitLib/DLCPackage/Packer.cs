@@ -224,7 +224,7 @@ namespace RocksmithToolkitLib.DLCPackage
                                 {
                                     var sngFileName = Path.GetFileNameWithoutExtension(sngFile);
                                     var vocalType = sngFileName.IndexOf("jvocals", StringComparison.OrdinalIgnoreCase) >= 0 ? "jvocals" : "vocals";
-                                    var dlcName = att.DLCKey.ToLower();
+                                    var dlcName = att.DLCKey == null?null:att.DLCKey.ToLower();//bcapi
                                     var glyphsPath = Path.Combine(Path.GetDirectoryName(xmlSngFile), String.Format("lyrics_{0}_{1}.glyphs.xml", dlcName, vocalType));
                                     var glyphDefs = GlyphDefinitions.LoadFromSng(sngContent);
                                     glyphDefs.Serialize(glyphsPath);

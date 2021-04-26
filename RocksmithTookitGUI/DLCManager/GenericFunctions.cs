@@ -219,13 +219,24 @@ namespace RocksmithToolkitGUI.DLCManager
             return "NOK";
         }
 
-        public static void ShowConnectivityError(Exception ex, string txt)
+        public static void ShowConnectivityError(Exception ex, string txt, System.Windows.Forms.Label lbl)
         {
-
+            
             if (ex.Message.IndexOf("The 'Microsoft.ACE.OLEDB.") > -1 && ex.Message.IndexOf("provider is not registered on the local machine.") > -1)
             {
-                ErrorWindow frm1 = new ErrorWindow("You need to Download Connectivity patch 32/64 bit to match your version of Office @ " + txt, ConfigRepository.Instance()["dlcm_Access" + ConfigRepository.Instance()["dlcm_AccessDLLVersion"]], "Error @Import", false, false, true, "", "", "");
+                if (c("dlcm_ShowConenctivityOnce") == "Yes") return;
+                ErrorWindow frm1 = new ErrorWindow("You need to Download Connectivity patch 32/64 bit to match your version of Office @ " +
+                    txt+".\n"+"Reinstall in case you feel/see plugin there or is not diplayed when ruznning in powershell:\n" +
+                    "(New-Object system.data.oledb.oledbenumerator).GetElements() | select SOURCES_NAME, SOURCES_DESCRIPTION\n" +
+                    "and if intending to install the x64 variant of plugin please note in order to have it on top of Office 32bit then you need to decompress it and rthe .msi with /passive flag"
+                    , ConfigRepository.Instance()["dlcm_Access" + ConfigRepository.Instance()["dlcm_AccessDLLVersion"]], "Error @Import", false, false, true, "", "", "");
                 frm1.ShowDialog();
+                ConfigRepository.Instance()["dlcm_ShowConenctivityOnce"] = "Yes";//default always to show message only once
+                if (lbl != null)
+                {
+                    lbl.Text = "missing Access plugin!";
+                    lbl.Visible = true;
+                }
             }
         }
 
@@ -702,7 +713,7 @@ namespace RocksmithToolkitGUI.DLCManager
             catch (Exception ex)
             {
                 var tsst = "Error4 ..." + ex; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", null, null);
-                ShowConnectivityError(ex, DB + "--------" + slct + "--------------");
+                ShowConnectivityError(ex, DB + "--------" + slct + "--------------", null);
                 return;
             }
         }
@@ -804,7 +815,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     else insertcmd = "INSERT INTO " + ftable + " (" + ffields + ") VALUES (" + fvalues + ");";
                     DateTime timestamp;
                     timestamp = UpdateLog(DateTime.Now, "error at import " + ee.Message + "-" + insertcmd, true, tmpPath, mutit.ToString(), "", null, null);
-                    ShowConnectivityError(ex, ftable + "--------" + fvalues + "--------------");
+                    ShowConnectivityError(ex, ftable + "--------" + fvalues + "--------------", null);
                 }
             }
         }
@@ -821,7 +832,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         da.Fill(dsm, ftable);
                         da.Dispose();
                     }
-                    catch (Exception ex) { ShowConnectivityError(ex, ftable + "---" + fcmds); }
+                    catch (Exception ex) { ShowConnectivityError(ex, ftable + "---" + fcmds, null); }
                 return dsm;
             }
             else return dfsm;
@@ -945,7 +956,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 catch (Exception ex)
                 {
                     var tsst = "Error8 ..." + ex; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", null, null);
-                    ShowConnectivityError(ex, ftable + "--------" + fcmds + "--------------");
+                    ShowConnectivityError(ex, ftable + "--------" + fcmds + "--------------", null);
                     return dsm;
                 }
             }
@@ -962,7 +973,7 @@ namespace RocksmithToolkitGUI.DLCManager
             catch (Exception ex)
             {
                 var tsst = "Error8 ..." + ex; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", null, null);
-                ShowConnectivityError(ex, ftable + "--------" + fcmds + "--------------");
+                ShowConnectivityError(ex, ftable + "--------" + fcmds + "--------------", null);
             }
 
             return;
@@ -2451,10 +2462,41 @@ namespace RocksmithToolkitGUI.DLCManager
             rt = st.IndexOf("["); rdt = st.IndexOf("]"); if (rt >= 0 && rdt > 0) st = st.Replace(st.Substring(rt, rdt - rt + 1), "").Trim();
             return st;
         }
-
-
-        public static string[] GetFTPFiles(string filen)
+        public static string[] GetFTPFilesPlusDLC(string filen, string Temp_Path_Import, string gameversion)
         {
+            var jsonFile1 = GetFTPFiles(filen);
+            string[] tmp = { "", "" };
+           if (!(jsonFile1 ==null)) foreach(string fileName in jsonFile1)
+            {                //Copy to decompress/import/FTP
+                var tt = Temp_Path_Import + "\\" + fileName+ gameversion;
+                if (fileName.IndexOf("songs.psarc.edat")>=0 || fileName.IndexOf("rs1compatibilitydlc.psarc.edat") >= 0
+                    || fileName.IndexOf("rs1compatibilitydisc.psarc.edat")>=0 || fileName.IndexOf("cache.psarc.edat") >= 0)
+                    tt = CopyFTPFile(Path.GetFileName(fileName), tt, c("dlcm_TempPath"));
+            }
+            var jsonFile2 = (GetFTPFiles(filen + "\\DLC"));//.ToArray();
+            if (!(jsonFile2 == null)) foreach (string fileName in jsonFile2)
+            {//Copy to decompress/import/FTP
+                var tt = c("dlcm_TempPath") + "\\" + fileName+ gameversion;
+                if (fileName.IndexOf("songs.psarc.edat") >= 0 || fileName.IndexOf("rs1compatibilitydlc.psarc.edat") >= 0
+                    || fileName.IndexOf("rs1compatibilitydisc.psarc.edat") >= 0 || fileName.IndexOf("cache.psarc.edat") >= 0)
+                    tt = CopyFTPFile(Path.GetFileName(fileName), tt, c("dlcm_TempPath"));
+            }
+             var z= jsonFile2==null ? tmp : jsonFile1.Concat(jsonFile2).ToArray();
+            if (z == null || z.Count() == 0 ) return tmp;
+            else return z;
+        }
+       public static string[] GetFilesPlusDLC(string filen)
+        {
+            string[] tmp = { "", "" };
+            if (!Directory.Exists(filen)) return tmp;
+            var jsonFile4 = Directory.GetFiles(filen, "*.psarc*", System.IO.SearchOption.AllDirectories);
+            return jsonFile4==null ? tmp : jsonFile4;
+                //.Concat(Directory.GetFiles(filen + "\\DLC", "*.psarc*", System.IO.SearchOption.AllDirectories)).ToArray();
+            
+        }
+            public static string[] GetFTPFiles(string filen)
+        {
+            if (c("dlcm_FTPstatus") == "NOK") return null;
             try
             {
                 System.Net.FtpWebRequest ftpRequest = (System.Net.FtpWebRequest)System.Net.WebRequest.Create(filen);
@@ -2482,7 +2524,10 @@ namespace RocksmithToolkitGUI.DLCManager
                 streamReader.Close();
                 return directories;
             }
-            catch (Exception ex) { var tsst = "Error17 ..." + ex; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", null, null); return null; }
+            catch (Exception ex) {
+
+                ConfigRepository.Instance()["dlcm_FTPstatus"] = "NOK";
+                var tsst = "Error17 ..." + ex; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", null, null); return null; }
         }
 
         public static string c(string configstring)

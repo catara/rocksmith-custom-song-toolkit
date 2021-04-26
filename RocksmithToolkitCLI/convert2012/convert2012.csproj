@@ -39,7 +39,7 @@
     <ApplicationIcon>CLI.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="RocksmithToolkitLib, Version=2.9.2.1, Culture=neutral, processorArchitecture=x86">
+    <Reference Include="RocksmithToolkitLib, Version=2.9.2.1, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\RocksmithToolkitLib\bin\Release\RocksmithToolkitLib.dll</HintPath>
     </Reference>

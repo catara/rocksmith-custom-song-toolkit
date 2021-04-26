@@ -168,6 +168,7 @@
   <Config Key="dlcm_StartInDLCM" Value="Yes" Descr="" />;
   <Config Key="dlcm_DBVersion" Value="1" Descr="" />;
   <Config Key="dlcm_ThreadNo" Value="" Descr="not used at split4pack is undes insted" />;
+  <Config Key="dlcm_ShowConenctivityOnce" Value="No" Descr="Only show no Provider conenctivity plugin installed ONLY once." />;
 
   <Config Key="dlcm_AdditionalManipul0" Value="No" Descr="" />
   <Config Key="dlcm_AdditionalManipul1" Value="No" Descr="" />

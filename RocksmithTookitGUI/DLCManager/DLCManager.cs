@@ -6966,18 +6966,66 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btn_Debbug_Click(object sender, EventArgs e)
         {
-            ProgressBar pB_ReadDLCs = new ProgressBar
+            var dirToPack = "C:\\t\\0\\0_dlcpacks\\temp\\songs_psarc_RS2014_Pc";
+            //var SourcePlatform = new Platform(dirToPack.GetPlatform().platform.ToString(), GameVersion.RS2014.ToString());
+            //var TargetPlatform = new Platform("Pc", GameVersion.RS2014.ToString());
+
+            //var needRebuildPackage = SourcePlatform.IsConsole != TargetPlatform.IsConsole;
+            //var tmpDir = Path.GetTempPath();
+
+            //var unpackedDir = Packer.Unpack(oldfilePath, tmpDir, SourcePlainfotform, false, false);
+            var info = DLCPackageData.LoadFromFolder(dirToPack, new Platform(GamePlatform.Pc, GameVersion.RS2014));
+            var dest= "";          var i = 0;  
+            foreach (var file in info.ArtFiles)
             {
-                Location = new System.Drawing.Point(11, 137),
-                Margin = new System.Windows.Forms.Padding(5, 2, 5, 2),
-                Maximum = 4,
-                Name = "pB_ReadDLCs",
-                Size = new System.Drawing.Size(1051, 28),
-                Step = 1,
-                TabIndex = 263
-            };
-            toolTip1.SetToolTip(pB_ReadDLCs, "Progress bar for different operations of CDLC Manager.");
-            Controls.Add(pB_ReadDLCs);
+
+                dest = c("dlcm_TempPath") + "\\dlcpacks\\manipulated\\songs_psarc_RS2014_Pc\\" + info.Arrangements[i].SongXml.Name;
+               
+                if (i==0) Directory.CreateDirectory(dest + "\\" + "gfxassets\\album_art");
+                File.Copy(file.sourceFile, dest + "\\" + "gfxassets\\album_art\\" + Path.GetFileName(file.sourceFile));
+
+                if (i == 0) Directory.CreateDirectory(dest + "\\" + "audio\\windows");
+                File.Copy(Path.GetFullPath(file.sourceFile)+"\\..\\..\\"+ "audio\\windows\\"+ Path.GetFileNameWithoutExtension(file.sourceFile)+".wem"
+                    , dest + "\\" + "audio\\windows\\song_" + Path.GetFileNameWithoutExtension(file.sourceFile) + ".wem");
+                File.Copy(Path.GetFullPath(file.sourceFile) + e + "\\..\\..\\" + "audio\\windows\\" + Path.GetFileNameWithoutExtension(file.sourceFile) + "_preview.wem"
+                    , dest + "\\" + "audio\\windows\\song_" + Path.GetFileNameWithoutExtension(file.sourceFile) + "_preview.wem");                
+                    
+                if (i == 0) Directory.CreateDirectory(dest + "\\" + "gamexblocks\nsongs");
+                File.Copy(Path.GetFullPath(file.sourceFile) + "\\..\\..\\" + "audio\\windows\\" + Path.GetFileNameWithoutExtension(file.sourceFile) + "._fcp_disk.xblock"
+                    , dest + "\\" + "audio\\windows\\song_" + Path.GetFileNameWithoutExtension(file.sourceFile) + "._fcp_disk.xblock");
+
+                if (i == 0) Directory.CreateDirectory(dest + "\\" + "songs\\arr");
+                File.Copy(info.Arrangements[i].SongXml.File, dest + "\\" + "songs\\arr\\" + info.Arrangements[i].SongXml.Name);
+                i++;
+            }
+
+            //foreach (var file in info.Arrangements)
+            //{
+            //    dest = c("dlcm_TempPath") + "\\dlcpacks\\manipulated\\songs_psarc_RS2014_Pc\\" + info.Arrangements[i].SongXml.Name;
+
+            //    i++;
+            //}
+            //foreach (var file in info.Arrangements)
+            //{
+            //    File.Copy(file.SongXml.File);
+            //}
+
+
+            //Packer.Pack(dirToPack, targetFileName, SourcePlatform, updateSNG, true); //30.09 added false updateManifest
+            //dlcSavePath = repacked_Path + "\\" + chbx_PC + "\\" + FN;
+            RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate(dirToPack, info, new Platform(GamePlatform.Pc, GameVersion.RS2014));
+            //ProgressBar pB_ReadDLCs = new ProgressBar
+            //{
+            //    Location = new System.Drawing.Point(11, 137),
+            //    Margin = new System.Windows.Forms.Padding(5, 2, 5, 2),
+            //    Maximum = 4,
+            //    Name = "pB_ReadDLCs",
+            //    Size = new System.Drawing.Size(1051, 28),
+            //    Step = 1,
+            //    TabIndex = 263
+            //};
+            //toolTip1.SetToolTip(pB_ReadDLCs, "Progress bar for different operations of CDLC Manager.");
+            //Controls.Add(pB_ReadDLCs);
         }
         private bool GetParam(int t)
         {

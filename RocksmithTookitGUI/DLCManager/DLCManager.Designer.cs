@@ -34,6 +34,7 @@ namespace RocksmithToolkitGUI.DLCManager
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DLCManager));
             this.cbx_Export = new System.Windows.Forms.ComboBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.lbl_Access = new System.Windows.Forms.Label();
             this.chbx_iOS = new System.Windows.Forms.CheckBox();
             this.chbx_PS4 = new System.Windows.Forms.CheckBox();
             this.txt_NoOfSplits = new System.Windows.Forms.ComboBox();
@@ -138,7 +139,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.cbx_Album_Sort = new System.Windows.Forms.ComboBox();
             this.txt_Album_Sort = new System.Windows.Forms.TextBox();
             this.txt_FilterParams = new System.Windows.Forms.RichTextBox();
-            this.lbl_Access = new System.Windows.Forms.Label();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -182,6 +182,17 @@ namespace RocksmithToolkitGUI.DLCManager
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(572, 104);
             this.panel2.TabIndex = 204;
+            // 
+            // lbl_Access
+            // 
+            this.lbl_Access.AutoSize = true;
+            this.lbl_Access.ForeColor = System.Drawing.Color.Red;
+            this.lbl_Access.Location = new System.Drawing.Point(243, 84);
+            this.lbl_Access.Name = "lbl_Access";
+            this.lbl_Access.Size = new System.Drawing.Size(118, 20);
+            this.lbl_Access.TabIndex = 432;
+            this.lbl_Access.Text = "DB Folder Path";
+            this.lbl_Access.Visible = false;
             // 
             // chbx_iOS
             // 
@@ -288,7 +299,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_Debbug.Text = "DebugRandomCode";
             this.btn_Debbug.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btn_Debbug.UseVisualStyleBackColor = true;
-            this.btn_Debbug.Visible = false;
             this.btn_Debbug.Click += new System.EventHandler(this.btn_Debbug_Click);
             // 
             // chbx_Mac
@@ -2160,17 +2170,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_FilterParams.TabIndex = 431;
             this.txt_FilterParams.Text = "";
             this.txt_FilterParams.Visible = false;
-            // 
-            // lbl_Access
-            // 
-            this.lbl_Access.AutoSize = true;
-            this.lbl_Access.ForeColor = System.Drawing.Color.Red;
-            this.lbl_Access.Location = new System.Drawing.Point(243, 84);
-            this.lbl_Access.Name = "lbl_Access";
-            this.lbl_Access.Size = new System.Drawing.Size(118, 20);
-            this.lbl_Access.TabIndex = 432;
-            this.lbl_Access.Text = "DB Folder Path";
-            this.lbl_Access.Visible = false;
             // 
             // DLCManager
             // 

@@ -230,10 +230,11 @@ r8 clcik on current selected changes also values
 make sure 3 ps3 retails can be imported separately
 update default (update DB template)
 save descrption in xml per each option
+at import and move announce if moving game relevant files(songs.psarc etc
+make sure songs.psarc and cache,psarc are also saved
 
 ## done:
-(prev release)
-[-] if no db announce
+(prev release)[-] if no db announce
 [-] show only a connectivityx issusue mss and then a red sentence
 [-] improved the dB defaulting if missing
 [-] improved load retaild DB finding the right files

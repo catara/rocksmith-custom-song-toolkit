@@ -1762,7 +1762,8 @@ namespace RocksmithToolkitGUI.DLCManager
             DialogResult result1 = DialogResult.Yes;
             if (!Directory.Exists(TempPathImport) || !Directory.Exists(pathDLC) || !Directory.Exists(oldPathImport) || !Directory.Exists(brokenPathImport) ||
                 !Directory.Exists(dupliPathImport) || !Directory.Exists(dlcpacks + "\\temp") || !Directory.Exists(dlcpacks + "\\manipulated") ||
-                !Directory.Exists(dlcpacks + "\\manifests") || !Directory.Exists(dlcpacks + "\\manipulated\\temp") || !Directory.Exists(repackedpath) ||
+                !Directory.Exists(dlcpacks + "\\manifests") || !Directory.Exists(dlcpacks + "\\manipulated\\temp") || !Directory.Exists(dlcpacks + "\\manipulated\\songs_psarc_RS2014_Pc")
+                || !Directory.Exists(repackedpath) ||
                 !Directory.Exists(repackedXBOXPath) || !Directory.Exists(repackedPCPath) || !Directory.Exists(repackedMACPath) ||
                 !Directory.Exists(repackedPSPath) || (!Directory.Exists(logPath) && logPath != "") || !Directory.Exists(LogPSPath)
                 || !Directory.Exists(albumCoversPSPath) || !Directory.Exists(ArchivePath) || !Directory.Exists(dataPath) || !Directory.Exists(TempPath))
@@ -1778,6 +1779,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 if (!Directory.Exists(dlcpacks + "\\manipulated") && (dlcpacks != null)) fldrm += ";" + dlcpacks + "\\manipulated";
                 if (!Directory.Exists(dlcpacks + "\\manipulated\\temp") && (dlcpacks != null)) fldrm += ";" + dlcpacks + "\\manipulated\\temp";
                 if (!Directory.Exists(dlcpacks + "\\temp") && (dlcpacks != null)) fldrm += ";" + dlcpacks + "\\temp";
+                if (!Directory.Exists(dlcpacks + "\\manipulated\\songs_psarc_RS2014_Pc") && (dlcpacks != null)) fldrm += ";" + dlcpacks + "\\manipulated\\songs_psarc_RS2014_Pc";
                 if (!Directory.Exists(repackedpath) && (repackedpath != null)) fldrm += ";" + repackedpath;
                 if (!Directory.Exists(repackedXBOXPath) && (repackedXBOXPath != null)) fldrm += ";" + repackedXBOXPath;
                 if (!Directory.Exists(repackedPCPath) && (repackedPCPath != null)) fldrm += ";" + repackedPCPath;
@@ -4265,7 +4267,7 @@ namespace RocksmithToolkitGUI.DLCManager
             DataSet dms = new DataSet(); dms = SelectFromDB(tab, "SELECT max(val(" + field + ")) FROM " + tab, null, cnb);
             if (dms.Tables.Count > 0)
             {
-                if (dms.Tables[0].Rows.Count > 0) return (float.Parse(dms.Tables[0].Rows[0].ItemArray[0].ToString()) + 1).ToString();
+                if (dms.Tables[0].Rows.Count > 0) return (float.Parse((dms.Tables[0].Rows[0].ItemArray[0].ToString() == "" ? "0" : dms.Tables[0].Rows[0].ItemArray[0].ToString())) + 1).ToString();
                 else return "0";
             }
             else return "0";

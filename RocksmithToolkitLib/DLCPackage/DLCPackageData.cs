@@ -24,6 +24,7 @@ using Tone = RocksmithToolkitLib.DLCPackage.Manifest.Tone.Tone;
 using System.Reflection;
 using System.Diagnostics;
 using RocksmithToolkitLib.PSARC;
+using System.Windows.Forms;
 
 namespace RocksmithToolkitLib.DLCPackage
 {
@@ -446,12 +447,12 @@ namespace RocksmithToolkitLib.DLCPackage
             var targetArtFiles = new List<DDSConvertedFile>();
             data.AlbumArtPath = artFiles[0];
             targetArtFiles.Add(new DDSConvertedFile()
-                {
-                    sizeX = 256,
-                    sizeY = 256,
-                    sourceFile = artFiles[0],
-                    destinationFile = artFiles[0].CopyToTempFile(".dds")
-                });
+            {
+                sizeX = 256,
+                sizeY = 256,
+                sourceFile = artFiles[0],
+                destinationFile = artFiles[0].CopyToTempFile(".dds")
+            });
 
             data.ArtFiles = targetArtFiles;
 
@@ -604,18 +605,18 @@ namespace RocksmithToolkitLib.DLCPackage
 
                         // Fill SongInfo from Manifest
                         data.SongInfo = new SongInfo
-                            {
-                                JapaneseArtistName = attr.JapaneseArtistName,
-                                JapaneseSongName = attr.JapaneseSongName,
-                                SongDisplayName = attr.SongName,
-                                SongDisplayNameSort = attr.SongNameSort,
-                                Album = attr.AlbumName,
-                                AlbumSort = attr.AlbumNameSort,
-                                SongYear = attr.SongYear ?? 0,
-                                Artist = attr.ArtistName,
-                                ArtistSort = attr.ArtistNameSort,
-                                AverageTempo = (int)attr.SongAverageTempo
-                            };
+                        {
+                            JapaneseArtistName = attr.JapaneseArtistName,
+                            JapaneseSongName = attr.JapaneseSongName,
+                            SongDisplayName = attr.SongName,
+                            SongDisplayNameSort = attr.SongNameSort,
+                            Album = attr.AlbumName,
+                            AlbumSort = attr.AlbumNameSort,
+                            SongYear = attr.SongYear ?? 0,
+                            Artist = attr.ArtistName,
+                            ArtistSort = attr.ArtistNameSort,
+                            AverageTempo = (int)attr.SongAverageTempo
+                        };
                     }
 
                     // Adding Arrangement
@@ -673,7 +674,7 @@ namespace RocksmithToolkitLib.DLCPackage
                         SongFile = new SongFile { File = "" },
                         XmlComments = Song2014.ReadXmlComments(xmlFile)
                     };
-                    
+
                     GlyphDefinitions.UpdateCustomFontStatus(ref voc);
 
                     // Adding Arrangement
@@ -689,10 +690,15 @@ namespace RocksmithToolkitLib.DLCPackage
                 var errMsg = "<WARNING> Did not find any *.bnk files ..." + Environment.NewLine + "You can still try loading an audio file by hand.  " + Environment.NewLine + Environment.NewLine;
                 BetterDialog2.ShowDialog(errMsg, MESSAGEBOX_CAPTION, null, null, "OK", Bitmap.FromHicon(SystemIcons.Warning.Handle), "Warning ...", 150, 150);
             }
-            else if (bnkFiles.Count > 2)
-                throw new FileLoadException("<ERROR> Found too many *.bnk files.  SongPacks can not be auto loaded ..." + Environment.NewLine);
-            else
+            else 
             {
+                if (bnkFiles.Count > 2)//bcapi-test
+                {
+                    DialogResult result1 = MessageBox.Show("<ERROR> Found too many *.bnk files.  SongPacks can not be auto loaded ..." + Environment.NewLine + ". Do you want to continue or Stop?", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (result1 == DialogResult.No) ;// return null;
+                }
+                //throw new FileLoadException("<ERROR> Found too many *.bnk files.  SongPacks can not be auto loaded ..." + Environment.NewLine);
+                //else
                 // extract .bnk file data
                 foreach (var bnkFile in bnkFiles)
                 {
@@ -792,20 +798,20 @@ namespace RocksmithToolkitLib.DLCPackage
                 data.ArtFiles = ddsFilesC;
             }
 
-//<<<<<<< HEAD
-//            // Lyric Art
-//            var lyricArt = Directory.EnumerateFiles(unpackedDir, "lyrics_*.dds", SearchOption.AllDirectories).ToArray();
-//            if (lyricArt.Any())
-//                data.LyricArtPath = lyricArt.FirstOrDefault();
+            //<<<<<<< HEAD
+            //            // Lyric Art
+            //            var lyricArt = Directory.EnumerateFiles(unpackedDir, "lyrics_*.dds", SearchOption.AllDirectories).ToArray();
+            //            if (lyricArt.Any())
+            //                data.LyricArtPath = lyricArt.FirstOrDefault();
 
-//            // Audio Files
-//            // Give ogg files friendly names
-//            var fixedOggFiles = Directory.EnumerateFiles(unpackedDir, "*.ogg", SearchOption.AllDirectories).ToList();
-//=======
+            //            // Audio Files
+            //            // Give ogg files friendly names
+            //            var fixedOggFiles = Directory.EnumerateFiles(unpackedDir, "*.ogg", SearchOption.AllDirectories).ToList();
+            //=======
             // Audio Files 
             // Give ogg files friendly names  
             var fixedOggFiles = Directory.EnumerateFiles(unpackedDir, "*_fixed.ogg", SearchOption.AllDirectories).ToList();
-//>>>>>>> pr/40
+            //>>>>>>> pr/40
             if (fixedOggFiles.Any())
             {
                 if (fixedOggFiles.Count > 2)
@@ -842,8 +848,12 @@ namespace RocksmithToolkitLib.DLCPackage
             var wemFiles = Directory.EnumerateFiles(unpackedDir, "*.wem", SearchOption.AllDirectories).ToList();
             if (wemFiles.Any())
             {
-                if (wemFiles.Count > 2)
-                    throw new FileLoadException("<ERROR> Found too many *.wem files ..." + Environment.NewLine + Environment.NewLine);
+                if (wemFiles.Count > 2)//bcapi-test
+                {
+                    DialogResult result1 = MessageBox.Show("ERROR> Found too many *.wem files ..." + Environment.NewLine + Environment.NewLine + ". Do you want to continue or Stop?", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (result1 == DialogResult.No) ;// return null;
+                }
+                //    throw new FileLoadException("<ERROR> Found too many *.wem files ..." + Environment.NewLine + Environment.NewLine);
 
                 // reset data.OggPath and data.OggPreviewPath
                 //data.OggPath = null;
@@ -862,28 +872,28 @@ namespace RocksmithToolkitLib.DLCPackage
                         else
                             data.OggPath = friendlyWemFile;
                     //{
-                        // both bnk files may reference the same wem file
-                        // where preview audio is the same as main audio
-                        //if (wemFiles.Count == 1)
-                        //{
-                        //data.OggPath = friendlyWemFile;
-                        //break;
-                        //}
+                    // both bnk files may reference the same wem file
+                    // where preview audio is the same as main audio
+                    //if (wemFiles.Count == 1)
+                    //{
+                    //data.OggPath = friendlyWemFile;
+                    //break;
+                    //}
 
-                        //<<<<<<< HEAD
-                        //            // copy the correct wem audio to _preview.wem for use with CDLC Creator
-                        //            if (!String.IsNullOrEmpty(audioPreviewPath) && !audioPreviewPath.EndsWith("_preview.wem"))
-                        //            {
-                        //                var newPreviewFileName = Path.Combine(Path.GetDirectoryName(audioPath), String.Format("{0}_preview{1}", Path.GetFileNameWithoutExtension(audioPath), Path.GetExtension(audioPath)));
-                        //                File.Copy(audioPreviewPath, newPreviewFileName, true); //bcapi (may2018 changed byck to copy)as some original creates an error here if (!File.Exists(newPreviewFileName))
+                    //<<<<<<< HEAD
+                    //            // copy the correct wem audio to _preview.wem for use with CDLC Creator
+                    //            if (!String.IsNullOrEmpty(audioPreviewPath) && !audioPreviewPath.EndsWith("_preview.wem"))
+                    //            {
+                    //                var newPreviewFileName = Path.Combine(Path.GetDirectoryName(audioPath), String.Format("{0}_preview{1}", Path.GetFileNameWithoutExtension(audioPath), Path.GetExtension(audioPath)));
+                    //                File.Copy(audioPreviewPath, newPreviewFileName, true); //bcapi (may2018 changed byck to copy)as some original creates an error here if (!File.Exists(newPreviewFileName))
 
-                        //                data.OggPreviewPath = newPreviewFileName;
-                        //=======
-                        // more efficient to use friendly name wem files with CDLC Creator
-                        //if (Path.GetFileName(friendlyWemFile).EndsWith("_preview.wem"))
-                        //    data.OggPreviewPath = friendlyWemFile;
-                        //else
-                        //    data.OggPath = friendlyWemFile;
+                    //                data.OggPreviewPath = newPreviewFileName;
+                    //=======
+                    // more efficient to use friendly name wem files with CDLC Creator
+                    //if (Path.GetFileName(friendlyWemFile).EndsWith("_preview.wem"))
+                    //    data.OggPreviewPath = friendlyWemFile;
+                    //else
+                    //    data.OggPath = friendlyWemFile;
                     //}
 
                     //else if(Path.GetFileName(wemFile).EndsWith("_preview.wem"))

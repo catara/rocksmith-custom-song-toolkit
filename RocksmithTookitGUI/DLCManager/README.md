@@ -4,7 +4,7 @@
 		# Document purpose: To describe the functionailities and the way to change, the NEW tab that enable MASS Manipulation of Rocksmith DLC Library
 							(DLC folder; including customs(CDLC), DLCs and songs embeded in the ready to ship version of Rocksmith (2014 Remastered version)) 
 
-## Rocksmith DLC Library Manager v1 b3.01 (compiled beta available in \RocksmithToolkitGUI\bin\Release)
+## Rocksmith DLC Library Manager v1 b3.02 (compiled beta available in \RocksmithToolkitGUI\bin\Release)
 *(forever to be unreleased version- for my own sake and not the masses's)*
 # App Description: MASS Manipulation of Rocksmith DLC Library
 

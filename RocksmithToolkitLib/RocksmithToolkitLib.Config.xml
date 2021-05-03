@@ -137,8 +137,8 @@
   <Config Key="dlcm_Grouping" Value="All" Descr="" />;
   <Config Key="dlcm_MaxLyricLenght_PS3" Value="46" Descr="" />;
   <Config Key="dlcm_DLCManager_Release" Value="1" Descr="" />;
-  <Config Key="dlcm_DLCManager_ReleaseName" Value="'Pre-Release for Retail Super Manipulation'" Descr="" />;
-  <Config Key="dlcm_DLCManager_ReleaseVersion" Value="beta3.01" Descr="" />;
+  <Config Key="dlcm_DLCManager_ReleaseName" Value="'Pre-Release for Retail Super Manipulation (backendupdates)'" Descr="" />;
+  <Config Key="dlcm_DLCManager_ReleaseVersion" Value="beta3.02" Descr="" />;
   <Config Key="dlcm_MuliThreading" Value="No" Descr="" />;
   <Config Key="dlcm_0_duplicate" Value="\\192.168.1.100\Kits_Software\t\0" Descr="" />;
   <Config Key="dlcm_0_old" Value="\\192.168.1.100\Kits_Software\t\0" Descr="" />;

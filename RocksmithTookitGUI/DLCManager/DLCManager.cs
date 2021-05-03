@@ -5612,7 +5612,7 @@ namespace RocksmithToolkitGUI.DLCManager
             timestamp = UpdateLog(timestamp, "Starting Retail Songs processing ...." + DateTime.Now, true, txt_TempPath.Text, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
             DataSet dhs = new DataSet(); dhs = SelectFromDB("Main", "SELECT * FROM Cache ", "", cnb);
             var rcount = dhs.Tables.Count == 0 ? 0 : dhs.Tables[0].Rows.Count;
-            DialogResult result1 = rcount==0 ? DialogResult.Yes : MessageBox.Show(rcount + " entries will be deleted. Are you sure?. E.g manually save existing cache table to them manually import/insert/mark back personal entries/select-flag/comments", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result1 = rcount == 0 ? DialogResult.Yes : MessageBox.Show(rcount + " entries will be deleted. Are you sure?. E.g manually save existing cache table to them manually import/insert/mark back personal entries/select-flag/comments", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result1 == DialogResult.No)
             {
                 return;
@@ -5718,7 +5718,7 @@ namespace RocksmithToolkitGUI.DLCManager
             pB_ReadDLCs.Maximum = 2 * 3;
             //UNPACK x3 psarcs
             foreach (var json in jsonFiles)
-            {                
+            {
                 platformDLC = json.GetPlatform(); //Platform 
                 platformDLCP = platformDLC.platform.ToString();
                 if (json.IndexOf("songs.psarc") >= 0 || json.IndexOf("rs1compatibilitydlc") >= 0
@@ -5734,7 +5734,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
                     if (json.IndexOf("songs.psarc") >= 0) //RS14 RETAIL
                     {
-                        inputFilePath = json; locat = "CACHE"+ps;
+                        inputFilePath = json; locat = "CACHE" + ps;
                         t = inputFilePath;
                         if (!GetParam(38)) //39. Use only unpacked songs already in the 0/dlcpacks folder
                         {
@@ -5761,15 +5761,16 @@ namespace RocksmithToolkitGUI.DLCManager
                                     using (var DDC = new Process())
                                     {
                                         DDC.StartInfo = startI; DDC.Start(); DDC.WaitForExit(1000 * 60 * 1); //wait 1min
-                                        if (DDC.ExitCode>0)
-                                                { var tsst = "Error ..." + DDC.ExitCode; timestamp = UpdateLog(timestamp, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
+                                        if (DDC.ExitCode > 0)
+                                        {
+                                            var tsst = "Error ..." + DDC.ExitCode; timestamp = UpdateLog(timestamp, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
                                         }
                                     }/*.Replace("\\cache_psarc_RS2014_Pc", "\\cache_psarc_RS2014_Ps3\\manipulated")*/
                                     var tmtpdir = unpackedDir + "\\audio\\ps3";
                                     if (Directory.Exists(tmtpdir))
                                     {
-                                        renamedir(unpackedDir, unpackedDir.Replace("_Pc", "_ps3"+ps));
-                                        unpackedDir = unpackedDir.Replace("_Pc", "_ps3"+ps);
+                                        renamedir(unpackedDir, unpackedDir.Replace("_Pc", "_ps3" + ps));
+                                        unpackedDir = unpackedDir.Replace("_Pc", "_ps3" + ps);
                                         platformDLCP = "PS3";
                                     }//.Replace("\\cache_psarc_RS2014_Pc", "\\cache_psarc_RS2014_Pc\\manipulated")
                                     else if (Directory.Exists(unpackedDir + "\\audio\\mac"))
@@ -5787,7 +5788,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                     else
                                     {
                                         var tsst = "Error ..." + unpackedDir; timestamp = UpdateLog(timestamp, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
-                                        MessageBox.Show("Platform/Import-file not supported yet: "+unpackedDir, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                        MessageBox.Show("Platform/Import-file not supported yet: " + unpackedDir, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
                                         return;
                                     }
 
@@ -5829,8 +5830,8 @@ namespace RocksmithToolkitGUI.DLCManager
                                     {
                                         DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 60 * 15); //wait 15min                                                                                                               
                                     }
-                                    renamedir(unpackedDir, unpackedDir.Replace("_Pc", "_ps3"+ ps));
-                                    unpackedDir = unpackedDir.Replace("_Pc", "_ps3"+ps);
+                                    renamedir(unpackedDir, unpackedDir.Replace("_Pc", "_ps3" + ps));
+                                    unpackedDir = unpackedDir.Replace("_Pc", "_ps3" + ps);
                                     platformDLCP = "PS3";
                                 }
                                 else if (json != pathDLC + "\\songs.psarc.edat") unpackedDir = Packer.Unpack(inputFilePath, txt_TempPath.Text + "\\0_dlcpacks\\temp", SourcePlatform, true, false);
@@ -5859,10 +5860,10 @@ namespace RocksmithToolkitGUI.DLCManager
 
                         timestamp = UpdateLog(timestamp, "Processed cache.psarc & songs.psarc", true, Temp_Path_Import, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
                     } //repacking at the moment manually with psarc 1.4 and lzma ratio 0
-                    else if (json.IndexOf("rs1compatibilitydlc") >= 0 ) //RS12 DLC|| json.IndexOf("rs1compatibilitydlc") >= 0
+                    else if (json.IndexOf("rs1compatibilitydlc") >= 0) //RS12 DLC|| json.IndexOf("rs1compatibilitydlc") >= 0
                     {
                         inputFilePath = json;
-                        locat = "COMPATIBILITY"+ps+ platformDLCP;
+                        locat = "COMPATIBILITY" + ps + platformDLCP;
                         if (!GetParam(38)) //39. Use only unpacked songs already in the 0/dlcpacks folder
                         {
                             try // UNPACK
@@ -5909,7 +5910,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     }
                     else if (json.IndexOf("rs1compatibilitydisc") >= 0) //RS12 RETAIL
                     {
-                        inputFilePath = json; locat = "RS1Retail"+ps+ platformDLCP;
+                        inputFilePath = json; locat = "RS1Retail" + ps + platformDLCP;
                         if (!GetParam(38)) //39. Use only unpacked songs already in the 0/dlcpacks folder
                         {
                             try // UNPACK
@@ -6975,45 +6976,91 @@ namespace RocksmithToolkitGUI.DLCManager
 
             //var unpackedDir = Packer.Unpack(oldfilePath, tmpDir, SourcePlainfotform, false, false);
             var info = DLCPackageData.LoadFromFolder(dirToPack, new Platform(GamePlatform.Pc, GameVersion.RS2014));
-            var dest= "";          var i = 0;  
+            var dest = ""; var i = -1;
             foreach (var file in info.ArtFiles)
             {
-
-                dest = c("dlcm_TempPath") + "\\dlcpacks\\manipulated\\songs_psarc_RS2014_Pc\\" + info.Arrangements[i].SongXml.Name;
-               
-                if (i==0) Directory.CreateDirectory(dest + "\\" + "gfxassets\\album_art");
-                File.Copy(file.sourceFile, dest + "\\" + "gfxassets\\album_art\\" + Path.GetFileName(file.sourceFile));
-
-                if (i == 0) Directory.CreateDirectory(dest + "\\" + "audio\\windows");
-                File.Copy(Path.GetFullPath(file.sourceFile)+"\\..\\..\\"+ "audio\\windows\\"+ Path.GetFileNameWithoutExtension(file.sourceFile)+".wem"
-                    , dest + "\\" + "audio\\windows\\song_" + Path.GetFileNameWithoutExtension(file.sourceFile) + ".wem");
-                File.Copy(Path.GetFullPath(file.sourceFile) + e + "\\..\\..\\" + "audio\\windows\\" + Path.GetFileNameWithoutExtension(file.sourceFile) + "_preview.wem"
-                    , dest + "\\" + "audio\\windows\\song_" + Path.GetFileNameWithoutExtension(file.sourceFile) + "_preview.wem");                
-                    
-                if (i == 0) Directory.CreateDirectory(dest + "\\" + "gamexblocks\nsongs");
-                File.Copy(Path.GetFullPath(file.sourceFile) + "\\..\\..\\" + "audio\\windows\\" + Path.GetFileNameWithoutExtension(file.sourceFile) + "._fcp_disk.xblock"
-                    , dest + "\\" + "audio\\windows\\song_" + Path.GetFileNameWithoutExtension(file.sourceFile) + "._fcp_disk.xblock");
-
-                if (i == 0) Directory.CreateDirectory(dest + "\\" + "songs\\arr");
-                File.Copy(info.Arrangements[i].SongXml.File, dest + "\\" + "songs\\arr\\" + info.Arrangements[i].SongXml.Name);
                 i++;
+
+                dest = c("dlcm_TempPath") + "\\dlcpacks\\manipulated\\songs_psarc_RS2014_Pc\\" +
+                    Path.GetFileNameWithoutExtension(file.sourceFile).Replace("album", "song").Replace("_128.dds", "");
+                //info.Arrangements[i].SongXml.Name.Substring(0, info.Arrangements[i].SongXml.Name.IndexOf("_") - 1);
+
+                if (i == 0)
+                {
+                    DirectoryInfo di;
+                    try
+                    {
+                        di = Directory.CreateDirectory(dest);
+                        UpdateLog(DateTime.Now, "created folders: " + dest, false, c("dlcm_TempPath"), "", "", null, null);
+                    }
+                    catch (Exception ex)
+                    {
+                        var tsst = "Error9 ..." + ex; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", null, null);
+                        MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                Directory.CreateDirectory(dest + "\\" + "gfxassets\\album_art");
+                File.Copy(file.sourceFile, dest + "\\" + "gfxassets\\album_art\\" + Path.GetFileName(file.sourceFile),true);
+
+                if (file.sourceFile.IndexOf("_128.dds") < 0) continue;
+
+                Directory.CreateDirectory(dest + "\\" + "audio\\windows");
+
+                File.Copy(Path.GetDirectoryName(file.sourceFile).Replace("gfxassets\\album_art", "") + "audio\\windows\\" +
+                Path.GetFileName(file.sourceFile).Replace("album", "song").Replace("_128.dds", "") + ".wem"
+                , dest + "\\" + "audio\\windows\\song_" + Path.GetFileName(file.sourceFile).Replace("album", "song").Replace("_128.dds", "") + ".wem", true);
+                File.Copy(Path.GetDirectoryName(file.sourceFile).Replace("gfxassets\\album_art", "") + "audio\\windows\\" +
+                    Path.GetFileName(file.sourceFile).Replace("album", "song").Replace("_128.dds", "") + "_preview.wem"
+                    , dest + "\\" + "audio\\windows\\song_" + Path.GetFileName(file.sourceFile).Replace("_128.dds", "") + "_preview.wem", true);
+                File.Copy(Path.GetDirectoryName(file.sourceFile).Replace("gfxassets\\album_art", "") + "audio\\windows\\" +
+                    Path.GetFileName(file.sourceFile).Replace("album", "song").Replace("_128.dds", "") + ".bnk"
+                    , dest + "\\" + "audio\\windows\\song_" + Path.GetFileName(file.sourceFile).Replace("album", "song").Replace("_128.dds", "") + ".bnk", true);
+                File.Copy(Path.GetDirectoryName(file.sourceFile).Replace("gfxassets\\album_art", "") + "audio\\windows\\" +
+                    Path.GetFileName(file.sourceFile).Replace("album", "song").Replace("_128.dds", "") + "_preview.bnk"
+                    , dest + "\\" + "audio\\windows\\song_" + Path.GetFileName(file.sourceFile).Replace("_128.dds", "") + "_preview.bnk", true);
+
+                Directory.CreateDirectory(dest + "\\" + "gamexblocks\\nsongs");
+                try
+                {
+                    File.Copy(Path.GetDirectoryName(file.sourceFile).Replace("gfxassets\\album_art", "") + "gamexblocks\\nsongs\\"
+                    + Path.GetFileName(file.sourceFile).Replace("album_", "").Replace("_128.dds", "") + "_fcp_disk.xblock"
+                    , dest + "\\" + "gamexblocks\\nsongs\\" + Path.GetFileName(file.sourceFile).Replace("album_", "").Replace("_128.dds", "") + "_fcp_disk.xblock", true);
+                }
+                catch (Exception ex)
+                {
+                    File.Copy(Path.GetDirectoryName(file.sourceFile).Replace("gfxassets\\album_art", "") + "gamexblocks\\nsongs\\"
+                    + Path.GetFileName(file.sourceFile).Replace("album_", "").Replace("_128.dds", "") + ".xblock"
+                    , dest + "\\" + "gamexblocks\\nsongs\\" + Path.GetFileName(file.sourceFile).Replace("album_", "").Replace("_128.dds", "") + ".xblock", true);
+                }
+                }
+
+            dest = "";
+            foreach (var file in info.Arrangements)
+            {
+                dest = c("dlcm_TempPath") + "\\dlcpacks\\manipulated\\songs_psarc_RS2014_Pc\\" + file.SongXml.Name.Substring(0, file.SongXml.Name.IndexOf("_") - 1);
+
+                Directory.CreateDirectory(dest + "\\" + "manifests\\songs");
+                File.Copy(file.SongXml.File, dest + "\\" + "manifests\\songs\\" + file.SongXml.Name + ".json", true);
+                Directory.CreateDirectory(dest + "\\" + "songs\\arr");
+                File.Copy(file.SongXml.File, dest + "\\" + "songs\\arr\\" + file.SongXml.Name + ".xml", true);
+                Directory.CreateDirectory(dest + "\\" + "songs\\bin\\generic");
+                File.Copy(file.SongXml.File, dest + "\\" + "songs\\bin\\generic\\" + file.SongXml.Name + ".bin", true);
             }
+                //foreach (var file in info.Arrangements)
+                //{
+                //    dest = c("dlcm_TempPath") + "\\dlcpacks\\manipulated\\songs_psarc_RS2014_Pc\\" + info.Arrangements[i].SongXml.Name;
 
-            //foreach (var file in info.Arrangements)
-            //{
-            //    dest = c("dlcm_TempPath") + "\\dlcpacks\\manipulated\\songs_psarc_RS2014_Pc\\" + info.Arrangements[i].SongXml.Name;
-
-            //    i++;
-            //}
-            //foreach (var file in info.Arrangements)
-            //{
-            //    File.Copy(file.SongXml.File);
-            //}
+                //    i++;
+                //}
+                //foreach (var file in info.Arrangements)
+                //{
+                //    File.Copy(file.SongXml.File);
+                //}
 
 
-            //Packer.Pack(dirToPack, targetFileName, SourcePlatform, updateSNG, true); //30.09 added false updateManifest
-            //dlcSavePath = repacked_Path + "\\" + chbx_PC + "\\" + FN;
-            RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate(dirToPack, info, new Platform(GamePlatform.Pc, GameVersion.RS2014));
+                //Packer.Pack(dirToPack, targetFileName, SourcePlatform, updateSNG, true); //30.09 added false updateManifest
+                //dlcSavePath = repacked_Path + "\\" + chbx_PC + "\\" + FN;
+ //RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate(dirToPack, info, new Platform(GamePlatform.Pc, GameVersion.RS2014));
             //ProgressBar pB_ReadDLCs = new ProgressBar
             //{
             //    Location = new System.Drawing.Point(11, 137),

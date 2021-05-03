@@ -692,63 +692,68 @@ namespace RocksmithToolkitLib.DLCPackage
             }
             else 
             {
-                if (bnkFiles.Count > 2)//bcapi-test
+                DialogResult result11= DialogResult.Yes;
+                if (bnkFiles.Count > 2)//bcapi-trying to ignore message when loading song.psarc for Retail manipulations
                 {
-                    DialogResult result1 = MessageBox.Show("<ERROR> Found too many *.bnk files.  SongPacks can not be auto loaded ..." + Environment.NewLine + ". Do you want to continue or Stop?", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                    if (result1 == DialogResult.No) ;// return null;
+                    result11 = MessageBox.Show("<ERROR> Found too many *.bnk files.  SongPacks can not be auto loaded ..." + Environment.NewLine
+                         + ". Do you want to Continue (Recommended if you are trying to load songs.psarc), \nSkipp following steps or \nStop (Default when loading songs)?", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                    if (result11 == DialogResult.Cancel) return null;
                 }
-                //throw new FileLoadException("<ERROR> Found too many *.bnk files.  SongPacks can not be auto loaded ..." + Environment.NewLine);
-                //else
-                // extract .bnk file data
-                foreach (var bnkFile in bnkFiles)
+                if (result11 != DialogResult.No)
                 {
-                    //<<<<<<< HEAD
-                    //                    var bnkAudio = bnkfiles.FirstOrDefault(x => !x.EndsWith("_preview.bnk"));
-                    //                    if (!String.IsNullOrEmpty(bnkAudio))
-                    //                        audioVolume = SoundBankGenerator2014.ReadBNKVolume(File.OpenRead(bnkAudio), sourcePlatform);
-
-                    //                    var bnkPreview = bnkfiles.FirstOrDefault(x => x.EndsWith("_preview.bnk"));
-                    //                    if (!String.IsNullOrEmpty(bnkPreview))
-                    //                        previewVolume = SoundBankGenerator2014.ReadBNKVolume(File.OpenRead(bnkPreview), sourcePlatform);
-                    //=======
-                    var bnkPlatform = sourcePlatform;
-                    var sourceResult = SoundBankGenerator2014.ValidateBnkFile(bnkFile, sourcePlatform);
-                    if (sourceResult.StartsWith("<ERROR>"))
+                    //throw new FileLoadException("<ERROR> Found too many *.bnk files.  SongPacks can not be auto loaded ..." + Environment.NewLine);
+                    //else
+                    // extract .bnk file data
+                    foreach (var bnkFile in bnkFiles)
                     {
-                        // maybe this .bnk already has targetPlatform endians
-                        var targetResult = SoundBankGenerator2014.ValidateBnkFile(bnkFile, targetPlatform);
-                        if (targetResult.StartsWith("<ERROR>"))
-                            throw new FormatException(sourceResult + Environment.NewLine + targetResult);
+                        //<<<<<<< HEAD
+                        //                    var bnkAudio = bnkfiles.FirstOrDefault(x => !x.EndsWith("_preview.bnk"));
+                        //                    if (!String.IsNullOrEmpty(bnkAudio))
+                        //                        audioVolume = SoundBankGenerator2014.ReadBNKVolume(File.OpenRead(bnkAudio), sourcePlatform);
 
-                        bnkPlatform = targetPlatform;
+                        //                    var bnkPreview = bnkfiles.FirstOrDefault(x => x.EndsWith("_preview.bnk"));
+                        //                    if (!String.IsNullOrEmpty(bnkPreview))
+                        //                        previewVolume = SoundBankGenerator2014.ReadBNKVolume(File.OpenRead(bnkPreview), sourcePlatform);
+                        //=======
+                        var bnkPlatform = sourcePlatform;
+                        var sourceResult = SoundBankGenerator2014.ValidateBnkFile(bnkFile, sourcePlatform);
+                        if (sourceResult.StartsWith("<ERROR>"))
+                        {
+                            // maybe this .bnk already has targetPlatform endians
+                            var targetResult = SoundBankGenerator2014.ValidateBnkFile(bnkFile, targetPlatform);
+                            if (targetResult.StartsWith("<ERROR>"))
+                                throw new FormatException(sourceResult + Environment.NewLine + targetResult);
+
+                            bnkPlatform = targetPlatform;
+                        }
+
+                        var bnkWemData = new BnkWemData { BnkFileName = bnkFile, WemFileId = SoundBankGenerator2014.ReadWemFileId(bnkFile, bnkPlatform), VolumeFactor = SoundBankGenerator2014.ReadVolumeFactor(bnkFile, bnkPlatform) };
+
+                        bnkWemList.Add(bnkWemData);
                     }
 
-                    var bnkWemData = new BnkWemData { BnkFileName = bnkFile, WemFileId = SoundBankGenerator2014.ReadWemFileId(bnkFile, bnkPlatform), VolumeFactor = SoundBankGenerator2014.ReadVolumeFactor(bnkFile, bnkPlatform) };
+                    // get volume from .bnk file
+                    if (bnkAudioVolume == null)
+                        bnkAudioVolume = bnkWemList.Where(fn => !fn.BnkFileName.EndsWith("_preview.bnk")).Select(vf => vf.VolumeFactor).FirstOrDefault();
 
-                    bnkWemList.Add(bnkWemData);
-                }
+                    if (bnkPreviewVolume == null)
+                        bnkPreviewVolume = bnkWemList.Where(fn => fn.BnkFileName.EndsWith("_preview.bnk")).Select(vf => vf.VolumeFactor).FirstOrDefault();
 
-                // get volume from .bnk file
-                if (bnkAudioVolume == null)
-                    bnkAudioVolume = bnkWemList.Where(fn => !fn.BnkFileName.EndsWith("_preview.bnk")).Select(vf => vf.VolumeFactor).FirstOrDefault();
+                    // validate bnk volumes
+                    var isAudioVolValid = bnkAudioVolume.IsVolumeValid();
+                    var isPreviewVolValid = bnkPreviewVolume.IsVolumeValid();
 
-                if (bnkPreviewVolume == null)
-                    bnkPreviewVolume = bnkWemList.Where(fn => fn.BnkFileName.EndsWith("_preview.bnk")).Select(vf => vf.VolumeFactor).FirstOrDefault();
-
-                // validate bnk volumes
-                var isAudioVolValid = bnkAudioVolume.IsVolumeValid();
-                var isPreviewVolValid = bnkPreviewVolume.IsVolumeValid();
-
-                // use default volumes
-                if (!isAudioVolValid || !isPreviewVolValid)
-                {
-                    bnkAudioVolume = DEFAULT_AUDIO_VOLUME;
-                    bnkPreviewVolume = DEFAULT_PREVIEW_VOLUME;
-                }
-                else // use validated volumes
-                {
-                    bnkAudioVolume = bnkAudioVolume.GetValidVolume(DEFAULT_AUDIO_VOLUME);
-                    bnkPreviewVolume = bnkPreviewVolume.GetValidVolume(DEFAULT_PREVIEW_VOLUME);
+                    // use default volumes
+                    if (!isAudioVolValid || !isPreviewVolValid)
+                    {
+                        bnkAudioVolume = DEFAULT_AUDIO_VOLUME;
+                        bnkPreviewVolume = DEFAULT_PREVIEW_VOLUME;
+                    }
+                    else // use validated volumes
+                    {
+                        bnkAudioVolume = bnkAudioVolume.GetValidVolume(DEFAULT_AUDIO_VOLUME);
+                        bnkPreviewVolume = bnkPreviewVolume.GetValidVolume(DEFAULT_PREVIEW_VOLUME);
+                    }
                 }
             }
 
@@ -845,22 +850,25 @@ namespace RocksmithToolkitLib.DLCPackage
             }
 
             // Give wem files friendly names
+            DialogResult result1 = DialogResult.Yes;
             var wemFiles = Directory.EnumerateFiles(unpackedDir, "*.wem", SearchOption.AllDirectories).ToList();
             if (wemFiles.Any())
             {
-                if (wemFiles.Count > 2)//bcapi-test
+                if (wemFiles.Count > 2)//bcapi-trying to ignore message when loading song.psarc for Retail manipulations
                 {
-                    DialogResult result1 = MessageBox.Show("ERROR> Found too many *.wem files ..." + Environment.NewLine + Environment.NewLine + ". Do you want to continue or Stop?", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                    if (result1 == DialogResult.No) ;// return null;
+                    result1 = MessageBox.Show("<ERROR> Found too many *.wem files.  SongPacks can not be auto loaded ..." + Environment.NewLine
+                        + ". Do you want to Continue (Recommended if you are trying to load songs.psarc), \nSkipp following steps or \nStop (Default when loading songs)?", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                    if (result1 == DialogResult.Cancel) return null;
                 }
-                //    throw new FileLoadException("<ERROR> Found too many *.wem files ..." + Environment.NewLine + Environment.NewLine);
+                    //    throw new FileLoadException("<ERROR> Found too many *.wem files ..." + Environment.NewLine + Environment.NewLine);
 
-                // reset data.OggPath and data.OggPreviewPath
-                //data.OggPath = null;
-                //data.OggPreviewPath = null;
-            }
+                    // reset data.OggPath and data.OggPreviewPath
+                    //data.OggPath = null;
+                    //data.OggPreviewPath = null;
+                }
 
-            foreach (string wemFile in wemFiles)
+            if (result1 != DialogResult.No)            
+                foreach (string wemFile in wemFiles)
             {
                 foreach (var item in bnkWemList)
                 {

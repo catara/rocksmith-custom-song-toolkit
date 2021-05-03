@@ -68,7 +68,7 @@
   <Config Key="dlcm_MainDBFormat" Value="PS3_US" Descr="" />;
   <Config Key="dlcm_FTPEU" Value="ftp://192.168.1.14/dev_hdd0/game/BLES01862/USRDIR/DLC/" Descr="" />;
   <Config Key="dlcm_FTPUS" Value="ftp://192.168.1.14/dev_hdd0/game/BLUS31182/USRDIR/DLC/" Descr="" />;
-  <Config Key="dlcm_FTPJP" Value="ftp://192.168.1.14/dev_hdd0/game/BLUS31182/USRDIR/DLC/" Descr="" />;
+  <Config Key="dlcm_FTPJP" Value="ftp://192.168.1.14/dev_hdd0/game/BLJM61049/USRDIR/DLC/" Descr="" />;
   <Config Key="dlcm_Mac" Value="Z:\DiskDrive\SteamLibrary\steamapps\common\Rocksmith2014\dlc" Descr="" />;
   <Config Key="dlcm_PC" Value="Z:\DiskDrive\SteamLibrary\steamapps\common\Rocksmith2014\dlc" Descr="" />;
   <Config Key="dlcm_XBOX" Value="" Descr="" />;
@@ -132,12 +132,13 @@
   <Config Key="dlcm_netstatus" Value="NOK" Descr="" />;
   <Config Key="dlcm_spotistatus" Value="NOK" Descr="" />;
   <Config Key="dlcm_youtubestatus" Value="NOK" Descr="" />;
+  <Config Key="dlcm_FTPstatus" Value="OK" Descr="" />;
   <Config Key="dlcm_Configurations" Value="MainBogdan" Descr="" />;
   <Config Key="dlcm_Grouping" Value="All" Descr="" />;
   <Config Key="dlcm_MaxLyricLenght_PS3" Value="46" Descr="" />;
   <Config Key="dlcm_DLCManager_Release" Value="1" Descr="" />;
-  <Config Key="dlcm_DLCManager_ReleaseName" Value="'Release of 2021'" Descr="" />;
-  <Config Key="dlcm_DLCManager_ReleaseVersion" Value="beta2" Descr="" />;
+  <Config Key="dlcm_DLCManager_ReleaseName" Value="'Pre-Release for Retail Super Manipulation (backendupdates)'" Descr="" />;
+  <Config Key="dlcm_DLCManager_ReleaseVersion" Value="beta3.02" Descr="" />;
   <Config Key="dlcm_MuliThreading" Value="No" Descr="" />;
   <Config Key="dlcm_0_duplicate" Value="\\192.168.1.100\Kits_Software\t\0" Descr="" />;
   <Config Key="dlcm_0_old" Value="\\192.168.1.100\Kits_Software\t\0" Descr="" />;
@@ -164,9 +165,9 @@
 <!-- ACE.OLEDB.12.0 Access 2007, ACE.OLEDB.14.0 Access 2010, ACE.OLEDB.15.0 Access 2013, ACE.OLEDB.16.0 Access 2016 -->
   <Config Key="dlcm_AccessDLLVersion" Value="ACE.OLEDB.16.0" Descr="" />;
   <Config Key="dlcm_AccessACE.OLEDB.16.0" Value="https://www.microsoft.com/en-us/download/details.aspx?id=54920" Descr="" />;
-  <Config Key="dlcm_timestamp" Value="11.01.2021" Descr="not used atm" />;
+  <Config Key="dlcm_timestamp" Value="26.04.2021" Descr="not used atm" />;
   <Config Key="dlcm_StartInDLCM" Value="Yes" Descr="" />;
-  <Config Key="dlcm_DBVersion" Value="1" Descr="" />;
+  <Config Key="dlcm_DBVersion" Value="1.01" Descr="" />;
   <Config Key="dlcm_ThreadNo" Value="" Descr="not used at split4pack is undes insted" />;
   <Config Key="dlcm_ShowConenctivityOnce" Value="No" Descr="Only show no Provider conenctivity plugin installed ONLY once." />;
 

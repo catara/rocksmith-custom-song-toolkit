@@ -58,6 +58,7 @@
     <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <NoWarn>0169, 0162</NoWarn>
+    <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>songcreator.ico</ApplicationIcon>
@@ -290,6 +291,21 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="DLCManager\external_tools\accessdatabaseengine\aceredist.msi" />
+    <None Include="DLCManager\external_tools\accessdatabaseengine\files.cat" />
+    <None Include="DLCManager\external_tools\accessdatabaseengine\setup.cmd" />
+    <None Include="DLCManager\external_tools\accessdatabaseengine\windows6.1-kb2999226-x64.msu" />
+    <None Include="DLCManager\external_tools\accessdatabaseengine\windows6.1-kb2999226-x86.msu" />
+    <None Include="DLCManager\external_tools\accessdatabaseengine\windows8-rt-kb2999226-x64.msu" />
+    <None Include="DLCManager\external_tools\accessdatabaseengine\windows8-rt-kb2999226-x86.msu" />
+    <None Include="DLCManager\external_tools\accessdatabaseengine\windows8.1-kb2999226-x64.msu" />
+    <None Include="DLCManager\external_tools\accessdatabaseengine\windows8.1-kb2999226-x86.msu" />
+    <None Include="DLCManager\external_tools\accessdatabaseengine_X64\aceredist.msi" />
+    <None Include="DLCManager\external_tools\accessdatabaseengine_X64\files.cat" />
+    <None Include="DLCManager\external_tools\accessdatabaseengine_X64\setup.cmd" />
+    <None Include="DLCManager\external_tools\accessdatabaseengine_X64\windows6.1-kb2999226-x64.msu" />
+    <None Include="DLCManager\external_tools\accessdatabaseengine_X64\windows8-rt-kb2999226-x64.msu" />
+    <None Include="DLCManager\external_tools\accessdatabaseengine_X64\windows8.1-kb2999226-x64.msu" />
     <None Include="DLCManager\external_tools\Audiokinetic\Wwise 2019.1.6.7110\Authoring\Data\Default Project\Conversion Settings\Factory Conversion Settings.wwu">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -3196,6 +3212,8 @@
     <None Include="Resources\toolkit_logo.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="DLCManager\external_tools\accessdatabaseengine\installucrt.exe" />
+    <Content Include="DLCManager\external_tools\accessdatabaseengine_X64\installucrt.exe" />
     <Content Include="DLCManager\external_tools\Audiokinetic\Wwise 2019.1.6.7110\Authoring\Data\Factory Assets\Auro\Manifest.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

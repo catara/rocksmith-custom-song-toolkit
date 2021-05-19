@@ -84,6 +84,7 @@
   <Config Key="dlcm_MinPreviewLenght" Value="10" Descr="" />;
   <Config Key="dlcm_PreviewStart" Value="00:30" Descr="" />;
   <Config Key="dlcm_Debug" Value="No" Descr="" />;
+  <Config Key="dlcm_Dbg" Value="Yes" Descr="" />;
   <Config Key="dlcm_DebugProfile" Value="Temp" Descr="" />;
   <Config Key="dlcm_LogPath" Value="" Descr="" />;
   <Config Key="dlcm_Activ_Title" Value="Yes" Descr="" />;

@@ -585,7 +585,7 @@ namespace RocksmithToolkitLib.DLCPackage.AggregateGraph2014
         {
             // create SongPack directory structure
             var dlcName = Path.GetFileName(srcPath).ToLower();
-            var songPackDir = Path.Combine(Path.GetTempPath(), String.Format("{0}_songpack_p_Pc", dlcName));
+            var songPackDir = Path.Combine(Path.GetTempPath(), "songs");//String.Format("{0}_songpack_p_Pc", dlcName));
             var audioWindowDir = Path.Combine(songPackDir, "audio", "windows");
             var flatmodelsRsDir = Path.Combine(songPackDir, "flatmodels", "rs");
             var gamexblocksNsongsDir = Path.Combine(songPackDir, "gamexblocks", "nsongs");
@@ -663,7 +663,7 @@ namespace RocksmithToolkitLib.DLCPackage.AggregateGraph2014
                 File.Copy(xml, xmlSongPack);
 
                 // skip vocal and showlight xml files
-                if (xml.EndsWith("_vocals.xml") || xml.EndsWith("_showlights.xml"))
+                if (xml.EndsWith("_vocals.xml") || xml.EndsWith("_showlights.xml") || xml.EndsWith("_jvocals.xml")) //bcapi to not import japanese lyrics
                     continue;
 
                 // add DDC to xml arrangement

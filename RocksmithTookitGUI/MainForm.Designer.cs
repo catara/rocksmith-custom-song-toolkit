@@ -403,7 +403,7 @@
             // 
             this.dlcManager1.CurrentGameVersion = RocksmithToolkitLib.GameVersion.RS2014;
             this.dlcManager1.Location = new System.Drawing.Point(-4, 0);
-            this.dlcManager1.Name = "dlcManagers";
+            this.dlcManager1.Name = "dlcManager";
             this.dlcManager1.Size = new System.Drawing.Size(613, 794);
             this.dlcManager1.TabIndex = 0;
             // 
@@ -503,6 +503,9 @@
 
         #endregion
 
+        private System.Windows.Forms.ToolStripMenuItem dLCLibraryManagerToolStripMenuItem;//bcapi
+        private DLCManager.DLCManager dlcManager1;//bcapi
+        private System.Windows.Forms.TabPage DLCManagerTab;//bcapi
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.MenuStrip menuStrip1;
@@ -534,9 +537,6 @@
         private System.Windows.Forms.TabPage dlcPackageCreatorTab;
         private DLCPackageCreator.DLCPackageCreator dlcPackageCreator1;
         private System.Windows.Forms.TabControl tabControl1;
-		private System.Windows.Forms.ToolStripMenuItem dLCLibraryManagerToolStripMenuItem;//bcapi
-        private DLCManager.DLCManager dlcManager1;//bcapi
-        private System.Windows.Forms.TabPage DLCManagerTab;//bcapi
         private System.Windows.Forms.TabPage DDCTab;
         private DDC.DDC ddc1;
     }

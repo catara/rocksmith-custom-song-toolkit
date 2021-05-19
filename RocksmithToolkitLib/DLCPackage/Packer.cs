@@ -51,9 +51,8 @@ namespace RocksmithToolkitLib.DLCPackage
         {
             var archivePath = String.Empty;
             ExternalApps.VerifyExternalApps();
-            CleanupArtifacts(srcPath);
-            Platform srcPlatform = srcPath.GetPlatform();
-
+            //CleanupArtifacts(srcPath);
+            Platform srcPlatform = new Platform(GamePlatform.Pc, GameVersion.RS2014);// srcPath.GetPlatform();
             if (overridePlatform != null && overridePlatform.platform != GamePlatform.None && overridePlatform.version != GameVersion.None)
                 srcPlatform = overridePlatform;
 
@@ -770,8 +769,8 @@ namespace RocksmithToolkitLib.DLCPackage
                     File.Delete(templateFile);
 
                 // delete friendly named ogg/wem audio files that may have been added by new LoadFromFolder method
-                var audioFiles = Directory.EnumerateFiles(srcPath, "song_*.*", SearchOption.AllDirectories).Where(fn => fn.EndsWith(".ogg") || fn.EndsWith(".wem")).ToList();
-                foreach (var audioFile in audioFiles)
+                var audioFiles = Directory.EnumerateFiles(srcPath, "song_*.*", SearchOption.AllDirectories).Where(fn => fn.EndsWith(".ogg")).ToList();/*|| fn.EndsWith(".wem")*///bcapi as friendfly names r cool
+                    foreach (var audioFile in audioFiles)
                     File.Delete(audioFile);
 
                 // delete friendly named _fixed.ogg audio files that may have been added by LoadFromFolder method
@@ -911,9 +910,10 @@ namespace RocksmithToolkitLib.DLCPackage
 
 
                     // PS3 2012/2014
-                    agg = fullPathInfo.EnumerateFiles("*.nt", SearchOption.TopDirectoryOnly).FirstOrDefault().FullName;
+                    var vagg = fullPathInfo.EnumerateFiles("*.nt", SearchOption.TopDirectoryOnly); //bcapi to repack cache.psarc :)
+                    agg= vagg.Count() == 0 ? null : vagg.FirstOrDefault().FullName;
 
-                    if (agg.Any())
+                    if (agg!=null) if (agg.Any())
                     {
                         var aggContent = File.ReadAllText(agg);
 

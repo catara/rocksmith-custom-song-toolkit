@@ -2,7 +2,7 @@
 <ArrayOfConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Config Key="general_configversion" Value="3" />
   <Config Key="general_firstrun" Value="true" />
-  <Config Key="general_showrevnote" Value="true" />
+  <Config Key="general_showrevnote" Value="false" />
   <Config Key="general_autoupdate" Value="true" />
   <Config Key="general_usebeta" Value="true" />
   <Config Key="general_replacerepo" Value="true" />
@@ -74,6 +74,7 @@
   <Config Key="dlcm_MinPreviewLenght" Value="10" />
   <Config Key="dlcm_PreviewStart" Value="00:30" />
   <Config Key="dlcm_Debug" Value="Yes" />
+  <Config Key="dlcm_Dbg" Value="Yes" />
   <Config Key="dlcm_DebugProfile" Value="Temp" />
   <Config Key="dlcm_LogPath" Value="" />
   <Config Key="dlcm_Activ_Title" Value="Yes" />
@@ -124,11 +125,11 @@
   <Config Key="dlcm_youtubestatus" Value="NOK" />
   <Config Key="dlcm_FTPstatus" Value="OK" />
   <Config Key="dlcm_Configurations" Value="Default" />
-  <Config Key="dlcm_Grouping" Value="Selected" />
+  <Config Key="dlcm_Grouping" Value="All" />
   <Config Key="dlcm_MaxLyricLenght_PS3" Value="46" />
   <Config Key="dlcm_DLCManager_Release" Value="1" />
   <Config Key="dlcm_DLCManager_ReleaseName" Value="Pre-Release for Retail Super Manipulation" />
-  <Config Key="dlcm_DLCManager_ReleaseVersion" Value="beta 3.01" />
+  <Config Key="dlcm_DLCManager_ReleaseVersion" Value="beta 3.03" />
   <Config Key="dlcm_MuliThreading" Value="No" />
   <Config Key="dlcm_0_duplicate" Value="\\192.168.1.100\Kits_Software\t\0" />
   <Config Key="dlcm_0_old" Value="\\192.168.1.100\Kits_Software\t\0" />
@@ -154,11 +155,15 @@
   <Config Key="dlcm_ArangementFields" Value="ID, Arrangement_Name, CDLC_ID, RouteMask, ToneBase, Bonus, Tunning, OrigSongTrack, PrimaryTrack, Broken, Favorite, MaxDifficulty,ConversionDateTime, Has_Sections, NoSections, Comments, Start_Time, Rating, Part, ToneA, ToneB, ToneC, ToneD, XMLFilePath, JSONFilePath, XMLFile_Hash, ScrollSpeed, PlayThroughYBLink, CustomsForge_Link, ArrangementSort, TuningPitch, Idd, MasterId, ArrangementType, String0, String1, String2, String3, String4, String5, PluckedType, XMLFileName, XMLFileLLID, XMLFileUUID, SNGFileName, SNGFileLLID, SNGFileUUID, ToneMultiplayer, SNGFileHash, CleanedXML_Hash, Json_Hash" />
   <Config Key="dlcm_AccessDLLVersion" Value="ACE.OLEDB.16.0" />
   <Config Key="dlcm_AccessACE.OLEDB.16.0" Value="https://www.microsoft.com/en-us/download/details.aspx?id=54920" />
+  <Config Key="dlcm_AccessACE.OLEDB.12.0" Value="https://www.microsoft.com/en-us/download/details.aspx?id=13255" />
+  <Config Key="dlcm_AccessACE.OLEDB.16.0Local64b" Value="DLCManager\external_tools\accessdatabaseengine_X64\aceredist.msi" />
+  <Config Key="dlcm_AccessACE.OLEDB.16.0Local32b" Value="DLCManager\external_tools\accessdatabaseengine\aceredist.msi" />
   <Config Key="dlcm_timestamp" Value="11.01.2021" />
   <Config Key="dlcm_StartInDLCM" Value="Yes" />
-  <Config Key="dlcm_DBVersion" Value="1.1" />
+  <Config Key="dlcm_DBVersion" Value="1.2" />
   <Config Key="dlcm_ThreadNo" Value="" />
-  <Config Key="dlcm_ShowConenctivityOnce" Value="No" />
+  <Config Key="dlcm_ShowConenctivityOnce" Value="Yes" />
+  <Config Key="dlcm_MoreWEMBNK" Value="No" />
   <Config Key="dlcm_AdditionalManipul0" Value="No" />
   <Config Key="dlcm_AdditionalManipul1" Value="No" />
   <Config Key="dlcm_AdditionalManipul2" Value="Yes" />
@@ -362,4 +367,5 @@
   <Config Key="dlcm_AdditionalManipul200" Value="No" />
   <Config Key="dlcm_WindowMax" Value="Yes" />
   <Config Key="dlcm_Activ_LyricsInfo" Value="Yes" />
+  <Config Key="dlcm_Autoplay" Value="No" />
 </ArrayOfConfig>

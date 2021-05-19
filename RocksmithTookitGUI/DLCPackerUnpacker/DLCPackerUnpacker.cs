@@ -617,7 +617,7 @@ namespace RocksmithToolkitGUI.DLCPackerUnpacker
                 sw.Restart();
 
                 var songPackDir = AggregateGraph2014.DoLikeSongPack(srcPath, NewAppId);
-                destPath = Path.Combine(Path.GetDirectoryName(srcPath), String.Format("{0}_songpack_p.psarc", Path.GetFileName(srcPath)));
+                destPath = Path.Combine(Path.GetDirectoryName(srcPath),"songs.psarc");// , String.Format("{0}_songpack_p.psarc", Path.GetFileName(srcPath)));
                 // Pc:RS2014 Only for now can't mix platform packages
                 Packer.Pack(songPackDir, destPath, overridePlatform: new Platform(GamePlatform.Pc, GameVersion.RS2014));
 

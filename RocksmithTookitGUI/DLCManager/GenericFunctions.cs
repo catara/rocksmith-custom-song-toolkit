@@ -221,23 +221,63 @@ namespace RocksmithToolkitGUI.DLCManager
 
         public static void ShowConnectivityError(Exception ex, string txt, System.Windows.Forms.Label lbl)
         {
-            
+
+            //Downlaod and install plugin from Microsoft website
             if (ex.Message.IndexOf("The 'Microsoft.ACE.OLEDB.") > -1 && ex.Message.IndexOf("provider is not registered on the local machine.") > -1)
             {
-                if (c("dlcm_ShowConenctivityOnce") == "Yes") return;
+                if (c("dlcm_ShowConenctivityOnce") == "Yes")
+                //{
+                    ConfigRepository.Instance()["dlcm_ShowConenctivityOnce"] = "Maybe";//default always to show message only once
+                    //return;
+                //}
+                else if (c("dlcm_ShowConenctivityOnce") == "Maybe") return;
+                //Use loally saved 2016 version 
+                var xx = "";
+                if (File.Exists(c("dlcm_AccessACE.OLEDB.16.0Local64b")) || File.Exists(c("dlcm_AccessACE.OLEDB.16.0Local32b")))
+                {
+                    DialogResult result1 = DialogResult.Cancel;
+                    result1 = MessageBox.Show("As no MS$ Access conenctivity plugin was found," +
+                    " Do you want to install the locally stored 32 /64 bit version press yes or No, else Cancel and download you own usig the subsecvent instructions."
+                    , MESSAGEBOX_CAPTION, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+
+                    if (result1 == DialogResult.Yes) xx = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, c("dlcm_AccessACE.OLEDB.16.0Local32b"));
+                    if (result1 == DialogResult.No) xx = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, c("dlcm_AccessACE.OLEDB.16.0Local64b"));
+
+                    if (!File.Exists(xx))
+                    {
+                        if (result1 != DialogResult.Cancel)
+                        {
+                            ErrorWindow frm2 = new ErrorWindow("Selected bit version(" + xx + ") not available instead the otehr one is there. close programm and open to try again" +
+                            " or manually install it as pe subsecvent instructions", ConfigRepository.Instance()["dlcm_Access" + ConfigRepository.Instance()["dlcm_AccessDLLVersion"]]
+                            , "Missing " + xx, false, false, true, "", "", "");
+                            frm2.ShowDialog();
+                        }
+                    }
+                    else
+                        try
+                        {
+                            Process process = Process.Start(@xx);
+                        }
+                        catch (Exception exx)
+                        {
+                            var tsst = "Error ..." + exx; var timestamp = UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", null, null);
+                            MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Can not open Local Access plugin install ! " + xx);
+                        }
+                }
                 ErrorWindow frm1 = new ErrorWindow("You need to Download Connectivity patch 32/64 bit to match your version of Office @ " +
-                    txt+".\n"+"Reinstall in case you feel/see plugin there or is not diplayed when ruznning in powershell:\n" +
+                    txt + ".\n" + "Reinstall in case you feel/see plugin there or is not diplayed when ruznning in powershell:\n" +
                     "(New-Object system.data.oledb.oledbenumerator).GetElements() | select SOURCES_NAME, SOURCES_DESCRIPTION\n" +
                     "and if intending to install the x64 variant of plugin please note in order to have it on top of Office 32bit then you need to decompress it and rthe .msi with /passive flag"
                     , ConfigRepository.Instance()["dlcm_Access" + ConfigRepository.Instance()["dlcm_AccessDLLVersion"]], "Error @Import", false, false, true, "", "", "");
                 frm1.ShowDialog();
-                ConfigRepository.Instance()["dlcm_ShowConenctivityOnce"] = "Yes";//default always to show message only once
                 if (lbl != null)
                 {
                     lbl.Text = "missing Access plugin!";
                     lbl.Visible = true;
                 }
             }
+            else MessageBox.Show("Error "+ex+" - "+txt, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Question);
         }
 
         public static string CompactAndRepair(OleDbConnection cnb)
@@ -981,6 +1021,14 @@ namespace RocksmithToolkitGUI.DLCManager
 
         static public void DeleteFile(string file)
         {
+            DialogResult result1 = DialogResult.Yes;
+            if (file.IndexOf("rs1compatibilitydisc") >= 0 || file.IndexOf("rs1compatibilitydlc") >= 0 || file.IndexOf("cache") >= 0)
+                result1 = MessageBox.Show("Are you sure you want to Delte/Move Rocksmith corefiles: " + file + ". (No) will ignore Delete command.", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result1 == DialogResult.No)
+            {
+                return;
+            }
+
             try
             {
                 if (ConfigRepository.Instance()["dlcm_AdditionalManipul81"] == "Yes") FileSystem.DeleteFile(file, Microsoft.VisualBasic.FileIO.UIOption.OnlyErrorDialogs, Microsoft.VisualBasic.FileIO.RecycleOption.SendToRecycleBin);
@@ -1530,7 +1578,8 @@ namespace RocksmithToolkitGUI.DLCManager
                                 var Arrangement_Name = dus.Tables[0].Rows[j].ItemArray[7].ToString();
                                 string shortstart = StartTime != "" && StartTime != null && StartTime.IndexOf(".") > 0 ? (StartTime.Substring(0, StartTime.IndexOf(".") + 2) + "s") : StartTime;
 
-                                /*var b = "";*/ var p = "";
+                                /*var b = "";*/
+                                var p = "";
                                 if (noOfRecP > 1) p = Part;
 
                                 tzt += (Arrangement_Name == "2" ? " C" + p + shortstart : "") + (RouteMask == "Bass" ? " B" + p + shortstart : "") + (RouteMask == "Rhythm" ? " R" + p + shortstart : ((RouteMask == "None" && ArrangementType == "Vocal") ? " V" + p + shortstart : ((RouteMask == "Lead") ? " L" + p + shortstart : "")));
@@ -1779,7 +1828,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 if (!Directory.Exists(dlcpacks + "\\manipulated") && (dlcpacks != null)) fldrm += ";" + dlcpacks + "\\manipulated";
                 if (!Directory.Exists(dlcpacks + "\\manipulated\\temp") && (dlcpacks != null)) fldrm += ";" + dlcpacks + "\\manipulated\\temp";
                 if (!Directory.Exists(dlcpacks + "\\temp") && (dlcpacks != null)) fldrm += ";" + dlcpacks + "\\temp";
-                if (!Directory.Exists(dlcpacks + "\\manipulated\\songs_psarc_RS2014_Pc") && (dlcpacks != null)) fldrm += ";" + dlcpacks + "\\manipulated\\songs_psarc_RS2014_Pc";
+                if (!Directory.Exists(dlcpacks + "\\origs") && (dlcpacks != null)) fldrm += ";" + dlcpacks + "\\origs";
                 if (!Directory.Exists(repackedpath) && (repackedpath != null)) fldrm += ";" + repackedpath;
                 if (!Directory.Exists(repackedXBOXPath) && (repackedXBOXPath != null)) fldrm += ";" + repackedXBOXPath;
                 if (!Directory.Exists(repackedPCPath) && (repackedPCPath != null)) fldrm += ";" + repackedPCPath;
@@ -1794,7 +1843,8 @@ namespace RocksmithToolkitGUI.DLCManager
                 if (!Directory.Exists(dflt_Path_Import) && (dflt_Path_Import != null)) fldrm += ";" + dflt_Path_Import;
 
                 DirectoryInfo di;
-                result1 = MessageBox.Show("Some( " + fldrm + " ) folder is missing please" + "\n\nChose:\n\n1. Create Folders\n2. Ignore\n3. Cancel operation", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                result1 = MessageBox.Show("Some( " + fldrm + " ) folder is missing please" + "\n\nChose:\n\n1. Create Folders\n2. Ignore\n3. Cancel operation"
+                    , MESSAGEBOX_CAPTION, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                 if (result1 == DialogResult.Yes)
                 {
                     string[] args = (fldrm).ToString().Split(';');
@@ -2468,35 +2518,35 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             var jsonFile1 = GetFTPFiles(filen);
             string[] tmp = { "", "" };
-           if (!(jsonFile1 ==null)) foreach(string fileName in jsonFile1)
-            {                //Copy to decompress/import/FTP
-                var tt = Temp_Path_Import + "\\" + fileName+ gameversion;
-                if (fileName.IndexOf("songs.psarc.edat")>=0 || fileName.IndexOf("rs1compatibilitydlc.psarc.edat") >= 0
-                    || fileName.IndexOf("rs1compatibilitydisc.psarc.edat")>=0 || fileName.IndexOf("cache.psarc.edat") >= 0)
-                    tt = CopyFTPFile(Path.GetFileName(fileName), tt, c("dlcm_TempPath"));
-            }
+            if (!(jsonFile1 == null)) foreach (string fileName in jsonFile1)
+                {                //Copy to decompress/import/FTP
+                    var tt = Temp_Path_Import + "\\" + fileName + gameversion;
+                    if (fileName.IndexOf("songs.psarc.edat") >= 0 || fileName.IndexOf("rs1compatibilitydlc.psarc.edat") >= 0
+                        || fileName.IndexOf("rs1compatibilitydisc.psarc.edat") >= 0 || fileName.IndexOf("cache.psarc.edat") >= 0)
+                        tt = CopyFTPFile(Path.GetFileName(fileName), tt, c("dlcm_TempPath"));
+                }
             var jsonFile2 = (GetFTPFiles(filen + "\\DLC"));//.ToArray();
             if (!(jsonFile2 == null)) foreach (string fileName in jsonFile2)
-            {//Copy to decompress/import/FTP
-                var tt = c("dlcm_TempPath") + "\\" + fileName+ gameversion;
-                if (fileName.IndexOf("songs.psarc.edat") >= 0 || fileName.IndexOf("rs1compatibilitydlc.psarc.edat") >= 0
-                    || fileName.IndexOf("rs1compatibilitydisc.psarc.edat") >= 0 || fileName.IndexOf("cache.psarc.edat") >= 0)
-                    tt = CopyFTPFile(Path.GetFileName(fileName), tt, c("dlcm_TempPath"));
-            }
-             var z= jsonFile2==null ? tmp : jsonFile1.Concat(jsonFile2).ToArray();
-            if (z == null || z.Count() == 0 ) return tmp;
+                {//Copy to decompress/import/FTP
+                    var tt = c("dlcm_TempPath") + "\\" + fileName + gameversion;
+                    if (fileName.IndexOf("songs.psarc.edat") >= 0 || fileName.IndexOf("rs1compatibilitydlc.psarc.edat") >= 0
+                        || fileName.IndexOf("rs1compatibilitydisc.psarc.edat") >= 0 || fileName.IndexOf("cache.psarc.edat") >= 0)
+                        tt = CopyFTPFile(Path.GetFileName(fileName), tt, c("dlcm_TempPath"));
+                }
+            var z = jsonFile2 == null ? tmp : jsonFile1.Concat(jsonFile2).ToArray();
+            if (z == null || z.Count() == 0) return tmp;
             else return z;
         }
-       public static string[] GetFilesPlusDLC(string filen)
+        public static string[] GetFilesPlusDLC(string filen)
         {
             string[] tmp = { "", "" };
             if (!Directory.Exists(filen)) return tmp;
             var jsonFile4 = Directory.GetFiles(filen, "*.psarc*", System.IO.SearchOption.AllDirectories);
-            return jsonFile4==null ? tmp : jsonFile4;
-                //.Concat(Directory.GetFiles(filen + "\\DLC", "*.psarc*", System.IO.SearchOption.AllDirectories)).ToArray();
-            
+            return jsonFile4 == null ? tmp : jsonFile4;
+            //.Concat(Directory.GetFiles(filen + "\\DLC", "*.psarc*", System.IO.SearchOption.AllDirectories)).ToArray();
+
         }
-            public static string[] GetFTPFiles(string filen)
+        public static string[] GetFTPFiles(string filen)
         {
             if (c("dlcm_FTPstatus") == "NOK") return null;
             try
@@ -2526,10 +2576,12 @@ namespace RocksmithToolkitGUI.DLCManager
                 streamReader.Close();
                 return directories;
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
 
                 ConfigRepository.Instance()["dlcm_FTPstatus"] = "NOK";
-                var tsst = "Error17 ..." + ex; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", null, null); return null; }
+                var tsst = "Error17 ..." + ex; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", null, null); return null;
+            }
         }
 
         public static string c(string configstring)

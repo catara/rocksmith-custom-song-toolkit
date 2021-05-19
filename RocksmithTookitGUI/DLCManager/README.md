@@ -4,7 +4,7 @@
 		# Document purpose: To describe the functionailities and the way to change, the NEW tab that enable MASS Manipulation of Rocksmith DLC Library
 							(DLC folder; including customs(CDLC), DLCs and songs embeded in the ready to ship version of Rocksmith (2014 Remastered version)) 
 
-## Rocksmith DLC Library Manager v1 b3.02 (compiled beta available in \RocksmithToolkitGUI\bin\Release)
+## Rocksmith DLC Library Manager v1 b3.03 (compiled beta available in \RocksmithToolkitGUI\bin\Release)
 *(forever to be unreleased version- for my own sake and not the masses's)*
 # App Description: MASS Manipulation of Rocksmith DLC Library
 
@@ -225,29 +225,26 @@ checkl Last
 add better sections improve lyrtics song für liam
 add guitar and lyrics to drums
 why is xbox loaded first ..?
-right click: delete, make 1st alternate, duplciate
 r8 clcik on current selected changes also values
-make sure 3 ps3 retails can be imported separately
 update default (update DB template)
 save descrption in xml per each option
-at import and move announce if moving game relevant files(songs.psarc etc
-make sure songs.psarc and cache,psarc are also saved
+right click:  make 1st alternate, dynamic dd to grops (try, play, etc)
+
+duplicate bug
+where are covers in standardiz or cache
 
 ## done:
-(prev release)[-] if no db announce
-[-] show only a connectivityx issusue mss and then a red sentence
-[-] improved the dB defaulting if missing
-[-] improved load retaild DB finding the right files
-[-] added Ps3 to imported retails songs directly from the ps3 and all other saved locations incl multiple ps3 versions
-[-] updated creation of profile with newly added description and sorting fields
-[-] made the load/read at open dlcmanager window of config param faster
-[-] adding new profiles copies Current Profile or Default
-[-] ADD pack folder as import location
-[-] fix 2 retails imported
-[-] dont show mss if zero retail songs to be deleted
-[-] update version&dbtemplate
-
-
+(prev release)
+[-] repack of songs.psarc works as proof of concept (PC; wo non retail songs i.e. rs2012,rs2012 dlcs)
+[-] at import and move announce if moving game relevant files(songs.psarc etc
+[-] make sure songs.psarc and cache,psarc are also saved
+[-] dont show rocksmith missing if mising then found
+[-] add ms access plugin sielnt mode if existing in external tools
+[-] add name of current selected by rights click song in main db 
+[-] add path in the toltip as field to small
+[-] make sure 3 ps3 retails can be imported separately
+[-] right click: delete,  duplciate, Add to grops (try, play, etc)
+[-] add and start access db plugin	q if missing
 
 # Version History(release date):
 	0.1(12.08.2014) prototype, 

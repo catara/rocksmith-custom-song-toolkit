@@ -690,12 +690,12 @@ namespace RocksmithToolkitLib.DLCPackage
                 var errMsg = "<WARNING> Did not find any *.bnk files ..." + Environment.NewLine + "You can still try loading an audio file by hand.  " + Environment.NewLine + Environment.NewLine;
                 BetterDialog2.ShowDialog(errMsg, MESSAGEBOX_CAPTION, null, null, "OK", Bitmap.FromHicon(SystemIcons.Warning.Handle), "Warning ...", 150, 150);
             }
-            else 
+            else
             {
-                DialogResult result11= DialogResult.Yes;
+                DialogResult result11 = DialogResult.Yes;
                 if (bnkFiles.Count > 2)//bcapi-trying to ignore message when loading song.psarc for Retail manipulations
                 {
-                    result11 = MessageBox.Show("<ERROR> Found too many *.bnk files.  SongPacks can not be auto loaded ..." + Environment.NewLine
+                    if (ConfigRepository.Instance()["dlcm_MoreWEMBNK"] != "Yes") result11 = MessageBox.Show("<ERROR> Found too many *.bnk files.  SongPacks can not be auto loaded ..." + Environment.NewLine
                          + ". Do you want to Continue (Recommended if you are trying to load songs.psarc), \nSkipp following steps or \nStop (Default when loading songs)?", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                     if (result11 == DialogResult.Cancel) return null;
                 }
@@ -817,37 +817,41 @@ namespace RocksmithToolkitLib.DLCPackage
             // Give ogg files friendly names  
             var fixedOggFiles = Directory.EnumerateFiles(unpackedDir, "*_fixed.ogg", SearchOption.AllDirectories).ToList();
             //>>>>>>> pr/40
+            DialogResult result111 = DialogResult.Yes; //bcapi to allow big sn g folders to load
             if (fixedOggFiles.Any())
-            {
                 if (fixedOggFiles.Count > 2)
-                    throw new FileLoadException("<ERROR> Found too many *.ogg files ..." + Environment.NewLine + Environment.NewLine);
+                    if (ConfigRepository.Instance()["dlcm_MoreWEMBNK"] != "Yes") result111 = MessageBox.Show("<ERROR> Found too many *.ogg files ..." + Environment.NewLine + Environment.NewLine
+     + ". Do you want to Continue (Recommended if you are trying to load songs.psarc), \nSkipp following steps or \nStop (Default when loading songs)?", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            if (result111 == DialogResult.Cancel) return null;
+            if (result111 != DialogResult.No)
+                //throw new FileLoadException();
 
                 // reset data.OggPath and data.OggPreviewPath
                 //data.OggPath = null;
                 //data.OggPreviewPath = null;
-            }
+                //}
 
-            foreach (string fixedOggFile in fixedOggFiles)
-            {
-                foreach (var item in bnkWemList)
+                foreach (string fixedOggFile in fixedOggFiles)
                 {
-                    if (Path.GetFileName(fixedOggFile).Contains(item.WemFileId))
+                    foreach (var item in bnkWemList)
                     {
-                        // some old RS2014 CDLC only have main audio and no preview audio file
-                        // these CDLC still may have two bnk files so need to catch that here
-                        if (!File.Exists(fixedOggFile))
-                            continue;
+                        if (Path.GetFileName(fixedOggFile).Contains(item.WemFileId))
+                        {
+                            // some old RS2014 CDLC only have main audio and no preview audio file
+                            // these CDLC still may have two bnk files so need to catch that here
+                            if (!File.Exists(fixedOggFile))
+                                continue;
 
-                        var friendlyFixedOggFile = Path.Combine(Path.GetDirectoryName(fixedOggFile), String.Format("{0}_fixed.ogg", Path.GetFileNameWithoutExtension(item.BnkFileName)));
-                        File.Move(fixedOggFile, friendlyFixedOggFile);
+                            var friendlyFixedOggFile = Path.Combine(Path.GetDirectoryName(fixedOggFile), String.Format("{0}_fixed.ogg", Path.GetFileNameWithoutExtension(item.BnkFileName)));
+                            File.Move(fixedOggFile, friendlyFixedOggFile);
 
-                        if (Path.GetFileName(friendlyFixedOggFile).EndsWith("_preview.wem"))
-                            data.OggPreviewPath = friendlyFixedOggFile;
-                        else
-                            data.OggPath = friendlyFixedOggFile;
+                            if (Path.GetFileName(friendlyFixedOggFile).EndsWith("_preview.wem"))
+                                data.OggPreviewPath = friendlyFixedOggFile;
+                            else
+                                data.OggPath = friendlyFixedOggFile;
+                        }
                     }
                 }
-            }
 
             // Give wem files friendly names
             DialogResult result1 = DialogResult.Yes;
@@ -856,61 +860,61 @@ namespace RocksmithToolkitLib.DLCPackage
             {
                 if (wemFiles.Count > 2)//bcapi-trying to ignore message when loading song.psarc for Retail manipulations
                 {
-                    result1 = MessageBox.Show("<ERROR> Found too many *.wem files.  SongPacks can not be auto loaded ..." + Environment.NewLine
+                    if (ConfigRepository.Instance()["dlcm_MoreWEMBNK"] != "Yes") result1 = MessageBox.Show("<ERROR> Found too many *.wem files.  SongPacks can not be auto loaded ..." + Environment.NewLine
                         + ". Do you want to Continue (Recommended if you are trying to load songs.psarc), \nSkipp following steps or \nStop (Default when loading songs)?", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                     if (result1 == DialogResult.Cancel) return null;
                 }
-                    //    throw new FileLoadException("<ERROR> Found too many *.wem files ..." + Environment.NewLine + Environment.NewLine);
+                //    throw new FileLoadException("<ERROR> Found too many *.wem files ..." + Environment.NewLine + Environment.NewLine);
 
-                    // reset data.OggPath and data.OggPreviewPath
-                    //data.OggPath = null;
-                    //data.OggPreviewPath = null;
-                }
-
-            if (result1 != DialogResult.No)            
-                foreach (string wemFile in wemFiles)
-            {
-                foreach (var item in bnkWemList)
-                {
-                    var friendlyWemFile = Path.Combine(Path.GetDirectoryName(wemFile), Path.GetFileName(Path.ChangeExtension(item.BnkFileName, ".wem")));
-                    if (File.Exists(wemFile)) if (Path.GetFileName(wemFile).Contains(item.WemFileId)) File.Move(wemFile, friendlyWemFile); //bcapi
-                    if (File.Exists(friendlyWemFile)) //bcapi
-                        if (Path.GetFileName(friendlyWemFile).EndsWith("_preview.wem"))
-                            data.OggPreviewPath = friendlyWemFile;
-                        else
-                            data.OggPath = friendlyWemFile;
-                    //{
-                    // both bnk files may reference the same wem file
-                    // where preview audio is the same as main audio
-                    //if (wemFiles.Count == 1)
-                    //{
-                    //data.OggPath = friendlyWemFile;
-                    //break;
-                    //}
-
-                    //<<<<<<< HEAD
-                    //            // copy the correct wem audio to _preview.wem for use with CDLC Creator
-                    //            if (!String.IsNullOrEmpty(audioPreviewPath) && !audioPreviewPath.EndsWith("_preview.wem"))
-                    //            {
-                    //                var newPreviewFileName = Path.Combine(Path.GetDirectoryName(audioPath), String.Format("{0}_preview{1}", Path.GetFileNameWithoutExtension(audioPath), Path.GetExtension(audioPath)));
-                    //                File.Copy(audioPreviewPath, newPreviewFileName, true); //bcapi (may2018 changed byck to copy)as some original creates an error here if (!File.Exists(newPreviewFileName))
-
-                    //                data.OggPreviewPath = newPreviewFileName;
-                    //=======
-                    // more efficient to use friendly name wem files with CDLC Creator
-                    //if (Path.GetFileName(friendlyWemFile).EndsWith("_preview.wem"))
-                    //    data.OggPreviewPath = friendlyWemFile;
-                    //else
-                    //    data.OggPath = friendlyWemFile;
-                    //}
-
-                    //else if(Path.GetFileName(wemFile).EndsWith("_preview.wem"))
-                    //        data.OggPreviewPath = wemFile;
-                    //    else
-                    //        data.OggPath = wemFile;
-                }
-                //>>>>>>> c7d902e63baa725649519d722a2c7540c837ad77
+                // reset data.OggPath and data.OggPreviewPath
+                //data.OggPath = null;
+                //data.OggPreviewPath = null;
             }
+
+            if (result1 != DialogResult.No)
+                foreach (string wemFile in wemFiles)
+                {
+                    foreach (var item in bnkWemList)
+                    {
+                        var friendlyWemFile = Path.Combine(Path.GetDirectoryName(wemFile), Path.GetFileName(Path.ChangeExtension(item.BnkFileName, ".wem")));
+                        if (File.Exists(wemFile)) if (Path.GetFileName(wemFile).Contains(item.WemFileId)) File.Move(wemFile, friendlyWemFile); //bcapi
+                        if (File.Exists(friendlyWemFile)) //bcapi
+                            if (Path.GetFileName(friendlyWemFile).EndsWith("_preview.wem"))
+                                data.OggPreviewPath = friendlyWemFile;
+                            else
+                                data.OggPath = friendlyWemFile;
+                        //{
+                        // both bnk files may reference the same wem file
+                        // where preview audio is the same as main audio
+                        //if (wemFiles.Count == 1)
+                        //{
+                        //data.OggPath = friendlyWemFile;
+                        //break;
+                        //}
+
+                        //<<<<<<< HEAD
+                        //            // copy the correct wem audio to _preview.wem for use with CDLC Creator
+                        //            if (!String.IsNullOrEmpty(audioPreviewPath) && !audioPreviewPath.EndsWith("_preview.wem"))
+                        //            {
+                        //                var newPreviewFileName = Path.Combine(Path.GetDirectoryName(audioPath), String.Format("{0}_preview{1}", Path.GetFileNameWithoutExtension(audioPath), Path.GetExtension(audioPath)));
+                        //                File.Copy(audioPreviewPath, newPreviewFileName, true); //bcapi (may2018 changed byck to copy)as some original creates an error here if (!File.Exists(newPreviewFileName))
+
+                        //                data.OggPreviewPath = newPreviewFileName;
+                        //=======
+                        // more efficient to use friendly name wem files with CDLC Creator
+                        //if (Path.GetFileName(friendlyWemFile).EndsWith("_preview.wem"))
+                        //    data.OggPreviewPath = friendlyWemFile;
+                        //else
+                        //    data.OggPath = friendlyWemFile;
+                        //}
+
+                        //else if(Path.GetFileName(wemFile).EndsWith("_preview.wem"))
+                        //        data.OggPreviewPath = wemFile;
+                        //    else
+                        //        data.OggPath = wemFile;
+                    }
+                    //>>>>>>> c7d902e63baa725649519d722a2c7540c837ad77
+                }
 
             if (!wemFiles.Any() && !fixedOggFiles.Any())
                 throw new InvalidDataException("<ERROR> Did not find any audio files found ..." + Environment.NewLine + Environment.NewLine);

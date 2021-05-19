@@ -1,11 +1,7 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\RocksmithTookitGUI",
-    "\\RocksmithTookitGUI\\DLCManager",
-    "\\RocksmithTookitGUI\\DLCManager\\external_tools",
-    "\\RocksmithToolkitCLI"
+    ""
   ],
-  "SelectedNode": "\\RocksmithTookitGUI\\DLCManager\\external_tools\\Audiokinetic",
+  "SelectedNode": "\\RocksmithToTabLib.sln",
   "PreviewInSolutionExplorer": false
 }

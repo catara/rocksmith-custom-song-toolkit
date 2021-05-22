@@ -1,0 +1,13 @@
+@import "global";
+
+@mixin waveviewer_exports {
+
+    ViewerTrackHeaderControl_BackgroundColor: applyTint(rgb(70,70,70));
+
+    SegmentEditorHelpControl_BackgroundColor: applyTint(rgb(200, 200, 200));
+    SegmentEditorControl_CursorInfoBackgroundColor: applyTint(#f0f0f0);
+    
+    GenericWavControl_BackgroundColorDiffNonZero: applyTint(rgba(188,130,36, 0.5));
+    GenericWavControl_WaveColorDiffDefault: applyTint(#101010);
+    GenericWavControl_WaveColorDiff: applyTint(rgb(0,0,0));
+}

@@ -1,0 +1,104 @@
+@import "global";
+
+@mixin gameprofiler3d_exports {
+
+    Control3d_BackgroundColor: applyTint(rgb(100, 100, 100));
+    Control3d_DialogBackgroundColor: $Global_Background;
+    Control3d_LightDiffuseColor0: rgb(255, 255, 255);
+    Control3d_LightDiffuseColor1: rgb(80, 80, 80);
+    Control3d_LightDiffuseColor2: rgb(155, 155, 155);
+    Control3d_LightAmbientColor:  rgb(255, 255, 255);
+	
+	// color of listener/emitter objects
+	GameObject3d_ListenerEmitter: rgb(0, 255, 255);
+
+    Text3d_TextColor: $Global_NormalText;
+
+    GameObject3d_CameraTextColor: $Global_RedTextDark;
+
+    Attenuation3d_InvertConeColor: rgba(0.9, 0.1, 0.1, 0.05);
+    Attenuation3d_ConeColor:       rgba(0, 0.9, 0.2, 0.05);
+    Attenuation3d_RadiusColor:     rgba(1, 1, 1, 0.1);
+
+    GameObject3d_FrontArrowColor: applyTintNormalized(0, 0, 1, 1);
+    GameObject3d_TopArrowColor: applyTintNormalized(0, 1, 0, 1);
+
+    Axe3d_XColor: applyTintNormalized(1, 0, 0, 1);
+    Axe3d_YColor: applyTintNormalized(0, 1, 0, 1);
+    Axe3d_ZColor: applyTintNormalized(0, 0, 1, 1);
+
+    Grid3d_GridColor: applyTintNormalized(1.0, 1.0, 1.0, 0.4);
+    Grid3d_XColor: applyTintNormalized(1, 0, 0, 1);
+    Grid3d_YColor: applyTintNormalized(0, 1, 0, 1);
+    Grid3d_ZColor: applyTintNormalized(0, 0, 1, 1);
+
+    Object3d_Color: rgb(220, 220, 220);
+
+    // dot on the listener and emitter in the 3d viewer
+    SpatialAudio3d_Listener:hsl(200, 100%, 70%);
+    SpatialAudio3d_Emitter: rgb(238, 255, 0);
+
+    // Geometry diffraction paths
+    SpatialAudio3d_DiffractionPath: hsl(300, 100%, 75%);
+
+    // path color when no path is found, or object is out of range
+    SpatialAudio3d_DiffractionPathOutOfRange: hsl(303, 58%, 37%); //there is no line of sight between emitter and listener, but no viable path
+
+    // sound propagation path color
+    SpatialAudio3d_PropagationPath:         hsl(120, 100%, 41%);
+    SpatialAudio3d_PropagationPathShortest: hsl(120, 100%, 76%); 
+
+    // reflection colors
+    SpatialAudio3d_Reflection1stOrder: hsl(60, 100%, 50%);
+    SpatialAudio3d_Reflection2ndOrder: hsl(41, 100%, 50%);
+    SpatialAudio3d_Reflection3rdOrder: hsl(12, 100%, 43%);
+    SpatialAudio3d_Reflection4thOrder: hsl(0, 100%, 18%);
+
+    SpatialAudio3d_ReflectionOccluded: rgba(0.2, 0.2, 0.2, 1.0); // requires a special build of wwise sound engine to see
+
+    // portals
+    SpatialAudioPortal_EnabledColor:  rgb(67, 254, 76);
+    SpatialAudioPortal_DisabledColor: rgb(84, 161, 77);
+    
+    // Diffraction edge color (edges must be enabled in the viewer settings)
+    SpatialAudioGeometry_DiffractionEdge: rgb(170, 170, 160);
+    SpatialAudioGeometry_BoundaryEdge:    rgb(88, 177, 230);
+    SpatialAudioGeometry_MalformedEdge:   rgb(128, 0, 0);
+
+    // Acoustic textures
+    AcousticTexture_NoTexture: applyTint(rgb( 19, 91, 107)); // <- no texture has been assigned to the geometry
+
+    AcousticTexture_PaletteColorNone: $Global_PaletteColorNone;// <- a texture has been assigned, but no color is assigned to the texture
+    AcousticTexture_PaletteColor1: $Global_PaletteColor1;
+    AcousticTexture_PaletteColor2: $Global_PaletteColor2;
+    AcousticTexture_PaletteColor3: $Global_PaletteColor3;
+    AcousticTexture_PaletteColor4: $Global_PaletteColor4;
+    AcousticTexture_PaletteColor5: $Global_PaletteColor5;
+    AcousticTexture_PaletteColor6: $Global_PaletteColor6;
+    AcousticTexture_PaletteColor7: $Global_PaletteColor7;
+    AcousticTexture_PaletteColor8: $Global_PaletteColor8;
+    AcousticTexture_PaletteColor9: $Global_PaletteColor9;
+    AcousticTexture_PaletteColor10: $Global_PaletteColor10;
+    AcousticTexture_PaletteColor11: $Global_PaletteColor11;
+    AcousticTexture_PaletteColor12: $Global_PaletteColor12;
+    AcousticTexture_PaletteColor13: $Global_PaletteColor13;
+    AcousticTexture_PaletteColor14: $Global_PaletteColor14;
+    AcousticTexture_PaletteColor15: $Global_PaletteColor15;
+    AcousticTexture_PaletteColor16: $Global_PaletteColor16;
+    AcousticTexture_PaletteColor17: $Global_PaletteColor17;
+    AcousticTexture_PaletteColor18: $Global_PaletteColor18;
+    AcousticTexture_PaletteColor19: $Global_PaletteColor19;
+    AcousticTexture_PaletteColor20: $Global_PaletteColor20;
+    AcousticTexture_PaletteColor21: $Global_PaletteColor21;
+    AcousticTexture_PaletteColor22: $Global_PaletteColor22;
+    AcousticTexture_PaletteColor23: $Global_PaletteColor23;
+    AcousticTexture_PaletteColor24: $Global_PaletteColor24;
+    AcousticTexture_PaletteColor25: $Global_PaletteColor25;
+    AcousticTexture_PaletteColor26: $Global_PaletteColor26;
+
+
+    // Currently only used in the spatial audio debug settings. 
+    SpatialAudio3d_SelectedEdge: applyTint(rgb(255,255,0));
+    SpatialAudio3d_VisibleEdge0: applyTint(rgb(0, 255, 97));
+    SpatialAudio3d_VisibleEdge1: applyTint(rgb(0, 237, 255));
+}

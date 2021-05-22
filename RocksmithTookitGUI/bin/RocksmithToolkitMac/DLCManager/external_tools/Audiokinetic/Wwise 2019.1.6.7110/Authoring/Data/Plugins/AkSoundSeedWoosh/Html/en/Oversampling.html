@@ -1,0 +1,7 @@
+
+<h2>Oversampling</h2>
+<p>The rate at which the control curves used for positioning and distance-based attenuation are sampled.</p>
+<p>Woosh is typically used for very short sounds, often less than 1 second. As a result, you may need to use the Oversampling control to run the control curves and position along the path at a higher rate than the regular buffer period, which is approximately 21 ms on most platforms. This effectively brings the control rate down by the oversampling value. For example, a control rate oversampling of 8 will result in a sampling of control curves to happen every 2.63 ms (~21 ms/8).</p>
+<p>Oversampling represents a computational cost and is best used only when needed.</p>
+<p>Default value: 1<br/>
+Range: 1 to 8<br/></p>

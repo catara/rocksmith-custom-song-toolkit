@@ -141,6 +141,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 {
                     picbx_AlbumArtPath.ImageLocation = txt_AlbumArt_Correction.Text.Replace(".dds", ".png");
                     lbl_corrected.Visible = true;
+                    lbl_SpotifyCover.Text = "Saved from Spotify:";
                 }
                 else
                     lbl_corrected.Visible = false;
@@ -149,11 +150,29 @@ namespace RocksmithToolkitGUI.DLCManager
                     {
                         pxbx_SavedSpotify.ImageLocation = databox.Rows[i].Cells[14].Value.ToString();
                         lbl_SpotifyCover.Visible = true;
+                        lbl_SpotifyCover.Text = "Saved from Spotify:";
                     }
                     else
                     {
-                        pxbx_SavedSpotify.ImageLocation = null;
-                        lbl_SpotifyCover.Visible = false;
+                        DataSet dus = new DataSet(); dus = SelectFromDB("Main", "SELECT AlbumArtPath FROM Main WHERE Artist =\"" + txt_Artist_Correction.Text == "" ? txt_Artist_Correction.Text : txt_Artist.Text
+                            + "\" AND Album=\"" + txt_Album_Correction.Text == "" ? txt_Album_Correction.Text : txt_Album.Text + "\"", "", cnb);
+                        //rtxt_StatisticsOnReadDLCs.Text += "\n  54= " +dus.Tables[0].Rows.Count;
+                        var rowc = dus.Tables.Count == 0 ? 0 : dus.Tables[0].Rows.Count;
+                        //foreach (DataRow dataRow in dus.Tables[0].Rows)
+                        //{
+                        //files[i] = new Files();
+                        //rtxt_StatisticsOnReadDLCs.Text += "\n  a= " + i + MaximumSize+dataRow.ItemArray[0].ToString();
+                        if (rowc > 0)
+                        {
+                            pxbx_SavedSpotify.ImageLocation = dus.Tables[0].Rows[0].ItemArray[0].ToString();
+                            lbl_SpotifyCover.Visible = true;
+                            lbl_SpotifyCover.Text = "Sample from Imported:";                            
+                        }
+                        else
+                        {
+                            pxbx_SavedSpotify.ImageLocation = null;
+                            lbl_SpotifyCover.Visible = false;
+                        }
                     }
                 cbx_Groups.Text = databox.Rows[i].Cells[16].Value.ToString();
                 //if (DataGridView1.Rows[i].Cells["Default_Cover"].Value.ToString() == "Yes") chbx_Default_Cover.Checked = true;
@@ -674,7 +693,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     if (dfz.Tables.Count > 0) foreach (DataRow dataRow in dfz.Tables[0].Rows)
                         {
                             var insertcmdd = "CDLC_ID, Groups, Type, Date_Added";
-                            var insertvalues = "\"" + dataRow.ItemArray[0].ToString() + "\",\"" + grp + "\",\"DLC\""+ ",\""+DateTime.Now.ToString("yyyyMMdd HHmmssfff") + "\"";
+                            var insertvalues = "\"" + dataRow.ItemArray[0].ToString() + "\",\"" + grp + "\",\"DLC\"" + ",\"" + DateTime.Now.ToString("yyyyMMdd HHmmssfff") + "\"";
                             //insertvalues = SearchCmd.Replace("*", "");
                             InsertIntoDBwValues("Groups", insertcmdd, insertvalues, cnb, 0);
                         }
@@ -1309,6 +1328,11 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             if (chbx_AutoSave.Checked) SaveRecord();
             ConfigRepository.Instance()["dlcm_Autosave"] = chbx_AutoSave.Checked == true ? "Yes" : "No";
+        }
+
+        private void btn_GetSpotifyCover_Click(object sender, EventArgs e)
+        {
+
         }
 
         //private void btn_GetSpotifyCover_Click(object sender, EventArgs e)

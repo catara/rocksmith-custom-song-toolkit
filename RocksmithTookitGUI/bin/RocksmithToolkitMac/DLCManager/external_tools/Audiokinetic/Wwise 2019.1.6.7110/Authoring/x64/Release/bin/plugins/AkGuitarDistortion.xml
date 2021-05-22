@@ -1,0 +1,856 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2009 Audiokinetic Inc. -->
+<PluginModule>
+  <EffectPlugin Name="Wwise Guitar Distortion" CompanyID="0" PluginID="126">
+    <PluginInfo MenuPath="50-Wwise">
+      <PlatformSupport>
+        <Platform Name="Any">
+          <CanBeInsertOnBusses>true</CanBeInsertOnBusses>
+          <CanBeInsertOnAudioObjects>true</CanBeInsertOnAudioObjects>
+          <CanBeRendered>true</CanBeRendered>
+        </Platform>
+      </PlatformSupport>
+    </PluginInfo>
+    <Properties>
+      <!-- EQ band properties -->
+      <!-- Pre-EQ properties -->
+      <!-- Band 1 -->
+      <Property Name="PreEQBand1Enable" DocId="PreEQBandEnable" Type="bool" SupportRTPCType="Boolean" ForceRTPCCurveSegmentShape="Constant" DisplayName="Pre-Distortion EQ Band 1 Enable" DisplayGroup="Pre-Distortion EQ/Band 1">
+        <DefaultValue>false</DefaultValue>
+        <AudioEnginePropertyID>4</AudioEnginePropertyID>
+      </Property>
+      <Property Name="PreEQBand1FilterType" DocId="PreEQBandFilterType" Type="int32" SupportRTPCType="Exclusive" ForceRTPCCurveSegmentShape="Constant" DisplayName="Pre-Distortion EQ Band 1 Filter Type" DisplayGroup="Pre-Distortion EQ/Band 1">
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>0</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="int32">
+              <Value DisplayName="Low Shelf">0</Value>
+              <Value DisplayName="Peaking">1</Value>
+              <Value DisplayName="High Shelf">2</Value>
+              <Value DisplayName="Low Pass">3</Value>
+              <Value DisplayName="High Pass">4</Value>
+              <Value DisplayName="Band Pass">5</Value>
+              <Value DisplayName="Notch">6</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="PreEQBand1Enable" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="PreEQBand1Gain" DocId="PreEQBandGain" Type="Real32" SupportRTPCType="Additive" DisplayName="Pre-Distortion EQ Band 1 Gain" DisplayGroup="Pre-Distortion EQ/Band 1">
+        <UserInterface Step="0.5" Fine="0.1" Decimals="1"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>1</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-48</Min>
+              <Max>48</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="PreEQBand1Enable" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="PreEQBand1FilterType" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Low Shelf -->
+                <Value DisplayName="Low Shelf">0</Value>
+                <!-- Peaking -->
+                <Value DisplayName="Peaking">1</Value>
+                <!-- High Shelf -->
+                <Value DisplayName="High Shelf">2</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="PreEQBand1Frequency" DocId="PreEQBandFrequency" Type="Real32" SupportRTPCType="Exclusive" DataMeaning="Frequency" DisplayName="Pre-Distortion EQ Band 1 Frequency" DisplayGroup="Pre-Distortion EQ/Band 1">
+        <UserInterface Decimals="0"/>
+        <DefaultValue>1000</DefaultValue>
+        <AudioEnginePropertyID>2</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>20</Min>
+              <Max>20000</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="PreEQBand1Enable" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="PreEQBand1QFactor" DocId="PreEQBandQFactor" Type="Real32" SupportRTPCType="Exclusive" DisplayName="Pre-Distortion EQ Band 1 Quality Factor" DisplayGroup="Pre-Distortion EQ/Band 1">
+        <UserInterface Step="0.1" Decimals="2"/>
+        <DefaultValue>1</DefaultValue>
+        <AudioEnginePropertyID>3</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0.1</Min>
+              <Max>20</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="PreEQBand1Enable" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="PreEQBand1FilterType" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Peaking -->
+                <Value DisplayName="Peaking">1</Value>
+                <!-- Band Pass -->
+                <Value DisplayName="Band Pass">5</Value>
+                <!-- Notch -->
+                <Value DisplayName="Notch">6</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <!-- Band 2 -->
+      <Property Name="PreEQBand2Enable" DocId="PreEQBandEnable" Type="bool" SupportRTPCType="Boolean" ForceRTPCCurveSegmentShape="Constant" DisplayName="Pre-Distortion EQ Band 2 Enable" DisplayGroup="Pre-Distortion EQ/Band 2">
+        <DefaultValue>false</DefaultValue>
+        <AudioEnginePropertyID>14</AudioEnginePropertyID>
+      </Property>
+      <Property Name="PreEQBand2FilterType" DocId="PreEQBandFilterType" Type="int32" SupportRTPCType="Exclusive" ForceRTPCCurveSegmentShape="Constant" DisplayName="Pre-Distortion EQ Band 2 Filter Type" DisplayGroup="Pre-Distortion EQ/Band 2">
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>10</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="int32">
+              <Value DisplayName="Low Shelf">0</Value>
+              <Value DisplayName="Peaking">1</Value>
+              <Value DisplayName="High Shelf">2</Value>
+              <Value DisplayName="Low Pass">3</Value>
+              <Value DisplayName="High Pass">4</Value>
+              <Value DisplayName="Band Pass">5</Value>
+              <Value DisplayName="Notch">6</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="PreEQBand2Enable" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="PreEQBand2Gain" DocId="PreEQBandGain" Type="Real32" SupportRTPCType="Additive" DataMeaning="Decibels" DisplayName="Pre-Distortion EQ Band 2 Gain" DisplayGroup="Pre-Distortion EQ/Band 2">
+        <UserInterface Step="0.5" Fine="0.1" Decimals="1"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>11</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-48</Min>
+              <Max>48</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="PreEQBand2Enable" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="PreEQBand2FilterType" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Low Shelf -->
+                <Value DisplayName="Low Shelf">0</Value>
+                <!-- Peaking -->
+                <Value DisplayName="Peaking">1</Value>
+                <!-- High Shelf -->
+                <Value DisplayName="High Shelf">2</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="PreEQBand2Frequency" DocId="PreEQBandFrequency" Type="Real32" SupportRTPCType="Exclusive" DataMeaning="Frequency" DisplayName="Pre-Distortion EQ Band 2 Frequency" DisplayGroup="Pre-Distortion EQ/Band 2">
+        <UserInterface Decimals="0"/>
+        <DefaultValue>1000</DefaultValue>
+        <AudioEnginePropertyID>12</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>20</Min>
+              <Max>20000</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="PreEQBand2Enable" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="PreEQBand2QFactor" DocId="PreEQBandQFactor" Type="Real32" SupportRTPCType="Exclusive" DisplayName="Pre-Distortion EQ Band 2 Quality Factor" DisplayGroup="Pre-Distortion EQ/Band 2">
+        <UserInterface Step="0.1" Decimals="2"/>
+        <DefaultValue>1</DefaultValue>
+        <AudioEnginePropertyID>13</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0.1</Min>
+              <Max>20</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="PreEQBand2Enable" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="PreEQBand2FilterType" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Peaking -->
+                <Value DisplayName="Peaking">1</Value>
+                <!-- Band Pass -->
+                <Value DisplayName="Band Pass">5</Value>
+                <!-- Notch -->
+                <Value DisplayName="Notch">6</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <!-- Band 3 -->
+      <Property Name="PreEQBand3Enable" DocId="PreEQBandEnable" Type="bool" SupportRTPCType="Boolean" ForceRTPCCurveSegmentShape="Constant" DisplayName="Pre-Distortion EQ Band 3 Enable" DisplayGroup="Pre-Distortion EQ/Band 3">
+        <DefaultValue>false</DefaultValue>
+        <AudioEnginePropertyID>24</AudioEnginePropertyID>
+      </Property>
+      <Property Name="PreEQBand3FilterType" DocId="PreEQBandFilterType" Type="int32" SupportRTPCType="Exclusive" ForceRTPCCurveSegmentShape="Constant" DisplayName="Pre-Distortion EQ Band 3 Filter Type" DisplayGroup="Pre-Distortion EQ/Band 3">
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>20</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="int32">
+              <Value DisplayName="Low Shelf">0</Value>
+              <Value DisplayName="Peaking">1</Value>
+              <Value DisplayName="High Shelf">2</Value>
+              <Value DisplayName="Low Pass">3</Value>
+              <Value DisplayName="High Pass">4</Value>
+              <Value DisplayName="Band Pass">5</Value>
+              <Value DisplayName="Notch">6</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="PreEQBand3Enable" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="PreEQBand3Gain" DocId="PreEQBandGain" Type="Real32" SupportRTPCType="Additive" DataMeaning="Decibels" DisplayName="Pre-Distortion EQ Band 3 Gain" DisplayGroup="Pre-Distortion EQ/Band 3">
+        <UserInterface Step="0.5" Fine="0.1" Decimals="1"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>21</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-48</Min>
+              <Max>48</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="PreEQBand3Enable" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="PreEQBand3FilterType" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Low Shelf -->
+                <Value DisplayName="Low Shelf">0</Value>
+                <!-- Peaking -->
+                <Value DisplayName="Peaking">1</Value>
+                <!-- High Shelf -->
+                <Value DisplayName="High Shelf">2</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="PreEQBand3Frequency" DocId="PreEQBandFrequency" Type="Real32" SupportRTPCType="Exclusive" DataMeaning="Frequency" DisplayName="Pre-Distortion EQ Band 3 Frequency" DisplayGroup="Pre-Distortion EQ/Band 3">
+        <UserInterface Decimals="0"/>
+        <DefaultValue>1000</DefaultValue>
+        <AudioEnginePropertyID>22</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>20</Min>
+              <Max>20000</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="PreEQBand3Enable" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="PreEQBand3QFactor" DocId="PreEQBandQFactor" Type="Real32" SupportRTPCType="Exclusive" DisplayName="Pre-Distortion EQ Band 3 Quality Factor" DisplayGroup="Pre-Distortion EQ/Band 3">
+        <UserInterface Step="0.1" Decimals="2"/>
+        <DefaultValue>1</DefaultValue>
+        <AudioEnginePropertyID>23</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0.1</Min>
+              <Max>20</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="PreEQBand3Enable" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="PreEQBand3FilterType" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Peaking -->
+                <Value DisplayName="Peaking">1</Value>
+                <!-- Band Pass -->
+                <Value DisplayName="Band Pass">5</Value>
+                <!-- Notch -->
+                <Value DisplayName="Notch">6</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <!-- Distortion properties -->
+      <Property Name="DistortionType" Type="int32" SupportRTPCType="Exclusive" ForceRTPCCurveSegmentShape="Constant" DisplayName="Distortion Type" DisplayGroup="Distortion">
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>60</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="int32">
+              <Value DisplayName="None">0</Value>
+              <Value DisplayName="Overdrive">1</Value>
+              <Value DisplayName="Heavy">2</Value>
+              <Value DisplayName="Fuzz">3</Value>
+              <Value DisplayName="Clip">4</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="DistortionDrive" Type="Real32" SupportRTPCType="Additive" DisplayName="Distortion Drive" DisplayGroup="Distortion">
+        <UserInterface Step="1" Fine="0.1" Decimals="1"/>
+        <DefaultValue>50</DefaultValue>
+        <AudioEnginePropertyID>61</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0</Min>
+              <Max>100</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="DistortionType" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Overdrive -->
+                <Value DisplayName="Overdrive">1</Value>
+                <!-- Heavy -->
+                <Value DisplayName="Heavy">2</Value>
+                <!-- Fuzz -->
+                <Value DisplayName="Fuzz">3</Value>
+                <!-- Clip -->
+                <Value DisplayName="Clip">4</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="DistortionTone" Type="Real32" SupportRTPCType="Additive" DisplayName="Distortion Tone" DisplayGroup="Distortion">
+        <UserInterface Step="1" Fine="0.1" Decimals="1"/>
+        <DefaultValue>50</DefaultValue>
+        <AudioEnginePropertyID>62</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0</Min>
+              <Max>100</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="DistortionType" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Overdrive -->
+                <Value DisplayName="Overdrive">1</Value>
+                <!-- Fuzz -->
+                <Value DisplayName="Fuzz">3</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="Rectification" Type="Real32" SupportRTPCType="Additive" DisplayName="Distortion Rectification" DisplayGroup="Distortion">
+        <UserInterface Step="1" Fine="0.1" Decimals="1"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>63</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0</Min>
+              <Max>100</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <!-- Post-EQ properties -->
+      <!-- Band 1 -->
+      <Property Name="PostEQBand1Enable" DocId="PostEQBandEnable" Type="bool" SupportRTPCType="Boolean" ForceRTPCCurveSegmentShape="Constant" DisplayName="Post-Distortion EQ Band 1 Enable" DisplayGroup="Post-Distortion EQ/Band 1">
+        <DefaultValue>false</DefaultValue>
+        <AudioEnginePropertyID>34</AudioEnginePropertyID>
+      </Property>
+      <Property Name="PostEQBand1FilterType" DocId="PostEQBandFilterType" Type="int32" SupportRTPCType="Exclusive" ForceRTPCCurveSegmentShape="Constant" DisplayName="Post-Distortion EQ Band 1 Filter Type" DisplayGroup="Post-Distortion EQ/Band 1">
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>30</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="int32">
+              <Value DisplayName="Low Shelf">0</Value>
+              <Value DisplayName="Peaking">1</Value>
+              <Value DisplayName="High Shelf">2</Value>
+              <Value DisplayName="Low Pass">3</Value>
+              <Value DisplayName="High Pass">4</Value>
+              <Value DisplayName="Band Pass">5</Value>
+              <Value DisplayName="Notch">6</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="PostEQBand1Enable" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="PostEQBand1Gain" DocId="PostEQBandGain" Type="Real32" SupportRTPCType="Additive" DataMeaning="Decibels" DisplayName="Post-Distortion EQ Band 1 Gain" DisplayGroup="Post-Distortion EQ/Band 1">
+        <UserInterface Step="0.5" Fine="0.1" Decimals="1"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>31</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-48</Min>
+              <Max>48</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="PostEQBand1Enable" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="PostEQBand1FilterType" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Low Shelf -->
+                <Value DisplayName="Low Shelf">0</Value>
+                <!-- Peaking -->
+                <Value DisplayName="Peaking">1</Value>
+                <!-- High Shelf -->
+                <Value DisplayName="High Shelf">2</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="PostEQBand1Frequency" DocId="PostEQBandFrequency" Type="Real32" SupportRTPCType="Exclusive" DataMeaning="Frequency" DisplayName="Post-Distortion EQ Band 1 Frequency" DisplayGroup="Post-Distortion EQ/Band 1">
+        <UserInterface Decimals="0"/>
+        <DefaultValue>1000</DefaultValue>
+        <AudioEnginePropertyID>32</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>20</Min>
+              <Max>20000</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="PostEQBand1Enable" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="PostEQBand1QFactor" DocId="PostEQBandQFactor" Type="Real32" SupportRTPCType="Exclusive" DisplayName="Post-Distortion EQ Band 1 Quality Factor" DisplayGroup="Post-Distortion EQ/Band 1">
+        <UserInterface Step="0.1" Decimals="2"/>
+        <DefaultValue>1</DefaultValue>
+        <AudioEnginePropertyID>33</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0.1</Min>
+              <Max>20</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="PostEQBand1Enable" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="PostEQBand1FilterType" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Peaking -->
+                <Value DisplayName="Peaking">1</Value>
+                <!-- Band Pass -->
+                <Value DisplayName="Band Pass">5</Value>
+                <!-- Notch -->
+                <Value DisplayName="Notch">6</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <!-- Band 2 -->
+      <Property Name="PostEQBand2Enable" DocId="PostEQBandEnable" Type="bool" SupportRTPCType="Boolean" ForceRTPCCurveSegmentShape="Constant" DisplayName="Post-Distortion EQ Band 2 Enable" DisplayGroup="Post-Distortion EQ/Band 2">
+        <DefaultValue>false</DefaultValue>
+        <AudioEnginePropertyID>44</AudioEnginePropertyID>
+      </Property>
+      <Property Name="PostEQBand2FilterType" DocId="PostEQBandFilterType" Type="int32" SupportRTPCType="Exclusive" ForceRTPCCurveSegmentShape="Constant" DisplayName="Post-Distortion EQ Band 2 Filter Type" DisplayGroup="Post-Distortion EQ/Band 2">
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>40</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="int32">
+              <Value DisplayName="Low Shelf">0</Value>
+              <Value DisplayName="Peaking">1</Value>
+              <Value DisplayName="High Shelf">2</Value>
+              <Value DisplayName="Low Pass">3</Value>
+              <Value DisplayName="High Pass">4</Value>
+              <Value DisplayName="Band Pass">5</Value>
+              <Value DisplayName="Notch">6</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="PostEQBand2Enable" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="PostEQBand2Gain" DocId="PostEQBandGain" Type="Real32" SupportRTPCType="Additive" DataMeaning="Decibels" DisplayName="Post-Distortion EQ Band 2 Gain" DisplayGroup="Post-Distortion EQ/Band 2">
+        <UserInterface Step="0.5" Fine="0.1" Decimals="1"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>41</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-48</Min>
+              <Max>48</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="PostEQBand2Enable" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="PostEQBand2FilterType" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Low Shelf -->
+                <Value DisplayName="Low Shelf">0</Value>
+                <!-- Peaking -->
+                <Value DisplayName="Peaking">1</Value>
+                <!-- High Shelf -->
+                <Value DisplayName="High Shelf">2</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="PostEQBand2Frequency" DocId="PostEQBandFrequency" Type="Real32" SupportRTPCType="Exclusive" DataMeaning="Frequency" DisplayName="Post-Distortion EQ Band 2 Frequency" DisplayGroup="Post-Distortion EQ/Band 2">
+        <UserInterface Decimals="0"/>
+        <DefaultValue>1000</DefaultValue>
+        <AudioEnginePropertyID>42</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>20</Min>
+              <Max>20000</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="PostEQBand2Enable" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="PostEQBand2QFactor" DocId="PostEQBandQFactor" Type="Real32" SupportRTPCType="Exclusive" DisplayName="Post-Distortion EQ Band 2 Quality Factor" DisplayGroup="Post-Distortion EQ/Band 2">
+        <UserInterface Step="0.1" Decimals="2"/>
+        <DefaultValue>1</DefaultValue>
+        <AudioEnginePropertyID>43</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0.1</Min>
+              <Max>20</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="PostEQBand2Enable" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="PostEQBand2FilterType" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Peaking -->
+                <Value DisplayName="Peaking">1</Value>
+                <!-- Band Pass -->
+                <Value DisplayName="Band Pass">5</Value>
+                <!-- Notch -->
+                <Value DisplayName="Notch">6</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <!-- Band 3 -->
+      <Property Name="PostEQBand3Enable" DocId="PostEQBandEnable" Type="bool" SupportRTPCType="Boolean" ForceRTPCCurveSegmentShape="Constant" DisplayName="Post-Distortion EQ Band 3 Enable" DisplayGroup="Post-Distortion EQ/Band 3">
+        <DefaultValue>false</DefaultValue>
+        <AudioEnginePropertyID>54</AudioEnginePropertyID>
+      </Property>
+      <Property Name="PostEQBand3FilterType" DocId="PostEQBandFilterType" Type="int32" SupportRTPCType="Exclusive" ForceRTPCCurveSegmentShape="Constant" DisplayName="Post-Distortion EQ Band 3 Filter Type" DisplayGroup="Post-Distortion EQ/Band 3">
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>50</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="int32">
+              <Value DisplayName="Low Shelf">0</Value>
+              <Value DisplayName="Peaking">1</Value>
+              <Value DisplayName="High Shelf">2</Value>
+              <Value DisplayName="Low Pass">3</Value>
+              <Value DisplayName="High Pass">4</Value>
+              <Value DisplayName="Band Pass">5</Value>
+              <Value DisplayName="Notch">6</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="PostEQBand3Enable" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="PostEQBand3Gain" DocId="PostEQBandGain" Type="Real32" SupportRTPCType="Additive" DataMeaning="Decibels" DisplayName="Post-Distortion EQ Band 3 Gain" DisplayGroup="Post-Distortion EQ/Band 3">
+        <UserInterface Step="0.5" Fine="0.1" Decimals="1"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>51</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-48</Min>
+              <Max>48</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="PostEQBand3Enable" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="PostEQBand3FilterType" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Low Shelf -->
+                <Value DisplayName="Low Shelf">0</Value>
+                <!-- Peaking -->
+                <Value DisplayName="Peaking">1</Value>
+                <!-- High Shelf -->
+                <Value DisplayName="High Shelf">2</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="PostEQBand3Frequency" DocId="PostEQBandFrequency" Type="Real32" SupportRTPCType="Exclusive" DataMeaning="Frequency" DisplayName="Post-Distortion EQ Band 3 Frequency" DisplayGroup="Post-Distortion EQ/Band 3">
+        <UserInterface Decimals="0"/>
+        <DefaultValue>1000</DefaultValue>
+        <AudioEnginePropertyID>52</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>20</Min>
+              <Max>20000</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="PostEQBand3Enable" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="PostEQBand3QFactor" DocId="PostEQBandQFactor" Type="Real32" SupportRTPCType="Exclusive" DisplayName="Post-Distortion EQ Band 3 Quality Factor" DisplayGroup="Post-Distortion EQ/Band 3">
+        <UserInterface Step="0.1" Decimals="2"/>
+        <DefaultValue>1</DefaultValue>
+        <AudioEnginePropertyID>53</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0.1</Min>
+              <Max>20</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="PostEQBand3Enable" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="PostEQBand3FilterType" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Peaking -->
+                <Value DisplayName="Peaking">1</Value>
+                <!-- Band Pass -->
+                <Value DisplayName="Band Pass">5</Value>
+                <!-- Notch -->
+                <Value DisplayName="Notch">6</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <!-- Other properties -->
+      <Property Name="OutputLevel" Type="Real32" SupportRTPCType="Additive" DataMeaning="Decibels" DisplayName="Output Gain" DisplayGroup="Output">
+        <UserInterface Step="0.5" Fine="0.1" Decimals="2"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>64</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-24</Min>
+              <Max>24</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="WetDryMix" Type="Real32" SupportRTPCType="Additive" DisplayName="Wet/Dry Mix" DisplayGroup="Output">
+        <UserInterface Step="1" Fine="0.1" Decimals="1"/>
+        <DefaultValue>100</DefaultValue>
+        <AudioEnginePropertyID>65</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0</Min>
+              <Max>100</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+    </Properties>
+  </EffectPlugin>
+</PluginModule>

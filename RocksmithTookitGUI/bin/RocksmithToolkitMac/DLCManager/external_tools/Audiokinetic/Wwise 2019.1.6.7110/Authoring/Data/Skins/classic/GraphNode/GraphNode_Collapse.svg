@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 11 11" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.41421;">
+    <g transform="matrix(1,0,0,1,-11,-37)">
+        <g transform="matrix(0.176471,0,0,2.06767,1.58824,14.4737)">
+            <g id="SchematicView_Collapse" transform="matrix(5.66667,0,0,0.483636,-14306,-425.345)">
+                <g transform="matrix(1.57143,0,0,1.57143,-1444.86,-601.857)">
+                    <rect x="2532" y="957" width="7" height="7"/>
+                </g>
+                <g transform="matrix(1.28571,0,0,1.28571,-720.435,-327.429)">
+                    <rect x="2532" y="957" width="7" height="7" style="fill:rgb(200,200,200);"/>
+                </g>
+                <g transform="matrix(1,0,0,1,3.99336,-53)">
+                    <rect x="2532" y="957" width="7" height="7" style="fill:rgb(145,145,145);"/>
+                </g>
+                <g transform="matrix(6.12323e-17,1,-1.66667,1.02054e-16,4150.33,-1628)">
+                    <rect x="2535" y="965" width="1" height="3"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

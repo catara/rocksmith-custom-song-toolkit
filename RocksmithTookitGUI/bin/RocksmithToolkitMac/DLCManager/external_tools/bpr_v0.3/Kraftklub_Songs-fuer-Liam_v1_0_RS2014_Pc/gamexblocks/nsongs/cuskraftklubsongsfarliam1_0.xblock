@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<game>
+  <entitySet>
+    <entity id="4464efc1ec0a4166bf4b85d83720f85d" modelName="RSEnumerable_Song" name="CusKraftklubSongsfArLiam1_0_Bass" iterations="0">
+      <properties>
+        <property name="Header">
+          <set value="urn:database:hsan-db:songs_dlc_cuskraftklubsongsfarliam1_0" />
+        </property>
+        <property name="Manifest">
+          <set value="urn:database:json-db:cuskraftklubsongsfarliam1_0_bass" />
+        </property>
+        <property name="SngAsset">
+          <set value="urn:application:musicgame-song:cuskraftklubsongsfarliam1_0_bass" />
+        </property>
+        <property name="AlbumArtSmall">
+          <set value="urn:image:dds:album_cuskraftklubsongsfarliam1_0_64" />
+        </property>
+        <property name="AlbumArtMedium">
+          <set value="urn:image:dds:album_cuskraftklubsongsfarliam1_0_128" />
+        </property>
+        <property name="AlbumArtLarge">
+          <set value="urn:image:dds:album_cuskraftklubsongsfarliam1_0_256" />
+        </property>
+        <property name="LyricArt">
+          <set value="" />
+        </property>
+        <property name="ShowLightsXMLAsset">
+          <set value="urn:application:xml:cuskraftklubsongsfarliam1_0_showlights" />
+        </property>
+        <property name="SoundBank">
+          <set value="urn:audio:wwise-sound-bank:song_cuskraftklubsongsfarliam1_0" />
+        </property>
+        <property name="PreviewSoundBank">
+          <set value="urn:audio:wwise-sound-bank:song_cuskraftklubsongsfarliam1_0_preview" />
+        </property>
+      </properties>
+    </entity>
+    <entity id="32c45134ff264782ae44d4b245926d9c" modelName="RSEnumerable_Song" name="CusKraftklubSongsfArLiam1_0_Rhythm" iterations="0">
+      <properties>
+        <property name="Header">
+          <set value="urn:database:hsan-db:songs_dlc_cuskraftklubsongsfarliam1_0" />
+        </property>
+        <property name="Manifest">
+          <set value="urn:database:json-db:cuskraftklubsongsfarliam1_0_rhythm" />
+        </property>
+        <property name="SngAsset">
+          <set value="urn:application:musicgame-song:cuskraftklubsongsfarliam1_0_rhythm" />
+        </property>
+        <property name="AlbumArtSmall">
+          <set value="urn:image:dds:album_cuskraftklubsongsfarliam1_0_64" />
+        </property>
+        <property name="AlbumArtMedium">
+          <set value="urn:image:dds:album_cuskraftklubsongsfarliam1_0_128" />
+        </property>
+        <property name="AlbumArtLarge">
+          <set value="urn:image:dds:album_cuskraftklubsongsfarliam1_0_256" />
+        </property>
+        <property name="LyricArt">
+          <set value="" />
+        </property>
+        <property name="ShowLightsXMLAsset">
+          <set value="urn:application:xml:cuskraftklubsongsfarliam1_0_showlights" />
+        </property>
+        <property name="SoundBank">
+          <set value="urn:audio:wwise-sound-bank:song_cuskraftklubsongsfarliam1_0" />
+        </property>
+        <property name="PreviewSoundBank">
+          <set value="urn:audio:wwise-sound-bank:song_cuskraftklubsongsfarliam1_0_preview" />
+        </property>
+      </properties>
+    </entity>
+    <entity id="074d2e1bda1b406b898f1beae17582e7" modelName="RSEnumerable_Song" name="CusKraftklubSongsfArLiam1_0_Vocals" iterations="0">
+      <properties>
+        <property name="Header">
+          <set value="urn:database:hsan-db:songs_dlc_cuskraftklubsongsfarliam1_0" />
+        </property>
+        <property name="Manifest">
+          <set value="urn:database:json-db:cuskraftklubsongsfarliam1_0_vocals" />
+        </property>
+        <property name="SngAsset">
+          <set value="urn:application:musicgame-song:cuskraftklubsongsfarliam1_0_vocals" />
+        </property>
+        <property name="AlbumArtSmall">
+          <set value="urn:image:dds:album_cuskraftklubsongsfarliam1_0_64" />
+        </property>
+        <property name="AlbumArtMedium">
+          <set value="urn:image:dds:album_cuskraftklubsongsfarliam1_0_128" />
+        </property>
+        <property name="AlbumArtLarge">
+          <set value="urn:image:dds:album_cuskraftklubsongsfarliam1_0_256" />
+        </property>
+        <property name="LyricArt">
+          <set value="" />
+        </property>
+        <property name="ShowLightsXMLAsset">
+          <set value="urn:application:xml:cuskraftklubsongsfarliam1_0_showlights" />
+        </property>
+        <property name="SoundBank">
+          <set value="urn:audio:wwise-sound-bank:song_cuskraftklubsongsfarliam1_0" />
+        </property>
+        <property name="PreviewSoundBank">
+          <set value="urn:audio:wwise-sound-bank:song_cuskraftklubsongsfarliam1_0_preview" />
+        </property>
+      </properties>
+    </entity>
+  </entitySet>
+</game>

@@ -1,10 +1,10 @@
-﻿		# Date: 29.04.2021
+﻿		# Date: 29.05.2021
 		# Document Name: Rocksmith DLC Management tool README
 						(fork of rocksmith-custom-song-toolkit)
 		# Document purpose: To describe the functionailities and the way to change, the NEW tab that enable MASS Manipulation of Rocksmith DLC Library
 							(DLC folder; including customs(CDLC), DLCs and songs embeded in the ready to ship version of Rocksmith (2014 Remastered version)) 
 
-## Rocksmith DLC Library Manager v1 b3.03 (compiled beta available in \RocksmithToolkitGUI\bin\Release)
+## Rocksmith DLC Library Manager v1 b3.04 (compiled beta available in \RocksmithToolkitGUI\bin\Release)
 *(forever to be unreleased version- for my own sake and not the masses's)*
 # App Description: MASS Manipulation of Rocksmith DLC Library
 
@@ -230,21 +230,20 @@ update default (update DB template)
 save descrption in xml per each option
 right click:  make 1st alternate, dynamic dd to grops (try, play, etc)
 
-duplicate bug
-where are covers in standardiz or cache
+
 
 ## done:
 (prev release)
-[-] repack of songs.psarc works as proof of concept (PC; wo non retail songs i.e. rs2012,rs2012 dlcs)
-[-] at import and move announce if moving game relevant files(songs.psarc etc
-[-] make sure songs.psarc and cache,psarc are also saved
-[-] dont show rocksmith missing if mising then found
-[-] add ms access plugin sielnt mode if existing in external tools
-[-] add name of current selected by rights click song in main db 
-[-] add path in the toltip as field to small
-[-] make sure 3 ps3 retails can be imported separately
-[-] right click: delete,  duplciate, Add to grops (try, play, etc)
-[-] add and start access db plugin	q if missing
+[-] duplicate window opening bug (no aynmore)
+[-] where are covers in standardiz(select 1st artist album if spoty not avail) or cache
+[-] fix for duplciate off list building issues
+[-] save log of connectivity(select errors)
+give info on game folders available
+[-] give summary of imported songs to songs.psarc
+[-] rename songs.psarc to imsert songs in GameFiles
+[-] fixed origs dlcpack folder issue
+[-] check directory existence if on the network (get enumerate)
+[-] use local temp for temp stuff e.g. decompresion :) ? is it worth it?
 
 # Version History(release date):
 	0.1(12.08.2014) prototype, 
@@ -280,7 +279,9 @@ where are covers in standardiz or cache
 	0.7.6 (20.02.2020) Fixes after reintegration of base changes	
 	0.7.7 (20.04.2020) Fixes & improvements around internal duplication and filters (tons tons tons of fixes and polishing of existing "features", all params are in the Groups table)
 	1.0 b1 (11.01.2021) Adding Pitch Shift instructions based on E standard or DropD
-	1.0 b1 (29.03.2021) Making Param sorted by type and configurable in the DB
+	1.0 b1 (29.02.2021) Making Param sorted by type and configurable in the DB
+	1.0 b2 (29.03.2021) backend fixes
+	1.0 b3 (29.05.2021) Add DLCs directyly intro GAmes fiels (songs.psarc and implicitely the hsan into cache.psarc)
 	1.0 (xx.04.2021) Released on Customforge and GitHub Release "tab" (2 versions one w all 3rd party software, one without; can be installed/decompressed and quickly used; 1 60sec video describing why you should use this)
 	1.1 (xx.06.2021) Reactivating Spotify checks
 

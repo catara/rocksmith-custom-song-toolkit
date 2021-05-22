@@ -1,0 +1,228 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2006 Audiokinetic Inc. -->
+<PluginModule>
+  <EffectPlugin Name="Wwise Reflect" CompanyID="0" PluginID="171">
+    <PluginInfo MenuPath="70-Reflect">
+      <PlatformSupport>
+        <Platform Name="Any">
+          <CanBeInsertOnBusses>true</CanBeInsertOnBusses>
+          <CanBeInsertOnAudioObjects>false</CanBeInsertOnAudioObjects>
+        </Platform>
+      </PlatformSupport>
+    </PluginInfo>
+    <Properties>
+      <Property Name="SpeedOfSound" Type="Real32" SupportRTPCType="Additive" DisplayName="Speed of Sound">
+        <UserInterface Step="1" Fine="0.001" Decimals="3" UIMin="100" UIMax="1000"/>
+        <DefaultValue>345</DefaultValue>
+        <AudioEnginePropertyID>0</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0.001</Min>
+              <Max>2147483648</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="CenterPerc" Type="Real32" SupportRTPCType="Additive" DisplayName="Center Ratio">
+        <UserInterface Step="1" Fine="0.001" Decimals="3" />
+        <DefaultValue>100</DefaultValue>
+        <AudioEnginePropertyID>1</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0</Min>
+              <Max>100</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="MaxReflections" Type="Real32" DisplayName="Max Reflections">
+        <UserInterface Step="1" Fine="1" Decimals="0" UIMax="6" />
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>2</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0</Min>
+              <Max>1024</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="Dry" Type="Real32" DisplayName="Dry">
+        <UserInterface Step="1" Fine="0.1" Decimals="1"/>
+        <DefaultValue>-96</DefaultValue>
+        <AudioEnginePropertyID>3</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-96</Min>
+              <Max>24</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+     <Property Name="Wet" Type="Real32" SupportRTPCType="Additive" DisplayName="Output Level">
+       <UserInterface Step="1" Fine="0.1" Decimals="1"/>
+       <DefaultValue>0</DefaultValue>
+       <AudioEnginePropertyID>4</AudioEnginePropertyID>
+       <Restrictions>
+         <ValueRestriction>
+           <Range Type="Real32">
+             <Min>-96</Min>
+             <Max>24</Max>
+           </Range>
+         </ValueRestriction>
+       </Restrictions>
+     </Property>
+      <Property Name="MaxDistance" Type="Real32" DisplayName="Max Distance">
+        <UserInterface Step="50" Fine="1" Decimals="0" UIMax="100" />
+        <DefaultValue>1000</DefaultValue>
+        <AudioEnginePropertyID>5</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>1</Min>
+              <Max>2147483648</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="BaseTextureFrequency" Type="Real32" IsVisible="false">
+        <DefaultValue>250</DefaultValue>
+        <AudioEnginePropertyID>6</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>20</Min>
+              <Max>1000</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="FadeOutNbFrames" Type="int32" IsVisible="false">
+        <DefaultValue>3</DefaultValue>
+        <AudioEnginePropertyID>7</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="int32">
+              <Min>1</Min>
+              <Max>100</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>     
+      <Property Name="ParamFilterCutoff" DocId="DistanceSmoothing" Type="Real32" SupportRTPCType="Additive" DisplayName="Distance Smoothing">
+        <UserInterface Step="0.1" Fine="0.01" Decimals="2"/>
+        <DefaultValue>0.5</DefaultValue>
+        <AudioEnginePropertyID>8</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0</Min>
+              <Max>1</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="ParamFilterType" DocId="SmoothingType" Type="int32" DisplayName="Smoothing Type">
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>9</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="int32">
+              <Value DisplayName="IIR">0</Value>
+              <Value DisplayName="FIR">1</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="PitchThreshold" Type="Real32" SupportRTPCType="Additive" DisplayName="Pitch Threshold">
+        <UserInterface Step="0.1" Fine="0.01" Decimals="2" UIMin="0" UIMax="2400"/>
+        <DefaultValue>2400</DefaultValue>
+        <AudioEnginePropertyID>10</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0</Min>
+              <Max>9600</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="DistanceThreshold" Type="Real32" SupportRTPCType="Additive" DisplayName="Distance Threshold">
+        <UserInterface Step="0.1" Fine="0.01" Decimals="2" UIMin="0" UIMax="10"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>11</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0</Min>
+              <Max>2147483648</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="ThresholdMode" Type="int32" DisplayName="Threshold Mode">
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>12</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="int32">
+              <Value DisplayName="Continuous">0</Value>
+              <Value DisplayName="Step">1</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="CursorNameCategory" Type="int32" DisplayName="Cursor Name Category">
+        <DefaultValue>0</DefaultValue>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="int32">
+              <Value DisplayName="No Flag">0</Value>
+              <Value DisplayName="Image Source ID">1</Value>
+              <Value DisplayName="Image Source Name">2</Value>
+              <Value DisplayName="Game Object ID">3</Value>
+              <Value DisplayName="Game Object Name">4</Value>
+              <Value DisplayName="Texture(s)">5</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="OutputChannelConfig" Type="int32" DisplayName="Output Config">
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>13</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="int32">
+              <!-- Serialized channel config: MSB mask(20) type(4) nchannels(8) -->
+              <Value DisplayName="Parent Bus">0</Value>
+              <Value DisplayName="Mono">16641</Value>
+              <Value DisplayName="Stereo">12546</Value>
+              <Value DisplayName="3.0">28931</Value>
+              <Value DisplayName="4.0">6304004</Value>
+              <Value DisplayName="5.1">6353158</Value>
+              <Value DisplayName="7.1">6549768</Value>
+              <Value DisplayName="5.1.2">90239240</Value>
+              <Value DisplayName="7.1.2">90435850</Value>
+              <Value DisplayName="7.1.4">761524492</Value>
+              <Value DisplayName="Ambisonics 1st order">516</Value>
+              <!-- 0x00000204 -->
+              <Value DisplayName="Ambisonics 2nd order">521</Value>
+              <!-- 0x00000209 -->
+              <Value DisplayName="Ambisonics 3rd order">528</Value>
+              <!-- 0x00000210 -->
+              <Value DisplayName="Auro 9.1">761327882</Value>
+              <Value DisplayName="Auro 10.1">769716491</Value>
+              <Value DisplayName="Auro 11.1">803270924</Value>
+              <Value DisplayName="Auro 13.1">803467534</Value>
+              <Value DisplayName="LFE">33025</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+    </Properties>
+  </EffectPlugin>
+</PluginModule>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (C) 2006 Audiokinetic Inc. -->
+<PluginModule>
+	<SourcePlugin Name="Wwise Silence" CompanyID="0" PluginID="101" >
+		<PluginInfo CanUnlink="true">
+			<PlatformSupport>
+				<Platform Name="Any"></Platform>
+			</PlatformSupport>
+		</PluginInfo>
+		<Properties>
+			<Property Name="Length" Type="Real32" SupportRTPCType="Exclusive" DisplayName="Duration" DisplayGroup="Length">
+				<UserInterface UIMax="10" Step="0.5" Fine="0.1" Decimals="3"/>
+				<DefaultValue>1.0</DefaultValue>
+				<AudioEnginePropertyID>0</AudioEnginePropertyID>
+				<Restrictions>
+					<ValueRestriction>
+						<Range Type="Real32">
+							<Min>0.001</Min>
+							<Max>3600</Max>
+						</Range>
+					</ValueRestriction>
+				</Restrictions>
+			</Property>
+			<Property Name="LengthMin" Type="Real32" DisplayName="Random Min" DisplayGroup="Length">
+				<UserInterface UIMin="-10" Step="0.5" Fine="0.1" Decimals="3"/>
+				<DefaultValue>0.0</DefaultValue>
+				<AudioEnginePropertyID>1</AudioEnginePropertyID>
+				<Restrictions>
+					<ValueRestriction>
+						<Range Type="Real32">
+							<Min>-3600</Min>
+							<Max>0</Max>
+						</Range>
+					</ValueRestriction>
+				</Restrictions>
+			</Property>
+			<Property Name="LengthMax" Type="Real32" DisplayName="Random Max" DisplayGroup="Length">
+				<UserInterface UIMax="10" Step="0.5" Fine="0.1" Decimals="3"/>
+				<DefaultValue>0.0</DefaultValue>
+				<AudioEnginePropertyID>2</AudioEnginePropertyID>
+				<Restrictions>
+					<ValueRestriction>
+						<Range Type="Real32">
+							<Min>0</Min>
+							<Max>3600</Max>
+						</Range>
+					</ValueRestriction>
+				</Restrictions>
+			</Property>
+		</Properties>
+	</SourcePlugin>					
+</PluginModule>

@@ -226,10 +226,10 @@ namespace RocksmithToolkitGUI.DLCManager
             if (ex.Message.IndexOf("The 'Microsoft.ACE.OLEDB.") > -1 && ex.Message.IndexOf("provider is not registered on the local machine.") > -1)
             {
                 if (c("dlcm_ShowConenctivityOnce") == "Yes")
-                //{
+                    //{
                     ConfigRepository.Instance()["dlcm_ShowConenctivityOnce"] = "Maybe";//default always to show message only once
-                    //return;
-                //}
+                                                                                       //return;
+                                                                                       //}
                 else if (c("dlcm_ShowConenctivityOnce") == "Maybe") return;
                 //Use loally saved 2016 version 
                 var xx = "";
@@ -261,7 +261,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         catch (Exception exx)
                         {
                             var tsst = "Error ..." + exx; var timestamp = UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", null, null);
-                            MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            //MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
                             MessageBox.Show("Can not open Local Access plugin install ! " + xx);
                         }
                 }
@@ -277,7 +277,11 @@ namespace RocksmithToolkitGUI.DLCManager
                     lbl.Visible = true;
                 }
             }
-            else MessageBox.Show("Error "+ex+" - "+txt, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Question);
+            else
+            {
+                var timestamp = UpdateLog(DateTime.Now, "Error ..." + ex + txt, false, c("dlcm_TempPath"), "", "", null, null);
+            }
+
         }
 
         public static string CompactAndRepair(OleDbConnection cnb)
@@ -948,7 +952,7 @@ namespace RocksmithToolkitGUI.DLCManager
             string[] args = new string[50]; for (var x = 0; x < 50; x++) args[x] = "";
 
             args = exttoigno.ToString().Split(';');
-            if (pathfld != "" && pathfld != null && Directory.Exists(pathfld))
+            if (pathfld != "" && pathfld != null && DirectoryExists(pathfld))
             {
                 pathfld = pathfld + "\\";
                 try
@@ -1060,7 +1064,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 wwisePath = ConfigRepository.Instance()["general_wwisepath"];
             else
                 wwisePath = Environment.GetEnvironmentVariable("WWISEROOT");
-            if (wwisePath == "" || !Directory.Exists(wwisePath))
+            if (wwisePath == "" || !DirectoryExists(wwisePath))
             {
                 ErrorWindow frm1 = new ErrorWindow("Cause " + Mss + ".\nPlease Install Wwise Launcher then Wwise v" + wwisePath + " with Authoring binaries : " + Environment.NewLine + "A restart is required for the Conversion to WEM, process to be succesfull, else the errors can be captured through the Missing Files Query" + Environment.NewLine, "https://www.audiokinetic.com/download/", "Error at WEM Creation", false, false, true, "", "", "");
                 frm1.ShowDialog();
@@ -1804,43 +1808,66 @@ namespace RocksmithToolkitGUI.DLCManager
             }
         }
 
+        public static bool DirectoryExists(string dir)
+        {
+            //return true;
+            if (Directory.Exists(dir)) return true;
+            else
+            {                try  {
+                //in case folder is on a network drive and DirectoryExists has issues returniung the real value
+                System.IO.DirectoryInfo downloadedMessageInfo = new DirectoryInfo(dir.Substring(0, dir.LastIndexOf("\\")));
+
+              
+                    
+                foreach (DirectoryInfo di in downloadedMessageInfo.GetDirectories())
+                {
+                    if (di.Name == dir.Substring(dir.LastIndexOf("\\") + 1, dir.Length - dir.LastIndexOf("\\")-1)) return true;
+                }
+                    }
+                catch (Exception Ex)
+                {
+                    return false;
+                }
+            }
+            return false;
+        }
         public static DialogResult CreateTempFolderStructure(string TempPathImport, string oldPathImport, string brokenPathImport, string dupliPathImport,
             string dlcpacks, string pathDLC, string repackedpath, string repackedXBOXPath, string repackedPCPath, string repackedMACPath, string repackedPSPath,
             string logPath, string albumCoversPSPath, string LogPSPath, string ArchivePath, string dataPath, string TempPath, string dflt_Path_Import)
         {
             DialogResult result1 = DialogResult.Yes;
-            if (!Directory.Exists(TempPathImport) || !Directory.Exists(pathDLC) || !Directory.Exists(oldPathImport) || !Directory.Exists(brokenPathImport) ||
-                !Directory.Exists(dupliPathImport) || !Directory.Exists(dlcpacks + "\\temp") || !Directory.Exists(dlcpacks + "\\manipulated") ||
-                !Directory.Exists(dlcpacks + "\\manifests") || !Directory.Exists(dlcpacks + "\\manipulated\\temp") || !Directory.Exists(dlcpacks + "\\manipulated\\songs_psarc_RS2014_Pc")
-                || !Directory.Exists(repackedpath) ||
-                !Directory.Exists(repackedXBOXPath) || !Directory.Exists(repackedPCPath) || !Directory.Exists(repackedMACPath) ||
-                !Directory.Exists(repackedPSPath) || (!Directory.Exists(logPath) && logPath != "") || !Directory.Exists(LogPSPath)
-                || !Directory.Exists(albumCoversPSPath) || !Directory.Exists(ArchivePath) || !Directory.Exists(dataPath) || !Directory.Exists(TempPath))
+            if (!DirectoryExists(TempPathImport) || !DirectoryExists(pathDLC) || !DirectoryExists(oldPathImport) || !DirectoryExists(brokenPathImport) ||
+                !DirectoryExists(dupliPathImport) || !DirectoryExists(dlcpacks + "\\temp") || !DirectoryExists(dlcpacks + "\\manipulated") ||
+                !DirectoryExists(dlcpacks + "\\manifests") || !DirectoryExists(dlcpacks + "\\manipulated\\temp") || !DirectoryExists(dlcpacks + "\\origs")
+                || !DirectoryExists(repackedpath) ||
+                !DirectoryExists(repackedXBOXPath) || !DirectoryExists(repackedPCPath) || !DirectoryExists(repackedMACPath) ||
+                !DirectoryExists(repackedPSPath) || (!DirectoryExists(logPath) && logPath != "") || !DirectoryExists(LogPSPath)
+                || !DirectoryExists(albumCoversPSPath) || !DirectoryExists(ArchivePath) || !DirectoryExists(dataPath) || !DirectoryExists(TempPath))
             {
                 var fldrm = "";
-                if (!Directory.Exists(TempPathImport) && (TempPathImport != null)) fldrm += ";" + TempPathImport;
-                if (!Directory.Exists(pathDLC) && (pathDLC != null)) fldrm += ";" + pathDLC;
-                if (!Directory.Exists(oldPathImport) && (oldPathImport != null)) fldrm += ";" + oldPathImport;
-                if (!Directory.Exists(brokenPathImport) && (brokenPathImport != null)) fldrm += ";" + brokenPathImport;
-                if (!Directory.Exists(dupliPathImport) && (dupliPathImport != null)) fldrm += ";" + dupliPathImport;
-                if (!Directory.Exists(dlcpacks) && (dlcpacks != null)) fldrm += ";" + dlcpacks;
-                if (!Directory.Exists(dlcpacks + "\\manifests") && (dlcpacks != null)) fldrm += ";" + dlcpacks + "\\manifests";
-                if (!Directory.Exists(dlcpacks + "\\manipulated") && (dlcpacks != null)) fldrm += ";" + dlcpacks + "\\manipulated";
-                if (!Directory.Exists(dlcpacks + "\\manipulated\\temp") && (dlcpacks != null)) fldrm += ";" + dlcpacks + "\\manipulated\\temp";
-                if (!Directory.Exists(dlcpacks + "\\temp") && (dlcpacks != null)) fldrm += ";" + dlcpacks + "\\temp";
-                if (!Directory.Exists(dlcpacks + "\\origs") && (dlcpacks != null)) fldrm += ";" + dlcpacks + "\\origs";
-                if (!Directory.Exists(repackedpath) && (repackedpath != null)) fldrm += ";" + repackedpath;
-                if (!Directory.Exists(repackedXBOXPath) && (repackedXBOXPath != null)) fldrm += ";" + repackedXBOXPath;
-                if (!Directory.Exists(repackedPCPath) && (repackedPCPath != null)) fldrm += ";" + repackedPCPath;
-                if (!Directory.Exists(repackedMACPath) && (repackedMACPath != null)) fldrm += ";" + repackedMACPath;
-                if (!Directory.Exists(repackedPSPath) && (repackedPSPath != null)) fldrm += ";" + repackedPSPath;
-                if (!Directory.Exists(logPath) && logPath != null && (logPath != "")) fldrm += ";" + logPath;
-                if (!Directory.Exists(albumCoversPSPath) && (albumCoversPSPath != null)) fldrm += ";" + albumCoversPSPath;
-                if (!Directory.Exists(LogPSPath) && (LogPSPath != null)) fldrm += ";" + LogPSPath;
-                if (!Directory.Exists(ArchivePath) && (ArchivePath != null)) fldrm += ";" + ArchivePath;
-                if (!Directory.Exists(dataPath) && (dataPath != null)) fldrm += ";" + dataPath;
-                if (!Directory.Exists(TempPath) && (TempPath != null)) fldrm += ";" + TempPath;
-                if (!Directory.Exists(dflt_Path_Import) && (dflt_Path_Import != null)) fldrm += ";" + dflt_Path_Import;
+                if (!DirectoryExists(TempPathImport) && (TempPathImport != null)) fldrm += ";" + TempPathImport;
+                if (!DirectoryExists(pathDLC) && (pathDLC != null)) fldrm += ";" + pathDLC;
+                if (!DirectoryExists(oldPathImport) && (oldPathImport != null)) fldrm += ";" + oldPathImport;
+                if (!DirectoryExists(brokenPathImport) && (brokenPathImport != null)) fldrm += ";" + brokenPathImport;
+                if (!DirectoryExists(dupliPathImport) && (dupliPathImport != null)) fldrm += ";" + dupliPathImport;
+                if (!DirectoryExists(dlcpacks) && (dlcpacks != null)) fldrm += ";" + dlcpacks;
+                if (!DirectoryExists(dlcpacks + "\\manifests") && (dlcpacks != null)) fldrm += ";" + dlcpacks + "\\manifests";
+                if (!DirectoryExists(dlcpacks + "\\manipulated") && (dlcpacks != null)) fldrm += ";" + dlcpacks + "\\manipulated";
+                if (!DirectoryExists(dlcpacks + "\\manipulated\\temp") && (dlcpacks != null)) fldrm += ";" + dlcpacks + "\\manipulated\\temp";
+                if (!DirectoryExists(dlcpacks + "\\temp") && (dlcpacks != null)) fldrm += ";" + dlcpacks + "\\temp";
+                if (!DirectoryExists(dlcpacks + "\\origs") && (dlcpacks != null)) fldrm += ";" + dlcpacks + "\\origs";
+                if (!DirectoryExists(repackedpath) && (repackedpath != null)) fldrm += ";" + repackedpath;
+                if (!DirectoryExists(repackedXBOXPath) && (repackedXBOXPath != null)) fldrm += ";" + repackedXBOXPath;
+                if (!DirectoryExists(repackedPCPath) && (repackedPCPath != null)) fldrm += ";" + repackedPCPath;
+                if (!DirectoryExists(repackedMACPath) && (repackedMACPath != null)) fldrm += ";" + repackedMACPath;
+                if (!DirectoryExists(repackedPSPath) && (repackedPSPath != null)) fldrm += ";" + repackedPSPath;
+                if (!DirectoryExists(logPath) && logPath != null && (logPath != "")) fldrm += ";" + logPath;
+                if (!DirectoryExists(albumCoversPSPath) && (albumCoversPSPath != null)) fldrm += ";" + albumCoversPSPath;
+                if (!DirectoryExists(LogPSPath) && (LogPSPath != null)) fldrm += ";" + LogPSPath;
+                if (!DirectoryExists(ArchivePath) && (ArchivePath != null)) fldrm += ";" + ArchivePath;
+                if (!DirectoryExists(dataPath) && (dataPath != null)) fldrm += ";" + dataPath;
+                if (!DirectoryExists(TempPath) && (TempPath != null)) fldrm += ";" + TempPath;
+                if (!DirectoryExists(dflt_Path_Import) && (dflt_Path_Import != null)) fldrm += ";" + dflt_Path_Import;
 
                 DirectoryInfo di;
                 result1 = MessageBox.Show("Some( " + fldrm + " ) folder is missing please" + "\n\nChose:\n\n1. Create Folders\n2. Ignore\n3. Cancel operation"
@@ -2540,7 +2567,7 @@ namespace RocksmithToolkitGUI.DLCManager
         public static string[] GetFilesPlusDLC(string filen)
         {
             string[] tmp = { "", "" };
-            if (!Directory.Exists(filen)) return tmp;
+            if (!DirectoryExists(filen)) return tmp;
             var jsonFile4 = Directory.GetFiles(filen, "*.psarc*", System.IO.SearchOption.AllDirectories);
             return jsonFile4 == null ? tmp : jsonFile4;
             //.Concat(Directory.GetFiles(filen + "\\DLC", "*.psarc*", System.IO.SearchOption.AllDirectories)).ToArray();
@@ -3001,7 +3028,7 @@ namespace RocksmithToolkitGUI.DLCManager
             Random randomp = new Random();
             var packid = 0;
             packid = randomp.Next(0, 100000);
-            var fn = (logPath == null || !Directory.Exists(logPath) ? tmpPath + "\\0_log" : logPath) + "\\" + MultithreadNo + "current_" + ismaindb + "temp" + ".txt";/*MultithreadNo +*/
+            var fn = (logPath == null || !DirectoryExists(logPath) ? tmpPath + "\\0_log" : logPath) + "\\" + MultithreadNo + "current_" + ismaindb + "temp" + ".txt";/*MultithreadNo +*/
             try
             {
                 if (File.Exists(fn))
@@ -3032,7 +3059,7 @@ namespace RocksmithToolkitGUI.DLCManager
             Random randomp = new Random();
             var packid = 0;
             packid = randomp.Next(0, 100000);
-            var fn = (logPath == null || !Directory.Exists(logPath) ? tmpPath + "\\0_log" : logPath) + "\\" + "current_temp" + MultithreadNo + ".txt";
+            var fn = (logPath == null || !DirectoryExists(logPath) ? tmpPath + "\\0_log" : logPath) + "\\" + "current_temp" + MultithreadNo + ".txt";
             // This text is always added, making the file longer over timev
             // if it is not deleted.
             if (File.Exists(fn))
@@ -3956,7 +3983,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
                         DirectoryInfo di;
                         var repacked_Path = TempPath + "\\0_repacked";
-                        if (!Directory.Exists(repacked_Path) && (repacked_Path != null)) di = Directory.CreateDirectory(repacked_Path);
+                        if (!DirectoryExists(repacked_Path) && (repacked_Path != null)) di = Directory.CreateDirectory(repacked_Path);
 
                         //manipulating the info
                         if (c("dlcm_AdditionalManipul102") != "Yes")
@@ -4283,7 +4310,7 @@ namespace RocksmithToolkitGUI.DLCManager
             }
 
             //Restore XML changes
-            var xmlFilex = Directory.Exists(Folder_Name) ? Directory.GetFiles(Folder_Name, "*.old", System.IO.SearchOption.AllDirectories) : null;
+            var xmlFilex = DirectoryExists(Folder_Name) ? Directory.GetFiles(Folder_Name, "*.old", System.IO.SearchOption.AllDirectories) : null;
             if (xmlFilex != null) foreach (var xml in xmlFilex)
                 {
                     if (xml.ToLower().IndexOf("showlights") < 0)
@@ -5635,7 +5662,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         public static void CopyFolder(string copy_dir, string destination_dir)
         {
-            if (!Directory.Exists(copy_dir)) return;
+            if (!DirectoryExists(copy_dir)) return;
             foreach (string dir in Directory.GetDirectories(copy_dir, "*", System.IO.SearchOption.AllDirectories))
             {
                 try

@@ -1,0 +1,47 @@
+@import "global";
+@import "controls";
+@import "propertyeditor";
+@import "musiceditor";
+@import "soundcaster";
+@import "schematicview";
+@import "multiswitcheditor";
+@import "attenuationeditor";
+@import "queryeditor";
+@import "mixingdesk";
+@import "wwiselib";
+@import "wwiselibui";
+@import "effects";
+@import "sources";
+@import "contentseditor";
+@import "gameprofiler";
+@import "gameprofiler3d";
+@import "wwiseui";
+@import "explorer";
+@import "waveviewer";           // TBD if we wish to have this on the same json file or not!
+@import "wwise";
+@import "propertyhelp";
+
+exports {
+    @include global_exports;
+    @include controls_exports;
+    @include propertyeditor_exports;
+    @include musiceditor_exports;
+    @include soundcaster_exports;
+    @include schematicview_exports;
+    @include multiswitcheditor_exports;
+    @include attenuationeditor_exports;
+    @include queryeditor_exports;
+    @include mixingdesk_exports;
+    @include wwiselib_exports;
+    @include wwiselibui_exports;
+    @include effects_exports;
+    @include sources_exports;
+    @include contentseditor_exports;
+    @include gameprofiler_exports;
+    @include gameprofiler3d_exports;
+    @include wwiseui_exports;
+    @include explorer_exports;
+    @include waveviewer_exports;    // TBD if we wish to have this on the same json file or not!
+    @include wwise_exports;
+    @include propertyhelp_exports;
+}

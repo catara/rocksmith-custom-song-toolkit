@@ -643,8 +643,8 @@ namespace RocksmithToolkitGUI.DLCManager
                     startI.FileName = Path.Combine(AppWD, "..\\..\\7za.exe");
                     startI.WorkingDirectory = TempPath + "\\0_dlcpacks\\";// Path.GetDirectoryName();
                     var za = TempPath + "\\0_dlcpacks\\cache_" + platfor + "\\cache7.7z";
-                    if (!Directory.Exists(TempPath + "\\0_dlcpacks\\manifests")) di = Directory.CreateDirectory(TempPath + "\\0_dlcpacks\\manifests");
-                    if (!Directory.Exists(TempPath + "\\0_dlcpacks\\manifests\\songs")) di = Directory.CreateDirectory(TempPath + "\\0_dlcpacks\\manifests\\songs");
+                    if (!DirectoryExists(TempPath + "\\0_dlcpacks\\manifests")) di = Directory.CreateDirectory(TempPath + "\\0_dlcpacks\\manifests");
+                    if (!DirectoryExists(TempPath + "\\0_dlcpacks\\manifests\\songs")) di = Directory.CreateDirectory(TempPath + "\\0_dlcpacks\\manifests\\songs");
                     File.Copy(hsanDir, TempPath + "\\0_dlcpacks\\manifests\\songs\\songs.hsan", true);
 
                     startI.Arguments = String.Format(" a {0} {1}",

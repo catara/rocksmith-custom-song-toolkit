@@ -1,0 +1,7 @@
+@import "global";
+
+@mixin propertyhelp_exports {
+    PropertyHelp_BorderColor: applyTint(rgb( 85, 85, 85 ));
+    PropertyHelp_BackgroundColor: rgb(180, 180, 180);
+    PropertyHelp_NormalText: rgb(0, 0, 0);
+}

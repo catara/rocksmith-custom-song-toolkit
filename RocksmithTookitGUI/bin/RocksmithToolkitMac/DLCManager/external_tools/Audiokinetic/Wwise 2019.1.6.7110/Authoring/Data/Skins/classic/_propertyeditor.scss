@@ -1,0 +1,39 @@
+@import "global";
+
+$GenericWaveControl_WaveformColor: applyTint(rgb(114, 114, 114));
+
+@mixin propertyeditor_exports {
+
+    GenericWaveControl_WaveformColor: $GenericWaveControl_WaveformColor;
+    GenericWaveControl_CrossfadeBackgroundColor: applyTint(rgba(white, 0.0784));
+    GenericWaveControl_RulerLineColor: applyTint(rgb(57, 57, 57));
+    GenericWaveControl_FadeCurveColor: applyTint(hsl(35, 96%, 48%));
+
+    GenericWaveViewer_WaveformColor: $GenericWaveControl_WaveformColor; // TODO: Centralize this better? Or just get rid of GenericWaveViewer_WaveformColor?
+
+    AudioSourceWaveControl_BackgroundColor: applyTint(rgb(43, 43, 43));
+    AudioSourceCursor_LineColor: $Global_TimeCursor;
+    AudioSourceLoopCursor_StartLineColor: applyTint(rgb(0, 179, 0));
+    AudioSourceLoopCursor_StopLineColor: applyTint(red);
+    
+    AudioSourceMarkerCursor_LineColorManual: setAlpha($Global_CurveColorBlueSaturated, 0.75);
+    AudioSourceMarkerCursor_LineColorFromFile: applyTint(rgb(100, 100, 100));
+    AudioSourceMarkerCursor_LineColorFromTransient: applyTint(rgb(199, 199, 199));
+
+    DialogPropViewBase_BackgroundColor: $Global_Background;
+
+    AudioSourceFade_FadeBoxColor: applyTint($Global_FadeCtrl);
+    AudioSourceFade_FadeCurveColor: applyTint($Global_FadeCurve);
+    AudioSourceFade_BoxFrameColor: applyTint($Global_FadeCtrlEdge);
+    AudioSourceFade_DisabledWaveBackgroundColor: applyTint(rgba(black, 0.3137));
+    AudioSourceFade_RegionLineColor: applyTint(hsl(0, 0%, 26%));
+
+    //Event Editor Drag/Drop Color
+    ActionList_DragColor: applyTint($Global_DropHover);
+
+    PropertyEditor_WarningColor: applyTint(#494949);
+
+    HdrMeter_MainColor: applyTint(#9ED4E6);
+
+    LayersList_BackgroundColor: $Global_ListBackground;
+}

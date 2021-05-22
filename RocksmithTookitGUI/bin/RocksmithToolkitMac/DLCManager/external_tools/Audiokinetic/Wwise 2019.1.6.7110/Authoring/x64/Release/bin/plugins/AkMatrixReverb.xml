@@ -1,0 +1,600 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2007 Audiokinetic Inc. -->
+<PluginModule>
+  <EffectPlugin Name="Wwise Matrix Reverb" CompanyID="0" PluginID="115">
+    <PluginInfo MenuPath="50-Wwise">
+      <PlatformSupport>
+        <Platform Name="Any">
+          <CanBeInsertOnBusses>true</CanBeInsertOnBusses>
+          <CanBeInsertOnAudioObjects>true</CanBeInsertOnAudioObjects>
+          <CanBeRendered>true</CanBeRendered>
+        </Platform>
+      </PlatformSupport>
+    </PluginInfo>
+    <Properties>
+      <Property Name="PreDelay" Type="Real32" DisplayName="Pre-delay">
+        <UserInterface Step="0.05" Fine="0.001" Decimals="3"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>5</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0</Min>
+              <Max>1</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="ReverbTime" Type="Real32" SupportRTPCType="Exclusive" DisplayName="Reverb Time">
+        <UserInterface Step="0.1" Fine="0.01" Decimals="2"/>
+        <DefaultValue>4</DefaultValue>
+        <AudioEnginePropertyID>0</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0.1</Min>
+              <Max>10</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="HFRatio" Type="Real32" SupportRTPCType="Exclusive" DisplayName="HF Ratio">
+        <UserInterface Step="0.1" Fine="0.01" Decimals="2"/>
+        <DefaultValue>2</DefaultValue>
+        <AudioEnginePropertyID>1</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0.5</Min>
+              <Max>10</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="WetLevel" Type="Real32" SupportRTPCType="Additive" DataMeaning="Decibels" DisplayName="Wet Level">
+        <UserInterface Step="1" Fine="0.1" Decimals="1"/>
+        <DefaultValue>-35</DefaultValue>
+        <AudioEnginePropertyID>4</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-96.3</Min>
+              <Max>0</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="DryLevel" Type="Real32" SupportRTPCType="Additive" DataMeaning="Decibels" DisplayName="Dry Level">
+        <UserInterface Step="1" Fine="0.1" Decimals="1"/>
+        <DefaultValue>-96.3</DefaultValue>
+        <AudioEnginePropertyID>3</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-96.3</Min>
+              <Max>0</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="ProcessLFE" Type="bool" DisplayName="Process LFE">
+        <DefaultValue>true</DefaultValue>
+        <AudioEnginePropertyID>6</AudioEnginePropertyID>
+      </Property>
+      <Property Name="NumberOfDelays" Type="int32" DisplayName="Quality vs. Performance">
+        <DefaultValue>8</DefaultValue>
+        <AudioEnginePropertyID>2</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="int32">
+              <Value DisplayName="Favor performance">4</Value>
+              <Value DisplayName="Balance quality and performance">8</Value>
+              <Value DisplayName="Favor quality">12</Value>
+              <Value DisplayName="Maximize quality">16</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="DelayLengthsMode" Type="int32" DisplayName="Delay Lengths Mode" DisplayGroup="Delay Lengths">
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>7</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="int32">
+              <Value DisplayName="Default delay lengths">0</Value>
+              <Value DisplayName="Custom delay lengths">1</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="DelayTime1" DocId="DelayTime" Type="Real32" DisplayName="Delay Time 1" DisplayGroup="Delay Lengths">
+        <UserInterface Step="0.5" Fine="0.1" Decimals="2" UIMin="5"/>
+        <DefaultValue>13.62</DefaultValue>
+        <AudioEnginePropertyID>8</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>1</Min>
+              <Max>35</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="DelayLengthsMode" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Custom delay lengths -->
+                <Value>1</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="DelayTime2" DocId="DelayTime" Type="Real32" DisplayName="Delay Time 2" DisplayGroup="Delay Lengths">
+        <UserInterface Step="0.5" Fine="0.1" Decimals="2" UIMin="5"/>
+        <DefaultValue>15.66</DefaultValue>
+        <AudioEnginePropertyID>9</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>1</Min>
+              <Max>35</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="DelayLengthsMode" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Custom delay lengths -->
+                <Value>1</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="DelayTime3" DocId="DelayTime" Type="Real32" DisplayName="Delay Time 3" DisplayGroup="Delay Lengths">
+        <UserInterface Step="0.5" Fine="0.1" Decimals="2" UIMin="5"/>
+        <DefaultValue>17.52</DefaultValue>
+        <AudioEnginePropertyID>10</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>1</Min>
+              <Max>35</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="DelayLengthsMode" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Custom delay lengths -->
+                <Value>1</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="DelayTime4" DocId="DelayTime" Type="Real32" DisplayName="Delay Time 4" DisplayGroup="Delay Lengths">
+        <UserInterface Step="0.5" Fine="0.1" Decimals="2" UIMin="5"/>
+        <DefaultValue>19.02</DefaultValue>
+        <AudioEnginePropertyID>11</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>1</Min>
+              <Max>35</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="DelayLengthsMode" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Custom delay lengths -->
+                <Value>1</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="DelayTime5" DocId="DelayTime" Type="Real32" DisplayName="Delay Time 5" DisplayGroup="Delay Lengths">
+        <UserInterface Step="0.5" Fine="0.1" Decimals="2" UIMin="5"/>
+        <DefaultValue>20.83</DefaultValue>
+        <AudioEnginePropertyID>12</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>1</Min>
+              <Max>35</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="DelayLengthsMode" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Custom delay lengths -->
+                <Value>1</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="NumberOfDelays" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Balance quality and performance -->
+                <Value>8</Value>
+                <!-- Favor quality -->
+                <Value>12</Value>
+                <!-- Maximize quality -->
+                <Value>16</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="DelayTime6" DocId="DelayTime" Type="Real32" DisplayName="Delay Time 6" DisplayGroup="Delay Lengths">
+        <UserInterface Step="0.5" Fine="0.1" Decimals="2" UIMin="5"/>
+        <DefaultValue>22.60</DefaultValue>
+        <AudioEnginePropertyID>13</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>1</Min>
+              <Max>35</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="DelayLengthsMode" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Custom delay lengths -->
+                <Value>1</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="NumberOfDelays" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Balance quality and performance -->
+                <Value>8</Value>
+                <!-- Favor quality -->
+                <Value>12</Value>
+                <!-- Maximize quality -->
+                <Value>16</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="DelayTime7" DocId="DelayTime" Type="Real32" DisplayName="Delay Time 7" DisplayGroup="Delay Lengths">
+        <UserInterface Step="0.5" Fine="0.1" Decimals="2" UIMin="5"/>
+        <DefaultValue>24.05</DefaultValue>
+        <AudioEnginePropertyID>14</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>1</Min>
+              <Max>35</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="DelayLengthsMode" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Custom delay lengths -->
+                <Value>1</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="NumberOfDelays" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Balance quality and performance -->
+                <Value>8</Value>
+                <!-- Favor quality -->
+                <Value>12</Value>
+                <!-- Maximize quality -->
+                <Value>16</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="DelayTime8" DocId="DelayTime" Type="Real32" DisplayName="Delay Time 8" DisplayGroup="Delay Lengths">
+        <UserInterface Step="0.5" Fine="0.1" Decimals="2" UIMin="5"/>
+        <DefaultValue>24.78</DefaultValue>
+        <AudioEnginePropertyID>15</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>1</Min>
+              <Max>35</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="DelayLengthsMode" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Custom delay lengths -->
+                <Value>1</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="NumberOfDelays" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Balance quality and performance -->
+                <Value>8</Value>
+                <!-- Favor quality -->
+                <Value>12</Value>
+                <!-- Maximize quality -->
+                <Value>16</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="DelayTime9" DocId="DelayTime" Type="Real32" DisplayName="Delay Time 9" DisplayGroup="Delay Lengths">
+        <UserInterface Step="0.5" Fine="0.1" Decimals="2" UIMin="5"/>
+        <DefaultValue>25.60</DefaultValue>
+        <AudioEnginePropertyID>16</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>1</Min>
+              <Max>35</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="DelayLengthsMode" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Custom delay lengths -->
+                <Value>1</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="NumberOfDelays" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Favor quality -->
+                <Value>12</Value>
+                <!-- Maximize quality -->
+                <Value>16</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="DelayTime10" DocId="DelayTime" Type="Real32" DisplayName="Delay Time 10" DisplayGroup="Delay Lengths">
+        <UserInterface Step="0.5" Fine="0.1" Decimals="2" UIMin="5"/>
+        <DefaultValue>26.09</DefaultValue>
+        <AudioEnginePropertyID>17</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>1</Min>
+              <Max>35</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="DelayLengthsMode" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Custom delay lengths -->
+                <Value>1</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="NumberOfDelays" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Favor quality -->
+                <Value>12</Value>
+                <!-- Maximize quality -->
+                <Value>16</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="DelayTime11" DocId="DelayTime" Type="Real32" DisplayName="Delay Time 11" DisplayGroup="Delay Lengths">
+        <UserInterface Step="0.5" Fine="0.1" Decimals="2" UIMin="5"/>
+        <DefaultValue>26.55</DefaultValue>
+        <AudioEnginePropertyID>18</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>1</Min>
+              <Max>35</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="DelayLengthsMode" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Custom delay lengths -->
+                <Value>1</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="NumberOfDelays" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Favor quality -->
+                <Value>12</Value>
+                <!-- Maximize quality -->
+                <Value>16</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="DelayTime12" DocId="DelayTime" Type="Real32" DisplayName="Delay Time 12" DisplayGroup="Delay Lengths">
+        <UserInterface Step="0.5" Fine="0.1" Decimals="2" UIMin="5"/>
+        <DefaultValue>26.91</DefaultValue>
+        <AudioEnginePropertyID>19</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>1</Min>
+              <Max>35</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="DelayLengthsMode" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Custom delay lengths -->
+                <Value>1</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="NumberOfDelays" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Favor quality -->
+                <Value>12</Value>
+                <!-- Maximize quality -->
+                <Value>16</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="DelayTime13" DocId="DelayTime" Type="Real32" DisplayName="Delay Time 13" DisplayGroup="Delay Lengths">
+        <UserInterface Step="0.5" Fine="0.1" Decimals="2" UIMin="5"/>
+        <DefaultValue>28.04</DefaultValue>
+        <AudioEnginePropertyID>20</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>1</Min>
+              <Max>35</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="DelayLengthsMode" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Custom delay lengths -->
+                <Value>1</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="NumberOfDelays" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Maximize quality -->
+                <Value>16</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="DelayTime14" DocId="DelayTime" Type="Real32" DisplayName="Delay Time 14" DisplayGroup="Delay Lengths">
+        <UserInterface Step="0.5" Fine="0.1" Decimals="2" UIMin="5"/>
+        <DefaultValue>29.09</DefaultValue>
+        <AudioEnginePropertyID>21</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>1</Min>
+              <Max>35</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="DelayLengthsMode" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Custom delay lengths -->
+                <Value>1</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="NumberOfDelays" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Maximize quality -->
+                <Value>16</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="DelayTime15" DocId="DelayTime" Type="Real32" DisplayName="Delay Time 15" DisplayGroup="Delay Lengths">
+        <UserInterface Step="0.5" Fine="0.1" Decimals="2" UIMin="5"/>
+        <DefaultValue>29.90</DefaultValue>
+        <AudioEnginePropertyID>22</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>1</Min>
+              <Max>35</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="DelayLengthsMode" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Custom delay lengths -->
+                <Value>1</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="NumberOfDelays" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Maximize quality -->
+                <Value>16</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="DelayTime16" DocId="DelayTime" Type="Real32" DisplayName="Delay Time 16" DisplayGroup="Delay Lengths">
+        <UserInterface Step="0.5" Fine="0.1" Decimals="2" UIMin="5"/>
+        <DefaultValue>30.86</DefaultValue>
+        <AudioEnginePropertyID>23</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>1</Min>
+              <Max>35</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="DelayLengthsMode" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Custom delay lengths -->
+                <Value>1</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="NumberOfDelays" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Maximize quality -->
+                <Value>16</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+    </Properties>
+  </EffectPlugin>
+</PluginModule>

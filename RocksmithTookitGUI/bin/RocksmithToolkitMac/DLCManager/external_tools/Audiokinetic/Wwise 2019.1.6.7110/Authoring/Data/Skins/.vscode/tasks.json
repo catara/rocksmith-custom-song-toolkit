@@ -1,0 +1,50 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build Typescript Tools",
+            "type": "shell",
+            "command": "./node_modules/.bin/tsc -p .",
+            "options": {
+                "cwd": "${workspaceRoot}"
+            },
+            "windows": {
+                "options": {
+                    "shell": {
+                        "executable": "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
+                    }
+                }
+            },
+            "problemMatcher": [
+                "$tsc"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "always"
+            }
+        },
+        {
+            "label": "Build All Skins",
+            "type": "shell",
+            "command": "node ${workspaceFolder}\\index.js",
+            "windows": {
+                "options": {
+                    "shell": {
+                        "executable": "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
+                    }
+                }
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+
+<h2>Voice Filter Type</h2>
+<p>ハーモナイズされたボイス信号に適用可能なフィルタリングのタイプを決定する。以下のようなフィルタが利用可能:</p>
+<ul>
+<li><strong>None（なし）</strong> ボイスフィルタを無効化。</li>
+<li><strong>Low Pass</strong> : 指定された周波数から高周波数の固定傾斜減衰を提供する。これ以下では、信号はほとんど影響を受けないが、より高い周波数は、カットオフ周波数点を超えると次第に減衰される。</li>
+<li><strong>High Pass</strong> : 指定された周波数から低周波数の固定傾斜減衰を提供する。これ以上では、信号はほとんど影響を受けないが、より低い周波数は、カットオフ周波数点を下回ると次第に減衰される。</li>
+<li><strong>Band Pass</strong>: 指定された中心周波数の周りの全ての周波数を除去する。中心付近の周波数範囲はQによって制御される。</li>
+<li><strong>Notch</strong>: 指定周波数範囲の固定減衰に幅変化を提供する。中心付近の周波数範囲はQによって制御される。</li>
+<li><strong>Low Shelf</strong>: 低周波数の指定範囲にゲイン/減衰を提供する。この曲線タイプは、Bass Tone Controlとしても知られている。</li>
+<li><strong>High Shelf</strong>: 高周波数の指定範囲にゲイン/減衰を提供する。この曲線タイプは、Treble Tone Controlとしても知られている。</li>
+<li><strong>Peaking</strong>: 指定周波数の増幅/減衰に幅変化を提供する。ピーク付近の周波数範囲はQによって制御される。</li>
+</ul>
+<p>Default value: None<br/></p>

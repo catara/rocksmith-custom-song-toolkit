@@ -61,19 +61,19 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             var startT = DateTime.Now.ToString("yyyyMMdd HHmmssfff");
             var Log_PSPath = c("dlcm_TempPath") + "\\0_log";
-            var fnl = (logPath == null || !Directory.Exists(logPath) ? c("dlcm_TempPath") + "\\0_log" : logPath) + "\\" + "current_arangtemp.txt";
+            var fnl = (logPath == null || !DirectoryExists(logPath) ? c("dlcm_TempPath") + "\\0_log" : logPath) + "\\" + "current_arangtemp.txt";
 
             var starttmp = DateTime.Now;
-            if (File.Exists((logPath == null || !Directory.Exists(logPath) ? Log_PSPath : logPath) + "\\" + "current_arangtemp.txt"))
+            if (File.Exists((logPath == null || !DirectoryExists(logPath) ? Log_PSPath : logPath) + "\\" + "current_arangtemp.txt"))
             {
-                File.Copy((logPath == null || !Directory.Exists(logPath) ? Log_PSPath : logPath) + "\\" + "current_arangtemp.txt"
-                      , (logPath == null || !Directory.Exists(logPath) ? Log_PSPath : logPath) + "\\" + "current_arangtemp" + startT + ".txt", true);
-                FileStream swt = File.Open((logPath == null || !Directory.Exists(logPath) ? Log_PSPath : logPath) + "\\" + "current_arangtemp.txt", FileMode.Create);
+                File.Copy((logPath == null || !DirectoryExists(logPath) ? Log_PSPath : logPath) + "\\" + "current_arangtemp.txt"
+                      , (logPath == null || !DirectoryExists(logPath) ? Log_PSPath : logPath) + "\\" + "current_arangtemp" + startT + ".txt", true);
+                FileStream swt = File.Open((logPath == null || !DirectoryExists(logPath) ? Log_PSPath : logPath) + "\\" + "current_arangtemp.txt", FileMode.Create);
                 swt.Dispose();
             }
             else
             {
-                FileStream swt = File.Open((logPath == null || !Directory.Exists(logPath) ? Log_PSPath : logPath) + "\\" + "current_maindbtemp.txt", FileMode.Create);
+                FileStream swt = File.Open((logPath == null || !DirectoryExists(logPath) ? Log_PSPath : logPath) + "\\" + "current_maindbtemp.txt", FileMode.Create);
                 swt.Dispose();
             }
             var tst = "Starting... " + startT; timestamp = UpdateLog(starttmp, tst, false, c("dlcm_TempPath"), "", "ArangDB", pB_ReadDLCs, null);

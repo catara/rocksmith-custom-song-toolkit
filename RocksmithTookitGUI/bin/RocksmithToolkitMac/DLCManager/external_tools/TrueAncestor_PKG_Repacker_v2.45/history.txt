@@ -1,0 +1,56 @@
+TrueAncestor PKG Repacker
+
+v2.45
+1. Add support for category WT/AS/HM/SF in fast pack & repack.
+
+v2.40
+1. Add XMBLink type in custom pack.
+
+v2.35
+1. Add support for various app categories in custom pack.
+2. Add category switch in custom pack.
+
+v2.30
+1. Add support for various app categories in fast pack & repack.
+
+v2.20
+1. Add new unpack engine make_pkg_npdrm & rpkg_extractor to replace the old engine PkgView.
+2. Unpacking retail psp remaster pkg is now supported under rpkg_extractor.
+3. Auto-switch unpack engine when handling 2gb+ pkg file.
+4. Update instructions.
+
+v2.10
+1. Set default to ON for patch sfo and resign eboot switches.
+2. Remove the retail patch restrict for repack pkg.
+
+v2.01
+1. Fix search non-standard contentid in self files.
+2. Fix rename issue when resign eboot switch is on.
+
+v2.00 Features:
+1. Rewrite the whole program and rename to TrueAncestor PKG Repacker.
+2. New fast pack operation for ultimate pkg packing experience.
+3. New ungpkg engine for unpacking pkg.
+4. New game folder info & pkg info display.
+5. New switch for patching PARAM.SFO in packing process.
+6. New switch for resigning EBOOT.BIN in packing process.
+7. Newly support long install path for Gamedata pkg.
+8. Newly support packing PS2 Classics pkg.
+9. Newly support packing .p3t theme file to pkg & batch mode for packing theme pkg.
+10. Newly support packing avatar file to pkg & batch mode for packing avatar pkg.
+11. Newly support packing retail & debug license pkg.
+12. Update instructions.
+
+TrueAncestor PKG Creator
+
+v1.01
+1. Fix bug in patching PARAM.SFO.
+2. Fix bug in auto-generating ContentID.
+
+v1.0 Features:
+1. No more typing command line.
+2. No more editing conf file.
+3. Support to create more than 10 types of pkg.
+4. Support to load ContentID from pkg / auto-generate ContentID.
+5. Manage pkg in one folder.
+6. Instructions for n00bs.

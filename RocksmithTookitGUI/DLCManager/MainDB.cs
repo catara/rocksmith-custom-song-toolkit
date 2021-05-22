@@ -120,18 +120,18 @@ namespace RocksmithToolkitGUI.DLCManager
 
             var startT = DateTime.Now.ToString("yyyyMMdd HHmmssfff");
             var Log_PSPath = c("dlcm_TempPath") + "\\0_log";
-            var fnl = (logPath == null || !Directory.Exists(logPath) ? c("dlcm_TempPath") + "\\0_log" : logPath) + "\\" + c("dlcm_Split4Pack") + "current_maindbtemp.txt";
+            var fnl = (logPath == null || !DirectoryExists(logPath) ? c("dlcm_TempPath") + "\\0_log" : logPath) + "\\" + c("dlcm_Split4Pack") + "current_maindbtemp.txt";
             var starttmp = DateTime.Now;
-            if (File.Exists((logPath == null || !Directory.Exists(logPath) ? Log_PSPath : logPath) + "\\" + c("dlcm_Split4Pack") + "current_maindbtemp.txt"))
+            if (File.Exists((logPath == null || !DirectoryExists(logPath) ? Log_PSPath : logPath) + "\\" + c("dlcm_Split4Pack") + "current_maindbtemp.txt"))
             {
-                File.Copy((logPath == null || !Directory.Exists(logPath) ? Log_PSPath : logPath) + "\\" + c("dlcm_Split4Pack") + "current_maindbtemp.txt"
-                      , (logPath == null || !Directory.Exists(logPath) ? Log_PSPath : logPath) + "\\" + c("dlcm_Split4Pack") + "current_maindbtemp" + startT + ".txt", true);
-                FileStream swt = File.Open((logPath == null || !Directory.Exists(logPath) ? Log_PSPath : logPath) + "\\" + c("dlcm_Split4Pack") + "current_maindbtemp.txt", FileMode.Create);
+                File.Copy((logPath == null || !DirectoryExists(logPath) ? Log_PSPath : logPath) + "\\" + c("dlcm_Split4Pack") + "current_maindbtemp.txt"
+                      , (logPath == null || !DirectoryExists(logPath) ? Log_PSPath : logPath) + "\\" + c("dlcm_Split4Pack") + "current_maindbtemp" + startT + ".txt", true);
+                FileStream swt = File.Open((logPath == null || !DirectoryExists(logPath) ? Log_PSPath : logPath) + "\\" + c("dlcm_Split4Pack") + "current_maindbtemp.txt", FileMode.Create);
                 swt.Dispose();
             }
             else
             {
-                FileStream swt = File.Open((logPath == null || !Directory.Exists(logPath) ? Log_PSPath : logPath) + "\\" + c("dlcm_Split4Pack") + "current_maindbtemp.txt", FileMode.Create);
+                FileStream swt = File.Open((logPath == null || !DirectoryExists(logPath) ? Log_PSPath : logPath) + "\\" + c("dlcm_Split4Pack") + "current_maindbtemp.txt", FileMode.Create);
                 swt.Dispose();
             }
 
@@ -224,7 +224,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 var tmpp = databox.Rows[0].Cells["Folder_Name"].Value.ToString();
                 var OLD_Path = tmpp.Substring(0, tmpp.IndexOf("\\0_data"));
                 var NEW_Path = c("dlcm_TempPath");
-                if (!Directory.Exists(OLD_Path) || (tmpp.ToLower().IndexOf(NEW_Path.ToLower()) == -1) && Directory.Exists(NEW_Path))
+                if (!DirectoryExists(OLD_Path) || (tmpp.ToLower().IndexOf(NEW_Path.ToLower()) == -1) && DirectoryExists(NEW_Path))
                 {
                     var cmd = "UPDATE Main SET AlbumArtPath=REPLACE(AlbumArtPath, '" + OLD_Path + "','" + NEW_Path + "'), " +
                             "AudioPath=REPLACE(AudioPath,'" + OLD_Path + "','" + NEW_Path + "'), " +
@@ -799,8 +799,8 @@ namespace RocksmithToolkitGUI.DLCManager
         public void ListTracks(string Duplicate_Of, string ID, string Song_Lenght)
         {
             if (cmb_Tracks.Items.Count > 0) for (int k = cmb_Tracks.Items.Count - 1; k >= 0; --k) cmb_Tracks.Items.RemoveAt(k);//remove items
-            var scmd = "SELECT ID FROM Main WHERE ID=" + Duplicate_Of + " OR ID=" + ID + " OR Duplicate_Of=\"" + (Duplicate_Of == "0" ? "999999" : Duplicate_Of)
-                + "\" OR Duplicate_Of=\"" + ID + "\";";
+            var scmd = "SELECT ID FROM Main WHERE ID=" + (Duplicate_Of == "" ? "0" : Duplicate_Of) + " OR ID=" + (ID == "" ? "0" : ID) + " OR Duplicate_Of=\"" + (Duplicate_Of == "0" ? "999999" : Duplicate_Of)
+                + "\" OR Duplicate_Of=\"" + (ID == "" ? "0" : ID) + "\";";
             DataSet dzs = new DataSet(); dzs = SelectFromDB("Main", scmd, "", cnb);
             var norecs = dzs.Tables.Count == 0 ? 0 : dzs.Tables[0].Rows.Count;
             var IDs = "0";
@@ -1380,7 +1380,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 chbx_PS3HAN.Enabled = true;
             }
             else
-            if (chbx_Format.Text == "ImportFolder" && Directory.Exists(c("dlcm_RocksmithDLCPath")))
+            if (chbx_Format.Text == "ImportFolder" && DirectoryExists(c("dlcm_RocksmithDLCPath")))
             {
                 txt_FTPPath.Text = c("dlcm_RocksmithDLCPath");
                 chbx_PS3HAN.Enabled = true;
@@ -1404,18 +1404,18 @@ namespace RocksmithToolkitGUI.DLCManager
                 {
                     var txt = "";
                     if (chbx_Format.Text == "ImportFolder") txt += "ImportFolder not existing ergo defaulted to Pc!";
-                    if (!(Directory.Exists(c("general_rs2014path")) && c("general_rs2014path").IndexOf(":\\") >= 0)) txt += "Defaulted to DLCManager PC Path: " + c("dlcm_PC");
+                    if (!(DirectoryExists(c("general_rs2014path")) && c("general_rs2014path").IndexOf(":\\") >= 0)) txt += "Defaulted to DLCManager PC Path: " + c("dlcm_PC");
                     DialogResult result1 = MessageBox.Show(txt, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    txt_FTPPath.Text = Directory.Exists(c("general_rs2014path")) && c("general_rs2014path").IndexOf(":\\") >= 0 ? c("general_rs2014path") : c("dlcm_PC");/// c("dlcm_RocksmithDLCPath");               
+                    txt_FTPPath.Text = DirectoryExists(c("general_rs2014path")) && c("general_rs2014path").IndexOf(":\\") >= 0 ? c("general_rs2014path") : c("dlcm_PC");/// c("dlcm_RocksmithDLCPath");               
                 }
                 else
                 if (chbx_Format.Text == "Mac" || chbx_Format.Text == "ImportFolder")
                 {
                     var txt = "";
                     if (chbx_Format.Text == "ImportFolder") txt += "ImportFolder not existing ergo defaulted to Mac!";
-                    if (!(Directory.Exists(c("general_rs2014path")) && c("general_rs2014path").IndexOf(":\\") >= 0)) txt += "Defaulted to DLCManager PC Path: " + c("dlcm_Mac");
+                    if (!(DirectoryExists(c("general_rs2014path")) && c("general_rs2014path").IndexOf(":\\") >= 0)) txt += "Defaulted to DLCManager PC Path: " + c("dlcm_Mac");
                     DialogResult result1 = MessageBox.Show(txt, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    txt_FTPPath.Text = Directory.Exists(c("general_rs2014path")) ? c("general_rs2014path") : c("dlcm_Mac");/// c("dlcm_RocksmithDLCPath");        
+                    txt_FTPPath.Text = DirectoryExists(c("general_rs2014path")) ? c("general_rs2014path") : c("dlcm_Mac");/// c("dlcm_RocksmithDLCPath");        
                 }
                 else
                 {
@@ -4904,7 +4904,7 @@ namespace RocksmithToolkitGUI.DLCManager
             for (var j = 1; j < 100; j++)
             {
                 var dest = AppWD.Substring(0, AppWD.Replace("\\DLCManager\\external_tools", "").LastIndexOf("\\")) + "\\RK" + j;
-                if (!(Directory.Exists(dest))) return;
+                if (!(DirectoryExists(dest))) return;
                 CopyFolder(AppWD + "\\..\\..", dest); var xx = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, dest + "\\RocksmithToolkitGUI.exe");
                 try
                 {
@@ -4923,7 +4923,7 @@ namespace RocksmithToolkitGUI.DLCManager
             if (t == "") return;
             if (File.Exists(t)) DeleteFile(t);
             else
-            if (Directory.Exists(t))
+            if (DirectoryExists(t))
             {
                 DeleteDirectory(t);
             }
@@ -5682,7 +5682,7 @@ namespace RocksmithToolkitGUI.DLCManager
             for (var j = 1; j < 100; j++)
             {
                 var dest = AppWD.Substring(0, AppWD.Replace("\\DLCManager\\external_tools", "").LastIndexOf("\\")) + "\\RK" + j;
-                if (Directory.Exists(dest)) DeleteDirectory(dest);
+                if (DirectoryExists(dest)) DeleteDirectory(dest);
             }
         }
         private void cMS_RightClick_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -6339,7 +6339,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private void btn_OpenRepackedFolder_Click(object sender, EventArgs e)
         {
             var i = databox.SelectedCells[0].RowIndex;
-            string filePath = Directory.Exists(c("dlcm_TempPath") + "\\0_repacked") ? c("dlcm_TempPath") + "\\0_repacked" : c("dlcm_0_repacked") + "\\" + chbx_Format.Text.ToUpper().Replace("_US", "").Replace("_EU", "").Replace("_JP", "");
+            string filePath = DirectoryExists(c("dlcm_TempPath") + "\\0_repacked") ? c("dlcm_TempPath") + "\\0_repacked" : c("dlcm_0_repacked") + "\\" + chbx_Format.Text.ToUpper().Replace("_US", "").Replace("_EU", "").Replace("_JP", "");
             try
             {
                 Process process = Process.Start(filePath);
@@ -6509,9 +6509,9 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btn_OpenMainDBLog_Click(object sender, EventArgs e)
         {
-            var logPatht = (logPath == null || !Directory.Exists(logPath) ? tmpPath + "\\0_log\\" : logPath);
+            var logPatht = (logPath == null || !DirectoryExists(logPath) ? tmpPath + "\\0_log\\" : logPath);
             logPatht = logPatht + c("dlcm_Split4Pack") + "current_maindbtemp.txt";
-            if (Directory.Exists(logPatht))
+            if (DirectoryExists(logPatht))
             {
                 try
                 {
@@ -6528,7 +6528,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btn_OpenLogsFolder_Click(object sender, EventArgs e)
         {
-            var fnl = (logPath == null || !Directory.Exists(logPath) ? c("dlcm_TempPath") + "\\0_log" : logPath) + "\\" + c("dlcm_Split4Pack") + "current_maindbtemp.txt";
+            var fnl = (logPath == null || !DirectoryExists(logPath) ? c("dlcm_TempPath") + "\\0_log" : logPath) + "\\" + c("dlcm_Split4Pack") + "current_maindbtemp.txt";
         }
 
         private void ContextMenuStrip_RightClick_Opening(object sender, CancelEventArgs e)

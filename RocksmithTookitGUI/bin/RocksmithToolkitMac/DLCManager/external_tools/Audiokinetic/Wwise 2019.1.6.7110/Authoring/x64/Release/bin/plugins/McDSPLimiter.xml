@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (C) 2008 McDSP -->
+<PluginModule>
+  <EffectPlugin Name="McDSP ML1" CompanyID="256" PluginID="103" EngineDllName="McDSP">
+    <PluginInfo MenuPath="30-McDSP">
+			<PlatformSupport>
+				<Platform Name="Any">
+					<CanBeInsertOnBusses>true</CanBeInsertOnBusses>
+					<CanBeInsertOnAudioObjects>true</CanBeInsertOnAudioObjects>
+					<CanBeRendered>true</CanBeRendered>
+				</Platform>
+      </PlatformSupport>
+		</PluginInfo>
+		<Properties>
+			<Property Name="Ceiling" Type="Real32" SupportRTPCType="Exclusive">
+				<UserInterface DisplayName="Ceiling" Step="1" Fine="0.1" Decimals="1" />
+				<DefaultValue>0.0</DefaultValue>
+				<AudioEnginePropertyID>0</AudioEnginePropertyID>
+				<Restrictions>
+					<ValueRestriction>
+						<Range Type="Real32">
+							<Min>-36.0</Min>
+							<Max>0.0</Max>
+						</Range>
+					</ValueRestriction>
+				</Restrictions>
+			</Property>
+			<Property Name="Threshold" Type="Real32" SupportRTPCType="Exclusive">
+				<UserInterface DisplayName="Threshold" Step="1" Fine="0.1" Decimals="1" />
+				<DefaultValue>0.0</DefaultValue>
+				<AudioEnginePropertyID>1</AudioEnginePropertyID>
+				<Restrictions>
+					<ValueRestriction>
+						<Range Type="Real32">
+							<Min>-36.0</Min>
+							<Max>0.0</Max>
+						</Range>
+					</ValueRestriction>
+				</Restrictions>
+			</Property>
+			<Property Name="Knee" Type="Real32" SupportRTPCType="Exclusive">
+				<UserInterface DisplayName="Knee" Step="1" Fine="0.1" Decimals="1" />
+				<DefaultValue>0.0</DefaultValue>
+				<AudioEnginePropertyID>2</AudioEnginePropertyID>
+				<Restrictions>
+					<ValueRestriction>
+						<Range Type="Real32">
+							<Min>0.0</Min>
+							<Max>100.0</Max>
+						</Range>
+					</ValueRestriction>
+				</Restrictions>
+			</Property>
+			<Property Name="Release" Type="Real32" SupportRTPCType="Exclusive">
+				<UserInterface DisplayName="Release" Step="1" Fine="0.1" Decimals="1" />
+				<DefaultValue>10.0</DefaultValue>
+				<AudioEnginePropertyID>3</AudioEnginePropertyID>
+				<Restrictions>
+					<ValueRestriction>
+						<Range Type="Real32">
+							<Min>1.0</Min>
+							<Max>5000.0</Max>
+						</Range>
+					</ValueRestriction>
+				</Restrictions>
+			</Property>
+			<Property Name="Mode" Type="int32" SupportRTPCType="Exclusive" ForceRTPCCurveSegmentShape="Constant">
+				<UserInterface DisplayName="Mode" />
+				<DefaultValue>0</DefaultValue>
+				<AudioEnginePropertyID>4</AudioEnginePropertyID>
+				<Restrictions>
+					<ValueRestriction>
+						<Enumeration Type="int32">
+							<Value DisplayName="Clean">0</Value>
+							<Value DisplayName="Soft">1</Value>
+							<Value DisplayName="Smart">2</Value>
+							<Value DisplayName="Dynamic">3</Value>
+							<Value DisplayName="Loud">4</Value>
+							<Value DisplayName="Crush">5</Value>
+						</Enumeration>
+					</ValueRestriction>
+				</Restrictions>
+			</Property>
+		</Properties>
+	</EffectPlugin>
+</PluginModule>

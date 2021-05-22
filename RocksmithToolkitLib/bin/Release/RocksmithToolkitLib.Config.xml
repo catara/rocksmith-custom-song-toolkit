@@ -69,8 +69,8 @@
   <Config Key="dlcm_FTPEU" Value="ftp://192.168.1.14/dev_hdd0/game/BLES01862/USRDIR/DLC/" Descr="" />;
   <Config Key="dlcm_FTPUS" Value="ftp://192.168.1.14/dev_hdd0/game/BLUS31182/USRDIR/DLC/" Descr="" />;
   <Config Key="dlcm_FTPJP" Value="ftp://192.168.1.14/dev_hdd0/game/BLJM61049/USRDIR/DLC/" Descr="" />;
-  <Config Key="dlcm_Mac" Value="Z:\DiskDrive\SteamLibrary\steamapps\common\Rocksmith2014\dlc" Descr="" />;
-  <Config Key="dlcm_PC" Value="Z:\DiskDrive\SteamLibrary\steamapps\common\Rocksmith2014\dlc" Descr="" />;
+  <Config Key="dlcm_Mac" Value="Z:\Volumes\DiskDrive\SteamLibrary\steamapps\common\Rocksmith2014\dlc" Descr="" />;
+  <Config Key="dlcm_PC" Value="Z:\Volumes\DiskDrive\SteamLibrary\steamapps\common\Rocksmith2014\dlc" Descr="" />;
   <Config Key="dlcm_XBOX" Value="" Descr="" />;
   <Config Key="dlcm_PS4" Value="" Descr="" />;
   <Config Key="dlcm_IOS" Value="" Descr="" />;
@@ -166,11 +166,15 @@
 <!-- ACE.OLEDB.12.0 Access 2007, ACE.OLEDB.14.0 Access 2010, ACE.OLEDB.15.0 Access 2013, ACE.OLEDB.16.0 Access 2016 -->
   <Config Key="dlcm_AccessDLLVersion" Value="ACE.OLEDB.16.0" Descr="" />;
   <Config Key="dlcm_AccessACE.OLEDB.16.0" Value="https://www.microsoft.com/en-us/download/details.aspx?id=54920" Descr="" />;
+  <Config Key="dlcm_AccessACE.OLEDB.12.0" Value="https://www.microsoft.com/en-us/download/details.aspx?id=13255" Descr="" />;
+  <Config Key="dlcm_AccessACE.OLEDB.16.0Local64b" Value="DLCManager\external_tools\accessdatabaseengine_X64\aceredist.msi" Descr="" />;
+  <Config Key="dlcm_AccessACE.OLEDB.16.0Local32b" Value="DLCManager\external_tools\accessdatabaseengine\aceredist.msi" Descr="" />;
   <Config Key="dlcm_timestamp" Value="26.04.2021" Descr="not used atm" />;
   <Config Key="dlcm_StartInDLCM" Value="Yes" Descr="" />;
   <Config Key="dlcm_DBVersion" Value="1.01" Descr="" />;
   <Config Key="dlcm_ThreadNo" Value="" Descr="not used at split4pack is undes insted" />;
-  <Config Key="dlcm_ShowConenctivityOnce" Value="No" Descr="Only show no Provider conenctivity plugin installed ONLY once." />;
+  <Config Key="dlcm_ShowConenctivityOnce" Value="Yes" Descr="Only show no Provider conenctivity plugin installed ONLY once." />;
+  <Config Key="dlcm_MoreWEMBNK" Value="No" Descr="When loading D£LC packs load more WEMs and BNKs wo thbrowing an error" />;
 
   <Config Key="dlcm_AdditionalManipul0" Value="No" Descr="" />
   <Config Key="dlcm_AdditionalManipul1" Value="No" Descr="" />

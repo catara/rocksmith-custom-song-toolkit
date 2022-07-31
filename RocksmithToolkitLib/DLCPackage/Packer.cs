@@ -23,7 +23,6 @@ using RocksmithToolkitLib.DLCPackage.Manifest;
 using RocksmithToolkitLib.XmlRepository;
 using System.Drawing;
 
-
 namespace RocksmithToolkitLib.DLCPackage
 {
     public static class Packer
@@ -49,6 +48,9 @@ namespace RocksmithToolkitLib.DLCPackage
         /// <returns>Archive Path</returns>
         public static string Pack(string srcPath, string destPath, Platform overridePlatform = null, bool updateSng = false, bool updateManifest = false)
         {
+            //bcapi
+
+
             var archivePath = String.Empty;
             ExternalApps.VerifyExternalApps();
             //CleanupArtifacts(srcPath);
@@ -375,30 +377,76 @@ namespace RocksmithToolkitLib.DLCPackage
 
         #region PC/MAC 2014
         // NOTE: See COMMON FUNCTIONS below for PC/MAC UNPACK, aka ExtractPSARC method
+        public static DateTime UpdateLog(DateTime dt, string txt, bool bbl, string tmpPath, string MultithreadNo, string form, ProgressBar pB_ReadDLCs, RichTextBox rtxt_StatisticsOnReadDLCs)
+        {
+            DateTime dtt = System.DateTime.Now;
+            string logPath = ConfigRepository.Instance()["dlcm_LogPath"] == "" ? "C:\t\0" + "\\0_log" : ConfigRepository.Instance()["dlcm_LogPath"];
+            var ismaindb = "";
+            if (pB_ReadDLCs != null)
+            {
+                pB_ReadDLCs.CreateGraphics().Clear(System.Drawing.Color.HotPink);
+                pB_ReadDLCs.CreateGraphics().DrawString(txt, new Font("Arial", 7, FontStyle.Bold), Brushes.Blue, new PointF(1, pB_ReadDLCs.Height / 4));
+            }
 
+            var ii = Math.Abs(Math.Round((dt - dtt).TotalSeconds, 2)).ToString().PadLeft(4, '0');
+            if (form != null && form != "" && rtxt_StatisticsOnReadDLCs != null)
+                rtxt_StatisticsOnReadDLCs.Text = dtt + " - " + ii + " - " + txt + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+
+            if (form == "MainDB") ismaindb = "maindb";
+
+            // Write the string to a file. packid+
+            Random randomp = new Random();
+            var packid = 0;
+            packid = randomp.Next(0, 100000);
+            var fn = (logPath == null || !Directory.Exists(logPath) ? tmpPath + "\\0_log" : logPath) + "\\" + MultithreadNo + "current_" + ismaindb + "pack" + ".txt";/*MultithreadNo +*/
+            try
+            {
+                if (File.Exists(fn))
+                {
+                    using (StreamWriter sw = File.AppendText(fn))
+                    {
+                        sw.WriteLine(dtt.ToString() + " - " + ii.ToString() + " - " + txt.ToString());// This text is always added, making the file longer over time if it is not deleted.
+                    }
+                }
+            }
+            catch (Exception ex) { var tsst = "Error ..." + ex; UpdateLog(DateTime.Now, tsst, false, "C:\t\0", "", "", null, null); }
+            //if (c("dlcm_Debug").ToLower() == "yes" && txt.ToLower().IndexOf("error") >= 0)
+            //{
+            //    ErrorWindow frm1 = new ErrorWindow(txt, "", "Error capture throughout the running odf the DLC Manager. If you wanna DEBUG do a Debug All" +
+            //        " now to continue to the block where error was coming from.", false, false, true, "", "", "");
+            //    frm1.ShowDialog();
+            //}
+            return dtt;
+        }
         // Pack PC/MAC song artifacts located in the source path and save to the destination path file
         private static string Pack2014(string srcDirPath, string destPath, Platform platform, bool updateSng, bool updateManifest)
         {
             using (var psarc = new PSARC.PSARC())
             using (var psarcStream = new MemoryStreamExtension())
             {
+                //UpdateLog(DateTime.Now,"Sng "+ srcDirPath, true, "C:\\t\\0", "", "DLCManager", null, null);
                 if (updateSng)
                     UpdateSng2014(srcDirPath, platform);
 
+                //UpdateLog(DateTime.Now, "Mani " + srcDirPath, true, "C:\\t\\0", "", "DLCManager", null, null);
                 if (updateManifest)
                     UpdateManifest2014(srcDirPath, platform);
 
+                //UpdateLog(DateTime.Now, "psaarc add entry " + srcDirPath, true, "C:\\t\\0", "", "DLCManager", null, null);
                 WalkThroughDirectory("", srcDirPath, (a, b) =>
                 {
+                    UpdateLog(DateTime.Now, "file " + a, true, "C:\\t\\0", "", "DLCManager", null, null);
                     var fileStream = File.OpenRead(b);
                     psarc.AddEntry(a, fileStream);
                 });
 
+                //UpdateLog(DateTime.Now, "write " + srcDirPath, true, "C:\\t\\0", "", "DLCManager", null, null);
                 psarc.Write(psarcStream, !platform.IsConsole);
 
                 if (Path.GetExtension(destPath) != ".psarc")
                     destPath += ".psarc";
 
+                UpdateLog(DateTime.Now, "writepsarc " + destPath, true, "C:\\t\\0", "", "DLCManager", null, null);
                 using (var outputFileStream = File.Create(destPath))
                     psarcStream.CopyTo(outputFileStream);
             }
@@ -644,7 +692,7 @@ namespace RocksmithToolkitLib.DLCPackage
 
             var psarcDatPaths = Directory.EnumerateFiles(PS3_EDAT, "*.psarc.dat").ToList();
             if (!psarcDatPaths.Any())
-                throw new FileLoadException("<ERROR> UnpackPS3Package Failed.  Could not find psarc.dat archive. " + Environment.NewLine + "Verify the OS Environmental Variable 'PATH' is configured properly for Java ..." + Environment.NewLine + Environment.NewLine);
+                throw new FileLoadException("<ERROR> UnpackPS3Package Failed.  Could not find "+ outputFilename + " psarc.dat archive. " + Environment.NewLine + "Verify the OS Environmental Variable 'PATH' is configured properly for Java ..." + Environment.NewLine + Environment.NewLine);
             if (psarcDatPaths.Count > 1)
                 throw new FileLoadException("<ERROR> UnpackPS3Package Failed.  Found more than one psarc.dat archive. " + Environment.NewLine + Environment.NewLine);
 
@@ -810,6 +858,8 @@ namespace RocksmithToolkitLib.DLCPackage
         /// <returns></returns>
         public static Platform GetPlatform(this string srcPath)
         {
+            try
+            {            
             // use the source file path to determine platform
             if (File.Exists(srcPath))
             {
@@ -897,6 +947,11 @@ namespace RocksmithToolkitLib.DLCPackage
                         return new Platform(GamePlatform.Pc, GameVersion.RS2014);
                     }
 
+                    if (srcPath.ToLower().EndsWith("_ps4")) //bcapi temporarely treat as PC
+                    {
+                        return new Platform(GamePlatform.Pc, GameVersion.RS2014);
+                    }
+
                     if (srcPath.ToLower().EndsWith("_m") || srcPath.ToLower().EndsWith("_mac"))
                     {
                         return new Platform(GamePlatform.Mac, GameVersion.RS2014);
@@ -928,7 +983,11 @@ namespace RocksmithToolkitLib.DLCPackage
                     return TryGetPlatformByEndName(srcPath);
                 }
             }
-
+            }
+            catch (Exception ee)
+            {
+                Console.WriteLine(ee.Message);
+            }
             return new Platform(GamePlatform.None, GameVersion.None);
         }
 
@@ -943,6 +1002,8 @@ namespace RocksmithToolkitLib.DLCPackage
             var v = GameVersion.RS2014;
             var name = Path.GetFileName(srcPath);
             var pIndex = name.LastIndexOf("_", StringComparison.Ordinal);
+
+           //if (srcPath.ToUpper().Contains("BLES01862") || srcPath.ToUpper().Contains("BLUS31182") || srcPath.ToUpper().Contains("BLJM61049")) return new Platform(GamePlatform.PS3, v);
 
             if (Directory.Exists(srcPath))
             {// Pc, Mac, XBox360, PS3
@@ -967,7 +1028,13 @@ namespace RocksmithToolkitLib.DLCPackage
                         return new Platform(GamePlatform.PS3, v);
                     case "_xbox":
                         return new Platform(GamePlatform.XBox360, v);
+                                           
                     default:
+                        if (srcPath.ToUpper().IndexOf("CUSA00745")>=0 || srcPath.ToUpper().IndexOf("CUSA00692")>=0) //bcapi temporarely treat as PC
+                        {
+                            return new Platform(GamePlatform.Pc, v);
+                        }
+                        else
                         return new Platform(GamePlatform.Pc, v);
                 }
             }

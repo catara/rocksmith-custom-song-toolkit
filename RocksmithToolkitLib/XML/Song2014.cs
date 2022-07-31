@@ -16,6 +16,8 @@ using RocksmithToolkitLib.Extensions;
 using RocksmithToolkitLib.Sng;
 using CON = RocksmithToolkitLib.Sng.Constants;
 using System.Text.RegularExpressions;
+using RocksmithToolkitLib.XmlRepository;
+using X360.Other;
 
 namespace RocksmithToolkitLib.XML
 {
@@ -284,19 +286,28 @@ namespace RocksmithToolkitLib.XML
             }
 
             //Only in SNG
-            Ebeats = SongEbeat.Parse(sngData.BPMs);
-            StartBeat = sngData.BPMs.BPMs[0].Time;
-            Events = SongEvent.Parse(sngData.Events);
-            Levels = SongLevel2014.Parse(sngData);
 
-            //Not used in RS2014 customs at this time. Need to check official files
-            NewLinkedDiff = SongNewLinkedDiff.Parse(sngData.NLD);
-            PhraseProperties = SongPhraseProperty.Parse(sngData.PhraseExtraInfo);
-            LinkedDiffs = new SongLinkedDiff[0];
-            FretHandMuteTemplates = new SongFretHandMuteTemplate[0];
+            try //bcapi
+            {
+                Ebeats = SongEbeat.Parse(sngData.BPMs);
+                if (!(sngData.BPMs.BPMs is null)) StartBeat = sngData.BPMs.BPMs[0].Time;
+                Events = SongEvent.Parse(sngData.Events);
+                Levels = SongLevel2014.Parse(sngData);
 
-            //ddc
-            TranscriptionTrack = TranscriptionTrack2014.GetDefault();
+                //Not used in RS2014 customs at this time. Need to check official files
+                NewLinkedDiff = SongNewLinkedDiff.Parse(sngData.NLD);
+                PhraseProperties = SongPhraseProperty.Parse(sngData.PhraseExtraInfo);
+                LinkedDiffs = new SongLinkedDiff[0];
+                FretHandMuteTemplates = new SongFretHandMuteTemplate[0];
+
+                //ddc
+                TranscriptionTrack = TranscriptionTrack2014.GetDefault();
+            }
+            catch (Exception ex)
+            {
+                //Console.WriteLine("This XML Arrangement has no comments: " + ex.Message);
+                //return null;
+            }
         }
 
         /// <summary>
@@ -456,10 +467,20 @@ namespace RocksmithToolkitLib.XML
 
         public static Song2014 LoadFromFile(string xmlSongRS2014File)
         {
-            using (var reader = new StreamReader(xmlSongRS2014File))
+            var t = new Song2014(); //XmlStreamingDeserializer<Song2014>().Deserialize();;
+            try
             {
-                return new XmlStreamingDeserializer<Song2014>(reader).Deserialize();
+
+                using (var reader = new StreamReader(xmlSongRS2014File))
+                {
+                    t= new XmlStreamingDeserializer<Song2014>(reader).Deserialize();
+                }
             }
+            catch (Exception ex)
+            {
+                return null;
+            }
+            return t;
         }
 
         public void Serialize(Stream stream, bool omitXmlDeclaration = false)
@@ -1106,7 +1127,7 @@ namespace RocksmithToolkitLib.XML
                 // TECHNIQUES
                 note.PickDirection = notesSection.Notes[i].PickDirection;
                 note.parseNoteMask(notesSection.Notes[i].NoteMask); //NOTE MASK need to be setup previous get property values
-                // Techniques with own properties
+                                                                    // Techniques with own properties
                 if (notesSection.Notes[i].LeftHand != 255) note.LeftHand = (sbyte)notesSection.Notes[i].LeftHand;
                 if (notesSection.Notes[i].SlideTo != 255) note.SlideTo = (sbyte)notesSection.Notes[i].SlideTo;
                 if (notesSection.Notes[i].SlideUnpitchTo != 255) note.SlideUnpitchTo = (sbyte)notesSection.Notes[i].SlideUnpitchTo;

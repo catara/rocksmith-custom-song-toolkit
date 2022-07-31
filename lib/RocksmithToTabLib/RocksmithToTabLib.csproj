@@ -61,7 +61,7 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
@@ -85,7 +85,7 @@
     </Reference>
     <Reference Include="RocksmithToolkitLib, Version=2.9.2.1, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\RocksmithToolkitLib\bin\Release\RocksmithToolkitLib.dll</HintPath>
+      <HintPath>..\..\RocksmithTookitGUI\bin\Release\net6.0\RocksmithToolkitLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

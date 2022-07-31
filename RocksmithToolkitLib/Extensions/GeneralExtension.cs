@@ -260,8 +260,8 @@ namespace RocksmithToolkitLib.Extensions
                 if (runInBackground)
                 {
                     startInfo.CreateNoWindow = true;
-                    startInfo.UseShellExecute = false;
-                    startInfo.RedirectStandardOutput = true;
+                    startInfo.UseShellExecute = true;//bcapi only way to work in arm64
+                    startInfo.RedirectStandardOutput = true;//bcapi only way to work in arm64
                 }
 
                 if (!String.IsNullOrEmpty(arguments))
@@ -289,8 +289,8 @@ namespace RocksmithToolkitLib.Extensions
                         FileName = Path.Combine(rootPath, exeFileName),
                         WorkingDirectory = rootPath,
                         CreateNoWindow = true,
-                        RedirectStandardOutput = true,
-                        UseShellExecute = false
+                        //RedirectStandardOutput = true, //bcapi only way to work in arm64
+                        UseShellExecute = true //bcapi only way to work in arm64
                     };
 
                     if (!String.IsNullOrEmpty(arguments))

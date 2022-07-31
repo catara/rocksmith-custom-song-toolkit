@@ -217,7 +217,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private CueTextBox txt_Artist_Correction;
         private CueTextBox txt_Artist;
         private CueTextBox txt_Album_Correction;
-        private GenericFunctions.MainDBfields filed;
+        private UtilitiesFunctions.MainDBfields filed;
         private DLCPackageData datas;
         private string author;
         private string tkversion;

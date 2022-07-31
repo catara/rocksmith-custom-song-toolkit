@@ -1,80 +1,70 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28606.126
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.31911.260
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RocksmithToolkitGUI", "RocksmithTookitGUI\RocksmithToolkitGUI.csproj", "{1A3DEAD6-14F3-43C3-B15C-A866D48FEF61}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RocksmithToolkitGUI", "RocksmithTookitGUI\RocksmithToolkitGUI.csproj", "{1A3DEAD6-14F3-43C3-B15C-A866D48FEF61}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RocksmithToolkitLib", "RocksmithToolkitLib\RocksmithToolkitLib.csproj", "{2231C13A-14F6-478A-96D7-D1D3E1094CD6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RocksmithToolkitLib", "RocksmithToolkitLib\RocksmithToolkitLib.csproj", "{2231C13A-14F6-478A-96D7-D1D3E1094CD6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RocksmithToolkitCLI", "RocksmithToolkitCLI", "{7CFB8499-8B82-40B3-89EA-7971F5FD1E0C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xml2sng", "RocksmithToolkitCLI\xml2sng\xml2sng.csproj", "{48703F6C-9F98-4534-AB1D-67856A84D806}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "xml2sng", "RocksmithToolkitCLI\xml2sng\xml2sng.csproj", "{48703F6C-9F98-4534-AB1D-67856A84D806}"
 	ProjectSection(ProjectDependencies) = postProject
 		{1A3DEAD6-14F3-43C3-B15C-A866D48FEF61} = {1A3DEAD6-14F3-43C3-B15C-A866D48FEF61}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pcdecrypt", "RocksmithToolkitCLI\pcdecrypt\pcdecrypt.csproj", "{9190164B-E755-4C8D-812E-70BE8FA286DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "pcdecrypt", "RocksmithToolkitCLI\pcdecrypt\pcdecrypt.csproj", "{9190164B-E755-4C8D-812E-70BE8FA286DD}"
 	ProjectSection(ProjectDependencies) = postProject
 		{1A3DEAD6-14F3-43C3-B15C-A866D48FEF61} = {1A3DEAD6-14F3-43C3-B15C-A866D48FEF61}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pedalgen", "RocksmithToolkitCLI\pedalgen\pedalgen.csproj", "{54637C43-E331-443B-B30F-C181A5CA60A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "pedalgen", "RocksmithToolkitCLI\pedalgen\pedalgen.csproj", "{54637C43-E331-443B-B30F-C181A5CA60A4}"
 	ProjectSection(ProjectDependencies) = postProject
 		{1A3DEAD6-14F3-43C3-B15C-A866D48FEF61} = {1A3DEAD6-14F3-43C3-B15C-A866D48FEF61}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sngtotab", "RocksmithToolkitCLI\sngtotab\sngtotab.csproj", "{3AB6A6D5-B5AE-4319-9B57-2758D13EB042}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sngtotab", "RocksmithToolkitCLI\sngtotab\sngtotab.csproj", "{3AB6A6D5-B5AE-4319-9B57-2758D13EB042}"
 	ProjectSection(ProjectDependencies) = postProject
 		{1A3DEAD6-14F3-43C3-B15C-A866D48FEF61} = {1A3DEAD6-14F3-43C3-B15C-A866D48FEF61}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "devtools", "RocksmithToolkitCLI\devtools\devtools.csproj", "{63FB3334-1E7E-42D7-A025-744BC387AAD6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "devtools", "RocksmithToolkitCLI\devtools\devtools.csproj", "{63FB3334-1E7E-42D7-A025-744BC387AAD6}"
 	ProjectSection(ProjectDependencies) = postProject
 		{1A3DEAD6-14F3-43C3-B15C-A866D48FEF61} = {1A3DEAD6-14F3-43C3-B15C-A866D48FEF61}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sng2014", "RocksmithToolkitCLI\sng2014\sng2014.csproj", "{8FDBC548-DEBF-46D6-A933-33C8D72F33AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sng2014", "RocksmithToolkitCLI\sng2014\sng2014.csproj", "{8FDBC548-DEBF-46D6-A933-33C8D72F33AB}"
 	ProjectSection(ProjectDependencies) = postProject
 		{1A3DEAD6-14F3-43C3-B15C-A866D48FEF61} = {1A3DEAD6-14F3-43C3-B15C-A866D48FEF61}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "packagecreator", "RocksmithToolkitCLI\PackageCreator\packagecreator.csproj", "{ED268869-387A-477E-A652-C6E47BE2AC02}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "packagecreator", "RocksmithToolkitCLI\PackageCreator\packagecreator.csproj", "{ED268869-387A-477E-A652-C6E47BE2AC02}"
 	ProjectSection(ProjectDependencies) = postProject
 		{1A3DEAD6-14F3-43C3-B15C-A866D48FEF61} = {1A3DEAD6-14F3-43C3-B15C-A866D48FEF61}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "artistfolders", "RocksmithToolkitCLI\artistfolders\artistfolders.csproj", "{E742753F-9DC3-4AB7-B129-DC11EB2302CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "artistfolders", "RocksmithToolkitCLI\artistfolders\artistfolders.csproj", "{E742753F-9DC3-4AB7-B129-DC11EB2302CA}"
 	ProjectSection(ProjectDependencies) = postProject
 		{2231C13A-14F6-478A-96D7-D1D3E1094CD6} = {2231C13A-14F6-478A-96D7-D1D3E1094CD6}
 		{1A3DEAD6-14F3-43C3-B15C-A866D48FEF61} = {1A3DEAD6-14F3-43C3-B15C-A866D48FEF61}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "convert2012", "RocksmithToolkitCLI\convert2012\convert2012.csproj", "{FE4E3BDA-2942-4009-9F42-07ECEF8DE350}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "convert2012", "RocksmithToolkitCLI\convert2012\convert2012.csproj", "{FE4E3BDA-2942-4009-9F42-07ECEF8DE350}"
 	ProjectSection(ProjectDependencies) = postProject
 		{1A3DEAD6-14F3-43C3-B15C-A866D48FEF61} = {1A3DEAD6-14F3-43C3-B15C-A866D48FEF61}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RocksmithToolkitUpdater", "RocksmithToolkitUpdater\RocksmithToolkitUpdater.csproj", "{4404D0DD-017E-4CC5-8302-3C150FDF06E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RocksmithToolkitUpdater", "RocksmithToolkitUpdater\RocksmithToolkitUpdater.csproj", "{4404D0DD-017E-4CC5-8302-3C150FDF06E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cdlcconverter", "RocksmithToolkitCLI\cdlcconverter\cdlcconverter.csproj", "{3EA40B0C-B63A-4670-BFC6-C6451C15F901}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "toneliberator", "RocksmithToolkitCLI\toneliberator\toneliberator.csproj", "{C8BDE9BB-F671-482E-97AB-5472F3C7D319}"
 	ProjectSection(ProjectDependencies) = postProject
 		{1A3DEAD6-14F3-43C3-B15C-A866D48FEF61} = {1A3DEAD6-14F3-43C3-B15C-A866D48FEF61}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "toneliberator", "RocksmithToolkitCLI\toneliberator\toneliberator.csproj", "{C8BDE9BB-F671-482E-97AB-5472F3C7D319}"
-	ProjectSection(ProjectDependencies) = postProject
-		{1A3DEAD6-14F3-43C3-B15C-A866D48FEF61} = {1A3DEAD6-14F3-43C3-B15C-A866D48FEF61}
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "transferprofile", "RocksmithToolkitCLI\transferprofile\transferprofile.csproj", "{CE48B5DF-398B-47D8-96D6-198566521104}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "transferprofile", "RocksmithToolkitCLI\transferprofile\transferprofile.csproj", "{CE48B5DF-398B-47D8-96D6-198566521104}"
 	ProjectSection(ProjectDependencies) = postProject
 		{2231C13A-14F6-478A-96D7-D1D3E1094CD6} = {2231C13A-14F6-478A-96D7-D1D3E1094CD6}
 		{1A3DEAD6-14F3-43C3-B15C-A866D48FEF61} = {1A3DEAD6-14F3-43C3-B15C-A866D48FEF61}
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "packer", "RocksmithToolkitCLI\packer\packer.csproj", "{822D185A-28A3-4AE0-A811-800E968AA2E7}"
-	ProjectSection(ProjectDependencies) = postProject
-		{2231C13A-14F6-478A-96D7-D1D3E1094CD6} = {2231C13A-14F6-478A-96D7-D1D3E1094CD6}
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Third-party Apps", "Third-party Apps", "{9D9C6573-FADA-4CF1-88B1-05794AC5E74D}"
@@ -133,6 +123,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cgm", "cgm", "{DC2300A9-3B9
 		Third-party Apps\cgm\Fret_Notes_24_Cozy1.cgm = Third-party Apps\cgm\Fret_Notes_24_Cozy1.cgm
 		Third-party Apps\cgm\Fret_Notes_Cozy1.cgm = Third-party Apps\cgm\Fret_Notes_Cozy1.cgm
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cdlcconverter", "RocksmithToolkitCLI\cdlcconverter\cdlcconverter.csproj", "{D34C5E2C-767D-4475-B918-34F7336B1D41}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "packer", "RocksmithToolkitCLI\packer\packer.csproj", "{A9B8AE19-56EB-4BE9-BA9C-577FAE894D79}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -327,22 +321,6 @@ Global
 		{4404D0DD-017E-4CC5-8302-3C150FDF06E7}.RocksmithToolkitMac|Any CPU.Build.0 = Debug Build CLI|x86
 		{4404D0DD-017E-4CC5-8302-3C150FDF06E7}.RocksmithToolkitMac|x86.ActiveCfg = Release|x86
 		{4404D0DD-017E-4CC5-8302-3C150FDF06E7}.RocksmithToolkitMac|x86.Build.0 = Release|x86
-		{3EA40B0C-B63A-4670-BFC6-C6451C15F901}.Debug Build CLI|Any CPU.ActiveCfg = Release|x86
-		{3EA40B0C-B63A-4670-BFC6-C6451C15F901}.Debug Build CLI|Any CPU.Build.0 = Release|x86
-		{3EA40B0C-B63A-4670-BFC6-C6451C15F901}.Debug Build CLI|x86.ActiveCfg = Debug|x86
-		{3EA40B0C-B63A-4670-BFC6-C6451C15F901}.Debug Build CLI|x86.Build.0 = Debug|x86
-		{3EA40B0C-B63A-4670-BFC6-C6451C15F901}.Debug|Any CPU.ActiveCfg = Release|Any CPU
-		{3EA40B0C-B63A-4670-BFC6-C6451C15F901}.Debug|Any CPU.Build.0 = Release|Any CPU
-		{3EA40B0C-B63A-4670-BFC6-C6451C15F901}.Debug|x86.ActiveCfg = Debug|x86
-		{3EA40B0C-B63A-4670-BFC6-C6451C15F901}.Debug|x86.Build.0 = Debug|x86
-		{3EA40B0C-B63A-4670-BFC6-C6451C15F901}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3EA40B0C-B63A-4670-BFC6-C6451C15F901}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3EA40B0C-B63A-4670-BFC6-C6451C15F901}.Release|x86.ActiveCfg = Debug|x86
-		{3EA40B0C-B63A-4670-BFC6-C6451C15F901}.Release|x86.Build.0 = Debug|x86
-		{3EA40B0C-B63A-4670-BFC6-C6451C15F901}.RocksmithToolkitMac|Any CPU.ActiveCfg = Release|x86
-		{3EA40B0C-B63A-4670-BFC6-C6451C15F901}.RocksmithToolkitMac|Any CPU.Build.0 = Release|x86
-		{3EA40B0C-B63A-4670-BFC6-C6451C15F901}.RocksmithToolkitMac|x86.ActiveCfg = Release|x86
-		{3EA40B0C-B63A-4670-BFC6-C6451C15F901}.RocksmithToolkitMac|x86.Build.0 = Release|x86
 		{C8BDE9BB-F671-482E-97AB-5472F3C7D319}.Debug Build CLI|Any CPU.ActiveCfg = Release|x86
 		{C8BDE9BB-F671-482E-97AB-5472F3C7D319}.Debug Build CLI|Any CPU.Build.0 = Release|x86
 		{C8BDE9BB-F671-482E-97AB-5472F3C7D319}.Debug Build CLI|x86.ActiveCfg = Debug|x86
@@ -373,22 +351,38 @@ Global
 		{CE48B5DF-398B-47D8-96D6-198566521104}.RocksmithToolkitMac|Any CPU.ActiveCfg = Release|x86
 		{CE48B5DF-398B-47D8-96D6-198566521104}.RocksmithToolkitMac|Any CPU.Build.0 = Release|x86
 		{CE48B5DF-398B-47D8-96D6-198566521104}.RocksmithToolkitMac|x86.ActiveCfg = Release|x86
-		{822D185A-28A3-4AE0-A811-800E968AA2E7}.Debug Build CLI|Any CPU.ActiveCfg = Debug|Any CPU
-		{822D185A-28A3-4AE0-A811-800E968AA2E7}.Debug Build CLI|Any CPU.Build.0 = Debug|Any CPU
-		{822D185A-28A3-4AE0-A811-800E968AA2E7}.Debug Build CLI|x86.ActiveCfg = Debug|Any CPU
-		{822D185A-28A3-4AE0-A811-800E968AA2E7}.Debug Build CLI|x86.Build.0 = Debug|Any CPU
-		{822D185A-28A3-4AE0-A811-800E968AA2E7}.Debug|Any CPU.ActiveCfg = Release|x86
-		{822D185A-28A3-4AE0-A811-800E968AA2E7}.Debug|Any CPU.Build.0 = Release|x86
-		{822D185A-28A3-4AE0-A811-800E968AA2E7}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{822D185A-28A3-4AE0-A811-800E968AA2E7}.Debug|x86.Build.0 = Debug|Any CPU
-		{822D185A-28A3-4AE0-A811-800E968AA2E7}.Release|Any CPU.ActiveCfg = Release|x86
-		{822D185A-28A3-4AE0-A811-800E968AA2E7}.Release|Any CPU.Build.0 = Release|x86
-		{822D185A-28A3-4AE0-A811-800E968AA2E7}.Release|x86.ActiveCfg = Debug|Any CPU
-		{822D185A-28A3-4AE0-A811-800E968AA2E7}.Release|x86.Build.0 = Debug|Any CPU
-		{822D185A-28A3-4AE0-A811-800E968AA2E7}.RocksmithToolkitMac|Any CPU.ActiveCfg = Release|Any CPU
-		{822D185A-28A3-4AE0-A811-800E968AA2E7}.RocksmithToolkitMac|Any CPU.Build.0 = Release|Any CPU
-		{822D185A-28A3-4AE0-A811-800E968AA2E7}.RocksmithToolkitMac|x86.ActiveCfg = Release|Any CPU
-		{822D185A-28A3-4AE0-A811-800E968AA2E7}.RocksmithToolkitMac|x86.Build.0 = Release|Any CPU
+		{D34C5E2C-767D-4475-B918-34F7336B1D41}.Debug Build CLI|Any CPU.ActiveCfg = Debug|Any CPU
+		{D34C5E2C-767D-4475-B918-34F7336B1D41}.Debug Build CLI|Any CPU.Build.0 = Debug|Any CPU
+		{D34C5E2C-767D-4475-B918-34F7336B1D41}.Debug Build CLI|x86.ActiveCfg = Debug|Any CPU
+		{D34C5E2C-767D-4475-B918-34F7336B1D41}.Debug Build CLI|x86.Build.0 = Debug|Any CPU
+		{D34C5E2C-767D-4475-B918-34F7336B1D41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D34C5E2C-767D-4475-B918-34F7336B1D41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D34C5E2C-767D-4475-B918-34F7336B1D41}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D34C5E2C-767D-4475-B918-34F7336B1D41}.Debug|x86.Build.0 = Debug|Any CPU
+		{D34C5E2C-767D-4475-B918-34F7336B1D41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D34C5E2C-767D-4475-B918-34F7336B1D41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D34C5E2C-767D-4475-B918-34F7336B1D41}.Release|x86.ActiveCfg = Release|Any CPU
+		{D34C5E2C-767D-4475-B918-34F7336B1D41}.Release|x86.Build.0 = Release|Any CPU
+		{D34C5E2C-767D-4475-B918-34F7336B1D41}.RocksmithToolkitMac|Any CPU.ActiveCfg = Release|Any CPU
+		{D34C5E2C-767D-4475-B918-34F7336B1D41}.RocksmithToolkitMac|Any CPU.Build.0 = Release|Any CPU
+		{D34C5E2C-767D-4475-B918-34F7336B1D41}.RocksmithToolkitMac|x86.ActiveCfg = Release|Any CPU
+		{D34C5E2C-767D-4475-B918-34F7336B1D41}.RocksmithToolkitMac|x86.Build.0 = Release|Any CPU
+		{A9B8AE19-56EB-4BE9-BA9C-577FAE894D79}.Debug Build CLI|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9B8AE19-56EB-4BE9-BA9C-577FAE894D79}.Debug Build CLI|Any CPU.Build.0 = Debug|Any CPU
+		{A9B8AE19-56EB-4BE9-BA9C-577FAE894D79}.Debug Build CLI|x86.ActiveCfg = Debug|Any CPU
+		{A9B8AE19-56EB-4BE9-BA9C-577FAE894D79}.Debug Build CLI|x86.Build.0 = Debug|Any CPU
+		{A9B8AE19-56EB-4BE9-BA9C-577FAE894D79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9B8AE19-56EB-4BE9-BA9C-577FAE894D79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9B8AE19-56EB-4BE9-BA9C-577FAE894D79}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A9B8AE19-56EB-4BE9-BA9C-577FAE894D79}.Debug|x86.Build.0 = Debug|Any CPU
+		{A9B8AE19-56EB-4BE9-BA9C-577FAE894D79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9B8AE19-56EB-4BE9-BA9C-577FAE894D79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9B8AE19-56EB-4BE9-BA9C-577FAE894D79}.Release|x86.ActiveCfg = Release|Any CPU
+		{A9B8AE19-56EB-4BE9-BA9C-577FAE894D79}.Release|x86.Build.0 = Release|Any CPU
+		{A9B8AE19-56EB-4BE9-BA9C-577FAE894D79}.RocksmithToolkitMac|Any CPU.ActiveCfg = Release|Any CPU
+		{A9B8AE19-56EB-4BE9-BA9C-577FAE894D79}.RocksmithToolkitMac|Any CPU.Build.0 = Release|Any CPU
+		{A9B8AE19-56EB-4BE9-BA9C-577FAE894D79}.RocksmithToolkitMac|x86.ActiveCfg = Release|Any CPU
+		{A9B8AE19-56EB-4BE9-BA9C-577FAE894D79}.RocksmithToolkitMac|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -403,13 +397,13 @@ Global
 		{ED268869-387A-477E-A652-C6E47BE2AC02} = {7CFB8499-8B82-40B3-89EA-7971F5FD1E0C}
 		{E742753F-9DC3-4AB7-B129-DC11EB2302CA} = {7CFB8499-8B82-40B3-89EA-7971F5FD1E0C}
 		{FE4E3BDA-2942-4009-9F42-07ECEF8DE350} = {7CFB8499-8B82-40B3-89EA-7971F5FD1E0C}
-		{3EA40B0C-B63A-4670-BFC6-C6451C15F901} = {7CFB8499-8B82-40B3-89EA-7971F5FD1E0C}
 		{C8BDE9BB-F671-482E-97AB-5472F3C7D319} = {7CFB8499-8B82-40B3-89EA-7971F5FD1E0C}
 		{CE48B5DF-398B-47D8-96D6-198566521104} = {7CFB8499-8B82-40B3-89EA-7971F5FD1E0C}
-		{822D185A-28A3-4AE0-A811-800E968AA2E7} = {7CFB8499-8B82-40B3-89EA-7971F5FD1E0C}
 		{68A001D7-F5BF-4D2C-9FF9-4C0A62D4118F} = {9D9C6573-FADA-4CF1-88B1-05794AC5E74D}
 		{6517160C-A8F8-4DB0-AFFD-24E9A7DC1DCA} = {9D9C6573-FADA-4CF1-88B1-05794AC5E74D}
 		{DC2300A9-3B99-47D9-86A4-3326CED50C1F} = {9D9C6573-FADA-4CF1-88B1-05794AC5E74D}
+		{D34C5E2C-767D-4475-B918-34F7336B1D41} = {7CFB8499-8B82-40B3-89EA-7971F5FD1E0C}
+		{A9B8AE19-56EB-4BE9-BA9C-577FAE894D79} = {7CFB8499-8B82-40B3-89EA-7971F5FD1E0C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C2426BEE-CD03-4B23-847A-7BD951E5F1A3}

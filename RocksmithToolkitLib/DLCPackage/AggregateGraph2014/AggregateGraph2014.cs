@@ -580,19 +580,19 @@ namespace RocksmithToolkitLib.DLCPackage.AggregateGraph2014
                     File.Delete(hsan);
             }
         }
-
-        public static string DoLikeSongPack(string srcPath, string appId = "248750")
+        
+        public static string DoLikeSongPack(string srcPath, string appId = "248750", string bin="generic", string audio="windows")
         {
             // create SongPack directory structure
             var dlcName = Path.GetFileName(srcPath).ToLower();
             var songPackDir = Path.Combine(Path.GetTempPath(), "songs");//String.Format("{0}_songpack_p_Pc", dlcName));
-            var audioWindowDir = Path.Combine(songPackDir, "audio", "windows");
+            var audioWindowDir = Path.Combine(songPackDir, "audio", audio);
             var flatmodelsRsDir = Path.Combine(songPackDir, "flatmodels", "rs");
             var gamexblocksNsongsDir = Path.Combine(songPackDir, "gamexblocks", "nsongs");
             var gfxassetsAlbumArtDir = Path.Combine(songPackDir, "gfxassets", "album_art");
             var manifestSongsDir = Path.Combine(songPackDir, "manifests", String.Format("songs_dlc_{0}", dlcName));
             var songsArrDir = Path.Combine(songPackDir, "songs", "arr");
-            var binGenericDir = Path.Combine(songPackDir, "songs", "bin", "generic");
+            var binGenericDir = Path.Combine(songPackDir, "songs", "bin", bin);
 
             if (Directory.Exists(songPackDir))
                 IOExtension.DeleteDirectory(songPackDir);
@@ -609,31 +609,31 @@ namespace RocksmithToolkitLib.DLCPackage.AggregateGraph2014
             // populate SongPack temporary directory
             var audioWemFiles = Directory.EnumerateFiles(srcPath, "*.wem", SearchOption.AllDirectories).ToArray();
             foreach (var wem in audioWemFiles)
-                File.Copy(wem, Path.Combine(audioWindowDir, Path.GetFileName(wem)));
+                File.Copy(wem, Path.Combine(audioWindowDir, Path.GetFileName(wem)),true);
 
             var audioBnkFiles = Directory.EnumerateFiles(srcPath, "*.bnk", SearchOption.AllDirectories).ToArray();
             foreach (var bnk in audioBnkFiles)
-                File.Copy(bnk, Path.Combine(audioWindowDir, Path.GetFileName(bnk)));
+                File.Copy(bnk, Path.Combine(audioWindowDir, Path.GetFileName(bnk)),true);
 
             var xblockFiles = Directory.EnumerateFiles(srcPath, "*.xblock", SearchOption.AllDirectories).ToArray();
             foreach (var xblock in xblockFiles)
-                File.Copy(xblock, Path.Combine(gamexblocksNsongsDir, Path.GetFileName(xblock)));
+                File.Copy(xblock, Path.Combine(gamexblocksNsongsDir, Path.GetFileName(xblock)),true);
 
             var albumArtFiles = Directory.EnumerateFiles(srcPath, "*.dds", SearchOption.AllDirectories).ToArray();
             foreach (var albumArt in albumArtFiles)
-                File.Copy(albumArt, Path.Combine(gfxassetsAlbumArtDir, Path.GetFileName(albumArt)));
+                File.Copy(albumArt, Path.Combine(gfxassetsAlbumArtDir, Path.GetFileName(albumArt)),true);
 
             var jsonFiles = Directory.EnumerateFiles(srcPath, "*.json", SearchOption.AllDirectories).ToArray();
             foreach (var json in jsonFiles)
-                File.Copy(json, Path.Combine(manifestSongsDir, Path.GetFileName(json)));
+                File.Copy(json, Path.Combine(manifestSongsDir, Path.GetFileName(json)),true);
 
             var hsanFiles = Directory.EnumerateFiles(srcPath, "*.hsan", SearchOption.AllDirectories).ToArray();
             foreach (var hsan in hsanFiles)
-                File.Copy(hsan, Path.Combine(manifestSongsDir, Path.GetFileName(hsan)));
+                File.Copy(hsan, Path.Combine(manifestSongsDir, Path.GetFileName(hsan)),true);
 
             var sngFiles = Directory.EnumerateFiles(srcPath, "*.sng", SearchOption.AllDirectories).ToArray();
             foreach (var sng in sngFiles)
-                File.Copy(sng, Path.Combine(binGenericDir, Path.GetFileName(sng)));
+                File.Copy(sng, Path.Combine(binGenericDir, Path.GetFileName(sng)),true);
 
             // declare variables one time for use in DDC generation   
             DDCSettings.Instance.LoadConfigXml();
@@ -660,10 +660,11 @@ namespace RocksmithToolkitLib.DLCPackage.AggregateGraph2014
                     continue;
 
                 var xmlSongPack = Path.Combine(songsArrDir, Path.GetFileName(xml));
-                File.Copy(xml, xmlSongPack);
+                File.Copy(xml, xmlSongPack, true);
 
                 // skip vocal and showlight xml files
-                if (xml.EndsWith("_vocals.xml") || xml.EndsWith("_showlights.xml") || xml.EndsWith("_jvocals.xml")) //bcapi to not import japanese lyrics
+                if (xml.EndsWith("_vocals.xml") || xml.EndsWith("_showlights.xml") || xml.EndsWith("_jvocals.xml") 
+                    || xml.Contains("VOCALS_RS2") || xml.Contains("VOCALS_RS42") || xml.EndsWith("lyric.xml")) //bcapi to not import japanese lyrics
                     continue;
 
                 // add DDC to xml arrangement

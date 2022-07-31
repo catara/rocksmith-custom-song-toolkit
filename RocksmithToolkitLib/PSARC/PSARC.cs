@@ -234,59 +234,110 @@ namespace RocksmithToolkitLib.PSARC
             foreach (Entry entry in _toc)
             {
                 var zList = new List<Tuple<byte[], int>>();
-                entry.zIndexBegin = (uint)zLengths.Count;
-                entry.Data.Seek(0, SeekOrigin.Begin);
-
-                while (entry.Data.Position < entry.Data.Length)
+                try
                 {
-                    var array_i = new byte[blockSize];
-                    var array_o = new byte[blockSize * 2];
+                    entry.zIndexBegin = (uint)zLengths.Count;
+                    entry.Data.Seek(0, SeekOrigin.Begin);
 
-                    using (var memoryStream = new MemoryStream(array_o))
+                    while (entry.Data.Position < entry.Data.Length)
                     {
-                        int plain_len = entry.Data.Read(array_i, 0, array_i.Length);
-                        int packed_len = (int)RijndaelEncryptor.Zip(array_i, memoryStream, plain_len, false);
+                        var array_i = new byte[blockSize];
+                        var array_o = new byte[blockSize * 2];
 
-                        // If packed data "worse" than plain (i.e. already packed) z = 0
-                        if (packed_len >= plain_len)
+                        using (var memoryStream = new MemoryStream(array_o))
                         {
-                            zList.Add(new Tuple<byte[], int>(array_i, plain_len));
-                        }
-                        else // If packed data is good
-                        {
-                            if (packed_len < (blockSize - 1))
-                            {
-                                // If packed data fits maximum packed block size z = packed_len
-                                zList.Add(new Tuple<byte[], int>(array_o, packed_len));
-                            }
-                            else // Write plain. z = 0
+                            int plain_len = entry.Data.Read(array_i, 0, array_i.Length);
+                            int packed_len = (int)RijndaelEncryptor.Zip(array_i, memoryStream, plain_len, false);
+
+                            // If packed data "worse" than plain (i.e. already packed) z = 0
+                            if (packed_len >= plain_len)
                             {
                                 zList.Add(new Tuple<byte[], int>(array_i, plain_len));
                             }
+                            else // If packed data is good
+                            {
+                                if (packed_len < (blockSize - 1))
+                                {
+                                    // If packed data fits maximum packed block size z = packed_len
+                                    zList.Add(new Tuple<byte[], int>(array_o, packed_len));
+                                }
+                                else // Write plain. z = 0
+                                {
+                                    zList.Add(new Tuple<byte[], int>(array_i, plain_len));
+                                }
+                            }
                         }
                     }
-                }
 
-                int zSisesSum = 0;
-                foreach (var zSize in zList)
+                    int zSisesSum = 0;
+                    foreach (var zSize in zList)
+                    {
+                        zSisesSum += zSize.Item2;
+                        zLengths.Add((uint)zSize.Item2);
+                    }
+
+                    var array3 = new byte[zSisesSum];
+                    using (var memoryStream2 = new MemoryStream(array3))
+                    {
+                        foreach (var entryblock in zList)
+                            memoryStream2.Write(entryblock.Item1, 0, entryblock.Item2);
+                    }
+
+                    entryDeflatedData.Add(entry, array3);
+                    progress += step;
+                    GlobalExtension.UpdateProgress.Value = ((int)progress > 100) ? 100 : (int)progress;
+                    Console.WriteLine("Deflating Entries: " + ndx++);
+                }
+                catch (Exception ex)
                 {
-                    zSisesSum += zSize.Item2;
-                    zLengths.Add((uint)zSize.Item2);
+                    var tsst = "Error at psarc packing songs.psarc" + ex;
+                    //UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", null, null);
                 }
-
-                var array3 = new byte[zSisesSum];
-                using (var memoryStream2 = new MemoryStream(array3))
-                {
-                    foreach (var entryblock in zList)
-                        memoryStream2.Write(entryblock.Item1, 0, entryblock.Item2);
-                }
-
-                entryDeflatedData.Add(entry, array3);
-                progress += step;
-                GlobalExtension.UpdateProgress.Value = (int)progress;
-                Console.WriteLine("Deflating Entries: " + ndx++);
             }
+                Console.WriteLine("done Deflating Entries");
         }
+
+        //public static DateTime UpdateLog(DateTime dt, string txt, bool bbl, string tmpPath, string MultithreadNo, string form, ProgressBar pB_ReadDLCs, RichTextBox rtxt_StatisticsOnReadDLCs)
+        //{
+        //    DateTime dtt = System.DateTime.Now;
+        //    string logPath = ConfigRepository.Instance()["dlcm_LogPath"] == "" ? "C:\t\0" + "\\0_log" : ConfigRepository.Instance()["dlcm_LogPath"];
+        //    var ismaindb = "";
+        //    if (pB_ReadDLCs != null)
+        //    {
+        //        pB_ReadDLCs.CreateGraphics().Clear(System.Drawing.Color.HotPink);
+        //        pB_ReadDLCs.CreateGraphics().DrawString(txt, new Font("Arial", 7, FontStyle.Bold), Brushes.Blue, new PointF(1, pB_ReadDLCs.Height / 4));
+        //    }
+
+        //    var ii = Math.Abs(Math.Round((dt - dtt).TotalSeconds, 2)).ToString().PadLeft(4, '0');
+        //    if (form != null && form != "" && rtxt_StatisticsOnReadDLCs != null)
+        //        rtxt_StatisticsOnReadDLCs.Text = dtt + " - " + ii + " - " + txt + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+
+        //    if (form == "MainDB") ismaindb = "maindb";
+
+        //    // Write the string to a file. packid+
+        //    Random randomp = new Random();
+        //    var packid = 0;
+        //    packid = randomp.Next(0, 100000);
+        //    var fn = (logPath == null || !Directory.Exists(logPath) ? tmpPath + "\\0_log" : logPath) + "\\" + MultithreadNo + "current_" + ismaindb + "pack" + ".txt";/*MultithreadNo +*/
+        //    try
+        //    {
+        //        if (File.Exists(fn))
+        //        {
+        //            using (StreamWriter sw = File.AppendText(fn))
+        //            {
+        //                sw.WriteLine(dtt.ToString() + " - " + ii.ToString() + " - " + txt.ToString());// This text is always added, making the file longer over time if it is not deleted.
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex) { var tsst = "Error ..." + ex; UpdateLog(DateTime.Now, tsst, false, "C:\t\0", "", "", null, null); }
+        //    //if (c("dlcm_Debug").ToLower() == "yes" && txt.ToLower().IndexOf("error") >= 0)
+        //    //{
+        //    //    ErrorWindow frm1 = new ErrorWindow(txt, "", "Error capture throughout the running odf the DLC Manager. If you wanna DEBUG do a Debug All" +
+        //    //        " now to continue to the block where error was coming from.", false, false, true, "", "", "");
+        //    //    frm1.ShowDialog();
+        //    //}
+        //    return dtt;
+        //}
 
         /// <summary>
         /// Reads file names from the manifest.
@@ -543,15 +594,23 @@ namespace RocksmithToolkitLib.PSARC
             //Write Table of contents
             foreach (Entry entry in _toc)
             {
-                entry.UpdateNameMD5();
+                try
+                {
+                    entry.UpdateNameMD5();
                 _writer.Write(entry.MD5);
                 _writer.Write(entry.zIndexBegin);
                 _writer.WriteUInt40((ulong)entry.Data.Length);
                 _writer.WriteUInt40(entry.Offset);
 
                 progress += step;
-                GlobalExtension.UpdateProgress.Value = (int)progress;
+                GlobalExtension.UpdateProgress.Value = ((int)progress >100)? 100 : (int)progress;
                 Console.WriteLine("Writing tocData: " + entry.Id);
+                }
+                catch (Exception ex)
+                {
+                    var tsst = "Error at psarc packing songs.psarc" + ex;
+                    //UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", null, null);
+                }
             }
 
             foreach (uint zLen in zLengths)
@@ -628,7 +687,7 @@ namespace RocksmithToolkitLib.PSARC
                 //}
 
                 progress += step;
-                GlobalExtension.UpdateProgress.Value = (int)progress;
+                GlobalExtension.UpdateProgress.Value = ((int)progress > 100) ? 100 : (int)progress;
                 Console.WriteLine("Writing zData: " + entry.Id);
             }
 

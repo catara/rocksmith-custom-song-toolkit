@@ -362,7 +362,7 @@ namespace RocksmithToolkitLib.Ogg
             {
                 reader.Seek(4, SeekOrigin.Begin);
                 if (reader.ReadUInt32() != reader.BaseStream.Length - 8)
-                    throw new InvalidDataException("The input OGG file appears to be truncated.");
+                    throw new InvalidDataException("The input OGG file appears to be truncated.")                        ;
                     
 
                 if (Encoding.ASCII.GetString(reader.ReadBytes(4)) != "WAVE")

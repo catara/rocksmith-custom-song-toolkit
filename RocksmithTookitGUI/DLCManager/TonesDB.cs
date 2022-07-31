@@ -14,19 +14,24 @@ using RocksmithToolkitGUI;
 using RocksmithToolkitLib.Extensions; //dds
 using Ookii.Dialogs; //cue text
 using static RocksmithToolkitGUI.DLCManager.GenericFunctions;
+using static RocksmithToolkitGUI.DLCManager.UtilitiesFunctions;
 using RocksmithToolkitLib.XmlRepository;
 using System.Globalization;
+using System.Data.SQLite;
+using SQLite;
 
 namespace RocksmithToolkitGUI.DLCManager
 {
     public partial class TonesDB : Form
     {
-        public TonesDB(string txt_DBFolder, string CDLC_ID, OleDbConnection cnnb)
+        //public TonesDB(string txt_DBFolder, string CDLC_ID, OleDbConnection cnnb, SQLiteConnection cnnz)
+        public TonesDB(string txt_DBFolder, string CDLC_ID, OleDbConnection cnnb, SQLite.SQLiteConnection cnnc)
         {
             InitializeComponent();
             CDLCID = CDLC_ID;
             DB_Path = txt_DBFolder;
             cnb = cnnb;
+            cnc = cnnc;
         }
 
         private string Filename = System.IO.Path.Combine(Application.StartupPath, "Text.txt");
@@ -41,6 +46,8 @@ namespace RocksmithToolkitGUI.DLCManager
         public DataSet dssx = new DataSet();
         public bool SaveOK = false;
         public OleDbConnection cnb;
+        //public SQLiteConnection cnz;
+        public SQLite.SQLiteConnection cnc;
 
         private void TonesDB_Load(object sender, EventArgs e)
         {
@@ -82,16 +89,17 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void button1_Click(object sender, EventArgs e)
         {
+            StartProcesss(@DB_Path, null);
             // DB_Path = DB_Path + "\\AccessDB.accdb"; //DLCManager.txt_DBFolder.Text
-            try
-            {
-                Process process = Process.Start(@DB_Path);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                MessageBox.Show("Can not open Tones DB connection in TonesDB ! " + DB_Path);
-            }
+            //try
+            //{
+            //    Process process = Process.Start(@DB_Path);
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    MessageBox.Show("Can not open Tones DB connection in TonesDB ! " + DB_Path);
+            //}
         }
 
         private void DataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
@@ -119,7 +127,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
                 ////Read Tones
                 var nrc = 0;
-                DataSet dtc = new DataSet(); dtc = SelectFromDB("Tones_GearList", "SELECT Gear_Name FROM Tones_GearList WHERE CDLC_ID=" + txt_ID.Text + ";", "", cnb);
+                DataSet dtc = new DataSet(); dtc = SelectFromDB("Tones_GearList", "SELECT Gear_Name FROM Tones_GearList WHERE CDLC_ID=" + txt_ID.Text + ";", "", cnb, cnc);
                 nrc = dtc.Tables[0].Rows.Count; /*var TID = "";*/
                 if (nrc > 0)
                 {
@@ -160,65 +168,66 @@ namespace RocksmithToolkitGUI.DLCManager
 
                 var connection = new OleDbConnection("Provider=Microsoft." + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path); //+ ";Persist Security Info=False"
                 var command = connection.CreateCommand();
-                using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft." + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
-                {
-                    command.CommandText = "UPDATE Tones SET ";
-                    command.CommandText += "Tone_Name = @param1, ";
-                    command.CommandText += "CDLC_ID = @param2, ";
-                    command.CommandText += "Volume = @param3, ";
-                    command.CommandText += "Keyy = @param4, ";
-                    command.CommandText += "Is_Custom = @param5, ";
-                    command.CommandText += "Description = @param9, ";
-                    command.CommandText += "Favorite = @param10 ";
-                    //command.CommandText += "lastConversionDateTime = @param34 ";
+                //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft." + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
+                //{
+                command.CommandText = "UPDATE Tones SET ";
+                command.CommandText += "Tone_Name = @param1, ";
+                command.CommandText += "CDLC_ID = @param2, ";
+                command.CommandText += "Volume = @param3, ";
+                command.CommandText += "Keyy = @param4, ";
+                command.CommandText += "Is_Custom = @param5, ";
+                command.CommandText += "Description = @param9, ";
+                command.CommandText += "Favorite = @param10 ";
+                //command.CommandText += "lastConversionDateTime = @param34 ";
 
-                    command.CommandText += "WHERE ID = " + txt_ID.Text;
+                command.CommandText += "WHERE ID = " + txt_ID.Text;
 
-                    command.Parameters.AddWithValue("@param1", DataGridView1.Rows[i].Cells["Tone_Name"].Value.ToString());
-                    command.Parameters.AddWithValue("@param2", DataGridView1.Rows[i].Cells["CDLC_ID"].Value.ToString());
-                    command.Parameters.AddWithValue("@param3", DataGridView1.Rows[i].Cells["Volume"].Value.ToString());
-                    command.Parameters.AddWithValue("@param4", DataGridView1.Rows[i].Cells["Keyy"].Value.ToString());
-                    command.Parameters.AddWithValue("@param9", DataGridView1.Rows[i].Cells["Description"].Value.ToString());
-                    command.Parameters.AddWithValue("@param5", DataGridView1.Rows[i].Cells["Is_Custom"].Value.ToString());
-                    command.Parameters.AddWithValue("@param10", DataGridView1.Rows[i].Cells["Favorite"].Value.ToString());
-                    try
-                    {
-                        command.CommandType = CommandType.Text;
-                        connection.Open();
-                        command.ExecuteNonQuery();
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        MessageBox.Show("Can not open Tones DB connection in Tones Edit screen ! " + DB_Path + "-" + command.CommandText);
+                command.Parameters.AddWithValue("@param1", DataGridView1.Rows[i].Cells["Tone_Name"].Value.ToString());
+                command.Parameters.AddWithValue("@param2", DataGridView1.Rows[i].Cells["CDLC_ID"].Value.ToString());
+                command.Parameters.AddWithValue("@param3", DataGridView1.Rows[i].Cells["Volume"].Value.ToString());
+                command.Parameters.AddWithValue("@param4", DataGridView1.Rows[i].Cells["Keyy"].Value.ToString());
+                command.Parameters.AddWithValue("@param9", DataGridView1.Rows[i].Cells["Description"].Value.ToString());
+                command.Parameters.AddWithValue("@param5", DataGridView1.Rows[i].Cells["Is_Custom"].Value.ToString());
+                command.Parameters.AddWithValue("@param10", DataGridView1.Rows[i].Cells["Favorite"].Value.ToString());
+                command.CommandType = CommandType.Text;
+                UpdateDBbyExecuteNonQuery(command, cnb, cnc);
+                //try
+                //{
+                //    connection.Open();
+                //    command.ExecuteNonQuery();
+                //}
+                //catch (Exception ex)
+                //{
+                //    MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //    MessageBox.Show("Can not open Tones DB connection in Tones Edit screen ! " + DB_Path + "-" + command.CommandText);
 
-                        throw;
-                    }
-                    finally
-                    {
-                        if (connection != null) connection.Close();
-                    }
+                //    throw;
+                //}
+                //finally
+                //{
+                //    if (connection != null) connection.Close();
+                //}
 
-                    var tid = txt_ID.Text;
-                    var insertcmdd = "CDLC_ID, Gear_Name, Type, Category, KnobValuesValues, KnobValuesKeys, PedalKey, Skin, SkinIndex";
-                    var insertvalues = ""; insertvalues += tid + ", \"" + cbx_Gear_Name.Text + "\", \"" + NullHandler(cbx_Type.Text);
-                    insertvalues += "\", \"" + NullHandler(chbx_Category.Text);
-                    //string vals = ""; string keys = ""; if (tn.GearList.Amp != null) foreach (KeyValuePair<string, float> glakv in tn.GearList.Amp.KnobValues) { vals += ";" + glakv.Value; keys += ";" + glakv.Key; }
-                    insertvalues += "\", \"" + NullHandler(chbx_KnobValues.Text);
-                    insertvalues += "\", \"" + NullHandler(chbx_KnobKeys.Text);
-                    insertvalues += "\", \"" + NullHandler(chbx_PedalKey.Text);
-                    insertvalues += "\", \"" + chbx_Skin.Text;
-                    insertvalues += "\", \"" + NullHandler(chbx_SkinIndex.Text) + "\"";
-                    InsertIntoDBwValues("Tones_GearList", insertcmdd, insertvalues, cnb, 0);
-                    if (!chbx_AutoSave.Checked) MessageBox.Show("Tones Saved");
-                    dis.Dispose();
-                }
+                var tid = txt_ID.Text;
+                var insertcmdd = "CDLC_ID, Gear_Name, Type, Category, KnobValuesValues, KnobValuesKeys, PedalKey, Skin, SkinIndex";
+                var insertvalues = ""; insertvalues += tid + ", \"" + cbx_Gear_Name.Text + "\", \"" + NullHandler(cbx_Type.Text);
+                insertvalues += "\", \"" + NullHandler(chbx_Category.Text);
+                //string vals = ""; string keys = ""; if (tn.GearList.Amp != null) foreach (KeyValuePair<string, float> glakv in tn.GearList.Amp.KnobValues) { vals += ";" + glakv.Value; keys += ";" + glakv.Key; }
+                insertvalues += "\", \"" + NullHandler(chbx_KnobValues.Text);
+                insertvalues += "\", \"" + NullHandler(chbx_KnobKeys.Text);
+                insertvalues += "\", \"" + NullHandler(chbx_PedalKey.Text);
+                insertvalues += "\", \"" + chbx_Skin.Text;
+                insertvalues += "\", \"" + NullHandler(chbx_SkinIndex.Text) + "\"";
+                InsertIntoDBwValues("Tones_GearList", insertcmdd, insertvalues, cnb, 0, cnc);
+                //    if (!chbx_AutoSave.Checked) MessageBox.Show("Tones Saved");
+                //    dis.Dispose();
+                //}
             }
         }
 
         public void Populate(ref DataGridView DataGridView, ref BindingSource bs)
         {
-            dssx = SelectFromDB("Tones", "SELECT * FROM Tones WHERE CDLC_ID=" + CDLCID + ";", "", cnb);
+            dssx = SelectFromDB("Tones", "SELECT * FROM Tones WHERE CDLC_ID=" + CDLCID + ";", "", cnb, cnc);
             var noOfRec = dssx.Tables[0].Rows.Count;
             lbl_NoRec.Text = " songs.";
             lbl_NoRec.Text = noOfRec.ToString() + " records.";
@@ -262,13 +271,13 @@ namespace RocksmithToolkitGUI.DLCManager
             public string lastConverjsonDateTime { get; set; }
             public string Comments { get; set; }
         }
-        private Files[] files = new Files[10000];
+        private Files[] files = new Files[20000];
         //Generic procedure to read and parse Tones.DB (&others..soon)
         public int SQLAccess(string cmd)
         {
             var MaximumSize = 0;
 
-            DataSet dus = new DataSet(); dus = SelectFromDB("Tones", cmd, "", cnb);
+            DataSet dus = new DataSet(); dus = SelectFromDB("Tones", cmd, "", cnb, cnc);
 
             var i = 0;
             //rtxt_StatisticsOnReadDLCs.Text += "\n  54= " +dus.Tables[0].Rows.Count;
@@ -293,7 +302,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
                 ////Read Tones
                 var nrc = 0;
-                DataSet dtc = new DataSet(); dtc = SelectFromDB("Tones_GearList", "SELECT Gear_Name FROM Tones_GearList WHERE CDLC_ID=" + files[i].ID + ";", "", cnb);
+                DataSet dtc = new DataSet(); dtc = SelectFromDB("Tones_GearList", "SELECT Gear_Name FROM Tones_GearList WHERE CDLC_ID=" + files[i].ID + ";", "", cnb, cnc);
                 nrc = dtc.Tables[0].Rows.Count; /*var TID = "";*/
                 if (nrc > 0)
                 {
@@ -356,7 +365,7 @@ namespace RocksmithToolkitGUI.DLCManager
             for (int k = chbx_SkinIndex.Items.Count - 1; k >= 0; --k) chbx_SkinIndex.Items.RemoveAt(k);
 
 
-            DataSet dsc = new DataSet(); dsc = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + txt_ID.Text + " AND Gear_Name=\"" + cbx_Gear_Name.Text + "\" ORDER BY Type DESC;", "", cnb);
+            DataSet dsc = new DataSet(); dsc = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + txt_ID.Text + " AND Gear_Name=\"" + cbx_Gear_Name.Text + "\" ORDER BY Type DESC;", "", cnb, cnc);
             if (dsc.Tables.Count > 0) nrc = dsc.Tables[0].Rows.Count;
             //for (int k = 0; k < nrc; k++)
             if (nrc > 0)
@@ -372,7 +381,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 if (dsc.Tables[0].Rows[0].ItemArray[4].ToString() != "") { chbx_PedalKey.Items.Add(dsc.Tables[0].Rows[0].ItemArray[4].ToString()); chbx_PedalKey.SelectedIndex = 0; }
                 if (dsc.Tables[0].Rows[0].ItemArray[5].ToString() != "") { chbx_Skin.Items.Add(dsc.Tables[0].Rows[0].ItemArray[5].ToString()); chbx_Skin.SelectedIndex = 0; }
                 if (dsc.Tables[0].Rows[0].ItemArray[6].ToString() != "") { chbx_SkinIndex.Items.Add(float.Parse(dsc.Tables[0].Rows[0].ItemArray[6].ToString(), NumberStyles.Float, CultureInfo.CurrentCulture)); chbx_SkinIndex.SelectedIndex = 0; }
- 
+
             }
 
         }
@@ -381,7 +390,7 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             if (DataGridView1.SelectedCells.Count > 0 && txt_ID.Text != "")
             {
-                ArrangementsDB frm = new ArrangementsDB(DB_Path, txt_ID.Text, false, cnb);
+                ArrangementsDB frm = new ArrangementsDB(DB_Path, txt_ID.Text, false, cnb, cnc);
                 frm.Show();
             }
             else MessageBox.Show("Chose an Arragement.");
@@ -419,7 +428,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 insertvalues += "\", \"" + NullHandler(chbx_PedalKey.Text);
                 insertvalues += "\", \"" + chbx_Skin.Text;
                 insertvalues += "\", \"" + NullHandler(chbx_SkinIndex.Text) + "\"";
-                InsertIntoDBwValues("Tones_GearList", insertcmdd, insertvalues, cnb, 0);
+                InsertIntoDBwValues("Tones_GearList", insertcmdd, insertvalues, cnb, 0, cnc);
             }
         }
 

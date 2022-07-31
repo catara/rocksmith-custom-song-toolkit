@@ -237,6 +237,7 @@ namespace RocksmithToolkitLib.Sng2014HSL
         private void parseEbeats(Song2014 xml, Sng2014File sng)
         {
             sng.BPMs = new BpmSection();
+            if (xml.Ebeats == null) return; //bcapi bad EoF bass track
             sng.BPMs.Count = xml.Ebeats.Length;
             sng.BPMs.BPMs = new Bpm[sng.BPMs.Count];
             Int16 measure = 0;

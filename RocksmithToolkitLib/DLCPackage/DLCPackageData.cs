@@ -688,7 +688,7 @@ namespace RocksmithToolkitLib.DLCPackage
             if (!bnkFiles.Any()) // LOG, IGNORE, AND CONTINUE
             {
                 var errMsg = "<WARNING> Did not find any *.bnk files ..." + Environment.NewLine + "You can still try loading an audio file by hand.  " + Environment.NewLine + Environment.NewLine;
-                BetterDialog2.ShowDialog(errMsg, MESSAGEBOX_CAPTION, null, null, "OK", Bitmap.FromHicon(SystemIcons.Warning.Handle), "Warning ...", 150, 150);
+                if (ConfigRepository.Instance()["dlcm_MoreWEMBNK"] != "Yes") BetterDialog2.ShowDialog(errMsg, MESSAGEBOX_CAPTION, null, null, "OK", Bitmap.FromHicon(SystemIcons.Warning.Handle), "Warning ...", 150, 150);
             }
             else
             {

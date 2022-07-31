@@ -1,0 +1,34 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "artistfolders/1.0.0": {
+        "dependencies": {
+          "Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers": "0.3.261602"
+        },
+        "runtime": {
+          "artistfolders.dll": {}
+        }
+      },
+      "Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers/0.3.261602": {}
+    }
+  },
+  "libraries": {
+    "artistfolders/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers/0.3.261602": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ahVFTPpOIqy8Ezadd2y7wW4IHGHF11RHCWP4jLxzTBbopNVuPZeL0s3nR+o+dAXPYm2x3dDZp859sQeCXpWlWA==",
+      "path": "microsoft.dotnet.upgradeassistant.extensions.default.analyzers/0.3.261602",
+      "hashPath": "microsoft.dotnet.upgradeassistant.extensions.default.analyzers.0.3.261602.nupkg.sha512"
+    }
+  }
+}

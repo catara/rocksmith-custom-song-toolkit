@@ -616,7 +616,7 @@ namespace RocksmithToolkitGUI.DLCPackerUnpacker
                 Stopwatch sw = new Stopwatch();
                 sw.Restart();
 
-                var songPackDir = AggregateGraph2014.DoLikeSongPack(srcPath, NewAppId);
+                var songPackDir = AggregateGraph2014.DoLikeSongPack(srcPath, NewAppId, "generic", "windows");
                 destPath = Path.Combine(Path.GetDirectoryName(srcPath),"songs.psarc");// , String.Format("{0}_songpack_p.psarc", Path.GetFileName(srcPath)));
                 // Pc:RS2014 Only for now can't mix platform packages
                 Packer.Pack(songPackDir, destPath, overridePlatform: new Platform(GamePlatform.Pc, GameVersion.RS2014));
@@ -844,6 +844,9 @@ namespace RocksmithToolkitGUI.DLCPackerUnpacker
         public static Label CurrentOperationLabel { get; set; }
         public static ProgressBar UpdateProgress { get; set; }
 
-
+        private void chkDecodeAudio_CheckedChanged(object sender, EventArgs e)
+        {
+            
+        }
     }
 }

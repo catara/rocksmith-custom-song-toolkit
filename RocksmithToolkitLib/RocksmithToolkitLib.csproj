@@ -1,66 +1,44 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <TargetFramework>net6.0-windows</TargetFramework>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{2231C13A-14F6-478A-96D7-D1D3E1094CD6}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RocksmithToolkitLib</RootNamespace>
-    <AssemblyName>RocksmithToolkitLib</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <OutputPath>bin\Debug\</OutputPath>
     <WarningLevel>0</WarningLevel>
-    <Optimize>false</Optimize>
-    <DebugType>full</DebugType>
     <DefineConstants>TRACE;DEBUG;PREBUILD</DefineConstants>
     <NoWarn>
     </NoWarn>
     <UseVSHostingProcess>false</UseVSHostingProcess>
-    <Prefer32Bit>false</Prefer32Bit>
     <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <OutputPath>bin\Release\</OutputPath>
-    <WarningLevel>4</WarningLevel>
-    <Optimize>true</Optimize>
-    <DebugType>none</DebugType>
     <NoWarn>0169, 0162</NoWarn>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <DefineConstants>
     </DefineConstants>
-    <Prefer32Bit>false</Prefer32Bit>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup>
     <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
+    <GenerateDocumentationFile>False</GenerateDocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug Build CLI|x86'">
     <OutputPath>bin\x86\Debug Build CLI\</OutputPath>
     <DefineConstants>TRACE;DEBUG;PREBUILD</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <PlatformTarget>x64</PlatformTarget>
-    <OutputPath>bin\Debug\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug Build CLI|AnyCPU'">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <OutputPath>bin\Debug Build CLI\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
@@ -73,15 +51,6 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\lib\Newtonsoft.Json\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
     <Reference Include="X360">
       <HintPath>..\lib\X360\X360.dll</HintPath>
     </Reference>
@@ -90,205 +59,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GlobalsLib.cs" />
-    <Compile Include="Conversion\Rs1Converter.cs" />
-    <Compile Include="Conversion\Rs2014Converter.cs" />
-    <Compile Include="DLCPackage\DDCreator.cs" />
-    <Compile Include="XML\GlyphDefinitions.cs" />
-    <Compile Include="Extensions\HelpForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Extensions\HelpForm.Designer.cs">
-      <DependentUpon>HelpForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Extensions\NotifyPropChangedBase.cs" />
-    <Compile Include="Extensions\TreeViewBrowser.cs">
+    <Compile Update="Extensions\TreeViewBrowser.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Extensions\TreeViewOfd.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Extensions\TreeViewOfd.designer.cs">
-      <DependentUpon>TreeViewOfd.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Ogg\WemFile.cs" />
-    <Compile Include="PSARC\PsarcExtensions.cs" />
-    <Compile Include="PSARC\PsarcLoader.cs" />
-    <Compile Include="PSARC\PsarcPackager.cs" />
-    <Compile Include="SngToTab\Common.cs" />
-    <Compile Include="SngToTab\Sng2Tab.cs" />
-    <Compile Include="SngToTab\TabBeat.cs" />
-    <Compile Include="SngToTab\TabChord.cs" />
-    <Compile Include="SngToTab\TabEntity.cs" />
-    <Compile Include="SngToTab\TabFile.cs" />
-    <Compile Include="SngToTab\TabHeader.cs" />
-    <Compile Include="SngToTab\TabLinesEntity.cs" />
-    <Compile Include="SngToTab\TabMeasure.cs" />
-    <Compile Include="SngToTab\TabNote.cs" />
-    <Compile Include="SngToTab\TabSection.cs" />
-    <Compile Include="SngToTab\TuningInfo.cs" />
-    <Compile Include="DLCPackage\Arrangement.cs" />
-    <Compile Include="DLCPackage\DLCPackageCreator.cs" />
-    <Compile Include="DLCPackage\InlayNif.cs" />
-    <Compile Include="DLCPackage\Manifest2014\InlayAttributes2014.cs" />
-    <Compile Include="DLCPackage\Manifest\Manifest.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DLCPackage\Manifest\Tone\Manifest.cs" />
-    <Compile Include="DLCPackage\Manifest\Tone\Pedal.cs" />
-    <Compile Include="DLCPackage\Manifest\Tone\Tone.cs" />
-    <Compile Include="XmlRepository\Config.cs" />
-    <Compile Include="XML\Showlights.cs" />
-    <Compile Include="DLCPackage\XBlock\XblockX.cs" />
-    <Compile Include="Extensions\BetterDialog2.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Extensions\BetterDialog2.designer.cs">
-      <DependentUpon>BetterDialog2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Extensions\StringExtensions.cs" />
-    <Compile Include="Extensions\ExternalApps.cs" />
-    <Compile Include="Extensions\GlobalExtension.cs" />
-    <Compile Include="Extensions\JitVersionInfo.cs" />
-    <Compile Include="Extensions\MemoryStreamExtension.cs" />
-    <Compile Include="Ogg\Wwise.cs" />
-    <Compile Include="Sng\Constants.cs" />
-    <Compile Include="ToolkitVersionOnline.cs" />
-    <Compile Include="DLCPackage\DLCPackageConverter.cs" />
-    <Compile Include="DLCPackage\SongPartition.cs" />
-    <Compile Include="DLCPackage\Crc32.cs" />
-    <Compile Include="DLCPackage\Manifest2014\Tone\ToneDescriptor.cs" />
-    <Compile Include="DLCPackage\Manifest2014\Tone\Gear2014.cs" />
-    <Compile Include="DLCPackage\Manifest2014\Tone\Pedal2014.cs" />
-    <Compile Include="DLCPackage\Manifest2014\Tone\Tone2014.cs" />
-    <Compile Include="DLCPackage\Manifest\IAttributes.cs" />
-    <Compile Include="DLCPackage\Manifest\Functions\ManifestFunctions.cs" />
-    <Compile Include="DLCPackage\XBlock\IEntity.cs" />
-    <Compile Include="DLCPackage\XBlock\ISet.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DLCPackage\XBlock\MultiItemSet.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DLCPackage\XBlock\Property2014.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DLCPackage\TuningFrequency.cs" />
-    <Compile Include="Extensions\DisposableCollection.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DLCPackage\AggregateGraph2014\AggregateGraph2014.cs" />
-    <Compile Include="DLCPackage\AggregateGraph2014\GraphPart.cs" />
-    <Compile Include="DLCPackage\AggregateGraph2014\GraphItem.cs" />
-    <Compile Include="DLCPackage\AggregateGraph\AggregateGraph.cs" />
-    <Compile Include="DLCPackage\AggregateGraph\AlbumArt.cs" />
-    <Compile Include="DLCPackage\AggregateGraph\Element.cs" />
-    <Compile Include="DLCPackage\AggregateGraph\ElementFile.cs" />
-    <Compile Include="DLCPackage\AggregateGraph\SongFile.cs" />
-    <Compile Include="DLCPackage\AggregateGraph\SongXML.cs" />
-    <Compile Include="DLCPackage\AggregateGraph\SoundBank.cs" />
-    <Compile Include="DLCPackage\AggregateGraph\XBlock.cs" />
-    <Compile Include="DLCPackage\XBlock\Entity2014.cs" />
-    <Compile Include="DLCPackage\Manifest2014\Attributes2014.cs" />
-    <Compile Include="DLCPackage\Manifest2014\Header\AttributesHeader2014.cs" />
-    <Compile Include="DLCPackage\Manifest2014\Header\ManifestHeader2014.cs" />
-    <Compile Include="DLCPackage\Manifest2014\Manifest2014.cs" />
-    <Compile Include="DLCPackage\DLCPackageData.cs" />
-    <Compile Include="DLCPackage\IdGenerator.cs" />
-    <Compile Include="DLCPackage\Manifest\ManifestBuilder.cs" />
-    <Compile Include="DLCPackage\Manifest\Attributes.cs" />
-    <Compile Include="DLCPackage\Manifest\ChordTemplate.cs" />
-    <Compile Include="DLCPackage\Manifest\Phrase.cs" />
-    <Compile Include="DLCPackage\Manifest\PhraseIteration.cs" />
-    <Compile Include="DLCPackage\Manifest\Section.cs" />
-    <Compile Include="DLCPackage\Packer.cs" />
-    <Compile Include="DLCPackage\RandomGenerator.cs" />
-    <Compile Include="DLCPackage\RijndaelEncryptor.cs" />
-    <Compile Include="DLCPackage\SongInfo.cs" />
-    <Compile Include="DLCPackage\XBox360License.cs" />
-    <Compile Include="Extensions\FileStreamExtension.cs" />
-    <Compile Include="Extensions\ImageHandler.cs" />
-    <Compile Include="Extensions\IOExtension.cs" />
-    <Compile Include="Extensions\EnumerableExtension.cs" />
-    <Compile Include="Extensions\GeneralExtension.cs" />
-    <Compile Include="Platform.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="Ogg\OggFile.cs" />
-    <Compile Include="PSARC\BigEndianBinaryReader.cs" />
-    <Compile Include="PSARC\BigEndianBinaryWriter.cs" />
-    <Compile Include="PSARC\Entry.cs" />
-    <Compile Include="PSARC\PSARC.cs" />
-    <Compile Include="Sng\Sng2014FileWriter.cs" />
-    <Compile Include="Sng\Sng2014File.cs" />
-    <Compile Include="Sng\Sng2014HSL.cs" />
-    <Compile Include="ToolkitTone\ToolkitPedal.cs" />
-    <Compile Include="ToolkitTone\ToolkitKnob.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Sng\SngFile.cs" />
-    <Compile Include="Sng\SngFileWriter.cs" />
-    <Compile Include="ToolkitVersion.cs" />
-    <Compile Include="XmlRepository\ConfigRepository.cs" />
-    <Compile Include="XmlRepository\TuningDefinitionRepository.cs" />
-    <Compile Include="XmlRepository\TuningDefinition.cs" />
-    <Compile Include="XmlRepository\SongAppId.cs" />
-    <Compile Include="XmlRepository\SongAppIdRepository.cs" />
-    <Compile Include="XmlRepository\XmlRepository.cs" />
-    <Compile Include="XML\Song2014.cs" />
-    <Compile Include="XML\Vocals.cs" />
-    <Compile Include="XML\Song.cs" />
-    <Compile Include="DLCPackage\SoundBankGenerator.cs" />
-    <Compile Include="DLCPackage\ToneGenerator.cs" />
-    <Compile Include="DLCPackage\XBlock\Entity.cs" />
-    <Compile Include="DLCPackage\XBlock\GameXblock.cs" />
-    <Compile Include="DLCPackage\XBlock\Property.cs" />
-    <Compile Include="DLCPackage\XBlock\Set.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="DLCPackage\ToolkitInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\albumart.dds" />
-    <None Include="Resources\Console_soundbank.bnk" />
-    <None Include="Resources\pedals2014.json" />
-    <None Include="Resources\rsenumerable_guitar.flat" />
-    <None Include="Resources\VOCALS_RS2.sng" />
-    <None Include="Resources\PC_soundbank.bnk" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Extensions\BetterDialog2.resx">
-      <DependentUpon>BetterDialog2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Extensions\HelpForm.resx">
-      <DependentUpon>HelpForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Extensions\TreeViewBrowser.resx">
-      <DependentUpon>TreeViewBrowser.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Extensions\TreeViewOFD.resx">
-      <DependentUpon>TreeViewOfd.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\albumart2014_64.dds" />
-    <None Include="Resources\albumart2014_128.dds" />
-    <None Include="Resources\albumart2014_256.dds" />
-    <None Include="Resources\XBox360_DLC_image2014.png" />
-    <None Include="Resources\cgm_default_icon.png" />
-    <None Include="Resources\cgm_default_inlay.png" />
     <EmbeddedResource Include="Resources\down.png" />
     <EmbeddedResource Include="Resources\left.png" />
     <EmbeddedResource Include="Resources\right.png" />
     <EmbeddedResource Include="Resources\up.png" />
     <EmbeddedResource Include="Resources\TreeViewOfd.ico" />
-    <Content Include="RocksmithToolkitLib.Config.xml">
+    <Content Include="XML\RocksmithToolkitLib.Config.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -296,37 +77,32 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
-    <None Include="Resources\pedals.json" />
     <Content Include="RocksmithToolkitLib.SongAppId.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
-    <None Include="Resources\rsenumerable_root.flat" />
-    <None Include="Resources\rsenumerable_song.flat" />
-    <None Include="Resources\XBox360_DLC_image.png" />
-    <None Include="Resources\XBox360_KV.bin" />
   </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers" Version="0.3.261602">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Windows.Compatibility" Version="6.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="RocksmithToolkitLib.Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <Optimize>False</Optimize>
   </PropertyGroup>
-  <!-- BEGIN CUSTOM PREBUILD EVENT - DO NOT MODIFY -->
   <PropertyGroup>
     <PreBuildEvent Condition=" '$(OS)' == 'Unix' ">
       "$(SolutionDir)prebuild.sh" "$(ProjectDir)" "$(ProjectDir)ToolkitVersion.cs"
     </PreBuildEvent>
   </PropertyGroup>
-  <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Optimize>True</Optimize>
   </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

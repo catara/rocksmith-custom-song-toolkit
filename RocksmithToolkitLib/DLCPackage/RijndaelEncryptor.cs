@@ -346,6 +346,7 @@ namespace RocksmithToolkitLib.DLCPackage
 
                     // Get the output into a string
                     var output = version.StandardError.ReadLine();
+                    if (output.Contains("openjdk version")) return true;//bcapi for ARM architecture
                     if (!output.Contains("java version"))
                         return false;
 

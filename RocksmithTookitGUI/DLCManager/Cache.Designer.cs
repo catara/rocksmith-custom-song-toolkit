@@ -316,7 +316,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // pB_ReadDLCs
             // 
             this.pB_ReadDLCs.Location = new System.Drawing.Point(1233, 892);
-            this.pB_ReadDLCs.Maximum = 10000;
+            this.pB_ReadDLCs.Maximum = 20000;
             this.pB_ReadDLCs.Name = "pB_ReadDLCs";
             this.pB_ReadDLCs.Size = new System.Drawing.Size(411, 36);
             this.pB_ReadDLCs.Step = 1;

@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<showlights count="35">
+  <!-- CST v2.9.2.1-a60453fa DEBUG -->
+  <showlight time="10" note="34" />
+  <showlight time="12" note="57" />
+  <showlight time="14" note="26" />
+  <showlight time="16" note="50" />
+  <showlight time="18" note="27" />
+  <showlight time="20" note="26" />
+  <showlight time="22" note="50" />
+  <showlight time="24" note="27" />
+  <showlight time="26" note="26" />
+  <showlight time="28" note="25" />
+  <showlight time="30" note="26" />
+  <showlight time="34" note="25" />
+  <showlight time="36" note="26" />
+  <showlight time="40" note="25" />
+  <showlight time="42" note="26" />
+  <showlight time="44" note="50" />
+  <showlight time="46" note="27" />
+  <showlight time="48" note="26" />
+  <showlight time="50" note="50" />
+  <showlight time="52" note="26" />
+  <showlight time="56" note="25" />
+  <showlight time="58" note="26" />
+  <showlight time="62" note="25" />
+  <showlight time="64" note="26" />
+  <showlight time="66" note="50" />
+  <showlight time="68" note="25" />
+  <showlight time="74" note="27" />
+  <showlight time="78" note="50" />
+  <showlight time="80" note="26" />
+  <showlight time="82" note="50" />
+  <showlight time="84" note="25" />
+  <showlight time="86" note="26" />
+  <showlight time="88" note="50" />
+  <showlight time="90" note="66" />
+  <showlight time="90" note="57" />
+</showlights>

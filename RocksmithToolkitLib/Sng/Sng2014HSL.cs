@@ -15,12 +15,12 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public Int32 Mask { get; set; }
 
         public string[] _order = {
-			"Time",
-			"Measure",
-			"Beat",
-			"PhraseIteration",
-			"Mask"
-		};
+            "Time",
+            "Measure",
+            "Beat",
+            "PhraseIteration",
+            "Mask"
+        };
         public string[] order { get { return _order; } }
         public void read(EndianBinaryReader r)
         {
@@ -36,9 +36,9 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public Int32 Count { get; set; }
         public Bpm[] BPMs { get; set; }
 
-        public string[] _order = {"Count","BPMs"};     
+        public string[] _order = { "Count", "BPMs" };
         public string[] order { get { return _order; } }
-  
+
         public void read(EndianBinaryReader r)
         {
             try
@@ -73,14 +73,14 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public Byte[] Name { get { return _Name; } set { _Name = value; } }
 
         public string[] _order = {
-			"Solo",
-			"Disparity",
-			"Ignore",
-			"Padding",
-			"MaxDifficulty",
-			"PhraseIterationLinks",
-			"Name"
-		};
+            "Solo",
+            "Disparity",
+            "Ignore",
+            "Padding",
+            "MaxDifficulty",
+            "PhraseIterationLinks",
+            "Name"
+        };
         public string[] order { get { return _order; } }
         public void read(EndianBinaryReader r)
         {
@@ -99,16 +99,17 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public Phrase[] Phrases { get; set; }
 
         public string[] _order = {
-			"Count",
-			"Phrases"
-		};
+            "Count",
+            "Phrases"
+        };
         public string[] order { get { return _order; } }
         public void read(EndianBinaryReader r)
         {
-            Count = r.ReadInt32();
-            int i = 0;
             try //bcapi
             {
+                Count = r.ReadInt32();
+                int i = 0;
+
                 Phrases = new Phrase[Count]; for (i = 0; i < Count; i++) { var obj = new Phrase(); obj.read(r); Phrases[i] = obj; }
             }
             catch (Exception ex)
@@ -132,12 +133,12 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public Byte[] Name { get { return _Name; } set { _Name = value; } }
 
         public string[] _order = {
-			"Mask",
-			"Frets",
-			"Fingers",
-			"Notes",
-			"Name"
-		};
+            "Mask",
+            "Frets",
+            "Fingers",
+            "Notes",
+            "Name"
+        };
         public string[] order { get { return _order; } }
         public void read(EndianBinaryReader r)
         {
@@ -154,14 +155,23 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public Chord[] Chords { get; set; }
 
         public string[] _order = {
-			"Count",
-			"Chords"
-		};
+            "Count",
+            "Chords"
+        };
         public string[] order { get { return _order; } }
         public void read(EndianBinaryReader r)
         {
-            Count = r.ReadInt32();
-            Chords = new Chord[Count]; for (int i = 0; i < Count; i++) { var obj = new Chord(); obj.read(r); Chords[i] = obj; }
+            try //bcapi
+            {
+                Count = r.ReadInt32();
+                Chords = new Chord[Count]; for (int i = 0; i < Count; i++) { var obj = new Chord(); obj.read(r); Chords[i] = obj; }
+            }
+            catch (Exception ex)
+            {
+                // incomplete song information may cause exceptions during conversion
+                // such as, "End of Stream reached with 4 bytes left to read" 
+                //bcapi throw new Exception("Corrupt CDLC ... Regenerating or Converting the original with Creator GUI may fix it." + Environment.NewLine + "Make sure the song information is complete and correct, including Song Year and Avg Tempo information. (HINT)" + Environment.NewLine + ex.Message + Environment.NewLine + Environment.NewLine);
+            }
         }
     }
     public class BendData32
@@ -173,12 +183,12 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public Byte Unk5 { get; set; }
 
         public string[] _order = {
-			"Time",
-			"Step",
-			"Unk3_0",
-			"Unk4_0",
-			"Unk5"
-		};
+            "Time",
+            "Step",
+            "Unk3_0",
+            "Unk4_0",
+            "Unk5"
+        };
         public string[] order { get { return _order; } }
         public void read(EndianBinaryReader r)
         {
@@ -196,9 +206,9 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public Int32 UsedCount { get; set; }
 
         public string[] _order = {
-			"BendData32",
-			"UsedCount"
-		};
+            "BendData32",
+            "UsedCount"
+        };
         public string[] order { get { return _order; } }
         public void read(EndianBinaryReader r)
         {
@@ -212,9 +222,9 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public BendData32[] BendData { get; set; }
 
         public string[] _order = {
-			"Count",
-			"BendData"
-		};
+            "Count",
+            "BendData"
+        };
         public string[] order { get { return _order; } }
         public void read(EndianBinaryReader r)
         {
@@ -236,12 +246,12 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public Int16[] Vibrato { get { return _Vibrato; } set { _Vibrato = value; } }
 
         public string[] _order = {
-			"NoteMask",
-			"BendData",
-			"SlideTo",
-			"SlideUnpitchTo",
-			"Vibrato"
-		};
+            "NoteMask",
+            "BendData",
+            "SlideTo",
+            "SlideUnpitchTo",
+            "Vibrato"
+        };
         public string[] order { get { return _order; } }
         public void read(EndianBinaryReader r)
         {
@@ -258,14 +268,23 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public ChordNotes[] ChordNotes { get; set; }
 
         public string[] _order = {
-			"Count",
-			"ChordNotes"
-		};
+            "Count",
+            "ChordNotes"
+        };
         public string[] order { get { return _order; } }
         public void read(EndianBinaryReader r)
         {
-            Count = r.ReadInt32();
-            ChordNotes = new ChordNotes[Count]; for (int i = 0; i < Count; i++) { var obj = new ChordNotes(); obj.read(r); ChordNotes[i] = obj; }
+            try //bcapi
+            {
+                Count = r.ReadInt32();
+                ChordNotes = new ChordNotes[Count]; for (int i = 0; i < Count; i++) { var obj = new ChordNotes(); obj.read(r); ChordNotes[i] = obj; }
+            }
+            catch (Exception ex)
+            {
+                // incomplete song information may cause exceptions during conversion
+                // such as, "End of Stream reached with 4 bytes left to read" 
+                //bcapi throw new Exception("Corrupt CDLC ... Regenerating or Converting the original with Creator GUI may fix it." + Environment.NewLine + "Make sure the song information is complete and correct, including Song Year and Avg Tempo information. (HINT)" + Environment.NewLine + ex.Message + Environment.NewLine + Environment.NewLine);
+            }
         }
     }
     public class Vocal
@@ -277,11 +296,11 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public Byte[] Lyric { get { return _Lyric; } set { _Lyric = value; } }
 
         public string[] _order = {
-			"Time",
-			"Note",
-			"Length",
-			"Lyric"
-		};
+            "Time",
+            "Note",
+            "Length",
+            "Lyric"
+        };
         public string[] order { get { return _order; } }
         public void read(EndianBinaryReader r)
         {
@@ -297,14 +316,23 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public Vocal[] Vocals { get; set; }
 
         public string[] _order = {
-			"Count",
-			"Vocals"
-		};
+            "Count",
+            "Vocals"
+        };
         public string[] order { get { return _order; } }
         public void read(EndianBinaryReader r)
         {
-            Count = r.ReadInt32();
-            Vocals = new Vocal[Count]; for (int i = 0; i < Count; i++) { var obj = new Vocal(); obj.read(r); Vocals[i] = obj; }
+            try //bcapi
+            {
+                Count = r.ReadInt32();
+                Vocals = new Vocal[Count]; for (int i = 0; i < Count; i++) { var obj = new Vocal(); obj.read(r); Vocals[i] = obj; }
+            }
+            catch (Exception ex)
+            {
+                // incomplete song information may cause exceptions during conversion
+                // such as, "End of Stream reached with 4 bytes left to read" 
+                //bcapi throw new Exception("Corrupt CDLC ... Regenerating or Converting the original with Creator GUI may fix it." + Environment.NewLine + "Make sure the song information is complete and correct, including Song Year and Avg Tempo information. (HINT)" + Environment.NewLine + ex.Message + Environment.NewLine + Environment.NewLine);
+            }
         }
     }
     public class SymbolsHeader
@@ -319,15 +347,15 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public Int32 Unk8 { get; set; }
 
         public string[] _order = {
-			"Unk1",
-			"Unk2",
-			"Unk3",
-			"Unk4",
-			"Unk5",
-			"Unk6",
-			"Unk7",
-			"Unk8"
-		};
+            "Unk1",
+            "Unk2",
+            "Unk3",
+            "Unk4",
+            "Unk5",
+            "Unk6",
+            "Unk7",
+            "Unk8"
+        };
         public string[] order { get { return _order; } }
         public void read(EndianBinaryReader r)
         {
@@ -347,9 +375,9 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public SymbolsHeader[] SymbolsHeader { get; set; }
 
         public string[] _order = {
-			"Count",
-			"SymbolsHeader"
-		};
+            "Count",
+            "SymbolsHeader"
+        };
         public string[] order { get { return _order; } }
         public void read(EndianBinaryReader r)
         {
@@ -367,12 +395,12 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public Int32 Height { get; set; }
 
         public string[] _order = {
-			"Font",
-			"FontpathLength",
-			"Unk1_0",
-			"Width",
-			"Height"
-		};
+            "Font",
+            "FontpathLength",
+            "Unk1_0",
+            "Width",
+            "Height"
+        };
         public string[] order { get { return _order; } }
         public void read(EndianBinaryReader r)
         {
@@ -389,9 +417,9 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public SymbolsTexture[] SymbolsTextures { get; set; }
 
         public string[] _order = {
-			"Count",
-			"SymbolsTextures"
-		};
+            "Count",
+            "SymbolsTextures"
+        };
         public string[] order { get { return _order; } }
         public void read(EndianBinaryReader r)
         {
@@ -407,11 +435,11 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public float xMax { get; set; }
 
         public string[] _order = {
-			"yMin",
-			"xMin",
-			"yMax",
-			"xMax"
-		};
+            "yMin",
+            "xMin",
+            "yMax",
+            "xMax"
+        };
         public string[] order { get { return _order; } }
         public void read(EndianBinaryReader r)
         {
@@ -429,10 +457,10 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public Rect Rect_Inner { get; set; }
 
         public string[] _order = {
-			"Text",
-			"Rect_Outter",
-			"Rect_Inner"
-		};
+            "Text",
+            "Rect_Outter",
+            "Rect_Inner"
+        };
         public string[] order { get { return _order; } }
         public void read(EndianBinaryReader r)
         {
@@ -447,9 +475,9 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public SymbolDefinition[] SymbolDefinitions { get; set; }
 
         public string[] _order = {
-			"Count",
-			"SymbolDefinitions"
-		};
+            "Count",
+            "SymbolDefinitions"
+        };
         public string[] order { get { return _order; } }
         public void read(EndianBinaryReader r)
         {
@@ -466,11 +494,11 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public Int32[] Difficulty { get { return _Difficulty; } set { _Difficulty = value; } }
 
         public string[] _order = {
-			"PhraseId",
-			"StartTime",
-			"NextPhraseTime",
-			"Difficulty"
-		};
+            "PhraseId",
+            "StartTime",
+            "NextPhraseTime",
+            "Difficulty"
+        };
         public string[] order { get { return _order; } }
         public void read(EndianBinaryReader r)
         {
@@ -486,14 +514,24 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public PhraseIteration[] PhraseIterations { get; set; }
 
         public string[] _order = {
-			"Count",
-			"PhraseIterations"
-		};
+            "Count",
+            "PhraseIterations"
+        };
         public string[] order { get { return _order; } }
+
         public void read(EndianBinaryReader r)
         {
-            Count = r.ReadInt32();
-            PhraseIterations = new PhraseIteration[Count]; for (int i = 0; i < Count; i++) { var obj = new PhraseIteration(); obj.read(r); PhraseIterations[i] = obj; }
+            try //bcapi
+            {
+                Count = r.ReadInt32();
+                PhraseIterations = new PhraseIteration[Count]; for (int i = 0; i < Count; i++) { var obj = new PhraseIteration(); obj.read(r); PhraseIterations[i] = obj; }
+            }
+            catch (Exception ex)
+            {
+                // incomplete song information may cause exceptions during conversion
+                // such as, "End of Stream reached with 4 bytes left to read" 
+                //bcapi throw new Exception("Corrupt CDLC ... Regenerating or Converting the original with Creator GUI may fix it." + Environment.NewLine + "Make sure the song information is complete and correct, including Song Year and Avg Tempo information. (HINT)" + Environment.NewLine + ex.Message + Environment.NewLine + Environment.NewLine);
+            }
         }
     }
     public class PhraseExtraInfoByLevel
@@ -506,13 +544,13 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public Byte Padding { get; set; }
 
         public string[] _order = {
-			"PhraseId",
-			"Difficulty",
-			"Empty",
-			"LevelJump",
-			"Redundant",
-			"Padding"
-		};
+            "PhraseId",
+            "Difficulty",
+            "Empty",
+            "LevelJump",
+            "Redundant",
+            "Padding"
+        };
         public string[] order { get { return _order; } }
         public void read(EndianBinaryReader r)
         {
@@ -530,14 +568,23 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public PhraseExtraInfoByLevel[] PhraseExtraInfoByLevel { get; set; }
 
         public string[] _order = {
-			"Count",
-			"PhraseExtraInfoByLevel"
-		};
+            "Count",
+            "PhraseExtraInfoByLevel"
+        };
         public string[] order { get { return _order; } }
         public void read(EndianBinaryReader r)
         {
-            Count = r.ReadInt32();
-            PhraseExtraInfoByLevel = new PhraseExtraInfoByLevel[Count]; for (int i = 0; i < Count; i++) { var obj = new PhraseExtraInfoByLevel(); obj.read(r); PhraseExtraInfoByLevel[i] = obj; }
+            try //bcapi
+            {
+                Count = r.ReadInt32();
+                PhraseExtraInfoByLevel = new PhraseExtraInfoByLevel[Count]; for (int i = 0; i < Count; i++) { var obj = new PhraseExtraInfoByLevel(); obj.read(r); PhraseExtraInfoByLevel[i] = obj; }
+            }
+            catch (Exception ex)
+            {
+                // incomplete song information may cause exceptions during conversion
+                // such as, "End of Stream reached with 4 bytes left to read" 
+                //bcapi throw new Exception("Corrupt CDLC ... Regenerating or Converting the original with Creator GUI may fix it." + Environment.NewLine + "Make sure the song information is complete and correct, including Song Year and Avg Tempo information. (HINT)" + Environment.NewLine + ex.Message + Environment.NewLine + Environment.NewLine);
+            }
         }
     }
     public class NLinkedDifficulty
@@ -547,10 +594,10 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public Int32[] NLD_Phrase { get; set; }
 
         public string[] _order = {
-			"LevelBreak",
-			"PhraseCount",
-			"NLD_Phrase"
-		};
+            "LevelBreak",
+            "PhraseCount",
+            "NLD_Phrase"
+        };
         public string[] order { get { return _order; } }
         public void read(EndianBinaryReader r)
         {
@@ -565,14 +612,23 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public NLinkedDifficulty[] NLinkedDifficulties { get; set; }
 
         public string[] _order = {
-			"Count",
-			"NLinkedDifficulties"
-		};
+            "Count",
+            "NLinkedDifficulties"
+        };
         public string[] order { get { return _order; } }
         public void read(EndianBinaryReader r)
         {
-            Count = r.ReadInt32();
-            NLinkedDifficulties = new NLinkedDifficulty[Count]; for (int i = 0; i < Count; i++) { var obj = new NLinkedDifficulty(); obj.read(r); NLinkedDifficulties[i] = obj; }
+            try
+            {
+                Count = r.ReadInt32();
+                NLinkedDifficulties = new NLinkedDifficulty[Count]; for (int i = 0; i < Count; i++) { var obj = new NLinkedDifficulty(); obj.read(r); NLinkedDifficulties[i] = obj; }
+            }
+            catch (Exception ex)
+            {
+                // incomplete song information may cause exceptions during conversion
+                // such as, "End of Stream reached with 4 bytes left to read" 
+                //bcapi throw new Exception("Corrupt CDLC ... Regenerating or Converting the original with Creator GUI may fix it." + Environment.NewLine + "Make sure the song information is complete and correct, including Song Year and Avg Tempo information. (HINT)" + Environment.NewLine + ex.Message + Environment.NewLine + Environment.NewLine);
+            }
         }
     }
     public class Action
@@ -582,9 +638,9 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public Byte[] ActionName { get { return _ActionName; } set { _ActionName = value; } }
 
         public string[] _order = {
-			"Time",
-			"ActionName"
-		};
+            "Time",
+            "ActionName"
+        };
         public string[] order { get { return _order; } }
         public void read(EndianBinaryReader r)
         {
@@ -598,14 +654,23 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public Action[] Actions { get; set; }
 
         public string[] _order = {
-			"Count",
-			"Actions"
-		};
+            "Count",
+            "Actions"
+        };
         public string[] order { get { return _order; } }
         public void read(EndianBinaryReader r)
         {
-            Count = r.ReadInt32();
-            Actions = new Action[Count]; for (int i = 0; i < Count; i++) { var obj = new Action(); obj.read(r); Actions[i] = obj; }
+            try
+            {
+                Count = r.ReadInt32();
+                Actions = new Action[Count]; for (int i = 0; i < Count; i++) { var obj = new Action(); obj.read(r); Actions[i] = obj; }
+            }
+            catch (Exception ex)
+            {
+                // incomplete song information may cause exceptions during conversion
+                // such as, "End of Stream reached with 4 bytes left to read" 
+                //bcapi throw new Exception("Corrupt CDLC ... Regenerating or Converting the original with Creator GUI may fix it." + Environment.NewLine + "Make sure the song information is complete and correct, including Song Year and Avg Tempo information. (HINT)" + Environment.NewLine + ex.Message + Environment.NewLine + Environment.NewLine);
+            }
         }
     }
     public class Event
@@ -615,9 +680,9 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public Byte[] EventName { get { return _EventName; } set { _EventName = value; } }
 
         public string[] _order = {
-			"Time",
-			"EventName"
-		};
+            "Time",
+            "EventName"
+        };
         public string[] order { get { return _order; } }
         public void read(EndianBinaryReader r)
         {
@@ -631,14 +696,23 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public Event[] Events { get; set; }
 
         public string[] _order = {
-			"Count",
-			"Events"
-		};
+            "Count",
+            "Events"
+        };
         public string[] order { get { return _order; } }
         public void read(EndianBinaryReader r)
         {
-            Count = r.ReadInt32();
-            Events = new Event[Count]; for (int i = 0; i < Count; i++) { var obj = new Event(); obj.read(r); Events[i] = obj; }
+            try
+            {
+                Count = r.ReadInt32();
+                Events = new Event[Count]; for (int i = 0; i < Count; i++) { var obj = new Event(); obj.read(r); Events[i] = obj; }
+            }
+            catch (Exception ex)
+            {
+                // incomplete song information may cause exceptions during conversion
+                // such as, "End of Stream reached with 4 bytes left to read" 
+                //bcapi throw new Exception("Corrupt CDLC ... Regenerating or Converting the original with Creator GUI may fix it." + Environment.NewLine + "Make sure the song information is complete and correct, including Song Year and Avg Tempo information. (HINT)" + Environment.NewLine + ex.Message + Environment.NewLine + Environment.NewLine);
+            }
         }
     }
     public class Tone
@@ -647,9 +721,9 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public Int32 ToneId { get; set; }
 
         public string[] _order = {
-			"Time",
-			"ToneId"
-		};
+            "Time",
+            "ToneId"
+        };
         public string[] order { get { return _order; } }
         public void read(EndianBinaryReader r)
         {
@@ -663,14 +737,23 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public Tone[] Tones { get; set; }
 
         public string[] _order = {
-			"Count",
-			"Tones"
-		};
+            "Count",
+            "Tones"
+        };
         public string[] order { get { return _order; } }
         public void read(EndianBinaryReader r)
         {
-            Count = r.ReadInt32();
-            Tones = new Tone[Count]; for (int i = 0; i < Count; i++) { var obj = new Tone(); obj.read(r); Tones[i] = obj; }
+            try
+            {
+                Count = r.ReadInt32();
+                Tones = new Tone[Count]; for (int i = 0; i < Count; i++) { var obj = new Tone(); obj.read(r); Tones[i] = obj; }
+            }
+            catch (Exception ex)
+            {
+                // incomplete song information may cause exceptions during conversion
+                // such as, "End of Stream reached with 4 bytes left to read" 
+                //bcapi throw new Exception("Corrupt CDLC ... Regenerating or Converting the original with Creator GUI may fix it." + Environment.NewLine + "Make sure the song information is complete and correct, including Song Year and Avg Tempo information. (HINT)" + Environment.NewLine + ex.Message + Environment.NewLine + Environment.NewLine);
+            }
         }
     }
     public class Dna
@@ -679,9 +762,9 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public Int32 DnaId { get; set; }
 
         public string[] _order = {
-			"Time",
-			"DnaId"
-		};
+            "Time",
+            "DnaId"
+        };
         public string[] order { get { return _order; } }
         public void read(EndianBinaryReader r)
         {
@@ -695,14 +778,23 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public Dna[] Dnas { get; set; }
 
         public string[] _order = {
-			"Count",
-			"Dnas"
-		};
+            "Count",
+            "Dnas"
+        };
         public string[] order { get { return _order; } }
         public void read(EndianBinaryReader r)
         {
-            Count = r.ReadInt32();
-            Dnas = new Dna[Count]; for (int i = 0; i < Count; i++) { var obj = new Dna(); obj.read(r); Dnas[i] = obj; }
+            try
+            {
+                Count = r.ReadInt32();
+                Dnas = new Dna[Count]; for (int i = 0; i < Count; i++) { var obj = new Dna(); obj.read(r); Dnas[i] = obj; }
+            }
+            catch (Exception ex)
+            {
+                // incomplete song information may cause exceptions during conversion
+                // such as, "End of Stream reached with 4 bytes left to read" 
+                //bcapi throw new Exception("Corrupt CDLC ... Regenerating or Converting the original with Creator GUI may fix it." + Environment.NewLine + "Make sure the song information is complete and correct, including Song Year and Avg Tempo information. (HINT)" + Environment.NewLine + ex.Message + Environment.NewLine + Environment.NewLine);
+            }
         }
     }
     public class Section
@@ -718,14 +810,14 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public Byte[] StringMask { get { return _StringMask; } set { _StringMask = value; } }
 
         public string[] _order = {
-			"Name",
-			"Number",
-			"StartTime",
-			"EndTime",
-			"StartPhraseIterationId",
-			"EndPhraseIterationId",
-			"StringMask"
-		};
+            "Name",
+            "Number",
+            "StartTime",
+            "EndTime",
+            "StartPhraseIterationId",
+            "EndPhraseIterationId",
+            "StringMask"
+        };
         public string[] order { get { return _order; } }
         public void read(EndianBinaryReader r)
         {
@@ -744,14 +836,23 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public Section[] Sections { get; set; }
 
         public string[] _order = {
-			"Count",
-			"Sections"
-		};
+            "Count",
+            "Sections"
+        };
         public string[] order { get { return _order; } }
         public void read(EndianBinaryReader r)
         {
-            Count = r.ReadInt32();
-            Sections = new Section[Count]; for (int i = 0; i < Count; i++) { var obj = new Section(); obj.read(r); Sections[i] = obj; }
+            try
+            {
+                Count = r.ReadInt32();
+                Sections = new Section[Count]; for (int i = 0; i < Count; i++) { var obj = new Section(); obj.read(r); Sections[i] = obj; }
+            }
+            catch (Exception ex)
+            {
+                // incomplete song information may cause exceptions during conversion
+                // such as, "End of Stream reached with 4 bytes left to read" 
+                //bcapi throw new Exception("Corrupt CDLC ... Regenerating or Converting the original with Creator GUI may fix it." + Environment.NewLine + "Make sure the song information is complete and correct, including Song Year and Avg Tempo information. (HINT)" + Environment.NewLine + ex.Message + Environment.NewLine + Environment.NewLine);
+            }
         }
     }
     public class Anchor
@@ -767,15 +868,15 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public Int32 PhraseIterationId { get; set; }
 
         public string[] _order = {
-			"StartBeatTime",
-			"EndBeatTime",
-			"Unk3_FirstNoteTime",
-			"Unk4_LastNoteTime",
-			"FretId",
-			"Padding",
-			"Width",
-			"PhraseIterationId"
-		};
+            "StartBeatTime",
+            "EndBeatTime",
+            "Unk3_FirstNoteTime",
+            "Unk4_LastNoteTime",
+            "FretId",
+            "Padding",
+            "Width",
+            "PhraseIterationId"
+        };
         public string[] order { get { return _order; } }
         public void read(EndianBinaryReader r)
         {
@@ -795,9 +896,9 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public Anchor[] Anchors { get; set; }
 
         public string[] _order = {
-			"Count",
-			"Anchors"
-		};
+            "Count",
+            "Anchors"
+        };
         public string[] order { get { return _order; } }
         public void read(EndianBinaryReader r)
         {
@@ -814,12 +915,12 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public Byte Unk4_0 { get; set; }
 
         public string[] _order = {
-			"BeatTime",
-			"FretId",
-			"Unk2_0",
-			"Unk3_0",
-			"Unk4_0"
-		};
+            "BeatTime",
+            "FretId",
+            "Unk2_0",
+            "Unk3_0",
+            "Unk4_0"
+        };
         public string[] order { get { return _order; } }
         public void read(EndianBinaryReader r)
         {
@@ -836,9 +937,9 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public AnchorExtension[] AnchorExtensions { get; set; }
 
         public string[] _order = {
-			"Count",
-			"AnchorExtensions"
-		};
+            "Count",
+            "AnchorExtensions"
+        };
         public string[] order { get { return _order; } }
         public void read(EndianBinaryReader r)
         {
@@ -855,12 +956,12 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public float Unk4_LastNoteTime { get; set; }
 
         public string[] _order = {
-			"ChordId",
-			"StartTime",
-			"EndTime",
-			"Unk3_FirstNoteTime",
-			"Unk4_LastNoteTime"
-		};
+            "ChordId",
+            "StartTime",
+            "EndTime",
+            "Unk3_FirstNoteTime",
+            "Unk4_LastNoteTime"
+        };
         public string[] order { get { return _order; } }
         public void read(EndianBinaryReader r)
         {
@@ -877,9 +978,9 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public Fingerprint[] Fingerprints { get; set; }
 
         public string[] _order = {
-			"Count",
-			"Fingerprints"
-		};
+            "Count",
+            "Fingerprints"
+        };
         public string[] order { get { return _order; } }
         public void read(EndianBinaryReader r)
         {
@@ -919,34 +1020,34 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public BendDataSection BendData { get; set; }
 
         public string[] _order = {
-			"NoteMask",
-			"NoteFlags",
-			"Hash",
-			"Time",
-			"StringIndex",
-			"FretId",
-			"AnchorFretId",
-			"AnchorWidth",
-			"ChordId",
-			"ChordNotesId",
-			"PhraseId",
-			"PhraseIterationId",
-			"FingerPrintId",
-			"NextIterNote",
-			"PrevIterNote",
-			"ParentPrevNote",
-			"SlideTo",
-			"SlideUnpitchTo",
-			"LeftHand",
-			"Tap",
-			"PickDirection",
-			"Slap",
-			"Pluck",
-			"Vibrato",
-			"Sustain",
-			"MaxBend",
-			"BendData"
-		};
+            "NoteMask",
+            "NoteFlags",
+            "Hash",
+            "Time",
+            "StringIndex",
+            "FretId",
+            "AnchorFretId",
+            "AnchorWidth",
+            "ChordId",
+            "ChordNotesId",
+            "PhraseId",
+            "PhraseIterationId",
+            "FingerPrintId",
+            "NextIterNote",
+            "PrevIterNote",
+            "ParentPrevNote",
+            "SlideTo",
+            "SlideUnpitchTo",
+            "LeftHand",
+            "Tap",
+            "PickDirection",
+            "Slap",
+            "Pluck",
+            "Vibrato",
+            "Sustain",
+            "MaxBend",
+            "BendData"
+        };
         public string[] order { get { return _order; } }
         public void read(EndianBinaryReader r)
         {
@@ -985,14 +1086,23 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public Notes[] Notes { get; set; }
 
         public string[] _order = {
-			"Count",
-			"Notes"
-		};
+            "Count",
+            "Notes"
+        };
         public string[] order { get { return _order; } }
         public void read(EndianBinaryReader r)
         {
-            Count = r.ReadInt32();
-            Notes = new Notes[Count]; for (int i = 0; i < Count; i++) { var obj = new Notes(); obj.read(r); Notes[i] = obj; }
+            try
+            {
+                Count = r.ReadInt32();
+                Notes = new Notes[Count]; for (int i = 0; i < Count; i++) { var obj = new Notes(); obj.read(r); Notes[i] = obj; }
+            }
+            catch (Exception ex)
+            {
+                // incomplete song information may cause exceptions during conversion
+                // such as, "End of Stream reached with 4 bytes left to read" 
+                //bcapi throw new Exception("Corrupt CDLC ... Regenerating or Converting the original with Creator GUI may fix it." + Environment.NewLine + "Make sure the song information is complete and correct, including Song Year and Avg Tempo information. (HINT)" + Environment.NewLine + ex.Message + Environment.NewLine + Environment.NewLine);
+            }
         }
     }
     public class Arrangement
@@ -1011,19 +1121,19 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public Int32[] NotesInIteration2 { get; set; }
 
         public string[] _order = {
-			"Difficulty",
-			"Anchors",
-			"AnchorExtensions",
-			"Fingerprints1",
-			"Fingerprints2",
-			"Notes",
-			"PhraseCount",
-			"AverageNotesPerIteration",
-			"PhraseIterationCount1",
-			"NotesInIteration1",
-			"PhraseIterationCount2",
-			"NotesInIteration2"
-		};
+            "Difficulty",
+            "Anchors",
+            "AnchorExtensions",
+            "Fingerprints1",
+            "Fingerprints2",
+            "Notes",
+            "PhraseCount",
+            "AverageNotesPerIteration",
+            "PhraseIterationCount1",
+            "NotesInIteration1",
+            "PhraseIterationCount2",
+            "NotesInIteration2"
+        };
         public string[] order { get { return _order; } }
         public void read(EndianBinaryReader r)
         {
@@ -1047,14 +1157,24 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public Arrangement[] Arrangements { get; set; }
 
         public string[] _order = {
-			"Count",
-			"Arrangements"
-		};
+            "Count",
+            "Arrangements"
+        };
         public string[] order { get { return _order; } }
         public void read(EndianBinaryReader r)
         {
-            Count = r.ReadInt32();
-            Arrangements = new Arrangement[Count]; for (int i = 0; i < Count; i++) { var obj = new Arrangement(); obj.read(r); Arrangements[i] = obj; }
+            try
+            {
+
+                Count = r.ReadInt32();
+                Arrangements = new Arrangement[Count]; for (int i = 0; i < Count; i++) { var obj = new Arrangement(); obj.read(r); Arrangements[i] = obj; }
+            }
+            catch (Exception ex)
+            {
+                // incomplete song information may cause exceptions during conversion
+                // such as, "End of Stream reached with 4 bytes left to read" 
+                //bcapi throw new Exception("Corrupt CDLC ... Regenerating or Converting the original with Creator GUI may fix it." + Environment.NewLine + "Make sure the song information is complete and correct, including Song Year and Avg Tempo information. (HINT)" + Environment.NewLine + ex.Message + Environment.NewLine + Environment.NewLine);
+            }
         }
     }
     public class Metadata
@@ -1077,25 +1197,27 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public Int32 MaxDifficulty { get; set; }
 
         public string[] _order = {
-			"MaxScore",
-			"MaxNotesAndChords",
-			"MaxNotesAndChords_Real",
-			"PointsPerNote",
-			"FirstBeatLength",
-			"StartTime",
-			"CapoFretId",
-			"LastConversionDateTime",
-			"Part",
-			"SongLength",
-			"StringCount",
-			"Tuning",
-			"Unk11_FirstNoteTime",
-			"Unk12_FirstNoteTime",
-			"MaxDifficulty"
-		};
+            "MaxScore",
+            "MaxNotesAndChords",
+            "MaxNotesAndChords_Real",
+            "PointsPerNote",
+            "FirstBeatLength",
+            "StartTime",
+            "CapoFretId",
+            "LastConversionDateTime",
+            "Part",
+            "SongLength",
+            "StringCount",
+            "Tuning",
+            "Unk11_FirstNoteTime",
+            "Unk12_FirstNoteTime",
+            "MaxDifficulty"
+        };
         public string[] order { get { return _order; } }
         public void read(EndianBinaryReader r)
         {
+            try
+            {
             MaxScore = r.ReadDouble();
             MaxNotesAndChords = r.ReadDouble();
             MaxNotesAndChords_Real = r.ReadDouble();
@@ -1111,6 +1233,13 @@ namespace RocksmithToolkitLib.Sng2014HSL
             Unk11_FirstNoteTime = r.ReadSingle();
             Unk12_FirstNoteTime = r.ReadSingle();
             MaxDifficulty = r.ReadInt32();
+            }
+            catch (Exception ex)
+            {
+                // incomplete song information may cause exceptions during conversion
+                // such as, "End of Stream reached with 4 bytes left to read" 
+                //bcapi throw new Exception("Corrupt CDLC ... Regenerating or Converting the original with Creator GUI may fix it." + Environment.NewLine + "Make sure the song information is complete and correct, including Song Year and Avg Tempo information. (HINT)" + Environment.NewLine + ex.Message + Environment.NewLine + Environment.NewLine);
+            }
         }
     }
     public class Sng
@@ -1135,25 +1264,25 @@ namespace RocksmithToolkitLib.Sng2014HSL
         public Metadata Metadata { get; set; }
 
         public string[] _order = {
-			"BPMs",
-			"Phrases",
-			"Chords",
-			"ChordNotes",
-			"Vocals",
-			"SymbolsHeader",
-			"SymbolsTexture",
-			"SymbolsDefinition",
-			"PhraseIterations",
-			"PhraseExtraInfo",
-			"NLD",
-			"Actions",
-			"Events",
-			"Tones",
-			"DNAs",
-			"Sections",
-			"Arrangements",
-			"Metadata"
-		};
+            "BPMs",
+            "Phrases",
+            "Chords",
+            "ChordNotes",
+            "Vocals",
+            "SymbolsHeader",
+            "SymbolsTexture",
+            "SymbolsDefinition",
+            "PhraseIterations",
+            "PhraseExtraInfo",
+            "NLD",
+            "Actions",
+            "Events",
+            "Tones",
+            "DNAs",
+            "Sections",
+            "Arrangements",
+            "Metadata"
+        };
         public string[] order { get { return _order; } }
         public void read(EndianBinaryReader r)
         {

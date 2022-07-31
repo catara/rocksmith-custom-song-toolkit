@@ -33,7 +33,8 @@ using Newtonsoft.Json;
 using Formatting = Newtonsoft.Json.Formatting;
 using RocksmithToolkitLib.ToolkitTone;
 using MakePedalSetting = RocksmithToolkitLib.ToolkitTone.ToolkitPedal;
-
+using System.Data.OleDb;
+using RocksmithToolkitGUI.DLCManager;
 
 namespace RocksmithToolkitGUI.DLCPackageCreator
 {
@@ -327,14 +328,14 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 {
                     case GameVersion.None:
                     case GameVersion.RS2014:
-//<<<<<<< HEAD
+                        //<<<<<<< HEAD
                         // TODO: Test WEM generation with non-PC Platforms
                         if (chkPlatformMAC.Checked == chkPlatformPS3.Checked == chkPlatformXBox360.Checked == false)
                             return "All Supported Files|*.wem;*.ogg;*.wav|Wwise 2019 audio files (*.wem)|*.wem|Ogg Vorbis audio files (*.ogg)|*.ogg|Wave audio files (*.wav)|*.wav";
 
-                    //    return "Wwise 2017 audio files (*.wem)|*.wem";
-                    //default:
-                    //    return "Wwise 2017 audio files (*.ogg)|*.ogg";
+                        //    return "Wwise 2017 audio files (*.wem)|*.wem";
+                        //default:
+                        //    return "Wwise 2017 audio files (*.ogg)|*.ogg";
                         //=======
                         return "All Supported Files|*.wem;*.ogg;*.wav|Wwise 2019 audio files (*.wem)|*.wem|Ogg Vorbis audio files (*.ogg)|*.ogg|Wave audio files (*.wav)|*.wav";
                     default:
@@ -1056,7 +1057,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             IsDirty = CurrentGameVersion != GameVersion.RS2014;
         }
 
-        string errorMsg;
+        //string errorMsg;
         private DLCPackageData GetPackageData(bool validate, out string errorMsg)
         {
             errorMsg = String.Empty;
@@ -1334,49 +1335,49 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 tonesRS2014 = lstTones.Items.OfType<Tone2014>().ToList();
 
             var data = new DLCPackageData
+            {
+                GameVersion = CurrentGameVersion,
+                Pc = PlatformPC,
+                Mac = PlatformMAC,
+                XBox360 = PlatformXBox360,
+                PS3 = PlatformPS3,
+                Name = txtDlcKey.Text,
+                AppId = txtAppId.Text,
+
+                SongInfo = new SongInfo
                 {
-                    GameVersion = CurrentGameVersion,
-                    Pc = PlatformPC,
-                    Mac = PlatformMAC,
-                    XBox360 = PlatformXBox360,
-                    PS3 = PlatformPS3,
-                    Name = txtDlcKey.Text,
-                    AppId = txtAppId.Text,
+                    JapaneseArtistName = this.JapaneseArtistName,
+                    JapaneseSongName = this.JapaneseSongTitle,
+                    SongDisplayName = this.SongTitle,
+                    SongDisplayNameSort = this.SongTitleSort,
+                    Album = this.Album,
+                    AlbumSort = this.AlbumSort,
+                    SongYear = year,
+                    Artist = this.Artist,
+                    ArtistSort = this.ArtistSort,
+                    AverageTempo = tempo
+                },
 
-                    SongInfo = new SongInfo
-                        {
-                            JapaneseArtistName = this.JapaneseArtistName,
-                            JapaneseSongName = this.JapaneseSongTitle,
-                            SongDisplayName = this.SongTitle,
-                            SongDisplayNameSort = this.SongTitleSort,
-                            Album = this.Album,
-                            AlbumSort = this.AlbumSort,
-                            SongYear = year,
-                            Artist = this.Artist,
-                            ArtistSort = this.ArtistSort,
-                            AverageTempo = tempo
-                        },
+                ToolkitInfo = new ToolkitInfo
+                {
+                    ToolkitVersion = ToolkitVers,
+                    PackageAuthor = PackageAuthor,
+                    PackageRating = PackageRating,
+                    PackageVersion = PackageVersion.GetValidVersion(),
+                    PackageComment = PackageComment
+                },
 
-                    ToolkitInfo = new ToolkitInfo
-                        {
-                            ToolkitVersion = ToolkitVers,
-                            PackageAuthor = PackageAuthor,
-                            PackageRating = PackageRating,
-                            PackageVersion = PackageVersion.GetValidVersion(),
-                            PackageComment = PackageComment
-                        },
-
-                    AlbumArtPath = AlbumArtPath,
-                    OggPath = AudioPath,
-                    OggPreviewPath = audioPreviewPath,
-                    OggQuality = numAudioQuality.Value,
-                    Arrangements = arrangements,
-                    Tones = tones,
-                    TonesRS2014 = tonesRS2014,
-                    Volume = (float)numVolSong.Value,
-                    PreviewVolume = (float)numVolPreview.Value,
-                    SignatureType = PackageMagic.CON
-                };
+                AlbumArtPath = AlbumArtPath,
+                OggPath = AudioPath,
+                OggPreviewPath = audioPreviewPath,
+                OggQuality = numAudioQuality.Value,
+                Arrangements = arrangements,
+                Tones = tones,
+                TonesRS2014 = tonesRS2014,
+                Volume = (float)numVolSong.Value,
+                PreviewVolume = (float)numVolPreview.Value,
+                SignatureType = PackageMagic.CON
+            };
 
             return data;
         }
@@ -1444,7 +1445,14 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                             }
                         }
                     else if (tones2014.Count < 2)
-                        lstTones.Items.Add(tones2014.FirstOrDefault(t => !t.GearList.IsNull()));
+                        try
+                        {
+                            lstTones.Items.Add(tones2014.FirstOrDefault(t => !t.GearList.IsNull()));
+                        }
+                        catch
+                        {
+                            //throw new NotSupportedException("Unknown file format exception. File not supported.");
+                        }
                 }
                 else
                 {
@@ -1680,6 +1688,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
 
         private void btnPackageGenerate_Click(object sender, EventArgs e)
         {
+
             // perform an intial check of Wwise configuration before attempting PackageGeneration
 
             if (CurrentGameVersion == GameVersion.RS2014 &&
@@ -1857,6 +1866,46 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 }
             }
 
+            //bcapi check if conenctivity can be achieved
+            //check if song exists (wo text in brakets) artist album song title
+            //add to the Rocksmith toolkit 
+            System.Data.OleDb.OleDbConnection cnb = null;
+            SQLite.SQLiteConnection cnc = null;
+            try
+            {
+                cnb = new OleDbConnection("Provider=Microsoft." + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Persist Security" +
+                    " Info=False;Mode= Share Deny None;Data Source=" + ConfigRepository.Instance()["dlcm_DBFolder"]);
+
+                cnb = new OleDbConnection("Provider=Microsoft." + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Persist Security" +
+                    " Info=False;Mode= Share Deny None;Data Source=" + ConfigRepository.Instance()["dlcm_DBFolder"]); //running twice as some issues with compilatiojn in x86...sometime
+                //if (File.Exists(cnb.DataSource.ToString())) cnb.Open();
+                //try { cnb.Close(); cnc.Close(); } catch (Exception ex) {; }
+                OpenDb(null, cnb, cnc);
+                PackNew frm = new DLCManager.PackNew(packageData, cnb, cnc); frm.ShowDialog();
+            }
+            catch (Exception exx)
+            {
+                DLCManager.GenericFunctions.ShowConnectivityError(exx, "FAIL to use M$ ACCESS plugin:\n");/*, null*/
+                var tz = ConfigRepository.Instance()["dlcm_DBFolder"];
+                tz = tz.Replace("AccessDB.accdb", "SQLLiteDB.db");
+                ConfigRepository.Instance()["dlcm_DBFolder"] = tz;
+                //cnz = new SQLiteConnection("Data Source="+ ConfigRepository.Instance()["dlcm_DBFolder"]);
+                //cnz.Open();
+                try
+                {
+                    cnc = new SQLite.SQLiteConnection(ConfigRepository.Instance()["dlcm_DBFolder"]);
+                    DLCManager.PackNew frm = new DLCManager.PackNew(packageData, null, cnc);
+                    frm.ShowDialog();
+                }
+                catch (Exception ex)
+                {
+                    DLCManager.GenericFunctions.ShowConnectivityError(ex, "FAIL to use M$ ACCESS plugin:\n");/*, null*/
+                }
+                //Is_MultiTrack = ag[0]; MultiTrack_Version = ag[1]; IsLive = ag[2]; LiveDetails = ag[3]; IsAcoustic = ag[4]; IsSingle = ag[5]; IsSoundtrack = ag[6]; IsInstrumental = ag[7]; IsEP = ag[8]; IsUncensored = ag[9];
+                //IsFullAlbum = ag[10]; IsRemastered = ag[11]; InTheWorks = ag[12]; IsKaraoke = ag[13]; IsDemo = ag[14]; HasFeaturing = ag[15]; IsRemix = ag[16]; IsCover = ag[17];
+            }
+            packageData.ToolkitInfo.PackageComment = ConfigRepository.Instance()["dlcm_GlobalTempVariable"] + packageData.ToolkitInfo.PackageComment;
+
             // open PackageGenerate save file dialog
             if (!GlobalsLib.IsUnitTest)
                 PackageGenerate_SFD();
@@ -1982,14 +2031,14 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 Song2014.WriteXmlComments(arr.SongXml.File);
             }
 
-            if (DestPath!="" && DestPath!=null)
+            if (DestPath != "" && DestPath != null)
                 if (Path.GetFileName(DestPath).Contains(" ") && PlatformPS3)
-            {
-                if (!ConfigRepository.Instance().GetBoolean("creator_ps3pkgnamewarn"))
-                    MessageBox.Show(String.Format("PS3 package name can't support space character due to encryption limitation. {0} Spaces will be automatic removed for your PS3 package name.", Environment.NewLine), MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                else
-                    ConfigRepository.Instance()["creator_ps3pkgnamewarn"] = true.ToString();
-            }
+                {
+                    if (!ConfigRepository.Instance().GetBoolean("creator_ps3pkgnamewarn"))
+                        MessageBox.Show(String.Format("PS3 package name can't support space character due to encryption limitation. {0} Spaces will be automatic removed for your PS3 package name.", Environment.NewLine), MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    else
+                        ConfigRepository.Instance()["creator_ps3pkgnamewarn"] = true.ToString();
+                }
 
             // unit test does not behave well with async background worker
             if (!GlobalsLib.IsUnitTest)
@@ -2010,6 +2059,80 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             return packageData;
         }
 
+        public static void OpenDb(Label lbl_Access, OleDbConnection cnb, SQLite.SQLiteConnection cnc)
+        {
+            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul114"] == "Yes" && File.Exists(tz))
+            //{
+            //    DialogResult result1 = DialogResult.Cancel;
+            //    result1 = MessageBox.Show("Chose DB System:\n1. (Yes) Microsoft Access (.accdb) or\n2. (No) SQLite3 (.db)."
+            //    , MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            //    if (result1 == DialogResult.Yes) ConfigRepository.Instance()["dlcm_AdditionalManipul114"] = "Yes";
+            //}
+            var tz = ConfigRepository.Instance()["dlcm_DBFolder"];
+            tz = tz.Replace("AccessDB.accdb", "SQLLiteDB.db");
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul114"] != "Yes")
+                try
+                {
+                    if (File.Exists(cnb.DataSource.ToString())) cnb.Open();
+                }
+                catch (Exception exx)
+                {
+
+                    GenericFunctions.ShowConnectivityError(exx, "");/*, lbl_Access*/
+                    try
+                    {
+                        if (File.Exists(cnb.DataSource.ToString())) cnb.Open(); //2nd time makes it work sometimes e.g. x64 solution
+                    }
+                    catch (Exception ex)
+                    {
+                        if (lbl_Access != null)
+                        {
+                            lbl_Access.Text = "missing Access plugin!";
+                            lbl_Access.Visible = true;
+                        }
+                        string vb = null; vb = UtilitiesFunctions.DisplayData();
+                        GenericFunctions.ShowConnectivityError(ex, "2nd FAIL to use M$ ACCESS plugin:\n" + vb);/*, lbl_Access*/
+                        //revert to SQLite
+                        if (File.Exists(tz))
+                        {
+                            ConfigRepository.Instance()["dlcm_AdditionalManipul114"] = "Yes";
+
+                            ConfigRepository.Instance()["dlcm_DBFolder"] = tz;
+                            //cnz = new SQLiteConnection("Data Source="+ ConfigRepository.Instance()["dlcm_DBFolder"]);
+                            //cnz.Open();
+
+                            //cnc = new SQLite.SQLiteConnection(ConfigRepository.Instance()["dlcm_DBFolder"]);
+
+                            //SQLiteDataAdapter myAdapter = new SQLiteDataAdapter(fcmds, cnc);
+                        }
+                        else MessageBox.Show("No Microsoft Access or SQLite databases (or access;plugins etc) available. Good Luck as (the) C-DLC Manager wont really work!");
+                    }
+                }
+            else
+                try
+                {
+                    ConfigRepository.Instance()["dlcm_DBFolder"] = tz;
+                    if (File.Exists(ConfigRepository.Instance()["dlcm_DBFolder"])) cnc = new SQLite.SQLiteConnection(ConfigRepository.Instance()["dlcm_DBFolder"]);
+                    ConfigRepository.Instance()["dlcm_AdditionalManipul114"] = "Yes";
+                }
+                catch (Exception exx)
+                {
+                    GenericFunctions.ShowConnectivityError(exx, "");/*, lbl_Access*/
+                }
+            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul114"] == "Yes")
+            //{
+            //cnz = new SQLiteConnection("Data Source="+ ConfigRepository.Instance()["dlcm_DBFolder"]);
+            //cnz.Open();              
+
+            //SQLiteDataAdapter myAdapter = new SQLiteDataAdapter(fcmds, cnc);
+            //}
+            //var tdz = ConfigRepository.Instance()["dlcm_DBFolder"];
+            //tdz = tdz.Replace("AccessDB.accdb", "SQLLiteDB.db");
+            //ConfigRepository.Instance()["dlcm_DBFolder"] = tdz;
+            //cnz = new SQLiteConnection("Data Source="+ ConfigRepository.Instance()["dlcm_DBFolder"]);
+            //cnz.Open();
+        }
         private void btnPackageImport_Click(object sender, EventArgs e)
         {
             string srcPath;

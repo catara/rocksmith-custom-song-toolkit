@@ -144,14 +144,15 @@ namespace RocksmithToolkitLib.XML
             // determine if the vocal xml arrangement uses a CustomFont
             var useCustomFont = false;
             var vocals = Vocals.LoadFromFile(arr.SongXml.File);
-            foreach (var voc in vocals.Vocal)
-            {
-                if (voc.Lyric.Length != voc.Lyric.GetValidLyric().Length)
+            if (File.Exists(arr.SongXml.File) && (vocals.Count>0))//bcapi ps4 dont crash as yet to have xmls
+                foreach (var voc in vocals.Vocal)
                 {
-                    useCustomFont = true;
-                    break;
+                    if (voc.Lyric.Length != voc.Lyric.GetValidLyric().Length)
+                    {
+                        useCustomFont = true;
+                        break;
+                    }
                 }
-            }
 
             // establish the root of the project directory
             if (String.IsNullOrEmpty(projectDir))

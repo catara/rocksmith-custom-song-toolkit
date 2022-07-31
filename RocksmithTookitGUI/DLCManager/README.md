@@ -1,15 +1,15 @@
-﻿		# Date: 29.05.2021
+﻿		# Date: 29.07.2022
 		# Document Name: Rocksmith DLC Management tool README
 						(fork of rocksmith-custom-song-toolkit)
 		# Document purpose: To describe the functionailities and the way to change, the NEW tab that enable MASS Manipulation of Rocksmith DLC Library
 							(DLC folder; including customs(CDLC), DLCs and songs embeded in the ready to ship version of Rocksmith (2014 Remastered version)) 
 
-## Rocksmith DLC Library Manager v1 b3.04 (compiled beta available in \RocksmithToolkitGUI\bin\Release)
+## Rocksmith DLC Library Manager v1 b4 (compiled beta available in \RocksmithToolkitGUI\bin\Debug\net6.0-windows10.0.22000.0)
 *(forever to be unreleased version- for my own sake and not the masses's)*
 # App Description: MASS Manipulation of Rocksmith DLC Library
 
 #Main Features:
-- Gather all DLCs metadata into 1 Microsoft Access DB
+- Gather all DLCs metadata into 1 Microsoft Access/SQLite3 DB
 	- Manage Duplicates @Import and After (NEW keep trace of them and recall them if needed)
 	- Edit Individual metadata fields
 	- Fix Songs without
@@ -18,7 +18,7 @@
 		- Lyrics
 		- the standard sufficient Audio qualiity (>128kb bitrate)
 	- Listen to songs Audio/Preview
-	- Gathers Track No./Cover/Year from Spotify & original video and playthrough from Youtube
+	- Gathers Track No./Cover/Year from Spotify & original video and playthrough from Youtube (NEW not working due to multiple spotify api updates and youtube qouta policies :))
 - Mass Modify songdetails/metadata @repack per each Rocksmith song
 	*e.g. Album Field: "<Broken><Year> - <Album> - r<Rating> - <Avail. Instr.> - <DD> - <Tuning>"
 	- Copies songs/packs directly to the PS3 by means of FTP
@@ -27,6 +27,9 @@
 - Read Current Game Library and match it to the DLCManager Library (incl. PS3)
 - Mass rename songs(Standardization) e.g. Black Keys->The Black Keys and maintain changes in a local DB
 - Manipulates the Retail songs list of Rocksmith (Rocksmith 2014 disc, or Rocksmith 2012 DLC, or Rocksmith 2012 Import disc)
+	NEW ability to insert CDLC in (PC atm PS3&PS4 later) Retail version
+- NEW when building new DLC save some todo/release notes etc
+- Export HTML (Apache server ready) setlist
 
 <img src="/RocksmithTookitGUI/DLCManager/Screenshot1.png" alt="Rocksmith DLC Library Manager Import&Pack"/>
 <img src="/RocksmithTookitGUI/DLCManager/Screenshot2.png" alt="Song Metadata DB Screen"/>
@@ -37,7 +40,7 @@
 
 ## Known Issues:
 -+ Packing of Rocksmith 2014 Retail manipulated files has 1 manual step for RS14 Retail songs for PS3
-- atm since compiled in 64b Access DB viewer not available
+- when compiled in 64b Access DB viewer not available
 - no yb parsing of links due to "no quota" Corona ggl lockdown
 - no spofity track&cover retrieval due to api change and not yet catchup w latest 3rdparty implementation 
 
@@ -105,7 +108,7 @@
 [ ] check rape me no bass
 [ ] MAMAS AND PAPASE LEAD and back vocal split
 [ ] can we have a dupli assement window :) (all 5 dupli what happened if automated)
-[ ] MAke Sure CHANGIN D THE AUDIO/PREVIEW DOES NOT deletes the old info useful for Duplciation comparison
+[ ] MAke Sure CHANGIN D THE AUDIO/PREVIEW DOES NOT deletes the old info useful for duplication comparison
 [ ] the rover preview issue , file gets a weird name
 [ ] consider multitasking DDC style
 [ ] report change in the house of flies remove ddd issue
@@ -163,7 +166,7 @@
 [] check search normal search song yb link
 [] groups cdlc id not incresed correctly as string
 [] main db duplicate needs to saves the other cdlc id in dupi field
-[ ] fixed delete on maindb duplciate checking
+[ ] fixed delete on maindb duplicate checking
 [ ] use external executable nice windo from main
 [ ] fixed saving or yb main/arrangement not to have https:\\yb.comhttps:\\yb.com
 [] check arangements and thones as maybe not all have
@@ -212,38 +215,150 @@
 [ ] perfect day merge lyrics&bass  
 [ ] fixing add standard in duplcaite was not removing older or adding doub along new id
 calculate all drop down options using pitch shifting systems and display it in maindb infobox
-
-## WiP:
-(this release)
 multi lyrics files (i wanna be your dog)
 check improv sections
 add column for order txt and 
 remove folders after file verification
 v0.9a not detected welcome home sanitarium
 show all same sanitisedtitle not alternate
-checkl Last
 add better sections improve lyrtics song für liam
 add guitar and lyrics to drums
-why is xbox loaded first ..?
 r8 clcik on current selected changes also values
-update default (update DB template)
 save descrption in xml per each option
 right click:  make 1st alternate, dynamic dd to grops (try, play, etc)
+add replace txt in title,album,artist
+version-remix?
+cehck long wems
+	try other 2013 wen conv
+pack also whos options for packing
+import also shows you options ot import
+decapitalise all album/artist sort
+standardization add multi select
+standardizationm whenj delete move back to order
+standarization mark clear duplicates
+[x]COMPATIBILITY doenst have any audio ..ti investigate maybve reference it from Main.db or check the value oif this file where files are newer better etc.
+
+[] improve button to open EoF
+[] if u press dont download it will still install it
+[] consider ApplyArtistAutoGroup multi insert into single insert logic
+	at 1st start restore db
+
+compact db doesnt work...add it manually
+qa in some tags
+not next filter MAKE as dropdow (add not old filter)
+fix manually adede vocvals
+make broken broken xmls
+add original sountrack 
+[] rerun capo check
+[] fix file repo issues (pack audit trail and groups were wipped lately)
+[]protejemois error
+why is xbox loaded first ..?
+duplicatre spotify on new stwqndardiztion
+dont duplciarte if spotify is standardization as it will create duplcairte
+add search in standarization
+add lenght into dsame dupli management logic
+	add text to same similar
+make cache window resizeble dinamically witht he objects inside
+fix load 
+moce sogs psarc to dlcpack not temp
+select only 1 platform for add songs into game type (show warnign if more are selected)
+
+
+## WiP:
+(this release)
+
+
 
 
 
 ## done:
 (prev release)
-[-] duplicate window opening bug (no aynmore)
-[-] where are covers in standardiz(select 1st artist album if spoty not avail) or cache
-[-] fix for duplciate off list building issues
-[-] save log of connectivity(select errors)
-give info on game folders available
-[-] give summary of imported songs to songs.psarc
-[-] rename songs.psarc to imsert songs in GameFiles
-[-] fixed origs dlcpack folder issue
-[-] check directory existence if on the network (get enumerate)
-[-] use local temp for temp stuff e.g. decompresion :) ? is it worth it?
+[x] theme/original score should indicate sountrack(?) (from?)
+[x] redo pack new
+[x] fix no concersion date
+[x] fix no start time vocals
+[x] improve arrangement name treatment
+[x] improve profile change 
+[x] add has_showlight (incl any arrangement name=6 or showlights)
+[x] add has_jvocals
+[x] add has_capo
+[x] add button to clean all titles
+	[x] add button for recheck all extra song details
+[x] do button to create shortcuts
+[x] redo instr as combo buttons[-] redo add karaoke etc
+	[x] check filename too (done by default)
+	[x] add cover/reinterpretation
+	[x] add remix
+	[x] add demo
+	[x] add karaoke
+	[x] add featuring (ft, ft., feat., feat, featuring)
+	[x] medley,5-6 strings, ost
+[x] fix lenght of ApplyArtistAutoGroup
+[x] remove folder -should work already but testing OK
+[x] remove arrangements and tones not in Db
+	[x] add at eop stats
+[x] check featuring
+[x] new DB template [x] update default (update DB template)
+	[x] add capo & multistrings info
+	[x] check multistrings logic if it cand be automated (not based on meta info :)) NO
+	[x] if profile removed is default then ...? yeah...
+[x] fix counpound
+[x] add save conpound
+[x] add mss for broken, grp
+[x] remove conpund after one use
+[x] add check&clean also duplicate grps entries per same dlcid
+	[x] check dlc clenup
+[x] remove error at op
+[x] improv multipl
+[x] fix pack summary
+[x] fix zero filesize
+[x] fixing multiplier rocksmitzhj
+	[] multiplied managers dont work
+[x] mcheck 1kb backup
+[x] if there is a broken update save reason in files missing
+[x] add Packed last group taht loses members after each update
+[x] make each check in maindb optional
+[x] fix capo saving/displaying
+	[x] show display w capo
+[x] overlap filter
+[x] check Last
+[x] if xml null dont break
+[x] at pack if 64 on make 49 too :)
+	[x] if no multitreat/pack no set to blank :)
+[x] red game lib doesnt work
+	[x] make erro
+	[x] count copy initial/old/lastPacked
+[x] ignore ghost
+[x] at startup pack a backup of dB aqnd copy remote
+fix 2018 albums in standardization
+	[-]  removed
+
+[-] add only songs marked Selected at adding dlc directing to game core files
+[-] chose to copy files with xcopy or filecopy when adding songs directly into core game files
+
+[-] add clean names of weird remaing chars or () vs []
+[-] fix for repack (MAJOR issue, arangements come with full name of type not 0-6)
+[-] fix error at detect alternate
+[-] fix error at deleting duplcaites
+
+[-] fix save load/groups
+
+[-] add hash of orig cache, songs, etc...
+	and use them to compare at load
+[-] add steps count on insert into gamefiles
+[-] fix pix in cache
+
+[-] run standardizatuion end of import retail
+
+[-] reuse loaded ] add ord in main groups dropdown (alittle to complicated)
+[x] fix pack
+[x] add summary of check
+[x] add lable on order
+[x] make Filter generation same in both main and db view. add groups beginning
+[x] add flag to generate tunnings
+[x] add minus prev group select
+[x] if selecting group category dont do anything
+
 
 # Version History(release date):
 	0.1(12.08.2014) prototype, 
@@ -262,7 +377,7 @@ give info on game folders available
 	0.2.0.7 (15.12.2014) New features: Add: lastconversiondata field per each arrangement, MainDb filters
 	0.2.0.8 (31.03.2015) Manage RS12, RS12 DLC & RS14 retail songs. Pending platform independent...checks on compression platform dependent...DB independece/dependence on already provided 1..play and FTP and Preview Adding
 	0.2.0.9 (30.04.2015) Implement FTP to PS3 (also as a copy to any other location)
-	0.2.0.10 (05.05.2015) save settings in Toolkit config, getrck no, groups, Add 30 sec preview midsong; close bugs on Conversion to Ps3(nin hell)
+	0.2.0.10 (05.05.2015) save settings in Toolkit config, getrck no, Groupz, Add 30 sec preview midsong; close bugs on Conversion to Ps3(nin hell)
 	0.2.0.11 (22.08.2015) remove bug on auto import if original
 	0.2.0.12 (26.09.2015) If importing an original over a alternate the alternate flag should be set no the Alternate
 	0.2.0.13 (12.11.2015) Finally implement Arrangements and Tones and song Groups	
@@ -282,8 +397,15 @@ give info on game folders available
 	1.0 b1 (29.02.2021) Making Param sorted by type and configurable in the DB
 	1.0 b2 (29.03.2021) backend fixes
 	1.0 b3 (29.05.2021) Add DLCs directyly intro GAmes fiels (songs.psarc and implicitely the hsan into cache.psarc)
-	1.0 (xx.04.2021) Released on Customforge and GitHub Release "tab" (2 versions one w all 3rd party software, one without; can be installed/decompressed and quickly used; 1 60sec video describing why you should use this)
-	1.1 (xx.06.2021) Reactivating Spotify checks
+	1.0 b4 (29.07.2021) moved to .NET6 as to allow development in windows for ARM (Apple,etc.)
+	1.0 b5 (29.08.2022) added SQLite capabiltites (removes dependency on ACCESS on Windows for ARM as sometimes not being detected)
+	1.0 b6 (9.05.2022) Add DLCs directyly intro GAmes fiels (songs.psarc and implicitely the hsan into cache.psarc)
+	1.0 b7 (9.05.2022) Last .NET Framework 4.8 based version (before migration to .NET Core 6)
+	1.0 b8 (9.05.2022) First .NET Core 7 version
+	1.0 b9 (9.05.2022) Migrating to SQL-Lite (as an option if access plugin is missing/cant be installed)
+	1.0 b10 (9.09.2022) Finalising addings songs directly to CACHE (Pc works, targetting Ps3 and Ps4)
+	1.0 b11(xx.04.2023) Released on Customforge and GitHub Release "tab" (2 versions one w all 3rd party software, one without; can be installed/decompressed and quickly used; 1 60sec video describing why you should use this)
+	1.1 (xx.06.2023) Reactivating Spotify checks
 
 # Implementation Tracking for the Main Features:
 		+1. Ability to Generate a Database with all DLC
@@ -453,6 +575,12 @@ of this folder should be directed to the respective developer.
 
 		- PKG Linker - WEBServer for PS3 HAN enabled delivered packages
 		http://www.psx-place.com/threads/pkg-linker-2-0-serve-packages-to-your-ps3-han-cfw.17252/page-20#post-125162
+
+PC/MAC custom DLC enabler 
+
+accessdatabaseengine / accessdatabaseengine64
+
+sqliteodbc_w64.exe
 
 		-DevOnly additional software
 			EOF v1.8b (c)2008-2010 T³ Software eof1.8RC11(xx-09-2020) http://ignition.customsforge.com/eof http://customsforge.com/topic/1529-latest-eof-releases-5-19-2016/page-86 -4 transforming lyrics into RS Vocals

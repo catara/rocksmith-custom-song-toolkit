@@ -531,9 +531,16 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest.Functions
         public Int32 GetMaxDifficulty(dynamic song)
         {
             var max = 0;
-            foreach (var phrase in song.Phrases)
+            try
+            {
+                foreach (var phrase in song.Phrases)
                 if (max < phrase.MaxDifficulty)
                     max = phrase.MaxDifficulty;
+            }
+            catch
+            {
+                ;
+            }
             return max;
         }
 

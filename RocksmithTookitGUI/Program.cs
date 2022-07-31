@@ -25,7 +25,7 @@ namespace RocksmithToolkitGUI
         static void Main(string[] args)
         {
             // make the logger available globally in application
-            GlobalsConfig.Log = LogManager.GetCurrentClassLogger();
+            //GlobalsConfig.Log = LogManager.GetCurrentClassLogger();//bcapinRT6
             // TODO: figure out way for native mac\linux OS
             var logPath = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "_RSToolkit_" + DateTime.Now.ToString("yyyy-MM-dd") + ".log");
 
@@ -40,7 +40,7 @@ namespace RocksmithToolkitGUI
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message + "\n\n" + e.ToString());
+                //MessageBox.Show(e.Message + "\n\n" + e.ToString());/Bcapi migrated project to CORE.NET (6) as to be able to debug on ARM (windows) architecture
                 /* DO NOTHING */
             }
 
@@ -48,25 +48,25 @@ namespace RocksmithToolkitGUI
             var assemblyConfiguration = assembly.GetCustomAttributes(typeof(AssemblyConfigurationAttribute), false).Cast<AssemblyConfigurationAttribute>().FirstOrDefault().Configuration.ToString() ?? "";
             var dtuLib = DateTime.Parse(assemblyConfiguration, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal);
 
-            GlobalsConfig.Log.Info(//OSVersion on unix will return it's Kernel version, urgh.
-                String.Format(" - RocksmithToolkitGUI: v{0}\r\n ", ToolkitVersion.RSTKGuiVersion) +
-                String.Format(" - RocksmithToolkitLib: v{0} [{1}]\r\n ", ToolkitVersion.RSTKLibVersion(), dtuLib) +
-                String.Format(" - RocksmithToolkitUpdater: v{0}\r\n ", updaterVersion) +
-                String.Format(" - Dynamic Difficulty Creator: v{0}\r\n ", FileVersionInfo.GetVersionInfo(Path.Combine(ExternalApps.TOOLKIT_ROOT, ExternalApps.APP_DDC)).ProductVersion) +
-                String.Format(" - OS: {0} ({1} bit)\r\n ", Environment.OSVersion, Environment.Is64BitOperatingSystem ? "64" : "32") +
-                String.Format(" - .NET Framework Runtime: v{0}\r\n ", Environment.Version) +
-                String.Format(" - CultureInfo: ({0}) \r\n ", CultureInfo.CurrentCulture.ToString()) +
-                String.Format(" - Current Local DateTime: [{0}]\r\n ", DateTime.Now.ToString()) +
-                String.Format(" - Current UTC DateTime: [{0}]\r\n ", DateTime.UtcNow.ToString()) +
-                String.Format(" - JIT: {0}\r\n ", JitVersionInfo.GetJitVersion()) +
-                String.Format(" - WINE_INSTALLED: {0}\r\n ", GeneralExtension.IsWine()) +
-                String.Format(" - MacOSX: {0} ", Environment.OSVersion.Platform == PlatformID.MacOSX)
-                );
+            //GlobalsConfig.Log.Info(//OSVersion on unix will return it's Kernel version, urgh. //bcapinRT6
+            //    String.Format(" - RocksmithToolkitGUI: v{0}\r\n ", ToolkitVersion.RSTKGuiVersion) +
+            //    String.Format(" - RocksmithToolkitLib: v{0} [{1}]\r\n ", ToolkitVersion.RSTKLibVersion(), dtuLib) +
+            //    String.Format(" - RocksmithToolkitUpdater: v{0}\r\n ", updaterVersion) +
+            //    String.Format(" - Dynamic Difficulty Creator: v{0}\r\n ", FileVersionInfo.GetVersionInfo(Path.Combine(ExternalApps.TOOLKIT_ROOT, ExternalApps.APP_DDC)).ProductVersion) +
+            //    String.Format(" - OS: {0} ({1} bit)\r\n ", Environment.OSVersion, Environment.Is64BitOperatingSystem ? "64" : "32") +
+            //    String.Format(" - .NET Framework Runtime: v{0}\r\n ", Environment.Version) +
+            //    String.Format(" - CultureInfo: ({0}) \r\n ", CultureInfo.CurrentCulture.ToString()) +
+            //    String.Format(" - Current Local DateTime: [{0}]\r\n ", DateTime.Now.ToString()) +
+            //    String.Format(" - Current UTC DateTime: [{0}]\r\n ", DateTime.UtcNow.ToString()) +
+            //    String.Format(" - JIT: {0}\r\n ", JitVersionInfo.GetJitVersion()) +
+            //    String.Format(" - WINE_INSTALLED: {0}\r\n ", GeneralExtension.IsWine()) +
+            //    String.Format(" - MacOSX: {0} ", Environment.OSVersion.Platform == PlatformID.MacOSX)
+            //    );
 
-            if (!Environment.Version.ToString().Contains("4.0.30319") &&
+            if (!Environment.Version.ToString().Contains("6") && !Environment.Version.ToString().Contains("Core") &&
                 ConfigRepository.Instance().GetBoolean("general_firstrun"))
             {
-                var envMsg = "The toolkit runs best with .NET 4.0.30319 installed." + Environment.NewLine +
+                var envMsg = "The toolkit runs best with .NET (Core; not Framework 4.xx) 6.0.2 installed." + Environment.NewLine +
                     "You are currently running .NET " + Environment.Version.ToString() + Environment.NewLine +
                     "Install the correct version if you experinece problems running the toolkit.   " + Environment.NewLine + Environment.NewLine +
                     "Click 'Yes' to download and install the correct version now from:" + Environment.NewLine +
@@ -90,7 +90,7 @@ namespace RocksmithToolkitGUI
                 AppDomain.CurrentDomain.UnhandledException += (s, e) =>
                 {
                     var exception = e.ExceptionObject as Exception;
-                    GlobalsConfig.Log.Error(" - Unhandled.Exception:\n\nSource: {0}\nTarget: {1}\n{2}", exception.Source, exception.TargetSite, exception.ToString());
+                    //GlobalsConfig.Log.Error(" - Unhandled.Exception:\n\nSource: {0}\nTarget: {1}\n{2}", exception.Source, exception.TargetSite, exception.ToString()); //bcapinRT6
 
                     if (MessageBox.Show(String.Format("Unhandled.Exception:\n\n{0}\nPlease send us the {1} file if you need help.  Open log file now?", 
                         exception.Message.ToString(), Path.GetFileName(logPath)), 
@@ -108,10 +108,10 @@ namespace RocksmithToolkitGUI
                     var exception = e.Exception;
                     var packerErrMsg = RocksmithToolkitLib.DLCPackage.Packer.ErrMsg.ToString();
 
-                    if (String.IsNullOrEmpty(packerErrMsg))
-                        GlobalsConfig.Log.Error(" - Application.ThreadException\n\nSource: {0}\nTarget: {1}\n{2}", exception.Source, exception.TargetSite, exception.ToString());
-                    else
-                        GlobalsConfig.Log.Error(" - Application.ThreadException\n\nSource: {0}\nTarget: {1}\n{2}\n\nPacker.ThreadException (Corrupt CDLC): {3}", exception.Source, exception.TargetSite, exception.ToString(), packerErrMsg.Trim());
+                    //if (String.IsNullOrEmpty(packerErrMsg))//bcapinRT6
+                    //    GlobalsConfig.Log.Error(" - Application.ThreadException\n\nSource: {0}\nTarget: {1}\n{2}", exception.Source, exception.TargetSite, exception.ToString());
+                    //else
+                    //    GlobalsConfig.Log.Error(" - Application.ThreadException\n\nSource: {0}\nTarget: {1}\n{2}\n\nPacker.ThreadException (Corrupt CDLC): {3}", exception.Source, exception.TargetSite, exception.ToString(), packerErrMsg.Trim());
 
                     if (exception.Message != null && exception.Message.Contains("expired"))
                     {
@@ -134,6 +134,7 @@ namespace RocksmithToolkitGUI
             }
 
             Application.EnableVisualStyles();
+            Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm(args));
         }

@@ -290,12 +290,12 @@ namespace RocksmithToolkitGUI
             if (!GeneralExtension.ValidateDisplaySettings(this, this, false, firstRun))
                 displaySettings = "\r\n  - Adjusted AutoScaleDimensions, AutoScaleMode, and AutoSize";
 
-            GlobalsConfig.Log.Info(
-                String.Format(" - App.config Status ({0})\r\n ", appConfigStatus) +
-                String.Format(" - System Display DPI Setting ({0})\r\n ", GeneralExtension.GetDisplayDpi(this)) + // validate and log runtime display setting
-                String.Format(" - System Display Screen Scale Factor ({0}%) ", GeneralExtension.GetDisplayScalingFactor(this) * 100) +
-                String.Format(displaySettings)
-                );
+            //GlobalsConfig.Log.Info( //bcapi
+            //    String.Format(" - App.config Status ({0})\r\n ", appConfigStatus) +
+            //    String.Format(" - System Display DPI Setting ({0})\r\n ", GeneralExtension.GetDisplayDpi(this)) + // validate and log runtime display setting
+            //    String.Format(" - System Display Screen Scale Factor ({0}%) ", GeneralExtension.GetDisplayScalingFactor(this) * 100) +
+            //    String.Format(displaySettings)
+            //    );
 
             // don't bug the Developers when in design mode ;)
             bool showRevNote = ConfigRepository.Instance().GetBoolean("general_showrevnote");

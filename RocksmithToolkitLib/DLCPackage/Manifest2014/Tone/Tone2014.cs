@@ -165,8 +165,15 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest2014.Tone
             var toneManifestFiles = Directory.EnumerateFiles(tmpDir, "*.json", SearchOption.AllDirectories);
             foreach (var file in toneManifestFiles)
                 foreach (Tone2014 tone in ReadFromManifest(file))
-                    if (tones.All(a => a.Name != tone.Name))
+                    try //bcapi some imports fail danko jones first date
+                    {
+                        if (tones.All(a => a.Name != tone.Name))
                         tones.Add(tone);
+                    }
+                    catch
+                    {
+                        //throw new NotSupportedException("Unknown file format exception. File not supported.");
+                    }
 
             IOExtension.DeleteDirectory(tmpDir);
 

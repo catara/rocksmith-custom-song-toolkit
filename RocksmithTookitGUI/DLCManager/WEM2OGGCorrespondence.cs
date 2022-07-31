@@ -16,74 +16,81 @@ using System.Diagnostics;
 using Ookii.Dialogs; //cue text
 using System.IO;//dir commands
 using static RocksmithToolkitGUI.DLCManager.GenericFunctions;
+using static RocksmithToolkitGUI.DLCManager.UtilitiesFunctions;
 using RocksmithToolkitLib.XmlRepository;
+using System.Data.SQLite;
+using SQLite;
 
 namespace RocksmithToolkitGUI.DLCManager
 {
     public partial class WEM2OGGCorrespondence : Form
     {
-        public WEM2OGGCorrespondence(string txt_DBFolder, string txt_TempPath, string txt_RocksmithDLCPath, OleDbConnection cnnb)
-        { 
+        //public WEM2OGGCorrespondence(string txt_DBFolder, string txt_TempPath, string txt_RocksmithDLCPath, OleDbConnection cnnb, SQLiteConnection cnnz)
+        public WEM2OGGCorrespondence(string txt_DBFolder, string txt_TempPath, string txt_RocksmithDLCPath, OleDbConnection cnnb, SQLite.SQLiteConnection cnnc)
+        {
             InitializeComponent();
             //MessageBox.Show("test0");
             DB_Path = txt_DBFolder;
             TempPath = txt_TempPath;
             RocksmithDLCPath = txt_RocksmithDLCPath;
             cnb = cnnb;
+            cnc = cnnc;
         }
 
-    private string Filename = System.IO.Path.Combine(Application.StartupPath, "Text.txt");
-    internal static string AppWD = AppDomain.CurrentDomain.BaseDirectory; //when removing DDC
-    internal static string MyAppWD = AppDomain.CurrentDomain.BaseDirectory + "\\DLCManager"; //when removing DDC
-    private BindingSource Main = new BindingSource();
-    private readonly string MESSAGEBOX_CAPTION = "StandardizationDB";
-    //private object cbx_Lead;
-    //public DataAccess da = new DataAccess();
-    //bcapi
-    public string DB_Path = "";
-    public string TempPath = "";
+        private string Filename = System.IO.Path.Combine(Application.StartupPath, "Text.txt");
+        internal static string AppWD = AppDomain.CurrentDomain.BaseDirectory; //when removing DDC
+        internal static string MyAppWD = AppDomain.CurrentDomain.BaseDirectory + "\\DLCManager"; //when removing DDC
+        private BindingSource Main = new BindingSource();
+        private readonly string MESSAGEBOX_CAPTION = "StandardizationDB";
+        //private object cbx_Lead;
+        //public DataAccess da = new DataAccess();
+        //bcapi
+        public string DB_Path = "";
+        public string TempPath = "";
         public string RocksmithDLCPath = "";
-    public DataSet dssx = new DataSet();
+        public DataSet dssx = new DataSet();
         public bool AllowORIGDeleteb = false;
         public bool AllowEncriptb = false;
         public OleDbConnection cnb;
+        //public SQLiteConnection cnz;
+        public SQLite.SQLiteConnection cnc;
         //public OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn);
 
         //private BindingSource bsPositions = new BindingSource();
         //private BindingSource bsBadges = new BindingSource();
 
         private void Standardization_Load(object sender, EventArgs e)
-    {
-        //DataAccess da = new DataAccess();
-        //MessageBox.Show("test0");
-        Populate(ref DataGridView1, ref Main);//, ref bsPositions, ref bsBadges);
-        DataGridView1.EditingControlShowing += DataGridView1_EditingControlShowing;
-    }
-
-    private void DataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
-    {
-        if (true) //(DataGridView1.CurrentCell.IsComboBoxCell())
         {
-            if (DataGridView1.Columns[DataGridView1.CurrentCell.ColumnIndex].Name == "ContactsColumn")
+            //DataAccess da = new DataAccess();
+            //MessageBox.Show("test0");
+            Populate(ref DataGridView1, ref Main);//, ref bsPositions, ref bsBadges);
+            DataGridView1.EditingControlShowing += DataGridView1_EditingControlShowing;
+        }
+
+        private void DataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            if (true) //(DataGridView1.CurrentCell.IsComboBoxCell())
             {
-                ComboBox cb = e.Control as ComboBox;
-                if (cb != null)
+                if (DataGridView1.Columns[DataGridView1.CurrentCell.ColumnIndex].Name == "ContactsColumn")
                 {
-                    cb.SelectionChangeCommitted -= _SelectionChangeCommitted;
-                    cb.SelectionChangeCommitted += _SelectionChangeCommitted;
+                    ComboBox cb = e.Control as ComboBox;
+                    if (cb != null)
+                    {
+                        cb.SelectionChangeCommitted -= _SelectionChangeCommitted;
+                        cb.SelectionChangeCommitted += _SelectionChangeCommitted;
+                    }
                 }
             }
         }
-    }
 
-    private void _SelectionChangeCommitted(object sender, EventArgs e)
-    {
-        //if (CheckBox1.Checked)
-        //{
-        //    MessageBox.Show(((DataGridViewComboBoxEditingControl)sender).Text);
-        //}
-        //else
-        //{
+        private void _SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            //if (CheckBox1.Checked)
+            //{
+            //    MessageBox.Show(((DataGridViewComboBoxEditingControl)sender).Text);
+            //}
+            //else
+            //{
             //if (bsPositions.Current != null)
             //{
             //    Int32 Index = bsPositions.Find("ContactPosition", ((DataGridViewComboBoxEditingControl)sender).Text);
@@ -96,31 +103,32 @@ namespace RocksmithToolkitGUI.DLCManager
             //                (DataRowView)bsBadges.Current).Row.Field<string>("Badge");
             //    }
             //}
-        //}
-    }
-
-    private void DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-    {
-        //MAYBE HERE CAN ACTIVATE THE INDIV CELLS
-    }
-
-    private void button1_Click(object sender, EventArgs e)
-    {
-        // DB_Path = DB_Path + "\\AccessDB.accdb"; //DLCManager.txt_DBFolder.Text
-        try
-            {
-                Process process = Process.Start(@DB_Path);
-            }
-        catch (Exception ex)
-        {
-            MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            MessageBox.Show("Can not open Standardization DB connection in StandardizationDB ! " + DB_Path);
+            //}
         }
-    }
 
-    private void DataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
-    {
-        int i;
+        private void DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            //MAYBE HERE CAN ACTIVATE THE INDIV CELLS
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            StartProcesss(@DB_Path, null);
+            // DB_Path = DB_Path + "\\AccessDB.accdb"; //DLCManager.txt_DBFolder.Text
+            //try
+            //    {
+            //        Process process = Process.Start(@DB_Path);
+            //    }
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    MessageBox.Show("Can not open Standardization DB connection in StandardizationDB ! " + DB_Path);
+            //}
+        }
+
+        private void DataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        {
+            int i;
             i = DataGridView1.SelectedCells[0].RowIndex;
             txt_ID.Text = DataGridView1.Rows[i].Cells[0].Value.ToString();
             txt_Artist.Text = DataGridView1.Rows[i].Cells[2].Value.ToString();
@@ -129,71 +137,72 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_Album_Correction.Text = DataGridView1.Rows[i].Cells[5].Value.ToString();
             //txt_AlbumArtPath_Correction.Text = DataGridView1.Rows[i].Cells[5].Value.ToString();
 
-           //if (txt_AlbumArtPath_Correction.Text != "") picbx_AlbumArtPath.ImageLocation = txt_AlbumArtPath.Text.Replace(".dds", ".png");
+            //if (txt_AlbumArtPath_Correction.Text != "") picbx_AlbumArtPath.ImageLocation = txt_AlbumArtPath.Text.Replace(".dds", ".png");
 
         }
 
-    private void button8_Click(object sender, EventArgs e)
-    {
-        int i;
-        DataSet dis = new DataSet();
+        private void button8_Click(object sender, EventArgs e)
+        {
+            int i;
+            DataSet dis = new DataSet();
 
-        i = DataGridView1.SelectedCells[0].RowIndex;
+            i = DataGridView1.SelectedCells[0].RowIndex;
 
             //DataGridView1.Rows[i].Cells[0].Value = txt_ID.Text;
             //DataGridView1.Rows[i].Cells[1].Value = txt_Artist.Text;
             DataGridView1.Rows[i].Cells[3].Value = txt_Artist_Correction.Text;
             //DataGridView1.Rows[i].Cells[3].Value = txt_Album.Text;
             DataGridView1.Rows[i].Cells[5].Value = txt_Album_Correction.Text;
-           // DataGridView1.Rows[i].Cells[6].Value = txt_AlbumArtPath_Correction.Text;
+            // DataGridView1.Rows[i].Cells[6].Value = txt_AlbumArtPath_Correction.Text;
 
             //var DB_Path = "../../../../tmp\\AccessDB.accdb;";
-            var connection = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path); //+ ";Persist Security Info=False"
+            var connection = new OleDbConnection("Provider=Microsoft." + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path); //+ ";Persist Security Info=False"
             var command = connection.CreateCommand();
             //dssx = DataGridView1;
-            using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
-        {
-                //OleDbCommand command = new OleDbCommand();
-                //Update StadardizationDB
-                //SqlCommand cmds = new SqlCommand(sqlCmd, conn2);
-                command.CommandText = "UPDATE Standardization SET ";
+            //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
+            //{
+            //OleDbCommand command = new OleDbCommand();
+            //Update StadardizationDB
+            //SqlCommand cmds = new SqlCommand(sqlCmd, conn2);
+            command.CommandText = "UPDATE Standardization SET ";
 
-                command.CommandText += "Artist_Correction = @param3, ";
-                command.CommandText += "Album_Correction = @param5 ";
-                //command.CommandText += "AlbumArtPath_Correction = @param6 ";
-                command.CommandText += "WHERE ID = " + txt_ID.Text;
+            command.CommandText += "Artist_Correction = @param3, ";
+            command.CommandText += "Album_Correction = @param5 ";
+            //command.CommandText += "AlbumArtPath_Correction = @param6 ";
+            command.CommandText += "WHERE ID = " + txt_ID.Text;
 
-                command.Parameters.AddWithValue("@param3", DataGridView1.Rows[i].Cells[3].Value.ToString() ?? DBNull.Value.ToString());
-                command.Parameters.AddWithValue("@param5", DataGridView1.Rows[i].Cells[5].Value.ToString() ?? DBNull.Value.ToString());
-                command.Parameters.AddWithValue("@param6", DataGridView1.Rows[i].Cells[6].Value.ToString() ?? DBNull.Value.ToString());
-                try
-            {
-                command.CommandType = CommandType.Text;
-                connection.Open();
-                command.ExecuteNonQuery();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                MessageBox.Show("Can not open Standardization DB connection in Standardization Edit screen ! " + DB_Path + "-" + command.CommandText);
+            command.Parameters.AddWithValue("@param3", DataGridView1.Rows[i].Cells[3].Value.ToString() ?? DBNull.Value.ToString());
+            command.Parameters.AddWithValue("@param5", DataGridView1.Rows[i].Cells[5].Value.ToString() ?? DBNull.Value.ToString());
+            command.Parameters.AddWithValue("@param6", DataGridView1.Rows[i].Cells[6].Value.ToString() ?? DBNull.Value.ToString());
 
-                throw;
-            }
-            finally
-            {
-                if (connection != null) connection.Close();
-            }
-            ////OleDbDataAdapter das = new OleDbDataAdapter(command.CommandText, cnn);
-            MessageBox.Show("Song Details Correction Saved");
+            command.CommandType = CommandType.Text;
+            UpdateDBbyExecuteNonQuery(command, cnb, cnc);
+            //    try
+            //{                connection.Open();
+            //    command.ExecuteNonQuery();
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    MessageBox.Show("Can not open Standardization DB connection in Standardization Edit screen ! " + DB_Path + "-" + command.CommandText);
+
+            //    throw;
+            //}
+            //finally
+            //{
+            //    if (connection != null) connection.Close();
+            //}
+            //////OleDbDataAdapter das = new OleDbDataAdapter(command.CommandText, cnn);
+            //MessageBox.Show("Song Details Correction Saved");
             //das.SelectCommand.CommandText = "SELECT * FROM Tones";
             //// das.Update(dssx, "Tones");
+            //}
         }
-    }
 
-    public void Populate(ref DataGridView DataGridView, ref BindingSource bs) //, ref BindingSource bsPositions, ref BindingSource bsBadges
-    {
+        public void Populate(ref DataGridView DataGridView, ref BindingSource bs) //, ref BindingSource bsPositions, ref BindingSource bsBadges
+        {
 
-            DataSet dooz = new DataSet(); dooz = SelectFromDB("Standardization", "SELECT ID, (SELECT IIF(count(*)>1,\"Yes\",\"\") as Suspect from Standardization AS O WHERE LCASE(S.Artist)=LCASE(O.Artist) and LCASE(S.Album)=LCASE(O.Album)) as Suspect, Artist, Artist_Correction, Album, Album_Correction, AlbumArt_Correction FROM Standardization as S ORDER BY Artist, Album;", "", cnb);
+            DataSet dooz = new DataSet(); dooz = SelectFromDB("Standardization", "SELECT ID, (SELECT IIF(count(*)>1,\"Yes\",\"\") as Suspect from Standardization AS O WHERE LCASE(S.Artist)=LCASE(O.Artist) and LCASE(S.Album)=LCASE(O.Album)) as Suspect, Artist, Artist_Correction, Album, Album_Correction, AlbumArt_Correction FROM Standardization as S ORDER BY Artist, Album;", "", cnb, cnc);
             //DB_Path = "../../../../tmp\\AccessDB.accdb;";
             //using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
             //{
@@ -243,8 +252,8 @@ namespace RocksmithToolkitGUI.DLCManager
 
             DataGridView.AutoGenerateColumns = false;
 
-        DataGridView.Columns.AddRange(new DataGridViewColumn[]
-            {
+            DataGridView.Columns.AddRange(new DataGridViewColumn[]
+                {
                 ID,
                 Suspect,
                 Artist,
@@ -252,13 +261,13 @@ namespace RocksmithToolkitGUI.DLCManager
                 Album,
                 Album_Correction,
                 AlbumArtPath_Correction
-            }
-        );
+                }
+            );
 
-        dssx.Tables["Standardization"].AcceptChanges();
+            dssx.Tables["Standardization"].AcceptChanges();
 
-        bs.DataSource = dssx.Tables["Standardization"];
-        DataGridView.DataSource = bs;
+            bs.DataSource = dssx.Tables["Standardization"];
+            DataGridView.DataSource = bs;
             //DataGridView.ExpandColumns();
 
             //advance or step back in the song list
@@ -292,67 +301,67 @@ namespace RocksmithToolkitGUI.DLCManager
             //ChangeRow();
         }
 
-    private class Files
-    {
+        private class Files
+        {
             public string ID { get; set; }
             public string Artist { get; set; }
             public string Artist_Correction { get; set; }
             public string Album { get; set; }
             public string Album_Correction { get; set; }
             public string AlbumArtPath_Correction { get; set; }
-    }
+        }
 
-    private Files[] files = new Files[10000];
-    
-    //Generic procedure to read and parse Standardization.DB (&others..soon)
-    public int SQLAccess(string cmd)
-    {
-        //var DB_Path = txt_DBFolder.Text + "\\Files.mdb;";
-        //Files[] files = new Files[10000];
+        private Files[] files = new Files[20000];
 
-        var MaximumSize = 0;
-            DataSet dus = new DataSet(); dus = SelectFromDB("Groups", cmd, "", cnb);
-        //rtxt_StatisticsOnReadDLCs.Text += "\n  ee= ";
-        //try
-        //{
-        //    MessageBox.Show(DB_Path);
-        //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.Jet.OLEDB.12.0;Data Source=" + DB_Path))
-        //    {
-        //        DataSet dus = new DataSet();
-        //        OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
-        //        dax.Fill(dus, "Standardization");
+        //Generic procedure to read and parse Standardization.DB (&others..soon)
+        public int SQLAccess(string cmd)
+        {
+            //var DB_Path = txt_DBFolder.Text + "\\Files.mdb;";
+            //Files[] files = new Files[10000];
 
-                var i = 0;
-                //rtxt_StatisticsOnReadDLCs.Text += "\n  54= " +dus.Tables[0].Rows.Count;
-                MaximumSize = dus.Tables[0].Rows.Count;
-                foreach (DataRow dataRow in dus.Tables[0].Rows)
-                {
-                    files[i] = new Files();
+            var MaximumSize = 0;
+            DataSet dus = new DataSet(); dus = SelectFromDB("Groups", cmd, "", cnb, cnc);
+            //rtxt_StatisticsOnReadDLCs.Text += "\n  ee= ";
+            //try
+            //{
+            //    MessageBox.Show(DB_Path);
+            //    using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft.Jet.OLEDB.12.0;Data Source=" + DB_Path))
+            //    {
+            //        DataSet dus = new DataSet();
+            //        OleDbDataAdapter dax = new OleDbDataAdapter(cmd, cnn); //WHERE id=253
+            //        dax.Fill(dus, "Standardization");
 
-                    //rtxt_StatisticsOnReadDLCs.Text += "\n  a= " + i + MaximumSize+dataRow.ItemArray[0].ToString();
-                    files[i].ID = dataRow.ItemArray[0].ToString();
-                    files[i].Artist = dataRow.ItemArray[2].ToString();
-                    files[i].Artist_Correction = dataRow.ItemArray[3].ToString();
-                    files[i].Album = dataRow.ItemArray[4].ToString();
-                    files[i].Album_Correction = dataRow.ItemArray[5].ToString();
-                    files[i].AlbumArtPath_Correction = dataRow.ItemArray[6].ToString();
-                    i++;
-                }
-                //Closing Connection
+            var i = 0;
+            //rtxt_StatisticsOnReadDLCs.Text += "\n  54= " +dus.Tables[0].Rows.Count;
+            MaximumSize = dus.Tables[0].Rows.Count;
+            foreach (DataRow dataRow in dus.Tables[0].Rows)
+            {
+                files[i] = new Files();
 
-      //  }        //        dax.Dispose();
-        //        cnn.Close();
-        //        //rtxt_StatisticsOnReadDLCs.Text += i;
-        //        //var ex = 0;
-        //    }
-        //}
-        //catch (System.IO.FileNotFoundException ee)
-        //{
-        //    MessageBox.Show(ee.Message + "Can not open Standardization DB connection ! ");
-        //    //MessageBox.Show(ee.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //rtxt_StatisticsOnReadDLCs.Text += "\n  max rows" + MaximumSize;
-        return MaximumSize;//files[10000];
-    }
+                //rtxt_StatisticsOnReadDLCs.Text += "\n  a= " + i + MaximumSize+dataRow.ItemArray[0].ToString();
+                files[i].ID = dataRow.ItemArray[0].ToString();
+                files[i].Artist = dataRow.ItemArray[2].ToString();
+                files[i].Artist_Correction = dataRow.ItemArray[3].ToString();
+                files[i].Album = dataRow.ItemArray[4].ToString();
+                files[i].Album_Correction = dataRow.ItemArray[5].ToString();
+                files[i].AlbumArtPath_Correction = dataRow.ItemArray[6].ToString();
+                i++;
+            }
+            //Closing Connection
+
+            //  }        //        dax.Dispose();
+            //        cnn.Close();
+            //        //rtxt_StatisticsOnReadDLCs.Text += i;
+            //        //var ex = 0;
+            //    }
+            //}
+            //catch (System.IO.FileNotFoundException ee)
+            //{
+            //    MessageBox.Show(ee.Message + "Can not open Standardization DB connection ! ");
+            //    //MessageBox.Show(ee.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //rtxt_StatisticsOnReadDLCs.Text += "\n  max rows" + MaximumSize;
+            return MaximumSize;//files[10000];
+        }
 
         private void btn_Close_Click(object sender, EventArgs e)
         {
@@ -362,7 +371,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private void btn_DecompressAll_Click(object sender, EventArgs e)
         {
             //txt_Description.Text = DB_Path;
-            MainDB frm = new MainDB( cnb, false);//.Replace("\\AccessDB.accdb", "")
+            MainDB frm = new MainDB(cnb, cnc, false);//.Replace("\\AccessDB.accdb", "")
             frm.Show();
         }
 
@@ -449,4 +458,4 @@ namespace RocksmithToolkitGUI.DLCManager
 
         }
     }
-} 
+}

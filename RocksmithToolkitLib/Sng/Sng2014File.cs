@@ -202,7 +202,8 @@ namespace RocksmithToolkitLib.Sng2014HSL
 
         public bool IsCustomFont()
         {
-            return !this.SymbolsTexture.SymbolsTextures[0].Font.ToNullTerminatedUTF8().Contains("lyrics.dds");
+            if (!(this.SymbolsTexture is null)) return !this.SymbolsTexture.SymbolsTextures[0].Font.ToNullTerminatedUTF8().Contains("lyrics.dds");
+            else return false;
         }
 
         public void Read(EndianBinaryReader r) {

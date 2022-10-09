@@ -1,0 +1,659 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<song version="7">
+<!-- EOF v1.8RC12 (9-26-2020) -->
+  <title>I love living in the citzy</title>
+  <arrangement>Bass</arrangement>
+  <part>1</part>
+  <offset>0.000</offset>
+  <centOffset>0</centOffset>
+  <songLength>202.105</songLength>
+  <lastConversionDateTime>8-27-22 23:49</lastConversionDateTime>
+  <startBeat>0.000</startBeat>
+  <averageTempo>120.270</averageTempo>
+  <tuning string0="0" string1="0" string2="0" string3="0" string4="0" string5="0" />
+  <capo>0</capo>
+  <artistName>Danko Jones</artistName>
+  <artistNameSort>Danko Jones</artistNameSort>
+  <albumName></albumName>
+  <albumYear></albumYear>
+  <crowdSpeed>1</crowdSpeed>
+  <arrangementProperties represent="1" bonusArr="0" standardTuning="1" nonStandardChords="0" barreChords="0" powerChords="0" dropDPower="0" openChords="0" fingerPicking="0" pickDirection="0" doubleStops="0" palmMutes="0" harmonics="0" pinchHarmonics="0" hopo="0" tremolo="0" slides="0" unpitchedSlides="0" bends="0" tapping="0" vibrato="0" fretHandMutes="0" slapPop="0" twoFingerPicking="0" fifthsAndOctaves="0" syncopation="0" bassPick="0" sustain="1" pathLead="0" pathRhythm="0" pathBass="1" />
+  <newLinkedDiffs count="0"/>
+  <linkedDiffs count="0"/>
+  <phraseProperties count="0"/>
+  <chordTemplates count="0"/>
+  <fretHandMuteTemplates count="0"/>
+  <events count="1">
+    <event time="0.000" code="TS:4/4"/>
+  </events>
+  <transcriptionTrack difficulty="-1">
+      <notes count="0"/>
+      <chords count="0"/>
+      <anchors count="0"/>
+      <handShapes count="0"/>
+  </transcriptionTrack>
+  <levels count="1">
+    <level difficulty="0">
+      <notes count="611">
+	
+<note time="10.000" string="1" fret="3" />
+        <note time="10.240" string="1" fret="3" />
+        <note time="10.460" string="1" fret="5" sustain="3" />
+        <note time="13.420" string="1" fret="3" />
+        <note time="13.670" string="1" fret="3" />
+        <note time="13.920" string="1" fret="5" sustain="3" />
+        <note time="16.900" string="1" fret="3" />
+        <note time="17.150" string="1" fret="3" />
+        <note time="17.380" string="1" fret="5" sustain="3" />
+        <note time="20.450" string="1" fret="3" />
+        <note time="20.670" string="1" fret="3" />
+        <note time="20.863" string="1" fret="5" sustain="3" />
+        <note time="23.890" string="1" fret="3" />
+        <note time="24.140" string="1" fret="3" />
+        <note time="24.370" string="1" fret="5" sustain="0.21" />
+        <note time="24.840" string="1" fret="5" />
+        <note time="25.080" string="1" fret="5" />
+        <note time="25.320" string="1" fret="5" />
+        <note time="25.560" string="1" fret="5" />
+        <note time="25.700" string="2" fret="5" />
+        <note time="26.090" string="2" fret="3" sustain="0.21" />
+        <note time="26.540" string="1" fret="5" />
+        <note time="26.780" string="1" fret="5" />
+        <note time="27.020" string="1" fret="5" />
+        <note time="27.260" string="1" fret="5" />
+        <note time="27.371" string="2" fret="5" />
+        <note time="27.760" string="2" fret="3" sustain="0.21" />
+        <note time="28.211" string="1" fret="5" />
+        <note time="28.451" string="1" fret="5" />
+        <note time="28.691" string="1" fret="5" />
+        <note time="28.931" string="1" fret="5" />
+        <note time="29.132" string="2" fret="5" />
+        <note time="29.522" string="2" fret="3" sustain="0.21" />
+        <note time="29.972" string="1" fret="5" />
+        <note time="30.212" string="1" fret="5" />
+        <note time="30.452" string="1" fret="5" />
+        <note time="30.692" string="1" fret="5" />
+        <note time="30.902" string="2" fret="5" />
+        <note time="31.292" string="2" fret="3" sustain="0.21" />
+        <note time="31.742" string="1" fret="5" />
+        <note time="31.982" string="1" fret="5" />
+        <note time="32.223" string="1" fret="5" />
+        <note time="32.462" string="1" fret="5" />
+        <note time="32.612" string="2" fret="5" sustain="0.5" />
+        <note time="33.000" string="1" fret="5" />
+        <note time="33.452" string="1" fret="5" />
+        <note time="33.692" string="1" fret="5" />
+        <note time="33.932" string="1" fret="5" />
+        <note time="34.172" string="1" fret="5" />
+        <note time="34.322" string="2" fret="5" />
+        <note time="34.713" string="2" fret="3" sustain="0.21" />
+        <note time="35.162" string="1" fret="5" />
+        <note time="35.402" string="1" fret="5" />
+        <note time="35.642" string="1" fret="5" />
+        <note time="35.882" string="1" fret="5" />
+        <note time="36.037" string="2" fret="5" />
+        <note time="36.427" string="2" fret="3" sustain="0.21" />
+        <note time="36.877" string="1" fret="5" />
+        <note time="37.117" string="1" fret="5" />
+        <note time="37.357" string="1" fret="5" />
+        <note time="37.597" string="1" fret="5" />
+        <note time="37.827" string="2" fret="5" />
+        <note time="38.217" string="2" fret="3" sustain="0.21" />
+        <note time="38.667" string="1" fret="5" />
+        <note time="38.897" string="1" fret="5" />
+        <note time="39.127" string="1" fret="5" />
+        <note time="39.357" string="1" fret="5" />
+        <note time="39.580" string="1" fret="5" />
+        <note time="39.810" string="1" fret="5" />
+        <note time="40.040" string="1" fret="5" />
+        <note time="40.270" string="1" fret="5" />
+        <note time="40.500" string="1" fret="5" />
+        <note time="40.730" string="1" fret="5" />
+        <note time="40.960" string="1" fret="5" />
+        <note time="41.190" string="1" fret="5" />
+        <note time="41.350" string="2" fret="5" />
+        <note time="41.730" string="2" fret="3" sustain="0.21" />
+        <note time="42.182" string="1" fret="5" />
+        <note time="42.412" string="1" fret="5" />
+        <note time="42.642" string="1" fret="5" />
+        <note time="42.872" string="1" fret="5" />
+        <note time="43.095" string="1" fret="5" />
+        <note time="43.325" string="1" fret="5" />
+        <note time="43.555" string="1" fret="5" />
+        <note time="43.785" string="1" fret="5" />
+        <note time="44.015" string="1" fret="5" />
+        <note time="44.245" string="1" fret="5" />
+        <note time="44.475" string="1" fret="5" />
+        <note time="44.705" string="1" fret="5" />
+        <note time="44.865" string="2" fret="5" />
+        <note time="45.255" string="2" fret="3" sustain="0.21" />
+        <note time="45.705" string="1" fret="5" />
+        <note time="45.935" string="1" fret="5" />
+        <note time="46.165" string="1" fret="5" />
+        <note time="46.395" string="1" fret="5" />
+        <note time="46.618" string="1" fret="5" />
+        <note time="46.838" string="1" fret="5" />
+        <note time="47.058" string="1" fret="5" />
+        <note time="47.278" string="1" fret="5" />
+        <note time="47.498" string="1" fret="5" />
+        <note time="47.718" string="1" fret="5" />
+        <note time="47.938" string="1" fret="5" />
+        <note time="48.168" string="1" fret="5" />
+        <note time="48.268" string="2" fret="5" />
+        <note time="48.668" string="2" fret="3" sustain="0.21" />
+        <note time="49.125" string="1" fret="5" />
+        <note time="49.355" string="1" fret="5" />
+        <note time="49.585" string="1" fret="5" />
+        <note time="49.815" string="1" fret="5" />
+        <note time="50.038" string="1" fret="5" />
+        <note time="50.258" string="1" fret="5" />
+        <note time="50.478" string="1" fret="5" />
+        <note time="50.698" string="1" fret="5" />
+        <note time="50.928" string="1" fret="5" />
+        <note time="51.148" string="1" fret="5" />
+        <note time="51.368" string="1" fret="5" />
+        <note time="51.588" string="1" fret="5" />
+        <note time="51.728" string="2" fret="5" />
+        <note time="52.118" string="2" fret="3" sustain="0.21" />
+        <note time="52.670" string="1" fret="5" />
+        <note time="52.900" string="1" fret="5" />
+        <note time="53.130" string="1" fret="5" />
+        <note time="53.360" string="1" fret="5" />
+        <note time="53.583" string="1" fret="5" />
+        <note time="53.803" string="1" fret="5" />
+        <note time="54.023" string="1" fret="5" />
+        <note time="54.243" string="1" fret="5" />
+        <note time="54.473" string="1" fret="5" />
+        <note time="54.693" string="1" fret="5" />
+        <note time="54.913" string="1" fret="5" />
+        <note time="55.133" string="1" fret="5" />
+        <note time="55.273" string="2" fret="5" />
+        <note time="55.663" string="2" fret="3" sustain="0.21" />
+        <note time="56.140" string="1" fret="5" />
+        <note time="56.370" string="1" fret="5" />
+        <note time="56.600" string="1" fret="5" />
+        <note time="56.830" string="1" fret="5" />
+        <note time="57.053" string="1" fret="5" />
+        <note time="57.273" string="1" fret="5" />
+        <note time="57.493" string="1" fret="5" />
+        <note time="57.713" string="1" fret="5" />
+        <note time="57.943" string="1" fret="5" />
+        <note time="58.163" string="1" fret="5" />
+        <note time="58.383" string="1" fret="5" />
+        <note time="58.603" string="1" fret="5" />
+        <note time="58.743" string="2" fret="5" />
+        <note time="59.133" string="2" fret="3" sustain="0.21" />
+        <note time="59.646" string="1" fret="5" />
+        <note time="59.876" string="1" fret="5" />
+        <note time="60.106" string="1" fret="5" />
+        <note time="60.336" string="1" fret="5" />
+        <note time="60.559" string="1" fret="5" />
+        <note time="60.779" string="1" fret="5" />
+        <note time="60.999" string="1" fret="5" />
+        <note time="61.219" string="1" fret="5" />
+        <note time="61.449" string="1" fret="5" />
+        <note time="61.669" string="1" fret="5" />
+        <note time="61.889" string="1" fret="5" />
+        <note time="62.109" string="1" fret="5" />
+        <note time="62.249" string="2" fret="5" />
+        <note time="62.639" string="2" fret="3" sustain="0.21" />
+        <note time="63.129" string="1" fret="5" />
+        <note time="63.359" string="1" fret="5" />
+        <note time="63.589" string="1" fret="5" />
+        <note time="63.819" string="1" fret="5" />
+        <note time="64.042" string="1" fret="5" />
+        <note time="64.262" string="1" fret="5" />
+        <note time="64.482" string="1" fret="5" />
+        <note time="64.702" string="1" fret="5" />
+        <note time="64.932" string="1" fret="5" />
+        <note time="65.152" string="1" fret="5" />
+        <note time="65.372" string="1" fret="5" />
+        <note time="65.592" string="1" fret="5" />
+        <note time="65.732" string="2" fret="5" />
+        <note time="66.122" string="2" fret="3" sustain="0.21" />
+        <note time="66.460" string="1" fret="5" />
+        <note time="66.700" string="1" fret="5" />
+        <note time="66.930" string="1" fret="5" />
+        <note time="67.165" string="1" fret="5" />
+        <note time="67.360" string="2" fret="5" />
+        <note time="67.850" string="2" fret="3" sustain="0.21" />
+        <note time="68.290" string="1" fret="5" />
+        <note time="68.520" string="1" fret="5" />
+        <note time="68.750" string="1" fret="5" />
+        <note time="68.980" string="1" fret="5" />
+        <note time="69.117" string="2" fret="5" />
+        <note time="69.607" string="2" fret="3" sustain="0.21" />
+        <note time="70.047" string="1" fret="5" />
+        <note time="70.277" string="1" fret="5" />
+        <note time="70.507" string="1" fret="5" />
+        <note time="70.737" string="1" fret="5" />
+        <note time="70.862" string="2" fret="5" />
+        <note time="71.352" string="2" fret="3" sustain="0.21" />
+        <note time="71.792" string="1" fret="5" />
+        <note time="72.020" string="1" fret="5" />
+        <note time="72.252" string="1" fret="5" />
+        <note time="72.482" string="1" fret="5" />
+        <note time="72.587" string="2" fret="5" />
+        <note time="73.077" string="2" fret="3" sustain="0.21" />
+        <note time="73.517" string="1" fret="5" />
+        <note time="73.747" string="1" fret="5" />
+        <note time="73.977" string="1" fret="5" />
+        <note time="74.207" string="1" fret="5" />
+        <note time="74.322" string="2" fret="5" sustain="0.5" />
+        <note time="74.812" string="1" fret="5" />
+        <note time="75.252" string="1" fret="5" />
+        <note time="75.482" string="1" fret="5" />
+        <note time="75.712" string="1" fret="5" />
+        <note time="75.942" string="1" fret="5" />
+        <note time="76.055" string="2" fret="5" />
+        <note time="76.545" string="2" fret="3" sustain="0.21" />
+        <note time="76.985" string="1" fret="5" />
+        <note time="77.215" string="1" fret="5" />
+        <note time="77.445" string="1" fret="5" />
+        <note time="77.675" string="1" fret="5" />
+        <note time="77.782" string="2" fret="5" />
+        <note time="78.272" string="2" fret="3" sustain="0.21" />
+        <note time="78.713" string="1" fret="5" />
+        <note time="78.942" string="1" fret="5" />
+        <note time="79.172" string="1" fret="5" />
+        <note time="79.402" string="1" fret="5" />
+        <note time="79.620" string="1" fret="3" />
+        <note time="79.840" string="1" fret="3" />
+        <note time="80.060" string="1" fret="5" sustain="3" />
+        <note time="83.090" string="1" fret="3" />
+        <note time="83.310" string="1" fret="3" />
+        <note time="83.530" string="1" fret="5" sustain="3" />
+        <note time="86.500" string="1" fret="3" />
+        <note time="86.760" string="1" fret="3" />
+        <note time="86.980" string="1" fret="5" sustain="0.21" />
+        <note time="87.000" string="1" fret="5" />
+        <note time="87.440" string="1" fret="5" />
+        <note time="87.670" string="1" fret="5" />
+        <note time="87.900" string="1" fret="5" />
+        <note time="88.130" string="1" fret="5" />
+        <note time="88.360" string="1" fret="5" />
+        <note time="88.591" string="1" fret="5" />
+        <note time="88.821" string="1" fret="5" />
+        <note time="89.051" string="1" fret="5" />
+        <note time="89.281" string="1" fret="5" />
+        <note time="89.510" string="1" fret="5" />
+        <note time="89.740" string="1" fret="5" />
+        <note time="89.967" string="2" fret="5" />
+        <note time="90.387" string="2" fret="3" sustain="0.21" />
+        <note time="90.828" string="1" fret="5" />
+        <note time="91.057" string="1" fret="5" />
+        <note time="91.287" string="1" fret="5" />
+        <note time="91.517" string="1" fret="5" />
+        <note time="91.743" string="1" fret="5" />
+        <note time="91.974" string="1" fret="5" />
+        <note time="92.204" string="1" fret="5" />
+        <note time="92.434" string="1" fret="5" />
+        <note time="92.664" string="1" fret="5" />
+        <note time="92.893" string="1" fret="5" />
+        <note time="93.123" string="1" fret="5" />
+        <note time="93.356" string="1" fret="5" />
+        <note time="93.526" string="2" fret="5" />
+        <note time="93.946" string="2" fret="3" sustain="0.21" />
+        <note time="94.387" string="1" fret="5" />
+        <note time="94.616" string="1" fret="5" />
+        <note time="94.836" string="1" fret="5" />
+        <note time="95.066" string="1" fret="5" />
+        <note time="95.292" string="1" fret="5" />
+        <note time="95.523" string="1" fret="5" />
+        <note time="95.753" string="1" fret="5" />
+        <note time="95.983" string="1" fret="5" />
+        <note time="96.213" string="1" fret="5" />
+        <note time="96.442" string="1" fret="5" />
+        <note time="96.672" string="1" fret="5" />
+        <note time="96.906" string="1" fret="5" />
+        <note time="97.006" string="2" fret="5" />
+        <note time="97.426" string="2" fret="3" sustain="0.21" />
+        <note time="97.867" string="1" fret="5" />
+        <note time="98.096" string="1" fret="5" />
+        <note time="98.316" string="1" fret="5" />
+        <note time="98.536" string="1" fret="5" />
+        <note time="98.762" string="1" fret="5" />
+        <note time="98.993" string="1" fret="5" />
+        <note time="99.203" string="1" fret="5" />
+        <note time="99.423" string="1" fret="5" />
+        <note time="99.653" string="1" fret="5" />
+        <note time="99.882" string="1" fret="5" />
+        <note time="100.112" string="1" fret="5" />
+        <note time="100.336" string="1" fret="5" />
+        <note time="100.426" string="2" fret="5" />
+        <note time="100.846" string="2" fret="3" sustain="0.21" />
+        <note time="101.287" string="1" fret="5" />
+        <note time="101.516" string="1" fret="5" />
+        <note time="101.736" string="1" fret="5" />
+        <note time="101.966" string="1" fret="5" />
+        <note time="102.192" string="1" fret="5" />
+        <note time="102.423" string="1" fret="5" />
+        <note time="102.653" string="1" fret="5" />
+        <note time="102.885" string="1" fret="5" />
+        <note time="103.113" string="1" fret="5" />
+        <note time="103.342" string="1" fret="5" />
+        <note time="103.562" string="1" fret="5" />
+        <note time="103.786" string="1" fret="5" />
+        <note time="103.919" string="2" fret="5" />
+        <note time="104.339" string="2" fret="3" sustain="0.21" />
+        <note time="104.780" string="1" fret="5" />
+        <note time="105.009" string="1" fret="5" />
+        <note time="105.229" string="1" fret="5" />
+        <note time="105.459" string="1" fret="5" />
+        <note time="105.685" string="1" fret="5" />
+        <note time="105.916" string="1" fret="5" />
+        <note time="106.146" string="1" fret="5" />
+        <note time="106.380" string="1" fret="5" />
+        <note time="106.606" string="1" fret="5" />
+        <note time="106.835" string="1" fret="5" />
+        <note time="107.055" string="1" fret="5" />
+        <note time="107.279" string="1" fret="5" />
+        <note time="107.371" string="2" fret="5" />
+        <note time="107.791" string="2" fret="3" sustain="0.21" />
+        <note time="108.233" string="1" fret="5" />
+        <note time="108.461" string="1" fret="5" />
+        <note time="108.681" string="1" fret="5" />
+        <note time="108.911" string="1" fret="5" />
+        <note time="109.137" string="1" fret="5" />
+        <note time="109.368" string="1" fret="5" />
+        <note time="109.598" string="1" fret="5" />
+        <note time="109.830" string="1" fret="5" />
+        <note time="110.058" string="1" fret="5" />
+        <note time="110.287" string="1" fret="5" />
+        <note time="110.507" string="1" fret="5" />
+        <note time="110.730" string="1" fret="5" />
+        <note time="110.826" string="2" fret="5" />
+        <note time="111.246" string="2" fret="3" sustain="0.21" />
+        <note time="111.687" string="1" fret="5" />
+        <note time="111.916" string="1" fret="5" />
+        <note time="112.136" string="1" fret="5" />
+        <note time="112.366" string="1" fret="5" />
+        <note time="112.592" string="1" fret="5" />
+        <note time="112.823" string="1" fret="5" />
+        <note time="113.053" string="1" fret="5" />
+        <note time="113.285" string="1" fret="5" />
+        <note time="113.513" string="1" fret="5" />
+        <note time="113.742" string="1" fret="5" />
+        <note time="113.962" string="1" fret="5" />
+        <note time="114.186" string="1" fret="5" />
+        <note time="114.333" string="2" fret="5" />
+        <note time="114.713" string="2" fret="3" sustain="0.21" />
+        <note time="115.154" string="1" fret="5" />
+        <note time="115.383" string="1" fret="5" />
+        <note time="115.603" string="1" fret="5" />
+        <note time="115.835" string="1" fret="5" />
+        <note time="116.058" string="2" fret="5" />
+        <note time="116.448" string="2" fret="3" sustain="0.21" />
+        <note time="116.889" string="1" fret="5" />
+        <note time="117.118" string="1" fret="5" />
+        <note time="117.338" string="1" fret="5" />
+        <note time="117.570" string="1" fret="5" />
+        <note time="117.815" string="2" fret="5" />
+        <note time="118.215" string="2" fret="3" sustain="0.21" />
+        <note time="118.616" string="1" fret="5" />
+        <note time="118.845" string="1" fret="5" />
+        <note time="119.065" string="1" fret="5" />
+        <note time="119.297" string="1" fret="5" />
+        <note time="119.565" string="2" fret="5" />
+        <note time="119.937" string="2" fret="3" sustain="0.21" />
+        <note time="120.368" string="1" fret="5" />
+        <note time="120.597" string="1" fret="5" />
+        <note time="120.817" string="1" fret="5" />
+        <note time="121.049" string="1" fret="5" />
+        <note time="121.245" string="2" fret="5" />
+        <note time="121.635" string="2" fret="3" sustain="0.21" />
+        <note time="122.076" string="1" fret="5" />
+        <note time="122.305" string="1" fret="5" />
+        <note time="122.525" string="1" fret="5" />
+        <note time="122.757" string="1" fret="5" />
+        <note time="123.075" string="2" fret="5" />
+        <note time="123.465" string="2" fret="3" sustain="0.21" />
+        <note time="123.906" string="1" fret="5" />
+        <note time="124.135" string="1" fret="5" />
+        <note time="124.355" string="1" fret="5" />
+        <note time="124.587" string="1" fret="5" />
+        <note time="124.797" string="2" fret="5" />
+        <note time="125.187" string="2" fret="3" sustain="0.21" />
+        <note time="125.628" string="1" fret="5" />
+        <note time="125.857" string="1" fret="5" />
+        <note time="126.077" string="1" fret="5" />
+        <note time="126.309" string="1" fret="5" />
+        <note time="126.507" string="2" fret="5" />
+        <note time="126.897" string="2" fret="3" sustain="0.21" />
+        <note time="127.338" string="1" fret="5" />
+        <note time="127.567" string="1" fret="5" />
+        <note time="127.787" string="1" fret="5" />
+        <note time="128.019" string="1" fret="5" />
+        <note time="128.240" string="0" fret="3" />
+        <note time="128.490" string="0" fret="3" />
+        <note time="128.730" string="0" fret="5" sustain="0.21" />
+        <note time="129.170" string="0" fret="5" />
+        <note time="129.370" string="0" fret="5" />
+        <note time="129.570" string="0" fret="5" />
+        <note time="129.780" string="0" fret="5" />
+        <note time="130.000" string="0" fret="3" />
+        <note time="130.220" string="0" fret="3" />
+        <note time="130.450" string="0" fret="5" sustain="0.21" />
+        <note time="130.928" string="0" fret="5" />
+        <note time="131.138" string="0" fret="5" />
+        <note time="131.338" string="0" fret="5" />
+        <note time="131.558" string="0" fret="5" />
+        <note time="131.778" string="0" fret="3" />
+        <note time="131.998" string="0" fret="3" />
+        <note time="132.218" string="0" fret="5" sustain="0.21" />
+        <note time="132.688" string="0" fret="5" />
+        <note time="132.908" string="0" fret="5" />
+        <note time="133.108" string="0" fret="5" />
+        <note time="133.328" string="0" fret="5" />
+        <note time="133.538" string="0" fret="3" />
+        <note time="133.748" string="0" fret="3" />
+        <note time="133.958" string="0" fret="5" sustain="0.21" />
+        <note time="134.400" string="0" fret="5" />
+        <note time="134.610" string="0" fret="5" />
+        <note time="134.820" string="0" fret="5" />
+        <note time="135.048" string="0" fret="5" />
+        <note time="135.268" string="0" fret="5" />
+        <note time="135.488" string="0" fret="5" />
+        <note time="135.698" string="0" fret="5" />
+        <note time="135.916" string="0" fret="5" />
+        <note time="136.120" string="1" fret="3" />
+        <note time="136.340" string="1" fret="5" />
+        <note time="136.540" string="2" fret="3" />
+        <note time="136.750" string="2" fret="5" />
+        <note time="137.421" string="1" fret="3" />
+        <note time="137.641" string="1" fret="5" />
+        <note time="137.841" string="2" fret="3" />
+        <note time="138.051" string="2" fret="5" />
+        <note time="138.640" string="2" fret="5" />
+        <note time="139.120" string="2" fret="3" sustain="0.21" />
+        <note time="139.568" string="1" fret="3" />
+        <note time="139.788" string="1" fret="5" />
+        <note time="139.988" string="2" fret="3" />
+        <note time="140.197" string="2" fret="5" />
+        <note time="140.869" string="1" fret="3" />
+        <note time="141.089" string="1" fret="5" />
+        <note time="141.289" string="2" fret="3" />
+        <note time="141.499" string="2" fret="5" />
+        <note time="142.088" string="2" fret="5" />
+        <note time="142.568" string="2" fret="3" sustain="0.21" />
+        <note time="143.063" string="1" fret="3" />
+        <note time="143.283" string="1" fret="5" />
+        <note time="143.483" string="2" fret="3" />
+        <note time="143.693" string="2" fret="5" />
+        <note time="144.364" string="1" fret="3" />
+        <note time="144.584" string="1" fret="5" />
+        <note time="144.784" string="2" fret="3" />
+        <note time="144.994" string="2" fret="5" />
+        <note time="145.583" string="2" fret="5" />
+        <note time="146.063" string="2" fret="3" sustain="0.21" />
+        <note time="146.511" string="1" fret="3" />
+        <note time="146.731" string="1" fret="5" />
+        <note time="146.931" string="2" fret="3" />
+        <note time="147.141" string="2" fret="5" />
+        <note time="147.812" string="1" fret="3" />
+        <note time="148.032" string="1" fret="5" />
+        <note time="148.232" string="2" fret="3" />
+        <note time="148.440" string="2" fret="5" />
+        <note time="149.031" string="2" fret="5" />
+        <note time="149.511" string="2" fret="5" />
+        <note time="149.995" string="2" fret="3" sustain="0.21" />
+        <note time="150.223" string="1" fret="5" />
+        <note time="150.443" string="1" fret="5" />
+        <note time="150.673" string="1" fret="5" />
+        <note time="150.899" string="1" fret="5" />
+        <note time="151.130" string="1" fret="5" />
+        <note time="151.360" string="1" fret="5" />
+        <note time="151.592" string="1" fret="5" />
+        <note time="151.820" string="1" fret="5" />
+        <note time="152.049" string="1" fret="5" />
+        <note time="152.269" string="1" fret="5" />
+        <note time="152.492" string="1" fret="5" />
+        <note time="152.588" string="2" fret="5" />
+        <note time="153.008" string="2" fret="3" sustain="0.21" />
+        <note time="153.449" string="1" fret="5" />
+        <note time="153.680" string="1" fret="5" />
+        <note time="153.898" string="1" fret="5" />
+        <note time="154.128" string="1" fret="5" />
+        <note time="154.354" string="1" fret="5" />
+        <note time="154.585" string="1" fret="5" />
+        <note time="154.815" string="1" fret="5" />
+        <note time="155.047" string="1" fret="5" />
+        <note time="155.275" string="1" fret="5" />
+        <note time="155.504" string="1" fret="5" />
+        <note time="155.724" string="1" fret="5" />
+        <note time="155.948" string="1" fret="5" />
+        <note time="156.095" string="2" fret="5" />
+        <note time="156.475" string="2" fret="3" sustain="0.21" />
+        <note time="156.913" string="1" fret="5" />
+        <note time="157.141" string="1" fret="5" />
+        <note time="157.361" string="1" fret="5" />
+        <note time="157.591" string="1" fret="5" />
+        <note time="157.817" string="1" fret="5" />
+        <note time="158.048" string="1" fret="5" />
+        <note time="158.278" string="1" fret="5" />
+        <note time="158.510" string="1" fret="5" />
+        <note time="158.738" string="1" fret="5" />
+        <note time="158.967" string="1" fret="5" />
+        <note time="159.187" string="1" fret="5" />
+        <note time="159.410" string="1" fret="5" />
+        <note time="159.506" string="2" fret="5" />
+        <note time="159.926" string="2" fret="3" sustain="0.21" />
+        <note time="160.367" string="1" fret="5" />
+        <note time="160.596" string="1" fret="5" />
+        <note time="160.816" string="1" fret="5" />
+        <note time="161.046" string="1" fret="5" />
+        <note time="161.272" string="1" fret="5" />
+        <note time="161.503" string="1" fret="5" />
+        <note time="161.733" string="1" fret="5" />
+        <note time="161.965" string="1" fret="5" />
+        <note time="162.193" string="1" fret="5" />
+        <note time="162.422" string="1" fret="5" />
+        <note time="162.642" string="1" fret="5" />
+        <note time="162.866" string="1" fret="5" />
+        <note time="163.013" string="2" fret="5" />
+        <note time="163.393" string="2" fret="3" sustain="0.21" />
+        <note time="163.831" string="1" fret="5" />
+        <note time="164.060" string="1" fret="5" />
+        <note time="164.280" string="1" fret="5" />
+        <note time="164.512" string="1" fret="5" />
+        <note time="164.735" string="2" fret="5" />
+        <note time="165.125" string="2" fret="3" sustain="0.21" />
+        <note time="165.566" string="1" fret="5" />
+        <note time="165.795" string="1" fret="5" />
+        <note time="166.015" string="1" fret="5" />
+        <note time="166.247" string="1" fret="5" />
+        <note time="166.492" string="2" fret="5" />
+        <note time="166.892" string="2" fret="3" sustain="0.21" />
+        <note time="167.293" string="1" fret="5" />
+        <note time="167.522" string="1" fret="5" />
+        <note time="167.742" string="1" fret="5" />
+        <note time="167.974" string="1" fret="5" />
+        <note time="168.242" string="2" fret="5" />
+        <note time="168.614" string="2" fret="3" sustain="0.21" />
+        <note time="169.045" string="1" fret="5" />
+        <note time="169.274" string="1" fret="5" />
+        <note time="169.494" string="1" fret="5" />
+        <note time="169.726" string="1" fret="5" />
+        <note time="169.922" string="2" fret="5" />
+        <note time="170.312" string="2" fret="3" sustain="0.21" />
+        <note time="170.753" string="1" fret="5" />
+        <note time="170.982" string="1" fret="5" />
+        <note time="171.202" string="1" fret="5" />
+        <note time="171.434" string="1" fret="5" />
+        <note time="171.753" string="2" fret="5" sustain="0.3" />
+
+        <note time="172.583" string="1" fret="5" />
+        <note time="172.812" string="1" fret="5" />
+        <note time="173.032" string="1" fret="5" />
+        <note time="173.264" string="1" fret="5" />
+        <note time="173.474" string="2" fret="5" />
+        <note time="173.864" string="2" fret="3" sustain="0.21" />
+        <note time="174.305" string="1" fret="5" />
+        <note time="174.534" string="1" fret="5" />
+        <note time="174.754" string="1" fret="5" />
+        <note time="174.986" string="1" fret="5" />
+        <note time="175.184" string="2" fret="5" />
+        <note time="175.574" string="2" fret="3" sustain="0.21" />
+        <note time="176.006" string="1" fret="5" />
+        <note time="176.235" string="1" fret="5" />
+        <note time="176.455" string="1" fret="5" />
+        <note time="176.687" string="1" fret="5" />
+        <note time="176.930" string="2" fret="5" />
+        <note time="177.300" string="2" fret="3" sustain="0.21" />
+        <note time="177.741" string="1" fret="5" />
+        <note time="177.970" string="1" fret="5" />
+        <note time="178.190" string="1" fret="5" />
+        <note time="178.423" string="1" fret="5" />
+        <note time="178.695" string="2" fret="5" />
+        <note time="179.067" string="2" fret="3" sustain="0.21" />
+        <note time="179.468" string="1" fret="5" />
+        <note time="179.697" string="1" fret="5" />
+        <note time="179.917" string="1" fret="5" />
+        <note time="180.149" string="1" fret="5" />
+        <note time="180.447" string="2" fret="5" />
+        <note time="180.819" string="2" fret="3" sustain="0.21" />
+        <note time="181.250" string="1" fret="5" />
+        <note time="181.479" string="1" fret="5" />
+        <note time="181.700" string="1" fret="5" />
+        <note time="181.931" string="1" fret="5" />
+        <note time="182.157" string="2" fret="5" />
+        <note time="182.527" string="2" fret="3" sustain="0.21" />
+        <note time="182.958" string="1" fret="5" />
+        <note time="183.187" string="1" fret="5" />
+        <note time="183.407" string="1" fret="5" />
+        <note time="183.639" string="1" fret="5" />
+        <note time="183.957" string="2" fret="5" />
+        <note time="184.347" string="2" fret="3" sustain="0.21" />
+        <note time="184.788" string="1" fret="5" />
+        <note time="185.017" string="1" fret="5" />
+        <note time="185.237" string="1" fret="5" />
+        <note time="185.469" string="1" fret="5" />
+        <note time="185.679" string="2" fret="5" sustain="0.1" />
+
+        <note time="186.510" string="1" fret="5" />
+        <note time="186.739" string="1" fret="5" />
+        <note time="186.959" string="1" fret="5" />
+        <note time="187.191" string="1" fret="5" />
+        <note time="187.389" string="2" fret="5" />
+        <note time="187.779" string="2" fret="3" sustain="0.21" />
+        <note time="188.207" string="1" fret="5" />
+        <note time="188.436" string="1" fret="5" />
+        <note time="188.656" string="1" fret="5" />
+        <note time="188.888" string="1" fret="5" />
+        <note time="189.206" string="2" fret="5" />
+        <note time="189.596" string="2" fret="3" sustain="0.21" />
+        <note time="190.037" string="1" fret="5" />
+        <note time="190.266" string="1" fret="5" />
+        <note time="190.486" string="1" fret="5" />
+        <note time="190.718" string="1" fret="5" />
+        <note time="190.942" string="1" fret="3" />
+        <note time="191.162" string="1" fret="3" />
+        <note time="191.382" string="1" fret="5" sustain="2.250" />
+
+      </notes>
+      <chords count="0"/>
+      <fretHandMutes count="0"/>
+      <handShapes count="0"/>
+    </level>
+  </levels>
+</song>

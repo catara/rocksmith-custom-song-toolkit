@@ -74,5 +74,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private CueTextBox txt_EoFPath;
         private CueTextBox txt_UpdateDate;
         private CueTextBox txt_PackageDate;
+        private CueTextBox txt_GPFilePath;
+        private System.Windows.Forms.Button btn_DBFolder;
     }
 }

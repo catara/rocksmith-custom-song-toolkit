@@ -113,7 +113,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_Delete = new System.Windows.Forms.Button();
             this.gbox_Cover = new System.Windows.Forms.PictureBox();
             this.txt_Top10 = new System.Windows.Forms.NumericUpDown();
-            this.chbx_Sections = new System.Windows.Forms.CheckBox();
+            this.chbx_HasSections = new System.Windows.Forms.CheckBox();
             this.chbx_Bonus = new System.Windows.Forms.CheckBox();
             this.txt_Rating = new System.Windows.Forms.NumericUpDown();
             this.chbx_LyricsChanged = new System.Windows.Forms.CheckBox();
@@ -138,9 +138,9 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_IsSingle = new System.Windows.Forms.CheckBox();
             this.chbx_IsAcoustic = new System.Windows.Forms.CheckBox();
             this.chbx_IsEP = new System.Windows.Forms.CheckBox();
-            this.chbx_IntheWorks = new System.Windows.Forms.CheckBox();
+            this.chbx_IsInTheWorks = new System.Windows.Forms.CheckBox();
             this.chbx_IsUncensored = new System.Windows.Forms.CheckBox();
-            this.chbx_ImprovedWithDM = new System.Windows.Forms.CheckBox();
+            this.chbx_IsImprovedWithDM = new System.Windows.Forms.CheckBox();
             this.chbx_Instaces = new System.Windows.Forms.CheckBox();
             this.chbx_IsFullAlbum = new System.Windows.Forms.CheckBox();
             this.btn_OpenMainDBLog = new System.Windows.Forms.Button();
@@ -148,8 +148,8 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_IsRemastered = new System.Windows.Forms.CheckBox();
             this.chbx_PackBeta = new System.Windows.Forms.CheckBox();
             this.btn_RockBandSite = new System.Windows.Forms.Button();
-            this.chbx_TrackNo = new System.Windows.Forms.CheckBox();
-            this.chbx_Cover = new System.Windows.Forms.CheckBox();
+            this.chbx_HasTrackNo = new System.Windows.Forms.CheckBox();
+            this.chbx_HasCover = new System.Windows.Forms.CheckBox();
             this.chbx_HasFeaturing = new System.Windows.Forms.CheckBox();
             this.chbx_IsDemo = new System.Windows.Forms.CheckBox();
             this.chbx_IsRemix = new System.Windows.Forms.CheckBox();
@@ -191,6 +191,15 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_IsMedley = new System.Windows.Forms.CheckBox();
             this.chbx_IsMultiStrings = new System.Windows.Forms.CheckBox();
             this.chbx_Overlap = new System.Windows.Forms.CheckBox();
+            this.btn_MODStarter = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
+            this.btn_ADD2HOT = new System.Windows.Forms.Button();
+            this.button7 = new System.Windows.Forms.Button();
+            this.bnt_DCLBuilder = new System.Windows.Forms.Button();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -226,13 +235,13 @@ namespace RocksmithToolkitGUI.DLCManager
             this.txt_BassPicking = new RocksmithToolkitGUI.CueTextBox();
             this.chbx_Lyrics = new System.Windows.Forms.CheckBox();
             this.gbox_QualityChecks = new System.Windows.Forms.GroupBox();
-            this.chbx_ShowLights = new System.Windows.Forms.CheckBox();
+            this.chbx_HasShowLights = new System.Windows.Forms.CheckBox();
             this.chbx_Original = new System.Windows.Forms.CheckBox();
             this.btn_AddSections = new System.Windows.Forms.Button();
             this.chbx_DD = new System.Windows.Forms.CheckBox();
             this.txt_AddDD = new System.Windows.Forms.NumericUpDown();
-            this.chbx_Preview = new System.Windows.Forms.CheckBox();
-            this.chbx_Author = new System.Windows.Forms.CheckBox();
+            this.chbx_HasPreview = new System.Windows.Forms.CheckBox();
+            this.chbx_HasAuthor = new System.Windows.Forms.CheckBox();
             this.chbx_BassDD = new System.Windows.Forms.CheckBox();
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -935,7 +944,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // btn_RockBand
             // 
-            this.btn_RockBand.Location = new System.Drawing.Point(788, 488);
+            this.btn_RockBand.Location = new System.Drawing.Point(1652, 226);
             this.btn_RockBand.Margin = new System.Windows.Forms.Padding(4);
             this.btn_RockBand.Name = "btn_RockBand";
             this.btn_RockBand.Size = new System.Drawing.Size(280, 44);
@@ -1471,18 +1480,18 @@ namespace RocksmithToolkitGUI.DLCManager
             0,
             0});
             // 
-            // chbx_Sections
+            // chbx_HasSections
             // 
-            this.chbx_Sections.AutoCheck = false;
-            this.chbx_Sections.AutoSize = true;
-            this.chbx_Sections.Location = new System.Drawing.Point(423, 180);
-            this.chbx_Sections.Margin = new System.Windows.Forms.Padding(4);
-            this.chbx_Sections.Name = "chbx_Sections";
-            this.chbx_Sections.Size = new System.Drawing.Size(135, 36);
-            this.chbx_Sections.TabIndex = 48;
-            this.chbx_Sections.Text = "Sections";
-            this.toolTip1.SetToolTip(this.chbx_Sections, "Song is split in different sections to help with ");
-            this.chbx_Sections.UseVisualStyleBackColor = true;
+            this.chbx_HasSections.AutoCheck = false;
+            this.chbx_HasSections.AutoSize = true;
+            this.chbx_HasSections.Location = new System.Drawing.Point(423, 180);
+            this.chbx_HasSections.Margin = new System.Windows.Forms.Padding(4);
+            this.chbx_HasSections.Name = "chbx_HasSections";
+            this.chbx_HasSections.Size = new System.Drawing.Size(135, 36);
+            this.chbx_HasSections.TabIndex = 48;
+            this.chbx_HasSections.Text = "Sections";
+            this.toolTip1.SetToolTip(this.chbx_HasSections, "Song is split in different sections to help with ");
+            this.chbx_HasSections.UseVisualStyleBackColor = true;
             // 
             // chbx_Bonus
             // 
@@ -1824,19 +1833,19 @@ namespace RocksmithToolkitGUI.DLCManager
             this.toolTip1.SetToolTip(this.chbx_IsEP, "Extended Play version");
             this.chbx_IsEP.UseVisualStyleBackColor = true;
             // 
-            // chbx_IntheWorks
+            // chbx_IsInTheWorks
             // 
-            this.chbx_IntheWorks.Appearance = System.Windows.Forms.Appearance.Button;
-            this.chbx_IntheWorks.AutoSize = true;
-            this.chbx_IntheWorks.Location = new System.Drawing.Point(159, 175);
-            this.chbx_IntheWorks.Margin = new System.Windows.Forms.Padding(4);
-            this.chbx_IntheWorks.Name = "chbx_IntheWorks";
-            this.chbx_IntheWorks.Size = new System.Drawing.Size(149, 42);
-            this.chbx_IntheWorks.TabIndex = 435;
-            this.chbx_IntheWorks.Text = "InTheWorks";
-            this.toolTip1.SetToolTip(this.chbx_IntheWorks, "In the works");
-            this.chbx_IntheWorks.UseVisualStyleBackColor = true;
-            this.chbx_IntheWorks.CheckedChanged += new System.EventHandler(this.chbx_IntheWorks_CheckedChanged);
+            this.chbx_IsInTheWorks.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chbx_IsInTheWorks.AutoSize = true;
+            this.chbx_IsInTheWorks.Location = new System.Drawing.Point(159, 175);
+            this.chbx_IsInTheWorks.Margin = new System.Windows.Forms.Padding(4);
+            this.chbx_IsInTheWorks.Name = "chbx_IsInTheWorks";
+            this.chbx_IsInTheWorks.Size = new System.Drawing.Size(149, 42);
+            this.chbx_IsInTheWorks.TabIndex = 435;
+            this.chbx_IsInTheWorks.Text = "InTheWorks";
+            this.toolTip1.SetToolTip(this.chbx_IsInTheWorks, "In the works");
+            this.chbx_IsInTheWorks.UseVisualStyleBackColor = true;
+            this.chbx_IsInTheWorks.CheckedChanged += new System.EventHandler(this.chbx_IntheWorks_CheckedChanged);
             // 
             // chbx_IsUncensored
             // 
@@ -1851,18 +1860,18 @@ namespace RocksmithToolkitGUI.DLCManager
             this.toolTip1.SetToolTip(this.chbx_IsUncensored, "Audio and-or Lyrics have been brought back to their original Matured content");
             this.chbx_IsUncensored.UseVisualStyleBackColor = true;
             // 
-            // chbx_ImprovedWithDM
+            // chbx_IsImprovedWithDM
             // 
-            this.chbx_ImprovedWithDM.Appearance = System.Windows.Forms.Appearance.Button;
-            this.chbx_ImprovedWithDM.AutoSize = true;
-            this.chbx_ImprovedWithDM.Location = new System.Drawing.Point(0, 108);
-            this.chbx_ImprovedWithDM.Margin = new System.Windows.Forms.Padding(4);
-            this.chbx_ImprovedWithDM.Name = "chbx_ImprovedWithDM";
-            this.chbx_ImprovedWithDM.Size = new System.Drawing.Size(159, 42);
-            this.chbx_ImprovedWithDM.TabIndex = 437;
-            this.chbx_ImprovedWithDM.Text = "Manipulated";
-            this.toolTip1.SetToolTip(this.chbx_ImprovedWithDM, "Improved locally with DLC Manager  (lyrics, trck,instrumntal)");
-            this.chbx_ImprovedWithDM.UseVisualStyleBackColor = true;
+            this.chbx_IsImprovedWithDM.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chbx_IsImprovedWithDM.AutoSize = true;
+            this.chbx_IsImprovedWithDM.Location = new System.Drawing.Point(0, 108);
+            this.chbx_IsImprovedWithDM.Margin = new System.Windows.Forms.Padding(4);
+            this.chbx_IsImprovedWithDM.Name = "chbx_IsImprovedWithDM";
+            this.chbx_IsImprovedWithDM.Size = new System.Drawing.Size(159, 42);
+            this.chbx_IsImprovedWithDM.TabIndex = 437;
+            this.chbx_IsImprovedWithDM.Text = "Manipulated";
+            this.toolTip1.SetToolTip(this.chbx_IsImprovedWithDM, "Improved locally with DLC Manager  (lyrics, trck,instrumntal)");
+            this.chbx_IsImprovedWithDM.UseVisualStyleBackColor = true;
             // 
             // chbx_Instaces
             // 
@@ -1955,32 +1964,32 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_RockBandSite.UseVisualStyleBackColor = true;
             this.btn_RockBandSite.Click += new System.EventHandler(this.btn_RockBandSite_Click);
             // 
-            // chbx_TrackNo
+            // chbx_HasTrackNo
             // 
-            this.chbx_TrackNo.Appearance = System.Windows.Forms.Appearance.Button;
-            this.chbx_TrackNo.AutoSize = true;
-            this.chbx_TrackNo.Location = new System.Drawing.Point(423, 246);
-            this.chbx_TrackNo.Margin = new System.Windows.Forms.Padding(4);
-            this.chbx_TrackNo.Name = "chbx_TrackNo";
-            this.chbx_TrackNo.Size = new System.Drawing.Size(110, 42);
-            this.chbx_TrackNo.TabIndex = 326;
-            this.chbx_TrackNo.Text = "TrackNo";
-            this.toolTip1.SetToolTip(this.chbx_TrackNo, "Has a Track Number");
-            this.chbx_TrackNo.UseVisualStyleBackColor = true;
+            this.chbx_HasTrackNo.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chbx_HasTrackNo.AutoSize = true;
+            this.chbx_HasTrackNo.Location = new System.Drawing.Point(423, 246);
+            this.chbx_HasTrackNo.Margin = new System.Windows.Forms.Padding(4);
+            this.chbx_HasTrackNo.Name = "chbx_HasTrackNo";
+            this.chbx_HasTrackNo.Size = new System.Drawing.Size(110, 42);
+            this.chbx_HasTrackNo.TabIndex = 326;
+            this.chbx_HasTrackNo.Text = "TrackNo";
+            this.toolTip1.SetToolTip(this.chbx_HasTrackNo, "Has a Track Number");
+            this.chbx_HasTrackNo.UseVisualStyleBackColor = true;
             // 
-            // chbx_Cover
+            // chbx_HasCover
             // 
-            this.chbx_Cover.Appearance = System.Windows.Forms.Appearance.Button;
-            this.chbx_Cover.AutoCheck = false;
-            this.chbx_Cover.AutoSize = true;
-            this.chbx_Cover.Location = new System.Drawing.Point(423, 212);
-            this.chbx_Cover.Margin = new System.Windows.Forms.Padding(4);
-            this.chbx_Cover.Name = "chbx_Cover";
-            this.chbx_Cover.Size = new System.Drawing.Size(86, 42);
-            this.chbx_Cover.TabIndex = 105;
-            this.chbx_Cover.Text = "Cover";
-            this.toolTip1.SetToolTip(this.chbx_Cover, "Shows if Songs has had a cover when imported");
-            this.chbx_Cover.UseVisualStyleBackColor = true;
+            this.chbx_HasCover.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chbx_HasCover.AutoCheck = false;
+            this.chbx_HasCover.AutoSize = true;
+            this.chbx_HasCover.Location = new System.Drawing.Point(423, 212);
+            this.chbx_HasCover.Margin = new System.Windows.Forms.Padding(4);
+            this.chbx_HasCover.Name = "chbx_HasCover";
+            this.chbx_HasCover.Size = new System.Drawing.Size(86, 42);
+            this.chbx_HasCover.TabIndex = 105;
+            this.chbx_HasCover.Text = "Cover";
+            this.toolTip1.SetToolTip(this.chbx_HasCover, "Shows if Songs has had a cover when imported");
+            this.chbx_HasCover.UseVisualStyleBackColor = true;
             // 
             // chbx_HasFeaturing
             // 
@@ -2549,6 +2558,117 @@ namespace RocksmithToolkitGUI.DLCManager
             this.toolTip1.SetToolTip(this.chbx_Overlap, "Selectd ony common records from Current and Future Filters");
             this.chbx_Overlap.UseVisualStyleBackColor = true;
             // 
+            // btn_MODStarter
+            // 
+            this.btn_MODStarter.BackColor = System.Drawing.SystemColors.Control;
+            this.btn_MODStarter.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btn_MODStarter.Location = new System.Drawing.Point(1364, 436);
+            this.btn_MODStarter.Margin = new System.Windows.Forms.Padding(0);
+            this.btn_MODStarter.Name = "btn_MODStarter";
+            this.btn_MODStarter.Size = new System.Drawing.Size(280, 44);
+            this.btn_MODStarter.TabIndex = 417;
+            this.btn_MODStarter.Text = "MODs Integrator";
+            this.toolTip1.SetToolTip(this.btn_MODStarter, "Opens Log Folder contaning Debug or Import, or Repack loggin info.");
+            this.btn_MODStarter.UseVisualStyleBackColor = false;
+            this.btn_MODStarter.Click += new System.EventHandler(this.btn_MODStarter_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(1562, 544);
+            this.button2.Margin = new System.Windows.Forms.Padding(4);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(280, 40);
+            this.button2.TabIndex = 419;
+            this.button2.Text = "M$ Access driver site";
+            this.toolTip1.SetToolTip(this.button2, "Export to tabs txt/gp5");
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click_1);
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(1850, 542);
+            this.button3.Margin = new System.Windows.Forms.Padding(4);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(280, 44);
+            this.button3.TabIndex = 418;
+            this.button3.Text = "M$ Access driver ";
+            this.toolTip1.SetToolTip(this.button3, "Used to resign packages for HAN eanble devices (e.g. PS3 SUPER Slim)");
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(1938, 490);
+            this.button4.Margin = new System.Windows.Forms.Padding(4);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(280, 40);
+            this.button4.TabIndex = 421;
+            this.button4.Text = "SQLite3 OLEDB site";
+            this.toolTip1.SetToolTip(this.button4, "Export to tabs txt/gp5");
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click_2);
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(2226, 488);
+            this.button5.Margin = new System.Windows.Forms.Padding(4);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(280, 44);
+            this.button5.TabIndex = 420;
+            this.button5.Text = "SQLite3 Driver";
+            this.toolTip1.SetToolTip(this.button5, "Used to resign packages for HAN eanble devices (e.g. PS3 SUPER Slim)");
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click_2);
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(2138, 540);
+            this.button6.Margin = new System.Windows.Forms.Padding(4);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(280, 44);
+            this.button6.TabIndex = 422;
+            this.button6.Text = "SQLite3 Command Line";
+            this.toolTip1.SetToolTip(this.button6, "Used to resign packages for HAN eanble devices (e.g. PS3 SUPER Slim)");
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
+            // btn_ADD2HOT
+            // 
+            this.btn_ADD2HOT.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btn_ADD2HOT.Location = new System.Drawing.Point(791, 256);
+            this.btn_ADD2HOT.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_ADD2HOT.Name = "btn_ADD2HOT";
+            this.btn_ADD2HOT.Size = new System.Drawing.Size(173, 40);
+            this.btn_ADD2HOT.TabIndex = 433;
+            this.btn_ADD2HOT.Text = "Add to Hot";
+            this.toolTip1.SetToolTip(this.btn_ADD2HOT, "This make the \"Monthly\" Group Add date as of NOW as to add it to the dynamic grou" +
+        "p HOT (weekly)");
+            this.btn_ADD2HOT.UseVisualStyleBackColor = true;
+            this.btn_ADD2HOT.Click += new System.EventHandler(this.btn_ADD2HOT_Click);
+            // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(1117, 297);
+            this.button7.Margin = new System.Windows.Forms.Padding(4);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(280, 40);
+            this.button7.TabIndex = 423;
+            this.button7.Text = "M$ Access driver site";
+            this.toolTip1.SetToolTip(this.button7, "Export to tabs txt/gp5");
+            this.button7.UseVisualStyleBackColor = true;
+            // 
+            // bnt_DCLBuilder
+            // 
+            this.bnt_DCLBuilder.Location = new System.Drawing.Point(1562, 590);
+            this.bnt_DCLBuilder.Margin = new System.Windows.Forms.Padding(4);
+            this.bnt_DCLBuilder.Name = "bnt_DCLBuilder";
+            this.bnt_DCLBuilder.Size = new System.Drawing.Size(280, 44);
+            this.bnt_DCLBuilder.TabIndex = 424;
+            this.bnt_DCLBuilder.Text = "DLCBuilder";
+            this.toolTip1.SetToolTip(this.bnt_DCLBuilder, "Used to resign packages for HAN eanble devices (e.g. PS3 SUPER Slim)");
+            this.bnt_DCLBuilder.UseVisualStyleBackColor = true;
+            this.bnt_DCLBuilder.Click += new System.EventHandler(this.bnt_DCLBuilder_Click);
+            // 
             // splitContainer2
             // 
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -2608,6 +2728,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // Panel1
             // 
+            this.Panel1.Controls.Add(this.btn_ADD2HOT);
             this.Panel1.Controls.Add(this.cmb_SearchFields);
             this.Panel1.Controls.Add(this.btn_GoTo);
             this.Panel1.Controls.Add(this.txt_Description);
@@ -3134,20 +3255,20 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.gbox_QualityChecks.Controls.Add(this.chbx_IsMedley);
             this.gbox_QualityChecks.Controls.Add(this.chbx_IsCover);
-            this.gbox_QualityChecks.Controls.Add(this.chbx_ShowLights);
+            this.gbox_QualityChecks.Controls.Add(this.chbx_HasShowLights);
             this.gbox_QualityChecks.Controls.Add(this.chbx_IsKaraoke);
             this.gbox_QualityChecks.Controls.Add(this.chbx_HasFeaturing);
             this.gbox_QualityChecks.Controls.Add(this.chbx_IsDemo);
             this.gbox_QualityChecks.Controls.Add(this.chbx_IsRemix);
             this.gbox_QualityChecks.Controls.Add(this.chbx_IsRemastered);
             this.gbox_QualityChecks.Controls.Add(this.chbx_IsFullAlbum);
-            this.gbox_QualityChecks.Controls.Add(this.chbx_ImprovedWithDM);
+            this.gbox_QualityChecks.Controls.Add(this.chbx_IsImprovedWithDM);
             this.gbox_QualityChecks.Controls.Add(this.chbx_IsUncensored);
-            this.gbox_QualityChecks.Controls.Add(this.chbx_IntheWorks);
+            this.gbox_QualityChecks.Controls.Add(this.chbx_IsInTheWorks);
             this.gbox_QualityChecks.Controls.Add(this.chbx_IsEP);
             this.gbox_QualityChecks.Controls.Add(this.chbx_IsAcoustic);
             this.gbox_QualityChecks.Controls.Add(this.chbx_IsSingle);
-            this.gbox_QualityChecks.Controls.Add(this.chbx_Cover);
+            this.gbox_QualityChecks.Controls.Add(this.chbx_HasCover);
             this.gbox_QualityChecks.Controls.Add(this.chbx_IsSoundtrack);
             this.gbox_QualityChecks.Controls.Add(this.chbx_IsInstrumental);
             this.gbox_QualityChecks.Controls.Add(this.chbx_IsLive);
@@ -3157,14 +3278,14 @@ namespace RocksmithToolkitGUI.DLCManager
             this.gbox_QualityChecks.Controls.Add(this.chbx_KeepDD);
             this.gbox_QualityChecks.Controls.Add(this.chbx_KeepBassDD);
             this.gbox_QualityChecks.Controls.Add(this.btn_AddSections);
-            this.gbox_QualityChecks.Controls.Add(this.chbx_TrackNo);
+            this.gbox_QualityChecks.Controls.Add(this.chbx_HasTrackNo);
             this.gbox_QualityChecks.Controls.Add(this.btn_AddDD);
             this.gbox_QualityChecks.Controls.Add(this.btn_RemoveDD);
             this.gbox_QualityChecks.Controls.Add(this.chbx_DD);
             this.gbox_QualityChecks.Controls.Add(this.txt_AddDD);
-            this.gbox_QualityChecks.Controls.Add(this.chbx_Sections);
-            this.gbox_QualityChecks.Controls.Add(this.chbx_Preview);
-            this.gbox_QualityChecks.Controls.Add(this.chbx_Author);
+            this.gbox_QualityChecks.Controls.Add(this.chbx_HasSections);
+            this.gbox_QualityChecks.Controls.Add(this.chbx_HasPreview);
+            this.gbox_QualityChecks.Controls.Add(this.chbx_HasAuthor);
             this.gbox_QualityChecks.Controls.Add(this.btn_RemoveBassDD);
             this.gbox_QualityChecks.Controls.Add(this.chbx_BassDD);
             this.gbox_QualityChecks.Controls.Add(this.txt_Rating);
@@ -3179,16 +3300,16 @@ namespace RocksmithToolkitGUI.DLCManager
             this.gbox_QualityChecks.TabStop = false;
             this.gbox_QualityChecks.Text = "DLC Details and Quality Checks";
             // 
-            // chbx_ShowLights
+            // chbx_HasShowLights
             // 
-            this.chbx_ShowLights.Appearance = System.Windows.Forms.Appearance.Button;
-            this.chbx_ShowLights.AutoSize = true;
-            this.chbx_ShowLights.Location = new System.Drawing.Point(423, 143);
-            this.chbx_ShowLights.Name = "chbx_ShowLights";
-            this.chbx_ShowLights.Size = new System.Drawing.Size(145, 42);
-            this.chbx_ShowLights.TabIndex = 445;
-            this.chbx_ShowLights.Text = "ShowLights";
-            this.chbx_ShowLights.UseVisualStyleBackColor = true;
+            this.chbx_HasShowLights.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chbx_HasShowLights.AutoSize = true;
+            this.chbx_HasShowLights.Location = new System.Drawing.Point(423, 143);
+            this.chbx_HasShowLights.Name = "chbx_HasShowLights";
+            this.chbx_HasShowLights.Size = new System.Drawing.Size(145, 42);
+            this.chbx_HasShowLights.TabIndex = 445;
+            this.chbx_HasShowLights.Text = "ShowLights";
+            this.chbx_HasShowLights.UseVisualStyleBackColor = true;
             // 
             // chbx_Original
             // 
@@ -3247,32 +3368,32 @@ namespace RocksmithToolkitGUI.DLCManager
             0,
             0});
             // 
-            // chbx_Preview
+            // chbx_HasPreview
             // 
-            this.chbx_Preview.Appearance = System.Windows.Forms.Appearance.Button;
-            this.chbx_Preview.AutoCheck = false;
-            this.chbx_Preview.AutoSize = true;
-            this.chbx_Preview.Location = new System.Drawing.Point(423, 281);
-            this.chbx_Preview.Margin = new System.Windows.Forms.Padding(4);
-            this.chbx_Preview.Name = "chbx_Preview";
-            this.chbx_Preview.Size = new System.Drawing.Size(106, 42);
-            this.chbx_Preview.TabIndex = 57;
-            this.chbx_Preview.Text = "Preview";
-            this.chbx_Preview.UseVisualStyleBackColor = true;
-            this.chbx_Preview.CheckedChanged += new System.EventHandler(this.chbx_Preview_CheckedChanged);
+            this.chbx_HasPreview.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chbx_HasPreview.AutoCheck = false;
+            this.chbx_HasPreview.AutoSize = true;
+            this.chbx_HasPreview.Location = new System.Drawing.Point(423, 281);
+            this.chbx_HasPreview.Margin = new System.Windows.Forms.Padding(4);
+            this.chbx_HasPreview.Name = "chbx_HasPreview";
+            this.chbx_HasPreview.Size = new System.Drawing.Size(106, 42);
+            this.chbx_HasPreview.TabIndex = 57;
+            this.chbx_HasPreview.Text = "Preview";
+            this.chbx_HasPreview.UseVisualStyleBackColor = true;
+            this.chbx_HasPreview.CheckedChanged += new System.EventHandler(this.chbx_Preview_CheckedChanged);
             // 
-            // chbx_Author
+            // chbx_HasAuthor
             // 
-            this.chbx_Author.Appearance = System.Windows.Forms.Appearance.Button;
-            this.chbx_Author.AutoCheck = false;
-            this.chbx_Author.AutoSize = true;
-            this.chbx_Author.Location = new System.Drawing.Point(423, 108);
-            this.chbx_Author.Margin = new System.Windows.Forms.Padding(4);
-            this.chbx_Author.Name = "chbx_Author";
-            this.chbx_Author.Size = new System.Drawing.Size(97, 42);
-            this.chbx_Author.TabIndex = 314;
-            this.chbx_Author.Text = "Author";
-            this.chbx_Author.UseVisualStyleBackColor = true;
+            this.chbx_HasAuthor.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chbx_HasAuthor.AutoCheck = false;
+            this.chbx_HasAuthor.AutoSize = true;
+            this.chbx_HasAuthor.Location = new System.Drawing.Point(423, 108);
+            this.chbx_HasAuthor.Margin = new System.Windows.Forms.Padding(4);
+            this.chbx_HasAuthor.Name = "chbx_HasAuthor";
+            this.chbx_HasAuthor.Size = new System.Drawing.Size(97, 42);
+            this.chbx_HasAuthor.TabIndex = 314;
+            this.chbx_HasAuthor.Text = "Author";
+            this.chbx_HasAuthor.UseVisualStyleBackColor = true;
             // 
             // chbx_BassDD
             // 
@@ -3985,6 +4106,14 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // btn_Encrypt
             // 
+            this.btn_Encrypt.Controls.Add(this.bnt_DCLBuilder);
+            this.btn_Encrypt.Controls.Add(this.button7);
+            this.btn_Encrypt.Controls.Add(this.button6);
+            this.btn_Encrypt.Controls.Add(this.button4);
+            this.btn_Encrypt.Controls.Add(this.button5);
+            this.btn_Encrypt.Controls.Add(this.button2);
+            this.btn_Encrypt.Controls.Add(this.button3);
+            this.btn_Encrypt.Controls.Add(this.btn_MODStarter);
             this.btn_Encrypt.Controls.Add(this.btn_EncryptManipulFolder);
             this.btn_Encrypt.Controls.Add(this.label15);
             this.btn_Encrypt.Controls.Add(this.label14);
@@ -4163,7 +4292,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.btn_GatherAttributes.Location = new System.Drawing.Point(1364, 488);
             this.btn_GatherAttributes.Margin = new System.Windows.Forms.Padding(4);
             this.btn_GatherAttributes.Name = "btn_GatherAttributes";
-            this.btn_GatherAttributes.Size = new System.Drawing.Size(588, 44);
+            this.btn_GatherAttributes.Size = new System.Drawing.Size(568, 44);
             this.btn_GatherAttributes.TabIndex = 406;
             this.btn_GatherAttributes.Text = "Gather Song Side Attributes and run Clean algorithms";
             this.btn_GatherAttributes.UseVisualStyleBackColor = true;
@@ -4173,7 +4302,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.btn_RunExternalProgramsChecks.Enabled = false;
             this.btn_RunExternalProgramsChecks.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btn_RunExternalProgramsChecks.Location = new System.Drawing.Point(1364, 436);
+            this.btn_RunExternalProgramsChecks.Location = new System.Drawing.Point(1960, 436);
             this.btn_RunExternalProgramsChecks.Margin = new System.Windows.Forms.Padding(4);
             this.btn_RunExternalProgramsChecks.Name = "btn_RunExternalProgramsChecks";
             this.btn_RunExternalProgramsChecks.Size = new System.Drawing.Size(344, 44);
@@ -4464,10 +4593,10 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // btn_SaveSetting
             // 
-            this.btn_SaveSetting.Location = new System.Drawing.Point(1960, 428);
+            this.btn_SaveSetting.Location = new System.Drawing.Point(2244, 276);
             this.btn_SaveSetting.Margin = new System.Windows.Forms.Padding(4);
             this.btn_SaveSetting.Name = "btn_SaveSetting";
-            this.btn_SaveSetting.Size = new System.Drawing.Size(280, 92);
+            this.btn_SaveSetting.Size = new System.Drawing.Size(270, 140);
             this.btn_SaveSetting.TabIndex = 333;
             this.btn_SaveSetting.Text = "Save Setting";
             this.btn_SaveSetting.UseVisualStyleBackColor = true;
@@ -5200,18 +5329,18 @@ namespace RocksmithToolkitGUI.DLCManager
         private System.Windows.Forms.CheckBox chbx_KeepBassDD;
         private System.Windows.Forms.Button btn_AddSections;
         private System.Windows.Forms.CheckBox chbx_Lyrics;
-        private System.Windows.Forms.CheckBox chbx_TrackNo;
+        private System.Windows.Forms.CheckBox chbx_HasTrackNo;
         private System.Windows.Forms.Button btn_AddDD;
         private System.Windows.Forms.Button btn_RemoveDD;
         private System.Windows.Forms.CheckBox chbx_DD;
         private NumericUpDown txt_AddDD;
-        private System.Windows.Forms.CheckBox chbx_Sections;
-        private System.Windows.Forms.CheckBox chbx_Preview;
-        private System.Windows.Forms.CheckBox chbx_Author;
+        private System.Windows.Forms.CheckBox chbx_HasSections;
+        private System.Windows.Forms.CheckBox chbx_HasPreview;
+        private System.Windows.Forms.CheckBox chbx_HasAuthor;
         private System.Windows.Forms.Button btn_RemoveBassDD;
         private System.Windows.Forms.CheckBox chbx_BassDD;
         private System.Windows.Forms.CheckBox chbx_Bonus;
-        private System.Windows.Forms.CheckBox chbx_Cover;
+        private System.Windows.Forms.CheckBox chbx_HasCover;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.ComboBox chbx_Format_Originals;
         private System.Windows.Forms.CheckBox chbx_Originals_Available;
@@ -5397,8 +5526,8 @@ namespace RocksmithToolkitGUI.DLCManager
         private System.Windows.Forms.CheckBox chbx_IsSingle;
         private System.Windows.Forms.CheckBox chbx_IsSoundtrack;
         private System.Windows.Forms.CheckBox chbx_IsUncensored;
-        private System.Windows.Forms.CheckBox chbx_IntheWorks;
-        private System.Windows.Forms.CheckBox chbx_ImprovedWithDM;
+        private System.Windows.Forms.CheckBox chbx_IsInTheWorks;
+        private System.Windows.Forms.CheckBox chbx_IsImprovedWithDM;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label3;
@@ -5450,7 +5579,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private Label label16;
         private CheckBox chbx_ExcludeBroken;
         private CheckBox chbx_Capo;
-        private CheckBox chbx_ShowLights;
+        private CheckBox chbx_HasShowLights;
         private CheckBox chbx_IsMedley;
         private CheckBox chbx_IsMultiStrings;
         private CheckBox chbx_Overlap;
@@ -5479,5 +5608,14 @@ namespace RocksmithToolkitGUI.DLCManager
         private ToolStripMenuItem previewToolStripMenuItem;
         private ToolStripMenuItem remixToolStripMenuItem;
         private ToolStripMenuItem multiStringsToolStripMenuItem;
+        private Button btn_MODStarter;
+        private Button button4;
+        private Button button5;
+        private Button button2;
+        private Button button3;
+        private Button button6;
+        private Button btn_ADD2HOT;
+        private Button bnt_DCLBuilder;
+        private Button button7;
     }
 }

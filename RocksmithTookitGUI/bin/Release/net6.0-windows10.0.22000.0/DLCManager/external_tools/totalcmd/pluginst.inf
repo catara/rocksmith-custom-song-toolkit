@@ -1,7 +1,0 @@
-[plugininstall]
-description=psarc - Plugin to extract/view/create PS3 PSARC format archives. Multi-processor version.
-type=wcx
-file=psarc.wcx
-defaultdir=psarc
-defaultextension=psarc
-

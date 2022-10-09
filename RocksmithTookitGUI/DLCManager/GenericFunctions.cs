@@ -44,6 +44,7 @@ using SQLite;
 using System.Windows.Input;
 using Microsoft.Win32;
 using static RocksmithToolkitGUI.DLCManager.UtilitiesFunctions;
+using X360.Other;
 
 namespace RocksmithToolkitGUI.DLCManager
 {
@@ -54,9 +55,34 @@ namespace RocksmithToolkitGUI.DLCManager
         public static StringBuilder errorsFound;
 
         public static void OpenDb()
-        {
+        {/*OleDbConnection cnc*/
+            if (cnb.State.ToString() == "Open") return;//notsure if ever reached
+            //ConfigRepository.Instance()["dlcm_AccessDLLVersion"] = "ACE.OLEDB.12.0";
             var tz = ConfigRepository.Instance()["dlcm_DBFolder"];
-            tz = tz.Replace("AccessDB.accdb", "SQLLiteDB.db");
+            //OleDbConnection cnf = null;
+            //tz = tz.Replace("AccessDB.accdb", "SQLLiteDB.db");
+#if (DEBUG)
+            {
+                DialogResult result1 = DialogResult.Cancel;
+                result1 = MessageBox.Show("Select DB (mandatory when in debug project mode)\n1. SQL-Lite3 (Yes)\n2. M$ Access (No)\n\nCurrently set value: "
+                    + (ConfigRepository.Instance()["dlcm_AdditionalManipul114"] == "Yes" ? "SQL-Lite3" : "M$ Access") + "\n" + tz
+                , MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (result1 == DialogResult.Yes)
+                {
+                    ConfigRepository.Instance()["dlcm_AdditionalManipul114"] = "Yes";
+                    ConfigRepository.Instance()["dlcm_DBFolder"] = tz.Replace("AccessDB.accdb", "SQLLiteDB.db");
+                }
+                if (result1 == DialogResult.No)
+                {
+                    ConfigRepository.Instance()["dlcm_AdditionalManipul114"] = "No";
+                    ConfigRepository.Instance()["dlcm_DBFolder"] = tz.Replace("SQLLiteDB.db", "AccessDB.accdb");
+                    cnb = new OleDbConnection("Provider=Microsoft." + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Persist Security" +
+                " Info=False;Mode= Share Deny None;Data Source=" + ConfigRepository.Instance()["dlcm_DBFolder"]);
+                }
+            }
+#endif
+            DBPathChange(c("dlcm_DBFolder"), c("dlcm_Configurations"));
             if (ConfigRepository.Instance()["dlcm_AdditionalManipul114"] != "Yes")
                 try
                 {
@@ -73,20 +99,22 @@ namespace RocksmithToolkitGUI.DLCManager
                     catch (Exception ex)
                     {
                         string vb = null; vb = DisplayData();
-                        ShowConnectivityError(ex, "2nd FAIL to use M$ ACCESS plugin:\n" + vb);/*, null*/
+                        ShowConnectivityError(ex, "NO M$ DB plugin Currently found (" + cnb.ConnectionString.ToString() + ")\n:" + DisplayData() + "\n2nd FAIL to use M$ ACCESS plugin:\n" + vb + "\n\nError:" + ex);/*, null*/
                         //revert to SQLite
-                        if (File.Exists(tz))
+                        if (File.Exists(tz.Replace("AccessDB.accdb", "SQLLiteDB.db")))
                         {
                             ConfigRepository.Instance()["dlcm_AdditionalManipul114"] = "Yes";
-                            ConfigRepository.Instance()["dlcm_DBFolder"] = tz;
+                            ConfigRepository.Instance()["dlcm_DBFolder"] = tz.Replace("AccessDB.accdb", "SQLLiteDB.db"); ;
                         }
-                        else MessageBox.Show("No Microsoft Access or SQLite databases (or access;plugins etc) available. Good Luck as (the) C-DLC Manager wont really work!");
+                        else MessageBox.Show("No Microsoft Access or SQLite databases" +
+                            //" i.e.: C:\\Program Files\\SQLite ODBC Driver for Win64 (existing: "+ (Directory.Exists("C:\\Program Files\\SQLite ODBC Driver for Win64") ? "true":"false")+ ")" +
+                            "\n(or access;plugins etc) available. Good Luck as (the) C-DLC Manager wont really work!");
                     }
                 }
             else
                 try
                 {
-                    ConfigRepository.Instance()["dlcm_DBFolder"] = tz;
+                    ConfigRepository.Instance()["dlcm_DBFolder"] = tz.Replace("AccessDB.accdb", "SQLLiteDB.db");
                     if (File.Exists(ConfigRepository.Instance()["dlcm_DBFolder"])) cnc = new SQLite.SQLiteConnection(ConfigRepository.Instance()["dlcm_DBFolder"]);
                     ConfigRepository.Instance()["dlcm_AdditionalManipul114"] = "Yes";
                 }
@@ -95,12 +123,251 @@ namespace RocksmithToolkitGUI.DLCManager
                     ShowConnectivityError(exx, "");/*, null*/
                 }
         }
+
+        public static bool DBPathChange(string txt_DBFolder, string chbx_Configurations)
+        {
+            bool t = PathChange(txt_DBFolder, chbx_Configurations);
+            return t;
+        }
+
+        static public bool PathChange(string txt_DBFolder, string chbx_Configurations)
+        {
+
+            var tt = ConfigRepository.Instance()["dlcm_DBFolder"];
+            //var tr = cnb.DataSource.ToString();
+            //var tz = cnc.DatabasePath.ToString();
+            try
+            {
+                if (!File.Exists(txt_DBFolder)) dbmissingHandle("");
+                var cnn = "";
+                if (cnb is not null)
+                {
+                    if (cnb is not null) if (cnb.DataSource.Contains(".accdb") && cnb.DataSource == c("dlcm_DBFolder")) return false;
+                        else if (c("dlcm_DBFolder").Contains(".accdb")) cnn = cnb.DataSource;
+                }//if (cnb.DataSource.Contains(".accdb")) cnn = cnb.DataSource;
+                if (cnc is not null)
+                {
+                    if (cnc is not null) if (cnc.DatabasePath.Contains(".db") && cnc.DatabasePath == c("dlcm_DBFolder")) return false;
+                        else if (c("dlcm_DBFolder").Contains(".db")) cnn = cnc.DatabasePath;
+                } //if (cnc.DatabasePath.Contains(".db")) cnn = cnc.DatabasePath;
+
+                if (cnn == "") return false;
+
+                DialogResult result1 = DialogResult.No;
+                result1 = MessageBox.Show("Do you want change DB (\nconnection: " + cnn + "\n param: " + c("dlcm_DBFolder") +
+                    ")?\n\nIf you chose No you can still modify/update profile, then change DB", "DB Change DETECTED!!", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+                if (result1 == DialogResult.No) return false;
+                if (File.Exists(txt_DBFolder))
+                {
+                    var cmd = "SELECT * FROM Groups WHERE Groupz=\"" + txt_DBFolder + "\" AND Comments =\"dlcm_DBFolder\" AND Profile_Name=\"" + chbx_Configurations + "\" and Type=\"Profile\";";
+
+                    if (cnn is not null && cnn != "")
+                    {
+                        DialogResult result2 = DialogResult.No;
+                        DataSet ddzv = new DataSet(); ddzv = SelectFromDB("Groups", cmd, txt_DBFolder, cnb, cnc);
+                        int max = ddzv.Tables.Count > 0 ? ddzv.Tables.Count : 0;
+                        if (txt_DBFolder != tt && max == 0) result2 = MessageBox.Show("Do you want to automatically Save the DB Folder Path change to " + txt_DBFolder
+                            + ") in the Profile (" + chbx_Configurations + ") or MANUALLY update entry in ACCDB/DB, Groupz table, entry/Comments field: dlcm_DBFolder, Groupz value.", "DB Change DETECTED!!", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+                        if (result2 == DialogResult.No) ;
+                        else
+                        {
+                            var cmdz = "UPDATE Groups SET Groupz=\"" + txt_DBFolder + "\" WHERE Comments=\"dlcm_DBFolder\" AND Profile_Name=\"" + chbx_Configurations + "\" and Type=\"Profile\";";
+                            DataSet dts = new DataSet(); dts = UpdateDB("Groups", cmdz, cnb, cnc);
+                            //MessageBox.Show("Note Prev DB Profile's DB folder is not changed automatically, so you need to udpate that yourself in the old DB."
+                            //       , MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                    }
+
+                    try
+                    {
+                        if (cnb is not null) cnb.Close(); if (cnc is not null) cnc.Close();
+                        cnb.ConnectionString = "Provider=Microsoft." + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Persist Security Info=False;Mode= Share Deny None;Data Source=" + txt_DBFolder;
+                        OpenDb();
+                    }
+                    catch (Exception ex)
+                    {; }
+                    //ConfigRepository.Instance()["dlcm_DBFolder"] = txt_DBFolder.Text;
+
+                    cmd = "UPDATE Groups SET Groupz=\"" + txt_DBFolder + "\" WHERE Comments=\"dlcm_DBFolder\" AND Type=\"Profile\" AND Profile_Name=\"Default\"";/*AND Comments=\"" + c(dss.Tables[0].Rows[j][0].ToString()) + "\"chbx_Configurations.Text*/
+                    UpdateDB("Groups", cmd, cnb, cnc);
+                    cmd = "UPDATE Groups SET Groupz=\"Default\" WHERE Comments=\"dlcm_Configurations\" AND Type=\"Profile\" AND Profile_Name=\"Default\"";/*AND Comments=\"" + c(dss.Tables[0].Rows[j][0].ToString()) + "\"chbx_Configurations.Text*/
+                    UpdateDB("Groups", cmd, cnb, cnc);
+
+                    //if (txt_DBFolder != MyAppWD + "\\..\\AccessDB.accdb" || txt_DBFolder != MyAppWD + "\\..\\SLQLiteDB.db") chbx_DefaultDB.Checked = false;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                dbmissingHandle(ex.Message.ToString());
+            }
+            return true;
+        }
+        public static void dbmissingHandle(string ex)
+        {
+            UpdateLog(DateTime.Now, ex, true, c("dlcm_TempPath"), "", "DLCManager", null, null);
+            var missing = false; DateTime zipdate = new DateTime(1900, 1, 1); var fil = ""; long fill = 0;
+            if (!File.Exists(ConfigRepository.Instance()["dlcm_DBFolder"]))
+            {
+                DialogResult result1 = DialogResult.No;
+                if (File.Exists(AppWD + "\\AccessDB.accdb"))
+                {
+                    System.IO.FileInfo f1 = null;
+                    System.IO.FileInfo f2 = null;
+                    try
+                    {
+                        f1 = new System.IO.FileInfo(AppWD + "\\AccessDB.accdb");
+                        f2 = new System.IO.FileInfo(AppWD + "\\SQLLiteDB.db");
+                        var ct1 = f1.CreationTime;
+                        var sz1 = f1.Length;
+                        var ct2 = f2.CreationTime;
+                        var sz2 = f2.Length;
+
+                        //getlastbackups
+                        if (Directory.Exists(Path.GetDirectoryName(c("dlcm_DBFolder")) + "\\0_temp"))
+                        {
+                            System.IO.DirectoryInfo downloadedMessageInfo2 = new DirectoryInfo(Path.GetDirectoryName(c("dlcm_DBFolder")) + "\\0_temp");
+                            foreach (FileInfo file in downloadedMessageInfo2.GetFiles())
+                            {
+                                if (!file.FullName.Contains(".gz")) continue;
+                                fil = file.FullName;
+                                fill = file.Length;
+                                if (zipdate < file.CreationTime) zipdate = file.CreationTime;
+                            }
+                        }
+                        UpdateLog(DateTime.Now, "Finished processing "+ Path.GetDirectoryName(c("dlcm_DBFolder")) + "\\0_temp searching for backups"
+                            , false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
+                        System.IO.DirectoryInfo downloadedMessageInfo1 = new DirectoryInfo(AppWD);
+                        foreach (FileInfo file in downloadedMessageInfo1.GetFiles())
+                        {
+                            if (!file.FullName.Contains(".gz")) continue;
+                            fil = file.FullName;
+                            fill = file.Length;
+                            if (zipdate < file.CreationTime) zipdate = file.CreationTime;
+                        }
+                        UpdateLog(DateTime.Now, "Finished processing " + AppWD+" searching for backups"
+                            , false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
+                        System.IO.DirectoryInfo downloadedMessageInfo3 = new DirectoryInfo(c("dlcm_0_temp") + "\\0_temp\\");
+                        foreach (FileInfo file in downloadedMessageInfo3.GetFiles())
+                        {
+                            if (!file.FullName.Contains(".gz")) continue;
+                            fil = file.FullName;
+                            fill = file.Length;
+                            if (zipdate < file.CreationTime) zipdate = file.CreationTime;
+                        }
+                        UpdateLog(DateTime.Now, "Finished processing " + c("dlcm_0_temp") + "\\0_temp\\ searching for backups"
+                            , false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
+                        System.IO.DirectoryInfo downloadedMessageInfo4 = new DirectoryInfo(c("dlcm_0_temp"));
+                        foreach (FileInfo file in downloadedMessageInfo4.GetFiles())
+                        {
+                            if (!file.FullName.Contains(".gz")) continue;
+                            fil = file.FullName;
+                            fill = file.Length;
+                            if (zipdate < file.CreationTime) zipdate = file.CreationTime;
+                        }
+                        UpdateLog(DateTime.Now, "Finished processing " + c("dlcm_0_temp")  + " searching for backups"
+                            , false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
+
+                        result1 = MessageBox.Show("DB file not found: " + ConfigRepository.Instance()["dlcm_DBFolder"] + "!" +
+                            "\n\n(Yes)Do you want to restore last Saved/Backed-up DBs? (" + fil + ", date: " + zipdate + ",size:" + fill + ")" +
+                            "\ninto target folder?\n\n" +
+                            "(No) " + (!Directory.Exists(Path.GetDirectoryName(c("dlcm_DBFolder"))) ? "Create path:" : "") + " Copy template DBs ( " +
+                            "(\nAccessDB " + ct1 + " " + sz1 + ";\nSQLLiteDB " + ct2 + " " + sz2 + ") to: " + Path.GetDirectoryName(c("dlcm_DBFolder")) +
+                            "\n\n(Cancel) will reference to the DB Template in Program folder: " + AppWD
+                            , MESSAGEBOX_CAPTION, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation);
+                    }
+                    catch (Exception ezx)
+                    {
+                        var tsst = "Error ..." + ezx; UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
+                    }
+                }
+
+
+                if (result1 == DialogResult.Yes)
+                {
+                    //DialogResult result2 = DialogResult.No;
+                    //result2 = MessageBox.Show("(Yes) Want to use decompressed backup files with timestamp: " + zipdate +
+                    //    "\n\n(No) Or default to the DB Template in Program folder: " + AppWD
+                    //       , MESSAGEBOX_CAPTION, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+
+                    //if (result2 == DialogResult.Yes) 
+
+                    unzipdb(Path.GetDirectoryName(c("dlcm_DBFolder")), fil);//unzip
+                    if (!File.Exists(ConfigRepository.Instance()["dlcm_DBFolder"])) missing = true;
+                    else missing = false;
+                }
+                else if (result1 == DialogResult.No)
+                {
+                    //var Temp_Path_Import = txt_TempPath.Text;
+                    //var dflt_Path_Import = txt_TempPath.Text + "\\0_to_temp";
+                    //var old_Path_Import = txt_TempPath.Text + "\\0_old";
+                    //var dataPath = txt_TempPath.Text + "\\0_data";
+                    //var broken_Path_Import = txt_TempPath.Text + "\\0_broken";
+                    //var dupli_Path_Import = txt_TempPath.Text + "\\0_duplicate";
+                    //var dlcpacks = txt_TempPath.Text + "\\0_dlcpacks";
+                    //var repacked_Path = txt_TempPath.Text + "\\0_repacked";
+                    //var repacked_XBOXPath = txt_TempPath.Text + "\\0_repacked\\XBOX360";
+                    //var repacked_PCPath = txt_TempPath.Text + "\\0_repacked\\PC";
+                    //var repacked_MACPath = txt_TempPath.Text + "\\0_repacked\\MAC";
+                    //var repacked_PSPath = txt_TempPath.Text + "\\0_repacked\\PS3";
+                    //var Log_PSPath = txt_TempPath.Text + "\\0_log";
+                    //var AlbumCovers_PSPath = txt_TempPath.Text + "\\0_albumCovers";
+                    //var Archive_Path = txt_TempPath.Text + "\\0_archive";
+                    //var Temp_Path = txt_TempPath.Text + "\\0_temp";
+                    //var log_Path = ConfigRepository.Instance()["dlcm_LogPath"] == "" ? ConfigRepository.Instance()["dlcm_TempPath"] + "\\0_log" : ConfigRepository.Instance()["dlcm_LogPath"];
+                    //string pathDLC = txt_RocksmithDLCPath.Text; DialogResult res = new DialogResult();
+                    //CreateTempFolderStructure(Temp_Path_Import, old_Path_Import, broken_Path_Import, dupli_Path_Import, dlcpacks,
+                    //pathDLC, repacked_Path, repacked_XBOXPath, repacked_PCPath, repacked_MACPath, repacked_PSPath, log_Path, AlbumCovers_PSPath, Log_PSPath, Archive_Path, dataPath, Temp_Path, dflt_Path_Import);
+                    if (!Directory.Exists(Path.GetDirectoryName(c("dlcm_DBFolder"))))
+                        try
+                        {
+                            Directory.CreateDirectory(Path.GetDirectoryName(c("dlcm_DBFolder")));
+                        }
+                        catch (Exception ezx)
+                        {
+                            var tsst = "Error at path create..." + ezx; UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
+                        }
+                    if (!Directory.Exists(Path.GetDirectoryName(c("dlcm_DBFolder")))) missing = true;
+                    else
+                    {
+                        //    ConfigRepository.Instance()["dlcm_DBFolder"] = AppWD + "\\AccessDB.accdb";
+                        //    MessageBox.Show("As could not create Path missing, DB was Defaulted to: " + ConfigRepository.Instance()["dlcm_DBFolder"],
+                        //MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
+                        //}
+                        FileCopy(AppWD + "\\AccessDB.accdb", Path.GetDirectoryName(c("dlcm_DBFolder")) + "\\AccessDB.accdb", true, 1, false);
+                        FileCopy(AppWD + "\\SQLLiteDB.db", Path.GetDirectoryName(c("dlcm_DBFolder")) + "\\SQLLiteDB.db", true, 1, false);
+                        FileCopy(AppWD + "\\LinkDB.accdb", Path.GetDirectoryName(c("dlcm_DBFolder")) + "\\LinkDB.accdb", true, 1, false);
+                        missing = false;
+                    }
+                }
+                else if (result1 == DialogResult.Cancel) missing = true;
+            }
+
+            if (missing)/*&& (Directory.Exists(ConfigRepository.Instance()["dlcm_DBFolder"]))*/
+            {
+                ConfigRepository.Instance()["dlcm_DBFolder"] = AppWD + "\\AccessDB.accdb";
+                ConfigRepository.Instance()["dlcm_DBFolder"] = ConfigRepository.Instance()["dlcm_DBFolder"] + ((ConfigRepository.Instance()["dlcm_AdditionalManipul114"] != "Yes") ? "\\..\\AccessDB.accdb" : "\\..\\SQLLiteDB.db");
+                MessageBox.Show("As DB Path missing, DB was Defaulted to: " + ConfigRepository.Instance()["dlcm_DBFolder"],
+                    MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            //cnb.ConnectionString = "Provider=Microsoft." + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Persist Security Info=False;Mode= Share Deny None;Data Source=" + ConfigRepository.Instance()["dlcm_DBFolder"];
+            //timestamp = 
+            UpdateLog(DateTime.Now, "DB" +
+            "(s: AccessDB.accdb-restored(" + File.Exists(Path.GetDirectoryName(c("dlcm_DBFolder")) + "\\AccessDB.accdb") + ")," +
+            "\nLinkDB.accdb-restored(" + File.Exists(Path.GetDirectoryName(c("dlcm_DBFolder")) + "\\LinkDB.accdb") + ")," +
+            "\nSQLLiteDB.db-restored(" + File.Exists(Path.GetDirectoryName(c("dlcm_DBFolder")) + "\\SQLLiteDB.db") + "),)" +
+            "\n set to: " + ConfigRepository.Instance()["dlcm_DBFolder"], true, c("dlcm_TempPath"), "", "DLCManager", null, null);
+        }
+
         public static void ShowConnectivityError(Exception ex, string txt)/*, System.Windows.Forms.Label lbl*/
         {
-            var mssg = "You need to Download Connectivity patch 32/64 bit to match your version of Office @ " +
-         txt + ".\n" + "Reinstall in case you feel/see plugin there or is not diplayed when manually checking by running in Windows PowerShell:\n" +
-         "(New-Object system.data.oledb.oledbenumerator).GetElements() | select SOURCES_NAME, SOURCES_DESCRIPTION\n" +
-         "and if intending to install the x64 variant of plugin please note in order to have it on top of Office 32bit then you need to decompress it and the .msi with /passive flag";
+            var mssg = "You need to Download Connectivity patch 32/64 bit v2010 (allows usage by 3rd party DB editors;also avail. at: " +
+                AppWD + "\\AccessDatabaseEngine.exe)/2013-2016 (assumingly bet perf/comp)  to match your version of Office @ " +
+         txt + ".\n" + "Reinstall in case you feel/see plugin there or is not diplayed when manually checking by running in Windows PowerShell:\n\n" +
+         "(New-Object system.data.oledb.oledbenumerator).GetElements() | select SOURCES_NAME, SOURCES_DESCRIPTION\n\n" +
+         "and if intending to install the x64 variant of plugin, please note in order to have it on top of Office 32bit," +
+         " then you need to decompress it (64b also avail. at: " + c("dlcm_AccessACE.OLEDB.16.0Local64b") + ") and the .msi with /passive flag\n\nError:ex";
 
             //Download and install plugin from Microsoft website
             if (ex.Message.IndexOf("The 'Microsoft.ACE.OLEDB.") > -1 && ex.Message.IndexOf("provider is not registered on the local machine.") > -1)
@@ -113,15 +380,18 @@ namespace RocksmithToolkitGUI.DLCManager
                 else if (c("dlcm_ShowConenctivityOnce") == "Maybe") return;
                 //Use locally saved 2016 installation kit 
                 var xx = "";
-                if (File.Exists(c("dlcm_AccessACE.OLEDB.16.0Local64b")) || File.Exists(c("dlcm_AccessACE.OLEDB.16.0Local32b")))
+                if (File.Exists(c("dlcm_AccessACE.OLEDB.16.0Local64b")) || File.Exists(c("dlcm_AccessACE.OLEDB.16.0Local32b")) || File.Exists(c("dlcm_sqliteodbc")))
                 {
                     DialogResult result1 = DialogResult.Cancel;
-                    result1 = MessageBox.Show("As no M$ Access connectivity plugin was found," +
-                    " Do you want to:\n 1. (Yes) Install the locally stored 32 bit version" +
-                    "\n 2. (No) Install the locally stored 64 bit version , or" +
+                    result1 = MessageBox.Show("Plugins Currently found for " + cnb.ConnectionString.ToString() + ":\n" + DisplayData()
+                        + "\nAs no M$ Access connectivity plugin was found," +
+                    " Do you want to:\n 1. (Yes) Install the locally stored 32 bit version (if matching your Office installation;" +
+                    " if interested in using 3rd party Freeware ACCDB Editors <best is the 2010 version>)" +
+                    "\n 2. (No) Install the locally stored 64 bit version (if matching your Excel installation) , or" +
                     "\n 3. (Cancel)" +
                     "\n \ta) Download by your self using the subsecvent instructions" +
-                    "\n \tb) Use SQL-lite3 as DB (you can still use M$ Access (LINKDB.accdb) to access the DB using a OLEDBC plugin)."
+                    "\n \tb) Use SQL-lite3 as DB (you can still use M$ Access (LINKDB.accdb) to access the DB using a OLEDBC plugin i.e.\n(1) " +
+                    c("dlcm_AccessACE.OLEDB.16.0Local64b") + "\n(2) " + c("dlcm_AccessACE.OLEDB.16.0Local32b") + "\n(3) " + c("dlcm_sqliteodbc") + ").\n\nError:" + ex
                     , MESSAGEBOX_CAPTION, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
 
                     if (result1 == DialogResult.Yes) xx = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, c("dlcm_AccessACE.OLEDB.16.0Local32b"));
@@ -139,9 +409,8 @@ namespace RocksmithToolkitGUI.DLCManager
                         else
                         {
                             DialogResult result3 = DialogResult.Cancel;
-                            result3 = MessageBox.Show("1. (Yes) Use M$ Access " +
-                                "\n2. (No) Use SQL-lite3"
-                            , MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                            result3 = MessageBox.Show("1. (Yes) Use M$ Access \n2. (No) Use SQL-lite3\n3. (Cancel) Don't use any DB (or any DCLM feature :) )"
+                            , MESSAGEBOX_CAPTION, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
 
                             if (result3 == DialogResult.No) ;
                             if (result3 == DialogResult.Yes)
@@ -150,6 +419,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                 , ConfigRepository.Instance()["dlcm_Access" + ConfigRepository.Instance()["dlcm_AccessDLLVersion"]], "Error @Import", false, false, true, "", "", "");
                                 frm2.ShowDialog();
                             }
+                            if (result3 == DialogResult.Cancel) ;
                         }
                     }
                     else
@@ -187,7 +457,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             }
                             var tsst = "Erro0 ..." + exx; var timestamp = UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", null, null);
                             //MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            MessageBox.Show("Can not open Local Access plugin install ! " + xx);
+                            MessageBox.Show("Can not open Local M$ Access plugin install ! " + xx);
                         }
                 }
 
@@ -203,6 +473,54 @@ namespace RocksmithToolkitGUI.DLCManager
             }
         }
 
+        public static void BackupDB(bool zip)/*, System.Windows.Forms.Label lbl*/
+        {
+            var dtt = System.DateTime.Now.ToString("yyyyMMdd HHmmssfff");
+            var timestamp = System.DateTime.Now;
+
+            var zipFile = c("dlcm_TempPath") + "\\0_temp\\" + dtt.Replace("/", "").Replace(":", "").Substring(0, 8) + ".gz";// "C:\data\myzip.zip";
+            if (!File.Exists(zipFile) && zip)
+            {
+                timestamp = UpdateLog(timestamp, "Create zip", true, c("dlcm_TempPath"), "", "DLCManager", null, null);
+                //try { cnb/*.*/Close(); cnc.Close(); } catch (Exception ex) {; }
+
+                //AddFileToZip(zipFile, c("dlcm_DBFolder")); //Remove_Content_Types_FromZip(zipFile);
+                AddFileToZip(zipFile, Path.GetDirectoryName(c("dlcm_DBFolder")) + "\\AccessDB.accdb");
+                AddFileToZip(zipFile, Path.GetDirectoryName(c("dlcm_DBFolder")) + "\\SQLLiteDB.db");
+                AddFileToZip(zipFile, Path.GetDirectoryName(c("dlcm_DBFolder")) + "\\LinkDB.accdb");
+
+                //copy to remote
+                // FileCopy(c("dlcm_DBFolder"), c("dlcm_0_temp") + "\\0_temp\\" + dtt.Replace("/", "").Replace(":", "").Substring(0, 8) + ".gz", true, 1, false);
+                FileCopy(zipFile, c("dlcm_0_temp") + "\\0_temp\\" + dtt.Replace("/", "").Replace(":", "").Substring(0, 8) + ".gz", true, 1, false);
+                timestamp = UpdateLog(timestamp, "Remote copied zip: " + File.Exists(c("dlcm_0_temp") + "\\0_temp\\" + dtt.Replace("/", "").Replace(":", "").Substring(0, 8) + ".gz")
+                    , true, c("dlcm_TempPath"), "", "DLCManager", null, null);
+
+                //copy internally
+                FileCopy(zipFile, AppWD + "\\dbbackup.gz", true, 1, false);
+                FileCopy(Path.GetDirectoryName(c("dlcm_DBFolder")) + "\\AccessDB.accdb", AppWD + "\\AccessDB.accdb", true, 1, false);
+                FileCopy(Path.GetDirectoryName(c("dlcm_DBFolder")) + "\\SQLLiteDB.db", AppWD + "\\SQLLiteDB.db", true, 1, false);
+                FileCopy(Path.GetDirectoryName(c("dlcm_DBFolder")) + "\\LinkDB.accdb", AppWD + "\\LinkDB.accdb", true, 1, false);
+                timestamp = UpdateLog(timestamp, "Local backup: done (true/false) AccessDB.accdb: " + File.Exists(AppWD + "\\AccessDB.accdb") +
+                "Local backup: done SQLLiteDB.accdb: " + File.Exists(AppWD + "\\SQLLiteDB.db") +
+                    "Local backup: done LinkDB.accdb: " + File.Exists(AppWD + "\\LinkDB.accdb"), true, c("dlcm_TempPath"), "", "DLCManager", null, null);
+                //.Replace("DLCManager\\external_tools", "")
+                try
+                {
+                    var x = new System.IO.FileInfo(zipFile).Length;
+                    if (File.Exists(zipFile))
+                        if (new System.IO.FileInfo(zipFile).Length <= 100)
+                        {
+                            timestamp = UpdateLog(timestamp, "Error at zip create (" + x + ")", true, c("dlcm_TempPath"), "", "DLCManager", null, null);
+                            DeleteFile(zipFile, true);
+                            AddFileToZip(zipFile, c("dlcm_DBFolder"));
+                        }
+                    OpenDb();
+
+                    timestamp = UpdateLog(timestamp, "EndCreate zip", true, c("dlcm_TempPath"), "", "DLCManager", null, null);
+                }
+                catch (Exception ex) { UpdateLog(timestamp, "Error at Create zip", true, c("dlcm_TempPath"), "", "DLCManager", null, null); }/*, lbl_Access*/
+            }
+        }
         static public string GetExtraAttributes(string origFN, string noMFN, string gom, string SongDisplayName, string Album, string PackageAuthor, string Name, string Artist)
         {
             var Is_MultiTrack = ""; var MultiTrack_Version = "";
@@ -375,7 +693,8 @@ namespace RocksmithToolkitGUI.DLCManager
             if ("Yes" == Titl.Split(';')[1] && Titl.Split(';')[0].Length > 6)
             { IsAcoustic = "Yes"; SongDisplayName = Titl.Split(';')[0].TrimEnd().TrimStart().Replace(" ()", ""); LiveDetails += gom.IndexOf(multxt) <= gom.Length - 4 ? "" : gom.Replace(gom.Substring(0, SongDisplayName.IndexOf(multxt) + 4), ""); }
             //var r = "";
-
+            //1234567891011
+            //1213141616171819202122
             return Is_MultiTrack + ";" + MultiTrack_Version + ";" + IsLive + ";" + LiveDetails + ";" + IsAcoustic + ";" + IsSingle + ";" + IsSoundtrack + ";" + IsInstrumental + ";" + IsEP + ";" + IsUncensored + ";" + IsFullAlbum + ";"
                 + IsRemastered + ";" + InTheWorks + ";" + IsKaraoke + ";" + IsDemo + ";" + HasFeaturing + ";" + IsRemix + ";" + IsCover + ";" + SongDisplayName + ";" + Album + ";" + IsMedley + ";" + IsMultiStrings;
         }
@@ -1148,7 +1467,20 @@ namespace RocksmithToolkitGUI.DLCManager
                     if (Filtertxt.Substring(0, 5) == "Group")
                         //var SearchCmd6 = ;SELECT * FROM Main u LEFT JOIN Groups AS m ON m.CDLC_ID = CSTR(u.ID) WHERE m.Groupz =  \"Zoe\"
                         //SearchCmd += "CSTR(u.ID) IN (" + "SELECT m.CDLC_ID FROM Groups AS m WHERE m.CDLC_ID = CSTR(u.ID) AND m.Groupz =  \"" + Filtertxt.Substring(6, Filtertxt.Length - 6).Trim() + "\"" + ")";
-                        SearchCmd = "SELECT u.ID FROM Main u LEFT JOIN Groups AS m ON m.CDLC_ID = CSTR(u.ID) WHERE m.Groupz =  \"" + Filtertxt.Substring(6, Filtertxt.Length - 6).Trim() + "\"";// + ")";
+                        if (!Filtertxt.Contains("Top " + c("dlcm_maxsongsinweekly") + "(weekly)"))
+                            SearchCmd = "SELECT u.ID FROM Main u LEFT JOIN Groups AS m ON m.CDLC_ID = CSTR(u.ID) WHERE m.Groupz =  \"" + Filtertxt.Substring(6, Filtertxt.Length - 6).Trim() + "\"";// + ")";
+                        else
+                        {
+                            SearchCmd = "SELECT Top " + c("dlcm_maxsongsinweekly") +
+                             " CDLC_ID FROM Groups WHERE Type=\"DLC\" AND Groupz=\"Hot (monthly)\" ORDER BY ID DESC";
+                            DataSet dvs = new DataSet();
+                            dvs = SelectFromDB("Groups", SearchCmd, "", cnb, cnc);
+                            var nores = dvs.Tables.Count == 0 ? 0 : dvs.Tables[0].Rows.Count; var idss = "";
+                            if (nores > 0)
+                                for (var l = 0; l < nores; l++)
+                                    idss += dvs.Tables[0].Rows[l].ItemArray[0].ToString() + ", ";
+                            SearchCmd = "SELECT u.ID FROM Main u where u.ID  in (" + idss + "0)";
+                        }
                     break;
                 default:
                     break;
@@ -3669,8 +4001,8 @@ namespace RocksmithToolkitGUI.DLCManager
                         + ";" + SongRecord[0].BasedOn_CF + ";" + SongRecord[0].BasedOn_Tabs + ";" + SongRecord[0].Spotify_Song_ID + ";" + SongRecord[0].Description + ";" + SongRecord[0].ToDos
                         + ";" + SongRecord[0].ToneDetails + ";" + "Yes"
                         + ";" + ";" + "Yes" + ";" + "Yes" + ConfigRepository.Instance()["dlcm_EoFPath"]
-                        + ";" + ";" + SongRecord[0].PackingDate + ";" + SongRecord[0].UpdateVersionDate
-                        + "Author,DLC_Name,TrackNo,Version,CDLCID,txt_EoFPath,YBLink,BasedOnYB,BasedOnCF,TabLinks,Spotify,Description,toDo,ToneDetails,SaveInVerisonInfo,SaveInDB,SaveRemotely,SaveRemotelyPath,PackageDate,UpdateDate";
+                        + ";" + ";" + SongRecord[0].PackingDate + ";" + SongRecord[0].UpdateVersionDate + ";" + SongRecord[0].BasedOn_GP
+                        + "Author,DLC_Name,TrackNo,Version,CDLCID,txt_EoFPath,YBLink,BasedOnYB,BasedOnCF,TabLinks,Spotify,Description,toDo,ToneDetails,SaveInVerisonInfo,SaveInDB,SaveRemotely,SaveRemotelyPath,PackageDate,UpdateDate,BasedOn_GP";
 
                         data.ToolkitInfo.PackageComment = ConfigRepository.Instance()["dlcm_GlobalTempVariable"] + data.ToolkitInfo.PackageComment;
                         ConfigRepository.Instance()["dlcm_Global2TempVariable"] = "\nSongDisplayName: " + data.SongInfo.SongDisplayName +
@@ -4391,7 +4723,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     }
                 }
                 e.Result = "done";
-                cnb.Close();
+                //cnb.Close();
             }
             catch (Exception ee)
             {
@@ -4658,7 +4990,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 //  try { File.Move(g + ".orig", g); } catch (Exception Ex56) { tsst = "Error at REstore TH ..." + Ex56; timestamp = startT; UpdateLog(timestamp, tsst, false, tmpPath, multithreadname, windw, null, null); }
             }
 
-            cnb.Close();
+            //cnb.Close();
 
             if (File.Exists(AudioPath))
             { if (File.Exists(AudioPath + ".orig")) DeleteFile(AudioPath + ".orig", false); }

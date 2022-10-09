@@ -35,6 +35,7 @@ using RocksmithToolkitLib.ToolkitTone;
 using MakePedalSetting = RocksmithToolkitLib.ToolkitTone.ToolkitPedal;
 using System.Data.OleDb;
 using RocksmithToolkitGUI.DLCManager;
+using static RocksmithToolkitGUI.DLCManager.UtilitiesFunctions;
 
 namespace RocksmithToolkitGUI.DLCPackageCreator
 {
@@ -613,6 +614,9 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 if (!String.IsNullOrEmpty(arr.GlyphsXmlPath))
                     arr.GlyphsXmlPath = arr.GlyphsXmlPath.RelativeTo(basePath);
             }
+
+            //save additional metadata
+            packageData.ToolkitInfo.PackageComment = ConfigRepository.Instance()["dlcm_GlobalTempVariable"] + packageData.ToolkitInfo.PackageComment;
 
             try
             {
@@ -1899,7 +1903,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 }
                 catch (Exception ex)
                 {
-                    DLCManager.GenericFunctions.ShowConnectivityError(ex, "FAIL to use M$ ACCESS plugin:\n");/*, null*/
+                    DLCManager.GenericFunctions.ShowConnectivityError(ex, "FAIL to use SQLLite :\n");/*, null*/
                 }
                 //Is_MultiTrack = ag[0]; MultiTrack_Version = ag[1]; IsLive = ag[2]; LiveDetails = ag[3]; IsAcoustic = ag[4]; IsSingle = ag[5]; IsSoundtrack = ag[6]; IsInstrumental = ag[7]; IsEP = ag[8]; IsUncensored = ag[9];
                 //IsFullAlbum = ag[10]; IsRemastered = ag[11]; InTheWorks = ag[12]; IsKaraoke = ag[13]; IsDemo = ag[14]; HasFeaturing = ag[15]; IsRemix = ag[16]; IsCover = ag[17];
@@ -2922,11 +2926,12 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             if (cbx.Text.Contains("PS3") && !JavaBool)
             {
                 JavaBool = true;
-                if (!RijndaelEncryptor.IsJavaInstalled())
-                {
-                    MessageBox.Show("Unable to generate PS3 package, since Java isn't present on this machine.", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    cbx.Checked = cbx.Enabled = false;
-                }
+                CheckJava();
+                //if (!RijndaelEncryptor.IsJavaInstalled())
+                //{
+                //    MessageBox.Show("Unable to generate PS3 package, since Java isn't present on this machine.", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //    cbx.Checked = cbx.Enabled = false;
+                //}
             }
             if (PlatformPC || PlatformMAC)
             {

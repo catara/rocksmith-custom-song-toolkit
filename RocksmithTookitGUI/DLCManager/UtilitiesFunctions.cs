@@ -49,6 +49,17 @@ using Windows.Devices.Geolocation;
 using Swan;
 using X360.Other;
 using System.ComponentModel.Design;
+using System.Windows.Documents;
+using System.Data.Common;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
+using System.Data.SqlClient;
+using System.Dynamic;
+using System.Transactions;
+using System.IO.Compression;
+using static System.Data.Entity.Infrastructure.Design.Executor;
+using static System.Net.WebRequestMethods;
+using File = System.IO.File;
 
 namespace RocksmithToolkitGUI.DLCManager
 {
@@ -664,6 +675,7 @@ namespace RocksmithToolkitGUI.DLCManager
             public string Has_JVocals { get; set; }
             public string Is_Medley { get; set; }
             public string Is_MultiStrings { get; set; }
+            public string BasedOn_GP { get; set; }
         }
 
         //public static SpotifyWebAPI _spotify = new SpotifyWebAPI
@@ -696,21 +708,14 @@ namespace RocksmithToolkitGUI.DLCManager
             }
             reader.Close();
             string AccessDBAsValue = string.Empty;
-            ret = "\n\nSOFTWARE\\Classes:\n";
+            ret += "\n\nSOFTWARE\\Classes:\n";
             RegistryKey rkACDBKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Classes");
             if (rkACDBKey != null)
-            {
                 //int lnSubKeyCount = 0;
                 //lnSubKeyCount =rkACDBKey.SubKeyCount; 
                 foreach (string subKeyName in rkACDBKey.GetSubKeyNames())
-                {
                     if (subKeyName.Contains("Microsoft.ACE.OLEDB"))
-                    {
-
                         ret += subKeyName + "\n";// do something what you want do
-                    }
-                }
-            }
             return ret;
         }
 
@@ -1447,6 +1452,8 @@ namespace RocksmithToolkitGUI.DLCManager
             }
             if (slctcmd == "SELECT DISTINCT CAST(CapoFret as numeric) as CapoFret FROM Arrangements WHERE CapoFret<>' AND CapoFret<>'0';")
                 ;
+            if (slctcmd.Contains(".") && !slctcmd.ToUpper().Contains(" AS "))
+                ;
             for (var i = 0; i < ret.Count(); i++) //clean fields names
             {
                 var tg = "";
@@ -1457,13 +1464,13 @@ namespace RocksmithToolkitGUI.DLCManager
             }
 
             if (slctcmd.Substring(7, slctcmd.IndexOf(" FROM ") - 6).Trim() != "*")
-            {
                 foreach (var fld in ret)
                     foreach (var propInfo in elementType.GetProperties())//add a column to table for each public property on T
                         if (fld == propInfo.Name.ToLower())
+                        {
                             t.Columns.Add(propInfo.Name, Nullable.GetUnderlyingType(propInfo.PropertyType) ?? propInfo.PropertyType);
-
-            }
+                            break;
+                        }
 
             foreach (var item in list)//go through each property on T and add each value to the table
             {
@@ -1500,7 +1507,7 @@ namespace RocksmithToolkitGUI.DLCManager
             try
             {
                 DataSet dss = new DataSet();
-                if (DB_Path.Contains(".db"))
+                if (DB_Path.Contains(".db") && ConfigRepository.Instance()["dlcm_AdditionalManipul114"].ToString() == "Yes" && cnc is not null)
                 {
                     slct = slct.Replace("\"", "'");
                     int modifiedRows = cnc.Execute(slct);
@@ -1522,32 +1529,106 @@ namespace RocksmithToolkitGUI.DLCManager
 
         static public void UpdateDBbyExecuteNonQuery(OleDbCommand command, OleDbConnection connection, SQLite.SQLiteConnection cnc)
         {
-            if (c("dlcm_DBFolder").Contains(".db") || ConfigRepository.Instance()["dlcm_AdditionalManipul114"].ToString() == "Yes")
+
+            var f = 0;
+            if (c("dlcm_DBFolder").Contains(".db") && ConfigRepository.Instance()["dlcm_AdditionalManipul114"].ToString() == "Yes" && cnc is not null)
             {
                 string commandString = command.CommandText;
                 foreach (OleDbParameter parameter in command.Parameters)
+
                     commandString = commandString.Replace(parameter.ParameterName.ToString() + ", ", "\"" + parameter.Value.ToString() + "\", "); //
-                var dfs = UpdateDB(gettablename(commandString), commandString, cnb, cnc);
+                var dfs = UpdateDB(gettablename(commandString), commandString, connection, cnc);
             }
             else
                 using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft." + c("dlcm_AccessDLLVersion") + ";Data Source=" + c("dlcm_DBFolder")))
-                {
+                    //{
                     try
                     {
-                        command.CommandType = CommandType.Text;
-                        connection.Open();
+                        //using (var tx = new TransactionScope()) { 
+                        //    var cmd = connection.CreateCommand();
+                        //    cmd.CommandType = CommandType.Text;
+                        //    cmd.CommandText = command.CommandText;
+                        //var nsp = command.Parameters.Cast<ICloneable>().Select(x => x.Clone() as SqlParameter).Where(x => x != null).ToArray();
+                        // Copy parameters into another command
+                        ///*command*/.Parameters.AddRange(nsp);
+
+                        if (cnn.State.ToString() == "Closed") cnn.Open();
+                        if (command.Connection.State.ToString() == "Closed")
+                        {
+                            command.Connection.Open();
+                            f = 1;
+                        }
+                        //OleDbTransaction OrderTrans = cnn.BeginTransaction();
+
+                        //SqlCommand cmd = new SqlCommand();
+                        //cmd.Connection = cnn;
+                        //cmd.Transaction = OrderTrans;
+                        //var dbTransaction = cnn.BeginTransaction();
+                        //cmd.Transaction = dbTransaction;
+                        //cmd.Transaction = true;
                         command.ExecuteNonQuery();
+                        //OrderTrans.Commit();
+                        //tx.Commit();
+                        //} 
                     }
                     catch (Exception ex)
                     {
                         var tsst = "Error ..." + ex; var timestamp = UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", null, null);
                         MessageBox.Show("Can not open Main DB connection in Edit Main screen ! " + c("dlcm_DBFolder") + "-" + command.CommandText + ex.Message);
                     }
-                    finally { if (connection != null) connection.Close(); }
-                }
+            //finally { if (connection != null) connection.Close(); }
+            //}
 
             if (c("dlcm_Autosave").ToLower() != "Yes".ToLower()) MessageBox.Show("Song Details Changes Saved");
             //return dsm;
+        }
+
+        private List<Tuple<string, SqlDbType, string>> where_param;
+        public IEnumerable<SqlParameter> RecycledParameters()
+        {
+            foreach (Tuple<string, SqlDbType, string> tuple in where_param)
+            {
+                SqlParameter local_arg = new SqlParameter(tuple.Item1, tuple.Item2);
+                local_arg.Value = tuple.Item3;
+                yield return local_arg;
+            }
+        }
+
+        private DbParameterCollection cloneParms(DbCommand commandWithParms)
+        {
+            return ObjectCopier.Clone<DbParameterCollection>(commandWithParms.Parameters);
+        }
+
+        public static class ObjectCopier
+        {
+            /// <summary>
+            /// Perform a deep Copy of the object.
+            /// </summary>
+            /// <typeparam name="T">The type of object being copied.</typeparam>
+            /// <param name="source">The object instance to copy.</param>
+            /// <returns>The copied object.</returns>
+            public static T Clone<T>(T source)
+            {
+                if (!typeof(T).IsSerializable)
+                {
+                    throw new ArgumentException("The type must be serializable.", "source");
+                }
+
+                // Don't serialize a null object, simply return the default for that object
+                if (Object.ReferenceEquals(source, null))
+                {
+                    return default(T);
+                }
+
+                IFormatter formatter = new BinaryFormatter();
+                Stream stream = new MemoryStream();
+                using (stream)
+                {
+                    formatter.Serialize(stream, source);
+                    stream.Seek(0, SeekOrigin.Begin);
+                    return (T)formatter.Deserialize(stream);
+                }
+            }
         }
 
         static public DataSet UpdateDB(string ftable, string fcmds, OleDbConnection cn, SQLite.SQLiteConnection cnc)
@@ -1556,7 +1637,7 @@ namespace RocksmithToolkitGUI.DLCManager
             DataSet dsm = new DataSet();
             if (File.Exists(DB_Path))
             {
-                if (DB_Path.Contains(".db") || ConfigRepository.Instance()["dlcm_AdditionalManipul114"].ToString() == "Yes")
+                if ((DB_Path.Contains(".db") && ConfigRepository.Instance()["dlcm_AdditionalManipul114"].ToString() == "Yes") && cnc is not null)
                 {
                     fcmds = sqladapt(fcmds, "VAL(", "CAST(", " as numeric)");
                     fcmds = sqladapt(fcmds, "CSTR(", "CAST(", " as string)");
@@ -1599,11 +1680,11 @@ namespace RocksmithToolkitGUI.DLCManager
                 //fcmds = fcmds.Replace("\"", "'");
                 fvalues = sqladapt(fvalues, "VAL(", "CAST(", " as numeric)");
                 fvalues = sqladapt(fvalues, "CSTR(", "CAST(", " as string)");
-                if (fvalues.Substring(fvalues.Length - 1) != ";") fvalues += ";";
+                //if (fvalues.Substring(fvalues.Length - 1) != ";") fvalues += ";";
                 if (fvalues.ToLower().IndexOf("select ") == 0) insertcmd = "INSERT INTO " + ftable + " (" + ffields + ") " + fvalues + "";
                 else insertcmd = "INSERT INTO " + ftable + " (" + ffields + ") VALUES (" + fvalues + ");";
 
-                if (DB_Path.Contains(".db") || ConfigRepository.Instance()["dlcm_AdditionalManipul114"].ToString() == "Yes")
+                if (DB_Path.Contains(".db") && ConfigRepository.Instance()["dlcm_AdditionalManipul114"].ToString() == "Yes" && cnc is not null)
                 {
                     int modifiedRows = cnc.Execute(insertcmd);
 
@@ -1634,9 +1715,21 @@ namespace RocksmithToolkitGUI.DLCManager
                     string tmpPath = c("dlcm_TempPath");
                     if (fvalues.ToLower().IndexOf("select ") >= 0) insertcmd = "INSERT INTO " + ftable + " (" + ffields + ") " + fvalues + "";
                     else insertcmd = "INSERT INTO " + ftable + " (" + ffields + ") VALUES (" + fvalues + ");";
-                    DateTime timestamp;
-                    timestamp = UpdateLog(DateTime.Now, "error at import " + ee.Message + "-" + insertcmd, true, tmpPath, mutit.ToString(), "", null, null);
-                    ShowConnectivityError(ex, ftable + "--------" + fvalues + "--------------");/*, null*/
+                    cnb.Close();
+                    OpenDb();
+                    DataSet dsm = new DataSet();
+                    OleDbDataAdapter dab = new OleDbDataAdapter(insertcmd, cnb);
+                    try
+                    {
+                        dab.Fill(dsm, ftable);
+                    }
+                    catch (Exception egx)
+                    {
+                        dab.Dispose();
+                        DateTime timestamp;
+                        timestamp = UpdateLog(DateTime.Now, "error at import " + ee.Message + "\n" + egx.Message + "-" + insertcmd, true, tmpPath, mutit.ToString(), "", null, null);
+                        ShowConnectivityError(ex, ftable + "--------" + fvalues + "--------------");/*, null*/
+                    }
                 }
             }
         }
@@ -1684,12 +1777,32 @@ namespace RocksmithToolkitGUI.DLCManager
                 if (!fcmds.Contains("Profile_Name=\"\""))
                     try
                     {
-                        if (DB_Path.Contains(".db") || ConfigRepository.Instance()["dlcm_AdditionalManipul114"].ToString() == "Yes")
+                        if (DB_Path.Contains(".db") && ConfigRepository.Instance()["dlcm_AdditionalManipul114"].ToString() == "Yes" && cnc is not null)
                         {
                             fcmds = sqladapt(fcmds, "VAL(", "CAST(", " as numeric)");
                             fcmds = sqladapt(fcmds, "CSTR(", "CAST(", " as string)");
                             fcmds = fcmds.Replace("+", "||");
-                            if (fcmds.ToLower().Contains(" top ")) fcmds = (fcmds.Replace(" top 1 ", " ").Replace(" Top 1 ", " ").Replace(" TOP 1 ", " ") + " LIMIT 1;").Trim();
+                            fcmds = fcmds.Replace("&", "||");
+                            if (fcmds.ToLower().Contains(" top 1 ")) fcmds = (fcmds.Replace(" top 1 ", " ").Replace(" Top 1 ", " ").Replace(" TOP 1 ", " ") + " LIMIT 1;").Trim();
+                            if (fcmds.ToLower().Contains(" top 2 ")) fcmds = (fcmds.Replace(" top 2 ", " ").Replace(" Top 2 ", " ").Replace(" TOP 2 ", " ") + " LIMIT 2;").Trim();
+                            if (fcmds.ToLower().Contains(" top 3 ")) fcmds = (fcmds.Replace(" top 3 ", " ").Replace(" Top 3 ", " ").Replace(" TOP 3 ", " ") + " LIMIT 3;").Trim();
+                            if (fcmds.ToLower().Contains(" top 4 ")) fcmds = (fcmds.Replace(" top 4 ", " ").Replace(" Top 4 ", " ").Replace(" TOP 4 ", " ") + " LIMIT 4;").Trim();
+                            if (fcmds.ToLower().Contains(" top 5 ")) fcmds = (fcmds.Replace(" top 5 ", " ").Replace(" Top 5 ", " ").Replace(" TOP 5 ", " ") + " LIMIT 5;").Trim();
+                            if (fcmds.ToLower().Contains(" top 6 ")) fcmds = (fcmds.Replace(" top 6 ", " ").Replace(" Top 6 ", " ").Replace(" TOP 6 ", " ") + " LIMIT 6;").Trim();
+                            if (fcmds.ToLower().Contains(" top 7 ")) fcmds = (fcmds.Replace(" top 7 ", " ").Replace(" Top 7 ", " ").Replace(" TOP 7 ", " ") + " LIMIT 7;").Trim();
+                            if (fcmds.ToLower().Contains(" top 8 ")) fcmds = (fcmds.Replace(" top 8 ", " ").Replace(" Top 8 ", " ").Replace(" TOP 8 ", " ") + " LIMIT 8;").Trim();
+                            if (fcmds.ToLower().Contains(" top 9 ")) fcmds = (fcmds.Replace(" top 9 ", " ").Replace(" Top 9 ", " ").Replace(" TOP 9 ", " ") + " LIMIT 9;").Trim();
+                            if (fcmds.ToLower().Contains(" top 10 ")) fcmds = (fcmds.Replace(" top 10 ", " ").Replace(" Top 10 ", " ").Replace(" TOP 10 ", " ") + " LIMIT 10;").Trim();
+                            if (fcmds.ToLower().Contains(" top 11 ")) fcmds = (fcmds.Replace(" top 11 ", " ").Replace(" Top 11 ", " ").Replace(" TOP 11 ", " ") + " LIMIT 11;").Trim();
+                            if (fcmds.ToLower().Contains(" top 12 ")) fcmds = (fcmds.Replace(" top 12 ", " ").Replace(" Top 12 ", " ").Replace(" TOP 12 ", " ") + " LIMIT 12;").Trim();
+                            if (fcmds.ToLower().Contains(" top 13 ")) fcmds = (fcmds.Replace(" top 13 ", " ").Replace(" Top 13 ", " ").Replace(" TOP 13 ", " ") + " LIMIT 13;").Trim();
+                            if (fcmds.ToLower().Contains(" top 14 ")) fcmds = (fcmds.Replace(" top 14 ", " ").Replace(" Top 14 ", " ").Replace(" TOP 14 ", " ") + " LIMIT 14;").Trim();
+                            if (fcmds.ToLower().Contains(" top 15 ")) fcmds = (fcmds.Replace(" top 15 ", " ").Replace(" Top 15 ", " ").Replace(" TOP 15 ", " ") + " LIMIT 15;").Trim();
+                            if (fcmds.ToLower().Contains(" top 16 ")) fcmds = (fcmds.Replace(" top 16 ", " ").Replace(" Top 16 ", " ").Replace(" TOP 16 ", " ") + " LIMIT 16;").Trim();
+                            if (fcmds.ToLower().Contains(" top 17 ")) fcmds = (fcmds.Replace(" top 17 ", " ").Replace(" Top 17 ", " ").Replace(" TOP 17 ", " ") + " LIMIT 17;").Trim();
+                            if (fcmds.ToLower().Contains(" top 18 ")) fcmds = (fcmds.Replace(" top 18 ", " ").Replace(" Top 18 ", " ").Replace(" TOP 18 ", " ") + " LIMIT 18;").Trim();
+                            if (fcmds.ToLower().Contains(" top 19 ")) fcmds = (fcmds.Replace(" top 19 ", " ").Replace(" Top 19 ", " ").Replace(" TOP 19 ", " ") + " LIMIT 19;").Trim();
+                            if (fcmds.ToLower().Contains(" top 20 ")) fcmds = (fcmds.Replace(" top 20 ", " ").Replace(" Top 20 ", " ").Replace(" TOP 20 ", " ") + " LIMIT 20;").Trim();
                             fcmds = fcmds.Replace(" ;", ";").Replace("; ", ";");
                             fcmds = fcmds.Replace(";LIMIT", " LIMIT");
 
@@ -1783,7 +1896,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         ShowConnectivityError(ex, ftable + "---" + fcmds);
                     }/*, null*/
                 else
-                    MessageBox.Show("-");
+                    MessageBox.Show("no data/connection");
                 return dsm;
             }
             else return dfsm;
@@ -3176,8 +3289,39 @@ namespace RocksmithToolkitGUI.DLCManager
             }
         }
 
+        public static void unzipdb(string destination, string zippath)
+        {
+            if (!Directory.Exists(Path.GetDirectoryName(c("dlcm_DBFolder"))))
+                try
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(c("dlcm_DBFolder")));
+                }
+                catch (Exception ezx)
+                {
+                    var tsst = "Error at path create..." + ezx; UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
+                }
+
+            if (!File.Exists(zippath) || !Directory.Exists(destination)) return;
+
+            try
+            {
+                ZipFile.ExtractToDirectory(zippath, destination);
+                System.IO.DirectoryInfo downloadedMessageInfo2 = new DirectoryInfo(Path.GetDirectoryName(c("dlcm_DBFolder")));
+                foreach (FileInfo file in downloadedMessageInfo2.GetFiles())
+                {
+                    if (!file.FullName.Contains("_bk")) continue;
+                    CopyMoveFileSafely(file.FullName, file.FullName.Replace("_bk", ""), false, null, true);
+                    return;
+                }
+            }
+            catch (Exception es)
+            {
+                var tsst = "Issues at copy filestrem..." + es.Message.ToString(); var timestamp = UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
+            }
+        }
         public static void AddFileToZip(string zipFilename, string fileToAdd)
         {
+            if (!File.Exists(fileToAdd)) return;
             //think of adding a copy to archive if file read only (e.g. when repssing save)
             using (Package zip = global::System.IO.Packaging.Package.Open(zipFilename, FileMode.OpenOrCreate))
             {
@@ -3200,7 +3344,24 @@ namespace RocksmithToolkitGUI.DLCManager
                 }
                 catch (Exception es)
                 {
-                    var tsst = "Issues at copy filestrem..." + es.Message.ToString(); var timestamp = UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
+                    try
+                    {
+
+                        CopyMoveFileSafely(fileToAdd, fileToAdd + "_bk", true, null, true);
+                        fileToAdd = fileToAdd + "_bk";
+                        using (FileStream fileStream = new FileStream(fileToAdd, FileMode.Open, FileAccess.Read))
+                        {
+                            using (Stream dest = part.GetStream())
+                            {
+                                CopyStream(fileStream, dest);
+                            }
+                        }
+                        DeleteFile(fileToAdd, true);
+                    }
+                    catch (Exception ex)
+                    {
+                        var tsst = "Error at copy filestrem..." + es.Message.ToString() + ex.Message.ToString(); var timestamp = UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
+                    }
                 }
             }
         }
@@ -3579,7 +3740,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     insertvalues += "\", \"" + (tn.GearList.Amp == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Amp.PedalKey));
                     insertvalues += "\", \"" + (tn.GearList.Amp == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Amp.Skin));
                     insertvalues += "\", \"" + (tn.GearList.Amp == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Amp.SkinIndex));
-                    insertvalues += "\", \"" + (tn.GearList.Amp == null ? "0" : CDLC_ID) + "\", \"" + Official + "\"";
+                    insertvalues += "\", \"" + CDLC_ID + "\", \"" + Official + "\"";/*(tn.GearList.Amp == null ? "0" : */
                     InsertIntoDBwValues("Tones_GearList", insertcmdd, insertvalues, connection, mutit, cnc);
 
                     insertvalues = ""; insertvalues += tid + ", \"Cabinet\", \"" + (tn.GearList.Cabinet == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Cabinet.Type));
@@ -3590,7 +3751,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     insertvalues += "\", \"" + (tn.GearList.Cabinet == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Cabinet.PedalKey));
                     insertvalues += "\", \"" + (tn.GearList.Cabinet == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Cabinet.Skin));
                     insertvalues += "\", \"" + (tn.GearList.Cabinet == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Cabinet.SkinIndex));
-                    insertvalues += "\", \"" + (tn.GearList.Cabinet == null ? "0" : CDLC_ID) + "\", \"" + Official + "\"";
+                    insertvalues += "\", \"" + CDLC_ID + "\", \"" + Official + "\"";/*(tn.GearList.Cabinet == null ? "0" : */
                     InsertIntoDBwValues("Tones_GearList", insertcmdd, insertvalues, connection, mutit, cnc);
 
                     insertvalues = ""; insertvalues += tid + ", \"PostPedal1\", \"" + (tn.GearList.PostPedal1 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PostPedal1.Type));
@@ -3601,7 +3762,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     insertvalues += "\", \"" + (tn.GearList.PostPedal1 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PostPedal1.PedalKey));
                     insertvalues += "\", \"" + (tn.GearList.PostPedal1 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PostPedal1.Skin));
                     insertvalues += "\", \"" + (tn.GearList.PostPedal1 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PostPedal1.SkinIndex));
-                    insertvalues += "\", \"" + (tn.GearList.PostPedal1 == null ? "0" : CDLC_ID) + "\", \"" + Official + "\"";
+                    insertvalues += "\", \"" + CDLC_ID + "\", \"" + Official + "\"";/*(tn.GearList.PostPedal1 == null ? "0" : */
                     InsertIntoDBwValues("Tones_GearList", insertcmdd, insertvalues, connection, mutit, cnc);
 
                     insertvalues = ""; insertvalues += tid + ", \"PostPedal2\", \"" + (tn.GearList.PostPedal2 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PostPedal2.Type));
@@ -3612,7 +3773,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     insertvalues += "\", \"" + (tn.GearList.PostPedal2 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PostPedal2.PedalKey));
                     insertvalues += "\", \"" + (tn.GearList.PostPedal2 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PostPedal2.Skin));
                     insertvalues += "\", \"" + (tn.GearList.PostPedal2 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PostPedal2.SkinIndex));
-                    insertvalues += "\", \"" + (tn.GearList.PostPedal2 == null ? "0" : CDLC_ID) + "\", \"" + Official + "\"";
+                    insertvalues += "\", \"" + CDLC_ID + "\", \"" + Official + "\"";/*(tn.GearList.PostPedal2 == null ? "0" :*/
                     InsertIntoDBwValues("Tones_GearList", insertcmdd, insertvalues, connection, mutit, cnc);
 
                     insertvalues = ""; insertvalues += tid + ", \"PostPedal3\", \"" + (tn.GearList.PostPedal3 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PostPedal3.Type));
@@ -3623,7 +3784,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     insertvalues += "\", \"" + (tn.GearList.PostPedal3 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PostPedal3.PedalKey));
                     insertvalues += "\", \"" + (tn.GearList.PostPedal3 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PostPedal3.Skin));
                     insertvalues += "\", \"" + (tn.GearList.PostPedal3 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PostPedal3.SkinIndex));
-                    insertvalues += "\", \"" + (tn.GearList.PostPedal3 == null ? "0" : CDLC_ID) + "\", \"" + Official + "\"";
+                    insertvalues += "\", \"" + CDLC_ID + "\", \"" + Official + "\"";/*(tn.GearList.PostPedal3 == null ? "0" : */
                     InsertIntoDBwValues("Tones_GearList", insertcmdd, insertvalues, connection, mutit, cnc);
 
                     insertvalues = ""; insertvalues += tid + ", \"PostPedal4\", \"" + (tn.GearList.PostPedal4 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PostPedal4.Type));
@@ -3634,7 +3795,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     insertvalues += "\", \"" + (tn.GearList.PostPedal4 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PostPedal4.PedalKey));
                     insertvalues += "\", \"" + (tn.GearList.PostPedal4 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PostPedal4.Skin));
                     insertvalues += "\", \"" + (tn.GearList.PostPedal4 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PostPedal4.SkinIndex));
-                    insertvalues += "\", \"" + (tn.GearList.PostPedal4 == null ? "0" : CDLC_ID) + "\", \"" + Official + "\"";
+                    insertvalues += "\", \"" + CDLC_ID + "\", \"" + Official + "\"";/*(tn.GearList.PostPedal4 == null ? "0" : */
                     InsertIntoDBwValues("Tones_GearList", insertcmdd, insertvalues, connection, mutit, cnc);
 
                     insertvalues = ""; insertvalues += tid + ", \"PrePedal1\", \"" + (tn.GearList.PrePedal1 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PrePedal1.Type));
@@ -3645,7 +3806,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     insertvalues += "\", \"" + (tn.GearList.PrePedal1 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PrePedal1.PedalKey));
                     insertvalues += "\", \"" + (tn.GearList.PrePedal1 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PrePedal1.Skin));
                     insertvalues += "\", \"" + (tn.GearList.PrePedal1 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PrePedal1.SkinIndex));
-                    insertvalues += "\", \"" + (tn.GearList.PrePedal1 == null ? "0" : CDLC_ID) + "\", \"" + Official + "\"";
+                    insertvalues += "\", \"" + CDLC_ID + "\", \"" + Official + "\"";/*(tn.GearList.PrePedal1 == null ? "0" :*/
                     InsertIntoDBwValues("Tones_GearList", insertcmdd, insertvalues, connection, mutit, cnc);
 
                     insertvalues = ""; insertvalues += tid + ", \"PrePedal2\", \"" + (tn.GearList.PrePedal2 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PrePedal2.Type));
@@ -3656,7 +3817,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     insertvalues += "\", \"" + (tn.GearList.PrePedal2 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PrePedal2.PedalKey));
                     insertvalues += "\", \"" + (tn.GearList.PrePedal2 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PrePedal2.Skin));
                     insertvalues += "\", \"" + (tn.GearList.PrePedal2 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PrePedal2.SkinIndex));
-                    insertvalues += "\", \"" + (tn.GearList.PrePedal2 == null ? "0" : CDLC_ID) + "\", \"" + Official + "\"";
+                    insertvalues += "\", \"" + CDLC_ID + "\", \"" + Official + "\"";/*(tn.GearList.PrePedal2 == null ? "0" :*/
                     InsertIntoDBwValues("Tones_GearList", insertcmdd, insertvalues, connection, mutit, cnc);
 
                     insertvalues = ""; insertvalues += tid + ", \"PrePedal3\", \"" + (tn.GearList.PrePedal3 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PrePedal3.Type));
@@ -3667,7 +3828,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     insertvalues += "\", \"" + (tn.GearList.PrePedal3 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PrePedal3.PedalKey));
                     insertvalues += "\", \"" + (tn.GearList.PrePedal3 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PrePedal3.Skin));
                     insertvalues += "\", \"" + (tn.GearList.PrePedal3 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PrePedal3.SkinIndex));
-                    insertvalues += "\", \"" + (tn.GearList.PrePedal3 == null ? "0" : CDLC_ID) + "\", \"" + Official + "\"";
+                    insertvalues += "\", \"" + CDLC_ID + "\", \"" + Official + "\"";/*(tn.GearList.PrePedal3 == null ? "0" : */
                     InsertIntoDBwValues("Tones_GearList", insertcmdd, insertvalues, connection, mutit, cnc);
 
                     insertvalues = ""; insertvalues += tid + ", \"PrePedal4\", \"" + (tn.GearList.PrePedal4 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PrePedal4.Type));
@@ -3678,7 +3839,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     insertvalues += "\", \"" + (tn.GearList.PrePedal4 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PrePedal4.PedalKey));
                     insertvalues += "\", \"" + (tn.GearList.PrePedal4 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PrePedal4.Skin));
                     insertvalues += "\", \"" + (tn.GearList.PrePedal4 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.PrePedal4.SkinIndex));
-                    insertvalues += "\", \"" + (tn.GearList.PrePedal4 == null ? "0" : CDLC_ID) + "\", \"" + Official + "\"";
+                    insertvalues += "\", \"" + CDLC_ID + "\", \"" + Official + "\"";/*(tn.GearList.PrePedal4 == null ? "0" :*/
                     InsertIntoDBwValues("Tones_GearList", insertcmdd, insertvalues, connection, mutit, cnc);
 
                     insertvalues = ""; insertvalues += tid + ", \"Rack1\", \"" + (tn.GearList.Rack1 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Rack1.Type));
@@ -3689,7 +3850,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     insertvalues += "\", \"" + (tn.GearList.Rack1 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Rack1.PedalKey));
                     insertvalues += "\", \"" + (tn.GearList.Rack1 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Rack1.Skin));
                     insertvalues += "\", \"" + (tn.GearList.Rack1 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Rack1.SkinIndex));
-                    insertvalues += "\", \"" + (tn.GearList.Rack1 == null ? "0" : CDLC_ID) + "\", \"" + Official + "\"";
+                    insertvalues += "\", \"" + CDLC_ID + "\", \"" + Official + "\"";/*(tn.GearList.Rack1 == null ? "0" : */
                     InsertIntoDBwValues("Tones_GearList", insertcmdd, insertvalues, connection, mutit, cnc);
 
                     insertvalues = ""; insertvalues += tid + ", \"Rack2\", \"" + (tn.GearList.Rack2 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Rack2.Type));
@@ -3700,7 +3861,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     insertvalues += "\", \"" + (tn.GearList.Rack2 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Rack2.PedalKey));
                     insertvalues += "\", \"" + (tn.GearList.Rack2 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Rack2.Skin));
                     insertvalues += "\", \"" + (tn.GearList.Rack2 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Rack2.SkinIndex));
-                    insertvalues += "\", \"" + (tn.GearList.Rack2 == null ? "0" : CDLC_ID) + "\", \"" + Official + "\"";
+                    insertvalues += "\", \"" + CDLC_ID + "\", \"" + Official + "\"";/*(tn.GearList.Rack2 == null ? "0" :*/
                     InsertIntoDBwValues("Tones_GearList", insertcmdd, insertvalues, connection, mutit, cnc);
 
                     insertvalues = ""; insertvalues += tid + ", \"Rack3\", \"" + (tn.GearList.Rack3 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Rack3.Type));
@@ -3711,7 +3872,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     insertvalues += "\", \"" + (tn.GearList.Rack3 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Rack3.PedalKey));
                     insertvalues += "\", \"" + (tn.GearList.Rack3 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Rack3.Skin));
                     insertvalues += "\", \"" + (tn.GearList.Rack3 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Rack3.SkinIndex));
-                    insertvalues += "\", \"" + (tn.GearList.Rack3 == null ? "0" : CDLC_ID) + "\", \"" + Official + "\"";
+                    insertvalues += "\", \"" + CDLC_ID + "\", \"" + Official + "\"";/*(tn.GearList.Rack3 == null ? "0" :*/
                     InsertIntoDBwValues("Tones_GearList", insertcmdd, insertvalues, connection, mutit, cnc);
 
                     insertvalues = ""; insertvalues += tid + ", \"Rack4\", \"" + (tn.GearList.Rack4 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Rack4.Type));
@@ -3722,7 +3883,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     insertvalues += "\", \"" + (tn.GearList.Rack4 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Rack4.PedalKey));
                     insertvalues += "\", \"" + (tn.GearList.Rack4 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Rack4.Skin));
                     insertvalues += "\", \"" + (tn.GearList.Rack4 == null ? DBNull.Value.ToString() : NullHandler(tn.GearList.Rack4.SkinIndex));
-                    insertvalues += "\", \"" + (tn.GearList.Rack4 == null ? "0" : CDLC_ID) + "\", \"" + Official + "\"";
+                    insertvalues += "\", \"" + CDLC_ID + "\", \"" + Official + "\"";/*(tn.GearList.Rack4 == null ? "0" :*/
                     InsertIntoDBwValues("Tones_GearList", insertcmdd, insertvalues, connection, mutit, cnc);
                     n++;
                 }
@@ -3777,7 +3938,7 @@ namespace RocksmithToolkitGUI.DLCManager
             , int Duplic, string ybSAddress, string ybRAddress, string IsSingle, string IsEP, string IsInstrumental, string IsSoundtrack, string ybAddress, string oldAlbumN
             , string audio_changed, string oldArtistN, string oldSongN, int oldYearN, string IsUncensored, string datemax, string IsFullAlbum, string PitchShiftableEsOrDd
             , string IsRemastered, string InTheWorks, string dupli_assesment, int j, string IsCover, string IsDemo, string IsRemix, string HasFeaturing, string IsKaraoke,
-            string BasedOn_Youtube, string BasedOn_CF, string BasedOn_Tabs, string ToDos, string ToneDetails, string PackageDetails, string PackingDate, string UpdateVersionDate,
+            string BasedOn_Youtube, string BasedOn_CF, string BasedOn_Tabs, string ToDos, string ToneDetails, string PackageDetails, string PackingDate, string UpdateVersionDate, string BasedOn_GP,
                     // string Has_Capo, string Has_Showlights, string Has_JVocals, string IsMedley, string IsMultiStrings, SQLiteConnection cnz)
                     string Has_Capo, string Has_Showlights, string Has_JVocals, string IsMedley, string IsMultiStrings, SQLite.SQLiteConnection cnc)
         {
@@ -3906,7 +4067,8 @@ namespace RocksmithToolkitGUI.DLCManager
                 command.CommandText += "Has_JVocals = @param116, ";
                 command.CommandText += "LyricsLanguage = @param117, ";
                 command.CommandText += "Is_Medley = @param118, ";
-                command.CommandText += "Is_MultiStrings = @param119 ";
+                command.CommandText += "Is_MultiStrings = @param119, ";
+                command.CommandText += "BasedOn_GP = @param120 ";
                 command.CommandText += " WHERE ID = " + IDD;
 
                 command.Parameters.AddWithValue("@param1", import_path);
@@ -4031,6 +4193,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 command.Parameters.AddWithValue("@param117", Has_JVocals == "Yes" ? "JP" : DBNull.Value.ToString());
                 command.Parameters.AddWithValue("@param118", IsMedley ?? DBNull.Value.ToString());
                 command.Parameters.AddWithValue("@param119", IsMultiStrings ?? DBNull.Value.ToString());
+                command.Parameters.AddWithValue("@param120", BasedOn_GP ?? DBNull.Value.ToString());
                 command.CommandType = CommandType.Text;
                 UpdateDBbyExecuteNonQuery(command, cnb, cnc);
                 ////EXECUTE SQL/UPDATE
@@ -4188,7 +4351,8 @@ namespace RocksmithToolkitGUI.DLCManager
                 command.CommandText += "Has_JVocals,";
                 command.CommandText += "LyricsLanguage, ";
                 command.CommandText += "Is_Medley, ";
-                command.CommandText += "Is_MultiStrings ";
+                command.CommandText += "Is_MultiStrings, ";
+                command.CommandText += "BasedOn_GP ";
                 command.CommandText += ") VALUES (@param1,@param2,@param3,@param4,@param5,@param6,@param7,@param8,@param9";
                 command.CommandText += ",@param10,@param11,@param12,@param13,@param14,@param15,@param16,@param17,@param18,@param19";
                 command.CommandText += ",@param20,@param21,@param22,@param23,@param24,@param25,@param26,@param27,@param28,@param29";
@@ -4200,7 +4364,8 @@ namespace RocksmithToolkitGUI.DLCManager
                 command.CommandText += ",@param80,@param81,@param82,@param83,@param84,@param85,@param86,@param87,@param88,@param89";
                 command.CommandText += ",@param90,@param91,@param92,@param93,@param94,@param95,@param96,@param97,@param98,@param99";
                 command.CommandText += ",@param100,@param101,@param102,@param103,@param104,@param105,@param106,@param107,@param108,@param109";
-                command.CommandText += ",@param110,@param111,@param112,@param113,@param114,@param115,@param116,@param117,@param118,@param119" + ")";
+                command.CommandText += ",@param110,@param111,@param112,@param113,@param114,@param115,@param116,@param117,@param118,@param119";
+                command.CommandText += ",@param120" + ")";
 
                 command.Parameters.AddWithValue("@param1", import_path);
                 command.Parameters.AddWithValue("@param2", original_FileName);
@@ -4320,8 +4485,9 @@ namespace RocksmithToolkitGUI.DLCManager
                 command.Parameters.AddWithValue("@param115", Has_Showlights ?? DBNull.Value.ToString());
                 command.Parameters.AddWithValue("@param116", Has_JVocals ?? DBNull.Value.ToString());
                 command.Parameters.AddWithValue("@param117", Has_JVocals == "Yes" ? "JP" : DBNull.Value.ToString());
-                command.Parameters.AddWithValue("@param118", IsMedley);
-                command.Parameters.AddWithValue("@param119", IsMultiStrings);
+                command.Parameters.AddWithValue("@param118", IsMedley ?? DBNull.Value.ToString());
+                command.Parameters.AddWithValue("@param119", IsMultiStrings ?? DBNull.Value.ToString());
+                command.Parameters.AddWithValue("@param120", BasedOn_GP ?? DBNull.Value.ToString());
                 //EXECUTE SQL/UPDATE
 
                 var rt = (import_path) + "\",\"" + (original_FileName) + "\",\"" + (original_FileName) + "\",\"" + (ds.Tables[0].Rows[i].ItemArray[3])
@@ -5108,7 +5274,16 @@ namespace RocksmithToolkitGUI.DLCManager
             return noOfRec;
         }
 
-
+        public static void CheckJava()
+        {
+            if (!RijndaelEncryptor.IsJavaInstalled())
+            {
+                ErrorWindow frm2 = new ErrorWindow("If you want to covert to PS3 in DLCManager please download&Install Java" +
+                    " (64bit if windows is for 64b https://www.java.com/en/download/manual.jsp )(chose OpenJDK 17.0.4.1 LTS+ for ARM architecture use https://docs.microsoft.com/en-us/java/openjdk/download)" + Environment.NewLine + "A restart is required" + Environment.NewLine,
+                    "http://www.java.com/en/download/win10.jsp", "Error at Packing", false, false, true, "", "", "");
+                frm2.ShowDialog();
+            }
+        }
         //public static System.Windows.Forms.ComboBox GenerateFilterList(System.Windows.Forms.ComboBox cbx_Groups, OleDbConnection cnb, SQLiteConnection cnz)
         public static System.Windows.Forms.ComboBox GenerateFilterList(System.Windows.Forms.ComboBox cbx_Groups, OleDbConnection cnb, SQLite.SQLiteConnection cnc)
         {
@@ -5158,11 +5333,13 @@ namespace RocksmithToolkitGUI.DLCManager
 
             // Loads Groups in chbx_AllGroups Filter box cmb_Filter //Create Groups list Dropbox
             var norec = 0;
-            DataSet dsn = new DataSet(); dsn = SelectFromDB("Groups", "SELECT DISTINCT Groupz FROM Groups WHERE Type =\"DLC\";", "", cnb, cnc);
+            DataSet dsn = new DataSet(); dsn = SelectFromDB("Groups", "SELECT DISTINCT Groupz,Comments FROM Groups WHERE Type =\"DLC\" ORDER BY Comments DESC;", "", cnb, cnc);
             norec = dsn.Tables.Count < 1 ? 0 : dsn.Tables[0].Rows.Count;
             if (norec > 0 && c("dlcm_AdditionalManipul107") == "Yes")
             {
                 cbx_Groups.Items.Add("----------Groups----------");
+                if (c("dlcm_maxsongsinweekly").ToInt32() > 0 && norec > 0)
+                    cbx_Groups.Items.Add("Group " + "Top " + c("dlcm_maxsongsinweekly") + "(weekly)");
                 for (int j = 0; j < norec; j++)
                     cbx_Groups.Items.Add("Group " + dsn.Tables[0].Rows[j][0].ToString());//add items
             }
@@ -5430,7 +5607,26 @@ namespace RocksmithToolkitGUI.DLCManager
             return (result == 0) ? 1 : result;
         }
 
-
+        public static bool GetParam(int t, System.Windows.Forms.CheckedListBox chbx_Additional_Manipulations)
+        {
+            if (chbx_Additional_Manipulations.Items.Count == 0)
+                return false;
+            if (chbx_Additional_Manipulations.Items[1].ToString().IndexOf("{") < 1) return chbx_Additional_Manipulations.GetItemChecked(t);
+            for (var i = 0; i < chbx_Additional_Manipulations.Items.Count; i++)
+            {
+                string k = chbx_Additional_Manipulations.Items[i].ToString();
+                if (k.IndexOf("{") < 1) continue;
+                var orderno = k.Substring(k.IndexOf("{") + 1, k.IndexOf("}") - k.IndexOf("{") - 1);
+                //string g = c("dlcm_AdditionalManipul" + t.ToString()).ToLower();
+                if (orderno.ToInt32() == t)
+                    //{
+                    return chbx_Additional_Manipulations.GetItemChecked(i);//.ToString() == "true" ? true : false;
+                                                                           //    break;
+                                                                           //}
+            }
+            //c("dlcm_AdditionalManipul" + t.ToString()).ToLower()=="yes"? true : false;
+            return false;
+        }
         public static async Task<string> RunYbASearch(MainDBfields SongRecord, SearchResource.ListRequest searchListRequest, string instr, bool nonnrksmithvideo)
         {
             var ybRAddress = "-"; var ybSAddress = "-";

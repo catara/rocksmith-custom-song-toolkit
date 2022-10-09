@@ -120,6 +120,9 @@
     <None Update="AccessDBDataSet.xss">
       <DependentUpon>AccessDBDataSet.xsd</DependentUpon>
     </None>
+    <None Update="DLCManager\external_tools\AccessDatabaseEngine.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="DLCManager\external_tools\accessdatabaseengine\aceredist.msi">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -1137,6 +1140,9 @@
     </None>
     <None Update="DLCManager\external_tools\CDLCEnablers\RUN_PATCH_RS.orig.command">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\Database4.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="DLCManager\external_tools\eof1.8RC12\AVDelay\guitar.ogg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -2609,6 +2615,54 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="DLCManager\external_tools\PS3xploit-resigner-master\source\tools\ps3py\setup.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\Rocksmith 2014 DLC Builder\DLCBuilder.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\Rocksmith 2014 DLC Builder\FastTreeNative.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\Rocksmith 2014 DLC Builder\LdaNative.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\Rocksmith 2014 DLC Builder\libHarfBuzzSharp.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\Rocksmith 2014 DLC Builder\libSkiaSharp.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\Rocksmith 2014 DLC Builder\Magick.Native-Q8-x64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\Rocksmith 2014 DLC Builder\MLModel.zip">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\Rocksmith 2014 DLC Builder\ReadMe.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\Rocksmith 2014 DLC Builder\SQLite.Interop.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\Rocksmith 2014 DLC Builder\Tools\packed_codebooks.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\Rocksmith 2014 DLC Builder\Tools\packed_codebooks_aoTuV_603.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\Rocksmith 2014 DLC Builder\Tools\revorb.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\Rocksmith 2014 DLC Builder\Tools\ww2ogg.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\Rocksmith 2014 DLC Builder\unins000.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\Rocksmith 2014 DLC Builder\unins000.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\RS2014-Mod-Installer.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="DLCManager\external_tools\sqliteodbc_w64.exe">
@@ -9273,8 +9327,8 @@
     <PackageReference Include="Microsoft.VisualBasic" Version="10.4.0-preview.18571.3" />
     <PackageReference Include="Rocksmith2014.XML" Version="1.1.1" />
     <PackageReference Include="SpotifyApi.NetCore" Version="3.5.0" />
-    <PackageReference Include="SpotifyAPI.Web" Version="6.2.2" />
-    <PackageReference Include="SpotifyAPI.Web.Auth" Version="6.2.2" />
+    <PackageReference Include="SpotifyAPI.Web" Version="6.3.0" />
+    <PackageReference Include="SpotifyAPI.Web.Auth" Version="6.3.0" />
     <PackageReference Include="SQLite" Version="3.13.0" />
     <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="6.0.0-preview.4.21253.7" />

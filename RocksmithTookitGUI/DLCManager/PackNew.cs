@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using System.Data.OleDb;
 using RocksmithToolkitGUI;
 using RocksmithToolkitGUI.DLCManager;
+using static RocksmithToolkitGUI.DLCManager.UtilitiesFunctions;
 using RocksmithToolkitLib.Extensions; //dds
 using System.Diagnostics;
 using Ookii.Dialogs; //cue text
@@ -19,6 +20,7 @@ using RocksmithToolkitLib.XmlRepository;
 using System.Data.SQLite;
 using SQLite;
 using System.IO;
+using RocksmithToolkitLib.Sng2014HSL;
 
 namespace RocksmithToolkitGUI.DLCManager
 {
@@ -56,6 +58,8 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             this.helpProvider1 = new System.Windows.Forms.HelpProvider();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.btn_DBFolder = new System.Windows.Forms.Button();
+            this.txt_GPFilePath = new RocksmithToolkitGUI.CueTextBox();
             this.txt_UpdateDate = new RocksmithToolkitGUI.CueTextBox();
             this.txt_PackageDate = new RocksmithToolkitGUI.CueTextBox();
             this.txt_EoFPath = new RocksmithToolkitGUI.CueTextBox();
@@ -106,6 +110,8 @@ namespace RocksmithToolkitGUI.DLCManager
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.AutoScroll = true;
+            this.splitContainer1.Panel1.Controls.Add(this.btn_DBFolder);
+            this.splitContainer1.Panel1.Controls.Add(this.txt_GPFilePath);
             this.splitContainer1.Panel1.Controls.Add(this.txt_UpdateDate);
             this.splitContainer1.Panel1.Controls.Add(this.txt_PackageDate);
             this.splitContainer1.Panel1.Controls.Add(this.txt_EoFPath);
@@ -143,14 +149,36 @@ namespace RocksmithToolkitGUI.DLCManager
             this.splitContainer1.Panel2.Controls.Add(this.chbx_SaveInVerisonInfo);
             this.splitContainer1.Panel2.Controls.Add(this.lbl_Link);
             this.splitContainer1.Panel2.Controls.Add(this.btn_B3);
-            this.splitContainer1.Size = new System.Drawing.Size(867, 989);
-            this.splitContainer1.SplitterDistance = 672;
+            this.splitContainer1.Size = new System.Drawing.Size(942, 1067);
+            this.splitContainer1.SplitterDistance = 724;
             this.splitContainer1.TabIndex = 336;
+            // 
+            // btn_DBFolder
+            // 
+            this.btn_DBFolder.Location = new System.Drawing.Point(822, 267);
+            this.btn_DBFolder.Margin = new System.Windows.Forms.Padding(0);
+            this.btn_DBFolder.Name = "btn_DBFolder";
+            this.btn_DBFolder.Size = new System.Drawing.Size(44, 40);
+            this.btn_DBFolder.TabIndex = 447;
+            this.btn_DBFolder.Text = "...";
+            this.btn_DBFolder.UseVisualStyleBackColor = true;
+            this.btn_DBFolder.Click += new System.EventHandler(this.btn_DBFolder_Click);
+            // 
+            // txt_GPFilePath
+            // 
+            this.txt_GPFilePath.Cue = "GP file (s; separated by commas;will be coppied in EoF path if not already there)" +
+    "";
+            this.txt_GPFilePath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txt_GPFilePath.ForeColor = System.Drawing.Color.Gray;
+            this.txt_GPFilePath.Location = new System.Drawing.Point(4, 272);
+            this.txt_GPFilePath.Name = "txt_GPFilePath";
+            this.txt_GPFilePath.Size = new System.Drawing.Size(815, 32);
+            this.txt_GPFilePath.TabIndex = 446;
             // 
             // txt_UpdateDate
             // 
             this.txt_UpdateDate.Cue = "Update date";
-            this.txt_UpdateDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_UpdateDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txt_UpdateDate.ForeColor = System.Drawing.Color.Gray;
             this.txt_UpdateDate.Location = new System.Drawing.Point(634, 50);
             this.txt_UpdateDate.Name = "txt_UpdateDate";
@@ -160,7 +188,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // txt_PackageDate
             // 
             this.txt_PackageDate.Cue = "Package Date";
-            this.txt_PackageDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_PackageDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txt_PackageDate.ForeColor = System.Drawing.Color.Gray;
             this.txt_PackageDate.Location = new System.Drawing.Point(451, 50);
             this.txt_PackageDate.Name = "txt_PackageDate";
@@ -170,7 +198,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // txt_EoFPath
             // 
             this.txt_EoFPath.Cue = "EoF Project Path";
-            this.txt_EoFPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_EoFPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txt_EoFPath.ForeColor = System.Drawing.Color.Gray;
             this.txt_EoFPath.Location = new System.Drawing.Point(3, 83);
             this.txt_EoFPath.Name = "txt_EoFPath";
@@ -179,7 +207,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // btm_DefaultAuthor
             // 
-            this.btm_DefaultAuthor.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btm_DefaultAuthor.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btm_DefaultAuthor.Location = new System.Drawing.Point(406, 10);
             this.btm_DefaultAuthor.Margin = new System.Windows.Forms.Padding(2);
             this.btm_DefaultAuthor.Name = "btm_DefaultAuthor";
@@ -191,7 +219,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // txt_CDLCID
             // 
             this.txt_CDLCID.Cue = "CDLC ID";
-            this.txt_CDLCID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_CDLCID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txt_CDLCID.ForeColor = System.Drawing.Color.Gray;
             this.txt_CDLCID.Location = new System.Drawing.Point(303, 50);
             this.txt_CDLCID.Name = "txt_CDLCID";
@@ -201,7 +229,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // txt_Version
             // 
             this.txt_Version.Cue = "Version";
-            this.txt_Version.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_Version.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txt_Version.ForeColor = System.Drawing.Color.Gray;
             this.txt_Version.Location = new System.Drawing.Point(107, 50);
             this.txt_Version.Name = "txt_Version";
@@ -210,8 +238,8 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // btn_Spotify
             // 
-            this.btn_Spotify.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Spotify.Location = new System.Drawing.Point(824, 272);
+            this.btn_Spotify.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btn_Spotify.Location = new System.Drawing.Point(824, 309);
             this.btn_Spotify.Margin = new System.Windows.Forms.Padding(2);
             this.btn_Spotify.Name = "btn_Spotify";
             this.btn_Spotify.Size = new System.Drawing.Size(39, 32);
@@ -222,7 +250,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // txt_TrackNo
             // 
             this.txt_TrackNo.Cue = "Track No.";
-            this.txt_TrackNo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_TrackNo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txt_TrackNo.ForeColor = System.Drawing.Color.Gray;
             this.txt_TrackNo.Location = new System.Drawing.Point(4, 50);
             this.txt_TrackNo.Name = "txt_TrackNo";
@@ -232,9 +260,9 @@ namespace RocksmithToolkitGUI.DLCManager
             // txt_Spotify
             // 
             this.txt_Spotify.Cue = "Spotify ID";
-            this.txt_Spotify.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_Spotify.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txt_Spotify.ForeColor = System.Drawing.Color.Gray;
-            this.txt_Spotify.Location = new System.Drawing.Point(3, 272);
+            this.txt_Spotify.Location = new System.Drawing.Point(3, 309);
             this.txt_Spotify.Name = "txt_Spotify";
             this.txt_Spotify.Size = new System.Drawing.Size(816, 32);
             this.txt_Spotify.TabIndex = 437;
@@ -243,17 +271,17 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.label2.AutoSize = true;
             this.label2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label2.Location = new System.Drawing.Point(736, 544);
+            this.label2.Location = new System.Drawing.Point(736, 581);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(127, 25);
+            this.label2.Size = new System.Drawing.Size(138, 32);
             this.label2.TabIndex = 436;
             this.label2.Text = "ToneDetails";
             // 
             // txt_ToneDetails
             // 
             this.txt_ToneDetails.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txt_ToneDetails.Location = new System.Drawing.Point(4, 544);
+            this.txt_ToneDetails.Location = new System.Drawing.Point(4, 581);
             this.txt_ToneDetails.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txt_ToneDetails.Name = "txt_ToneDetails";
             this.txt_ToneDetails.Size = new System.Drawing.Size(859, 123);
@@ -263,7 +291,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // txt_CDLC_Name
             // 
             this.txt_CDLC_Name.Cue = "DLC Name";
-            this.txt_CDLC_Name.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_CDLC_Name.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txt_CDLC_Name.ForeColor = System.Drawing.Color.Gray;
             this.txt_CDLC_Name.Location = new System.Drawing.Point(451, 12);
             this.txt_CDLC_Name.Name = "txt_CDLC_Name";
@@ -272,7 +300,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // button3
             // 
-            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.button3.Location = new System.Drawing.Point(824, 234);
             this.button3.Margin = new System.Windows.Forms.Padding(2);
             this.button3.Name = "button3";
@@ -283,7 +311,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // button2
             // 
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.button2.Location = new System.Drawing.Point(824, 196);
             this.button2.Margin = new System.Windows.Forms.Padding(2);
             this.button2.Name = "button2";
@@ -294,7 +322,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // button1
             // 
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.button1.Location = new System.Drawing.Point(824, 155);
             this.button1.Margin = new System.Windows.Forms.Padding(2);
             this.button1.Name = "button1";
@@ -305,7 +333,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // btn_Album2SortA
             // 
-            this.btn_Album2SortA.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Album2SortA.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btn_Album2SortA.Location = new System.Drawing.Point(824, 117);
             this.btn_Album2SortA.Margin = new System.Windows.Forms.Padding(2);
             this.btn_Album2SortA.Name = "btn_Album2SortA";
@@ -316,8 +344,8 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_BasedOnCF
             // 
-            this.txt_BasedOnCF.Cue = "CF (Based on) Link(s)";
-            this.txt_BasedOnCF.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_BasedOnCF.Cue = "CF (Based on) Link(; separated by commas)";
+            this.txt_BasedOnCF.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txt_BasedOnCF.ForeColor = System.Drawing.Color.Gray;
             this.txt_BasedOnCF.Location = new System.Drawing.Point(4, 196);
             this.txt_BasedOnCF.Name = "txt_BasedOnCF";
@@ -328,10 +356,10 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.label1.AutoSize = true;
             this.label1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label1.Location = new System.Drawing.Point(781, 424);
+            this.label1.Location = new System.Drawing.Point(781, 461);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(82, 25);
+            this.label1.Size = new System.Drawing.Size(90, 32);
             this.label1.TabIndex = 408;
             this.label1.Text = "ToDo-s";
             // 
@@ -339,17 +367,17 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             this.lbl_Settings.AutoSize = true;
             this.lbl_Settings.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lbl_Settings.Location = new System.Drawing.Point(686, 318);
+            this.lbl_Settings.Location = new System.Drawing.Point(686, 355);
             this.lbl_Settings.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_Settings.Name = "lbl_Settings";
-            this.lbl_Settings.Size = new System.Drawing.Size(177, 25);
+            this.lbl_Settings.Size = new System.Drawing.Size(191, 32);
             this.lbl_Settings.TabIndex = 407;
             this.lbl_Settings.Text = "Version Changes";
             // 
             // txt_toDos
             // 
             this.txt_toDos.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txt_toDos.Location = new System.Drawing.Point(4, 424);
+            this.txt_toDos.Location = new System.Drawing.Point(4, 461);
             this.txt_toDos.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txt_toDos.Name = "txt_toDos";
             this.txt_toDos.Size = new System.Drawing.Size(859, 115);
@@ -359,7 +387,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // txt_Description
             // 
             this.txt_Description.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txt_Description.Location = new System.Drawing.Point(4, 318);
+            this.txt_Description.Location = new System.Drawing.Point(4, 355);
             this.txt_Description.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txt_Description.Name = "txt_Description";
             this.txt_Description.Size = new System.Drawing.Size(859, 96);
@@ -368,8 +396,8 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_TabLinks
             // 
-            this.txt_TabLinks.Cue = "Tab(s) Link";
-            this.txt_TabLinks.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_TabLinks.Cue = "Tab Link (s; separated by commas)";
+            this.txt_TabLinks.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txt_TabLinks.ForeColor = System.Drawing.Color.Gray;
             this.txt_TabLinks.Location = new System.Drawing.Point(4, 234);
             this.txt_TabLinks.Name = "txt_TabLinks";
@@ -378,8 +406,8 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_BasedOnYB
             // 
-            this.txt_BasedOnYB.Cue = "YB (Based on) Link(s)";
-            this.txt_BasedOnYB.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_BasedOnYB.Cue = "YB (Based on) Link(s; separated by commas)";
+            this.txt_BasedOnYB.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txt_BasedOnYB.ForeColor = System.Drawing.Color.Gray;
             this.txt_BasedOnYB.Location = new System.Drawing.Point(3, 155);
             this.txt_BasedOnYB.Name = "txt_BasedOnYB";
@@ -388,8 +416,8 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_YBLink
             // 
-            this.txt_YBLink.Cue = "YB Link";
-            this.txt_YBLink.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_YBLink.Cue = "YB Link (s; separated by commas)";
+            this.txt_YBLink.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txt_YBLink.ForeColor = System.Drawing.Color.Gray;
             this.txt_YBLink.Location = new System.Drawing.Point(4, 117);
             this.txt_YBLink.Name = "txt_YBLink";
@@ -399,7 +427,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // txt_Author
             // 
             this.txt_Author.Cue = "Author";
-            this.txt_Author.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txt_Author.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txt_Author.ForeColor = System.Drawing.Color.Gray;
             this.txt_Author.Location = new System.Drawing.Point(4, 12);
             this.txt_Author.Name = "txt_Author";
@@ -411,7 +439,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.linkLabel4.AutoSize = true;
             this.linkLabel4.Location = new System.Drawing.Point(12, 106);
             this.linkLabel4.Name = "linkLabel4";
-            this.linkLabel4.Size = new System.Drawing.Size(210, 25);
+            this.linkLabel4.Size = new System.Drawing.Size(227, 32);
             this.linkLabel4.TabIndex = 15;
             this.linkLabel4.TabStop = true;
             this.linkLabel4.Text = "Search for Track No.";
@@ -421,7 +449,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.linkLabel3.AutoSize = true;
             this.linkLabel3.Location = new System.Drawing.Point(12, 81);
             this.linkLabel3.Name = "linkLabel3";
-            this.linkLabel3.Size = new System.Drawing.Size(245, 25);
+            this.linkLabel3.Size = new System.Drawing.Size(276, 32);
             this.linkLabel3.TabIndex = 14;
             this.linkLabel3.TabStop = true;
             this.linkLabel3.Text = "Search for the Spotify ID";
@@ -434,7 +462,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_SaveRemotely.Enabled = false;
             this.chbx_SaveRemotely.Location = new System.Drawing.Point(634, 76);
             this.chbx_SaveRemotely.Name = "chbx_SaveRemotely";
-            this.chbx_SaveRemotely.Size = new System.Drawing.Size(189, 29);
+            this.chbx_SaveRemotely.Size = new System.Drawing.Size(203, 36);
             this.chbx_SaveRemotely.TabIndex = 13;
             this.chbx_SaveRemotely.Text = "Save Remotely";
             this.chbx_SaveRemotely.UseVisualStyleBackColor = true;
@@ -444,7 +472,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.linkLabel2.AutoSize = true;
             this.linkLabel2.Location = new System.Drawing.Point(12, 56);
             this.linkLabel2.Name = "linkLabel2";
-            this.linkLabel2.Size = new System.Drawing.Size(318, 25);
+            this.linkLabel2.Size = new System.Drawing.Size(355, 32);
             this.linkLabel2.TabIndex = 12;
             this.linkLabel2.TabStop = true;
             this.linkLabel2.Text = "Search for tab on Custom Forge";
@@ -454,7 +482,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.linkLabel1.AutoSize = true;
             this.linkLabel1.Location = new System.Drawing.Point(12, 30);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(325, 25);
+            this.linkLabel1.Size = new System.Drawing.Size(366, 32);
             this.linkLabel1.TabIndex = 11;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "Search for tab on Ultimate Guitar";
@@ -467,7 +495,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_SaveInDB.Enabled = false;
             this.chbx_SaveInDB.Location = new System.Drawing.Point(634, 41);
             this.chbx_SaveInDB.Name = "chbx_SaveInDB";
-            this.chbx_SaveInDB.Size = new System.Drawing.Size(151, 29);
+            this.chbx_SaveInDB.Size = new System.Drawing.Size(161, 36);
             this.chbx_SaveInDB.TabIndex = 10;
             this.chbx_SaveInDB.Text = "Save in DB";
             this.chbx_SaveInDB.UseVisualStyleBackColor = true;
@@ -477,11 +505,12 @@ namespace RocksmithToolkitGUI.DLCManager
             this.chbx_SaveInVerisonInfo.AutoSize = true;
             this.chbx_SaveInVerisonInfo.Checked = true;
             this.chbx_SaveInVerisonInfo.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chbx_SaveInVerisonInfo.Enabled = false;
             this.chbx_SaveInVerisonInfo.Location = new System.Drawing.Point(634, 6);
             this.chbx_SaveInVerisonInfo.Name = "chbx_SaveInVerisonInfo";
-            this.chbx_SaveInVerisonInfo.Size = new System.Drawing.Size(230, 29);
+            this.chbx_SaveInVerisonInfo.Size = new System.Drawing.Size(332, 36);
             this.chbx_SaveInVerisonInfo.TabIndex = 9;
-            this.chbx_SaveInVerisonInfo.Text = "Save in VersionInfo";
+            this.chbx_SaveInVerisonInfo.Text = "Save in PackageComments";
             this.chbx_SaveInVerisonInfo.UseVisualStyleBackColor = true;
             // 
             // lbl_Link
@@ -489,7 +518,7 @@ namespace RocksmithToolkitGUI.DLCManager
             this.lbl_Link.AutoSize = true;
             this.lbl_Link.Location = new System.Drawing.Point(12, 7);
             this.lbl_Link.Name = "lbl_Link";
-            this.lbl_Link.Size = new System.Drawing.Size(200, 25);
+            this.lbl_Link.Size = new System.Drawing.Size(217, 32);
             this.lbl_Link.TabIndex = 7;
             this.lbl_Link.TabStop = true;
             this.lbl_Link.Text = "Search for YoutuBe";
@@ -498,9 +527,9 @@ namespace RocksmithToolkitGUI.DLCManager
             // btn_B3
             // 
             this.btn_B3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btn_B3.Location = new System.Drawing.Point(0, 197);
+            this.btn_B3.Location = new System.Drawing.Point(0, 223);
             this.btn_B3.Name = "btn_B3";
-            this.btn_B3.Size = new System.Drawing.Size(867, 116);
+            this.btn_B3.Size = new System.Drawing.Size(942, 116);
             this.btn_B3.TabIndex = 5;
             this.btn_B3.Text = "OK (PackNow!)";
             this.btn_B3.UseVisualStyleBackColor = true;
@@ -509,7 +538,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // PackNew
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(867, 989);
+            this.ClientSize = new System.Drawing.Size(942, 1067);
             this.Controls.Add(this.splitContainer1);
             this.Name = "PackNew";
             this.Load += new System.EventHandler(this.PackNew_Load);
@@ -531,10 +560,10 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btn_OK_Click(object sender, EventArgs e)
         {
-            ConfigRepository.Instance()["dlcm_GlobalTempVariable"] = txt_Author.Text + ";" + txt_CDLC_Name.Text + ";" + txt_TrackNo.Text + ";" + txt_Version.Text + ";" + txt_CDLCID.Text + ";" + txt_EoFPath.Text + ";" + txt_YBLink.Text + ";" + txt_BasedOnYB.Text
-                + ";" + txt_BasedOnCF.Text + ";" + txt_TabLinks.Text + ";" + txt_Spotify.Text + ";" + txt_Description.Text + ";" + txt_toDos.Text + ";" + txt_ToneDetails.Text + ";" + (chbx_SaveInVerisonInfo.Checked ? "Yes" : "No")
-                + ";" + ";" + (chbx_SaveInDB.Checked ? "Yes" : "No") + ";" + (chbx_SaveRemotely.Checked ? "Yes" : "No") + ConfigRepository.Instance()["dlcm_EoFPath"] + ";" + ";" + txt_PackageDate.Text + ";" + txt_UpdateDate.Text
-                + "Author,DLC_Name,TrackNo,Version,CDLCID,txt_EoFPath,YBLink,BasedOnYB,BasedOnCF,TabLinks,Spotify,Description,toDo,ToneDetails,SaveInVerisonInfo,SaveInDB,SaveRemotely,SaveRemotelyPath,PackageDate,UpdateDate";
+            ConfigRepository.Instance()["dlcm_GlobalTempVariable"] = txt_Author.Text + ";" + txt_CDLC_Name.Text + ";" + txt_TrackNo.Text + ";" + txt_Version.Text + ";" + txt_CDLCID.Text + ";" + txt_EoFPath.Text + ";" + txt_YBLink.Text.Replace(";", ",") + ";" + txt_BasedOnYB.Text.Replace(";", ",")
+                + ";" + txt_BasedOnCF.Text.Replace(";", ",") + ";" + txt_TabLinks.Text.Replace(";", ",") + ";" + txt_Spotify.Text.Replace(";", ",") + ";" + txt_Description.Text.Replace(";", ",") + ";" + txt_toDos.Text.Replace(";", ",") + ";" + txt_ToneDetails.Text.Replace(";", ",") + ";" + (chbx_SaveInVerisonInfo.Checked ? "Yes" : "No")
+                + ";" + ";" + (chbx_SaveInDB.Checked ? "Yes" : "No") + ";" + (chbx_SaveRemotely.Checked ? "Yes" : "No") + ConfigRepository.Instance()["dlcm_EoFPath"] + ";" + ";" + txt_PackageDate.Text + ";" + txt_UpdateDate.Text + ";" + txt_GPFilePath.Text
+                + "Author,DLC_Name,TrackNo,Version,CDLCID,txt_EoFPath,YBLink,BasedOnYB,BasedOnCF,TabLinks,Spotify,Description,toDo,ToneDetails,SaveInVerisonInfo,SaveInDB,SaveRemotely,SaveRemotelyPath,PackageDate,UpdateDate,BasedOn_GP";
 
             //exit();
             this.Hide();
@@ -564,15 +593,16 @@ namespace RocksmithToolkitGUI.DLCManager
                 if (info.ToolkitInfo.PackageComment.Contains(";"))
                 {
                     string[] ag = info.ToolkitInfo.PackageComment.ToString().Split(';');
-                    txt_Author.Text = ag[0];
+                    txt_Author.Text = ag[0].Replace("Repacked by", "");
                     if (ag.Length >= 20)
                     {
                         ud = ag[19];
                         txt_CDLC_Name.Text = ag[1]; txt_TrackNo.Text = ag[2]; txt_Version.Text = ag[3]; txt_CDLCID.Text = ag[4]; txt_EoFPath.Text = ag[5]; txt_YBLink.Text = ag[6]; txt_BasedOnYB.Text = ag[7];
                         txt_BasedOnCF.Text = ag[8]; txt_TabLinks.Text = ag[9]; txt_Spotify.Text = ag[10]; txt_Description.Text = ag[11]; txt_toDos.Text = ag[12]; txt_ToneDetails.Text = ag[14];
                         chbx_SaveInVerisonInfo.Checked = ag[15] == "Yes" ? true : false; chbx_SaveInDB.Checked = ag[16] == "Yes" ? true : false; chbx_SaveRemotely.Checked = ag[17] == "Yes" ? true : false;
-                        //txt_PackageDate.Text = ag[18]; txt_UpdateDate.Text = ud;//ConfigRepository.Instance()["dlcm_EoFPath"] + ";"
-                        //"Author,DLC_Name,TrackNo,Version,CDLCID,txt_EoFPath,YBLink,BasedOnYB,BasedOnCF,TabLinks,Spotify,Description,toDo,ToneDetails,SaveInVerisonInfo,SaveInDB,SaveRemotely,SaveRemotelyPath,PackageDate,UpdateDate"
+                        //txt_PackageDate.Text = ag[18];
+                        txt_GPFilePath.Text = ag[20];//ConfigRepository.Instance()["dlcm_EoFPath"] + ";"
+                        //"Author,DLC_Name,TrackNo,Version,CDLCID,txt_EoFPath,YBLink,BasedOnYB,BasedOnCF,TabLinks,Spotify,Description,toDo,ToneDetails,SaveInVerisonInfo,SaveInDB,SaveRemotely,SaveRemotelyPath,PackageDate,UpdateDate,BasedOn_GP"
 
                         //if (txt_PackageDate.Text == "")
                         txt_PackageDate.Text = DateTime.Now.ToString();
@@ -582,6 +612,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         //}
                         emt = true;
                     }
+                    if (txt_GPFilePath.Text == "") txt_GPFilePath.Text = GetGPfile();
                 }
             if (!emt)
             {
@@ -589,15 +620,43 @@ namespace RocksmithToolkitGUI.DLCManager
                 txt_CDLC_Name.Text = info.Name;
                 txt_Version.Text = info.ToolkitInfo.PackageVersion;
                 //txt_CDLCID.Text = ag[4];
-                txt_EoFPath.Text = Path.GetDirectoryName(info.Arrangements[0].SongXml.File);
-                txt_Author.Text = info.ToolkitInfo.PackageAuthor == null || info.ToolkitInfo.PackageAuthor.Contains("CDLC Creator")? ConfigRepository.Instance()["general_defaultauthor"] : info.ToolkitInfo.PackageAuthor;
+                txt_EoFPath.Text = Path.Combine(Path.GetDirectoryName(info.Arrangements[0].SongXml.File), "notes.eof");
+                txt_Author.Text = info.ToolkitInfo.PackageAuthor == null || info.ToolkitInfo.PackageAuthor.Contains("CDLC Creator") ? ConfigRepository.Instance()["general_defaultauthor"] : info.ToolkitInfo.PackageAuthor;
                 //"Author,DLC_Name,TrackNo,Version,CDLCID,txt_EoFPath,YBLink,BasedOnYB,BasedOnCF,TabLinks,Spotify,Description,toDo,ToneDetails,SaveInVerisonInfo,SaveInDB,SaveRemotely,SaveRemotelyPath,PackageDate,UpdateDate"
 
                 //if (txt_PackageDate.Text == "")
                 txt_PackageDate.Text = DateTime.Now.ToString();
                 txt_UpdateDate.Text = DateTime.Now.ToString();
+                txt_GPFilePath.Text = GetGPfile();
             }
 
         }
+
+        public string GetGPfile()
+        {
+            var templateList = Directory.EnumerateFiles(Path.GetDirectoryName(info.Arrangements[0].SongXml.File));
+            var files = "";
+            foreach (var template in templateList)
+            {
+                if (Path.GetExtension(template).ToLower() == ".gp" || Path.GetExtension(template).ToLower() == ".gpx" || Path.GetExtension(template).ToLower() == ".gp5")
+                {
+                    files += template + ",";
+                }
+            }
+            return files;
+        }
+        private void btn_DBFolder_Click(object sender, EventArgs e)
+            {
+                var result1 = MessageBox.Show("chose file.", "GuitarPro file", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation);
+                if (result1 == DialogResult.OK)
+                    using (var fbd = new VistaFolderBrowserDialog())
+                    {
+                        if (fbd.ShowDialog() == DialogResult.OK)
+                       if (fbd.SelectedPath== Path.Combine(Path.GetDirectoryName(info.Arrangements[0].SongXml.File)))
+                            FileCopy(fbd.SelectedPath, Path.Combine(Path.GetDirectoryName(info.Arrangements[0].SongXml.File), Path.GetFileName(fbd.SelectedPath))
+                                , true,0,false);
+                    txt_GPFilePath.Text = Path.Combine(Path.GetDirectoryName(info.Arrangements[0].SongXml.File), Path.GetFileName(fbd.SelectedPath));
+                }
+            }
+        }
     }
-}

@@ -23,6 +23,7 @@ using System.Net;
 using System.IO;
 using System.Data.SQLite;
 using SQLite;
+using SpotifyApi.NetCore;
 
 namespace RocksmithToolkitGUI.DLCManager
 {
@@ -91,6 +92,17 @@ namespace RocksmithToolkitGUI.DLCManager
                 }
                 while (i > 0 && databox.RowCount > 1 && i < databox.RowCount);
             }
+
+            //chbx_a1.Text = c("dclm_CustomToAtribute_1"); if (c("dclm_CustomToAtribute_1") == "Yes") chbx_a1.Enabled = false;
+            //else chbx_a1.Enabled = true;
+            //chbx_a2.Text = c("dclm_CustomToAtribute_2"); if (c("dclm_CustomToAtribute_2") == "Yes") chbx_a2.Enabled = false;
+            //else chbx_a2.Enabled = true;
+            //chbx_a3.Text = c("dclm_CustomToAtribute_3"); if (c("dclm_CustomToAtribute_3") == "Yes") chbx_a3.Enabled = false;
+            //else chbx_a3.Enabled = true;
+            //chbx_a4.Text = c("dclm_CustomToAtribute_4"); if (c("dclm_CustomToAtribute_4") == "Yes") chbx_a4.Enabled = false;
+            //else chbx_a4.Enabled = true;
+            //chbx_a5.Text = c("dclm_CustomToAtribute_5"); if (c("dclm_CustomToAtribute_5") == "Yes") chbx_a5.Enabled = false;
+            //else chbx_a5.Enabled = true;
 
         }
 
@@ -193,6 +205,16 @@ namespace RocksmithToolkitGUI.DLCManager
                 txt_Year_Correction.Text = databox.Rows[i].Cells[10].Value.ToString();
                 if (databox.Rows[i].Cells[15].Value.ToString() == "Yes") chbx_Default_Cover.Checked = true;
                 else chbx_Default_Cover.Checked = false;
+                if (databox.Rows[i].Cells[17].Value.ToString() == "Yes") chbx_a1.Checked = true;
+                else chbx_a1.Checked = false;
+                if (databox.Rows[i].Cells[18].Value.ToString() == "Yes") chbx_a2.Checked = true;
+                else chbx_a2.Checked = false;
+                if (databox.Rows[i].Cells[19].Value.ToString() == "Yes") chbx_a3.Checked = true;
+                else chbx_a3.Checked = false;
+                if (databox.Rows[i].Cells[20].Value.ToString() == "Yes") chbx_a4.Checked = true;
+                else chbx_a4.Checked = false;
+                if (databox.Rows[i].Cells[21].Value.ToString() == "Yes") chbx_a5.Checked = true;
+                else chbx_a5.Checked = false;
                 if (txt_AlbumArt_Correction.Text != "" && File.Exists(txt_AlbumArt_Correction.Text.Replace(".dds", ".png")))
                 {
                     picbx_AlbumArtPath.ImageLocation = txt_AlbumArt_Correction.Text;
@@ -210,8 +232,9 @@ namespace RocksmithToolkitGUI.DLCManager
                     }
                     else
                     {
-                        var ts = "SELECT AlbumArtPath FROM Main WHERE Artist =\"" + (txt_Artist_Correction.Text != "" ? txt_Artist_Correction.Text : txt_Artist.Text)
-                            + "\" AND Album=\"" + (txt_Album_Correction.Text != "" ? txt_Album_Correction.Text : txt_Album.Text) + "\"";
+                        var ts = "SELECT AlbumArtPath, Album_ArtPathOrig FROM Main WHERE " +
+                            "(Artist =\"" + txt_Artist_Correction.Text + "\" OR Artist =\"" + txt_Artist.Text + "\")"
+                            + " AND (Album=\"" + txt_Album_Correction.Text + "\" OR Album=\"" + txt_Album.Text + "\")";
                         DataSet dus = new DataSet(); dus = SelectFromDB("Main", ts, "", cnb, cnc);
                         //rtxt_StatisticsOnReadDLCs.Text += "\n  54= " +dus.Tables[0].Rows.Count;
                         var rowc = dus.Tables.Count == 0 ? 0 : dus.Tables[0].Rows.Count;
@@ -219,9 +242,10 @@ namespace RocksmithToolkitGUI.DLCManager
                         //{
                         //files[i] = new Files();
                         //rtxt_StatisticsOnReadDLCs.Text += "\n  a= " + i + MaximumSize+dataRow.ItemArray[0].ToString();
+                        var pix = GetAlbumArtPath(dus.Tables[0].Rows[0].ItemArray[0].ToString(), dus.Tables[0].Rows[0].ItemArray[0].ToString(), ".png");
                         if (rowc > 0)
                         {
-                            pxbx_SavedSpotify.ImageLocation = dus.Tables[0].Rows[0].ItemArray[0].ToString().Replace(".dds", ".png");
+                            pxbx_SavedSpotify.ImageLocation = pix;
                             lbl_SpotifyCover.Visible = true;
                             lbl_SpotifyCover.Text = "Sample from Imported:";
                         }
@@ -271,7 +295,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
             dssx = SelectFromDB("Standardization", "SELECT ID, Suspect, Suspect_Reason, Artist, Artist_Correction, Album, Album_Correction, AlbumArt_Correction, Comments, Artist_Short, Album_Short, Year_Correction, SpotifyArtistID," +
                 " SpotifyAlbumID, SpotifyAlbumURL, SpotifyAlbumPath, Default_Cover, Artist_AutoGroup FROM Standardization as S" +
-                " ORDER BY Artist, Album, Artist_Correction, Album_Correction;", "", cnb, cnc);
+                " ORDER BY Artist, Album, Artist_Correction, Album_Correction, CustomToAtribute_1, CustomToAtribute_2, CustomToAtribute_3, CustomToAtribute_4, CustomToAtribute_5;", "", cnb, cnc);
             //OleDbDataAdapter da = new OleDbDataAdapter(cmd, cn);
             //da.Fill(dssx, "Standardization");
             if (dssx.Tables.Count > 0)
@@ -297,6 +321,11 @@ namespace RocksmithToolkitGUI.DLCManager
                 DataGridViewTextBoxColumn SpotifyAlbumPath = new DataGridViewTextBoxColumn { DataPropertyName = "SpotifyAlbumPath", HeaderText = "SpotifyAlbumPath ", Width = 30 };
                 DataGridViewTextBoxColumn Default_Cover = new DataGridViewTextBoxColumn { DataPropertyName = "Default_Cover", HeaderText = "Default_Cover ", Width = 30 };
                 DataGridViewTextBoxColumn Artist_AutoGroup = new DataGridViewTextBoxColumn { DataPropertyName = "Artist_AutoGroup", HeaderText = "Artist_AutoGroup ", Width = 55 };
+                DataGridViewTextBoxColumn CustomToAtribute_1 = new DataGridViewTextBoxColumn { DataPropertyName = "CustomToAtribute_1", HeaderText = "CustomToAtribute_1 ", Width = 55 };
+                DataGridViewTextBoxColumn CustomToAtribute_2 = new DataGridViewTextBoxColumn { DataPropertyName = "CustomToAtribute_2", HeaderText = "CustomToAtribute_2 ", Width = 55 };
+                DataGridViewTextBoxColumn CustomToAtribute_3 = new DataGridViewTextBoxColumn { DataPropertyName = "CustomToAtribute_3", HeaderText = "CustomToAtribute_3 ", Width = 55 };
+                DataGridViewTextBoxColumn CustomToAtribute_4 = new DataGridViewTextBoxColumn { DataPropertyName = "CustomToAtribute_4", HeaderText = "CustomToAtribute_4 ", Width = 55 };
+                DataGridViewTextBoxColumn CustomToAtribute_5 = new DataGridViewTextBoxColumn { DataPropertyName = "CustomToAtribute_5", HeaderText = "CustomToAtribute_5 ", Width = 55 };
                 DataGridView.AutoGenerateColumns = false;
 
                 DataGridView.Columns.AddRange(new DataGridViewColumn[]
@@ -318,7 +347,12 @@ namespace RocksmithToolkitGUI.DLCManager
                         SpotifyAlbumPath,
                         Default_Cover,
                         Artist_AutoGroup,
-                        Suspect_Reason
+                        Suspect_Reason,
+                        CustomToAtribute_1,
+                        CustomToAtribute_2,
+                        CustomToAtribute_3,
+                        CustomToAtribute_4,
+                        CustomToAtribute_5
                     }
                 );
 
@@ -378,29 +412,34 @@ namespace RocksmithToolkitGUI.DLCManager
             }
         }
 
-        private class Files
-        {
-            public string ID { get; set; }
-            public string Suspect { get; set; }
-            public string Artist { get; set; }
-            public string Artist_Correction { get; set; }
-            public string Album { get; set; }
-            public string Album_Correction { get; set; }
-            public string AlbumArt_Correction { get; set; }
-            public string Comments { get; set; }
-            public string Artist_Short { get; set; }
-            public string Album_Short { get; set; }
-            public string Year_Correction { get; set; }
-            public string SpotifyArtistID { get; set; }
-            public string SpotifyAlbumID { get; set; }
-            public string SpotifyAlbumURL { get; set; }
-            public string SpotifyAlbumPath { get; set; }
-            public string Default_Cover { get; set; }
-            public string Artist_AutoGroup { get; set; }
-            public string Suspect_Reason { get; set; }
-        }
+        //private class Files
+        //{
+        //    public string ID { get; set; }
+        //    public string Suspect { get; set; }
+        //    public string Artist { get; set; }
+        //    public string Artist_Correction { get; set; }
+        //    public string Album { get; set; }
+        //    public string Album_Correction { get; set; }
+        //    public string AlbumArt_Correction { get; set; }
+        //    public string Comments { get; set; }
+        //    public string Artist_Short { get; set; }
+        //    public string Album_Short { get; set; }
+        //    public string Year_Correction { get; set; }
+        //    public string SpotifyArtistID { get; set; }
+        //    public string SpotifyAlbumID { get; set; }
+        //    public string SpotifyAlbumURL { get; set; }
+        //    public string SpotifyAlbumPath { get; set; }
+        //    public string Default_Cover { get; set; }
+        //    public string Artist_AutoGroup { get; set; }
+        //    public string Suspect_Reason { get; set; }
+        //    public string CustomToAtribute_1 { get; set; }
+        //    public string CustomToAtribute_2 { get; set; }
+        //    public string CustomToAtribute_3 { get; set; }
+        //    public string CustomToAtribute_4 { get; set; }
+        //    public string CustomToAtribute_5 { get; set; }
+        //}
 
-        private Files[] files = new Files[20000];
+        private UtilitiesFunctions.Standardization[] files = new UtilitiesFunctions.Standardization[20000];
 
         //Generic procedure to read and parse Standardization.DB (&others..soon)
         public int SQLAccess(string cmd)
@@ -425,10 +464,10 @@ namespace RocksmithToolkitGUI.DLCManager
             MaximumSize = dus.Tables[0].Rows.Count;
             foreach (DataRow dataRow in dus.Tables[0].Rows)
             {
-                files[i] = new Files();
+                files[i] = new UtilitiesFunctions.Standardization();
 
                 //rtxt_StatisticsOnReadDLCs.Text += "\n  a= " + i + MaximumSize+dataRow.ItemArray[0].ToString();
-                files[i].ID = dataRow.ItemArray[0].ToString();
+                files[i].ID = dataRow.ItemArray[0].ToString().ToInt32();
                 files[i].Suspect = dataRow.ItemArray[1].ToString();
                 files[i].Suspect_Reason = dataRow.ItemArray[17].ToString();
                 files[i].Artist = dataRow.ItemArray[2].ToString();
@@ -446,6 +485,11 @@ namespace RocksmithToolkitGUI.DLCManager
                 files[i].SpotifyAlbumPath = dataRow.ItemArray[14].ToString();
                 files[i].Default_Cover = dataRow.ItemArray[15].ToString();
                 files[i].Artist_AutoGroup = dataRow.ItemArray[16].ToString();
+                files[i].CustomToAtribute_1 = dataRow.ItemArray[17].ToString();
+                files[i].CustomToAtribute_2 = dataRow.ItemArray[18].ToString();
+                files[i].CustomToAtribute_3 = dataRow.ItemArray[19].ToString();
+                files[i].CustomToAtribute_4 = dataRow.ItemArray[20].ToString();
+                files[i].CustomToAtribute_5 = dataRow.ItemArray[21].ToString();
                 i++;
             }
             //Closing Connection
@@ -629,8 +673,8 @@ namespace RocksmithToolkitGUI.DLCManager
                 //Main.ResetBindings(false);
 
 
-                var connection = new OleDbConnection("Provider=Microsoft." + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path);
-                var command = connection.CreateCommand();
+                //var connection = new OleDbConnection("Provider=Microsoft." + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path);
+                var command = cnb.CreateCommand();
                 //using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft." + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
                 //{
                 command.CommandText = "UPDATE Standardization SET ";
@@ -647,7 +691,12 @@ namespace RocksmithToolkitGUI.DLCManager
                 command.CommandText += "SpotifyAlbumURL = @param13, ";
                 command.CommandText += "SpotifyAlbumPath = @param14, ";
                 command.CommandText += "Default_Cover = @param15, ";
-                command.CommandText += "Artist_AutoGroup = @param16 ";
+                command.CommandText += "Artist_AutoGroup = @param16, ";
+                command.CommandText += "CustomToAtribute_1 = @param17,";
+                command.CommandText += "CustomToAtribute_2 = @param18,";
+                command.CommandText += "CustomToAtribute_3 = @param19,";
+                command.CommandText += "CustomToAtribute_4 = @param20,";
+                command.CommandText += "CustomToAtribute_5 = @param21";
                 command.CommandText += "WHERE ID = " + txt_ID.Text;
                 command.Parameters.AddWithValue("@param3", databox.Rows[i].Cells[3].Value.ToString() ?? DBNull.Value.ToString());
                 command.Parameters.AddWithValue("@param5", databox.Rows[i].Cells[5].Value.ToString() ?? DBNull.Value.ToString());
@@ -662,8 +711,16 @@ namespace RocksmithToolkitGUI.DLCManager
                 command.Parameters.AddWithValue("@param14", databox.Rows[i].Cells[14].Value.ToString() ?? DBNull.Value.ToString());
                 command.Parameters.AddWithValue("@param15", databox.Rows[i].Cells[15].Value.ToString() ?? DBNull.Value.ToString());
                 command.Parameters.AddWithValue("@param16", databox.Rows[i].Cells[16].Value.ToString() ?? DBNull.Value.ToString());
+                command.Parameters.AddWithValue("@param17", databox.Rows[i].Cells[17].Value.ToString() ?? DBNull.Value.ToString());
+                command.Parameters.AddWithValue("@param18", databox.Rows[i].Cells[18].Value.ToString() ?? DBNull.Value.ToString());
+                command.Parameters.AddWithValue("@param19", databox.Rows[i].Cells[19].Value.ToString() ?? DBNull.Value.ToString());
+                command.Parameters.AddWithValue("@param20", databox.Rows[i].Cells[20].Value.ToString() ?? DBNull.Value.ToString());
+                command.Parameters.AddWithValue("@param21", databox.Rows[i].Cells[21].Value.ToString() ?? DBNull.Value.ToString());
                 command.CommandType = CommandType.Text;
+
                 UpdateDBbyExecuteNonQuery(command, cnb, cnc);
+                command.Dispose();
+
                 //    try
                 //    {
                 //        connection.Open();
@@ -834,7 +891,8 @@ namespace RocksmithToolkitGUI.DLCManager
             if (netstatus == "OK") netstatus = CheckIfConnectedToSpotify().Result.ToString();
             if (netstatus == "NOK" || netstatus == "") return;
 
-            DataSet SongRecord = new DataSet(); SongRecord = SelectFromDB("Standardization", "SELECT IIF(Artist_Correction is null,Artist,Artist_Correction), IIF(Album_Correction is null,Album,Album_Correction), ID FROM Standardization WHERE SpotifyArtistID = \"-\" OR SpotifyArtistID = \"\" OR SpotifyArtistID is null ORDER BY SpotifyArtistID ASC;", "", cnb, cnc);
+            DataSet SongRecord = new DataSet(); SongRecord = SelectFromDB("Standardization", "SELECT IIF(Artist_Correction is null,Artist,Artist_Correction), IIF(Album_Correction is null,Album,Album_Correction), " +
+                "ID FROM Standardization WHERE SpotifyArtistID = \"-\" OR SpotifyArtistID = \"\" OR SpotifyArtistID is null ORDER BY SpotifyArtistID ASC;", "", cnb, cnc);
             var noOfRec = SongRecord.Tables[0].Rows.Count;
             //var vFilesMissingIssues = "";
             pB_ReadDLCs.Value = 0; pB_ReadDLCs.Step = 1;
@@ -1222,6 +1280,75 @@ namespace RocksmithToolkitGUI.DLCManager
             if (SearchON)
                 if (e.KeyChar == (char)Keys.Enter)
                     btn_Search.PerformClick();
+        }
+
+        private void btn_suspect_Click(object sender, EventArgs e)
+        {
+
+            //parse table
+            //if %*Artist*% like %*artist*%
+            //if %*album*%t like %*album*%
+
+            var tsst = ""; var timestamp = DateTime.Now; var i = 0;
+
+            DataSet dfz = UpdateDB("Standardization", "UPDATE Standardization SET suspect=\"\"", cnb, cnc);
+
+            var cmd = "SELECT ID, Artist, Artist_Correction, Album, Album_Correction, Suspect, Suspect_Reason FROM Standardization;";
+
+            dfz = new DataSet(); dfz = SelectFromDB("Standardization", cmd, "", cnb, cnc);
+            var norecs = dfz.Tables.Count > 0 ? dfz.Tables[0].Rows.Count : 0; var tz = ""; pB_ReadDLCs.Maximum = norecs; pB_ReadDLCs.Step = 1; pB_ReadDLCs.Value = 0
+; if (norecs > 0)
+                for (var k = 0; k < norecs; k++)
+                {
+                    pB_ReadDLCs.Increment(1);
+                    var artistx = dfz.Tables[0].Rows[k].ItemArray[2].ToString() != "" ? dfz.Tables[0].Rows[k].ItemArray[2].ToString() : dfz.Tables[0].Rows[k].ItemArray[1].ToString();
+                    var albumx = dfz.Tables[0].Rows[k].ItemArray[4].ToString() != "" ? dfz.Tables[0].Rows[k].ItemArray[4].ToString() : dfz.Tables[0].Rows[k].ItemArray[3].ToString();
+                    for (var l = k + 1; l < norecs; l++)
+                    {
+                        var idd = dfz.Tables[0].Rows[l].ItemArray[0].ToString();
+                        var artistt = dfz.Tables[0].Rows[l].ItemArray[2].ToString() != "" ? dfz.Tables[0].Rows[l].ItemArray[2].ToString() : dfz.Tables[0].Rows[l].ItemArray[1].ToString();
+                        var albumt = dfz.Tables[0].Rows[l].ItemArray[4].ToString() != "" ? dfz.Tables[0].Rows[l].ItemArray[4].ToString() : dfz.Tables[0].Rows[l].ItemArray[3].ToString();
+
+
+                        if (artistx != "" && albumx != "" && artistt != "" && albumt != "")
+                            if (artistx.Length > 4 && albumx.Length > 4 && artistt.Length > 4 && albumt.Length > 4)
+                            {
+                                if (
+                                    (artistx != artistt && (artistx.ToLower().Trim() == artistt.ToLower().Trim() || artistx.ToLower().Trim().Contains(artistt.ToLower().Trim()) || artistt.ToLower().Trim().Contains(artistx.ToLower().Trim())))
+                                    ||
+                                    (albumx != albumt && artistx.ToLower().Trim() == artistt.ToLower().Trim() && (albumx.ToLower().Trim() == albumt.ToLower().Trim() || albumx.ToLower().Trim().Contains(albumt.ToLower().Trim()) || albumt.ToLower().Trim().Contains(albumx.ToLower().Trim())))
+                                   )
+                                {
+                                    tz += idd + ", ";
+                                    i++;
+                                    break;
+
+                                }
+                                else
+                                {
+                                    bool equal = String.Equals(albumt, albumx, StringComparison.InvariantCulture);
+                                    if (equal && albumx.ToLower().Trim() != albumt.ToLower().Trim())
+                                        cmd = idd;
+                                }
+                            }
+                    }
+                }
+            else UpdateLog(timestamp, "no standardization to asses for supect as in need for correction" + cmd, false, c("dlcm_TempPath"), "", "", null, null);
+
+            if (tz.Contains(",")) tz = tz.Substring(0, tz.Length - 2);
+            if (tz != "") dfz = UpdateDB("Standardization", "UPDATE Standardization SET suspect=\"Yes\" WHERE ID IN (" + tz + ")", cnb, cnc);
+
+            Populate(ref databox, ref Main);
+            databox.Refresh();
+
+            tsst = "Adding suspects :" + tz + "/" + i + " times."; UpdateLog(timestamp, tsst, false, c("dlcm_TempPath"), "", "", null, null);
+        }
+
+        private void btn_StandCover_Click(object sender, EventArgs e)
+        {
+            //Apply Forced AlbumCoverDefaulting :)
+            //pB_ReadDLCs.Maximum = maxtranslationprocesse; stage++; pB_ReadDLCs.Value = stage; tsst = stage + "/" + maxtranslationprocesse + " take first song in an album then make it DEfault for cover"; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+            var afacd = ApplyForcedAlbumCoverDefaulting(cnb, cnc, pB_ReadDLCs, null);
         }
 
         //private void btn_GetSpotifyCover_Click(object sender, EventArgs e)

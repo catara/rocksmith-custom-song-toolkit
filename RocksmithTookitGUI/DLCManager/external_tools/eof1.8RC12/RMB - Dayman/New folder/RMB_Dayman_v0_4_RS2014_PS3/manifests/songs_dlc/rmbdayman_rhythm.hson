@@ -1,0 +1,54 @@
+{
+  "Entries": {
+    "565EE996D4C84412B7C0742CA5CEC7F9": {
+      "Attributes": {
+        "AlbumArt": "urn:image:dds:album_rmbdayman",
+        "AlbumName": "Dayman",
+        "AlbumNameSort": "Dayman",
+        "ArrangementName": "Rhythm",
+        "ArtistName": "RMB",
+        "ArtistNameSort": "RMB",
+        "CapoFret": 0.0,
+        "CentOffset": 0.0,
+        "DLC": true,
+        "DLCKey": "RMBDayMan",
+        "DNA_Chords": 0.0,
+        "DNA_Riffs": 0.0,
+        "DNA_Solo": 0.0,
+        "EasyMastery": 0.073113208,
+        "LeaderboardChallengeRating": 0,
+        "ManifestUrn": "urn:database:json-db:rmbdayman_rhythm",
+        "MasterID_RDV": 482585263,
+        "MediumMastery": 0.476415094,
+        "NotesEasy": 31.0,
+        "NotesHard": 424.0,
+        "NotesMedium": 202.0,
+        "Representative": 1,
+        "RouteMask": 2,
+        "Shipping": true,
+        "SKU": "",
+        "SongDiffEasy": 0.105081507,
+        "SongDiffHard": 0.359310959,
+        "SongDiffMed": 0.342362329,
+        "SongDifficulty": 0.359310959,
+        "SongKey": "RMBDayMan",
+        "SongLength": 129.804,
+        "SongName": "Dayman",
+        "SongNameSort": "Dayman",
+        "SongYear": 2018,
+        "Tuning": {
+          "string0": 0,
+          "string1": 0,
+          "string2": 0,
+          "string3": 0,
+          "string4": 0,
+          "string5": 0
+        },
+        "PersistentID": "565EE996D4C84412B7C0742CA5CEC7F9"
+      }
+    }
+  },
+  "ModelName": "RSEnumerable_Song_Header",
+  "IterationVersion": 2,
+  "InsertRoot": "Static.Songs.Headers"
+}

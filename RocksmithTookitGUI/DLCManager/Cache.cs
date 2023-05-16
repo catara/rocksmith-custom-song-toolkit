@@ -560,37 +560,37 @@ namespace RocksmithToolkitGUI.DLCManager
             //DataGridView.ExpandColumns();
         }
 
-        private class CacheRecs
-        {
-            public string ID { get; set; }
-            public string Identifier { get; set; }
-            public string Artist { get; set; }
-            public string ArtistSort { get; set; }
-            public string Album { get; set; }
-            public string Title { get; set; }
-            public string AlbumYear { get; set; }
-            public string Arrangements { get; set; }
-            public string Removed { get; set; }
-            public string AlbumArtPath { get; set; }
-            public string Comments { get; set; }
-            public string PSARCName { get; set; }
-            public string SongsHSANPath { get; set; }
-            public string Platform { get; set; }
-            public string AudioPath { get; set; }
-            public string AudioPreviewPath { get; set; }
-            public string Selected { get; set; }
-            public string PS3Region { get; set; }
-            public string PSACRBackupPath { get; set; }
-            public string PSARCHash { get; set; }
-            public string AudioHash { get; set; }
-            public string AudioPreviewHash { get; set; }
-            public string ArtHash { get; set; }
-            public string AudioPathWEM { get; set; }
-            public string AudioPreviewPathWEM { get; set; }
-            public string AlbumSort { get; set; }
-        }
+        //private class CacheRecs
+        //{
+        //    public string ID { get; set; }
+        //    public string Identifier { get; set; }
+        //    public string Artist { get; set; }
+        //    public string ArtistSort { get; set; }
+        //    public string Album { get; set; }
+        //    public string Title { get; set; }
+        //    public string AlbumYear { get; set; }
+        //    public string Arrangements { get; set; }
+        //    public string Removed { get; set; }
+        //    public string AlbumArtPath { get; set; }
+        //    public string Comments { get; set; }
+        //    public string PSARCName { get; set; }
+        //    public string SongsHSANPath { get; set; }
+        //    public string Platform { get; set; }
+        //    public string AudioPath { get; set; }
+        //    public string AudioPreviewPath { get; set; }
+        //    public string Selected { get; set; }
+        //    public string PS3Region { get; set; }
+        //    public string PSACRBackupPath { get; set; }
+        //    public string PSARCHash { get; set; }
+        //    public string AudioHash { get; set; }
+        //    public string AudioPreviewHash { get; set; }
+        //    public string ArtHash { get; set; }
+        //    public string AudioPathWEM { get; set; }
+        //    public string AudioPreviewPathWEM { get; set; }
+        //    public string AlbumSort { get; set; }
+        //}
 
-        private CacheRecs[] files = new CacheRecs[20000];
+        private UtilitiesFunctions.Cache[] files = new UtilitiesFunctions.Cache[20000];
 
         //Generic procedure to read and parse Cache.DB (&others..soon)
         public int SQLAccess(string cmd)
@@ -617,10 +617,10 @@ namespace RocksmithToolkitGUI.DLCManager
             if (MaximumSize > 0)
                 foreach (DataRow dataRow in dus.Tables[0].Rows)
                 {
-                    files[i] = new CacheRecs();
+                    files[i] = new UtilitiesFunctions.Cache();
 
                     //rtxt_StatisticsOnReadDLCs.Text += "\n  a= " + i + MaximumSize+dataRow.ItemArray[0].ToString();
-                    files[i].ID = dataRow.ItemArray[0].ToString();
+                    files[i].ID = dataRow.ItemArray[0].ToString().ToInt32();
                     files[i].Identifier = dataRow.ItemArray[1].ToString();
                     files[i].Artist = dataRow.ItemArray[2].ToString();
                     files[i].ArtistSort = dataRow.ItemArray[3].ToString();

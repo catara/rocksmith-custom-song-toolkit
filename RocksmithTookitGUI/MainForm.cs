@@ -40,7 +40,8 @@ namespace RocksmithToolkitGUI
                 btnDevTestMethod.Visible = true;
 
             InitMainForm();
-            if (ConfigRepository.Instance()["dlcm_StartInDLCM"] == "Yes")   ShowDLCManager();//bcapi autostart DLCManager
+            if (ConfigRepository.Instance()["dlcm_StartInDLCM"] == "Yes")
+                ShowDLCManager();//bcapi autostart DLCManager
         }
 
         private void InitMainForm()
@@ -368,5 +369,9 @@ namespace RocksmithToolkitGUI
             DevTestMethod();
         }
 
+        private void dlcPackageCreator1_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

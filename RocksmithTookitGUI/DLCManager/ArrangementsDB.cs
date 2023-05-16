@@ -515,65 +515,65 @@ namespace RocksmithToolkitGUI.DLCManager
             ChangeRow();
         }
 
-        private class Files
-        {
-            public string ID { get; set; }
-            public string Arrangement_Name { get; set; }
-            public string CDLC_ID { get; set; }
-            public string Bonus { get; set; }
-            public string JSONFilePath { get; set; }
-            public string XMLFilePath { get; set; }
-            public string XMLFile_Hash { get; set; }
-            public string ScrollSpeed { get; set; }
-            public string Tunning { get; set; }
-            public string Rating { get; set; }
-            public string PlaythroughYBLink { get; set; }
-            public string CustomsForge_Link { get; set; }
-            public string ArrangementSort { get; set; }
-            public string TuningPitch { get; set; }
-            public string ToneBase { get; set; }
-            public string Idd { get; set; }
-            public string MasterId { get; set; }
-            public string ArrangementType { get; set; }
-            public string String0 { get; set; }
-            public string String1 { get; set; }
-            public string String2 { get; set; }
-            public string String3 { get; set; }
-            public string String4 { get; set; }
-            public string String5 { get; set; }
-            public string PluckedType { get; set; }
-            public string RouteMask { get; set; }
-            public string XMLFileName { get; set; }
-            public string XMLFileLLID { get; set; }
-            public string XMLFileUUID { get; set; }
-            public string SNGFileName { get; set; }
-            public string SNGFileLLID { get; set; }
-            public string SNGFileUUID { get; set; }
-            public string ToneMultiplayer { get; set; }
-            public string ToneA { get; set; }
-            public string ToneB { get; set; }
-            public string ToneC { get; set; }
-            public string ToneD { get; set; }
-            public string ConversionDateTime { get; set; }
-            public string SNGFileHash { get; set; }
-            public string Has_Sections { get; set; }
-            public string Comments { get; set; }
-            public string Start_Time { get; set; }
-            public string CleanedXML_Hash { get; set; }
-            public string Json_Hash { get; set; }
-            public string Part { get; set; }
-            public string MaxDifficulty { get; set; }
-            public string NoSections { get; set; }
-            public string OrigSongTrack { get; set; }
-            public string PrimaryTrack { get; set; }
-            public string Favorite { get; set; }
-            public string Broken { get; set; }
-            public string Official { get; set; }
-            public string PersistentID { get; set; }
-            public string CapoFret { get; set; }
-        }
+        //private class Files
+        //{
+        //    public string ID { get; set; }
+        //    public string Arrangement_Name { get; set; }
+        //    public string CDLC_ID { get; set; }
+        //    public string Bonus { get; set; }
+        //    public string JSONFilePath { get; set; }
+        //    public string XMLFilePath { get; set; }
+        //    public string XMLFile_Hash { get; set; }
+        //    public string ScrollSpeed { get; set; }
+        //    public string Tunning { get; set; }
+        //    public string Rating { get; set; }
+        //    public string PlaythroughYBLink { get; set; }
+        //    public string CustomsForge_Link { get; set; }
+        //    public string ArrangementSort { get; set; }
+        //    public string TuningPitch { get; set; }
+        //    public string ToneBase { get; set; }
+        //    public string Idd { get; set; }
+        //    public string MasterId { get; set; }
+        //    public string ArrangementType { get; set; }
+        //    public string String0 { get; set; }
+        //    public string String1 { get; set; }
+        //    public string String2 { get; set; }
+        //    public string String3 { get; set; }
+        //    public string String4 { get; set; }
+        //    public string String5 { get; set; }
+        //    public string PluckedType { get; set; }
+        //    public string RouteMask { get; set; }
+        //    public string XMLFileName { get; set; }
+        //    public string XMLFileLLID { get; set; }
+        //    public string XMLFileUUID { get; set; }
+        //    public string SNGFileName { get; set; }
+        //    public string SNGFileLLID { get; set; }
+        //    public string SNGFileUUID { get; set; }
+        //    public string ToneMultiplayer { get; set; }
+        //    public string ToneA { get; set; }
+        //    public string ToneB { get; set; }
+        //    public string ToneC { get; set; }
+        //    public string ToneD { get; set; }
+        //    public string ConversionDateTime { get; set; }
+        //    public string SNGFileHash { get; set; }
+        //    public string Has_Sections { get; set; }
+        //    public string Comments { get; set; }
+        //    public string Start_Time { get; set; }
+        //    public string CleanedXML_Hash { get; set; }
+        //    public string Json_Hash { get; set; }
+        //    public string Part { get; set; }
+        //    public string MaxDifficulty { get; set; }
+        //    public string NoSections { get; set; }
+        //    public string OrigSongTrack { get; set; }
+        //    public string PrimaryTrack { get; set; }
+        //    public string Favorite { get; set; }
+        //    public string Broken { get; set; }
+        //    public string Official { get; set; }
+        //    public string PersistentID { get; set; }
+        //    public string CapoFret { get; set; }
+        //}
 
-        private Files[] files = new Files[20000];
+        private UtilitiesFunctions.Arrangements[] files = new UtilitiesFunctions.Arrangements[20000];
         //Generic procedure to read and parse Main.DB (&others..soon)
         //public int SQLAccess(string cmd)
         //{

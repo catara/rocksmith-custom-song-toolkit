@@ -110,7 +110,7 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest2014.Header
             DLC = true; // false = requires UPlay to unlock
 
             // TODO: monitor this change
-             if (info.ToolkitInfo == null || info.ToolkitInfo.PackageAuthor == "Ubisoft")
+            if (info.ToolkitInfo == null || info.ToolkitInfo.PackageAuthor == "Ubisoft")
                 SKU = "RS2"; // shows purple marker w/ "DLC" text overlay
             else
                 SKU = ""; // hides album artwork marker in-game setlist
@@ -129,7 +129,9 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest2014.Header
             CentOffset = (!arrangement.TuningPitch.Equals(0)) ? TuningFrequency.Frequency2Cents(arrangement.TuningPitch) : 0.0;
             ArtistNameSort = info.SongInfo.ArtistSort;
             BassPick = arrangement.ArrangementType == ArrangementType.Bass ? (int)arrangement.PluckedType : 0;
-            CapoFret = (arrangement.Sng2014.Metadata.CapoFretId == 0xFF) ? CapoFret = 0 : Convert.ToDecimal(arrangement.Sng2014.Metadata.CapoFretId);
+            if (arrangement.Sng2014 == null) //bcapi
+                CapoFret = 0;
+            else CapoFret = (arrangement.Sng2014.Metadata.CapoFretId == 0xFF) ? CapoFret = 0 : Convert.ToDecimal(arrangement.Sng2014.Metadata.CapoFretId);
             DNA_Chords = arrangement.Sng2014.DNACount[(int)DNAId.Chord];
             DNA_Riffs = arrangement.Sng2014.DNACount[(int)DNAId.Riff];
             DNA_Solo = arrangement.Sng2014.DNACount[(int)DNAId.Solo];

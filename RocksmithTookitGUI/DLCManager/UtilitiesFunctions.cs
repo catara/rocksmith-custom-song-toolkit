@@ -72,9 +72,7 @@ namespace RocksmithToolkitGUI.DLCManager
         public const long BUFFER_SIZE = 4096;
         public static StringBuilder errorsFound;
         public static OleDbConnection cnb;
-        //SQLiteConnection cnz;
         public static SQLite.SQLiteConnection cnc;
-
         public enum ConverterTypes
         {
             HeaderFix,
@@ -481,6 +479,11 @@ namespace RocksmithToolkitGUI.DLCManager
             public string Artist_AutoGroup { get; set; }
             public string Suspect { get; set; }
             public string Suspect_Reason { get; set; }
+            public string CustomToAtribute_1 { get; set; }
+            public string CustomToAtribute_2 { get; set; }
+            public string CustomToAtribute_3 { get; set; }
+            public string CustomToAtribute_4 { get; set; }
+            public string CustomToAtribute_5 { get; set; }
         }
 
         public class Tones
@@ -676,6 +679,13 @@ namespace RocksmithToolkitGUI.DLCManager
             public string Is_Medley { get; set; }
             public string Is_MultiStrings { get; set; }
             public string BasedOn_GP { get; set; }
+            public string Album_ArtPathOrig { get; set; }
+            public string Is_Deluxe { get; set; }
+            public string Is_GreatestHits { get; set; }
+            public string Is_Midi { get; set; }
+            public string Is_GameSoundtrack { get; set; }
+            public string Is_AmateurCover { get; set; }
+            public string Is_TVTheme { get; set; }
         }
 
         //public static SpotifyWebAPI _spotify = new SpotifyWebAPI
@@ -973,6 +983,27 @@ namespace RocksmithToolkitGUI.DLCManager
                 startInfo.Arguments = string.Format(" /c mklink /D 0_old " + c("dlcm_0_old") + "\\0_old");
                 using (var DDC = new Process()) { DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 3 * 1); if (DDC.ExitCode > 0) { timestamp = UpdateLog(timestamp, "error at creation of " + c("dlcm_0_old") + "\\0_old", true, c("dlcm_TempPath"), "", "", null, null); } }
             }
+
+            if (!IsSymbolic(c("dlcm_TempPath") + "\\0_dlcpacks") || !Directory.Exists(c("dlcm_TempPath") + "\\0_dlcpacks"))/*Directory.Exists(c("dlcm_TempPath") + "\\0_data\\")*/
+            {
+                if (Directory.Exists(c("dlcm_TempPath") + "\\0_dlcpacks"))
+                {
+                    CopyFolder(c("dlcm_TempPath") + "\\0_dlcpacks", c("dlcm_0_dlcpacks") + "\\0_dlcpacks");
+                    DeleteDirectory(c("dlcm_TempPath") + "\\0_dlcpacks", true);
+                }
+                startInfo.Arguments = string.Format(" /c mklink /D 0_dlcpacks " + c("dlcm_0_dlcpacks") + "\\0_dlcpacks");
+                using (var DDC = new Process()) { DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 3 * 1); if (DDC.ExitCode > 0) { timestamp = UpdateLog(timestamp, "error at creation of " + c("dlcm_0_old") + "\\0_old", true, c("dlcm_TempPath"), "", "", null, null); } }
+            }
+            if (!IsSymbolic(c("dlcm_TempPath") + "\\0_old") || !Directory.Exists(c("dlcm_TempPath") + "\\0_old"))/*Directory.Exists(c("dlcm_TempPath") + "\\0_data\\")*/
+            {
+                if (Directory.Exists(c("dlcm_TempPath") + "\\0_old"))
+                {
+                    CopyFolder(c("dlcm_TempPath") + "\\0_old", c("dlcm_0_old") + "\\0_old");
+                    DeleteDirectory(c("dlcm_TempPath") + "\\0_old", true);
+                }
+                startInfo.Arguments = string.Format(" /c mklink /D 0_old " + c("dlcm_0_old") + "\\0_old");
+                using (var DDC = new Process()) { DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 3 * 1); if (DDC.ExitCode > 0) { timestamp = UpdateLog(timestamp, "error at creation of " + c("dlcm_0_old") + "\\0_old", true, c("dlcm_TempPath"), "", "", null, null); } }
+            }
             //startInfo.Arguments = string.Format(" /c mklink /D 0_data \\\\192.168.1.100\\Kits_Software\\t\0\\\0_data"); using (var DDC = new Process()) { DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 3 * 1); }
             //startInfo.Arguments = string.Format(" /c mklink /D 0_data \\\\192.168.1.100\\Kits_Software\\t\0\\\0_data"); using (var DDC = new Process()) { DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 3 * 1); }
             if (Directory.Exists(c("dlcm_TempPath") + "\\0_old")) copy = "OLD;";
@@ -1142,8 +1173,281 @@ namespace RocksmithToolkitGUI.DLCManager
             else
                 return "0" + ";-;-;-;-;-;-";
         }
+        public static void OpenDBQuick()    
+        {
+            cnb = new OleDbConnection("Provider=Microsoft." + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Persist Security" +
+                " Info=False;Mode= Share Deny None;Data Source=" + ConfigRepository.Instance()["dlcm_DBFolder"]);
 
-        //static public MainDBfields[] GetRecord_s(string cmd, OleDbConnection cnb, SQLiteConnection cnz)
+            cnb = new OleDbConnection("Provider=Microsoft." + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Persist Security" +
+                    " Info=False;Mode= Share Deny None;Data Source=" + ConfigRepository.Instance()["dlcm_DBFolder"]); //running twice as some issues with compilatiojn in x86...sometime
+
+        }
+        public static void OpenDb()
+        {/*OleDbConnection cnc*/
+            if (cnb.State.ToString() == "Open" ) return;//notsure if ever reached
+            if (cnc is not null) 
+                if (cnc.ToString().Contains("open")) return;
+            //ConfigRepository.Instance()["dlcm_AccessDLLVersion"] = "ACE.OLEDB.12.0";
+            var tz = ConfigRepository.Instance()["dlcm_DBFolder"];
+            //OleDbConnection cnf = null;
+            //tz = tz.Replace("AccessDB.accdb", "SQLLiteDB.db");
+#if (DEBUG)
+            {
+                DialogResult result1 = DialogResult.Cancel;
+                result1 = MessageBox.Show("Select DB (mandatory when in debug project mode)\n1. SQL-Lite3 (Yes)\n2. M$ Access (No)\n\nCurrently set value: "
+                    + (ConfigRepository.Instance()["dlcm_AdditionalManipul114"] == "Yes" ? "SQL-Lite3" : "M$ Access") + "\n" + tz
+                , MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (result1 == DialogResult.Yes)
+                {
+                    ConfigRepository.Instance()["dlcm_AdditionalManipul114"] = "Yes";
+                    ConfigRepository.Instance()["dlcm_DBFolder"] = tz.Replace("AccessDB.accdb", "SQLLiteDB.db");
+                    ConfigRepository.Instance()["dlcm_chosendb"] = ".db";
+                }
+                if (result1 == DialogResult.No)
+                {
+                    ConfigRepository.Instance()["dlcm_AdditionalManipul114"] = "No";
+                    ConfigRepository.Instance()["dlcm_DBFolder"] = tz.Replace("SQLLiteDB.db", "AccessDB.accdb");
+                    cnb = new OleDbConnection("Provider=Microsoft." + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Persist Security" +
+                " Info=False;Mode= Share Deny None;Data Source=" + ConfigRepository.Instance()["dlcm_DBFolder"]);
+                    ConfigRepository.Instance()["dlcm_chosendb"] = ".accdb";
+                }
+            }
+#endif
+            DBPathChange(c("dlcm_DBFolder"), c("dlcm_Configurations"));
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul114"] != "Yes")
+                try
+                {
+                    if (File.Exists(cnb.DataSource.ToString())) cnb.Open();
+                }
+                catch (Exception exx)
+                {
+
+                    ShowConnectivityError(exx, "");/*, null*/
+                    try
+                    {
+                        if (File.Exists(cnb.DataSource.ToString())) cnb.Open(); //2nd time makes it work sometimes e.g. x64 solution
+                    }
+                    catch (Exception ex)
+                    {
+                        string vb = null; vb = DisplayData();
+                        ShowConnectivityError(ex, "NO M$ DB plugin Currently found (" + cnb.ConnectionString.ToString() + ")\n:" + DisplayData() + "\n2nd FAIL to use M$ ACCESS plugin:\n" + vb + "\n\nError:" + ex);/*, null*/
+                        //revert to SQLite
+                        if (File.Exists(tz.Replace("AccessDB.accdb", "SQLLiteDB.db")))
+                        {
+                            ConfigRepository.Instance()["dlcm_AdditionalManipul114"] = "Yes";
+                            ConfigRepository.Instance()["dlcm_DBFolder"] = tz.Replace("AccessDB.accdb", "SQLLiteDB.db"); ;
+                        }
+                        else MessageBox.Show("No Microsoft Access or SQLite databases" +
+                            //" i.e.: C:\\Program Files\\SQLite ODBC Driver for Win64 (existing: "+ (Directory.Exists("C:\\Program Files\\SQLite ODBC Driver for Win64") ? "true":"false")+ ")" +
+                            "\n(or access;plugins etc) available. Good Luck as (the) C-DLC Manager wont really work!");
+                    }
+                }
+            else
+                try
+                {
+                    ConfigRepository.Instance()["dlcm_DBFolder"] = tz.Replace("AccessDB.accdb", "SQLLiteDB.db");
+                    if (File.Exists(ConfigRepository.Instance()["dlcm_DBFolder"])) cnc = new SQLite.SQLiteConnection(ConfigRepository.Instance()["dlcm_DBFolder"]);
+                    ConfigRepository.Instance()["dlcm_AdditionalManipul114"] = "Yes";
+                }
+                catch (Exception exx)
+                {
+                    ShowConnectivityError(exx, "");/*, null*/
+                }
+        }
+
+        public static bool DBPathChange(string txt_DBFolder, string chbx_Configurations)
+        {
+            bool t = PathChange(txt_DBFolder, chbx_Configurations);
+            return t;
+        }
+
+        static public bool PathChange(string txt_DBFolder, string chbx_Configurations)
+        {
+
+            var tt = ConfigRepository.Instance()["dlcm_DBFolder"];
+            //var tr = cnb.DataSource.ToString();
+            //var tz = cnc.DatabasePath.ToString();
+            try
+            {
+                if (!File.Exists(txt_DBFolder)) dbmissingHandle("");
+                var cnn = "";
+                if (cnb is not null && cnb.State.ToString()=="Opened")
+                {
+                    if (cnb.DataSource.Contains(".accdb") && cnb.DataSource == c("dlcm_DBFolder")) return false;
+                        else if (c("dlcm_DBFolder").Contains(".accdb")) cnn = cnb.DataSource;
+                }//if (cnb.DataSource.Contains(".accdb")) cnn = cnb.DataSource;
+                if (cnc is not null)
+                {
+                    if (cnc is not null) if (cnc.DatabasePath.Contains(".db") && cnc.DatabasePath == c("dlcm_DBFolder")) return false;
+                        else if (c("dlcm_DBFolder").Contains(".db")) cnn = cnc.DatabasePath;
+                } //if (cnc.DatabasePath.Contains(".db")) cnn = cnc.DatabasePath;
+
+                if (cnn == "") return false;
+
+                DialogResult result1 = DialogResult.No;
+                result1 = MessageBox.Show("Do you want change DB (\nconnection: " + cnn + "\n param: " + c("dlcm_DBFolder") +
+                    ")?\n\nIf you chose No you can still modify/update profile, then change DB", "DB Change DETECTED!!", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+                if (result1 == DialogResult.No) return false;
+                if (File.Exists(txt_DBFolder))
+                {
+                    var cmd = "SELECT * FROM Groups WHERE Groupz=\"" + txt_DBFolder + "\" AND Comments =\"dlcm_DBFolder\" AND Profile_Name=\"" + chbx_Configurations + "\" and Type=\"Profile\";";
+
+                    if (cnn is not null && cnn != "")
+                    {
+                        DialogResult result2 = DialogResult.No;
+                        DataSet ddzv = new DataSet(); ddzv = SelectFromDB("Groups", cmd, txt_DBFolder, cnb, cnc);
+                        int max = ddzv.Tables.Count > 0 ? ddzv.Tables.Count : 0;
+                        if (txt_DBFolder != tt && max == 0) result2 = MessageBox.Show("Do you want to automatically Save the DB Folder Path change to " + txt_DBFolder
+                            + ") in the Profile (" + chbx_Configurations + ") or MANUALLY update entry in ACCDB/DB, Groupz table, entry/Comments field: dlcm_DBFolder, Groupz value.", "DB Change DETECTED!!", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+                        if (result2 == DialogResult.No) ;
+                        else
+                        {
+                            var cmdz = "UPDATE Groups SET Groupz=\"" + txt_DBFolder + "\" WHERE Comments=\"dlcm_DBFolder\" AND Profile_Name=\"" + chbx_Configurations + "\" and Type=\"Profile\";";
+                            DataSet dts = new DataSet(); dts = UpdateDB("Groups", cmdz, cnb, cnc);
+                            //MessageBox.Show("Note Prev DB Profile's DB folder is not changed automatically, so you need to udpate that yourself in the old DB."
+                            //       , MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                    }
+
+                    try
+                    {
+                        if (cnb is not null) cnb.Close(); if (cnc is not null) cnc.Close();
+                        cnb.ConnectionString = "Provider=Microsoft." + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Persist Security Info=False;Mode= Share Deny None;Data Source=" + txt_DBFolder;
+                        OpenDb();
+                    }
+                    catch (Exception ex) {; }
+                    //ConfigRepository.Instance()["dlcm_DBFolder"] = txt_DBFolder.Text;
+
+                    cmd = "UPDATE Groups SET Groupz=\"" + txt_DBFolder + "\" WHERE Comments=\"dlcm_DBFolder\" AND Type=\"Profile\" AND Profile_Name=\"Default\"";/*AND Comments=\"" + c(dss.Tables[0].Rows[j][0].ToString()) + "\"chbx_Configurations.Text*/
+                    UpdateDB("Groups", cmd, cnb, cnc);
+                    cmd = "UPDATE Groups SET Groupz=\"Default\" WHERE Comments=\"dlcm_Configurations\" AND Type=\"Profile\" AND Profile_Name=\"Default\"";/*AND Comments=\"" + c(dss.Tables[0].Rows[j][0].ToString()) + "\"chbx_Configurations.Text*/
+                    UpdateDB("Groups", cmd, cnb, cnc);
+
+                    //if (txt_DBFolder != MyAppWD + "\\..\\AccessDB.accdb" || txt_DBFolder != MyAppWD + "\\..\\SLQLiteDB.db") chbx_DefaultDB.Checked = false;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                dbmissingHandle(ex.Message.ToString());
+            }
+            return true;
+        }
+
+        public static void ShowConnectivityError(Exception ex, string txt)/*, System.Windows.Forms.Label lbl*/
+        {
+            var mssg = "You need to Download Connectivity patch 32/64 bit v2010 (allows usage by 3rd party DB editors;also avail. at: " +
+                AppWD + "\\AccessDatabaseEngine.exe)/2013-2016 (assumingly bet perf/comp)  to match your version of Office @ " +
+         txt + ".\n" + "Reinstall in case you feel/see plugin there or is not diplayed when manually checking by running in Windows PowerShell:\n\n" +
+         "(New-Object system.data.oledb.oledbenumerator).GetElements() | select SOURCES_NAME, SOURCES_DESCRIPTION\n\n" +
+         "and if intending to install the x64 variant of plugin, please note in order to have it on top of Office 32bit," +
+         " then you need to decompress it (64b also avail. at: " + c("dlcm_AccessACE.OLEDB.16.0Local64b") + ") and the .msi with /passive flag\n\nError:ex";
+
+            //Download and install plugin from Microsoft website
+            if (ex.Message.IndexOf("The 'Microsoft.ACE.OLEDB.") > -1 && ex.Message.IndexOf("provider is not registered on the local machine.") > -1)
+            {
+                if (c("dlcm_ShowConenctivityOnce") == "Yes")
+                    //{
+                    ConfigRepository.Instance()["dlcm_ShowConenctivityOnce"] = "Maybe";//default always to show message only once
+                                                                                       //return;
+                                                                                       //}
+                else if (c("dlcm_ShowConenctivityOnce") == "Maybe") return;
+                //Use locally saved 2016 installation kit 
+                var xx = "";
+                if (File.Exists(c("dlcm_AccessACE.OLEDB.16.0Local64b")) || File.Exists(c("dlcm_AccessACE.OLEDB.16.0Local32b")) || File.Exists(c("dlcm_sqliteodbc")))
+                {
+                    DialogResult result1 = DialogResult.Cancel;
+                    result1 = MessageBox.Show("Plugins Currently found for " + cnb.ConnectionString.ToString() + ":\n" + DisplayData()
+                        + "\nAs no M$ Access connectivity plugin was found," +
+                    " Do you want to:\n 1. (Yes) Install the locally stored 32 bit version (if matching your Office installation;" +
+                    " if interested in using 3rd party Freeware ACCDB Editors <best is the 2010 version>)" +
+                    "\n 2. (No) Install the locally stored 64 bit version (if matching your Excel installation) , or" +
+                    "\n 3. (Cancel)" +
+                    "\n \ta) Download by your self using the subsecvent instructions" +
+                    "\n \tb) Use SQL-lite3 as DB (you can still use M$ Access (LINKDB.accdb) to access the DB using a OLEDBC plugin i.e.\n(1) " +
+                    c("dlcm_AccessACE.OLEDB.16.0Local64b") + "\n(2) " + c("dlcm_AccessACE.OLEDB.16.0Local32b") + "\n(3) " + c("dlcm_sqliteodbc") + ").\n\nError:" + ex
+                    , MESSAGEBOX_CAPTION, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+
+                    if (result1 == DialogResult.Yes) xx = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, c("dlcm_AccessACE.OLEDB.16.0Local32b"));
+                    if (result1 == DialogResult.No) xx = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, c("dlcm_AccessACE.OLEDB.16.0Local64b"));
+
+                    if (!File.Exists(xx))
+                    {
+                        if (result1 != DialogResult.Cancel)
+                        {
+                            ErrorWindow frm2 = new ErrorWindow("Selected bit version(" + xx + ") not available instead the other one is there. close the program and open to try again" +
+                            " or manually install it as pe subsecvent instructions", ConfigRepository.Instance()["dlcm_Access" + ConfigRepository.Instance()["dlcm_AccessDLLVersion"]]
+                            , "Missing " + xx, false, false, true, "", "", "");
+                            frm2.ShowDialog();
+                        }
+                        else
+                        {
+                            DialogResult result3 = DialogResult.Cancel;
+                            result3 = MessageBox.Show("1. (Yes) Use M$ Access \n2. (No) Use SQL-lite3\n3. (Cancel) Don't use any DB (or any DCLM feature :) )"
+                            , MESSAGEBOX_CAPTION, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+
+                            if (result3 == DialogResult.No) ;
+                            if (result3 == DialogResult.Yes)
+                            {
+                                ErrorWindow frm2 = new ErrorWindow(mssg
+                                , ConfigRepository.Instance()["dlcm_Access" + ConfigRepository.Instance()["dlcm_AccessDLLVersion"]], "Error @Import", false, false, true, "", "", "");
+                                frm2.ShowDialog();
+                            }
+                            if (result3 == DialogResult.Cancel) ;
+                        }
+                    }
+                    else
+                    if (result1 == DialogResult.Cancel)
+                    {
+                        ErrorWindow frm1 = new ErrorWindow(mssg
+                            , ConfigRepository.Instance()["dlcm_Access" + ConfigRepository.Instance()["dlcm_AccessDLLVersion"]], "Error @Import", false, false, true, "", "", "");
+                        frm1.ShowDialog();
+
+                    }
+                    else
+                        try
+                        {
+                            //xx = "cmd /C " + xx;
+                            //Process process = Process.Start(@xx);
+                            StartProcesss(@xx, null);
+                        }
+                        catch (Exception exx)
+                        {
+                            if (File.Exists(xx))
+                                ;// GeneralExtension.RunExternalExecutable(xx, false);
+                            var startInfo = new ProcessStartInfo
+                            {
+                                FileName = xx,
+                                WorkingDirectory = Path.GetDirectoryName(xx)
+                            };
+                            Process DDC = new Process();
+                            //startInfo.Arguments = "";
+                            startInfo.UseShellExecute = true; startInfo.CreateNoWindow = false;
+
+                            if (File.Exists(xx))
+                            {
+                                DDC.StartInfo = startInfo;
+                                DDC.Start(); DDC.WaitForExit(1000 * 30 * 1); //wait 1min
+                            }
+                            var tsst = "Erro0 ..." + exx; var timestamp = UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", null, null);
+                            //MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Can not open Local M$ Access plugin install ! " + xx);
+                        }
+                }
+
+                //if (lbl != null)
+                //{
+                //    lbl.Text = "missing Access plugin!";
+                //    lbl.Visible = true;
+                //}
+            }
+            else
+            {
+                var timestamp = UpdateLog(DateTime.Now, "Error ..." + txt + ex, false, c("dlcm_TempPath"), "", "", null, null);
+            }
+        }
+
         static public MainDBfields[] GetRecord_s(string cmd, OleDbConnection cnb, SQLite.SQLiteConnection cnc)
         {
             var MaximumSize = 0;
@@ -1305,6 +1609,14 @@ namespace RocksmithToolkitGUI.DLCManager
                 query[i].Has_JVocals = dataRow.ItemArray[141].ToString();
                 query[i].Is_Medley = dataRow.ItemArray[142].ToString();
                 query[i].Is_MultiStrings = dataRow.ItemArray[143].ToString();
+                query[i].BasedOn_GP = dataRow.ItemArray[144].ToString();
+                query[i].Album_ArtPathOrig = dataRow.ItemArray[145].ToString();
+                query[i].Is_Deluxe = dataRow.ItemArray[146].ToString();
+                query[i].Is_GreatestHits = dataRow.ItemArray[147].ToString();
+                query[i].Is_Midi = dataRow.ItemArray[148].ToString();
+                query[i].Is_GameSoundtrack = dataRow.ItemArray[149].ToString();
+                query[i].Is_TVTheme = dataRow.ItemArray[150].ToString();
+                query[i].Is_AmateurCover = dataRow.ItemArray[151].ToString();
                 i++;
                 query[i] = new MainDBfields();
             }
@@ -1407,6 +1719,14 @@ namespace RocksmithToolkitGUI.DLCManager
 
             //e.Result = "Done";
             //cnb.Close();
+        }
+
+
+        static public string AddIntheWorks(string s)
+        {
+            if (s.Contains("<IntheWorksWDetails>")) s = s.Replace("<IntheWorksWDetails>", "<IntheWorks>").Replace("<Author>", "").Replace("<Version>", "").Replace("<TimestampShort>", "") + "<Author>" + "<Version>" + "<TimestampShort>";
+
+            return s;
         }
 
         static public string gettablename(string slctcmd)/**/
@@ -1540,42 +1860,42 @@ namespace RocksmithToolkitGUI.DLCManager
                 var dfs = UpdateDB(gettablename(commandString), commandString, connection, cnc);
             }
             else
-                using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft." + c("dlcm_AccessDLLVersion") + ";Data Source=" + c("dlcm_DBFolder")))
-                    //{
-                    try
-                    {
-                        //using (var tx = new TransactionScope()) { 
-                        //    var cmd = connection.CreateCommand();
-                        //    cmd.CommandType = CommandType.Text;
-                        //    cmd.CommandText = command.CommandText;
-                        //var nsp = command.Parameters.Cast<ICloneable>().Select(x => x.Clone() as SqlParameter).Where(x => x != null).ToArray();
-                        // Copy parameters into another command
-                        ///*command*/.Parameters.AddRange(nsp);
+                //'30.10 using (OleDbConnection cnn = new OleDbConnection("Provider=Microsoft." + c("dlcm_AccessDLLVersion") + ";Data Source=" + c("dlcm_DBFolder")))
+                //{
+                try
+                {
+                    //using (var tx = new TransactionScope()) { 
+                    //    var cmd = connection.CreateCommand();
+                    //    cmd.CommandType = CommandType.Text;
+                    //    cmd.CommandText = command.CommandText;
+                    //var nsp = command.Parameters.Cast<ICloneable>().Select(x => x.Clone() as SqlParameter).Where(x => x != null).ToArray();
+                    // Copy parameters into another command
+                    ///*command*/.Parameters.AddRange(nsp);
 
-                        if (cnn.State.ToString() == "Closed") cnn.Open();
-                        if (command.Connection.State.ToString() == "Closed")
-                        {
-                            command.Connection.Open();
-                            f = 1;
-                        }
-                        //OleDbTransaction OrderTrans = cnn.BeginTransaction();
-
-                        //SqlCommand cmd = new SqlCommand();
-                        //cmd.Connection = cnn;
-                        //cmd.Transaction = OrderTrans;
-                        //var dbTransaction = cnn.BeginTransaction();
-                        //cmd.Transaction = dbTransaction;
-                        //cmd.Transaction = true;
-                        command.ExecuteNonQuery();
-                        //OrderTrans.Commit();
-                        //tx.Commit();
-                        //} 
-                    }
-                    catch (Exception ex)
+                    if (connection.State.ToString() == "Closed") connection.Open();
+                    if (command.Connection.State.ToString().ToLower() == "Closed".ToLower())
                     {
-                        var tsst = "Error ..." + ex; var timestamp = UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", null, null);
-                        MessageBox.Show("Can not open Main DB connection in Edit Main screen ! " + c("dlcm_DBFolder") + "-" + command.CommandText + ex.Message);
+                        command.Connection.Open();
+                        f = 1;
                     }
+                    //OleDbTransaction OrderTrans = cnn.BeginTransaction();
+
+                    //SqlCommand cmd = new SqlCommand();
+                    //cmd.Connection = cnn;
+                    //cmd.Transaction = OrderTrans;
+                    //var dbTransaction = cnn.BeginTransaction();
+                    //cmd.Transaction = dbTransaction;
+                    //cmd.Transaction = true;
+                    command.ExecuteNonQuery();
+                    //OrderTrans.Commit();
+                    //tx.Commit();
+                    //} 
+                }
+                catch (Exception ex)
+                {
+                    var tsst = "Error ..." + ex; var timestamp = UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", null, null);
+                    MessageBox.Show("Can not open Main DB connection in Edit Main screen ! " + c("dlcm_DBFolder") + "-" + command.CommandText + ex.Message);
+                }
             //finally { if (connection != null) connection.Close(); }
             //}
 
@@ -1783,26 +2103,59 @@ namespace RocksmithToolkitGUI.DLCManager
                             fcmds = sqladapt(fcmds, "CSTR(", "CAST(", " as string)");
                             fcmds = fcmds.Replace("+", "||");
                             fcmds = fcmds.Replace("&", "||");
-                            if (fcmds.ToLower().Contains(" top 1 ")) fcmds = (fcmds.Replace(" top 1 ", " ").Replace(" Top 1 ", " ").Replace(" TOP 1 ", " ") + " LIMIT 1;").Trim();
-                            if (fcmds.ToLower().Contains(" top 2 ")) fcmds = (fcmds.Replace(" top 2 ", " ").Replace(" Top 2 ", " ").Replace(" TOP 2 ", " ") + " LIMIT 2;").Trim();
-                            if (fcmds.ToLower().Contains(" top 3 ")) fcmds = (fcmds.Replace(" top 3 ", " ").Replace(" Top 3 ", " ").Replace(" TOP 3 ", " ") + " LIMIT 3;").Trim();
-                            if (fcmds.ToLower().Contains(" top 4 ")) fcmds = (fcmds.Replace(" top 4 ", " ").Replace(" Top 4 ", " ").Replace(" TOP 4 ", " ") + " LIMIT 4;").Trim();
-                            if (fcmds.ToLower().Contains(" top 5 ")) fcmds = (fcmds.Replace(" top 5 ", " ").Replace(" Top 5 ", " ").Replace(" TOP 5 ", " ") + " LIMIT 5;").Trim();
-                            if (fcmds.ToLower().Contains(" top 6 ")) fcmds = (fcmds.Replace(" top 6 ", " ").Replace(" Top 6 ", " ").Replace(" TOP 6 ", " ") + " LIMIT 6;").Trim();
-                            if (fcmds.ToLower().Contains(" top 7 ")) fcmds = (fcmds.Replace(" top 7 ", " ").Replace(" Top 7 ", " ").Replace(" TOP 7 ", " ") + " LIMIT 7;").Trim();
-                            if (fcmds.ToLower().Contains(" top 8 ")) fcmds = (fcmds.Replace(" top 8 ", " ").Replace(" Top 8 ", " ").Replace(" TOP 8 ", " ") + " LIMIT 8;").Trim();
-                            if (fcmds.ToLower().Contains(" top 9 ")) fcmds = (fcmds.Replace(" top 9 ", " ").Replace(" Top 9 ", " ").Replace(" TOP 9 ", " ") + " LIMIT 9;").Trim();
-                            if (fcmds.ToLower().Contains(" top 10 ")) fcmds = (fcmds.Replace(" top 10 ", " ").Replace(" Top 10 ", " ").Replace(" TOP 10 ", " ") + " LIMIT 10;").Trim();
-                            if (fcmds.ToLower().Contains(" top 11 ")) fcmds = (fcmds.Replace(" top 11 ", " ").Replace(" Top 11 ", " ").Replace(" TOP 11 ", " ") + " LIMIT 11;").Trim();
-                            if (fcmds.ToLower().Contains(" top 12 ")) fcmds = (fcmds.Replace(" top 12 ", " ").Replace(" Top 12 ", " ").Replace(" TOP 12 ", " ") + " LIMIT 12;").Trim();
-                            if (fcmds.ToLower().Contains(" top 13 ")) fcmds = (fcmds.Replace(" top 13 ", " ").Replace(" Top 13 ", " ").Replace(" TOP 13 ", " ") + " LIMIT 13;").Trim();
-                            if (fcmds.ToLower().Contains(" top 14 ")) fcmds = (fcmds.Replace(" top 14 ", " ").Replace(" Top 14 ", " ").Replace(" TOP 14 ", " ") + " LIMIT 14;").Trim();
-                            if (fcmds.ToLower().Contains(" top 15 ")) fcmds = (fcmds.Replace(" top 15 ", " ").Replace(" Top 15 ", " ").Replace(" TOP 15 ", " ") + " LIMIT 15;").Trim();
-                            if (fcmds.ToLower().Contains(" top 16 ")) fcmds = (fcmds.Replace(" top 16 ", " ").Replace(" Top 16 ", " ").Replace(" TOP 16 ", " ") + " LIMIT 16;").Trim();
-                            if (fcmds.ToLower().Contains(" top 17 ")) fcmds = (fcmds.Replace(" top 17 ", " ").Replace(" Top 17 ", " ").Replace(" TOP 17 ", " ") + " LIMIT 17;").Trim();
-                            if (fcmds.ToLower().Contains(" top 18 ")) fcmds = (fcmds.Replace(" top 18 ", " ").Replace(" Top 18 ", " ").Replace(" TOP 18 ", " ") + " LIMIT 18;").Trim();
-                            if (fcmds.ToLower().Contains(" top 19 ")) fcmds = (fcmds.Replace(" top 19 ", " ").Replace(" Top 19 ", " ").Replace(" TOP 19 ", " ") + " LIMIT 19;").Trim();
-                            if (fcmds.ToLower().Contains(" top 20 ")) fcmds = (fcmds.Replace(" top 20 ", " ").Replace(" Top 20 ", " ").Replace(" TOP 20 ", " ") + " LIMIT 20;").Trim();
+                            if (fcmds.ToLower().Contains(" top "))
+                            {
+                                if (fcmds.ToLower().Contains(" top 1 ")) fcmds = (fcmds.Replace(" top 1 ", " ").Replace(" Top 1 ", " ").Replace(" TOP 1 ", " ") + " LIMIT 1;").Trim();
+                                if (fcmds.ToLower().Contains(" top 2 ")) fcmds = (fcmds.Replace(" top 2 ", " ").Replace(" Top 2 ", " ").Replace(" TOP 2 ", " ") + " LIMIT 2;").Trim();
+                                if (fcmds.ToLower().Contains(" top 3 ")) fcmds = (fcmds.Replace(" top 3 ", " ").Replace(" Top 3 ", " ").Replace(" TOP 3 ", " ") + " LIMIT 3;").Trim();
+                                if (fcmds.ToLower().Contains(" top 4 ")) fcmds = (fcmds.Replace(" top 4 ", " ").Replace(" Top 4 ", " ").Replace(" TOP 4 ", " ") + " LIMIT 4;").Trim();
+                                if (fcmds.ToLower().Contains(" top 5 ")) fcmds = (fcmds.Replace(" top 5 ", " ").Replace(" Top 5 ", " ").Replace(" TOP 5 ", " ") + " LIMIT 5;").Trim();
+                                if (fcmds.ToLower().Contains(" top 6 ")) fcmds = (fcmds.Replace(" top 6 ", " ").Replace(" Top 6 ", " ").Replace(" TOP 6 ", " ") + " LIMIT 6;").Trim();
+                                if (fcmds.ToLower().Contains(" top 7 ")) fcmds = (fcmds.Replace(" top 7 ", " ").Replace(" Top 7 ", " ").Replace(" TOP 7 ", " ") + " LIMIT 7;").Trim();
+                                if (fcmds.ToLower().Contains(" top 8 ")) fcmds = (fcmds.Replace(" top 8 ", " ").Replace(" Top 8 ", " ").Replace(" TOP 8 ", " ") + " LIMIT 8;").Trim();
+                                if (fcmds.ToLower().Contains(" top 9 ")) fcmds = (fcmds.Replace(" top 9 ", " ").Replace(" Top 9 ", " ").Replace(" TOP 9 ", " ") + " LIMIT 9;").Trim();
+                                if (fcmds.ToLower().Contains(" top 10 ")) fcmds = (fcmds.Replace(" top 10 ", " ").Replace(" Top 10 ", " ").Replace(" TOP 10 ", " ") + " LIMIT 10;").Trim();
+                                if (fcmds.ToLower().Contains(" top 11 ")) fcmds = (fcmds.Replace(" top 11 ", " ").Replace(" Top 11 ", " ").Replace(" TOP 11 ", " ") + " LIMIT 11;").Trim();
+                                if (fcmds.ToLower().Contains(" top 12 ")) fcmds = (fcmds.Replace(" top 12 ", " ").Replace(" Top 12 ", " ").Replace(" TOP 12 ", " ") + " LIMIT 12;").Trim();
+                                if (fcmds.ToLower().Contains(" top 13 ")) fcmds = (fcmds.Replace(" top 13 ", " ").Replace(" Top 13 ", " ").Replace(" TOP 13 ", " ") + " LIMIT 13;").Trim();
+                                if (fcmds.ToLower().Contains(" top 14 ")) fcmds = (fcmds.Replace(" top 14 ", " ").Replace(" Top 14 ", " ").Replace(" TOP 14 ", " ") + " LIMIT 14;").Trim();
+                                if (fcmds.ToLower().Contains(" top 15 ")) fcmds = (fcmds.Replace(" top 15 ", " ").Replace(" Top 15 ", " ").Replace(" TOP 15 ", " ") + " LIMIT 15;").Trim();
+                                if (fcmds.ToLower().Contains(" top 16 ")) fcmds = (fcmds.Replace(" top 16 ", " ").Replace(" Top 16 ", " ").Replace(" TOP 16 ", " ") + " LIMIT 16;").Trim();
+                                if (fcmds.ToLower().Contains(" top 17 ")) fcmds = (fcmds.Replace(" top 17 ", " ").Replace(" Top 17 ", " ").Replace(" TOP 17 ", " ") + " LIMIT 17;").Trim();
+                                if (fcmds.ToLower().Contains(" top 18 ")) fcmds = (fcmds.Replace(" top 18 ", " ").Replace(" Top 18 ", " ").Replace(" TOP 18 ", " ") + " LIMIT 18;").Trim();
+                                if (fcmds.ToLower().Contains(" top 19 ")) fcmds = (fcmds.Replace(" top 19 ", " ").Replace(" Top 19 ", " ").Replace(" TOP 19 ", " ") + " LIMIT 19;").Trim();
+                                if (fcmds.ToLower().Contains(" top 20 ")) fcmds = (fcmds.Replace(" top 20 ", " ").Replace(" Top 20 ", " ").Replace(" TOP 20 ", " ") + " LIMIT 20;").Trim();
+                                if (fcmds.ToLower().Contains(" top 21 ")) fcmds = (fcmds.Replace(" top 21 ", " ").Replace(" Top 21 ", " ").Replace(" TOP 21 ", " ") + " LIMIT 21;").Trim();
+                                if (fcmds.ToLower().Contains(" top 22 ")) fcmds = (fcmds.Replace(" top 22 ", " ").Replace(" Top 22 ", " ").Replace(" TOP 22 ", " ") + " LIMIT 22;").Trim();
+                                if (fcmds.ToLower().Contains(" top 23 ")) fcmds = (fcmds.Replace(" top 23 ", " ").Replace(" Top 23 ", " ").Replace(" TOP 23 ", " ") + " LIMIT 23;").Trim();
+                                if (fcmds.ToLower().Contains(" top 24 ")) fcmds = (fcmds.Replace(" top 24 ", " ").Replace(" Top 24 ", " ").Replace(" TOP 24 ", " ") + " LIMIT 24;").Trim();
+                                if (fcmds.ToLower().Contains(" top 25 ")) fcmds = (fcmds.Replace(" top 25 ", " ").Replace(" Top 25 ", " ").Replace(" TOP 25 ", " ") + " LIMIT 25;").Trim();
+                                if (fcmds.ToLower().Contains(" top 26 ")) fcmds = (fcmds.Replace(" top 26 ", " ").Replace(" Top 26 ", " ").Replace(" TOP 26 ", " ") + " LIMIT 26;").Trim();
+                                if (fcmds.ToLower().Contains(" top 27 ")) fcmds = (fcmds.Replace(" top 27 ", " ").Replace(" Top 27 ", " ").Replace(" TOP 27 ", " ") + " LIMIT 27;").Trim();
+                                if (fcmds.ToLower().Contains(" top 28 ")) fcmds = (fcmds.Replace(" top 28 ", " ").Replace(" Top 28 ", " ").Replace(" TOP 28 ", " ") + " LIMIT 28;").Trim();
+                                if (fcmds.ToLower().Contains(" top 29 ")) fcmds = (fcmds.Replace(" top 29 ", " ").Replace(" Top 29 ", " ").Replace(" TOP 29 ", " ") + " LIMIT 29;").Trim();
+                                if (fcmds.ToLower().Contains(" top 30 ")) fcmds = (fcmds.Replace(" top 30 ", " ").Replace(" Top 30 ", " ").Replace(" TOP 30 ", " ") + " LIMIT 30;").Trim();
+                                if (fcmds.ToLower().Contains(" top 31 ")) fcmds = (fcmds.Replace(" top 31 ", " ").Replace(" Top 31 ", " ").Replace(" TOP 31 ", " ") + " LIMIT 31;").Trim();
+                                if (fcmds.ToLower().Contains(" top 32 ")) fcmds = (fcmds.Replace(" top 32 ", " ").Replace(" Top 32 ", " ").Replace(" TOP 32 ", " ") + " LIMIT 32;").Trim();
+                                if (fcmds.ToLower().Contains(" top 33 ")) fcmds = (fcmds.Replace(" top 33 ", " ").Replace(" Top 33 ", " ").Replace(" TOP 33 ", " ") + " LIMIT 33;").Trim();
+                                if (fcmds.ToLower().Contains(" top 34 ")) fcmds = (fcmds.Replace(" top 34 ", " ").Replace(" Top 34 ", " ").Replace(" TOP 34 ", " ") + " LIMIT 34;").Trim();
+                                if (fcmds.ToLower().Contains(" top 35 ")) fcmds = (fcmds.Replace(" top 35 ", " ").Replace(" Top 35 ", " ").Replace(" TOP 35 ", " ") + " LIMIT 35;").Trim();
+                                if (fcmds.ToLower().Contains(" top 36 ")) fcmds = (fcmds.Replace(" top 36 ", " ").Replace(" Top 36 ", " ").Replace(" TOP 36 ", " ") + " LIMIT 36;").Trim();
+                                if (fcmds.ToLower().Contains(" top 37 ")) fcmds = (fcmds.Replace(" top 37 ", " ").Replace(" Top 37 ", " ").Replace(" TOP 37 ", " ") + " LIMIT 37;").Trim();
+                                if (fcmds.ToLower().Contains(" top 38 ")) fcmds = (fcmds.Replace(" top 38 ", " ").Replace(" Top 38 ", " ").Replace(" TOP 38 ", " ") + " LIMIT 38;").Trim();
+                                if (fcmds.ToLower().Contains(" top 39 ")) fcmds = (fcmds.Replace(" top 39 ", " ").Replace(" Top 39 ", " ").Replace(" TOP 39 ", " ") + " LIMIT 39;").Trim();
+                                if (fcmds.ToLower().Contains(" top 40 ")) fcmds = (fcmds.Replace(" top 40 ", " ").Replace(" Top 40 ", " ").Replace(" TOP 40 ", " ") + " LIMIT 40;").Trim();
+                                if (fcmds.ToLower().Contains(" top 41 ")) fcmds = (fcmds.Replace(" top 41 ", " ").Replace(" Top 41 ", " ").Replace(" TOP 41 ", " ") + " LIMIT 41;").Trim();
+                                if (fcmds.ToLower().Contains(" top 42 ")) fcmds = (fcmds.Replace(" top 42 ", " ").Replace(" Top 42 ", " ").Replace(" TOP 42 ", " ") + " LIMIT 42;").Trim();
+                                if (fcmds.ToLower().Contains(" top 43 ")) fcmds = (fcmds.Replace(" top 43 ", " ").Replace(" Top 43 ", " ").Replace(" TOP 43 ", " ") + " LIMIT 43;").Trim();
+                                if (fcmds.ToLower().Contains(" top 44 ")) fcmds = (fcmds.Replace(" top 44 ", " ").Replace(" Top 44 ", " ").Replace(" TOP 44 ", " ") + " LIMIT 44;").Trim();
+                                if (fcmds.ToLower().Contains(" top 45 ")) fcmds = (fcmds.Replace(" top 45 ", " ").Replace(" Top 45 ", " ").Replace(" TOP 45 ", " ") + " LIMIT 45;").Trim();
+                                if (fcmds.ToLower().Contains(" top 46 ")) fcmds = (fcmds.Replace(" top 46 ", " ").Replace(" Top 46 ", " ").Replace(" TOP 46 ", " ") + " LIMIT 46;").Trim();
+                                if (fcmds.ToLower().Contains(" top 47 ")) fcmds = (fcmds.Replace(" top 47 ", " ").Replace(" Top 47 ", " ").Replace(" TOP 47 ", " ") + " LIMIT 47;").Trim();
+                                if (fcmds.ToLower().Contains(" top 48 ")) fcmds = (fcmds.Replace(" top 48 ", " ").Replace(" Top 48 ", " ").Replace(" TOP 48 ", " ") + " LIMIT 48;").Trim();
+                                if (fcmds.ToLower().Contains(" top 49 ")) fcmds = (fcmds.Replace(" top 49 ", " ").Replace(" Top 49 ", " ").Replace(" TOP 49 ", " ") + " LIMIT 49;").Trim();
+                                if (fcmds.ToLower().Contains(" top 50 ")) fcmds = (fcmds.Replace(" top 50 ", " ").Replace(" Top 50 ", " ").Replace(" TOP 50 ", " ") + " LIMIT 50;").Trim();
+                            }
                             fcmds = fcmds.Replace(" ;", ";").Replace("; ", ";");
                             fcmds = fcmds.Replace(";LIMIT", " LIMIT");
 
@@ -1900,6 +2253,15 @@ namespace RocksmithToolkitGUI.DLCManager
                 return dsm;
             }
             else return dfsm;
+        }
+
+        public static int GetNoRecords(string cmd, OleDbConnection cnb, SQLite.SQLiteConnection cnc)
+        {
+            cmd = cmd.Replace(";", "");
+            cmd = cmd.Replace("Maiu", "Main u");
+            DataSet dms = new DataSet(); dms = SelectFromDB("Main", cmd, "", cnb, cnc);
+            var noOfRec = dms.Tables.Count == 0 ? 0 : (dms.Tables[0].Rows.Count > 0 ? dms.Tables[0].Rows.Count : 0);
+            return noOfRec;
         }
 
 
@@ -2483,8 +2845,8 @@ namespace RocksmithToolkitGUI.DLCManager
                         try
                         {
                             if (result2 == DialogResult.No && !once &&
-                            (s.Contains("0_duplicate") || s.Contains("0_old") || s.Contains("") || s.Contains("0_data") &&
-                            s.Contains("0_archive") || s.Contains("0_broken")))
+                            (s.Contains("0_duplicate") || s.Contains("0_old") || s.Contains("0_data") &&/*|| s.Contains("")*/
+                            s.Contains("0_archive") || s.Contains("0_broken") || s.Contains("0_repacked") || s.Contains("0_dlcpacks")))
                             { CreateMKLinks(); once = true; }
                             else
                                 di = Directory.CreateDirectory(s);
@@ -2699,6 +3061,15 @@ namespace RocksmithToolkitGUI.DLCManager
             return st;
         }
 
+        //Further Clean Metadata for purposes of comparison (e.g. Are you going to go my way (bogdan version) eg. Mr Bungle
+        public static string CleanTitleFurther(string st)
+        {
+            st = CleanTitle(st);
+            var rt = st.IndexOf("("); var rdt = st.IndexOf(")"); if (rt >= 0 && rdt > 0) st = st.Replace(st.Substring(rt, rdt - rt + 1), "").Trim();
+            rt = st.IndexOf("("); rdt = st.IndexOf(")"); if (rt >= 0 && rdt > 0) st = st.Replace(st.Substring(rt, rdt - rt + 1), "").Trim();
+            if (st.IndexOf(" - ") > 0 && !st.ToLower().Contains("bass") && !st.ToLower().Contains("guitar")) st = st.Substring(0, st.IndexOf(" - ") - 1);
+            return st.Replace("'", "").Replace(".", "").Trim();/*&& !st.ToLower().Contains("Half-Life 2") && !st.ToLower().Contains("GoldenEye 64")*/
+        }
         public static string CleanTitleOfWeirdChars(string st)
         {
             //  ), - , - ),  Audio )
@@ -3431,7 +3802,7 @@ namespace RocksmithToolkitGUI.DLCManager
             var ismaindb = "";
             try
             {
-                if (pB_ReadDLCs != null)
+                if (pB_ReadDLCs != null && txt != null & txt != "")
                 {
                     pB_ReadDLCs.CreateGraphics().Clear(System.Drawing.Color.HotPink);
                     pB_ReadDLCs.CreateGraphics().DrawString(txt, new Font("Arial", 7, FontStyle.Bold), Brushes.Blue, new PointF(1, pB_ReadDLCs.Height / 4));
@@ -3471,7 +3842,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 }
             }
             catch (Exception ex) { var tsst = "Error ..." + ex; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", null, null); }
-            if (c("dlcm_Debug").ToLower() == "yes" && txt.ToLower().IndexOf("error") >= 0 && c("dlcm_AdditionalManipul105") == "Yes")
+            if (c("dlcm_Debug").ToLower() == "yes" && txt.ToLower().IndexOf("error") >= 0 && txt.ToLower().IndexOf("<ERROR>") < 0 && c("dlcm_AdditionalManipul105") == "Yes")
             {
                 ErrorWindow frm1 = new ErrorWindow(txt, "", "'Erro' captured throughout the running of the DLC Manager. Chose DEBUG If you wanna do a Debug line by line" +
                     " now, to continue to the block where error was coming from.", true, true, false, "Continue", "Debug", "");
@@ -3940,7 +4311,8 @@ namespace RocksmithToolkitGUI.DLCManager
             , string IsRemastered, string InTheWorks, string dupli_assesment, int j, string IsCover, string IsDemo, string IsRemix, string HasFeaturing, string IsKaraoke,
             string BasedOn_Youtube, string BasedOn_CF, string BasedOn_Tabs, string ToDos, string ToneDetails, string PackageDetails, string PackingDate, string UpdateVersionDate, string BasedOn_GP,
                     // string Has_Capo, string Has_Showlights, string Has_JVocals, string IsMedley, string IsMultiStrings, SQLiteConnection cnz)
-                    string Has_Capo, string Has_Showlights, string Has_JVocals, string IsMedley, string IsMultiStrings, SQLite.SQLiteConnection cnc)
+                    string Has_Capo, string Has_Showlights, string Has_JVocals, string IsMedley, string IsMultiStrings, string IsDeluxe, string IsGreatestHits
+            , string IsMidi, string IsGameSoundtrack, string IsTVTheme, string IsAmateurCover, SQLite.SQLiteConnection cnc)
         {
             var command = cnb.CreateCommand();
             if (dupli_assesment == "Update")
@@ -4068,7 +4440,14 @@ namespace RocksmithToolkitGUI.DLCManager
                 command.CommandText += "LyricsLanguage = @param117, ";
                 command.CommandText += "Is_Medley = @param118, ";
                 command.CommandText += "Is_MultiStrings = @param119, ";
-                command.CommandText += "BasedOn_GP = @param120 ";
+                command.CommandText += "BasedOn_GP = @param120, ";
+                command.CommandText += "Album_ArtPathOrig = @param121, ";
+                command.CommandText += "Is_Deluxe = @param122, ";
+                command.CommandText += "Is_GreatestHits = @param123,";
+                command.CommandText += "Is_Midi = @param124, ";
+                command.CommandText += "Is_GameSoundtrack = @param125 ";
+                command.CommandText += "Is_TVTheme= @param126, ";
+                command.CommandText += "Is_AmateurCover = @param127 ";
                 command.CommandText += " WHERE ID = " + IDD;
 
                 command.Parameters.AddWithValue("@param1", import_path);
@@ -4194,6 +4573,13 @@ namespace RocksmithToolkitGUI.DLCManager
                 command.Parameters.AddWithValue("@param118", IsMedley ?? DBNull.Value.ToString());
                 command.Parameters.AddWithValue("@param119", IsMultiStrings ?? DBNull.Value.ToString());
                 command.Parameters.AddWithValue("@param120", BasedOn_GP ?? DBNull.Value.ToString());
+                command.Parameters.AddWithValue("@param121", info.AlbumArtPath ?? DBNull.Value.ToString());
+                command.Parameters.AddWithValue("@param122", IsDeluxe ?? DBNull.Value.ToString());
+                command.Parameters.AddWithValue("@param123", IsGreatestHits ?? DBNull.Value.ToString());
+                command.Parameters.AddWithValue("@param124", IsMidi ?? DBNull.Value.ToString());
+                command.Parameters.AddWithValue("@param125", IsGameSoundtrack ?? DBNull.Value.ToString());
+                command.Parameters.AddWithValue("@param126", IsTVTheme ?? DBNull.Value.ToString());
+                command.Parameters.AddWithValue("@param127", IsAmateurCover ?? DBNull.Value.ToString());
                 command.CommandType = CommandType.Text;
                 UpdateDBbyExecuteNonQuery(command, cnb, cnc);
                 ////EXECUTE SQL/UPDATE
@@ -4352,7 +4738,14 @@ namespace RocksmithToolkitGUI.DLCManager
                 command.CommandText += "LyricsLanguage, ";
                 command.CommandText += "Is_Medley, ";
                 command.CommandText += "Is_MultiStrings, ";
-                command.CommandText += "BasedOn_GP ";
+                command.CommandText += "BasedOn_GP, ";
+                command.CommandText += "Album_ArtPathOrig, ";
+                command.CommandText += "Is_Deluxe, ";
+                command.CommandText += "Is_GreatestHits, ";
+                command.CommandText += "Is_Midi, ";
+                command.CommandText += "Is_GameSoundtrack, ";
+                command.CommandText += "Is_TVTheme, ";
+                command.CommandText += "Is_AmateurCover ";
                 command.CommandText += ") VALUES (@param1,@param2,@param3,@param4,@param5,@param6,@param7,@param8,@param9";
                 command.CommandText += ",@param10,@param11,@param12,@param13,@param14,@param15,@param16,@param17,@param18,@param19";
                 command.CommandText += ",@param20,@param21,@param22,@param23,@param24,@param25,@param26,@param27,@param28,@param29";
@@ -4365,7 +4758,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 command.CommandText += ",@param90,@param91,@param92,@param93,@param94,@param95,@param96,@param97,@param98,@param99";
                 command.CommandText += ",@param100,@param101,@param102,@param103,@param104,@param105,@param106,@param107,@param108,@param109";
                 command.CommandText += ",@param110,@param111,@param112,@param113,@param114,@param115,@param116,@param117,@param118,@param119";
-                command.CommandText += ",@param120" + ")";
+                command.CommandText += ",@param120,@param121,@param122,@param123,@param124,@param125,@param126,@param127" + ")";
 
                 command.Parameters.AddWithValue("@param1", import_path);
                 command.Parameters.AddWithValue("@param2", original_FileName);
@@ -4488,6 +4881,13 @@ namespace RocksmithToolkitGUI.DLCManager
                 command.Parameters.AddWithValue("@param118", IsMedley ?? DBNull.Value.ToString());
                 command.Parameters.AddWithValue("@param119", IsMultiStrings ?? DBNull.Value.ToString());
                 command.Parameters.AddWithValue("@param120", BasedOn_GP ?? DBNull.Value.ToString());
+                command.Parameters.AddWithValue("@param121", info.AlbumArtPath ?? DBNull.Value.ToString());
+                command.Parameters.AddWithValue("@param122", IsDeluxe ?? DBNull.Value.ToString());
+                command.Parameters.AddWithValue("@param123", IsGreatestHits ?? DBNull.Value.ToString());
+                command.Parameters.AddWithValue("@param124", IsMidi ?? DBNull.Value.ToString());
+                command.Parameters.AddWithValue("@param125", IsGameSoundtrack ?? DBNull.Value.ToString());
+                command.Parameters.AddWithValue("@param126", IsTVTheme ?? DBNull.Value.ToString());
+                command.Parameters.AddWithValue("@param127", IsAmateurCover ?? DBNull.Value.ToString());
                 //EXECUTE SQL/UPDATE
 
                 var rt = (import_path) + "\",\"" + (original_FileName) + "\",\"" + (original_FileName) + "\",\"" + (ds.Tables[0].Rows[i].ItemArray[3])
@@ -5409,39 +5809,6 @@ namespace RocksmithToolkitGUI.DLCManager
             for (int j = 0; j < n; j++)
                 if (d.Tables[0].Rows[j][1].ToString() == s) return j;
             return 0;
-        }
-
-        public static string Check4MultiT(string origFN, string noMFN, string text, bool multibool, string tag)
-        {
-            var FN = origFN.ToLower();
-            var ST = noMFN.ToLower();
-            text = text.ToLower();
-            var aaa = noMFN;
-            if (origFN.ToLower().IndexOf(text) >= 0 || origFN.ToLower().IndexOf(text.Replace(" ", "")) >= 0 || origFN.ToLower().IndexOf(text.Replace(" ", "_")) >= 0 || origFN.ToLower().IndexOf(text.Replace(" ", "-")) >= 0
-                || noMFN.ToLower().IndexOf(text) >= 0 || noMFN.ToLower().IndexOf(text.Replace(" ", "")) >= 0 || noMFN.ToLower().IndexOf(text.Replace(" ", "_")) >= 0 || noMFN.ToLower().IndexOf(text.Replace(" ", "-")) >= 0)
-            {
-                noMFN = Regex.Replace(Regex.Replace(Regex.Replace(Regex.Replace(noMFN, text.Replace(" ", ""), "", RegexOptions.IgnoreCase), text, "", RegexOptions.IgnoreCase), text.Replace(" ", "_"), "", RegexOptions.IgnoreCase), text.Replace(" ", "-"), "", RegexOptions.IgnoreCase);
-                origFN = Regex.Replace(Regex.Replace(Regex.Replace(Regex.Replace(origFN, text.Replace(" ", ""), "", RegexOptions.IgnoreCase), text, "", RegexOptions.IgnoreCase), text.Replace(" ", "_"), "", RegexOptions.IgnoreCase), text.Replace(" ", "-"), "", RegexOptions.IgnoreCase);
-                var t = ReplaceTxt(aaa, noMFN, multibool, tag);
-                if (t == "")
-                    return aaa + ";" + "No";
-                else return t + ";" + ((FN != origFN || noMFN != ST) ? "Yes" : "No");
-            }
-            return ReplaceTxt(aaa, noMFN, multibool, tag) + ";" + "No";
-        }
-
-        public static string ReplaceTxt(string orgstr, string replstr, bool ask4permission, string tag)
-        {
-            var a = orgstr;
-            if (orgstr != replstr)
-            {
-                if (replstr == "") return orgstr;
-                DialogResult result111 = DialogResult.Yes;
-                if (ask4permission) result111 = MessageBox.Show("Tag:" + tag + "\n\nDo you agree with replacement of \n\nOld Meta info: " + orgstr + "\nwith\nNew Meta info: " + replstr + "\n\n(Cancel=Ignore flag set too)", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation);
-                if (result111 == DialogResult.Yes) a = replstr;
-                if (result111 == DialogResult.Cancel) a = "";
-            }
-            return a;
         }
 
         public static string CopyFolder(string copy_dir, string destination_dir)

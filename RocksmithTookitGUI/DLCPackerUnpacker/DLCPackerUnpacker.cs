@@ -126,7 +126,7 @@ namespace RocksmithToolkitGUI.DLCPackerUnpacker
             diaMsg = diaMsg + Environment.NewLine + Environment.NewLine + "Would you like to open the destination path?  ";
             
             if (MessageBox.Show(diaMsg, MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
-                Process.Start(destDirPath);
+                DLCManager.UtilitiesFunctions.StartProcesss(destDirPath,null); //bcapi ARM fix
         }
 
 

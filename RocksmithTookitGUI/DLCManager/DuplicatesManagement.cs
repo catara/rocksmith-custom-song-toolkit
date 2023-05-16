@@ -95,6 +95,13 @@ namespace RocksmithToolkitGUI.DLCManager
         public string isCover { get; set; }
         public string isMedley { get; set; }
         public string isMultiStrings { get; set; }
+        public string isDeluxe { get; set; }
+        public string isGreatestHits { get; set; }
+        //public bool newold { get; set; }
+        public string isMidi { get; set; }
+        public string isGameSoundtrack { get; set; }
+        public string isTVTheme { get; set; }
+        public string isAmateurCover { get; set; }
         //public bool newold { get; set; }
         //public string clist { get; set; }
         //public DuplicatesManagement(string txt_DBFolder, Files eXisting, DLCPackageData dataNew, string author, string tkversion, string DD, string Bass, string Guitar, string Combo, string Rhythm, string Lead, string tunnings, int i, int norows, string original_FileName, string art_hash, string audio_hash, string audioPreview_hash, List<string> xmlhlist, List<string> jsonhlist)
@@ -115,9 +122,11 @@ namespace RocksmithToolkitGUI.DLCManager
             string original_Platform, string IsLive, string LiveDetails, string IsAcoustic, OleDbConnection cnnb, string dupli_reasons
             , string lengty, string allothers, int reff, List<string> cxmlhlist, List<string> snghlist, string filehash
             , string IsInstrumental, string IsSoundtrack, string IsFullAlbum, string IsSingle, string IsEP, string IsUncensored, string IsRemastered, string InTheWorks
-            , string IsKaraoke, string IsDemo, string HasFeaturing, string IsRemix, string IsCover, string IsMedley, string IsMultiStrings, string HasCapo, SQLite.SQLiteConnection cnnc)//, SQLiteConnection cnnz)//, string yeara, string albumsa)//string Is_MultiTracking, string Multitracking, 
-            //        , string IsKaraoke, string IsDemo, string HasFeaturing, string IsRemix, string IsCover, string IsMedley, string IsMultiStrings, string HasCapo, SQLiteConnection cnnz)//, SQLiteConnection cnnz)//, string yeara, string albumsa)//string Is_MultiTracking, string Multitracking, 
-        //file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, Tunings, b, norows, original_FileName, art_reff, audio_hash, audioPreview_hash, xmlhlist, jsonhlist, DB_Path, clist, dlist, newold, Is_Original, altver
+            , string IsKaraoke, string IsDemo, string HasFeaturing, string IsRemix, string IsCover, string IsMedley, string IsMultiStrings, string IsDeluxe
+            , string IsGretestHits, string IsMidi, string IsGameSoundtrack, string IsTVTheme, string IsAmateurCover
+            , string HasCapo, SQLite.SQLiteConnection cnnc)//, SQLiteConnection cnnz)//, string yeara, string albumsa)//string Is_MultiTracking, string Multitracking, 
+                                                           //        , string IsKaraoke, string IsDemo, string HasFeaturing, string IsRemix, string IsCover, string IsMedley, string IsMultiStrings, string HasCapo, SQLiteConnection cnnz)//, SQLiteConnection cnnz)//, string yeara, string albumsa)//string Is_MultiTracking, string Multitracking, 
+                                                           //file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, Tunings, b, norows, original_FileName, art_reff, audio_hash, audioPreview_hash, xmlhlist, jsonhlist, DB_Path, clist, dlist, newold, Is_Original, altver
         {
             //Text = text;
             //MessageBox.Show("test2");
@@ -177,6 +186,12 @@ namespace RocksmithToolkitGUI.DLCManager
             this.isCover = IsCover;
             this.isMedley = IsMedley;
             this.isMultiStrings = IsMultiStrings;
+            this.isDeluxe = IsDeluxe;
+            this.isGreatestHits = IsGretestHits;
+            this.isMidi = IsMidi;
+            this.isGameSoundtrack = IsGameSoundtrack;
+            this.isTVTheme = IsTVTheme;
+            this.isAmateurCover = IsAmateurCover;
             //MessageBox.Show(DB_Path);
             //DB_Path = text;
             //MessageBox.Show(DB_Path);
@@ -345,11 +360,11 @@ namespace RocksmithToolkitGUI.DLCManager
                 || MultiTrack_Versions != (eXisting.MultiTrack_Version == "No" ? "" : eXisting.MultiTrack_Version)
                 || isLive != (eXisting.Is_Live == "No" ? "" : eXisting.Is_Live)
                 || liveDetails != (eXisting.Live_Details == "No" ? "" : eXisting.Live_Details)) { lbl_Multitrack.ForeColor = lbl_Reference.ForeColor; }
-            else if (((Is_MultiTracks == ""|| Is_MultiTracks == "No") && ("" == eXisting.Is_Multitrack || "No" == eXisting.Is_Multitrack))
-                && (MultiTrack_Versions == ""  && "" == eXisting.MultiTrack_Version)
-                && ((isLive == ""  || isLive == "No" ) && ("" == eXisting.Is_Live || "No" == eXisting.Is_Live))
+            else if (((Is_MultiTracks == "" || Is_MultiTracks == "No") && ("" == eXisting.Is_Multitrack || "No" == eXisting.Is_Multitrack))
+                && (MultiTrack_Versions == "" && "" == eXisting.MultiTrack_Version)
+                && ((isLive == "" || isLive == "No") && ("" == eXisting.Is_Live || "No" == eXisting.Is_Live))
                 && (liveDetails == "" && "" == eXisting.Live_Details)) lbl_Multitrack.Text = "";
-            
+
             chbx_MultiTrackNew.Checked = Is_MultiTracks == "Yes" ? true : false;
             txt_MultiTrackNew.Enabled = Is_MultiTracks == "Yes" ? true : false;
             txt_MultiTrackNew.Text = (MultiTrack_Versions == "") ? "" : MultiTrack_Versions;
@@ -376,16 +391,38 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_LiveDetailsExisting.Enabled = eXisting.Is_Live == "Yes" ? true : false;
             txt_LiveDetailsExisting.Text = (eXisting.Live_Details == "") ? "" : eXisting.Live_Details;
 
-            if (isAcoustic != (eXisting.Is_Acoustic=="No"? "" : eXisting.Is_Acoustic)) lbl_P2.ForeColor = lbl_Reference.ForeColor;
-            else if ((isAcoustic == ""|| isAcoustic=="No") && ("" == eXisting.Is_Acoustic || "No" == eXisting.Is_Acoustic)) lbl_P2.Text = "";
-            chbx_AcousticNew.Checked = isAcoustic == "Yes" ? true : false;
-            chbx_AcousticExisting.Checked = eXisting.Is_Acoustic == "Yes" ? true : false;
+            //if (arg.CapoFret != null && arg.CapoFret.ToString() != "" && arg.CapoFret > 0) Has_Capo = "Yes";
+            if (hasCapo != (eXisting.Has_Capo == "No" ? "" : eXisting.Has_Capo)) lbl_AvailableTracks.ForeColor = lbl_Reference.ForeColor;
+            else if ((hasCapo == "" || hasCapo == "No") && ("" == eXisting.Has_Capo || "No" == eXisting.Has_Capo)) lbl_AvailableTracks.Text = "";
+            chbx_CapoNew.Checked = hasCapo == "Yes" ? true : false;
+            chbx_CapoExisting.Checked = eXisting.Has_Capo == "Yes" ? true : false;
+
+            if (isMultiStrings != (eXisting.Is_MultiStrings == "No" ? "" : eXisting.Is_MultiStrings)) lbl_DD.ForeColor = lbl_Reference.ForeColor;
+            else if ((isMultiStrings == "" || isMultiStrings == "No") && ("" == eXisting.Is_MultiStrings || "No" == eXisting.Is_MultiStrings)) lbl_DD.Text = "";
+            chbx_MultiStringsNew.Checked = isMultiStrings == "Yes" ? true : false;
+            chbx_MultiStringsExisting.Checked = eXisting.Is_MultiStrings == "Yes" ? true : false;
+
+            //P3
+            if (inTheWorks != (eXisting.IntheWorks == "No" ? "" : eXisting.IntheWorks)) lbl_P3.ForeColor = lbl_Reference.ForeColor;
+            else if ((inTheWorks == "" || inTheWorks == "No") && ("" == eXisting.IntheWorks || "No" == eXisting.IntheWorks)) lbl_P3.Text = "";
+            chbx_InTheWorksNew.Checked = inTheWorks == "Yes" ? true : false;
+            chbx_InTheWorksExisting.Checked = eXisting.IntheWorks == "Yes" ? true : false;
+            if (isRemastered != (eXisting.Is_Remastered == "No" ? "" : eXisting.Is_Remastered)) lbl_P3.ForeColor = lbl_Reference.ForeColor;
+            else if ((isRemastered == "" || isRemastered == "No") && ("" == eXisting.Is_Remastered || "No" == eXisting.Is_Remastered)) lbl_P3.Text = "";
+            chbx_RemasteredNew.Checked = isRemastered == "Yes" ? true : false;
+            chbx_RemasteredExisting.Checked = eXisting.Is_Remastered == "Yes" ? true : false;
+
+            if (isMedley != (eXisting.Is_Medley == "No" ? "" : eXisting.Is_Medley)) lbl_P3.ForeColor = lbl_Reference.ForeColor;
+            else if ((isMedley == "" || isMedley == "No") && ("" == eXisting.Is_Medley || "No" == eXisting.Is_Medley)) lbl_P3.Text = "";
+            chbx_MedleyNew.Checked = isMedley == "Yes" ? true : false;
+            chbx_MedleyExisting.Checked = eXisting.Is_Medley == "Yes" ? true : false;
 
             if (isEP != (eXisting.Is_EP == "No" ? "" : eXisting.Is_EP)) lbl_P3.ForeColor = lbl_Reference.ForeColor;
             else if ((isEP == "" || isEP == "No") && ("" == eXisting.Is_EP || "No" == eXisting.Is_EP)) lbl_P3.Text = "";
             chbx_EPNew.Checked = isEP == "Yes" ? true : false;
             chbx_EPExisting.Checked = eXisting.Is_EP == "Yes" ? true : false;
 
+            //P1
             if (isSingle != (eXisting.Is_Single == "No" ? "" : eXisting.Is_Single)) lbl_P1.ForeColor = lbl_Reference.ForeColor;
             else if ((isSingle == "" || isSingle == "No") && ("" == eXisting.Is_Single || "No" == eXisting.Is_Single)) lbl_P1.Text = "";
             chbx_SingleNew.Checked = isSingle == "Yes" ? true : false;
@@ -401,8 +438,19 @@ namespace RocksmithToolkitGUI.DLCManager
             chbx_DemoNew.Checked = isDemo == "Yes" ? true : false;
             chbx_DemoExisting.Checked = eXisting.Is_Demo == "Yes" ? true : false;
 
-            if (isRemix != (eXisting.Is_Remix == "No" ? "" : eXisting.Is_Remix)) lbl_P1.ForeColor = lbl_Reference.ForeColor;
-            else if ((isRemix == "" || isRemix == "No") && ("" == eXisting.Is_Remix || "No" == eXisting.Is_Remix)) lbl_P1.Text = "";
+            if (isCover != (eXisting.Is_Cover == "No" ? "" : eXisting.Is_Cover)) lbl_P1.ForeColor = lbl_Reference.ForeColor;
+            else if ((isCover == "" || isCover == "No") && ("" == eXisting.Is_Cover || "No" == eXisting.Is_Cover)) lbl_P1.Text = "";
+            chbx_CoverNew.Checked = isCover == "Yes" ? true : false;
+            chbx_CoverExisting.Checked = eXisting.Is_Cover == "Yes" ? true : false;
+
+            //P2
+            if (isAcoustic != (eXisting.Is_Acoustic == "No" ? "" : eXisting.Is_Acoustic)) lbl_P2.ForeColor = lbl_Reference.ForeColor;
+            else if ((isAcoustic == "" || isAcoustic == "No") && ("" == eXisting.Is_Acoustic || "No" == eXisting.Is_Acoustic)) lbl_P2.Text = "";
+            chbx_AcousticNew.Checked = isAcoustic == "Yes" ? true : false;
+            chbx_AcousticExisting.Checked = eXisting.Is_Acoustic == "Yes" ? true : false;
+
+            if (isRemix != (eXisting.Is_Remix == "No" ? "" : eXisting.Is_Remix)) lbl_P2.ForeColor = lbl_Reference.ForeColor;
+            else if ((isRemix == "" || isRemix == "No") && ("" == eXisting.Is_Remix || "No" == eXisting.Is_Remix)) lbl_P2.Text = "";
             chbx_RemixNew.Checked = isRemix == "Yes" ? true : false;
             chbx_RemixExisting.Checked = eXisting.Is_Remix == "Yes" ? true : false;
 
@@ -411,26 +459,21 @@ namespace RocksmithToolkitGUI.DLCManager
             chbx_FeaturingNew.Checked = hasFeaturing == "Yes" ? true : false;
             chbx_FeaturingExisting.Checked = eXisting.Has_Featuring == "Yes" ? true : false;
 
-            //if (arg.CapoFret != null && arg.CapoFret.ToString() != "" && arg.CapoFret > 0) Has_Capo = "Yes";
-            if (hasCapo != (eXisting.Has_Capo == "No" ? "" : eXisting.Has_Capo)) lbl_AvailableTracks.ForeColor = lbl_Reference.ForeColor;
-            else if ((hasCapo == "" || hasCapo == "No") && ("" == eXisting.Has_Capo || "No" == eXisting.Has_Capo)) lbl_AvailableTracks.Text = "";
-            chbx_CapoNew.Checked = hasCapo == "Yes" ? true : false;
-            chbx_CapoExisting.Checked = eXisting.Has_Capo == "Yes" ? true : false;
-
-            if (isCover != (eXisting.Is_Cover == "No" ? "" : eXisting.Is_Cover)) lbl_P1.ForeColor = lbl_Reference.ForeColor;
-            else if ((isCover == "" || isCover == "No") && ("" == eXisting.Is_Cover || "No" == eXisting.Is_Cover)) lbl_P1.Text = "";
-            chbx_CoverNew.Checked = isCover == "Yes" ? true : false;
-            chbx_CoverExisting.Checked = eXisting.Is_Cover == "Yes" ? true : false;
-
-            if (isKaraoke != (eXisting.Is_Karaoke == "No" ? "" : eXisting.Is_Karaoke)) lbl_P1.ForeColor = lbl_Reference.ForeColor;
-            else if ((isKaraoke == "" || isKaraoke == "No") && ("" == eXisting.Is_Karaoke || "No" == eXisting.Is_Karaoke)) lbl_P1.Text = "";
-            chbx_KaraokeNew.Checked = isKaraoke == "Yes" ? true : false;
-            chbx_KaraokeExisting.Checked = eXisting.Is_Karaoke == "Yes" ? true : false;
-
             if (isFullAlbum != (eXisting.Is_FullAlbum == "No" ? "" : eXisting.Is_FullAlbum)) lbl_P2.ForeColor = lbl_Reference.ForeColor;
             else if ((isFullAlbum == "" || isFullAlbum == "No") && ("" == eXisting.Is_FullAlbum || "No" == eXisting.Is_FullAlbum)) lbl_P2.Text = "";
             chbx_FullAlbumNew.Checked = isFullAlbum == "Yes" ? true : false;
             chbx_FullAlbumExisting.Checked = eXisting.Is_FullAlbum == "Yes" ? true : false;
+
+            if (isAmateurCover != (eXisting.Is_AmateurCover == "No" ? "" : eXisting.Is_AmateurCover)) lbl_P2.ForeColor = lbl_Reference.ForeColor;
+            else if ((isAmateurCover == "" || isAmateurCover == "No") && ("" == eXisting.Is_AmateurCover || "No" == eXisting.Is_AmateurCover)) lbl_P2.Text = "";
+            chbx_AmateurCoverNew.Checked = isAmateurCover == "Yes" ? true : false;
+            chbx_AmateurCoverExisting.Checked = eXisting.Is_AmateurCover == "Yes" ? true : false;
+
+            //P4
+            if (isKaraoke != (eXisting.Is_Karaoke == "No" ? "" : eXisting.Is_Karaoke)) lbl_P4.ForeColor = lbl_Reference.ForeColor;
+            else if ((isKaraoke == "" || isKaraoke == "No") && ("" == eXisting.Is_Karaoke || "No" == eXisting.Is_Karaoke)) lbl_P4.Text = "";
+            chbx_KaraokeNew.Checked = isKaraoke == "Yes" ? true : false;
+            chbx_KaraokeExisting.Checked = eXisting.Is_Karaoke == "Yes" ? true : false;
 
             if (isSoundtrack != (eXisting.Is_Soundtrack == "No" ? "" : eXisting.Is_Soundtrack)) lbl_P4.ForeColor = lbl_Reference.ForeColor;
             else if ((isSoundtrack == "" || isSoundtrack == "No") && ("" == eXisting.Is_Soundtrack || "No" == eXisting.Is_Soundtrack)) lbl_P4.Text = "";
@@ -442,25 +485,31 @@ namespace RocksmithToolkitGUI.DLCManager
             chbx_UncensoredNew.Checked = isUncensored == "Yes" ? true : false;
             chbx_UncensoredExisting.Checked = eXisting.Is_Uncensored == "Yes" ? true : false;
 
-            if (isRemastered != (eXisting.Is_Remastered == "No" ? "" : eXisting.Is_Remastered)) lbl_P3.ForeColor = lbl_Reference.ForeColor;
-            else if ((isRemastered == "" || isRemastered == "No") && ("" == eXisting.Is_Remastered || "No" == eXisting.Is_Remastered)) lbl_P3.Text = "";
-            chbx_RemasteredNew.Checked = isRemastered == "Yes" ? true : false;
-            chbx_RemasteredExisting.Checked = eXisting.Is_Remastered == "Yes" ? true : false;
+            if (isTVTheme != (eXisting.Is_TVTheme == "No" ? "" : eXisting.Is_TVTheme)) lbl_P4.ForeColor = lbl_Reference.ForeColor;
+            else if ((isTVTheme == "" || isTVTheme == "No") && ("" == eXisting.Is_TVTheme || "No" == eXisting.Is_Uncensored)) lbl_P4.Text = "";
+            chbx_TVThemeNew.Checked = isTVTheme == "Yes" ? true : false;
+            chbx_TVThemeExisting.Checked = eXisting.Is_TVTheme == "Yes" ? true : false;
 
-            if (isMedley != (eXisting.Is_Medley == "No" ? "" : eXisting.Is_Medley)) lbl_P3.ForeColor = lbl_Reference.ForeColor;
-            else if ((isMedley == "" || isMedley == "No") && ("" == eXisting.Is_Medley || "No" == eXisting.Is_Medley)) lbl_P3.Text = "";
-            chbx_MedleyNew.Checked = isMedley == "Yes" ? true : false;
-            chbx_MedleyExisting.Checked = eXisting.Is_Medley == "Yes" ? true : false;
+            //P5
+            if (isDeluxe != (eXisting.Is_Deluxe == "No" ? "" : eXisting.Is_Deluxe)) lbl_P5.ForeColor = lbl_Reference.ForeColor;
+            else if ((isDeluxe == "" || isDeluxe == "No") && ("" == eXisting.Is_Deluxe || "No" == eXisting.Is_Deluxe)) lbl_P5.Text = "";
+            chbx_DeluxeNew.Checked = isDeluxe == "Yes" ? true : false;
+            chbx_DeluxeExisting.Checked = eXisting.Is_Deluxe == "Yes" ? true : false;
 
-            if (isMultiStrings != (eXisting.Is_MultiStrings == "No" ? "" : eXisting.Is_MultiStrings)) lbl_DD.ForeColor = lbl_Reference.ForeColor;
-            else if ((isMultiStrings == "" || isMultiStrings == "No") && ("" == eXisting.Is_MultiStrings || "No" == eXisting.Is_MultiStrings)) lbl_DD.Text = "";
-            chbx_MultiStringsNew.Checked = isMultiStrings == "Yes" ? true : false;
-            chbx_MultiStringsExisting.Checked = eXisting.Is_MultiStrings == "Yes" ? true : false;
+            if (isGreatestHits != (eXisting.Is_GreatestHits == "No" ? "" : eXisting.Is_GreatestHits)) lbl_P5.ForeColor = lbl_Reference.ForeColor;
+            else if ((isGreatestHits == "" || isGreatestHits == "No") && ("" == eXisting.Is_GreatestHits || "No" == eXisting.Is_GreatestHits)) lbl_P5.Text = "";
+            chbx_GreatestHitsNew.Checked = isGreatestHits == "Yes" ? true : false;
+            chbx_GreatestHitsExisting.Checked = eXisting.Is_GreatestHits == "Yes" ? true : false;
 
-            if (inTheWorks != (eXisting.IntheWorks == "No" ? "" : eXisting.IntheWorks)) lbl_P3.ForeColor = lbl_Reference.ForeColor;
-            else if ((inTheWorks == "" || inTheWorks == "No") && ("" == eXisting.IntheWorks || "No" == eXisting.IntheWorks)) lbl_P3.Text = "";
-            chbx_InTheWorksNew.Checked = inTheWorks == "Yes" ? true : false;
-            chbx_InTheWorksExisting.Checked = eXisting.IntheWorks == "Yes" ? true : false;
+            if (isGameSoundtrack != (eXisting.Is_GameSoundtrack == "No" ? "" : eXisting.Is_GameSoundtrack)) lbl_P5.ForeColor = lbl_Reference.ForeColor;
+            else if ((isGameSoundtrack == "" || isGameSoundtrack == "No") && ("" == eXisting.Is_GameSoundtrack || "No" == eXisting.Is_GameSoundtrack)) lbl_P5.Text = "";
+            chbx_GameSoundtrackNew.Checked = isGameSoundtrack == "Yes" ? true : false;
+            chbx_GameSoundtrackExisting.Checked = eXisting.Is_GameSoundtrack == "Yes" ? true : false;
+
+            if (isMidi != (eXisting.Is_Midi == "No" ? "" : eXisting.Is_Midi)) lbl_P5.ForeColor = lbl_Reference.ForeColor;
+            else if ((isMidi == "" || isMidi == "No") && ("" == eXisting.Is_Midi || "No" == eXisting.Is_Midi)) lbl_P5.Text = "";
+            chbx_MidiNew.Checked = isMidi == "Yes" ? true : false;
+            chbx_MidiExisting.Checked = eXisting.Is_Midi == "Yes" ? true : false;
 
 
             Art_Hash = eXisting.AlbumArt_Hash;
@@ -590,13 +639,13 @@ namespace RocksmithToolkitGUI.DLCManager
             else if (eXisting.Audio_OrigHash == "" && "" == audio_hash) lbl_Audio.Text = "";
             else { lbl_AudioMain.ForeColor = System.Drawing.Color.Green; lbl_AudioMain.Font = new Font(lbl_AudioMain.Font.Name, 9, FontStyle.Bold | FontStyle.Underline); }
             txt_AudioNew.Text = (audio_hash.ToString() == "" ? "" : "Yes");
-            if(eXisting.Audio_OrigHash != null) txt_AudioExisting.Text = (eXisting.Audio_OrigHash.ToString() == "" ? "" : "Yes");
+            if (eXisting.Audio_OrigHash != null) txt_AudioExisting.Text = (eXisting.Audio_OrigHash.ToString() == "" ? "" : "Yes");
 
             if (eXisting.Audio_OrigPreviewHash != audioPreview_hash) lbl_Preview.ForeColor = lbl_Reference.ForeColor;
             else if (eXisting.Audio_OrigPreviewHash == "" && "" == audioPreview_hash) lbl_Vocals.Text = "";
             else { lbl_AudioPreview.ForeColor = System.Drawing.Color.Green; lbl_AudioMain.Font = new Font(lbl_AudioPreview.Font.Name, 9, FontStyle.Bold | FontStyle.Underline); }
             txt_PreviewNew.Text = (audioPreview_hash.ToString() == "" ? "No" : "Yes");
-            if(eXisting.Audio_OrigPreviewHash != null) txt_PreviewExisting.Text = (eXisting.Audio_OrigPreviewHash.ToString() == "" ? "No" : "Yes");
+            if (eXisting.Audio_OrigPreviewHash != null) txt_PreviewExisting.Text = (eXisting.Audio_OrigPreviewHash.ToString() == "" ? "No" : "Yes");
             if (audioPreview_hash.ToString() != "") btn_PlayPreviewNew.Enabled = true;
             if (eXisting.Audio_OrigPreviewHash.ToString() != "") btn_PlayPreviewExisting.Enabled = true;
             if (eXisting.PreviewTime != "") { lbl_Preview.ForeColor = lbl_previewFootnote.ForeColor; lbl_previewFootnote.Visible = true; }
@@ -623,8 +672,8 @@ namespace RocksmithToolkitGUI.DLCManager
             else btn_NotADuplicate.Text = "NOT a Duplicate";
 
 
-            if (lbl_Covers.ForeColor == System.Drawing.Color.Green || lbl_AudioPreview.ForeColor == System.Drawing.Color.Green  || lbl_Audio.ForeColor == System.Drawing.Color.Green|| lbl_LenghtNew.ForeColor == System.Drawing.Color.Green) lbl_Attention.Visible = true;
-            else             lbl_Attention.Visible = false;
+            if (lbl_Covers.ForeColor == System.Drawing.Color.Green || lbl_AudioPreview.ForeColor == System.Drawing.Color.Green || lbl_Audio.ForeColor == System.Drawing.Color.Green || lbl_LenghtNew.ForeColor == System.Drawing.Color.Green) lbl_Attention.Visible = true;
+            else lbl_Attention.Visible = false;
 
             //    btn_NotADuplicate.Visible = true;
             //else btn_NotADuplicate.Visible = false;
@@ -1135,15 +1184,19 @@ namespace RocksmithToolkitGUI.DLCManager
             sel += " Is_Remastered = \"" + (chbx_RemasteredExisting.Checked ? "Yes" : "No");
             sel += "\", Is_Uncensored = \"" + (chbx_UncensoredExisting.Checked ? "Yes" : "No");
             sel += "\", Is_Soundtrack = \"" + (chbx_SoundtrackExisting.Checked ? "Yes" : "No");
+            sel += "\", Is_Deluxe = \"" + (chbx_DeluxeExisting.Checked ? "Yes" : "No");
+            sel += "\", Is_GreatestHits = \"" + (chbx_GreatestHitsExisting.Checked ? "Yes" : "No");
             sel += "\", Is_FullAlbum = \"" + (chbx_FullAlbumExisting.Checked ? "Yes" : "No");
             sel += "\", Is_Karaoke = \"" + (chbx_KaraokeExisting.Checked ? "Yes" : "No");
-            
+            sel += "\", Is_TVTheme = \"" + (chbx_TVThemeExisting.Checked ? "Yes" : "No");
+            sel += "\", Is_AmateurCover = \"" + (chbx_AmateurCoverExisting.Checked ? "Yes" : "No");
+            sel += "\", Is_Midi = \"" + (chbx_MidiExisting.Checked ? "Yes" : "No");
+            sel += "\", Is_GameSoundtrack = \"" + (chbx_GameSoundtrackExisting.Checked ? "Yes" : "No");
             sel += "\", Is_Instrumental = \"" + (chbx_InstrumentalExisting.Checked ? "Yes" : "No");
             sel += "\", Is_Demo = \"" + (chbx_DemoExisting.Checked ? "Yes" : "No");
             sel += "\", Is_Remix = \"" + (chbx_RemixExisting.Checked ? "Yes" : "No");
             sel += "\", Is_Cover = \"" + (chbx_CoverExisting.Checked ? "Yes" : "No");
             sel += "\", Has_Featuring = \"" + (chbx_FeaturingExisting.Checked ? "Yes" : "No");
-
             sel += "\", Is_EP = \"" + (chbx_EPExisting.Checked ? "Yes" : "No");
             sel += "\", InTheWorks = \"" + (chbx_InTheWorksExisting.Checked ? "Yes" : "No");
             sel += "\", Is_Single = \"" + (chbx_SingleExisting.Checked ? "Yes" : "No");
@@ -1179,19 +1232,23 @@ namespace RocksmithToolkitGUI.DLCManager
             sel += " Is_Alternate = \"" + (chbx_IsAlternateNew.Checked ? "Yes" : "No") + "\", Alternate_Version_No = \"" + alt + "\",";// + "\"", AlbumArtPath = \"" + (rbtn_CoverNew.Checked ? picbx_AlbumArtPathNew.ImageLocation : picbx_AlbumArtPathNew.ImageLocation);// + "\", Is_Original = \"" + (chbx_IsOriginal.Checked ? "Yes" : "No");
             sel += " Is_MultiTrack = \"" + (chbx_MultiTrackNew.Checked ? "Yes" : "No") + "\", MultiTrack_Version = \"" + (chbx_MultiTrackNew.Checked ? txt_MultiTrackNew.Text : "") + "\",";// + "\"", AlbumArtPath = \"" + (rbtn_CoverNew.Checked ? picbx_AlbumArtPathNew.ImageLocation : picbx_AlbumArtPathNew.ImageLocation);// + "\", Is_Original = \"" + (chbx_IsOriginal.Checked ? "Yes" : "No");
             sel += " Is_Live = \"" + (chbx_LiveNew.Checked ? "Yes" : "No") + "\", Live_Details = \"" + (chbx_LiveNew.Checked ? txt_LiveDetailsNew.Text : "") + "\",";// + "\"", AlbumArtPath = \"" + (rbtn_CoverNew.Checked ? picbx_AlbumArtPathNew.ImageLocation : picbx_AlbumArtPathNew.ImageLocation);// + "\", Is_Original = \"" + (chbx_IsOriginal.Checked ? "Yes" : "No");
-            sel += " Is_Acoustic = \"" + (chbx_AcousticNew.Checked ? "Yes" : "No") + "\"," + " Album_Year = \"" + txt_YearNew.Text ;
+            sel += " Is_Acoustic = \"" + (chbx_AcousticNew.Checked ? "Yes" : "No") + "\"," + " Album_Year = \"" + txt_YearNew.Text;
             sel += "\", Is_Remastered = \"" + (chbx_RemasteredNew.Checked ? "Yes" : "No");
             sel += "\", Is_Uncensored = \"" + (chbx_UncensoredNew.Checked ? "Yes" : "No");
+            sel += "\", Is_Deluxe = \"" + (chbx_DeluxeNew.Checked ? "Yes" : "No");
+            sel += "\", Is_GreatestHits = \"" + (chbx_GreatestHitsNew.Checked ? "Yes" : "No");
             sel += "\", Is_Soundtrack = \"" + (chbx_SoundtrackNew.Checked ? "Yes" : "No");
             sel += "\", Is_FullAlbum = \"" + (chbx_FullAlbumNew.Checked ? "Yes" : "No");
             sel += "\", Is_Karaoke = \"" + (chbx_KaraokeNew.Checked ? "Yes" : "No");
-
+            sel += "\", Is_TVTheme = \"" + (chbx_TVThemeNew.Checked ? "Yes" : "No");
+            sel += "\", Is_GameSoundtrack = \"" + (chbx_GameSoundtrackNew.Checked ? "Yes" : "No");
+            sel += "\", Is_Midi = \"" + (chbx_MidiNew.Checked ? "Yes" : "No");
+            sel += "\", Is_AmateurCover= \"" + (chbx_AmateurCoverNew.Checked ? "Yes" : "No");
             sel += "\", Is_Instrumental = \"" + (chbx_InstrumentalNew.Checked ? "Yes" : "No");
             sel += "\", Is_Demo = \"" + (chbx_DemoNew.Checked ? "Yes" : "No");
             sel += "\", Is_Remix = \"" + (chbx_RemixNew.Checked ? "Yes" : "No");
             sel += "\", Is_Cover = \"" + (chbx_CoverNew.Checked ? "Yes" : "No");
             sel += "\", Has_Featuring = \"" + (chbx_FeaturingNew.Checked ? "Yes" : "No");
-
             sel += "\", Is_EP = \"" + (chbx_EPNew.Checked ? "Yes" : "No");
             sel += "\", InTheWorks = \"" + (chbx_InTheWorksNew.Checked ? "Yes" : "No");
             sel += "\", Is_Single = \"" + (chbx_SingleNew.Checked ? "Yes" : "No");
@@ -1330,7 +1387,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //    lbl_Author.ForeColor = lbl_Reference.ForeColor;
             //}
 
-            if (txt_AlbumSortExisting.Text == txt_AlbumSortNew.Text )
+            if (txt_AlbumSortExisting.Text == txt_AlbumSortNew.Text)
             {
                 btn_AlbumSortExisting.Enabled = false;
                 btn_AlbumSortNew.Enabled = false;
@@ -1417,8 +1474,8 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btn_TitleNew_Click(object sender, EventArgs e)
         {
-            if (txt_TitleNew.Text.IndexOf("(newer)") > 0) txt_TitleNew.Text = txt_TitleExisting.Text.Replace("(newer)", "(older)");
-            else if (txt_TitleNew.Text.IndexOf("(older)") > 0) txt_TitleNew.Text = txt_TitleExisting.Text.Replace("(older)", "(newer)");
+            if (txt_TitleNew.Text.IndexOf("newer") > 0) txt_TitleNew.Text = txt_TitleExisting.Text.Replace("newer", "older");
+            else if (txt_TitleNew.Text.IndexOf("older") > 0) txt_TitleNew.Text = txt_TitleExisting.Text.Replace("older", "newer");
             else txt_TitleNew.Text = txt_TitleExisting.Text;
             lbl_Title.ForeColor = lbl_diffCount.ForeColor;
             if (chbx_Sort.Checked) syncTitle();
@@ -1428,8 +1485,8 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btn_TitleExisting_Click(object sender, EventArgs e)
         {
-            if (txt_TitleExisting.Text.IndexOf("(newer)") > 0) txt_TitleExisting.Text = txt_TitleNew.Text.Replace("(newer)", "(older)");
-            else if (txt_TitleExisting.Text.IndexOf("(older)") > 0) txt_TitleExisting.Text = txt_TitleNew.Text.Replace("(older)", "(newer)");
+            if (txt_TitleExisting.Text.IndexOf("newer") > 0) txt_TitleExisting.Text = txt_TitleNew.Text.Replace("newer", "older");
+            else if (txt_TitleExisting.Text.IndexOf("older") > 0) txt_TitleExisting.Text = txt_TitleNew.Text.Replace("older", "newer");
             else txt_TitleExisting.Text = txt_TitleNew.Text;
             lbl_Title.ForeColor = lbl_diffCount.ForeColor;
             if (chbx_Sort.Checked) syncTitle();
@@ -2090,6 +2147,24 @@ namespace RocksmithToolkitGUI.DLCManager
         private void lbl_Atention_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btn_Replace_Brakets_Click(object sender, EventArgs e)
+        {
+            txt_TitleNew.Text = txt_TitleNew.Text.Replace("(", "[").Replace(")", "]");
+            txt_TitleExisting.Text = txt_TitleExisting.Text.Replace("(", "[").Replace(")", "]");
+        }
+
+        private void btn_OpenExistingFolder_Click(object sender, EventArgs e)
+        {
+            string filePath = eXisting.Folder_Name;
+            StartProcesss(filePath, null);
+        }
+
+        private void btn_OpenNewFolder_Click(object sender, EventArgs e)
+        {
+            string filePath = dataNew.AlbumArtPath;
+            StartProcesss(filePath, null);
         }
     }
 }

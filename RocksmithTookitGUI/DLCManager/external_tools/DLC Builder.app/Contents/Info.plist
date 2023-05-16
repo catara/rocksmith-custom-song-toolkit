@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>CFBundleName</key>
+    <string>DLC Builder</string>
+    <key>CFBundleDisplayName</key>
+    <string>Rocksmith 2014 DLC Builder</string>
+    <key>CFBundleIdentifier</key>
+    <string>com.iminashi.dlcbuilder</string>
+    <key>CFBundleVersion</key>
+    <string>1.6.2</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>CFBundleSignature</key>
+    <string>????</string>
+    <key>CFBundleExecutable</key>
+    <string>DLCBuilder</string>
+    <key>CFBundleIconFile</key>
+    <string>icon.icns</string>
+    <key>CFBundleShortVersionString</key>
+    <string>1.6.2</string>
+    <key>NSPrincipalClass</key>
+    <string>NSApplication</string>
+    <key>NSHighResolutionCapable</key>
+    <true />
+  </dict>
+</plist>

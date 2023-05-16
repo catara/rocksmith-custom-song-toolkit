@@ -41,7 +41,7 @@ namespace RocksmithToolkitGUI.DLCManager
         internal static string AppWD = AppDomain.CurrentDomain.BaseDirectory; //when removing DDC
         internal static string MyAppWD = AppDomain.CurrentDomain.BaseDirectory + "\\DLCManager"; //when removing DDC
         private BindingSource Main = new BindingSource();
-        private readonly string MESSAGEBOX_CAPTION = "StandardizationDB";
+        private readonly string MESSAGEBOX_CAPTION = "WEM2OGGCorrespondenceDB";
         //private object cbx_Lead;
         //public DataAccess da = new DataAccess();
         //bcapi
@@ -131,13 +131,9 @@ namespace RocksmithToolkitGUI.DLCManager
             int i;
             i = DataGridView1.SelectedCells[0].RowIndex;
             txt_ID.Text = DataGridView1.Rows[i].Cells[0].Value.ToString();
-            txt_Artist.Text = DataGridView1.Rows[i].Cells[2].Value.ToString();
-            txt_Artist_Correction.Text = DataGridView1.Rows[i].Cells[3].Value.ToString();
-            txt_Album.Text = DataGridView1.Rows[i].Cells[4].Value.ToString();
-            txt_Album_Correction.Text = DataGridView1.Rows[i].Cells[5].Value.ToString();
-            //txt_AlbumArtPath_Correction.Text = DataGridView1.Rows[i].Cells[5].Value.ToString();
-
-            //if (txt_AlbumArtPath_Correction.Text != "") picbx_AlbumArtPath.ImageLocation = txt_AlbumArtPath.Text.Replace(".dds", ".png");
+            txt_Platform.Text = DataGridView1.Rows[i].Cells[1].Value.ToString();
+            txt_Identifier.Text = DataGridView1.Rows[i].Cells[2].Value.ToString();
+            txt_EncryptedID.Text = DataGridView1.Rows[i].Cells[3].Value.ToString();
 
         }
 
@@ -149,11 +145,9 @@ namespace RocksmithToolkitGUI.DLCManager
             i = DataGridView1.SelectedCells[0].RowIndex;
 
             //DataGridView1.Rows[i].Cells[0].Value = txt_ID.Text;
-            //DataGridView1.Rows[i].Cells[1].Value = txt_Artist.Text;
-            DataGridView1.Rows[i].Cells[3].Value = txt_Artist_Correction.Text;
-            //DataGridView1.Rows[i].Cells[3].Value = txt_Album.Text;
-            DataGridView1.Rows[i].Cells[5].Value = txt_Album_Correction.Text;
-            // DataGridView1.Rows[i].Cells[6].Value = txt_AlbumArtPath_Correction.Text;
+            DataGridView1.Rows[i].Cells[1].Value = txt_Platform.Text;
+            DataGridView1.Rows[i].Cells[2].Value = txt_Identifier.Text;
+            DataGridView1.Rows[i].Cells[3].Value = txt_EncryptedID.Text;
 
             //var DB_Path = "../../../../tmp\\AccessDB.accdb;";
             var connection = new OleDbConnection("Provider=Microsoft." + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path); //+ ";Persist Security Info=False"
@@ -164,16 +158,16 @@ namespace RocksmithToolkitGUI.DLCManager
             //OleDbCommand command = new OleDbCommand();
             //Update StadardizationDB
             //SqlCommand cmds = new SqlCommand(sqlCmd, conn2);
-            command.CommandText = "UPDATE Standardization SET ";
+            command.CommandText = "UPDATE WEM2OGGCorrespondence SET ";
 
-            command.CommandText += "Artist_Correction = @param3, ";
-            command.CommandText += "Album_Correction = @param5 ";
-            //command.CommandText += "AlbumArtPath_Correction = @param6 ";
+            command.CommandText += "Platform = @param1, ";
+            command.CommandText += "Identifier = @param2, ";
+            command.CommandText += "EncryptedID = @param3 ";
             command.CommandText += "WHERE ID = " + txt_ID.Text;
 
+            command.Parameters.AddWithValue("@param1", DataGridView1.Rows[i].Cells[1].Value.ToString() ?? DBNull.Value.ToString());
+            command.Parameters.AddWithValue("@param2", DataGridView1.Rows[i].Cells[2].Value.ToString() ?? DBNull.Value.ToString());
             command.Parameters.AddWithValue("@param3", DataGridView1.Rows[i].Cells[3].Value.ToString() ?? DBNull.Value.ToString());
-            command.Parameters.AddWithValue("@param5", DataGridView1.Rows[i].Cells[5].Value.ToString() ?? DBNull.Value.ToString());
-            command.Parameters.AddWithValue("@param6", DataGridView1.Rows[i].Cells[6].Value.ToString() ?? DBNull.Value.ToString());
 
             command.CommandType = CommandType.Text;
             UpdateDBbyExecuteNonQuery(command, cnb, cnc);
@@ -202,7 +196,7 @@ namespace RocksmithToolkitGUI.DLCManager
         public void Populate(ref DataGridView DataGridView, ref BindingSource bs) //, ref BindingSource bsPositions, ref BindingSource bsBadges
         {
 
-            DataSet dooz = new DataSet(); dooz = SelectFromDB("Standardization", "SELECT ID, (SELECT IIF(count(*)>1,\"Yes\",\"\") as Suspect from Standardization AS O WHERE LCASE(S.Artist)=LCASE(O.Artist) and LCASE(S.Album)=LCASE(O.Album)) as Suspect, Artist, Artist_Correction, Album, Album_Correction, AlbumArt_Correction FROM Standardization as S ORDER BY Artist, Album;", "", cnb, cnc);
+            DataSet dooz = new DataSet(); dooz = SelectFromDB("WEM2OGGCorrespondence", "SELECT ID, Platform, Identifier, EncryptedID FROM WEM2OGGCorrespondence;", "", cnb, cnc);
             //DB_Path = "../../../../tmp\\AccessDB.accdb;";
             //using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
             //{
@@ -215,12 +209,9 @@ namespace RocksmithToolkitGUI.DLCManager
             //}
             //MessageBox.Show("test");
             DataGridViewTextBoxColumn ID = new DataGridViewTextBoxColumn { DataPropertyName = "ID", HeaderText = "ID ", Width = 40 };
-            DataGridViewTextBoxColumn Suspect = new DataGridViewTextBoxColumn { DataPropertyName = "Suspect", HeaderText = "Suspect ", Width = 40 };
-            DataGridViewTextBoxColumn Artist = new DataGridViewTextBoxColumn { DataPropertyName = "Artist", HeaderText = "Artist ", Width = 185 };
-            DataGridViewTextBoxColumn Artist_Correction = new DataGridViewTextBoxColumn { DataPropertyName = "Artist_Correction", HeaderText = "Artist_Correction ", Width = 185 };
-            DataGridViewTextBoxColumn Album = new DataGridViewTextBoxColumn { DataPropertyName = "Album", HeaderText = "Album ", Width = 185 };
-            DataGridViewTextBoxColumn Album_Correction = new DataGridViewTextBoxColumn { DataPropertyName = "Album_Correction", HeaderText = "Album_Correction ", Width = 185 };
-            DataGridViewTextBoxColumn AlbumArtPath_Correction = new DataGridViewTextBoxColumn { DataPropertyName = "AlbumArtPath_Correction", HeaderText = "AlbumArtPath_Correction ", Width = 495 };
+            DataGridViewTextBoxColumn Platform = new DataGridViewTextBoxColumn { DataPropertyName = "Platform", HeaderText = "Platform ", Width = 40 };
+            DataGridViewTextBoxColumn Identifier = new DataGridViewTextBoxColumn { DataPropertyName = "Identifier", HeaderText = "Identifier ", Width = 185 };
+            DataGridViewTextBoxColumn EncryptedID = new DataGridViewTextBoxColumn { DataPropertyName = "EncryptedID", HeaderText = "EncryptedID ", Width = 185 };
 
 
             //bsPositions.DataSource = ds.Tables["Tones"];
@@ -255,18 +246,15 @@ namespace RocksmithToolkitGUI.DLCManager
             DataGridView.Columns.AddRange(new DataGridViewColumn[]
                 {
                 ID,
-                Suspect,
-                Artist,
-                Artist_Correction,
-                Album,
-                Album_Correction,
-                AlbumArtPath_Correction
+                Platform,
+                Identifier,
+                EncryptedID
                 }
             );
 
-            dssx.Tables["Standardization"].AcceptChanges();
+            dssx.Tables["WEM2OGGCorrespondence"].AcceptChanges();
 
-            bs.DataSource = dssx.Tables["Standardization"];
+            bs.DataSource = dssx.Tables["WEM2OGGCorrespondence"];
             DataGridView.DataSource = bs;
             //DataGridView.ExpandColumns();
 
@@ -301,17 +289,17 @@ namespace RocksmithToolkitGUI.DLCManager
             //ChangeRow();
         }
 
-        private class Files
-        {
-            public string ID { get; set; }
-            public string Artist { get; set; }
-            public string Artist_Correction { get; set; }
-            public string Album { get; set; }
-            public string Album_Correction { get; set; }
-            public string AlbumArtPath_Correction { get; set; }
-        }
+        //private class Files
+        //{
+        //    public string ID { get; set; }
+        //    public string Artist { get; set; }
+        //    public string Artist_Correction { get; set; }
+        //    public string Album { get; set; }
+        //    public string Album_Correction { get; set; }
+        //    public string AlbumArtPath_Correction { get; set; }
+        //}
 
-        private Files[] files = new Files[20000];
+        private UtilitiesFunctions.WEM2OGGCorrespondence[] files = new UtilitiesFunctions.WEM2OGGCorrespondence[20000];
 
         //Generic procedure to read and parse Standardization.DB (&others..soon)
         public int SQLAccess(string cmd)
@@ -336,15 +324,13 @@ namespace RocksmithToolkitGUI.DLCManager
             MaximumSize = dus.Tables[0].Rows.Count;
             foreach (DataRow dataRow in dus.Tables[0].Rows)
             {
-                files[i] = new Files();
+                files[i] = new UtilitiesFunctions.WEM2OGGCorrespondence();
 
                 //rtxt_StatisticsOnReadDLCs.Text += "\n  a= " + i + MaximumSize+dataRow.ItemArray[0].ToString();
-                files[i].ID = dataRow.ItemArray[0].ToString();
-                files[i].Artist = dataRow.ItemArray[2].ToString();
-                files[i].Artist_Correction = dataRow.ItemArray[3].ToString();
-                files[i].Album = dataRow.ItemArray[4].ToString();
-                files[i].Album_Correction = dataRow.ItemArray[5].ToString();
-                files[i].AlbumArtPath_Correction = dataRow.ItemArray[6].ToString();
+                files[i].ID = dataRow.ItemArray[0].ToString().ToInt32();
+                files[i].Platform = dataRow.ItemArray[1].ToString();
+                files[i].Identifier = dataRow.ItemArray[2].ToString();
+                files[i].EncryptedID = dataRow.ItemArray[3].ToString();
                 i++;
             }
             //Closing Connection

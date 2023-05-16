@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web" Project="Sdk.targets">
   <PropertyGroup>
-    <TargetFramework>net6.0-windows10.0.22000.0</TargetFramework>
+    <TargetFramework>net7.0-windows10.0.22621.0</TargetFramework>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <OutputType>WinExe</OutputType>
     <StartupObject>RocksmithToolkitGUI.Program</StartupObject>
@@ -23,6 +23,8 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <UseWindowsForms>true</UseWindowsForms>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+    <Configurations>Debug;Release;RocksmithToolkitMac</Configurations>
+    <Platforms>x86;AnyCPU</Platforms>
   </PropertyGroup>
   <PropertyGroup>
     <EnableDefaultContentItems>false</EnableDefaultContentItems>
@@ -58,6 +60,16 @@
     <OutputPath>bin\RocksmithToolkitMac\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="DLCManager\external_tools\MediaInfo_CLI_17.12_Windows_x64\**" />
+    <Compile Remove="DLCManager\external_tools\totalcmd\wcx32_psarc_v1.4\**" />
+    <EmbeddedResource Remove="DLCManager\external_tools\MediaInfo_CLI_17.12_Windows_x64\**" />
+    <EmbeddedResource Remove="DLCManager\external_tools\totalcmd\wcx32_psarc_v1.4\**" />
+    <None Remove="DLCManager\external_tools\MediaInfo_CLI_17.12_Windows_x64\**" />
+    <None Remove="DLCManager\external_tools\totalcmd\wcx32_psarc_v1.4\**" />
+    <Page Remove="DLCManager\external_tools\MediaInfo_CLI_17.12_Windows_x64\**" />
+    <Page Remove="DLCManager\external_tools\totalcmd\wcx32_psarc_v1.4\**" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\ZLib\ICSharpCode.SharpZipLib.dll</HintPath>
@@ -79,7 +91,7 @@
       <HintPath>..\lib\PSTaskDialog\PSTaskDialog.dll</HintPath>
     </Reference>
     <Reference Include="RocksmithToTabLib">
-      <HintPath>..\..\New folder\RocksmithToTab\RocksmithToTabLib\bin\Debug\netstandard2.0\RocksmithToTabLib.dll</HintPath>
+      <HintPath>..\lib\RocksmithToTabLib\bin\Release\RocksmithToTabLib.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="SharpConfig">
@@ -103,6 +115,9 @@
     </Compile>
     <Compile Update="DLCManager\DLCManager.cs">
       <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="DLCManager\Selection.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Update="Properties\Settings.Designer.cs">
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -176,6 +191,11 @@
     </None>
     <None Update="DLCManager\external_tools\Audiokinetic\Wwise 2019.1.6.7110\Authoring\Data\Default Project\Queries\Factory Queries.wwu">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
     </None>
     <None Include="DLCManager\external_tools\Audiokinetic\Wwise 2019.1.6.7110\Authoring\Data\Factory Command Lines\File Packager %28Android%29.wcmdline">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1084,15 +1104,6 @@
     <None Update="DLCManager\external_tools\C3CONToolsv401\setlists\songs_rb4_xone">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="DLCManager\external_tools\MediaInfo_CLI_17.12_Windows_x64\Plugin\Custom\Table by fields, compact %28HTML%29.csv" />
-    <None Include="DLCManager\external_tools\MediaInfo_CLI_17.12_Windows_x64\Plugin\Custom\Table by fields, short %28HTML%29.csv" />
-    <None Include="DLCManager\external_tools\MediaInfo_CLI_17.12_Windows_x64\Plugin\Custom\Table by fields, standard %28HTML%29.csv" />
-    <None Include="DLCManager\external_tools\MediaInfo_CLI_17.12_Windows_x64\Plugin\Custom\Table by fields, verbose %28HTML%29.csv" />
-    <None Include="DLCManager\external_tools\MediaInfo_CLI_17.12_Windows_x64\Plugin\Custom\Table by streams, compact %28HTML%29.csv" />
-    <None Include="DLCManager\external_tools\MediaInfo_CLI_17.12_Windows_x64\Plugin\Custom\Table by streams, short %28HTML%29.csv" />
-    <None Include="DLCManager\external_tools\MediaInfo_CLI_17.12_Windows_x64\Plugin\Custom\Table by streams, standard %28HTML%29.csv" />
-    <None Include="DLCManager\external_tools\MediaInfo_CLI_17.12_Windows_x64\Plugin\Custom\Table by streams, verbose %28HTML%29.csv" />
-    <None Include="DLCManager\external_tools\MediaInfo_CLI_17.12_Windows_x64\Plugin\Custom\zzz_Contrib - Dusil %28HTML%29.csv" />
     <Compile Update="DLCPackageCreator\DLCPackageCreator.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -1138,11 +1149,32 @@
     <None Update="app.manifest">
       <SubType>Designer</SubType>
     </None>
+    <None Update="DLCManager\external_tools\CDLCEnablers\ARM\libRSBypass.dylib">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\CDLCEnablers\insert_dylib">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\CDLCEnablers\libRSBypass.dylib">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\CDLCEnablers\RUN_PATCH_RS.command">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="DLCManager\external_tools\CDLCEnablers\RUN_PATCH_RS.orig.command">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="DLCManager\external_tools\CDLCEnablers\x64.Legacy\libRSBypass.dylib">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\CDLCEnablers\x64\libRSBypass.dylib">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\CDLCEnablers\x86\libRSBypass.dylib">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="DLCManager\external_tools\Database4.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="DLCManager\external_tools\eof1.8RC12\AVDelay\guitar.ogg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1177,7 +1209,13 @@
     <None Update="DLCManager\external_tools\eof1.8RC12\wavtoogg.bat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="DLCManager\external_tools\ErrorLog.TXT">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="DLCManager\external_tools\LinkDB.accdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\mdbplus.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="DLCManager\external_tools\NVorbis.bin.0.8.4\COPYING">
@@ -2663,6 +2701,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="DLCManager\external_tools\RS2014-Mod-Installer.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\SQLite.Interop.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\sqlite3.dsn">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="DLCManager\external_tools\sqliteodbc_w64.exe">
@@ -6734,9 +6778,6 @@
     <Content Include="DLCManager\external_tools\tools\revorb.exe"><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
     <Content Include="DLCManager\external_tools\tools\topng.exe"><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
     <Content Include="DLCManager\external_tools\tools\ww2ogg.exe"><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
-    <Content Include="DLCManager\external_tools\totalcmd\wcx32_psarc_v1.4\pluginst.inf"><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
-    <Content Include="DLCManager\external_tools\totalcmd\wcx32_psarc_v1.4\ReadMe_en.txt"><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
-    <Content Include="DLCManager\external_tools\totalcmd\wcx32_psarc_v1.4\ReadMe_ru.txt"><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
     <Content Include="DLCManager\external_tools\ww2ogg0.14.exe"><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
     <Content Include="DLCManager\external_tools\X360.dll"><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
     <Content Include="ReleaseNotes.txt">
@@ -8433,7 +8474,6 @@
     <Content Include="DLCManager\external_tools\PS3xploit-resigner-master\source\tools\ps3py_exe\pkg_exdata.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="DLCManager\external_tools\totalcmd\psarc64\pluginst.inf"><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
     <Content Include="DLCManager\external_tools\totalcmd\psarc64\ReadMe_en.txt"><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
     <Content Include="DLCManager\external_tools\totalcmd\psarc64\ReadMe_ru.txt"><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
     <Content Include="DLCManager\external_tools\TrueAncestor_PKG_Repacker_v2.45\history.txt">
@@ -8874,18 +8914,6 @@
     <Content Include="DLCManager\external_tools\MDBPlus.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="DLCManager\external_tools\MediaInfo_CLI_17.12_Windows_x64\History.txt"><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
-    <Content Include="DLCManager\external_tools\MediaInfo_CLI_17.12_Windows_x64\info.txt"><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
-    <Content Include="DLCManager\external_tools\MediaInfo_CLI_17.12_Windows_x64\Info_Parameters.txt"><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
-    <Content Include="DLCManager\external_tools\MediaInfo_CLI_17.12_Windows_x64\LIBCURL.DLL">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\MediaInfo_CLI_17.12_Windows_x64\License.html"><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
-    <Content Include="DLCManager\external_tools\MediaInfo_CLI_17.12_Windows_x64\MediaInfo.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\MediaInfo_CLI_17.12_Windows_x64\ReadMe.txt"><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
-    <Content Include="DLCManager\external_tools\MediaInfo_CLI_17.12_Windows_x64\template.txt"><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
     <Content Include="DLCManager\external_tools\NVorbis.bin.0.8.4\NVorbis.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -8916,46 +8944,19 @@
     <Content Include="DLCManager\external_tools\remastered.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="DLCManager\external_tools\totalcmd\CABRK.DLL">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\totalcmd\FRERES32.DLL">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="DLCManager\external_tools\totalcmd\HISTORY.TXT">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="DLCManager\external_tools\totalcmd\KEYBOARD.TXT">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="DLCManager\external_tools\totalcmd\NOCLOSE.EXE">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="DLCManager\external_tools\totalcmd\NOCLOSE64.EXE">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\totalcmd\pluginst.inf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\totalcmd\ReadMe_en.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\totalcmd\ReadMe_ru.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\totalcmd\SHARE_NT.EXE">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="DLCManager\external_tools\totalcmd\SIZE!.TXT">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="DLCManager\external_tools\totalcmd\TC7Z.DLL">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="DLCManager\external_tools\totalcmd\TC7Z64.DLL">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\totalcmd\TC7ZIPIF.DLL">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="DLCManager\external_tools\totalcmd\TCLZMA64.DLL">
@@ -8964,34 +8965,16 @@
     <Content Include="DLCManager\external_tools\totalcmd\TCMADM64.EXE">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="DLCManager\external_tools\totalcmd\TCMADMIN.EXE">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\totalcmd\TCMDLZMA.DLL">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="DLCManager\external_tools\totalcmd\TCMDX32.EXE">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\totalcmd\TCMDX64.EXE">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="DLCManager\external_tools\totalcmd\TCUNIN64.EXE">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="DLCManager\external_tools\totalcmd\TCUNINST.EXE">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="DLCManager\external_tools\totalcmd\TCUNZL64.DLL">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="DLCManager\external_tools\totalcmd\TCUNZLIB.DLL">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="DLCManager\external_tools\totalcmd\TcUsbRun.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\totalcmd\TOTALCMD.EXE">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="DLCManager\external_tools\totalcmd\TOTALCMD.INC">
@@ -9000,28 +8983,13 @@
     <Content Include="DLCManager\external_tools\totalcmd\TOTALCMD64.EXE">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="DLCManager\external_tools\totalcmd\UNACEV2.DLL">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\totalcmd\UNRAR.DLL">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="DLCManager\external_tools\totalcmd\UNRAR64.DLL">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\totalcmd\UNRAR9X.DLL">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\totalcmd\WC32TO16.EXE">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="DLCManager\external_tools\totalcmd\WCMICONS.DLL">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="DLCManager\external_tools\totalcmd\WCMICONS.INC">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\totalcmd\WCMZIP32.DLL">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="DLCManager\external_tools\totalcmd\WCMZIP64.DLL">
@@ -9081,103 +9049,10 @@
     <Content Include="DLCManager\external_tools\UltraStar Creator\usc.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\7z.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\7zip_pad.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="DLCManager\external_tools\WinMerge\Contributors.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Docs\ChangeLog.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Docs\ReadMe.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="DLCManager\external_tools\WinMerge\Docs\ReleaseNotes.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Files.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\libexpat.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Merge7z910U.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Merge7z911.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Merge7z911U.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Merge7z912.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Merge7z912U.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Merge7z913.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Merge7z913U.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Merge7z914.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Merge7z914U.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Merge7z915.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Merge7z915U.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Merge7z916.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Merge7z916U.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Merge7z917.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Merge7z917U.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Merge7z918.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Merge7z918U.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Merge7z919.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Merge7z919U.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Merge7z920.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\Merge7z920U.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\MergeLang.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\MergePlugins\CompareMSExcelFiles.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\MergePlugins\CompareMSWordFiles.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\MergePlugins\DisplayXMLFiles.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="DLCManager\external_tools\WinMerge\MergePlugins\editor addin.sct">
@@ -9195,40 +9070,7 @@
     <Content Include="DLCManager\external_tools\WinMerge\MergePlugins\IgnoreFieldsTab.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\MergePlugins\IgnoreLeadingLineNumbers.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="DLCManager\external_tools\WinMerge\MergePlugins\insert datetime.sct">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\MergePlugins\WatchBeginningOfLog.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\MergePlugins\WatchEndOfLog.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\mfc90.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\mfc90u.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\mfcm90.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\mfcm90u.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\msvcm90.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\msvcp90.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\msvcr90.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\WinMerge\pcre.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="DLCManager\external_tools\WinMerge\WinMergeU.exe">
@@ -9320,23 +9162,23 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="EntityFramework" Version="6.4.4" />
-    <PackageReference Include="Google.Apis.YouTube.v3" Version="1.57.0.2756" />
-    <PackageReference Include="Microsoft.Data.Sqlite" Version="7.0.0-preview.6.22329.4" />
-    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="7.0.0-preview.6.22329.4" />
-    <PackageReference Include="Microsoft.NETCore.Platforms" Version="7.0.0-preview.6.22324.4" />
+    <PackageReference Include="Google.Apis.YouTube.v3" Version="1.60.0.3043" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.0-preview.3.23174.2" />
+    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="8.0.0-preview.3.23174.2" />
+    <PackageReference Include="Microsoft.NETCore.Platforms" Version="8.0.0-preview.3.23174.8" />
     <PackageReference Include="Microsoft.VisualBasic" Version="10.4.0-preview.18571.3" />
     <PackageReference Include="Rocksmith2014.XML" Version="1.1.1" />
     <PackageReference Include="SpotifyApi.NetCore" Version="3.5.0" />
-    <PackageReference Include="SpotifyAPI.Web" Version="6.3.0" />
-    <PackageReference Include="SpotifyAPI.Web.Auth" Version="6.3.0" />
+    <PackageReference Include="SpotifyAPI.Web" Version="7.0.0" />
+    <PackageReference Include="SpotifyAPI.Web.Auth" Version="7.0.0" />
     <PackageReference Include="SQLite" Version="3.13.0" />
-    <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
+    <PackageReference Include="sqlite-net-pcl" Version="1.9.141-beta" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="6.0.0-preview.4.21253.7" />
-    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.116" />
+    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.117" />
     <PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
     <PackageReference Include="System.Security.Principal.Windows" Version="6.0.0-preview.5.21301.5" />
     <PackageReference Include="Unosquare.Swan.Lite" Version="3.1.0" />
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0-preview.6.22324.4" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0-preview.3.23174.8" />
   </ItemGroup>
   <PropertyGroup Condition="'$(OutDir)'==''">
   <OutDir>bin\$(Configuration)\$(TargetFramework)\</OutDir>
@@ -9349,16 +9191,20 @@
     <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
     <IsPublishable>False</IsPublishable>
     <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
-    <IncludeSymbols>True</IncludeSymbols>
+    <IncludeSymbols>False</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <RunAnalyzersDuringBuild>False</RunAnalyzersDuringBuild>
     <RunAnalyzersDuringLiveAnalysis>False</RunAnalyzersDuringLiveAnalysis>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Title>Rocksmith2014DLCManager</Title>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <Optimize>False</Optimize>
+    <DebugType>embedded</DebugType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <Optimize>False</Optimize>
+    <DebugType>embedded</DebugType>
   </PropertyGroup>
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />

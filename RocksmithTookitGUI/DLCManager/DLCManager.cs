@@ -39,6 +39,9 @@ using Microsoft.Extensions.Logging;
 using System.Windows;
 using Application = System.Windows.Forms.Application;
 using MessageBox = System.Windows.Forms.MessageBox;
+using System.Windows.Media;
+using X360.Other;
+using Swan;
 //using System.Threading;
 namespace RocksmithToolkitGUI.DLCManager
 {
@@ -50,11 +53,11 @@ namespace RocksmithToolkitGUI.DLCManager
         string Groupss = "";
         public string netstatus = "NOK";
         public bool FiltrParams = false;
-        public bool ChanginProfile = true;
+        public bool ChanginProfile = false;
         public string SaveOK = "";
         public int mutit = 0;
         public string inserts = "";
-        string[] insrts = new string[30000];
+        string[] insrts = new string[c("dlcm_maxsongsinDLCM").ToInt32()];
         bool nostatrefresh = false;
         bool DefaultExist = false;
 
@@ -66,7 +69,7 @@ namespace RocksmithToolkitGUI.DLCManager
         bool duplit = false;
         int dupliNo = 0;
         int dupliPrcs = 0;
-        string[,] dupliSongs = new string[2, 30000];
+        string[,] dupliSongs = new string[2, c("dlcm_maxsongsinDLCM").ToInt32()];
 
         static string AppWD = AppDomain.CurrentDomain.BaseDirectory + "DLCManager\\external_tools"; //when removing DDC
         static string MyAppWD = AppWD; //when removing DDC
@@ -117,7 +120,8 @@ namespace RocksmithToolkitGUI.DLCManager
         public string AppIdD;
         public string IsLive = ""; public string LiveDetails = ""; public string IsAcoustic = ""; public string IsSingle = ""; public string IsSoundtrack = "";
         public string IsInstrumental = ""; public string IsEP = ""; public string IsUncensored = ""; public string IsFullAlbum = ""; public string IsRemastered = ""; public string InTheWorks = "";
-        public string IsKaraoke = ""; public string IsDemo = ""; public string IsMedley = ""; public string IsMultiStrings = ""; public string HasFeaturing = ""; public string IsRemix = ""; public string IsCover = "";
+        public string IsKaraoke = ""; public string IsDemo = ""; public string IsMedley = ""; public string IsMultiStrings = ""; public string HasFeaturing = ""; public string IsRemix = "";
+        public string IsCover = ""; public string IsDeluxe = ""; public string IsGreatestHits = ""; public string IsMidi = ""; public string IsGameSoundtrack = ""; public string IsTVTheme = ""; public string IsAmateurCover = "";
         public string BasedOn_Youtube = ""; string BasedOn_CF = ""; string BasedOn_Tabs = ""; string ToDos = ""; string ToneDetails = ""; string PackageDetails = "";/* public string HasCapo = "";*/
         //public string manualdec;
         //public string automdec;
@@ -165,6 +169,10 @@ namespace RocksmithToolkitGUI.DLCManager
 
         public DLCManager()
         {
+            timestamp = UpdateLog(timestamp, "startig dlc manag", true, c("dlcm_TempPath"), "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+
+
+            ConfigRepository.Instance()["dlcm_chosendb"] = "";
             if (!Directory.Exists(ConfigRepository.Instance()["dlcm_RocksmithDLCPath"]))
             {
                 ConfigRepository.Instance()["dlcm_RocksmithDLCPath"] = ConfigRepository.Instance()["dlcm_TempPath"] + "\\0_to_import";
@@ -177,19 +185,12 @@ namespace RocksmithToolkitGUI.DLCManager
             if (res != DialogResult.No && res != DialogResult.Yes)
                 return;
 
-            timestamp = UpdateLog(timestamp, "startig dlc manag", true, c("dlcm_TempPath"), "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
-
             string v = ConfigRepository.Instance()["dlcm_AccessDLLVersion"];
             string dbbg = ConfigRepository.Instance()["dlcm_DBFolder"];
             if (DisplayData().IndexOf("Microsoft.ACE.OLEDB.16.0") >= 0) ConfigRepository.Instance()["dlcm_AccessDLLVersion"] = "ACE.OLEDB.16.0";
             else if (DisplayData().IndexOf("Microsoft.ACE.OLEDB.12.0") >= 0) ConfigRepository.Instance()["dlcm_AccessDLLVersion"] = "ACE.OLEDB.12.0";
 
-            cnb = new OleDbConnection("Provider=Microsoft." + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Persist Security" +
-                " Info=False;Mode= Share Deny None;Data Source=" + ConfigRepository.Instance()["dlcm_DBFolder"]);
-
-            cnb = new OleDbConnection("Provider=Microsoft." + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Persist Security" +
-                    " Info=False;Mode= Share Deny None;Data Source=" + ConfigRepository.Instance()["dlcm_DBFolder"]); //running twice as some issues with compilatiojn in x86...sometime
-
+            OpenDBQuick();
             InitializeComponent();
 
             var SearchFields = c("dlcm_SearchFields");
@@ -210,7 +211,9 @@ namespace RocksmithToolkitGUI.DLCManager
             {
                 CopyFolder(templateDir, destination_dir);
             }
-
+#if (DEBUG)
+            btn_Debug.Visible = true;
+#endif
             //Enable Preview generation
             if (ConfigRepository.Instance()["general_wwisepath"] == "")
                 if (ConfigRepository.Instance()["dlcm_localwwise"] == "") ConfigRepository.Instance()["general_wwisepath"] = "C:\\Program Files (x86)\\Audiokinetic\\" + c("dlcm_wwise");// 2017.2.0.6500";
@@ -240,6 +243,7 @@ namespace RocksmithToolkitGUI.DLCManager
             bwConvert.RunWorkerCompleted += new RunWorkerCompletedEventHandler(ProcessCompleted);
             bwConvert.WorkerReportsProgress = true;
 
+            // if (!ChanginProfile) 
             OpenDb();
 
             txt_DBFolder.Text = c("dlcm_DBFolder");
@@ -302,51 +306,6 @@ namespace RocksmithToolkitGUI.DLCManager
             //txt_DBFolder.Text = "1";
             //var a = ConfigRepository.Instance()["dlcm_DBFolder"];
             var t = DBPathChange(txt_DBFolder.Text, chbx_Configurations.Text);
-            var missingsoftware = "";
-            if (!File.Exists(ConfigRepository.Instance()["dlcm_EoFPath"])) missingsoftware += "\n" + ConfigRepository.Instance()["dlcm_EoFPath_www"]
-                    + " ... " + "used in Adding Lyrics";
-            if (!File.Exists(ConfigRepository.Instance()["dlcm_UltraStarCreator"])) missingsoftware += "\n" + ConfigRepository.Instance()["dlcm_UltraStarCreator_www"]
-                    + " ... " + "Used in creating lyrics out of nothing";
-            if (!File.Exists(ConfigRepository.Instance()["dlcm_WinMerge"])) missingsoftware += "\n" + ConfigRepository.Instance()["dlcm_WinMerge_www"]
-                    + " ... " + "used in comparing duplicates (and their respecitve differential track)";
-            if (!File.Exists(ConfigRepository.Instance()["dlcm_TCommander"])) missingsoftware += "\n" + ConfigRepository.Instance()["dlcm_TCommander_www"]
-                    + " ... " + "used to pack RETAIL files on PS3";
-            if (!File.Exists(ConfigRepository.Instance()["dlcm_PathForBRM"])) missingsoftware += "\n" + ConfigRepository.Instance()["dlcm_PathForBRM_www"]
-                    + " ... " + "used to see the Rocksmith tab \"in-a-visual-way\" or to create phases";
-            if (!File.Exists(ConfigRepository.Instance()["dlcm_TrueAncestor_PKG_Repacker"])) missingsoftware += "\n" + ConfigRepository.Instance()["dlcm_TrueAncestor_PKG_Repacker_www"]
-                    + " ... " + "packing for PS3 jailbroken with HAN";
-            if (!File.Exists(ConfigRepository.Instance()["dlcm_PS3xploit-resigner"])) missingsoftware += "\n" + ConfigRepository.Instance()["dlcm_PS3xploit-resigner_www"]
-                    + " ... " + "signig packages for PS3 jailbroken with HAN";
-            if (!File.Exists(ConfigRepository.Instance()["dlcm_MediaInfo_CLI"])) missingsoftware += "\n" + ConfigRepository.Instance()["dlcm_MediaInfo_CLI_www"]
-                    + " ... " + "used (sometimes) in normalising the bitrate used in the Audio of the song";
-            if (!File.Exists(ConfigRepository.Instance()["dlcm_PKG_Linker"])) missingsoftware += "\n" + ConfigRepository.Instance()["dlcm_PKG_Linker_www"]
-                    + " ... " + "server used to distribute songs for PS3 jailbroken with HAN";
-            if (!File.Exists(ConfigRepository.Instance()["dlcm_RockBand"])) missingsoftware += "\n" + ConfigRepository.Instance()["dlcm_RockBand_www"]
-                    + " ... " + "used to decompress songs made for Rockband to quickly copy their vocal track to Rocksmith";
-            if (!File.Exists(ConfigRepository.Instance()["dlcm_MDBPlus"])) missingsoftware += "\n" + ConfigRepository.Instance()["dlcm_MDBPlus_www"]
-                    + " ... " + "used to View/Edit ACCDB database when 32 bit Driver&Office is installed";
-            if (!File.Exists(ConfigRepository.Instance()["dlcm_RS2014-Mod-Installer"])) missingsoftware += "\n" + ConfigRepository.Instance()["dlcm_RS2014-Mod-Installer_www"]
-                    + " ... " + "used to run a modded version of Rocksmith for tweaking interface or recording your screen";
-            if (missingsoftware != "")
-            {
-                ErrorWindow frm1 = new ErrorWindow(missingsoftware, "", "Warning there is missing sotware used in some of the DCLManager features", false, false, true, "", "", "");
-                frm1.ShowDialog();
-                if (frm1.IgnoreSong) ;
-                if (frm1.StopImport) {; }
-
-                MessageBox.Show("Finished installing?");
-                missingsoftware = "";
-                if (!File.Exists(ConfigRepository.Instance()["dlcm_EoFPath"])) ConfigRepository.Instance()["dlcm_EoFPath"] = "";
-                if (!File.Exists(ConfigRepository.Instance()["dlcm_UltraStarCreator"])) ConfigRepository.Instance()["dlcm_UltraStarCreator_www"] = "";
-                if (!File.Exists(ConfigRepository.Instance()["dlcm_WinMerge"])) ConfigRepository.Instance()["dlcm_WinMerge_www"] = "";
-                if (!File.Exists(ConfigRepository.Instance()["dlcm_TCommander"])) ConfigRepository.Instance()["dlcm_TCommander_www"] = "";
-                if (!File.Exists(ConfigRepository.Instance()["dlcm_PathForBRM"])) ConfigRepository.Instance()["dlcm_PathForBRM_www"] = "";
-                if (!File.Exists(ConfigRepository.Instance()["dlcm_TrueAncestor_PKG_Repacker"])) ConfigRepository.Instance()["dlcm_TrueAncestor_PKG_Repacker_www"] = "";
-                if (!File.Exists(ConfigRepository.Instance()["dlcm_PS3xploit-resigner"])) ConfigRepository.Instance()["dlcm_PS3xploit-resigner_www"] = "";
-                if (!File.Exists(ConfigRepository.Instance()["dlcm_MediaInfo_CLI"])) ConfigRepository.Instance()["dlcm_MediaInfo_CLI_www"] = "";
-                if (!File.Exists(ConfigRepository.Instance()["dlcm_PKG_Linker"])) ConfigRepository.Instance()["dlcm_PKG_Linker_www"] = "";
-                if (!File.Exists(ConfigRepository.Instance()["dlcm_RockBand"])) ConfigRepository.Instance()["dlcm_RockBand_www"] = "";
-            }
 
             txt_RocksmithDLCPath.Text = ConfigRepository.Instance()["dlcm_RocksmithDLCPath"];
             txt_TempPath.Text = ConfigRepository.Instance()["dlcm_TempPath"];
@@ -358,16 +317,84 @@ namespace RocksmithToolkitGUI.DLCManager
             SaveOK = oldsave;
 
             //If DLCManagerOpen is initiated from ChangeProfile then dont run :) 
-            if (ChanginProfile)
-            {
-                int k = chbx_Configurations.Items.Count - 1;
-                for (k = k; k >= 0; --k)
-                    if (chbx_Configurations.Items[k].ToString() == ConfigRepository.Instance()["dlcm_Configurations"])
+
+            int k = chbx_Configurations.Items.Count - 1;
+            for (k = k; k >= 0; --k)
+                if (chbx_Configurations.Items[k].ToString() == ConfigRepository.Instance()["dlcm_Configurations"])
+                {
+                    //chbx_Configurations.SelectedIndex = k; break;
+                }
+            //if (k < 0)
+                if (ChanginProfile)
+                {
+                    ChangeProfile();
+                    var missingsoftware = "";
+                    if (!File.Exists(ConfigRepository.Instance()["dlcm_EoFPath"])) missingsoftware += "\n" + ConfigRepository.Instance()["dlcm_EoFPath"] + " - " + ConfigRepository.Instance()["dlcm_EoFPath_www"]
+                            + " ... " + "(optionally) Used in Adding/Precision-time-aligning Lyrics.";
+                    if (!File.Exists(ConfigRepository.Instance()["dlcm_UltraStarCreator"])) missingsoftware += "\n" + ConfigRepository.Instance()["dlcm_UltraStarCreator"] + " - " + ConfigRepository.Instance()["dlcm_UltraStarCreator_www"]
+                            + " ... " + "(optionally) Used in creating lyrics out of nothing (raw lyrics).";
+                    if (!File.Exists(ConfigRepository.Instance()["dlcm_WinMerge"])) missingsoftware += "\n" + ConfigRepository.Instance()["dlcm_WinMerge"] + " - " + ConfigRepository.Instance()["dlcm_WinMerge_www"]
+                            + " ... " + "(optionally) Used in offering a XML file wysiwyg based comparing duplicates tracks.";
+                    if (!File.Exists(ConfigRepository.Instance()["dlcm_TCommander"])) missingsoftware += "\n" + ConfigRepository.Instance()["dlcm_TCommander"] + " - " + ConfigRepository.Instance()["dlcm_TCommander_www"]
+                            + " ... " + "(optionally) Needed when packing RETAIL files on PS3.";
+                    if (!File.Exists(ConfigRepository.Instance()["dlcm_PathForBRM"])) missingsoftware += "\n" + ConfigRepository.Instance()["dlcm_PathForBRM"] + " - " + ConfigRepository.Instance()["dlcm_PathForBRM_www"]
+                            + " ... " + "(optionally) Used to see the Rocksmith tab \"in-a-visual-way\" or to create phases (old tool not under DEV).";
+                    if (!File.Exists(ConfigRepository.Instance()["dlcm_TrueAncestor_PKG_Repacker"])) missingsoftware += "\n" + ConfigRepository.Instance()["dlcm_TrueAncestor_PKG_Repacker"] + " - " + ConfigRepository.Instance()["dlcm_TrueAncestor_PKG_Repacker_www"]
+                            + " ... " + "(optionally) Neede when packing for PS3 jailbroken with HAN.";
+                    if (!File.Exists(ConfigRepository.Instance()["dlcm_PS3xploit-resigner"])) missingsoftware += "\n" + ConfigRepository.Instance()["dlcm_PS3xploit-resigner"] + " - " + ConfigRepository.Instance()["dlcm_PS3xploit-resigner_www"]
+                            + " ... " + "(optionally) Needed when signing packages for PS3 jailbroken with HAN.";
+                    if (!File.Exists(ConfigRepository.Instance()["dlcm_MediaInfo_CLI"])) missingsoftware += "\n" + ConfigRepository.Instance()["dlcm_MediaInfo_CLI"] + " - " + ConfigRepository.Instance()["dlcm_MediaInfo_CLI_www"]
+                            + " ... " + "(optionally) Used (sometimes) in normalising the bitrate of Audio of the song to reduce file size.";
+                    if (!File.Exists(ConfigRepository.Instance()["dlcm_PKG_Linker"])) missingsoftware += "\n" + ConfigRepository.Instance()["dlcm_PKG_Linker"] + " - " + ConfigRepository.Instance()["dlcm_PKG_Linker_www"]
+                            + " ... " + "(optionally) Used by the server used to distribute songs for PS3 jailbroken with HAN.";
+                    if (!File.Exists(ConfigRepository.Instance()["dlcm_RockBand"])) missingsoftware += "\n" + ConfigRepository.Instance()["dlcm_RockBand"] + " - " + ConfigRepository.Instance()["dlcm_RockBand_www"]
+                            + " ... " + "(optionally) Used to decompress songs made for Rockband to quickly copy their vocal track to Rocksmith.";
+                    if (!File.Exists(ConfigRepository.Instance()["dlcm_MDBPlus"])) missingsoftware += "\n" + ConfigRepository.Instance()["dlcm_MDBPlus"] + " - " + ConfigRepository.Instance()["dlcm_MDBPlus_www"]
+                            + " ... " + "(optionally) Used to View/Edit ACCDB database when 32 bit Driver&Office is installed (old sometimes not working on ARM CPUs).";
+                    if (!File.Exists(ConfigRepository.Instance()["dlcm_RS2014-Mod-Installer"])) missingsoftware += "\n" + ConfigRepository.Instance()["dlcm_RS2014-Mod-Installer"] + " - " + ConfigRepository.Instance()["dlcm_RS2014-Mod-Installer_www"]
+                            + " ... " + "(optionally) Used to run a modded version of Rocksmith for tweaking interface or recording your screen,";
+                    if (!File.Exists(ConfigRepository.Instance()["dlcm_Database.NET"])) missingsoftware += "\n" + ConfigRepository.Instance()["dlcm_Database.NET"] + " - " + ConfigRepository.Instance()["dlcm_Database.NET_www"]
+                            + " ... " + "(optionally) General DB editor for .accdb (Microsoft Access) and .db (sqlite3) (only trial for migration inbetween DBs).";
+                    if (!File.Exists(ConfigRepository.Instance()["dlcm_DLCEnablerPC"])) missingsoftware += "\n" + ConfigRepository.Instance()["dlcm_DLCEnablerPC"] + " - " + ConfigRepository.Instance()["dlcm_DLCEnablerPC_www"]
+                            + " ... " + "(mandatory) Only way to play songs not bought from Ubioft/Rocksmith-store on Windows.";
+                    if (!File.Exists(ConfigRepository.Instance()["dlcm_DLCEnablerMAC"])) missingsoftware += "\n" + ConfigRepository.Instance()["dlcm_DLCEnablerMAC"] + " - " + ConfigRepository.Instance()["dlcm_DLCEnablerMAC_www"]
+                            + " ... " + "(mandatory) Only way to play songs not bought from Ubioft/Rocksmith-store on MAc.";
+                    if (!File.Exists(ConfigRepository.Instance()["dlcm_DLCBuilder"])) missingsoftware += "\n" + ConfigRepository.Instance()["dlcm_DLCBuilder"] + " - " + ConfigRepository.Instance()["dlcm_DLCBuilder_www"]
+                            + " ... " + "(optionally) useful for generating a 'notes'/EoF-file out a psarc (also used t6o make a song just like RocksmithToolkit but newer tech still under DEV).";
+                    //if (!File.Exists(ConfigRepository.Instance()["dlcm_DLCEnablerMAC"])) missingsoftware += "\n" + ConfigRepository.Instance()["dlcm_DLCEnablerMAC_www"]
+                    //        + " ... " + "";
+                    //if (!File.Exists(ConfigRepository.Instance()["dlcm_Audiokinetic"])) missingsoftware += "\n" + ConfigRepository.Instance()["dlcm_Audiokinetic_www"]
+                    //        + " ... " + "";
+                    if (missingsoftware != "")
                     {
-                        chbx_Configurations.SelectedIndex = k; break;
+                        ErrorWindow frm1 = new ErrorWindow(missingsoftware + "\n\n (Profile:" + ConfigRepository.Instance()["dlcm_Configurations"].ToString() + ")"
+                            , "", "Warning there is missing software used in some of the DCLManager features", false, false, true, "", "", "");
+                        frm1.ShowDialog();
+                        if (frm1.IgnoreSong) ;
+                        if (frm1.StopImport) {; }
+
+                        MessageBox.Show("Finished installing\n"+ missingsoftware,"Reminder:", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        missingsoftware = "";
+                        if (!File.Exists(ConfigRepository.Instance()["dlcm_EoFPath"])) ConfigRepository.Instance()["dlcm_EoFPath"] = "";
+                        if (!File.Exists(ConfigRepository.Instance()["dlcm_UltraStarCreator"])) ConfigRepository.Instance()["dlcm_UltraStarCreator_www"] = "";
+                        if (!File.Exists(ConfigRepository.Instance()["dlcm_WinMerge"])) ConfigRepository.Instance()["dlcm_WinMerge_www"] = "";
+                        if (!File.Exists(ConfigRepository.Instance()["dlcm_TCommander"])) ConfigRepository.Instance()["dlcm_TCommander_www"] = "";
+                        if (!File.Exists(ConfigRepository.Instance()["dlcm_PathForBRM"])) ConfigRepository.Instance()["dlcm_PathForBRM_www"] = "";
+                        if (!File.Exists(ConfigRepository.Instance()["dlcm_TrueAncestor_PKG_Repacker"])) ConfigRepository.Instance()["dlcm_TrueAncestor_PKG_Repacker_www"] = "";
+                        if (!File.Exists(ConfigRepository.Instance()["dlcm_PS3xploit-resigner"])) ConfigRepository.Instance()["dlcm_PS3xploit-resigner_www"] = "";
+                        if (!File.Exists(ConfigRepository.Instance()["dlcm_MediaInfo_CLI"])) ConfigRepository.Instance()["dlcm_MediaInfo_CLI_www"] = "";
+                        if (!File.Exists(ConfigRepository.Instance()["dlcm_PKG_Linker"])) ConfigRepository.Instance()["dlcm_PKG_Linker_www"] = "";
+                        if (!File.Exists(ConfigRepository.Instance()["dlcm_RockBand"])) ConfigRepository.Instance()["dlcm_RockBand_www"] = "";
+                        if (!File.Exists(ConfigRepository.Instance()["dlcm_DLCBuilder"])) ConfigRepository.Instance()["dlcm_DLCBuilder_www"] = "";
+                        if (!File.Exists(ConfigRepository.Instance()["dlcm_sqliteodbc"])) ConfigRepository.Instance()["dlcm_sqliteodbc_www"] = "";
+                        if (!File.Exists(ConfigRepository.Instance()["dlcm_RS2014-Mod-Installer"])) ConfigRepository.Instance()["dlcm_RS2014-Mod-Installer_www"] = "";
+                        if (!File.Exists(ConfigRepository.Instance()["dlcm_Database.NET"])) ConfigRepository.Instance()["dlcm_Database.NET_www"] = "";
+                        if (!File.Exists(ConfigRepository.Instance()["dlcm_MDBPlus"])) ConfigRepository.Instance()["dlcm_MDBPlus_www"] = "";
+                        if (!File.Exists(ConfigRepository.Instance()["dlcm_DLCEnablerPC"])) ConfigRepository.Instance()["dlcm_DLCEnablerPC_www"] = "";
+                        if (!File.Exists(ConfigRepository.Instance()["dlcm_DLCEnablerMAC"])) ConfigRepository.Instance()["dlcm_DLCEnablerMAC_www"] = "";
+                        //if (!File.Exists(ConfigRepository.Instance()["dlcm_Audiokinetic"])) ConfigRepository.Instance()["dlcm_Audiokinetic_www"] = "";
                     }
-                if (k < 0) ChangeProfile();
-            }
+                }
 
             //chbx_Configurations.se = ConfigRepository.Instance()["dlcm_Configurations"];
             txt_Title.Text = ConfigRepository.Instance()["dlcm_Title"];
@@ -410,413 +437,226 @@ namespace RocksmithToolkitGUI.DLCManager
             cbx_Activ_File_Name.Checked = (ConfigRepository.Instance()["dlcm_Activ_FileName"] == "Yes") ? true : false;
             cbx_Activ_Lyric_Info.Checked = (ConfigRepository.Instance()["dlcm_Activ_LyricInfo"] == "Yes") ? true : false;
             cbx_Groups.Text = ConfigRepository.Instance()["dlcm_Groups"];
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul0"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(0), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(0), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul1"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(1), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(1), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul2"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(2), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(2), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul3"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(3), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(3), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul4"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(4), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(4), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul5"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(5), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(5), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul6"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(6), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(6), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul7"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(7), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(7), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul8"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(8), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(8), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul9"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(8), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(9), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul10"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(10), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(10), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul11"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(11), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(11), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul12"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(12), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(12), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul13"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(13), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(13), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul14"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(14), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(14), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul15"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(15), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(15), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul16"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(16), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(16), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul17"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(17), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(17), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul18"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(18), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(18), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul19"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(19), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(19), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul20"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(20), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(20), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul21"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(21), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(21), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul22"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(22), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(22), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul23"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(23), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(23), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul24"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(24), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(24), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul25"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(25), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(25), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul26"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(26), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(26), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul27"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(27), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(27), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul28"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(28), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(28), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul29"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(29), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(29), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul30"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(30), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(3), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul30"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(31), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(31), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul32"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(32), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(32), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul33"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(33), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(33), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul34"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(34), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(34), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul35"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(35), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(35), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul36"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(36), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(36), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul37"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(37), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(37), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul38"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(38), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(38), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul39"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(39), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(39), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul40"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(40), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(40), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul41"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(41), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(41), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul42"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(42), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(42), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul43"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(43), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(43), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul44"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(44), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(44), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul45"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(45), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(45), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul46"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(46), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(46), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul47"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(47), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(47), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul48"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(48), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(48), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul49"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(49), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(49), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul50"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(50), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(50), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul51"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(51), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(51), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul52"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(52), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(52), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul53"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(53), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(53), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul54"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(54), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(54), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul55"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(55), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(55), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul56"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(56), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(56), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul57"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(57), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(57), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul58"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(58), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(58), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul59"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(59), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(59), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul60"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(60), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(60), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul61"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(61), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(61), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul62"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(62), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(62), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul63"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(63), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(63), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul64"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(64), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(64), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul65"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(65), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(65), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul66"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(66), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(66), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul67"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(67), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(67), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul68"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(68), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(68), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul69"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(69), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(69), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul70"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(70), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(70), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul71"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(71), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(71), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul72"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(72), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(72), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul73"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(73), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(73), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul74"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(74), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(74), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul75"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(75), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(75), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul76"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(76), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(76), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul77"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(77), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(77), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul78"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(78), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(78), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul79"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(79), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(79), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul80"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(80), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(80), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul81"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(81), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(81), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul82"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(82), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(82), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul83"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(83), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(83), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul84"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(84), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(84), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul85"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(85), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(85), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul86"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(86), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(86), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul87"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(87), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(87), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul88"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(88), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(88), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul89"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(89), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(89), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul90"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(90), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(90), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul91"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(91), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(91), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul92"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(92), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(92), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul93"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(93), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(93), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul94"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(94), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(94), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul95"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(95), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(95), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul96"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(96), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(96), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul97"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(97), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(97), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul98"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(98), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(98), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul99"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(99), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(99), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul100"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(100), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(100), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul101"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(101), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(101), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul102"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(102), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(102), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul103"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(103), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(103), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul104"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(104), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(104), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul105"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(105), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(105), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul106"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(106), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(106), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul107"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(107), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(107), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul108"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(108), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(108), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul109"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(109), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(109), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul110"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(110), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(110), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul111"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(111), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(111), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul112"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(112), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(112), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul113"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(113), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(113), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul114"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(114), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(114), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul115"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(115), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(115), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul116"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(116), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(116), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul117"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(117), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(117), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul118"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(118), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(118), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul119"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(119), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(119), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul120"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(120), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(120), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul121"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(121), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(121), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul122"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(122), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(122), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul123"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(123), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(123), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul124"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(124), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(124), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul125"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(125), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(125), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul126"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(126), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(126), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul127"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(127), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(127), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul128"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(128), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(128), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul129"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(129), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(129), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul130"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(130), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(130), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul131"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(131), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(131), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul132"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(132), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(132), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul133"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(133), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(133), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul134"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(134), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(134), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul135"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(135), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(135), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul136"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(136), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(136), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul137"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(137), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(137), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul138"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(138), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(138), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul139"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(139), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(139), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul140"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(140), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(140), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul141"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(141), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(141), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul142"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(142), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(142), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul143"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(143), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(143), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul144"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(144), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(144), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul145"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(145), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(145), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul146"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(146), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(146), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul147"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(147), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(147), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul148"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(148), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(148), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul149"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(149), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(149), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul150"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(150), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(150), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul151"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(151), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(151), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul152"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(152), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(152), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul153"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(153), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(153), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul154"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(154), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(154), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul155"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(155), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(155), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul156"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(156), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(156), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul157"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(157), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(157), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul158"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(158), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(158), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul159"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(159), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(159), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul160"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(160), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(160), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul161"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(161), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(161), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul162"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(162), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(162), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul163"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(163), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(163), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul164"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(164), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(164), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul165"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(165), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(165), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul166"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(166), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(166), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul167"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(167), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(167), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul168"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(168), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(168), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul169"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(169), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(169), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul170"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(170), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(170), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul171"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(171), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(171), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul172"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(172), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(172), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul173"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(173), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(173), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul174"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(174), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(174), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul175"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(175), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(175), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul176"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(176), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(176), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul177"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(177), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(177), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul178"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(178), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(178), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul179"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(179), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(179), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul180"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(180), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(180), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul181"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(181), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(181), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul182"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(182), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(182), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul183"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(183), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(183), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul184"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(184), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(184), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul185"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(185), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(185), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul186"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(186), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(186), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul187"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(187), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(187), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul188"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(188), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(188), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul189"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(189), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(189), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul190"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(190), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(190), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul191"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(191), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(191), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul192"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(192), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(192), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul193"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(193), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(193), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul194"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(194), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(194), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul195"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(195), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(195), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul196"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(196), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(196), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul197"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(197), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(197), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul198"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(198), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(198), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul199"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(199), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(199), CheckState.Unchecked);
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul200"] == "Yes") chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(200), CheckState.Checked);
-            //else chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(200), CheckState.Unchecked);
-
-            //a = ConfigRepository.Instance()["dlcm_DBFolder"];
             txt_DBFolder.Text = ConfigRepository.Instance()["dlcm_DBFolder"];//Make sure we change this at end as this will save
         }
 
+        private void ProfilesRefresh()
+        {
+            //DataSet dcs = new DataSet(); dcs = SelectFromDB("Arrangements", "SELECT DISTINCT CAST(CapoFret as numeric) as CDLC_ID FROM Arrangements WHERE CapoFret<>'' AND CapoFret<>'0'", txt_DBFolder.Text, cnb, cnc);
+
+            var profileexists = false;
+            //populate the Group  Dropdown
+            if (File.Exists(txt_DBFolder.Text))
+            {
+                //DataSet des = new DataSet(); des = SelectFromDB("Groups", "SELECT ID, Type, Comments, DisplayName, DisplayGroup, DisplayPosition, Date_Added, Groupz FROM Groups u WHERE Type='Filter' ORDER BY DisplayGroup, DisplayName ASC", txt_DBFolder.Text, cnb, cnc);
+
+                // Groups[] ds = new Groups[20000]; ds = SelectFromDB("Groups", "SELECT DISTINCT Profile_Name FROM Groups WHERE Type=\"Profile\";", txt_DBFolder.Text, cnb, cnc);
+                var cmd = "SELECT DISTINCT Profile_Name FROM Groups WHERE Type=\"Profile\";";
+                DataSet ds = new DataSet(); ds = SelectFromDB("Groups", cmd, txt_DBFolder.Text, cnb, cnc);
+
+                var norec = ds.Tables.Count == 0 ? 0 : ds.Tables[0].Rows.Count;
+                if (norec > 0)
+                {
+                    //remove items
+                    if (chbx_Configurations.Items.Count > 0)
+                    {
+                        chbx_Configurations.DataSource = null;
+                        for (int k = chbx_Configurations.Items.Count - 1; k >= 0; --k)
+                            if (!chbx_Configurations.Items[k].ToString().Contains("--"))
+                                chbx_Configurations.Items.RemoveAt(k);
+                    }
+                    //add items
+                    chbx_Configurations.DataSource = null;
+                    for (int j = 0; j < norec; j++)
+                    {
+                        // var tem = ds[j].Profile_Name; //ds.Tables[0].Rows[j].ItemArray[0].ToString();
+                        var tem = ds.Tables[0].Rows[j].ItemArray[0].ToString();
+                        chbx_Configurations.Items.Add(tem);
+                        if (tem == "Default") DefaultExist = true;
+                        if (ConfigRepository.Instance()["dlcm_Configurations"].ToString() == tem) profileexists = true;
+                    }
+                }
+            }
+            if ((chbx_Configurations.Text == "" || !profileexists) && DefaultExist)
+            {
+                MessageBox.Show("Since profile " + chbx_Configurations.Text + " is missing, defaulted to Default", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                timestamp = UpdateLog(timestamp, "Profile Default-ed (fyi " + ConfigRepository.Instance()["dlcm_Configurations"].ToString()
+                    + (profileexists ? "exists" : "doesn't exist") + ")", true, txt_TempPath.Text, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+
+                chbx_Configurations.Text = "Default";
+            }
+        }
+
+
+        public void ChangeProfile()
+        {
+
+            timestamp = UpdateLog(timestamp, "Starting Changing Profiles", true, txt_TempPath.Text, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+            //SaveOK = "Ok"; SaveSettings();//Save settings
+
+            pB_ReadDLCs.Maximum = 5; pB_ReadDLCs.Step = 1; pB_ReadDLCs.Value = 1;
+            if (chbx_Configurations.Text == "Select Profile") return;/*|| !ChanginProfile*/
+            else if (chbx_Configurations.Text == "" && DefaultExist)
+            {
+                MessageBox.Show("Since profile " + chbx_Configurations.Text + " is missing, defaulted to Default", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                timestamp = UpdateLog(timestamp, "Profile Default-ed", true, txt_TempPath.Text, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+
+                chbx_Configurations.Text = "Default";
+                return;
+            }
+            else if (chbx_Configurations.Text == "" && !DefaultExist)
+            {
+                MessageBox.Show("No User or Default Profile!", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            DataSet ds = new DataSet(); ds = SelectFromDB("Groups", "SELECT Groupz, Comments FROM Groups WHERE Profile_Name=\"" + chbx_Configurations.Text
+                    + "\" ORDER BY Comments ASC", txt_DBFolder.Text, cnb, cnc);
+            var norec = 0; var tst = "";
+            if (ds.Tables.Count > 0) norec = ds.Tables[0].Rows.Count;
+            if (norec == 0 & DefaultExist)
+            {
+                //ds = SelectFromDB("Groups", "SELECT Groups, Comments FROM Groups WHERE Profile_Name=\"Default\" ORDER BY Comments ASC", txt_DBFolder.Text, cnb, cnc);
+                //if (ds.Tables.Count > 0)
+                //{
+                //    norec = ds.Tables[0].Rows.Count;
+                //    if (norec > 0)
+                //    {
+                //     
+                //if (ConfigRepository.Instance()["dlcm_Dbg"] != "Yes") 
+                MessageBox.Show("Since profile " + chbx_Configurations.Text + " is missing, default-ed to Default", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                timestamp = UpdateLog(timestamp, "Profile Default-ed", true, txt_TempPath.Text, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+
+                chbx_Configurations.Text = "Default";
+                //    }if () 
+                //}
+            }
+            if (norec > 0)
+            {
+                //ConfigRepository.Instance()["dlcm_Groups"] = "";
+                pB_ReadDLCs.Increment(1); var newdb = "";
+                for (int j = 0; j < norec; j++)
+                    if (ds.Tables[0].Rows[j].ItemArray[1].ToString() == "dlcm_DBFolder") newdb = ds.Tables[0].Rows[j].ItemArray[0].ToString();
+                if (ConfigRepository.Instance()["dlcm_DBFolder"].ToLower() != newdb.ToLower() && File.Exists(newdb))
+                {
+                    var old = ConfigRepository.Instance()["dlcm_DBFolder"].ToLower();
+                    for (int j = 0; j < norec; j++)
+                        if (!(ds.Tables[0].Rows[j].ItemArray[1].ToString() == "dlcm_DBFolder"
+                            && ConfigRepository.Instance()[ds.Tables[0].Rows[j].ItemArray[1].ToString()].Contains(ConfigRepository.Instance()["dlcm_chosendb"]))
+                            ||
+                            !(ConfigRepository.Instance()["dlcm_AdditionalManipul114"] == "Yes"
+                            && ConfigRepository.Instance()[ds.Tables[0].Rows[j].ItemArray[1].ToString()].Contains(".db")
+                            ))
+                            ConfigRepository.Instance()[ds.Tables[0].Rows[j].ItemArray[1].ToString()] = ds.Tables[0].Rows[j].ItemArray[0].ToString();
+                    //cnb.Close();
+                    //cnb.ConnectionString = "Provider=Microsoft." + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Persist Security Info=False;Mode= Share Deny None;Data Source=" + newdb;
+                    if ((newdb.Contains(ConfigRepository.Instance()["dlcm_chosendb"]))
+                            ||
+                            (ConfigRepository.Instance()["dlcm_AdditionalManipul114"] == "Yes"
+                            && newdb.Contains(".db")
+                            ))
+                        txt_DBFolder.Text = newdb;
+                    //ConfigRepository.Instance()["dlcm_Configurations"] = "Default";
+                    var t = DBPathChange(txt_DBFolder.Text, chbx_Configurations.Text);
+                    if (!t) return;
+
+                    var sel = "SELECT Groupz, Comments FROM Groups WHERE Profile_Name=\"" + chbx_Configurations.Text + "\" ORDER BY Comments ASC";
+                    DataSet drs = new DataSet(); drs = SelectFromDB("Groups", sel, txt_DBFolder.Text, cnb, cnc);
+                    var norecs = 0;
+                    if (drs.Tables.Count > 0) norecs = drs.Tables[0].Rows.Count;
+                    if (norecs == 0)
+                    {
+                        AddNewProfile(true, c("dlcm_Configurations")); tst = chbx_Configurations.Text + " Profile inserted..." + old + "Changed DB to get New Profile..." + newdb;
+                    }
+                    else
+                    {
+                        //cnb/cnc functions prb dont works as var populated only in uitiltie 
+                        DialogResult result1 = MessageBox.Show("Do you want to overrite existing Profile (" + c("dlcm_Configurations")//ConfigRepository.Instance()["dlcm_DBFolder"].ToLower() 
+                            + ") in the just changed DB (" + cnb.DataSource + ") and its (same name) Profile (" + chbx_Configurations.Text + ")?", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        if (result1 == DialogResult.Yes)
+                        {
+                            SaveOK = "OK"; SaveSettings(); SaveOK = ""; tst = chbx_Configurations.Text + "Profile overwitten..." + old + "Changed DB to get New Profile..." + newdb;
+                        }
+                    }
+
+                    chbx_Configurations.Text = ConfigRepository.Instance()["dlcm_Configurations"];
+                    //ds = SelectFromDB("Groups", "SELECT Groups, Comments FROM Groups WHERE Profile_Name=\"" + chbx_Configurations.Text + "\" ORDER BY Comments ASC", txt_DBFolder.Text, cnb, cnc);
+                    //norec = 0;
+                    //if (ds.Tables.Count > 0) norec = ds.Tables[0].Rows.Count;
+                    //tst = "eChanged DB to get New Profile...";
+                    timestamp = UpdateLog(timestamp, tst, true, ConfigRepository.Instance()["dlcm_TempPath"]
+                        , "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+                    //timestamp = UpdateLog(timestamp, "REturing.. to import", true, txt_TempPath.Text, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+                }
+                else
+                    for (int j = 0; j < norec; j++)
+                        //{
+                        if (ds.Tables[0].Rows[j].ItemArray[1].ToString() == "dlcm_Configurations")
+                            //{
+                            ConfigRepository.Instance()["dlcm_Configurations"] = chbx_Configurations.Text;
+                        //    tst = chbx_Configurations.Text;
+                        //}
+                        else
+                            ConfigRepository.Instance()[ds.Tables[0].Rows[j].ItemArray[1].ToString()] = ds.Tables[0].Rows[j].ItemArray[0].ToString();
+                //}
+
+                pB_ReadDLCs.Increment(1);
+            }
+            else
+            {
+                //MessageBox.Show("No profile name found for " + chbx_Configurations.Text, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                chbx_Configurations.Text = "";
+            }
+
+            //}
+            pB_ReadDLCs.Increment(1);
+            if (!File.Exists(txt_DBFolder.Text)) chbx_DefaultDB.Checked = true;
+            else if (!(txt_DBFolder.Text == MyAppWD + "\\..\\AccessDB.accdb") || !(txt_DBFolder.Text == MyAppWD + "\\..\\SQLLiteDB.db")) chbx_DefaultDB.Checked = false;
+            //SaveOK = "";
+
+            tst = "Loading Selected Profile..."; timestamp = UpdateLog(timestamp, tst, true, ConfigRepository.Instance()["dlcm_TempPath"], "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+            //save read profile to Config
+            SaveOK = "OK";
+            //DLCManagerOpen();
+            SaveOK = "";
+            SetImportNo();
+            pB_ReadDLCs.Increment(1);
+
+            //Setting autoamting some debug options if profile is named debug/as per config
+            if (chbx_Configurations.Text == ConfigRepository.Instance()["dlcm_DebugProfile"])
+            {
+                var txt = "15 move to old Unchecked\n" +
+                        "49 ftp Unchecked\n" +
+                        "24 apply standard Unchecked\n" +
+                        "77 dont open main db Unchecked\n" +
+                        "75 copy to old checked\n" +
+                        "34 audio Unchecked\n" +
+                        "55 audio Unchecked\n" +
+                        "69 audio Unchecked\n" +
+                        "78 audio Unchecked\n" +
+                "chbx_CleanTemp.Checked = true;\n" +
+                        "chbx_DebugB.Checked = true;\n";
+                MessageBox.Show("Cause Debug Profile was selected (same Profile as option dlcm_DebugProfile)" + txt
+                   , MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(15), CheckState.Unchecked);//move to old
+                chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(49), CheckState.Unchecked);//ftp
+                chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(24), CheckState.Unchecked);//apply standard
+                chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(77), CheckState.Unchecked);//dont open main db
+                chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(75), CheckState.Checked);//copy to old
+                chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(34), CheckState.Unchecked);//audio
+                chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(55), CheckState.Unchecked);//audio
+                chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(69), CheckState.Unchecked);//audio
+                chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(78), CheckState.Unchecked);//audio
+                                                                                                            //chbx_CleanDB.Checked = true;
+                chbx_CleanTemp.Checked = true;
+                chbx_DebugB.Checked = true;
+            }
+            ChanginProfile = false;
+            //SaveOK = "OK"; SaveSettings();
+            tst = "End Selected Profile..."; timestamp = UpdateLog(timestamp, tst, true, ConfigRepository.Instance()["dlcm_TempPath"], "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+
+        }
 
         public const long BUFFER_SIZE = 4096;
 
@@ -1162,6 +1002,7 @@ namespace RocksmithToolkitGUI.DLCManager
             timestamp = UpdateLog(timestamp, "Ending SaveSetting", true, txt_TempPath.Text, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
         }
 
+
         public void SaveSettings()
         {
             if (SaveOK == "") return;
@@ -1199,117 +1040,8 @@ namespace RocksmithToolkitGUI.DLCManager
             ConfigRepository.Instance()["dlcm_FilterCompound"] = chbx_FilterCompound.Checked ? "Yes" : "No";
             //ConfigRepository.Instance()["dlcm_Grouping"] = rbtn_Population_All.Checked ? "All" : (rbtn_Population_Groups.Checked ? "Groups" : (rbtn_Population_Selected.Checked ? "Selected" : (rbtn_Population_PackNO.Checked ? "Split" : "")));
 
-            for (int j = 0; j < chbx_Additional_Manipulations.Items.Count; j++)
-            {
-                string orderno = chbx_Additional_Manipulations.Items[j].ToString();
-                if (orderno.IndexOf("{") <= 0 || orderno.IndexOf("}") <= 0) continue;
-                else orderno = orderno.Substring(orderno.IndexOf("{") + 1, orderno.IndexOf("}") - orderno.IndexOf("{") - 1);
-                //if (orderno == "89")
-                //    ;
-                ConfigRepository.Instance()["dlcm_AdditionalManipul" + orderno] = chbx_Additional_Manipulations.GetItemChecked(j) ? "Yes" : "No";/*GetParam(j)*/
-            }
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul0"] = GetParam(0) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul1"] = GetParam(1) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul2"] = GetParam(2) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul3"] = GetParam(3) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul4"] = GetParam(4) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul5"] = GetParam(5) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul6"] = GetParam(6) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul7"] = GetParam(7, chbx_Additional_Manipulations) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul8"] = GetParam(8) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul9"] = GetParam(9) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul10"] = GetParam(10) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul11"] = GetParam(11, chbx_Additional_Manipulations) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul12"] = GetParam(12) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul13"] = GetParam(13, chbx_Additional_Manipulations) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul14"] = GetParam(14, chbx_Additional_Manipulations) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul15"] = GetParam(15, chbx_Additional_Manipulations) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul16"] = GetParam(16, chbx_Additional_Manipulations) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul17"] = GetParam(17) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul18"] = GetParam(18) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul19"] = GetParam(19, chbx_Additional_Manipulations) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul20"] = GetParam(20, chbx_Additional_Manipulations) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul21"] = GetParam(21) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul22"] = GetParam(22, chbx_Additional_Manipulations) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul23"] = GetParam(23) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul24"] = GetParam(24, chbx_Additional_Manipulations) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul25"] = GetParam(25) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul26"] = GetParam(26) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul27"] = GetParam(27) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul28"] = GetParam(28) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul29"] = GetParam(29, chbx_Additional_Manipulations) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul30"] = GetParam(30, chbx_Additional_Manipulations) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul31"] = GetParam(31) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul32"] = GetParam(32, chbx_Additional_Manipulations) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul33"] = GetParam(33) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul34"] = GetParam(34, chbx_Additional_Manipulations) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul35"] = GetParam(35, chbx_Additional_Manipulations) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul36"] = GetParam(36, chbx_Additional_Manipulations) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul37"] = GetParam(37, chbx_Additional_Manipulations) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul38"] = GetParam(38, chbx_Additional_Manipulations) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul39"] = GetParam(39, chbx_Additional_Manipulations) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul40"] = GetParam(40, chbx_Additional_Manipulations) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul41"] = GetParam(41, chbx_Additional_Manipulations) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul42"] = GetParam(42, chbx_Additional_Manipulations) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul43"] = GetParam(43, chbx_Additional_Manipulations) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul44"] = GetParam(44) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul45"] = GetParam(45) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul46"] = GetParam(46, chbx_Additional_Manipulations) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul47"] = GetParam(47, chbx_Additional_Manipulations) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul48"] = GetParam(48) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul49"] = GetParam(49) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul50"] = GetParam(50, chbx_Additional_Manipulations) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul51"] = GetParam(51) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul52"] = GetParam(52) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul53"] = GetParam(53) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul54"] = GetParam(54) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul55"] = GetParam(55, chbx_Additional_Manipulations) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul56"] = GetParam(56, chbx_Additional_Manipulations) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul57"] = GetParam(57, chbx_Additional_Manipulations) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul58"] = GetParam(58, chbx_Additional_Manipulations) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul59"] = GetParam(59, chbx_Additional_Manipulations) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul60"] = GetParam(60) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul61"] = GetParam(61) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul62"] = GetParam(62) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul63"] = GetParam(63) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul64"] = GetParam(64) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul65"] = GetParam(65) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul66"] = GetParam(66, chbx_Additional_Manipulations) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul67"] = GetParam(67) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul68"] = GetParam(68, chbx_Additional_Manipulations) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul69"] = GetParam(69, chbx_Additional_Manipulations) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul70"] = GetParam(70) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul71"] = GetParam(71) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul72"] = GetParam(72, chbx_Additional_Manipulations) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul73"] = GetParam(73) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul74"] = GetParam(74) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul75"] = GetParam(75, chbx_Additional_Manipulations) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul76"] = GetParam(76) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul77"] = GetParam(77, chbx_Additional_Manipulations) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul78"] = GetParam(78, chbx_Additional_Manipulations) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul79"] = GetParam(79, chbx_Additional_Manipulations) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul80"] = GetParam(80) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul81"] = GetParam(81) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul82"] = GetParam(82, chbx_Additional_Manipulations) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul83"] = GetParam(83, chbx_Additional_Manipulations) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul84"] = GetParam(84) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul85"] = GetParam(85, chbx_Additional_Manipulations) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul86"] = GetParam(86) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul87"] = GetParam(87) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul88"] = GetParam(88, chbx_Additional_Manipulations) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul89"] = GetParam(89) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul90"] = GetParam(90) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul91"] = GetParam(91) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul92"] = GetParam(92) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul93"] = GetParam(93) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul94"] = GetParam(94) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul95"] = GetParam(95) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul96"] = GetParam(96) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul97"] = GetParam(97) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul98"] = GetParam(98) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul99"] = GetParam(99) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul100"] = GetParam(100) ? "Yes" : "No";
-            //ConfigRepository.Instance()["dlcm_AdditionalManipul101"] = GetParam(101) ? "Yes" : "No";
+            saveOptions(chbx_Additional_Manipulations);
+
             if (chbx_Configurations.SelectedIndex >= 0)
                 //{
                 SaveProfileToDB(oldprof, cnb, cnc);
@@ -1912,6 +1644,12 @@ namespace RocksmithToolkitGUI.DLCManager
             var log_Path = c("dlcm_LogPath") == "" ? c("dlcm_TempPath") + "\\0_log" : c("dlcm_LogPath");
             string pathDLC = txt_RocksmithDLCPath.Text;
 
+            var slct = "SELECT Type, Comments, DisplayName, DisplayGroup, DisplayPosition, Date_Added, Groupz FROM Groups u " +
+"WHERE Type=\"Profile\" AND Profile_Name=\"" + c("dlcm_Configurations") + "\" and Comments like \"%dlcm_AdditionalManipul%\" AND DisplayGroup='Import' ORDER BY DisplayGroup ASC";
+            Selection frm1 = new Selection(slct, "Stop", "Continue Importing");
+            frm1.ShowDialog();
+            if (frm1.StopImport) return;
+
             var DB_Path = txt_DBFolder.Text;
             var errr = true;
             SaveOK = "OK"; SaveSettings(); SaveOK = "";
@@ -2091,7 +1829,7 @@ namespace RocksmithToolkitGUI.DLCManager
             if (noOfRecx > 0) ImportPackNo = (gh + 1).ToString();
             if (ImportPackNo == "" || ImportPackNo == "0") ImportPackNo = "1";
             var invalid = "No";
-            string[] filez = new string[30000];
+            string[] filez = new string[c("dlcm_maxsongsinDLCM").ToInt32()];
             var viles = "";
             if (!GetParam(38, chbx_Additional_Manipulations)) //39. Use only unpacked songs already in the 0/0_Import folder folder
             {
@@ -2184,7 +1922,8 @@ namespace RocksmithToolkitGUI.DLCManager
                 cmds.Parameters.Add("?", OleDbType.VarWChar, 255);
                 cmds.Parameters.Add("?", OleDbType.VarWChar, 255);
 
-                if (cmds.Connection.State.ToString() == "Closed") cmds.Connection.Open();
+                if (cmds.Connection.State.ToString() == "Closed")
+                    cmds.Connection.Open();
                 cmds.Prepare();
                 OleDbTransaction tran = cnb.BeginTransaction();
                 cmds.Transaction = tran;
@@ -2446,7 +2185,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 dupliPrcs = 0;
                 if (netstatus == "NOK" || netstatus == "") netstatus = CheckIfConnectedToInternet().Result.ToString();
 
-                for (j = 0; j < 30000; j++) { dupliSongs[0, j] = "0"; dupliSongs[1, j] = "0"; }
+                for (j = 0; j < c("dlcm_maxsongsinDLCM").ToInt32(); j++) { dupliSongs[0, j] = "0"; dupliSongs[1, j] = "0"; }
                 timestamp = UpdateLog(timestamp, "ending setting dupli array to 0.", true, Temp_Path_Import, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
                 var stats = "0";
                 for (j = 0; j <= 1; j++)
@@ -2502,10 +2241,10 @@ namespace RocksmithToolkitGUI.DLCManager
                                     wwisePath = Environment.GetEnvironmentVariable("WWISEROOT");
                                 if (wwisePath == "")
                                 {
-                                    ErrorWindow frm1 = new ErrorWindow("In order to use decompress Songs for previewig purposes, please Install Wwise Launcher then Wwise v" + wwisePath + " with Authoring binaries : " + Environment.NewLine + "A restart is required for the Conversion to WEM, process to be succesfull, else the errors can be captured through the Missing Files Query" + Environment.NewLine, "https://www.audiokinetic.com/download/", "Error at WEM Creation", true, true, true, "", "", "");
-                                    frm1.ShowDialog();
-                                    if (frm1.IgnoreSong) break;
-                                    if (frm1.StopImport) { j = 10; i = 9999; break; }
+                                    ErrorWindow frm2 = new ErrorWindow("In order to use decompress Songs for previewig purposes, please Install Wwise Launcher then Wwise v" + wwisePath + " with Authoring binaries : " + Environment.NewLine + "A restart is required for the Conversion to WEM, process to be succesfull, else the errors can be captured through the Missing Files Query" + Environment.NewLine, "https://www.audiokinetic.com/download/", "Error at WEM Creation", true, true, true, "", "", "");
+                                    frm2.ShowDialog();
+                                    if (frm2.IgnoreSong) break;
+                                    if (frm2.StopImport) { j = 10; i = 9999; break; }
                                 }
                                 try
                                 {
@@ -2660,7 +2399,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                     catch (Exception ex)
                                     {
                                         var tsst = "Error ..." + ex; timestamp = UpdateLog(timestamp, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
-                                        ErrorWindow frm1 = new ErrorWindow("Error at file opening for Pack_AuditTrail", "", "", false, false, true, "", "", "");
+                                        ErrorWindow frm3 = new ErrorWindow("Error at file opening for Pack_AuditTrail", "", "", false, false, true, "", "", "");
                                     }
 
                                     insertcmdA = "CopyPath, PackPath, FileName, PackDate, FileHash, FileSize, CDLC_ID, DLC_Name, Platform, Official, Reason, Pack";
@@ -3241,7 +2980,12 @@ namespace RocksmithToolkitGUI.DLCManager
                 //    + IsRemastered + ";" + InTheWorks + ";" + IsKaraoke + ";" + IsDemo + ";" + HasFeaturing + ";" + IsRemix + ";" + IsCover + ";" + SongDisplayName + ";" + Album + ";" + IsMedley + ";" + IsMultiStrings;
                 Is_MultiTrack = ag[0]; MultiTrack_Version = ag[1]; IsLive = ag[2]; LiveDetails = ag[3]; IsAcoustic = ag[4]; IsSingle = ag[5]; IsSoundtrack = ag[6]; IsInstrumental = ag[7]; IsEP = ag[8];
                 IsUncensored = ag[9]; IsFullAlbum = ag[10]; IsRemastered = ag[11]; InTheWorks = ag[12]; IsKaraoke = ag[13]; IsDemo = ag[14]; HasFeaturing = ag[15]; IsRemix = ag[16]; IsCover = ag[17];
-                info.SongInfo.SongDisplayName = ag[18]; info.SongInfo.Album = ag[19]; IsMedley = ag[20]; IsMultiStrings = ag[21];
+
+                if (info.SongInfo.SongDisplayName != ag[18] || info.SongInfo.Album != ag[19])
+                { dupliSongs[0, i] = "1"; duplit = true; dupli_assesment_reason = "not a duplicate but with Title/AlbumName cleansed, and to be scheduled for assesment end of Import"; }
+                info.SongInfo.SongDisplayName = ag[18]; info.SongInfo.Album = ag[19];
+
+                IsMedley = ag[20]; IsMultiStrings = ag[21]; IsDeluxe = ag[22]; IsGreatestHits = ag[23]; IsMidi = ag[24]; IsGameSoundtrack = ag[25]; IsTVTheme = ag[26]; IsAmateurCover = ag[27];
                 //Remove Live/Others Info from Title
                 if (ConfigRepository.Instance()["dlcm_AdditionalManipul104"] == "Yes") info.SongInfo.SongDisplayName = gom.TrimEnd().Replace("()", "").TrimStart(); //(Regex.Replace(noMFN, "( audio)", "", RegexOptions.IgnoreCase)).TrimEnd().TrimStart().Replace(" ()", "");
                 else
@@ -3328,6 +3072,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 if (AlbumArtPath != "" && AlbumArtPath != null)
                 {
                     art_hash = GetHash(AlbumArtPath);
+                    tst = "trying to convert DDS2PNG"; timestamp = UpdateLog(timestamp, tst, true, Temp_Path_Import, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
                     //convert to png
                     ExternalApps.Dds2Png(AlbumArtPath);
                 }
@@ -3454,7 +3199,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     {
                         SongDisplayName = "";
                         Namee = "";
-                        Description = "";
+                        // Description = "";
                         if (b >= norows) break;
                         folder_name = file.Folder_Name;
                         filename = original_FileName;// file.Current_FileName;
@@ -3518,7 +3263,8 @@ namespace RocksmithToolkitGUI.DLCManager
                            Is_MultiTrack, MultiTrack_Version, ds.Tables[0].Rows[i].ItemArray[7].ToString(), duplicstat, Platformm, IsLive,
                            LiveDetails, IsAcoustic, HasOrig, dupli_reason, sel, Duplic, Rebuild, versio, norowsduo, hash, j,
                            SongLenght, AllOther, cxmlhlist, snghlist, filehash, IsUncensored, IsEP
-                           , IsSingle, IsSoundtrack, IsFullAlbum, IsRemastered, IsInstrumental, InTheWorks, IsKaraoke, IsDemo, HasFeaturing, IsRemix, IsCover, IsMedley, IsMultiStrings, Has_Capo);  //else if (dupli_assesment == "")                      
+                           , IsSingle, IsSoundtrack, IsFullAlbum, IsRemastered, IsInstrumental, InTheWorks, IsKaraoke, IsDemo
+                           , HasFeaturing, IsRemix, IsCover, IsMedley, IsMultiStrings, Has_Capo);  //else if (dupli_assesment == "")                      
 
                         string[] retunc = dupli_assesment.Split(';');//Get Duplication assessment and its reason
                         dupli_assesment = retunc[0];
@@ -3660,7 +3406,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         }
                     }
 
-                    //Move file Original file to duplicates if Main DB record is being overitten
+                    //Move file Original file to duplicates if Main DB record is being overwritten
                     if (dupli_assesment == "Update" && GetParam(29, chbx_Additional_Manipulations))//30. When NOT importing a duplicate Move it to _duplicate
                     {
                         DataSet dzr = new DataSet(); dzr = SelectFromDB("Main", "SELECT Original_FileName, Available_Old FROM Main WHERE ID=" + IDD + ";", txt_DBFolder.Text, cnb, cnc);
@@ -3763,7 +3509,8 @@ namespace RocksmithToolkitGUI.DLCManager
                       , Duplic, ybSAddress, ybRAddress, IsSingle, IsEP, IsInstrumental, IsSoundtrack, ybAddress, oldAlbumN
                       , audio_changed, oldArtistN, oldSongN, oldYearN, IsUncensored, datemax, IsFullAlbum, PitchShiftableEsOrDd
                       , IsRemastered, InTheWorks, dupli_assesment, j, IsCover, IsDemo, IsRemix, HasFeaturing, IsKaraoke, txt_BasedOnYBText, txt_BasedOnCFText, txt_TabLinksText, txt_toDosText, txt_ToneDetailsText, txt_DescriptionText
-                      , txt_PackageDate, txt_UpdateDate, txt_BasedOn_GP, Has_Capo, Has_Showlights, Has_JVocals, IsMedley, IsMultiStrings, cnc);
+                      , txt_PackageDate, txt_UpdateDate, txt_BasedOn_GP, Has_Capo, Has_Showlights, Has_JVocals, IsMedley, IsMultiStrings, IsDeluxe, IsGreatestHits
+                      , IsMidi, IsGameSoundtrack, IsTVTheme, IsAmateurCover, cnc);
                     //if (connection != null) connection.Close();//some issues with saving and reading such records
                     if (dupli_assesment == "Insert" || dupli_assesment == "Update") //Common set of action for all
                     {
@@ -3850,13 +3597,18 @@ namespace RocksmithToolkitGUI.DLCManager
                             pos = ms.ToString().LastIndexOf("\\") + 1;
                             if (AlbumArtPath == info.AlbumArtPath)
                                 if (GetParam(36, chbx_Additional_Manipulations)) //37. Keep the Uncompressed Songs superorganized                                
+                                {
                                     cmd += " AlbumArtPath=\"" + (info.AlbumArtPath == "" ? "" : norm_path) + "\\Toolkit\\" + ms.Substring(pos) + "\"";
+                                    cmd += ", Album_ArtPathOrig=\"" + (info.AlbumArtPath == "" ? "" : norm_path) + "\\Toolkit\\" + ms.Substring(pos) + "\"";
+                                }
                                 else
+                                {
                                     cmd += " AlbumArtPath=\"" + (info.AlbumArtPath == "" ? "" : norm_path) + (platformTXT == "XBox360" ? "\\Root" : "") + "\\gfxassets\\album_art\\" + ms.Substring(pos) + "\"";
+                                    cmd += ", Album_ArtPathOrig=\"" + (info.AlbumArtPath == "" ? "" : norm_path) + (platformTXT == "XBox360" ? "\\Root" : "") + "\\gfxassets\\album_art\\" + ms.Substring(pos) + "\"";
+                                }
                             else //Override Album Art during the Duplication assements process
-                            {
-                                cmd += " AlbumArt_Hash=\"" + art_hash + "\", AlbumArtPath=\"" + AlbumArtPath + "\"";
-                            }
+                                cmd += " AlbumArt_Hash=\"" + art_hash + "\", AlbumArtPath=\"" + AlbumArtPath + "\", Album_ArtPathOrig =\"" + AlbumArtPath + "\"";
+
 
                             //If Cover was applied to the original then update its album art
                             if (dupliID != "")
@@ -4139,7 +3891,14 @@ namespace RocksmithToolkitGUI.DLCManager
         public void Btn_RePack_Click(object sender, EventArgs e)
         {
             var old = ConfigRepository.Instance()["dlcm_MuliThreading"];
+            var metadatadisplayedonce = ConfigRepository.Instance()["dlcm_AdditionalManipul115"];
             timestamp = UpdateLog(timestamp, "\n----------------------------------------------\nStarting Packing " + " songs.", true, txt_TempPath.Text, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+
+            var slct = "SELECT Type, Comments, DisplayName, DisplayGroup, DisplayPosition, Date_Added, Groupz FROM Groups u " +
+"WHERE Type=\"Profile\" AND Profile_Name=\"" + c("dlcm_Configurations") + "\" and Comments like \"%dlcm_AdditionalManipul%\" AND DisplayGroup='Pack' ORDER BY DisplayGroup ASC";
+            Selection frm1 = new Selection(slct, "Stop", "Continue Packing");
+            frm1.ShowDialog();
+            if (frm1.StopImport) return;
 
             SaveOK = "OK"; SaveSettings(); SaveOK = "";
             var atleastone = false;
@@ -4276,6 +4035,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         args += (file.Keep_DD == "Yes" ? true : false) + ";" + file.Is_Original + ";" + file.ID + ";";//chbx_KeepDD.Checked, chbx_Original.Tex, dlc_id
                         args += cmd + (cmd.IndexOf(";") > 0 ? "" : ";") + txt_RocksmithDLCPath.Text + ";" + file.DLC_Name + ";"; //SearchCmd + ";" + RocksmithDLCPath, DataViewGrid.Rows[DataViewGrid.SelectedCells[0].RowIndex].Cells["DLC_Name"].Value
                         args += ConfigRepository.Instance()["dlcm_AdditionalManipul76"] + ";" + c("dlcm_Split4Pack") + ";" + "DLCManager" + ";" + ordno + i + ";" + spotystatus + ";" + ybstatus + ";" + ftpstatus + ";" + "No"; //i in case of multi
+                        string[] argz = (args).ToString().Split(';');//4debugpurposes
                         ConfigRepository.Instance()["dlcm_GlobalTempVariable"] = "";
                         bwRGenerate.RunWorkerAsync(args);
                         do
@@ -4296,7 +4056,7 @@ namespace RocksmithToolkitGUI.DLCManager
             btn_RePack.Text = "RePack";
             ConfigRepository.Instance()["dlcm_MuliThreading"] = old;
             GeneratePackingSummary(pack, ConfigRepository.Instance()["dlcm_Global2TempVariable"], brkn, cnb, i, norows, cnc);
-
+            ConfigRepository.Instance()["dlcm_AdditionalManipul115"] = metadatadisplayedonce;
             timestamp = UpdateLog(timestamp, "Ended Packing", true, txt_TempPath.Text, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
 
         }
@@ -6330,45 +6090,6 @@ namespace RocksmithToolkitGUI.DLCManager
             SaveSettings();//Save settings
         }
 
-        private void ProfilesRefresh()
-        {
-            //DataSet dcs = new DataSet(); dcs = SelectFromDB("Arrangements", "SELECT DISTINCT CAST(CapoFret as numeric) as CDLC_ID FROM Arrangements WHERE CapoFret<>'' AND CapoFret<>'0'", txt_DBFolder.Text, cnb, cnc);
-
-            //populate the Group  Dropdown
-            if (File.Exists(txt_DBFolder.Text))
-            {
-                //DataSet des = new DataSet(); des = SelectFromDB("Groups", "SELECT ID, Type, Comments, DisplayName, DisplayGroup, DisplayPosition, Date_Added, Groupz FROM Groups u WHERE Type='Filter' ORDER BY DisplayGroup, DisplayName ASC", txt_DBFolder.Text, cnb, cnc);
-
-                // Groups[] ds = new Groups[20000]; ds = SelectFromDB("Groups", "SELECT DISTINCT Profile_Name FROM Groups WHERE Type=\"Profile\";", txt_DBFolder.Text, cnb, cnc);
-                var cmd = "SELECT DISTINCT Profile_Name FROM Groups WHERE Type=\"Profile\";";
-                DataSet ds = new DataSet(); ds = SelectFromDB("Groups", cmd, txt_DBFolder.Text, cnb, cnc);
-
-                var norec = ds.Tables.Count == 0 ? 0 : ds.Tables[0].Rows.Count;
-                if (norec > 0)
-                {
-                    //remove items
-                    if (chbx_Configurations.Items.Count > 0)
-                    {
-                        chbx_Configurations.DataSource = null;
-                        for (int k = chbx_Configurations.Items.Count - 1; k >= 0; --k)
-                            if (!chbx_Configurations.Items[k].ToString().Contains("--"))
-                                chbx_Configurations.Items.RemoveAt(k);
-                    }
-                    //add items
-                    chbx_Configurations.DataSource = null;
-                    for (int j = 0; j < norec; j++)
-                    {
-                        // var tem = ds[j].Profile_Name; //ds.Tables[0].Rows[j].ItemArray[0].ToString();
-                        var tem = ds.Tables[0].Rows[j].ItemArray[0].ToString();
-                        chbx_Configurations.Items.Add(tem);
-                        if (tem == "Default") DefaultExist = true;
-                    }
-                }
-            }
-            if (chbx_Configurations.Text == "" && DefaultExist)
-                chbx_Configurations.Text = "Default";
-        }
-
         public static class Prompt
         {
             public static string ShowDialog(string text, string caption)
@@ -6706,7 +6427,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         if (result1 == DialogResult.No) ;
                         else
                         {
-                            cnb.Close();
+                            cnb.Close(); //Prb doesnt as cnb exsts only in utlities fucntions
                             //DeleteFile(dest + "old", true);
                             File.Move(dest, dest + System.DateTime.Now.ToString().Replace(":", "").Replace("/", "") + "old");
                             File.Copy(fielPath, dest, false);
@@ -7238,9 +6959,58 @@ namespace RocksmithToolkitGUI.DLCManager
                     || (IsFullAlbum == "Yes" && filed.Is_FullAlbum != "Yes") || (IsFullAlbum == "Yes" && filed.Is_FullAlbum == "Yes"))
                     /*66.Duplicate manag.ignores Uncensored Songs */
                     || (GetParam(66, chbx_Additional_Manipulations) && ((filed.Is_Uncensored == "Yes" && IsUncensored != "Yes")
-                    || (IsUncensored == "Yes" && filed.Is_Uncensored != "Yes") || (IsUncensored == "Yes" && filed.Is_Uncensored == "Yes"))))))))))))
+                    || (IsUncensored == "Yes" && filed.Is_Uncensored != "Yes") || (IsUncensored == "Yes" && filed.Is_Uncensored == "Yes")
+                    /*66.Duplicate manag.ignores Karaoke Songs */
+                    || (GetParam(66, chbx_Additional_Manipulations) && ((filed.Is_Karaoke == "Yes" && IsKaraoke != "Yes")
+                    || (IsKaraoke == "Yes" && filed.Is_Karaoke != "Yes") || (IsKaraoke == "Yes" && filed.Is_Karaoke == "Yes")
+                    /*66.Duplicate manag.ignores Cover Songs */
+                    || (GetParam(66, chbx_Additional_Manipulations) && ((filed.Is_Cover == "Yes" && IsCover != "Yes")
+                    || (IsCover == "Yes" && filed.Is_Cover != "Yes") || (IsCover == "Yes" && filed.Is_Cover == "Yes")
+                //66.Duplicate manag.ignores HasFeaturing Songs
+                    || (GetParam(66, chbx_Additional_Manipulations) && ((filed.Has_Featuring == "Yes" && HasFeaturing != "Yes")
+                    || (HasFeaturing == "Yes" && filed.Has_Featuring != "Yes") || (HasFeaturing == "Yes" && filed.Has_Featuring == "Yes")
+                    /*66.Duplicate manag.ignores Demo Songs */
+                    || (GetParam(66, chbx_Additional_Manipulations) && ((filed.Is_Demo == "Yes" && IsDemo != "Yes")
+                    || (IsDemo == "Yes" && filed.Is_Demo != "Yes") || (IsDemo == "Yes" && filed.Is_Demo == "Yes")
+                    /*66.Duplicate manag.ignores Uncensored Songs */
+                    || (GetParam(66, chbx_Additional_Manipulations) && ((filed.Is_Remix == "Yes" && IsRemix != "Yes")
+                    || (IsRemix == "Yes" && filed.Is_Remix != "Yes") || (IsRemix == "Yes" && filed.Is_Remix == "Yes")
+                    //66.Duplicate manag.ignores Capo Songs
+                    || (GetParam(66, chbx_Additional_Manipulations) && ((filed.Has_Capo == "Yes" && HasCapo != "Yes")
+                    || (HasCapo == "Yes" && filed.Has_Capo != "Yes") || (HasCapo == "Yes" && filed.Has_Capo == "Yes")
+                    /*66.Duplicate manag.ignores Uncensored Songs */
+                    //|| (GetParam(66, chbx_Additional_Manipulations) && ((filed.Has_ShowLights == "Yes" && HasShowLights != "Yes")
+                    //|| (HasShowLights == "Yes" && filed.Has_ShowLights != "Yes") || (HasShowLights == "Yes" && filed.Has_ShowLights == "Yes")
+                    /*66.Duplicate manag.ignores Uncensored Songs */
+                    //|| (GetParam(66, chbx_Additional_Manipulations) && ((filed.Has_JVocals == "Yes" && HasJVocals != "Yes")
+                    //|| (HasJVocals == "Yes" && filed.Has_JVocals != "Yes") || (HasJVocals == "Yes" && filed.Has_JVocals == "Yes")
+                    /*66.Duplicate manag.ignores Medley Songs */
+                    || (GetParam(66, chbx_Additional_Manipulations) && ((filed.Is_Medley == "Yes" && IsMedley != "Yes")
+                    || (IsMedley == "Yes" && filed.Is_Medley != "Yes") || (IsMedley == "Yes" && filed.Is_Medley == "Yes")
+                    //66.Duplicate manag.ignores Multistrings Songs 
+                    || (GetParam(66, chbx_Additional_Manipulations) && ((filed.Is_MultiStrings == "Yes" && IsMultiStrings != "Yes")
+                    || (IsMultiStrings == "Yes" && filed.Is_MultiStrings != "Yes") || (IsMultiStrings == "Yes" && filed.Is_MultiStrings == "Yes")
+                    /*66.Duplicate manag.ignores Deluxe Songs */
+                    || (GetParam(66, chbx_Additional_Manipulations) && ((filed.Is_Deluxe == "Yes" && IsDeluxe != "Yes")
+                    || (IsDeluxe == "Yes" && filed.Is_Demo != "Yes") || (IsDeluxe == "Yes" && filed.Is_Deluxe == "Yes")
+                    /*66.Duplicate manag.ignores GreatestHits Songs */
+                    || (GetParam(66, chbx_Additional_Manipulations) && ((filed.Is_GreatestHits == "Yes" && IsGreatestHits != "Yes")
+                    || (IsGreatestHits == "Yes" && filed.Is_GreatestHits != "Yes") || (IsGreatestHits == "Yes" && filed.Is_GreatestHits == "Yes")
+                    //66.Duplicate manag.ignores Midi Songs HasFeaturing
+                    || (GetParam(66, chbx_Additional_Manipulations) && ((filed.Is_Midi == "Yes" && IsMidi != "Yes")
+                    || (IsMidi == "Yes" && filed.Is_Midi != "Yes") || (IsMidi == "Yes" && filed.Is_Midi == "Yes")
+                    //66.Duplicate manag.ignores GameSoundtrack Songs 
+                    || (GetParam(66, chbx_Additional_Manipulations) && ((filed.Is_GameSoundtrack == "Yes" && IsGameSoundtrack != "Yes")
+                    || (IsGameSoundtrack == "Yes" && filed.Is_GameSoundtrack != "Yes") || (IsGameSoundtrack == "Yes" && filed.Is_GameSoundtrack == "Yes")
+                    //66.Duplicate manag.ignores TV Theme Songs 
+                    || (GetParam(66, chbx_Additional_Manipulations) && ((filed.Is_TVTheme == "Yes" && IsTVTheme != "Yes")
+                    || (IsTVTheme == "Yes" && filed.Is_TVTheme != "Yes") || (IsTVTheme == "Yes" && filed.Is_TVTheme == "Yes")
+                    //66.Duplicate manag.ignores Amateur Cover Songs
+                    || (GetParam(66, chbx_Additional_Manipulations) && ((filed.Is_AmateurCover == "Yes" && IsAmateurCover != "Yes")
+                    || (IsAmateurCover == "Yes" && filed.Is_AmateurCover != "Yes") || (IsAmateurCover == "Yes" && filed.Is_AmateurCover == "Yes")
+                    )))))))))))))))))))))))))))))))))))))))
                 {
-                    dupli_reason += "autom: Initially assed as alternate cause multitrack/live/aCOUSRTIC."; timestamp = UpdateLog(timestamp, dupli_reason, true, txt_TempPath.Text, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+                    dupli_reason += "autom: Initially assed as alternate cause multitrack/live/aCOUSTIC/."; timestamp = UpdateLog(timestamp, dupli_reason, true, txt_TempPath.Text, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
                     return "Alternate;" + dupli_reason;/*autom: alt*/
                 }
             }
@@ -7257,7 +7027,10 @@ namespace RocksmithToolkitGUI.DLCManager
                 , IsInstrumental == "No" ? "" : IsInstrumental, IsSoundtrack == "No" ? "" : IsSoundtrack, IsFullAlbum == "No" ? "" : IsFullAlbum, IsSingle == "No" ? "" : IsSingle,
                 IsEP == "No" ? "" : IsEP, IsUncensored == "No" ? "" : IsUncensored, IsRemastered == "No" ? "" : IsRemastered
                 , InTheWorks == "No" ? "" : InTheWorks, IsKaraoke == "No" ? "" : IsKaraoke, IsDemo == "No" ? "" : IsDemo, HasFeaturing == "No" ? "" : HasFeaturing,
-                IsRemix == "No" ? "" : IsRemix, IsCover == "No" ? "" : IsCover, IsMedley == "No" ? "" : IsMedley, IsMultiStrings == "No" ? "" : IsMultiStrings, HasCapo == "No" ? "" : HasCapo, cnc);//);
+                IsRemix == "No" ? "" : IsRemix, IsCover == "No" ? "" : IsCover, IsMedley == "No" ? "" : IsMedley, IsMultiStrings == "No" ? "" : IsMultiStrings
+                , IsDeluxe == "No" ? "" : IsDeluxe, IsGreatestHits == "No" ? "" : IsGreatestHits, HasCapo == "No" ? "" : HasCapo
+                , IsMidi == "No" ? "" : IsMidi, IsGameSoundtrack == "No" ? "" : IsGameSoundtrack, IsTVTheme == "No" ? "" : IsTVTheme, IsAmateurCover == "No" ? "" : IsAmateurCover
+                , cnc);//);
 
             frm1.ShowDialog();
             if (frm1.Author != author) if (frm1.Author == "Custom Song Creator" && GetParam(57, chbx_Additional_Manipulations)) author = "";
@@ -7291,7 +7064,6 @@ namespace RocksmithToolkitGUI.DLCManager
             if (frm1.isEP != "") IsEP = frm1.isEP;
             if (frm1.isUncensored != "") IsUncensored = frm1.isUncensored;
             if (frm1.isRemastered != "") IsRemastered = frm1.isRemastered;
-
             if (frm1.isCover != "") IsCover = frm1.isCover;
             if (frm1.isDemo != "") IsDemo = frm1.isDemo;
             if (frm1.isRemix != "") IsRemix = frm1.isRemix;
@@ -7299,6 +7071,12 @@ namespace RocksmithToolkitGUI.DLCManager
             if (frm1.hasFeaturing != "") HasFeaturing = frm1.hasFeaturing;
             if (frm1.isMedley != "") IsMedley = frm1.isMedley;
             if (frm1.isMultiStrings != "") IsKaraoke = frm1.isMultiStrings;
+            if (frm1.isDeluxe != "") IsDeluxe = frm1.isDeluxe;
+            if (frm1.isGreatestHits != "") IsGreatestHits = frm1.isGreatestHits;
+            if (frm1.isMidi != "") IsMidi = frm1.isMidi;
+            if (frm1.isGameSoundtrack != "") IsGameSoundtrack = frm1.isGameSoundtrack;
+            if (frm1.isTVTheme != "") IsTVTheme = frm1.isTVTheme;
+            if (frm1.isAmateurCover != "") IsAmateurCover = frm1.isAmateurCover;
 
             if (frm1.YouTube_Link != "") YouTube_Link = frm1.YouTube_Link;
             if (frm1.CustomsForge_Link != "") CustomsForge_Link = frm1.CustomsForge_Link;
@@ -7461,154 +7239,6 @@ namespace RocksmithToolkitGUI.DLCManager
             ChanginProfile = false;
             ChangeProfile();
             ChanginProfile = true;
-        }
-
-        public void ChangeProfile()
-        {
-
-            timestamp = UpdateLog(timestamp, "Starting Changing Profiles", true, txt_TempPath.Text, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
-            //SaveOK = "Ok"; SaveSettings();//Save settings
-
-            pB_ReadDLCs.Maximum = 5; pB_ReadDLCs.Step = 1; pB_ReadDLCs.Value = 1;
-            if (chbx_Configurations.Text == "Select Profile") return;/*|| !ChanginProfile*/
-            else if (chbx_Configurations.Text == "" && DefaultExist)
-            {
-                chbx_Configurations.Text = "Default";
-                return;
-            }
-            else if (chbx_Configurations.Text == "" && !DefaultExist)
-            {
-                MessageBox.Show("No User or Default Profile!", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-
-            DataSet ds = new DataSet(); ds = SelectFromDB("Groups", "SELECT Groupz, Comments FROM Groups WHERE Profile_Name=\"" + chbx_Configurations.Text
-                    + "\" ORDER BY Comments ASC", txt_DBFolder.Text, cnb, cnc);
-            var norec = 0; var tst = "";
-            if (ds.Tables.Count > 0) norec = ds.Tables[0].Rows.Count;
-            if (norec == 0 & DefaultExist)
-            {
-                //ds = SelectFromDB("Groups", "SELECT Groups, Comments FROM Groups WHERE Profile_Name=\"Default\" ORDER BY Comments ASC", txt_DBFolder.Text, cnb, cnc);
-                //if (ds.Tables.Count > 0)
-                //{
-                //    norec = ds.Tables[0].Rows.Count;
-                //    if (norec > 0)
-                //    {
-                //     
-                if (ConfigRepository.Instance()["dlcm_Dbg"] != "Yes") MessageBox.Show("Since profile " + chbx_Configurations.Text + " is missing, defaulted to Default", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                chbx_Configurations.Text = "Default";
-                //    }if () 
-                //}
-            }
-            if (norec > 0)
-            {
-                //ConfigRepository.Instance()["dlcm_Groups"] = "";
-                pB_ReadDLCs.Increment(1); var newdb = "";
-                for (int j = 0; j < norec; j++)
-                    if (ds.Tables[0].Rows[j].ItemArray[1].ToString() == "dlcm_DBFolder") newdb = ds.Tables[0].Rows[j].ItemArray[0].ToString();
-                if (ConfigRepository.Instance()["dlcm_DBFolder"].ToLower() != newdb.ToLower() && File.Exists(newdb))
-                {
-                    var old = ConfigRepository.Instance()["dlcm_DBFolder"].ToLower();
-                    for (int j = 0; j < norec; j++) ConfigRepository.Instance()[ds.Tables[0].Rows[j].ItemArray[1].ToString()] = ds.Tables[0].Rows[j].ItemArray[0].ToString();
-                    //cnb.Close();
-                    //cnb.ConnectionString = "Provider=Microsoft." + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Persist Security Info=False;Mode= Share Deny None;Data Source=" + newdb;
-                    txt_DBFolder.Text = newdb;
-                    //ConfigRepository.Instance()["dlcm_Configurations"] = "Default";
-                    var t = DBPathChange(txt_DBFolder.Text, chbx_Configurations.Text);
-                    if (!t) return;
-
-                    var sel = "SELECT Groupz, Comments FROM Groups WHERE Profile_Name=\"" + chbx_Configurations.Text + "\" ORDER BY Comments ASC";
-                    DataSet drs = new DataSet(); drs = SelectFromDB("Groups", sel, txt_DBFolder.Text, cnb, cnc);
-                    var norecs = 0;
-                    if (drs.Tables.Count > 0) norecs = drs.Tables[0].Rows.Count;
-                    if (norecs == 0)
-                    {
-                        AddNewProfile(true, c("dlcm_Configurations")); tst = chbx_Configurations.Text + " Profile inserted..." + old + "Changed DB to get New Profile..." + newdb;
-                    }
-                    else
-                    {
-                        DialogResult result1 = MessageBox.Show("Do you want to overrite existing Profile (" + c("dlcm_Configurations")//ConfigRepository.Instance()["dlcm_DBFolder"].ToLower() 
-                            + ") in the just changed DB (" + cnb.DataSource + ") and its (same name) Profile (" + chbx_Configurations.Text + ")?", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                        if (result1 == DialogResult.Yes)
-                        {
-                            SaveOK = "OK"; SaveSettings(); SaveOK = ""; tst = chbx_Configurations.Text + "Profile overwitten..." + old + "Changed DB to get New Profile..." + newdb;
-                        }
-                    }
-
-                    chbx_Configurations.Text = ConfigRepository.Instance()["dlcm_Configurations"];
-                    //ds = SelectFromDB("Groups", "SELECT Groups, Comments FROM Groups WHERE Profile_Name=\"" + chbx_Configurations.Text + "\" ORDER BY Comments ASC", txt_DBFolder.Text, cnb, cnc);
-                    //norec = 0;
-                    //if (ds.Tables.Count > 0) norec = ds.Tables[0].Rows.Count;
-                    //tst = "eChanged DB to get New Profile...";
-                    timestamp = UpdateLog(timestamp, tst, true, ConfigRepository.Instance()["dlcm_TempPath"]
-                        , "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
-                    //timestamp = UpdateLog(timestamp, "REturing.. to import", true, txt_TempPath.Text, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
-                }
-                else
-                    for (int j = 0; j < norec; j++)
-                        //{
-                        if (ds.Tables[0].Rows[j].ItemArray[1].ToString() == "dlcm_Configurations")
-                            //{
-                            ConfigRepository.Instance()["dlcm_Configurations"] = chbx_Configurations.Text;
-                        //    tst = chbx_Configurations.Text;
-                        //}
-                        else
-                            ConfigRepository.Instance()[ds.Tables[0].Rows[j].ItemArray[1].ToString()] = ds.Tables[0].Rows[j].ItemArray[0].ToString();
-                //}
-
-                pB_ReadDLCs.Increment(1);
-            }
-            else
-            {
-                //MessageBox.Show("No profile name found for " + chbx_Configurations.Text, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                chbx_Configurations.Text = "";
-            }
-
-            //}
-            pB_ReadDLCs.Increment(1);
-            if (!File.Exists(txt_DBFolder.Text)) chbx_DefaultDB.Checked = true;
-            else if (!(txt_DBFolder.Text == MyAppWD + "\\..\\AccessDB.accdb") || !(txt_DBFolder.Text == MyAppWD + "\\..\\SQLLiteDB.db")) chbx_DefaultDB.Checked = false;
-            //SaveOK = "";
-
-            tst = "Loading Selected Profile..."; timestamp = UpdateLog(timestamp, tst, true, ConfigRepository.Instance()["dlcm_TempPath"], "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
-            //save read profile to Config
-            SaveOK = "OK"; DLCManagerOpen(); SaveOK = "";
-            SetImportNo();
-            pB_ReadDLCs.Increment(1);
-
-            //Setting autoamting some debug options if profile is named debug/as per config
-            if (chbx_Configurations.Text == ConfigRepository.Instance()["dlcm_DebugProfile"])
-            {
-                var txt = "15 move to old Unchecked\n" +
-                        "49 ftp Unchecked\n" +
-                        "24 apply standard Unchecked\n" +
-                        "77 dont open main db Unchecked\n" +
-                        "75 copy to old checked\n" +
-                        "34 audio Unchecked\n" +
-                        "55 audio Unchecked\n" +
-                        "69 audio Unchecked\n" +
-                        "78 audio Unchecked\n" +
-                "chbx_CleanTemp.Checked = true;\n" +
-                        "chbx_DebugB.Checked = true;\n";
-                MessageBox.Show("Cause Debug Profile was selected (same Profile as option dlcm_DebugProfile)" + txt
-                   , MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(15), CheckState.Unchecked);//move to old
-                chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(49), CheckState.Unchecked);//ftp
-                chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(24), CheckState.Unchecked);//apply standard
-                chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(77), CheckState.Unchecked);//dont open main db
-                chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(75), CheckState.Checked);//copy to old
-                chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(34), CheckState.Unchecked);//audio
-                chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(55), CheckState.Unchecked);//audio
-                chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(69), CheckState.Unchecked);//audio
-                chbx_Additional_Manipulations.SetItemCheckState(GetParamLocation(78), CheckState.Unchecked);//audio
-                                                                                                            //chbx_CleanDB.Checked = true;
-                chbx_CleanTemp.Checked = true;
-                chbx_DebugB.Checked = true;
-            }
-
-            //SaveOK = "OK"; SaveSettings();
-            tst = "End Selected Profile..."; timestamp = UpdateLog(timestamp, tst, true, ConfigRepository.Instance()["dlcm_TempPath"], "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
-
         }
 
         private void Btn_Save_Click(object sender, EventArgs e)
@@ -7789,6 +7419,12 @@ namespace RocksmithToolkitGUI.DLCManager
                 {
                     DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 60 * 1);
                 }
+        }
+
+        private void btn_Debug_Click(object sender, EventArgs e)
+        {
+            //CleanAlternates_and_MultiplyGroups(cnb, cnc, pB_ReadDLCs);
+            MultiplyMetaAlbum(cnb, cnc, pB_ReadDLCs);
         }
 
         //private void DLCManagerOpen(object sender, EventArgs e)

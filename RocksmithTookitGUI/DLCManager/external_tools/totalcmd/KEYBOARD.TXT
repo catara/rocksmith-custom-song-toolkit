@@ -32,7 +32,8 @@ ALT+F11                Opens left current directory bar (breadcrumb bar)
 ALT+F12                Opens right current directory bar (breadcrumb bar)
 ALT+SHIFT+F11          Focus the button bar to use it with the keyboard
 ALT+left or right      Open previous/next directory in list of already visited dirs
-ALT+down               Open list of already visited dirs
+ALT+down               Open history list of already visited dirs
+ALT+SHIFT+down         Open history list of already visited dirs without history thinning
 SHIFT+F1               Choose custom columns view
 SHIFT+F2               Compare file lists
 SHIFT+F3               List only file under cursor, when multiple files selected
@@ -40,6 +41,7 @@ SHIFT+F4               Create new text file and load into editor
 SHIFT+F5               Copy files (with rename) in the same directory
 SHIFT+CTRL+F5          Create shortcut of files in target directory
 SHIFT+F6               Rename files in the same directory
+SHIFT+F7               Create directory in other panel, using name under cursor
 SHIFT+F8/DEL           Delete directly / delete to recycle bin - according to configuration
 SHIFT+F10              Show context menu
 SHIFT+ESC              Iconize Wincmd
@@ -99,6 +101,7 @@ ALT+SHIFT+ENTER        The contents of all directories in the current directory 
                        of the string <DIR>.
 ALT+ENTER              Show property sheet.
 CTRL+A                 Select all
+CTRL+SHIFT+A           Show list of all open tabs as menu (as in the Chrome browser)
 CTRL+B                 Directory branch: show contents of current dir and all subdirs in one list
 CTRL+SHIFT+B           Directory branch for selected directories: show contents of selected dir
                        and all subdirs in one list
@@ -113,6 +116,7 @@ CTRL+SHIFT+M           Change FTP transfer mode
 CTRL+N                 New FTP connection (enter URL or host address)
 CTRL+P                 Copy current path to command line
 CTRL+Q                 Show Quick View panel instead of a file list
+CTRL+SHIFT+Q           Separate quick view window (like Lister, but updates with cursor movement)
 CTRL+R                 Reread source directory
 CTRL+S                 Open Quick Filter dialog and activate filter
 CTRL+SHIFT+S           Open Quick Filter dialog and reactivate last-used filter

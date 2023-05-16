@@ -1,250 +1,167 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-  "http://www.w3.org/TR/html4/loose.dtd">
-
-<!-- $Id: ReleaseNotes.html 7587 2013-01-14 02:25:43Z christianlist $ -->
-
-<html>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang xml:lang>
 <head>
-  <title>Release Notes</title>
-  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
-  <style type="text/css">
-  <!--
-    body {
-      font-family: Verdana,Helvetica,Arial,sans-serif;
-      font-size: small;
-    }
-    code,pre {
-      font-family: "Courier New",Courier,monospace;
-      font-size: 1em;
-    }
-    h3 {
-      padding: 2px;
-      border-left: 4px solid #FFCC00;
-      border-bottom: 1px solid #FFCC00;
-    }
-    h4 {
-      padding: 2px;
-      border-left: 8px solid #FF9933;
-      border-bottom: 1px solid #FF9933;
-    }
-    h5 {
-      font-size: small;
-    }
-    pre {
-      margin-left: 25px;
-      margin-right: 25px;
-      padding: 5px;
-      background-color: #EEEEEE;
-      border: 1px solid black;
-    }
-    p.note {
-      padding: 5px;
-      background-color: #DDDDFF;
-      border: 1px solid blue;
-    }
-    acronym {
-      cursor: help;
-      border-bottom: 1px dotted black;
-    }
-  -->
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>ReleaseNotes</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
+  <link rel="stylesheet" href="data:text/css,article%2Caside%2Cdetails%2Cfigcaption%2Cfigure%2Cfooter%2Cheader%2Chgroup%2Cmain%2Cnav%2Csection%2Csummary%20%7Bdisplay%3A%20block%3B%7Daudio%2Ccanvas%2Cvideo%20%7Bdisplay%3A%20inline%2Dblock%3B%7Daudio%3Anot%28%5Bcontrols%5D%29%20%7Bdisplay%3A%20none%3Bheight%3A%200%3B%7D%5Bhidden%5D%2Ctemplate%20%7Bdisplay%3A%20none%3B%7Dhtml%20%7Bfont%2Dfamily%3A%20sans%2Dserif%3B%20%2Dms%2Dtext%2Dsize%2Dadjust%3A%20100%25%3B%20%2Dwebkit%2Dtext%2Dsize%2Dadjust%3A%20100%25%3B%20%7Dbody%20%7Bmargin%3A%200%3B%7Da%20%7Bbackground%3A%20transparent%3B%7Da%3Afocus%20%7Boutline%3A%20thin%20dotted%3B%7Da%3Aactive%2Ca%3Ahover%20%7Boutline%3A%200%3B%7Dh1%20%7Bfont%2Dsize%3A%202em%3Bmargin%3A%200%2E67em%200%3B%7Dabbr%5Btitle%5D%20%7Bborder%2Dbottom%3A%201px%20dotted%3B%7Db%2Cstrong%20%7Bfont%2Dweight%3A%20bold%3B%7Ddfn%20%7Bfont%2Dstyle%3A%20italic%3B%7Dhr%20%7B%2Dmoz%2Dbox%2Dsizing%3A%20content%2Dbox%3Bbox%2Dsizing%3A%20content%2Dbox%3Bheight%3A%200%3B%7Dmark%20%7Bbackground%3A%20%23ff0%3Bcolor%3A%20%23000%3B%7Dcode%2Ckbd%2Cpre%2Csamp%20%7Bfont%2Dfamily%3A%20monospace%2C%20serif%3Bfont%2Dsize%3A%201em%3B%7Dpre%20%7Bwhite%2Dspace%3A%20pre%2Dwrap%3B%7Dq%20%7Bquotes%3A%20%22%5C201C%22%20%22%5C201D%22%20%22%5C2018%22%20%22%5C2019%22%3B%7Dsmall%20%7Bfont%2Dsize%3A%2080%25%3B%7Dsub%2Csup%20%7Bfont%2Dsize%3A%2075%25%3Bline%2Dheight%3A%200%3Bposition%3A%20relative%3Bvertical%2Dalign%3A%20baseline%3B%7Dsup%20%7Btop%3A%20%2D0%2E5em%3B%7Dsub%20%7Bbottom%3A%20%2D0%2E25em%3B%7Dimg%20%7Bborder%3A%200%3B%7Dsvg%3Anot%28%3Aroot%29%20%7Boverflow%3A%20hidden%3B%7Dfigure%20%7Bmargin%3A%200%3B%7Dfieldset%20%7Bborder%3A%201px%20solid%20%23c0c0c0%3Bmargin%3A%200%202px%3Bpadding%3A%200%2E35em%200%2E625em%200%2E75em%3B%7Dlegend%20%7Bborder%3A%200%3B%20padding%3A%200%3B%20%7Dbutton%2Cinput%2Cselect%2Ctextarea%20%7Bfont%2Dfamily%3A%20inherit%3B%20font%2Dsize%3A%20100%25%3B%20margin%3A%200%3B%20%7Dbutton%2Cinput%20%7Bline%2Dheight%3A%20normal%3B%7Dbutton%2Cselect%20%7Btext%2Dtransform%3A%20none%3B%7Dbutton%2Chtml%20input%5Btype%3D%22button%22%5D%2C%20input%5Btype%3D%22reset%22%5D%2Cinput%5Btype%3D%22submit%22%5D%20%7B%2Dwebkit%2Dappearance%3A%20button%3B%20cursor%3A%20pointer%3B%20%7Dbutton%5Bdisabled%5D%2Chtml%20input%5Bdisabled%5D%20%7Bcursor%3A%20default%3B%7Dinput%5Btype%3D%22checkbox%22%5D%2Cinput%5Btype%3D%22radio%22%5D%20%7Bbox%2Dsizing%3A%20border%2Dbox%3B%20padding%3A%200%3B%20%7Dinput%5Btype%3D%22search%22%5D%20%7B%2Dwebkit%2Dappearance%3A%20textfield%3B%20%2Dmoz%2Dbox%2Dsizing%3A%20content%2Dbox%3B%2Dwebkit%2Dbox%2Dsizing%3A%20content%2Dbox%3B%20box%2Dsizing%3A%20content%2Dbox%3B%7Dinput%5Btype%3D%22search%22%5D%3A%3A%2Dwebkit%2Dsearch%2Dcancel%2Dbutton%2Cinput%5Btype%3D%22search%22%5D%3A%3A%2Dwebkit%2Dsearch%2Ddecoration%20%7B%2Dwebkit%2Dappearance%3A%20none%3B%7Dbutton%3A%3A%2Dmoz%2Dfocus%2Dinner%2Cinput%3A%3A%2Dmoz%2Dfocus%2Dinner%20%7Bborder%3A%200%3Bpadding%3A%200%3B%7Dtextarea%20%7Boverflow%3A%20auto%3B%20vertical%2Dalign%3A%20top%3B%20%7Dtable%20%7Bborder%2Dcollapse%3A%20collapse%3Bborder%2Dspacing%3A%200%3B%7D%2Ego%2Dtop%20%7Bposition%3A%20fixed%3Bbottom%3A%202em%3Bright%3A%202em%3Btext%2Ddecoration%3A%20none%3Bbackground%2Dcolor%3A%20%23E0E0E0%3Bfont%2Dsize%3A%2012px%3Bpadding%3A%201em%3Bdisplay%3A%20inline%3B%7Dhtml%2Cbody%7B%20margin%3A%20auto%3Bpadding%2Dright%3A%201em%3Bpadding%2Dleft%3A%201em%3Bmax%2Dwidth%3A%2044em%3B%20color%3Ablack%3B%7D%2A%3Anot%28%27%23mkdbuttons%27%29%7Bmargin%3A0%3Bpadding%3A0%7Dbody%7Bfont%3A13%2E34px%20helvetica%2Carial%2Cfreesans%2Cclean%2Csans%2Dserif%3B%2Dwebkit%2Dfont%2Dsmoothing%3Asubpixel%2Dantialiased%3Bline%2Dheight%3A1%2E4%3Bpadding%3A3px%3Bbackground%3A%23fff%3Bborder%2Dradius%3A3px%3B%2Dmoz%2Dborder%2Dradius%3A3px%3B%2Dwebkit%2Dborder%2Dradius%3A3px%7Dp%7Bmargin%3A1em%200%7Da%7Bcolor%3A%234183c4%3Btext%2Ddecoration%3Anone%7Dbody%7Bbackground%2Dcolor%3A%23fff%3Bpadding%3A30px%3Bmargin%3A15px%3Bfont%2Dsize%3A14px%3Bline%2Dheight%3A1%2E6%7Dbody%3E%2A%3Afirst%2Dchild%7Bmargin%2Dtop%3A0%21important%7Dbody%3E%2A%3Alast%2Dchild%7Bmargin%2Dbottom%3A0%21important%7D%40media%20screen%7Bbody%7Bbox%2Dshadow%3A0%200%200%201px%20%23cacaca%2C0%200%200%204px%20%23eee%7D%7Dh1%2Ch2%2Ch3%2Ch4%2Ch5%2Ch6%7Bmargin%3A20px%200%2010px%3Bpadding%3A0%3Bfont%2Dweight%3Abold%3B%2Dwebkit%2Dfont%2Dsmoothing%3Asubpixel%2Dantialiased%3Bcursor%3Atext%7Dh1%7Bfont%2Dsize%3A28px%3Bcolor%3A%23000%7Dh2%7Bfont%2Dsize%3A24px%3Bborder%2Dbottom%3A1px%20solid%20%23ccc%3Bcolor%3A%23000%7Dh3%7Bfont%2Dsize%3A18px%3Bcolor%3A%23333%7Dh4%7Bfont%2Dsize%3A16px%3Bcolor%3A%23333%7Dh5%7Bfont%2Dsize%3A14px%3Bcolor%3A%23333%7Dh6%7Bcolor%3A%23777%3Bfont%2Dsize%3A14px%7Dp%2Cblockquote%2Ctable%2Cpre%7Bmargin%3A15px%200%7Dul%7Bpadding%2Dleft%3A30px%7Dol%7Bpadding%2Dleft%3A30px%7Dol%20li%20ul%3Afirst%2Dof%2Dtype%7Bmargin%2Dtop%3A0%7Dhr%7Bbackground%3Atransparent%20url%28data%3Aimage%2Fpng%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAAAYAAAAECAYAAACtBE5DAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw%2FeHBhY2tldCBiZWdpbj0i77u%2FIiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8%2BIDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OENDRjNBN0E2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OENDRjNBN0I2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo4Q0NGM0E3ODY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4Q0NGM0E3OTY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI%2FPqqezsUAAAAfSURBVHjaYmRABcYwBiM2QSA4y4hNEKYDQxAEAAIMAHNGAzhkPOlYAAAAAElFTkSuQmCC%29%20repeat%2Dx%200%200%3Bborder%3A0%20none%3Bcolor%3A%23ccc%3Bheight%3A4px%3Bpadding%3A0%7Dbody%3Eh2%3Afirst%2Dchild%7Bmargin%2Dtop%3A0%3Bpadding%2Dtop%3A0%7Dbody%3Eh1%3Afirst%2Dchild%7Bmargin%2Dtop%3A0%3Bpadding%2Dtop%3A0%7Dbody%3Eh1%3Afirst%2Dchild%2Bh2%7Bmargin%2Dtop%3A0%3Bpadding%2Dtop%3A0%7Dbody%3Eh3%3Afirst%2Dchild%2Cbody%3Eh4%3Afirst%2Dchild%2Cbody%3Eh5%3Afirst%2Dchild%2Cbody%3Eh6%3Afirst%2Dchild%7Bmargin%2Dtop%3A0%3Bpadding%2Dtop%3A0%7Da%3Afirst%2Dchild%20h1%2Ca%3Afirst%2Dchild%20h2%2Ca%3Afirst%2Dchild%20h3%2Ca%3Afirst%2Dchild%20h4%2Ca%3Afirst%2Dchild%20h5%2Ca%3Afirst%2Dchild%20h6%7Bmargin%2Dtop%3A0%3Bpadding%2Dtop%3A0%7Dh1%2Bp%2Ch2%2Bp%2Ch3%2Bp%2Ch4%2Bp%2Ch5%2Bp%2Ch6%2Bp%2Cul%20li%3E%3Afirst%2Dchild%2Col%20li%3E%3Afirst%2Dchild%7Bmargin%2Dtop%3A0%7Ddl%7Bpadding%3A0%7Ddl%20dt%7Bfont%2Dsize%3A14px%3Bfont%2Dweight%3Abold%3Bfont%2Dstyle%3Aitalic%3Bpadding%3A0%3Bmargin%3A15px%200%205px%7Ddl%20dt%3Afirst%2Dchild%7Bpadding%3A0%7Ddl%20dt%3E%3Afirst%2Dchild%7Bmargin%2Dtop%3A0%7Ddl%20dt%3E%3Alast%2Dchild%7Bmargin%2Dbottom%3A0%7Ddl%20dd%7Bmargin%3A0%200%2015px%3Bpadding%3A0%2015px%7Ddl%20dd%3E%3Afirst%2Dchild%7Bmargin%2Dtop%3A0%7Ddl%20dd%3E%3Alast%2Dchild%7Bmargin%2Dbottom%3A0%7Dblockquote%7Bborder%2Dleft%3A4px%20solid%20%23DDD%3Bpadding%3A0%2015px%3Bcolor%3A%23777%7Dblockquote%3E%3Afirst%2Dchild%7Bmargin%2Dtop%3A0%7Dblockquote%3E%3Alast%2Dchild%7Bmargin%2Dbottom%3A0%7Dtable%7Bborder%2Dcollapse%3Acollapse%3Bborder%2Dspacing%3A0%3Bfont%2Dsize%3A100%25%3Bfont%3Ainherit%7Dtable%20th%7Bfont%2Dweight%3Abold%3Bborder%3A1px%20solid%20%23ccc%3Bpadding%3A6px%2013px%7Dtable%20td%7Bborder%3A1px%20solid%20%23ccc%3Bpadding%3A6px%2013px%7Dtable%20tr%7Bborder%2Dtop%3A1px%20solid%20%23ccc%3Bbackground%2Dcolor%3A%23fff%7Dtable%20tr%3Anth%2Dchild%282n%29%7Bbackground%2Dcolor%3A%23f8f8f8%7Dimg%7Bmax%2Dwidth%3A100%25%7Dcode%2Ctt%7Bmargin%3A0%202px%3Bpadding%3A0%205px%3Bwhite%2Dspace%3Anowrap%3Bborder%3A1px%20solid%20%23eaeaea%3Bbackground%2Dcolor%3A%23f8f8f8%3Bborder%2Dradius%3A3px%3Bfont%2Dfamily%3AConsolas%2C%27Liberation%20Mono%27%2CCourier%2Cmonospace%3Bfont%2Dsize%3A12px%3Bcolor%3A%23333%7Dpre%3Ecode%7Bmargin%3A0%3Bpadding%3A0%3Bwhite%2Dspace%3Apre%3Bborder%3A0%3Bbackground%3Atransparent%7D%2Ehighlight%20pre%7Bbackground%2Dcolor%3A%23f8f8f8%3Bborder%3A1px%20solid%20%23ccc%3Bfont%2Dsize%3A13px%3Bline%2Dheight%3A19px%3Boverflow%3Aauto%3Bpadding%3A6px%2010px%3Bborder%2Dradius%3A3px%7Dpre%7Bbackground%2Dcolor%3A%23f8f8f8%3Bborder%3A1px%20solid%20%23ccc%3Bfont%2Dsize%3A13px%3Bline%2Dheight%3A19px%3Boverflow%3Aauto%3Bpadding%3A6px%2010px%3Bborder%2Dradius%3A3px%7Dpre%20code%2Cpre%20tt%7Bbackground%2Dcolor%3Atransparent%3Bborder%3A0%7D%2Epoetry%20pre%7Bfont%2Dfamily%3AGeorgia%2CGaramond%2Cserif%21important%3Bfont%2Dstyle%3Aitalic%3Bfont%2Dsize%3A110%25%21important%3Bline%2Dheight%3A1%2E6em%3Bdisplay%3Ablock%3Bmargin%2Dleft%3A1em%7D%2Epoetry%20pre%20code%7Bfont%2Dfamily%3AGeorgia%2CGaramond%2Cserif%21important%3Bword%2Dbreak%3Abreak%2Dall%3Bword%2Dbreak%3Abreak%2Dword%3B%2Dwebkit%2Dhyphens%3Aauto%3B%2Dmoz%2Dhyphens%3Aauto%3Bhyphens%3Aauto%3Bwhite%2Dspace%3Apre%2Dwrap%7Dsup%2Csub%2Ca%2Efootnote%7Bfont%2Dsize%3A1%2E4ex%3Bheight%3A0%3Bline%2Dheight%3A1%3Bvertical%2Dalign%3Asuper%3Bposition%3Arelative%7Dsub%7Bvertical%2Dalign%3Asub%3Btop%3A%2D1px%7D%40media%20print%7Bbody%7Bbackground%3A%23fff%7Dimg%2Cpre%2Cblockquote%2Ctable%2Cfigure%7Bpage%2Dbreak%2Dinside%3Aavoid%7Dbody%7Bbackground%3A%23fff%3Bborder%3A0%7Dcode%7Bbackground%2Dcolor%3A%23fff%3Bcolor%3A%23333%21important%3Bpadding%3A0%20%2E2em%3Bborder%3A1px%20solid%20%23dedede%7Dpre%7Bbackground%3A%23fff%7Dpre%20code%7Bbackground%2Dcolor%3Awhite%21important%3Boverflow%3Avisible%7D%7D%40media%20screen%7Bbody%2Einverted%7Bcolor%3A%23eee%21important%3Bborder%2Dcolor%3A%23555%3Bbox%2Dshadow%3Anone%7D%2Einverted%20body%2C%2Einverted%20hr%20%2Einverted%20p%2C%2Einverted%20td%2C%2Einverted%20li%2C%2Einverted%20h1%2C%2Einverted%20h2%2C%2Einverted%20h3%2C%2Einverted%20h4%2C%2Einverted%20h5%2C%2Einverted%20h6%2C%2Einverted%20th%2C%2Einverted%20%2Emath%2C%2Einverted%20caption%2C%2Einverted%20dd%2C%2Einverted%20dt%2C%2Einverted%20blockquote%7Bcolor%3A%23eee%21important%3Bborder%2Dcolor%3A%23555%3Bbox%2Dshadow%3Anone%7D%2Einverted%20td%2C%2Einverted%20th%7Bbackground%3A%23333%7D%2Einverted%20h2%7Bborder%2Dcolor%3A%23555%7D%2Einverted%20hr%7Bborder%2Dcolor%3A%23777%3Bborder%2Dwidth%3A1px%21important%7D%3A%3Aselection%7Bbackground%3Argba%28157%2C193%2C200%2C0%2E5%29%7Dh1%3A%3Aselection%7Bbackground%2Dcolor%3Argba%2845%2C156%2C208%2C0%2E3%29%7Dh2%3A%3Aselection%7Bbackground%2Dcolor%3Argba%2890%2C182%2C224%2C0%2E3%29%7Dh3%3A%3Aselection%2Ch4%3A%3Aselection%2Ch5%3A%3Aselection%2Ch6%3A%3Aselection%2Cli%3A%3Aselection%2Col%3A%3Aselection%7Bbackground%2Dcolor%3Argba%28133%2C201%2C232%2C0%2E3%29%7Dcode%3A%3Aselection%7Bbackground%2Dcolor%3Argba%280%2C0%2C0%2C0%2E7%29%3Bcolor%3A%23eee%7Dcode%20span%3A%3Aselection%7Bbackground%2Dcolor%3Argba%280%2C0%2C0%2C0%2E7%29%21important%3Bcolor%3A%23eee%21important%7Da%3A%3Aselection%7Bbackground%2Dcolor%3Argba%28255%2C230%2C102%2C0%2E2%29%7D%2Einverted%20a%3A%3Aselection%7Bbackground%2Dcolor%3Argba%28255%2C230%2C102%2C0%2E6%29%7Dtd%3A%3Aselection%2Cth%3A%3Aselection%2Ccaption%3A%3Aselection%7Bbackground%2Dcolor%3Argba%28180%2C237%2C95%2C0%2E5%29%7D%2Einverted%7Bbackground%3A%230b2531%3Bbackground%3A%23252a2a%7D%2Einverted%20body%7Bbackground%3A%23252a2a%7D%2Einverted%20a%7Bcolor%3A%23acd1d5%7D%7D%2Ehighlight%20%2Ec%7Bcolor%3A%23998%3Bfont%2Dstyle%3Aitalic%7D%2Ehighlight%20%2Eerr%7Bcolor%3A%23a61717%3Bbackground%2Dcolor%3A%23e3d2d2%7D%2Ehighlight%20%2Ek%2C%2Ehighlight%20%2Eo%7Bfont%2Dweight%3Abold%7D%2Ehighlight%20%2Ecm%7Bcolor%3A%23998%3Bfont%2Dstyle%3Aitalic%7D%2Ehighlight%20%2Ecp%7Bcolor%3A%23999%3Bfont%2Dweight%3Abold%7D%2Ehighlight%20%2Ec1%7Bcolor%3A%23998%3Bfont%2Dstyle%3Aitalic%7D%2Ehighlight%20%2Ecs%7Bcolor%3A%23999%3Bfont%2Dweight%3Abold%3Bfont%2Dstyle%3Aitalic%7D%2Ehighlight%20%2Egd%7Bcolor%3A%23000%3Bbackground%2Dcolor%3A%23fdd%7D%2Ehighlight%20%2Egd%20%2Ex%7Bcolor%3A%23000%3Bbackground%2Dcolor%3A%23faa%7D%2Ehighlight%20%2Ege%7Bfont%2Dstyle%3Aitalic%7D%2Ehighlight%20%2Egr%7Bcolor%3A%23a00%7D%2Ehighlight%20%2Egh%7Bcolor%3A%23999%7D%2Ehighlight%20%2Egi%7Bcolor%3A%23000%3Bbackground%2Dcolor%3A%23dfd%7D%2Ehighlight%20%2Egi%20%2Ex%7Bcolor%3A%23000%3Bbackground%2Dcolor%3A%23afa%7D%2Ehighlight%20%2Ego%7Bcolor%3A%23888%7D%2Ehighlight%20%2Egp%7Bcolor%3A%23555%7D%2Ehighlight%20%2Egs%7Bfont%2Dweight%3Abold%7D%2Ehighlight%20%2Egu%7Bcolor%3A%23800080%3Bfont%2Dweight%3Abold%7D%2Ehighlight%20%2Egt%7Bcolor%3A%23a00%7D%2Ehighlight%20%2Ekc%2C%2Ehighlight%20%2Ekd%2C%2Ehighlight%20%2Ekn%2C%2Ehighlight%20%2Ekp%2C%2Ehighlight%20%2Ekr%7Bfont%2Dweight%3Abold%7D%2Ehighlight%20%2Ekt%7Bcolor%3A%23458%3Bfont%2Dweight%3Abold%7D%2Ehighlight%20%2Em%7Bcolor%3A%23099%7D%2Ehighlight%20%2Es%7Bcolor%3A%23d14%7D%2Ehighlight%20%2Ena%7Bcolor%3A%23008080%7D%2Ehighlight%20%2Enb%7Bcolor%3A%230086b3%7D%2Ehighlight%20%2Enc%7Bcolor%3A%23458%3Bfont%2Dweight%3Abold%7D%2Ehighlight%20%2Eno%7Bcolor%3A%23008080%7D%2Ehighlight%20%2Eni%7Bcolor%3A%23800080%7D%2Ehighlight%20%2Ene%2C%2Ehighlight%20%2Enf%7Bcolor%3A%23900%3Bfont%2Dweight%3Abold%7D%2Ehighlight%20%2Enn%7Bcolor%3A%23555%7D%2Ehighlight%20%2Ent%7Bcolor%3A%23000080%7D%2Ehighlight%20%2Env%7Bcolor%3A%23008080%7D%2Ehighlight%20%2Eow%7Bfont%2Dweight%3Abold%7D%2Ehighlight%20%2Ew%7Bcolor%3A%23bbb%7D%2Ehighlight%20%2Emf%2C%2Ehighlight%20%2Emh%2C%2Ehighlight%20%2Emi%2C%2Ehighlight%20%2Emo%7Bcolor%3A%23099%7D%2Ehighlight%20%2Esb%2C%2Ehighlight%20%2Esc%2C%2Ehighlight%20%2Esd%2C%2Ehighlight%20%2Es2%2C%2Ehighlight%20%2Ese%2C%2Ehighlight%20%2Esh%2C%2Ehighlight%20%2Esi%2C%2Ehighlight%20%2Esx%7Bcolor%3A%23d14%7D%2Ehighlight%20%2Esr%7Bcolor%3A%23009926%7D%2Ehighlight%20%2Es1%7Bcolor%3A%23d14%7D%2Ehighlight%20%2Ess%7Bcolor%3A%23990073%7D%2Ehighlight%20%2Ebp%7Bcolor%3A%23999%7D%2Ehighlight%20%2Evc%2C%2Ehighlight%20%2Evg%2C%2Ehighlight%20%2Evi%7Bcolor%3A%23008080%7D%2Ehighlight%20%2Eil%7Bcolor%3A%23099%7D%2Ehighlight%20%2Egc%7Bcolor%3A%23999%3Bbackground%2Dcolor%3A%23eaf2f5%7D%2Etype%2Dcsharp%20%2Ehighlight%20%2Ek%2C%2Etype%2Dcsharp%20%2Ehighlight%20%2Ekt%7Bcolor%3A%2300F%7D%2Etype%2Dcsharp%20%2Ehighlight%20%2Enf%7Bcolor%3A%23000%3Bfont%2Dweight%3Anormal%7D%2Etype%2Dcsharp%20%2Ehighlight%20%2Enc%7Bcolor%3A%232b91af%7D%2Etype%2Dcsharp%20%2Ehighlight%20%2Enn%7Bcolor%3A%23000%7D%2Etype%2Dcsharp%20%2Ehighlight%20%2Es%2C%2Etype%2Dcsharp%20%2Ehighlight%20%2Esc%7Bcolor%3A%23a31515%7D" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
 </head>
 <body>
-
-<h2>WinMerge 2.14.0 Release Notes</h2>
+<h1 id="winmerge-21628-release-notes">WinMerge 2.16.28 Release Notes</h1>
 <ul>
-  <li><a href="#about">About This Release</a></li>
-  <li><a href="#new2140">What Is New in 2.14.0?</a></li>
-  <li><a href="#new21320">What Is New in 2.13.20 beta?</a></li>
-  <li><a href="#issues">Known Issues</a></li>
+<li><a href="#about-this-release">About This Release</a></li>
+<li><a href="#what-is-new-in-21628">What Is New in 2.16.28?</a></li>
+<li><a href="#what-is-new-in-21626">What Is New in 2.16.26?</a></li>
+<li><a href="#what-is-new-in-21625-beta">What Is New in 2.16.25 beta?</a></li>
+<li><a href="#known-issues">Known issues</a></li>
 </ul>
-<p>June 2011</p>
-
-<h3><a name="about">About This Release</a></h3>
-
-<p>
-This is a WinMerge 2.14.0 stable release. This release replaces earlier WinMerge
-stable releases as a recommended release.
-</p>
-
-<p>
-Please submit bug reports to our <a href="http://bugs.winmerge.org">bug-tracker</a>.
-</p>
-
-<h3><a name="#new2140">What Is New in 2.14.0?</a></h3>
-<p>
-WinMerge 2.14 is an important update to WinMerge. There are lots of 
-improvements and bug fixes since 2.12.4 stable release. 
-</p>
-
-<p>2.14.0 stable release has many changes after beta release. But see also the
-2.13 beta release changes below for other important changes in this release.
-</p>
-
-<h4>Improvements</h4>
+<p>January 2023</p>
+<h2 id="about-this-release">About This Release</h2>
+<p>This is a WinMerge 2.16.28 stable release. This release replaces earlier WinMerge stable releases as a recommended release.</p>
+<p>Please submit bug reports to our bug-tracker.</p>
+<h2 id="what-is-new-in-21628">What Is New in 2.16.28</h2>
+<h3 id="folder-compare">Folder compare</h3>
+<p>BugFix: Fixed an issue where files with no extension were not compared if they were in a folder with a &#39;.&#39; in the folder name.</p>
+<h2 id="what-is-new-in-21626">What Is New in 2.16.26</h2>
+<h3 id="general">General</h3>
 <ul>
-  <li>Improve startup time</li>
-  <li>Improve editing of linefilter regular expressions</li>
-  <li>Improve color options organization</li>
+<li>Fixed issue where the program would crash when certain path names were set in the file path bar.</li>
 </ul>
-
-<h4>Other changes</h4>
+<h3 id="file-compare">File compare</h3>
 <ul>
-  <li>Update PCRE to version 8.10</li>
-  <li>Update SCEW to version 1.1.2</li>
-  <li>Add menuitems for selecting automatic or manual prediffing</li>
-  <li>Add accelerator keys for Shell context menu</li>
-  <li>Allow editing context line count in patch creator</li>
-  <li>Add <code>/xq</code> command line switch for closing WinMerge after identical files and not showing message</li>
-  <li>Allow setting codepage from command line</li>
-  <li>Allow giving encoding name as custom codepage</li>
-  <li>Add new options dialog panel for folder compare options</li>
-  <li>Add options GUI for quick compare limit</li>
-  <li>Write config log as UTF-8 file</li>
+<li>Feature request: Allow pasting when editing caption of pages (PR #1651)</li>
 </ul>
-
-<h4>Bugs fixed</h4>
+<h3 id="folder-compare-1">Folder compare</h3>
 <ul>
-  <li>Untranslated string ("Merge.rc:nnnn") was displayed in status bar</li>
-  <li>Pane headers not updated after language change</li>
-  <li>Quick contents compare didn't ignore EOL byte differences</li>
-  <li>Compare by size always checked file times too</li>
-  <li>Crash when pasting from clipboard</li>
-  <li>Keeps verifing path even turned off in options</li>
-  <li>Crash after deleting text</li>
-  <li>Added EOL chars between copied file/path names</li>
-  <li>Created new matching folder to wrong folder</li>
-  <li>Strange scrolling effect in location pane</li>
-  <li>Plugin error after interrupting folder compare</li>
-  <li>"+" and "-" from the number block don't work in the editor</li>
-  <li>Date format did not respect Regional Settings</li>
+<li>BugFix: Filters aren&#39;t saved anywhere (#1638)</li>
+<li>BugFix: Fixed issue where the Open menu item in file path bar of folder comparison window was disabled.</li>
+<li>Add processing to indicate that two directories are identical in the &quot;Comparison result&quot; column when they are identical in a 3-way folder comparison. (PR #1649)</li>
+<li>Request: highlight the file after opening its parent folder (#1662)</li>
+<li>Show/hide directories in 3-way comparison (PR #1683)</li>
 </ul>
-
-<h4>New Translation</h4>
+<h3 id="binary-compare">Binary compare</h3>
 <ul>
-  <li>Basque</li>
+<li>BugFix: Fixed issue where the Open menu item in file path bar of binary comparison window was disabled.</li>
 </ul>
-
-<h4>Translation updates</h4>
+<h3 id="webpage-compare">Webpage compare</h3>
 <ul>
-  <li>Hungarian</li>
-  <li>Turkish</li>
-  <li>Russian</li>
-  <li>Norwegian</li>
-  <li>Danish</li>
+<li>BugFix: Deleted color of Word Difference in Options dialog was not used.</li>
+<li>Implemented Ignore numbers comparison option.</li>
 </ul>
-
-<h3><a name="new21320">What Is New in 2.13.20 beta?</a></h3>
-<p>
-WinMerge before version 2.13.20 was vulnerable to DLL hijacking as described in
-Microsoft Security Advisory (<a href="http://www.microsoft.com/technet/security/advisory/2269637.mspx">2269637</a>).
-To fix this problem, we must also drop support for Windows 9x, ME and NT4.
-</p>
-
-<h4>Installer</h4>
+<h3 id="options-dialog">Options dialog</h3>
 <ul>
-  <li>Drop Windows 9x/ME/NT4 support and use Microsoft runtime libraries installer</li>
-  <li>Remove Uninstall shortcut from start menu folder</li>
-  <li>Don't install quick launch icon for Windows 7</li>
+<li>Modify the &quot;Options (Compare &gt; Folder)&quot; dialog. (PR #1645)</li>
 </ul>
-
-<h4>Other changes</h4>
+<h3 id="plugins">Plugins</h3>
 <ul>
-  <li>Add missing keywords to Pascal highlighter</li>
-  <li>Recognize .ascx files as ASP files</li>
-  <li>Fix help locations</li>
-  <li>Show only "Copy to other side" item in file compare context menu</li>
-  <li>Expand/collapse folders from keyboard</li>
-  <li>Improve detecting XML files in file compare</li>
-  <li>Initialize folder selection dialog to currently selected folder in options dialog</li>
+<li>Add PreviewMarkdown plugin (PR #1641)</li>
+<li>Add PreviewPlantUML plugin (PR #1666)</li>
+<li>CompareMSExcelFiles: Added &quot;Compare worksheets as HTML&quot; in CompareMSExcelFiles plugin options window</li>
+<li>ApacheTika: Updated Apache Tika to version 2.6.0</li>
+<li>ApacheTika: If Java is not installed, OpenJDK 19.0.2 will now be downloaded and used.</li>
 </ul>
-
-<h4>Bugs fixed</h4>
+<h3 id="translations">Translations</h3>
 <ul>
-  <li>WinMerge was vulnerable to DLL hijacking as described in Microsoft Security
-      Advisory (<a href="http://www.microsoft.com/technet/security/advisory/2269637.mspx">2269637</a>)</li>
-  <li>Location pane focus enabled "Save"</li>
-  <li>"Copy and advance" toolbar icons not automatically enabled</li>
+<li>Translation updates:
+<ul>
+<li>Brazilian (PR #1656,#1670)</li>
+<li>Chinese Simplified (PR #1635,#1665,#1667,#1677,#1681)</li>
+<li>Corsican (PR #1674)</li>
+<li>French (PR #1640,#1679)</li>
+<li>German (PR #1660,#1671)</li>
+<li>Hungarian (PR #1664)</li>
+<li>Japanese</li>
+<li>Lithuanian (PR #1657,#1673)</li>
+<li>Polish (PR #1648)</li>
+<li>Portuguese (PR #1669)</li>
+<li>Russian (PR #1676)</li>
+<li>Slovenian</li>
+<li>Swedish (PR #1655,#1663,#1682)</li>
+</ul></li>
 </ul>
-
-<h4>New Translations</h4>
+<h2 id="what-is-new-in-21625-beta">What Is New in 2.16.25 Beta</h2>
+<h3 id="file-compare-1">File compare</h3>
 <ul>
-  <li>Persian</li>
-  <li>Serbian</li>
+<li>BugFix: Selection in &quot;Replace&quot; by regular expression doesn&#39;t work with <code>\n</code> (#1556)</li>
+<li>BugFix: WinMerge hangs for a certain regex search &amp; replace action for clearing all lines not containing &#39;%&#39; (#1575)</li>
+<li>Add html5 keywords to crystaledit (PR #1565)</li>
+<li>Add css keywords to crystaledit (PR #1572)</li>
+<li>Preliminary exit (performance optimization) for Scrollbars calculation (PR #1574, #1573)</li>
+<li>Fix issue #1583 Syntax highlighting for SQL leaves many things out. (PR #1591, #1583)</li>
+<li>Starting Pane Consistency (#1598)</li>
 </ul>
-
-<h4>Translation updates</h4>
+<h3 id="binary-compare-1">Binary compare</h3>
 <ul>
-  <li>Bulgarian</li>
-  <li>Chinese</li>
-  <li>Dutch</li>
-  <li>French</li>
-  <li>Slovenian</li>
-  <li>Spanish</li>
-  <li>Turkish</li>
-  <li>Ukrainian</li>
+<li>BugFix: Crash 0xc0000409 (#1544)</li>
+<li>Binary compare: Allow 64bit versions to open files larger than 2GB (PR #1549)</li>
 </ul>
-
-<h3><a name="issues">Known Issues</a></h3>
+<h3 id="folder-compare-2">Folder compare</h3>
 <ul>
-  <li>
-    <p><strong>7-zip installed from MSI installer may not work with WinMerge.</strong></p>
-    <p><i>Workaround</i>: Use the EXE installer of 7-Zip. See manual
-    <i>4.5. 7-Zip and Archive Support</i> for more information.</p>
-  </li>
-  <li>
-    <p><strong>Old IE version can cause crashes when handling archive files.</strong></p>
-    <p><i>Workaround</i>: If WinMerge crashes when handling archives, consider
-      updating IE to version 6.0 or later.</p>
-  </li>
-  <li>
-    <p><strong>Supercopier application causes WinMerge to hang.</strong></p>
-    <p><a href="http://supercopier.sfxteam.org/modules/mydownloads/">Supercopier</a>
-    application causes WinMerge to not exit properly and leaves WinMerge process
-    hang. See the bug reports:
-    <ul>
-      <li><a href="http://winmerge.org/bug/1976241">#1976241</a> the winmerge.exe
-        process doesn't stop itself</li>
-      <li><a href="http://winmerge.org/bug/1602313">#1602313</a> WinMerge stays
-        in tasklist after closing</li>
-    </ul>
-    <p><i>Workaround</i>: Disable the Supercopier when using WinMerge.</p>
-  </li>
-  <li>
-    <p><strong>There is no way to specify the codepage for a particular file.</strong></p>
-    <p><i>Workaround</i>: Specify the default codepages for all files in Edit-&gt;Options-&gt;Codepage-&gt;Custom codepage.</p>
-  </li>
-  <li><p><strong>There is no 3-way merge.</strong> <small><a href="http://winmerge.org/rfe/990464" title="Feature Request #990464">#990464</a></small></p></li>
-  <li>
-    <p><strong>Filters only applied when using full compare.</strong></p>
-    <p>Line filtering is only applied in folder compare when using <i>Full Contents</i>-compare method.</p>
-    <p>If you are using any other compare method, line filters are not applied. Files marked different
-    in folder compare can get status changed to identical when opening them to file compare.</p>
-  </li>
-  <li>
-    <p><strong>Some plugins shipped with WinMerge require Visual Basic runtime library to work</strong></p>
-    <p><i>Workaround</i>: You can download the required file <code><a href="http://www.dll-files.com/dllindex/dll-files.shtml?msvbvm60">msvbvm60.dll</a></code>
-       or use the <a href="http://www.microsoft.com/downloads/details.aspx?familyid=7b9ba261-7a9c-43e7-9117-f673077ffb3c">Run-Time Redistribution Pack</a> from Microsoft.</p>
-    <p><i>Workaround 2</i>: If you don't need the plugin, you can safely remove it.</p>
-  </li>
-  <li>
-    <p><strong>VSS integration cannot add new files to VSS</strong></p>
-    <p>If you need to add a new file, you must add it via VSS client program.</p>
-  </li>
-  <li>
-    <p><strong>Unset WinMerge integration from ClearCase</strong></p>
-    <p>To remove WinMerge integration, you'll need to edit one file by hand:</p>
-    <ol>
-      <li>Find ClearCase installation folder<br>
-          Usually it is something like <code>C:\Program Files\Rational\ClearCase</code></li>
-      <li>Go to subfolder <code>lib\mgrs\</code></li>
-      <li>Open file <code>map</code> in there to editor program</li>
-      <li>Comment-out the line starting with "<code>text_file_delta xcompare</code>", containing "<code>WinMergeU.exe</code>"</li>
-      <li>Uncomment the line starting with "<code>text_file_delta xcompare</code>", containing "<code>cleardiffmrg.exe</code>"</li>
-    </ol>
-  </li>
+<li>BugFix: Fix the problem that WinMerge crashes when pressing the &quot;OK&quot; button in the &quot;Display Columns&quot; dialog in the debug version. (PR #1568)</li>
+<li>BugFix: Crash when copying files/folders (#1558)</li>
+<li>BugFix: File Duplication Bug In Outputted Zips (#1588)</li>
+<li>BugFix: Fixed problem with scrolling to unexpected position when expanding folders (osdn.net #46061)</li>
+<li>BugFix: Fixed incorrect links to files with # in filename in folder comparison report (osdn.net #46082)</li>
+<li>Changes the display processing of the &quot;Comparison result&quot; column for a 3-way folder comparison. (PR #1545)</li>
+<li>Add &quot;Copy All Displayed Columns&quot; to the context menu of the folder compare window. (PR #1615)</li>
+</ul>
+<h3 id="options-dialog-1">Options dialog</h3>
+<ul>
+<li>Added Auto-reload modified files option (PR #1611)</li>
+</ul>
+<h3 id="translations-1">Translations</h3>
+<ul>
+<li>Translation updates:
+<ul>
+<li>Brazilian (PR #1617,#1630)</li>
+<li>Chinese Simplified (PR #1614)</li>
+<li>Corsican (PR #1628,#1629)</li>
+<li>Galician (#1581)</li>
+<li>German (PR #1616,#1633)</li>
+<li>Hungarian (PR #1618,#1631)</li>
+<li>Lithuanian (PR #1621,#1632)</li>
+<li>Japanese</li>
+<li>Polish (PR #1566)</li>
+<li>Russian (PR #1553,#1554,#1555)</li>
+<li>Slovenian</li>
+<li>Swedish (PR #1594)</li>
+<li>Turkish (PR #1563)</li>
+</ul></li>
+</ul>
+<h3 id="others">Others</h3>
+<ul>
+<li>png optimization(loss less) (PR #1541)</li>
+<li>Fields rearranged for size optimization (PR #1576)</li>
+<li>refactoring Diff3.h (PR #1577)</li>
+<li>Fix: Mismatch between keyword list and comments (PR #1578)</li>
+<li>DiffFileData optimization for same-files (PR #1579)</li>
+<li>Fixed potentially wrong SubEditList ReadOnly attribute storage; refactoring (PR #1580)</li>
+<li>CheckForInvalidUtf8 performance improvement; code cleanup (PR #1582)</li>
+<li>Update unicoder.cpp (PR #1584)</li>
+<li>unicoder.cpp light performance improvements (PR #1586)</li>
+<li>Update markdown.cpp (PR #1590)</li>
+<li>Add a feature for debugging. (PR #1595)</li>
+</ul>
+<h2 id="known-issues">Known issues</h2>
+<ul>
+<li>Shell integration does not open winmerge when selecting two folders (#1619)</li>
+<li>Suggestion to make the result of image comparison more reliable (#1391)</li>
+<li>Crashes when comparing large files (#325)</li>
+<li>Very slow to compare significantly different directories (#322)</li>
+<li>Vertical scrollbar breaks after pasting text (#296)</li>
 </ul>
 </body>
 </html>
-
- 	  	 

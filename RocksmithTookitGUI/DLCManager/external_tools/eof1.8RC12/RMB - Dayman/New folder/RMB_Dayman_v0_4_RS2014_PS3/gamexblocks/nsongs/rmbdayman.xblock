@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<game>
+  <entitySet>
+    <entity id="565ee996d4c84412b7c0742ca5cec7f9" modelName="RSEnumerable_Song" name="RMBDayMan_Rhythm" iterations="0">
+      <properties>
+        <property name="Header">
+          <set value="urn:database:hson-db:rmbdayman_rhythm" />
+        </property>
+        <property name="Manifest">
+          <set value="urn:database:json-db:rmbdayman_rhythm" />
+        </property>
+        <property name="SngAsset">
+          <set value="urn:application:musicgame-song:rmbdayman_rhythm" />
+        </property>
+        <property name="AlbumArtSmall">
+          <set value="urn:image:dds:album_rmbdayman_64" />
+        </property>
+        <property name="AlbumArtMedium">
+          <set value="urn:image:dds:album_rmbdayman_128" />
+        </property>
+        <property name="AlbumArtLarge">
+          <set value="urn:image:dds:album_rmbdayman_256" />
+        </property>
+        <property name="LyricArt">
+          <set value="" />
+        </property>
+        <property name="ShowLightsXMLAsset">
+          <set value="urn:application:xml:rmbdayman_showlights" />
+        </property>
+        <property name="SoundBank">
+          <set value="urn:audio:wwise-sound-bank:song_rmbdayman" />
+        </property>
+        <property name="PreviewSoundBank">
+          <set value="urn:audio:wwise-sound-bank:song_rmbdayman_preview" />
+        </property>
+      </properties>
+    </entity>
+    <entity id="690bab180a0d4d2ebeb2f15aa20e2087" modelName="RSEnumerable_Song" name="RMBDayMan_Bass" iterations="0">
+      <properties>
+        <property name="Header">
+          <set value="urn:database:hson-db:rmbdayman_bass" />
+        </property>
+        <property name="Manifest">
+          <set value="urn:database:json-db:rmbdayman_bass" />
+        </property>
+        <property name="SngAsset">
+          <set value="urn:application:musicgame-song:rmbdayman_bass" />
+        </property>
+        <property name="AlbumArtSmall">
+          <set value="urn:image:dds:album_rmbdayman_64" />
+        </property>
+        <property name="AlbumArtMedium">
+          <set value="urn:image:dds:album_rmbdayman_128" />
+        </property>
+        <property name="AlbumArtLarge">
+          <set value="urn:image:dds:album_rmbdayman_256" />
+        </property>
+        <property name="LyricArt">
+          <set value="" />
+        </property>
+        <property name="ShowLightsXMLAsset">
+          <set value="urn:application:xml:rmbdayman_showlights" />
+        </property>
+        <property name="SoundBank">
+          <set value="urn:audio:wwise-sound-bank:song_rmbdayman" />
+        </property>
+        <property name="PreviewSoundBank">
+          <set value="urn:audio:wwise-sound-bank:song_rmbdayman_preview" />
+        </property>
+      </properties>
+    </entity>
+    <entity id="f204249d1b884b4ba63cc5032b46d0a2" modelName="RSEnumerable_Song" name="RMBDayMan_Vocals" iterations="0">
+      <properties>
+        <property name="Header">
+          <set value="urn:database:hson-db:rmbdayman_vocals" />
+        </property>
+        <property name="Manifest">
+          <set value="urn:database:json-db:rmbdayman_vocals" />
+        </property>
+        <property name="SngAsset">
+          <set value="urn:application:musicgame-song:rmbdayman_vocals" />
+        </property>
+        <property name="AlbumArtSmall">
+          <set value="urn:image:dds:album_rmbdayman_64" />
+        </property>
+        <property name="AlbumArtMedium">
+          <set value="urn:image:dds:album_rmbdayman_128" />
+        </property>
+        <property name="AlbumArtLarge">
+          <set value="urn:image:dds:album_rmbdayman_256" />
+        </property>
+        <property name="LyricArt">
+          <set value="" />
+        </property>
+        <property name="ShowLightsXMLAsset">
+          <set value="urn:application:xml:rmbdayman_showlights" />
+        </property>
+        <property name="SoundBank">
+          <set value="urn:audio:wwise-sound-bank:song_rmbdayman" />
+        </property>
+        <property name="PreviewSoundBank">
+          <set value="urn:audio:wwise-sound-bank:song_rmbdayman_preview" />
+        </property>
+      </properties>
+    </entity>
+  </entitySet>
+</game>

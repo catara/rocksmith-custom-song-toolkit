@@ -1,0 +1,334 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DLCPackageData xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.datacontract.org/2004/07/RocksmithToolkitLib.DLCPackage">
+  <AlbumArtPath>gfxassets\album_art\album_rmbdayman_256.dds</AlbumArtPath>
+  <AppId>248750</AppId>
+  <Arrangements>
+    <Arrangement>
+      <ArrangementName>Bass</ArrangementName>
+      <ArrangementPropeties xmlns:d4p1="http://schemas.datacontract.org/2004/07/RocksmithToolkitLib.XML">
+        <d4p1:BarreChords>0</d4p1:BarreChords>
+        <d4p1:BassPick>1</d4p1:BassPick>
+        <d4p1:Bends>0</d4p1:Bends>
+        <d4p1:DoubleStops>0</d4p1:DoubleStops>
+        <d4p1:DropDPower>0</d4p1:DropDPower>
+        <d4p1:FifthsAndOctaves>0</d4p1:FifthsAndOctaves>
+        <d4p1:FingerPicking>0</d4p1:FingerPicking>
+        <d4p1:FretHandMutes>0</d4p1:FretHandMutes>
+        <d4p1:Harmonics>0</d4p1:Harmonics>
+        <d4p1:Hopo>0</d4p1:Hopo>
+        <d4p1:NonStandardChords>0</d4p1:NonStandardChords>
+        <d4p1:OpenChords>0</d4p1:OpenChords>
+        <d4p1:PalmMutes>0</d4p1:PalmMutes>
+        <d4p1:PickDirection>0</d4p1:PickDirection>
+        <d4p1:PinchHarmonics>0</d4p1:PinchHarmonics>
+        <d4p1:PowerChords>0</d4p1:PowerChords>
+        <d4p1:Represent>1</d4p1:Represent>
+        <d4p1:SlapPop>0</d4p1:SlapPop>
+        <d4p1:Slides>0</d4p1:Slides>
+        <d4p1:StandardTuning>1</d4p1:StandardTuning>
+        <d4p1:Sustain>1</d4p1:Sustain>
+        <d4p1:Syncopation>0</d4p1:Syncopation>
+        <d4p1:Tapping>0</d4p1:Tapping>
+        <d4p1:Tremolo>0</d4p1:Tremolo>
+        <d4p1:TwoFingerPicking>0</d4p1:TwoFingerPicking>
+        <d4p1:UnpitchedSlides>0</d4p1:UnpitchedSlides>
+        <d4p1:Vibrato>0</d4p1:Vibrato>
+        <d4p1:BonusArr>0</d4p1:BonusArr>
+        <d4p1:Metronome>0</d4p1:Metronome>
+        <d4p1:PathBass>1</d4p1:PathBass>
+        <d4p1:PathLead>0</d4p1:PathLead>
+        <d4p1:PathRhythm>0</d4p1:PathRhythm>
+        <d4p1:RouteMask>4</d4p1:RouteMask>
+      </ArrangementPropeties>
+      <ArrangementSort>0</ArrangementSort>
+      <ArrangementType>Bass</ArrangementType>
+      <BonusArr>false</BonusArr>
+      <CapoFret>0.0</CapoFret>
+      <GlyphsXmlPath i:nil="true" />
+      <Id>a9d39a7a-1721-4e69-85b5-4bc484f27d94</Id>
+      <LyricsArtPath i:nil="true" />
+      <MasterId>917711435</MasterId>
+      <Metronome>None</Metronome>
+      <PluckedType>Picked</PluckedType>
+      <Represent>true</Represent>
+      <RouteMask>Bass</RouteMask>
+      <ScrollSpeed>13</ScrollSpeed>
+      <Sng2014 xmlns:d4p1="http://schemas.datacontract.org/2004/07/RocksmithToolkitLib.Sng2014HSL" i:nil="true" />
+      <SongFile xmlns:d4p1="http://schemas.datacontract.org/2004/07/RocksmithToolkitLib.DLCPackage.AggregateGraph">
+        <d4p1:UUID>bb20953a-bb9f-411b-b49f-30c153df7dc4</d4p1:UUID>
+        <d4p1:File></d4p1:File>
+        <d4p1:Version i:nil="true" />
+      </SongFile>
+      <SongXml xmlns:d4p1="http://schemas.datacontract.org/2004/07/RocksmithToolkitLib.DLCPackage.AggregateGraph">
+        <d4p1:UUID>00cead57-c845-4ba2-b90e-fe2ee1df6098</d4p1:UUID>
+        <d4p1:File>songs\arr\rmbdayman_bass.xml</d4p1:File>
+        <d4p1:Version>7</d4p1:Version>
+      </SongXml>
+      <ToneA></ToneA>
+      <ToneB></ToneB>
+      <ToneBase>Default_Bass</ToneBase>
+      <ToneC></ToneC>
+      <ToneD i:nil="true" />
+      <ToneMultiplayer></ToneMultiplayer>
+      <Tuning>E Standard</Tuning>
+      <TuningPitch>440</TuningPitch>
+      <TuningStrings xmlns:d4p1="http://schemas.datacontract.org/2004/07/RocksmithToolkitLib.XML">
+        <d4p1:String0>0</d4p1:String0>
+        <d4p1:String1>0</d4p1:String1>
+        <d4p1:String2>0</d4p1:String2>
+        <d4p1:String3>0</d4p1:String3>
+        <d4p1:String4>0</d4p1:String4>
+        <d4p1:String5>0</d4p1:String5>
+      </TuningStrings>
+    </Arrangement>
+    <Arrangement>
+      <ArrangementName>Rhythm</ArrangementName>
+      <ArrangementPropeties xmlns:d4p1="http://schemas.datacontract.org/2004/07/RocksmithToolkitLib.XML">
+        <d4p1:BarreChords>0</d4p1:BarreChords>
+        <d4p1:BassPick>0</d4p1:BassPick>
+        <d4p1:Bends>1</d4p1:Bends>
+        <d4p1:DoubleStops>1</d4p1:DoubleStops>
+        <d4p1:DropDPower>0</d4p1:DropDPower>
+        <d4p1:FifthsAndOctaves>0</d4p1:FifthsAndOctaves>
+        <d4p1:FingerPicking>0</d4p1:FingerPicking>
+        <d4p1:FretHandMutes>0</d4p1:FretHandMutes>
+        <d4p1:Harmonics>0</d4p1:Harmonics>
+        <d4p1:Hopo>1</d4p1:Hopo>
+        <d4p1:NonStandardChords>1</d4p1:NonStandardChords>
+        <d4p1:OpenChords>0</d4p1:OpenChords>
+        <d4p1:PalmMutes>1</d4p1:PalmMutes>
+        <d4p1:PickDirection>0</d4p1:PickDirection>
+        <d4p1:PinchHarmonics>0</d4p1:PinchHarmonics>
+        <d4p1:PowerChords>0</d4p1:PowerChords>
+        <d4p1:Represent>1</d4p1:Represent>
+        <d4p1:SlapPop>0</d4p1:SlapPop>
+        <d4p1:Slides>1</d4p1:Slides>
+        <d4p1:StandardTuning>1</d4p1:StandardTuning>
+        <d4p1:Sustain>1</d4p1:Sustain>
+        <d4p1:Syncopation>0</d4p1:Syncopation>
+        <d4p1:Tapping>0</d4p1:Tapping>
+        <d4p1:Tremolo>0</d4p1:Tremolo>
+        <d4p1:TwoFingerPicking>0</d4p1:TwoFingerPicking>
+        <d4p1:UnpitchedSlides>0</d4p1:UnpitchedSlides>
+        <d4p1:Vibrato>1</d4p1:Vibrato>
+        <d4p1:BonusArr>0</d4p1:BonusArr>
+        <d4p1:Metronome>0</d4p1:Metronome>
+        <d4p1:PathBass>0</d4p1:PathBass>
+        <d4p1:PathLead>0</d4p1:PathLead>
+        <d4p1:PathRhythm>1</d4p1:PathRhythm>
+        <d4p1:RouteMask>2</d4p1:RouteMask>
+      </ArrangementPropeties>
+      <ArrangementSort>0</ArrangementSort>
+      <ArrangementType>Guitar</ArrangementType>
+      <BonusArr>false</BonusArr>
+      <CapoFret>0.0</CapoFret>
+      <GlyphsXmlPath i:nil="true" />
+      <Id>db1c8130-7722-4803-ad4e-0c71935aa72e</Id>
+      <LyricsArtPath i:nil="true" />
+      <MasterId>1552621599</MasterId>
+      <Metronome>None</Metronome>
+      <PluckedType>NotPicked</PluckedType>
+      <Represent>true</Represent>
+      <RouteMask>Rhythm</RouteMask>
+      <ScrollSpeed>13</ScrollSpeed>
+      <Sng2014 xmlns:d4p1="http://schemas.datacontract.org/2004/07/RocksmithToolkitLib.Sng2014HSL" i:nil="true" />
+      <SongFile xmlns:d4p1="http://schemas.datacontract.org/2004/07/RocksmithToolkitLib.DLCPackage.AggregateGraph">
+        <d4p1:UUID>fc027dea-446d-4c59-afae-9f2ea1236d82</d4p1:UUID>
+        <d4p1:File></d4p1:File>
+        <d4p1:Version i:nil="true" />
+      </SongFile>
+      <SongXml xmlns:d4p1="http://schemas.datacontract.org/2004/07/RocksmithToolkitLib.DLCPackage.AggregateGraph">
+        <d4p1:UUID>35cf4c53-812a-492b-b030-38218d0bb7b0</d4p1:UUID>
+        <d4p1:File>songs\arr\rmbdayman_rhythm.xml</d4p1:File>
+        <d4p1:Version>7</d4p1:Version>
+      </SongXml>
+      <ToneA i:nil="true" />
+      <ToneB i:nil="true" />
+      <ToneBase>Default_Bass</ToneBase>
+      <ToneC i:nil="true" />
+      <ToneD i:nil="true" />
+      <ToneMultiplayer></ToneMultiplayer>
+      <Tuning>E Standard</Tuning>
+      <TuningPitch>440</TuningPitch>
+      <TuningStrings xmlns:d4p1="http://schemas.datacontract.org/2004/07/RocksmithToolkitLib.XML">
+        <d4p1:String0>0</d4p1:String0>
+        <d4p1:String1>0</d4p1:String1>
+        <d4p1:String2>0</d4p1:String2>
+        <d4p1:String3>0</d4p1:String3>
+        <d4p1:String4>0</d4p1:String4>
+        <d4p1:String5>0</d4p1:String5>
+      </TuningStrings>
+    </Arrangement>
+    <Arrangement>
+      <ArrangementName>Vocals</ArrangementName>
+      <ArrangementPropeties xmlns:d4p1="http://schemas.datacontract.org/2004/07/RocksmithToolkitLib.XML" i:nil="true" />
+      <ArrangementSort>0</ArrangementSort>
+      <ArrangementType>Vocal</ArrangementType>
+      <BonusArr>false</BonusArr>
+      <CapoFret>0</CapoFret>
+      <GlyphsXmlPath i:nil="true" />
+      <Id>3f22fd90-8e6c-4df1-9977-afa0f3451f0c</Id>
+      <LyricsArtPath i:nil="true" />
+      <MasterId>254937878</MasterId>
+      <Metronome>None</Metronome>
+      <PluckedType>NotPicked</PluckedType>
+      <Represent>false</Represent>
+      <RouteMask>None</RouteMask>
+      <ScrollSpeed>20</ScrollSpeed>
+      <Sng2014 xmlns:d4p1="http://schemas.datacontract.org/2004/07/RocksmithToolkitLib.Sng2014HSL" i:nil="true" />
+      <SongFile xmlns:d4p1="http://schemas.datacontract.org/2004/07/RocksmithToolkitLib.DLCPackage.AggregateGraph">
+        <d4p1:UUID>73cecaf5-c76c-4683-bde1-436ee75e83f8</d4p1:UUID>
+        <d4p1:File></d4p1:File>
+        <d4p1:Version i:nil="true" />
+      </SongFile>
+      <SongXml xmlns:d4p1="http://schemas.datacontract.org/2004/07/RocksmithToolkitLib.DLCPackage.AggregateGraph">
+        <d4p1:UUID>ec8fcb31-132a-43f5-84a0-42c436acc22a</d4p1:UUID>
+        <d4p1:File>songs\arr\rmbdayman_vocals.xml</d4p1:File>
+        <d4p1:Version i:nil="true" />
+      </SongXml>
+      <ToneA i:nil="true" />
+      <ToneB i:nil="true" />
+      <ToneBase>Default_Bass</ToneBase>
+      <ToneC i:nil="true" />
+      <ToneD i:nil="true" />
+      <ToneMultiplayer i:nil="true" />
+      <Tuning i:nil="true" />
+      <TuningPitch>0</TuningPitch>
+      <TuningStrings xmlns:d4p1="http://schemas.datacontract.org/2004/07/RocksmithToolkitLib.XML" i:nil="true" />
+    </Arrangement>
+    <Arrangement>
+      <ArrangementName>ShowLights</ArrangementName>
+      <ArrangementPropeties xmlns:d4p1="http://schemas.datacontract.org/2004/07/RocksmithToolkitLib.XML" i:nil="true" />
+      <ArrangementSort>0</ArrangementSort>
+      <ArrangementType>ShowLight</ArrangementType>
+      <BonusArr>false</BonusArr>
+      <CapoFret>0</CapoFret>
+      <GlyphsXmlPath i:nil="true" />
+      <Id>ae576ed8-bdd7-4a3c-9b04-306e958624f4</Id>
+      <LyricsArtPath i:nil="true" />
+      <MasterId>2111743059</MasterId>
+      <Metronome>None</Metronome>
+      <PluckedType>NotPicked</PluckedType>
+      <Represent>false</Represent>
+      <RouteMask>None</RouteMask>
+      <ScrollSpeed>0</ScrollSpeed>
+      <Sng2014 xmlns:d4p1="http://schemas.datacontract.org/2004/07/RocksmithToolkitLib.Sng2014HSL" i:nil="true" />
+      <SongFile xmlns:d4p1="http://schemas.datacontract.org/2004/07/RocksmithToolkitLib.DLCPackage.AggregateGraph">
+        <d4p1:UUID>aff87a3b-b6f0-4748-add4-2e64ee0a7b95</d4p1:UUID>
+        <d4p1:File></d4p1:File>
+        <d4p1:Version i:nil="true" />
+      </SongFile>
+      <SongXml xmlns:d4p1="http://schemas.datacontract.org/2004/07/RocksmithToolkitLib.DLCPackage.AggregateGraph">
+        <d4p1:UUID>fdc65505-0a3e-436c-a533-22d314d2dd2c</d4p1:UUID>
+        <d4p1:File>songs\arr\rmbdayman_showlights.xml</d4p1:File>
+        <d4p1:Version i:nil="true" />
+      </SongXml>
+      <ToneA i:nil="true" />
+      <ToneB i:nil="true" />
+      <ToneBase>Default_Bass</ToneBase>
+      <ToneC i:nil="true" />
+      <ToneD i:nil="true" />
+      <ToneMultiplayer i:nil="true" />
+      <Tuning i:nil="true" />
+      <TuningPitch>0</TuningPitch>
+      <TuningStrings xmlns:d4p1="http://schemas.datacontract.org/2004/07/RocksmithToolkitLib.XML" i:nil="true" />
+    </Arrangement>
+  </Arrangements>
+  <ArtFiles i:nil="true" />
+  <DefaultShowlights>false</DefaultShowlights>
+  <GameVersion>RS2014</GameVersion>
+  <Inlay i:nil="true" />
+  <Mac>false</Mac>
+  <Name>RMBDayMan</Name>
+  <OggPath>audio\windows\song_rmbdayman.wem</OggPath>
+  <OggPreviewPath></OggPreviewPath>
+  <OggQuality>4</OggQuality>
+  <PS3>false</PS3>
+  <Pc>true</Pc>
+  <PreviewVolume>-5</PreviewVolume>
+  <SignatureType>CON</SignatureType>
+  <SongInfo>
+    <Album>Dayman</Album>
+    <AlbumSort>Dayman</AlbumSort>
+    <Artist>RMB</Artist>
+    <ArtistSort>RMB</ArtistSort>
+    <AverageTempo>240</AverageTempo>
+    <JapaneseArtistName></JapaneseArtistName>
+    <JapaneseSongName></JapaneseSongName>
+    <SongDisplayName>Dayman</SongDisplayName>
+    <SongDisplayNameSort>Dayman</SongDisplayNameSort>
+    <SongYear>2018</SongYear>
+  </SongInfo>
+  <Tones xmlns:d2p1="http://schemas.datacontract.org/2004/07/RocksmithToolkitLib.DLCPackage.Manifest.Tone" />
+  <TonesRS2014 xmlns:d2p1="http://schemas.datacontract.org/2004/07/RocksmithToolkitLib.DLCPackage.Manifest2014.Tone">
+    <d2p1:Tone2014>
+      <d2p1:GearList>
+        <d2p1:Amp>
+          <d2p1:Category>Amp</d2p1:Category>
+          <d2p1:KnobValues xmlns:d6p1="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+            <d6p1:KeyValueOfstringfloat>
+              <d6p1:Key>Amp_OrangeAD50_Gain</d6p1:Key>
+              <d6p1:Value>88</d6p1:Value>
+            </d6p1:KeyValueOfstringfloat>
+            <d6p1:KeyValueOfstringfloat>
+              <d6p1:Key>Amp_OrangeAD50_Bass</d6p1:Key>
+              <d6p1:Value>75</d6p1:Value>
+            </d6p1:KeyValueOfstringfloat>
+            <d6p1:KeyValueOfstringfloat>
+              <d6p1:Key>Amp_OrangeAD50_Treble</d6p1:Key>
+              <d6p1:Value>66</d6p1:Value>
+            </d6p1:KeyValueOfstringfloat>
+            <d6p1:KeyValueOfstringfloat>
+              <d6p1:Key>Amp_OrangeAD50_Mid</d6p1:Key>
+              <d6p1:Value>66</d6p1:Value>
+            </d6p1:KeyValueOfstringfloat>
+          </d2p1:KnobValues>
+          <d2p1:PedalKey>Amp_OrangeAD50</d2p1:PedalKey>
+          <d2p1:Skin i:nil="true" />
+          <d2p1:SkinIndex i:nil="true" />
+          <d2p1:Type>Amps</d2p1:Type>
+        </d2p1:Amp>
+        <d2p1:Cabinet>
+          <d2p1:Category>Dynamic_Cone</d2p1:Category>
+          <d2p1:KnobValues xmlns:d6p1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+          <d2p1:PedalKey>Cab_OrangeJimmyBean_57_Cone</d2p1:PedalKey>
+          <d2p1:Skin i:nil="true" />
+          <d2p1:SkinIndex i:nil="true" />
+          <d2p1:Type>Cabinets</d2p1:Type>
+        </d2p1:Cabinet>
+        <d2p1:PostPedal1 i:nil="true" />
+        <d2p1:PostPedal2 i:nil="true" />
+        <d2p1:PostPedal3 i:nil="true" />
+        <d2p1:PostPedal4 i:nil="true" />
+        <d2p1:PrePedal1 i:nil="true" />
+        <d2p1:PrePedal2 i:nil="true" />
+        <d2p1:PrePedal3 i:nil="true" />
+        <d2p1:PrePedal4 i:nil="true" />
+        <d2p1:Rack1 i:nil="true" />
+        <d2p1:Rack2 i:nil="true" />
+        <d2p1:Rack3 i:nil="true" />
+        <d2p1:Rack4 i:nil="true" />
+      </d2p1:GearList>
+      <d2p1:IsCustom>true</d2p1:IsCustom>
+      <d2p1:Key>Default_Bass</d2p1:Key>
+      <d2p1:Name>Default_Bass</d2p1:Name>
+      <d2p1:NameSeparator> - </d2p1:NameSeparator>
+      <d2p1:SortOrder>0.0</d2p1:SortOrder>
+      <d2p1:ToneDescriptors xmlns:d4p1="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+        <d4p1:string>$[35715]BASS</d4p1:string>
+      </d2p1:ToneDescriptors>
+      <d2p1:Volume>-12</d2p1:Volume>
+    </d2p1:Tone2014>
+  </TonesRS2014>
+  <ToolkitInfo>
+    <PackageAuthor>Repacked by catara</PackageAuthor>
+    <PackageComment>Yes(Remastered by CDLC Creator)</PackageComment>
+    <PackageRating i:nil="true" />
+    <PackageVersion>0.2</PackageVersion>
+    <ToolkitVersion>Improve Lead</ToolkitVersion>
+  </ToolkitInfo>
+  <Version>Toolkit Version 2.9.2.1-a60453fa DEBUG</Version>
+  <Volume>-7</Volume>
+  <XBox360>false</XBox360>
+  <XBox360Licenses />
+</DLCPackageData>

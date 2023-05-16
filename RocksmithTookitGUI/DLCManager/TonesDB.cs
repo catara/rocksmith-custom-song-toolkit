@@ -255,23 +255,23 @@ namespace RocksmithToolkitGUI.DLCManager
             dssx.Dispose();
         }
 
-        private class Files
-        {
-            public string ID { get; set; }
-            public string Tone_Name { get; set; }
-            public string CDLC_ID { get; set; }
-            public string Volume { get; set; }
-            public string Keyy { get; set; }
-            public string Is_Custom { get; set; }
-            public string Description { get; set; }
-            public string Favorite { get; set; }
-            public string SortOrder { get; set; }
-            public string NameSeparator { get; set; }
-            public string ConversionDateTime { get; set; }
-            public string lastConverjsonDateTime { get; set; }
-            public string Comments { get; set; }
-        }
-        private Files[] files = new Files[20000];
+        //private class Files
+        //{
+        //    public string ID { get; set; }
+        //    public string Tone_Name { get; set; }
+        //    public string CDLC_ID { get; set; }
+        //    public string Volume { get; set; }
+        //    public string Keyy { get; set; }
+        //    public string Is_Custom { get; set; }
+        //    public string Description { get; set; }
+        //    public string Favorite { get; set; }
+        //    public string SortOrder { get; set; }
+        //    public string NameSeparator { get; set; }
+        //    public string ConversionDateTime { get; set; }
+        //    public string lastConverjsonDateTime { get; set; }
+        //    public string Comments { get; set; }
+        //}
+        private UtilitiesFunctions.Tones[] files = new UtilitiesFunctions.Tones[20000];
         //Generic procedure to read and parse Tones.DB (&others..soon)
         public int SQLAccess(string cmd)
         {
@@ -284,11 +284,11 @@ namespace RocksmithToolkitGUI.DLCManager
             MaximumSize = dus.Tables[0].Rows.Count;
             foreach (DataRow dataRow in dus.Tables[0].Rows)
             {
-                files[i] = new Files();
+                files[i] = new UtilitiesFunctions.Tones();
 
-                files[i].ID = dataRow.ItemArray[0].ToString();
+                files[i].ID = dataRow.ItemArray[0].ToString().ToInt32();
                 files[i].Tone_Name = dataRow.ItemArray[1].ToString();
-                files[i].CDLC_ID = dataRow.ItemArray[2].ToString();
+                files[i].CDLC_ID = dataRow.ItemArray[2].ToString().ToInt32();
                 files[i].Volume = dataRow.ItemArray[3].ToString();
                 files[i].Keyy = dataRow.ItemArray[4].ToString();
                 files[i].Is_Custom = dataRow.ItemArray[5].ToString();

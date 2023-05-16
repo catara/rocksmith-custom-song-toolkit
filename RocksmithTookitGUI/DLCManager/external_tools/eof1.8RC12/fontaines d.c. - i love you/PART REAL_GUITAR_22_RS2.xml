@@ -2,12 +2,12 @@
 <song version="7">
 <!-- EOF v1.8RC12 (9-26-2020) -->
   <title>I Love You</title>
-  <arrangement>Rhythm</arrangement>
+  <arrangement>PART REAL_GUITAR_22</arrangement>
   <part>1</part>
   <offset>0.000</offset>
   <centOffset>0</centOffset>
   <songLength>306.515</songLength>
-  <lastConversionDateTime>8-17-22 10:40</lastConversionDateTime>
+  <lastConversionDateTime>6-10-22 1:08</lastConversionDateTime>
   <startBeat>3.130</startBeat>
   <averageTempo>114.197</averageTempo>
   <tuning string0="0" string1="0" string2="0" string3="0" string4="0" string5="0" />
@@ -17,7 +17,7 @@
   <albumName></albumName>
   <albumYear></albumYear>
   <crowdSpeed>1</crowdSpeed>
-  <arrangementProperties represent="1" bonusArr="0" standardTuning="1" nonStandardChords="0" barreChords="0" powerChords="0" dropDPower="0" openChords="0" fingerPicking="0" pickDirection="0" doubleStops="0" palmMutes="0" harmonics="0" pinchHarmonics="0" hopo="1" tremolo="0" slides="0" unpitchedSlides="0" bends="0" tapping="0" vibrato="0" fretHandMutes="0" slapPop="0" twoFingerPicking="0" fifthsAndOctaves="0" syncopation="0" bassPick="0" sustain="0" pathLead="0" pathRhythm="1" pathBass="0" />
+  <arrangementProperties represent="1" bonusArr="0" standardTuning="1" nonStandardChords="0" barreChords="0" powerChords="0" dropDPower="0" openChords="0" fingerPicking="0" pickDirection="0" doubleStops="0" palmMutes="0" harmonics="0" pinchHarmonics="0" hopo="1" tremolo="0" slides="0" unpitchedSlides="0" bends="0" tapping="0" vibrato="0" fretHandMutes="0" slapPop="0" twoFingerPicking="0" fifthsAndOctaves="0" syncopation="0" bassPick="0" sustain="0" pathLead="0" pathRhythm="0" pathBass="0" />
   <phrases count="2">
     <phrase name="COUNT" maxDifficulty="0" />
     <phrase name="END" maxDifficulty="0" />

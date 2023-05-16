@@ -1,0 +1,432 @@
+{
+  "Entries": {
+    "690BAB180A0D4D2EBEB2F15AA20E2087": {
+      "Attributes": {
+        "ArrangementProperties": {
+          "bonusArr": 0,
+          "Metronome": 0,
+          "pathLead": 0,
+          "pathRhythm": 0,
+          "pathBass": 1,
+          "routeMask": 4,
+          "represent": 1,
+          "standardTuning": 1,
+          "nonStandardChords": 0,
+          "barreChords": 0,
+          "powerChords": 0,
+          "dropDPower": 0,
+          "openChords": 0,
+          "fingerPicking": 0,
+          "pickDirection": 0,
+          "doubleStops": 0,
+          "palmMutes": 0,
+          "harmonics": 0,
+          "pinchHarmonics": 0,
+          "hopo": 0,
+          "tremolo": 0,
+          "slides": 0,
+          "unpitchedSlides": 0,
+          "bends": 0,
+          "tapping": 0,
+          "vibrato": 0,
+          "fretHandMutes": 0,
+          "slapPop": 0,
+          "twoFingerPicking": 0,
+          "fifthsAndOctaves": 0,
+          "syncopation": 0,
+          "bassPick": 1,
+          "sustain": 1
+        },
+        "ArrangementSort": 0,
+        "ArrangementType": 3,
+        "BlockAsset": "urn:emergent-world:rmbdayman",
+        "Chords": {},
+        "ChordTemplates": [],
+        "DynamicVisualDensity": [
+          5.0,
+          4.4,
+          3.9,
+          3.5,
+          3.1,
+          2.7,
+          2.4,
+          2.1,
+          1.9,
+          1.7,
+          1.3,
+          1.3,
+          1.3,
+          1.3,
+          1.3,
+          1.3,
+          1.3,
+          1.3,
+          1.3,
+          1.3
+        ],
+        "FullName": "RMBDayMan_Bass",
+        "LastConversionDateTime": "1-10-23 1:43",
+        "MasterID_PS3": 50729724,
+        "MasterID_XBox360": 50729724,
+        "MaxPhraseDifficulty": 11,
+        "PhraseIterations": [
+          {
+            "PhraseIndex": 0,
+            "MaxDifficulty": 0,
+            "Name": "COUNT",
+            "StartTime": 0.0,
+            "EndTime": 4.0
+          },
+          {
+            "PhraseIndex": 1,
+            "MaxDifficulty": 11,
+            "Name": "p1",
+            "StartTime": 4.0,
+            "EndTime": 51.75
+          },
+          {
+            "PhraseIndex": 2,
+            "MaxDifficulty": 9,
+            "Name": "p2",
+            "StartTime": 51.75,
+            "EndTime": 99.75
+          },
+          {
+            "PhraseIndex": 3,
+            "MaxDifficulty": 11,
+            "Name": "p3",
+            "StartTime": 99.75,
+            "EndTime": 120.75
+          },
+          {
+            "PhraseIndex": 4,
+            "MaxDifficulty": 1,
+            "Name": "p4",
+            "StartTime": 120.75,
+            "EndTime": 123.75
+          },
+          {
+            "PhraseIndex": 5,
+            "MaxDifficulty": 0,
+            "Name": "END",
+            "StartTime": 123.75,
+            "EndTime": 129.804
+          }
+        ],
+        "Phrases": [
+          {
+            "MaxDifficulty": 0,
+            "Name": "COUNT",
+            "IterationCount": 1
+          },
+          {
+            "MaxDifficulty": 11,
+            "Name": "p1",
+            "IterationCount": 1
+          },
+          {
+            "MaxDifficulty": 9,
+            "Name": "p2",
+            "IterationCount": 1
+          },
+          {
+            "MaxDifficulty": 11,
+            "Name": "p3",
+            "IterationCount": 1
+          },
+          {
+            "MaxDifficulty": 1,
+            "Name": "p4",
+            "IterationCount": 1
+          },
+          {
+            "MaxDifficulty": 0,
+            "Name": "END",
+            "IterationCount": 1
+          }
+        ],
+        "PreviewBankPath": "song_rmbdayman_preview.bnk",
+        "RelativeDifficulty": 0,
+        "Score_MaxNotes": 366.0,
+        "Score_PNV": 273.22403,
+        "Sections": [
+          {
+            "Name": "intro",
+            "UIName": "$[34286] Intro [1]",
+            "Number": 1,
+            "StartTime": 4.0,
+            "EndTime": 51.75,
+            "StartPhraseIterationIndex": 1,
+            "EndPhraseIterationIndex": 1,
+            "IsSolo": false
+          },
+          {
+            "Name": "verse",
+            "UIName": "$[34304] Verse [1]",
+            "Number": 1,
+            "StartTime": 51.75,
+            "EndTime": 99.75,
+            "StartPhraseIterationIndex": 2,
+            "EndPhraseIterationIndex": 2,
+            "IsSolo": false
+          },
+          {
+            "Name": "solo",
+            "UIName": "$[34300] Solo [1]",
+            "Number": 1,
+            "StartTime": 99.75,
+            "EndTime": 120.75,
+            "StartPhraseIterationIndex": 3,
+            "EndPhraseIterationIndex": 3,
+            "IsSolo": true
+          },
+          {
+            "Name": "noguitar",
+            "UIName": "$[6091] No Guitar [1]",
+            "Number": 1,
+            "StartTime": 120.75,
+            "EndTime": 126.75,
+            "StartPhraseIterationIndex": 4,
+            "EndPhraseIterationIndex": 5,
+            "IsSolo": false
+          },
+          {
+            "Name": "bridge",
+            "UIName": "$[34282] Bridge [1]",
+            "Number": 1,
+            "StartTime": 126.75,
+            "EndTime": 123.75,
+            "StartPhraseIterationIndex": -1,
+            "EndPhraseIterationIndex": 4,
+            "IsSolo": false
+          },
+          {
+            "Name": "noguitar",
+            "UIName": "$[6091] No Guitar [1]",
+            "Number": 2,
+            "StartTime": 123.75,
+            "EndTime": 129.804,
+            "StartPhraseIterationIndex": 5,
+            "EndPhraseIterationIndex": 5,
+            "IsSolo": false
+          }
+        ],
+        "ShowlightsXML": "urn:application:xml:rmbdayman_showlights",
+        "SongAsset": "urn:application:musicgame-song:rmbdayman_bass",
+        "SongAverageTempo": 240.645,
+        "SongBank": "song_rmbdayman.bnk",
+        "SongEvent": "Play_RMBDayMan",
+        "SongOffset": -0.0,
+        "SongPartition": 0,
+        "SongXml": "urn:application:xml:rmbdayman_bass",
+        "TargetScore": 100000,
+        "Techniques": {
+          "0": {
+            "1": [
+              13
+            ]
+          },
+          "1": {
+            "1": [
+              12,
+              13
+            ]
+          },
+          "2": {
+            "1": [
+              13
+            ]
+          },
+          "3": {
+            "1": [
+              13
+            ]
+          },
+          "4": {
+            "1": [
+              13
+            ]
+          },
+          "5": {
+            "1": [
+              13
+            ]
+          },
+          "6": {
+            "1": [
+              13
+            ]
+          },
+          "7": {
+            "1": [
+              13
+            ]
+          },
+          "8": {
+            "1": [
+              13
+            ]
+          },
+          "9": {
+            "1": [
+              13
+            ]
+          },
+          "10": {
+            "1": [
+              13
+            ]
+          },
+          "11": {
+            "1": [
+              13
+            ]
+          }
+        },
+        "Tone_A": "Default_Bass",
+        "Tone_B": "Bass",
+        "Tone_Base": "Default_Bass",
+        "Tone_C": "",
+        "Tone_D": "",
+        "Tone_Multiplayer": "",
+        "Tones": [
+          {
+            "GearList": {
+              "Amp": {
+                "Type": "Amps",
+                "KnobValues": {
+                  "Amp_OrangeAD50_Gain": 88.0,
+                  "Amp_OrangeAD50_Bass": 75.0,
+                  "Amp_OrangeAD50_Treble": 66.0,
+                  "Amp_OrangeAD50_Mid": 66.0
+                },
+                "Key": "Amp_OrangeAD50",
+                "Category": "Amp"
+              },
+              "Cabinet": {
+                "Type": "Cabinets",
+                "KnobValues": {},
+                "Key": "Cab_OrangeJimmyBean_57_Cone",
+                "Category": "Dynamic_Cone"
+              }
+            },
+            "IsCustom": true,
+            "Volume": "-12",
+            "ToneDescriptors": [
+              "$[35715]BASS"
+            ],
+            "Key": "Default_Bass",
+            "NameSeparator": " - ",
+            "Name": "Default_Bass",
+            "SortOrder": 0.0
+          },
+          {
+            "GearList": {
+              "Rack1": {
+                "Type": "Racks",
+                "KnobValues": {
+                  "Rack_StudioGraphicEQ_Treble": -2.0,
+                  "Rack_StudioGraphicEQ_MidFreq": 0.6,
+                  "Rack_StudioGraphicEQ_HiMid": -6.0,
+                  "Rack_StudioGraphicEQ_Bass": -2.0,
+                  "Rack_StudioGraphicEQ_TrebleFreq": 8.6,
+                  "Rack_StudioGraphicEQ_HiMidFreq": 1.8,
+                  "Rack_StudioGraphicEQ_LoMidFreq": 800.0,
+                  "Rack_StudioGraphicEQ_BassFreq": 125.0,
+                  "Rack_StudioGraphicEQ_Mid": 1.0,
+                  "Rack_StudioGraphicEQ_LoMid": 1.0
+                },
+                "Key": "Rack_StudioGraphicEQ"
+              },
+              "Amp": {
+                "Type": "Amps",
+                "KnobValues": {
+                  "Bass_Amp_CH350B_Gain": 2.0,
+                  "Bass_Amp_CH350B_7500": -5.0,
+                  "Bass_Amp_CH350B_250": 0.0,
+                  "Bass_Amp_CH350B_30": 2.5,
+                  "Bass_Amp_CH350B_90": 5.0,
+                  "Bass_Amp_CH350B_2500": -2.5,
+                  "Bass_Amp_CH350B_Bass": 88.0,
+                  "Bass_Amp_CH350B_Treble": 70.0,
+                  "Bass_Amp_CH350B_15000": 2.0,
+                  "Bass_Amp_CH350B_800": 2.5
+                },
+                "Key": "Bass_Amp_CH350B"
+              },
+              "Cabinet": {
+                "Type": "Cabinets",
+                "KnobValues": {},
+                "Key": "Bass_Cab_AT810BC_Tube_Cone"
+              },
+              "PrePedal1": {
+                "Type": "Pedals",
+                "KnobValues": {
+                  "Bass_Pedal_MBComp_Filter": 600.0,
+                  "Bass_Pedal_MBComp_Compress": 100.0,
+                  "Bass_Pedal_MBComp_Rate": 40.0
+                },
+                "Key": "Bass_Pedal_MBComp"
+              }
+            },
+            "IsCustom": true,
+            "Volume": "-10.8",
+            "ToneDescriptors": [
+              "$[35715]BASS"
+            ],
+            "Key": "Bass",
+            "NameSeparator": " - ",
+            "Name": "Bass",
+            "SortOrder": 0.0
+          }
+        ],
+        "SongVolume": -7.0,
+        "PreviewVolume": -5.0,
+        "AlbumArt": "urn:image:dds:album_rmbdayman",
+        "AlbumName": "Dayman",
+        "AlbumNameSort": "Dayman",
+        "ArrangementName": "Bass",
+        "ArtistName": "RMB",
+        "ArtistNameSort": "RMB",
+        "CapoFret": 0.0,
+        "CentOffset": 0.0,
+        "DLC": true,
+        "DLCKey": "RMBDayMan",
+        "DNA_Chords": 0.0,
+        "DNA_Riffs": 0.0,
+        "DNA_Solo": 0.0,
+        "EasyMastery": 0.073770492,
+        "LeaderboardChallengeRating": 0,
+        "ManifestUrn": "urn:database:json-db:rmbdayman_bass",
+        "MasterID_RDV": 50729724,
+        "MediumMastery": 0.540983607,
+        "NotesEasy": 27.0,
+        "NotesHard": 366.0,
+        "NotesMedium": 198.0,
+        "Shipping": true,
+        "SKU": "",
+        "SongDiffEasy": 0.041601183,
+        "SongDiffHard": 0.140981787,
+        "SongDiffMed": 0.152537671,
+        "SongDifficulty": 0.140981787,
+        "SongKey": "RMBDayMan",
+        "SongLength": 129.804,
+        "SongName": "Dayman",
+        "SongNameSort": "Dayman",
+        "SongYear": 2018,
+        "Tuning": {
+          "string0": 0,
+          "string1": 0,
+          "string2": 0,
+          "string3": 0,
+          "string4": 0,
+          "string5": 0
+        },
+        "PersistentID": "690BAB180A0D4D2EBEB2F15AA20E2087"
+      }
+    }
+  },
+  "ModelName": "RSEnumerable_Song",
+  "IterationVersion": 2,
+  "InsertRoot": "Static.Songs.Entries"
+}

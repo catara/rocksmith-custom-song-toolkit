@@ -7,9 +7,9 @@
   <offset>0.000</offset>
   <centOffset>0</centOffset>
   <songLength>172.156</songLength>
-  <lastConversionDateTime>8-24-22 10:15</lastConversionDateTime>
+  <lastConversionDateTime>1-21-23 14:51</lastConversionDateTime>
   <startBeat>0.000</startBeat>
-  <averageTempo>120.268</averageTempo>
+  <averageTempo>120.284</averageTempo>
   <tuning string0="0" string1="0" string2="0" string3="0" string4="0" string5="0" />
   <capo>0</capo>
   <artistName>spongeBob squarePants</artistName>
@@ -18,44 +18,52 @@
   <albumYear></albumYear>
   <crowdSpeed>1</crowdSpeed>
   <arrangementProperties represent="1" bonusArr="0" standardTuning="1" nonStandardChords="0" barreChords="0" powerChords="0" dropDPower="0" openChords="0" fingerPicking="0" pickDirection="0" doubleStops="0" palmMutes="0" harmonics="0" pinchHarmonics="0" hopo="0" tremolo="0" slides="1" unpitchedSlides="0" bends="0" tapping="0" vibrato="0" fretHandMutes="0" slapPop="0" twoFingerPicking="0" fifthsAndOctaves="0" syncopation="0" bassPick="0" sustain="1" pathLead="0" pathRhythm="0" pathBass="1" />
-  <phrases count="13">
+  <phrases count="17">
     <phrase name="COUNT" maxDifficulty="0" />
     <phrase name="tst" maxDifficulty="0" />
     <phrase name="dasf" maxDifficulty="0" />
+    <phrase name="PreChorus" maxDifficulty="0" />
     <phrase name="sfaddsge" maxDifficulty="0" />
+    <phrase name="GuitarSolo" maxDifficulty="0" />
     <phrase name="etre" maxDifficulty="0" />
     <phrase name="zhrtbd" maxDifficulty="0" />
+    <phrase name="fingerslide" maxDifficulty="0" />
     <phrase name="Iamnotsurewhatistheriffwhensolo" maxDifficulty="0" />
     <phrase name="dsvfsr" maxDifficulty="0" />
     <phrase name="Main" maxDifficulty="0" />
+    <phrase name="OutroFadeOut" maxDifficulty="0" />
     <phrase name="Ihopeyoulikedit" maxDifficulty="0" />
     <phrase name="fillins" maxDifficulty="0" />
     <phrase name="rgssfv" maxDifficulty="0" />
     <phrase name="END" maxDifficulty="0" />
   </phrases>
-  <phraseIterations count="15">
+  <phraseIterations count="19">
     <phraseIteration time="0.000" phraseId="0"/>
     <phraseIteration time="16.000" phraseId="1"/>
     <phraseIteration time="32.000" phraseId="2"/>
-    <phraseIteration time="42.000" phraseId="8"/>
-    <phraseIteration time="56.000" phraseId="3"/>
-    <phraseIteration time="72.000" phraseId="4"/>
-    <phraseIteration time="80.000" phraseId="8"/>
-    <phraseIteration time="96.000" phraseId="5"/>
-    <phraseIteration time="110.000" phraseId="6"/>
-    <phraseIteration time="112.000" phraseId="7"/>
-    <phraseIteration time="128.000" phraseId="8"/>
-    <phraseIteration time="140.000" phraseId="9"/>
-    <phraseIteration time="142.000" phraseId="10"/>
-    <phraseIteration time="144.000" phraseId="11"/>
-    <phraseIteration time="210.000" phraseId="12"/>
+    <phraseIteration time="34.000" phraseId="3"/>
+    <phraseIteration time="42.000" phraseId="11"/>
+    <phraseIteration time="56.000" phraseId="4"/>
+    <phraseIteration time="58.000" phraseId="5"/>
+    <phraseIteration time="72.000" phraseId="6"/>
+    <phraseIteration time="80.000" phraseId="11"/>
+    <phraseIteration time="96.000" phraseId="7"/>
+    <phraseIteration time="104.000" phraseId="8"/>
+    <phraseIteration time="110.000" phraseId="9"/>
+    <phraseIteration time="112.000" phraseId="10"/>
+    <phraseIteration time="128.000" phraseId="11"/>
+    <phraseIteration time="138.000" phraseId="12"/>
+    <phraseIteration time="140.000" phraseId="13"/>
+    <phraseIteration time="142.000" phraseId="14"/>
+    <phraseIteration time="144.000" phraseId="15"/>
+    <phraseIteration time="210.000" phraseId="16"/>
   </phraseIterations>
   <newLinkedDiffs count="0"/>
   <linkedDiffs count="0"/>
   <phraseProperties count="0"/>
   <chordTemplates count="0"/>
   <fretHandMuteTemplates count="0"/>
-  <ebeats count="449">
+  <ebeats count="423">
     <ebeat time="0.000" measure="1" />
     <ebeat time="0.500" />
     <ebeat time="1.000" />
@@ -479,42 +487,19 @@
     <ebeat time="210.000" measure="106" />
     <ebeat time="210.500" />
     <ebeat time="211.000" />
-    <ebeat time="211.500" />
-    <ebeat time="212.000" measure="107" />
-    <ebeat time="212.500" />
-    <ebeat time="213.000" />
-    <ebeat time="213.500" />
-    <ebeat time="214.000" measure="108" />
-    <ebeat time="214.500" />
-    <ebeat time="215.000" />
-    <ebeat time="215.500" />
-    <ebeat time="216.000" measure="109" />
-    <ebeat time="216.500" />
-    <ebeat time="217.000" />
-    <ebeat time="217.500" />
-    <ebeat time="218.000" measure="110" />
-    <ebeat time="218.500" />
-    <ebeat time="219.000" />
-    <ebeat time="219.500" />
-    <ebeat time="220.000" measure="111" />
-    <ebeat time="220.500" />
-    <ebeat time="221.000" />
-    <ebeat time="221.500" />
-    <ebeat time="222.000" measure="112" />
-    <ebeat time="222.500" />
-    <ebeat time="223.000" />
-    <ebeat time="223.500" />
-    <ebeat time="224.000" measure="113" />
   </ebeats>
-  <sections count="9">
-    <section name="intro" number="4" startTime="0.000"/>
-    <section name="verse" number="4" startTime="16.000"/>
-    <section name="chorus" number="4" startTime="32.000"/>
-    <section name="verse" number="8" startTime="56.000"/>
-    <section name="chorus" number="8" startTime="72.000"/>
-    <section name="bridge" number="4" startTime="96.000"/>
-    <section name="solo" number="4" startTime="112.000"/>
-    <section name="outro" number="4" startTime="144.000"/>
+  <sections count="12">
+    <section name="intro" number="5" startTime="0.000"/>
+    <section name="chorus" number="4" startTime="2.000"/>
+    <section name="verse" number="5" startTime="16.000"/>
+    <section name="verse" number="9" startTime="18.000"/>
+    <section name="chorus" number="9" startTime="32.000"/>
+    <section name="chorus" number="13" startTime="42.000"/>
+    <section name="verse" number="14" startTime="56.000"/>
+    <section name="chorus" number="18" startTime="72.000"/>
+    <section name="bridge" number="5" startTime="96.000"/>
+    <section name="solo" number="5" startTime="112.000"/>
+    <section name="outro" number="5" startTime="144.000"/>
     <section name="noguitar" number="1" startTime="210.000"/>
   </sections>
   <events count="1">
@@ -1207,22 +1192,26 @@
       </notes>
       <chords count="0"/>
       <fretHandMutes count="0"/>
-      <anchors count="18">
+      <anchors count="22">
         <anchor time="2.000" fret="2" width="4.000"/>
         <anchor time="16.000" fret="2" width="4.000"/>
         <anchor time="32.000" fret="2" width="4.000"/>
+        <anchor time="34.000" fret="2" width="4.000"/>
         <anchor time="37.250" fret="1" width="4.000"/>
         <anchor time="42.000" fret="1" width="4.000"/>
         <anchor time="43.500" fret="2" width="4.000"/>
         <anchor time="56.000" fret="2" width="4.000"/>
+        <anchor time="58.000" fret="2" width="4.000"/>
         <anchor time="72.000" fret="2" width="4.000"/>
         <anchor time="77.250" fret="1" width="4.000"/>
         <anchor time="80.000" fret="1" width="4.000"/>
         <anchor time="83.500" fret="2" width="4.000"/>
         <anchor time="96.000" fret="2" width="4.000"/>
+        <anchor time="104.000" fret="2" width="4.000"/>
         <anchor time="110.000" fret="2" width="4.000"/>
         <anchor time="112.000" fret="2" width="4.000"/>
         <anchor time="128.000" fret="2" width="4.000"/>
+        <anchor time="138.000" fret="2" width="4.000"/>
         <anchor time="140.000" fret="2" width="4.000"/>
         <anchor time="142.000" fret="2" width="4.000"/>
         <anchor time="144.000" fret="2" width="4.000"/>

@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <OutputType>Exe</OutputType>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
@@ -38,7 +38,7 @@
       <HintPath>..\..\lib\NDesk\NDesk.Options.dll</HintPath>
     </Reference>
     <Reference Include="RocksmithToolkitLib">
-      <HintPath>..\..\RocksmithToolkitLib\bin\Release\net6.0-windows\RocksmithToolkitLib.dll</HintPath>
+      <HintPath>..\..\RocksmithToolkitLib\bin\Release\net7.0-windows10.0.22621.0\RocksmithToolkitLib.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

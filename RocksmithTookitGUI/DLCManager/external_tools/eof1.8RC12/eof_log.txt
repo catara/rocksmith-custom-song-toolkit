@@ -1,823 +1,292 @@
-162: Logging started during program initialization at 10/01/22 16:59:31
-162: EOF v1.8RC12 (9-26-2020)
-162: eof_controller_load_config() entered
-162: eof_controller_read_button_names() entered
-162: eof_controller_load_config() entered
-162: eof_controller_read_button_names() entered
-162: Logging level set to normal
-162: 	Importing chord shape definitions
-162: eof_load_chord_shape_definitions() entered
-162: 	54 chord shape definitions imported
-162: eof_set_display_mode() entered
-162: eof_window_create() entered
-162: eof_window_create() entered
-162: eof_window_create() entered
-162: eof_window_create() entered
-162: eof_window_create() entered
-162: eof_load_data() entered
-162: eof_init_colors() entered
-162: eof_undo_reset() entered
-162: 	Initializing audio
-162: eof_mix_init() entered
-162: 	Loading audio samples
-162: 	Checking for crash recovery files
-162: eof_window_create() entered
-162: 	New notes panel window instance:  0x10a447d0
-162: 	Entering main program loop
-162: eof_menu_file_load() entered
-162: eof_destroy_ogg() entered
-162: 	Loading project
-162: eof_load_song() entered
-162: eof_create_song() entered
-162: eof_load_song_pf() entered
-162: eof_track_add_tremolo() entered
-162: 	Project loaded
-162: 	Set eof_song_path to "C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\spongeBob squarePants - goofy goober\"
-162: eof_import_ini() entered
-162: 	Buffering INI file into memory
-162: 	Tokenizing INI file buffer
-162: 	Parsing INI file buffer
-162: 	Processing INI file contents
-162: 	Freeing INI buffer
-162: eof_load_ogg_quick() entered
-162: eof_destroy_ogg() entered
-162: 	Loading OGG file "C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\spongeBob squarePants - goofy goober\guitar.ogg"
-162: eof_truncate_chart() entered
-162: 	Deleting beats
-162: eof_truncate_chart() exiting
-162: 	Initializing after load
-162: eof_init_after_load() entered
-162: eof_truncate_chart() entered
-162: 	Deleting beats
-162: eof_truncate_chart() exiting
-162: eof_select_beat() entered
-162: eof_undo_reset() entered
-162: eof_sort_notes() entered
-162: eof_fixup_notes() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_sort_events() entered
-162: eof_delete_blank_events() entered
-162: 	Removed 0 empty text events
-162: 	Initialization after load complete
-162: eof_fixup_notes() entered
-162: eof_music_play() entered
-162: 	Starting 100% speed time stretch playback
-162: eof_mix_start() entered
-162: eof_music_play() entered
-162: 	Starting 100% speed time stretch playback
-162: eof_mix_start() entered
-162: eof_music_play() entered
-162: 	Stopping playback
-162: File>Save selected
-162: 	Saving chart
-162: eof_save_helper() entered
-162: eof_sort_notes() entered
-162: eof_fixup_notes() entered
-162: eof_prepare_undo() entered
-162: eof_check_fret_hand_positions_option() entered
-162: eof_copy_file() entered
-162: 	Saving project
-162: 	Project saved at 10/01/22 17:10:31
-162: eof_export_midi() entered
-162: eof_build_tempo_and_ts_lists() entered
-162: eof_create_ts_list() entered
-162: 	Building tempo and TS lists from project's tempo track
-162: eof_build_tempo_list() entered
-162: eof_build_ts_list() entered
-162: eof_create_ts_list() entered
-162: eof_midi_add_ts_realtime() entered
-162: eof_build_ks_list() entered
-162: eof_create_ks_list() entered
-162: eof_sort_notes() entered
-162: eof_sort_events() entered
-162: eof_clear_midi_events() entered
-162: eof_check_for_note_overlap() entered
-162: eof_clear_midi_events() entered
-162: eof_check_for_note_overlap() entered
-162: eof_clear_midi_events() entered
-162: eof_check_for_note_overlap() entered
-162: eof_clear_midi_events() entered
-162: eof_sort_events() entered
-162: eof_dump_midi_track() entered
-162: eof_dump_midi_track() entered
-162: eof_dump_midi_track() entered
-162: eof_dump_midi_track() entered
-162: eof_dump_midi_track() entered
-162: eof_destroy_tempo_list() entered
-162: eof_destroy_ts_list() entered
-162: eof_destroy_ks_list() entered
-162: 	MIDI export completed
-162: eof_save_ini() entered
-162: Exporting Rocksmith XML files
-162: eof_export_rocksmith_2_track() entered
-162: Cannot export track "PART REAL_BASS" in Rocksmith format, it has no populated difficulties
-162: eof_export_rocksmith_2_track() entered
-162: eof_truncate_chart() entered
-162: 	Deleting beats
-162: eof_truncate_chart() exiting
-162: 	! Adding missing COUNT phrase
-162: 	! Adding missing END phrase
-162: eof_sort_events() entered
-162: 	! Adding missing noguitar RS section
-162: eof_sort_events() entered
-162: eof_build_section_list() entered
-162: eof_rs_build_chord_list() entered
-162: eof_track_pro_guitar_sort_tone_changes() entered
-162: eof_sort_events() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_sort_events() entered
-162: eof_sort_events() entered
-162: eof_export_rocksmith_2_track() entered
-162: eof_truncate_chart() entered
-162: 	Deleting beats
-162: eof_truncate_chart() exiting
-162: 	! Adding missing COUNT phrase
-162: 	! Adding missing END phrase
-162: eof_sort_events() entered
-162: 	! Adding missing noguitar RS section
-162: eof_sort_events() entered
-162: eof_build_section_list() entered
-162: eof_rs_build_chord_list() entered
-162: eof_track_pro_guitar_sort_tone_changes() entered
-162: eof_sort_events() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_sort_events() entered
-162: eof_sort_events() entered
-162: eof_export_rocksmith_2_track() entered
-162: eof_truncate_chart() entered
-162: 	Deleting beats
-162: eof_truncate_chart() exiting
-162: 	! Adding missing COUNT phrase
-162: 	! Adding missing END phrase
-162: eof_sort_events() entered
-162: 	! Adding missing noguitar RS section
-162: eof_sort_events() entered
-162: eof_build_section_list() entered
-162: eof_rs_build_chord_list() entered
-162: eof_track_pro_guitar_sort_tone_changes() entered
-162: eof_sort_events() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_sort_events() entered
-162: eof_sort_events() entered
-162: eof_export_rocksmith_2_track() entered
-162: eof_truncate_chart() entered
-162: 	Deleting beats
-162: eof_truncate_chart() exiting
-162: 	! Adding missing COUNT phrase
-162: 	! Adding missing END phrase
-162: eof_sort_events() entered
-162: 	! Adding missing noguitar RS section
-162: eof_sort_events() entered
-162: eof_build_section_list() entered
-162: eof_rs_build_chord_list() entered
-162: eof_track_pro_guitar_sort_tone_changes() entered
-162: eof_sort_events() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_sort_events() entered
-162: eof_sort_events() entered
-162: 	Save completed
-162: 	Importing Rocksmith file
-162: eof_load_rs() entered
-162: eof_prepare_undo() entered
-162: 		Processing <phrases> tag on line #21
-162: 			19 phrases loaded
-162: 		Processing <phraseIterations> tag on line #42
-162: 			21 phrase iterations loaded
-162: 		Processing <ebeats> tag on line #70
-162: 	Error reading timestamp on line #549.  Aborting
-162: 	Importing Rocksmith file
-162: eof_load_rs() entered
-162: eof_prepare_undo() entered
-162: 		Processing <phrases> tag on line #21
-162: 			19 phrases loaded
-162: 		Processing <phraseIterations> tag on line #42
-162: 			21 phrase iterations loaded
-162: 		Processing <ebeats> tag on line #70
-162: 	Error reading timestamp on line #549.  Aborting
-162: 	Importing Rocksmith file
-162: eof_load_rs() entered
-162: eof_prepare_undo() entered
-162: 		Processing <phrases> tag on line #21
-162: 			19 phrases loaded
-162: 		Processing <phraseIterations> tag on line #42
-162: 			21 phrase iterations loaded
-162: 		Processing <ebeats> tag on line #70
-162: 		Processing <sections> tag on line #521
-162: 			12 sections loaded
-162: 		Processing <events> tag on line #535
-162: 			1 events loaded
-162: 		Processing <levels> tag on line #544
-162: 			Processing <level> tag on line #545
-162: 				Processing <notes> tag on line #546
-162: 					Added 478 notes
-162: 				Processing <anchors> tag on line #1029
-162: 					Added 23 anchors
-162: 	Parsing complete.  Finishing up
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_sort_events() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: Cleaning up beats
-162: eof_truncate_chart() entered
-162: 	Deleting beats
-162: eof_truncate_chart() exiting
-162: Cleaning up imported notes
-162: eof_prepare_undo() entered
-162: 	Importing Rocksmith file
-162: eof_load_rs() entered
-162: eof_prepare_undo() entered
-162: 		Processing <phrases> tag on line #21
-162: 			19 phrases loaded
-162: 		Processing <phraseIterations> tag on line #42
-162: 			21 phrase iterations loaded
-162: 		Processing <ebeats> tag on line #70
-162: 		Processing <sections> tag on line #521
-162: 			12 sections loaded
-162: 		Processing <events> tag on line #535
-162: 			1 events loaded
-162: 		Processing <levels> tag on line #544
-162: 			Processing <level> tag on line #545
-162: 				Processing <notes> tag on line #546
-162: 					Added 478 notes
-162: 				Processing <anchors> tag on line #1029
-162: 					Added 23 anchors
-162: 	Parsing complete.  Finishing up
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_sort_events() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: Cleaning up beats
-162: eof_truncate_chart() entered
-162: 	Deleting beats
-162: eof_truncate_chart() exiting
-162: Cleaning up imported notes
-162: File>Save selected
-162: 	Saving chart
-162: eof_save_helper() entered
-162: eof_sort_notes() entered
-162: eof_fixup_notes() entered
-162: eof_check_fret_hand_positions_option() entered
-162: eof_copy_file() entered
-162: 	Saving project
-162: 	Project saved at 10/02/22 11:18:51
-162: eof_export_midi() entered
-162: eof_build_tempo_and_ts_lists() entered
-162: eof_create_ts_list() entered
-162: 	Building tempo and TS lists from project's tempo track
-162: eof_build_tempo_list() entered
-162: eof_build_ts_list() entered
-162: eof_create_ts_list() entered
-162: eof_midi_add_ts_realtime() entered
-162: eof_build_ks_list() entered
-162: eof_create_ks_list() entered
-162: eof_sort_notes() entered
-162: eof_sort_events() entered
-162: eof_clear_midi_events() entered
-162: eof_check_for_note_overlap() entered
-162: eof_clear_midi_events() entered
-162: eof_check_for_note_overlap() entered
-162: eof_clear_midi_events() entered
-162: eof_check_for_note_overlap() entered
-162: eof_clear_midi_events() entered
-162: eof_check_for_note_overlap() entered
-162: eof_clear_midi_events() entered
-162: eof_sort_events() entered
-162: eof_dump_midi_track() entered
-162: eof_dump_midi_track() entered
-162: eof_dump_midi_track() entered
-162: eof_dump_midi_track() entered
-162: eof_dump_midi_track() entered
-162: eof_dump_midi_track() entered
-162: eof_destroy_tempo_list() entered
-162: eof_destroy_ts_list() entered
-162: eof_destroy_ks_list() entered
-162: 	MIDI export completed
-162: eof_save_ini() entered
-162: Exporting Rocksmith XML files
-162: eof_export_rocksmith_2_track() entered
-162: eof_truncate_chart() entered
-162: 	Deleting beats
-162: eof_truncate_chart() exiting
-162: 	! Adding missing COUNT phrase
-162: 	! Adding missing END phrase
-162: eof_sort_events() entered
-162: 	! Adding missing noguitar RS section
-162: eof_sort_events() entered
-162: eof_build_section_list() entered
-162: eof_rs_build_chord_list() entered
-162: eof_track_pro_guitar_sort_tone_changes() entered
-162: eof_sort_events() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_sort_events() entered
-162: eof_sort_events() entered
-162: eof_export_rocksmith_2_track() entered
-162: eof_truncate_chart() entered
-162: 	Deleting beats
-162: eof_truncate_chart() exiting
-162: 	! Adding missing COUNT phrase
-162: 	! Adding missing END phrase
-162: eof_sort_events() entered
-162: 	! Adding missing noguitar RS section
-162: eof_sort_events() entered
-162: eof_build_section_list() entered
-162: eof_rs_build_chord_list() entered
-162: eof_track_pro_guitar_sort_tone_changes() entered
-162: eof_sort_events() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_sort_events() entered
-162: eof_sort_events() entered
-162: eof_export_rocksmith_2_track() entered
-162: eof_truncate_chart() entered
-162: 	Deleting beats
-162: eof_truncate_chart() exiting
-162: 	! Adding missing COUNT phrase
-162: 	! Adding missing END phrase
-162: eof_sort_events() entered
-162: 	! Adding missing noguitar RS section
-162: eof_sort_events() entered
-162: eof_build_section_list() entered
-162: eof_rs_build_chord_list() entered
-162: eof_track_pro_guitar_sort_tone_changes() entered
-162: eof_sort_events() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_sort_events() entered
-162: eof_sort_events() entered
-162: eof_export_rocksmith_2_track() entered
-162: eof_truncate_chart() entered
-162: 	Deleting beats
-162: eof_truncate_chart() exiting
-162: 	! Adding missing COUNT phrase
-162: 	! Adding missing END phrase
-162: eof_sort_events() entered
-162: 	! Adding missing noguitar RS section
-162: eof_sort_events() entered
-162: eof_build_section_list() entered
-162: eof_rs_build_chord_list() entered
-162: eof_track_pro_guitar_sort_tone_changes() entered
-162: eof_sort_events() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_sort_events() entered
-162: eof_sort_events() entered
-162: eof_export_rocksmith_2_track() entered
-162: eof_truncate_chart() entered
-162: 	Deleting beats
-162: eof_truncate_chart() exiting
-162: 	! Adding missing COUNT phrase
-162: 	! Adding missing END phrase
-162: eof_sort_events() entered
-162: 	! Adding missing noguitar RS section
-162: eof_sort_events() entered
-162: eof_build_section_list() entered
-162: eof_rs_build_chord_list() entered
-162: eof_track_pro_guitar_sort_tone_changes() entered
-162: eof_sort_events() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_sort_events() entered
-162: eof_sort_events() entered
-162: 	Save completed
-162: eof_prepare_undo() entered
-162: eof_undo_apply() entered
-162: eof_undo_load_state() entered
-162: eof_create_song() entered
-162: eof_load_song_pf() entered
-162: eof_track_add_tremolo() entered
-162: 	Closing project
-162: eof_destroy_song() entered
-162: eof_song_delete_track() entered
-162: eof_song_delete_track() entered
-162: eof_song_delete_track() entered
-162: eof_song_delete_track() entered
-162: eof_song_delete_track() entered
-162: eof_song_delete_track() entered
-162: eof_song_delete_track() entered
-162: eof_song_delete_track() entered
-162: eof_song_delete_track() entered
-162: eof_song_delete_track() entered
-162: eof_song_delete_track() entered
-162: eof_song_delete_track() entered
-162: eof_song_delete_track() entered
-162: eof_song_delete_track() entered
-162: eof_song_delete_track() entered
-162: eof_MIDI_empty_track_list() entered
-162: 	Project closed
-162: 	Initializing after load
-162: eof_init_after_load() entered
-162: eof_truncate_chart() entered
-162: 	Deleting beats
-162: eof_truncate_chart() exiting
-162: eof_sort_notes() entered
-162: eof_fixup_notes() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_sort_events() entered
-162: eof_delete_blank_events() entered
-162: 	Removed 0 empty text events
-162: 	Initialization after load complete
-162: eof_select_beat() entered
-162: eof_fix_catalog_selection() entered
-162: eof_prepare_undo() entered
-162: 	Importing Rocksmith file
-162: eof_load_rs() entered
-162: eof_prepare_undo() entered
-162: 		Processing <phrases> tag on line #21
-162: 			19 phrases loaded
-162: 		Processing <phraseIterations> tag on line #42
-162: 			21 phrase iterations loaded
-162: 		Processing <ebeats> tag on line #70
-162: 		Processing <sections> tag on line #521
-162: 			12 sections loaded
-162: 		Processing <events> tag on line #535
-162: 			1 events loaded
-162: 		Processing <levels> tag on line #544
-162: 			Processing <level> tag on line #545
-162: 				Processing <notes> tag on line #546
-162: 					Added 383 notes
-162: 				Processing <anchors> tag on line #934
-162: 					Added 23 anchors
-162: 	Parsing complete.  Finishing up
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_sort_events() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: Cleaning up beats
-162: eof_truncate_chart() entered
-162: 	Deleting beats
-162: eof_truncate_chart() exiting
-162: Cleaning up imported notes
-162: 	Importing Rocksmith file
-162: eof_load_rs() entered
-162: eof_prepare_undo() entered
-162: 		Processing <phrases> tag on line #21
-162: 			19 phrases loaded
-162: 		Processing <phraseIterations> tag on line #42
-162: 			21 phrase iterations loaded
-162: 		Processing <ebeats> tag on line #70
-162: 		Processing <sections> tag on line #414
-162: 	Warning:  Invalid section name on line #426.
-162: 			12 sections loaded
-162: 		Processing <events> tag on line #428
-162: 			1 events loaded
-162: 		Processing <levels> tag on line #437
-162: 			Processing <level> tag on line #438
-162: 				Processing <notes> tag on line #439
-162: 					Added 383 notes
-162: 				Processing <anchors> tag on line #826
-162: 					Added 23 anchors
-162: 	Parsing complete.  Finishing up
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_sort_events() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: eof_song_delete_text_event() entered
-162: eof_cleanup_beat_flags() entered
-162: Cleaning up beats
-162: eof_truncate_chart() entered
-162: 	Adding beats
-162: eof_truncate_chart() exiting
-162: Cleaning up imported notes
-162: ALT keypress detected, activating main menu
-162: eof_set_display_mode() entered
-162: eof_window_destroy() entered
-162: eof_window_destroy() entered
-162: eof_window_destroy() entered
-162: eof_window_destroy() entered
-162: eof_window_destroy() entered
-162: eof_window_destroy() entered
-162: eof_window_create() entered
-162: eof_window_create() entered
-162: eof_window_create() entered
-162: eof_window_create() entered
-162: eof_window_create() entered
-162: eof_set_display_mode() entered
-162: eof_window_destroy() entered
-162: eof_window_destroy() entered
-162: eof_window_destroy() entered
-162: eof_window_destroy() entered
-162: eof_window_destroy() entered
-162: eof_window_create() entered
-162: eof_window_create() entered
-162: eof_window_create() entered
-162: eof_window_create() entered
-162: eof_window_create() entered
-162: eof_window_create() entered
-162: 	New notes panel window instance:  0x10a441e0
+949: Logging started during program initialization at 04/28/23 22:42:29
+949: EOF v1.8RC12 (9-26-2020)
+949: eof_controller_load_config() entered
+949: eof_controller_read_button_names() entered
+949: eof_controller_load_config() entered
+949: eof_controller_read_button_names() entered
+949: Logging level set to normal
+949: 	Importing chord shape definitions
+949: eof_load_chord_shape_definitions() entered
+949: 	54 chord shape definitions imported
+949: eof_set_display_mode() entered
+949: eof_window_create() entered
+949: eof_window_create() entered
+949: eof_window_create() entered
+949: eof_window_create() entered
+949: eof_window_create() entered
+949: eof_load_data() entered
+949: eof_init_colors() entered
+949: eof_undo_reset() entered
+949: 	Initializing audio
+949: eof_mix_init() entered
+949: 	Loading audio samples
+949: 	Checking for crash recovery files
+949: 		Loading last undo state
+949: 	Loading project
+949: eof_load_song() entered
+949: eof_create_song() entered
+949: eof_load_song_pf() entered
+949: eof_track_add_tremolo() entered
+949: 	Project loaded
+949: eof_load_ogg() entered
+949: eof_destroy_ogg() entered
+949: 		Applying name "guitar.ogg" to OGG profile
+949: 	Loading OGG file "C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\spongeBob squarePants - goofy goober\guitar.ogg"
+949: eof_truncate_chart() entered
+949: 	Deleting beats
+949: eof_truncate_chart() exiting
+949: 	Initializing after load
+949: eof_init_after_load() entered
+949: eof_truncate_chart() entered
+949: 	Deleting beats
+949: eof_truncate_chart() exiting
+949: eof_select_beat() entered
+949: eof_undo_reset() entered
+949: eof_sort_notes() entered
+949: eof_fixup_notes() entered
+949: eof_cleanup_beat_flags() entered
+949: eof_sort_events() entered
+949: eof_delete_blank_events() entered
+949: 	Removed 0 empty text events
+949: 	Initialization after load complete
+949: eof_repair_midi_import_grid_snap() entered
+949: Enforcing grid snap for imported notes
+949: 	Checking PART GUITAR
+949: 	Checking PART BASS
+949: 	Checking PART GUITAR COOP
+949: 	Checking PART RHYTHM
+949: 	Checking PART DRUMS
+949: 	Checking PART VOCALS
+949: 	Checking PART KEYS
+949: 	Checking PART REAL_BASS
+949: 	Checking PART REAL_GUITAR
+949: 	Checking PART DANCE
+949: 	Checking PART REAL_BASS_22
+949: 	Checking PART REAL_GUITAR_22
+949: 	Checking PART REAL_DRUMS_PS
+949: 	Checking PART REAL_GUITAR_BONUS
+949: eof_prepare_undo() entered
+949: eof_window_create() entered
+949: 	New notes panel window instance:  0x10b315f0
+949: 	Entering main program loop
+949: eof_set_display_mode() entered
+949: eof_window_destroy() entered
+949: eof_window_destroy() entered
+949: eof_window_destroy() entered
+949: eof_window_destroy() entered
+949: eof_window_destroy() entered
+949: eof_window_destroy() entered
+949: eof_window_create() entered
+949: eof_window_create() entered
+949: eof_window_create() entered
+949: eof_window_create() entered
+949: eof_window_create() entered
+949: eof_set_display_mode() entered
+949: eof_window_destroy() entered
+949: eof_window_destroy() entered
+949: eof_window_destroy() entered
+949: eof_window_destroy() entered
+949: eof_window_destroy() entered
+949: eof_window_create() entered
+949: eof_window_create() entered
+949: eof_window_create() entered
+949: eof_window_create() entered
+949: eof_window_create() entered
+949: eof_window_create() entered
+949: 	New notes panel window instance:  0x10b310f0
+949: "File>Quick save" selected
+949: 	Quick saving chart
+949: eof_save_helper() entered
+949: eof_sort_notes() entered
+949: eof_fixup_notes() entered
+949: eof_copy_file() entered
+949: 	Saving project
+949: 	Project saved at 05/01/23 21:39:06
+949: eof_export_midi() entered
+949: eof_build_tempo_and_ts_lists() entered
+949: eof_create_ts_list() entered
+949: 	Building tempo and TS lists from project's tempo track
+949: eof_build_tempo_list() entered
+949: eof_build_ts_list() entered
+949: eof_create_ts_list() entered
+949: eof_midi_add_ts_realtime() entered
+949: eof_build_ks_list() entered
+949: eof_create_ks_list() entered
+949: eof_sort_notes() entered
+949: eof_sort_events() entered
+949: eof_clear_midi_events() entered
+949: eof_check_for_note_overlap() entered
+949: eof_clear_midi_events() entered
+949: eof_check_for_note_overlap() entered
+949: eof_clear_midi_events() entered
+949: eof_check_for_note_overlap() entered
+949: eof_clear_midi_events() entered
+949: eof_check_for_note_overlap() entered
+949: eof_clear_midi_events() entered
+949: eof_sort_events() entered
+949: eof_dump_midi_track() entered
+949: eof_dump_midi_track() entered
+949: eof_dump_midi_track() entered
+949: eof_dump_midi_track() entered
+949: eof_dump_midi_track() entered
+949: eof_dump_midi_track() entered
+949: eof_destroy_tempo_list() entered
+949: eof_destroy_ts_list() entered
+949: eof_destroy_ks_list() entered
+949: 	MIDI export completed
+949: eof_save_ini() entered
+949: Exporting Rocksmith XML files
+949: eof_export_rocksmith_2_track() entered
+949: eof_truncate_chart() entered
+949: 	Deleting beats
+949: eof_truncate_chart() exiting
+949: 	! Adding missing COUNT phrase
+949: 	! Adding missing END phrase
+949: eof_sort_events() entered
+949: 	! Adding missing noguitar RS section
+949: eof_sort_events() entered
+949: eof_build_section_list() entered
+949: eof_rs_build_chord_list() entered
+949: eof_track_pro_guitar_sort_tone_changes() entered
+949: eof_sort_events() entered
+949: eof_song_delete_text_event() entered
+949: eof_cleanup_beat_flags() entered
+949: eof_song_delete_text_event() entered
+949: eof_cleanup_beat_flags() entered
+949: eof_song_delete_text_event() entered
+949: eof_cleanup_beat_flags() entered
+949: eof_song_delete_text_event() entered
+949: eof_cleanup_beat_flags() entered
+949: eof_sort_events() entered
+949: eof_sort_events() entered
+949: eof_export_rocksmith_2_track() entered
+949: eof_truncate_chart() entered
+949: 	Deleting beats
+949: eof_truncate_chart() exiting
+949: 	! Adding missing COUNT phrase
+949: 	! Adding missing END phrase
+949: eof_sort_events() entered
+949: 	! Adding missing noguitar RS section
+949: eof_sort_events() entered
+949: eof_build_section_list() entered
+949: eof_rs_build_chord_list() entered
+949: eof_track_pro_guitar_sort_tone_changes() entered
+949: eof_sort_events() entered
+949: eof_song_delete_text_event() entered
+949: eof_cleanup_beat_flags() entered
+949: eof_song_delete_text_event() entered
+949: eof_cleanup_beat_flags() entered
+949: eof_song_delete_text_event() entered
+949: eof_cleanup_beat_flags() entered
+949: eof_song_delete_text_event() entered
+949: eof_cleanup_beat_flags() entered
+949: eof_sort_events() entered
+949: eof_sort_events() entered
+949: eof_export_rocksmith_2_track() entered
+949: eof_truncate_chart() entered
+949: 	Deleting beats
+949: eof_truncate_chart() exiting
+949: 	! Adding missing COUNT phrase
+949: 	! Adding missing END phrase
+949: eof_sort_events() entered
+949: 	! Adding missing noguitar RS section
+949: eof_sort_events() entered
+949: eof_build_section_list() entered
+949: eof_rs_build_chord_list() entered
+949: eof_track_pro_guitar_sort_tone_changes() entered
+949: eof_sort_events() entered
+949: eof_song_delete_text_event() entered
+949: eof_cleanup_beat_flags() entered
+949: eof_song_delete_text_event() entered
+949: eof_cleanup_beat_flags() entered
+949: eof_song_delete_text_event() entered
+949: eof_cleanup_beat_flags() entered
+949: eof_song_delete_text_event() entered
+949: eof_cleanup_beat_flags() entered
+949: eof_sort_events() entered
+949: eof_sort_events() entered
+949: eof_export_rocksmith_2_track() entered
+949: eof_truncate_chart() entered
+949: 	Deleting beats
+949: eof_truncate_chart() exiting
+949: 	! Adding missing COUNT phrase
+949: 	! Adding missing END phrase
+949: eof_sort_events() entered
+949: 	! Adding missing noguitar RS section
+949: eof_sort_events() entered
+949: eof_build_section_list() entered
+949: eof_rs_build_chord_list() entered
+949: eof_track_pro_guitar_sort_tone_changes() entered
+949: eof_sort_events() entered
+949: eof_song_delete_text_event() entered
+949: eof_cleanup_beat_flags() entered
+949: eof_song_delete_text_event() entered
+949: eof_cleanup_beat_flags() entered
+949: eof_song_delete_text_event() entered
+949: eof_cleanup_beat_flags() entered
+949: eof_song_delete_text_event() entered
+949: eof_cleanup_beat_flags() entered
+949: eof_sort_events() entered
+949: eof_sort_events() entered
+949: eof_export_rocksmith_2_track() entered
+949: eof_truncate_chart() entered
+949: 	Deleting beats
+949: eof_truncate_chart() exiting
+949: 	! Adding missing COUNT phrase
+949: 	! Adding missing END phrase
+949: eof_sort_events() entered
+949: 	! Adding missing noguitar RS section
+949: eof_sort_events() entered
+949: eof_build_section_list() entered
+949: eof_rs_build_chord_list() entered
+949: eof_track_pro_guitar_sort_tone_changes() entered
+949: eof_sort_events() entered
+949: eof_song_delete_text_event() entered
+949: eof_cleanup_beat_flags() entered
+949: eof_song_delete_text_event() entered
+949: eof_cleanup_beat_flags() entered
+949: eof_song_delete_text_event() entered
+949: eof_cleanup_beat_flags() entered
+949: eof_song_delete_text_event() entered
+949: eof_cleanup_beat_flags() entered
+949: eof_sort_events() entered
+949: eof_sort_events() entered
+949: 	Save completed
+949: eof_restore_oggs_helper() entered
+949: eof_exit() entered
+949: eof_save_config() entered
+949: eof_controller_save_config() entered
+949: eof_controller_save_config() entered
+949: eof_mix_exit() entered
+949: eof_destroy_data() entered
+949: eof_destroy_ogg() entered
+949: 	Closing project
+949: eof_destroy_song() entered
+949: eof_destroy_waveform() entered
+949: eof_destroy_spectrogram() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_MIDI_empty_track_list() entered
+949: 	Project closed
+949: eof_destroy_waveform() entered
+949: eof_destroy_spectrogram() entered
+949: eof_window_destroy() entered
+949: eof_window_destroy() entered
+949: eof_window_destroy() entered
+949: eof_window_destroy() entered
+949: eof_window_destroy() entered
+949: eof_window_destroy() entered
+949: Logging stopped during program completion at 05/01/23 21:39:06

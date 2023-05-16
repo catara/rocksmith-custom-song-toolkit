@@ -1873,23 +1873,24 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             //bcapi check if conenctivity can be achieved
             //check if song exists (wo text in brakets) artist album song title
             //add to the Rocksmith toolkit 
-            System.Data.OleDb.OleDbConnection cnb = null;
-            SQLite.SQLiteConnection cnc = null;
+            //System.Data.OleDb.OleDbConnection cnb = null;
+            //SQLite.SQLiteConnection cnc = null;
             try
             {
-                cnb = new OleDbConnection("Provider=Microsoft." + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Persist Security" +
-                    " Info=False;Mode= Share Deny None;Data Source=" + ConfigRepository.Instance()["dlcm_DBFolder"]);
+                OpenDBQuick();
+                //cnb = new OleDbConnection("Provider=Microsoft." + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Persist Security" +
+                //    " Info=False;Mode= Share Deny None;Data Source=" + ConfigRepository.Instance()["dlcm_DBFolder"]);
 
-                cnb = new OleDbConnection("Provider=Microsoft." + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Persist Security" +
-                    " Info=False;Mode= Share Deny None;Data Source=" + ConfigRepository.Instance()["dlcm_DBFolder"]); //running twice as some issues with compilatiojn in x86...sometime
+                //cnb = new OleDbConnection("Provider=Microsoft." + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Persist Security" +
+                //    " Info=False;Mode= Share Deny None;Data Source=" + ConfigRepository.Instance()["dlcm_DBFolder"]); //running twice as some issues with compilatiojn in x86...sometime
                 //if (File.Exists(cnb.DataSource.ToString())) cnb.Open();
                 //try { cnb.Close(); cnc.Close(); } catch (Exception ex) {; }
-                OpenDb(null, cnb, cnc);
+                OpenDb();// (null, cnb, cnc);
                 PackNew frm = new DLCManager.PackNew(packageData, cnb, cnc); frm.ShowDialog();
             }
             catch (Exception exx)
             {
-                DLCManager.GenericFunctions.ShowConnectivityError(exx, "FAIL to use M$ ACCESS plugin:\n");/*, null*/
+                ShowConnectivityError(exx, "FAIL to use M$ ACCESS plugin:\n");/*, null*/
                 var tz = ConfigRepository.Instance()["dlcm_DBFolder"];
                 tz = tz.Replace("AccessDB.accdb", "SQLLiteDB.db");
                 ConfigRepository.Instance()["dlcm_DBFolder"] = tz;
@@ -1903,7 +1904,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 }
                 catch (Exception ex)
                 {
-                    DLCManager.GenericFunctions.ShowConnectivityError(ex, "FAIL to use SQLLite :\n");/*, null*/
+                    ShowConnectivityError(ex, "FAIL to use SQLLite :\n");/*, null*/
                 }
                 //Is_MultiTrack = ag[0]; MultiTrack_Version = ag[1]; IsLive = ag[2]; LiveDetails = ag[3]; IsAcoustic = ag[4]; IsSingle = ag[5]; IsSoundtrack = ag[6]; IsInstrumental = ag[7]; IsEP = ag[8]; IsUncensored = ag[9];
                 //IsFullAlbum = ag[10]; IsRemastered = ag[11]; InTheWorks = ag[12]; IsKaraoke = ag[13]; IsDemo = ag[14]; HasFeaturing = ag[15]; IsRemix = ag[16]; IsCover = ag[17];
@@ -2063,80 +2064,80 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             return packageData;
         }
 
-        public static void OpenDb(Label lbl_Access, OleDbConnection cnb, SQLite.SQLiteConnection cnc)
-        {
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul114"] == "Yes" && File.Exists(tz))
-            //{
-            //    DialogResult result1 = DialogResult.Cancel;
-            //    result1 = MessageBox.Show("Chose DB System:\n1. (Yes) Microsoft Access (.accdb) or\n2. (No) SQLite3 (.db)."
-            //    , MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+        //public static void OpenDb(Label lbl_Access, OleDbConnection cnb, SQLite.SQLiteConnection cnc)
+        //{
+        //    //if (ConfigRepository.Instance()["dlcm_AdditionalManipul114"] == "Yes" && File.Exists(tz))
+        //    //{
+        //    //    DialogResult result1 = DialogResult.Cancel;
+        //    //    result1 = MessageBox.Show("Chose DB System:\n1. (Yes) Microsoft Access (.accdb) or\n2. (No) SQLite3 (.db)."
+        //    //    , MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-            //    if (result1 == DialogResult.Yes) ConfigRepository.Instance()["dlcm_AdditionalManipul114"] = "Yes";
-            //}
-            var tz = ConfigRepository.Instance()["dlcm_DBFolder"];
-            tz = tz.Replace("AccessDB.accdb", "SQLLiteDB.db");
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul114"] != "Yes")
-                try
-                {
-                    if (File.Exists(cnb.DataSource.ToString())) cnb.Open();
-                }
-                catch (Exception exx)
-                {
+        //    //    if (result1 == DialogResult.Yes) ConfigRepository.Instance()["dlcm_AdditionalManipul114"] = "Yes";
+        //    //}
+        //    var tz = ConfigRepository.Instance()["dlcm_DBFolder"];
+        //    tz = tz.Replace("AccessDB.accdb", "SQLLiteDB.db");
+        //    if (ConfigRepository.Instance()["dlcm_AdditionalManipul114"] != "Yes")
+        //        try
+        //        {
+        //            if (File.Exists(cnb.DataSource.ToString())) OpenDb();
+        //        }
+        //        catch (Exception exx)
+        //        {
 
-                    GenericFunctions.ShowConnectivityError(exx, "");/*, lbl_Access*/
-                    try
-                    {
-                        if (File.Exists(cnb.DataSource.ToString())) cnb.Open(); //2nd time makes it work sometimes e.g. x64 solution
-                    }
-                    catch (Exception ex)
-                    {
-                        if (lbl_Access != null)
-                        {
-                            lbl_Access.Text = "missing Access plugin!";
-                            lbl_Access.Visible = true;
-                        }
-                        string vb = null; vb = UtilitiesFunctions.DisplayData();
-                        GenericFunctions.ShowConnectivityError(ex, "2nd FAIL to use M$ ACCESS plugin:\n" + vb);/*, lbl_Access*/
-                        //revert to SQLite
-                        if (File.Exists(tz))
-                        {
-                            ConfigRepository.Instance()["dlcm_AdditionalManipul114"] = "Yes";
+        //            ShowConnectivityError(exx, "");/*, lbl_Access*/
+        //            try
+        //            {
+        //                if (File.Exists(cnb.DataSource.ToString())) OpenDb(); //cnb.Open(); //2nd time makes it work sometimes e.g. x64 solution
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                if (lbl_Access != null)
+        //                {
+        //                    lbl_Access.Text = "missing Access plugin!";
+        //                    lbl_Access.Visible = true;
+        //                }
+        //                string vb = null; vb = UtilitiesFunctions.DisplayData();
+        //                ShowConnectivityError(ex, "2nd FAIL to use M$ ACCESS plugin:\n" + vb);/*, lbl_Access*/
+        //                //revert to SQLite
+        //                if (File.Exists(tz))
+        //                {
+        //                    ConfigRepository.Instance()["dlcm_AdditionalManipul114"] = "Yes";
 
-                            ConfigRepository.Instance()["dlcm_DBFolder"] = tz;
-                            //cnz = new SQLiteConnection("Data Source="+ ConfigRepository.Instance()["dlcm_DBFolder"]);
-                            //cnz.Open();
+        //                    ConfigRepository.Instance()["dlcm_DBFolder"] = tz;
+        //                    //cnz = new SQLiteConnection("Data Source="+ ConfigRepository.Instance()["dlcm_DBFolder"]);
+        //                    //cnz.Open();
 
-                            //cnc = new SQLite.SQLiteConnection(ConfigRepository.Instance()["dlcm_DBFolder"]);
+        //                    //cnc = new SQLite.SQLiteConnection(ConfigRepository.Instance()["dlcm_DBFolder"]);
 
-                            //SQLiteDataAdapter myAdapter = new SQLiteDataAdapter(fcmds, cnc);
-                        }
-                        else MessageBox.Show("No Microsoft Access or SQLite databases (or access;plugins etc) available. Good Luck as (the) C-DLC Manager wont really work!");
-                    }
-                }
-            else
-                try
-                {
-                    ConfigRepository.Instance()["dlcm_DBFolder"] = tz;
-                    if (File.Exists(ConfigRepository.Instance()["dlcm_DBFolder"])) cnc = new SQLite.SQLiteConnection(ConfigRepository.Instance()["dlcm_DBFolder"]);
-                    ConfigRepository.Instance()["dlcm_AdditionalManipul114"] = "Yes";
-                }
-                catch (Exception exx)
-                {
-                    GenericFunctions.ShowConnectivityError(exx, "");/*, lbl_Access*/
-                }
-            //if (ConfigRepository.Instance()["dlcm_AdditionalManipul114"] == "Yes")
-            //{
-            //cnz = new SQLiteConnection("Data Source="+ ConfigRepository.Instance()["dlcm_DBFolder"]);
-            //cnz.Open();              
+        //                    //SQLiteDataAdapter myAdapter = new SQLiteDataAdapter(fcmds, cnc);
+        //                }
+        //                else MessageBox.Show("No Microsoft Access or SQLite databases (or access;plugins etc) available. Good Luck as (the) C-DLC Manager wont really work!");
+        //            }
+        //        }
+        //    else
+        //        try
+        //        {
+        //            ConfigRepository.Instance()["dlcm_DBFolder"] = tz;
+        //            if (File.Exists(ConfigRepository.Instance()["dlcm_DBFolder"])) cnc = new SQLite.SQLiteConnection(ConfigRepository.Instance()["dlcm_DBFolder"]);
+        //            ConfigRepository.Instance()["dlcm_AdditionalManipul114"] = "Yes";
+        //        }
+        //        catch (Exception exx)
+        //        {
+        //            ShowConnectivityError(exx, "");/*, lbl_Access*/
+        //        }
+        //    //if (ConfigRepository.Instance()["dlcm_AdditionalManipul114"] == "Yes")
+        //    //{
+        //    //cnz = new SQLiteConnection("Data Source="+ ConfigRepository.Instance()["dlcm_DBFolder"]);
+        //    //cnz.Open();              
 
-            //SQLiteDataAdapter myAdapter = new SQLiteDataAdapter(fcmds, cnc);
-            //}
-            //var tdz = ConfigRepository.Instance()["dlcm_DBFolder"];
-            //tdz = tdz.Replace("AccessDB.accdb", "SQLLiteDB.db");
-            //ConfigRepository.Instance()["dlcm_DBFolder"] = tdz;
-            //cnz = new SQLiteConnection("Data Source="+ ConfigRepository.Instance()["dlcm_DBFolder"]);
-            //cnz.Open();
-        }
+        //    //SQLiteDataAdapter myAdapter = new SQLiteDataAdapter(fcmds, cnc);
+        //    //}
+        //    //var tdz = ConfigRepository.Instance()["dlcm_DBFolder"];
+        //    //tdz = tdz.Replace("AccessDB.accdb", "SQLLiteDB.db");
+        //    //ConfigRepository.Instance()["dlcm_DBFolder"] = tdz;
+        //    //cnz = new SQLiteConnection("Data Source="+ ConfigRepository.Instance()["dlcm_DBFolder"]);
+        //    //cnz.Open();
+        //}
         private void btnPackageImport_Click(object sender, EventArgs e)
         {
             string srcPath;

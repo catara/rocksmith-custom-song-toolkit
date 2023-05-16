@@ -1,0 +1,4 @@
+23/02/2020 00:47:41 UNIT:[Unit1.pas] ERROR:SearchSet: Field '' not found
+23/02/2020 00:47:52 UNIT:[Unit1.pas] ERROR:SearchSet: Field '' not found
+23/02/2020 00:48:13 UNIT:[Unit1.pas] ERROR:SearchSet: Field '' not found
+23/02/2020 00:48:18 UNIT:[Unit1.pas] ERROR:SearchSet: Field '' not found

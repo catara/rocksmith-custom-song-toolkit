@@ -1,0 +1,426 @@
+
+
+<chord time="4.410" chordId="2" ><chordNote time="4.410" string="1" fret="5" /><chordNote time="4.410" string="2" fret="7" /><chordNote time="4.410" string="3" fret="7" /></chord>
+<chord time="4.740" chordId="2" highDensity="1" ><chordNote time="4.740" string="1" fret="5" /><chordNote time="4.740" string="2" fret="7" /><chordNote time="4.740" string="3" fret="7" /></chord>
+<chord time="5.040" chordId="2" highDensity="1" ><chordNote time="5.040" string="1" fret="5<chordNote time="5.040" string="2" fret="7" /><chordNote time="5.040" string="3" fret="7" /></chord>
+<chord time="5.340" chordId="5" ><chordNote time="5.340" string="1" fret="3" /><chordNote time="5.340" string="2" fret="5" /><chordNote time="5.340" string="3" fret="5" /></chord>
+<chord time="7.923" chordId="5" ><chordNote time="7.923" string="1" fret="3" /><chordNote time="7.923" string="2" fret="5" /><chordNote time="7.923" string="3" fret="5" /></chord>" />
+<chord time="8.223" chordId="5" highDensity="1" ><chordNote time="8.223" string="1" fret="3" /><chordNote time="8.223" string="2" fret="5" /><chordNote time="8.223" string="3" fret="5" /></chord>
+<chord time="8.523" chordId="2" ><chordNote time="8.523" string="1" fret="5" /><chordNote time="8.523" string="2" fret="7" /><chordNote time="8.523" string="3" fret="7" /></chord>
+<chord time="8.763" chordId="1" ><chordNote time="8.763" string="1" fret="2" /><chordNote time="8.763" string="2" fret="4" /><chordNote time="8.763" string="3" fret="4" /></chord>
+<chord time="11.355" chordId="1" ><chordNote time="11.355" string="1" fret="2" /><chordNote time="11.355" string="2" fret="4" /><chordNote time="11.355" string="3" fret="4" /></chord>
+<chord time="11.685" chordId="1" highDensity="1" ><chordNote time="11.685" string="1" fret="2" /><chordNote time="11.685" string="2" fret="4" /><chordNote time="11.685" string="3" fret="4" /></chord>
+<chord time="11.985" chordId="1" highDensity="1" ><chordNote time="11.985" string="1" fret="2" /><chordNote time="11.985" string="2" fret="4" /><chordNote time="11.985" string="3" fret="4" /></chord>
+<chord time="12.255" chordId="5" ><chordNote time="12.255" string="1" fret="3" /><chordNote time="12.255" string="2" fret="5" /><chordNote time="12.255" string="3" fret="5" /></chord>
+<chord time="15.810" chordId="2" ><chordNote time="15.810" string="1" fret="5" /><chordNote time="15.810" string="2" fret="7" /><chordNote time="15.810" string="3" fret="7" /></chord>
+<chord time="18.530" chordId="2" ><chordNote time="18.530" string="1" fret="5" /><chordNote time="18.530" string="2" fret="7" /><chordNote time="18.530" string="3" fret="7" /></chord>
+<chord time="18.860" chordId="2" highDensity="1" ><chordNote time="18.860" string="1" fret="5" /><chordNote time="18.860" string="2" fret="7" /><chordNote time="18.860" string="3" fret="7" /></chord>
+<chord time="19.160" chordId="2" highDensity="1" ><chordNote time="19.160" string="1" fret="5" /><chordNote time="19.160" string="2" fret="7" /><chordNote time="19.160" string="3" fret="7" /></chord>
+<chord time="19.460" chordId="5" ><chordNote time="19.460" string="1" fret="3" /><chordNote time="19.460" string="2" fret="5" /><chordNote time="19.460" string="3" fret="5" /></chord>
+<chord time="22.043" chordId="5" ><chordNote time="22.043" string="1" fret="3" /><chordNote time="22.043" string="2" fret="5" /><chordNote time="22.043" string="3" fret="5" /></chord>
+<chord time="22.343" chordId="5" highDensity="1" ><chordNote time="22.343" string="1" fret="3" /><chordNote time="22.343" string="2" fret="5" /><chordNote time="22.343" string="3" fret="5" /></chord>
+<chord time="22.643" chordId="2" ><chordNote time="22.643" string="1" fret="5" /><chordNote time="22.643" string="2" fret="7" /><chordNote time="22.643" string="3" fret="7" /></chord>
+<chord time="22.983" chordId="1" ><chordNote time="22.983" string="1" fret="2" /><chordNote time="22.983" string="2" fret="4" /><chordNote time="22.983" string="3" fret="4" /></chord>
+<chord time="25.575" chordId="1" ><chordNote time="25.575" string="1" fret="2" /><chordNote time="25.575" string="2" fret="4" /><chordNote time="25.575" string="3" fret="4" /></chord>
+<chord time="25.905" chordId="1" highDensity="1" ><chordNote time="25.905" string="1" fret="2" /><chordNote time="25.905" string="2" fret="4" /><chordNote time="25.905" string="3" fret="4" /></chord>
+<chord time="26.205" chordId="1" highDensity="1" ><chordNote time="26.205" string="1" fret="2" /><chordNote time="26.205" string="2" fret="4" /><chordNote time="26.205" string="3" fret="4" /></chord>
+<chord time="26.475" chordId="5" ><chordNote time="26.475" string="1" fret="3" /><chordNote time="26.475" string="2" fret="5" /><chordNote time="26.475" string="3" fret="5" /></chord>
+<chord time="28.276" chordId="5" ><chordNote time="28.276" string="1" fret="3" /><chordNote time="28.276" string="2" fret="5" /><chordNote time="28.276" string="3" fret="5" /></chord>
+<chord time="28.576" chordId="5" highDensity="1" ><chordNote time="28.576" string="1" fret="3" /><chordNote time="28.576" string="2" fret="5" /><chordNote time="28.576" string="3" fret="5" /></chord>
+<chord time="28.846" chordId="5" highDensity="1" ><chordNote time="28.846" string="1" fret="3" /><chordNote time="28.846" string="2" fret="5" /><chordNote time="28.846" string="3" fret="5" /></chord>
+<chord time="29.211" chordId="6" ><chordNote time="29.211" string="1" fret="4" /><chordNote time="29.211" string="2" fret="6" /><chordNote time="29.211" string="3" fret="6" /></chord>
+<chord time="29.511" chordId="6" highDensity="1" ><chordNote time="29.511" string="1" fret="4" /><chordNote time="29.511" string="2" fret="6" /><chordNote time="29.511" string="3" fret="6" /></chord>
+<chord time="29.811" chordId="6" highDensity="1" ><chordNote time="29.811" string="1" fret="4" /><chordNote time="29.811" string="2" fret="6" /><chordNote time="29.811" string="3" fret="6" /></chord>
+<chord time="42.657" chordId="5" ><chordNote time="42.657" string="1" fret="3" /><chordNote time="42.657" string="2" fret="5" /><chordNote time="42.657" string="3" fret="5" /></chord>
+<chord time="42.848" chordId="5" highDensity="1" ><chordNote time="42.848" string="1" fret="3" /><chordNote time="42.848" string="2" fret="5" /><chordNote time="42.848" string="3" fret="5" /></chord>
+<chord time="43.038" chordId="5" highDensity="1" ><chordNote time="43.038" string="1" fret="3" /><chordNote time="43.038" string="2" fret="5" /><chordNote time="43.038" string="3" fret="5" /></chord>
+<chord time="43.223" chordId="5" highDensity="1" ><chordNote time="43.223" string="1" fret="3" /><chordNote time="43.223" string="2" fret="5" /><chordNote time="43.223" string="3" fret="5" /></chord>
+<chord time="43.413" chordId="6" ><chordNote time="43.413" string="1" fret="4" /><chordNote time="43.413" string="2" fret="6" /><chordNote time="43.413" string="3" fret="6" /></chord>
+<chord time="43.603" chordId="6" highDensity="1" ><chordNote time="43.603" string="1" fret="4" /><chordNote time="43.603" string="2" fret="6" /><chordNote time="43.603" string="3" fret="6" /></chord>
+<chord time="43.791" chordId="6" highDensity="1" ><chordNote time="43.791" string="1" fret="4" /><chordNote time="43.791" string="2" fret="6" /><chordNote time="43.791" string="3" fret="6" /></chord>
+<chord time="43.983" chordId="6" highDensity="1" ><chordNote time="43.983" string="1" fret="4" /><chordNote time="43.983" string="2" fret="6" /><chordNote time="43.983" string="3" fret="6" /></chord>
+<chord time="44.174" chordId="6" highDensity="1" ><chordNote time="44.174" string="1" fret="4" /><chordNote time="44.174" string="2" fret="6" /><chordNote time="44.174" string="3" fret="6" /></chord>
+<chord time="44.360" chordId="2" ><chordNote time="44.360" string="1" fret="5" /><chordNote time="44.360" string="2" fret="7" /><chordNote time="44.360" string="3" fret="7" /></chord>
+<chord time="44.530" chordId="2" highDensity="1" ><chordNote time="44.530" string="1" fret="5" /><chordNote time="44.530" string="2" fret="7" /><chordNote time="44.530" string="3" fret="7" /></chord>
+<chord time="44.830" chordId="2" highDensity="1" ><chordNote time="44.830" string="1" fret="5" /><chordNote time="44.830" string="2" fret="7" /><chordNote time="44.830" string="3" fret="7" /></chord>
+<chord time="45.010" chordId="2" highDensity="1" ><chordNote time="45.010" string="1" fret="5" /><chordNote time="45.010" string="2" fret="7" /><chordNote time="45.010" string="3" fret="7" /></chord>
+<chord time="45.310" chordId="2" highDensity="1" ><chordNote time="45.310" string="1" fret="5" /><chordNote time="45.310" string="2" fret="7" /><chordNote time="45.310" string="3" fret="7" /></chord>
+<chord time="45.500" chordId="2" highDensity="1" ><chordNote time="45.500" string="1" fret="5" /><chordNote time="45.500" string="2" fret="7" /><chordNote time="45.500" string="3" fret="7" /></chord>
+<chord time="45.800" chordId="2" highDensity="1" ><chordNote time="45.800" string="1" fret="5" /><chordNote time="45.800" string="2" fret="7" /><chordNote time="45.800" string="3" fret="7" /></chord>
+<chord time="45.990" chordId="2" highDensity="1" ><chordNote time="45.990" string="1" fret="5" /><chordNote time="45.990" string="2" fret="7" /><chordNote time="45.990" string="3" fret="7" /></chord>
+<chord time="46.290" chordId="2" highDensity="1" ><chordNote time="46.290" string="1" fret="5" /><chordNote time="46.290" string="2" fret="7" /><chordNote time="46.290" string="3" fret="7" /></chord>
+<chord time="46.480" chordId="2" highDensity="1" ><chordNote time="46.480" string="1" fret="5" /><chordNote time="46.480" string="2" fret="7" /><chordNote time="46.480" string="3" fret="7" /></chord>
+<chord time="46.780" chordId="2" highDensity="1" ><chordNote time="46.780" string="1" fret="5" /><chordNote time="46.780" string="2" fret="7" /><chordNote time="46.780" string="3" fret="7" /></chord>
+<chord time="46.978" chordId="2" highDensity="1" ><chordNote time="46.978" string="1" fret="5" /><chordNote time="46.978" string="2" fret="7" /><chordNote time="46.978" string="3" fret="7" /></chord>
+<chord time="47.278" chordId="2" highDensity="1" ><chordNote time="47.278" string="1" fret="5" /><chordNote time="47.278" string="2" fret="7" /><chordNote time="47.278" string="3" fret="7" /></chord>
+<chord time="47.458" chordId="2" highDensity="1" ><chordNote time="47.458" string="1" fret="5" /><chordNote time="47.458" string="2" fret="7" /><chordNote time="47.458" string="3" fret="7" /></chord>
+<chord time="47.768" chordId="2" highDensity="1" ><chordNote time="47.768" string="1" fret="5" /><chordNote time="47.768" string="2" fret="7" /><chordNote time="47.768" string="3" fret="7" /></chord>
+<chord time="48.068" chordId="5" ><chordNote time="48.068" string="1" fret="3" /><chordNote time="48.068" string="2" fret="5" /><chordNote time="48.068" string="3" fret="5" /></chord>
+<chord time="48.248" chordId="5" highDensity="1" ><chordNote time="48.248" string="1" fret="3" /><chordNote time="48.248" string="2" fret="5" /><chordNote time="48.248" string="3" fret="5" /></chord>
+<chord time="48.548" chordId="5" highDensity="1" ><chordNote time="48.548" string="1" fret="3" /><chordNote time="48.548" string="2" fret="5" /><chordNote time="48.548" string="3" fret="5" /></chord>
+<chord time="48.738" chordId="5" highDensity="1" ><chordNote time="48.738" string="1" fret="3" /><chordNote time="48.738" string="2" fret="5" /><chordNote time="48.738" string="3" fret="5" /></chord>
+<chord time="49.038" chordId="5" highDensity="1" ><chordNote time="49.038" string="1" fret="3" /><chordNote time="49.038" string="2" fret="5" /><chordNote time="49.038" string="3" fret="5" /></chord>
+<chord time="49.228" chordId="5" highDensity="1" ><chordNote time="49.228" string="1" fret="3" /><chordNote time="49.228" string="2" fret="5" /><chordNote time="49.228" string="3" fret="5" /></chord>
+<chord time="49.528" chordId="5" highDensity="1" ><chordNote time="49.528" string="1" fret="3" /><chordNote time="49.528" string="2" fret="5" /><chordNote time="49.528" string="3" fret="5" /></chord>
+<chord time="49.718" chordId="5" highDensity="1" ><chordNote time="49.718" string="1" fret="3" /><chordNote time="49.718" string="2" fret="5" /><chordNote time="49.718" string="3" fret="5" /></chord>
+<chord time="50.018" chordId="5" highDensity="1" ><chordNote time="50.018" string="1" fret="3" /><chordNote time="50.018" string="2" fret="5" /><chordNote time="50.018" string="3" fret="5" /></chord>
+<chord time="50.216" chordId="5" highDensity="1" ><chordNote time="50.216" string="1" fret="3" /><chordNote time="50.216" string="2" fret="5" /><chordNote time="50.216" string="3" fret="5" /></chord>
+<chord time="50.516" chordId="5" highDensity="1" ><chordNote time="50.516" string="1" fret="3" /><chordNote time="50.516" string="2" fret="5" /><chordNote time="50.516" string="3" fret="5" /></chord>
+<chord time="50.696" chordId="5" highDensity="1" ><chordNote time="50.696" string="1" fret="3" /><chordNote time="50.696" string="2" fret="5" /><chordNote time="50.696" string="3" fret="5" /></chord>
+<chord time="50.996" chordId="5" highDensity="1" ><chordNote time="50.996" string="1" fret="3" /><chordNote time="50.996" string="2" fret="5" /><chordNote time="50.996" string="3" fret="5" /></chord>
+<chord time="51.187" chordId="5" highDensity="1" ><chordNote time="51.187" string="1" fret="3" /><chordNote time="51.187" string="2" fret="5" /><chordNote time="51.187" string="3" fret="5" /></chord>
+<chord time="51.487" chordId="5" highDensity="1" ><chordNote time="51.487" string="1" fret="3" /><chordNote time="51.487" string="2" fret="5" /><chordNote time="51.487" string="3" fret="5" /></chord>
+<chord time="51.658" chordId="1" ><chordNote time="51.658" string="1" fret="2" /><chordNote time="51.658" string="2" fret="4" /><chordNote time="51.658" string="3" fret="4" /></chord>
+<chord time="51.958" chordId="1" highDensity="1" ><chordNote time="51.958" string="1" fret="2" /><chordNote time="51.958" string="2" fret="4" /><chordNote time="51.958" string="3" fret="4" /></chord>
+<chord time="52.148" chordId="1" highDensity="1" ><chordNote time="52.148" string="1" fret="2" /><chordNote time="52.148" string="2" fret="4" /><chordNote time="52.148" string="3" fret="4" /></chord>
+<chord time="52.448" chordId="1" highDensity="1" ><chordNote time="52.448" string="1" fret="2" /><chordNote time="52.448" string="2" fret="4" /><chordNote time="52.448" string="3" fret="4" /></chord>
+<chord time="52.638" chordId="1" highDensity="1" ><chordNote time="52.638" string="1" fret="2" /><chordNote time="52.638" string="2" fret="4" /><chordNote time="52.638" string="3" fret="4" /></chord>
+<chord time="52.938" chordId="1" highDensity="1" ><chordNote time="52.938" string="1" fret="2" /><chordNote time="52.938" string="2" fret="4" /><chordNote time="52.938" string="3" fret="4" /></chord>
+<chord time="53.128" chordId="1" highDensity="1" ><chordNote time="53.128" string="1" fret="2" /><chordNote time="53.128" string="2" fret="4" /><chordNote time="53.128" string="3" fret="4" /></chord>
+<chord time="53.428" chordId="1" highDensity="1" ><chordNote time="53.428" string="1" fret="2" /><chordNote time="53.428" string="2" fret="4" /><chordNote time="53.428" string="3" fret="4" /></chord>
+<chord time="53.626" chordId="1" highDensity="1" ><chordNote time="53.626" string="1" fret="2" /><chordNote time="53.626" string="2" fret="4" /><chordNote time="53.626" string="3" fret="4" /></chord>
+<chord time="53.926" chordId="1" highDensity="1" ><chordNote time="53.926" string="1" fret="2" /><chordNote time="53.926" string="2" fret="4" /><chordNote time="53.926" string="3" fret="4" /></chord>
+<chord time="54.106" chordId="1" highDensity="1" ><chordNote time="54.106" string="1" fret="2" /><chordNote time="54.106" string="2" fret="4" /><chordNote time="54.106" string="3" fret="4" /></chord>
+<chord time="54.406" chordId="1" highDensity="1" ><chordNote time="54.406" string="1" fret="2" /><chordNote time="54.406" string="2" fret="4" /><chordNote time="54.406" string="3" fret="4" /></chord>
+<chord time="54.594" chordId="1" highDensity="1" ><chordNote time="54.594" string="1" fret="2" /><chordNote time="54.594" string="2" fret="4" /><chordNote time="54.594" string="3" fret="4" /></chord>
+<chord time="54.894" chordId="1" highDensity="1" ><chordNote time="54.894" string="1" fret="2" /><chordNote time="54.894" string="2" fret="4" /><chordNote time="54.894" string="3" fret="4" /></chord>
+<chord time="55.074" chordId="3" ><chordNote time="55.074" string="1" fret="1" /><chordNote time="55.074" string="2" fret="3" /><chordNote time="55.074" string="3" fret="3" /></chord>
+<chord time="55.374" chordId="3" highDensity="1" ><chordNote time="55.374" string="1" fret="1" /><chordNote time="55.374" string="2" fret="3" /><chordNote time="55.374" string="3" fret="3" /></chord>
+<chord time="55.564" chordId="3" highDensity="1" ><chordNote time="55.564" string="1" fret="1" /><chordNote time="55.564" string="2" fret="3" /><chordNote time="55.564" string="3" fret="3" /></chord>
+<chord time="55.864" chordId="3" highDensity="1" ><chordNote time="55.864" string="1" fret="1" /><chordNote time="55.864" string="2" fret="3" /><chordNote time="55.864" string="3" fret="3" /></chord>
+<chord time="56.054" chordId="3" highDensity="1" ><chordNote time="56.054" string="1" fret="1" /><chordNote time="56.054" string="2" fret="3" /><chordNote time="56.054" string="3" fret="3" /></chord>
+<chord time="56.354" chordId="3" highDensity="1" ><chordNote time="56.354" string="1" fret="1" /><chordNote time="56.354" string="2" fret="3" /><chordNote time="56.354" string="3" fret="3" /></chord>
+<chord time="56.543" chordId="3" highDensity="1" ><chordNote time="56.543" string="1" fret="1" /><chordNote time="56.543" string="2" fret="3" /><chordNote time="56.543" string="3" fret="3" /></chord>
+<chord time="56.843" chordId="3" highDensity="1" ><chordNote time="56.843" string="1" fret="1" /><chordNote time="56.843" string="2" fret="3" /><chordNote time="56.843" string="3" fret="3" /></chord>
+<chord time="57.042" chordId="5" ><chordNote time="57.042" string="1" fret="3" /><chordNote time="57.042" string="2" fret="5" /><chordNote time="57.042" string="3" fret="5" /></chord>
+<chord time="57.234" chordId="5" highDensity="1" ><chordNote time="57.234" string="1" fret="3" /><chordNote time="57.234" string="2" fret="5" /><chordNote time="57.234" string="3" fret="5" /></chord>
+<chord time="57.425" chordId="5" highDensity="1" ><chordNote time="57.425" string="1" fret="3" /><chordNote time="57.425" string="2" fret="5" /><chordNote time="57.425" string="3" fret="5" /></chord>
+<chord time="57.611" chordId="5" highDensity="1" ><chordNote time="57.611" string="1" fret="3" /><chordNote time="57.611" string="2" fret="5" /><chordNote time="57.611" string="3" fret="5" /></chord>
+<chord time="57.801" chordId="6" ><chordNote time="57.801" string="1" fret="4" /><chordNote time="57.801" string="2" fret="6" /><chordNote time="57.801" string="3" fret="6" /></chord>
+<chord time="57.991" chordId="6" highDensity="1" ><chordNote time="57.991" string="1" fret="4" /><chordNote time="57.991" string="2" fret="6" /><chordNote time="57.991" string="3" fret="6" /></chord>
+<chord time="58.179" chordId="6" highDensity="1" ><chordNote time="58.179" string="1" fret="4" /><chordNote time="58.179" string="2" fret="6" /><chordNote time="58.179" string="3" fret="6" /></chord>
+<chord time="58.371" chordId="6" highDensity="1" ><chordNote time="58.371" string="1" fret="4" /><chordNote time="58.371" string="2" fret="6" /><chordNote time="58.371" string="3" fret="6" /></chord>
+<chord time="58.582" chordId="6" highDensity="1" ><chordNote time="58.582" string="1" fret="4" /><chordNote time="58.582" string="2" fret="6" /><chordNote time="58.582" string="3" fret="6" /></chord>
+<chord time="58.670" chordId="0" ><chordNote time="58.670" string="3" fret="12" /><chordNote time="58.670" string="4" fret="10" /></chord>
+<chord time="75.505" chordId="2" ><chordNote time="75.505" string="1" fret="5" /><chordNote time="75.505" string="2" fret="7" /><chordNote time="75.505" string="3" fret="7" /></chord>
+<chord time="75.837" chordId="2" highDensity="1" ><chordNote time="75.837" string="1" fret="5" /><chordNote time="75.837" string="2" fret="7" /><chordNote time="75.837" string="3" fret="7" /></chord>
+<chord time="76.139" chordId="2" highDensity="1" ><chordNote time="76.139" string="1" fret="5" /><chordNote time="76.139" string="2" fret="7" /><chordNote time="76.139" string="3" fret="7" /></chord>
+<chord time="76.440" chordId="5" ><chordNote time="76.440" string="1" fret="3" /><chordNote time="76.440" string="2" fret="5" /><chordNote time="76.440" string="3" fret="5" /></chord>
+<chord time="79.138" chordId="5" highDensity="1" ><chordNote time="79.138" string="1" fret="3" /><chordNote time="79.138" string="2" fret="5" /><chordNote time="79.138" string="3" fret="5" /></chord>
+<chord time="79.470" chordId="5" highDensity="1" ><chordNote time="79.470" string="1" fret="3" /><chordNote time="79.470" string="2" fret="5" /><chordNote time="79.470" string="3" fret="5" /></chord>
+<chord time="79.772" chordId="5" highDensity="1" ><chordNote time="79.772" string="1" fret="3" /><chordNote time="79.772" string="2" fret="5" /><chordNote time="79.772" string="3" fret="5" /></chord>
+<chord time="80.073" chordId="1" ><chordNote time="80.073" string="1" fret="2" /><chordNote time="80.073" string="2" fret="4" /><chordNote time="80.073" string="3" fret="4" /></chord>
+<chord time="82.759" chordId="3" ><chordNote time="82.759" string="1" fret="1" /><chordNote time="82.759" string="2" fret="3" /><chordNote time="82.759" string="3" fret="3" /></chord>
+<chord time="83.091" chordId="3" highDensity="1" ><chordNote time="83.091" string="1" fret="1" /><chordNote time="83.091" string="2" fret="3" /><chordNote time="83.091" string="3" fret="3" /></chord>
+<chord time="83.393" chordId="2" ><chordNote time="83.393" string="1" fret="5" /><chordNote time="83.393" string="2" fret="7" /><chordNote time="83.393" string="3" fret="7" /></chord>
+<chord time="83.704" chordId="3" ><chordNote time="83.704" string="1" fret="1" /><chordNote time="83.704" string="2" fret="3" /><chordNote time="83.704" string="3" fret="3" /></chord>
+<chord time="84.200" chordId="4" highDensity="1" palmMute="1" ><chordNote time="84.200" string="1" fret="1" mute="1" palmMute="1" /><chordNote time="84.200" string="2" fret="0" mute="1" palmMute="1" /><chordNote time="84.200" string="3" fret="0" mute="1" palmMute="1" /></chord>
+<chord time="84.310" chordId="4" highDensity="1" palmMute="1" ><chordNote time="84.310" string="1" fret="1" mute="1" palmMute="1" /><chordNote time="84.310" string="2" fret="0" mute="1" palmMute="1" /><chordNote time="84.310" string="3" fret="0" mute="1" palmMute="1" /></chord>
+<chord time="84.430" chordId="4" highDensity="1" palmMute="1" ><chordNote time="84.430" string="1" fret="1" mute="1" palmMute="1" /><chordNote time="84.430" string="2" fret="0" mute="1" palmMute="1" /><chordNote time="84.430" string="3" fret="0" mute="1" palmMute="1" /></chord>
+<chord time="84.550" chordId="4" highDensity="1" palmMute="1" ><chordNote time="84.550" string="1" fret="1" mute="1" palmMute="1" /><chordNote time="84.550" string="2" fret="0" mute="1" palmMute="1" /><chordNote time="84.550" string="3" fret="0" mute="1" palmMute="1" /></chord>
+<chord time="84.850" chordId="4" highDensity="1" palmMute="1" ><chordNote time="84.850" string="1" fret="1" mute="1" palmMute="1" /><chordNote time="84.850" string="2" fret="0" mute="1" palmMute="1" /><chordNote time="84.850" string="3" fret="0" mute="1" palmMute="1" /></chord>
+<chord time="84.970" chordId="4" highDensity="1" palmMute="1" ><chordNote time="84.970" string="1" fret="1" mute="1" palmMute="1" /><chordNote time="84.970" string="2" fret="0" mute="1" palmMute="1" /><chordNote time="84.970" string="3" fret="0" mute="1" palmMute="1" /></chord>
+<chord time="85.080" chordId="4" highDensity="1" palmMute="1" ><chordNote time="85.080" string="1" fret="1" mute="1" palmMute="1" /><chordNote time="85.080" string="2" fret="0" mute="1" palmMute="1" /><chordNote time="85.080" string="3" fret="0" mute="1" palmMute="1" /></chord>
+<chord time="85.210" chordId="4" highDensity="1" palmMute="1" ><chordNote time="85.210" string="1" fret="1" mute="1" palmMute="1" /><chordNote time="85.210" string="2" fret="0" mute="1" palmMute="1" /><chordNote time="85.210" string="3" fret="0" mute="1" palmMute="1" /></chord>
+<chord time="85.466" chordId="5" ><chordNote time="85.466" string="1" fret="3" /><chordNote time="85.466" string="2" fret="5" /><chordNote time="85.466" string="3" fret="5" /></chord>
+<chord time="85.768" chordId="5" highDensity="1" ><chordNote time="85.768" string="1" fret="3" /><chordNote time="85.768" string="2" fret="5" /><chordNote time="85.768" string="3" fret="5" /></chord>
+<chord time="86.040" chordId="5" highDensity="1" ><chordNote time="86.040" string="1" fret="3" /><chordNote time="86.040" string="2" fret="5" /><chordNote time="86.040" string="3" fret="5" /></chord>
+<chord time="86.251" chordId="5" highDensity="1" ><chordNote time="86.251" string="1" fret="3" /><chordNote time="86.251" string="2" fret="5" /><chordNote time="86.251" string="3" fret="5" /></chord>
+<chord time="86.408" chordId="6" ><chordNote time="86.408" string="1" fret="4" /><chordNote time="86.408" string="2" fret="6" /><chordNote time="86.408" string="3" fret="6" /></chord>
+<chord time="86.740" chordId="6" highDensity="1" ><chordNote time="86.740" string="1" fret="4" /><chordNote time="86.740" string="2" fret="6" /><chordNote time="86.740" string="3" fret="6" /></chord>
+<chord time="87.032" chordId="6" highDensity="1" ><chordNote time="87.032" string="1" fret="4" /><chordNote time="87.032" string="2" fret="6" /><chordNote time="87.032" string="3" fret="6" /></chord>
+<chord time="101.490" chordId="6" ><chordNote time="101.490" string="1" fret="4" /><chordNote time="101.490" string="2" fret="6" /><chordNote time="101.490" string="3" fret="6" /></chord>
+<chord time="101.880" chordId="6" highDensity="1" ><chordNote time="101.880" string="1" fret="4" /><chordNote time="101.880" string="2" fret="6" /><chordNote time="101.880" string="3" fret="6" /></chord>
+<chord time="102.290" chordId="6" highDensity="1" ><chordNote time="102.290" string="1" fret="4" /><chordNote time="102.290" string="2" fret="6" /><chordNote time="102.290" string="3" fret="6" /></chord>
+<chord time="102.600" chordId="13" ><chordNote time="102.600" string="0" fret="10" /><chordNote time="102.600" string="1" fret="12" /><chordNote time="102.600" string="2" fret="12" /></chord>
+<chord time="102.980" chordId="13" highDensity="1" ><chordNote time="102.980" string="0" fret="10" /><chordNote time="102.980" string="1" fret="12" /><chordNote time="102.980" string="2" fret="12" /></chord>
+<chord time="103.310" chordId="7" ><chordNote time="103.310" string="3" fret="12" /><chordNote time="103.310" string="4" fret="12" /></chord>
+<chord time="103.500" chordId="8" ><chordNote time="103.500" string="3" fret="10" /><chordNote time="103.500" string="4" fret="10" /></chord>
+<chord time="103.660" chordId="7" ><chordNote time="103.660" string="3" fret="12" sustain="0.317" bend="1" ><bendValues count="4" ><bendValue time="103.680" /><bendValue time="103.665" step="0.500" /><bendValue time="103.680" step="0.500" /><bendValue time="103.685" /></bendValues></chordNote><chordNote time="103.660" string="4" fret="12" sustain="0.317" bend="1" ><bendValues count="4" ><bendValue time="103.680" /><bendValue time="103.665" step="0.500" /><bendValue time="103.680" step="0.500" /><bendValue time="103.685" /></bendValues></chordNote></chord>
+<chord time="103.980" chordId="8" ><chordNote time="103.980" string="3" fret="10" /><chordNote time="103.980" string="4" fret="10" /></chord>
+<chord time="104.760" chordId="13" ><chordNote time="104.760" string="0" fret="10" /><chordNote time="104.760" string="1" fret="12" /><chordNote time="104.760" string="2" fret="12" /></chord>
+<chord time="105.060" chordId="13" highDensity="1" ><chordNote time="105.060" string="0" fret="10" /><chordNote time="105.060" string="1" fret="12" /><chordNote time="105.060" string="2" fret="12" /></chord>
+<chord time="105.380" chordId="13" highDensity="1" ><chordNote time="105.380" string="0" fret="10" /><chordNote time="105.380" string="1" fret="12" /><chordNote time="105.380" string="2" fret="12" /></chord>
+<chord time="106.070" chordId="11" ><chordNote time="106.070" string="0" fret="8" /><chordNote time="106.070" string="1" fret="10" /><chordNote time="106.070" string="2" fret="10" /></chord>
+<chord time="106.450" chordId="11" highDensity="1" ><chordNote time="106.450" string="0" fret="8" /><chordNote time="106.450" string="1" fret="10" /><chordNote time="106.450" string="2" fret="10" /></chord>
+<chord time="106.870" chordId="7" ><chordNote time="106.870" string="3" fret="12" /><chordNote time="106.870" string="4" fret="12" /></chord>
+<chord time="107.060" chordId="8" ><chordNote time="107.060" string="3" fret="10" /><chordNote time="107.060" string="4" fret="10" /></chord>
+<chord time="107.220" chordId="7" ><chordNote time="107.220" string="3" fret="12" sustain="0.277" bend="1" ><bendValues count="4" ><bendValue time="107.240" /><bendValue time="107.225" step="0.500" /><bendValue time="107.240" step="0.500" /><bendValue time="107.245" /></bendValues></chordNote><chordNote time="107.220" string="4" fret="12" sustain="0.277" bend="1" ><bendValues count="4" ><bendValue time="107.240" /><bendValue time="107.225" step="0.500" /><bendValue time="107.240" step="0.500" /><bendValue time="107.245" /></bendValues></chordNote></chord>
+<chord time="107.520" chordId="8" ><chordNote time="107.520" string="3" fret="10" /><chordNote time="107.520" string="4" fret="10" /></chord>
+<chord time="108.417" chordId="11" ><chordNote time="108.417" string="0" fret="8" /><chordNote time="108.417" string="1" fret="10" /><chordNote time="108.417" string="2" fret="10" /></chord>
+<chord time="108.718" chordId="11" highDensity="1" ><chordNote time="108.718" string="0" fret="8" /><chordNote time="108.718" string="1" fret="10" /><chordNote time="108.718" string="2" fret="10" /></chord>
+<chord time="109.038" chordId="11" highDensity="1" ><chordNote time="109.038" string="0" fret="8" /><chordNote time="109.038" string="1" fret="10" /><chordNote time="109.038" string="2" fret="10" /></chord>
+<chord time="109.728" chordId="9" ><chordNote time="109.728" string="0" fret="7" /><chordNote time="109.728" string="1" fret="9" /><chordNote time="109.728" string="2" fret="9" /></chord>
+<chord time="110.108" chordId="9" highDensity="1" ><chordNote time="110.108" string="0" fret="7" /><chordNote time="110.108" string="1" fret="9" /><chordNote time="110.108" string="2" fret="9" /></chord>
+<chord time="110.528" chordId="7" ><chordNote time="110.528" string="3" fret="12" /><chordNote time="110.528" string="4" fret="12" /></chord>
+<chord time="110.718" chordId="8" ><chordNote time="110.718" string="3" fret="10" /><chordNote time="110.718" string="4" fret="10" /></chord>
+<chord time="110.878" chordId="7" ><chordNote time="110.878" string="3" fret="12" /><chordNote time="110.878" string="4" fret="12" /></chord>
+<chord time="111.178" chordId="8" ><chordNote time="111.178" string="3" fret="10" /><chordNote time="111.178" string="4" fret="10" /></chord>
+<chord time="112.508" chordId="9" ><chordNote time="112.508" string="0" fret="7" /><chordNote time="112.508" string="1" fret="9" /><chordNote time="112.508" string="2" fret="9" /></chord>
+<chord time="112.809" chordId="9" highDensity="1" ><chordNote time="112.809" string="0" fret="7" /><chordNote time="112.809" string="1" fret="9" /><chordNote time="112.809" string="2" fret="9" /></chord>
+<chord time="113.129" chordId="9" highDensity="1" ><chordNote time="113.129" string="0" fret="7" /><chordNote time="113.129" string="1" fret="9" /><chordNote time="113.129" string="2" fret="9" /></chord>
+<chord time="113.459" chordId="10" ><chordNote time="113.459" string="0" fret="6" /><chordNote time="113.459" string="1" fret="8" /><chordNote time="113.459" string="2" fret="8" /></chord>
+<chord time="113.810" chordId="10" highDensity="1" ><chordNote time="113.810" string="0" fret="6" /><chordNote time="113.810" string="1" fret="8" /><chordNote time="113.810" string="2" fret="8" /></chord>
+<chord time="113.970" chordId="10" highDensity="1" ><chordNote time="113.970" string="0" fret="6" /><chordNote time="113.970" string="1" fret="8" /><chordNote time="113.970" string="2" fret="8" /></chord>
+<chord time="114.110" chordId="10" highDensity="1" ><chordNote time="114.110" string="0" fret="6" /><chordNote time="114.110" string="1" fret="8" /><chordNote time="114.110" string="2" fret="8" /></chord>
+<chord time="114.250" chordId="10" highDensity="1" ><chordNote time="114.250" string="0" fret="6" /><chordNote time="114.250" string="1" fret="8" /><chordNote time="114.250" string="2" fret="8" /></chord>
+<chord time="114.380" chordId="10" highDensity="1" ><chordNote time="114.380" string="0" fret="6" /><chordNote time="114.380" string="1" fret="8" /><chordNote time="114.380" string="2" fret="8" /></chord>
+<chord time="114.530" chordId="10" highDensity="1" ><chordNote time="114.530" string="0" fret="6" /><chordNote time="114.530" string="1" fret="8" /><chordNote time="114.530" string="2" fret="8" /></chord>
+<chord time="114.670" chordId="10" highDensity="1" ><chordNote time="114.670" string="0" fret="6" /><chordNote time="114.670" string="1" fret="8" /><chordNote time="114.670" string="2" fret="8" /></chord>
+<chord time="114.790" chordId="10" highDensity="1" ><chordNote time="114.790" string="0" fret="6" /><chordNote time="114.790" string="1" fret="8" /><chordNote time="114.790" string="2" fret="8" /></chord>
+<chord time="114.930" chordId="10" highDensity="1" ><chordNote time="114.930" string="0" fret="6" /><chordNote time="114.930" string="1" fret="8" /><chordNote time="114.930" string="2" fret="8" /></chord>
+<chord time="115.070" chordId="10" highDensity="1" ><chordNote time="115.070" string="0" fret="6" /><chordNote time="115.070" string="1" fret="8" /><chordNote time="115.070" string="2" fret="8" /></chord>
+<chord time="115.200" chordId="10" highDensity="1" ><chordNote time="115.200" string="0" fret="6" /><chordNote time="115.200" string="1" fret="8" /><chordNote time="115.200" string="2" fret="8" /></chord>
+<chord time="115.410" chordId="11" ><chordNote time="115.410" string="0" fret="8" /><chordNote time="115.410" string="1" fret="10" /><chordNote time="115.410" string="2" fret="10" /></chord>
+<chord time="115.690" chordId="11" highDensity="1" ><chordNote time="115.690" string="0" fret="8" /><chordNote time="115.690" string="1" fret="10" /><chordNote time="115.690" string="2" fret="10" /></chord>
+<chord time="115.960" chordId="11" highDensity="1" ><chordNote time="115.960" string="0" fret="8" /><chordNote time="115.960" string="1" fret="10" /><chordNote time="115.960" string="2" fret="10" /></chord>
+<chord time="116.230" chordId="12" ><chordNote time="116.230" string="0" fret="9" /><chordNote time="116.230" string="1" fret="11" /><chordNote time="116.230" string="2" fret="11" /></chord>
+<chord time="116.510" chordId="12" highDensity="1" ><chordNote time="116.510" string="0" fret="9" /><chordNote time="116.510" string="1" fret="11" /><chordNote time="116.510" string="2" fret="11" /></chord>
+<chord time="116.790" chordId="12" highDensity="1" ><chordNote time="116.790" string="0" fret="9" /><chordNote time="116.790" string="1" fret="11" /><chordNote time="116.790" string="2" fret="11" /></chord>
+<chord time="117.100" chordId="13" ><chordNote time="117.100" string="0" fret="10" /><chordNote time="117.100" string="1" fret="12" /><chordNote time="117.100" string="2" fret="12" /></chord>
+<note time="1.870" string="1" fret="5" palmMute="1" />
+<note time="1.960" string="1" fret="5" palmMute="1" />
+<note time="2.130" string="1" fret="5" palmMute="1" />
+<note time="2.240" string="1" fret="5" palmMute="1" />
+<note time="2.400" string="1" fret="5" palmMute="1" />
+<note time="2.500" string="1" fret="5" palmMute="1" />
+<note time="2.674" string="1" fret="5" palmMute="1" />
+<note time="2.784" string="1" fret="5" palmMute="1" />
+<note time="2.961" string="1" fret="5" palmMute="1" />
+<note time="3.071" string="1" fret="5" palmMute="1" />
+<note time="3.250" string="1" fret="5" palmMute="1" />
+<note time="3.380" string="1" fret="5" palmMute="1" />
+<note time="3.530" string="1" fret="5" palmMute="1" />
+<note time="3.660" string="1" fret="5" palmMute="1" />
+<note time="3.806" string="1" fret="5" palmMute="1" />
+<note time="3.906" string="1" fret="5" palmMute="1" />
+<note time="4.126" string="1" fret="5" palmMute="1" />
+<note time="4.226" string="1" fret="5" palmMute="1" />
+<note time="5.790" string="1" fret="3" palmMute="1" />
+<note time="5.920" string="1" fret="3" palmMute="1" />
+<note time="6.070" string="1" fret="3" palmMute="1" />
+<note time="6.200" string="1" fret="3" palmMute="1" />
+<note time="6.357" string="1" fret="3" palmMute="1" />
+<note time="6.487" string="1" fret="3" palmMute="1" />
+<note time="6.637" string="1" fret="3" palmMute="1" />
+<note time="6.787" string="1" fret="3" palmMute="1" />
+<note time="6.913" string="1" fret="3" palmMute="1" />
+<note time="7.043" string="1" fret="3" palmMute="1" />
+<note time="7.193" string="1" fret="3" palmMute="1" />
+<note time="7.343" string="1" fret="3" palmMute="1" />
+<note time="7.483" string="1" fret="3" palmMute="1" />
+<note time="7.613" string="1" fret="3" palmMute="1" />
+<note time="7.763" string="1" fret="3" palmMute="1" />
+<note time="9.213" string="1" fret="2" palmMute="1" />
+<note time="9.343" string="1" fret="2" palmMute="1" />
+<note time="9.493" string="1" fret="2" palmMute="1" />
+<note time="9.623" string="1" fret="2" palmMute="1" />
+<note time="9.780" string="1" fret="2" palmMute="1" />
+<note time="9.910" string="1" fret="2" palmMute="1" />
+<note time="10.060" string="1" fret="2" palmMute="1" />
+<note time="10.210" string="1" fret="2" palmMute="1" />
+<note time="10.336" string="1" fret="2" palmMute="1" />
+<note time="10.466" string="1" fret="2" palmMute="1" />
+<note time="10.616" string="1" fret="2" palmMute="1" />
+<note time="10.766" string="1" fret="2" palmMute="1" />
+<note time="10.906" string="1" fret="2" palmMute="1" />
+<note time="11.036" string="1" fret="2" palmMute="1" />
+<note time="11.186" string="1" fret="2" palmMute="1" />
+<note time="12.705" string="1" fret="1" palmMute="1" />
+<note time="12.835" string="1" fret="1" palmMute="1" />
+<note time="12.985" string="1" fret="1" palmMute="1" />
+<note time="13.115" string="1" fret="1" palmMute="1" />
+<note time="13.272" string="1" fret="1" palmMute="1" />
+<note time="13.402" string="1" fret="1" palmMute="1" />
+<note time="13.552" string="1" fret="1" palmMute="1" />
+<note time="13.702" string="1" fret="1" palmMute="1" />
+<note time="13.828" string="1" fret="1" palmMute="1" />
+<note time="13.940" string="1" fret="2" sustain="0.367" slideUnpitchTo="3" />
+<note time="14.310" string="2" fret="5" sustain="0.397" />
+<note time="14.740" string="3" fret="5" sustain="0.297" />
+<note time="15.040" string="1" fret="3" sustain="0.297" slideUnpitchTo="4" />
+<note time="15.340" string="2" fret="6" sustain="0.167" />
+<note time="15.510" string="3" fret="6" sustain="0.297" />
+<note time="16.380" string="1" fret="5" palmMute="1" />
+<note time="16.470" string="1" fret="5" palmMute="1" />
+<note time="16.640" string="1" fret="5" palmMute="1" />
+<note time="16.750" string="1" fret="5" palmMute="1" />
+<note time="16.910" string="1" fret="5" palmMute="1" />
+<note time="17.010" string="1" fret="5" palmMute="1" />
+<note time="17.184" string="1" fret="5" palmMute="1" />
+<note time="17.294" string="1" fret="5" palmMute="1" />
+<note time="17.471" string="1" fret="5" palmMute="1" />
+<note time="17.581" string="1" fret="5" palmMute="1" />
+<note time="17.760" string="1" fret="5" palmMute="1" />
+<note time="17.890" string="1" fret="5" palmMute="1" />
+<note time="18.040" string="1" fret="5" palmMute="1" />
+<note time="18.170" string="1" fret="5" palmMute="1" />
+<note time="18.316" string="1" fret="5" palmMute="1" />
+<note time="18.416" string="1" fret="5" palmMute="1" />
+<note time="19.910" string="1" fret="3" palmMute="1" />
+<note time="20.040" string="1" fret="3" palmMute="1" />
+<note time="20.190" string="1" fret="3" palmMute="1" />
+<note time="20.320" string="1" fret="3" palmMute="1" />
+<note time="20.477" string="1" fret="3" palmMute="1" />
+<note time="20.607" string="1" fret="3" palmMute="1" />
+<note time="20.757" string="1" fret="3" palmMute="1" />
+<note time="20.907" string="1" fret="3" palmMute="1" />
+<note time="21.033" string="1" fret="3" palmMute="1" />
+<note time="21.163" string="1" fret="3" palmMute="1" />
+<note time="21.313" string="1" fret="3" palmMute="1" />
+<note time="21.463" string="1" fret="3" palmMute="1" />
+<note time="21.603" string="1" fret="3" palmMute="1" />
+<note time="21.733" string="1" fret="3" palmMute="1" />
+<note time="21.883" string="1" fret="3" palmMute="1" />
+<note time="23.433" string="1" fret="2" palmMute="1" />
+<note time="23.563" string="1" fret="2" palmMute="1" />
+<note time="23.713" string="1" fret="2" palmMute="1" />
+<note time="23.843" string="1" fret="2" palmMute="1" />
+<note time="24.000" string="1" fret="2" palmMute="1" />
+<note time="24.130" string="1" fret="2" palmMute="1" />
+<note time="24.280" string="1" fret="2" palmMute="1" />
+<note time="24.430" string="1" fret="2" palmMute="1" />
+<note time="24.556" string="1" fret="2" palmMute="1" />
+<note time="24.686" string="1" fret="2" palmMute="1" />
+<note time="24.836" string="1" fret="2" palmMute="1" />
+<note time="24.986" string="1" fret="2" palmMute="1" />
+<note time="25.126" string="1" fret="2" palmMute="1" />
+<note time="25.256" string="1" fret="2" palmMute="1" />
+<note time="25.406" string="1" fret="2" palmMute="1" />
+<note time="26.925" string="1" fret="1" palmMute="1" />
+<note time="27.055" string="1" fret="1" palmMute="1" />
+<note time="27.205" string="1" fret="1" palmMute="1" />
+<note time="27.335" string="1" fret="1" palmMute="1" />
+<note time="27.492" string="1" fret="1" palmMute="1" />
+<note time="27.622" string="1" fret="1" palmMute="1" />
+<note time="27.772" string="1" fret="1" palmMute="1" />
+<note time="27.922" string="1" fret="1" palmMute="1" />
+<note time="28.048" string="1" fret="1" palmMute="1" />
+<note time="28.168" string="1" fret="1" palmMute="1" />
+<note time="30.151" string="1" fret="5" sustain="0.289" />
+<note time="30.443" string="1" fret="5" palmMute="1" />
+<note time="30.613" string="1" fret="5" palmMute="1" />
+<note time="30.864" string="1" fret="5" palmMute="1" />
+<note time="31.044" string="1" fret="5" palmMute="1" />
+<note time="31.299" string="1" fret="5" palmMute="1" />
+<note time="31.479" string="1" fret="5" palmMute="1" />
+<note time="31.740" string="1" fret="5" palmMute="1" />
+<note time="31.910" string="1" fret="5" palmMute="1" />
+<note time="32.184" string="1" fret="5" palmMute="1" />
+<note time="32.364" string="1" fret="5" palmMute="1" />
+<note time="32.638" string="1" fret="5" palmMute="1" />
+<note time="32.808" string="1" fret="5" palmMute="1" />
+<note time="33.084" string="1" fret="5" palmMute="1" />
+<note time="33.254" string="1" fret="5" palmMute="1" />
+<note time="33.505" string="1" fret="5" palmMute="1" />
+<note time="33.685" string="1" fret="3" palmMute="1" />
+<note time="33.940" string="1" fret="3" palmMute="1" />
+<note time="34.120" string="1" fret="3" palmMute="1" />
+<note time="34.385" string="1" fret="3" palmMute="1" />
+<note time="34.555" string="1" fret="3" palmMute="1" />
+<note time="34.825" string="1" fret="3" palmMute="1" />
+<note time="34.995" string="1" fret="3" palmMute="1" />
+<note time="35.267" string="1" fret="3" palmMute="1" />
+<note time="35.447" string="1" fret="3" palmMute="1" />
+<note time="35.714" string="1" fret="3" palmMute="1" />
+<note time="35.894" string="1" fret="3" palmMute="1" />
+<note time="36.159" string="1" fret="3" palmMute="1" />
+<note time="36.320" string="1" fret="3" palmMute="1" />
+<note time="36.614" string="1" fret="3" palmMute="1" />
+<note time="36.784" string="1" fret="3" palmMute="1" />
+<note time="37.057" string="1" fret="3" palmMute="1" />
+<note time="37.227" string="1" fret="2" palmMute="1" />
+<note time="37.503" string="1" fret="2" palmMute="1" />
+<note time="37.665" string="1" fret="2" palmMute="1" />
+<note time="37.912" string="1" fret="2" palmMute="1" />
+<note time="38.074" string="1" fret="2" palmMute="1" />
+<note time="38.377" string="1" fret="2" palmMute="1" />
+<note time="38.549" string="1" fret="2" palmMute="1" />
+<note time="38.817" string="1" fret="2" palmMute="1" />
+<note time="38.989" string="1" fret="2" palmMute="1" />
+<note time="39.287" string="1" fret="2" palmMute="1" />
+<note time="39.450" string="1" fret="2" palmMute="1" />
+<note time="39.753" string="1" fret="2" palmMute="1" />
+<note time="39.924" string="1" fret="2" palmMute="1" />
+<note time="40.209" string="1" fret="2" palmMute="1" />
+<note time="40.381" string="1" fret="2" palmMute="1" />
+<note time="40.649" string="1" fret="2" palmMute="1" />
+<note time="40.821" string="1" fret="1" palmMute="1" />
+<note time="41.110" string="1" fret="1" palmMute="1" />
+<note time="41.292" string="1" fret="1" palmMute="1" />
+<note time="41.579" string="1" fret="1" palmMute="1" />
+<note time="41.721" string="1" fret="1" palmMute="1" />
+<note time="41.948" string="1" fret="1" palmMute="1" />
+<note time="42.138" string="1" fret="1" palmMute="1" />
+<note time="42.308" string="1" fret="1" palmMute="1" />
+<note time="42.487" string="1" fret="1" palmMute="1" />
+<note time="59.000" string="3" fret="12" sustain="0.167" bend="2" ><bendValues count="1" ><bendValue time="59.056" step="2.000" /></bendValues></note>
+<note time="59.170" string="3" fret="10" />
+<note time="59.350" string="3" fret="12" />
+<note time="59.460" string="3" fret="10" sustain="0.297" />
+<note time="59.760" string="3" fret="10" mute="1" />
+<note time="59.910" string="2" fret="10" />
+<note time="60.060" string="2" fret="12" />
+<note time="60.200" string="3" fret="10" />
+<note time="60.390" string="3" fret="12" sustain="0.257" bend="2" ><bendValues count="1" ><bendValue time="60.476" step="2.000" /></bendValues></note>
+<note time="60.650" string="3" fret="10" />
+<note time="60.815" string="3" fret="12" hopo="1" hammerOn="1" />
+<note time="60.920" string="3" fret="10" hopo="1" pullOff="1" />
+<note time="60.990" string="2" fret="12" />
+<note time="61.160" string="2" fret="12" sustain="0.257" />
+<note time="61.420" string="2" fret="10" />
+<note time="61.620" string="2" fret="12" />
+<note time="61.770" string="3" fret="10" />
+<note time="61.980" string="3" fret="12" sustain="0.167" bend="2" ><bendValues count="1" ><bendValue time="62.036" step="2.000" /></bendValues></note>
+<note time="62.150" string="4" fret="10" />
+<note time="62.330" string="4" fret="13" />
+<note time="62.500" string="4" fret="13" />
+<note time="62.630" string="4" fret="10" />
+<note time="62.770" string="4" fret="10" />
+<note time="62.900" string="4" fret="10" sustain="0.217" />
+<note time="63.120" string="4" fret="13" />
+<note time="63.320" string="4" fret="13" />
+<note time="63.480" string="4" fret="10" />
+<note time="63.650" string="4" fret="10" />
+<note time="63.760" string="4" fret="13" sustain="0.200" linkNext="1" slideTo="15" />
+<note time="63.960" string="4" fret="15" />
+<note time="64.090" string="5" fret="13" />
+<note time="64.310" string="5" fret="15" sustain="0.207" bend="2" ><bendValues count="1" ><bendValue time="64.379" step="2.000" /></bendValues></note>
+<note time="64.520" string="5" fret="15" sustain="0.217" bend="2" vibrato="80" ><bendValues count="2" ><bendValue time="64.620" /><bendValue time="64.625" step="2.000" /></bendValues></note>
+<note time="64.740" string="5" fret="15" sustain="0.267" bend="2" ><bendValues count="1" ><bendValue time="64.829" step="2.000" /></bendValues></note>
+<note time="65.010" string="5" fret="13" />
+<note time="65.140" string="5" fret="15" sustain="0.217" bend="2" ><bendValues count="3" ><bendValue time="65.140" step="2.000" /><bendValue time="65.145" step="2.000" /><bendValue time="65.140" /></bendValues></note>
+<note time="65.360" string="5" fret="15" />
+<note time="65.505" string="5" fret="13" hopo="1" pullOff="1" />
+<note time="65.620" string="5" fret="15" hopo="1" hammerOn="1" />
+<note time="65.740" string="5" fret="15" />
+<note time="65.910" string="5" fret="13" />
+<note time="66.050" string="4" fret="15" />
+<note time="66.190" string="5" fret="15" />
+<note time="66.370" string="5" fret="13" />
+<note time="66.570" string="4" fret="15" />
+<note time="66.710" string="5" fret="15" />
+<note time="66.990" string="5" fret="13" />
+<note time="67.140" string="4" fret="15" />
+<note time="67.270" string="5" fret="15" sustain="0.250" bend="2" ><bendValues count="2" ><bendValue time="67.520" /><bendValue time="67.483" step="2.000" /></bendValues></note>
+<note time="67.540" string="5" fret="13" />
+<note time="67.690" string="4" fret="15" />
+<note time="67.900" string="4" fret="13" />
+<note time="68.030" string="4" fret="15" sustain="0.337" vibrato="80" />
+<note time="68.370" string="4" fret="13" />
+<note time="68.525" string="4" fret="15" hopo="1" hammerOn="1" />
+<note time="68.690" string="5" fret="13" />
+<note time="68.850" string="5" fret="18" sustain="0.357" />
+<note time="69.210" string="5" fret="18" />
+<note time="69.430" string="5" fret="18" />
+<note time="69.670" string="5" fret="18" />
+<note time="69.980" string="5" fret="20" sustain="0.327" />
+<note time="70.310" string="5" fret="20" />
+<note time="70.530" string="5" fret="20" />
+<note time="70.750" string="5" fret="21" sustain="0.357" />
+<note time="71.110" string="5" fret="21" sustain="1.867" vibrato="80" />
+<note time="100.530" string="1" fret="3" sustain="0.417" />
+<note time="100.950" string="2" fret="5" sustain="0.537" />
+<note time="104.470" string="2" fret="12" />
+<note time="108.050" string="2" fret="12" />
+<note time="111.665" string="2" fret="12" />

@@ -88,6 +88,7 @@ POPUP "Sho&w"
   MENUITEM "&Full\tCtrl+F2", cm_srclong
   MENUITEM "Co&mments\tCtrl+Shift+F2", 300
   MENUITEM "Custom Columns Mo&de\tShift+F1", 270
+  MENUITEM "Custom View Modes", 333
   MENUITEM "&Tree\tCtrl+F8", cm_srcTree
   POPUP "Separate Tree\tCtrl+Shift+F8"
     MENUITEM "&0 (None)", 3200
@@ -119,7 +120,9 @@ END_POPUP
 POPUP "C&onfiguration"
   MENUITEM "&Options...", cm_config
   MENUITEM "&Button Bar...", cm_ButtonConfig
+  MENUITEM "Button Bar &2 (Vertical)...", 583
   MENUITEM "&Change Settings Files Directly...", 581
+  MENUITEM "&Dark<->Normal", 2950
   MENUITEM "&Save Position", cm_configSavepos
   MENUITEM "Sa&ve Settings", 580
 END_POPUP
@@ -132,7 +135,8 @@ POPUP "&Help"
   MENUITEM "&Index\tF1", cm_HelpIndex
   MENUITEM "&Keyboard", cm_keyboard
   MENUITEM "&Registration Info", cm_register
-  MENUITEM "&Visit Totalcmd's Web Site", 640
+  MENUITEM "&Visit Totalcmd's Website", 640
+  MENUITEM "&Check for updates now", 650
   MENUITEM SEPARATOR
   MENUITEM "&About Total Commander...", cm_About
 END_POPUP

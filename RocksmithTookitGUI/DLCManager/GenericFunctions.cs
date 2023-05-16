@@ -45,6 +45,17 @@ using System.Windows.Input;
 using Microsoft.Win32;
 using static RocksmithToolkitGUI.DLCManager.UtilitiesFunctions;
 using X360.Other;
+using RocksmithToolkitLib.DLCPackage.XBlock;
+using static System.Data.Entity.Infrastructure.Design.Executor;
+using SpotifyApi.NetCore;
+using System.Runtime.Intrinsics.Arm;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
+using static System.Net.Mime.MediaTypeNames;
+using System.Speech.Synthesis;
+using System.Windows.Documents;
+using System.Diagnostics.Eventing.Reader;
+using System.Drawing.Printing;
+using X360.FATX;
 
 namespace RocksmithToolkitGUI.DLCManager
 {
@@ -53,156 +64,8 @@ namespace RocksmithToolkitGUI.DLCManager
         static string AppWD = AppDomain.CurrentDomain.BaseDirectory + "DLCManager\\external_tools"; //when removing DDC
         public const long BUFFER_SIZE = 4096;
         public static StringBuilder errorsFound;
-
-        public static void OpenDb()
-        {/*OleDbConnection cnc*/
-            if (cnb.State.ToString() == "Open") return;//notsure if ever reached
-            //ConfigRepository.Instance()["dlcm_AccessDLLVersion"] = "ACE.OLEDB.12.0";
-            var tz = ConfigRepository.Instance()["dlcm_DBFolder"];
-            //OleDbConnection cnf = null;
-            //tz = tz.Replace("AccessDB.accdb", "SQLLiteDB.db");
-#if (DEBUG)
-            {
-                DialogResult result1 = DialogResult.Cancel;
-                result1 = MessageBox.Show("Select DB (mandatory when in debug project mode)\n1. SQL-Lite3 (Yes)\n2. M$ Access (No)\n\nCurrently set value: "
-                    + (ConfigRepository.Instance()["dlcm_AdditionalManipul114"] == "Yes" ? "SQL-Lite3" : "M$ Access") + "\n" + tz
-                , MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-                if (result1 == DialogResult.Yes)
-                {
-                    ConfigRepository.Instance()["dlcm_AdditionalManipul114"] = "Yes";
-                    ConfigRepository.Instance()["dlcm_DBFolder"] = tz.Replace("AccessDB.accdb", "SQLLiteDB.db");
-                }
-                if (result1 == DialogResult.No)
-                {
-                    ConfigRepository.Instance()["dlcm_AdditionalManipul114"] = "No";
-                    ConfigRepository.Instance()["dlcm_DBFolder"] = tz.Replace("SQLLiteDB.db", "AccessDB.accdb");
-                    cnb = new OleDbConnection("Provider=Microsoft." + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Persist Security" +
-                " Info=False;Mode= Share Deny None;Data Source=" + ConfigRepository.Instance()["dlcm_DBFolder"]);
-                }
-            }
-#endif
-            DBPathChange(c("dlcm_DBFolder"), c("dlcm_Configurations"));
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul114"] != "Yes")
-                try
-                {
-                    if (File.Exists(cnb.DataSource.ToString())) cnb.Open();
-                }
-                catch (Exception exx)
-                {
-
-                    ShowConnectivityError(exx, "");/*, null*/
-                    try
-                    {
-                        if (File.Exists(cnb.DataSource.ToString())) cnb.Open(); //2nd time makes it work sometimes e.g. x64 solution
-                    }
-                    catch (Exception ex)
-                    {
-                        string vb = null; vb = DisplayData();
-                        ShowConnectivityError(ex, "NO M$ DB plugin Currently found (" + cnb.ConnectionString.ToString() + ")\n:" + DisplayData() + "\n2nd FAIL to use M$ ACCESS plugin:\n" + vb + "\n\nError:" + ex);/*, null*/
-                        //revert to SQLite
-                        if (File.Exists(tz.Replace("AccessDB.accdb", "SQLLiteDB.db")))
-                        {
-                            ConfigRepository.Instance()["dlcm_AdditionalManipul114"] = "Yes";
-                            ConfigRepository.Instance()["dlcm_DBFolder"] = tz.Replace("AccessDB.accdb", "SQLLiteDB.db"); ;
-                        }
-                        else MessageBox.Show("No Microsoft Access or SQLite databases" +
-                            //" i.e.: C:\\Program Files\\SQLite ODBC Driver for Win64 (existing: "+ (Directory.Exists("C:\\Program Files\\SQLite ODBC Driver for Win64") ? "true":"false")+ ")" +
-                            "\n(or access;plugins etc) available. Good Luck as (the) C-DLC Manager wont really work!");
-                    }
-                }
-            else
-                try
-                {
-                    ConfigRepository.Instance()["dlcm_DBFolder"] = tz.Replace("AccessDB.accdb", "SQLLiteDB.db");
-                    if (File.Exists(ConfigRepository.Instance()["dlcm_DBFolder"])) cnc = new SQLite.SQLiteConnection(ConfigRepository.Instance()["dlcm_DBFolder"]);
-                    ConfigRepository.Instance()["dlcm_AdditionalManipul114"] = "Yes";
-                }
-                catch (Exception exx)
-                {
-                    ShowConnectivityError(exx, "");/*, null*/
-                }
-        }
-
-        public static bool DBPathChange(string txt_DBFolder, string chbx_Configurations)
-        {
-            bool t = PathChange(txt_DBFolder, chbx_Configurations);
-            return t;
-        }
-
-        static public bool PathChange(string txt_DBFolder, string chbx_Configurations)
-        {
-
-            var tt = ConfigRepository.Instance()["dlcm_DBFolder"];
-            //var tr = cnb.DataSource.ToString();
-            //var tz = cnc.DatabasePath.ToString();
-            try
-            {
-                if (!File.Exists(txt_DBFolder)) dbmissingHandle("");
-                var cnn = "";
-                if (cnb is not null)
-                {
-                    if (cnb is not null) if (cnb.DataSource.Contains(".accdb") && cnb.DataSource == c("dlcm_DBFolder")) return false;
-                        else if (c("dlcm_DBFolder").Contains(".accdb")) cnn = cnb.DataSource;
-                }//if (cnb.DataSource.Contains(".accdb")) cnn = cnb.DataSource;
-                if (cnc is not null)
-                {
-                    if (cnc is not null) if (cnc.DatabasePath.Contains(".db") && cnc.DatabasePath == c("dlcm_DBFolder")) return false;
-                        else if (c("dlcm_DBFolder").Contains(".db")) cnn = cnc.DatabasePath;
-                } //if (cnc.DatabasePath.Contains(".db")) cnn = cnc.DatabasePath;
-
-                if (cnn == "") return false;
-
-                DialogResult result1 = DialogResult.No;
-                result1 = MessageBox.Show("Do you want change DB (\nconnection: " + cnn + "\n param: " + c("dlcm_DBFolder") +
-                    ")?\n\nIf you chose No you can still modify/update profile, then change DB", "DB Change DETECTED!!", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
-                if (result1 == DialogResult.No) return false;
-                if (File.Exists(txt_DBFolder))
-                {
-                    var cmd = "SELECT * FROM Groups WHERE Groupz=\"" + txt_DBFolder + "\" AND Comments =\"dlcm_DBFolder\" AND Profile_Name=\"" + chbx_Configurations + "\" and Type=\"Profile\";";
-
-                    if (cnn is not null && cnn != "")
-                    {
-                        DialogResult result2 = DialogResult.No;
-                        DataSet ddzv = new DataSet(); ddzv = SelectFromDB("Groups", cmd, txt_DBFolder, cnb, cnc);
-                        int max = ddzv.Tables.Count > 0 ? ddzv.Tables.Count : 0;
-                        if (txt_DBFolder != tt && max == 0) result2 = MessageBox.Show("Do you want to automatically Save the DB Folder Path change to " + txt_DBFolder
-                            + ") in the Profile (" + chbx_Configurations + ") or MANUALLY update entry in ACCDB/DB, Groupz table, entry/Comments field: dlcm_DBFolder, Groupz value.", "DB Change DETECTED!!", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
-                        if (result2 == DialogResult.No) ;
-                        else
-                        {
-                            var cmdz = "UPDATE Groups SET Groupz=\"" + txt_DBFolder + "\" WHERE Comments=\"dlcm_DBFolder\" AND Profile_Name=\"" + chbx_Configurations + "\" and Type=\"Profile\";";
-                            DataSet dts = new DataSet(); dts = UpdateDB("Groups", cmdz, cnb, cnc);
-                            //MessageBox.Show("Note Prev DB Profile's DB folder is not changed automatically, so you need to udpate that yourself in the old DB."
-                            //       , MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                    }
-
-                    try
-                    {
-                        if (cnb is not null) cnb.Close(); if (cnc is not null) cnc.Close();
-                        cnb.ConnectionString = "Provider=Microsoft." + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Persist Security Info=False;Mode= Share Deny None;Data Source=" + txt_DBFolder;
-                        OpenDb();
-                    }
-                    catch (Exception ex)
-                    {; }
-                    //ConfigRepository.Instance()["dlcm_DBFolder"] = txt_DBFolder.Text;
-
-                    cmd = "UPDATE Groups SET Groupz=\"" + txt_DBFolder + "\" WHERE Comments=\"dlcm_DBFolder\" AND Type=\"Profile\" AND Profile_Name=\"Default\"";/*AND Comments=\"" + c(dss.Tables[0].Rows[j][0].ToString()) + "\"chbx_Configurations.Text*/
-                    UpdateDB("Groups", cmd, cnb, cnc);
-                    cmd = "UPDATE Groups SET Groupz=\"Default\" WHERE Comments=\"dlcm_Configurations\" AND Type=\"Profile\" AND Profile_Name=\"Default\"";/*AND Comments=\"" + c(dss.Tables[0].Rows[j][0].ToString()) + "\"chbx_Configurations.Text*/
-                    UpdateDB("Groups", cmd, cnb, cnc);
-
-                    //if (txt_DBFolder != MyAppWD + "\\..\\AccessDB.accdb" || txt_DBFolder != MyAppWD + "\\..\\SLQLiteDB.db") chbx_DefaultDB.Checked = false;
-
-                }
-            }
-            catch (Exception ex)
-            {
-                dbmissingHandle(ex.Message.ToString());
-            }
-            return true;
-        }
+        public static bool metadatadisplayedonce = false;
+        public static CultureInfo enUS = new CultureInfo("en-US");
         public static void dbmissingHandle(string ex)
         {
             UpdateLog(DateTime.Now, ex, true, c("dlcm_TempPath"), "", "DLCManager", null, null);
@@ -235,7 +98,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                 if (zipdate < file.CreationTime) zipdate = file.CreationTime;
                             }
                         }
-                        UpdateLog(DateTime.Now, "Finished processing "+ Path.GetDirectoryName(c("dlcm_DBFolder")) + "\\0_temp searching for backups"
+                        UpdateLog(DateTime.Now, "Finished processing " + Path.GetDirectoryName(c("dlcm_DBFolder")) + "\\0_temp searching for backups"
                             , false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
                         System.IO.DirectoryInfo downloadedMessageInfo1 = new DirectoryInfo(AppWD);
                         foreach (FileInfo file in downloadedMessageInfo1.GetFiles())
@@ -245,7 +108,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             fill = file.Length;
                             if (zipdate < file.CreationTime) zipdate = file.CreationTime;
                         }
-                        UpdateLog(DateTime.Now, "Finished processing " + AppWD+" searching for backups"
+                        UpdateLog(DateTime.Now, "Finished processing " + AppWD + " searching for backups"
                             , false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
                         System.IO.DirectoryInfo downloadedMessageInfo3 = new DirectoryInfo(c("dlcm_0_temp") + "\\0_temp\\");
                         foreach (FileInfo file in downloadedMessageInfo3.GetFiles())
@@ -265,7 +128,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             fill = file.Length;
                             if (zipdate < file.CreationTime) zipdate = file.CreationTime;
                         }
-                        UpdateLog(DateTime.Now, "Finished processing " + c("dlcm_0_temp")  + " searching for backups"
+                        UpdateLog(DateTime.Now, "Finished processing " + c("dlcm_0_temp") + " searching for backups"
                             , false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
 
                         result1 = MessageBox.Show("DB file not found: " + ConfigRepository.Instance()["dlcm_DBFolder"] + "!" +
@@ -360,119 +223,6 @@ namespace RocksmithToolkitGUI.DLCManager
             "\n set to: " + ConfigRepository.Instance()["dlcm_DBFolder"], true, c("dlcm_TempPath"), "", "DLCManager", null, null);
         }
 
-        public static void ShowConnectivityError(Exception ex, string txt)/*, System.Windows.Forms.Label lbl*/
-        {
-            var mssg = "You need to Download Connectivity patch 32/64 bit v2010 (allows usage by 3rd party DB editors;also avail. at: " +
-                AppWD + "\\AccessDatabaseEngine.exe)/2013-2016 (assumingly bet perf/comp)  to match your version of Office @ " +
-         txt + ".\n" + "Reinstall in case you feel/see plugin there or is not diplayed when manually checking by running in Windows PowerShell:\n\n" +
-         "(New-Object system.data.oledb.oledbenumerator).GetElements() | select SOURCES_NAME, SOURCES_DESCRIPTION\n\n" +
-         "and if intending to install the x64 variant of plugin, please note in order to have it on top of Office 32bit," +
-         " then you need to decompress it (64b also avail. at: " + c("dlcm_AccessACE.OLEDB.16.0Local64b") + ") and the .msi with /passive flag\n\nError:ex";
-
-            //Download and install plugin from Microsoft website
-            if (ex.Message.IndexOf("The 'Microsoft.ACE.OLEDB.") > -1 && ex.Message.IndexOf("provider is not registered on the local machine.") > -1)
-            {
-                if (c("dlcm_ShowConenctivityOnce") == "Yes")
-                    //{
-                    ConfigRepository.Instance()["dlcm_ShowConenctivityOnce"] = "Maybe";//default always to show message only once
-                                                                                       //return;
-                                                                                       //}
-                else if (c("dlcm_ShowConenctivityOnce") == "Maybe") return;
-                //Use locally saved 2016 installation kit 
-                var xx = "";
-                if (File.Exists(c("dlcm_AccessACE.OLEDB.16.0Local64b")) || File.Exists(c("dlcm_AccessACE.OLEDB.16.0Local32b")) || File.Exists(c("dlcm_sqliteodbc")))
-                {
-                    DialogResult result1 = DialogResult.Cancel;
-                    result1 = MessageBox.Show("Plugins Currently found for " + cnb.ConnectionString.ToString() + ":\n" + DisplayData()
-                        + "\nAs no M$ Access connectivity plugin was found," +
-                    " Do you want to:\n 1. (Yes) Install the locally stored 32 bit version (if matching your Office installation;" +
-                    " if interested in using 3rd party Freeware ACCDB Editors <best is the 2010 version>)" +
-                    "\n 2. (No) Install the locally stored 64 bit version (if matching your Excel installation) , or" +
-                    "\n 3. (Cancel)" +
-                    "\n \ta) Download by your self using the subsecvent instructions" +
-                    "\n \tb) Use SQL-lite3 as DB (you can still use M$ Access (LINKDB.accdb) to access the DB using a OLEDBC plugin i.e.\n(1) " +
-                    c("dlcm_AccessACE.OLEDB.16.0Local64b") + "\n(2) " + c("dlcm_AccessACE.OLEDB.16.0Local32b") + "\n(3) " + c("dlcm_sqliteodbc") + ").\n\nError:" + ex
-                    , MESSAGEBOX_CAPTION, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-
-                    if (result1 == DialogResult.Yes) xx = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, c("dlcm_AccessACE.OLEDB.16.0Local32b"));
-                    if (result1 == DialogResult.No) xx = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, c("dlcm_AccessACE.OLEDB.16.0Local64b"));
-
-                    if (!File.Exists(xx))
-                    {
-                        if (result1 != DialogResult.Cancel)
-                        {
-                            ErrorWindow frm2 = new ErrorWindow("Selected bit version(" + xx + ") not available instead the other one is there. close the program and open to try again" +
-                            " or manually install it as pe subsecvent instructions", ConfigRepository.Instance()["dlcm_Access" + ConfigRepository.Instance()["dlcm_AccessDLLVersion"]]
-                            , "Missing " + xx, false, false, true, "", "", "");
-                            frm2.ShowDialog();
-                        }
-                        else
-                        {
-                            DialogResult result3 = DialogResult.Cancel;
-                            result3 = MessageBox.Show("1. (Yes) Use M$ Access \n2. (No) Use SQL-lite3\n3. (Cancel) Don't use any DB (or any DCLM feature :) )"
-                            , MESSAGEBOX_CAPTION, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-
-                            if (result3 == DialogResult.No) ;
-                            if (result3 == DialogResult.Yes)
-                            {
-                                ErrorWindow frm2 = new ErrorWindow(mssg
-                                , ConfigRepository.Instance()["dlcm_Access" + ConfigRepository.Instance()["dlcm_AccessDLLVersion"]], "Error @Import", false, false, true, "", "", "");
-                                frm2.ShowDialog();
-                            }
-                            if (result3 == DialogResult.Cancel) ;
-                        }
-                    }
-                    else
-                    if (result1 == DialogResult.Cancel)
-                    {
-                        ErrorWindow frm1 = new ErrorWindow(mssg
-                            , ConfigRepository.Instance()["dlcm_Access" + ConfigRepository.Instance()["dlcm_AccessDLLVersion"]], "Error @Import", false, false, true, "", "", "");
-                        frm1.ShowDialog();
-
-                    }
-                    else
-                        try
-                        {
-                            //xx = "cmd /C " + xx;
-                            //Process process = Process.Start(@xx);
-                            StartProcesss(@xx, null);
-                        }
-                        catch (Exception exx)
-                        {
-                            if (File.Exists(xx))
-                                ;// GeneralExtension.RunExternalExecutable(xx, false);
-                            var startInfo = new ProcessStartInfo
-                            {
-                                FileName = xx,
-                                WorkingDirectory = Path.GetDirectoryName(xx)
-                            };
-                            Process DDC = new Process();
-                            //startInfo.Arguments = "";
-                            startInfo.UseShellExecute = true; startInfo.CreateNoWindow = false;
-
-                            if (File.Exists(xx))
-                            {
-                                DDC.StartInfo = startInfo;
-                                DDC.Start(); DDC.WaitForExit(1000 * 30 * 1); //wait 1min
-                            }
-                            var tsst = "Erro0 ..." + exx; var timestamp = UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", null, null);
-                            //MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            MessageBox.Show("Can not open Local M$ Access plugin install ! " + xx);
-                        }
-                }
-
-                //if (lbl != null)
-                //{
-                //    lbl.Text = "missing Access plugin!";
-                //    lbl.Visible = true;
-                //}
-            }
-            else
-            {
-                var timestamp = UpdateLog(DateTime.Now, "Error ..." + txt + ex, false, c("dlcm_TempPath"), "", "", null, null);
-            }
-        }
-
         public static void BackupDB(bool zip)/*, System.Windows.Forms.Label lbl*/
         {
             var dtt = System.DateTime.Now.ToString("yyyyMMdd HHmmssfff");
@@ -497,9 +247,13 @@ namespace RocksmithToolkitGUI.DLCManager
 
                 //copy internally
                 FileCopy(zipFile, AppWD + "\\dbbackup.gz", true, 1, false);
+                if (AppWD.Contains("\\Debug\\")) FileCopy(zipFile, AppWD + "\\..\\..\\..\\..\\..\\DLCManager\\external_tools\\dbbackup.gz", true, 1, false);
                 FileCopy(Path.GetDirectoryName(c("dlcm_DBFolder")) + "\\AccessDB.accdb", AppWD + "\\AccessDB.accdb", true, 1, false);
                 FileCopy(Path.GetDirectoryName(c("dlcm_DBFolder")) + "\\SQLLiteDB.db", AppWD + "\\SQLLiteDB.db", true, 1, false);
                 FileCopy(Path.GetDirectoryName(c("dlcm_DBFolder")) + "\\LinkDB.accdb", AppWD + "\\LinkDB.accdb", true, 1, false);
+                if (AppWD.Contains("\\Debug\\")) FileCopy(Path.GetDirectoryName(c("dlcm_DBFolder")) + "\\AccessDB.accdb", AppWD + "\\..\\..\\..\\..\\..\\DLCManager\\external_tools\\AccessDB.accdb", true, 1, false);
+                if (AppWD.Contains("\\Debug\\")) FileCopy(Path.GetDirectoryName(c("dlcm_DBFolder")) + "\\SQLLiteDB.db", AppWD + "\\..\\..\\..\\..\\..\\DLCManager\\external_tools\\SQLLiteDB.db", true, 1, false);
+                if (AppWD.Contains("\\Debug\\")) FileCopy(Path.GetDirectoryName(c("dlcm_DBFolder")) + "\\LinkDB.accdb", AppWD + "\\..\\..\\..\\..\\..\\DLCManager\\external_tools\\LinkDB.accdb", true, 1, false);
                 timestamp = UpdateLog(timestamp, "Local backup: done (true/false) AccessDB.accdb: " + File.Exists(AppWD + "\\AccessDB.accdb") +
                 "Local backup: done SQLLiteDB.accdb: " + File.Exists(AppWD + "\\SQLLiteDB.db") +
                     "Local backup: done LinkDB.accdb: " + File.Exists(AppWD + "\\LinkDB.accdb"), true, c("dlcm_TempPath"), "", "DLCManager", null, null);
@@ -527,7 +281,7 @@ namespace RocksmithToolkitGUI.DLCManager
             var IsLive = ""; var LiveDetails = ""; var IsAcoustic = ""; var IsSingle = ""; var IsSoundtrack = "";
             var IsInstrumental = ""; var IsEP = ""; var IsUncensored = ""; var IsFullAlbum = ""; var IsRemastered = ""; var InTheWorks = "";
             var IsKaraoke = ""; var IsDemo = ""; var HasFeaturing = ""; var IsRemix = ""; var IsCover = ""; var IsMultiStrings = ""; var IsMedley = "";
-            var Titl = "";
+            var Titl = ""; var IsGreatestHits = ""; var IsDeluxe = ""; var IsGameSoundtrack = ""; var IsMidi = ""; var IsTVTheme = ""; var IsAmateurCover = "";
             if (Album == "") Album = "---";
             var multibool = ConfigRepository.Instance()["dlcm_AdditionalManipul48"] == "Yes" ? true : false;
             var multxt = "No Guitar"; Titl = Check4MultiT(origFN, SongDisplayName, multxt, multibool, "SongDisplayName"); if ("Yes" == Titl.Split(';')[1]) { Is_MultiTrack = "Yes"; SongDisplayName = Titl.Split(';')[0]; MultiTrack_Version = "(No Guitars)"; }
@@ -567,6 +321,17 @@ namespace RocksmithToolkitGUI.DLCManager
             multxt = "(Single)"; Titl = Check4MultiT(origFN, Album, multxt, multibool, "Album"); if ("Yes" == Titl.Split(';')[1]) { IsSingle = "Yes"; Album = Titl.Split(';')[0]; Album = Titl.Split(';')[0]; }
             multxt = "(Single-Edit)"; Titl = Check4MultiT(origFN, SongDisplayName, multxt, multibool, "SongDisplayName"); if ("Yes" == Titl.Split(';')[1]) { IsSingle = "Yes"; SongDisplayName = Titl.Split(';')[0]; }
             multxt = "CD Single"; Titl = Check4MultiT(origFN, Album, multxt, multibool, "Album"); if ("Yes" == Titl.Split(';')[1]) { IsSingle = "Yes"; Album = Titl.Split(';')[0]; }
+            multxt = "12 inch"; Titl = Check4MultiT(origFN, Album, multxt, multibool, "Album"); if ("Yes" == Titl.Split(';')[1]) { IsSingle = "Yes"; Album = Titl.Split(';')[0]; LiveDetails += " \"12 inch"; }
+            multxt = "\"12"; Titl = Check4MultiT(origFN, Album, multxt, multibool, "Album"); if ("Yes" == Titl.Split(';')[1]) { IsSingle = "Yes"; Album = Titl.Split(';')[0]; LiveDetails += " \"12 inch"; }
+            multxt = "12\""; Titl = Check4MultiT(origFN, Album, multxt, multibool, "Album"); if ("Yes" == Titl.Split(';')[1]) { IsSingle = "Yes"; Album = Titl.Split(';')[0]; LiveDetails += " \"12 inch"; }
+            multxt = "'12"; Titl = Check4MultiT(origFN, Album, multxt, multibool, "Album"); if ("Yes" == Titl.Split(';')[1]) { IsSingle = "Yes"; Album = Titl.Split(';')[0]; LiveDetails += " \"12 inch"; }
+            multxt = "12'"; Titl = Check4MultiT(origFN, Album, multxt, multibool, "Album"); if ("Yes" == Titl.Split(';')[1]) { IsSingle = "Yes"; Album = Titl.Split(';')[0]; LiveDetails += " \"12 inch"; }
+            multxt = "7 inch"; Titl = Check4MultiT(origFN, Album, multxt, multibool, "Album"); if ("Yes" == Titl.Split(';')[1]) { IsSingle = "Yes"; Album = Titl.Split(';')[0]; LiveDetails += " \"7 inch"; }
+            multxt = "\" 7inch"; Titl = Check4MultiT(origFN, Album, multxt, multibool, "Album"); if ("Yes" == Titl.Split(';')[1]) { IsSingle = "Yes"; Album = Titl.Split(';')[0]; LiveDetails += " \"7 inch"; }
+            multxt = "'7"; Titl = Check4MultiT(origFN, Album, multxt, multibool, "Album"); if ("Yes" == Titl.Split(';')[1]) { IsSingle = "Yes"; Album = Titl.Split(';')[0]; LiveDetails += " \"7 inch"; }
+            multxt = "7'"; Titl = Check4MultiT(origFN, Album, multxt, multibool, "Album"); if ("Yes" == Titl.Split(';')[1]) { IsSingle = "Yes"; Album = Titl.Split(';')[0]; LiveDetails += " \"7 inch"; }
+            multxt = "'7"; Titl = Check4MultiT(origFN, Album, multxt, multibool, "Album"); if ("Yes" == Titl.Split(';')[1]) { IsSingle = "Yes"; Album = Titl.Split(';')[0]; LiveDetails += " \"7 inch"; }
+            multxt = "7'"; Titl = Check4MultiT(origFN, Album, multxt, multibool, "Album"); if ("Yes" == Titl.Split(';')[1]) { IsSingle = "Yes"; Album = Titl.Split(';')[0]; LiveDetails += " \"7 inch"; }
             multxt = "Single"; Titl = Check4MultiT(origFN, Album, multxt, multibool, "Album"); if ("Yes" == Titl.Split(';')[1]) { IsSingle = "Yes"; Album = Titl.Split(';')[0]; }
             multxt = "(EP)"; Titl = Check4MultiT(origFN, SongDisplayName, multxt, multibool, "SongDisplayName"); if ("Yes" == Titl.Split(';')[1]) { IsEP = "Yes"; SongDisplayName = Titl.Split(';')[0]; }
             multxt = "(EP)"; Titl = Check4MultiT(origFN, Album, multxt, multibool, "Album"); if ("Yes" == Titl.Split(';')[1]) { IsEP = "Yes"; Album = Titl.Split(';')[0]; }
@@ -577,17 +342,21 @@ namespace RocksmithToolkitGUI.DLCManager
             multxt = "Original Soundtrack"; Titl = Check4MultiT(origFN, SongDisplayName, multxt, multibool, "SongDisplayName"); if ("Yes" == Titl.Split(';')[1]) { IsSoundtrack = "Yes"; SongDisplayName = Titl.Split(';')[0]; }
             multxt = "The Original Motion Picture Soundtrack"; Titl = Check4MultiT(origFN, Album, multxt, multibool, "Album"); if ("Yes" == Titl.Split(';')[1]) { IsSoundtrack = "Yes"; Album = Titl.Split(';')[0]; }
             multxt = "Original Motion Picture Soundtrack"; Titl = Check4MultiT(origFN, Album, multxt, multibool, "Album"); if ("Yes" == Titl.Split(';')[1]) { IsSoundtrack = "Yes"; Album = Titl.Split(';')[0]; }
-            multxt = "Soundtrack"; Titl = Check4MultiT(origFN, SongDisplayName, multxt, multibool, "SongDisplayName"); if ("Yes" == Titl.Split(';')[1]) { IsSoundtrack = "Yes"; SongDisplayName = Titl.Split(';')[0]; }
             multxt = "Original Motion Picture"; Titl = Check4MultiT(origFN, SongDisplayName, multxt, multibool, "SongDisplayName"); if ("Yes" == Titl.Split(';')[1]) { IsSoundtrack = "Yes"; SongDisplayName = Titl.Split(';')[0]; }
             multxt = "Original Game Soundtrack"; Titl = Check4MultiT(origFN, Album, multxt, multibool, "Album"); if ("Yes" == Titl.Split(';')[1]) { IsSoundtrack = "Yes"; Album = Titl.Split(';')[0]; }
-            multxt = "Original Motion Picture"; Titl = Check4MultiT(origFN, Album, multxt, multibool, "Album"); if ("Yes" == Titl.Split(';')[1]) { IsSoundtrack = "Yes"; Album = Titl.Split(';')[0]; }
+            multxt = "Original Motion Picture"; Titl = Check4MultiT(origFN, Album, multxt, multibool, "Album"); if ("Yes" == Titl.Split(';')[1]) { IsGameSoundtrack = "Yes"; IsSoundtrack = "Yes"; Album = Titl.Split(';')[0]; }
             multxt = "(movie ver.)"; Titl = Check4MultiT(origFN, Album, multxt, multibool, "Album"); if ("Yes" == Titl.Split(';')[1]) { IsSoundtrack = "Yes"; Album = Titl.Split(';')[0]; }
-            multxt = "Soundtrack"; Titl = Check4MultiT(origFN, Album, multxt, multibool, "Album"); if ("Yes" == Titl.Split(';')[1]) { IsSoundtrack = "Yes"; Album = Titl.Split(';')[0]; }
+            multxt = "original motion picture score"; Titl = Check4MultiT(origFN, Album, multxt, multibool, "Album"); if ("Yes" == Titl.Split(';')[1]) { IsSoundtrack = "Yes"; Album = Titl.Split(';')[0]; }
             multxt = "Original Motion Picture"; Titl = Check4MultiT(origFN, Album, multxt, multibool, "Album"); if ("Yes" == Titl.Split(';')[1]) { IsSoundtrack = "Yes"; Album = Titl.Split(';')[0]; }
-            if (Album.ToLower().Contains(" ost") || Album.ToLower().Contains("(ost") || Album.ToLower().Substring(0, 2) == "ost")
-            { multxt = "OST"; Titl = Check4MultiT(origFN, Album, multxt, multibool, "Album"); if ("Yes" == Titl.Split(';')[1]) { IsSoundtrack = "Yes"; Album = Titl.Split(';')[0]; } }
-            if (SongDisplayName.ToLower().Contains(" ost") || SongDisplayName.ToLower().Contains("(ost"))
-            { multxt = "OST"; Titl = Check4MultiT(origFN, SongDisplayName, multxt, multibool, "SongDisplayName"); if ("Yes" == Titl.Split(';')[1]) { IsSoundtrack = "Yes"; SongDisplayName = Titl.Split(';')[0]; } }
+            multxt = "The Original Soundtrack from the Motion Picture"; Titl = Check4MultiT(origFN, Album, multxt, multibool, "Album"); if ("Yes" == Titl.Split(';')[1]) { IsSoundtrack = "Yes"; Album = Titl.Split(';')[0]; }
+            multxt = "main title theme"; Titl = Check4MultiT(origFN, Album, multxt, multibool, "Album"); if ("Yes" == Titl.Split(';')[1]) { IsSoundtrack = "Yes"; Album = Titl.Split(';')[0]; }
+            multxt = "main title theme"; Titl = Check4MultiT(origFN, SongDisplayName, multxt, multibool, "SongDisplayName"); if ("Yes" == Titl.Split(';')[1]) { IsSoundtrack = "Yes"; SongDisplayName = Titl.Split(';')[0]; }
+            multxt = "Original Soundtrack"; Titl = Check4MultiT(origFN, Album, multxt, multibool, "Album"); if ("Yes" == Titl.Split(';')[1]) { IsSoundtrack = "Yes"; Album = Titl.Split(';')[0]; }
+            multxt = "Soundtrack"; Titl = Check4MultiT(origFN, SongDisplayName, multxt, multibool, "SongDisplayName"); if ("Yes" == Titl.Split(';')[1]) { IsSoundtrack = "Yes"; SongDisplayName = Titl.Split(';')[0]; }
+            multxt = "Soundtrack"; Titl = Check4MultiT(origFN, Album, multxt, multibool, "Album"); if ("Yes" == Titl.Split(';')[1]) { IsSoundtrack = "Yes"; Album = Titl.Split(';')[0]; }
+            if (Album.Length > 2) if (Album.ToLower().Contains(" ost") || Album.ToLower().Contains("(ost") || Album.ToLower().Substring(0, 2) == "ost") { multxt = "OST"; Titl = Check4MultiT(origFN, Album, multxt, multibool, "Album"); if ("Yes" == Titl.Split(';')[1]) { IsSoundtrack = "Yes"; Album = Titl.Split(';')[0]; } }
+            if (SongDisplayName.ToLower().Contains(" ost") || SongDisplayName.ToLower().Contains("(ost")) { multxt = "OST"; Titl = Check4MultiT(origFN, SongDisplayName, multxt, multibool, "SongDisplayName"); if ("Yes" == Titl.Split(';')[1]) { IsSoundtrack = "Yes"; SongDisplayName = Titl.Split(';')[0]; } }
+            multxt = "Theme Reprise"; Titl = Check4MultiT(origFN, SongDisplayName, multxt, multibool, "SongDisplayName"); if ("Yes" == Titl.Split(';')[1]) { IsSoundtrack = "Yes"; SongDisplayName = Titl.Split(';')[0]; }
             multxt = " Theme"; Titl = Check4MultiT(origFN, SongDisplayName, multxt, multibool, "SongDisplayName"); if ("Yes" == Titl.Split(';')[1]) { IsSoundtrack = "Yes"; SongDisplayName = Titl.Split(';')[0]; }
             multxt = " Theme"; Titl = Check4MultiT(origFN, Album, multxt, multibool, "Album"); if ("Yes" == Titl.Split(';')[1]) { IsSoundtrack = "Yes"; Album = Titl.Split(';')[0]; }
             multxt = "Uncensored"; Titl = Check4MultiT(origFN, SongDisplayName, multxt, multibool, "SongDisplayName"); if ("Yes" == Titl.Split(';')[1]) { IsUncensored = "Yes"; SongDisplayName = Titl.Split(';')[0]; }
@@ -606,14 +375,26 @@ namespace RocksmithToolkitGUI.DLCManager
             multxt = "Remix"; Titl = Check4MultiT(origFN, SongDisplayName, multxt, multibool, "SongDisplayName"); if ("Yes" == Titl.Split(';')[1]) { IsRemix = "Yes"; SongDisplayName = Titl.Split(';')[0]; }
             multxt = "Remixed"; Titl = Check4MultiT(origFN, Album, multxt, multibool, "Album"); if ("Yes" == Titl.Split(';')[1]) { IsRemix = "Yes"; Album = Titl.Split(';')[0]; Album = Titl.Split(';')[0]; }
             multxt = "Remixed"; Titl = Check4MultiT(origFN, SongDisplayName, multxt, multibool, "SongDisplayName"); if ("Yes" == Titl.Split(';')[1]) { IsRemix = "Yes"; SongDisplayName = Titl.Split(';')[0]; }
+            multxt = "Metal Version"; Titl = Check4MultiT(origFN, SongDisplayName, multxt, multibool, "SongDisplayName"); if ("Yes" == Titl.Split(';')[1]) { IsRemix = "Yes"; SongDisplayName = Titl.Split(';')[0]; }
             multxt = "Remix"; Titl = Check4MultiT(origFN, Album, multxt, multibool, "Album"); if ("Yes" == Titl.Split(';')[1]) { IsRemix = "Yes"; Album = Titl.Split(';')[0]; }
             multxt = "Remix"; Titl = Check4MultiT(origFN, SongDisplayName, multxt, multibool, "SongDisplayName"); if ("Yes" == Titl.Split(';')[1]) { IsRemix = "Yes"; SongDisplayName = Titl.Split(';')[0]; }
             multxt = "Extended Mix"; Titl = Check4MultiT(origFN, Album, multxt, multibool, "Album"); if ("Yes" == Titl.Split(';')[1]) { IsRemix = "Yes"; Album = Titl.Split(';')[0]; }
             multxt = "Extended Mix"; Titl = Check4MultiT(origFN, SongDisplayName, multxt, multibool, "SongDisplayName"); if ("Yes" == Titl.Split(';')[1]) { IsRemix = "Yes"; SongDisplayName = Titl.Split(';')[0]; }
+            multxt = "radio edit"; Titl = Check4MultiT(origFN, SongDisplayName, multxt, multibool, "SongDisplayName"); if ("Yes" == Titl.Split(';')[1]) { IsRemix = "Yes"; SongDisplayName = Titl.Split(';')[0]; }
+            multxt = "Single Edit"; Titl = Check4MultiT(origFN, SongDisplayName, multxt, multibool, "SongDisplayName"); if ("Yes" == Titl.Split(';')[1]) { IsRemix = "Yes"; SongDisplayName = Titl.Split(';')[0]; }
+            multxt = "Movie Edit"; Titl = Check4MultiT(origFN, SongDisplayName, multxt, multibool, "SongDisplayName"); if ("Yes" == Titl.Split(';')[1]) { IsSoundtrack = "Yes"; SongDisplayName = Titl.Split(';')[0]; }
+            multxt = "movie ver"; Titl = Check4MultiT(origFN, SongDisplayName, multxt, multibool, "SongDisplayName"); if ("Yes" == Titl.Split(';')[1]) { IsSoundtrack = "Yes"; SongDisplayName = Titl.Split(';')[0]; }
             multxt = "Extended"; Titl = Check4MultiT(origFN, SongDisplayName, multxt, multibool, "SongDisplayName"); if ("Yes" == Titl.Split(';')[1]) { IsRemix = "Yes"; SongDisplayName = Titl.Split(';')[0]; }
+            multxt = "Edit"; Titl = Check4MultiT(origFN, SongDisplayName, multxt, multibool, "SongDisplayName"); if ("Yes" == Titl.Split(';')[1]) { IsRemix = "Yes"; SongDisplayName = Titl.Split(';')[0]; }
             multxt = "Cover"; Titl = Check4MultiT(origFN, SongDisplayName, multxt, false, "SongDisplayName"); if ("Yes" == Titl.Split(';')[1]) { IsCover = "Yes"; /*SongDisplayName = Titl.Split(';')[0];*/ }
             multxt = "Medley"; Titl = Check4MultiT(origFN, Album, multxt, multibool, "Album"); if ("Yes" == Titl.Split(';')[1]) { IsMedley = "Yes"; Album = Titl.Split(';')[0]; }
             multxt = "Medley"; Titl = Check4MultiT(origFN, SongDisplayName, multxt, multibool, "SongDisplayName"); if ("Yes" == Titl.Split(';')[1]) { IsMedley = "Yes"; SongDisplayName = Titl.Split(';')[0]; }
+            multxt = "Deluxe Edition"; Titl = Check4MultiT(origFN, Album, multxt, multibool, "Album"); if ("Yes" == Titl.Split(';')[1]) { IsDeluxe = "Yes"; Album = Titl.Split(';')[0]; }
+            multxt = "Deluxe"; Titl = Check4MultiT(origFN, Album, multxt, multibool, "Album"); if ("Yes" == Titl.Split(';')[1]) { IsDeluxe = "Yes"; Album = Titl.Split(';')[0]; }
+            multxt = "Deluxe"; Titl = Check4MultiT(origFN, SongDisplayName, multxt, multibool, "SongDisplayName"); if ("Yes" == Titl.Split(';')[1]) { IsDeluxe = "Yes"; SongDisplayName = Titl.Split(';')[0]; }
+            multxt = "GreatestHits"; Titl = Check4MultiT(origFN, Album, multxt, multibool, "Album"); if ("Yes" == Titl.Split(';')[1]) { IsGreatestHits = "Yes"; Album = Titl.Split(';')[0]; }
+            multxt = "GreatestHits"; Titl = Check4MultiT(origFN, SongDisplayName, multxt, multibool, "SongDisplayName"); if ("Yes" == Titl.Split(';')[1]) { IsGreatestHits = "Yes"; SongDisplayName = Titl.Split(';')[0]; }
+            multxt = "midi"; Titl = Check4MultiT(origFN, SongDisplayName, multxt, multibool, "SongDisplayName"); if ("Yes" == Titl.Split(';')[1]) { IsMidi = "Yes"; SongDisplayName = Titl.Split(';')[0]; }
             multxt = "5 String"; Titl = Check4MultiT(origFN, SongDisplayName, multxt, multibool, "SongDisplayName"); if ("Yes" == Titl.Split(';')[1]) { IsMultiStrings = "Yes"; SongDisplayName = Titl.Split(';')[0]; }
             multxt = "6 String"; Titl = Check4MultiT(origFN, SongDisplayName, multxt, multibool, "SongDisplayName"); if ("Yes" == Titl.Split(';')[1]) { IsMultiStrings = "Yes"; SongDisplayName = Titl.Split(';')[0]; }
             multxt = "7 String"; Titl = Check4MultiT(origFN, SongDisplayName, multxt, multibool, "SongDisplayName"); if ("Yes" == Titl.Split(';')[1]) { IsMultiStrings = "Yes"; SongDisplayName = Titl.Split(';')[0]; }
@@ -627,17 +408,13 @@ namespace RocksmithToolkitGUI.DLCManager
 
             //Detect Live
             multxt = "(Live)"; Titl = Check4MultiT(origFN, SongDisplayName, multxt, multibool, "SongDisplayName");
-            if ("Yes" == Titl.Split(';')[1] && Titl.Split(';')[0].Length > 6)
-            { IsLive = "Yes"; SongDisplayName = Titl.Split(';')[0].TrimEnd().TrimStart().Replace(" ()", ""); LiveDetails += gom.IndexOf(multxt) <= gom.Length - 4 ? "" : gom.Replace(gom.Substring(0, SongDisplayName.IndexOf(multxt) + 4), ""); }
+            if ("Yes" == Titl.Split(';')[1] && Titl.Split(';')[0].Length > 6) { IsLive = "Yes"; SongDisplayName = Titl.Split(';')[0].TrimEnd().TrimStart().Replace(" ()", ""); LiveDetails += gom.IndexOf(multxt) <= gom.Length - 4 ? "" : gom.Replace(gom.Substring(0, SongDisplayName.IndexOf(multxt) + 4), ""); }
             multxt = "Unplugged"; Titl = Check4MultiT(origFN, SongDisplayName, multxt, multibool, "SongDisplayName");
-            if ("Yes" == Titl.Split(';')[1] && Titl.Split(';')[0].Length > 9)
-            { IsLive = "Yes"; IsAcoustic = "Yes"; SongDisplayName = Titl.Split(';')[0].TrimEnd().TrimStart().Replace(" ()", ""); LiveDetails += gom.IndexOf(multxt) <= gom.Length - 4 ? "" : gom.Replace(gom.Substring(0, SongDisplayName.IndexOf(multxt) + 4), ""); }
+            if ("Yes" == Titl.Split(';')[1] && Titl.Split(';')[0].Length > 9) { IsLive = "Yes"; IsAcoustic = "Yes"; SongDisplayName = Titl.Split(';')[0].TrimEnd().TrimStart().Replace(" ()", ""); LiveDetails += gom.IndexOf(multxt) <= gom.Length - 4 ? "" : gom.Replace(gom.Substring(0, SongDisplayName.IndexOf(multxt) + 4), ""); }
             multxt = "Live"; Titl = Check4MultiT(origFN, Album, multxt, false, "Album");
-            if ("Yes" == Titl.Split(';')[1] && Titl.Split(';')[0].Length > 4)
-            { IsLive = "Yes"; LiveDetails += gom.IndexOf(multxt) <= gom.Length - 4 ? "" : gom.Replace(gom.Substring(0, Album.IndexOf(multxt) + 4), ""); }
+            if ("Yes" == Titl.Split(';')[1] && Titl.Split(';')[0].Length > 4) { IsLive = "Yes"; LiveDetails += gom.IndexOf(multxt) <= gom.Length - 4 ? "" : gom.Replace(gom.Substring(0, Album.IndexOf(multxt) + 4), ""); }
             multxt = "Unplugged"; Titl = Check4MultiT(origFN, Album, multxt, multibool, "Album");
-            if ("Yes" == Titl.Split(';')[1] && Titl.Split(';')[0].Length > 9)
-            { IsLive = "Yes"; IsAcoustic = "Yes"; LiveDetails += gom.IndexOf(multxt) <= gom.Length - 4 ? "" : gom.Replace(gom.Substring(0, Album.IndexOf(multxt) + 4), ""); }
+            if ("Yes" == Titl.Split(';')[1] && Titl.Split(';')[0].Length > 9) { IsLive = "Yes"; IsAcoustic = "Yes"; LiveDetails += gom.IndexOf(multxt) <= gom.Length - 4 ? "" : gom.Replace(gom.Substring(0, Album.IndexOf(multxt) + 4), ""); }
 
             //Detect Featuring
             multxt = "Feat."; Titl = Check4MultiT(origFN, SongDisplayName, multxt, false, "SongDisplayName");
@@ -645,62 +422,149 @@ namespace RocksmithToolkitGUI.DLCManager
             {
                 HasFeaturing = "Yes"; SongDisplayName = (SongDisplayName.Replace(" Feat.", "[Ft.").Replace(" feat.", "[Ft.")).Replace("(Feat.", "[Ft.").Replace("(feat.", "[Ft.")
                       + "]"; LiveDetails += gom.IndexOf(multxt) <= gom.Length - 4 ? "" : gom.Replace(gom.Substring(0, SongDisplayName.IndexOf(multxt) + 4), "");
-            }/*(Titl.Split(';')[0].TrimEnd().TrimStart())*/
+            }
 
             multxt = "Ft."; Titl = Check4MultiT(origFN, SongDisplayName, multxt, false, "SongDisplayName");
             if ("Yes" == Titl.Split(';')[1] && Titl.Split(';')[0].Length > 3)
             {
                 HasFeaturing = "Yes"; SongDisplayName = (SongDisplayName.Replace(" Ft.", "[Ft.").Replace(" ft.", "[Ft.")).Replace("(Ft.", "[Ft.").Replace("(ft.", "[Ft.")
                       + "]"; LiveDetails += gom.IndexOf(multxt) <= gom.Length - 4 ? "" : gom.Replace(gom.Substring(0, SongDisplayName.IndexOf(multxt) + 4), "");
-            }/*(Titl.Split(';')[0].TrimEnd().TrimStart())*/
+            }
 
             multxt = "Featuring"; Titl = Check4MultiT(origFN, SongDisplayName, multxt, false, "SongDisplayName");
             if ("Yes" == Titl.Split(';')[1] && Titl.Split(';')[0].Length > 9)
             {
                 HasFeaturing = "Yes"; SongDisplayName = (SongDisplayName.Replace(" Featuring", "[Ft.").Replace(" featuring", "[Ft.")).Replace("(Featuring", "[Ft.").Replace("(featuring", "[Ft.")
                       + "]"; LiveDetails += gom.IndexOf(multxt) <= gom.Length - 4 ? "" : gom.Replace(gom.Substring(0, SongDisplayName.IndexOf(multxt) + 4), "");
-            }/*(Titl.Split(';')[0].TrimEnd().TrimStart())*/
+            }
 
             multxt = "Feat."; Titl = Check4MultiT(origFN, Artist, multxt, false, "Artist");
             if ("Yes" == Titl.Split(';')[1] && Titl.Split(';')[0].Length > 5)
             {
                 HasFeaturing = "Yes"; Artist = (Artist.Replace(" Feat.", "[Ft.").Replace(" feat.", "[Ft.")).Replace("(Feat.", "[Ft.").Replace("(feat.", "[Ft.")
                       + "]"; LiveDetails += gom.IndexOf(multxt) <= gom.Length - 4 ? "" : gom.Replace(gom.Substring(0, Artist.IndexOf(multxt) + 4), "");
-            }/*(Titl.Split(';')[0].TrimEnd().TrimStart())*/
+            }
 
             multxt = "Ft."; Titl = Check4MultiT(origFN, Artist, multxt, false, "Artist");
             if ("Yes" == Titl.Split(';')[1] && Titl.Split(';')[0].Length > 3)
             {
                 HasFeaturing = "Yes"; Artist = (Artist.Replace(" Ft.", "[Ft.").Replace(" ft.", "[Ft.")).Replace("(Ft.", "[Ft.").Replace("(ft.", "[Ft.")
                       + "]"; LiveDetails += gom.IndexOf(multxt) <= gom.Length - 4 ? "" : gom.Replace(gom.Substring(0, Artist.IndexOf(multxt) + 4), "");
-            }/*(Titl.Split(';')[0].TrimEnd().TrimStart())*/
+            }
 
             multxt = "Featuring"; Titl = Check4MultiT(origFN, Artist, multxt, false, "Artist");
             if ("Yes" == Titl.Split(';')[1] && Titl.Split(';')[0].Length > 9)
             {
                 HasFeaturing = "Yes"; Artist = (Artist.Replace(" Featuring", "[Ft.").Replace(" featuring", "[Ft.")).Replace("(Featuring", "[Ft.").Replace("(featuring", "[Ft.")
                       + "]"; LiveDetails += gom.IndexOf(multxt) <= gom.Length - 4 ? "" : gom.Replace(gom.Substring(0, Artist.IndexOf(multxt) + 4), "");
-            }/*(Titl.Split(';')[0].TrimEnd().TrimStart())*/
+            }
 
             if (SongDisplayName.IndexOf("Rocker") >= 0)
                 ;
+
             //Detect Acoustic
             multxt = "Acoustic Version"; Titl = Check4MultiT(origFN, SongDisplayName, multxt, multibool, "SongDisplayName");
-            if ("Yes" == Titl.Split(';')[1] && Titl.Split(';')[0].Length > 6)
-            { IsAcoustic = "Yes"; SongDisplayName = Titl.Split(';')[0].TrimEnd().TrimStart().Replace(" ()", ""); LiveDetails += gom.IndexOf(multxt) <= gom.Length - 4 ? "" : gom.Replace(gom.Substring(0, SongDisplayName.IndexOf(multxt) + 4), ""); }
+            if ("Yes" == Titl.Split(';')[1] && Titl.Split(';')[0].Length > 6) { IsAcoustic = "Yes"; SongDisplayName = Titl.Split(';')[0].TrimEnd().TrimStart().Replace(" ()", ""); LiveDetails += gom.IndexOf(multxt) <= gom.Length - 4 ? "" : gom.Replace(gom.Substring(0, SongDisplayName.IndexOf(multxt) + 4), ""); }
 
             multxt = "Acoustic"; Titl = Check4MultiT(origFN, SongDisplayName, multxt, multibool, "SongDisplayName");
-            if ("Yes" == Titl.Split(';')[1] && Titl.Split(';')[0].Length > 6)
-            { IsAcoustic = "Yes"; SongDisplayName = Titl.Split(';')[0].TrimEnd().TrimStart().Replace(" ()", ""); LiveDetails += gom.IndexOf(multxt) <= gom.Length - 4 ? "" : gom.Replace(gom.Substring(0, SongDisplayName.IndexOf(multxt) + 4), ""); }
+            if ("Yes" == Titl.Split(';')[1] && Titl.Split(';')[0].Length > 6) { IsAcoustic = "Yes"; SongDisplayName = Titl.Split(';')[0].TrimEnd().TrimStart().Replace(" ()", ""); LiveDetails += gom.IndexOf(multxt) <= gom.Length - 4 ? "" : gom.Replace(gom.Substring(0, SongDisplayName.IndexOf(multxt) + 4), ""); }
+
+            //checking if any of the softcoded Artist+Album need to have ana attribute applied
+            var cmd1 = "SELECT ID FROM Standardization " +
+                        "WHERE (CustomToAtribute_1='Yes' or CustomToAtribute_1 is not Null) AND " +
+                        " IIF(Artist_Correction <>\"\",Artist_Correction,Artist)=\"" + Artist + "\" OR IIF(Album_Correction <>\"\",Album_Correction,Album)=\"" + Album + "\"";
+            var no = GetNoRecords(cmd1, cnb, cnc);
+            if (no > 0)
+            {
+                if (c("dclm_CustomToAtribute_1").ToLower().Contains("gamesoundtrack")) IsGameSoundtrack = "Yes";
+                if (c("dclm_CustomToAtribute_1").ToLower().Contains("amateurcover")) IsAmateurCover = "Yes";
+                if (c("dclm_CustomToAtribute_1").ToLower().Contains("tvtheme")) IsTVTheme = "Yes";
+            }
+
+            var cmd2 = "SELECT ID FROM Standardization " +
+            "WHERE (CustomToAtribute_2='Yes' or CustomToAtribute_2 is not Null) AND " +
+            " IIF(Artist_Correction <>\"\",Artist_Correction,Artist)=\"" + Artist + "\" OR IIF(Album_Correction <>\"\",Album_Correction,Album)=\"" + Album + "\"";
+            var no2 = GetNoRecords(cmd2, cnb, cnc);
+            if (no2 > 0)
+            {
+                if (c("dclm_CustomToAtribute_2").ToLower().Contains("gamesoundtrack")) IsGameSoundtrack = "Yes";
+                if (c("dclm_CustomToAtribute_2").ToLower().Contains("amateurcover")) IsAmateurCover = "Yes";
+                if (c("dclm_CustomToAtribute_2").ToLower().Contains("tvtheme")) IsTVTheme = "Yes";
+            }
+
+            var cmd3 = "SELECT ID FROM Standardization " +
+            "WHERE (CustomToAtribute_3='Yes' or CustomToAtribute_3 is not Null) AND " +
+            " IIF(Artist_Correction <>\"\",Artist_Correction,Artist)=\"" + Artist + "\" OR IIF(Album_Correction <>\"\",Album_Correction,Album)=\"" + Album + "\"";
+            var no3 = GetNoRecords(cmd3, cnb, cnc);
+            if (no3 > 0)
+            {
+                if (c("dclm_CustomToAtribute_3").ToLower().Contains("gamesoundtrack")) IsGameSoundtrack = "Yes";
+                if (c("dclm_CustomToAtribute_3").ToLower().Contains("amateurcover")) IsAmateurCover = "Yes";
+                if (c("dclm_CustomToAtribute_3").ToLower().Contains("tvtheme")) IsTVTheme = "Yes";
+            }
+
+            var cmd4 = "SELECT ID FROM Standardization " +
+            "WHERE (CustomToAtribute_4='Yes' or CustomToAtribute_4 is not Null) AND " +
+            " IIF(Artist_Correction <>\"\",Artist_Correction,Artist)=\"" + Artist + "\" OR IIF(Album_Correction <>\"\",Album_Correction,Album)=\"" + Album + "\"";
+            var no4 = GetNoRecords(cmd4, cnb, cnc);
+            if (no4 > 0)
+            {
+                if (c("dclm_CustomToAtribute_4").ToLower().Contains("gamesoundtrack")) IsGameSoundtrack = "Yes";
+                if (c("dclm_CustomToAtribute_4").ToLower().Contains("amateurcover")) IsAmateurCover = "Yes";
+                if (c("dclm_CustomToAtribute_4").ToLower().Contains("tvtheme")) IsTVTheme = "Yes";
+            }
+
+            var cmd5 = "SELECT ID FROM Standardization " +
+            "WHERE (CustomToAtribute_5='Yes' or CustomToAtribute_5 is not Null) AND " +
+            " IIF(Artist_Correction <>\"\",Artist_Correction,Artist)=\"" + Artist + "\" OR IIF(Album_Correction <>\"\",Album_Correction,Album)=\"" + Album + "\"";
+            var no5 = GetNoRecords(cmd5, cnb, cnc);
+            if (no5 > 0)
+            {
+                if (c("dclm_CustomToAtribute_5").ToLower().Contains("gamesoundtrack")) IsGameSoundtrack = "Yes";
+                if (c("dclm_CustomToAtribute_5").ToLower().Contains("amateurcover")) IsAmateurCover = "Yes";
+                if (c("dclm_CustomToAtribute_5").ToLower().Contains("tvtheme")) IsTVTheme = "Yes";
+            }
+
             //var r = "";
             //1234567891011
             //1213141616171819202122
             return Is_MultiTrack + ";" + MultiTrack_Version + ";" + IsLive + ";" + LiveDetails + ";" + IsAcoustic + ";" + IsSingle + ";" + IsSoundtrack + ";" + IsInstrumental + ";" + IsEP + ";" + IsUncensored + ";" + IsFullAlbum + ";"
-                + IsRemastered + ";" + InTheWorks + ";" + IsKaraoke + ";" + IsDemo + ";" + HasFeaturing + ";" + IsRemix + ";" + IsCover + ";" + SongDisplayName + ";" + Album + ";" + IsMedley + ";" + IsMultiStrings;
+                + IsRemastered + ";" + InTheWorks + ";" + IsKaraoke + ";" + IsDemo + ";" + HasFeaturing + ";" + IsRemix + ";" + IsCover + ";" + SongDisplayName + ";" + Album + ";" + IsMedley + ";" + IsMultiStrings
+                + ";" + IsDeluxe + ";" + IsGreatestHits + ";" + IsMidi + ";" + IsGameSoundtrack + ";" + IsTVTheme + ";" + IsAmateurCover;
         }
 
+        public static string Check4MultiT(string origFN, string noMFN, string text, bool multibool, string tag)
+        {
+            var FN = origFN.ToLower();
+            var ST = noMFN.ToLower();
+            text = text.ToLower();
+            var aaa = noMFN;
+            if (origFN.ToLower().IndexOf(text) >= 0 || origFN.ToLower().IndexOf(text.Replace(" ", "")) >= 0 || origFN.ToLower().IndexOf(text.Replace(" ", "_")) >= 0 || origFN.ToLower().IndexOf(text.Replace(" ", "-")) >= 0
+                || noMFN.ToLower().IndexOf(text) >= 0 || noMFN.ToLower().IndexOf(text.Replace(" ", "")) >= 0 || noMFN.ToLower().IndexOf(text.Replace(" ", "_")) >= 0 || noMFN.ToLower().IndexOf(text.Replace(" ", "-")) >= 0)
+            {
+                noMFN = Regex.Replace(Regex.Replace(Regex.Replace(Regex.Replace(noMFN, text.Replace(" ", ""), "", RegexOptions.IgnoreCase), text, "", RegexOptions.IgnoreCase), text.Replace(" ", "_"), "", RegexOptions.IgnoreCase), text.Replace(" ", "-"), "", RegexOptions.IgnoreCase);
+                origFN = Regex.Replace(Regex.Replace(Regex.Replace(Regex.Replace(origFN, text.Replace(" ", ""), "", RegexOptions.IgnoreCase), text, "", RegexOptions.IgnoreCase), text.Replace(" ", "_"), "", RegexOptions.IgnoreCase), text.Replace(" ", "-"), "", RegexOptions.IgnoreCase);
+                var t = ReplaceTxt(aaa, noMFN, multibool, tag);
+                if (t == "")
+                    return aaa + ";" + "No";
+                else return t + ";" + ((FN != origFN || noMFN != ST) ? "Yes" : "No");
+            }
+            return ReplaceTxt(aaa, noMFN, multibool, tag) + ";" + "No";
+        }
 
-
+        public static string ReplaceTxt(string orgstr, string replstr, bool ask4permission, string tag)
+        {
+            var a = orgstr;
+            if (orgstr != replstr)
+            {
+                if (replstr == "") return orgstr;
+                DialogResult result111 = DialogResult.Yes;
+                if (ask4permission) result111 = MessageBox.Show("Tag:" + tag + "\n\nDo you agree with replacement of \n\nOld Meta info: " + orgstr + "\nwith\nNew Meta info: " + replstr + "\n\n(Cancel=Ignore flag set too)", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation);
+                if (result111 == DialogResult.Yes) a = replstr;
+                if (result111 == DialogResult.Cancel) a = "";
+            }
+            return a;
+        }
 
         public static void CreatePackingGroup(string cmd, OleDbConnection cnb, string filter, int norows, SQLite.SQLiteConnection cnc)
         {
@@ -858,6 +722,24 @@ namespace RocksmithToolkitGUI.DLCManager
                     break;
                 case true when Filtertxt == "MultiStrings":
                     SearchCmd += "Is_MultiStrings = \"Yes\"";
+                    break;
+                case true when Filtertxt == "Deluxe":
+                    SearchCmd += "Is_Deluxe = \"Yes\"";
+                    break;
+                case true when Filtertxt == "Greatest Hits":
+                    SearchCmd += "Is_GreatestHits = \"Yes\"";
+                    break;
+                case true when Filtertxt == "TV Theme":
+                    SearchCmd += "Is_TVTheme = \"Yes\"";
+                    break;
+                case true when Filtertxt == "Midi":
+                    SearchCmd += "Is_Midi = \"Yes\"";
+                    break;
+                case true when Filtertxt == "Game Soundtrack":
+                    SearchCmd += "Is_GameSoundtrack = \"Yes\"";
+                    break;
+                case true when Filtertxt == "Amateur Cover":
+                    SearchCmd += "Is_AmateurCover = \"Yes\"";
                     break;
                 case true when Filtertxt == "Medley":
                     SearchCmd += "Is_Medley = \"Yes\"";
@@ -1113,7 +995,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         for (var l = 0; l < noOfRec; l++)
                             for (var v = l + 1; v < noOfRec; v++)
                                 if (dvs.Tables[0].Rows[l].ItemArray[1].ToString().ToLower() == dvs.Tables[0].Rows[v].ItemArray[1].ToString().ToLower())
-                                    if (CleanTitle(dvs.Tables[0].Rows[l].ItemArray[2].ToString().ToLower()) == CleanTitle(dvs.Tables[0].Rows[v].ItemArray[2].ToString().ToLower()))
+                                    if (CleanTitleFurther(dvs.Tables[0].Rows[l].ItemArray[2].ToString().ToLower()) == CleanTitleFurther(dvs.Tables[0].Rows[v].ItemArray[2].ToString().ToLower()))
                                     {
                                         if (dvs.Tables[0].Rows[l].ItemArray[3].ToString().ToLower() != dvs.Tables[0].Rows[v].ItemArray[3].ToString().ToLower())
 
@@ -1250,7 +1132,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             {
                                 if (dns.Tables[0].Rows[l].ItemArray[1].ToString().ToLower() == dns.Tables[0].Rows[v].ItemArray[1].ToString().ToLower())
                                 {
-                                    if (CleanTitle(dns.Tables[0].Rows[l].ItemArray[2].ToString().ToLower()) == CleanTitle(dns.Tables[0].Rows[v].ItemArray[2].ToString().ToLower()))
+                                    if (CleanTitleFurther(dns.Tables[0].Rows[l].ItemArray[2].ToString().ToLower()) == CleanTitleFurther(dns.Tables[0].Rows[v].ItemArray[2].ToString().ToLower()))
                                         IDf += dns.Tables[0].Rows[l].ItemArray[0].ToString() + ", " + dns.Tables[0].Rows[v].ItemArray[0].ToString() + ", ";
                                 }
                                 else break;
@@ -1303,7 +1185,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         for (var l = 0; l < noOfRec; l++)
                             for (var v = l + 1; v < noOfRec; v++)
                                 if (dws.Tables[0].Rows[l].ItemArray[1].ToString().ToLower() == dws.Tables[0].Rows[v].ItemArray[1].ToString().ToLower())
-                                    if (CleanTitle(dws.Tables[0].Rows[l].ItemArray[2].ToString().ToLower()) == CleanTitle(dws.Tables[0].Rows[v].ItemArray[2].ToString().ToLower()))
+                                    if (CleanTitleFurther(dws.Tables[0].Rows[l].ItemArray[2].ToString().ToLower()) == CleanTitleFurther(dws.Tables[0].Rows[v].ItemArray[2].ToString().ToLower()))
                                     {
                                         if (dws.Tables[0].Rows[l].ItemArray[3].ToString().ToLower() != dws.Tables[0].Rows[v].ItemArray[3].ToString().ToLower())
                                             IDc += dws.Tables[0].Rows[l].ItemArray[0].ToString() + ", " + dws.Tables[0].Rows[v].ItemArray[0].ToString() + ", ";
@@ -1329,7 +1211,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                 //{
                                 if (dts.Tables[0].Rows[l].ItemArray[1].ToString().ToLower() == dts.Tables[0].Rows[v].ItemArray[1].ToString().ToLower())
                                 {
-                                    if (CleanTitle(dts.Tables[0].Rows[l].ItemArray[2].ToString()) == CleanTitle(dts.Tables[0].Rows[v].ItemArray[2].ToString()))
+                                    if (CleanTitleFurther(dts.Tables[0].Rows[l].ItemArray[2].ToString()) == CleanTitleFurther(dts.Tables[0].Rows[v].ItemArray[2].ToString()))
                                         if (dts.Tables[0].Rows[l].ItemArray[3].ToString() != dts.Tables[0].Rows[v].ItemArray[3].ToString().ToLower())
                                             IDe += dts.Tables[0].Rows[l].ItemArray[0].ToString() + ", " + dts.Tables[0].Rows[v].ItemArray[0].ToString() + ", ";
                                 }
@@ -1472,7 +1354,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         else
                         {
                             SearchCmd = "SELECT Top " + c("dlcm_maxsongsinweekly") +
-                             " CDLC_ID FROM Groups WHERE Type=\"DLC\" AND Groupz=\"Hot (monthly)\" ORDER BY ID DESC";
+                             " CDLC_ID FROM Groups WHERE Type=\"DLC\" AND Groupz=\"" + c("dlcm_HotGrp") + "\" ORDER BY ID DESC";
                             DataSet dvs = new DataSet();
                             dvs = SelectFromDB("Groups", SearchCmd, "", cnb, cnc);
                             var nores = dvs.Tables.Count == 0 ? 0 : dvs.Tables[0].Rows.Count; var idss = "";
@@ -1859,10 +1741,10 @@ namespace RocksmithToolkitGUI.DLCManager
                             else tzt = SongRecord[k].Album_ShortName != "" ? SongRecord[k].Album_ShortName : SongRecord[k].Album;
                             break;
                         case "<Author>":
-                            tzt = SongRecord[k].Author;
+                            tzt = "by " + SongRecord[k].Author;
                             break;
                         case "<Version>":
-                            tzt = SongRecord[k].Version;
+                            tzt = "v." + SongRecord[k].Version;
                             break;
                         case "<DLCName>":
                             tzt = SongRecord[k].DLC_Name;
@@ -1874,6 +1756,9 @@ namespace RocksmithToolkitGUI.DLCManager
                             tzt = SongRecord[k].Album_Year;
                             break;
                         case "<Rating>":
+                            tzt = ((SongRecord[k].Rating == "") ? "" : "rating." + SongRecord[k].Rating);
+                            break;
+                        case "<RatingShort>":
                             tzt = ((SongRecord[k].Rating == "") ? "" : "r." + SongRecord[k].Rating);
                             break;
                         case "<Alt. Vers.>":
@@ -1975,9 +1860,30 @@ namespace RocksmithToolkitGUI.DLCManager
                         case "<Manipulated>":
                             tzt = ((SongRecord[k].ImprovedWithDM == "Yes") ? "-Manipulated " : "");
                             break;
+                        case "<Deluxe>":
+                            tzt = ((SongRecord[k].Is_Deluxe == "Yes") ? "-Deluxe " : "");
+                            break;
+                        case "<GreatestHits>":
+                            tzt = ((SongRecord[k].Is_GreatestHits == "Yes") ? "-GreatestHits " : "");
+                            break;
+                        case "<Midi>":
+                            tzt = ((SongRecord[k].Is_Midi == "Yes") ? "-Midi " : "");
+                            break;
+                        case "<AmateurCover>":
+                            tzt = ((SongRecord[k].Is_AmateurCover == "Yes") ? "-AmateurCover " : "");
+                            break;
+                        case "<GameSoundtrack>":
+                            tzt = ((SongRecord[k].Is_GameSoundtrack == "Yes") ? "-GameSoundtrack " : "");
+                            break;
+                        case "<TVTheme>":
+                            tzt = ((SongRecord[k].Is_TVTheme == "Yes") ? "-TVTheme " : "");
+                            break;
                         case "<IntheWorks>":
                             tzt = ((SongRecord[k].IntheWorks == "Yes") ? "-IntheWorks " : "");
                             break;
+                        //case "<IntheWorksWDetails>":
+                        //    tzt = ((SongRecord[k].IntheWorks == "Yes") ? "-IntheWorks " : "");
+                        //    break;
                         case "<Remastered>":
                             tzt = ((SongRecord[k].Is_Remastered == "Yes") ? "-Remastered " : "");
                             break;
@@ -2011,6 +1917,14 @@ namespace RocksmithToolkitGUI.DLCManager
                             tzt += ((SongRecord[k].Is_Cover == "Yes") ? "-Cover " : "");
                             tzt += ((SongRecord[k].Is_Demo == "Yes") ? "-Demo  " : "");
                             tzt += ((SongRecord[k].Is_Remix == "Yes") ? "-Remix " : "");
+                            tzt += ((SongRecord[k].Is_GreatestHits == "Yes") ? "-GreatestHits  " : "");
+                            tzt += ((SongRecord[k].Is_TVTheme == "Yes") ? "-TVTheme " : "");
+                            tzt += ((SongRecord[k].Is_AmateurCover == "Yes") ? "-AmateurCover " : "");
+                            tzt += ((SongRecord[k].Is_Midi == "Yes") ? "-Midi " : "");
+                            tzt += ((SongRecord[k].Is_Medley == "Yes") ? "-Medley " : "");
+                            tzt += ((SongRecord[k].Is_GameSoundtrack == "Yes") ? "-GameSoundtrack  " : "");
+                            tzt += ((SongRecord[k].Is_MultiStrings == "Yes") ? "-MultiStrings " : "");
+                            tzt += ((SongRecord[k].Is_Deluxe == "Yes") ? "-Deluxe " : "");
                             //no manipulated/improved at not a property of song more of DLCM
                             break;
                         case "<CDLC_ID>":
@@ -2570,7 +2484,6 @@ namespace RocksmithToolkitGUI.DLCManager
 
                 if (Is_Original == "Yes" || !string.IsNullOrEmpty(consoleOutput) || UseInternalLog == "Yes")
                     try
-
                     { //http://code.google.com/p/rocksmith-custom-song-creator/issues/detail?id=60
 
                         if (xml.Length > 0)
@@ -2965,7 +2878,9 @@ namespace RocksmithToolkitGUI.DLCManager
             string Folder_Name = SongRecord[0].Folder_Name;
             try
             {
-                if (cnb.State.ToString() == "Open") cnb.Open();
+                //not needed as all dont in utilities
+                //if (cnb.State.ToString() == "Open") 
+                //    cnb.Open();
 
                 //var vars = e.Argument as string[];
                 bool bassRemoved = args[1].ToLower() == "true" ? true : false;
@@ -3129,13 +3044,13 @@ namespace RocksmithToolkitGUI.DLCManager
                         h += (chbx_Format == "PC" ? "_p.psarc" : (chbx_Format == "Mac" ? "_m.psarc" : (chbx_Format == "PS3" ? "_ps3.psarc.edat" : "")));
                     }
                 }
-                if (((chbx_Last_Packed && chbx_Last_PackedEnabled) && !(chbx_CopyOld && chbx_CopyOldEnabled)) || (!File.Exists(h) || h == ""))
+                if (((chbx_Last_Packed && chbx_Last_PackedEnabled) && !(chbx_CopyOld && chbx_CopyOldEnabled)) && (!File.Exists(h) || h == ""))
                 {
                     DataSet dvr = new DataSet(); dvr = SelectFromDB("Pack_AuditTrail", "SELECT TOP 1 PackPath+\"\\\"+FileName FROM Pack_AuditTrail WHERE Platform=\"" + chbx_Format + "\" and CDLC_ID=" + ID + " ORDER BY ID DESC;", "", cnb, cnc);
                     rec = dvr.Tables[0].Rows.Count;
                     if (rec > 0) h = dvr.Tables[0].Rows[0].ItemArray[0].ToString();
                 }
-                if ((!(chbx_Last_Packed && chbx_Last_PackedEnabled) || (chbx_Last_Packed && chbx_Last_PackedEnabled && rec == 0)) && !(chbx_CopyOld && chbx_CopyOldEnabled) || (!File.Exists(h) || h == ""))
+                if ((!(chbx_Last_Packed && chbx_Last_PackedEnabled) || (chbx_Last_Packed && chbx_Last_PackedEnabled && rec == 0)) && !(chbx_CopyOld && chbx_CopyOldEnabled) && (!File.Exists(h) || h == ""))
                 {
                     var i = 0;
                     tsst = "Repacking " + SongRecord[0].NoRec + " song(s)"; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), multithreadname, form, null, null);
@@ -3153,7 +3068,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         //RemoveDD DD 
                         tsst = "removing DD"; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), multithreadname, form, null, null);
                         bassRemoved = false;
-                        Platform platformz = Folder_Name.GetPlatform(); string[] xmlFilez = new string[30000]; bool done = true; var countd = 0;
+                        Platform platformz = Folder_Name.GetPlatform(); string[] xmlFilez = new string[c("dlcm_maxsongsinDLCM").ToInt32()]; bool done = true; var countd = 0;
                         do
                         {
                             try
@@ -3181,7 +3096,6 @@ namespace RocksmithToolkitGUI.DLCManager
                                     if (xmlContent.Arrangement.ToLower() == "bass" && !(xml.IndexOf(".old") > 0))
                                     {
                                         if ((ConfigRepository.Instance()["dlcm_AdditionalManipul3"] == "Yes" || chbx_RemoveBassDD) && chbx_BassDD && (!(chbx_KeepBassDD && ConfigRepository.Instance()["dlcm_AdditionalManipul52"] == "Yes") && !(chbx_KeepDD && ConfigRepository.Instance()["dlcm_AdditionalManipul53"] == "Yes")))
-
                                         {
                                             bassRemoved = (RemoveDD(Folder_Name, chbx_Original, xml, platformz, false, false, chbx_UseInternalDD) == "Yes") ? true : false;
                                             timestamp = UpdateLog(timestamp, "Removing Bass.." + filez.ID + "-" + filez.Artist + "-" + filez.Song_Title, true, tmpPath, multithreadname, form, null, null);
@@ -3190,7 +3104,6 @@ namespace RocksmithToolkitGUI.DLCManager
                                     if (xmlContent.Arrangement.ToLower() != "bass" && xml.IndexOf(".old") <= 0)
                                     {
                                         if (ConfigRepository.Instance()["dlcm_AdditionalManipul3"] == "Yes" && !(chbx_KeepDD && ConfigRepository.Instance()["dlcm_AdditionalManipul53"] == "Yes"))
-
                                         {
                                             bassRemoved = (RemoveDD(Folder_Name, chbx_Original, xml, platformz, false, false, chbx_UseInternalDD) == "Yes") ? true : false;
                                             timestamp = UpdateLog(timestamp, "Removing non bass DD.." + filez.ID + "-" + filez.Artist + "-" + filez.Song_Title, true, tmpPath, multithreadname, form, null, null);
@@ -3268,11 +3181,20 @@ namespace RocksmithToolkitGUI.DLCManager
                             //    {
                             //        var trst = "Error lyrics..." + ex; UpdateLog(DateTime.Now, trst, false, c("dlcm_TempPath"), "", "", null, null);
                             //    }
-                            MessageBox.Show("Are you done with reading the Lyrics file?.", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            DialogResult result1 = DialogResult.Yes;
+                            result1 = MessageBox.Show("(Yes) Are you done with reading the Lyrics file?\n(No) stops current individual packing action.\n(Cancel) stops overall packing action.", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation);
+                            if (result1 == DialogResult.Yes) ;
+                            else if (result1 == DialogResult.No) return;
+                            else if (result1 == DialogResult.Cancel)
+                            {
+                                ConfigRepository.Instance()["dlcm_GlobalTempVariable"] = "Yes";
+                                return;
+                            }
                         }
 
                         // LOAD DATA
                         timestamp = UpdateLog(timestamp, "Loading song.." + filez.ID + "-" + filez.Artist + "-" + filez.Song_Title, true, tmpPath, multithreadname, form, null, null);
+
                         //verify if too many audios
                         var xmlFil = Directory.GetFiles(filez.Folder_Name, "*.wem", System.IO.SearchOption.AllDirectories);
                         foreach (var xml in xmlFil) if (xml != filez.AudioPath && xml != filez.audioPreviewPath) DeleteFile(xml, false);
@@ -3286,6 +3208,14 @@ namespace RocksmithToolkitGUI.DLCManager
                         float volume = float.Parse(filez.Volume.ToString(), NumberStyles.Float, CultureInfo.CurrentCulture);
                         float volumep = float.Parse(filez.Preview_Volume, NumberStyles.Float, CultureInfo.CurrentCulture);
 
+                        //set art incl check if existing c("dlcm_defaultalbumart")
+                        info.ArtFiles[1].sourceFile = GetAlbumArtPath(filez.AlbumArtPath.Replace("256", info.ArtFiles[0].sizeX.ToString())
+                            , filez.Album_ArtPathOrig.Replace("256", info.ArtFiles[0].sizeX.ToString()), ".dds");
+                        info.ArtFiles[1].sourceFile = GetAlbumArtPath(filez.AlbumArtPath.Replace("256", info.ArtFiles[1].sizeX.ToString())
+                            , filez.Album_ArtPathOrig.Replace("256", info.ArtFiles[0].sizeX.ToString()), ".dds");
+                        info.ArtFiles[2].sourceFile = GetAlbumArtPath(filez.AlbumArtPath.Replace("256", info.ArtFiles[2].sizeX.ToString())
+                            , filez.Album_ArtPathOrig.Replace("256", info.ArtFiles[0].sizeX.ToString()), ".dds");
+
 
                         data = new DLCPackageData
                         {
@@ -3296,8 +3226,8 @@ namespace RocksmithToolkitGUI.DLCManager
                             PS3 = filez.Platform == "Ps3" ? true : false,
                             Name = filez.DLC_Name,
                             AppId = filez.DLC_AppID,
-                            ArtFiles = info.ArtFiles, //not complete
-                                                      //Showlights = true,//info.Showlights, //apparently this info is not read..also the tone base is removed/not read also
+                            ArtFiles = info.ArtFiles,
+                            //Showlights = true,//info.Showlights, //apparently this info is not read..also the tone base is removed/not read also
                             Inlay = info.Inlay,
                             //LyricArtPath = info.LyricArtPath,
 
@@ -3315,8 +3245,8 @@ namespace RocksmithToolkitGUI.DLCManager
                             },
 
                             //AlbumArtPath = filez.AlbumArtPath,
-                            OggPath = filez.AudioPath,
-                            OggPreviewPath = ((filez.audioPreviewPath != "") ? filez.audioPreviewPath : filez.AudioPath),
+                            OggPath = File.Exists(filez.AudioPath) ? filez.AudioPath : c("dlcm_defaultaudio"),
+                            OggPreviewPath = ((filez.audioPreviewPath != "") ? (File.Exists(filez.audioPreviewPath) ? filez.audioPreviewPath : c("dlcm_defaultpreview")) : (File.Exists(filez.AudioPath) ? filez.AudioPath : c("dlcm_defaultaudio"))),
                             //OggPath = filez.OggPath,
                             //OggPreviewPath = ((filez.oggPreviewPath != "") ? filez.oggPreviewPath : filez.OggPath),
                             Arrangements = info.Arrangements,
@@ -3793,6 +3723,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                         SampleRate = vorbis.SampleRate;
                                     }
                             }
+
                         //Convert Audio to lower bitrate
                         //Convert Audio if bitrate> ConfigRepository.Instance()["dlcm_Bitrate"].ToInt32() +8000
                         var tst = "";
@@ -3863,6 +3794,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             DeleteFile(filez.oggPreviewPath.Replace(".ogg", "_preview_fixed.ogg"), false);
                             //tsst = "recompress preview...bbug..wierd..."; timestamp = UpdateLog(timestamp, tsst, false);
                         }
+
                         if (ConfigRepository.Instance()["dlcm_AdditionalManipul71"] == "Yes")
                         {
                             //var sel = "SELECT ID FROM Pack_AuditTrail WHERE FileHash=\"" + "" + "\" OR (FileName=\"" + "" + "\" AND PackPath=\"" + "" + "\");";
@@ -3882,6 +3814,16 @@ namespace RocksmithToolkitGUI.DLCManager
                         DirectoryInfo di;
                         var repacked_Path = TempPath + "\\0_repacked";
                         if (!DirectoryExists(repacked_Path) && (repacked_Path != null)) di = Directory.CreateDirectory(repacked_Path);
+
+                        //IntheWorksWDetails
+                        var r1 = ConfigRepository.Instance()["dlcm_Title"]; ConfigRepository.Instance()["dlcm_Title"] = AddIntheWorks(c("dlcm_Title"));
+                        var r2 = ConfigRepository.Instance()["dlcm_Title_Sort"]; ConfigRepository.Instance()["dlcm_Title_Sort"] = AddIntheWorks(c("dlcm_Title_Sort"));
+                        var r3 = ConfigRepository.Instance()["dlcm_Artist"]; ConfigRepository.Instance()["dlcm_Artist"] = AddIntheWorks(c("dlcm_Artist"));
+                        var r4 = ConfigRepository.Instance()["dlcm_Artist_Sort"]; ConfigRepository.Instance()["dlcm_Artist_Sort"] = AddIntheWorks(c("dlcm_Artist_Sort"));
+                        var r5 = ConfigRepository.Instance()["dlcm_Album"]; ConfigRepository.Instance()["dlcm_Album"] = AddIntheWorks(c("dlcm_Album"));
+                        var r6 = ConfigRepository.Instance()["dlcm_Album_Sort"]; ConfigRepository.Instance()["dlcm_Album_Sort"] = AddIntheWorks(c("dlcm_Album_Sort"));
+                        var r7 = ConfigRepository.Instance()["dlcm_File_Name"]; ConfigRepository.Instance()["dlcm_File_Name"] = AddIntheWorks(c("dlcm_File_Name"));
+                        var r8 = ConfigRepository.Instance()["dlcm_Lyric_Info"]; ConfigRepository.Instance()["dlcm_Lyric_Info"] = AddIntheWorks(c("dlcm_Lyric_Info"));
 
                         //manipulating the info
                         if (c("dlcm_AdditionalManipul102") != "Yes")
@@ -3921,11 +3863,17 @@ namespace RocksmithToolkitGUI.DLCManager
                             if (ConfigRepository.Instance()["dlcm_AdditionalManipul1"] == "Yes")
                                 data.SongInfo.SongDisplayName = ord_no + "_" + data.SongInfo.SongDisplayName;
                         }
+
                         if (c("dlcm_AdditionalManipul113") == "Yes")
-                            //{
                             if (!ConfigRepository.Instance()["dlcm_Activ_ArtistSort"].Contains("GroupIndex"))
-                                data.SongInfo.ArtistSort = Manipulate_strings("<FirstGroupIndexAndName>", 0, false, false, bassRemoved, SongRecord, "", "", chbx_Beta, true, false, cnc) + data.SongInfo.ArtistSort;
-                        //}
+                            {
+                                var r = ConfigRepository.Instance()["dlcm_Activ_ArtistSort"];
+                                ConfigRepository.Instance()["dlcm_Activ_ArtistSort"] = ConfigRepository.Instance()["dlcm_Activ_ArtistSort"].Replace("<FirstGroupIndexAndName>", "");
+                                data.SongInfo.ArtistSort = Manipulate_strings("<FirstGroupIndexAndName>", 0, false, false, bassRemoved, SongRecord, "", "", chbx_Beta, true, false, cnc)
+                                + data.SongInfo.ArtistSort;
+                                ConfigRepository.Instance()["dlcm_Activ_ArtistSort"] = r;
+                            }
+
                         if (ConfigRepository.Instance()["dlcm_AdditionalManipul2"] == "Yes")
                             //"3. Make all DLC IDs unique (&save)"
                             if (filez.UniqueDLCName != null && filez.UniqueDLCName != "") data.Name = filez.UniqueDLCName;
@@ -4011,10 +3959,36 @@ namespace RocksmithToolkitGUI.DLCManager
                             "\nArtistSort: " + data.SongInfo.ArtistSort +
                             "\nAlbum: " + data.SongInfo.Album +
                             "\nAlbumSort: " + data.SongInfo.AlbumSort +
+                            "\nDLCName: " + data.Name +
+                            "\nDLC_ID: " + data.AppId +
                             "\nFile Name: " + FN +
                             "\nPackage internal Comment: " + (data.ToolkitInfo.PackageComment == null ? "" : data.ToolkitInfo.PackageComment.ToString()) + "----";
 
+                        //IntheWorksWDetails
+                        ConfigRepository.Instance()["dlcm_Title"] = r1;
+                        ConfigRepository.Instance()["dlcm_Title_Sort"] = r2;
+                        ConfigRepository.Instance()["dlcm_Artist"] = r3;
+                        ConfigRepository.Instance()["dlcm_Artist_Sort"] = r4;
+                        ConfigRepository.Instance()["dlcm_Album"] = r5;
+                        ConfigRepository.Instance()["dlcm_Album_Sort"] = r6;
+                        ConfigRepository.Instance()["dlcm_File_Name"] = r7;
+                        ConfigRepository.Instance()["dlcm_Lyric_Info"] = r8;
+
                         UpdateLog(DateTime.Now, "Metadata:\n" + ConfigRepository.Instance()["dlcm_Global2TempVariable"] + "\n", false, c("dlcm_TempPath"), "", "", null, null);/*\n*/
+
+                        DialogResult result2 = DialogResult.Yes;
+                        if (metadatadisplayedonce & c("dlcm_AdditionalManipul115") == "Yes")
+                        {
+                            result2 = MessageBox.Show("Do you like the metadata?\n\n\n(Yes) Continue packing\n(No) stops current individual packing action.\n(Cancel) stops overall packing action. :\n\n" + ConfigRepository.Instance()["dlcm_Global2TempVariable"].Replace("\n", "\n\n") + "", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation);
+                            ConfigRepository.Instance()["dlcm_AdditionalManipul115"] = "No";
+                        }
+                        if (result2 == DialogResult.Yes) ;
+                        else if (result2 == DialogResult.No) return;
+                        else if (result2 == DialogResult.Cancel)
+                        {
+                            ConfigRepository.Instance()["dlcm_GlobalTempVariable"] = "Yes";
+                            return;
+                        }
 
                         //check if already packed
                         if (c("dlcm_AdditionalManipul98") == "Yes" && form != "MainDB")
@@ -4222,7 +4196,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 }
                 //Add Pack Audit Trail
 
-                cnb.Close();
+                cnb.Close();//prb wont work as variable only avail in utilities 
             }
             catch (Exception ex)
             {
@@ -4336,6 +4310,18 @@ namespace RocksmithToolkitGUI.DLCManager
             UpdateLog(DateTime.Now, "Ending Packing " + summary + "\n songs.", true, null, "", "DLCManager", null, null);
         }
 
+        public static void saveOptions(CheckedListBox chbx_Additional_Manipulations)
+        {
+            for (int j = 0; j < chbx_Additional_Manipulations.Items.Count; j++)
+            {
+                string orderno = chbx_Additional_Manipulations.Items[j].ToString();
+                if (orderno.IndexOf("{") <= 0 || orderno.IndexOf("}") <= 0) continue;
+                else orderno = orderno.Substring(orderno.IndexOf("{") + 1, orderno.IndexOf("}") - orderno.IndexOf("{") - 1);
+                //if (orderno == "89")
+                //    ;
+                ConfigRepository.Instance()["dlcm_AdditionalManipul" + orderno] = chbx_Additional_Manipulations.GetItemChecked(j) ? "Yes" : "No";/*GetParam(j)*/
+            }
+        }
 
         //public static string AddTrackStart2Lyrics(string SongID, OleDbConnection cnb, bool arrangoff, SQLiteConnection cnz)
         public static string AddTrackStart2Lyrics(string SongID, OleDbConnection cnb, bool arrangoff, SQLite.SQLiteConnection cnc)
@@ -4618,30 +4604,31 @@ namespace RocksmithToolkitGUI.DLCManager
             string windw = args[9];
             string err = "";
 
-            System.Data.OleDb.OleDbConnection cnb = null;
-            SQLite.SQLiteConnection cnc = null;
-            try
-            {
-                cnb = new OleDbConnection("Provider=Microsoft." + ConfigRepository.Instance()["dlcm_AccessDLLVersion"]
-               + ";OLE DB Services=-2;Mode=Read;Persist Security Info=False;Mode= Share Deny None;Data Source="
-               + ConfigRepository.Instance()["dlcm_DBFolder"]);
-                do
-                    System.Threading.Thread.Sleep(1000);
-                while (cnb.State.ToString() == "Connecting");
-                //if (File.Exists(cnb.DataSource.ToString())) cnb.Open();
-                //try { cnb.Close(); cnc.Close(); } catch (Exception ex) {; }
-                OpenDb();
-            }
-            catch (Exception exx)
-            {
-                ShowConnectivityError(exx, "FAIL to use M$ ACCESS plugin:\n");/*, null*/
-                var tz = ConfigRepository.Instance()["dlcm_DBFolder"];
-                tz = tz.Replace("AccessDB.accdb", "SQLLiteDB.db");
-                ConfigRepository.Instance()["dlcm_DBFolder"] = tz;
-                //cnz = new SQLiteConnection("Data Source="+ ConfigRepository.Instance()["dlcm_DBFolder"]);
-                //cnz.Open();
-                cnc = new SQLite.SQLiteConnection(ConfigRepository.Instance()["dlcm_DBFolder"]);
-            }
+            //not needed as all done in utilitites
+            //System.Data.OleDb.OleDbConnection cnb = null;
+            //SQLite.SQLiteConnection cnc = null;
+            //try
+            //{
+            //    cnb = new OleDbConnection("Provider=Microsoft." + ConfigRepository.Instance()["dlcm_AccessDLLVersion"]
+            //   + ";OLE DB Services=-2;Mode=Read;Persist Security Info=False;Mode= Share Deny None;Data Source="
+            //   + ConfigRepository.Instance()["dlcm_DBFolder"]);
+            //    do
+            //        System.Threading.Thread.Sleep(1000);
+            //    while (cnb.State.ToString() == "Connecting");
+            //    //if (File.Exists(cnb.DataSource.ToString())) cnb.Open();
+            //    //try { cnb.Close(); cnc.Close(); } catch (Exception ex) {; }
+            //    OpenDb();
+            //}
+            //catch (Exception exx)
+            //{
+            //    ShowConnectivityError(exx, "FAIL to use M$ ACCESS plugin:\n");/*, null*/
+            //    var tz = ConfigRepository.Instance()["dlcm_DBFolder"];
+            //    tz = tz.Replace("AccessDB.accdb", "SQLLiteDB.db");
+            //    ConfigRepository.Instance()["dlcm_DBFolder"] = tz;
+            //    //cnz = new SQLiteConnection("Data Source="+ ConfigRepository.Instance()["dlcm_DBFolder"]);
+            //    //cnz.Open();
+            //    cnc = new SQLite.SQLiteConnection(ConfigRepository.Instance()["dlcm_DBFolder"]);
+            //}
 
             var tsst = "Start FixBitRate TH ..." + AudioPath + "-" + bitrate + "-" + SampleRate; DateTime timestamp = startT; UpdateLog(timestamp, tsst, false, tmpPath, multithreadname, windw, null, null);
 
@@ -4753,23 +4740,19 @@ namespace RocksmithToolkitGUI.DLCManager
                 return;
             }
 
-            if (File.Exists(AudioPath))
-            { if (File.Exists(AudioPath + ".origi")) DeleteFile(AudioPath + ".origi", false); }
+            if (File.Exists(AudioPath)) { if (File.Exists(AudioPath + ".origi")) DeleteFile(AudioPath + ".origi", false); }
             else
                 if (File.Exists(AudioPath + ".origi")) File.Move(AudioPath + ".origi", AudioPath);
 
-            if (File.Exists(audioPreviewPath))
-            { if (File.Exists(audioPreviewPath + ".origi")) DeleteFile(audioPreviewPath + ".origi", false); }
+            if (File.Exists(audioPreviewPath)) { if (File.Exists(audioPreviewPath + ".origi")) DeleteFile(audioPreviewPath + ".origi", false); }
             else
                 if (File.Exists(audioPreviewPath + ".origi")) File.Move(audioPreviewPath + ".origi", audioPreviewPath);
 
-            if (File.Exists(oggPath))
-            { if (File.Exists(oggPath + ".origi")) DeleteFile(oggPath + ".origi", false); }
+            if (File.Exists(oggPath)) { if (File.Exists(oggPath + ".origi")) DeleteFile(oggPath + ".origi", false); }
             else
                  if (File.Exists(oggPath + ".origi")) if (File.Exists(oggPath + ".origi")) File.Move(oggPath + ".origi", oggPath);
 
-            if (File.Exists(oggPreviewPath))
-            { if (File.Exists(oggPreviewPath + ".origi")) DeleteFile(oggPreviewPath + ".origi", false); }
+            if (File.Exists(oggPreviewPath)) { if (File.Exists(oggPreviewPath + ".origi")) DeleteFile(oggPreviewPath + ".origi", false); }
             else
                 if (File.Exists(oggPreviewPath + ".origi")) File.Move(oggPreviewPath + ".origi", oggPreviewPath);
 
@@ -4992,23 +4975,19 @@ namespace RocksmithToolkitGUI.DLCManager
 
             //cnb.Close();
 
-            if (File.Exists(AudioPath))
-            { if (File.Exists(AudioPath + ".orig")) DeleteFile(AudioPath + ".orig", false); }
+            if (File.Exists(AudioPath)) { if (File.Exists(AudioPath + ".orig")) DeleteFile(AudioPath + ".orig", false); }
             else
                 File.Move(AudioPath + ".orig", AudioPath);
 
-            if (File.Exists(audioPreviewPath))
-            { if (File.Exists(audioPreviewPath + ".orig")) DeleteFile(audioPreviewPath + ".orig", false); }
+            if (File.Exists(audioPreviewPath)) { if (File.Exists(audioPreviewPath + ".orig")) DeleteFile(audioPreviewPath + ".orig", false); }
             else
                 File.Move(audioPreviewPath + ".orig", audioPreviewPath);
 
-            if (File.Exists(OggPath))
-            { if (File.Exists(OggPath + ".orig")) DeleteFile(OggPath + ".orig", false); }
+            if (File.Exists(OggPath)) { if (File.Exists(OggPath + ".orig")) DeleteFile(OggPath + ".orig", false); }
             else
                 File.Move(OggPath + ".orig", OggPath);
 
-            if (File.Exists(tr))
-            { if (File.Exists(tr + ".orig")) DeleteFile(tr + ".orig", false); }
+            if (File.Exists(tr)) { if (File.Exists(tr + ".orig")) DeleteFile(tr + ".orig", false); }
             else
                 File.Move(tr + ".orig", tr);
 
@@ -5090,50 +5069,143 @@ namespace RocksmithToolkitGUI.DLCManager
         // Insert any translation if not already existing
         {
             var tst = "Running Translation_And_Correction..."; var timestamp = DateTime.Now; timestamp = UpdateLog(timestamp, tst, true, c("dlcm_TempPath"), "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+            var stage = 0; var maxtranslationprocesse = 12;
+            //Bug-Fix: Make sure no Album & Artist are blank
+            var cmd1 = " WHERE Artist is null OR Artist=\"\""; timestamp = UpdateLog(timestamp, "0/" + maxtranslationprocesse + "Standardization bug fix " + cmd1 + ": " + GetNoRecords("SELECT ID FROM Standardization" + cmd1, cnb, cnc).ToString(), true, c("dlcm_TempPath"), "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+            var gdus = UpdateDB("Standardization", "UPDATE Standardization SET Artist = \"xxx\" " + cmd1, cnb, cnc);
+            var cmd2 = " WHERE Album is null OR Album=\"\""; timestamp = UpdateLog(timestamp, "0/" + maxtranslationprocesse + "Standardization bug fix " + cmd2 + ": " + GetNoRecords("SELECT ID FROM Standardization" + cmd2, cnb, cnc).ToString(), true, c("dlcm_TempPath"), "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+            var gdud = UpdateDB("Standardization", "UPDATE Standardization SET Album = \"xxx\" " + cmd2, cnb, cnc);
 
-            //Make sure no Albbum & Artist are blank
-            var cmd1 = "UPDATE Standardization SET Artist = \"xxx\" WHERE Artist is null";
-            var gdus = UpdateDB("Standardization", cmd1, cnb, cnc);
-            var cmd2 = "UPDATE Standardization SET Album = \"xxx\" WHERE Album is null";
-            var gdud = UpdateDB("Standardization", cmd2, cnb, cnc);
+            //Apply any correction/standardization to Main //" + norec + "
+            pB_ReadDLCs.Maximum = maxtranslationprocesse; stage++; pB_ReadDLCs.Value = stage; var tsst = stage + "/" + maxtranslationprocesse + " Apply Artist and Album corrections, to MainDB"; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+            var mat = ManuallyApplyTransalations(cnb, pB_ReadDLCs, rtxt_StatisticsOnReadDLCs, cnc);
 
+            //insert any translation if not already existing
+            pB_ReadDLCs.Maximum = maxtranslationprocesse; stage++; pB_ReadDLCs.Value = stage; tsst = stage + "/" + maxtranslationprocesse + " insert any translation if not already existing"; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+            var mcr = Multiplycorrections(cnb, pB_ReadDLCs, rtxt_StatisticsOnReadDLCs, cnc);
+
+            //Removing Standardization duplicates
+            pB_ReadDLCs.Maximum = maxtranslationprocesse; stage++; pB_ReadDLCs.Value = stage; tsst = stage + "/" + maxtranslationprocesse + " Cleans out duplicates"; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+            var mrd = ManuallyRemoveDuplicates(cnb, cnc);
+
+            //Apply Artist Short Name
+            pB_ReadDLCs.Maximum = maxtranslationprocesse; stage++; pB_ReadDLCs.Value = stage; tsst = stage + "/" + maxtranslationprocesse + " Apply Artist Short Name"; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+            var aass = ApplyArtistShort(cnb, cnc);
+
+            //Apply Album Short Name    
+            pB_ReadDLCs.Maximum = maxtranslationprocesse; stage++; pB_ReadDLCs.Value = stage; tsst = stage + "/" + maxtranslationprocesse + " Apply Album Short Name"; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+            var aas = ApplyAlbumShort(cnb, cnc);
+
+            //Multiply Spotify
+            pB_ReadDLCs.Maximum = maxtranslationprocesse; stage++; pB_ReadDLCs.Value = stage; tsst = stage + "/" + maxtranslationprocesse + " Multiply Spotify"; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+            var ms = MultiplySpotify(cnb, cnc);
+
+            //Multiply Cover
+            pB_ReadDLCs.Maximum = maxtranslationprocesse; stage++; pB_ReadDLCs.Value = stage; tsst = stage + "/" + maxtranslationprocesse + " Multiply Cover"; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+            var adc = ApplyDefaultCover(cnb, cnc);
+
+            //Apply DefaultCover
+            pB_ReadDLCs.Maximum = maxtranslationprocesse; stage++; pB_ReadDLCs.Value = stage; tsst = stage + "/" + maxtranslationprocesse + " Apply DefaultCover"; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+            var mc = MakeCover(cnb, cnc);
+
+            //Apply Artist Auto Group
+            pB_ReadDLCs.Maximum = maxtranslationprocesse; stage++; pB_ReadDLCs.Value = stage; tsst = stage + "/" + maxtranslationprocesse + " Apply Artist Auto Group"; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+            var aaag = ApplyArtistAutoGroup(cnb, pB_ReadDLCs, rtxt_StatisticsOnReadDLCs, cnc);
+
+            //Apply YearCorrection
+            pB_ReadDLCs.Maximum = maxtranslationprocesse; stage++; pB_ReadDLCs.Value = stage; tsst = stage + "/" + maxtranslationprocesse + " Multiply 1st and apply Year Correction"; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+            var maay = MultiplyAndApplyYear(cnb, cnc);
+
+            //Apply Groups inclusion & exclusion
+            var gi = 0; var go = 0; pB_ReadDLCs.Maximum = maxtranslationprocesse; stage++; pB_ReadDLCs.Value = stage; tsst = stage + "/" + maxtranslationprocesse + " Apply group Inclusions and Exclusions (as per config params)"; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+            if (c("dlcm_GroupIn_GroupIn1") != "") gi += ApplyGroupRules(cnb, cnc, c("dlcm_GroupIn_GroupIn1"), true).ToInt32();
+            if (c("dlcm_GroupIn_GroupIn2") != "") gi += ApplyGroupRules(cnb, cnc, c("dlcm_GroupIn_GroupIn2"), true).ToInt32();
+            if (c("dlcm_GroupIn_GroupIn3") != "") gi += ApplyGroupRules(cnb, cnc, c("dlcm_GroupIn_GroupIn3"), true).ToInt32();
+            if (c("dlcm_GroupIn_GroupOut1") != "") go += ApplyGroupRules(cnb, cnc, c("dlcm_GroupIn_GroupOut1"), false).ToInt32();
+            if (c("dlcm_GroupIn_GroupOut2") != "") go += ApplyGroupRules(cnb, cnc, c("dlcm_GroupIn_GroupOut2"), false).ToInt32();
+            if (c("dlcm_GroupIn_GroupOut3") != "") go += ApplyGroupRules(cnb, cnc, c("dlcm_GroupIn_GroupOut3"), false).ToInt32();
+
+            //Apply YearCorrection
+            pB_ReadDLCs.Maximum = maxtranslationprocesse; stage++; pB_ReadDLCs.Value = stage; tsst = stage + "/" + maxtranslationprocesse + " Clear Alternates and Multiply Groups per Alternates"; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+            var mg = CleanAlternates_and_MultiplyGroups(cnb, cnc, pB_ReadDLCs);
+
+            //Apply Spotify
+            // tsst = "11/13 Multiply 1st and apply Spotify data"; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs); pB_ReadDLCs.Increment(1);
+            //Standardization.MultiplyAndApplySpotify(cnb);
+
+            //Multiply Meta per albums
+            pB_ReadDLCs.Maximum = maxtranslationprocesse; stage++; pB_ReadDLCs.Value = stage; tsst = stage + "/" + maxtranslationprocesse + " Multiply Meta per Album"; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+            var ma = MultiplyMetaAlbum(cnb, cnc, pB_ReadDLCs);
+
+            pB_ReadDLCs.Maximum = maxtranslationprocesse; stage++; pB_ReadDLCs.Value = stage; tsst = stage + "/" + maxtranslationprocesse + " Finished applying Standardization"; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+            MessageBox.Show("Artist/Album Translation_And_Correction Standardization rules applied:" +
+                "\n\n1. MainDB updated with Artist, Album, Year standardizations e.g.  (" + mat + ")" +
+                "\n\n2. Standarization multiplied to same Artist & Album (" + mcr + ")" +
+                "\n\n3. Standarization records cleansed of duplicates (same Album  +Artist) (" + mrd + ")" +
+                "\n\n4. Apply and Multiply Artist shortname (e.g. 'Rage Against the Machine' = 'ratm') (" + aass + ")" +
+                "\n\n5. Apply and Multiply Album shortname (e.g. 'Blood Sugar Sex Magik' = 'BSSM') (" + aas + ")" +
+                "\n\n6. Multiply Spotify info in Main and Standardization DBs (" + ms + ")" +
+                "\n\n7. If an Album Art is marked as Default then set it as such in Standardizartion DB (" + adc + ")" +
+                "\n\n8. If an Album Art is marked as Default then set it as such in Main DB (" + mc + ")" +
+                "\n\n9. If an Artist is Marked to be added by default to a Group (e.g. 'Danko Jones' -> 'Playable Powercords' group) (" + aaag + ")" +
+                "\n\n10. Enforced any Standardization has an Artist or an Album (" + maay + ")" +
+                "\n\n11. Multiplied and Apply Standardization Year (" + maay + ")" +
+                "\n\n12. Apply any (5) group (3x2) dependency (\n\te.g.1 If in group 'Monthly songs of Interest' then also in 'Definetely To Try' group" +
+                "\n\te.g.2 If in group 'Playable songs' then NOT also in 'Definetely To Try' group) (" + gi + "-" + go + "(inserted/deleted))" +
+                "\n\n13. Multiply groups for alternates(" + mg + ")" +
+                "\n\n14. Multiply meta for albums(" + ma + ")" +
+                "", "Sumamry of Translations done, based on Standardisation Table and Rules", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+        }
+        public static string ManuallyApplyTransalations(OleDbConnection cnb, ProgressBar pB_ReadDLCs, System.Windows.Forms.RichTextBox rtxt_StatisticsOnReadDLCs, SQLite.SQLiteConnection cnc)
+        {
             //Multiply
             //tst = "Apply Already existing translations"; UpdateLog(DateTime.Now, tst, false, c("dlcm_TempPath"), "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
             //Standardization.ApplyExistingTranlations(cnb);
-
-            cmd1 = "SELECT * FROM Standardization WHERE Artist_Correction <> \"\" or Album_Correction <> \"\"  order by id;";
+            var cmd1 = "SELECT * FROM Standardization WHERE Artist_Correction <> \"\" or Album_Correction <> \"\"  order by id;";//DISTINCT (Artist_Correction + Album_Correction)
+            //((distinct(ID, Artist, Artist_Correction, Album, Album_Correction, Comments, Artist_Short, Album_Short, Year_Correction)))
             var artpath_c = "";
             var artist_c = "";
             var album_c = "";
             var albumyear_c = "";
-            var DB_Path = dbp;
+            var DB_Path = ConfigRepository.Instance()["dlcm_DBFolder"].ToString();
             //int aa = 0;
             pB_ReadDLCs.Value = 0; pB_ReadDLCs.Step = 1;
             DataSet dus = new DataSet(); dus = SelectFromDB("Standardization", cmd1, ConfigRepository.Instance()["dlcm_DBFolder"].ToString(), cnb, cnc);
-            var norec = dus.Tables[0].Rows.Count;
-            pB_ReadDLCs.Maximum = 11; var cnt = 0;
-            var tsst = "1/12 Applying " + norec + "corrections"; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs); pB_ReadDLCs.Increment(1);
+            var norec = dus.Tables.Count == 0 ? 0 : dus.Tables[0].Rows.Count;
+            var cnt = 0;
+            if (norec > 0)
+                foreach (DataRow dataRow in dus.Tables[0].Rows)
+                {
+                    artist_c = dataRow.ItemArray[2].ToString();
+                    album_c = dataRow.ItemArray[4].ToString();
+                    artpath_c = dataRow.ItemArray[5].ToString();
+                    albumyear_c = dataRow.ItemArray[9].ToString();
 
-            foreach (DataRow dataRow in dus.Tables[0].Rows)
-            {
-                cnt++;
-                artist_c = dataRow.ItemArray[2].ToString();
-                album_c = dataRow.ItemArray[4].ToString();
-                artpath_c = dataRow.ItemArray[5].ToString();
-                albumyear_c = dataRow.ItemArray[9].ToString();
+                    //tst = cnt + "\"" + norec + "Running Translation_And_Correction..." + artist_c + " " + album_c + " " + albumyear_c; timestamp = DateTime.Now; timestamp = UpdateLog(timestamp, tst, true, c("dlcm_TempPath"), "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+                    var badartistalbum = "Artist=\"" + dataRow.ItemArray[1].ToString() + "\" AND Album=\"" + dataRow.ItemArray[3].ToString() + "\"" +
+                        " AND (" + (artist_c != "" ? "Artist <> \"" + artist_c + "\"" : "") + (artist_c != "" ? " OR Artist_Sort <> \"" + artist_c + "\"" : "") + (album_c != "" ? "OR Album <> \"" + album_c + "\"" : "")
+                        + (artpath_c != "" ? " OR AlbumArtPath <> \"" + artpath_c + "\"" : "") + (albumyear_c != "" ? " OR Album_Year <> \"" + albumyear_c + "\"" : "");
+                    badartistalbum += ")"; badartistalbum = badartistalbum.Replace("(OR", "(");
+                    var norecs = GetNoRecords("SELECT ID from Main WHERE " + badartistalbum, cnb, cnc);
+                    cnt += norecs;
+                    if (norecs > 0)
+                    {
+                        cmd1 = "UPDATE Main SET " + (artist_c != "" ? "Artist = \"" + artist_c + "\"," : "") + (artist_c != "" ? " Artist_Sort = \"" + artist_c + "\"," : "")
+                            + (album_c != "" ? " Album = \"" + album_c + "\"," : "") + (artpath_c != "" ? " AlbumArtPath = \"" + artpath_c + "\"," : "") + (albumyear_c != "" ? " Album_Year = \"" + albumyear_c + "\"," : "");
+                        cmd1 += ", Has_Been_Corrected=\"Yes\" WHERE " + badartistalbum;
+                        cmd1 = cmd1.Replace("SET ,", "SET ").Replace(", ,", ", ").Replace(",,", ", ") + ";";
+                        dus = UpdateDB("Main", cmd1, cnb, cnc);
+                        UpdateLog(DateTime.Now, "Updated (" + norecs + "times): " + cmd1, false, c("dlcm_TempPath"), "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+                    }
+                    //else UpdateLog(DateTime.Now, "No TRansalation to update" + cmd1, false, c("dlcm_TempPath"), "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+                }
+            else UpdateLog(DateTime.Now, "No standardization/Correction/Transalation to update" + cmd1, false, c("dlcm_TempPath"), "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+            UpdateLog(DateTime.Now, "No TRansalation to update" + cmd1, false, c("dlcm_TempPath"), "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+            return norec.ToString() + "/" + cnt.ToString() + " (total/updated)";
+        }
 
-                //tst = cnt + "\"" + norec + "Running Translation_And_Correction..." + artist_c + " " + album_c + " " + albumyear_c; timestamp = DateTime.Now; timestamp = UpdateLog(timestamp, tst, true, c("dlcm_TempPath"), "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
-
-                cmd1 = "UPDATE Main SET " + (artist_c != "" ? "Artist = \"" + artist_c + "\"," : "") + (artist_c != "" ? " Artist_Sort = \"" + artist_c + "\"," : "") + (album_c != "" ? " Album = \"" + album_c + "\"," : "") + (artpath_c != "" ? " AlbumArtPath = \"" + artpath_c + "\"," : "") + (albumyear_c != "" ? " Album_Year = \"" + albumyear_c + "\"," : "");
-                cmd1 += ", Has_Been_Corrected=\"Yes\" WHERE Artist=\"" + dataRow.ItemArray[1].ToString() + "\" AND Album=\"" + dataRow.ItemArray[3].ToString() + "\"";
-                cmd1 = cmd1.Replace("SET ,", "SET ").Replace(", ,", ", ").Replace(",,", ", ") + ";";
-                dus = UpdateDB("Main", cmd1, cnb, cnc);
-
-                pB_ReadDLCs.Increment(1);
-            }
-
-            //insert any translation if not already existing
-            tsst = "2/12 insert any translation if not already existing"; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs); pB_ReadDLCs.Increment(1);
+        public static string Multiplycorrections(OleDbConnection cnb, ProgressBar pB_ReadDLCs, System.Windows.Forms.RichTextBox rtxt_StatisticsOnReadDLCs, SQLite.SQLiteConnection cnc)
+        {
             //var insertcmdd = "Artist, Album";
             //var insertvalues = "SELECT DISTINCT(Switch([S].[Artist_Correction] <> \"\", [S].[Artist_Correction], 1=1, [S].[Artist])) AS ArtistN" +
             //    ", (Switch(S.Album_Correction <> \"\", [S].[Album_Correction], 1=1, [S].[Album])) AS AlbumN" +
@@ -5144,106 +5216,95 @@ namespace RocksmithToolkitGUI.DLCManager
             //    " AND (StrComp([SS].[Album],[S].[Album_Correction],0)=0) ))=0));";
             //DataSet dooz = new DataSet(); dooz = SelectFromDB("Main", insertvalues, ConfigRepository.Instance()["dlcm_DBFolder"].ToString(), cnb, cnc); aa = dooz.Tables[0].Rows.Count; //Get No Of NEW/existing Standardizatiins ???
             //InsertIntoDBwValues("Standardization", insertcmdd, insertvalues, cnb, 0);
-
-            DataSet dgs = new DataSet(); dgs = SelectFromDB("Main", "SELECT distinct Artist, Album FROM Main ORDER BY Artist", "", cnb, cnc);
+            var cmd1 = "SELECT distinct Artist, Album FROM Main ORDER BY Artist";
+            DataSet dgs = new DataSet(); dgs = SelectFromDB("Main", cmd1, "", cnb, cnc);
             var noOfRec = dgs.Tables.Count == 0 ? 0 : dgs.Tables[0].Rows.Count;
-            DataSet dg = new DataSet(); dg = SelectFromDB("Main", "SELECT DISTINCT(Switch([S].[Artist_Correction] <> \"\", [S].[Artist_Correction], 1=1, [S].[Artist])) AS ArtistN" +
-                ", (Switch(S.Album_Correction <> \"\", [S].[Album_Correction], 1=1, [S].[Album])) AS AlbumN FROM Standardization AS S ORDER BY Switch([S].[Artist_Correction] <> \"\", [S].[Artist_Correction], 1=1, [S].[Artist])", "", cnb, cnc);
+            var cmd2 = "SELECT DISTINCT(Switch([S].[Artist_Correction] <> \"\", [S].[Artist_Correction], 1=1, [S].[Artist])) AS ArtistN" +
+                ", (Switch(S.Album_Correction <> \"\", [S].[Album_Correction], 1=1, [S].[Album])) AS AlbumN FROM Standardization AS S" +
+                " ORDER BY Switch([S].[Artist_Correction] <> \"\", [S].[Artist_Correction], 1=1, [S].[Artist])";
+            DataSet dg = new DataSet(); dg = SelectFromDB("Standardization", cmd2, "", cnb, cnc);
             var noOfRecz = dg.Tables.Count == 0 ? 0 : dg.Tables[0].Rows.Count;
-            var found = false/*; var album = ""; var artist = ""*/; var tz = 0;
+            var found = false/*; var album = ""; var artist = ""*/; var tz = 0; var tsst = "";
             if (noOfRec > 0 && noOfRecz > 0)
                 for (var l = 0; l < noOfRec; l++)
                 {
                     found = false;
                     for (var v = 0; v < noOfRecz; v++)
                     {
-                        tz++;
-                        var artfound = false;
+                        //var artfound = false;
                         if (dgs.Tables[0].Rows[l].ItemArray[0].ToString().ToLower() == dg.Tables[0].Rows[v].ItemArray[0].ToString().ToLower())
                         {
-                            artfound = true;
-                            if (dgs.Tables[0].Rows[l].ItemArray[1].ToString().ToLower() == dg.Tables[0].Rows[v].ItemArray[1].ToString().ToLower())
+                            //artfound = true;
+                            if (dgs.Tables[0].Rows[l].ItemArray[1].ToString() == dg.Tables[0].Rows[v].ItemArray[1].ToString())
                             {
-                                found = true; break;/*album = dgs.Tables[0].Rows[l].ItemArray[1].ToString(); artist = dgs.Tables[0].Rows[l].ItemArray[0].ToString(); */
+                                found = true;
+                                break;/*album = dgs.Tables[0].Rows[l].ItemArray[1].ToString(); artist = dgs.Tables[0].Rows[l].ItemArray[0].ToString(); */
                             }
                         }
-                        else if (artfound) break;
+                        //else if (artfound) break;
                     }
                     if (!found)
+                    {
+                        tz++;
+                        tsst = "Insert new values based on existing Artist, Album, \"" + dgs.Tables[0].Rows[l].ItemArray[0].ToString() + "\",\"" + dgs.Tables[0].Rows[l].ItemArray[1].ToString() + "\""; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
                         InsertIntoDBwValues("Standardization", "Artist, Album", "\"" + dgs.Tables[0].Rows[l].ItemArray[0].ToString() + "\",\"" + dgs.Tables[0].Rows[l].ItemArray[1].ToString() + "\"", cnb, 0, cnc);
+                    }
                 }
+            else
+                UpdateLog(DateTime.Now, "No records to multiply in Standardization(" + noOfRec + ") found in either: " + cmd1 + "\n or \n" + cmd2, false, c("dlcm_TempPath"), "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+            tsst = "Inserted " + tz + " entries in Standardization(" + noOfRecz + ") based on manual check if existing Artist, Album in Main(" + noOfRec + "), doesnt in transanlastion aforementioned table"; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
 
-            tsst = "3/12 Cleans out duplicates (prev" + tz + ")"; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs); pB_ReadDLCs.Increment(1);
-            ManuallyRemoveDuplicates(cnb, cnc);
-
-            //Apply Artist Short Name
-            tsst = "4/12 Apply Artist Short Name (prev:" + tz + ""; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs); pB_ReadDLCs.Increment(1);
-            ApplyArtistShort(cnb, cnc);
-
-            //Apply Album Short Name    
-            tsst = "5/12 Apply Album Short Name"; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs); pB_ReadDLCs.Increment(1);
-            ApplyAlbumShort(cnb, cnc);
-
-            //Multiply Spotify
-            tsst = "6/12 Multiply Spotify"; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs); pB_ReadDLCs.Increment(1);
-            MultiplySpotify(cnb, cnc);
-
-            //Multiply Cover
-            tsst = "7/12 Multiply Cover"; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs); pB_ReadDLCs.Increment(1);
-            ApplyDefaultCover(cnb, cnc);
-
-            //Apply DefaultCover
-            tsst = "8/12 Apply DefaultCover"; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs); pB_ReadDLCs.Increment(1);
-            MakeCover(cnb, cnc);
-
-            //Apply Artist Auto Group
-            tsst = "9/12 Apply Artist Auto Group"; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs); pB_ReadDLCs.Increment(1);
-            ApplyArtistAutoGroup(cnb, pB_ReadDLCs, rtxt_StatisticsOnReadDLCs, cnc);
-
-            //Apply YearCorrection
-            tsst = "10/12 Multiply 1st and apply Year Correction"; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs); pB_ReadDLCs.Increment(1);
-            MultiplyAndApplyYear(cnb, cnc);
-
-            //Apply Spotify
-            tsst = "11/12 Multiply 1st and apply Spotify data"; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs); pB_ReadDLCs.Increment(1);
-            //Standardization.MultiplyAndApplySpotify(cnb);
-
-            tsst = "12/12 Finished applying Standardization"; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs); pB_ReadDLCs.Increment(1);
-            MessageBox.Show("Artist/Album Translation_And_Correction Standardization rules applied (correction recs :" + cnt + ")");
+            return tz.ToString() + " (inserted in Standardization)";
         }
 
-        public static void ManuallyRemoveDuplicates(OleDbConnection cnb, SQLite.SQLiteConnection cnc)//(string DBs_Path)//, string AlbumArt, string Artist, string Albums)
+        public static string ManuallyRemoveDuplicates(OleDbConnection cnb, SQLite.SQLiteConnection cnc)//(string DBs_Path)//, string AlbumArt, string Artist, string Albums)
         {
-            DataSet dr = new DataSet(); dr = SelectFromDB("Main", "SELECT distinct Artist, Album, Artist_Correction, Album_Correction, ID FROM Standardization ORDER BY Artist", "", cnb, cnc);
+            var timestamp = DateTime.Now; var tsst = "";
+            DataSet dr = new DataSet(); dr = SelectFromDB("Standardization", "SELECT Artist, Album, Artist_Correction, Album_Correction, ID FROM Standardization ORDER BY Artist", "", cnb, cnc);
             var noOfRec = dr.Tables.Count == 0 ? 0 : dr.Tables[0].Rows.Count;
             var IDs = ""; var tz = 0;
             if (noOfRec > 0)
                 for (var l = 0; l < noOfRec; l++)
                     for (var v = l + 1; v < noOfRec; v++)
-                    {
-                        tz++;
-                        if (dr.Tables[0].Rows[l].ItemArray[0].ToString().ToLower() == dr.Tables[0].Rows[v].ItemArray[0].ToString().ToLower())
+                        if (dr.Tables[0].Rows[l].ItemArray[0].ToString() == dr.Tables[0].Rows[v].ItemArray[0].ToString())/*.ToLower() */
                         {
-                            if (dr.Tables[0].Rows[l].ItemArray[1].ToString().ToLower() == dr.Tables[0].Rows[v].ItemArray[1].ToString().ToLower()
-                                && dr.Tables[0].Rows[l].ItemArray[2].ToString().ToLower() == dr.Tables[0].Rows[v].ItemArray[2].ToString().ToLower()
-                                && dr.Tables[0].Rows[l].ItemArray[3].ToString().ToLower() == dr.Tables[0].Rows[v].ItemArray[3].ToString().ToLower())
-                                IDs += dr.Tables[0].Rows[v].ItemArray[4].ToString().ToLower() + ", ";
+                            if (dr.Tables[0].Rows[l].ItemArray[1].ToString() == dr.Tables[0].Rows[v].ItemArray[1].ToString()
+                                && dr.Tables[0].Rows[l].ItemArray[2].ToString() == dr.Tables[0].Rows[v].ItemArray[2].ToString()
+                                && dr.Tables[0].Rows[l].ItemArray[3].ToString() == dr.Tables[0].Rows[v].ItemArray[3].ToString())
+                            {
+                                tz++;
+                                IDs += dr.Tables[0].Rows[v].ItemArray[4].ToString() + ", ";
+                            }
                         }
                         else break;
-                    }
+
             if (IDs.Length > 0)
-                DeleteFromDB("Groups", "Delete * from Standardization WHERE ID IN (" + (IDs.Substring(0, IDs.Length - 2)) + ")", cnb, cnc); //Cleans out duplicates
+            {
+                DeleteFromDB("Standardization", "Delete * from Standardization WHERE ID IN (" + (IDs.Substring(0, IDs.Length - 2)) + ")", cnb, cnc); //Cleans out duplicates
+                tsst = "Manually checked: Removed Artist&Album&corespondent corrections Duplicates" + tz + "/" + noOfRec + " correction(" + IDs + ")"; UpdateLog(timestamp, tsst, false, c("dlcm_TempPath"), "", "", null, null); //pB_ReadDLCs.Increment(1);
+            }
+            else UpdateLog(timestamp, "No Manually Removed Artist&Album&corespondent corrections Duplicates /" + noOfRec + " corrections", false, c("dlcm_TempPath"), "", "", null, null); //pB_ReadDLCs.Increment(1);
+            return tz.ToString() + " (removed from Standardization)";
         }
 
-        public static void MultiplySpotify(OleDbConnection cnb, SQLite.SQLiteConnection cnc)//(string DBs_Path)//, string AlbumArt, string Artist, string Albums)
+        public static string MultiplySpotify(OleDbConnection cnb, SQLite.SQLiteConnection cnc)//(string DBs_Path)//, string AlbumArt, string Artist, string Albums)
         {//continue;
             //}
 
-            //var norec = 0;
-            DataSet dfz = new DataSet(); dfz = SelectFromDB("Standardization", "SELECT distinct iif(Artist_Correction<>\"\", Artist_Correction, Artist), iif(Album_Correction<>\"\", Album_Correction, Album), SpotifyArtistID, SpotifyAlbumID, SpotifyAlbumURL, SpotifyAlbumPath, Year_Correction FROM Standardization WHERE (SpotifyArtistID <> \"\") GROUP BY iif(Artist_Correction<>\"\", Artist_Correction, Artist), iif(Album_Correction<>\"\", Album_Correction, Album), SpotifyArtistID, SpotifyAlbumID, SpotifyAlbumURL,SpotifyAlbumPath, Year_Correction;", "", cnb, cnc);
-            if (dfz.Tables.Count > 0)
+            var tsst = ""; var timestamp = DateTime.Now; var i = 0;
+            var cmd = "SELECT distinct iif(Artist_Correction<>\"\", Artist_Correction, Artist), iif(Album_Correction<>\"\", Album_Correction, Album)" +
+                ", SpotifyArtistID, SpotifyAlbumID, SpotifyAlbumURL, SpotifyAlbumPath, Year_Correction FROM Standardization" +
+                " WHERE (SpotifyArtistID <> \"\")" +
+                " GROUP BY iif(Artist_Correction<>\"\", Artist_Correction, Artist)" +
+                ", iif(Album_Correction<>\"\", Album_Correction, Album), SpotifyArtistID, SpotifyAlbumID, SpotifyAlbumURL,SpotifyAlbumPath, Year_Correction;";
+            //+
+            //" ORDER BY ID;";
+            DataSet dfz = new DataSet(); dfz = SelectFromDB("Standardization", cmd, "", cnb, cnc);
+            var norecs = dfz.Tables.Count > 0 ? dfz.Tables[0].Rows.Count : 0; var tz = 0;
+            if (norecs > 0)
                 foreach (DataRow dataRow in dfz.Tables[0].Rows)
                 {
+                    i++;
                     var artist_c = dataRow.ItemArray[0].ToString();
                     var album_c = dataRow.ItemArray[1].ToString();
                     var SpotifyArtistID = dataRow.ItemArray[2].ToString();
@@ -5254,16 +5315,24 @@ namespace RocksmithToolkitGUI.DLCManager
                     //var cmd1 = "UPDATE Main SET Spotify_Artist_ID = \"" + SpotifyArtistID + "\",Spotify_Album_ID = \"" + SpotifyAlbumID + "\",Spotify_Album_URL = \"" + SpotifyAlbumURL + "\",Spotify_Album_Path = \"" + SpotifyAlbumPath + "\", WHERE Album=\"" + SpotifyAlbumID + "\"";
                     //DataSet dus = UpdateDB("Main", cmd1 + ";");
                     //dus = SelectFromDB("Main", "SELECT * FROM Main WHERE Artist=\"" + artist_c + "\"", ""); try { norec = dus.Tables[0].Rows.Count; } catch { }
-                    var cmd1 = "UPDATE Standardization SET SpotifyArtistID = \"" + SpotifyArtistID + "\",SpotifyAlbumID = \"" + SpotifyAlbumID + "\",SpotifyAlbumURL = \""
-                        + SpotifyAlbumURL + "\",SpotifyAlbumPath = \"" + SpotifyAlbumPath + "\" WHERE (Artist=\"" + artist_c + "\" OR Artist_Correction=\""
-                        + artist_c + "\") and (Album=\"" + album_c + "\" OR Album_Correction=\"" + album_c + "\")";/*+ "\",Year_Correction = \"" + SpotifyYear +*/
-                    var dus = UpdateDB("Standardization", cmd1 + ";", cnb, cnc);
+                    var cmd1 = "WHERE (Artist=\"" + artist_c + "\" OR Artist_Correction=\""
+                        + artist_c + "\") and (Album=\"" + album_c + "\" OR Album_Correction=\"" + album_c + "\") AND "
+                        + " SpotifyArtistID <> \"" + SpotifyArtistID + "\" ";/*+ "\",Year_Correction = \"" + SpotifyYear +*/
+                    var norec = GetNoRecords("SELECt ID FROM Standardization " + cmd1, cnb, cnc); tz += norec;
+                    if (norec > 0)
+                    {
+                        var dus = UpdateDB("Standardization", "UPDATE Standardization SET SpotifyArtistID = \"" + SpotifyArtistID + "\",SpotifyAlbumID = \"" + SpotifyAlbumID + "\",SpotifyAlbumURL = \""
+                        + SpotifyAlbumURL + "\",SpotifyAlbumPath = \"" + SpotifyAlbumPath + "\" " + cmd1, cnb, cnc);
+                        tsst = "Multiplying spotify :" + i + "/" + dfz.Tables[0].Rows.Count + " for " + cmd1 + ", " + norec + " times."; UpdateLog(timestamp, tsst, false, c("dlcm_TempPath"), "", "", null, null);
+                    }
                 }
-
+            else UpdateLog(timestamp, "no spotify to multiply for " + cmd, false, c("dlcm_TempPath"), "", "", null, null);
+            tsst = "Multiplying spotify :" + i + "/" + tz + " times."; UpdateLog(timestamp, tsst, false, c("dlcm_TempPath"), "", "", null, null);
+            return norecs + "-" + tz + " (totals/multiplied)";
             //MessageBox.Show("Artist Short Name has been defaulted onto " + norec.ToString() + " songs");
         }
 
-        public static void MakeCover(OleDbConnection cnb, SQLite.SQLiteConnection cnc)//(string DBs_Path)//, string AlbumArt, string Artist, string Albums)
+        public static string MakeCover(OleDbConnection cnb, SQLite.SQLiteConnection cnc)//(string DBs_Path)//, string AlbumArt, string Artist, string Albums)
         {
             //var cmd1 = "";
             ////var DB_Path = DB_Path + "\\AccessDB.accdb";
@@ -5288,6 +5357,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //}
 
             var NoRec = 0;
+            var timestamp = DateTime.Now; var tsst = ""; var cmd = "SELECT Artist, Album, AlbumArt_Correction FROM Standardization WHERE (AlbumArt_Correction <> \"\") GROUP BY Artist,Album,AlbumArt_Correction;";
             //DataSet dssx = new DataSet();
             //using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DBs_Path))
             //{
@@ -5299,7 +5369,8 @@ namespace RocksmithToolkitGUI.DLCManager
             //da.Fill(ds, "Badge");
             //}
 
-            DataSet dgt = new DataSet(); dgt = SelectFromDB("Standardization", "SELECT Artist, Album, AlbumArt_Correction FROM Standardization WHERE (AlbumArt_Correction <> \"\") GROUP BY Artist,Album,AlbumArt_Correction;", "", cnb, cnc);
+            DataSet dgt = new DataSet(); dgt = SelectFromDB("Standardization", cmd, "", cnb, cnc);
+            var tz = 0;
             //NoRec = dgt.Tables[0].Rows.Count;
             //pB_ReadDLCs.Maximum = NoRec;
             if (dgt.Tables.Count > 0)
@@ -5309,21 +5380,169 @@ namespace RocksmithToolkitGUI.DLCManager
                     var album_c = dataRow.ItemArray[1].ToString();
                     var artpath_c = dataRow.ItemArray[2].ToString();
                     var cmd1 = "";
-                    cmd1 = "UPDATE Main SET AlbumArtPath = \"" + artpath_c + "\" WHERE Artist=\"" + artist_c + "\" and Album=\"" + album_c + "\"";
-                    dgt = UpdateDB("Main", cmd1 + ";", cnb, cnc);
-                    if (artpath_c != "" && album_c != "" && artpath_c != "") dgt = SelectFromDB("Main", "SELECT * FROM Main WHERE Artist=\"" + artist_c + "\" and Album=\"" + album_c + "\"", "", cnb, cnc);
-                    try { NoRec = dgt.Tables[0].Rows.Count; } catch { }
+                    cmd1 = " WHERE Artist=\"" + artist_c + "\" and Album=\"" + album_c + "\" And AlbumArtPath <> \"" + artpath_c + "\"";
+                    var norec = GetNoRecords("SELECt ID FROM Main " + cmd1, cnb, cnc); tz += norec;
+                    if (norec > 0)
+                    {
+                        dgt = UpdateDB("Main", "UPDATE Main SET AlbumArtPath = \"" + artpath_c + "\"" + cmd1 + "; ", cnb, cnc);
+                        UpdateLog(timestamp, "Cover to update :" + "Artist =\"" + artist_c + "\" and Album=\"" + album_c + "\" And AlbumArtPath <> \"" + artpath_c + "\", " + norec + " times.", false, c("dlcm_TempPath"), "", "", null, null);
+                    }
+                    //if (artpath_c != "" && album_c != "" && artpath_c != "") dgt = SelectFromDB("Main", "SELECT * FROM Main WHERE Artist=\"" + artist_c + "\" and Album=\"" + album_c + "\"", "", cnb, cnc);
+                    //try { NoRec = dgt.Tables[0].Rows.Count; } catch { }
                     //cmd1 = "UPDATE Standardization SET AlbumArt_Correction = \"" + artpath_c + "\" WHERE (Artist=\"" + artist_c + "\" OR Artist_Correction=\"" + artist_c + "\") AND (Album=\"" + album_c + "\" OR Album_Correction=\"" + album_c + "\");";
                     //dgt = UpdateDB("Standardization", cmd1 + ";");
                 }
+            else UpdateLog(timestamp, "No Cover to update :" + cmd, false, c("dlcm_TempPath"), "", "", null, null);
             //DataSet dxr = new DataSet(); dxr = UpdateDB("Main", "UPDATE Main SET AlbumArt = \"" + AlbumArt + "\" WHERE Artist=\"" + Artist + "\" and Album=\"" + Albums + "\"");
             //DataSet dssx = new DataSet(); dxr = SelectFromDB("Main", "SELECT ID FROM Main WHERE Artist=\"" + Artist + "\" and Album=\"" + Albums + "\";");
-
+            UpdateLog(timestamp, NoRec.ToString() + " ( defaulted to standardized Album+Artist cover, cover)", false, c("dlcm_TempPath"), "", "", null, null);
+            return NoRec.ToString() + " ( defaulted to standardized Album+Artist cover, cover)";
 
             // lbl_NoRec = noOfRec.ToString() + " records.";
             //MessageBox.Show("Cover has been defaulted as Cover to " + NoRec.ToString() + " songs");
         }
-        public static void MultiplyAndApplyYear(OleDbConnection cnb, SQLite.SQLiteConnection cnc)
+
+        //       from main
+        //get all same year same artist
+        //get all same artist, album
+        //get all same artist similar album
+        //get all alternate of any of these
+        public static string GetSameAlbum(string artist, string year, string album, string ID, bool withlog)
+        {
+            var album_c = ""; var timestamp = DateTime.Now; var norec = 0; var tz = 0; var tu = 0; var artist_c = ""; var tsst = ""; var ids = "";
+
+            //not checking this due to amount of observer false positives
+            //var cmd = "SELECT ID FROM Main WHERE Artist=\"" + artist + "\" AND Album_Year=\"" + year + "\"";
+            //DataSet dfz = new DataSet(); dfz = SelectFromDB("Main", cmd, "", cnb, cnc);
+            //int norecs = dfz.Tables.Count > 0 ? dfz.Tables[0].Rows.Count : 0;
+            //if (norecs > 0) foreach (DataRow dataRow in dfz.Tables[0].Rows) ids += dataRow.ItemArray[0].ToString() + ", ";
+            //if (withlog) UpdateLog(timestamp, "get all same year same artist(" + norecs + "):" + ids, false, c("dlcm_TempPath"), "", "MainDB", null, null);
+
+            var cmd = "SELECT ID FROM Main WHERE Artist=\"" + artist + "\" AND Album=\"" + album + "\"";
+            DataSet dgz = new DataSet(); dgz = SelectFromDB("Main", cmd, "", cnb, cnc);
+            int norecs = dgz.Tables.Count > 0 ? dgz.Tables[0].Rows.Count : 0;
+            if (norecs > 0) foreach (DataRow dataRow in dgz.Tables[0].Rows) ids += dataRow.ItemArray[0].ToString() + ", ";
+            if (withlog) UpdateLog(timestamp, "get all same artist, album(" + norecs + "):" + ids, false, c("dlcm_TempPath"), "", "MainDB", null, null);
+
+            cmd = "SELECT ID FROM Main WHERE Artist=\"" + artist + "\" AND Album like \"%" + album + "%\"";
+            DataSet dhz = new DataSet(); dhz = SelectFromDB("Main", cmd, "", cnb, cnc);
+            norecs = dhz.Tables.Count > 0 ? dhz.Tables[0].Rows.Count : 0;
+            if (norecs > 0) foreach (DataRow dataRow in dhz.Tables[0].Rows) ids += dataRow.ItemArray[0].ToString() + ", ";
+            if (withlog) UpdateLog(timestamp, "get all same artist similar album(" + norecs + "):" + ids, false, c("dlcm_TempPath"), "", "MainDB", null, null);
+
+            if (ids.Length > 2) ids = ids.Substring(0, ids.Length - 2);
+
+            cmd = "SELECT ID FROM Main WHERE Duplicate_of in (\"" + ids.Replace(", ", "\",\"") + "\")";
+            DataSet dvz = new DataSet(); dvz = SelectFromDB("Main", cmd, "", cnb, cnc);
+            norecs = dvz.Tables.Count > 0 ? dvz.Tables[0].Rows.Count : 0;
+            if (norecs > 0) foreach (DataRow dataRow in dvz.Tables[0].Rows) ids += dataRow.ItemArray[0].ToString() + ", ";
+            if (withlog) UpdateLog(timestamp, "get all alternate of any of these(" + norecs + "):" + ids, false, c("dlcm_TempPath"), "", "MainDB", null, null);
+
+            if (ids.Length > 2) if (ids.Substring(ids.Length - 2, 2) == ". ") ids = ids.Substring(0, ids.Length - 2);
+            return ids;
+        }
+
+        public static string ApplyForcedAlbumCoverDefaulting(OleDbConnection cnb, SQLite.SQLiteConnection cnc, ProgressBar pB_ReadDLCs, System.Windows.Forms.RichTextBox rtxt_StatisticsOnReadDLCs)
+        {
+            var cmd = "SELECT Artist, Album_Year, Album, ID FROM Main ORDER BY Artist, Album";
+            DataSet dfz = new DataSet(); dfz = SelectFromDB("Main", cmd, "", cnb, cnc); var tz = 0; var checkedids = "";
+            var tsst = ""; int norecs = dfz.Tables.Count > 0 ? dfz.Tables[0].Rows.Count : 0; var t = 0; var gID = ""; var gAlbum_Year = "";
+            var timestamp = DateTime.Now; var norec = 0; var gArtist = ""; var gAlbum = ""; pB_ReadDLCs.Maximum = norecs; pB_ReadDLCs.Step = 1; pB_ReadDLCs.Value = 0;
+            if (norecs > 0)
+                foreach (DataRow dataRow in dfz.Tables[0].Rows)
+                {
+                    //if (gArtist == dataRow.ItemArray[0].ToString() && gAlbum_Year != dataRow.ItemArray[1].ToString() && gAlbum != dataRow.ItemArray[2].ToString() && gAlbum_Year != "") continue;
+                    gArtist = dataRow.ItemArray[0].ToString();
+                    gAlbum_Year = dataRow.ItemArray[1].ToString();
+                    gAlbum = dataRow.ItemArray[2].ToString();
+                    gID = dataRow.ItemArray[3].ToString();
+                    if (checkedids.Contains(gID)) continue;
+
+                    pB_ReadDLCs.Increment(1);
+                    pB_ReadDLCs.CreateGraphics().Clear(System.Drawing.Color.HotPink);
+                    pB_ReadDLCs.CreateGraphics().DrawString(norecs + "\\" + pB_ReadDLCs.Value, new Font("Arial", 7, FontStyle.Bold), Brushes.Blue, new PointF(1, pB_ReadDLCs.Height / 4));
+
+                    var ids = GetSameAlbum(gArtist, gAlbum_Year, gAlbum, gID, false);
+                    checkedids += "," + ids;
+
+                    //var a = ConfigRepository.Instance()["dlcm_AdditionalManipul84"]; ConfigRepository.Instance()["dlcm_AdditionalManipul84"] = "No";
+                    t = SetMultiCover(ids);
+                    //ConfigRepository.Instance()["dlcm_AdditionalManipul84"] = a;
+                }
+            UpdateLog(timestamp, "No of Applied standardizations on Album Cover: " + t, false, c("dlcm_TempPath"), "", "", null, null);
+
+            return t + "/" + norecs + " (Covers standardized)";
+        }
+        public static int SetMultiCover(string ids)
+        {
+            //var cmd1 = " WHERE ID IN (" + ids + ")";
+            //var norecs = GetNoRecords("SELECt ID FROM Main " + cmd1, cnb, cnc); //tz += norecs;
+
+            var cmd = "SELECT Artist, Album_Year, Album, ID, AlbumArtPath FROM Main WHERE ID in (" + ids + ") ORDER BY ID";
+            DataSet dfz = new DataSet(); dfz = SelectFromDB("Main", cmd, "", cnb, cnc);
+            int norecs = dfz.Tables.Count > 0 ? dfz.Tables[0].Rows.Count : 0; var tz = "";
+            var tArtist = ""; var tAlbum_Year = ""; var tAlbum = ""; var tID = ""; var aap = ""; var aay = ""; bool cleanupreq = false;
+            var timestamp = DateTime.Now; int cnt = 0;
+            if (norecs > 1)
+            {
+                foreach (DataRow dataRowz in dfz.Tables[0].Rows)
+                {
+                    if ((tArtist != dataRowz.ItemArray[0].ToString() || tAlbum != dataRowz.ItemArray[2].ToString() || tAlbum_Year != dataRowz.ItemArray[1].ToString()) && (tArtist != "")) cleanupreq = true;
+                    tArtist = dataRowz.ItemArray[0].ToString();
+                    tAlbum_Year = dataRowz.ItemArray[1].ToString();
+                    tAlbum = dataRowz.ItemArray[2].ToString();
+                    tID = dataRowz.ItemArray[3].ToString();
+                    if (aap == "")
+                    {
+                        aap = dataRowz.ItemArray[4].ToString(); aay = dataRowz.ItemArray[1].ToString();
+                    }
+                    tz += tArtist + " - " + tAlbum + " - " + tAlbum_Year + " - " + tID + "\n";
+                }
+                tz += "\nwith: " + aap;
+                var t = GetNoRecords("SELECT * FROM Main WHERE AlbumArtPath <> \"" + aap + "\" AND ID in (" + ids + "); ", cnb, cnc);
+                var dlg = "Do you want to default Cover of the following:\n" + tz + "\n\nchose Cancel to uniformise Years";
+                if (cleanupreq && t > 0) cnt += t; ConfigRepository.Instance()["dlcm_GlobalTempVariable"] = "";
+                //{
+
+                //UpdateLog(timestamp,tz, false, c("dlcm_TempPath"), "", "", null, null);
+                //}
+                if (cleanupreq && t > 0 ? ShowDialogue(dlg, "", -1, "", 3) : 1 == 2)/* (t > 0 ? 1 == 1 : 1 == 2)*/
+                {
+                    //cmd = "SELECT top 1 AlbumArtPath FROM Main WHERE ID in (" + ids + ") ORDER BY ID";
+                    //DataSet ddz = new DataSet(); ddz = SelectFromDB("Main", cmd, "", cnb, cnc);
+                    //norecs = ddz.Tables.Count > 0 ? ddz.Tables[0].Rows.Count : 0; 
+                    //if (norecs > 0)
+                    //{
+                    //foreach (DataRow dataRow in ddz.Tables[0].Rows)
+                    //    aap = dataRow.ItemArray[0].ToString();
+                    cmd = "UPDATE Main SET AlbumArtPath = \"" + aap + "\" WHERE AlbumArtPath <> \"" + aap + "\" AND ID in (" + ids + ")";
+                    if (c("dlcm_GlobalTempVariable") == "OverriteYear") cmd = cmd.Replace(" WHERE ", ", Album_Year=\"" + aay + "\" WHERE ");
+
+                    var dus = UpdateDB("Main", cmd, cnb, cnc);
+                    UpdateLog(timestamp, "AlbumArtPath = \"" + aap + " applied to" + norecs + "songs", false, c("dlcm_TempPath"), "", "", null, null);
+                    //}
+                }
+            }
+            return cnt;
+        }
+
+        public static bool ShowDialogue(string d, string toreplace, int noofstuff, string verb, int nobuttons)
+        {
+            var buttons = MessageBoxButtons.YesNo;
+            if (nobuttons == 2) buttons = MessageBoxButtons.YesNo;
+            else if (nobuttons == 3) buttons = MessageBoxButtons.YesNoCancel;
+
+            if (c("dlcm_AdditionalManipul84") != "Yes") return true;
+
+            d = noofstuff > -1 ? d.Replace(toreplace, " " + verb + " " + noofstuff.ToString()) + " " : d;
+
+            var result1 = MessageBox.Show(d, MESSAGEBOX_CAPTION, buttons, MessageBoxIcon.Exclamation);
+            if (result1 == DialogResult.No) return false;
+            if (result1 == DialogResult.Cancel) ConfigRepository.Instance()["dlcm_GlobalTempVariable"] = "OverriteYear";
+            return true;
+        }
+
+        public static string MultiplyAndApplyYear(OleDbConnection cnb, SQLite.SQLiteConnection cnc)
         {
 
             //Multiply
@@ -5333,9 +5552,9 @@ namespace RocksmithToolkitGUI.DLCManager
                         " GROUP BY  o.ID, iif(o.Artist_Correction <> \"\", o.Artist_Correction, o.Artist), iif(o.Album_Correction <> \"\", o.Album_Correction, o.Album), o.Year_Correction" +
                         " ORDER BY iif(o.Artist_Correction <> \"\", o.Artist_Correction, o.Artist), iif(o.Album_Correction <> \"\", o.Album_Correction, o.Album)";
             DataSet dfz = new DataSet(); dfz = SelectFromDB("Standardization", cmd, "", cnb, cnc);
-            var artist_c = "";
-            var album_c = "";
-            if (dfz.Tables.Count > 0)
+            var artist_c = ""; var tsst = ""; int norecs = dfz.Tables.Count > 0 ? dfz.Tables[0].Rows.Count : 0;
+            var album_c = ""; var timestamp = DateTime.Now; var norec = 0; var tz = 0; var tu = 0;
+            if (norecs > 0)
                 foreach (DataRow dataRow in dfz.Tables[0].Rows)
                 {
                     if (artist_c == dataRow.ItemArray[1].ToString() && album_c == dataRow.ItemArray[2].ToString())
@@ -5350,35 +5569,48 @@ namespace RocksmithToolkitGUI.DLCManager
                     //var cmd1 = "UPDATE Main SET Spotify_Artist_ID = \"" + SpotifyArtistID + "\",Spotify_Album_ID = \"" + SpotifyAlbumID + "\",Spotify_Album_URL = \"" + SpotifyAlbumURL + "\",Spotify_Album_Path = \"" + SpotifyAlbumPath + "\", WHERE Album=\"" + SpotifyAlbumID + "\"";
                     //DataSet dus = UpdateDB("Main", cmd1 + ";");
                     //dus = SelectFromDB("Main", "SELECT * FROM Main WHERE Artist=\"" + artist_c + "\"", ""); try { norec = dus.Tables[0].Rows.Count; } catch { }
-                    var cmd1 = "UPDATE Standardization SET Year_Correction = \"" + SpotifyYear + "\" WHERE (Artist=\"" + artist_c + "\" OR Artist_Correction=\""
-                        + artist_c + "\") and (Album=\"" + album_c + "\" OR Album_Correction=\"" + album_c + "\")";
+                    var cmd1 = " WHERE (Artist=\"" + artist_c + "\" OR Artist_Correction=\""
+                        + artist_c + "\") and (Album=\"" + album_c + "\" OR Album_Correction=\"" + album_c + "\") AND (Year_Correction <> \"" + SpotifyYear + "\")";
                     //SpotifyArtistID = \"" + SpotifyArtistID + "\",SpotifyAlbumID = \"" + SpotifyAlbumID + "\",SpotifyAlbumURL = \""
                     //+ SpotifyAlbumURL + "\",SpotifyAlbumPath = \"" + SpotifyAlbumPath + "\",
-                    var dus = UpdateDB("Standardization", cmd1 + ";", cnb, cnc);
+                    norecs = GetNoRecords("SELECt ID FROM Standardization " + cmd1, cnb, cnc); tz += norecs;
+                    if (norecs > 0)
+                    {
+                        var dus = UpdateDB("Standardization", "UPDATE Standardization SET Year_Correction = \"" + SpotifyYear + "\"" + cmd1 + "; ", cnb, cnc);
+                        UpdateLog(timestamp, "Year to multipply :" + cmd, false, c("dlcm_TempPath"), "", "", null, null);
+                    }
                 }
-
-            var NoRec = 0;
+            else UpdateLog(timestamp, "No Year to multiply :" + cmd, false, c("dlcm_TempPath"), "", "", null, null);
 
             //DataSet dgt = new DataSet(); dgt = SelectFromDB("Standardization", "SELECT iif(o.Artist_Correction <> \"\", o.Artist_Correction, o.Artist), iif(o.Album_Correction <> \"\", o.Album_Correction, o.Album), o.Year_Correction" +
             cmd = "SELECT distinct iif(o.Artist_Correction <> \"\", o.Artist_Correction, o.Artist), iif(o.Album_Correction <> \"\", o.Album_Correction, o.Album), o.Year_Correction" +
                 " FROM Standardization o WHERE o.Year_Correction<>\"\"" +
                 " GROUP BY iif(o.Artist_Correction <> \"\", o.Artist_Correction, o.Artist), iif(o.Album_Correction <> \"\", o.Album_Correction, o.Album), o.Year_Correction;";
             DataSet dgt = new DataSet(); dgt = SelectFromDB("Standardization", cmd, "", cnb, cnc);
-
-            if (dgt.Tables.Count > 0)
+            var NoRec = dgt.Tables.Count > 0 ? dgt.Tables[0].Rows.Count : 0;
+            if (NoRec > 0)
                 foreach (DataRow dataRow in dgt.Tables[0].Rows)
                 {
                     artist_c = dataRow.ItemArray[0].ToString();
                     album_c = dataRow.ItemArray[1].ToString();
                     var year_c = dataRow.ItemArray[2].ToString();
                     var cmd1 = "";
-                    cmd1 = "UPDATE Main SET Album_Year = \"" + year_c + "\" WHERE Artist=\"" + artist_c + "\" AND (Album=\"" + album_c + "\")";
-                    dgt = UpdateDB("Main", cmd1 + ";", cnb, cnc);
+                    cmd1 = " WHERE Artist=\"" + artist_c + "\" AND Album=\"" + album_c + "\" AND Album_Year <> \"" + year_c + "\"";
+                    var norex = GetNoRecords("SELECt ID FROM Main " + cmd1, cnb, cnc); tu += norex;
+                    if (norex > 0)
+                    {
+                        dgt = UpdateDB("Main", "UPDATE Main SET Album_Year = \"" + year_c + "\"" + cmd1 + "; ", cnb, cnc);
+                        UpdateLog(timestamp, "Year to apply Artist=\"" + artist_c + "\" AND Album=\"" + album_c + "\" AND Album_Year <> \"" + year_c + "\", " + norec + " times.", false, c("dlcm_TempPath"), "", "", null, null);
+                    }
                     //if (artist_c != "" && album_c != "" && year_c != "") dgt = SelectFromDB("Main", "SELECT * FROM Main WHERE Artist=\"" + artist_c + "\" and Album=\"" + album_c + "\"", "", cnb, cnc);
                     //try { NoRec = dgt.Tables[0].Rows.Count; } catch { }
                 }
+            else UpdateLog(timestamp, "No Year to apply :" + cmd, false, c("dlcm_TempPath"), "", "", null, null);
+
+            return tz.ToString() + "-" + tu.ToString() + " (Multiplied in Standardization - Applied to Main)";
         }
-        public static void MultiplyAndApplySpotify(OleDbConnection cnb, SQLite.SQLiteConnection cnc)
+
+        public static string MultiplyAndApplySpotify(OleDbConnection cnb, SQLite.SQLiteConnection cnc)
         {
 
             //Multiply
@@ -5388,8 +5620,8 @@ namespace RocksmithToolkitGUI.DLCManager
                         " GROUP BY iif(o.Artist_Correction <> \"\", o.Artist_Correction, o.Artist), iif(o.Album_Correction <> \"\", o.Album_Correction, o.Album), o.SpotifyArtistID, o.SpotifyAlbumID, o.SpotifyAlbumURL, o.SpotifyAlbumPath" +
                         " ORDER BY iif(o.Artist_Correction <> \"\", o.Artist_Correction, o.Artist), iif(o.Album_Correction <> \"\", o.Album_Correction, o.Album)";
             DataSet dfz = new DataSet(); dfz = SelectFromDB("Standardization", cmd, "", cnb, cnc);
-            var artist_c = "";
-            var album_c = "";
+            var artist_c = ""; var timestamp = DateTime.Now;
+            var album_c = ""; var tz = 0;
             if (dfz.Tables.Count > 0)
                 foreach (DataRow dataRow in dfz.Tables[0].Rows)
                 {
@@ -5401,13 +5633,19 @@ namespace RocksmithToolkitGUI.DLCManager
                     var SpotifyAlbumID = dataRow.ItemArray[4].ToString();
                     var SpotifyAlbumURL = dataRow.ItemArray[5].ToString();
                     var SpotifyAlbumPath = dataRow.ItemArray[6].ToString();
-                    var cmd1 = "UPDATE Main SET SpotifyArtistID = \"" + SpotifyArtistID + "\",SpotifyAlbumID = \"" + SpotifyAlbumID + "\",SpotifyAlbumURL = \"" + SpotifyAlbumURL + "\",SpotifyAlbumPath = \"" + SpotifyAlbumPath + "\"" +
-                        " WHERE (Artist=\"" + artist_c + "\" OR Artist_Correction=\""
-                        + artist_c + "\") and (Album=\"" + album_c + "\" OR Album_Correction=\"" + album_c + "\")";
-                    var dus = UpdateDB("Standardization", cmd1 + ";", cnb, cnc);
-                }
+                    var cmd1 = " WHERE (Artist=\"" + artist_c + "\" OR Artist_Correction=\""
+                        + artist_c + "\") and (Album=\"" + album_c + "\" OR Album_Correction=\"" + album_c + "\") AND SpotifyArtistID <> \"" + SpotifyArtistID + "\"";
 
-            var NoRec = 0;
+                    var norec = GetNoRecords("SELECt ID FROM Standardization " + cmd1, cnb, cnc); tz += norec;
+                    if (norec > 0)
+                    {
+                        var dus = UpdateDB("Main", "UPDATE Main SET SpotifyArtistID = \"" + SpotifyArtistID + "\",SpotifyAlbumID = \"" + SpotifyAlbumID + "\",SpotifyAlbumURL = \"" + SpotifyAlbumURL + "\",SpotifyAlbumPath = \"" + SpotifyAlbumPath + "\" " + cmd1 + ";", cnb, cnc);
+                        UpdateLog(timestamp, "Spotify to apply (Artist =\"" + artist_c + "\" OR Artist_Correction=\"" + artist_c + "\") and (Album=\"" + album_c + "\" OR Album_Correction=\"" + album_c + "\") AND SpotifyArtistID <> \"" + SpotifyArtistID + "\", " + norec + " times.", false, c("dlcm_TempPath"), "", "", null, null);
+                    }
+                }
+            else UpdateLog(timestamp, "No Spotify to multiply :" + cmd, false, c("dlcm_TempPath"), "", "", null, null);
+
+            var NoRec = 0; var tt = 0;
             cmd = "SELECT distinct iif(o.Artist_Correction <> \"\", o.Artist_Correction, o.Artist), iif(o.Album_Correction <> \"\", o.Album_Correction, o.Album), o.SpotifyArtistID, o.SpotifyAlbumID, o.SpotifyAlbumURL, o.SpotifyAlbumPath" +
                 " FROM Standardization o WHERE o.SpotifyArtistID<>\"\"" +
                 " GROUP BY iif(o.Artist_Correction <> \"\", o.Artist_Correction, o.Artist), iif(o.Album_Correction <> \"\", o.Album_Correction, o.Album), o.SpotifyArtistID, o.SpotifyAlbumID, o.SpotifyAlbumURL, o.SpotifyAlbumPath;";
@@ -5423,42 +5661,109 @@ namespace RocksmithToolkitGUI.DLCManager
                     var SpotifyAlbumURL = dataRow.ItemArray[4].ToString();
                     var SpotifyAlbumPath = dataRow.ItemArray[5].ToString();
                     var cmd1 = "";
-                    cmd1 = "UPDATE Main SET SpotifyArtistID = \"" + SpotifyArtistID + "\",SpotifyAlbumID = \"" + SpotifyAlbumID + "\",SpotifyAlbumURL = \"" + SpotifyAlbumURL + "\",SpotifyAlbumPath = \"" + SpotifyAlbumPath + "\"" +
-                        " WHERE Artist=\"" + artist_c + "\" AND (Album=\"" + album_c + "\")";
-                    dgt = UpdateDB("Main", cmd1 + ";", cnb, cnc);
+                    cmd1 = " WHERE Artist=\"" + artist_c + "\" AND (Album=\"" + album_c + "\") AND SpotifyArtistID <> \"" + SpotifyArtistID + "\"";
+                    NoRec = GetNoRecords("SELECt ID FROM Standardization " + cmd1, cnb, cnc); tt += NoRec;
+                    if (NoRec > 0)
+                    {
+                        var dus = UpdateDB("Main", "UPDATE Main SET SpotifyArtistID = \"" + SpotifyArtistID + "\",SpotifyAlbumID = \"" + SpotifyAlbumID + "\",SpotifyAlbumURL = \"" + SpotifyAlbumURL + "\",SpotifyAlbumPath = \"" + SpotifyAlbumPath + "\" " + cmd1 + ";", cnb, cnc);
+                        UpdateLog(timestamp, "Spotify to apply Artist=\"" + artist_c + "\" AND (Album=\"" + album_c + "\") AND SpotifyArtistID <> \"" + SpotifyArtistID + "\" AND SpotifyArtistID <> \"" + SpotifyArtistID + "\", " + NoRec + " times.", false, c("dlcm_TempPath"), "", "", null, null);
+                    }
                 }
+            else UpdateLog(timestamp, "No Spotify to apply :" + cmd, false, c("dlcm_TempPath"), "", "", null, null);
+
+            return tz + "-" + tt + " (update Main - Multiply Standardization Spotify info)";
         }
 
-        public static void ApplyArtistShort(OleDbConnection cnb, SQLite.SQLiteConnection cnc)//(string DBs_Path)//, string AlbumArt, string Artist, string Albums)
-        {//continue;
-            //}
-
-            var norec = 0;
-            DataSet dfz = new DataSet();
-            dfz = SelectFromDB("Standardization", "SELECT iif(Artist_Correction<>\"\", Artist_Correction, Artist), Artist_Short" +
+        public static string ApplyArtistShort(OleDbConnection cnb, SQLite.SQLiteConnection cnc)//(string DBs_Path)//, string AlbumArt, string Artist, string Albums)
+        {
+            var timestamp = DateTime.Now;
+            var norec = 0; var tsst = "";
+            var cmd = "SELECT iif(Artist_Correction<>\"\", Artist_Correction, Artist), Artist_Short" +
                 " FROM Standardization WHERE (Artist_Short <> \"\") GROUP BY iif(Artist_Correction<>\"\", Artist_Correction, Artist)," +
-                " Artist_Short;", "", cnb, cnc);
-
-            //pB_ReadDLCs.Maximum = norec;
-            //pB_ReadDLCs.Value = 0;
-            if (dfz.Tables.Count > 0)
+                " Artist_Short;";
+            DataSet dfz = new DataSet();
+            DataSet dus = new DataSet();
+            dfz = SelectFromDB("Standardization", cmd, "", cnb, cnc);
+            var recs = dfz.Tables.Count > 0 ? dfz.Tables[0].Rows.Count : 0;
+            if (recs > 0)
                 foreach (DataRow dataRow in dfz.Tables[0].Rows)
                 {
                     var artist_c = dataRow.ItemArray[0].ToString();
                     var short_c = dataRow.ItemArray[1].ToString();
-                    var cmd1 = "UPDATE Main SET Artist_ShortName = \"" + short_c + "\" WHERE Artist=\"" + artist_c + "\"";
-                    DataSet dus = UpdateDB("Main", cmd1 + ";", cnb, cnc);
-                    dus = SelectFromDB("Main", "SELECT * FROM Main WHERE Artist=\"" + artist_c + "\"", "", cnb, cnc);
-                    try { norec = dus.Tables[0].Rows.Count; } catch { }
-                    cmd1 = "UPDATE Standardization SET Artist_Short = \"" + short_c + "\" WHERE Artist=\"" + artist_c
-                        + "\" OR Artist_Correction=\"" + artist_c + "\"";
-                    if (artist_c != "" && short_c != "") dus = UpdateDB("Standardization", cmd1 + ";", cnb, cnc);
-                }
+                    var cmd1 = " WHERE Artist=\"" + artist_c + "\" AND Artist_ShortName <> \"" + short_c + "\"";
+                    norec = GetNoRecords("SELECt ID FROM Main " + cmd1, cnb, cnc);
+                    if (norec > 0)
+                    {
+                        UpdateLog(timestamp, "Updated Main Artist_short=\"" + artist_c + "\" AND Artist_ShortName <> \"" + short_c + "\" with " + short_c + ", " + norec + " times.", false, c("dlcm_TempPath"), "", "", null, null);
+                        DataSet dis = UpdateDB("Main", "UPDATE Main SET Artist_ShortName = \"" + short_c + "\"" + cmd1 + "; ", cnb, cnc);
+                    }
 
+                    //var dus = SelectFromDB("Main", "SELECT * FROM Main WHERE Artist=\"" + artist_c + "\"", "", cnb, cnc);
+                    //try { norec = dus.Tables[0].Rows.Count; } catch { }
+
+                    cmd1 = "WHERE (Artist=\"" + artist_c + "\" OR Artist_Correction=\"" + artist_c + "\") AND Artist_Short <> \"" + short_c + "\"";
+                    norec = GetNoRecords("SELECt ID FROM Standardization " + cmd1, cnb, cnc);
+                    if (artist_c != "" && short_c != "" && norec > 0)
+                    {
+                        UpdateLog(timestamp, "Updated Standardization Artist_Short=\"" + artist_c + "\" to " + short_c + ", " + norec + " times.", false, c("dlcm_TempPath"), "", "", null, null);
+                        dus = UpdateDB("Standardization", "UPDATE Standardization SET Artist_Short = \"" + short_c + "\" " + cmd1 + ";", cnb, cnc);
+                    }
+                }
+            else UpdateLog(timestamp, "No shorts to update: " + cmd, false, c("dlcm_TempPath"), "", "", null, null);
+            UpdateLog(timestamp, recs.ToString() + "-" + norec.ToString() + " (Update Main - Multiply Standardization)", false, c("dlcm_TempPath"), "", "", null, null);
+            return recs.ToString() + "-" + norec.ToString() + " (Update Main - Multiply Standardization)";
             //MessageBox.Show("Artist Short Name has been defaulted onto " + norec.ToString() + " songs");
         }
 
-        public static void ApplyArtistAutoGroup(OleDbConnection cnb, ProgressBar pB_ReadDLCs, System.Windows.Forms.RichTextBox rtxt_StatisticsOnReadDLCs, SQLite.SQLiteConnection cnc)//(string DBs_Path)//, string AlbumArt, string Artist, string Albums)
+        //pseudocode:
+        //GEt all Default-ing Grousp from Standardization
+        //match them against already existing CDLC mapped to the each Dflt Grp
+        //then add new dlc to grp
+        public static string ApplyArtistAutoGroup(OleDbConnection cnb, ProgressBar pB_ReadDLCs, System.Windows.Forms.RichTextBox rtxt_StatisticsOnReadDLCs, SQLite.SQLiteConnection cnc)//(string DBs_Path)//, string AlbumArt, string Artist, string Albums)
+        {
+            var timestamp = DateTime.Now;//.ToString("yyyyMMdd HHmmssfff");
+            var j = 0;
+            DataSet df = new DataSet();
+            var selstand = "SELECT DISTINCT Artist_AutoGroup, iif(Artist_Correction<>\"\", Artist_Correction, Artist) FROM Standardization WHERE Artist_AutoGroup<>\"\"";
+            df = SelectFromDB("Standardization", selstand, "", cnb, cnc);
+            var norec = df.Tables.Count > 0 ? df.Tables[0].Rows.Count : 0; var i = 0; var tsst = ""; var norecs = 0;
+            pB_ReadDLCs.Maximum = norec; pB_ReadDLCs.Value = 0;
+            if (norec > 0)
+                foreach (DataRow defaultgrp in df.Tables[0].Rows)
+                {
+                    string grp = defaultgrp.ItemArray[0].ToString();
+                    string artist_c = defaultgrp.ItemArray[1].ToString();
+
+                    //Get just the IDs of songs already defaulted in Groups
+                    var IDs = GetSelectIDs("SELECT DISTINCT CDLC_ID FROM Groups WHERE Type=\"DLC\" AND Groupz=\"" + grp + "\" AND VAL(CDLC_ID) IN (SELECT ID FROM Main WHERE Artist =\"" + artist_c + "\")", cnb, cnc);
+
+                    i++;
+                    DataSet dfz = new DataSet();
+                    selstand = "SELECT ID FROM Main WHERE ID NOT IN (" + IDs + ") AND Artist =\"" + artist_c + "\";";
+                    dfz = SelectFromDB("Main", selstand, "", cnb, cnc); /*Artist_AutoGroup /*, Artist_AutoGroup,*/
+                    norecs = dfz.Tables.Count > 0 ? dfz.Tables[0].Rows.Count : 0;
+                    if (norecs > 0)
+                    {
+                        pB_ReadDLCs.Maximum = norecs; pB_ReadDLCs.Value = 0;
+                        foreach (DataRow dataRow in dfz.Tables[0].Rows)
+                        {
+                            var insertcmdd = "CDLC_ID, Groupz, Type, Date_Added, Comments";
+                            var insertvalues = "\"" + dataRow.ItemArray[0].ToString() + "\",\"" + grp + "\",\"DLC\"" + ",\"" + DateTime.Now.ToString("yyyyMMdd HHmmssfff") + "\",\"90\"";
+                            j++; pB_ReadDLCs.Increment(1);
+                            InsertIntoDBwValues("Groups", insertcmdd, insertvalues, cnb, 0, cnc);
+                        }
+                        // tsst = "9/12 Apply Artist Auto Group DLC in the grp " + i + "-" + grp + ", " + artist_c + ", " + norecs + "times"; UpdateLog(timestamp, tsst, false, c("dlcm_TempPath"), "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+                    }
+                    pB_ReadDLCs.Maximum = norec; pB_ReadDLCs.Value = i;
+                    tsst = "9/12 Applied " + norecs + " " + artist_c + " Auto Group '" + grp + "' grp"; UpdateLog(timestamp, tsst, false, c("dlcm_TempPath"), "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+                }
+            tsst = "AutoGroups applied " + j + " times out of " + norec + " Artists marked as autoGroups"; UpdateLog(timestamp, tsst, false, c("dlcm_TempPath"), "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+            return j + "/" + norec.ToString() + " (added new songs to Defaulting-Group / Total AutoGroups and unique group&artist||correction)";// norecs.ToString() + "/"
+            //MessageBox.Show("Artist Short Name has been defaulted onto " + norec.ToString() + " songs");
+        }
+
+        //pseudocode:
+        public static void ApplyArtistAutoGroup_old(OleDbConnection cnb, ProgressBar pB_ReadDLCs, System.Windows.Forms.RichTextBox rtxt_StatisticsOnReadDLCs, SQLite.SQLiteConnection cnc)//(string DBs_Path)//, string AlbumArt, string Artist, string Albums)
         {
             var timestamp = DateTime.Now;//.ToString("yyyyMMdd HHmmssfff");
             DataSet dgf = new DataSet();
@@ -5480,7 +5785,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     //DeleteFromDB("Standardization", "DELETE * FROM Groups WHERE Groupz=\"" + grp + "\" AND Type=\"DLC\" ", cnb, cnc);
                     pB_ReadDLCs.Maximum = norec;
                     pB_ReadDLCs.Value = 0;
-                    var tsst = "9/12 Apply Artist Auto Group DLC in Default grp check"; UpdateLog(timestamp, tsst, false, c("dlcm_TempPath"), "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs); pB_ReadDLCs.Increment(1);
+                    var tsst = "9/12 Apply Artist Auto Group DLC in Default grp " + grp + "check"; UpdateLog(timestamp, tsst, false, c("dlcm_TempPath"), "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs); pB_ReadDLCs.Increment(1);
 
                     if (dfz.Tables.Count > 0)
                         foreach (DataRow dataRow in dfz.Tables[0].Rows)
@@ -5495,37 +5800,526 @@ namespace RocksmithToolkitGUI.DLCManager
                         }
                     var cmd1 = "UPDATE Standardization SET Artist_AutoGroup = \"" + grp + "\" WHERE Artist=\"" + artist_c + "\" OR Artist_Correction=\"" + artist_c + "\"";
                     DataSet dfu = new DataSet(); dfu = UpdateDB("Standardization", cmd1 + ";", cnb, cnc);
-                    tsst = "9/12 Apply Artist Auto Group end check"; UpdateLog(timestamp, tsst, false, c("dlcm_TempPath"), "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs); pB_ReadDLCs.Increment(1);
+                    tsst = "9/12 Apply Artist Auto Group " + grp + " end check"; UpdateLog(timestamp, tsst, false, c("dlcm_TempPath"), "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs); pB_ReadDLCs.Increment(1);
                 }
 
             //MessageBox.Show("Artist Short Name has been defaulted onto " + norec.ToString() + " songs");
         }
 
-        public static void ApplyAlbumShort(OleDbConnection cnb, SQLite.SQLiteConnection cnc)//(string DBs_Path)//, string AlbumArt, string Artist, string Albums)
-        {//continue;
+        //Trim all the songs and their Alternate_version_no
+        // populate all missing duplicates
+        // 1. get all the songs with 
+        //      - duplicate_of not ""
+        //      - is_alternate="Yes"
+        //      - Alternate_version_no not ""
+        //    1.1. make all alternate songs (Say you incl officials)
+
+        // 2. per each group check if song grp is missing else
+        // 2.1 increase alternate songs appropiatels
+
+        // 3. make only one newer
+        // 3.1 make the rest older 1/x
+        public static string CleanAlternates_and_MultiplyGroups(OleDbConnection cnb, SQLite.SQLiteConnection cnc, ProgressBar pB_ReadDLCs)//, string grps, bool inclexcl(string DBs_Path)//, string AlbumArt, string Artist, string Albums)
+        {
+            var timestamp = DateTime.Now;//.ToString("yyyyMMdd HHmmssfff");
+            var tsst = "";
+
+
+            var cmd1 = ""; var cmd2 = ""; ; var cmd3 = ""; var cmd4 = "";
+
+            cmd3 = "UPDATE Main SET Alternate_Version_No=Replace(Alternate_Version_No,\" \",\"\");";
+            var no_o = GetNoRecords("SELECT ID FROM Main WHERE Alternate_Version_No<>Replace(Alternate_Version_No,\" \",\"\")", cnb, cnc);
+            DataSet dts = new DataSet(); dts = UpdateDB("Main", cmd3, cnb, cnc);
+
+            DataSet dvz = new DataSet();
+            cmd2 = "SELECT Artist, Song_Title, Duplicate_of,count(Duplicate_Of) as cnt FROM Main WHERE Duplicate_Of=\"0\"  Group by Artist,Song_Title,Duplicate_of;";
+            dvz = SelectFromDB("Main", cmd2, "", cnb, cnc); /*Artist_AutoGroup /*, Artist_AutoGroup,*/
+            var noOfRecr = 0;// dvz.Tables.Count==0 ? 0 : dvz.Tables[0].Rows.Count;
+            var art = ""; var ids = ""; var st = ""; pB_ReadDLCs.Maximum = dvz.Tables[0].Rows.Count; pB_ReadDLCs.Value = 0; //pB_ReadDLCs.Increment(1);
+            foreach (DataRow dataRow in dvz.Tables[0].Rows)
+            {
+                pB_ReadDLCs.Value++;
+                if (dataRow.ItemArray[3].ToString().ToInt32() < 2) continue;
+                noOfRecr++;
+                art = dataRow.ItemArray[0].ToString();
+                st = dataRow.ItemArray[1].ToString();
+
+                DataSet duz = new DataSet();
+                var cmd6 = "SELECT ID FROM Main where LCASE(Artist)=\"" + art.ToLower() + "\" and LCASE(Song_Title)=\"" + st.ToLower() + "\" order by Is_Original DESC;";
+                duz = SelectFromDB("Main", cmd6, "", cnb, cnc); /*Artist_AutoGroup /*, Artist_AutoGroup,*/
+
+                //ids += dataRow.ItemArray[3].ToString() + ",";
+                //if (art != dataRow.ItemArray[0].ToString() && st != dataRow.ItemArray[1].ToString() & art != "" && st != "" && ids != "")
+                //{
+                //DataSet dgz = new DataSet();
+                //cmd4 = "SELECT ID FROM Main WHERE Artist=\""+art+ "\" and Song_Titlet=\""+st+"\" order by Is_Official;";
+                //dvz = SelectFromDB("Groups", cmd4, "", cnb, cnc); /*Artist_AutoGroup /*, Artist_AutoGroup,*/
+
+                var cmd5 = "UPDATE Main SET Is_Alternate='Yes',Duplicate_of=\"" + duz.Tables[0].Rows[0][0].ToString() + "\" WHERE ID IN (" + cmd6 + ")" +
+                    (c("dlcm_AdditionalManipul117") == "Yes" ? "" : " AND Is_Original<>''") + ";";
+                DataSet dgs = new DataSet(); dgs = UpdateDB("Main", cmd5, cnb, cnc);
+                //art = ""; st = ""; ids = "";
+            }
+            //delete when sam id as duplcaite of
+            //cmd3 = "UPDATE Main SET Duplicate_of='' WHERE Duplicate_of=ID;";
+            //DataSet tts = new DataSet(); tts = UpdateDB("Main", cmd3, cnb, cnc);
             //}
 
-            var norec = 0;
-
-            DataSet dfz = new DataSet(); dfz = SelectFromDB("Standardization", "SELECT iif(Artist_Correction<>\"\", Artist_Correction, Artist), iif(Album_Correction<>\"\", Album_Correction, Album), Album_short FROM Standardization WHERE (Album_Short <> \"\") GROUP BY iif(Artist_Correction<>\"\", Artist_Correction, Artist),Album_short,iif(Album_Correction<>\"\",Album_Correction,Album);", "", cnb, cnc);
-            //pB_ReadDLCs.Maximum = norec;
-            //pB_ReadDLCs.Value = 0;
-            foreach (DataRow dataRow in dfz.Tables[0].Rows)
+            DataSet dgz = new DataSet();
+            cmd2 = "SELECT Artist, Song_Title, id, Duplicate_of FROM Main order by Artist, Song_Title, Is_Original ;";
+            dgz = SelectFromDB("Main", cmd2, "", cnb, cnc);
+            var noOfRecs = 0; var id = ""; var dup = ""; var dupl = ""; var upd = false; pB_ReadDLCs.Maximum = dgz.Tables[0].Rows.Count; pB_ReadDLCs.Value = 0; var norm = 0; //pB_ReadDLCs.Increment(1);
+            foreach (DataRow dataRow in dgz.Tables[0].Rows)
             {
-                var artist_c = dataRow.ItemArray[0].ToString();
-                var album_c = dataRow.ItemArray[1].ToString();
-                var short_c = dataRow.ItemArray[2].ToString();
-                var cmd1 = "UPDATE Main SET Album_ShortName = \"" + short_c + "\" WHERE Artist=\"" + artist_c + "\" AND Album=\"" + album_c + "\";";
-                DataSet dus = UpdateDB("Main", cmd1, cnb, cnc);
-                dus = SelectFromDB("Main", "SELECT * FROM Main WHERE Artist=\"" + artist_c + "\" AND Album=\"" + album_c + "\";", "", cnb, cnc); try { norec = dus.Tables[0].Rows.Count; } catch { }
-                cmd1 = "UPDATE Standardization SET Album_Short = \"" + short_c + "\" WHERE (Artist=\"" + artist_c + "\" OR Artist_Correction=\"" + artist_c + "\") AND (Album=\"" + album_c + "\" OR Album_Correction=\"" + album_c + "\")";
-                dus = UpdateDB("Standardization", cmd1 + ";", cnb, cnc);
+                //
+                //;ids += dataRow.ItemArray[2].ToString() + ",";
+
+                pB_ReadDLCs.Value++;
+                if (CleanTitleFurther(art).ToLower() == CleanTitleFurther(dataRow.ItemArray[0].ToString().ToLower())
+                    && CleanTitleFurther(st).ToLower() == CleanTitleFurther(dataRow.ItemArray[1].ToString()).ToLower()
+                    & art != "" && st != "")// && st != dataRow.ItemArray[1].ToString())//&& dgz.Tables[0].Rows[3][0].ToString() == "0")
+                {
+                    ids += dataRow.ItemArray[2].ToString() + ",";
+                    if (dup == "") dup = id;
+                    if (dupl == "0" || dataRow.ItemArray[3].ToString() == "0" || dupl != dataRow.ItemArray[3].ToString()) upd = true;
+                    norm++;
+                }
+                else
+                {
+                    if (ids != "" && upd)/*&& ids.Substring(0, ids.Length - 1).Contains(",")*/
+                    {
+                        //DataSet dgz = new DataSet(); && ids != ""
+                        //cmd4 = "SELECT ID FROM Main WHERE Artist=\""+art+ "\" and Song_Titlet=\""+st+"\" order by Is_Official;";
+                        //dvz = SelectFromDB("Groups", cmd4, "", cnb, cnc); /*Artist_AutoGroup /*, Artist_AutoGroup,*/
+
+                        var cmd5 = "UPDATE Main SET Is_Alternate='Yes',Duplicate_of=\"" + dup + "\" WHERE ID IN (" + ids + dup + ")" +//ids.Substring(0, ids.Length - 1) + ")" +
+                            (c("dlcm_AdditionalManipul117") == "Yes" ? "" : " AND Is_Original<>''") + ";";//+ 
+                        DataSet dgs = new DataSet(); dgs = UpdateDB("Main", cmd5, cnb, cnc);
+                        norm++;
+                    }
+                    dup = ""; ids = ""; upd = false;
+                }
+                art = dataRow.ItemArray[0].ToString();
+                st = dataRow.ItemArray[1].ToString();
+                dupl = dataRow.ItemArray[3].ToString();
+                id = dataRow.ItemArray[2].ToString();
             }
-            //var noOfRec = dgt.Tables[0].Rows.Count;
-            //lbl_NoRec = norec.ToString() + " records.";
-            //MessageBox.Show("Album Short has been defaulted onto " + norec.ToString() + " songs");
+            //delete when sam id as duplcaite of
+            //cmd3 = "UPDATE Main SET Duplicate_of='' WHERE Duplicate_of=ID;";
+            //DataSet tts = new DataSet(); tts = UpdateDB("Main", cmd3, cnb, cnc);
+
+            var norec = 0; var altfixed = 0;
+            DataSet dzh = new DataSet();
+            cmd1 = "SELECT distinct ID,Duplicate_of,'' as norod, '' as age,LastConversionDateTime FROM ( " +
+                "SELECT distinct ID, Duplicate_of,'' as norod, '' as age,LastConversionDateTime FROM Main WHERE Duplicate_of<> '' and Duplicate_of<>'0'" +
+                 "UNION ALL" +
+                 "SELECT distinct Duplicate_of as ID, Duplicate_of,'' as norod, '' as age,LastConversionDateTime FROM Main WHERE Duplicate_of<>'' and Duplicate_of<>'0'" +
+                 "UNION ALL" +
+                 "SELECT distinct Duplicate_of as ID, Duplicate_of,'' as norod, '' as age,LastConversionDateTime FROM Main WHERE Alternate_Version_No<>''" +
+                 "UNION ALL" +
+                 "SELECT distinct ID, Duplicate_of,'' as norod, '' as age,LastConversionDateTime FROM Main WHERE Alternate_Version_No = 'Yes'" +
+                 "UNION ALL" +
+                 "SELECT distinct ID, Duplicate_of,'' as norod, '' as age,LastConversionDateTime FROM Main WHERE Is_Alternate = 'Yes'" +
+                ") ORDER BY Duplicate_of" +
+                ";";
+            dzh = SelectFromDB("Main", cmd1, "", cnb, cnc);
+            norec = dzh.Tables.Count == 0 ? 0 : dzh.Tables[0].Rows.Count;/*Artist_AutoGroup /*, Artist_AutoGroup,*/
+            if (norec > 0)
+            {
+                var emptys = 0;
+                var idd = "";
+                var dupli = "";
+                var noor = "";
+                var age = "";
+                var lastdate = "";
+                var start = -1;
+                var end = -1;
+
+                for (int k = 0; k < norec; k++)
+                {
+                    idd = dzh.Tables[0].Rows[k].ItemArray[0].ToString();
+                    noor = dzh.Tables[0].Rows[k].ItemArray[2].ToString();
+                    age = dzh.Tables[0].Rows[k].ItemArray[3].ToString();
+                    lastdate = dzh.Tables[0].Rows[k].ItemArray[4].ToString();
+                    if (idd == "0" || dupli == "0") { continue; emptys++; }
+
+                    if (dupli != dzh.Tables[0].Rows[k].ItemArray[1].ToString())
+                    {
+                        if (start != -1)
+                        {
+                            end = k - 1;
+                            if (start != end && end > start)
+                                SetOrderAndAge(dzh, start, end);// if (altfixed++;
+                        }
+                        else start = k;
+                    }
+
+                    dupli = dzh.Tables[0].Rows[k].ItemArray[1].ToString();
+                }
+            }
+            //}
+
+            //tsst = "Apply Groups rules (" + (inclexcl ? "adding to groupas" : "deleting from group") + ")" + grp1 + "cause in: " + grp21 + "\",\"" + grp22 + "\",\"" + grp23 + "\",\"" + grp24 + "\",\"" + grp25; UpdateLog(timestamp, tsst, false, c("dlcm_TempPath"), "", "", null, null); //pB_ReadDLCs.Increment(1);
+
+            //Show Summary window
+            var summary = "Cleaned: \n\n" +
+                "\nAlternate no with spaces inside:" + no_o +
+               "\nAlternate with duplicate marked as 0 PC cleansed: " + noOfRecr +
+               "\nAlternate with SAME (cleaned) artist & title marked as alternates " + norm +
+                ("\n\nAlternates manipulated: " + altfixed + " / " + norec);
+            ErrorWindow frm9 = new ErrorWindow(summary, "", "Summary of the Mass-Repack process", false, false, true, "", "", "");
+            frm9.Show();
+            return norec.ToString();
         }
-        public static void ApplyExistingTranlations(OleDbConnection cnb, SQLite.SQLiteConnection cnc)//(string DBs_Path)//, string AlbumArt, string Artist, string Albums)
+
+        public static DataSet SetOrderAndAge(DataSet dzh, int start, int end)
+        {
+            for (int k = start; k < end; k++)
+            {
+                var chang = false;
+                //Get the oldest timestamp
+                //myNewDate = DateTime.ParseExact(datenew, "MM-dd-yy HH:mm", enUS, System.Globalization.DateTimeStyles.None);
+                //myOldDate = DateTime.ParseExact(dateold, "MM-dd-yy HH:mm", enUS, System.Globalization.DateTimeStyles.None);
+                var idd = dzh.Tables[0].Rows[k].ItemArray[0].ToString();
+                var dupli = dzh.Tables[0].Rows[k].ItemArray[0].ToString();
+                var noor = dzh.Tables[0].Rows[k].ItemArray[2].ToString();
+                var age = dzh.Tables[0].Rows[k].ItemArray[3].ToString();
+                var ld = dzh.Tables[0].Rows[k].ItemArray[4].ToString();
+                var lastdate = DateTime.ParseExact(ld, "MM-dd-yy HH:mm", enUS, System.Globalization.DateTimeStyles.None);
+                for (int i = k + 1; i <= end; i++)
+                {
+                    var idd2 = dzh.Tables[0].Rows[i].ItemArray[0].ToString();
+                    var dupli2 = dzh.Tables[0].Rows[i].ItemArray[0].ToString();
+                    var noor2 = dzh.Tables[0].Rows[i].ItemArray[2].ToString();
+                    var age2 = dzh.Tables[0].Rows[i].ItemArray[3].ToString();
+                    var ld2 = dzh.Tables[0].Rows[i].ItemArray[4].ToString();
+                    var lastdate2 = DateTime.ParseExact(ld2, "MM-dd-yy HH:mm", enUS, System.Globalization.DateTimeStyles.None);
+                    if (lastdate < lastdate2)
+                    {
+                        dzh.Tables[0].Rows[k].ItemArray[0] = idd2;
+                        dzh.Tables[0].Rows[k].ItemArray[1] = dupli2;
+                        dzh.Tables[0].Rows[k].ItemArray[2] = noor2;
+                        dzh.Tables[0].Rows[k].ItemArray[3] = age2;
+                        dzh.Tables[0].Rows[k].ItemArray[4] = ld2;
+                        dzh.Tables[0].Rows[i].ItemArray[0] = idd;
+                        dzh.Tables[0].Rows[i].ItemArray[1] = dupli;
+                        dzh.Tables[0].Rows[i].ItemArray[2] = noor;
+                        dzh.Tables[0].Rows[i].ItemArray[3] = age;
+                        dzh.Tables[0].Rows[i].ItemArray[4] = ld;
+                        chang = true;
+                    }
+                }
+
+                if (chang) UpdateOrdAge(dzh, start, end);
+            }
+
+            return dzh;
+        }
+        public static void UpdateOrdAge(DataSet dzh, int start, int end)
+        {
+            var nor = 0;
+            for (int k = start; k < end; k++)
+            {
+                var idd = dzh.Tables[0].Rows[k].ItemArray[0].ToString();
+                //var dupli = dzh.Tables[0].Rows[0].ItemArray[0].ToString();
+                var noor = dzh.Tables[0].Rows[k].ItemArray[2].ToString();
+                var age = dzh.Tables[0].Rows[k].ItemArray[3].ToString();
+                var ld = dzh.Tables[0].Rows[k].ItemArray[4].ToString();
+
+                DataSet dgf = new DataSet();
+                var st = "";
+                dgf = SelectFromDB("Main", "SELECT Song_Title FROM Main WHERE ID = " + idd, "", cnb, cnc);
+                if (dgf.Tables.Count > 0) st = dgf.Tables[0].Rows[0].ItemArray[0].ToString();
+
+                var cmd5 = "UPDATE Main SET " +
+                    "Alternate_Version_No,='" + nor +
+                    ",Song_Title=" + ReplaceAge(st, GetAge(k, start, end)) +//Replace('newer',"+GetAge(k,start,end)+")'" +"" +
+                    "WHERE ID=" + idd + ";";//+ 
+                DataSet dgs = new DataSet(); dgs = UpdateDB("Main", cmd5, cnb, cnc);
+            }
+        }
+
+        public static string GetAge(int cur, int start, int end)
+        {
+            if (cur == start) return "newest";
+            if (cur == end) return "oldest";
+            return "old" + (end - start == 1 ? "er" : "") + (end - start == 2 ? "er" : "") + (end - start == 3 ? "er" : "") + (end - start == 4 ? "er"
+                : "") + (end - start == 5 ? "er" : "") + (end - start == 6 ? "er" : "") + (end - start == 7 ? "er" : "") + (end - start == 8 ? "er" : "")
+                + (end - start == 9 ? "er" : "") + (end - start == 10 ? "er" : "") + (end - start == 11 ? "er" : "") + (end - start == 12 ? "er" : "")
+                + (end - start == 13 ? "er" : "") + (end - start == 14 ? "er" : "") + (end - start == 15 ? "er" : "") + (end - start == 16 ? "er" : "");
+        }
+
+        public static string ReplaceAge(string st, string newage)
+        {
+            if (st.Contains("newest")) if (st.IndexOf(("newest")) > st.IndexOf("[")) st = st.Replace("newest", "");
+            if (st.Contains("oldest")) if (st.IndexOf(("oldest")) > st.IndexOf("[")) st = st.Replace("oldest", "");
+            if (st.Contains("olderer")) ReplaceAge(st, newage);
+            if (st.Contains("older")) if (st.IndexOf(("older")) > st.IndexOf("[")) st = st.Replace("older", "");
+            return st;
+        }
+
+        public static string MultiplyMetaAlbum(OleDbConnection cnb, SQLite.SQLiteConnection cnc, ProgressBar pB_ReadDLCs)//, string grps, bool inclexcl(string DBs_Path)//, string AlbumArt, string Artist, string Albums)
+        {
+            var timestamp = DateTime.Now;//.ToString("yyyyMMdd HHmmssfff");
+            var tsst = "";
+
+
+            var cmd1 = ""; var cmd2 = ""; ; var cmd3 = ""; var cmd4 = "";
+            pB_ReadDLCs.Maximum = 5; pB_ReadDLCs.Value = 0; pB_ReadDLCs.Increment(1);
+
+            cmd3 = "UPDATE Main SET " + c("CustomToAtribute_1") + "=\"Yes\" " +
+                "WHERE Artist + Album in (";
+            cmd1 = "SELECT IIF(Artist_Correction <>\"\",Artist_Correction,Artist) + IIF(Album_Correction <>\"\",Album_Correction,Album) FROM Standardization " +
+                "WHERE CustomToAtribute_1='Yes' or CustomToAtribute_1 is not Null ";
+            cmd3 += cmd1 + ") and (" + c("CustomToAtribute_1") + "<>'Yes'or " + c("CustomToAtribute_1") + " is Null)";
+            var no_o1 = GetNoRecords(cmd1, cnb, cnc);
+            DataSet dts = new DataSet(); if (no_o1 > 0) dts = UpdateDB("Main", cmd3, cnb, cnc);
+            //cmd3 = "UPDATE Main SET Is_GameSoundtrack=\"Yes\" " +
+            //    "WHERE Artist + Album in (" +
+            //    "SELECT IIF(Artist_Correction <>\"\",Artist_Correction,Artist) + IIF(Album_Correction <>\"\",Album_Correction,Album) FROM Standardization " +
+            //    "WHERE CustomToAtribute_1='Yes' or CustomToAtribute_1 is not Null " +
+            //    ") and (Is_GameSoundtrack<>'Yes'or Is_GameSoundtrack is Null)";
+
+
+            pB_ReadDLCs.Value++; var no_o2 = GetNoRecords(cmd1.Replace(c("CustomToAtribute_1"), c("CustomToAtribute_2")).Replace("CustomToAtribute_1", "CustomToAtribute_2"), cnb, cnc);
+            DataSet dns = new DataSet(); if (no_o2 > 0) dns = UpdateDB("Main", cmd3.Replace(c("CustomToAtribute_1"), c("CustomToAtribute_2")).Replace("CustomToAtribute_1", "CustomToAtribute_2"), cnb, cnc);
+
+            pB_ReadDLCs.Value++; var no_o3 = GetNoRecords(cmd1.Replace(c("CustomToAtribute_1"), c("CustomToAtribute_3")).Replace("CustomToAtribute_1", "CustomToAtribute_3"), cnb, cnc);
+            DataSet dgs = new DataSet(); if (no_o3 > 0) dgs = UpdateDB("Main", cmd3.Replace(c("CustomToAtribute_1"), c("CustomToAtribute_3")).Replace("CustomToAtribute_1", "CustomToAtribute_3"), cnb, cnc);
+
+            pB_ReadDLCs.Value++; var no_o4 = GetNoRecords(cmd1.Replace(c("CustomToAtribute_1"), c("CustomToAtribute_4")).Replace("CustomToAtribute_1", "CustomToAtribute_4"), cnb, cnc);
+            DataSet dus = new DataSet(); if (no_o4 > 0) dus = UpdateDB("Main", cmd3.Replace(c("CustomToAtribute_1"), c("CustomToAtribute_4")).Replace("CustomToAtribute_41", "CustomToAtribute_4"), cnb, cnc);
+
+            pB_ReadDLCs.Value++; var no_o5 = GetNoRecords(cmd1.Replace(c("CustomToAtribute_1"), c("CustomToAtribute_5")).Replace("CustomToAtribute_1", "CustomToAtribute_5"), cnb, cnc);
+            DataSet dbs = new DataSet(); if (no_o5 > 0) dbs = UpdateDB("Main", cmd3.Replace(c("CustomToAtribute_1"), c("CustomToAtribute_5")).Replace("CustomToAtribute_1", "CustomToAtribute_5"), cnb, cnc);
+
+            //DataSet dvz = new DataSet();
+            //cmd2 = "SELECT Artist, Album, Duplicate_of,count(Duplicate_Of) as cnt FROM Main WHERE Duplicate_Of=\"0\"  Group by Artist,Song_Title,Duplicate_of;";
+            //dvz = SelectFromDB("Main", cmd2, "", cnb, cnc); /*Artist_AutoGroup /*, Artist_AutoGroup,*/
+            //var noOfRecr = 0;// dvz.Tables.Count==0 ? 0 : dvz.Tables[0].Rows.Count;
+            //var art = ""; var ids = ""; var st = ""; pB_ReadDLCs.Maximum= dvz.Tables[0].Rows.Count; pB_ReadDLCs.Value = 0;
+            //foreach (DataRow dataRow in dvz.Tables[0].Rows)
+            //{
+            //    pB_ReadDLCs.Value++;
+            //    if (dataRow.ItemArray[3].ToString().ToInt32() < 2) continue;
+            //    noOfRecr++;
+            //    art = dataRow.ItemArray[0].ToString();
+            //    st = dataRow.ItemArray[1].ToString();
+
+            //    DataSet duz = new DataSet();
+            //    var cmd6 = "SELECT ID FROM Main where LCASE(Artist)=\"" + art.ToLower() + "\" and LCASE(Song_Title)=\"" + st.ToLower() + "\" order by Is_Original DESC;";
+            //    duz = SelectFromDB("Main", cmd6, "", cnb, cnc); /*Artist_AutoGroup /*, Artist_AutoGroup,*/
+
+            //    //ids += dataRow.ItemArray[3].ToString() + ",";
+            //    //if (art != dataRow.ItemArray[0].ToString() && st != dataRow.ItemArray[1].ToString() & art != "" && st != "" && ids != "")
+            //    //{
+            //    //DataSet dgz = new DataSet();
+            //    //cmd4 = "SELECT ID FROM Main WHERE Artist=\""+art+ "\" and Song_Titlet=\""+st+"\" order by Is_Official;";
+            //    //dvz = SelectFromDB("Groups", cmd4, "", cnb, cnc); /*Artist_AutoGroup /*, Artist_AutoGroup,*/
+
+            //    var cmd5 = "UPDATE Main SET Is_Alternate='Yes',Duplicate_of=\"" + duz.Tables[0].Rows[0][0].ToString() + "\" WHERE ID IN (" + cmd2 + ")" +
+            //        (c("dlcm_AdditionalManipul117") == "Yes" ? "" : " AND Is_Original<>''") + ";";
+            //    DataSet dgs = new DataSet(); dgs = UpdateDB("Main", cmd5, cnb, cnc);
+            //    //art = ""; st = ""; ids = "";
+            //}
+            ////delete when sam id as duplcaite of
+            ////cmd3 = "UPDATE Main SET Duplicate_of='' WHERE Duplicate_of=ID;";
+            ////DataSet tts = new DataSet(); tts = UpdateDB("Main", cmd3, cnb, cnc);
+            ////}
+
+            //DataSet dgz = new DataSet();
+            //cmd2 = "SELECT Artist, Song_Title, id, Duplicate_of FROM Main order by Artist, Song_Title, Is_Original ;";
+            //dgz = SelectFromDB("Main", cmd2, "", cnb, cnc);
+            //var noOfRecs = 0; var id = ""; var dup = ""; var dupl = ""; var upd = false; pB_ReadDLCs.Maximum = dgz.Tables[0].Rows.Count; pB_ReadDLCs.Value = 0;var norm = 0;
+            //foreach (DataRow dataRow in dgz.Tables[0].Rows)
+            //{
+            //    //
+            //    //;ids += dataRow.ItemArray[2].ToString() + ",";
+
+            //    pB_ReadDLCs.Value++;
+            //    if (CleanTitleFurther(art).ToLower() == CleanTitleFurther(dataRow.ItemArray[0].ToString().ToLower())
+            //        && CleanTitleFurther(st).ToLower() == CleanTitleFurther(dataRow.ItemArray[1].ToString()).ToLower()
+            //        & art != "" && st != "")// && st != dataRow.ItemArray[1].ToString())//&& dgz.Tables[0].Rows[3][0].ToString() == "0")
+            //    {
+            //        ids += dataRow.ItemArray[2].ToString() + ",";
+            //        if (dup == "") dup = id;
+            //        if (dupl == "0" || dataRow.ItemArray[3].ToString() == "0" || dupl != dataRow.ItemArray[3].ToString()) upd = true;
+            //        norm++;
+            //    }
+            //    else
+            //    {
+            //        if (ids != "" && upd)/*&& ids.Substring(0, ids.Length - 1).Contains(",")*/
+            //        {
+            //            //DataSet dgz = new DataSet(); && ids != ""
+            //            //cmd4 = "SELECT ID FROM Main WHERE Artist=\""+art+ "\" and Song_Titlet=\""+st+"\" order by Is_Official;";
+            //            //dvz = SelectFromDB("Groups", cmd4, "", cnb, cnc); /*Artist_AutoGroup /*, Artist_AutoGroup,*/
+
+            //            var cmd5 = "UPDATE Main SET Is_Alternate='Yes',Duplicate_of=\"" + dup + "\" WHERE ID IN (" + ids+dup + ")" +//ids.Substring(0, ids.Length - 1) + ")" +
+            //                (c("dlcm_AdditionalManipul117") == "Yes" ? "" : " AND Is_Original<>''") + ";";//+ 
+            //            DataSet dgs = new DataSet(); dgs = UpdateDB("Main", cmd5, cnb, cnc);
+            //            norm++;
+            //        }
+            //        dup = ""; ids = ""; upd = false;
+            //    }
+            //    art = dataRow.ItemArray[0].ToString();
+            //    st = dataRow.ItemArray[1].ToString();
+            //    dupl = dataRow.ItemArray[3].ToString();
+            //    id = dataRow.ItemArray[2].ToString();
+            //}
+            ////delete when sam id as duplcaite of
+            ////cmd3 = "UPDATE Main SET Duplicate_of='' WHERE Duplicate_of=ID;";
+            ////DataSet tts = new DataSet(); tts = UpdateDB("Main", cmd3, cnb, cnc);
+
+            //var norec = 0;
+            //DataSet dzh = new DataSet();
+            //cmd1 = "SELECT distinct ID,Duplicate_of FROM ( " +
+            //    "SELECT distinct ID, Duplicate_of FROM Main WHERE Duplicate_of<> '' and Duplicate_of<>'0'" +
+            //    " UNION ALL" +
+            //    " SELECT distinct Duplicate_of as ID, Duplicate_of FROM Main WHERE Duplicate_of<>'' and Duplicate_of<>'0'" +
+            //    " UNION ALL" +
+            //    " SELECT distinct Duplicate_of as ID, Duplicate_of FROM Main WHERE Alternate_Version_No<>''" +
+            //    " UNION ALL" +
+            //    " SELECT distinct ID, Duplicate_of FROM Main WHERE Alternate_Version_No = 'Yes'" +
+            //    " UNION ALL" +
+            //    " SELECT distinct ID, Duplicate_of FROM Main WHERE Is_Alternate = 'Yes'" +
+            //    ") ORDER BY Duplicate_of" +
+            //    ";";
+            //dzh = SelectFromDB("Main", cmd1, "", cnb, cnc);
+            //norec = dzh.Tables.Count == 0 ? 0 : dzh.Tables[0].Rows.Count;/*Artist_AutoGroup /*, Artist_AutoGroup,*/
+            //foreach (DataRow dataRow in dfz.Tables[0].Rows) {
+            //    var album_c = dataRow.ItemArray[0].ToString();
+            //    var short_c = dataRow.ItemArray[1].ToString();
+            //    cmd2 = "SELECT CDLC_ID FROM Groups WHERE Groupz =\"" + grp1 + "\" AND" +
+            //    " CDLC_ID not in (SELECT CDLC_ID FROM Groups WHERE TYPE=\"DLC\" AND Groupz in (\"" + grp21 + "\",\"" + grp22 + "\",\"" + grp23 + "\",\"" + grp24 + "\",\"" + grp25 + "\"))";
+            //dfz = SelectFromDB("Groups", cmd2, "", cnb, cnc); /*Artist_AutoGroup /*, Artist_AutoGroup,*/
+            //norec = dfz.Tables.Count > 0 ? dfz.Tables[0].Rows.Count : 0;
+            //if (norec > 0) {
+            //    tsst = "11/12 Adding" + norec + " New groups: " + cmd1; UpdateLog(timestamp, tsst, false, c("dlcm_TempPath"), "", "", null, null); //pB_ReadDLCs.Increment(1);
+            //    foreach (DataRow dataRow in dfz.Tables[0].Rows) {
+            //        var insertcmdd = "CDLC_ID, Groupz, Type, Date_Added, Comments";
+            //        var insertvalues = "\"" + dataRow.ItemArray[0].ToString() + "\",\"" + grp21 + "\",\"DLC\"" + ",\"" + DateTime.Now.ToString("yyyyMMdd HHmmssfff") + "\",\"90\"";
+            //        InsertIntoDBwValues("Groups", insertcmdd, insertvalues, cnb, 0, cnc);
+
+            //        insertvalues = "\"" + dataRow.ItemArray[0].ToString() + "\",\"" + grp22 + "\",\"DLC\"" + ",\"" + DateTime.Now.ToString("yyyyMMdd HHmmssfff") + "\",\"90\"";
+            //        if (grp22 != "" && grp22 is not null) InsertIntoDBwValues("Groups", insertcmdd, insertvalues, cnb, 0, cnc);
+            //        insertvalues = "\"" + dataRow.ItemArray[0].ToString() + "\",\"" + grp23 + "\",\"DLC\"" + ",\"" + DateTime.Now.ToString("yyyyMMdd HHmmssfff") + "\",\"90\"";
+            //        if (grp23 != "" && grp23 is not null) InsertIntoDBwValues("Groups", insertcmdd, insertvalues, cnb, 0, cnc);
+            //        insertvalues = "\"" + dataRow.ItemArray[0].ToString() + "\",\"" + grp24 + "\",\"DLC\"" + ",\"" + DateTime.Now.ToString("yyyyMMdd HHmmssfff") + "\",\"90\"";
+            //        if (grp24 != "" && grp24 is not null) InsertIntoDBwValues("Groups", insertcmdd, insertvalues, cnb, 0, cnc);
+            //        insertvalues = "\"" + dataRow.ItemArray[0].ToString() + "\",\"" + grp25 + "\",\"DLC\"" + ",\"" + DateTime.Now.ToString("yyyyMMdd HHmmssfff") + "\",\"90\"";
+            //        if (grp25 != "" && grp25 is not null) InsertIntoDBwValues("Groups", insertcmdd, insertvalues, cnb, 0, cnc);
+            //    }
+            //}
+            //}
+
+            //tsst = "Apply Groups rules (" + (inclexcl ? "adding to groupas" : "deleting from group") + ")" + grp1 + "cause in: " + grp21 + "\",\"" + grp22 + "\",\"" + grp23 + "\",\"" + grp24 + "\",\"" + grp25; UpdateLog(timestamp, tsst, false, c("dlcm_TempPath"), "", "", null, null); //pB_ReadDLCs.Increment(1);
+
+            ////Show Summary window
+            //var summary = "Cleaned: \n" +
+            //    "\nAlternate no with spaces inside:" + no_o +
+            //   "\nAlternate with dupicate marked as 0 PC: " + noOfRecr +
+            //    ("\n\nAletrnates manipulated: " + 0 + " / " + norec);
+            //ErrorWindow frm9 = new ErrorWindow(summary, "", "Summary of the Mass-Repack process", false, false, true, "", "", "");
+            //frm9.Show();
+            return no_o1.ToString() + " - " + no_o2.ToString() + " - " + no_o3.ToString() + " - " + no_o4.ToString() + " - " + no_o5.ToString();// +" - "+;
+        }
+        public static string ApplyGroupRules(OleDbConnection cnb, SQLite.SQLiteConnection cnc, string grps, bool inclexcl)//(string DBs_Path)//, string AlbumArt, string Artist, string Albums)
+        {
+            if (grps == "" || grps is null) return "";
+            var timestamp = DateTime.Now;//.ToString("yyyyMMdd HHmmssfff");
+            var tsst = "";
+            string[] ret = grps.Split(';');
+            var grp1 = ret[0];
+            var grp21 = ret.Length > 1 ? ret[1] : "";
+            var grp22 = ret.Length > 2 ? ret[2] : "";
+            var grp23 = ret.Length > 3 ? ret[3] : "";
+            var grp24 = ret.Length > 4 ? ret[4] : "";
+            var grp25 = ret.Length > 6 ? ret[5] : "";
+
+            var cmd1 = "";
+            var norec = 0;
+            if (inclexcl)
+            {
+                DataSet dfz = new DataSet();
+                cmd1 = "SELECT CDLC_ID FROM Groups WHERE Groupz =\"" + grp1 + "\" AND" +
+                    " CDLC_ID not in (SELECT CDLC_ID FROM Groups WHERE TYPE=\"DLC\" AND Groupz in (\"" + grp21 + "\",\"" + grp22 + "\",\"" + grp23 + "\",\"" + grp24 + "\",\"" + grp25 + "\"))";
+                dfz = SelectFromDB("Groups", cmd1, "", cnb, cnc); /*Artist_AutoGroup /*, Artist_AutoGroup,*/
+                norec = dfz.Tables.Count > 0 ? dfz.Tables[0].Rows.Count : 0;
+                if (norec > 0)
+                {
+                    tsst = "11/12 Adding" + norec + " New groups: " + cmd1; UpdateLog(timestamp, tsst, false, c("dlcm_TempPath"), "", "", null, null); //pB_ReadDLCs.Increment(1);
+                    foreach (DataRow dataRow in dfz.Tables[0].Rows)
+                    {
+                        var insertcmdd = "CDLC_ID, Groupz, Type, Date_Added, Comments";
+                        var insertvalues = "\"" + dataRow.ItemArray[0].ToString() + "\",\"" + grp21 + "\",\"DLC\"" + ",\"" + DateTime.Now.ToString("yyyyMMdd HHmmssfff") + "\",\"90\"";
+                        InsertIntoDBwValues("Groups", insertcmdd, insertvalues, cnb, 0, cnc);
+
+                        insertvalues = "\"" + dataRow.ItemArray[0].ToString() + "\",\"" + grp22 + "\",\"DLC\"" + ",\"" + DateTime.Now.ToString("yyyyMMdd HHmmssfff") + "\",\"90\"";
+                        if (grp22 != "" && grp22 is not null) InsertIntoDBwValues("Groups", insertcmdd, insertvalues, cnb, 0, cnc);
+                        insertvalues = "\"" + dataRow.ItemArray[0].ToString() + "\",\"" + grp23 + "\",\"DLC\"" + ",\"" + DateTime.Now.ToString("yyyyMMdd HHmmssfff") + "\",\"90\"";
+                        if (grp23 != "" && grp23 is not null) InsertIntoDBwValues("Groups", insertcmdd, insertvalues, cnb, 0, cnc);
+                        insertvalues = "\"" + dataRow.ItemArray[0].ToString() + "\",\"" + grp24 + "\",\"DLC\"" + ",\"" + DateTime.Now.ToString("yyyyMMdd HHmmssfff") + "\",\"90\"";
+                        if (grp24 != "" && grp24 is not null) InsertIntoDBwValues("Groups", insertcmdd, insertvalues, cnb, 0, cnc);
+                        insertvalues = "\"" + dataRow.ItemArray[0].ToString() + "\",\"" + grp25 + "\",\"DLC\"" + ",\"" + DateTime.Now.ToString("yyyyMMdd HHmmssfff") + "\",\"90\"";
+                        if (grp25 != "" && grp25 is not null) InsertIntoDBwValues("Groups", insertcmdd, insertvalues, cnb, 0, cnc);
+                    }
+                }
+                //    cmd1 = "DELETE Groups WHERE Groupz=\"" + grp1 + "\" AND CDLC_ID in (SELECT CDCL_ID FROM Groups WHERE TYPE=\"DLC\" AND Groupz in (\"" + grp21 + "\",\"" + grp22 + "\",\"" + grp23 + "\",\"" + grp24 + "\",\"" + grp25 + "\"))";
+                //DataSet dfu = new DataSet(); dfu = UpdateDB("Groups", cmd1 + ";", cnb, cnc);
+                //cmd1 = "INSERT INTO Groups WHERE Groupz=\"" + grp21 + "\""; 
+            }
+            else
+            {
+                cmd1 = "DELETE * FROM Groups WHERE Groupz in (\"" + grp21 + "\",\"" + grp22 + "\",\"" + grp23 + "\",\"" + grp24 + "\",\"" + grp25 + "\") AND " +
+                    "CDLC_ID in (SELECT CDLC_ID FROM Groups WHERE TYPE=\"DLC\" AND Groupz=\"" + grp1 + "\")";
+
+                DataSet dfz = new DataSet();
+                dfz = SelectFromDB("Groups", cmd1.Replace("DELETE", "SELECT"), "", cnb, cnc); /*Artist_AutoGroup /*, Artist_AutoGroup,*/
+                norec = dfz.Tables.Count > 0 ? dfz.Tables[0].Rows.Count : 0; DataSet dhu = new DataSet();
+                if (norec > 0) dhu = UpdateDB("Groups", cmd1 + ";", cnb, cnc);
+                tsst = "11/12 Removing" + norec + "DLCs from Groups: " + cmd1; UpdateLog(timestamp, tsst, false, c("dlcm_TempPath"), "", "", null, null); //pB_ReadDLCs.Increment(1);
+            }
+            tsst = "Apply Groups rules (" + (inclexcl ? "adding to groupas" : "deleting from group") + ")" + grp1 + "cause in: " + grp21 + "\",\"" + grp22 + "\",\"" + grp23 + "\",\"" + grp24 + "\",\"" + grp25; UpdateLog(timestamp, tsst, false, c("dlcm_TempPath"), "", "", null, null); //pB_ReadDLCs.Increment(1);
+            return norec.ToString();
+        }
+
+        public static string ApplyAlbumShort(OleDbConnection cnb, SQLite.SQLiteConnection cnc)
+        {
+            var timestamp = DateTime.Now;
+            var tsst = "";
+            var cmd = "SELECT iif(Album_Correction<>\"\", Album_Correction, Album), Album_Short" +
+                " FROM Standardization WHERE (Album_Short <> \"\") GROUP BY iif(Album_Correction<>\"\", Album_Correction, Album)," +
+                " Album_Short;";
+            DataSet dfz = new DataSet(); var cmc = 0; var cmv = 0;
+            DataSet dus = new DataSet(); var cms = 0; var cmx = 0;
+            dfz = SelectFromDB("Standardization", cmd, "", cnb, cnc);
+            var norec = dfz.Tables.Count > 0 ? dfz.Tables[0].Rows.Count : 0;
+            if (norec > 0)
+                foreach (DataRow dataRow in dfz.Tables[0].Rows)
+                {
+                    var album_c = dataRow.ItemArray[0].ToString();
+                    var short_c = dataRow.ItemArray[1].ToString();
+                    var cmd1 = " WHERE Album=\"" + album_c + "\" AND Album_ShortName <> \"" + short_c + "\""; cms = GetNoRecords("SELECt ID FROM Main " + cmd1, cnb, cnc); cms += cmc;
+                    if (cms > 0)
+                    {
+                        UpdateLog(timestamp, "Updated Main Album_short=\"" + album_c + "\" to " + short_c, false, c("dlcm_TempPath"), "", "", null, null);
+                        DataSet dis = UpdateDB("Main", "UPDATE Main SET Album_ShortName = \"" + short_c + "\"" + cmd1 + "; ", cnb, cnc);
+                    }
+
+                    cmd1 = "WHERE (Album=\"" + album_c
+                        + "\" OR Album_Correction=\"" + album_c + "\") AND Album_Short <> \"" + short_c + "\""; cmx = GetNoRecords("SELECt ID FROM Standardization " + cmd1, cnb, cnc); cmv += cmx;
+                    if (album_c != "" && short_c != "" && cmx > 0)
+                    {
+                        UpdateLog(timestamp, "Updated Standardization Album_Short=\"" + album_c + "\" to " + short_c, false, c("dlcm_TempPath"), "", "", null, null);
+                        dus = UpdateDB("Standardization", "UPDATE Standardization SET Album_Short = \"" + short_c + "\" " + cmd1 + ";", cnb, cnc);
+                    }
+                }
+            else UpdateLog(timestamp, "No Album shorts to update: " + cmd, false, c("dlcm_TempPath"), "", "", null, null);
+            UpdateLog(timestamp, norec + "/" + cmc + "/" + cmv + " (total corrections and album shorts / Update Main / Multiply Standardization)", false, c("dlcm_TempPath"), "", "", null, null);
+            return norec + "/" + cmc + "/" + cmv + " (total corrections and album shorts / Update Main / Multiply Standardization)";
+        }
+
+        public static void ApplyExistingTranlations_old(OleDbConnection cnb, SQLite.SQLiteConnection cnc)//(string DBs_Path)//, string AlbumArt, string Artist, string Albums)
         {
             //var norec = 0;
             DataSet dfz = new DataSet();
@@ -5539,7 +6333,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     var artist_c = dataRow.ItemArray[1].ToString();
                     var cmd1 = "UPDATE Standardization SET Artist_Correction = \"" + artist_c + "\" , Has_Been_Corrected=\"Yes\"" +
                         " WHERE Artist=\"" + artist + "\"" +
-                    // OR Artist_Correction=\"" + artist_c + "\" OR Artist=\"" + artist_c + "\" " +
+                        // OR Artist_Correction=\"" + artist_c + "\" OR Artist=\"" + artist_c + "\" " +
                         "AND Artist_correction <> Null";
                     var dus = UpdateDB("Standardization", cmd1 + ";", cnb, cnc);
                 }
@@ -5557,7 +6351,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     var artist_c = dataRow.ItemArray[3].ToString();
                     var cmd1 = "UPDATE Standardization SET Album_Correction = \"" + album_c + "\", Has_Been_Corrected=\"Yes\"" +
                         " WHERE Artist=\"" + artist + "\"" +
-                    //OR Artist_Correction=\"" + artist_c + "\" OR Artist=\"" + artist_c + "\" OR Artist_Correction=\"" + artist + "\")" +
+                        //OR Artist_Correction=\"" + artist_c + "\" OR Artist=\"" + artist_c + "\" OR Artist_Correction=\"" + artist + "\")" +
                         " AND Album=\"" + album + "\"";
                     //OR Album_Correction=\"" + album_c + "\" OR Album=\"" + album_c + "\" OR Album_Correction=\"" + album + "\"))";
                     var dus = UpdateDB("Standardization", cmd1 + ";", cnb, cnc);
@@ -5584,31 +6378,44 @@ namespace RocksmithToolkitGUI.DLCManager
                 }
         }
 
-        public static void ApplyDefaultCover(OleDbConnection cnb, SQLite.SQLiteConnection cnc)//(string DBs_Path)//, string AlbumArt, string Artist, string Albums)
+        public static string ApplyDefaultCover(OleDbConnection cnb, SQLite.SQLiteConnection cnc)//(string DBs_Path)//, string AlbumArt, string Artist, string Albums)
         {//continue;
-            //}
-
+         //}
+            var timstamp = DateTime.Now;
+            var cmd1 = "SELECT iif(Artist_Correction<>\"\", Artist_Correction, Artist), iif(Album_Correction<>\"\", Album_Correction, Album), IIF(AlbumArt_Correction<>\"\", AlbumArt_Correction, SpotifyAlbumPath) " +
+                "FROM Standardization WHERE (Default_Cover = \"Yes\") " +
+                "GROUP BY iif(Artist_Correction<>\"\", Artist_Correction, Artist), iif(Album_Correction<>\"\", Album_Correction, Album),IIF(AlbumArt_Correction<>\"\", AlbumArt_Correction, SpotifyAlbumPath);";
             //var norec = 0; //get al Default ON entries in standardization table
-            DataSet dfz = new DataSet(); dfz = SelectFromDB("Standardization", "SELECT iif(Artist_Correction<>\"\", Artist_Correction, Artist), iif(Album_Correction<>\"\", Album_Correction, Album), IIF(AlbumArt_Correction<>\"\", AlbumArt_Correction, SpotifyAlbumPath) FROM Standardization WHERE (Default_Cover = \"Yes\") GROUP BY iif(Artist_Correction<>\"\", Artist_Correction, Artist), iif(Album_Correction<>\"\", Album_Correction, Album),IIF(AlbumArt_Correction<>\"\", AlbumArt_Correction, SpotifyAlbumPath);", "", cnb, cnc);
-
-            foreach (DataRow dataRow in dfz.Tables[0].Rows)
-            {
-                var artist_c = dataRow.ItemArray[0].ToString();
-                var album_c = dataRow.ItemArray[1].ToString();
-                var Default_Cover = dataRow.ItemArray[2].ToString();
-                //var cmd1 = "UPDATE Main SET Spotify_Artist_ID = \"" + SpotifyArtistID + "\",Spotify_Album_ID = \"" + SpotifyAlbumID + "\",Spotify_Album_URL = \"" + SpotifyAlbumURL + "\",Spotify_Album_Path = \"" + SpotifyAlbumPath + "\", WHERE Album=\"" + SpotifyAlbumID + "\"";
-                //DataSet dus = UpdateDB("Main", cmd1 + ";");
-                //dus = SelectFromDB("Main", "SELECT * FROM Main WHERE Artist=\"" + artist_c + "\"", ""); try { norec = dus.Tables[0].Rows.Count; } catch { }
-                //apply only to Same Artist&Album Names
-                var cmd1 = "UPDATE Standardization SET AlbumArt_Correction = \"" + Default_Cover + "\", Default_Cover == \"Yes\" WHERE (Artist=\"" + artist_c + "\" OR Artist_Correction=\"" + artist_c + "\") and (Album=\"" + album_c + "\" OR Album_Correction=\"" + album_c + "\")";
-                var dus = UpdateDB("Standardization", cmd1 + ";", cnb, cnc);
-            }
-
+            DataSet dfz = new DataSet(); dfz = SelectFromDB("Standardization", cmd1, "", cnb, cnc);
+            var noOfRec = dfz.Tables.Count > 0 ? dfz.Tables[0].Rows.Count : 0; var tz = 0;
+            if (noOfRec > 0)
+                foreach (DataRow dataRow in dfz.Tables[0].Rows)
+                {
+                    var artist_c = dataRow.ItemArray[0].ToString();
+                    var album_c = dataRow.ItemArray[1].ToString();
+                    var Default_Cover = dataRow.ItemArray[2].ToString();
+                    //var cmd1 = "UPDATE Main SET Spotify_Artist_ID = \"" + SpotifyArtistID + "\",Spotify_Album_ID = \"" + SpotifyAlbumID + "\",Spotify_Album_URL = \"" + SpotifyAlbumURL + "\",Spotify_Album_Path = \"" + SpotifyAlbumPath + "\", WHERE Album=\"" + SpotifyAlbumID + "\"";
+                    //DataSet dus = UpdateDB("Main", cmd1 + ";");
+                    //dus = SelectFromDB("Main", "SELECT * FROM Main WHERE Artist=\"" + artist_c + "\"", ""); try { norec = dus.Tables[0].Rows.Count; } catch { }
+                    //apply only to Same Artist&Album Names
+                    cmd1 = " WHERE (Artist=\"" + artist_c + "\" OR Artist_Correction=\"" + artist_c + "\") and (Album=\"" + album_c + "\" OR Album_Correction=\"" + album_c + "\")";
+                    var norec = GetNoRecords("SELECt ID FROM Main " + cmd1, cnb, cnc); tz += norec;
+                    if (norec > 0)
+                    {
+                        UpdateLog(timstamp, "Update (" + norec + " times)default cover" + artist_c + "-" + album_c + "-" + Default_Cover, false, c("dlcm_TempPath"), "", "", null, null);
+                        var dus = UpdateDB("Standardization", "UPDATE Standardization SET AlbumArt_Correction = \"" + Default_Cover + "\", Default_Cover == \"Yes\"" + cmd1 + "; ", cnb, cnc);
+                    }
+                    //else
+                    //    UpdateLog(DateTime.Now, "No recordsfound: " + cmd1, false, c("dlcm_TempPath"), "", "", null, null);
+                }
+            else
+                UpdateLog(timstamp, "No recordsfound: " + cmd1, false, c("dlcm_TempPath"), "", "", null, null);
+            return noOfRec + "-" + tz + " (Defaulted Covers found in Standardization / actual records applied on Main)";
             //MessageBox.Show("Artist Short Name has been defaulted onto " + norec.ToString() + " songs");
         }
 
         public static bool copyallfilesinatemplate(MainDBfields SongRecord, int j, ProgressBar pB_ReadDLCs, RichTextBox rtxt_StatisticsOnReadDLCs
-        //    , int norows, OleDbConnection cnb, bool arrangoff, string SongsPath, string format, SQLiteConnection cnz)/*, bool verbose = truestring */
+                    //    , int norows, OleDbConnection cnb, bool arrangoff, string SongsPath, string format, SQLiteConnection cnz)/*, bool verbose = truestring */
                     , int norows, OleDbConnection cnb, bool arrangoff, string SongsPath, string format, SQLite.SQLiteConnection cnc)/*, bool verbose = truestring */
         {
             var timestamp = UpdateLog(DateTime.Now, j + " loading..." + Path.GetFileName(SongRecord.Folder_Name), true, c("dlcm_TempPath"), "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
@@ -5911,6 +6718,17 @@ namespace RocksmithToolkitGUI.DLCManager
             //}/*file.SongXml.Name*/
             //info.CleanCache();
             return true;
+        }
+        public static string GetAlbumArtPath(string albm, string orig, string ext)
+        {
+            if (File.Exists(albm)) return albm.Replace(".dds", ext);
+            else if (File.Exists(orig)) return orig.Replace(".dds", ext);
+
+            UpdateLog(DateTime.Now, "Defaulted AlbumArtPath to: " + AppWD + "\\" + c("dlcm_defaultalbumart").Replace(".dds", ext)
+               + "\nExisting: " + File.Exists(AppWD + "\\" + c("dlcm_defaultalbumart").Replace(".dds", ext)).ToString()
+                , false, c("dlcm_TempPath"), "", "", null, null);
+
+            return AppWD + "\\" + c("dlcm_defaultalbumart").Replace(".dds", ext);
         }
 
     }

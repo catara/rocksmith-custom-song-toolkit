@@ -116,6 +116,9 @@
     <Compile Update="DLCManager\DLCManager.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="DLCManager\DistribXMLNotes.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="DLCManager\Selection.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -9162,10 +9165,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="EntityFramework" Version="6.4.4" />
-    <PackageReference Include="Google.Apis.YouTube.v3" Version="1.60.0.3043" />
-    <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.0-preview.3.23174.2" />
-    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="8.0.0-preview.3.23174.2" />
-    <PackageReference Include="Microsoft.NETCore.Platforms" Version="8.0.0-preview.3.23174.8" />
+    <PackageReference Include="Google.Apis.YouTube.v3" Version="1.60.0.3064" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.0-preview.4.23259.3" />
+    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="8.0.0-preview.4.23259.3" />
+    <PackageReference Include="Microsoft.NETCore.Platforms" Version="8.0.0-preview.4.23259.5" />
     <PackageReference Include="Microsoft.VisualBasic" Version="10.4.0-preview.18571.3" />
     <PackageReference Include="Rocksmith2014.XML" Version="1.1.1" />
     <PackageReference Include="SpotifyApi.NetCore" Version="3.5.0" />
@@ -9178,7 +9181,7 @@
     <PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
     <PackageReference Include="System.Security.Principal.Windows" Version="6.0.0-preview.5.21301.5" />
     <PackageReference Include="Unosquare.Swan.Lite" Version="3.1.0" />
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0-preview.3.23174.8" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0-preview.4.23259.5" />
   </ItemGroup>
   <PropertyGroup Condition="'$(OutDir)'==''">
   <OutDir>bin\$(Configuration)\$(TargetFramework)\</OutDir>

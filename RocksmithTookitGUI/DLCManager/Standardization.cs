@@ -237,7 +237,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             + " AND (Album=\"" + txt_Album_Correction.Text + "\" OR Album=\"" + txt_Album.Text + "\")";
                         DataSet dus = new DataSet(); dus = SelectFromDB("Main", ts, "", cnb, cnc);
                         //rtxt_StatisticsOnReadDLCs.Text += "\n  54= " +dus.Tables[0].Rows.Count;
-                        var rowc = dus.Tables.Count == 0 ? 0 : dus.Tables[0].Rows.Count;
+                        var rowc = GetNoRec(dus, cnb, cnc);//dus.Tables.Count == 0 ? 0 : dus.Tables[0].Rows.Count;
                         //foreach (DataRow dataRow in dus.Tables[0].Rows)
                         //{
                         //files[i] = new Files();
@@ -292,17 +292,16 @@ namespace RocksmithToolkitGUI.DLCManager
                  " WHERE LCASE(S.Artist)=LCASE(O.Artist) and LCASE(S.Artist_Correction)=LCASE(O.Artist_Correction)" +
                  " and LCASE(S.Album_Correction)=LCASE(O.Album_Correction) and LCASE(S.Album)=LCASE(O.Album) )";
 
-
             dssx = SelectFromDB("Standardization", "SELECT ID, Suspect, Suspect_Reason, Artist, Artist_Correction, Album, Album_Correction, AlbumArt_Correction, Comments, Artist_Short, Album_Short, Year_Correction, SpotifyArtistID," +
                 " SpotifyAlbumID, SpotifyAlbumURL, SpotifyAlbumPath, Default_Cover, Artist_AutoGroup FROM Standardization as S" +
                 " ORDER BY Artist, Album, Artist_Correction, Album_Correction, CustomToAtribute_1, CustomToAtribute_2, CustomToAtribute_3, CustomToAtribute_4, CustomToAtribute_5;", "", cnb, cnc);
             //OleDbDataAdapter da = new OleDbDataAdapter(cmd, cn);
             //da.Fill(dssx, "Standardization");
-            if (dssx.Tables.Count > 0)
+            var noOfRec = dssx.Tables[0].Rows.Count;
+            lbl_NoRec.Text = noOfRec.ToString() + " records.";
+            //}
+            if (noOfRec > 0)
             {
-                var noOfRec = dssx.Tables[0].Rows.Count;
-                lbl_NoRec.Text = noOfRec.ToString() + " records.";
-                //}
                 DataGridViewTextBoxColumn ID = new DataGridViewTextBoxColumn { DataPropertyName = "ID", HeaderText = "ID ", Width = 35 };
                 DataGridViewTextBoxColumn Suspect = new DataGridViewTextBoxColumn { DataPropertyName = "Suspect", HeaderText = "Suspect ", Width = 35 };
                 DataGridViewTextBoxColumn Suspect_Reason = new DataGridViewTextBoxColumn { DataPropertyName = "Suspect_Reason", HeaderText = "Suspect_Reason ", Width = 35 };
@@ -461,7 +460,7 @@ namespace RocksmithToolkitGUI.DLCManager
             DataSet dus = new DataSet(); dus = SelectFromDB("Standardization", cmd, "", cnb, cnc);
             var i = 0;
             //rtxt_StatisticsOnReadDLCs.Text += "\n  54= " +dus.Tables[0].Rows.Count;
-            MaximumSize = dus.Tables[0].Rows.Count;
+            MaximumSize = GetNoRec(dus, cnb, cnc);//dus.Tables[0].Rows.Count;
             foreach (DataRow dataRow in dus.Tables[0].Rows)
             {
                 files[i] = new UtilitiesFunctions.Standardization();
@@ -893,7 +892,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
             DataSet SongRecord = new DataSet(); SongRecord = SelectFromDB("Standardization", "SELECT IIF(Artist_Correction is null,Artist,Artist_Correction), IIF(Album_Correction is null,Album,Album_Correction), " +
                 "ID FROM Standardization WHERE SpotifyArtistID = \"-\" OR SpotifyArtistID = \"\" OR SpotifyArtistID is null ORDER BY SpotifyArtistID ASC;", "", cnb, cnc);
-            var noOfRec = SongRecord.Tables[0].Rows.Count;
+            var noOfRec = GetNoRec(SongRecord, cnb, cnc);//.Tables[0].Rows.Count;
             //var vFilesMissingIssues = "";
             pB_ReadDLCs.Value = 0; pB_ReadDLCs.Step = 1;
             pB_ReadDLCs.Maximum = noOfRec;
@@ -944,7 +943,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //if (netstatus == "NOK" || netstatus == "") netstatus = ActivateSpotify_ClickAsync().Result.ToString();
             DataSet SongRecordC = new DataSet(); SongRecord = SelectFromDB("Standardization", "SELECT ID, Artist, Artist_Correction, Album, Album_Correction,SpotifyAlbumURL FROM Standardization WHERE SpotifyAlbumPath=\"\" AND SpotifyAlbumURL<>\"\" AND SpotifyAlbumURL != Null", "", cnb, cnc);
 
-            var noOfRecC = SongRecordC.Tables.Count == 0 ? 0 : SongRecordC.Tables[0].Rows.Count;
+            var noOfRecC = GetNoRec(SongRecordC, cnb, cnc);//.Tables.Count == 0 ? 0 : SongRecordC.Tables[0].Rows.Count;
             //var vFilesMissingIssues = "";
             pB_ReadDLCs.Value = 0; pB_ReadDLCs.Step = 1;
             pB_ReadDLCs.Maximum = noOfRec;
@@ -1005,7 +1004,7 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             //populaet the Group  Dropdown
             DataSet ds = new DataSet(); ds = SelectFromDB("Groups", "SELECT DISTINCT Groupz FROM Groups WHERE Type=\"DLC\";", "", cnb, cnc);
-            var norec = ds.Tables[0].Rows.Count;
+            var norec = GetNoRec(ds, cnb, cnc);//ds.Tables[0].Rows.Count;
 
             if (norec > 0)
             {
@@ -1232,8 +1231,8 @@ namespace RocksmithToolkitGUI.DLCManager
             cmd = SearchCmd.Replace("WHERE AND", "WHERE ");
             cmd = SearchCmd.Replace("AND ORDER BY ", "ORDER BY ");
 
-            DataSet dhxs = new DataSet(); dhxs = SelectFromDB("Main", cmd, "", cnb, cnc); var noOfRec = dhxs.Tables[0].Rows.Count;
-            DataSet dhs = new DataSet(); dhs = SelectFromDB("Main", SearchCmd, "", cnb, cnc); var noRec = dhs.Tables[0].Rows.Count;
+            DataSet dhxs = new DataSet(); dhxs = SelectFromDB("Main", cmd, "", cnb, cnc); var noOfRec = GetNoRec(dhxs, cnb, cnc);//dhxs.Tables[0].Rows.Count;
+            DataSet dhs = new DataSet(); dhs = SelectFromDB("Main", SearchCmd, "", cnb, cnc); var noRec = GetNoRec(dhs, cnb, cnc);//dhs.Tables[0].Rows.Count;
             //var ID = 0;
             for (var j = GoTocounter; j <= noOfRec - 1; j++)
             {
@@ -1296,8 +1295,9 @@ namespace RocksmithToolkitGUI.DLCManager
             var cmd = "SELECT ID, Artist, Artist_Correction, Album, Album_Correction, Suspect, Suspect_Reason FROM Standardization;";
 
             dfz = new DataSet(); dfz = SelectFromDB("Standardization", cmd, "", cnb, cnc);
-            var norecs = dfz.Tables.Count > 0 ? dfz.Tables[0].Rows.Count : 0; var tz = ""; pB_ReadDLCs.Maximum = norecs; pB_ReadDLCs.Step = 1; pB_ReadDLCs.Value = 0
-; if (norecs > 0)
+            var norecs = GetNoRec(dfz, cnb, cnc);//dfz.Tables.Count > 0 ? dfz.Tables[0].Rows.Count : 0;
+            var tz = ""; pB_ReadDLCs.Maximum = norecs; pB_ReadDLCs.Step = 1; pB_ReadDLCs.Value = 0;
+            if (norecs > 0)
                 for (var k = 0; k < norecs; k++)
                 {
                     pB_ReadDLCs.Increment(1);

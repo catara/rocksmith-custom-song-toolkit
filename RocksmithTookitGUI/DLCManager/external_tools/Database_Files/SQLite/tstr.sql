@@ -1,0 +1,28 @@
+﻿SELECT [ID]
+	,[CDLC_ID]
+	,[Groupz]
+	,[Type]
+	,[Comments]
+	,[Profile_Name]
+	,[Description]
+	,[DisplayName]
+	,[DisplayGroup]
+	,[DisplayPosition]
+	,[Date_Added]
+FROM [Groupsu] where Groups in ('ALL Others',
+'Songs in Rocksmith Game Lib',
+'Imported Last',
+'0ALL',',
+'Show Songs with FilesMissing Issues',
+'Reverse current Filter',
+'No Cover',
+'No Guitar',
+'No Preview',
+'No Section',
+'No Vocals',
+'68-72-D9-BF-CD-44-B8-4B-11-E0-E6-E1-70-2F-73-42-15-16-9F-8F',
+'2E-91-FB-DB-EA-80-5E-19-9D-9C-98-23-EA-A4-C0-B0-9B-50-24-FA',
+'B6-13-91-83-25-4B-7B-89-33-4C-35-9D-CB-4E-09-0E-BE-A6-2B-A3',
+'86-3F-EC-82-F9-11-57-77-ED-D9-84-8C-D1-CC-0A-DD-54-C7-65-58',
+'A3-58-61-B7-BC-65-E4-4E-E7-E5-0F-1C-26-8F-92-E1-AB-26-92-1B'
+)

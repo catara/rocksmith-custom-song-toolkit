@@ -24,6 +24,7 @@ using static RocksmithToolkitGUI.DLCManager.UtilitiesFunctions;
 //using RocksmithToolkitLib.Extensions; //most likely cue text
 using System.Data.SQLite;
 using SQLite;
+using System.Net;
 
 namespace RocksmithToolkitGUI.DLCManager
 {
@@ -736,7 +737,7 @@ namespace RocksmithToolkitGUI.DLCManager
             DataSet ds = new DataSet(); ds = SelectFromDB("Arrangements", "SELECT * FROM Arrangements WHERE CDLC_ID=" + eXisting.ID.ToString() + GetArrOfficSQLTxt(false), "", cnb, cnc);
             var noOfRec = 0;
             //MessageBox.Show("0.1");
-            noOfRec = ds.Tables[0].Rows.Count;//ds.Tables[0].Rows[0].ItemArray[0].ToString();
+            noOfRec = GetNoRec(ds, cnb, cnc);//ds.Tables[0].Rows.Count;//ds.Tables[0].Rows[0].ItemArray[0].ToString();
                                               //rtxt_StatisticsOnReadDLCs.Text = noOfRec + "Assesment Arrangement hash file" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
                                               //MessageBox.Show("1");
 

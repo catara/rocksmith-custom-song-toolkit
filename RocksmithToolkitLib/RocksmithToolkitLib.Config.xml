@@ -212,9 +212,9 @@
   <Config Key="dlcm_Custom_Meta4" Value="" Descr="" />;
   <Config Key="dlcm_Custom_Meta5" Value="" Descr="" />;
   <Config Key="dlcm_CustomToAtribute_1" Value="Is_GameSoundtrack" Descr="" />;
-  <Config Key="dlcm_CustomToAtribute_2" Value="" Descr="" />;
-  <Config Key="dlcm_CustomToAtribute_3" Value="" Descr="" />;
-  <Config Key="dlcm_CustomToAtribute_4" Value="" Descr="" />;
+  <Config Key="dlcm_CustomToAtribute_2" Value="Is_Soundtrack" Descr="" />;
+  <Config Key="dlcm_CustomToAtribute_3" Value="Is_TVTheme" Descr="" />;
+  <Config Key="dlcm_CustomToAtribute_4" Value="Is_AmateurCover" Descr="" />;
   <Config Key="dlcm_CustomToAtribute_5" Value="" Descr="" />;
   <Config Key="dlcm_chosendb" Value="" Descr="" />;
 

@@ -56,6 +56,7 @@ using System.Windows.Documents;
 using System.Diagnostics.Eventing.Reader;
 using System.Drawing.Printing;
 using X360.FATX;
+using System.Threading;
 
 namespace RocksmithToolkitGUI.DLCManager
 {
@@ -110,26 +111,32 @@ namespace RocksmithToolkitGUI.DLCManager
                         }
                         UpdateLog(DateTime.Now, "Finished processing " + AppWD + " searching for backups"
                             , false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
-                        System.IO.DirectoryInfo downloadedMessageInfo3 = new DirectoryInfo(c("dlcm_0_temp") + "\\0_temp\\");
-                        foreach (FileInfo file in downloadedMessageInfo3.GetFiles())
+                        try
                         {
-                            if (!file.FullName.Contains(".gz")) continue;
-                            fil = file.FullName;
-                            fill = file.Length;
-                            if (zipdate < file.CreationTime) zipdate = file.CreationTime;
+                            System.IO.DirectoryInfo downloadedMessageInfo3 = new DirectoryInfo(c("dlcm_0_temp") + "\\0_temp\\");
+                            foreach (FileInfo file in downloadedMessageInfo3.GetFiles())
+                            {
+                                if (!file.FullName.Contains(".gz")) continue;
+                                fil = file.FullName;
+                                fill = file.Length;
+                                if (zipdate < file.CreationTime) zipdate = file.CreationTime;
+                            }
+                            UpdateLog(DateTime.Now, "Finished processing " + c("dlcm_0_temp") + "\\0_temp\\ searching for backups"
+                                , false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
+                            System.IO.DirectoryInfo downloadedMessageInfo4 = new DirectoryInfo(c("dlcm_0_temp"));
+                            foreach (FileInfo file in downloadedMessageInfo4.GetFiles())
+                            {
+                                if (!file.FullName.Contains(".gz")) continue;
+                                fil = file.FullName;
+                                fill = file.Length;
+                                if (zipdate < file.CreationTime) zipdate = file.CreationTime;
+                            }
+                            UpdateLog(DateTime.Now, "Finished processing " + c("dlcm_0_temp") + " searching for backups"
+                                , false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
                         }
-                        UpdateLog(DateTime.Now, "Finished processing " + c("dlcm_0_temp") + "\\0_temp\\ searching for backups"
-                            , false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
-                        System.IO.DirectoryInfo downloadedMessageInfo4 = new DirectoryInfo(c("dlcm_0_temp"));
-                        foreach (FileInfo file in downloadedMessageInfo4.GetFiles())
+                        catch (Exception ezx)
                         {
-                            if (!file.FullName.Contains(".gz")) continue;
-                            fil = file.FullName;
-                            fill = file.Length;
-                            if (zipdate < file.CreationTime) zipdate = file.CreationTime;
                         }
-                        UpdateLog(DateTime.Now, "Finished processing " + c("dlcm_0_temp") + " searching for backups"
-                            , false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
 
                         result1 = MessageBox.Show("DB file not found: " + ConfigRepository.Instance()["dlcm_DBFolder"] + "!" +
                             "\n\n(Yes)Do you want to restore last Saved/Backed-up DBs? (" + fil + ", date: " + zipdate + ",size:" + fill + ")" +
@@ -476,9 +483,10 @@ namespace RocksmithToolkitGUI.DLCManager
             var no = GetNoRecords(cmd1, cnb, cnc);
             if (no > 0)
             {
-                if (c("dclm_CustomToAtribute_1").ToLower().Contains("gamesoundtrack")) IsGameSoundtrack = "Yes";
-                if (c("dclm_CustomToAtribute_1").ToLower().Contains("amateurcover")) IsAmateurCover = "Yes";
-                if (c("dclm_CustomToAtribute_1").ToLower().Contains("tvtheme")) IsTVTheme = "Yes";
+                if (c("dlcm_CustomToAtribute_1").ToLower().Contains("gamesoundtrack")) IsGameSoundtrack = "Yes";
+                if (c("dlcm_CustomToAtribute_1").ToLower().Contains("amateurcover")) IsAmateurCover = "Yes";
+                if (c("dlcm_CustomToAtribute_1").ToLower().Contains("tvtheme")) IsTVTheme = "Yes";
+                if (c("dlcm_CustomToAtribute_1").ToLower().Contains("Is_Soundtrack")) IsSoundtrack = "Yes";
             }
 
             var cmd2 = "SELECT ID FROM Standardization " +
@@ -487,9 +495,10 @@ namespace RocksmithToolkitGUI.DLCManager
             var no2 = GetNoRecords(cmd2, cnb, cnc);
             if (no2 > 0)
             {
-                if (c("dclm_CustomToAtribute_2").ToLower().Contains("gamesoundtrack")) IsGameSoundtrack = "Yes";
-                if (c("dclm_CustomToAtribute_2").ToLower().Contains("amateurcover")) IsAmateurCover = "Yes";
-                if (c("dclm_CustomToAtribute_2").ToLower().Contains("tvtheme")) IsTVTheme = "Yes";
+                if (c("dlcm_CustomToAtribute_2").ToLower().Contains("gamesoundtrack")) IsGameSoundtrack = "Yes";
+                if (c("dlcm_CustomToAtribute_2").ToLower().Contains("amateurcover")) IsAmateurCover = "Yes";
+                if (c("dlcm_CustomToAtribute_2").ToLower().Contains("tvtheme")) IsTVTheme = "Yes";
+                if (c("dlcm_CustomToAtribute_2").ToLower().Contains("Is_Soundtrack")) IsSoundtrack = "Yes";
             }
 
             var cmd3 = "SELECT ID FROM Standardization " +
@@ -498,9 +507,10 @@ namespace RocksmithToolkitGUI.DLCManager
             var no3 = GetNoRecords(cmd3, cnb, cnc);
             if (no3 > 0)
             {
-                if (c("dclm_CustomToAtribute_3").ToLower().Contains("gamesoundtrack")) IsGameSoundtrack = "Yes";
-                if (c("dclm_CustomToAtribute_3").ToLower().Contains("amateurcover")) IsAmateurCover = "Yes";
-                if (c("dclm_CustomToAtribute_3").ToLower().Contains("tvtheme")) IsTVTheme = "Yes";
+                if (c("dlcm_CustomToAtribute_3").ToLower().Contains("gamesoundtrack")) IsGameSoundtrack = "Yes";
+                if (c("dlcm_CustomToAtribute_3").ToLower().Contains("amateurcover")) IsAmateurCover = "Yes";
+                if (c("dlcm_CustomToAtribute_3").ToLower().Contains("tvtheme")) IsTVTheme = "Yes";
+                if (c("dlcm_CustomToAtribute_3").ToLower().Contains("Is_Soundtrack")) IsSoundtrack = "Yes";
             }
 
             var cmd4 = "SELECT ID FROM Standardization " +
@@ -509,9 +519,10 @@ namespace RocksmithToolkitGUI.DLCManager
             var no4 = GetNoRecords(cmd4, cnb, cnc);
             if (no4 > 0)
             {
-                if (c("dclm_CustomToAtribute_4").ToLower().Contains("gamesoundtrack")) IsGameSoundtrack = "Yes";
-                if (c("dclm_CustomToAtribute_4").ToLower().Contains("amateurcover")) IsAmateurCover = "Yes";
-                if (c("dclm_CustomToAtribute_4").ToLower().Contains("tvtheme")) IsTVTheme = "Yes";
+                if (c("dlcm_CustomToAtribute_4").ToLower().Contains("gamesoundtrack")) IsGameSoundtrack = "Yes";
+                if (c("dlcm_CustomToAtribute_4").ToLower().Contains("amateurcover")) IsAmateurCover = "Yes";
+                if (c("dlcm_CustomToAtribute_4").ToLower().Contains("tvtheme")) IsTVTheme = "Yes";
+                if (c("dlcm_CustomToAtribute_4").ToLower().Contains("Is_Soundtrack")) IsSoundtrack = "Yes";
             }
 
             var cmd5 = "SELECT ID FROM Standardization " +
@@ -520,9 +531,10 @@ namespace RocksmithToolkitGUI.DLCManager
             var no5 = GetNoRecords(cmd5, cnb, cnc);
             if (no5 > 0)
             {
-                if (c("dclm_CustomToAtribute_5").ToLower().Contains("gamesoundtrack")) IsGameSoundtrack = "Yes";
-                if (c("dclm_CustomToAtribute_5").ToLower().Contains("amateurcover")) IsAmateurCover = "Yes";
-                if (c("dclm_CustomToAtribute_5").ToLower().Contains("tvtheme")) IsTVTheme = "Yes";
+                if (c("dlcm_CustomToAtribute_5").ToLower().Contains("gamesoundtrack")) IsGameSoundtrack = "Yes";
+                if (c("dlcm_CustomToAtribute_5").ToLower().Contains("amateurcover")) IsAmateurCover = "Yes";
+                if (c("dlcm_CustomToAtribute_5").ToLower().Contains("tvtheme")) IsTVTheme = "Yes";
+                if (c("dlcm_CustomToAtribute_5").ToLower().Contains("Is_Soundtrack")) IsSoundtrack = "Yes";
             }
 
             //var r = "";
@@ -573,20 +585,24 @@ namespace RocksmithToolkitGUI.DLCManager
             timestamp = UpdateLog(DateTime.Now, "Deleting All Packing groups & inserintg newly " + norows, true, null, null, "", null, null);
             if (filter == "Packing") return;
             DeleteFromDB("Groups", "DELETE * FROM Groups WHERE Type = \"DLC\" AND Groupz = \"Packing\"", cnb, cnc);
+            string insertcmd; insertcmd = "CDLC_ID, Groupz, Type, Comments, Date_Added ";//INSERT INTO Groups ()
+            //var insertcmdd = "Artist, Album, SpotifyArtistID, SpotifyAlbumID, SpotifyAlbumURL, SpotifyAlbumPath, Year_Correction";
+            var insertvalues = cmd.Replace("*", "ID, \"Packing\", \"DLC\", \"89\",\"" + DateTime.Now.ToString("yyyyMMdd HHmmssfff") + "\"") + ";";
+            //"\"" + info.SongInfo.Artist + "\",\"" + info.SongInfo.Album + "\",\"" + SpotifyArtistID + "\",\"" + SpotifyAlbumID
+            //    + "\",\"" + SpotifyAlbumURL + "\",\"" + SpotifyAlbumPath + "\",\"" + SpotifyAlbumYear + "\"";
+            InsertIntoDBwValues("Groups", insertcmd, insertvalues, cnb, 0, cnc);
 
-            string insertcmd;
-            try
-            {
-                DataSet dsm = new DataSet();
-                insertcmd = "INSERT INTO Groups (CDLC_ID, Groupz, Type, Comments, Date_Added) " + cmd.Replace("*", "ID, \"Packing\", \"DLC\", \"89\",\"" + DateTime.Now.ToString("yyyyMMdd HHmmssfff") + "\"") + ";";
-                OleDbDataAdapter dab = new OleDbDataAdapter(insertcmd, cnb);
-                dab.Fill(dsm, "Groups");
-                dab.Dispose();
-            }
-            catch (Exception ee)
-            {
-                ShowConnectivityError(ee, "");/*, null*/
-            }
+            //try
+            //{
+            //    DataSet dsm = new DataSet();
+            //    OleDbDataAdapter dab = new OleDbDataAdapter(insertcmd, cnb);
+            //    dab.Fill(dsm, "Groups");
+            //    dab.Dispose();
+            //}
+            //catch (Exception ee)
+            //{
+            //    ShowConnectivityError(ee, "");/*, null*/
+            //}
         }
 
         //public static string GetFilter(string Filtertxt, string SearchCmd, int i, string Searchcmdf, OleDbConnection cnb, string Group, string chbx_Format, string Import_Date, SQLiteConnection cnz)
@@ -971,7 +987,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     //SLOW SearchCmd += "SELECT Main.ID FROM Main INNER JOIN Main AS Main_1 ON LCASE(Main.Original_FileName) = LCASE(Main_1.Original_FileName) AND Main.ID<> Main_1.ID";
                     //var SearchCmd52 = "SELECT Main.ID FROM Main INNER JOIN Main AS Main_1 ON LCASE(Main.Original_FileName) = LCASE(Main_1.Original_FileName) AND Main.ID<> Main_1.ID";
                     DataSet dgs = new DataSet(); dgs = SelectFromDB("Main", "SELECT m.ID,Original_FileName FROM Main AS m ORDER BY LCASE(Original_FileName)", "", cnb, cnc);
-                    noOfRec = dgs.Tables.Count == 0 ? 0 : dgs.Tables[0].Rows.Count;
+                    noOfRec = GetNoRec(dgs, cnb, cnc);//dgs.Tables.Count == 0 ? 0 : dgs.Tables[0].Rows.Count;
                     var IDgg = "";
                     if (noOfRec > 0)
                         for (var l = 0; l < noOfRec; l++)
@@ -989,7 +1005,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 case true when Filtertxt == "Same Artist&Title(no[]) & SongLenght":
                     //SearchCmd += "SELECT Main.ID FROM Main INNER JOIN Main AS Main_1 ON Main.Song_Lenght = Main_1.Song_Lenght AND  AND Main.ID<> Main_1.ID";
                     DataSet dvs = new DataSet(); dvs = SelectFromDB("Main", "SELECT m.ID,m.Artist, m.Song_Title, m.Album, Song_Lenght FROM Main AS m ORDER BY LCASE(Artist), LCASE(Song_Title), LCASE(Album)", "", cnb, cnc);
-                    noOfRec = dvs.Tables.Count == 0 ? 0 : dvs.Tables[0].Rows.Count;
+                    noOfRec = GetNoRec(dvs, cnb, cnc);//dvs.Tables.Count == 0 ? 0 : dvs.Tables[0].Rows.Count;
                     var IDb = "";
                     if (noOfRec > 0)
                         for (var l = 0; l < noOfRec; l++)
@@ -1015,7 +1031,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     //SLOW SearchCmd += "SELECT Main.ID FROM Main INNER JOIN Main AS Main_1 ON LCASE(Main.Original_FileName) = LCASE(Main_1.Original_FileName) AND Main.ID<> Main_1.ID";
                     //var SearchCmd52 = "SELECT Main.ID FROM Main INNER JOIN Main AS Main_1 ON LCASE(Main.Original_FileName) = LCASE(Main_1.Original_FileName) AND Main.ID<> Main_1.ID";
                     DataSet dgc = new DataSet(); dgc = SelectFromDB("Main", "SELECT m.ID,File_Hash FROM Main AS m ORDER BY File_Hash", "", cnb, cnc);
-                    noOfRec = dgc.Tables.Count == 0 ? 0 : dgc.Tables[0].Rows.Count;
+                    noOfRec = GetNoRec(dgc, cnb, cnc);//dgc.Tables.Count == 0 ? 0 : dgc.Tables[0].Rows.Count;
                     var IDgl = "";
                     if (noOfRec > 0)
                         for (var l = 0; l < noOfRec; l++)
@@ -1038,7 +1054,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     break;
                 case true when Filtertxt == "Imported Last":
                     DataSet dds = new DataSet(); dds = SelectFromDB("Main", "SELECT top 1 Pack FROM Main order by ID DESC;", "", cnb, cnc);
-                    noOfRec = dds.Tables[0].Rows.Count;
+                    noOfRec = GetNoRec(dds, cnb, cnc);//dds.Tables[0].Rows.Count;
                     if (noOfRec > 0)
                         SearchCmd += "Pack=\"" + dds.Tables[0].Rows[0].ItemArray[0].ToString() + "\"";
                     else SearchCmd += "1 = 2";
@@ -1057,7 +1073,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     break;
                 case true when Filtertxt == "Packed Last":
                     DataSet dzs = new DataSet(); dzs = SelectFromDB("LogPacking", "SELECT top 1 Pack FROM LogPacking order by ID DESC;", "", cnb, cnc);
-                    noOfRec = dzs.Tables[0].Rows.Count;
+                    noOfRec = GetNoRec(dzs, cnb, cnc);//dzs.Tables[0].Rows.Count;
                     if (noOfRec > 0)
                         SearchCmd += "CSTR(ID) in (SELECT CDLC_ID FROM LogPacking WHERE Pack=\"" + dzs.Tables[0].Rows[0].ItemArray[0].ToString() + "\")";
                     else SearchCmd += "1 = 2";
@@ -1065,7 +1081,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 case true when Filtertxt == "Packing Errors":
                     DataSet dks = new DataSet(); dks = SelectFromDB("LogPackingError", "SELECT top 1 Pack FROM LogPackingError order by ID DESC;", "", cnb, cnc);
 
-                    noOfRec = dks.Tables[0].Rows.Count;
+                    noOfRec = GetNoRec(dks, cnb, cnc);//dks.Tables[0].Rows.Count;
                     if (noOfRec > 0)
                         SearchCmd += "CSTR(ID) in (SELECT CDLC_ID FROM LogPackingError WHERE Pack=\"" + dks.Tables[0].Rows[0].ItemArray[0].ToString() + "\")";
                     else SearchCmd += "1 = 2";
@@ -1073,7 +1089,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 case true when Filtertxt == "Same DLCName":
                     //SLOW var SearchCmd5 = "SELECT Main.ID FROM Main INNER JOIN Main AS Main_1 ON LCASE(Main.DLC_Name) = LCASE(Main_1.DLC_Name) AND Main.ID <> Main_1.ID";
                     DataSet dos = new DataSet(); dos = SelectFromDB("Main", "SELECT m.ID,DLC_Name FROM Main AS m ORDER BY LCASE(DLC_Name)", "", cnb, cnc);
-                    noOfRec = dos.Tables.Count == 0 ? 0 : dos.Tables[0].Rows.Count;
+                    noOfRec = GetNoRec(dos, cnb, cnc);//dos.Tables.Count == 0 ? 0 : dos.Tables[0].Rows.Count;
                     var IDg = ""; var ttt = 0;
                     if (noOfRec > 0)
                         for (var l = 0; l < noOfRec; l++)
@@ -1097,7 +1113,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     //SearchCmd += "ID IN (" + SearchCmd55 + ")";
                     //break;
                     DataSet dqs = new DataSet(); dqs = SelectFromDB("Main", "SELECT m.ID,m.Song_Title, m.Artist FROM Main AS m ORDER BY LCASE(Artist), LCASE(Song_Title)", "", cnb, cnc);
-                    noOfRec = dqs.Tables.Count == 0 ? 0 : dqs.Tables[0].Rows.Count;
+                    noOfRec = GetNoRec(dqs, cnb, cnc);//dqs.Tables.Count == 0 ? 0 : dqs.Tables[0].Rows.Count;
                     var IDu = ""; var tts = 0;
                     if (noOfRec > 0)
                         for (var l = 0; l < noOfRec; l++)
@@ -1123,7 +1139,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     break;
                 case true when Filtertxt == "Same Title(no[])&Artist":
                     DataSet dns = new DataSet(); dns = SelectFromDB("Main", "SELECT m.ID, Artist,m.Song_Title FROM Main AS m ORDER BY LCASE(Artist), LCASE(Song_Title)", "", cnb, cnc);
-                    noOfRec = dns.Tables.Count == 0 ? 0 : dns.Tables[0].Rows.Count;
+                    noOfRec = GetNoRec(dns, cnb, cnc);//dns.Tables.Count == 0 ? 0 : dns.Tables[0].Rows.Count;
                     var IDf = "";/* bool done = false;*/
                     if (noOfRec > 0)
                         for (var l = 0; l < noOfRec; l++)
@@ -1150,7 +1166,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     //SearchCmd += "ID IN (" + SearchCmdr5 + ")";
                     //break;
                     DataSet das = new DataSet(); das = SelectFromDB("Main", "SELECT m.ID, m.Artist, m.Album, m.Album_Year FROM Main AS m ORDER BY LCASE(Artist), LCASE(Album), Album_Year", "", cnb, cnc);
-                    noOfRec = das.Tables.Count == 0 ? 0 : das.Tables[0].Rows.Count;
+                    noOfRec = GetNoRec(das, cnb, cnc);//das.Tables.Count == 0 ? 0 : das.Tables[0].Rows.Count;
                     var IDr = "";
                     if (noOfRec > 0)
                         for (var l = 0; l < noOfRec; l++)
@@ -1179,7 +1195,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     break;
                 case true when Filtertxt == "Same Artist&Title(no[]) different Album":
                     DataSet dws = new DataSet(); dws = SelectFromDB("Main", "SELECT m.ID,m.Artist, m.Song_Title, m.Album FROM Main AS m ORDER BY LCASE(Artist), LCASE(Song_Title), LCASE(Album)", "", cnb, cnc);
-                    noOfRec = dws.Tables.Count == 0 ? 0 : dws.Tables[0].Rows.Count;
+                    noOfRec = GetNoRec(dws, cnb, cnc);//dws.Tables.Count == 0 ? 0 : dws.Tables[0].Rows.Count;
                     var IDc = ""; /*var dones = false;*/
                     if (noOfRec > 0)
                         for (var l = 0; l < noOfRec; l++)
@@ -1203,7 +1219,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 //break;
                 case true when Filtertxt == "Same Artist&Title(no[]) different Year":
                     DataSet dts = new DataSet(); dts = SelectFromDB("Main", "SELECT m.ID, m.Artist, m.Song_Title, m.Album_Year FROM Main AS m ORDER BY LCASE(Artist), LCASE(Song_title), Album_Year", "", cnb, cnc);
-                    noOfRec = dts.Tables.Count == 0 ? 0 : dts.Tables[0].Rows.Count;
+                    noOfRec = GetNoRec(dts, cnb, cnc);//dts.Tables.Count == 0 ? 0 : dts.Tables[0].Rows.Count;
                     var IDe = ""; var donez = false;
                     if (noOfRec > 0)
                         for (var l = 0; l < noOfRec; l++)
@@ -1286,10 +1302,10 @@ namespace RocksmithToolkitGUI.DLCManager
 
                     var SearchCmdj1 = "SELECT DISTINCT VAL(CDLC_ID) FROM Groups WHERE Type=\"DLC\" AND Groupz = \"" + Group + "\"";
                     DataSet dys = new DataSet(); dys = SelectFromDB("Main", SearchCmdj1, "", cnb, cnc);
-                    var noOftRec = dys.Tables.Count == 0 ? 0 : dys.Tables[0].Rows.Count;
+                    var noOftRec = GetNoRec(dys, cnb, cnc);//dys.Tables.Count == 0 ? 0 : dys.Tables[0].Rows.Count;
 
                     DataSet dbs = new DataSet(); dbs = SelectFromDB("Main", "SELECT CDLC_ID FROM vw_CountGroups WHERE vw_CountGroups.CountGrp>1", "", cnb, cnc);
-                    noOfRec = dbs.Tables.Count == 0 ? 0 : dbs.Tables[0].Rows.Count;
+                    noOfRec = GetNoRec(dbs, cnb, cnc);//dbs.Tables.Count == 0 ? 0 : dbs.Tables[0].Rows.Count;
                     var IDw = ""; var doney = false;
                     if (noOfRec > 0)
                         for (var l = 0; l < noOftRec; l++)
@@ -1357,7 +1373,8 @@ namespace RocksmithToolkitGUI.DLCManager
                              " CDLC_ID FROM Groups WHERE Type=\"DLC\" AND Groupz=\"" + c("dlcm_HotGrp") + "\" ORDER BY ID DESC";
                             DataSet dvs = new DataSet();
                             dvs = SelectFromDB("Groups", SearchCmd, "", cnb, cnc);
-                            var nores = dvs.Tables.Count == 0 ? 0 : dvs.Tables[0].Rows.Count; var idss = "";
+                            var nores = GetNoRec(dvs, cnb, cnc);//dvs.Tables.Count == 0 ? 0 : dvs.Tables[0].Rows.Count;
+                            var idss = "";
                             if (nores > 0)
                                 for (var l = 0; l < nores; l++)
                                     idss += dvs.Tables[0].Rows[l].ItemArray[0].ToString() + ", ";
@@ -1412,7 +1429,7 @@ namespace RocksmithToolkitGUI.DLCManager
             cmd = cmd.Replace(", )", ")").Replace("WHERE )", ")");
             cmd = cmd.Replace("Maiu", "Main u");
             DataSet dms = new DataSet(); dms = SelectFromDB("Main", cmd, "", cnb, cnc);
-            noOfRec = dms.Tables.Count == 0 ? 0 : dms.Tables[0].Rows.Count;
+            noOfRec = GetNoRec(dms, cnb, cnc);//dms.Tables.Count == 0 ? 0 : dms.Tables[0].Rows.Count;
             var IDS = "0, ";
             if (noOfRec > 0)
                 //{            }
@@ -1541,7 +1558,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //Save Profiles
 
             DataSet ds = new DataSet(); ds = SelectFromDB("Groups", "SELECT CDLC_ID FROM Groups WHERE Profile_Name=\"" + oldprof + "\";", "", cnb, cnc);/*chbx_Configurations.Text*/
-            var norec = ds.Tables.Count < 1 ? 0 : ds.Tables[0].Rows.Count;
+            var norec = GetNoRec(ds, cnb, cnc);//ds.Tables.Count < 1 ? 0 : ds.Tables[0].Rows.Count;
             if (norec > 0)
             {
                 var fnn = ds.Tables[0].Rows[0].ItemArray[0].ToString();
@@ -1550,7 +1567,9 @@ namespace RocksmithToolkitGUI.DLCManager
 
                 var norecs = 0;
                 DataSet dsg = new DataSet(); dsg = SelectFromDB("Groups", "SELECT DISTINCT Comments, Groupz, ID FROM Groups WHERE Type=\"Profile\" AND Profile_Name=\"" + oldprof + "\"; ", "", cnb, cnc);/*c("dlcm_Configurations")*/
-                norecs = dsg.Tables[0].Rows.Count; var rt = 0; var t = ""; var tt = "";
+                norecs = GetNoRec(dsg, cnb, cnc);//dsg.Tables[0].Rows.Count;
+                var rt = 0;
+                var t = ""; var tt = "";
                 if (norecs > 0)
                     //{
                     for (int j = 0; j < norecs; j++)
@@ -1784,7 +1803,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             break;
                         case "<Groups>":
                             DataSet dvs = new DataSet(); dvs = SelectFromDB("Group", "SELECT Groupz,Comments FROM Groups WHERE CDLC_ID=\"" + SongRecord[k].ID + "\" AND Type=\"DLC\" ORDER BY Groupz,Comments", "", cnb, cnc);
-                            var noOfRect = dvs.Tables.Count > 0 ? dvs.Tables[0].Rows.Count : 0;
+                            var noOfRect = GetNoRec(dvs, cnb, cnc);//dvs.Tables.Count > 0 ? dvs.Tables[0].Rows.Count : 0;
 
                             for (var j = 0; j <= noOfRect - 1; j++)
                             {
@@ -1794,22 +1813,22 @@ namespace RocksmithToolkitGUI.DLCManager
                             break;
                         case "<GroupIndex>":
                             DataSet dbs = new DataSet(); dbs = SelectFromDB("Groups", "SELECT TOP 1 Comments,Groupz FROM Groups WHERE Type=\"DLC\" AND Groupz=\"" + SongRecord[k].Groups + "\" ORDER BY Comments,Groupz", "", cnb, cnc);
-                            var noOfRehc = dbs.Tables.Count > 0 ? dbs.Tables[0].Rows.Count : 0;
+                            var noOfRehc = GetNoRec(dbs, cnb, cnc);//dbs.Tables.Count > 0 ? dbs.Tables[0].Rows.Count : 0;
                             if (noOfRehc > 0) tzt = dbs.Tables[0].Rows[0].ItemArray[0].ToString();
                             break;
                         case "<GroupIndexAndName>":
                             DataSet dqs = new DataSet(); dqs = SelectFromDB("Groups", "SELECT TOP 1 Groupz, Comments FROM Groups WHERE Type=\"DLC\" AND Groupz=\"" + SongRecord[k].Groups + "\" ORDER BY Comments,Groupz", "", cnb, cnc);
-                            var noOfRehq = dqs.Tables.Count > 0 ? dqs.Tables[0].Rows.Count : 0;
+                            var noOfRehq = GetNoRec(dqs, cnb, cnc);//dqs.Tables.Count > 0 ? dqs.Tables[0].Rows.Count : 0;
                             if (noOfRehq > 0) tzt = dqs.Tables[0].Rows[0].ItemArray[0].ToString() + dqs.Tables[0].Rows[0].ItemArray[1].ToString();
                             break;
                         case "<FirstGroupIndexAndName>":
                             DataSet dps = new DataSet(); dps = SelectFromDB("Groups", "SELECT TOP 1 Comments,Groupz FROM Groups WHERE Type=\"DLC\" AND CDLC_ID=\"" + SongRecord[k].ID + "\" ORDER BY Comments", "", cnb, cnc);
-                            var noOfRepq = dps.Tables.Count > 0 ? dps.Tables[0].Rows.Count : 0;
+                            var noOfRepq = GetNoRec(dps, cnb, cnc); //dps.Tables.Count > 0 ? dps.Tables[0].Rows.Count : 0;
                             if (noOfRepq > 0) tzt = dps.Tables[0].Rows[0].ItemArray[0].ToString() + dps.Tables[0].Rows[0].ItemArray[1].ToString();
                             break;
                         case "<BetaOrGroupIndex>":
                             DataSet dgs = new DataSet(); dgs = SelectFromDB("Groups", "SELECT TOP 1 Comments,Groupz FROM Groups WHERE Type=\"DLC\" AND Groupz=\"" + SongRecord[k].Groups + "\" ORDER BY Comments,Groupz", "", cnb, cnc);
-                            var noOfRegc = dgs.Tables.Count > 0 ? dgs.Tables[0].Rows.Count : 0;
+                            var noOfRegc = GetNoRec(dgs, cnb, cnc);//dgs.Tables.Count > 0 ? dgs.Tables[0].Rows.Count : 0;
                             if (noOfRegc > 0)
                                 tzt = dgs.Tables[0].Rows[0].ItemArray[0].ToString();
                             else
@@ -1947,7 +1966,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             break;
                         case "<CapoFret>":
                             DataSet dos = new DataSet(); dos = SelectFromDB("Arrangements", "SELECT CapoFret, Bonus, Comments, ArrangementType, RouteMask, Start_Time, Part FROM Arrangements WHERE CDLC_ID=" + SongRecord[k].ID + GetArrOfficSQLTxt(arrangoff), "", cnb, cnc);
-                            var noOfReoc = dos.Tables[0].Rows.Count;
+                            var noOfReoc = GetNoRec(dos, cnb, cnc);//dos.Tables[0].Rows.Count;
 
                             for (var j = 0; j <= noOfReoc - 1; j++)
                             {
@@ -1958,7 +1977,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             break;
                         case "<DigitechDropFlag>":
                             DataSet dys = new DataSet(); dys = SelectFromDB("Arrangements", "SELECT Tunning, Bonus, Comments, ArrangementType, RouteMask, Start_Time, Part FROM Arrangements WHERE CDLC_ID=" + SongRecord[k].ID + GetArrOfficSQLTxt(arrangoff), "", cnb, cnc);
-                            var noOfRekc = dys.Tables[0].Rows.Count;
+                            var noOfRekc = GetNoRec(dys, cnb, cnc);//dys.Tables[0].Rows.Count;
 
                             for (var j = 0; j <= noOfRekc - 1; j++)
                             {
@@ -1996,7 +2015,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         case "<DigitechDropDetails>":/*EstandardDirect*/
                             DataSet dns = new DataSet(); dns = SelectFromDB("Arrangements", "SELECT Tunning, Bonus, Comments, ArrangementType, RouteMask, Start_Time, Part, Arrangement_Name FROM Arrangements WHERE CDLC_ID="
                                 + SongRecord[k].ID + GetArrOfficSQLTxt(arrangoff), "", cnb, cnc);
-                            var noOfRenc = dns.Tables[0].Rows.Count;
+                            var noOfRenc = GetNoRec(dns, cnb, cnc);//dns.Tables[0].Rows.Count;
 
                             for (var j = 0; j <= noOfRenc - 1; j++)
                             {
@@ -2080,7 +2099,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         case "<Avail. Tracks w Bonus>":
                             DataSet dcs = new DataSet(); dcs = SelectFromDB("Arrangements", "SELECT XMLFilePath, Bonus, Comments, ArrangementType, RouteMask, Start_Time, Part, Arrangement_Name FROM Arrangements WHERE CDLC_ID="
                                 + SongRecord[k].ID + GetArrOfficSQLTxt(arrangoff), "", cnb, cnc);
-                            var noOfRezc = dcs.Tables[0].Rows.Count;
+                            var noOfRezc = GetNoRec(dcs, cnb, cnc);//dcs.Tables[0].Rows.Count;
                             //float FirstLyric = 5000;
                             //float FirstVocal = 0;
                             var B = ""; var L = ""; var R = ""; var C = "";
@@ -2113,7 +2132,8 @@ namespace RocksmithToolkitGUI.DLCManager
                         case "<Avail. Tracks w Favorite>":
                             DataSet dks = new DataSet(); dks = SelectFromDB("Arrangements", "SELECT XMLFilePath, Bonus, Comments, ArrangementType, RouteMask, Start_Time, Part, Favorite, Arrangement_Name FROM Arrangements WHERE CDLC_ID="
                                 + SongRecord[k].ID + GetArrOfficSQLTxt(arrangoff), "", cnb, cnc);
-                            var noOfRezk = dks.Tables[0].Rows.Count; var Bk = ""; var Lk = ""; var Rk = ""; var Ck = "";
+                            var noOfRezk = GetNoRec(dks, cnb, cnc);//dks.Tables[0].Rows.Count; 
+                            var Bk = ""; var Lk = ""; var Rk = ""; var Ck = "";
 
                             for (var j = 0; j <= noOfRezk - 1; j++)
                             {
@@ -2149,11 +2169,11 @@ namespace RocksmithToolkitGUI.DLCManager
                             break;
                         case "<Avail. Tracks and Timings>":
                             DataSet dup = new DataSet(); dup = SelectFromDB("Arrangements", "SELECT Max(Part) FROM Arrangements WHERE CDLC_ID=" + SongRecord[k].ID + GetArrOfficSQLTxt(arrangoff), "", cnb, cnc);
-                            var noOfRecP = dup.Tables.Count > 0 ? (string.IsNullOrEmpty(dup.Tables[0].Rows[0].ItemArray[0].ToString()) ? 0 : int.Parse(dup.Tables[0].Rows[0].ItemArray[0].ToString())) : 0;
+                            var noOfRecP = GetNoRec(dup, cnb, cnc) > 0 ? (string.IsNullOrEmpty(dup.Tables[0].Rows[0].ItemArray[0].ToString()) ? 0 : int.Parse(dup.Tables[0].Rows[0].ItemArray[0].ToString())) : 0;
 
                             DataSet dus = new DataSet(); dus = SelectFromDB("Arrangements", "SELECT XMLFilePath, Bonus, Comments, ArrangementType, RouteMask, Start_Time, Part, Arrangement_Name FROM Arrangements WHERE CDLC_ID="
                                 + SongRecord[k].ID + GetArrOfficSQLTxt(arrangoff), "", cnb, cnc);
-                            var noOfRec = dus.Tables[0].Rows.Count;
+                            var noOfRec = GetNoRec(dus, cnb, cnc);//dus.Tables[0].Rows.Count;
                             for (var j = 0; j <= noOfRec - 1; j++)
                             {
                                 var XMLFilePath = dus.Tables[0].Rows[j].ItemArray[0].ToString();
@@ -2175,10 +2195,10 @@ namespace RocksmithToolkitGUI.DLCManager
                             break;
                         case "<Avail. Tracks and ShortTimings&Bonus>":
                             DataSet dxp = new DataSet(); dxp = SelectFromDB("Arrangements", "SELECT Max(Part) FROM Arrangements WHERE CDLC_ID=" + SongRecord[k].ID + "", "", cnb, cnc);
-                            var noOfRecc = dxp.Tables.Count > 0 ? (string.IsNullOrEmpty(dxp.Tables[0].Rows[0].ItemArray[0].ToString()) ? 0 : int.Parse(dxp.Tables[0].Rows[0].ItemArray[0].ToString())) : 0;
+                            var noOfRecc = GetNoRec(dxp, cnb, cnc) > 0 ? (string.IsNullOrEmpty(dxp.Tables[0].Rows[0].ItemArray[0].ToString()) ? 0 : int.Parse(dxp.Tables[0].Rows[0].ItemArray[0].ToString())) : 0;
 
                             DataSet dxs = new DataSet(); dxs = SelectFromDB("Arrangements", "SELECT XMLFilePath, Bonus, Comments, ArrangementType, RouteMask, Start_Time, Part, Arrangement_Name FROM Arrangements WHERE CDLC_ID=" + SongRecord[k].ID + GetArrOfficSQLTxt(arrangoff), "", cnb, cnc);
-                            var noOfRecv = dxs.Tables[0].Rows.Count;
+                            var noOfRecv = GetNoRec(dxs, cnb, cnc);//dxs.Tables[0].Rows.Count;
                             for (var j = 0; j <= noOfRecv - 1; j++)
                             {
                                 var XMLFilePath = dxs.Tables[0].Rows[j].ItemArray[0].ToString();
@@ -2200,10 +2220,10 @@ namespace RocksmithToolkitGUI.DLCManager
                             break;
                         case "<Avail. Tracks and ShortTimings&Bonus&Favorite>":
                             DataSet dbp = new DataSet(); dbp = SelectFromDB("Arrangements", "SELECT Max(Part) FROM Arrangements WHERE CDLC_ID=" + SongRecord[k].ID + GetArrOfficSQLTxt(arrangoff), "", cnb, cnc);
-                            var noOfRecb = dbp.Tables.Count > 0 ? (string.IsNullOrEmpty(dbp.Tables[0].Rows[0].ItemArray[0].ToString()) ? 0 : int.Parse(dbp.Tables[0].Rows[0].ItemArray[0].ToString())) : 0;
+                            var noOfRecb = GetNoRec(dbp, cnb, cnc);// > 0 ? (string.IsNullOrEmpty(dbp.Tables[0].Rows[0].ItemArray[0].ToString()) ? 0 : int.Parse(dbp.Tables[0].Rows[0].ItemArray[0].ToString())) : 0;
 
                             DataSet dts = new DataSet(); dts = SelectFromDB("Arrangements", "SELECT XMLFilePath, Bonus, Comments, ArrangementType, RouteMask, Start_Time, Part, Favorite FROM Arrangements WHERE CDLC_ID=" + SongRecord[k].ID + GetArrOfficSQLTxt(arrangoff), "", cnb, cnc);
-                            var noOfRecm = dts.Tables[0].Rows.Count;
+                            var noOfRecm = GetNoRec(dts, cnb, cnc);//dts.Tables[0].Rows.Count;
                             for (var j = 0; j <= noOfRecm - 1; j++)
                             {
                                 var XMLFilePath = dts.Tables[0].Rows[j].ItemArray[0].ToString();
@@ -2229,11 +2249,11 @@ namespace RocksmithToolkitGUI.DLCManager
                             break;
                         case "<Avail. Tracks and ShortTimings>":
                             DataSet dsp = new DataSet(); dsp = SelectFromDB("Arrangements", "SELECT Max(Part) FROM Arrangements WHERE CDLC_ID=" + SongRecord[k].ID + GetArrOfficSQLTxt(arrangoff), "", cnb, cnc);
-                            var noOfRecPS = dsp.Tables.Count > 0 ? (string.IsNullOrEmpty(dsp.Tables[0].Rows[0].ItemArray[0].ToString()) ? 0 : int.Parse(dsp.Tables[0].Rows[0].ItemArray[0].ToString())) : 0;
+                            var noOfRecPS = GetNoRec(dsp, cnb, cnc) > 0 ? (string.IsNullOrEmpty(dsp.Tables[0].Rows[0].ItemArray[0].ToString()) ? 0 : int.Parse(dsp.Tables[0].Rows[0].ItemArray[0].ToString())) : 0;
 
                             DataSet dss = new DataSet(); dss = SelectFromDB("Arrangements", "SELECT XMLFilePath, Bonus, Comments, ArrangementType, RouteMask, Start_Time, Part, Arrangement_Name FROM Arrangements WHERE CDLC_ID="
                                 + SongRecord[k].ID + GetArrOfficSQLTxt(arrangoff), "", cnb, cnc);
-                            var noOfRecS = dss.Tables[0].Rows.Count;
+                            var noOfRecS = GetNoRec(dss, cnb, cnc);//dss.Tables[0].Rows.Count;
                             for (var j = 0; j <= noOfRecS - 1; j++)
                             {
                                 var XMLFilePath = dss.Tables[0].Rows[j].ItemArray[0].ToString();
@@ -2309,7 +2329,7 @@ namespace RocksmithToolkitGUI.DLCManager
             if (result1 == DialogResult.Yes)
             {
                 DataSet dhs = new DataSet(); dhs = SelectFromDB("Main", cmd.Replace("DELETE FROM Main WHERE ID IN (", "SELECT * FROM Main WHERE ID IN ("), "", cnb, cnc);
-                var rcount = dhs.Tables[0].Rows.Count;
+                var rcount = GetNoRec(dhs, cnb, cnc);//dhs.Tables[0].Rows.Count;
                 var tsst = "Updating PAck detail to point to Archive"; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", null, null);
                 string psarcPath = ""; var cmmd = "";
 
@@ -2847,6 +2867,83 @@ namespace RocksmithToolkitGUI.DLCManager
                 }
             DeleteFile(fn + ".old", false);
         }
+
+        public static CheckedListBox GenerateParamsList(CheckedListBox chbx_Additional_Manipulations, string slct)
+        {
+            //Get group and norder index
+            var SearchCmd = "SELECT Type, Profile_Name, DisplayGroup FROM Groups u WHERE Type=\"Groups\" ORDER BY DisplayGroup ASC";
+            DataSet dv = new DataSet(); dv = SelectFromDB("Groups", SearchCmd, c("dlcm_DBFolder"), cnb, cnc);
+            var n = GetNoRec(dv, cnb, cnc);
+
+            //SELECT all Params for current Profile
+            SearchCmd = slct;
+            //"SELECT Type, Comments, DisplayName, DisplayGroup, DisplayPosition, Date_Added, Groupz FROM Groups u WHERE Type=\"Profile\"" +
+            //" AND Profile_Name=\"" + c("dlcm_Configurations") + "\" and Comments like \"%dlcm_AdditionalManipul%\"";
+            DataSet dsz1 = new DataSet(); dsz1 = SelectFromDB("Groups", SearchCmd, c("dlcm_DBFolder"), cnb, cnc);
+            var noOfRec = GetNoRec(dsz1, cnb, cnc);
+
+            //clear PArams
+            chbx_Additional_Manipulations.DataSource = null;
+            for (int i = chbx_Additional_Manipulations.Items.Count - 1; i >= 0; --i)
+                chbx_Additional_Manipulations.Items.RemoveAt(i);
+
+            //AddOrderNo Group Index + order no in group
+            var DisplayGroup = "";
+            for (int j = 0; j < noOfRec; j++)
+            {
+                DisplayGroup = dsz1.Tables[0].Rows[j][3].ToString();
+                var Comments = dsz1.Tables[0].Rows[j][4].ToString();
+                if (Comments.Length == 1) Comments = "0" + Comments;
+                dsz1.Tables[0].Rows[j][5] = GiveOrder(dv, n, DisplayGroup) + Comments;
+            }
+
+            //OrderList of Params based on Group order and then Item in the group order
+            var tmp = "";
+            for (int l = 0; l < noOfRec; l++)
+                for (int m = l + 1; m < noOfRec; m++)
+                {
+                    if (dsz1.Tables[0].Rows[l][1].ToString() == "dlcm_AdditionalManipul89" || dsz1.Tables[0].Rows[m][1].ToString() == "dlcm_AdditionalManipul89")
+                        ;
+                    if (dsz1.Tables[0].Rows[m][5].ToString().ToInt32() < dsz1.Tables[0].Rows[l][5].ToString().ToInt32())
+                    {
+                        tmp = dsz1.Tables[0].Rows[l][0].ToString(); dsz1.Tables[0].Rows[l][0] = dsz1.Tables[0].Rows[m][0].ToString(); dsz1.Tables[0].Rows[m][0] = tmp;
+                        tmp = dsz1.Tables[0].Rows[l][1].ToString(); dsz1.Tables[0].Rows[l][1] = dsz1.Tables[0].Rows[m][1].ToString(); dsz1.Tables[0].Rows[m][1] = tmp;
+                        tmp = dsz1.Tables[0].Rows[l][2].ToString(); dsz1.Tables[0].Rows[l][2] = dsz1.Tables[0].Rows[m][2].ToString(); dsz1.Tables[0].Rows[m][2] = tmp;
+                        tmp = dsz1.Tables[0].Rows[l][3].ToString(); dsz1.Tables[0].Rows[l][3] = dsz1.Tables[0].Rows[m][3].ToString(); dsz1.Tables[0].Rows[m][3] = tmp;
+                        tmp = dsz1.Tables[0].Rows[l][4].ToString(); dsz1.Tables[0].Rows[l][4] = dsz1.Tables[0].Rows[m][4].ToString(); dsz1.Tables[0].Rows[m][4] = tmp;
+                        tmp = dsz1.Tables[0].Rows[l][5].ToString(); dsz1.Tables[0].Rows[l][5] = dsz1.Tables[0].Rows[m][5].ToString(); dsz1.Tables[0].Rows[m][5] = tmp;
+                        tmp = dsz1.Tables[0].Rows[l][6].ToString(); dsz1.Tables[0].Rows[l][6] = dsz1.Tables[0].Rows[m][6].ToString(); dsz1.Tables[0].Rows[m][6] = tmp;
+                    }
+                }
+
+            //add items
+            DisplayGroup = "";
+            var z = 0;
+            for (int k = 0; k < noOfRec; k++)
+            {
+                var Type = dsz1.Tables[0].Rows[k][0].ToString();
+                var Comments = dsz1.Tables[0].Rows[k][1].ToString();
+
+                var DisplayName = dsz1.Tables[0].Rows[k][2].ToString();
+                if (DisplayName == "") continue;
+                if (DisplayGroup != dsz1.Tables[0].Rows[k][3].ToString())
+                {
+                    chbx_Additional_Manipulations.Items.Add(dsz1.Tables[0].Rows[k][3].ToString());
+                    chbx_Additional_Manipulations.SetItemCheckState(z, CheckState.Indeterminate);
+                    z++;
+                }
+                DisplayGroup = dsz1.Tables[0].Rows[k][3].ToString();
+                var DisplayPosition = dsz1.Tables[0].Rows[k][4].ToString();
+                var Groups = dsz1.Tables[0].Rows[k][6].ToString();
+                chbx_Additional_Manipulations.Items.Add(("Yes" == ConfigRepository.Instance()["dlcm_Debug"] ? DisplayPosition + ". " : "")
+                    + DisplayName + " {" + Comments.Replace("dlcm_AdditionalManipul", "") + "}");
+                chbx_Additional_Manipulations.SetItemCheckState(z, Groups.ToLower() == "no" ? CheckState.Unchecked : CheckState.Checked);
+                z++;
+            }
+
+            return chbx_Additional_Manipulations;
+        }
+
         public static void GeneratePackage(object sender, DoWorkEventArgs e)
         {
             Random randomp = new Random();
@@ -2931,6 +3028,10 @@ namespace RocksmithToolkitGUI.DLCManager
                 //if (c("dlcm_MuliThreading") == "No")/*&& form != "DLCManager"*/
                 //    ConfigRepository.Instance()["dlcm_MuliThreading"] = txt_DLC_ID;
                 //else if (c("dlcm_MuliThreading") == txt_DLC_ID) return;
+
+                //get packld
+                //DataSet dms = new DataSet(); dms = SelectFromDB("Main", "SELECT max(val(Pack)) as ID FROM Main", c("dlcm_DBFolder"), cnb, cnc);
+                //if (GetNoRec(dms, cnb, cnc) > 0) packid = (int.Parse(dms.Tables[0].Rows[0].ItemArray[0].ToString()) + 1).ToString();
 
                 string dlcSavePath = "";
                 string h = "";
@@ -3047,7 +3148,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 if (((chbx_Last_Packed && chbx_Last_PackedEnabled) && !(chbx_CopyOld && chbx_CopyOldEnabled)) && (!File.Exists(h) || h == ""))
                 {
                     DataSet dvr = new DataSet(); dvr = SelectFromDB("Pack_AuditTrail", "SELECT TOP 1 PackPath+\"\\\"+FileName FROM Pack_AuditTrail WHERE Platform=\"" + chbx_Format + "\" and CDLC_ID=" + ID + " ORDER BY ID DESC;", "", cnb, cnc);
-                    rec = dvr.Tables[0].Rows.Count;
+                    rec = GetNoRec(dvr, cnb, cnc); //dvr.Tables[0].Rows.Count;
                     if (rec > 0) h = dvr.Tables[0].Rows[0].ItemArray[0].ToString();
                 }
                 if ((!(chbx_Last_Packed && chbx_Last_PackedEnabled) || (chbx_Last_Packed && chbx_Last_PackedEnabled && rec == 0)) && !(chbx_CopyOld && chbx_CopyOldEnabled) && (!File.Exists(h) || h == ""))
@@ -3162,7 +3263,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         {
                             DataSet dus = new DataSet(); dus = SelectFromDB("Arrangements", "SELECT XMLFilePath, ArrangementType FROM Arrangements WHERE CDLC_ID=" + filez.ID + GetArrOfficSQLTxt(arrangoff), "", cnb, cnc);
 
-                            var noOfRec = dus.Tables[0].Rows.Count;
+                            var noOfRec = GetNoRec(dus, cnb, cnc); //dus.Tables[0].Rows.Count;
                             var ST = "";
                             for (i = 0; i <= noOfRec - 1; i++)
                             {
@@ -3261,7 +3362,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         if (updateTonesArrangs)
                         {
                             DataSet dbs = new DataSet(); dbs = SelectFromDB("Tones_GearList", "SELECT * FROM Tones_GearList WHERE Tone_ID in (SELECT ID FROM Tones WHERE CDLC_ID=" + ID + GetArrOfficSQLTxt(arrangoff) + ");", "", cnb, cnc);
-                            var norecx = dbs.Tables.Count > 0 ? dbs.Tables[0].Rows.Count : 0;
+                            var norecx = GetNoRec(dbs, cnb, cnc); //dbs.Tables.Count > 0 ? dbs.Tables[0].Rows.Count : 0;
 
                             if (norecx == 0 && info.TonesRS2014.Count != 0) updateTonesArrangs = false;// MessageBox.Show("Vocals not included as added in the DLCManager tool, but Option 76 is Unselected ergo no DLCManager-DB changes are considered at packing");
                             else updateTonesArrangs = true;
@@ -3271,7 +3372,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         if (!updateTonesArrangs)
                         {
                             DataSet dvs = new DataSet(); dvs = SelectFromDB("Arrangements", "SELECT * FROM Arrangements WHERE CDLC_ID=" + ID + " AND ArrangementType=\"Vocal\"" + GetArrOfficSQLTxt(arrangoff), "", cnb, cnc);
-                            var norec = dvs.Tables.Count > 0 ? dvs.Tables[0].Rows.Count : 0;
+                            var norec = GetNoRec(dvs, cnb, cnc); //dvs.Tables.Count > 0 ? dvs.Tables[0].Rows.Count : 0;
                             bool vocalmissing = true;
                             foreach (var arg in info.Arrangements)//, Type
                             {
@@ -3300,7 +3401,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                     foreach (var arg in info.TonesRS2014)//, Type
                                     {
                                         j = 0; jf++; //jf,tz,j used for debugging
-                                        norec = dfs.Tables[0].Rows.Count;
+                                        norec = GetNoRec(dfs, cnb, cnc); //dfs.Tables[0].Rows.Count;
                                         for (j = 0; j < norec; j++)
                                         {
                                             //if (j == 2 && jf == 3)
@@ -3318,7 +3419,8 @@ namespace RocksmithToolkitGUI.DLCManager
                                                 //dictionary types not saved in the DB yet
                                                 var nrc = 0;
                                                 DataSet dsc = new DataSet(); dsc = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE Tone_ID=" + TID + " AND Gear_Name=\"Amp\" ORDER BY Type DESC;", "", cnb, cnc);
-                                                nrc = dsc.Tables[0].Rows.Count; tz++;//2
+                                                nrc = GetNoRec(dsc, cnb, cnc); //dsc.Tables[0].Rows.Count;
+                                                tz++;//2
                                                 for (int k = 0; k < nrc; k++)
                                                 {
                                                     if (dsc.Tables[0].Rows[k].ItemArray[0].ToString() != "") data.TonesRS2014[j].GearList.Amp.Type = dsc.Tables[0].Rows[k].ItemArray[0].ToString();
@@ -3335,7 +3437,8 @@ namespace RocksmithToolkitGUI.DLCManager
                                                 }
                                                 nrc = 0;
                                                 DataSet dsa = new DataSet(); dsa = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE Tone_ID=" + TID + " AND Gear_Name=\"Cabinet\" ORDER BY Type DESC;", "", cnb, cnc);
-                                                nrc = dsa.Tables[0].Rows.Count; tz++;//3
+                                                nrc = GetNoRec(dsa, cnb, cnc); //dsa.Tables[0].Rows.Count;
+                                                tz++;//3
                                                 for (int k = 0; k < nrc; k++)
                                                 {
                                                     string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
@@ -3352,7 +3455,8 @@ namespace RocksmithToolkitGUI.DLCManager
                                                 }
                                                 nrc = 0;
                                                 DataSet dss1 = new DataSet(); dss1 = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE Tone_ID=" + TID + " AND Gear_Name=\"PostPedal1\" ORDER BY Type DESC;", "", cnb, cnc);
-                                                nrc = dss1.Tables[0].Rows.Count; tz++;//4
+                                                nrc = GetNoRec(dss1, cnb, cnc); //dss1.Tables[0].Rows.Count;
+                                                tz++;//4
                                                 for (int k = 0; k < nrc; k++)
                                                 {
                                                     string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
@@ -3369,7 +3473,8 @@ namespace RocksmithToolkitGUI.DLCManager
                                                 }
                                                 nrc = 0;
                                                 DataSet dss2 = new DataSet(); dss2 = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE Tone_ID=" + TID + " AND Gear_Name=\"PostPedal2\" ORDER BY Type DESC;", "", cnb, cnc);
-                                                nrc = dss2.Tables[0].Rows.Count; tz++;//5
+                                                nrc = GetNoRec(dss2, cnb, cnc); //dss2.Tables[0].Rows.Count; 
+                                                tz++;//5
                                                 for (int k = 0; k < nrc; k++)
                                                 {
                                                     string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
@@ -3387,7 +3492,8 @@ namespace RocksmithToolkitGUI.DLCManager
                                                 }
                                                 nrc = 0;
                                                 DataSet dss3 = new DataSet(); dss3 = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE Tone_ID=" + TID + " AND Gear_Name=\"PostPedal3\" ORDER BY Type DESC;", "", cnb, cnc);
-                                                nrc = dss3.Tables[0].Rows.Count; tz++;//6
+                                                nrc = GetNoRec(dss3, cnb, cnc); //dss3.Tables[0].Rows.Count;
+                                                tz++;//6
                                                 for (int k = 0; k < nrc; k++)
                                                 {
                                                     string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
@@ -3405,7 +3511,8 @@ namespace RocksmithToolkitGUI.DLCManager
                                                 }
                                                 nrc = 0;
                                                 DataSet dss4 = new DataSet(); dss4 = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE Tone_ID=" + TID + " AND Gear_Name=\"PostPedal4\" ORDER BY Type DESC;", "", cnb, cnc);
-                                                nrc = dss4.Tables[0].Rows.Count; tz++; //7
+                                                nrc = GetNoRec(dss4, cnb, cnc); //dss4.Tables[0].Rows.Count; 
+                                                tz++; //7
                                                 for (int k = 0; k < nrc; k++)
                                                 {
                                                     string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
@@ -3424,7 +3531,8 @@ namespace RocksmithToolkitGUI.DLCManager
 
                                                 nrc = 0;
                                                 DataSet dsp1 = new DataSet(); dsp1 = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE Tone_ID=" + TID + " AND Gear_Name=\"PrePedal1\" ORDER BY Type DESC;", "", cnb, cnc);
-                                                nrc = dsp1.Tables[0].Rows.Count; tz++;//8
+                                                nrc = GetNoRec(dsp1, cnb, cnc); //dsp1.Tables[0].Rows.Count;
+                                                tz++;//8
                                                 for (int k = 0; k < nrc; k++)
                                                 {
                                                     string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
@@ -3441,7 +3549,8 @@ namespace RocksmithToolkitGUI.DLCManager
                                                 }
                                                 nrc = 0;
                                                 DataSet dsp2 = new DataSet(); dsp2 = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE Tone_ID=" + TID + " AND Gear_Name=\"PrePedal2\" ORDER BY Type DESC;", "", cnb, cnc);
-                                                nrc = dsp2.Tables[0].Rows.Count; tz++;//9
+                                                nrc = GetNoRec(dsp2, cnb, cnc); //dsp2.Tables[0].Rows.Count; 
+                                                tz++;//9
                                                 for (int k = 0; k < nrc; k++)
                                                 {
                                                     string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
@@ -3459,7 +3568,8 @@ namespace RocksmithToolkitGUI.DLCManager
                                                 }
                                                 nrc = 0;
                                                 DataSet dsp3 = new DataSet(); dsp3 = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE Tone_ID=" + TID + " AND Gear_Name=\"PrePedal3\" ORDER BY Type DESC;", "", cnb, cnc);
-                                                nrc = dsp3.Tables[0].Rows.Count; tz++;//10
+                                                nrc = GetNoRec(dsp3, cnb, cnc); //dsp3.Tables[0].Rows.Count; 
+                                                tz++;//10
                                                 for (int k = 0; k < nrc; k++)
                                                 {
                                                     string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
@@ -3477,7 +3587,8 @@ namespace RocksmithToolkitGUI.DLCManager
                                                 }
                                                 nrc = 0;
                                                 DataSet dsp4 = new DataSet(); dsp4 = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE Tone_ID=" + TID + " AND Gear_Name=\"PrePedal4\" ORDER BY Type DESC;", "", cnb, cnc);
-                                                nrc = dsp4.Tables[0].Rows.Count; tz++;//11
+                                                nrc = GetNoRec(dsp4, cnb, cnc); //dsp4.Tables[0].Rows.Count;
+                                                tz++;//11
                                                 for (int k = 0; k < nrc; k++)
                                                 {
                                                     string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
@@ -3496,7 +3607,8 @@ namespace RocksmithToolkitGUI.DLCManager
 
                                                 nrc = 0;
                                                 DataSet dsr1 = new DataSet(); dsr1 = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE Tone_ID=" + TID + " AND Gear_Name=\"Rack1\" ORDER BY Type DESC;", "", cnb, cnc);
-                                                nrc = dsr1.Tables[0].Rows.Count; tz++;//12
+                                                nrc = GetNoRec(dsr1, cnb, cnc); //dsr1.Tables[0].Rows.Count;
+                                                tz++;//12
                                                 for (int k = 0; k < nrc; k++)
                                                 {
                                                     string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
@@ -3513,7 +3625,8 @@ namespace RocksmithToolkitGUI.DLCManager
                                                 }
                                                 nrc = 0;
                                                 DataSet dsr2 = new DataSet(); dsr2 = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE Tone_ID=" + TID + " AND Gear_Name=\"Rack2\" ORDER BY Type DESC;", "", cnb, cnc);
-                                                nrc = dsr2.Tables[0].Rows.Count; tz++;//13
+                                                nrc = GetNoRec(dsr2, cnb, cnc); //dsr2.Tables[0].Rows.Count;
+                                                tz++;//13
                                                 for (int k = 0; k < nrc; k++)
                                                 {
                                                     string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
@@ -3531,7 +3644,8 @@ namespace RocksmithToolkitGUI.DLCManager
                                                 }
                                                 nrc = 0;
                                                 DataSet dsr3 = new DataSet(); dsr3 = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE Tone_ID=" + TID + " AND Gear_Name=\"Rack3\" ORDER BY Type DESC;", "", cnb, cnc);
-                                                nrc = dsr3.Tables[0].Rows.Count; tz++;//14
+                                                nrc = GetNoRec(dsr3, cnb, cnc); //dsr3.Tables[0].Rows.Count; 
+                                                tz++;//14
                                                 for (int k = 0; k < nrc; k++)
                                                 {
                                                     string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
@@ -3549,7 +3663,8 @@ namespace RocksmithToolkitGUI.DLCManager
                                                 }
                                                 nrc = 0;
                                                 DataSet dsr4 = new DataSet(); dsr4 = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE Tone_ID=" + TID + " AND Gear_Name=\"Rack4\" ORDER BY Type DESC;", "", cnb, cnc);
-                                                nrc = dsr4.Tables[0].Rows.Count; tz++;//15
+                                                nrc = GetNoRec(dsr4, cnb, cnc); //dsr4.Tables[0].Rows.Count; 
+                                                tz++;//15
                                                 for (int k = 0; k < nrc; k++)
                                                 {
                                                     string[] strArrK = null; string[] strArrV = null; char[] splitchar = { ';' };
@@ -3578,7 +3693,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                 norec = 0;
                                 string sds = "";
                                 DataSet ds = new DataSet(); ds = SelectFromDB("Arrangements", "SELECT * FROM Arrangements WHERE CDLC_ID = " + ID + GetArrOfficSQLTxt(arrangoff), "", cnb, cnc);
-                                norec = ds.Tables[0].Rows.Count;
+                                norec = GetNoRec(ds, cnb, cnc); //ds.Tables[0].Rows.Count;
                                 if (norec > data.Arrangements.Count)
                                 {
                                     for (int k = 0; k < norec; k++)
@@ -3950,7 +4065,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         + ";" + SongRecord[0].ToneDetails + ";" + "Yes"
                         + ";" + ";" + "Yes" + ";" + "Yes" + ConfigRepository.Instance()["dlcm_EoFPath"]
                         + ";" + ";" + SongRecord[0].PackingDate + ";" + SongRecord[0].UpdateVersionDate + ";" + SongRecord[0].BasedOn_GP
-                        + "Author,DLC_Name,TrackNo,Version,CDLCID,txt_EoFPath,YBLink,BasedOnYB,BasedOnCF,TabLinks,Spotify,Description,toDo,ToneDetails,SaveInVerisonInfo,SaveInDB,SaveRemotely,SaveRemotelyPath,PackageDate,UpdateDate,BasedOn_GP";
+                        + "Author,DLC_Name,TrackNo,Version,CDLCID,txt_EoFPath,YBLink,BasedOnYB,BasedOnCF,TabLinks,Spotify,Description,toDo,ToneDetails,SaveInVerisonInfo,SaveInDB,SaveRemotely,SaveRemotelyPath,PackageDate,UpdateDate,BasedOn_GP;";
 
                         data.ToolkitInfo.PackageComment = ConfigRepository.Instance()["dlcm_GlobalTempVariable"] + data.ToolkitInfo.PackageComment;
                         ConfigRepository.Instance()["dlcm_Global2TempVariable"] = "\nSongDisplayName: " + data.SongInfo.SongDisplayName +
@@ -3994,11 +4109,11 @@ namespace RocksmithToolkitGUI.DLCManager
                         if (c("dlcm_AdditionalManipul98") == "Yes" && form != "MainDB")
                         {
                             DataSet dvr = new DataSet(); if (chbx_PC == "PC") dvr = SelectFromDB("Pack_AuditTrail", "SELECT * FROM Pack_AuditTrail WHERE CDLC_ID=" + filez.ID + " AND Platform =\"Pc\"", "", cnb, cnc);
-                            if (dvr.Tables.Count > 0) if (dvr.Tables[0].Rows.Count > 0) chbx_PC = "";
+                            if (GetNoRec(dvr, cnb, cnc) > 0) chbx_PC = "";
                             DataSet dvd = new DataSet(); if (chbx_Mac == "Mac") dvd = SelectFromDB("Pack_AuditTrail", "SELECT * FROM Pack_AuditTrail WHERE CDLC_ID=" + filez.ID + " AND Platform =\"Mac\"", "", cnb, cnc);
-                            if (dvd.Tables.Count > 0) if (dvd.Tables[0].Rows.Count > 0) chbx_Mac = "";
+                            if (GetNoRec(dvd, cnb, cnc) > 0) chbx_Mac = "";
                             DataSet dvx = new DataSet(); if (chbx_PS3 == "PS3") dvx = SelectFromDB("Pack_AuditTrail", "SELECT * FROM Pack_AuditTrail WHERE CDLC_ID=" + filez.ID + " AND Platform =\"PS3\"", "", cnb, cnc);
-                            if (dvx.Tables.Count > 0) if (dvx.Tables[0].Rows.Count > 0) chbx_PS3 = "";
+                            if (GetNoRec(dvx, cnb, cnc) > 0) chbx_PS3 = "";
                         }
 
                         if (chbx_PC == "PC")
@@ -4196,7 +4311,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 }
                 //Add Pack Audit Trail
 
-                cnb.Close();//prb wont work as variable only avail in utilities 
+                //cnb.Close();//prb wont work as variable only avail in utilities 
             }
             catch (Exception ex)
             {
@@ -4244,49 +4359,70 @@ namespace RocksmithToolkitGUI.DLCManager
             var PS3F = 0; var PCF = 0; var MACF = 0; var XBOXF = 0; var cmds = ""; var cpy = 0;
             ////DataSet dnz = new DataSet(); dnz = SelectFromDB("Main", cmds, null, cnb, cnc);
             ////if (dnz.Tables.Count > 0) total = dmz.Tables[0].Rows.Count;
-            cmds = "SELECT COUNT(ID) as ID FROM Pack_AuditTrail where Pack=\"" + pack + "\" AND Platform=\"PS3\"";
-            DataSet dmz = new DataSet(); dmz = SelectFromDB("Pack_AuditTrail", cmds, null, cnb, cnc);
-            if (dmz.Tables.Count > 0) if (dmz.Tables[0].Rows.Count > 0) PS3P = dmz.Tables[0].Rows[0].ItemArray[0].ToString().ToInt32();
-            cmds = "SELECT COUNT(ID) as ID FROM Pack_AuditTrail where Pack=\"" + pack + "\" AND Platform=\"Pc\"";
-            dmz.Dispose(); dmz = new DataSet(); dmz = SelectFromDB("Pack_AuditTrail", cmds, null, cnb, cnc);
-            if (dmz.Tables.Count > 0) if (dmz.Tables[0].Rows.Count > 0) PCP = dmz.Tables[0].Rows[0].ItemArray[0].ToString().ToInt32();
-            dmz.Dispose(); dmz = new DataSet(); dmz = SelectFromDB("Pack_AuditTrail", "SELECT COUNT(ID) as ID FROM Pack_AuditTrail where Pack=\"" + pack + "\" AND Platform=\"Mac\"", null, cnb, cnc);
-            if (dmz.Tables.Count > 0) if (dmz.Tables[0].Rows.Count > 0) MACP = dmz.Tables[0].Rows[0].ItemArray[0].ToString().ToInt32();
-            dmz.Dispose(); dmz = new DataSet(); dmz = SelectFromDB("Pack_AuditTrail", "SELECT COUNT(ID) as ID FROM Pack_AuditTrail where Pack=\"" + pack + "\" AND Platform=\"XBOX360\"", null, cnb, cnc);
-            if (dmz.Tables.Count > 0) if (dmz.Tables[0].Rows.Count > 0) XBOXP = dmz.Tables[0].Rows[0].ItemArray[0].ToString().ToInt32();
-            //DataSet dmz = new DataSet(); dmz = SelectFromDB("Pack_AuditTrail", "SELECT Sum(ID) FROM Pack_AuditTrail where Pack=\"" + pack + "\" AND Platform=\"Pc\"", txt_DBFolder.Text, cnb, cnc);
-            //if (dmz.Tables.Count > 0) if (dmz.Tables[0].Rows.Count > 0) XBOXP = dmz.Tables[0].Rows.Count;
-            //DataSet dmz = new DataSet(); dmz = SelectFromDB("Pack_AuditTrail", "SELECT Sum(ID) FROM Pack_AuditTrail where Pack=\"" + pack + "\" AND Platform=\"Pc\"", txt_DBFolder.Text, cnb, cnc);
-            //if (dmz.Tables.Count > 0) if (dmz.Tables[0].Rows.Count > 0) XBOXP = dmz.Tables[0].Rows.Count;dmz = SelectFromDB("Pack_AuditTrail", "SELECT Sum(ID) FROM Pack_AuditTrail where Pack=\"" + pack + "\" AND Platform=\"PS3\"", txt_DBFolder.Text, cnb, cnc);
-            dmz.Dispose(); dmz = new DataSet(); dmz = SelectFromDB("Pack_AuditTrail", "SELECT COUNT(ID) as ID FROM Pack_AuditTrail where Pack=\"" + pack + "\" AND Platform=\"PS3\" AND FTPed=\"Yes\"", null, cnb, cnc);
-            if (dmz.Tables.Count > 0) if (dmz.Tables[0].Rows.Count > 0) PS3F = dmz.Tables[0].Rows[0].ItemArray[0].ToString().ToInt32();
-            dmz.Dispose(); dmz = new DataSet(); dmz = SelectFromDB("Pack_AuditTrail", "SELECT COUNT(ID) FROM Pack_AuditTrail where Pack=\"" + pack + "\" AND Platform=\"Pc\" AND FTPed=\"Yes\"", null, cnb, cnc);
-            if (dmz.Tables.Count > 0) if (dmz.Tables[0].Rows.Count > 0) PCF = dmz.Tables[0].Rows[0].ItemArray[0].ToString().ToInt32();
-            dmz.Dispose(); dmz = new DataSet(); dmz = SelectFromDB("Pack_AuditTrail", "SELECT COUNT(ID) as ID FROM Pack_AuditTrail where Pack=\"" + pack + "\" AND Platform=\"Mac\" AND FTPed=\"Yes\"", null, cnb, cnc);
-            if (dmz.Tables.Count > 0) if (dmz.Tables[0].Rows.Count > 0) MACF = dmz.Tables[0].Rows[0].ItemArray[0].ToString().ToInt32();
-            dmz.Dispose(); dmz = new DataSet(); dmz = SelectFromDB("Pack_AuditTrail", "SELECT COUNT(ID) as ID FROM Pack_AuditTrail where Pack=\"" + pack + "\" AND Platform=\"XBOX360\" AND FTPed=\"Yes\"", null, cnb, cnc);
-            if (dmz.Tables.Count > 0) if (dmz.Tables[0].Rows.Count > 0) XBOXF = dmz.Tables[0].Rows[0].ItemArray[0].ToString().ToInt32();
-            dmz.Dispose(); dmz = new DataSet(); dmz = SelectFromDB("Pack_AuditTrail", "SELECT COUNT(ID) as ID FROM Pack_AuditTrail where Pack=\"" + pack + "\" AND FTPed=\"Yes\"", null, cnb, cnc);
-            if (dmz.Tables.Count > 0) if (dmz.Tables[0].Rows.Count > 0) cpy = dmz.Tables[0].Rows[0].ItemArray[0].ToString().ToInt32();
-            dmz.Dispose(); dmz = new DataSet(); dmz = SelectFromDB("LogPackingError", "SELECT COUNT(ID) as ID FROM LogPackingError where Pack=\"" + pack + "\"", null, cnb, cnc);
-            if (dmz.Tables.Count > 0) if (dmz.Tables[0].Rows.Count > 0) FailedP = dmz.Tables[0].Rows[0].ItemArray[0].ToString().ToInt32();
+            var dmz = "SELECT ID FROM Pack_AuditTrail where Pack=\"" + pack + "\" AND UCASE(Platform)=\"PS3\"";
+            //DataSet /*dmz*/ = new DataSet(); dmz = SelectFromDB("Pack_AuditTrail", cmds, null, cnb, cnc);
+            // if (dmz.Tables.Count > 0) if (dmz.Tables[0].Rows.Count > 0) 
+            PS3P = GetNoRecords(dmz, cnb, cnc);//dmz.Tables[0].Rows[0].ItemArray[0].ToString().ToInt32();
+            dmz = "SELECT ID FROM Pack_AuditTrail where Pack=\"" + pack + "\" AND UCASE(Platform)=\"PC\"";
+            //dmz.Dispose(); dmz = new DataSet(); dmz = SelectFromDB("Pack_AuditTrail", cmds, null, cnb, cnc);
+            //if (dmz.Tables.Count > 0) if (dmz.Tables[0].Rows.Count > 0)
+            PCP = GetNoRecords(dmz, cnb, cnc); //dmz.Tables[0].Rows[0].ItemArray[0].ToString().ToInt32();
+                                               //dmz.Dispose(); dmz = new DataSet(); dmz = SelectFromDB("Pack_AuditTrail",
+            dmz = "SELECT COUNT(ID) as ID FROM Pack_AuditTrail where Pack=\"" + pack + "\" AND UCASE(Platform)=\"MAC\"";//, null, cnb, cnc);// ;
+                                                                                                                 //if (dmz.Tables.Count > 0) if (dmz.Tables[0].Rows.Count > 0)
+                                                                                                                 //        MACP = GetNoRec(dmz, cnb, cnc); //dmz.Tables[0].Rows[0].ItemArray[0].ToString().ToInt32();
+                                                                                                                 //dmz.Dispose(); dmz = new DataSet(); dmz = SelectFromDB("Pack_AuditTrail", 
+            dmz = "SELECT ID FROM Pack_AuditTrail where Pack=\"" + pack + "\" AND UCASE(Platform)=\"XBOX360\"";
+            //    , null, cnb, cnc);
+            //if (dmz.Tables.Count > 0) if (dmz.Tables[0].Rows.Count > 0) 
+            XBOXP = GetNoRecords(dmz, cnb, cnc); //dmz.Tables[0].Rows[0].ItemArray[0].ToString().ToInt32();
+                                                 //DataSet dmz = new DataSet(); dmz = SelectFromDB("Pack_AuditTrail", "SELECT Sum(ID) FROM Pack_AuditTrail where Pack=\"" + pack + "\" AND Platform=\"Pc\"", txt_DBFolder.Text, cnb, cnc);
+                                                 //if (dmz.Tables.Count > 0) if (dmz.Tables[0].Rows.Count > 0) XBOXP = dmz.Tables[0].Rows.Count;
+                                                 //DataSet dmz = new DataSet(); dmz = SelectFromDB("Pack_AuditTrail", "SELECT Sum(ID) FROM Pack_AuditTrail where Pack=\"" + pack + "\" AND Platform=\"Pc\"", txt_DBFolder.Text, cnb, cnc);
+                                                 //if (dmz.Tables.Count > 0) if (dmz.Tables[0].Rows.Count > 0) XBOXP = dmz.Tables[0].Rows.Count;dmz = SelectFromDB("Pack_AuditTrail", "SELECT Sum(ID) FROM Pack_AuditTrail where Pack=\"" + pack + "\" AND Platform=\"PS3\"", txt_DBFolder.Text, cnb, cnc);
+                                                 //dmz.Dispose(); dmz = new DataSet(); dmz = SelectFromDB("Pack_AuditTrail", 
+            dmz = "SELECT ID FROM Pack_AuditTrail where Pack=\"" + pack + "\" AND UCASE(Platform)=\"PS3\" AND FTPed=\"Yes\"";
+            //    , null, cnb, cnc);
+            //if (dmz.Tables.Count > 0) if (dmz.Tables[0].Rows.Count > 0) 
+            PS3F = GetNoRecords(dmz, cnb, cnc); //dmz.Tables[0].Rows[0].ItemArray[0].ToString().ToInt32();
+                                                //dmz.Dispose(); dmz = new DataSet(); dmz = SelectFromDB("Pack_AuditTrail",
+            dmz = "SELECT ID FROM Pack_AuditTrail where Pack=\"" + pack + "\" AND UCASE(Platform)=\"PC\" AND FTPed=\"Yes\"";
+            //, null, cnb, cnc);
+            //if (dmz.Tables.Count > 0) if (dmz.Tables[0].Rows.Count > 0) 
+            PCF = GetNoRecords(dmz, cnb, cnc); //dmz.Tables[0].Rows[0].ItemArray[0].ToString().ToInt32();
+                                               //dmz.Dispose(); dmz = new DataSet(); dmz = SelectFromDB("Pack_AuditTrail", 
+            dmz = "SELECT ID FROM Pack_AuditTrail where Pack=\"" + pack + "\" AND UCASE(Platform)=\"MAC\" AND FTPed=\"Yes\"";//, null, cnb, cnc);
+                                                                                                                                   //if (dmz.Tables.Count > 0) if (dmz.Tables[0].Rows.Count > 0) 
+            MACF = GetNoRecords(dmz, cnb, cnc); //dmz.Tables[0].Rows[0].ItemArray[0].ToString().ToInt32();
+                                                //dmz.Dispose(); dmz = new DataSet(); dmz = SelectFromDB("Pack_AuditTrail", 
+            dmz = "SELECT ID FROM Pack_AuditTrail where Pack=\"" + pack + "\" AND UCASE(Platform)=\"XBOX360\" AND FTPed=\"Yes\"";//, null, cnb, cnc);
+                                                                                                                                       // if (dmz.Tables.Count > 0) if (dmz.Tables[0].Rows.Count > 0) 
+            XBOXF = GetNoRecords(dmz, cnb, cnc); //dmz.Tables[0].Rows[0].ItemArray[0].ToString().ToInt32();
+                                                 // dmz.Dispose(); dmz = new DataSet(); dmz = SelectFromDB("Pack_AuditTrail",
+            dmz = "SELECT ID FROM Pack_AuditTrail where Pack=\"" + pack + "\" AND FTPed=\"Yes\"";// ;// ;// ;
+                                                                                                              //if (dmz.Tables.Count > 0) if (dmz.Tables[0].Rows.Count > 0) 
+            cpy = GetNoRecords(dmz, cnb, cnc); //dmz.Tables[0].Rows[0].ItemArray[0].ToString().ToInt32();
+                                               //dmz.Dispose(); dmz = new DataSet(); dmz = SelectFromDB("LogPackingError",
+            dmz = "SELECT ID FROM LogPackingError where Pack=\"" + pack + "\"";
+            //    , null, cnb, cnc) ;
+            //if (dmz.Tables.Count > 0) if (dmz.Tables[0].Rows.Count > 0) 
+            FailedP = GetNoRecords(dmz, cnb, cnc); //dmz.Tables[0].Rows[0].ItemArray[0].ToString().ToInt32();
 
-            dmz.Dispose(); dmz = new DataSet(); dmz = SelectFromDB("LogPackingError", "SELECT CDLC_ID, Comments FROM LogPackingError where Pack=\"" + pack + "\"", null, cnb, cnc);
-            var noOfRecs = 0;
-            if (dmz.Tables.Count > 0) if (dmz.Tables[0].Rows.Count > 0) noOfRecs = dmz.Tables.Count == 0 ? 0 : dmz.Tables[0].Rows.Count;
+            var gmz = new DataSet(); gmz = SelectFromDB("LogPackingError", "SELECT CDLC_ID, Comments FROM LogPackingError where Pack=\"" + pack + "\"", null, cnb, cnc); ;
+            var noOfRecs = GetNoRec(gmz, cnb, cnc);//if (dmz.Tables.Count > 0) if (dmz.Tables[0].Rows.Count > 0)  = dmz.Tables.Count == 0 ? 0 : dmz.Tables[0].Rows.Count;
             var packapth = "";
             for (var j = 0; j < noOfRecs; j++)
             {
-                var dnz = new DataSet(); dnz = SelectFromDB("Main", "SELECT Artist, Song_Title FROM Main where ID=" + dmz.Tables[0].Rows[j].ItemArray[0].ToString() + "", null, cnb, cnc);
+                var dnz = new DataSet(); dnz = SelectFromDB("Main", "SELECT Artist, Song_Title FROM Main where ID=" + gmz.Tables[0].Rows[j].ItemArray[0].ToString() + "", null, cnb, cnc);
                 //if (dnz.Tables.Count > 0) if (dnz.Tables[0].Rows.Count > 0) noOfRecs = dmz.Tables[0].Rows.Count;
-                ListNP += j + ". " + dmz.Tables[0].Rows[j].ItemArray[0].ToString() + "-" + dnz.Tables[0].Rows[0].ItemArray[0].ToString() + "-" + dnz.Tables[0].Rows[0].ItemArray[1].ToString() + "-" +
-                    dmz.Tables[0].Rows[j].ItemArray[1].ToString() + "\n";
+                ListNP += j + ". " + gmz.Tables[0].Rows[j].ItemArray[0].ToString() + "-" + dnz.Tables[0].Rows[0].ItemArray[0].ToString() + "-" + dnz.Tables[0].Rows[0].ItemArray[1].ToString() + "-" +
+                    gmz.Tables[0].Rows[j].ItemArray[1].ToString() + "\n";
                 //dnz.Dispose();
                 //packapth = dmz.Tables[0].Rows[j].ItemArray[1].ToString();
             }
 
             var cmz = new DataSet(); cmz = SelectFromDB("Pack_AuditTrail", "SELECT FileName, PackPath, CDLC_ID FROM Pack_AuditTrail where Pack=\"" + pack + "\"", null, cnb, cnc);
-            noOfRecs = dmz.Tables.Count == 0 ? 0 : cmz.Tables[0].Rows.Count;
+            noOfRecs = GetNoRec(cmz, cnb, cnc);//dmz.Tables.Count == 0 ? 0 : cmz.Tables[0].Rows.Count;
             for (var k = 0; k < noOfRecs; k++)
                 //{
                 ListP += k + ". " + cmz.Tables[0].Rows[k].ItemArray[2].ToString() + " - " + cmz.Tables[0].Rows[k].ItemArray[0].ToString() + "\n";
@@ -4327,10 +4463,10 @@ namespace RocksmithToolkitGUI.DLCManager
         public static string AddTrackStart2Lyrics(string SongID, OleDbConnection cnb, bool arrangoff, SQLite.SQLiteConnection cnc)
         {
             DataSet dup = new DataSet(); dup = SelectFromDB("Arrangements", "SELECT Max(Part) FROM Arrangements WHERE CDLC_ID=" + SongID + GetArrOfficSQLTxt(arrangoff), "", cnb, cnc);
-            var noOfRecP = dup.Tables.Count > 0 ? (string.IsNullOrEmpty(dup.Tables[0].Rows[0].ItemArray[0].ToString()) ? 0 : int.Parse(dup.Tables[0].Rows[0].ItemArray[0].ToString())) : 0;
-
+            var noOfRecP = GetNoRec(dup, cnb, cnc) > 0 ? (string.IsNullOrEmpty(dup.Tables[0].Rows[0].ItemArray[0].ToString()) ? 0 : int.Parse(dup.Tables[0].Rows[0].ItemArray[0].ToString())) : 0;
+            //dup.Tables.Count
             DataSet dus = new DataSet(); dus = SelectFromDB("Arrangements", "SELECT XMLFilePath, ArrangementType, RouteMask, Start_Time, Bonus, Part FROM Arrangements WHERE CDLC_ID=" + SongID + GetArrOfficSQLTxt(arrangoff), "", cnb, cnc);
-            var noOfRec = dus.Tables[0].Rows.Count;
+            var noOfRec = GetNoRec(dus, cnb, cnc);//dus.Tables[0].Rows.Count;
             var XMLFilePath = ""; var j = 0; var i = 0; var ArrangementType = "";
             for (i = 0; i <= noOfRec - 1; i++)
             {
@@ -4453,10 +4589,10 @@ namespace RocksmithToolkitGUI.DLCManager
             var tsst = "Start TH ..."; var timestamp = UpdateLog(DateTime.Now, tsst, true, c("dlcm_TempPath"), "", "", null, null);
 
             DataSet dup = new DataSet(); dup = SelectFromDB("Arrangements", "SELECT Max(Part) FROM Arrangements WHERE CDLC_ID=" + SongID + GetArrOfficSQLTxt(arrangoff), "", cnb, cnc);
-            var noOfRecP = dup.Tables.Count > 0 ? (string.IsNullOrEmpty(dup.Tables[0].Rows[0].ItemArray[0].ToString()) ? 0 : int.Parse(dup.Tables[0].Rows[0].ItemArray[0].ToString())) : 0;
-
+            var noOfRecP = GetNoRec(dup, cnb, cnc) > 0 ? (string.IsNullOrEmpty(dup.Tables[0].Rows[0].ItemArray[0].ToString()) ? 0 : int.Parse(dup.Tables[0].Rows[0].ItemArray[0].ToString())) : 0;
+            //dup.Tables.Count
             DataSet dus = new DataSet(); dus = SelectFromDB("Arrangements", "SELECT XMLFilePath, Bonus, Comments, ArrangementType, RouteMask, Start_Time, Part FROM Arrangements WHERE CDLC_ID=" + SongID + GetArrOfficSQLTxt(arrangoff), "", cnb, cnc);
-            var noOfRec = dus.Tables[0].Rows.Count;
+            var noOfRec = GetNoRec(dus, cnb, cnc);//dus.Tables[0].Rows.Count;
             float FirstLyric = 5000;
             float FirstVocal = 0; var i = 0;
             for (i = 0; i <= noOfRec - 1; i++)
@@ -5015,7 +5151,7 @@ namespace RocksmithToolkitGUI.DLCManager
             var DB_Path = dbp;
             pB_ReadDLCs.Value = 0;
             DataSet dus = new DataSet(); dus = SelectFromDB("Standardization", cmd1, ConfigRepository.Instance()["dlcm_DBFolder"].ToString(), cnb, cnc);
-            var norec = dus.Tables.Count > 0 ? dus.Tables[0].Rows.Count : 0;
+            var norec = GetNoRec(dus, cnb, cnc);//dus.Tables.Count > 0 ? dus.Tables[0].Rows.Count : 0;
             pB_ReadDLCs.Maximum = norec;
             var tsst = "Applying " + norec + "corrections"; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
 
@@ -5069,7 +5205,7 @@ namespace RocksmithToolkitGUI.DLCManager
         // Insert any translation if not already existing
         {
             var tst = "Running Translation_And_Correction..."; var timestamp = DateTime.Now; timestamp = UpdateLog(timestamp, tst, true, c("dlcm_TempPath"), "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
-            var stage = 0; var maxtranslationprocesse = 12;
+            var stage = 0; var maxtranslationprocesse = 14;
             //Bug-Fix: Make sure no Album & Artist are blank
             var cmd1 = " WHERE Artist is null OR Artist=\"\""; timestamp = UpdateLog(timestamp, "0/" + maxtranslationprocesse + "Standardization bug fix " + cmd1 + ": " + GetNoRecords("SELECT ID FROM Standardization" + cmd1, cnb, cnc).ToString(), true, c("dlcm_TempPath"), "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
             var gdus = UpdateDB("Standardization", "UPDATE Standardization SET Artist = \"xxx\" " + cmd1, cnb, cnc);
@@ -5125,7 +5261,7 @@ namespace RocksmithToolkitGUI.DLCManager
             if (c("dlcm_GroupIn_GroupOut2") != "") go += ApplyGroupRules(cnb, cnc, c("dlcm_GroupIn_GroupOut2"), false).ToInt32();
             if (c("dlcm_GroupIn_GroupOut3") != "") go += ApplyGroupRules(cnb, cnc, c("dlcm_GroupIn_GroupOut3"), false).ToInt32();
 
-            //Apply YearCorrection
+            //Apply alternate Corrections
             pB_ReadDLCs.Maximum = maxtranslationprocesse; stage++; pB_ReadDLCs.Value = stage; tsst = stage + "/" + maxtranslationprocesse + " Clear Alternates and Multiply Groups per Alternates"; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
             var mg = CleanAlternates_and_MultiplyGroups(cnb, cnc, pB_ReadDLCs);
 
@@ -5171,7 +5307,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //int aa = 0;
             pB_ReadDLCs.Value = 0; pB_ReadDLCs.Step = 1;
             DataSet dus = new DataSet(); dus = SelectFromDB("Standardization", cmd1, ConfigRepository.Instance()["dlcm_DBFolder"].ToString(), cnb, cnc);
-            var norec = dus.Tables.Count == 0 ? 0 : dus.Tables[0].Rows.Count;
+            var norec = GetNoRec(dus, cnb, cnc);//dus.Tables.Count == 0 ? 0 : dus.Tables[0].Rows.Count;
             var cnt = 0;
             if (norec > 0)
                 foreach (DataRow dataRow in dus.Tables[0].Rows)
@@ -5218,12 +5354,12 @@ namespace RocksmithToolkitGUI.DLCManager
             //InsertIntoDBwValues("Standardization", insertcmdd, insertvalues, cnb, 0);
             var cmd1 = "SELECT distinct Artist, Album FROM Main ORDER BY Artist";
             DataSet dgs = new DataSet(); dgs = SelectFromDB("Main", cmd1, "", cnb, cnc);
-            var noOfRec = dgs.Tables.Count == 0 ? 0 : dgs.Tables[0].Rows.Count;
+            var noOfRec = GetNoRec(dgs, cnb, cnc);//dgs.Tables.Count == 0 ? 0 : dgs.Tables[0].Rows.Count;
             var cmd2 = "SELECT DISTINCT(Switch([S].[Artist_Correction] <> \"\", [S].[Artist_Correction], 1=1, [S].[Artist])) AS ArtistN" +
                 ", (Switch(S.Album_Correction <> \"\", [S].[Album_Correction], 1=1, [S].[Album])) AS AlbumN FROM Standardization AS S" +
                 " ORDER BY Switch([S].[Artist_Correction] <> \"\", [S].[Artist_Correction], 1=1, [S].[Artist])";
             DataSet dg = new DataSet(); dg = SelectFromDB("Standardization", cmd2, "", cnb, cnc);
-            var noOfRecz = dg.Tables.Count == 0 ? 0 : dg.Tables[0].Rows.Count;
+            var noOfRecz = GetNoRec(dg, cnb, cnc);//dg.Tables.Count == 0 ? 0 : dg.Tables[0].Rows.Count;
             var found = false/*; var album = ""; var artist = ""*/; var tz = 0; var tsst = "";
             if (noOfRec > 0 && noOfRecz > 0)
                 for (var l = 0; l < noOfRec; l++)
@@ -5261,7 +5397,7 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             var timestamp = DateTime.Now; var tsst = "";
             DataSet dr = new DataSet(); dr = SelectFromDB("Standardization", "SELECT Artist, Album, Artist_Correction, Album_Correction, ID FROM Standardization ORDER BY Artist", "", cnb, cnc);
-            var noOfRec = dr.Tables.Count == 0 ? 0 : dr.Tables[0].Rows.Count;
+            var noOfRec = GetNoRec(dr, cnb, cnc);//dr.Tables.Count == 0 ? 0 : dr.Tables[0].Rows.Count;
             var IDs = ""; var tz = 0;
             if (noOfRec > 0)
                 for (var l = 0; l < noOfRec; l++)
@@ -5300,7 +5436,8 @@ namespace RocksmithToolkitGUI.DLCManager
             //+
             //" ORDER BY ID;";
             DataSet dfz = new DataSet(); dfz = SelectFromDB("Standardization", cmd, "", cnb, cnc);
-            var norecs = dfz.Tables.Count > 0 ? dfz.Tables[0].Rows.Count : 0; var tz = 0;
+            var norecs = GetNoRec(dfz, cnb, cnc);//dfz.Tables.Count > 0 ? dfz.Tables[0].Rows.Count : 0; 
+            var tz = 0;
             if (norecs > 0)
                 foreach (DataRow dataRow in dfz.Tables[0].Rows)
                 {
@@ -5323,8 +5460,8 @@ namespace RocksmithToolkitGUI.DLCManager
                     {
                         var dus = UpdateDB("Standardization", "UPDATE Standardization SET SpotifyArtistID = \"" + SpotifyArtistID + "\",SpotifyAlbumID = \"" + SpotifyAlbumID + "\",SpotifyAlbumURL = \""
                         + SpotifyAlbumURL + "\",SpotifyAlbumPath = \"" + SpotifyAlbumPath + "\" " + cmd1, cnb, cnc);
-                        tsst = "Multiplying spotify :" + i + "/" + dfz.Tables[0].Rows.Count + " for " + cmd1 + ", " + norec + " times."; UpdateLog(timestamp, tsst, false, c("dlcm_TempPath"), "", "", null, null);
-                    }
+                        tsst = "Multiplying spotify :" + i + "/" + GetNoRec(dfz, cnb, cnc) + " for " + cmd1 + ", " + norec + " times."; UpdateLog(timestamp, tsst, false, c("dlcm_TempPath"), "", "", null, null);
+                    }/*dfz.Tables[0].Rows.Count*/
                 }
             else UpdateLog(timestamp, "no spotify to multiply for " + cmd, false, c("dlcm_TempPath"), "", "", null, null);
             tsst = "Multiplying spotify :" + i + "/" + tz + " times."; UpdateLog(timestamp, tsst, false, c("dlcm_TempPath"), "", "", null, null);
@@ -5373,7 +5510,7 @@ namespace RocksmithToolkitGUI.DLCManager
             var tz = 0;
             //NoRec = dgt.Tables[0].Rows.Count;
             //pB_ReadDLCs.Maximum = NoRec;
-            if (dgt.Tables.Count > 0)
+            if (GetNoRec(dgt, cnb, cnc) > 0)/*dgt.Tables.Count*/
                 foreach (DataRow dataRow in dgt.Tables[0].Rows)
                 {
                     var artist_c = dataRow.ItemArray[0].ToString();
@@ -5420,13 +5557,13 @@ namespace RocksmithToolkitGUI.DLCManager
 
             var cmd = "SELECT ID FROM Main WHERE Artist=\"" + artist + "\" AND Album=\"" + album + "\"";
             DataSet dgz = new DataSet(); dgz = SelectFromDB("Main", cmd, "", cnb, cnc);
-            int norecs = dgz.Tables.Count > 0 ? dgz.Tables[0].Rows.Count : 0;
+            int norecs = GetNoRec(dgz, cnb, cnc);//dgz.Tables.Count > 0 ? dgz.Tables[0].Rows.Count : 0;
             if (norecs > 0) foreach (DataRow dataRow in dgz.Tables[0].Rows) ids += dataRow.ItemArray[0].ToString() + ", ";
             if (withlog) UpdateLog(timestamp, "get all same artist, album(" + norecs + "):" + ids, false, c("dlcm_TempPath"), "", "MainDB", null, null);
 
             cmd = "SELECT ID FROM Main WHERE Artist=\"" + artist + "\" AND Album like \"%" + album + "%\"";
             DataSet dhz = new DataSet(); dhz = SelectFromDB("Main", cmd, "", cnb, cnc);
-            norecs = dhz.Tables.Count > 0 ? dhz.Tables[0].Rows.Count : 0;
+            norecs = GetNoRec(dhz, cnb, cnc);//dhz.Tables.Count > 0 ? dhz.Tables[0].Rows.Count : 0;
             if (norecs > 0) foreach (DataRow dataRow in dhz.Tables[0].Rows) ids += dataRow.ItemArray[0].ToString() + ", ";
             if (withlog) UpdateLog(timestamp, "get all same artist similar album(" + norecs + "):" + ids, false, c("dlcm_TempPath"), "", "MainDB", null, null);
 
@@ -5434,7 +5571,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
             cmd = "SELECT ID FROM Main WHERE Duplicate_of in (\"" + ids.Replace(", ", "\",\"") + "\")";
             DataSet dvz = new DataSet(); dvz = SelectFromDB("Main", cmd, "", cnb, cnc);
-            norecs = dvz.Tables.Count > 0 ? dvz.Tables[0].Rows.Count : 0;
+            norecs = GetNoRec(dvz, cnb, cnc);//dvz.Tables.Count > 0 ? dvz.Tables[0].Rows.Count : 0;
             if (norecs > 0) foreach (DataRow dataRow in dvz.Tables[0].Rows) ids += dataRow.ItemArray[0].ToString() + ", ";
             if (withlog) UpdateLog(timestamp, "get all alternate of any of these(" + norecs + "):" + ids, false, c("dlcm_TempPath"), "", "MainDB", null, null);
 
@@ -5446,7 +5583,8 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             var cmd = "SELECT Artist, Album_Year, Album, ID FROM Main ORDER BY Artist, Album";
             DataSet dfz = new DataSet(); dfz = SelectFromDB("Main", cmd, "", cnb, cnc); var tz = 0; var checkedids = "";
-            var tsst = ""; int norecs = dfz.Tables.Count > 0 ? dfz.Tables[0].Rows.Count : 0; var t = 0; var gID = ""; var gAlbum_Year = "";
+            var tsst = ""; int norecs = GetNoRec(dfz, cnb, cnc);//dfz.Tables.Count > 0 ? dfz.Tables[0].Rows.Count : 0; 
+            var t = 0; var gID = ""; var gAlbum_Year = "";
             var timestamp = DateTime.Now; var norec = 0; var gArtist = ""; var gAlbum = ""; pB_ReadDLCs.Maximum = norecs; pB_ReadDLCs.Step = 1; pB_ReadDLCs.Value = 0;
             if (norecs > 0)
                 foreach (DataRow dataRow in dfz.Tables[0].Rows)
@@ -5480,7 +5618,8 @@ namespace RocksmithToolkitGUI.DLCManager
 
             var cmd = "SELECT Artist, Album_Year, Album, ID, AlbumArtPath FROM Main WHERE ID in (" + ids + ") ORDER BY ID";
             DataSet dfz = new DataSet(); dfz = SelectFromDB("Main", cmd, "", cnb, cnc);
-            int norecs = dfz.Tables.Count > 0 ? dfz.Tables[0].Rows.Count : 0; var tz = "";
+            int norecs = GetNoRec(dfz, cnb, cnc);//dfz.Tables.Count > 0 ? dfz.Tables[0].Rows.Count : 0;
+            var tz = "";
             var tArtist = ""; var tAlbum_Year = ""; var tAlbum = ""; var tID = ""; var aap = ""; var aay = ""; bool cleanupreq = false;
             var timestamp = DateTime.Now; int cnt = 0;
             if (norecs > 1)
@@ -5552,7 +5691,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         " GROUP BY  o.ID, iif(o.Artist_Correction <> \"\", o.Artist_Correction, o.Artist), iif(o.Album_Correction <> \"\", o.Album_Correction, o.Album), o.Year_Correction" +
                         " ORDER BY iif(o.Artist_Correction <> \"\", o.Artist_Correction, o.Artist), iif(o.Album_Correction <> \"\", o.Album_Correction, o.Album)";
             DataSet dfz = new DataSet(); dfz = SelectFromDB("Standardization", cmd, "", cnb, cnc);
-            var artist_c = ""; var tsst = ""; int norecs = dfz.Tables.Count > 0 ? dfz.Tables[0].Rows.Count : 0;
+            var artist_c = ""; var tsst = ""; int norecs = GetNoRec(dfz, cnb, cnc);//dfz.Tables.Count > 0 ? dfz.Tables[0].Rows.Count : 0;
             var album_c = ""; var timestamp = DateTime.Now; var norec = 0; var tz = 0; var tu = 0;
             if (norecs > 0)
                 foreach (DataRow dataRow in dfz.Tables[0].Rows)
@@ -5587,7 +5726,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 " FROM Standardization o WHERE o.Year_Correction<>\"\"" +
                 " GROUP BY iif(o.Artist_Correction <> \"\", o.Artist_Correction, o.Artist), iif(o.Album_Correction <> \"\", o.Album_Correction, o.Album), o.Year_Correction;";
             DataSet dgt = new DataSet(); dgt = SelectFromDB("Standardization", cmd, "", cnb, cnc);
-            var NoRec = dgt.Tables.Count > 0 ? dgt.Tables[0].Rows.Count : 0;
+            var NoRec = GetNoRec(dgt, cnb, cnc);//dgt.Tables.Count > 0 ? dgt.Tables[0].Rows.Count : 0;
             if (NoRec > 0)
                 foreach (DataRow dataRow in dgt.Tables[0].Rows)
                 {
@@ -5622,7 +5761,7 @@ namespace RocksmithToolkitGUI.DLCManager
             DataSet dfz = new DataSet(); dfz = SelectFromDB("Standardization", cmd, "", cnb, cnc);
             var artist_c = ""; var timestamp = DateTime.Now;
             var album_c = ""; var tz = 0;
-            if (dfz.Tables.Count > 0)
+            if (GetNoRec(dfz, cnb, cnc) > 0)/*dfz.Tables.Count*/
                 foreach (DataRow dataRow in dfz.Tables[0].Rows)
                 {
                     if (artist_c == dataRow.ItemArray[1].ToString() && album_c == dataRow.ItemArray[2].ToString())
@@ -5651,7 +5790,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 " GROUP BY iif(o.Artist_Correction <> \"\", o.Artist_Correction, o.Artist), iif(o.Album_Correction <> \"\", o.Album_Correction, o.Album), o.SpotifyArtistID, o.SpotifyAlbumID, o.SpotifyAlbumURL, o.SpotifyAlbumPath;";
             DataSet dgt = new DataSet(); dgt = SelectFromDB("Standardization", cmd, "", cnb, cnc);
 
-            if (dgt.Tables.Count > 0)
+            if (GetNoRec(dgt, cnb, cnc) > 0)
                 foreach (DataRow dataRow in dgt.Tables[0].Rows)
                 {
                     artist_c = dataRow.ItemArray[0].ToString();
@@ -5684,7 +5823,7 @@ namespace RocksmithToolkitGUI.DLCManager
             DataSet dfz = new DataSet();
             DataSet dus = new DataSet();
             dfz = SelectFromDB("Standardization", cmd, "", cnb, cnc);
-            var recs = dfz.Tables.Count > 0 ? dfz.Tables[0].Rows.Count : 0;
+            var recs = GetNoRec(dfz, cnb, cnc);//dfz.Tables.Count > 0 ? dfz.Tables[0].Rows.Count : 0;
             if (recs > 0)
                 foreach (DataRow dataRow in dfz.Tables[0].Rows)
                 {
@@ -5726,7 +5865,8 @@ namespace RocksmithToolkitGUI.DLCManager
             DataSet df = new DataSet();
             var selstand = "SELECT DISTINCT Artist_AutoGroup, iif(Artist_Correction<>\"\", Artist_Correction, Artist) FROM Standardization WHERE Artist_AutoGroup<>\"\"";
             df = SelectFromDB("Standardization", selstand, "", cnb, cnc);
-            var norec = df.Tables.Count > 0 ? df.Tables[0].Rows.Count : 0; var i = 0; var tsst = ""; var norecs = 0;
+            var norec = GetNoRec(df, cnb, cnc);//df.Tables.Count > 0 ? df.Tables[0].Rows.Count : 0;
+            var i = 0; var tsst = ""; var norecs = 0;
             pB_ReadDLCs.Maximum = norec; pB_ReadDLCs.Value = 0;
             if (norec > 0)
                 foreach (DataRow defaultgrp in df.Tables[0].Rows)
@@ -5741,7 +5881,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     DataSet dfz = new DataSet();
                     selstand = "SELECT ID FROM Main WHERE ID NOT IN (" + IDs + ") AND Artist =\"" + artist_c + "\";";
                     dfz = SelectFromDB("Main", selstand, "", cnb, cnc); /*Artist_AutoGroup /*, Artist_AutoGroup,*/
-                    norecs = dfz.Tables.Count > 0 ? dfz.Tables[0].Rows.Count : 0;
+                    norecs = GetNoRec(dfz, cnb, cnc);//dfz.Tables.Count > 0 ? dfz.Tables[0].Rows.Count : 0;
                     if (norecs > 0)
                     {
                         pB_ReadDLCs.Maximum = norecs; pB_ReadDLCs.Value = 0;
@@ -5768,11 +5908,11 @@ namespace RocksmithToolkitGUI.DLCManager
             var timestamp = DateTime.Now;//.ToString("yyyyMMdd HHmmssfff");
             DataSet dgf = new DataSet();
             dgf = SelectFromDB("Groups", "SELECT CDLC_ID FROM Groups WHERE Type=\"DLC\"", "", cnb, cnc);
-            if (dgf.Tables.Count > 0) ;
+            if (GetNoRec(dgf, cnb, cnc) > 0) ;/*dgf.Tables.Count*/
 
             DataSet df = new DataSet();
             df = SelectFromDB("Standardization", "SELECT DISTINCT Artist_AutoGroup,iif(Artist_Correction<>\"\", Artist_Correction, Artist) FROM Standardization WHERE Artist_AutoGroup<>\"\"", "", cnb, cnc);
-            if (df.Tables.Count > 0) foreach (DataRow defaultgrp in df.Tables[0].Rows)
+            if (GetNoRec(df, cnb, cnc) > 0) foreach (DataRow defaultgrp in df.Tables[0].Rows)/*df.Tables.Count*/
                 {
                     string grp = defaultgrp.ItemArray[0].ToString();
                     string artist_c = defaultgrp.ItemArray[1].ToString();
@@ -5787,7 +5927,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     pB_ReadDLCs.Value = 0;
                     var tsst = "9/12 Apply Artist Auto Group DLC in Default grp " + grp + "check"; UpdateLog(timestamp, tsst, false, c("dlcm_TempPath"), "", "", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs); pB_ReadDLCs.Increment(1);
 
-                    if (dfz.Tables.Count > 0)
+                    if (GetNoRec(dfz, cnb, cnc) > 0)//dfz.Tables.Count
                         foreach (DataRow dataRow in dfz.Tables[0].Rows)
                         {
                             var found = false;
@@ -5832,33 +5972,50 @@ namespace RocksmithToolkitGUI.DLCManager
             DataSet dts = new DataSet(); dts = UpdateDB("Main", cmd3, cnb, cnc);
 
             DataSet dvz = new DataSet();
-            cmd2 = "SELECT Artist, Song_Title, Duplicate_of,count(Duplicate_Of) as cnt FROM Main WHERE Duplicate_Of=\"0\"  Group by Artist,Song_Title,Duplicate_of;";
+            cmd2 = "SELECT Artist, Song_Title, Duplicate_of,count(Duplicate_Of) as ID FROM Main WHERE Duplicate_Of=\"0\"  Group by Artist,Song_Title,Duplicate_of;";
             dvz = SelectFromDB("Main", cmd2, "", cnb, cnc); /*Artist_AutoGroup /*, Artist_AutoGroup,*/
             var noOfRecr = 0;// dvz.Tables.Count==0 ? 0 : dvz.Tables[0].Rows.Count;
-            var art = ""; var ids = ""; var st = ""; pB_ReadDLCs.Maximum = dvz.Tables[0].Rows.Count; pB_ReadDLCs.Value = 0; //pB_ReadDLCs.Increment(1);
-            foreach (DataRow dataRow in dvz.Tables[0].Rows)
+            var gho = GetNoRec(dvz, cnb, cnc);
+            var art = ""; var ids = ""; var st = "";
+            try
             {
-                pB_ReadDLCs.Value++;
-                if (dataRow.ItemArray[3].ToString().ToInt32() < 2) continue;
-                noOfRecr++;
-                art = dataRow.ItemArray[0].ToString();
-                st = dataRow.ItemArray[1].ToString();
+                if (gho > 1)
+                    pB_ReadDLCs.Maximum = gho + 1; pB_ReadDLCs.Value = 0; //pB_ReadDLCs.Increment(1);
 
-                DataSet duz = new DataSet();
-                var cmd6 = "SELECT ID FROM Main where LCASE(Artist)=\"" + art.ToLower() + "\" and LCASE(Song_Title)=\"" + st.ToLower() + "\" order by Is_Original DESC;";
-                duz = SelectFromDB("Main", cmd6, "", cnb, cnc); /*Artist_AutoGroup /*, Artist_AutoGroup,*/
 
-                //ids += dataRow.ItemArray[3].ToString() + ",";
-                //if (art != dataRow.ItemArray[0].ToString() && st != dataRow.ItemArray[1].ToString() & art != "" && st != "" && ids != "")
-                //{
-                //DataSet dgz = new DataSet();
-                //cmd4 = "SELECT ID FROM Main WHERE Artist=\""+art+ "\" and Song_Titlet=\""+st+"\" order by Is_Official;";
-                //dvz = SelectFromDB("Groups", cmd4, "", cnb, cnc); /*Artist_AutoGroup /*, Artist_AutoGroup,*/
+                foreach (DataRow dataRow in dvz.Tables[0].Rows)
+                {
+                    pB_ReadDLCs.Value++;
 
-                var cmd5 = "UPDATE Main SET Is_Alternate='Yes',Duplicate_of=\"" + duz.Tables[0].Rows[0][0].ToString() + "\" WHERE ID IN (" + cmd6 + ")" +
-                    (c("dlcm_AdditionalManipul117") == "Yes" ? "" : " AND Is_Original<>''") + ";";
-                DataSet dgs = new DataSet(); dgs = UpdateDB("Main", cmd5, cnb, cnc);
-                //art = ""; st = ""; ids = "";
+                    if (dataRow.ItemArray[3].ToString().ToInt32() < 2)
+                    {
+                        if (gho > pB_ReadDLCs.Value) continue;
+                        else break;
+                    }
+                    noOfRecr++;
+                    art = dataRow.ItemArray[0].ToString();
+                    st = dataRow.ItemArray[1].ToString();
+
+                    DataSet duz = new DataSet();
+                    var cmd6 = "SELECT ID FROM Main where LCASE(Artist)=\"" + art.ToLower() + "\" and LCASE(Song_Title)=\"" + st.ToLower() + "\" order by Is_Original DESC;";
+                    duz = SelectFromDB("Main", cmd6, "", cnb, cnc); /*Artist_AutoGroup /*, Artist_AutoGroup,*/
+
+                    //ids += dataRow.ItemArray[3].ToString() + ",";
+                    //if (art != dataRow.ItemArray[0].ToString() && st != dataRow.ItemArray[1].ToString() & art != "" && st != "" && ids != "")
+                    //{
+                    //DataSet dgz = new DataSet();
+                    //cmd4 = "SELECT ID FROM Main WHERE Artist=\""+art+ "\" and Song_Titlet=\""+st+"\" order by Is_Official;";
+                    //dvz = SelectFromDB("Groups", cmd4, "", cnb, cnc); /*Artist_AutoGroup /*, Artist_AutoGroup,*/
+
+                    var cmd5 = "UPDATE Main SET Is_Alternate='Yes',Duplicate_of=\"" + duz.Tables[0].Rows[0][0].ToString() + "\" WHERE ID IN (" + cmd6 + ")" +
+                        (c("dlcm_AdditionalManipul117") == "Yes" ? "" : " AND Is_Original<>''") + ";";
+                    DataSet dgs = new DataSet(); dgs = UpdateDB("Main", cmd5, cnb, cnc);
+                    //art = ""; st = ""; ids = "";
+                }
+            }
+            catch (Exception ex)
+            {
+                tsst = "Erro ..." + ex; timestamp = UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", null, null);
             }
             //delete when sam id as duplcaite of
             //cmd3 = "UPDATE Main SET Duplicate_of='' WHERE Duplicate_of=ID;";
@@ -5868,41 +6025,46 @@ namespace RocksmithToolkitGUI.DLCManager
             DataSet dgz = new DataSet();
             cmd2 = "SELECT Artist, Song_Title, id, Duplicate_of FROM Main order by Artist, Song_Title, Is_Original ;";
             dgz = SelectFromDB("Main", cmd2, "", cnb, cnc);
-            var noOfRecs = 0; var id = ""; var dup = ""; var dupl = ""; var upd = false; pB_ReadDLCs.Maximum = dgz.Tables[0].Rows.Count; pB_ReadDLCs.Value = 0; var norm = 0; //pB_ReadDLCs.Increment(1);
-            foreach (DataRow dataRow in dgz.Tables[0].Rows)
+            var noOfRecs = 0; var id = ""; var dup = ""; var dupl = ""; var upd = false; var norm = 0; //pB_ReadDLCs.Increment(1);
+            gho = GetNoRec(dgz, cnb, cnc);
+            if (gho > 1)
             {
-                //
-                //;ids += dataRow.ItemArray[2].ToString() + ",";
+                pB_ReadDLCs.Maximum = gho; pB_ReadDLCs.Value = 0;
+                foreach (DataRow dataRow in dgz.Tables[0].Rows)
+                {
+                    //
+                    //;ids += dataRow.ItemArray[2].ToString() + ",";
 
-                pB_ReadDLCs.Value++;
-                if (CleanTitleFurther(art).ToLower() == CleanTitleFurther(dataRow.ItemArray[0].ToString().ToLower())
-                    && CleanTitleFurther(st).ToLower() == CleanTitleFurther(dataRow.ItemArray[1].ToString()).ToLower()
-                    & art != "" && st != "")// && st != dataRow.ItemArray[1].ToString())//&& dgz.Tables[0].Rows[3][0].ToString() == "0")
-                {
-                    ids += dataRow.ItemArray[2].ToString() + ",";
-                    if (dup == "") dup = id;
-                    if (dupl == "0" || dataRow.ItemArray[3].ToString() == "0" || dupl != dataRow.ItemArray[3].ToString()) upd = true;
-                    norm++;
-                }
-                else
-                {
-                    if (ids != "" && upd)/*&& ids.Substring(0, ids.Length - 1).Contains(",")*/
+                    pB_ReadDLCs.Value++;
+                    if (CleanTitleFurther(art).ToLower() == CleanTitleFurther(dataRow.ItemArray[0].ToString().ToLower())
+                        && CleanTitleFurther(st).ToLower() == CleanTitleFurther(dataRow.ItemArray[1].ToString()).ToLower()
+                        & art != "" && st != "")// && st != dataRow.ItemArray[1].ToString())//&& dgz.Tables[0].Rows[3][0].ToString() == "0")
                     {
-                        //DataSet dgz = new DataSet(); && ids != ""
-                        //cmd4 = "SELECT ID FROM Main WHERE Artist=\""+art+ "\" and Song_Titlet=\""+st+"\" order by Is_Official;";
-                        //dvz = SelectFromDB("Groups", cmd4, "", cnb, cnc); /*Artist_AutoGroup /*, Artist_AutoGroup,*/
-
-                        var cmd5 = "UPDATE Main SET Is_Alternate='Yes',Duplicate_of=\"" + dup + "\" WHERE ID IN (" + ids + dup + ")" +//ids.Substring(0, ids.Length - 1) + ")" +
-                            (c("dlcm_AdditionalManipul117") == "Yes" ? "" : " AND Is_Original<>''") + ";";//+ 
-                        DataSet dgs = new DataSet(); dgs = UpdateDB("Main", cmd5, cnb, cnc);
+                        ids += dataRow.ItemArray[2].ToString() + ",";
+                        if (dup == "") dup = id;
+                        if (dupl == "0" || dataRow.ItemArray[3].ToString() == "0" || dupl != dataRow.ItemArray[3].ToString()) upd = true;
                         norm++;
                     }
-                    dup = ""; ids = ""; upd = false;
+                    else
+                    {
+                        if (ids != "" && upd)/*&& ids.Substring(0, ids.Length - 1).Contains(",")*/
+                        {
+                            //DataSet dgz = new DataSet(); && ids != ""
+                            //cmd4 = "SELECT ID FROM Main WHERE Artist=\""+art+ "\" and Song_Titlet=\""+st+"\" order by Is_Official;";
+                            //dvz = SelectFromDB("Groups", cmd4, "", cnb, cnc); /*Artist_AutoGroup /*, Artist_AutoGroup,*/
+
+                            var cmd5 = "UPDATE Main SET Is_Alternate='Yes',Duplicate_of=\"" + dup + "\" WHERE ID IN (" + ids + dup + ")" +//ids.Substring(0, ids.Length - 1) + ")" +
+                                (c("dlcm_AdditionalManipul117") == "Yes" ? "" : " AND Is_Original<>''") + ";";//+ 
+                            DataSet dgs = new DataSet(); dgs = UpdateDB("Main", cmd5, cnb, cnc);
+                            norm++;
+                        }
+                        dup = ""; ids = ""; upd = false;
+                    }
+                    art = dataRow.ItemArray[0].ToString();
+                    st = dataRow.ItemArray[1].ToString();
+                    dupl = dataRow.ItemArray[3].ToString();
+                    id = dataRow.ItemArray[2].ToString();
                 }
-                art = dataRow.ItemArray[0].ToString();
-                st = dataRow.ItemArray[1].ToString();
-                dupl = dataRow.ItemArray[3].ToString();
-                id = dataRow.ItemArray[2].ToString();
             }
             //delete when sam id as duplcaite of
             //cmd3 = "UPDATE Main SET Duplicate_of='' WHERE Duplicate_of=ID;";
@@ -5911,19 +6073,19 @@ namespace RocksmithToolkitGUI.DLCManager
             var norec = 0; var altfixed = 0;
             DataSet dzh = new DataSet();
             cmd1 = "SELECT distinct ID,Duplicate_of,'' as norod, '' as age,LastConversionDateTime FROM ( " +
-                "SELECT distinct ID, Duplicate_of,'' as norod, '' as age,LastConversionDateTime FROM Main WHERE Duplicate_of<> '' and Duplicate_of<>'0'" +
-                 "UNION ALL" +
-                 "SELECT distinct Duplicate_of as ID, Duplicate_of,'' as norod, '' as age,LastConversionDateTime FROM Main WHERE Duplicate_of<>'' and Duplicate_of<>'0'" +
-                 "UNION ALL" +
-                 "SELECT distinct Duplicate_of as ID, Duplicate_of,'' as norod, '' as age,LastConversionDateTime FROM Main WHERE Alternate_Version_No<>''" +
-                 "UNION ALL" +
-                 "SELECT distinct ID, Duplicate_of,'' as norod, '' as age,LastConversionDateTime FROM Main WHERE Alternate_Version_No = 'Yes'" +
-                 "UNION ALL" +
-                 "SELECT distinct ID, Duplicate_of,'' as norod, '' as age,LastConversionDateTime FROM Main WHERE Is_Alternate = 'Yes'" +
+                " SELECT distinct ID, Duplicate_of,'' as norod, '' as age,LastConversionDateTime FROM Main WHERE Duplicate_of<> '' and Duplicate_of<>'0'" +
+                 " UNION ALL" +
+                 " SELECT distinct Duplicate_of as ID, Duplicate_of,'' as norod, '' as age,LastConversionDateTime FROM Main WHERE Duplicate_of<>'' and Duplicate_of<>'0'" +
+                 " UNION ALL" +
+                 " SELECT distinct Duplicate_of as ID, Duplicate_of,'' as norod, '' as age,LastConversionDateTime FROM Main WHERE Alternate_Version_No<>''" +
+                 " UNION ALL" +
+                 " SELECT distinct ID, Duplicate_of,'' as norod, '' as age,LastConversionDateTime FROM Main WHERE Alternate_Version_No = 'Yes'" +
+                 " UNION ALL" +
+                 " SELECT distinct ID, Duplicate_of,'' as norod, '' as age,LastConversionDateTime FROM Main WHERE Is_Alternate = 'Yes'" +
                 ") ORDER BY Duplicate_of" +
                 ";";
             dzh = SelectFromDB("Main", cmd1, "", cnb, cnc);
-            norec = dzh.Tables.Count == 0 ? 0 : dzh.Tables[0].Rows.Count;/*Artist_AutoGroup /*, Artist_AutoGroup,*/
+            norec = GetNoRec(dzh, cnb, cnc);//dzh.Tables.Count == 0 ? 0 : dzh.Tables[0].Rows.Count;/*Artist_AutoGroup /*, Artist_AutoGroup,*/
             if (norec > 0)
             {
                 var emptys = 0;
@@ -5967,7 +6129,7 @@ namespace RocksmithToolkitGUI.DLCManager
                "\nAlternate with duplicate marked as 0 PC cleansed: " + noOfRecr +
                "\nAlternate with SAME (cleaned) artist & title marked as alternates " + norm +
                 ("\n\nAlternates manipulated: " + altfixed + " / " + norec);
-            ErrorWindow frm9 = new ErrorWindow(summary, "", "Summary of the Mass-Repack process", false, false, true, "", "", "");
+            ErrorWindow frm9 = new ErrorWindow(summary, "", "Summary of the Mass-Alternate Cleanup process", false, false, true, "", "", "");
             frm9.Show();
             return norec.ToString();
         }
@@ -6029,7 +6191,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 DataSet dgf = new DataSet();
                 var st = "";
                 dgf = SelectFromDB("Main", "SELECT Song_Title FROM Main WHERE ID = " + idd, "", cnb, cnc);
-                if (dgf.Tables.Count > 0) st = dgf.Tables[0].Rows[0].ItemArray[0].ToString();
+                if (GetNoRec(dgf, cnb, cnc) > 0) st = dgf.Tables[0].Rows[0].ItemArray[0].ToString();/*dgf.Tables.Count*/
 
                 var cmd5 = "UPDATE Main SET " +
                     "Alternate_Version_No,='" + nor +
@@ -6067,11 +6229,11 @@ namespace RocksmithToolkitGUI.DLCManager
             var cmd1 = ""; var cmd2 = ""; ; var cmd3 = ""; var cmd4 = "";
             pB_ReadDLCs.Maximum = 5; pB_ReadDLCs.Value = 0; pB_ReadDLCs.Increment(1);
 
-            cmd3 = "UPDATE Main SET " + c("CustomToAtribute_1") + "=\"Yes\" " +
+            cmd3 = "UPDATE Main SET " + c("dlcm_CustomToAtribute_1") + "=\"Yes\" " +
                 "WHERE Artist + Album in (";
             cmd1 = "SELECT IIF(Artist_Correction <>\"\",Artist_Correction,Artist) + IIF(Album_Correction <>\"\",Album_Correction,Album) FROM Standardization " +
                 "WHERE CustomToAtribute_1='Yes' or CustomToAtribute_1 is not Null ";
-            cmd3 += cmd1 + ") and (" + c("CustomToAtribute_1") + "<>'Yes'or " + c("CustomToAtribute_1") + " is Null)";
+            cmd3 += cmd1 + ") and (" + c("dlcm_CustomToAtribute_1") + "<>'Yes'or " + c("dlcm_CustomToAtribute_1") + " is Null)";
             var no_o1 = GetNoRecords(cmd1, cnb, cnc);
             DataSet dts = new DataSet(); if (no_o1 > 0) dts = UpdateDB("Main", cmd3, cnb, cnc);
             //cmd3 = "UPDATE Main SET Is_GameSoundtrack=\"Yes\" " +
@@ -6081,17 +6243,17 @@ namespace RocksmithToolkitGUI.DLCManager
             //    ") and (Is_GameSoundtrack<>'Yes'or Is_GameSoundtrack is Null)";
 
 
-            pB_ReadDLCs.Value++; var no_o2 = GetNoRecords(cmd1.Replace(c("CustomToAtribute_1"), c("CustomToAtribute_2")).Replace("CustomToAtribute_1", "CustomToAtribute_2"), cnb, cnc);
-            DataSet dns = new DataSet(); if (no_o2 > 0) dns = UpdateDB("Main", cmd3.Replace(c("CustomToAtribute_1"), c("CustomToAtribute_2")).Replace("CustomToAtribute_1", "CustomToAtribute_2"), cnb, cnc);
+            pB_ReadDLCs.Value++; var no_o2 = GetNoRecords(cmd1.Replace(c("dlcm_CustomToAtribute_1"), c("dlcm_CustomToAtribute_2")).Replace("CustomToAtribute_1", "CustomToAtribute_2"), cnb, cnc);
+            DataSet dns = new DataSet(); if (no_o2 > 0) dns = UpdateDB("Main", cmd3.Replace(c("dlcm_CustomToAtribute_1"), c("dlcm_CustomToAtribute_2")).Replace("CustomToAtribute_1", "CustomToAtribute_2"), cnb, cnc);
 
-            pB_ReadDLCs.Value++; var no_o3 = GetNoRecords(cmd1.Replace(c("CustomToAtribute_1"), c("CustomToAtribute_3")).Replace("CustomToAtribute_1", "CustomToAtribute_3"), cnb, cnc);
-            DataSet dgs = new DataSet(); if (no_o3 > 0) dgs = UpdateDB("Main", cmd3.Replace(c("CustomToAtribute_1"), c("CustomToAtribute_3")).Replace("CustomToAtribute_1", "CustomToAtribute_3"), cnb, cnc);
+            pB_ReadDLCs.Value++; var no_o3 = GetNoRecords(cmd1.Replace(c("dlcm_CustomToAtribute_1"), c("dlcm_CustomToAtribute_3")).Replace("CustomToAtribute_1", "CustomToAtribute_3"), cnb, cnc);
+            DataSet dgs = new DataSet(); if (no_o3 > 0) dgs = UpdateDB("Main", cmd3.Replace(c("dlcm_CustomToAtribute_1"), c("dlcm_CustomToAtribute_3")).Replace("CustomToAtribute_1", "CustomToAtribute_3"), cnb, cnc);
 
-            pB_ReadDLCs.Value++; var no_o4 = GetNoRecords(cmd1.Replace(c("CustomToAtribute_1"), c("CustomToAtribute_4")).Replace("CustomToAtribute_1", "CustomToAtribute_4"), cnb, cnc);
-            DataSet dus = new DataSet(); if (no_o4 > 0) dus = UpdateDB("Main", cmd3.Replace(c("CustomToAtribute_1"), c("CustomToAtribute_4")).Replace("CustomToAtribute_41", "CustomToAtribute_4"), cnb, cnc);
+            pB_ReadDLCs.Value++; var no_o4 = GetNoRecords(cmd1.Replace(c("dlcm_CustomToAtribute_1"), c("dlcm_CustomToAtribute_4")).Replace("CustomToAtribute_1", "CustomToAtribute_4"), cnb, cnc);
+            DataSet dus = new DataSet(); if (no_o4 > 0) dus = UpdateDB("Main", cmd3.Replace(c("dlcm_CustomToAtribute_1"), c("dlcm_CustomToAtribute_4")).Replace("CustomToAtribute_41", "CustomToAtribute_4"), cnb, cnc);
 
-            pB_ReadDLCs.Value++; var no_o5 = GetNoRecords(cmd1.Replace(c("CustomToAtribute_1"), c("CustomToAtribute_5")).Replace("CustomToAtribute_1", "CustomToAtribute_5"), cnb, cnc);
-            DataSet dbs = new DataSet(); if (no_o5 > 0) dbs = UpdateDB("Main", cmd3.Replace(c("CustomToAtribute_1"), c("CustomToAtribute_5")).Replace("CustomToAtribute_1", "CustomToAtribute_5"), cnb, cnc);
+            pB_ReadDLCs.Value++; var no_o5 = GetNoRecords(cmd1.Replace(c("dlcm_CustomToAtribute_1"), c("dlcm_CustomToAtribute_5")).Replace("CustomToAtribute_1", "CustomToAtribute_5"), cnb, cnc);
+            DataSet dbs = new DataSet(); if (no_o5 > 0) dbs = UpdateDB("Main", cmd3.Replace(c("dlcm_CustomToAtribute_1"), c("dlcm_CustomToAtribute_5")).Replace("CustomToAtribute_1", "CustomToAtribute_5"), cnb, cnc);
 
             //DataSet dvz = new DataSet();
             //cmd2 = "SELECT Artist, Album, Duplicate_of,count(Duplicate_Of) as cnt FROM Main WHERE Duplicate_Of=\"0\"  Group by Artist,Song_Title,Duplicate_of;";
@@ -6244,7 +6406,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 cmd1 = "SELECT CDLC_ID FROM Groups WHERE Groupz =\"" + grp1 + "\" AND" +
                     " CDLC_ID not in (SELECT CDLC_ID FROM Groups WHERE TYPE=\"DLC\" AND Groupz in (\"" + grp21 + "\",\"" + grp22 + "\",\"" + grp23 + "\",\"" + grp24 + "\",\"" + grp25 + "\"))";
                 dfz = SelectFromDB("Groups", cmd1, "", cnb, cnc); /*Artist_AutoGroup /*, Artist_AutoGroup,*/
-                norec = dfz.Tables.Count > 0 ? dfz.Tables[0].Rows.Count : 0;
+                norec = GetNoRec(dfz, cnb, cnc);//dfz.Tables.Count > 0 ? dfz.Tables[0].Rows.Count : 0;
                 if (norec > 0)
                 {
                     tsst = "11/12 Adding" + norec + " New groups: " + cmd1; UpdateLog(timestamp, tsst, false, c("dlcm_TempPath"), "", "", null, null); //pB_ReadDLCs.Increment(1);
@@ -6275,7 +6437,8 @@ namespace RocksmithToolkitGUI.DLCManager
 
                 DataSet dfz = new DataSet();
                 dfz = SelectFromDB("Groups", cmd1.Replace("DELETE", "SELECT"), "", cnb, cnc); /*Artist_AutoGroup /*, Artist_AutoGroup,*/
-                norec = dfz.Tables.Count > 0 ? dfz.Tables[0].Rows.Count : 0; DataSet dhu = new DataSet();
+                norec = GetNoRec(dfz, cnb, cnc);//dfz.Tables.Count > 0 ? dfz.Tables[0].Rows.Count : 0;
+                DataSet dhu = new DataSet();
                 if (norec > 0) dhu = UpdateDB("Groups", cmd1 + ";", cnb, cnc);
                 tsst = "11/12 Removing" + norec + "DLCs from Groups: " + cmd1; UpdateLog(timestamp, tsst, false, c("dlcm_TempPath"), "", "", null, null); //pB_ReadDLCs.Increment(1);
             }
@@ -6293,7 +6456,7 @@ namespace RocksmithToolkitGUI.DLCManager
             DataSet dfz = new DataSet(); var cmc = 0; var cmv = 0;
             DataSet dus = new DataSet(); var cms = 0; var cmx = 0;
             dfz = SelectFromDB("Standardization", cmd, "", cnb, cnc);
-            var norec = dfz.Tables.Count > 0 ? dfz.Tables[0].Rows.Count : 0;
+            var norec = GetNoRec(dfz, cnb, cnc);//dfz.Tables.Count > 0 ? dfz.Tables[0].Rows.Count : 0;
             if (norec > 0)
                 foreach (DataRow dataRow in dfz.Tables[0].Rows)
                 {
@@ -6326,7 +6489,7 @@ namespace RocksmithToolkitGUI.DLCManager
             var cmd = "SELECT Artist, Artist_Correction  FROM Standardization WHERE" +
                 " (Artist_Correction <> \"\") GROUP BY Artist, Artist_Correction;";
             dfz = SelectFromDB("Standardization", cmd, "", cnb, cnc);
-            if (dfz.Tables.Count > 0)
+            if (GetNoRec(dfz, cnb, cnc) > 0)/*dfz.Tables.Count*/
                 foreach (DataRow dataRow in dfz.Tables[0].Rows)
                 {
                     var artist = dataRow.ItemArray[0].ToString();
@@ -6342,7 +6505,7 @@ namespace RocksmithToolkitGUI.DLCManager
             cmd = "SELECT Album, Album_Correction, Artist, Artist_Correction FROM Standardization WHERE" +
                  " (Album_Correction <> \"\") GROUP BY Album, Album_Correction, Artist, Artist_Correction;";
             dgz = SelectFromDB("Standardization", cmd, "", cnb, cnc);
-            if (dgz.Tables.Count > 0)
+            if (GetNoRec(dgz, cnb, cnc) > 0)/*dgz.Tables.Count */
                 foreach (DataRow dataRow in dgz.Tables[0].Rows)
                 {
                     var album = dataRow.ItemArray[0].ToString();
@@ -6362,7 +6525,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 " FROM Standardization WHERE" +
                 " (Year_Correction <> \"\") GROUP BY Year_Correction, Album, Album_Correction, Artist, Artist_Correction;";
             dhz = SelectFromDB("Standardization", cmd, "", cnb, cnc);
-            if (dhz.Tables.Count > 0)
+            if (GetNoRec(dhz, cnb, cnc) > 0)//));/)dhz.Tables.Count )
                 foreach (DataRow dataRow in dhz.Tables[0].Rows)
                 {
                     var year_c = dataRow.ItemArray[0].ToString();
@@ -6387,7 +6550,8 @@ namespace RocksmithToolkitGUI.DLCManager
                 "GROUP BY iif(Artist_Correction<>\"\", Artist_Correction, Artist), iif(Album_Correction<>\"\", Album_Correction, Album),IIF(AlbumArt_Correction<>\"\", AlbumArt_Correction, SpotifyAlbumPath);";
             //var norec = 0; //get al Default ON entries in standardization table
             DataSet dfz = new DataSet(); dfz = SelectFromDB("Standardization", cmd1, "", cnb, cnc);
-            var noOfRec = dfz.Tables.Count > 0 ? dfz.Tables[0].Rows.Count : 0; var tz = 0;
+            var noOfRec = GetNoRec(dfz, cnb, cnc);//dfz.Tables.Count > 0 ? dfz.Tables[0].Rows.Count : 0;
+            var tz = 0;
             if (noOfRec > 0)
                 foreach (DataRow dataRow in dfz.Tables[0].Rows)
                 {
@@ -6557,7 +6721,8 @@ namespace RocksmithToolkitGUI.DLCManager
 
             DataSet dvs = new DataSet(); dvs = SelectFromDB("Arrangements", "SELECT * FROM Arrangements WHERE CDLC_ID=" + SongRecord.ID + GetArrOfficSQLTxt(arrangoff), "", cnb, cnc);
             //" + " AND ArrangementType=\"Vocal\";", "", cnb, cnc);
-            var norec = dvs.Tables.Count > 0 ? dvs.Tables[0].Rows.Count : 0; var once = true;
+            var norec = GetNoRec(dvs, cnb, cnc);//dvs.Tables.Count > 0 ? dvs.Tables[0].Rows.Count : 0;
+            var once = true;
             var hhh = "SELECT * FROM Arrangements WHERE CDLC_ID=" + SongRecord.ID + GetArrOfficSQLTxt(arrangoff);
             if (norec == 0)
                 ;

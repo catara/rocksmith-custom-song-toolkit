@@ -18,6 +18,7 @@ using RocksmithToolkitLib.XmlRepository;
 using static RocksmithToolkitGUI.DLCManager.GenericFunctions;
 using static RocksmithToolkitGUI.DLCManager.UtilitiesFunctions;
 using Microsoft.Extensions.Logging;
+using System.Net;
 
 namespace RocksmithToolkitGUI.DLCManager
 {
@@ -43,117 +44,86 @@ namespace RocksmithToolkitGUI.DLCManager
             if (B2Txt != "") btn_B2.Text = B2Txt;
             if (B3Txt != "") btn_B3.Text = B3Txt;/*Comments like 'dlcm_AdditionalManipul%'*/
             //slct = "SELECT Type, Profile_Name, DisplayGroup FROM Groups u WHERE Profile_Name=\"" + c("dlcm_Configurations")+ "\" AND DisplayGroup='Pack' ORDER BY DisplayGroup ASC";
-
-            chbx_Additional_Manipulations = GenerateParamsLists(chbx_Additional_Manipulations, slct);
+            chbx_Additional_Manipulations=GenerateParamsList(chbx_Additional_Manipulations, slct);
+            //chbx_Additional_Manipulations = GenerateParamsLists(chbx_Additional_Manipulations, slct);
 
             //MessageBox.Show("test0");
             //DB_Path = txt_DBFolder;
             //TempPath = txt_TempPath;
             //RocksmithDLCPath = txt_RocksmithDLCPath;
         }
-        public static CheckedListBox GenerateParamsLists(CheckedListBox chbx_Additional_Manipulations, string slct)
-        {
-            //Get group and norder index
-            var n = 0;
+        //public static CheckedListBox GenerateParamsLists(CheckedListBox chbx_Additional_Manipulations, string slct)
+        //{
+        //    //Get group and norder index
+        //    DataSet dv = new DataSet(); dv = SelectFromDB("Groups", slct, ConfigRepository.Instance()["dlcm_DBFolder"].ToString(), cnb, cnc);
+        //     var n = GetNoRec(dv, cnb, cnc);
 
-            DataSet dv = new DataSet(); dv = SelectFromDB("Groups", slct, ConfigRepository.Instance()["dlcm_DBFolder"].ToString(), cnb, cnc);
-            if (dv.Tables.Count > 0) n = dv.Tables[0].Rows.Count;
+        //    //SELECT all Params for current Profile
+            
+        //    DataSet dsz1 = new DataSet(); dsz1 = SelectFromDB("Groups", slct, ConfigRepository.Instance()["dlcm_DBFolder"].ToString(), cnb, cnc);
+        //    var noOfRec = GetNoRec(dsz1, cnb, cnc);
 
-            //SELECT all Params for current Profile
-            var noOfRec = 0;
-            DataSet dsz1 = new DataSet(); dsz1 = SelectFromDB("Groups", slct, ConfigRepository.Instance()["dlcm_DBFolder"].ToString(), cnb, cnc);
-            if (dsz1.Tables.Count > 0) noOfRec = dsz1.Tables[0].Rows.Count;
-            if (noOfRec == 0)
-                noOfRec = 0;
-            //chbx_Additional_Manipulations.Items.Add("Group " + dsn.Tables[0].Rows[j][0].ToString());//add items
+        //    //clear PArams
+        //    chbx_Additional_Manipulations.DataSource = null;
+        //    for (int i = chbx_Additional_Manipulations.Items.Count - 1; i >= 0; --i)
+        //        chbx_Additional_Manipulations.Items.RemoveAt(i);
 
-            //clear PArams
-            chbx_Additional_Manipulations.DataSource = null;
-            for (int i = chbx_Additional_Manipulations.Items.Count - 1; i >= 0; --i)
-                chbx_Additional_Manipulations.Items.RemoveAt(i);
+        //    //AddOrderNo Group Index + order no in group
+        //    var DisplayGroup = "";
+        //    for (int j = 0; j < noOfRec; j++)
+        //    {
+        //        DisplayGroup = dsz1.Tables[0].Rows[j][3].ToString();
+        //        var Comments = dsz1.Tables[0].Rows[j][4].ToString();
+        //        if (Comments.Length == 1) Comments = "0" + Comments;
+        //        dsz1.Tables[0].Rows[j][5] = GiveOrder(dv, n, DisplayGroup) + Comments;
+        //    }
 
-            //AddOrderNo Group Index + order no in group
-            var DisplayGroup = "";
-            for (int j = 0; j < noOfRec; j++)/*chbx_Additional_Manipulations.Items.Count*/
-            {
-                DisplayGroup = dsz1.Tables[0].Rows[j][3].ToString();
-                var Comments = dsz1.Tables[0].Rows[j][4].ToString();//.Replace("dlcm_AdditionalManipul", "");
-                if (Comments.Length == 1) Comments = "0" + Comments;
-                dsz1.Tables[0].Rows[j][5] = GiveOrder(dv, n, DisplayGroup) + Comments;
-            }
+        //    //OrderList of Params based on Group order and then Item in the group order
+        //    var tmp = "";
+        //    for (int l = 0; l < noOfRec; l++)
+        //        for (int m = l + 1; m < noOfRec; m++)
+        //        {
+        //            if (dsz1.Tables[0].Rows[l][1].ToString() == "dlcm_AdditionalManipul89" || dsz1.Tables[0].Rows[m][1].ToString() == "dlcm_AdditionalManipul89")
+        //                ;
+        //            if (dsz1.Tables[0].Rows[m][5].ToString().ToInt32() < dsz1.Tables[0].Rows[l][5].ToString().ToInt32())
+        //            {
+        //                tmp = dsz1.Tables[0].Rows[l][0].ToString(); dsz1.Tables[0].Rows[l][0] = dsz1.Tables[0].Rows[m][0].ToString(); dsz1.Tables[0].Rows[m][0] = tmp;
+        //                tmp = dsz1.Tables[0].Rows[l][1].ToString(); dsz1.Tables[0].Rows[l][1] = dsz1.Tables[0].Rows[m][1].ToString(); dsz1.Tables[0].Rows[m][1] = tmp;
+        //                tmp = dsz1.Tables[0].Rows[l][2].ToString(); dsz1.Tables[0].Rows[l][2] = dsz1.Tables[0].Rows[m][2].ToString(); dsz1.Tables[0].Rows[m][2] = tmp;
+        //                tmp = dsz1.Tables[0].Rows[l][3].ToString(); dsz1.Tables[0].Rows[l][3] = dsz1.Tables[0].Rows[m][3].ToString(); dsz1.Tables[0].Rows[m][3] = tmp;
+        //                tmp = dsz1.Tables[0].Rows[l][4].ToString(); dsz1.Tables[0].Rows[l][4] = dsz1.Tables[0].Rows[m][4].ToString(); dsz1.Tables[0].Rows[m][4] = tmp;
+        //                tmp = dsz1.Tables[0].Rows[l][5].ToString(); dsz1.Tables[0].Rows[l][5] = dsz1.Tables[0].Rows[m][5].ToString(); dsz1.Tables[0].Rows[m][5] = tmp;
+        //                tmp = dsz1.Tables[0].Rows[l][6].ToString(); dsz1.Tables[0].Rows[l][6] = dsz1.Tables[0].Rows[m][6].ToString(); dsz1.Tables[0].Rows[m][6] = tmp;
+        //            }
+        //        }
 
-            //OrderList of Params based on Group order and then Item in the group order
-            var tmp = "";
-            //for (int j = 0; j < n; j++)/*chbx_Additional_Manipulations.Items.Count*/
-            //{
-            //    var grp = dv.Tables[0].Rows[j][0].ToString();
-            //if (grp == dsz1.Tables[0].Rows[l][3].ToString())
-            for (int l = 0; l < noOfRec; l++)
-                for (int m = l + 1; m < noOfRec; m++)
-                {
-                    if (dsz1.Tables[0].Rows[l][1].ToString() == "dlcm_AdditionalManipul89" || dsz1.Tables[0].Rows[m][1].ToString() == "dlcm_AdditionalManipul89")
-                        ;
-                    if (dsz1.Tables[0].Rows[m][5].ToString().ToInt32() < dsz1.Tables[0].Rows[l][5].ToString().ToInt32())
-                    {
-                        tmp = dsz1.Tables[0].Rows[l][0].ToString(); dsz1.Tables[0].Rows[l][0] = dsz1.Tables[0].Rows[m][0].ToString(); dsz1.Tables[0].Rows[m][0] = tmp;
-                        tmp = dsz1.Tables[0].Rows[l][1].ToString(); dsz1.Tables[0].Rows[l][1] = dsz1.Tables[0].Rows[m][1].ToString(); dsz1.Tables[0].Rows[m][1] = tmp;
-                        tmp = dsz1.Tables[0].Rows[l][2].ToString(); dsz1.Tables[0].Rows[l][2] = dsz1.Tables[0].Rows[m][2].ToString(); dsz1.Tables[0].Rows[m][2] = tmp;
-                        tmp = dsz1.Tables[0].Rows[l][3].ToString(); dsz1.Tables[0].Rows[l][3] = dsz1.Tables[0].Rows[m][3].ToString(); dsz1.Tables[0].Rows[m][3] = tmp;
-                        tmp = dsz1.Tables[0].Rows[l][4].ToString(); dsz1.Tables[0].Rows[l][4] = dsz1.Tables[0].Rows[m][4].ToString(); dsz1.Tables[0].Rows[m][4] = tmp;
-                        tmp = dsz1.Tables[0].Rows[l][5].ToString(); dsz1.Tables[0].Rows[l][5] = dsz1.Tables[0].Rows[m][5].ToString(); dsz1.Tables[0].Rows[m][5] = tmp;
-                        tmp = dsz1.Tables[0].Rows[l][6].ToString(); dsz1.Tables[0].Rows[l][6] = dsz1.Tables[0].Rows[m][6].ToString(); dsz1.Tables[0].Rows[m][6] = tmp;
-                    }
-                }
-            //}
+        //    //add items
+        //    DisplayGroup = "";
+        //    var z = 0;
+        //    for (int k = 0; k < noOfRec; k++)
+        //    {
+        //        var Type = dsz1.Tables[0].Rows[k][0].ToString();
+        //        var Comments = dsz1.Tables[0].Rows[k][1].ToString();
 
-            //add items
-            DisplayGroup = "";
-            var z = 0;
-            for (int k = 0; k < noOfRec; k++)
-            {
-                var Type = dsz1.Tables[0].Rows[k][0].ToString();
-                var Comments = dsz1.Tables[0].Rows[k][1].ToString();
+        //        var DisplayName = dsz1.Tables[0].Rows[k][2].ToString();
+        //        if (DisplayName == "") continue;
+        //        if (DisplayGroup != dsz1.Tables[0].Rows[k][3].ToString())
+        //        {
+        //            chbx_Additional_Manipulations.Items.Add(dsz1.Tables[0].Rows[k][3].ToString());
+        //            chbx_Additional_Manipulations.SetItemCheckState(z, CheckState.Indeterminate);
+        //            z++;
+        //        }
+        //        DisplayGroup = dsz1.Tables[0].Rows[k][3].ToString() == "" ? DisplayGroup : dsz1.Tables[0].Rows[k][3].ToString();
+        //        var DisplayPosition = dsz1.Tables[0].Rows[k][4].ToString();
+        //        var Groups = dsz1.Tables[0].Rows[k][6].ToString();
+        //        chbx_Additional_Manipulations.Items.Add(("Yes" == ConfigRepository.Instance()["dlcm_Debug"] ? DisplayPosition + ". " : "")
+        //            + DisplayName + " {" + Comments.Replace("dlcm_AdditionalManipul", "") + "}");
+        //        chbx_Additional_Manipulations.SetItemCheckState(z, Groups.ToLower() == "no" ? CheckState.Unchecked : CheckState.Checked);
+        //        z++;
+        //    }
+        //    return chbx_Additional_Manipulations;
+        //}
 
-                var DisplayName = dsz1.Tables[0].Rows[k][2].ToString();
-                if (DisplayName == "") continue;
-                if (DisplayGroup != dsz1.Tables[0].Rows[k][3].ToString())
-                {
-                    chbx_Additional_Manipulations.Items.Add(dsz1.Tables[0].Rows[k][3].ToString());
-                    chbx_Additional_Manipulations.SetItemCheckState(z, CheckState.Indeterminate);
-                    z++; /*break;*/
-                }
-                DisplayGroup = dsz1.Tables[0].Rows[k][3].ToString() == "" ? DisplayGroup : dsz1.Tables[0].Rows[k][3].ToString();
-                var DisplayPosition = dsz1.Tables[0].Rows[k][4].ToString();
-                //var DAte_Adde_NoOfOrder = dsz1.Tables[0].Rows[k][5].ToString();
-                var Groups = dsz1.Tables[0].Rows[k][6].ToString();
-                chbx_Additional_Manipulations.Items.Add(("Yes" == ConfigRepository.Instance()["dlcm_Debug"] ? DisplayPosition + ". " : "")
-                    + DisplayName + " {" + Comments.Replace("dlcm_AdditionalManipul", "") + "}");
-                chbx_Additional_Manipulations.SetItemCheckState(z, Groups.ToLower() == "no" ? CheckState.Unchecked : CheckState.Checked);
-                z++;
-            }
-            //    found = false;
-            //    for (var k = 0; k < noOfRecs; k++)
-            //    {
-            //        if (chbx_AllGroups.GetItemChecked(j) && grp.Tables[0].Rows[k].ItemArray[1].ToString() == chbx_AllGroups.Items[j].ToString())
-            //        {
-            //            grpsel += "," + grp.Tables[0].Rows[k].ItemArray[2].ToString() + ",";
-            //            found = true;
-            //            break;
-            //        }
-            //        if (!chbx_AllGroups.GetItemChecked(j) && grp.Tables[0].Rows[k].ItemArray[1].ToString() == chbx_AllGroups.Items[j].ToString())
-            //            grpdel += "," + grp.Tables[0].Rows[k].ItemArray[2].ToString() + ",";
-            //    }
-
-            //    if (!found && chbx_AllGroups.GetItemChecked(j))
-            //    {
-            //        var insertcmdd = "CDLC_ID, Groupz, Type, Date_Added";
-            //        var insertvalues = "\"" + txt_ID.Text + "\", \"" + chbx_AllGroups.Items[j].ToString() + "\", \"DLC\", \"" + DateTime.Now.ToString("yyyyMMdd HHmmssfff") + "\"";
-            //        InsertIntoDBwValues("Groups", insertcmdd, insertvalues, cnb, 0);
-            //    }
-            //count total no of additional options as once few dissapeared :)
-            //lbl_Settings.Text = lbl_Settings.Text + " " + chbx_Additional_Manipulations.Items.Count.ToString() + "/" + noOfRec.ToString();
-            return chbx_Additional_Manipulations;
-        }
         private void InitializeComponent()
         {
             helpProvider1 = new HelpProvider();

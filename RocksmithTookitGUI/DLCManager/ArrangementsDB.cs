@@ -24,6 +24,7 @@ using RocksmithToolkitLib.XmlRepository;
 using RocksmithToolkitLib;
 using System.Data.SQLite;
 using SQLite;
+using System.Net;
 
 namespace RocksmithToolkitGUI.DLCManager
 {
@@ -95,7 +96,7 @@ namespace RocksmithToolkitGUI.DLCManager
         {
 
             DataSet dxs = new DataSet(); dxs = SelectFromDB("Arrangements", "SELECT  ToneBase, ID, CDLC_ID, RouteMask FROM Arrangements;", "", cnb, cnc);
-            var norec = dxs.Tables[0].Rows.Count;//DISTINCT
+            var norec = GetNoRec(dxs, cnb, cnc);// dxs.Tables[0].Rows.Count;//DISTINCT
 
             if (norec > 0)
             {
@@ -127,7 +128,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private void loadTunnings()
         {
             DataSet dks = new DataSet(); dks = SelectFromDB("Arrangements", "SELECT DISTINCT Tunning FROM Arrangements;", "", cnb, cnc);
-            var norec = dks.Tables[0].Rows.Count;
+            var norec = GetNoRec(dks, cnb, cnc);//dks.Tables[0].Rows.Count;
 
             if (norec > 0)
             {
@@ -147,7 +148,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private void loadToneA()
         {
             DataSet ds = new DataSet(); ds = SelectFromDB("Arrangements", "SELECT DISTINCT ToneA FROM Arrangements;", "", cnb, cnc);
-            var norec = ds.Tables[0].Rows.Count;
+            var norec = GetNoRec(ds, cnb, cnc);//ds.Tables[0].Rows.Count;
 
             if (norec > 0)
             {
@@ -173,7 +174,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private void loadToneB()
         {
             DataSet dIs = new DataSet(); dIs = SelectFromDB("Arrangements", "SELECT DISTINCT ToneB FROM Arrangements;", "", cnb, cnc);
-            var norec = dIs.Tables[0].Rows.Count;
+            var norec = GetNoRec(dIs, cnb, cnc);//dIs.Tables[0].Rows.Count;
 
             if (norec > 0)
             {
@@ -199,7 +200,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private void loadToneC()
         {
             DataSet dfs = new DataSet(); dfs = SelectFromDB("Arrangements", "SELECT DISTINCT ToneC FROM Arrangements;", "", cnb, cnc);
-            var norec = dfs.Tables[0].Rows.Count;
+            var norec = GetNoRec(dfs, cnb, cnc);//dfs.Tables[0].Rows.Count;
 
             if (norec > 0)
             {
@@ -224,7 +225,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private void loadToneD()
         {
             DataSet dHs = new DataSet(); dHs = SelectFromDB("Arrangements", "SELECT DISTINCT ToneD FROM Arrangements;", "", cnb, cnc);
-            var norec = dHs.Tables[0].Rows.Count;
+            var norec = GetNoRec(dHs, cnb, cnc);//dHs.Tables[0].Rows.Count;
 
             if (norec > 0)
             {
@@ -346,7 +347,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //cn.Dispose();
             var ft = "SELECT " + c("dlcm_ArangementFields") + " FROM Arrangements " + (all ? "" : "WHERE CDLC_ID=" + CDLCID + ";");
             dssx = SelectFromDB("Arrangements", ft, "", cnb, cnc);
-            noOfRec = dssx.Tables[0].Rows.Count;
+            noOfRec = GetNoRec(dssx, cnb, cnc);//dssx.Tables[0].Rows.Count;
             lbl_NoRec.Text = noOfRec.ToString() + " records.";
             //}
             //MessageBox.Show("test");
@@ -784,19 +785,19 @@ namespace RocksmithToolkitGUI.DLCManager
                 scmd = "SELECT ID FROM Main WHERE ID=" + dupl + " OR ID=" + txt_CDLC_ID.Text + " OR Duplicate_Of=\"" + (dupl == "0" ? "999999" : dupl)
                    + "\" OR Duplicate_Of=\"" + txt_CDLC_ID.Text + "\";";
                 DataSet dzs = new DataSet(); dzs = SelectFromDB("Main", scmd, "", cnb, cnc);
-                var norecs = dzs.Tables.Count == 0 ? 0 : dzs.Tables[0].Rows.Count;
+                var norecs = GetNoRec(dzs, cnb, cnc);//dzs.Tables.Count == 0 ? 0 : dzs.Tables[0].Rows.Count;
                 var IDs = "0";
                 for (var j = 0; j <= norecs - 1; j++) IDs += "," + dzs.Tables[0].Rows[j].ItemArray[0].ToString();
 
                 //same name
                 scmd = "SELECT ID FROM Main WHERE Song_Title=\"" + CleanTitle(sname) + "\" AND ID not in (" + IDs + ");";
                 DataSet dzcs = new DataSet(); dzcs = SelectFromDB("Main", scmd, "", cnb, cnc);
-                norecs = dzcs.Tables.Count == 0 ? 0 : dzcs.Tables[0].Rows.Count;
+                norecs = GetNoRec(dzcs, cnb, cnc);//dzcs.Tables.Count == 0 ? 0 : dzcs.Tables[0].Rows.Count;
                 for (var j = 0; j <= norecs - 1; j++) IDs += "," + dzcs.Tables[0].Rows[j].ItemArray[0].ToString();
 
                 scmd = "SELECT ID, XMLFileName, Start_Time, RouteMask, Bonus, ArrangementType, CDLC_ID FROM Arrangements WHERE CDLC_ID IN (" + IDs + ");";
                 DataSet dnzs = new DataSet(); dnzs = SelectFromDB("Arrangements", scmd, "", cnb, cnc);
-                norecs = dnzs.Tables.Count == 0 ? 0 : dnzs.Tables[0].Rows.Count;
+                norecs = GetNoRec(dnzs, cnb, cnc);//dnzs.Tables.Count == 0 ? 0 : dnzs.Tables[0].Rows.Count;
                 if (norecs > 0)
                     for (int j = 0; j < norecs; j++)
                         if (dnzs.Tables[0].Rows[j][0].ToString() != "" && dnzs.Tables[0].Rows[j][0].ToString() != null)
@@ -1101,10 +1102,10 @@ namespace RocksmithToolkitGUI.DLCManager
             var CDLCID = chbx_ToneBase.Text.Substring(chbx_ToneBase.Text.IndexOf(" - ") + 3, chbx_ToneBase.Text.Length - chbx_ToneBase.Text.IndexOf(" - ") + 3);
             CDLCID = CDLCID.Substring(0, CDLCID.IndexOf(" - "));
             DataSet dxs = new DataSet(); dxs = SelectFromDB("Arrangements", "SELECT JSONFilePath FROM Arrangements where CDLC_ID=" + CDLCID + ";", "", cnb, cnc);
-            noOfRec = dxs.Tables.Count <= 0 ? 0 : dxs.Tables[0].Rows.Count;
+            noOfRec = GetNoRec(dxs, cnb, cnc);//dxs.Tables.Count <= 0 ? 0 : dxs.Tables[0].Rows.Count;
             //var i = databox.SelectedCells[0].RowIndex;
             DataSet dfs = new DataSet(); dxs = SelectFromDB("Arrangements", "SELECT JSONFilePath FROM Arrangements where JSONFilePath<>\"\" and CDLC_ID=" + txt_CDLC_ID.Text + ";", "", cnb, cnc);
-            var noOfRecs = dfs.Tables.Count <= 0 ? 0 : dfs.Tables[0].Rows.Count;
+            var noOfRecs = GetNoRec(dfs, cnb, cnc);//dfs.Tables.Count <= 0 ? 0 : dfs.Tables[0].Rows.Count;
             string destination_dir = Path.GetDirectoryName(txt_XMLFilePath.Text);
             if (noOfRecs > 0) destination_dir = Path.GetDirectoryName(dfs.Tables[0].Rows[0].ItemArray[0].ToString());// databox.Rows[i].Cells["JSONFilePath"].Value.ToString();
             if (noOfRec > 0)
@@ -1204,7 +1205,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 var SongID = databox.SelectedCells[0].RowIndex;
                 DataSet dus = new DataSet(); dus = SelectFromDB("Arrangements", "SELECT XMLFilePath, ArrangementType, RouteMask, Start_Time FROM Arrangements WHERE CDLC_ID=" + SongID + "", "", cnb, cnc);
                 //var CDLC_ID = dus.Tables[0].Rows[0].ItemArray[0].ToString();
-                var noOfRec = dus.Tables[0].Rows.Count;
+                var noOfRec = GetNoRec(dus, cnb, cnc);//dus.Tables[0].Rows.Count;
                 var XMLFilePath = "";
                 for (var ii = 0; ii <= noOfRec - 1; ii++)
                 {
@@ -1236,7 +1237,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 string destination_dir = databox.Rows[i].Cells["Folder_Name"].Value.ToString();//pending to develop + (txt_Platform.Text.ToLower() == "XBOX360".ToLower() ? "\\Root" : "") +
 
                 DataSet dus = new DataSet(); dus = SelectFromDB("Arrangements", "SELECT XMLFilePath, XMLFileName, RouteMask, Start_Time FROM Arrangements WHERE ID=" + ArrangID + "", "", cnb, cnc);
-                var noOfRec = dus.Tables[0].Rows.Count;//var CDLC_ID = dus.Tables[0].Rows[0].ItemArray[0].ToString();
+                var noOfRec = GetNoRec(dus, cnb, cnc);//dus.Tables[0].Rows.Count;//var CDLC_ID = dus.Tables[0].Rows[0].ItemArray[0].ToString();
                 var XMLFilePath = dus.Tables[0].Rows[0].ItemArray[0].ToString();
                 var newXMLFilePath = destination_dir + "\\songs\\arr\\" + dus.Tables[0].Rows[0].ItemArray[1].ToString() + ".xml";
                 var s2s = float.Parse(num_Lyrics.Value.ToString());
@@ -1362,7 +1363,7 @@ namespace RocksmithToolkitGUI.DLCManager
             var tst = "";
 
             var noOfArr = 0;
-            noOfArr = dss.Tables[0].Rows.Count;
+            noOfArr = GetNoRec(dss, cnb, cnc);//dss.Tables[0].Rows.Count;
             if (noOfArr == 0) { return; }
             pB_ReadDLCs.Value = 0; pB_ReadDLCs.Maximum = noOfArr;
             string datemax = "12-13-11 13:11"; var startr = ""; CultureInfo enUS = new CultureInfo("en-US");
@@ -1383,7 +1384,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     DLCPackageData info = null;
                     var cmds = "SELECT Folder_Name, Platform FROM Main WHERE ID =" + cdlcid + " and Is_Broken <> \"Yes\";";// WHERE CDLC_ID=" + ID + GetArrOfficSQLTxt(arrangoff);
                     DataSet dsz = new DataSet(); dsz = SelectFromDB("Main", cmds, "", cnb, cnc);
-                    var noOfArz = dsz.Tables[0].Rows.Count;
+                    var noOfArz = GetNoRec(dsz, cnb, cnc);//dsz.Tables[0].Rows.Count;
                     if (dlcid != cdlcid)
                         try
                         {

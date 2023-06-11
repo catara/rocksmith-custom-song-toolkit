@@ -1,0 +1,5 @@
+catara;RepNBTFutureproof;1;
+0.1;;C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\Nothing But Thieves - Futureproof\notes.eof;
+https://www.youtube.com/watch?v=8E-anGEPhFU;;;
+https://www.ultimate-guitar.com/pro/?app_utm_source=UltimateGuitar&app_utm_medium=Search&app_utm_campaign=UG+Search&artist=Nothing%20But%20Thieves&song=futureproof&tab_id=4138714;https://open.spotify.com/artist/1kDGbuxWknIKx4FlgWxiSp;- initial version;- sync tabs
+- add tones (specially since 2 rhythm tracks);;Yes;Yes;Yes;DLCManager\external_tools\eof1.8RC12\eof.exe;6/11/2023 2:19:44 AM;6/11/2023 2:19:44 AM;C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\Nothing But Thieves - Futureproof\Nothing But Thieves - Futureproof.gp5,;Author,DLC_Name,TrackNo,Version,CDLCID,txt_EoFPath,YBLink,BasedOnYB,BasedOnCF,TabLinks,Spotify,Description,toDo,ToneDetails,SaveInVerisonInfo,SaveInDB,SaveRemotely,SaveRemotelyPath,PackageDate,UpdateDate,BasedOn_GP;(Remastered by CDLC Creator)<

@@ -33,7 +33,7 @@ namespace RocksmithToolkitGUI.DLCManager
         {
 
             InitializeComponent();
-            this.info = info;
+            info = info;
 
             //lbl_Link.Text = link;
             //txt_Description.Text = mss;
@@ -536,7 +536,9 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // PackNew
             // 
-            AutoScaleMode = AutoScaleMode.None;
+            AutoScaleDimensions = new SizeF(192F, 192F);
+            AutoScaleMode = AutoScaleMode.Dpi;
+            AutoSize = true;
             ClientSize = new Size(942, 1067);
             Controls.Add(splitContainer1);
             Name = "PackNew";
@@ -558,10 +560,21 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btn_OK_Click(object sender, EventArgs e)
         {
-            ConfigRepository.Instance()["dlcm_GlobalTempVariable"] = txt_Author.Text + ";" + txt_CDLC_Name.Text + ";" + txt_TrackNo.Text + ";" + txt_Version.Text + ";" + txt_CDLCID.Text + ";" + txt_EoFPath.Text + ";" + txt_YBLink.Text.Replace(";", ",") + ";" + txt_BasedOnYB.Text.Replace(";", ",")
-                + ";" + txt_BasedOnCF.Text.Replace(";", ",") + ";" + txt_TabLinks.Text.Replace(";", ",") + ";" + txt_Spotify.Text.Replace(";", ",") + ";" + txt_Description.Text.Replace(";", ",") + ";" + txt_toDos.Text.Replace(";", ",") + ";" + txt_ToneDetails.Text.Replace(";", ",") + ";" + (chbx_SaveInVerisonInfo.Checked ? "Yes" : "No")
-                + ";" + ";" + (chbx_SaveInDB.Checked ? "Yes" : "No") + ";" + (chbx_SaveRemotely.Checked ? "Yes" : "No") + ConfigRepository.Instance()["dlcm_EoFPath"] + ";" + ";" + txt_PackageDate.Text + ";" + txt_UpdateDate.Text + ";" + txt_GPFilePath.Text
-                + "Author,DLC_Name,TrackNo,Version,CDLCID,txt_EoFPath,YBLink,BasedOnYB,BasedOnCF,TabLinks,Spotify,Description,toDo,ToneDetails,SaveInVerisonInfo,SaveInDB,SaveRemotely,SaveRemotelyPath,PackageDate,UpdateDate,BasedOn_GP";
+            ConfigRepository.Instance()["dlcm_GlobalTempVariable"] =
+                txt_Author.Text + ";" + txt_CDLC_Name.Text + ";" + txt_TrackNo.Text + ";" + //0-2
+                txt_Version.Text + ";" + txt_CDLCID.Text + ";" + txt_EoFPath.Text + ";" + //3-5
+                txt_YBLink.Text.Replace(";", ",") + ";" + txt_BasedOnYB.Text.Replace(";", ",") + ";" + txt_BasedOnCF.Text.Replace(";", ",") + ";" + //6-8
+                txt_TabLinks.Text.Replace(";", ",") + ";" + txt_Spotify.Text.Replace(";", ",") + ";" + txt_Description.Text.Replace(";", ",") + ";" +//9-11
+                 txt_toDos.Text.Replace(";", ",") + ";" + txt_ToneDetails.Text.Replace(";", ",") + ";" + (chbx_SaveInVerisonInfo.Checked ? "Yes" : "No") + ";" +//12-14
+                 (chbx_SaveInDB.Checked ? "Yes" : "No") + ";" + (chbx_SaveRemotely.Checked ? "Yes" : "No") + ";" + ConfigRepository.Instance()["dlcm_EoFPath"] + ";" + //15-17
+                txt_PackageDate.Text + ";" + txt_UpdateDate.Text + ";" + txt_GPFilePath.Text + ";"//18-20                
+                + "Author,DLC_Name,TrackNo," +
+                "Version,CDLCID,txt_EoFPath," +
+                "YBLink,BasedOnYB,BasedOnCF," +
+                "TabLinks,Spotify,Description," +
+                "toDo,ToneDetails,SaveInVerisonInfo," +
+                "SaveInDB,SaveRemotely,SaveRemotelyPath," +
+                "PackageDate,UpdateDate,BasedOn_GP;";
 
             //exit();
             this.Hide();
@@ -587,46 +600,70 @@ namespace RocksmithToolkitGUI.DLCManager
         public void PackNew_Load(object sender, EventArgs e)
         {
             var ud = ""; var emt = false;
-            if (info.ToolkitInfo != null)
-                if (info.ToolkitInfo.PackageComment.Contains(";"))
+            if (info != null)
+            {
+                if (info.ToolkitInfo != null)
                 {
-                    string[] ag = info.ToolkitInfo.PackageComment.ToString().Split(';');
-                    txt_Author.Text = ag[0].Replace("Repacked by", "");
-                    if (ag.Length >= 20)
+                    if (info.ToolkitInfo.PackageComment.Contains(";"))
                     {
-                        ud = ag[19];
-                        txt_CDLC_Name.Text = ag[1]; txt_TrackNo.Text = ag[2]; txt_Version.Text = ag[3]; txt_CDLCID.Text = ag[4]; txt_EoFPath.Text = ag[5]; txt_YBLink.Text = ag[6]; txt_BasedOnYB.Text = ag[7];
-                        txt_BasedOnCF.Text = ag[8]; txt_TabLinks.Text = ag[9]; txt_Spotify.Text = ag[10]; txt_Description.Text = ag[11]; txt_toDos.Text = ag[12]; txt_ToneDetails.Text = ag[14];
-                        chbx_SaveInVerisonInfo.Checked = ag[15] == "Yes" ? true : false; chbx_SaveInDB.Checked = ag[16] == "Yes" ? true : false; chbx_SaveRemotely.Checked = ag[17] == "Yes" ? true : false;
-                        //txt_PackageDate.Text = ag[18];
-                        txt_GPFilePath.Text = ag[20];//ConfigRepository.Instance()["dlcm_EoFPath"] + ";"
-                        //"Author,DLC_Name,TrackNo,Version,CDLCID,txt_EoFPath,YBLink,BasedOnYB,BasedOnCF,TabLinks,Spotify,Description,toDo,ToneDetails,SaveInVerisonInfo,SaveInDB,SaveRemotely,SaveRemotelyPath,PackageDate,UpdateDate,BasedOn_GP"
+                        string[] ag = info.ToolkitInfo.PackageComment.ToString().Split(';');
+                        txt_Author.Text = ag[0].Replace("Repacked by", "");
+                        if (ag.Length >= 20)
+                        {
+                            ud = ag[19];
+                            txt_CDLC_Name.Text = ag[1]; txt_TrackNo.Text = ag[2]; txt_Version.Text = ag[3]; txt_CDLCID.Text = ag[4]; txt_EoFPath.Text = ag[5]; txt_YBLink.Text = ag[6]; txt_BasedOnYB.Text = ag[7];
+                            txt_BasedOnCF.Text = ag[8]; txt_TabLinks.Text = ag[9]; txt_Spotify.Text = ag[10]; txt_Description.Text = ag[11]; txt_toDos.Text = ag[12]; txt_ToneDetails.Text = ag[13];
+                            chbx_SaveInVerisonInfo.Checked = ag[14] == "Yes" ? true : false; chbx_SaveInDB.Checked = ag[15] == "Yes" ? true : false; chbx_SaveRemotely.Checked = ag[16] == "Yes" ? true : false;
+                            //txt_PackageDate.Text = ag[18];
+                            txt_GPFilePath.Text = ag[20];//ConfigRepository.Instance()["dlcm_EoFPath"] + ";"
+                                                         //"Author,DLC_Name,TrackNo,Version,CDLCID,txt_EoFPath,YBLink,BasedOnYB,BasedOnCF,TabLinks,Spotify,Description,toDo,ToneDetails,SaveInVerisonInfo,SaveInDB,SaveRemotely,SaveRemotelyPath,PackageDate,UpdateDate,BasedOn_GP;"
+
+                            //if (txt_PackageDate.Text == "")
+                            txt_PackageDate.Text = DateTime.Now.ToString();
+                            //else
+                            //{
+                            toolTip1.SetToolTip(txt_UpdateDate, "Previous Update Date: " + ud);
+                            //}
+                            emt = true;
+                        }
+                        if (txt_GPFilePath.Text == "") txt_GPFilePath.Text = GetGPfile();
+                    }
+                    if (txt_CDLCID.Text != "")
+                    {
+
+                    }
+                    if (!emt)
+                    {
+
+                        txt_CDLC_Name.Text = info.Name;
+                        txt_Version.Text = info.ToolkitInfo.PackageVersion;
+                        //txt_CDLCID.Text = ag[4];
+                        txt_EoFPath.Text = Path.Combine(Path.GetDirectoryName(info.Arrangements[0].SongXml.File), "notes.eof");
+                        txt_Author.Text = info.ToolkitInfo.PackageAuthor == null || info.ToolkitInfo.PackageAuthor.Contains("CDLC Creator") ? ConfigRepository.Instance()["general_defaultauthor"] : info.ToolkitInfo.PackageAuthor;
+                        //"Author,DLC_Name,TrackNo,Version,CDLCID,txt_EoFPath,YBLink,BasedOnYB,BasedOnCF,TabLinks,Spotify,Description,toDo,ToneDetails,SaveInVerisonInfo,SaveInDB,SaveRemotely,SaveRemotelyPath,PackageDate,UpdateDate"
 
                         //if (txt_PackageDate.Text == "")
                         txt_PackageDate.Text = DateTime.Now.ToString();
-                        //else
-                        //{
-                        toolTip1.SetToolTip(txt_UpdateDate, "Previous Update Date: " + ud);
-                        //}
-                        emt = true;
+                        txt_UpdateDate.Text = DateTime.Now.ToString();
+                        txt_GPFilePath.Text = GetGPfile();
                     }
-                    if (txt_GPFilePath.Text == "") txt_GPFilePath.Text = GetGPfile();
                 }
-            if (!emt)
-            {
-
-                txt_CDLC_Name.Text = info.Name;
-                txt_Version.Text = info.ToolkitInfo.PackageVersion;
-                //txt_CDLCID.Text = ag[4];
-                txt_EoFPath.Text = Path.Combine(Path.GetDirectoryName(info.Arrangements[0].SongXml.File), "notes.eof");
-                txt_Author.Text = info.ToolkitInfo.PackageAuthor == null || info.ToolkitInfo.PackageAuthor.Contains("CDLC Creator") ? ConfigRepository.Instance()["general_defaultauthor"] : info.ToolkitInfo.PackageAuthor;
-                //"Author,DLC_Name,TrackNo,Version,CDLCID,txt_EoFPath,YBLink,BasedOnYB,BasedOnCF,TabLinks,Spotify,Description,toDo,ToneDetails,SaveInVerisonInfo,SaveInDB,SaveRemotely,SaveRemotelyPath,PackageDate,UpdateDate"
-
-                //if (txt_PackageDate.Text == "")
-                txt_PackageDate.Text = DateTime.Now.ToString();
-                txt_UpdateDate.Text = DateTime.Now.ToString();
-                txt_GPFilePath.Text = GetGPfile();
             }
+            var result1 = MessageBox.Show("Things not to forget before packing newly a EoF song:\n" +
+                    "\n9. Add 4000+ miliSec of Leading Silence (ReEncode ?always? works)" +
+                    "\n1. Add a meaningful name for Tracks that are Final" +
+                    "\n2. Set Track Type (Rhythm/Lead)" +
+                    "\n3. Set if an Bonus/Alternate track" +
+                    "\n4. Remove Difficulty Limit" +
+                    "\n5. Set Bass Pick setting (or wo)" +
+                    "\n6. Delete All then Generate Fee Hand positions" +
+                    "\n7. Set difficulty to 0" +
+                    "\n8. Add tone changes (stat of the song, Default_'Instrument', then at instrument kickoff 4+ sec)" +
+                    "\n10. Set Default tone to Default_'Instrument'" +
+                    "\n11. Add Lyrics even if created in 3min using UltraCreator (press mouse to elongate some lyrics or extend them when precise tab them in EoF)" +
+                    "\n\nOptional:\n12. Clean then Set song Sections"
+                    , "Information", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
 
         }
 

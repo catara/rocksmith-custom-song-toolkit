@@ -233,7 +233,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 //        OleDbDataAdapter da = new OleDbDataAdapter(SearchCmd, cnn); //WHERE id=253
                 //        da.Fill(ds, "Main");
                 DataSet ds = new DataSet(); ds = SelectFromDB("Main", "SELECT DISTINCT Groupz FROM Groups WHERE Type=\"Retail\";", "", cnb, cnc);
-                norec = ds.Tables[0].Rows.Count;
+                norec = GetNoRec(ds, cnb, cnc);//ds.Tables[0].Rows.Count;
 
                 if (norec > 0)
                 {
@@ -263,7 +263,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 //    string SearchCmds = "SELECT DISTINCT Groupz FROM Groups WHERE Type=\"Retail\" AND CDLC_ID=\"" + DataGridView1.Rows[DataGridView1.SelectedCells[0].RowIndex].Cells["ID"].Value.ToString() + "\";";
                 //    OleDbDataAdapter dfa = new OleDbDataAdapter(SearchCmds, con); //WHERE id=253
                 //    dfa.Fill(dds, "Main");
-                var nocrec = dds.Tables[0].Rows.Count;
+                var nocrec = GetNoRec(dds, cnb, cnc);//dds.Tables[0].Rows.Count;
 
                 if (nocrec > 0)
                     for (int l = 0; l < norec; l++)
@@ -335,7 +335,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         DataSet dooz = new DataSet(); dooz = SelectFromDB("Groups", "SELECT ID FROM Groups WHERE Type=\"Retail\" AND CDLC_ID=\"" + txt_ID.Text + "\" AND Groupz=\"" + chbx_AllGroups.Items[j] + "\";", "", cnb, cnc);
                         //var cmd = "INSERT INTO Groups(CDLC_ID,Groups,Type) VALUES";
 
-                        var rr = dooz.Tables[0].Rows.Count;
+                        var rr = GetNoRec(dooz, cnb, cnc);//dooz.Tables[0].Rows.Count;
                         if (chbx_AllGroups.GetItemChecked(j) && rr == 0)
                         {
                             //   cmd += "(\"" + txt_ID.Text + "\",\"" + chbx_AllGroups.Items[j] + "\",\"Retail\")";
@@ -511,7 +511,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //);
 
             dssx.Tables["Cache"].AcceptChanges();
-            var noOfRec = dssx.Tables[0].Rows.Count;
+            var noOfRec = GetNoRec(dssx, cnb, cnc);//dssx.Tables[0].Rows.Count;
             bs.DataSource = dssx.Tables["Cache"];
             DataGridView.DataSource = bs;
             dssx.Dispose();
@@ -526,7 +526,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //    //da = new OleDbDataAdapter("SELECT Identifier, Badge FROM Badge", cn);
             //    //da.Fill(ds, "Badge");
             //}
-            lbl_NoRec.Text = noOfRec.ToString() + "/" + (dooz.Tables[0].Rows.Count - noOfRec).ToString() + " records.";
+            lbl_NoRec.Text = noOfRec.ToString() + "/" + (GetNoRec(dooz, cnb, cnc) - noOfRec).ToString() + " records.";
 
             //advance or step back in the song list
             int i = 0;
@@ -613,7 +613,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
             var i = 0;
             //rtxt_StatisticsOnReadDLCs.Text += "\n  54= " +dus.Tables[0].Rows.Count;
-            MaximumSize = dus.Tables[0].Rows.Count;
+            MaximumSize = GetNoRec(dus, cnb, cnc);//dus.Tables[0].Rows.Count;
             if (MaximumSize > 0)
                 foreach (DataRow dataRow in dus.Tables[0].Rows)
                 {
@@ -987,7 +987,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     //    OleDbDataAdapter da = new OleDbDataAdapter(cmd, cn);
                     //    da.Fill(disx, "Cache");
                     //rtxt_StatisticsOnReadDLCs.Text = "Processing: " + dssx.Tables[0].Rows.Count + " " + songkey + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                    var rec = disx.Tables[0].Rows.Count;
+                    var rec = GetNoRec(disx, cnb, cnc);//disx.Tables[0].Rows.Count;
                     if (rec > 0) IDD = disx.Tables[0].Rows[0].ItemArray[0].ToString();
                     else
                         //{
@@ -1595,7 +1595,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 //}
                 DeleteFromDB("Groups", "DELETE * FROM Groups WHERE Type=\"Retail\" AND Groupz= \"" + chbx_Group.Text + "\"", cnb, cnc);
                 DataSet ds = new DataSet(); ds = SelectFromDB("Cache", "SELECT * from Cache AS O", "", cnb, cnc);
-                var recs = dssx.Tables[0].Rows.Count;
+                var recs = GetNoRec(dssx, cnb, cnc);//dssx.Tables[0].Rows.Count;
                 pB_ReadDLCs.Value = 0;
                 if (recs != 0)
                     pB_ReadDLCs.Maximum = 2 * recs;

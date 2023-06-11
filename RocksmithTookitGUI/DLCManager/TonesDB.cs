@@ -19,6 +19,7 @@ using RocksmithToolkitLib.XmlRepository;
 using System.Globalization;
 using System.Data.SQLite;
 using SQLite;
+using System.Net;
 
 namespace RocksmithToolkitGUI.DLCManager
 {
@@ -128,7 +129,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 ////Read Tones
                 var nrc = 0;
                 DataSet dtc = new DataSet(); dtc = SelectFromDB("Tones_GearList", "SELECT Gear_Name FROM Tones_GearList WHERE CDLC_ID=" + txt_ID.Text + ";", "", cnb, cnc);
-                nrc = dtc.Tables[0].Rows.Count; /*var TID = "";*/
+                nrc = GetNoRec(dtc, cnb, cnc);//dtc.Tables[0].Rows.Count; /*var TID = "";*/
                 if (nrc > 0)
                 {
                     for (int k = cbx_Gear_Name.Items.Count - 1; k >= 0; --k) cbx_Gear_Name.Items.RemoveAt(k);
@@ -228,7 +229,7 @@ namespace RocksmithToolkitGUI.DLCManager
         public void Populate(ref DataGridView DataGridView, ref BindingSource bs)
         {
             dssx = SelectFromDB("Tones", "SELECT * FROM Tones WHERE CDLC_ID=" + CDLCID + ";", "", cnb, cnc);
-            var noOfRec = dssx.Tables[0].Rows.Count;
+            var noOfRec = GetNoRec(dssx, cnb, cnc);//dssx.Tables[0].Rows.Count;
             lbl_NoRec.Text = " songs.";
             lbl_NoRec.Text = noOfRec.ToString() + " records.";
             DataGridViewTextBoxColumn ID = new DataGridViewTextBoxColumn { DataPropertyName = "ID", HeaderText = "ID " };
@@ -281,7 +282,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
             var i = 0;
             //rtxt_StatisticsOnReadDLCs.Text += "\n  54= " +dus.Tables[0].Rows.Count;
-            MaximumSize = dus.Tables[0].Rows.Count;
+            MaximumSize = GetNoRec(dus, cnb, cnc);//dus.Tables[0].Rows.Count;
             foreach (DataRow dataRow in dus.Tables[0].Rows)
             {
                 files[i] = new UtilitiesFunctions.Tones();
@@ -303,7 +304,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 ////Read Tones
                 var nrc = 0;
                 DataSet dtc = new DataSet(); dtc = SelectFromDB("Tones_GearList", "SELECT Gear_Name FROM Tones_GearList WHERE CDLC_ID=" + files[i].ID + ";", "", cnb, cnc);
-                nrc = dtc.Tables[0].Rows.Count; /*var TID = "";*/
+                nrc = GetNoRec(dtc, cnb, cnc);//dtc.Tables[0].Rows.Count; /*var TID = "";*/
                 if (nrc > 0)
                 {
                     for (int k = 0; k < nrc; k++)
@@ -355,7 +356,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private void cmbx_Gear_Name_SelectedIndexChanged(object sender, EventArgs e)
         {
 
-            var nrc = 0;
+            
             for (int k = cbx_Type.Items.Count - 1; k >= 0; --k) cbx_Type.Items.RemoveAt(k);
             for (int k = chbx_Category.Items.Count - 1; k >= 0; --k) chbx_Category.Items.RemoveAt(k);
             for (int k = chbx_KnobValues.Items.Count - 1; k >= 0; --k) chbx_KnobValues.Items.RemoveAt(k);
@@ -366,7 +367,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
 
             DataSet dsc = new DataSet(); dsc = SelectFromDB("Tones_GearList", "SELECT Type, Category, KnobValuesKeys, KnobValuesValues, PedalKey, Skin, SkinIndex FROM Tones_GearList WHERE CDLC_ID=" + txt_ID.Text + " AND Gear_Name=\"" + cbx_Gear_Name.Text + "\" ORDER BY Type DESC;", "", cnb, cnc);
-            if (dsc.Tables.Count > 0) nrc = dsc.Tables[0].Rows.Count;
+            var nrc = GetNoRec(dsc, cnb, cnc);//0;if (dsc.Tables.Count > 0) nrc = dsc.Tables[0].Rows.Count;
             //for (int k = 0; k < nrc; k++)
             if (nrc > 0)
             {

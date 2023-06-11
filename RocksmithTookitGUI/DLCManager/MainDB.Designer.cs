@@ -160,33 +160,33 @@ namespace RocksmithToolkitGUI.DLCManager
             chbx_A_IsCover = new CheckBox();
             txt_Order = new NumericUpDown();
             btn_PitchShift = new Button();
-            txt_AlbumArtPath = new CueTextBox();
-            txt_Art_Hash = new CueTextBox();
-            txt_Preview_Hash = new CueTextBox();
-            txt_Lyrics_Hash = new CueTextBox();
-            txt_AudioPath = new CueTextBox();
-            txt_AudioPreviewPath = new CueTextBox();
-            txt_AlbumSort = new CueTextBox();
-            txt_OldPath = new CueTextBox();
-            txt_OggPath = new CueTextBox();
-            txt_OggPreviewPath = new CueTextBox();
-            txt_Lyrics = new CueTextBox();
-            txt_Author = new CueTextBox();
-            txt_Tuning = new CueTextBox();
-            txt_Live_Details = new CueTextBox();
-            txt_DuplicateOf = new CueTextBox();
-            txt_YouTube_Link = new CueTextBox();
-            txt_Artist_ShortName = new CueTextBox();
-            txt_Album_ShortName = new CueTextBox();
-            txt_Album_Year = new CueTextBox();
-            txt_APP_ID = new CueTextBox();
-            txt_DLC_ID = new CueTextBox();
-            txt_Version = new CueTextBox();
-            txt_Album = new CueTextBox();
-            txt_Title_Sort = new CueTextBox();
-            txt_Title = new CueTextBox();
-            txt_Artist_Sort = new CueTextBox();
-            txt_Artist = new CueTextBox();
+            txt_AlbumArtPath = new TextBox();
+            txt_Art_Hash = new TextBox();
+            txt_Preview_Hash = new TextBox();
+            txt_Lyrics_Hash = new TextBox();
+            txt_AudioPath = new TextBox();
+            txt_AudioPreviewPath = new TextBox();
+            txt_AlbumSort = new TextBox();
+            txt_OldPath = new TextBox();
+            txt_OggPath = new TextBox();
+            txt_OggPreviewPath = new TextBox();
+            txt_Lyrics = new TextBox();
+            txt_Author = new TextBox();
+            txt_Tuning = new TextBox();
+            txt_Live_Details = new TextBox();
+            txt_DuplicateOf = new TextBox();
+            txt_YouTube_Link = new TextBox();
+            txt_Artist_ShortName = new TextBox();
+            txt_Album_ShortName = new TextBox();
+            txt_Album_Year = new TextBox();
+            txt_APP_ID = new TextBox();
+            txt_DLC_ID = new TextBox();
+            txt_Version = new TextBox();
+            txt_Album = new TextBox();
+            txt_Title_Sort = new TextBox();
+            txt_Title = new TextBox();
+            txt_Artist_Sort = new TextBox();
+            txt_Artist = new TextBox();
             chbx_ExcludeBroken = new CheckBox();
             chbx_A_IsMedley = new CheckBox();
             chbx_A_IsMultiStrings = new CheckBox();
@@ -205,7 +205,7 @@ namespace RocksmithToolkitGUI.DLCManager
             btn_RestoreAlbumArt = new Button();
             chbx_A_IsDeluxe = new CheckBox();
             chbx_A_IsGreatestHits = new CheckBox();
-            txt_Album_OrigArtPath = new CueTextBox();
+            txt_Album_OrigArtPath = new TextBox();
             chbx_A_IsMidi = new CheckBox();
             chbx_A_IsGameSoundtrack = new CheckBox();
             btn_Distribute_Evenly = new Button();
@@ -245,14 +245,14 @@ namespace RocksmithToolkitGUI.DLCManager
             chbx_Lead = new CheckBox();
             chbx_Combo = new CheckBox();
             chbx_Rhythm = new CheckBox();
-            txt_BassPicking = new CueTextBox();
+            txt_BassPicking = new TextBox();
             chbx_Lyrics = new CheckBox();
             gbox_QualityChecks = new GroupBox();
             chbx_DD = new CheckBox();
             txt_AddDD = new NumericUpDown();
             chbx_BassDD = new CheckBox();
             groupBox2 = new GroupBox();
-            txt_ID = new CueTextBox();
+            txt_ID = new TextBox();
             btn_SelectInverted = new Button();
             btn_InvertSelect = new Button();
             label12 = new Label();
@@ -275,7 +275,6 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_PreviewStart = new DateTimePicker();
             btn_PlayAudio = new Button();
             btn_PlayPreview = new Button();
-            txt_AverageTempo = new CueTextBox();
             txt_PreviewEnd = new NumericUpDown();
             btn_SelectPreview = new Button();
             groupBox3 = new GroupBox();
@@ -301,7 +300,7 @@ namespace RocksmithToolkitGUI.DLCManager
             rtxt_StatisticsOnReadDLCs = new RichTextBox();
             label59 = new Label();
             btn_Debug = new Button();
-            txt_CustomsForge_Link = new CueTextBox();
+            txt_CustomsForge_Link = new TextBox();
             label33 = new Label();
             label32 = new Label();
             btn_Encrypt = new TabPage();
@@ -309,9 +308,9 @@ namespace RocksmithToolkitGUI.DLCManager
             label15 = new Label();
             label14 = new Label();
             label13 = new Label();
-            txt_BasedOn_Tabs = new CueTextBox();
-            txt_BasedOn_CF = new CueTextBox();
-            txt_BasedOn_Youtube = new CueTextBox();
+            txt_BasedOn_Tabs = new TextBox();
+            txt_BasedOn_CF = new TextBox();
+            txt_BasedOn_Youtube = new TextBox();
             txt_ToneDetails = new RichTextBox();
             txt_PackageDetails = new RichTextBox();
             txt_ToDos = new RichTextBox();
@@ -343,13 +342,13 @@ namespace RocksmithToolkitGUI.DLCManager
             btn_SaveSetting = new Button();
             btn_RemoveAllRemoteSongs = new Button();
             btn_RemoveRemoteSong = new Button();
-            txt_RemotePath = new CueTextBox();
+            txt_RemotePath = new TextBox();
             tabPage4 = new TabPage();
-            txt_Spotify_Album_URL = new CueTextBox();
-            txt_Spotify_Album_ID = new CueTextBox();
-            txt_Spotify_Artist_ID = new CueTextBox();
-            txt_Spotify_Song_ID = new CueTextBox();
-            txt_SpotifyStatus = new CueTextBox();
+            txt_Spotify_Album_URL = new TextBox();
+            txt_Spotify_Album_ID = new TextBox();
+            txt_Spotify_Artist_ID = new TextBox();
+            txt_Spotify_Song_ID = new TextBox();
+            txt_SpotifyStatus = new TextBox();
             picbx_SpotifyCover = new PictureBox();
             btn_GetTrack = new Button();
             txt_SavedPlaylists = new ListBox();
@@ -408,6 +407,7 @@ namespace RocksmithToolkitGUI.DLCManager
             dropdown_Broken = new ToolStripMenuItem();
             dropdown_Unbroken = new ToolStripMenuItem();
             dropdown_Reverse = new ToolStripMenuItem();
+            txt_AverageTempo = new TextBox();
             ((System.ComponentModel.ISupportInitialize)gbox_Cover).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txt_Top10).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txt_Rating).BeginInit();
@@ -2104,7 +2104,6 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_AlbumArtPath
             // 
-            txt_AlbumArtPath.Cue = "Album art Path";
             txt_AlbumArtPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             txt_AlbumArtPath.ForeColor = System.Drawing.Color.Gray;
             txt_AlbumArtPath.HideSelection = false;
@@ -2120,7 +2119,6 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_Art_Hash
             // 
-            txt_Art_Hash.Cue = "Hash Art";
             txt_Art_Hash.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             txt_Art_Hash.ForeColor = System.Drawing.Color.Gray;
             txt_Art_Hash.HideSelection = false;
@@ -2136,7 +2134,6 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_Preview_Hash
             // 
-            txt_Preview_Hash.Cue = "Hash Preview";
             txt_Preview_Hash.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             txt_Preview_Hash.ForeColor = System.Drawing.Color.Gray;
             txt_Preview_Hash.HideSelection = false;
@@ -2152,7 +2149,6 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_Lyrics_Hash
             // 
-            txt_Lyrics_Hash.Cue = "Hash Lyrics";
             txt_Lyrics_Hash.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             txt_Lyrics_Hash.ForeColor = System.Drawing.Color.Gray;
             txt_Lyrics_Hash.HideSelection = false;
@@ -2168,7 +2164,6 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_AudioPath
             // 
-            txt_AudioPath.Cue = "Audio Path";
             txt_AudioPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             txt_AudioPath.ForeColor = System.Drawing.Color.Gray;
             txt_AudioPath.HideSelection = false;
@@ -2184,7 +2179,6 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_AudioPreviewPath
             // 
-            txt_AudioPreviewPath.Cue = "Audio Preview Path";
             txt_AudioPreviewPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             txt_AudioPreviewPath.ForeColor = System.Drawing.Color.Gray;
             txt_AudioPreviewPath.HideSelection = false;
@@ -2200,7 +2194,6 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_AlbumSort
             // 
-            txt_AlbumSort.Cue = "Album Sort";
             txt_AlbumSort.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             txt_AlbumSort.ForeColor = System.Drawing.Color.Gray;
             txt_AlbumSort.Location = new System.Drawing.Point(699, 168);
@@ -2213,7 +2206,6 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_OldPath
             // 
-            txt_OldPath.Cue = "Old Path";
             txt_OldPath.Enabled = false;
             txt_OldPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             txt_OldPath.ForeColor = System.Drawing.Color.Gray;
@@ -2230,7 +2222,6 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_OggPath
             // 
-            txt_OggPath.Cue = "Ogg Path";
             txt_OggPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             txt_OggPath.ForeColor = System.Drawing.Color.Gray;
             txt_OggPath.HideSelection = false;
@@ -2246,7 +2237,6 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_OggPreviewPath
             // 
-            txt_OggPreviewPath.Cue = "Ogg Preview Path";
             txt_OggPreviewPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             txt_OggPreviewPath.ForeColor = System.Drawing.Color.Gray;
             txt_OggPreviewPath.HideSelection = false;
@@ -2262,7 +2252,6 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_Lyrics
             // 
-            txt_Lyrics.Cue = "Lyrics Path";
             txt_Lyrics.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             txt_Lyrics.ForeColor = System.Drawing.Color.Gray;
             txt_Lyrics.HideSelection = false;
@@ -2278,7 +2267,6 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_Author
             // 
-            txt_Author.Cue = "Author";
             txt_Author.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             txt_Author.ForeColor = System.Drawing.Color.Gray;
             txt_Author.Location = new System.Drawing.Point(8, 159);
@@ -2292,7 +2280,6 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_Tuning
             // 
-            txt_Tuning.Cue = "Tuning (All)";
             txt_Tuning.Enabled = false;
             txt_Tuning.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             txt_Tuning.ForeColor = System.Drawing.Color.Gray;
@@ -2305,7 +2292,6 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_Live_Details
             // 
-            txt_Live_Details.Cue = "Live/Acoustic/Featuring Details";
             txt_Live_Details.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             txt_Live_Details.ForeColor = System.Drawing.Color.Gray;
             txt_Live_Details.Location = new System.Drawing.Point(9, 197);
@@ -2318,7 +2304,6 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_DuplicateOf
             // 
-            txt_DuplicateOf.Cue = "Alternate Of";
             txt_DuplicateOf.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             txt_DuplicateOf.ForeColor = System.Drawing.Color.Gray;
             txt_DuplicateOf.Location = new System.Drawing.Point(248, 93);
@@ -2330,7 +2315,6 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_YouTube_Link
             // 
-            txt_YouTube_Link.Cue = "YouTube Link";
             txt_YouTube_Link.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             txt_YouTube_Link.ForeColor = System.Drawing.Color.Gray;
             txt_YouTube_Link.Location = new System.Drawing.Point(148, 172);
@@ -2343,7 +2327,6 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_Artist_ShortName
             // 
-            txt_Artist_ShortName.Cue = "ShortName Artist";
             txt_Artist_ShortName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             txt_Artist_ShortName.ForeColor = System.Drawing.Color.Gray;
             txt_Artist_ShortName.Location = new System.Drawing.Point(864, 4);
@@ -2355,7 +2338,6 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_Album_ShortName
             // 
-            txt_Album_ShortName.Cue = "ShortName Album";
             txt_Album_ShortName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             txt_Album_ShortName.ForeColor = System.Drawing.Color.Gray;
             txt_Album_ShortName.Location = new System.Drawing.Point(803, 168);
@@ -2367,7 +2349,6 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_Album_Year
             // 
-            txt_Album_Year.Cue = "Year";
             txt_Album_Year.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             txt_Album_Year.ForeColor = System.Drawing.Color.Gray;
             txt_Album_Year.Location = new System.Drawing.Point(864, 168);
@@ -2380,7 +2361,6 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_APP_ID
             // 
-            txt_APP_ID.Cue = "App ID";
             txt_APP_ID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             txt_APP_ID.ForeColor = System.Drawing.Color.Gray;
             txt_APP_ID.Location = new System.Drawing.Point(699, 208);
@@ -2392,7 +2372,6 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_DLC_ID
             // 
-            txt_DLC_ID.Cue = "DLC Name";
             txt_DLC_ID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             txt_DLC_ID.ForeColor = System.Drawing.Color.Gray;
             txt_DLC_ID.Location = new System.Drawing.Point(419, 208);
@@ -2404,7 +2383,6 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_Version
             // 
-            txt_Version.Cue = "Version";
             txt_Version.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             txt_Version.ForeColor = System.Drawing.Color.Gray;
             txt_Version.Location = new System.Drawing.Point(1000, 44);
@@ -2416,7 +2394,6 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_Album
             // 
-            txt_Album.Cue = "Album";
             txt_Album.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             txt_Album.ForeColor = System.Drawing.Color.Gray;
             txt_Album.Location = new System.Drawing.Point(419, 168);
@@ -2430,7 +2407,6 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_Title_Sort
             // 
-            txt_Title_Sort.Cue = "Title Sort";
             txt_Title_Sort.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             txt_Title_Sort.ForeColor = System.Drawing.Color.Gray;
             txt_Title_Sort.Location = new System.Drawing.Point(419, 128);
@@ -2443,7 +2419,6 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_Title
             // 
-            txt_Title.Cue = "Title";
             txt_Title.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             txt_Title.ForeColor = System.Drawing.Color.Gray;
             txt_Title.Location = new System.Drawing.Point(419, 84);
@@ -2457,7 +2432,6 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_Artist_Sort
             // 
-            txt_Artist_Sort.Cue = "Artist Sort";
             txt_Artist_Sort.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             txt_Artist_Sort.ForeColor = System.Drawing.Color.Gray;
             txt_Artist_Sort.Location = new System.Drawing.Point(419, 44);
@@ -2470,7 +2444,6 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_Artist
             // 
-            txt_Artist.Cue = "Artist";
             txt_Artist.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             txt_Artist.ForeColor = System.Drawing.Color.Gray;
             txt_Artist.Location = new System.Drawing.Point(419, 4);
@@ -2715,7 +2688,6 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_Album_OrigArtPath
             // 
-            txt_Album_OrigArtPath.Cue = "Orig Album art Path";
             txt_Album_OrigArtPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             txt_Album_OrigArtPath.ForeColor = System.Drawing.Color.Gray;
             txt_Album_OrigArtPath.HideSelection = false;
@@ -2816,6 +2788,7 @@ namespace RocksmithToolkitGUI.DLCManager
             btn_EOF.Text = "Editor on Fire";
             toolTip1.SetToolTip(btn_EOF, "Open Song Editor (EoF/Editor on Fire))");
             btn_EOF.UseVisualStyleBackColor = true;
+            btn_EOF.Click += btn_EOF_Click;
             // 
             // splitContainer2
             // 
@@ -2882,19 +2855,14 @@ namespace RocksmithToolkitGUI.DLCManager
             Panel1.Controls.Add(cmb_SearchFields);
             Panel1.Controls.Add(btn_GoTo);
             Panel1.Controls.Add(txt_Description);
-  			Panel1.Controls.Add(txt_Album_OrigArtPath);
+            Panel1.Controls.Add(txt_Album_OrigArtPath);
             Panel1.Controls.Add(txt_AlbumArtPath);
             Panel1.Controls.Add(txt_Art_Hash);
-            Panel1.Controls.Add(chbx_DupliGTrack);
             Panel1.Controls.Add(txt_Preview_Hash);
             Panel1.Controls.Add(txt_Lyrics_Hash);
             Panel1.Controls.Add(txt_AudioPath);
             Panel1.Controls.Add(txt_AudioPreviewPath);
             Panel1.Controls.Add(txt_AlbumSort);
-            Panel1.Controls.Add(txt_OldPath);
-            Panel1.Controls.Add(txt_OggPath);
-            Panel1.Controls.Add(txt_OggPreviewPath);
-            Panel1.Controls.Add(txt_Lyrics);
             Panel1.Controls.Add(groupBox4);
             Panel1.Controls.Add(btn_Sort);
             Panel1.Controls.Add(btn_Refresh);
@@ -2942,7 +2910,6 @@ namespace RocksmithToolkitGUI.DLCManager
             Panel1.Controls.Add(btn_OpenRetail);
             Panel1.Controls.Add(btn_Close);
             Panel1.Controls.Add(btn_OpenStandardization);
-
             Panel1.Controls.Add(chbx_AutoSave);
             Panel1.Controls.Add(btn_Save);
             Panel1.Controls.Add(btn_Duplicate);
@@ -3373,7 +3340,6 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_BassPicking
             // 
-            txt_BassPicking.Cue = "Bass Picking";
             txt_BassPicking.Enabled = false;
             txt_BassPicking.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             txt_BassPicking.ForeColor = System.Drawing.Color.Gray;
@@ -3517,7 +3483,6 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_ID
             // 
-            txt_ID.Cue = "ID";
             txt_ID.Enabled = false;
             txt_ID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             txt_ID.ForeColor = System.Drawing.Color.Gray;
@@ -3806,17 +3771,6 @@ namespace RocksmithToolkitGUI.DLCManager
             btn_PlayPreview.UseVisualStyleBackColor = true;
             btn_PlayPreview.Click += btn_PlayPreview_Click;
             // 
-            // txt_AverageTempo
-            // 
-            txt_AverageTempo.Cue = "Avg. Tempo";
-            txt_AverageTempo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            txt_AverageTempo.ForeColor = System.Drawing.Color.Gray;
-            txt_AverageTempo.Location = new System.Drawing.Point(564, 80);
-            txt_AverageTempo.Margin = new Padding(4);
-            txt_AverageTempo.Name = "txt_AverageTempo";
-            txt_AverageTempo.Size = new System.Drawing.Size(126, 35);
-            txt_AverageTempo.TabIndex = 90;
-            // 
             // txt_PreviewEnd
             // 
             txt_PreviewEnd.Location = new System.Drawing.Point(287, 81);
@@ -3867,7 +3821,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // label8
             // 
             label8.Enabled = false;
-            label8.Location = new System.Drawing.Point(332, 132);
+            label8.Location = new System.Drawing.Point(271, 175);
             label8.Margin = new Padding(4, 0, 4, 0);
             label8.Name = "label8";
             label8.Size = new System.Drawing.Size(88, 36);
@@ -4135,7 +4089,6 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_CustomsForge_Link
             // 
-            txt_CustomsForge_Link.Cue = "CustomsForge New";
             txt_CustomsForge_Link.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             txt_CustomsForge_Link.ForeColor = System.Drawing.Color.Gray;
             txt_CustomsForge_Link.Location = new System.Drawing.Point(156, 116);
@@ -4280,7 +4233,6 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_BasedOn_Tabs
             // 
-            txt_BasedOn_Tabs.Cue = "Based on Tabs";
             txt_BasedOn_Tabs.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             txt_BasedOn_Tabs.ForeColor = System.Drawing.Color.Gray;
             txt_BasedOn_Tabs.HideSelection = false;
@@ -4294,7 +4246,6 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_BasedOn_CF
             // 
-            txt_BasedOn_CF.Cue = "Based on Custom Forge";
             txt_BasedOn_CF.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             txt_BasedOn_CF.ForeColor = System.Drawing.Color.Gray;
             txt_BasedOn_CF.HideSelection = false;
@@ -4308,7 +4259,6 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_BasedOn_Youtube
             // 
-            txt_BasedOn_Youtube.Cue = "Based on Youtube";
             txt_BasedOn_Youtube.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             txt_BasedOn_Youtube.ForeColor = System.Drawing.Color.Gray;
             txt_BasedOn_Youtube.HideSelection = false;
@@ -4662,7 +4612,6 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_RemotePath
             // 
-            txt_RemotePath.Cue = "Remote Path";
             txt_RemotePath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             txt_RemotePath.ForeColor = System.Drawing.Color.Gray;
             txt_RemotePath.HideSelection = false;
@@ -4698,7 +4647,6 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_Spotify_Album_URL
             // 
-            txt_Spotify_Album_URL.Cue = "Spotify Album URL";
             txt_Spotify_Album_URL.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             txt_Spotify_Album_URL.ForeColor = System.Drawing.Color.Gray;
             txt_Spotify_Album_URL.HideSelection = false;
@@ -4712,7 +4660,6 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_Spotify_Album_ID
             // 
-            txt_Spotify_Album_ID.Cue = "Spotify Album ID";
             txt_Spotify_Album_ID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             txt_Spotify_Album_ID.ForeColor = System.Drawing.Color.Gray;
             txt_Spotify_Album_ID.HideSelection = false;
@@ -4726,7 +4673,6 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_Spotify_Artist_ID
             // 
-            txt_Spotify_Artist_ID.Cue = "Spotify Artist ID";
             txt_Spotify_Artist_ID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             txt_Spotify_Artist_ID.ForeColor = System.Drawing.Color.Gray;
             txt_Spotify_Artist_ID.HideSelection = false;
@@ -4740,7 +4686,6 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_Spotify_Song_ID
             // 
-            txt_Spotify_Song_ID.Cue = "Spotify Song ID";
             txt_Spotify_Song_ID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             txt_Spotify_Song_ID.ForeColor = System.Drawing.Color.Gray;
             txt_Spotify_Song_ID.HideSelection = false;
@@ -4754,7 +4699,6 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_SpotifyStatus
             // 
-            txt_SpotifyStatus.Cue = "Authentification Status";
             txt_SpotifyStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             txt_SpotifyStatus.ForeColor = System.Drawing.Color.Gray;
             txt_SpotifyStatus.HideSelection = false;
@@ -5149,7 +5093,7 @@ namespace RocksmithToolkitGUI.DLCManager
             ToolStripMenuItemTVTheme.Click += tVThemeToolStripMenuItem_Click;
             // 
             // ToolStripMenuItemAmateurCover
-            // //
+            // 
             ToolStripMenuItemAmateurCover.Name = "ToolStripMenuItemAmateurCover";
             ToolStripMenuItemAmateurCover.Size = new System.Drawing.Size(339, 44);
             ToolStripMenuItemAmateurCover.Text = "Amateur Cover";
@@ -5234,6 +5178,16 @@ namespace RocksmithToolkitGUI.DLCManager
             dropdown_Reverse.Text = "Reverse";
             dropdown_Reverse.Click += ContextMenuMenu_Reverse_Click;
             // 
+            // txt_AverageTempo
+            // 
+            txt_AverageTempo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            txt_AverageTempo.ForeColor = System.Drawing.Color.Gray;
+            txt_AverageTempo.Location = new System.Drawing.Point(564, 80);
+            txt_AverageTempo.Margin = new Padding(4);
+            txt_AverageTempo.Name = "txt_AverageTempo";
+            txt_AverageTempo.Size = new System.Drawing.Size(126, 35);
+            txt_AverageTempo.TabIndex = 90;
+            // 
             // MainDB
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(192F, 192F);
@@ -5295,6 +5249,7 @@ namespace RocksmithToolkitGUI.DLCManager
             ((System.ComponentModel.ISupportInitialize)txt_NoOfSplits).EndInit();
             ((System.ComponentModel.ISupportInitialize)txt_CoundofPacked).EndInit();
             tabPage4.ResumeLayout(false);
+            tabPage4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)picbx_SpotifyCover).EndInit();
             ((System.ComponentModel.ISupportInitialize)databox).EndInit();
             ContextMenuStrip_RightClick.ResumeLayout(false);
@@ -5314,14 +5269,14 @@ namespace RocksmithToolkitGUI.DLCManager
         private Button btn_Replace_Brakets;
         private Button chbx_Instrumental;
         private Button btn_ReadGameLibrary;
-        private CueTextBox txt_OldPath;
+        private TextBox txt_OldPath;
         private Button btn_Copy_old;
         private ComboBox txt_Platform;
         private Button btn_ApplyAlbumSortNames;
         private Button btn_ApplyArtistShortNames;
         private NumericUpDown txt_Track_No;
         private Button btn_ChangeLyrics;
-        private CueTextBox txt_Lyrics;
+        private TextBox txt_Lyrics;
         private Button btn_Artist2SortA;
         private Button btn_Title2SortT;
         private Button btn_GroupsAdd;
@@ -5357,12 +5312,12 @@ namespace RocksmithToolkitGUI.DLCManager
         private CheckBox chbx_UniqueID;
         private GroupBox groupBox5;
         private CheckBox chbx_Bass;
-        private CueTextBox txt_Live_Details;
+        private TextBox txt_Live_Details;
         private CheckBox chbx_Lead;
         private CheckBox chbx_Combo;
         private CheckBox chbx_Rhythm;
-        private CueTextBox txt_BassPicking;
-        private CueTextBox txt_Tuning;
+        private TextBox txt_BassPicking;
+        private TextBox txt_Tuning;
         private GroupBox gbox_QualityChecks;
         private CheckBox chbx_UseInternalDDRemovalLogic;
         private Button btn_CreateLyrics;
@@ -5396,7 +5351,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private CheckBox chbx_FilterNot;
         private CheckBox chbx_InclBroken;
         private CheckBox chbx_InclGroups;
-        private CueTextBox txt_ID;
+        private TextBox txt_ID;
         private CheckBox chbx_InclBeta;
         private Button btn_SelectInverted;
         private Button btn_InvertSelect;
@@ -5422,32 +5377,32 @@ namespace RocksmithToolkitGUI.DLCManager
         private DateTimePicker txt_PreviewStart;
         private Button btn_PlayAudio;
         private Button btn_PlayPreview;
-        private CueTextBox txt_AverageTempo;
+        private TextBox txt_AverageTempo;
         private CheckBox chbx_AutoPlay;
-        private CueTextBox txt_OggPath;
+        private TextBox txt_OggPath;
         private NumericUpDown txt_PreviewEnd;
-        private CueTextBox txt_OggPreviewPath;
+        private TextBox txt_OggPreviewPath;
         private Button btn_SelectPreview;
         private Button btn_OpenRetail;
         private Button btn_Close;
         private Button btn_OpenStandardization;
-        private CueTextBox txt_AlbumArtPath;
+        private TextBox txt_AlbumArtPath;
         private Button btn_ChangeCover;
-        private CueTextBox txt_Artist_ShortName;
-        private CueTextBox txt_Album_ShortName;
+        private TextBox txt_Artist_ShortName;
+        private TextBox txt_Album_ShortName;
         private CheckBox chbx_AutoSave;
-        private CueTextBox txt_Album_Year;
+        private TextBox txt_Album_Year;
         private PictureBox gbox_Cover;
         private Button btn_Save;
-        private CueTextBox txt_APP_ID;
-        private CueTextBox txt_DLC_ID;
-        private CueTextBox txt_Version;
-        private CueTextBox txt_Author;
-        private CueTextBox txt_Album;
-        private CueTextBox txt_Title_Sort;
-        private CueTextBox txt_Title;
-        private CueTextBox txt_Artist_Sort;
-        private CueTextBox txt_Artist;
+        private TextBox txt_APP_ID;
+        private TextBox txt_DLC_ID;
+        private TextBox txt_Version;
+        private TextBox txt_Author;
+        private TextBox txt_Album;
+        private TextBox txt_Title_Sort;
+        private TextBox txt_Title;
+        private TextBox txt_Artist_Sort;
+        private TextBox txt_Artist;
         private Button btn_Duplicate;
         private Button btn_SearchReset;
         private Button btn_Search;
@@ -5473,7 +5428,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private RichTextBox rtxt_StatisticsOnReadDLCs;
         private Label label59;
         private Button btn_Debug;
-        private CueTextBox txt_CustomsForge_Link;
+        private TextBox txt_CustomsForge_Link;
         private Label label33;
         private Label label32;
         private TabPage btn_Encrypt;
@@ -5499,13 +5454,13 @@ namespace RocksmithToolkitGUI.DLCManager
         private Button btn_Remove_Packed;
         private Button btn_RemoveAllRemoteSongs;
         private Button btn_RemoveRemoteSong;
-        private CueTextBox txt_RemotePath;
+        private TextBox txt_RemotePath;
         private TabPage tabPage4;
-        private CueTextBox txt_Spotify_Album_URL;
-        private CueTextBox txt_Spotify_Album_ID;
-        private CueTextBox txt_Spotify_Artist_ID;
-        private CueTextBox txt_Spotify_Song_ID;
-        private CueTextBox txt_SpotifyStatus;
+        private TextBox txt_Spotify_Album_URL;
+        private TextBox txt_Spotify_Album_ID;
+        private TextBox txt_Spotify_Artist_ID;
+        private TextBox txt_Spotify_Song_ID;
+        private TextBox txt_SpotifyStatus;
         private PictureBox picbx_SpotifyCover;
         private Button btn_GetTrack;
         private ListBox txt_SavedPlaylists;
@@ -5525,23 +5480,23 @@ namespace RocksmithToolkitGUI.DLCManager
         private Button btn_Playthrough;
         private NumericUpDown num_Lyrics;
         private Button btn_Youtube;
-        private CueTextBox txt_YouTube_Link;
+        private TextBox txt_YouTube_Link;
         //private System.Windows.Forms.CheckBox checkBox4;
         private CheckBox chbx_LyricsChanged;
         private CheckBox chbx_AudioChanged;
         private Button btn_Refresh;
         private ToolStripMenuItem ContextMenuMenu_Refresh;
         private ComboBox txt_Playthrough;
-        private CueTextBox txt_AlbumSort;
-        private CueTextBox txt_AudioPath;
-        private CueTextBox txt_AudioPreviewPath;
-        private CueTextBox txt_Preview_Hash;
-        private CueTextBox txt_Lyrics_Hash;
-        private CueTextBox txt_Art_Hash;
+        private TextBox txt_AlbumSort;
+        private TextBox txt_AudioPath;
+        private TextBox txt_AudioPreviewPath;
+        private TextBox txt_Preview_Hash;
+        private TextBox txt_Lyrics_Hash;
+        private TextBox txt_Art_Hash;
         private Button btn_Sort;
         private Button btn_CompactDB;
         private ComboBox cmb_Tracks;
-        private CueTextBox txt_DuplicateOf;
+        private TextBox txt_DuplicateOf;
         private Button btn_SearchLyrics;
         private Button btn_SearchYB;
         private Button btn_ShowLyrics;
@@ -5601,9 +5556,9 @@ namespace RocksmithToolkitGUI.DLCManager
         private RichTextBox txt_ToneDetails;
         private RichTextBox txt_PackageDetails;
         private RichTextBox txt_ToDos;
-        private CueTextBox txt_BasedOn_CF;
-        private CueTextBox txt_BasedOn_Youtube;
-        private CueTextBox txt_BasedOn_Tabs;
+        private TextBox txt_BasedOn_CF;
+        private TextBox txt_BasedOn_Youtube;
+        private TextBox txt_BasedOn_Tabs;
         private CheckBox chbx_A_IsCover;
         private NumericUpDown txt_Order;
         private ComboBox cmb_SearchFields;
@@ -5660,15 +5615,15 @@ namespace RocksmithToolkitGUI.DLCManager
         private Button button7;
         private Button btn_AutoCover;
         private Button btn_RestoreAlbumArt;
-        private CueTextBox txt_Album_OrigArtPath;
+        private TextBox txt_Album_OrigArtPath;
         private CheckBox chbx_A_IsGreatestHits;
         private CheckBox chbx_A_IsDeluxe;
         private GroupBox groupBox1;
         private Label lbl_Comments;
         private ToolStripMenuItem ToolStripMenuItemDeluxe;
         private ToolStripMenuItem ToolStripMenuItemGreatestHits;
-        private CueTextBox txt_Album_OrigArtPath3;
-        private CueTextBox cueTextBox1;
+        private TextBox txt_Album_OrigArtPath3;
+        private TextBox TextBox1;
         private CheckBox chbx_A_IsGameSoundtrack;
         private CheckBox chbx_A_IsMidi;
         private ToolStripMenuItem ToolStripMenuItemMidi;

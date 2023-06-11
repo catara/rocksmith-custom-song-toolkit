@@ -20,6 +20,7 @@ using static RocksmithToolkitGUI.DLCManager.UtilitiesFunctions;
 using RocksmithToolkitLib.XmlRepository;
 using System.Data.SQLite;
 using SQLite;
+using System.Net;
 
 namespace RocksmithToolkitGUI.DLCManager
 {
@@ -321,7 +322,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
             var i = 0;
             //rtxt_StatisticsOnReadDLCs.Text += "\n  54= " +dus.Tables[0].Rows.Count;
-            MaximumSize = dus.Tables[0].Rows.Count;
+            MaximumSize = GetNoRec(dus, cnb, cnc);//dus.Tables[0].Rows.Count;
             foreach (DataRow dataRow in dus.Tables[0].Rows)
             {
                 files[i] = new UtilitiesFunctions.WEM2OGGCorrespondence();

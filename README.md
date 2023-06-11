@@ -1,10 +1,10 @@
-﻿		# Date: 07.05.2023
+﻿		# Date: 27.05.2023
 		# Document Name: Rocksmith 2014 RM DLC Management tool README
 						(fork of rocksmith-custom-song-toolkit)
 		# Document purpose: To describe the functionailities and the way to change, the NEW tab that enable MASS Manipulation of Rocksmith DLC Library
 							(DLC folder; including customs(CDLC), DLCs and songs embeded in the ready to ship version of Rocksmith (2014 Remastered version)) 
 
-## Rocksmith 2014 RM DLC Library Manager v1 b6 (compiled beta available in \RocksmithToolkitGUI\bin\Debug\)
+## Rocksmith 2014 RM DLC Library Manager v1 b6 r2 (compiled beta available in \RocksmithToolkitGUI\bin\Debug\)
 *(forever to be unreleased version- for my own sake and not the masses's)*
 # App Description: MASS Manipulation of Rocksmith 2014 RM DLC Library
 
@@ -268,8 +268,6 @@ make cache window resizeble dinamically witht he objects inside
 moce sogs psarc to dlcpack not temp
 select only 1 platform for add songs into game type (show warnign if more are selected)
 
-## WiP:
-(this release)
 use year album artwork from cache
 
 pixies
@@ -327,24 +325,26 @@ selected in?
 vocals concurency? also why not in summary log :)
 is grapewine in? why blank in import auditrail
 clean gearlist dlcm 3000
-create slim version
+script create slim version
 standardise debug (profile or compiled as debug)
 
 [] VACUUM;
-[] DELETE  FROM Arrangements;
-DELETE  FROM Cache;
-DELETE  FROM (SELECT  FROM Groups WHERE ID in (SELECT ID FROM Groups WHERE Type='DLC'));
-DELETE  FROM (SELECT  FROM Groups WHERE ID in (SELECT ID FROM Groups WHERE Profile_Name<>'Default' AND Type='Profile'));
-DELETE  FROM Import;
-DELETE  FROM Import_AuditTrail;
-DELETE  FROM LogImporting;
-DELETE  FROM LogImportingError;
-DELETE  FROM LogPacking;
-DELETE  FROM LogPackingError;
-DELETE  FROM Main;
-DELETE  FROM Pack_AuditTrail;
-DELETE  FROM Tones;
-DELETE  FROM Tones_GearList;
+[] delete sqlite
+	DELETE  FROM Arrangements;
+	DELETE  FROM Cache;
+	DELETE  FROM (SELECT  FROM Groups WHERE ID in (SELECT ID FROM Groups WHERE Type='DLC'));
+	DELETE  FROM (SELECT  FROM Groups WHERE ID in (SELECT ID FROM Groups WHERE Profile_Name<>'Default' AND Type='Profile'));
+	DELETE  FROM Import;
+	DELETE  FROM Import_AuditTrail;
+	DELETE  FROM LogImporting;
+	DELETE  FROM LogImportingError;
+	DELETE  FROM LogPacking;
+	DELETE  FROM LogPackingError;
+	DELETE  FROM Main;
+	DELETE  FROM Pack_AuditTrail;
+	DELETE  FROM Tones;
+	DELETE  FROM Tones_GearList;
+	VACUUM;
 add timesteamp in log summary of translation
 add timestamps at import
 populate old data to all dlcs
@@ -353,12 +353,81 @@ fix search 2-3times
 fix standardize cover
 check tones and gearlists are complet per song
 
-fix max duplicate not working in sqlite
-sqlite dlcmnanger 1700 also made theser calls avaiul in sqlite
-not run so many file checks :) at startup and no profile change
+fix duplicate not working in sqlite
+add further check after checking for installed software :)
+why sqlite startup maindb so slow
+add instrumntal AI split https://github.com/stemrollerapp/stemroller
+
+## WiP:
+(this release)
+1.0 b6 (12.06.2023) (pre2) Prototyping GuitarPro simple time distribution for new songs
+[-] fix improvedimport no eof no gp5
+[-] improved getfirst note, also added get last
+[-] fix move of buttons import selection of param screen
+[-] fix new attribute to always give if songs match standardization rule
+[-] fix some empty/broken audio/album paths
+[--] fix some original album paths & code at path fix (not sure where the code issues is)
+[-] why there are no Packing details in db
+[-] standardise the get records specialyl since SQL-Lite might return an empty record=1 if tableempty
+[-] save setting doesnt seem to work
+[-] 3rd extension was not cleaned (psarc from celand folders
+[-] fixes on cleanups
+[-] further sqlite improve impl strcom,switch,ucase etc.
+	[-] weird pack no
+	[-] why zero packed songs
+	[.] sqlite dlcmnanger 1700 also made theser calls avaiul in sqlite
+[-] where is sample (not the case on single processing as anyway sumamry at end)
+[-] sqlite other windows (not required as now selects etc standardized only in utilities fuction files)
+[-] improved packing no detection at single and harmogenised with mass same function
+[-] harmonised generate param list same function, and added general to all (still to do put it sec :))
+[-] generate packing stats ignores platform case
+[-] workaround sqlite table with id not null contrains not being able to insert in even if not inserting id
+	empty table:
+		.schema Tones_GearList
+		drpo table Tones_GearList
+		create Tones_GearList
+		CONSTRAINT "pk_Pack_AuditTrail" PRIMARY KEY("ID"));
+	full table:
+		CREATE TABLE IF NOT EXISTS "Groupsu" ("ID" INTEGER NOT NULL,
+		"CDLC_ID" VARCHAR(255),
+		"Groupz" TEXT,
+		"Type" VARCHAR(255),
+		"Comments" VARCHAR(255),
+		"Profile_Name" VARCHAR(255),
+		"Description" VARCHAR(255),
+		"DisplayName" VARCHAR(255),
+		"DisplayGroup" VARCHAR(255),
+		"DisplayPosition" VARCHAR(255),
+		"Date_Added" VARCHAR(30));
+
+		INSERT INTO Groupsu (ID, CDLC_ID,Groupz, Type, Comments,Profile_Name,Description,DisplayName,DisplayGroup,DisplayPosition,Date_Added)
+		  SELECT ID, CDLC_ID,Groupz, Type, Comments,Profile_Name,Description,DisplayName,DisplayGroup,DisplayPosition,Date_Added
+		  FROM Groups;
+
+		drop table "Groups";
+
+		CREATE TABLE IF NOT EXISTS "Groups" ("ID" INTEGER,
+		"CDLC_ID" VARCHAR(255),
+		"Groupz" TEXT,
+		"Type" VARCHAR(255),
+		"Comments" VARCHAR(255),
+		"Profile_Name" VARCHAR(255),
+		"Description" VARCHAR(255),
+		"DisplayName" VARCHAR(255),
+		"DisplayGroup" VARCHAR(255),
+		"DisplayPosition" VARCHAR(255),
+		"Date_Added" VARCHAR(30),
+		CONSTRAINT "pk_Pack_AuditTrail" PRIMARY KEY("ID"));
+
+		INSERT INTO Groups (ID, CDLC_ID,Groupz, Type, Comments,Profile_Name,Description,DisplayName,DisplayGroup,DisplayPosition,Date_Added)
+		  SELECT ID, CDLC_ID,Groupz, Type, Comments,Profile_Name,Description,DisplayName,DisplayGroup,DisplayPosition,Date_Added
+		  FROM Groupsu;
 
 ## done:
 (prev release)
+1.0 b6 (10.05.2023) (not yet)Prototyping GuitarPro simple time distri…
+…bution for new songs
+
 [-] startup improvements (chose accd/db daqtabses formats; )
 [-] Open ACCDBx32 check/ACCDBx64 warning/SQLite3
 [-] expand param
@@ -369,7 +438,7 @@ not run so many file checks :) at startup and no profile change
 	[-] dlcm_sqliteodbc,dlcm_sqliteodbc_www
 	[-] dlcm_DLCManager_ReleaseNotes,dlcm_DLCManager_ReleaseDetails
 [-] add weekly
-	[x] move to monthly if more than 7/param(cancelled as weekly is dynamic grp now :))		
+	[x] move to monthly if more than 7/param(cancelled as weekly is dynamic grp now :))
 		ignore at save/create
 		dont save hot
 [-] improve pack additional metadata
@@ -382,7 +451,7 @@ not run so many file checks :) at startup and no profile change
 [-] fix search
 	[-] if search fails reset back the search terms :)
 [-] add orig titles to info buble
-	[-] search orig terms too 
+	[-] search orig terms too
 [-] select misses on when from right click dropdown (&streamlined&algined code)
 [-] instru bubble is not reset and adds text
 [x] before check do backup
@@ -392,11 +461,11 @@ not run so many file checks :) at startup and no profile change
 [-] if in hot do also try
 [-] if in playable remove from try
 [-] implement set different album art, default some if missing, same for audio
-[-] dcompress remove Erro<ERROR> 
-[-] improved check for software and backend (links etc.) 
+[-] dcompress remove Erro<ERROR>
+[-] improved check for software and backend (links etc.)
 [-] add to checks missing metadata else reread
 	[-]improved dialogs-validation&logging
-[-] deluxe, greatesthits, 
+[-] deluxe, greatesthits,
 [-] add window at pack or import with imporatant settings
 [-] dlc featu:
 [-] at save add metadata
@@ -415,7 +484,7 @@ not run so many file checks :) at startup and no profile change
 [-] fix accdb copy (improved to copy also to code folders)
 [-] add latzest to sqlite (migrate new fileds)
 [-] update screenshots
-[-] fix load 
+[-] fix load
 [-] add new columns
 	ALTER TABLE Main ADD Album_ArtPathOrig;
 	ALTER TABLE Main ADD Is_Deluxe;
@@ -449,6 +518,8 @@ not run so many file checks :) at startup and no profile change
 [x] improve missing prgrs mss. add dlcbuilder and db
 [x] update enable CDLC to 2022 latest mac and win DLC/libs (check if installed etc.)
 [x] improv startup with empty DBs
+[x] not run so many file checks :) at startup and no profile change
+
 
 # Version History(release date):
 	0.1(12.08.2014) prototype, 
@@ -489,10 +560,10 @@ not run so many file checks :) at startup and no profile change
 	1.0 b3 (29.05.2021) Add DLCs directyly intro GAmes fiels (songs.psarc and implicitely the hsan into cache.psarc)
 	1.0 b4 (29.07.2021) moved to .NET6 as to allow development in windows for ARM (Apple,etc.)added SQLite capabiltites (removes dependency on ACCESS on Windows for ARM as sometimes not being detected)
 	1.0 b5 (09.10.2022) startup/dependencies improvements, weekly dyanmic last 5 in monthly hot list and sqlite further integration
-	1.0 b6 (10.05.2023) Prototyping GuitarPro simple time distribution for new songs
-	1.0 b7 (9.03.2023) Finalising addings songs directly to CACHE (Pc works, targetting Ps3 and Ps4)
-	1.0 b8(xx.04.2023) Released on Customforge and GitHub Release "tab" (2 versions one w all 3rd party software, one without; can be installed/decompressed and quickly used; 1 60sec video describing why you should use this)
-	1.1 (xx.06.2023) Reactivating Spotify checks
+	1.0 b6 (12.06.2023) (pre2) Prototyping GuitarPro simple time distribution for new songs
+	1.0 b7 (9.09.2023) Finalising addings songs directly to CACHE (Pc works, targetting Ps3 and Ps4)
+	1.0 b8(xx.11.2023) Released on Customforge and GitHub Release "tab" (2 versions one w all 3rd party software, one without; can be installed/decompressed and quickly used; 1 60sec video describing why you should use this)
+	1.1 (xx.12.2023) Reactivating Spotify checks
 
 # Implementation Tracking for the Main Features:
 		+1. Ability to Generate a Database with all DLC

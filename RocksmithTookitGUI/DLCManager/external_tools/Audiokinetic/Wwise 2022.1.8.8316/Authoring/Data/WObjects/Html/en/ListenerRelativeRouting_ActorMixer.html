@@ -1,0 +1,7 @@
+
+<h2>Listener Relative Routing</h2>
+<p>When enabled, the emitter-listener association is evaluated at this Wwise object. Evaluating emitter-listener association is almost always required with objects of the actor-mixer hierarchy, because actor-mixers are associated with emitters, whereas busses are typically associated with the listener.</p>
+<p>Make sure to enable Listener Relative Routing on at least one object in your signal chain, regardless of the positioning type; the opposite would result in a complete duplication of the mixing graph (that is, busses and their effects). Aside from using more CPU, most bus insert effects such as compressors will not work as intended.</p>
+<p>This symptom should be apparent in the Voice Graph of the Wwise Profiler whenever the emitter and listener are different game objects. Note that it will not be apparent when playing sound from the authoring tool because the Transport/Soundcaster game object is both an emitter and listener.</p>
+<p>Evaluating emitter-listener association is also required for any game object-driven 3D positioning to occur (attenuation and spatialization).</p>
+<p>Default value: true<br/></p>

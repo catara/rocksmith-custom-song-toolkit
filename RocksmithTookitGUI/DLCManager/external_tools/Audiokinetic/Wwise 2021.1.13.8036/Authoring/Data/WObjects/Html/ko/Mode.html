@@ -1,0 +1,9 @@
+
+<h2>Mode</h2>
+<p>State 또는 Switch에 부합하는 미리 정의된 경로가 두 개 이상일 때 사운드 엔진이 런타임 내에 어떤 경로를 선택할지 명시합니다.</p>
+<ul>
+<li><strong>Best Match</strong> - 런타임 때 유발된 State 또는 Switch에 가장 적합한 경로를 선택합니다. 정확한 일치 결과가 없을 경우 가장 와일드카드 &lsquo; * &lsquo;가 적은 경로가 선택됩니다.</li>
+<li><strong>Weighted</strong> - 부합하는 경로 중 각 가중치에 따라 한 경로를 랜덤으로 선택합니다.</li>
+</ul>
+<p>여러 개의 미리 정의된 경로들이 런타임에 State 또는 Switch에 부합할 수 있는데, 그 이유는 대비 경로들 내의 와일드카드 (*)의 사용 때문입니다.</p>
+<p>Default value: Best Match<br/></p>

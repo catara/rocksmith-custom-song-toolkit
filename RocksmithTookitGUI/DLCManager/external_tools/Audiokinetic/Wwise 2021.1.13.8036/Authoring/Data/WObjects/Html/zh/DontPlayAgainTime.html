@@ -1,0 +1,8 @@
+
+<h2>Don&rsquo;t play this Stinger again for x seconds.</h2>
+<p>在 x 秒内不再播放此插播乐句。在经过 x 秒后才能再次使用该 Stinger。</p>
+<p>若 Trigger 在 x 秒内调用此 Stinger，则将忽略或弃用 Trigger。Capture Log 中将显示消息，说明无法播放该 Stinger。注意，Don&rsquo;t play Stinger again for x seconds 基于插播乐句的同步点，即插播乐句的入口提示点出现的时间点。</p>
+<p>例如，对于一个 1 秒每拍的段落，其 Stinger 前导段长 1.5 秒，同步规则为“下一拍”，而且在 3 秒内不再播放 Stinger。试想，在发布 Trigger 时，此段落刚好播放到整拍。由于前导段长 1.5 秒，因此插播乐句的入口提示点无法与段落的下一拍同步，而会与再下一拍同步（即 2 秒后）。因此，接下来 5 秒内所发布的 Trigger（同步点之前的 2 秒以及不再播放的 3 秒）将全部弃用。</p>
+<p>此外，当前时刻值也被算在内。例如，“不再播放”时间设为 0 时，在当前 Trigger 到达同步点之前，将弃用其他 Trigger。这样就不会在同一精确时间播放两个或更多 Stinger。</p>
+<p>Default value: 0<br/>
+Range: 0 to 3600<br/></p>

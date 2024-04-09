@@ -1,0 +1,10 @@
+
+<h2>Passthrough Mix</h2>
+<p>Dictates whether the plug-in should generate an additional Audio Object representing a passthrough (non-spatialized) mix.</p>
+<ul>
+<li><strong>When Audio Device supports it</strong>: The plug-in consults the Audio Device at the end of the bus pipeline to determine whether to produce a passthrough mix or not. A passthrough mix will only be produced if the Audio Device supports it.</li>
+<li><strong>Always</strong>: A passthrough mix will be produced, regardless of Audio Device capabilities.</li>
+<li><strong>Never</strong>: A passthrough mix will not be produced, regardless of Audio Device capabilities.</li>
+</ul>
+<p><strong>Note</strong>: If a passthrough mix is not produced, Audio Objects that would be mixed into the passthrough mix will be mixed to the Main Mix instead.</p>
+<p>Default value: When Audio Device supports it<br/></p>

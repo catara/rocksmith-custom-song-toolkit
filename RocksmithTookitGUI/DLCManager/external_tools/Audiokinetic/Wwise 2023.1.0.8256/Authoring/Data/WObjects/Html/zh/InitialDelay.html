@@ -1,0 +1,9 @@
+
+<h2>Initial Delay</h2>
+<p>初始延迟。在播放前应用的初始延迟。此延迟将加到父项和子项的初始延迟。</p>
+<p><strong>备注</strong>:此延迟将改变 Trigger Rate 模式下容器的行为，因为子对象的延迟将使 Trigger Rate 的间隔时间加长。</p>
+<p><strong>备注</strong>:如果启用了 Initial Delay，则不会遵循 Source Editor 的播放光标起始位置。有关详细信息，请参阅 <a href="HelpDoc=source_editor#play_cursor">Source Editor 文档</a> 。</p>
+<p><strong>备注</strong>:如果RTPC绑定到初始延迟或优先级，使用内置参数来控制RTPC会导致出问题。使用给定游戏对象播放声音时，会计算这些内置参数。因此，它们对大部分声音属性来说都很适用。内置参数控制的 RTPC 不适用于对象的播放逻辑属性（如 Initial Delay 和 Priority），因为触发 Play Action 时它们的值是未知的。</p>
+<p>单位：s<br/></p>
+<p>Default value: 0<br/>
+Range: 0 to 3600<br/></p>

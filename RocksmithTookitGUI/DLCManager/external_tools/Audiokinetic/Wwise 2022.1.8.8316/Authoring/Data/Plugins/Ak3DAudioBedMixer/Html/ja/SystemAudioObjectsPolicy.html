@@ -1,0 +1,9 @@
+
+<h2>Preserve System-Eligible Audio Objects</h2>
+<p>3Dスペーシャリゼーションのオーディオオブジェクトを、メインミックスにミキシングせずにそのまま通過させるのかどうかを指示します。</p>
+<ul>
+<li><strong>When Audio Device supports it</strong>:プラグインはバスパイプラインの末端にあるオーディオデバイスを確認して、System-Eligibleオーディオオブジェクトをミキシングするのか通過させるのかを判断します。オーディオデバイスがシステムオーディオオブジェクトに対応している場合はそれらを維持し、それ以外の場合はそれらをミキシングします。</li>
+<li><strong>Always</strong>:System-Eligibleオーディオオブジェクトはオーディオデバイスの機能に関わらずSystem-Eligible Audio Object Limitに到達するまで維持されます。</li>
+<li><strong>Never</strong>:System-Eligibleオーディオオブジェクトはオーディオデバイスの機能に関わらず常にメインミックスにミキシングします。</li>
+</ul>
+<p>Default value: When Audio Device supports it<br/></p>

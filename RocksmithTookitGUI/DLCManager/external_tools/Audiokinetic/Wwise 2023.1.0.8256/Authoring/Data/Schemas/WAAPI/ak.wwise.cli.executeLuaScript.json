@@ -1,0 +1,80 @@
+{
+    "version": 1,
+    "functions": [
+        {
+            "id": "ak.wwise.cli.executeLuaScript",
+            "restrict": [ "commandLine" ],
+            "description": "Execute one or more LUA scripts.",
+            "argsSchema": {
+                "type": "object",
+                "properties": {
+                    "project": {
+                        "$ref": "#/definitions/projectOptionCliArg",
+                        "description": "When no project is specified, no project is loaded. Refer to \\ref ak_wwise_console_project_open for information on how to open a project."
+                    },
+                    "lua-script": {
+                        "type": "string",
+                        "description": "LUA script file path",
+                        "synopsis": ["FILE"]
+                    },
+                    "require": {
+                        "$ref": "#/definitions/stringOrArrayOfString",
+                        "description": "Specify an array of lua module to load. This option must be followed by a Lua module name. The module name must be found in the lua path. Ex: '--require debug.lua'",
+                        "synopsis": [
+                            "--require MODULE1",
+                            "--require MODULE1 MODULE2 ...",
+                            "--require MODULE1 --require MODULE2 ..."
+                        ]
+                    },
+                    "do-file": {
+                        "$ref": "#/definitions/stringOrArrayOfString",
+                        "description": "Specify an array of lua files to load. This option must be followed by a absolute file name.",
+                        "synopsis": [
+                            "--do-file LUAFILE1",
+                            "--do-file LUAFILE1 LUAFILE2 ...",
+                            "--do-file LUAFILE1 --do-file LUAFILE2 ..."
+                        ]
+                    },
+                    "arg": {
+                        "type": ["boolean", "array", "number", "string"],
+                        "description": "The 'arg' variable passed to LUA script. Use the global variable named 'arg'.",
+                        "synopsis": ["--arg VALUE"]
+                    },
+                    "lua-path": {
+                        "$ref": "#/definitions/stringOrArrayOfString",
+                        "description": "Specify a search path for Lua modules loaded. This option must be followed by a Lua path. Ex: '--lua-path C:\\\\module\\\\?.lua'",
+                        "synopsis": [
+                            "--lua-path PATH1",
+                            "--lua-path PATH1 PATH2 ...",
+                            "--lua-path PATH1 --lua-path PATH2 ..."
+                        ]
+                    },
+                    "allow-migration": {
+                        "$ref": "#/definitions/allowMigrationCliArg"
+                    }
+                },
+                "required": [ "lua-script" ],
+                "additionalProperties": false
+            },
+            "resultSchema": {
+                "type": "object",
+                "properties": {
+                    "result": {
+                        "type": "any",
+                        "description": "Result returned by the LUA script"
+                    }
+                },
+                "required": [ "result" ],
+                "additionalProperties": false
+            },
+            "optionsSchema": {
+                "type": "object",
+                "properties": { },
+                "additionalProperties": false
+            }
+        }
+    ],
+    "topics": [],
+    "validators": [],
+    "definitions": {}
+}

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Layout Name="Schematic">
+	<StackPanel Name="StackPanel" Width="1645" Height="746" Orientation="Vertical">
+		<StackPanel Name="StackPanel" Width="1645" Height="743" Orientation="Horizontal">
+			<StackPanel Name="StackPanel" Width="1464" Height="743" Orientation="Horizontal">
+				<StackPanel Name="StackPanel" Width="424" Height="743" Orientation="Vertical">
+					<View Name="Project Explorer" Width="424" Height="553" ViewSyncGroup="1">						<ViewData>
+	<ProjectExplorerView ActiveTab="0"/>
+</ViewData>
+					</View>
+					<Splitter Name="Splitter" Width="424" Height="3"/>
+					<View Name="Event Viewer" Width="424" Height="187" ViewSyncGroup="1">						<ViewData>
+	<EventViewer ActiveTab="0" Filter="2"/>
+</ViewData>
+					</View>
+				</StackPanel>
+				<Splitter Name="Splitter" Width="3" Height="743"/>
+				<StackPanel Name="StackPanel" Width="1036" Height="743" Orientation="Vertical">
+					<View Name="Schematic View" Width="1036" Height="667"/>
+					<Splitter Name="Splitter" Width="1036" Height="3"/>
+					<View Name="Transport Control" Width="1036" Height="73"/>
+				</StackPanel>
+			</StackPanel>
+			<Splitter Name="Splitter" Width="3" Height="743"/>
+			<View Name="Meter" Width="178" Height="743" ViewSyncGroup="1"/>
+		</StackPanel>
+	</StackPanel>
+</Layout>

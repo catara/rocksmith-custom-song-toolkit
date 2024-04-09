@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <g transform="matrix(1,0,0,1,-76,-28)">
+        <g transform="matrix(0.75,0,0,0.75,-596.75,192.5)">
+            <g id="Dialog_SelectionChannelsNone" transform="matrix(3.65566,0,0,4.301,-73.9722,-2419.68)">
+                <g id="Transparent-BG" serif:id="Transparent BG" transform="matrix(0.364731,0,0,0.310005,265.608,511.589)">
+                    <rect x="0" y="0" width="20" height="20" style="fill:none;"/>
+                </g>
+                <g transform="matrix(0.416835,0,0,0.354292,-2071.9,-1071.65)">
+                    <path d="M5616.5,4473.12C5614.09,4473.12 5612.12,4475.09 5612.12,4477.5C5612.12,4479.91 5614.09,4481.88 5616.5,4481.88C5618.91,4481.88 5620.88,4479.91 5620.88,4477.5C5620.88,4475.09 5618.91,4473.12 5616.5,4473.12ZM5616.5,4474C5618.43,4474 5620,4475.57 5620,4477.5C5620,4479.43 5618.43,4481 5616.5,4481C5614.57,4481 5613,4479.43 5613,4477.5C5613,4475.57 5614.57,4474 5616.5,4474Z" style="fill:rgb(26,26,26);"/>
+                </g>
+                <g transform="matrix(0.364731,0,0,0.310005,-1779.44,-873.824)">
+                    <path d="M5614,4476L5619.99,4481.87" style="fill:none;stroke:rgb(26,26,26);stroke-width:1px;"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

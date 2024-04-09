@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-10,-22)">
+        <g transform="matrix(1,0,0,1,19,18)">
+            <g id="ProjectExplorer_Checkbox_Unchecked_Pressed" transform="matrix(1.23077,0,0,1.23077,-588.692,406.462)">
+                <g transform="matrix(0.541667,0,0,0.573529,461.25,-335.029)">
+                    <rect x="18" y="14" width="18" height="17" style="fill:rgb(241,241,241);fill-opacity:0;"/>
+                </g>
+                <g id="Checkbox" transform="matrix(0.121875,0,0,0.573529,413.231,-473.25)">
+                    <path d="M554,256.7C554,255.762 550.415,255 546,255L482,255C477.585,255 474,255.762 474,256.7L474,270.3C474,271.238 477.585,272 482,272L546,272C550.415,272 554,271.238 554,270.3L554,256.7Z" style="fill:rgb(34,34,34);"/>
+                </g>
+                <g id="Checkbox1" serif:id="Checkbox" transform="matrix(0.101563,0,0,0.477941,423.672,-448.063)">
+                    <path d="M554,256.7C554,255.762 550.415,255 546,255L482,255C477.585,255 474,255.762 474,256.7L474,270.3C474,271.238 477.585,272 482,272L546,272C550.415,272 554,271.238 554,270.3L554,256.7Z" style="fill:rgb(200,200,200);fill-opacity:0.6;"/>
+                </g>
+                <g id="Checkbox2" serif:id="Checkbox" transform="matrix(0.08125,0,0,0.382353,434.112,-422.875)">
+                    <path d="M554,256.7C554,255.762 550.415,255 546,255L482,255C477.585,255 474,255.762 474,256.7L474,270.3C474,271.238 477.585,272 482,272L546,272C550.415,272 554,271.238 554,270.3L554,256.7Z" style="fill:rgb(28,28,28);"/>
+                </g>
+                <g id="Checkbox3" serif:id="Checkbox" transform="matrix(0.08125,0,0,0.382353,434.112,-422.875)">
+                    <path d="M554,256.7C554,255.762 550.415,255 546,255L482,255C477.585,255 474,255.762 474,256.7L474,270.3C474,271.238 477.585,272 482,272L546,272C550.415,272 554,271.238 554,270.3L554,256.7Z" style="fill:rgb(34,34,34);"/>
+                </g>
+                <g id="Checkbox4" serif:id="Checkbox" transform="matrix(0.0609375,0,0,0.286765,444.553,-397.687)">
+                    <path d="M554,256.7C554,255.762 550.415,255 546,255L482,255C477.585,255 474,255.762 474,256.7L474,270.3C474,271.238 477.585,272 482,272L546,272C550.415,272 554,271.238 554,270.3L554,256.7Z" style="fill:rgb(33,33,33);"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

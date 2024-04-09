@@ -99,6 +99,8 @@ namespace RocksmithToolkitLib.DLCPackage
         {
             var isDirty = false;
             var song = Song2014.LoadFromFile(xmlSongFile);
+            if (song is null)
+                return;
             this.SongFile = new SongFile { File = "" };
             // TODO: monitor this change
             this.SongXml = new SongXML { File = xmlSongFile, Version = song.Version };

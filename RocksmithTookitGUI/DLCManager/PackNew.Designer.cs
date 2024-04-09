@@ -40,7 +40,7 @@ namespace RocksmithToolkitGUI.DLCManager
         }
         private System.Windows.Forms.HelpProvider helpProvider1;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.LinkLabel lbl_Link;
+        private System.Windows.Forms.LinkLabel lbl_LinkYB;
         private System.Windows.Forms.Button btn_B3;
         private CueTextBox txt_TabLinks;
         private CueTextBox txt_BasedOnYB;
@@ -56,25 +56,30 @@ namespace RocksmithToolkitGUI.DLCManager
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button btn_Album2SortA;
-        private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.LinkLabel lbl_LinkUG;
         private System.Windows.Forms.CheckBox chbx_SaveInDB;
         private System.Windows.Forms.CheckBox chbx_SaveInVerisonInfo;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.RichTextBox txt_ToneDetails;
-        private System.Windows.Forms.LinkLabel linkLabel2;
+        private System.Windows.Forms.LinkLabel lbl_LinkCF;
         private System.Windows.Forms.Button btn_Spotify;
         private CueTextBox txt_TrackNo;
         private CueTextBox txt_Spotify;
-        private System.Windows.Forms.LinkLabel linkLabel4;
-        private System.Windows.Forms.LinkLabel linkLabel3;
+        private System.Windows.Forms.LinkLabel lbl_LinkTN;
+        private System.Windows.Forms.LinkLabel lbl_LinkS;
         private System.Windows.Forms.CheckBox chbx_SaveRemotely;
         private CueTextBox txt_CDLCID;
         private CueTextBox txt_Version;
-        private System.Windows.Forms.Button btm_DefaultAuthor;
+        private System.Windows.Forms.Button btn_DefaultAuthor;
         private CueTextBox txt_EoFPath;
         private CueTextBox txt_UpdateDate;
         private CueTextBox txt_PackageDate;
         private CueTextBox txt_GPFilePath;
         private System.Windows.Forms.Button btn_DBFolder;
+        private System.Windows.Forms.Button btn_Cancel;
+        private System.Windows.Forms.Button btn_EoFPath;
+        private CueTextBox txt_PrevDate;
+        private System.Windows.Forms.Label label3;
+        private System.ComponentModel.IContainer components;
     }
 }

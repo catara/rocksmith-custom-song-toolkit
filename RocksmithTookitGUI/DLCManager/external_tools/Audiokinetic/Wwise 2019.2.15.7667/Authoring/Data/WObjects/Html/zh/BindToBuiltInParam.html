@@ -1,0 +1,16 @@
+
+<h2>Bind to Built-In Param:</h2>
+<p>绑定至内置参数。将此 Game Parameter 绑定至声音引擎中计算得出的内置参数。选择以下其中一项：</p>
+<p><strong>有关内置参数的详细信息，请参阅 <a href="HelpDoc=binding_game_parameter_to_built_in_parameter#avaialble_builtin_parameters">可用内置参数</a> 。</strong></p>
+<ul>
+<li><strong>Distance</strong>:与游戏对象的距离。</li>
+<li><strong>Azimuth</strong>:水平方位角。</li>
+<li><strong>Elevation</strong>:竖直仰角。</li>
+<li><strong>Emitter Cone</strong>:游戏对象的朝向与听者之间的夹角。</li>
+<li><strong>Obstruction</strong>:由游戏对该游戏对象进行设定。</li>
+<li><strong>Occlusion</strong>:由游戏对该游戏对象进行设定。</li>
+<li><strong>Listener Cone</strong>:游戏对象与听者朝向（前部）之间的夹角。</li>
+<li><strong>Diffraction</strong>:由 Wwise Spatial Audio 对游戏对象进行设定。</li>
+</ul>
+<p><strong>备注</strong>:如果RTPC绑定到初始延迟或优先级，使用内置参数来控制RTPC会导致出问题。使用给定游戏对象播放声音时，会计算这些内置参数。因此，它们对大部分声音属性来说都很适用。内置参数控制的 RTPC 不适用于对象的播放逻辑属性（如 Initial Delay 和 Priority），因为触发 Play Action 时它们的值是未知的。</p>
+<p>Default value: None<br/></p>

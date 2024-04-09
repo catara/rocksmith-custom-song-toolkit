@@ -1,0 +1,16 @@
+
+<h2>Type</h2>
+<p>类型。列出可在容器中各个对象之间应用的过渡。</p>
+<ul>
+<li><strong>Xfade (amp)</strong> - 淡变（恒定振幅），在两个对象之间保持恒定振幅进行交叉淡变。</li>
+<li><strong>Xfade (power)</strong> - 淡变（恒定功率），在两个对象之间保持恒定功率进行交叉淡变。</li>
+<li><strong>Delay</strong> - 延迟，在两个对象之间添加无声段落。</li>
+<li><strong>Sample Accurate</strong> - 精确到采样点，对象之间进行零延迟的无缝过渡。</li>
+<li><strong>Trigger rate</strong>：按照指定的速率播放容器内的新对象。该选项对于模拟快速枪声十分实用。</li>
+</ul>
+<p><strong>备注</strong>:在使用 Xfade、Sample accurate 和 Trigge rate 时有一些局限性。以下几点需要注意：</p>
+<ul>
+<li>Blend 和 Switch Container 不支持交叉淡变（Xfade）。当子级 Blend/Switch Container 播放时，其父级 Random/Sequence Container的 Xfade 设置也无法正常工作。</li>
+<li>对于使用了 Xfade 或 Trigger rate 过渡方式的容器，带有 Fade out 的 Stop Action 将不起作用。为容器调用 StopEvent 时，如果 Fade out 时间比当前播放的声音更长，则播放结束时声音会突然切断。要避免这种情况，可以使用 Set Voice Volume Action 进行淡出，并延迟 Stop Action。</li>
+</ul>
+<p>Default value: Xfade (amp)<br/></p>

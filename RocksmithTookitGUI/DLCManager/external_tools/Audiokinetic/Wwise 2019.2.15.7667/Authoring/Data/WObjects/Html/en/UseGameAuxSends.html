@@ -1,0 +1,10 @@
+
+<h2>Use game-defined auxiliary sends</h2>
+<p>Determines whether the object is using the game-defined auxiliary sends for the game object. A game-defined send is a combination of an Auxiliary Bus and a send volume.</p>
+<p>Enable this option to have the object affected by the values coming from the game for the following functions:</p>
+<ul>
+<li><a href="https://www.audiokinetic.com/library/?source=SDK&amp;id=ak__soundengine__setgameobjectauxsendvalues.html">AK::SoundEngine::SetGameObjectAuxSendValues()</a></li>
+<li><a href="https://www.audiokinetic.com/library/?source=SDK&amp;id=ak__soundengine__setgameobjectoutputbusvolume.html">AK::SoundEngine::SetGameObjectOutputBusVolume()</a></li>
+</ul>
+<p>If the game has initialized Spatial Audio and sent Rooms and Portals data to Wwise, this property determines if the object should send to the Auxiliary Bus defined by the current Room that the game object is inside.</p>
+<p>Default value: false<br/></p>

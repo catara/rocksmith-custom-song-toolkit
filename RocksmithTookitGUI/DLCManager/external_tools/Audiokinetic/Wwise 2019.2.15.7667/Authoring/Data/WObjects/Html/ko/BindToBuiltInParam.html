@@ -1,0 +1,16 @@
+
+<h2>Bind to Built-In Param:</h2>
+<p>이 Game Parameter를 사운드 엔진 내에서 계산된 값으로 고정합니다. 다음 중 하나를 선택해 주세요:</p>
+<p><strong>(더 자세한 설명을 위해서는 <a href="HelpDoc=binding_game_parameter_to_built_in_parameter#avaialble_builtin_parameters">사용 가능한 내장 매개 변수</a> 에서 다음의 내장된 매개 변수를 참조하세요.)</strong></p>
+<ul>
+<li><strong>Distance</strong>: 게임 오브젝트로의 거리.</li>
+<li><strong>Azimuth</strong>: 수평각.</li>
+<li><strong>Elevation</strong>: 수직각.</li>
+<li><strong>Emitter Cone</strong>: 오브젝트의 방향과 청자 사이의 각도.</li>
+<li><strong>Obstruction</strong>: 게임에서 게임 오브젝트에 설정된 방해.</li>
+<li><strong>Occlusion</strong>: 게임에서 게임 오브젝트에 설정된 차단.
+오브젝트와 청자의 방향 (앞쪽) 사이의 각도.</li>
+<li><strong>Diffraction</strong>: Wwise Spatial Audio가 게임 오브젝트에 설정한 회절.</li>
+</ul>
+<p><strong>참고</strong>: 내장된 매개 변수를 RTPC를 조종하기 위해 사용하는 것은 해당 RTPC가 Initial Delay 또는 Priority(우선 순위)에 연결되어 있는 경우 문제가 발생할 수도 있습니다. 내장 매개변수는 주어진 게임 오브젝트에서 사운드가 재생될 때 컴퓨터에 의해 계산되기 때문에, 대부분의 사운드 속성을 위해 사용하기 아주 좋습니다. Initial Delay와 Priority와 같은 재생의 논리적 조정 아이템들은 RTPC를 조종하기 위해 내장 매개 변수를 사용할 때에는 사용하는 것이 적절하지 않은데, 그 이유는 Play Action이 게시되어 있을 때에 그 조정 아이템들의 값이 밝혀지지 않기 때문입니다.</p>
+<p>Default value: None<br/></p>

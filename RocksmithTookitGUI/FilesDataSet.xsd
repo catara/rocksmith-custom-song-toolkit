@@ -12,7 +12,7 @@
       </DataSource>
     </xs:appinfo>
   </xs:annotation>
-  <xs:element name="FilesDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="FilesDataSet" msprop:Generator_UserDSName="FilesDataSet">
+  <xs:element name="FilesDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="FilesDataSet" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="FilesDataSet">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded" />
     </xs:complexType>

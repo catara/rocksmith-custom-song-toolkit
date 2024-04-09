@@ -1,0 +1,13 @@
+
+<h2>Bus Configuration</h2>
+<p>Determines in which configuration the bus output is formatted and can affect the processing status of the bus. You can use this setting to save CPU and memory by deferring mixing until further along the bus pipeline or reducing the number of channels for which Effects inserted on a bus must be processed.</p>
+<p>Some of the available options are:</p>
+<ul>
+<li><strong>Same as parent</strong> - The bus inherits the bus configuration of its parent bus and has the potential to be non-mixing. This would save CPU and memory by propagating the properties of the bus to its input without requiring any processing. However, if the bus has certain features such as Effects, processing is performed and the potential savings are lost. Refer to <a href="HelpDoc=understanding_the_bus_icons">Understanding the Bus Icons and Processing Status</a> for further details.</li>
+<li><strong>Same as main mix</strong> - The bus inherits the bus configuration of the Main Mix of the Audio Device at the end of the bus pipeline. This option provides flexibility in that the bus configuration is determined by the endpoint at runtime.</li>
+<li><strong>Same as passthrough mix</strong> - The bus inherits the bus configuration of the Passthrough Mix of the Audio Device at the end of the bus pipeline. This option provides flexibility in that the bus configuration is determined by the endpoint at runtime. If 3D audio is active and the endpoint supports the Passthrough Mix, the bus output is formatted as 2.0. Otherwise, the bus functions as if <strong>Same as main mix</strong> were selected.</li>
+<li><strong>Audio Objects</strong> - The bus produces Audio Objects. These are audio buffers accompanied by Metadata that, if all conditions are met, could be passed to an endpoint to be rendered with spatialized effects.</li>
+</ul>
+<p>The Bus Configuration of any top-level bus, such as the Master Audio Bus, is automatically set to <strong>Defined by device</strong>. This is because these busses always inherit the bus configuration of the associated Audio Device.</p>
+<p>For more information on these and other options in the drop-down list, refer to <a href="HelpDoc=understanding_channel_configurations">Understanding Bus Configurations</a>.</p>
+<p>Default value: Same as parent<br/></p>

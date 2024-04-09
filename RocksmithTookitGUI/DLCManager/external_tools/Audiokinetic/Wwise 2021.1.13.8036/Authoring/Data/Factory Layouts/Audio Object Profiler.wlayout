@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Layout Name="Audio Object Profiler">
+	<StackPanel Name="StackPanel" Width="1645" Height="914" Orientation="Vertical">
+		<StackPanel Name="StackPanel" Width="1645" Height="910" Orientation="Vertical">
+			<StackPanel Name="StackPanel" Width="1645" Height="609" Orientation="Horizontal">
+				<StackPanel Name="StackPanel" Width="1482" Height="609" Orientation="Vertical">
+					<StackPanel Name="StackPanel" Width="1482" Height="428" Orientation="Horizontal">
+						<View Name="Audio Object List" Width="870" Height="428"/>
+						<Splitter Name="Splitter" Width="3" Height="428"/>
+						<View Name="Audio Object 3D Viewer" Width="608" Height="428"/>
+					</StackPanel>
+					<Splitter Name="Splitter" Width="1482" Height="3"/>
+					<StackPanel Name="StackPanel" Width="1482" Height="176" Orientation="Horizontal">
+						<View Name="Advanced Profiler" Width="1200" Height="176"/>
+						<Splitter Name="Splitter" Width="3" Height="176"/>
+						<View Name="Audio Object Metadata" Width="279" Height="176"/>
+					</StackPanel>
+				</StackPanel>
+				<Splitter Name="Splitter" Width="3" Height="609"/>
+				<View Name="Audio Object Meter" Width="159" Height="609"/>
+			</StackPanel>
+			<Splitter Name="Splitter" Width="1645" Height="3"/>
+			<View Name="Voice Monitor" Width="1645" Height="298"/>
+		</StackPanel>
+	</StackPanel>
+	<LastPositions>
+		<ViewPosition Name="Advanced Profiler" WindowPlacement_Flags="0" WindowPlacement_ShowCmd="Normal" WindowPlacement_MinPos_X="-1" WindowPlacement_MinPos_Y="-1" WindowPlacement_MaxPos_X="-1" WindowPlacement_MaxPos_Y="-1" WindowPlacement_NormalPos_Left="25" WindowPlacement_NormalPos_Top="75" WindowPlacement_NormalPos_Right="739" WindowPlacement_NormalPos_Bottom="796"/>
+		<ViewPosition Name="Project Explorer" WindowPlacement_Flags="0" WindowPlacement_ShowCmd="Normal" WindowPlacement_MinPos_X="-1" WindowPlacement_MinPos_Y="-1" WindowPlacement_MaxPos_X="-1" WindowPlacement_MaxPos_Y="-1" WindowPlacement_NormalPos_Left="1311" WindowPlacement_NormalPos_Top="367" WindowPlacement_NormalPos_Right="1805" WindowPlacement_NormalPos_Bottom="967"/>
+		<ViewPosition Name="Property Editor" WindowPlacement_Flags="0" WindowPlacement_ShowCmd="Normal" WindowPlacement_MinPos_X="-1" WindowPlacement_MinPos_Y="-1" WindowPlacement_MaxPos_X="-1" WindowPlacement_MaxPos_Y="-1" WindowPlacement_NormalPos_Left="897" WindowPlacement_NormalPos_Top="264" WindowPlacement_NormalPos_Right="1552" WindowPlacement_NormalPos_Bottom="759"/>
+		<ViewPosition Name="Transport Control" WindowPlacement_Flags="0" WindowPlacement_ShowCmd="Normal" WindowPlacement_MinPos_X="-1" WindowPlacement_MinPos_Y="-1" WindowPlacement_MaxPos_X="-1" WindowPlacement_MaxPos_Y="-1" WindowPlacement_NormalPos_Left="588" WindowPlacement_NormalPos_Top="636" WindowPlacement_NormalPos_Right="930" WindowPlacement_NormalPos_Bottom="729"/>
+	</LastPositions>
+</Layout>

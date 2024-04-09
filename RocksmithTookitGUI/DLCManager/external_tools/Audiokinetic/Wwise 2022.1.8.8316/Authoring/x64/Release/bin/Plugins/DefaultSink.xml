@@ -1,0 +1,195 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2006 Audiokinetic Inc. -->
+<PluginModule>
+  <SinkPlugin Name="System" CompanyID="0" PluginID="174">
+    <PluginInfo>
+      <PlatformSupport>
+        <Platform Name="Any"/>
+      </PlatformSupport>
+    </PluginInfo>
+    <Properties>
+      <Property Name="Allow3DAudio" Type="bool" DisplayName="Allow 3D Audio" SupportLink="true">
+        <DefaultValue>false</DefaultValue>
+        <AudioEnginePropertyID>0</AudioEnginePropertyID>
+      </Property>
+      <Property Name="MainMixHeadphoneConfiguration" Type="Uint32" SupportLink="true" DisplayName="Main Mix Configuration for Binauralization">
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>1</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="Uint32">
+              <!-- Serialized channel config: MSB mask(20) type(4) nchannels(8) -->
+              <Value DisplayName="Use Game-Defined Settings">0</Value>
+              <Value DisplayName="7.1">6549768</Value>
+              <Value DisplayName="7.1.4">761524492</Value>
+              <Value DisplayName="Ambisonics 1st order">516</Value>
+              <!-- 0x00000204 -->
+              <Value DisplayName="Ambisonics 2nd order">521</Value>
+              <!-- 0x00000209 -->
+              <Value DisplayName="Ambisonics 3rd order">528</Value>
+              <!-- 0x00000210 -->
+              <Value DisplayName="Ambisonics 4th order">537</Value>
+              <!-- 0x00000219 -->
+              <Value DisplayName="Ambisonics 5th order">548</Value>
+              <!-- 0x00000224 -->
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="Allow3DAudio" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="MainMixSpeakerConfiguration" Type="Uint32" SupportLink="true" DisplayName="Main Mix Configuration for Home Theater">
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>2</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="Uint32">
+              <!-- Serialized channel config: MSB mask(20) type(4) nchannels(8) -->
+              <Value DisplayName="Use Game-Defined Settings">0</Value>
+              <Value DisplayName="7.1">6549768</Value>
+              <Value DisplayName="7.1.4">761524492</Value>
+              <Value DisplayName="Ambisonics 1st order">516</Value>
+              <!-- 0x00000204 -->
+              <Value DisplayName="Ambisonics 2nd order">521</Value>
+              <!-- 0x00000209 -->
+              <Value DisplayName="Ambisonics 3rd order">528</Value>
+              <!-- 0x00000210 -->
+              <Value DisplayName="Ambisonics 4th order">537</Value>
+              <!-- 0x00000219 -->
+              <Value DisplayName="Ambisonics 5th order">548</Value>
+              <!-- 0x00000224 -->
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="Allow3DAudio" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="AllowSystemAudioObjects" Type="bool" SupportLink="true" DisplayName="Allow System Audio Objects">
+        <DefaultValue>true</DefaultValue>
+        <AudioEnginePropertyID>3</AudioEnginePropertyID>
+        <Dependencies>
+          <PropertyDependency Name="Allow3DAudio" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="MinSystemAudioObjectsRequired" Type="Uint16" SupportLink="true" DisplayName="Minimum System Audio Objects Required">
+        <DefaultValue>32</DefaultValue>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Uint16">
+              <Min>0</Min>
+              <Max>65535</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <AudioEnginePropertyID>4</AudioEnginePropertyID>
+        <Dependencies>
+          <PropertyDependency Name="Allow3DAudio" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="AllowSystemAudioObjects" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>        
+        </Dependencies>
+      </Property>
+    </Properties>    
+  </SinkPlugin>  
+
+  <SinkPlugin Name="DVR Bypass" CompanyID="0" PluginID="175">
+    <PluginInfo>
+      <PlatformSupport>        
+        <Platform Name="XboxOne"/>
+        <Platform Name="XboxSeriesX"/>
+        <Platform Name="PS4"/>
+        <Platform Name="PS5"/>
+      </PlatformSupport>     
+    </PluginInfo>
+    <Properties>
+      <Property Name="DVRRecordable" Type="bool">
+        <UserInterface DisplayName="DVR Recordable"/>
+        <DefaultValue>false</DefaultValue>
+        <AudioEnginePropertyID>0</AudioEnginePropertyID>
+      </Property>
+    </Properties>
+  </SinkPlugin>
+
+  <SinkPlugin Name="Communication" CompanyID="0" PluginID="176">
+    <PluginInfo>
+      <PlatformSupport>
+        <Platform Name="XboxOne"/>
+        <Platform Name="XboxSeriesX"/>
+        <Platform Name="PS4"/>
+        <Platform Name="PS5"/>
+        <Platform Name="Windows"/>
+        <Platform Name="Stadia"/>
+      </PlatformSupport>
+    </PluginInfo>    
+  </SinkPlugin>
+  
+  <SinkPlugin Name="Controller Headphones" CompanyID="0" PluginID="177">
+    <PluginInfo>
+      <PlatformSupport>        
+        <Platform Name="XboxOne"/>
+        <Platform Name="XboxSeriesX"/>
+        <Platform Name="PS4"/>
+        <Platform Name="PS5"/>
+        <Platform Name="Windows"/>
+      </PlatformSupport>
+    </PluginInfo>    
+  </SinkPlugin>
+
+  <SinkPlugin Name="Controller Speaker" CompanyID="0" PluginID="179">
+    <PluginInfo>
+      <PlatformSupport>        
+        <Platform Name="PS4"/>
+        <Platform Name="PS5"/>
+        <Platform Name="Windows"/>
+      </PlatformSupport>
+    </PluginInfo>    
+  </SinkPlugin>
+
+  <SinkPlugin Name="Auxiliary" CompanyID="0" PluginID="180">
+    <PluginInfo>
+      <PlatformSupport>        
+        <Platform Name="PS4"/>
+        <Platform Name="PS5"/>
+        <Platform Name="Windows"/>
+      </PlatformSupport>
+    </PluginInfo>    
+  </SinkPlugin>
+
+  <SinkPlugin Name="No Output" CompanyID="0" PluginID="181">
+    <PluginInfo CanBeMasterSink="false">
+      <PlatformSupport>
+        <Platform Name="Any"/>
+      </PlatformSupport>
+    </PluginInfo>
+  </SinkPlugin>
+</PluginModule>

@@ -1,0 +1,56 @@
+{
+    "version": 1,
+    "functions": [
+        {
+            "id": "ak.wwise.core.executeLuaScript",
+            "restrict": [ "commandLine", "userInterface" ],
+            "description": "Execute a Lua script. Optionally, additional Lua search paths, additional modules, and additional Lua script to load prior to the main script. The script can return a value.",
+            "argsSchema": {
+                "type": "object",
+                "properties": {
+                    "luaScript": {
+                        "type": "string",
+                        "description": "Defines the main Lua file to load and execute."
+                    },
+                    "luaPaths": {
+                        "$ref": "#/definitions/arrayOfString",
+                        "description":"Defines an array of paths to be used to search additional Lua modules. Here is an example of a lua path 'C:/path_to_folder/?.lua'."
+                    },
+                    "requires": {
+                        "$ref": "#/definitions/arrayOfString",
+                        "description": "Defines additional modules to be loaded at runtime using the require system. Note that the following folders are automatically added in the Lua path: PROJECT/Add-ons/Lua, APPDATA/Audiokinetic/Wwise/Add-ons/Lua, INSTALLDIR/Authoring/Data/Add-ons/Lua."
+                    },
+                    "doFiles": {
+                        "$ref": "#/definitions/arrayOfString",
+                        "description": "Defines additional Lua files to load before the main Lua script is loaded and executed. It is also possible to specify a directory in which all lua files will be loaded."
+                    },
+                    "arg": {
+                        "type": ["boolean", "object", "array", "number", "string"],
+                        "description": "The 'arg' value passed to Lua script. Use the global variable named 'arg'."
+                    }
+                },
+                "required": [ "luaScript" ],
+                "additionalProperties": false
+            },
+            "resultSchema": {
+                "type": "object",
+                "properties": {
+                    "return": {
+                        "type": ["boolean", "object", "array", "number", "string"],
+                        "description": "Result returned by the lua script. Use a return statement at the end of the script."
+                    }
+                },
+                "required": [ "return" ],
+                "additionalProperties": false
+            },
+            "optionsSchema": {
+                "type": "object",
+                "properties": { },
+                "additionalProperties": false
+            }
+        }
+    ],
+    "topics": [],
+    "validators": [],
+    "definitions": {}    
+}

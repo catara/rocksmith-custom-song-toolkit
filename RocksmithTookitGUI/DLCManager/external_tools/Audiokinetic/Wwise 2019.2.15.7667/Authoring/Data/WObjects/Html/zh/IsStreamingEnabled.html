@@ -1,0 +1,7 @@
+
+<h2>Stream</h2>
+<p>此控件启用后可以让您直接从游戏媒体中流播放音频。</p>
+<p>SoundBank 中不包含流媒体文件。运行时打开并从磁盘中读取流媒体文件的工作由 Wwise Stream Manager 负责，并最终由底层 I/O 子模块负责。有关 Wwise I/O 的更多详细信息，请参阅 <a href="https://www.audiokinetic.com/library/edge/?source=SDK&amp;id=streamingdevicemanager.html">Wwise SDK 文档</a> 。</p>
+<p>流播放文件描述于文件 SoundBanksInfo.xml 中，SoundBanksInfo.xml  文件是在生成 SoundBank 时为各个平台创建的。<span class="condition" name="WwiseLite">在生成 SoundBank 后，可使用 CopyStreamedFiles 或 File Packager 工具方便地进行部署。</span> 有关更多详细信息，请参阅 <a href="HelpDoc=managing_soundbanks">管理 SoundBank</a> 。</p>
+<p><strong>备注</strong>:在 Project Settings 或 SoundBanks Settings 的 SoundBanks 选项卡下，须始终启用 Generate Metadata Files 选项。此外，还须启用 Generate XML Metadata 选项。利用这些设置，Wwise 可在每次成功生成 SoundBank 时自动生成 SoundbanksInfo.xml 文件。</p>
+<p>Default value: false<br/></p>

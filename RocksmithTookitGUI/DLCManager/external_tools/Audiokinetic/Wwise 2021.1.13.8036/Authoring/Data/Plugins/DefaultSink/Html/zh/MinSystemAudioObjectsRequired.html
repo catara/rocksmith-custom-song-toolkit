@@ -1,0 +1,7 @@
+
+<h2>Minimum System Audio Objects Requirement</h2>
+<p>最低系统音频对象要求。定义终端至少要支持多少个 System Audio Object，声音引擎才会生成 System Audio Object。</p>
+<p>您可以使用此属性来确保将系统的 3D 音频处理能力保持在一定的水平。比如，在将该值设为 50 的情况下，若平台无法做到<strong>至少</strong>同时支持 50 个 Audio Object，则禁止其使用 System Audio Object。藉此，可避免尝试播放的对象超出系统支持的数量，进而导致对部分对象实施不同的混音处理。在这种情况下，将无法保证每次播放音频时都会产生相同的效果。</p>
+<p>因此，该值应略微大于游戏在任意时刻可能播放的 System Audio Object 数量。</p>
+<p>Default value: 32<br/>
+Range: 0 to 65535<br/></p>

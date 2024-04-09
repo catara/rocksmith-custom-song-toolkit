@@ -1,0 +1,4 @@
+
+<h2>Attempts to determine the expected duration of each Event in a SoundBank. 各イベントのDurationType、MinDuration、MaxDurationsの属性が含まれる</h2>
+<p>SoundBank内のイベントごとの、長さの予測を試みる。各イベントの属性であるDurationType、MinDuration、MaxDurationsが、soundbanksinfo.xmlファイルに含まれる。DurationTypeの種類として、OneShot、Infinite、Mixed、Unknownがある。それぞれの意味は、OneShotがループなしのサウンド、Infiniteがループするサウンド、Mixedが無限にループする可能性のあるサウンド（ランダムチャンスやSwitchなどによる）、Unknownが長さをWwiseが判断できないサウンドを示す。MinDuration、MaxDurationの属性は、イベントの長さの上限と下限の予測である。なお、上下限は予測であり、ランタイム条件によって正確でない場合がある。</p>
+<p>Default value: false<br/></p>

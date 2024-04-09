@@ -36,6 +36,9 @@ using MakePedalSetting = RocksmithToolkitLib.ToolkitTone.ToolkitPedal;
 using System.Data.OleDb;
 using RocksmithToolkitGUI.DLCManager;
 using static RocksmithToolkitGUI.DLCManager.UtilitiesFunctions;
+using System.Windows.Shell;
+using X360.Other;
+
 
 namespace RocksmithToolkitGUI.DLCPackageCreator
 {
@@ -1875,41 +1878,51 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             //add to the Rocksmith toolkit 
             //System.Data.OleDb.OleDbConnection cnb = null;
             //SQLite.SQLiteConnection cnc = null;
-            try
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul119"] == "Yes")
             {
-                OpenDBQuick();
-                //cnb = new OleDbConnection("Provider=Microsoft." + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Persist Security" +
-                //    " Info=False;Mode= Share Deny None;Data Source=" + ConfigRepository.Instance()["dlcm_DBFolder"]);
-
-                //cnb = new OleDbConnection("Provider=Microsoft." + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Persist Security" +
-                //    " Info=False;Mode= Share Deny None;Data Source=" + ConfigRepository.Instance()["dlcm_DBFolder"]); //running twice as some issues with compilatiojn in x86...sometime
-                //if (File.Exists(cnb.DataSource.ToString())) cnb.Open();
-                //try { cnb.Close(); cnc.Close(); } catch (Exception ex) {; }
-                OpenDb();// (null, cnb, cnc);
-                PackNew frm = new DLCManager.PackNew(packageData, cnb, cnc); frm.ShowDialog();
-            }
-            catch (Exception exx)
-            {
-                ShowConnectivityError(exx, "FAIL to use M$ ACCESS plugin:\n");/*, null*/
-                var tz = ConfigRepository.Instance()["dlcm_DBFolder"];
-                tz = tz.Replace("AccessDB.accdb", "SQLLiteDB.db");
-                ConfigRepository.Instance()["dlcm_DBFolder"] = tz;
-                //cnz = new SQLiteConnection("Data Source="+ ConfigRepository.Instance()["dlcm_DBFolder"]);
-                //cnz.Open();
                 try
                 {
-                    cnc = new SQLite.SQLiteConnection(ConfigRepository.Instance()["dlcm_DBFolder"]);
-                    DLCManager.PackNew frm = new DLCManager.PackNew(packageData, null, cnc);
-                    frm.ShowDialog();
+                    ConfigRepository.Instance()["dlcm_GlobalTempVariable"] = "";
+                    SaveTemplateFile(UnpackedDir);
+                    OpenDBQuick();
+                    //cnb = new OleDbConnection("Provider=Microsoft." + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Persist Security" +
+                    //    " Info=False;Mode= Share Deny None;Data Source=" + ConfigRepository.Instance()["dlcm_DBFolder"]);
+
+                    //cnb = new OleDbConnection("Provider=Microsoft." + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Persist Security" +
+                    //    " Info=False;Mode= Share Deny None;Data Source=" + ConfigRepository.Instance()["dlcm_DBFolder"]); //running twice as some issues with compilatiojn in x86...sometime
+                    //if (File.Exists(cnb.DataSource.ToString())) cnb.Open();
+                    //try { cnb.Close(); cnc.Close(); } catch (Exception ex) {; }
+                    OpenDb();// (null, cnb, cnc);
+                    PackNew frm = new DLCManager.PackNew(packageData, cnb, cnc); frm.ShowDialog();
+                    if (frm.StopPack) return null;
                 }
-                catch (Exception ex)
+                catch (Exception exx)
                 {
-                    ShowConnectivityError(ex, "FAIL to use SQLLite :\n");/*, null*/
+                    ShowConnectivityError(exx, "FAIL to use M$ ACCESS plugin:\n");/*, null*/
+                    var tz = ConfigRepository.Instance()["dlcm_DBFolder"];
+                    tz = tz.Replace("AccessDB.accdb", "SQLLiteDB.db");
+                    ConfigRepository.Instance()["dlcm_DBFolder"] = tz;
+                    //cnz = new SQLiteConnection("Data Source="+ ConfigRepository.Instance()["dlcm_DBFolder"]);
+                    //cnz.Open();
+                    try
+                    {
+                        cnc = new SQLite.SQLiteConnection(ConfigRepository.Instance()["dlcm_DBFolder"]);
+                        DLCManager.PackNew frm = new DLCManager.PackNew(packageData, null, cnc);
+                        frm.ShowDialog();
+                        if (frm.StopPack) return null;
+                        if (ConfigRepository.Instance()["dlcm_GlobalTempVariable"] == "") return packageData;
+                    }
+                    catch (Exception ex)
+                    {
+                        ShowConnectivityError(ex, "FAIL to use SQLLite :\n");/*, null*/
+                    }
+                    //Is_MultiTrack = ag[0]; MultiTrack_Version = ag[1]; IsLive = ag[2]; LiveDetails = ag[3]; IsAcoustic = ag[4]; IsSingle = ag[5]; IsSoundtrack = ag[6]; IsInstrumental = ag[7]; IsEP = ag[8]; IsUncensored = ag[9];
+                    //IsFullAlbum = ag[10]; IsRemastered = ag[11]; InTheWorks = ag[12]; IsKaraoke = ag[13]; IsDemo = ag[14]; HasFeaturing = ag[15]; IsRemix = ag[16]; IsCover = ag[17];
                 }
-                //Is_MultiTrack = ag[0]; MultiTrack_Version = ag[1]; IsLive = ag[2]; LiveDetails = ag[3]; IsAcoustic = ag[4]; IsSingle = ag[5]; IsSoundtrack = ag[6]; IsInstrumental = ag[7]; IsEP = ag[8]; IsUncensored = ag[9];
-                //IsFullAlbum = ag[10]; IsRemastered = ag[11]; InTheWorks = ag[12]; IsKaraoke = ag[13]; IsDemo = ag[14]; HasFeaturing = ag[15]; IsRemix = ag[16]; IsCover = ag[17];
+
+                packageData.ToolkitInfo.PackageComment = ConfigRepository.Instance()["dlcm_GlobalTempVariable"] + packageData.ToolkitInfo.PackageComment.Replace("(Remastered by CDLC Creator)","").Trim();
+                SaveTemplateFile(UnpackedDir);
             }
-            packageData.ToolkitInfo.PackageComment = ConfigRepository.Instance()["dlcm_GlobalTempVariable"] + packageData.ToolkitInfo.PackageComment;
 
             // open PackageGenerate save file dialog
             if (!GlobalsLib.IsUnitTest)
@@ -2431,12 +2444,12 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
 
             var step = (int)Math.Round(1.0 / numPlatforms * 100, 0);
             int progress = 0;
-
+            var error = "";
             if (PlatformPC)
                 try
                 {
                     bwGenerate.ReportProgress(progress, "Generating PC Package ...");
-                    RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate(DestPath, packageData, new Platform(GamePlatform.Pc, currentGameVersion), pnum: numPlatforms);
+                    error=RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate(DestPath, packageData, new Platform(GamePlatform.Pc, currentGameVersion), pnum: numPlatforms);
                     progress += step;
                     numPlatforms--;
                     bwGenerate.ReportProgress(progress);
@@ -2450,7 +2463,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 try
                 {
                     bwGenerate.ReportProgress(progress, "Generating Mac Package ...");
-                    RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate(DestPath, packageData, new Platform(GamePlatform.Mac, currentGameVersion), pnum: numPlatforms);
+                    error=RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate(DestPath, packageData, new Platform(GamePlatform.Mac, currentGameVersion), pnum: numPlatforms);
                     progress += step;
                     numPlatforms--;
                     bwGenerate.ReportProgress(progress);
@@ -2464,7 +2477,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 try
                 {
                     bwGenerate.ReportProgress(progress, "Generating XBox 360 Package ...");
-                    RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate(DestPath, packageData, new Platform(GamePlatform.XBox360, currentGameVersion), pnum: numPlatforms);
+                    error=RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate(DestPath, packageData, new Platform(GamePlatform.XBox360, currentGameVersion), pnum: numPlatforms);
                     progress += step;
                     numPlatforms--;
                     bwGenerate.ReportProgress(progress);
@@ -2478,20 +2491,23 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 try
                 {
                     bwGenerate.ReportProgress(progress, "Generating PS3 Package ...");
-                    RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate(DestPath, packageData, new Platform(GamePlatform.PS3, currentGameVersion), pnum: numPlatforms);
+                    error=RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate(DestPath, packageData, new Platform(GamePlatform.PS3, currentGameVersion), pnum: numPlatforms);
                     progress += step;
                     numPlatforms--;
                     bwGenerate.ReportProgress(progress);
                 }
                 catch (Exception ex)
                 {
-                    errorsFound.AppendLine(String.Format("Error generating PS3 package: {0}{1}{0}{2}. {0}PS3 package require 'JAVA x86' (32 bits) installed on your machine to generate properly.{0}", Environment.NewLine, ex.Message, ex.StackTrace));
+                    errorsFound.AppendLine(String.Format("Error generating PS3 package: {0}{1}{0}{2}. {0} fyi PS3 package require 'JAVA x86' (32 bits) installed on your machine to generate properly.{0}", Environment.NewLine, ex.Message, ex.StackTrace));
                 }
 
             // Cache cleanup so we don't serialize or reuse data that could be changed
             packageData.CleanCache();
             e.Result = (numPlatforms == 1 && errorsFound.Length > 0) ? "error" : "generate";
-
+            if (!File.Exists(error))
+            {
+                UpdateLog(System.DateTime.Now, "Error: "+error, true, null, null, null, null, null);
+            }
         }
 
         // capture listbox special keys
@@ -2552,7 +2568,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
 
                     message += String.Format("{0}Would you like to open the folder where the package was generated?{0}", Environment.NewLine);
                     if (MessageBox.Show(message, MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
-                        Process.Start(Path.GetDirectoryName(DestPath));
+                        UtilitiesFunctions.StartProcesss(Path.GetDirectoryName(DestPath), null);
 
                     break;
                 case "error":

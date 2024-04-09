@@ -1,0 +1,10 @@
+
+<h2>Virtual voice behavior</h2>
+<p>오브젝트의 음량이 음량 한계값 아래로 떨어지거나 오브젝트의 수가 재생 한계를 초과할 때 오브젝트의 작동 방식을 정합니다. 다음의 옵션 중에서 선택하실 수 있습니다:</p>
+<ul>
+<li><strong>Continue to play</strong>를 선택하면 오브젝트를 더 이상 듣거나 느끼지 못하더라도 계속해서 오브젝트를 재생합니다.</li>
+<li><strong>Kill voice(보이스 제거)</strong>는 오브젝트의 재생을 중단합니다. 이 옵션의 경우 페이드 아웃이 적용되지 않습니다.</li>
+<li><strong>Send to virtual voice(가상 보이스로 전송)</strong>은 해당 오브젝트를 가상 보이스 목록으로 전송합니다. 오브젝트가 가상 보이스 목록으로 전송되면 해당 오브젝트의 몇몇 매개 변수들은 사운드 엔진에 의해 감시되는데, 이때 오디오나 모션에 대한 가공은 일어나지 않습니다.</li>
+<li><strong>Kill if finite else virtual(유한 재생일 경우 중단하고 무한 재생일 경우 가상 보이스로 전송)</strong>은 무한 반복 재생되지 않는 오브젝트의 재생은 중단하고 무한 반복 재생되는 오브젝트는 가상 보이스 목록으로 전송합니다. 이 옵션은 <strong>On return to physical voice(물리적 보이스로 되돌아갈 때)</strong>작동이 상위 레벨에서 정의된 작동 방식에 상관없이 자동으로 <strong>Play from elapsed time(경과 시간부터 재생)</strong>으로 설정됩니다.</li>
+</ul>
+<p>Default value: Continue to play<br/></p>

@@ -1,0 +1,14 @@
+
+<h2>Filter Type</h2>
+<p>변조 신호에 적용할 수 있는 필터링의 유형을 결정합니다. 다음은 사용 가능한 필터들입니다:</p>
+<ul>
+<li><strong>None</strong>은 필터를 비활성화합니다.</li>
+<li><strong>Low Pass</strong>는 명시된 주파수로부터 고정된 경사면의 고주파수 감쇠를 제공합니다. 신호 중 이 값보다 적은 주파수는 그대로 유지되며 이 값을 초과하는 주파수는 절단 주파수를 넘어설 때 누진적으로 감쇠됩니다.</li>
+<li><strong>High Pass</strong>는 명시된 주파수로부터 고정된 경사면의 저주파수 감쇠를 제공합니다. 신호 중 이 값을 초과하는 주파수는 거의 그대로 유지되며 이 값보다 낮은 주파수는 절단 주파수보다 미만일 때 누진적으로 감쇠됩니다.</li>
+<li><strong>Band Pass</strong>는 명시된 중심 주파수 주위의 모든 주파수들을 거부합니다. 중심 주파수 주위의 주파수 범위는 Q에 의해 조종됩니다.</li>
+<li><strong>Notch</strong>는 명시된 주파수 범위에 변동 넓이를 가진 고정 감쇠를 제공합니다. 중심 주파수 주위의 주파수 범위는 Q에 의해 조종됩니다.</li>
+<li><strong>Low Shelf</strong>는 명시된 저주파수의 범위에 게인 / 감쇠를 제공합니다. 이 곡선 유형은 또한 Bass Tone Control로 알려져 있습니다.</li>
+<li><strong>High Shelf</strong>는 명시된 고주파수의 범위에 게인 / 감쇠를 제공합니다. 이 곡션 유형은 또한 Treble Tone Control로 알려져 있습니다.</li>
+<li><strong>Peaking</strong>은 명시된 주파수 범위에 변동 넓이를 가진 증폭/감쇠를 제공합니다. 피크 주변 주파수의 범위는 Q에 의해 조종됩니다.</li>
+</ul>
+<p>Default value: None<br/></p>

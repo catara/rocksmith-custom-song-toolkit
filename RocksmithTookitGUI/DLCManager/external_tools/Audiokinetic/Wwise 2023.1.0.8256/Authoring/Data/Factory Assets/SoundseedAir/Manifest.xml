@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Manifest Name="Soundseed Air" Type="Samples">
+  <Dependencies>
+    <Plugin PluginName="Soundseed Air/Soundseed Wind" CompanyID="0" PluginID="119" PluginType="2"/>
+    <Plugin PluginName="Soundseed Air/Soundseed Woosh" CompanyID="0" PluginID="120" PluginType="2"/>
+    <Plugin PluginName="Silence" CompanyID="0" PluginID="101" PluginType="2"/>
+  </Dependencies>
+</Manifest>

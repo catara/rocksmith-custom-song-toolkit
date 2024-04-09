@@ -1,0 +1,17 @@
+
+<h2>Playback Speed</h2>
+<p>Adjusts the speed at which the music object&rsquo;s contents are played:</p>
+<ul>
+<li>A value of 1 results in a normal playback</li>
+<li>A value less than 1 results in a slower playback</li>
+<li>A value greater than 1 results in a faster playback</li>
+</ul>
+<p>The Playback Speed affects different media types differently:</p>
+<ul>
+<li>WAV: The contents are played at a higher/lower pitch.</li>
+<li>MIDI: The contents are played at a faster/slower tempo.</li>
+</ul>
+<p><strong>Note</strong>: This value is multiplied by the Playback Speed of the object&rsquo;s ancestors to determine the effective playback speed of the object.</p>
+<p><strong>Note</strong>: During an Interactive Music playback instance, the effective playback speed of the active Segment is applied to all playing Segments of the same playback instance. This is particularly important during the transition between two segments when a crossfade is applied. The fading-in (newly active) Segment&rsquo;s playback speed is applied to the fading-out (previously active) Segment.</p>
+<p>Default value: 1<br/>
+Range: 0.25 to 4<br/></p>

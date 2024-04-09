@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Layout Name="SoundBank">
+	<StackPanel Name="StackPanel" ID="{15D36CEB-3A8A-4C8B-AA60-A8414399AD83}" Width="1628" Height="728" Orientation="Vertical">
+		<StackPanel Name="StackPanel" ID="{C96C643A-2BEC-4CE5-BEF4-DB030EBE5E0F}" Width="1628" Height="725" Orientation="Horizontal">
+			<StackPanel Name="StackPanel" ID="{C89A6C3D-D985-42CA-B592-C6FFD9AF3266}" Width="277" Height="785" Orientation="Vertical">
+				<View Name="Project Explorer" ID="{403CE576-A52B-4629-A94E-AEDE063BC1DF}" Width="277" Height="551" SelectionChannel="2">					<ViewData/>
+				</View>
+				<Splitter/>
+				<View Name="Event Viewer" ID="{879C2A96-54A5-4401-8436-E4352121396B}" Width="277" Height="221" SelectionChannel="2">					<ViewData>
+	<EventViewer ActiveTab="0" Filter="2"/>
+</ViewData>
+				</View>
+			</StackPanel>
+			<Splitter/>
+			<StackPanel Name="StackPanel" ID="{DA8B9558-18CF-4170-A96A-D4D5A241166E}" Width="1482" Height="868" Orientation="Vertical">
+				<View Name="SoundBank Manager" ID="{434A49D9-BC0B-4350-8A3A-2AA637E57110}" Width="955" Height="383" SelectionChannel="1"/>
+				<Splitter/>
+				<StackPanel Name="StackPanel" ID="{601DE141-66A9-466E-BE12-457C71F4E4C6}" Width="955" Height="245" Orientation="Horizontal">
+					<View Name="SoundBank Editor" ID="{58BC7396-82BF-4A46-9C4C-8F0C971B94A4}" Width="528" Height="245" SelectionChannel="1"/>
+					<Splitter/>
+					<View Name="Property Editor" ID="{E606E29A-0008-463A-9458-D3378EE8E548}" Width="421" Height="245" SelectionChannel="1"/>
+				</StackPanel>
+			</StackPanel>
+		</StackPanel>
+	</StackPanel>
+</Layout>

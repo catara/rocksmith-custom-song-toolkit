@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 7 13" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.41421;">
+    <g transform="matrix(1,0,0,1,-36,-31)">
+        <g id="State_nor_dis_13px">
+            <g transform="matrix(1.4,0,0,0.619048,19.2,27.9048)">
+                <path d="M17,8.618C17,6.621 16.283,5 15.4,5L13.6,5C12.717,5 12,6.621 12,8.618L12,22.382C12,24.379 12.717,26 13.6,26L15.4,26C16.283,26 17,24.379 17,22.382L17,8.618Z" style="fill:rgb(161,161,161);"/>
+            </g>
+            <g transform="matrix(1,0,0,0.285714,25,30.5714)">
+                <path d="M17,10.425C17,7.431 16.305,5 15.45,5L13.6,5C12.717,5 12,7.509 12,10.6L12,26L17,26L17,10.425Z" style="fill:rgb(186,186,186);"/>
+            </g>
+            <g transform="matrix(1,0,0,0.285714,25,35.5714)">
+                <path d="M17,5L12,5L12,19C12,22.863 12.896,26 14,26L15,26C16.104,26 17,22.863 17,19L17,5Z" style="fill:rgb(186,186,186);"/>
+            </g>
+            <g transform="matrix(1,0,0,-1,36,49)">
+                <rect x="2" y="11" width="3" height="1" style="fill:rgb(161,161,161);"/>
+            </g>
+            <g transform="matrix(1,0,0,-1,36,46)">
+                <rect x="2" y="11" width="3" height="1" style="fill:rgb(161,161,161);"/>
+            </g>
+            <g transform="matrix(1,0,0,-1,36,45)">
+                <rect x="2" y="4" width="3" height="1" style="fill:rgb(161,161,161);"/>
+            </g>
+        </g>
+    </g>
+</svg>

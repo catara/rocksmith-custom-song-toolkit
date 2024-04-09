@@ -1,0 +1,19 @@
+
+<h2>Channel Configuration Override</h2>
+<p>A list of possible channel configurations for the source, which can be selected for display in the graph view.</p>
+<span class="condition" name="WwiseLite"><p>
+<strong>Note</strong>: While it is still possible to use and edit a large variety of channel configurations for your source, only the full version of Wwise can actually output these configurations. Wwise LTX will always downmix higher order configurations to stereo.
+</p></span>
+<p>The audio waveform always has a Wwise display ordering. For 5.1, this corresponds to L + R + C + SL + SR + LFE, from top to bottom on the left side of the graph view. For 1st order ambisonics, this corresponds to W + Y + Z + X.</p>
+<p>Wwise interprets the selected channel configurations and outputs them to the graph view, according to the display order. The source channel configuration can be interpreted according to any of the following file ordering schemes:</p>
+<ul>
+<li><strong>SMPTE</strong>: By default, Wwise interprets the file order as SMPTE (the Microsoft standard), unless it has an ambisonics header. For 5.1, it appears as 5.1(L,R,C,LFE,SL,SR).
+<br/>However, the default is indicated in the list by displaying Detect [channelconfig], where &ldquo;channelconfig&rdquo; indicates the detected configuration. For 5.1, it appears as Detect [5.1(L,R,C,LFE,SL,SR)].</li>
+<li><strong>FuMa</strong>: By default, Wwise interprets the channel ordering for Ambisonics Component Ordering and 1st, 2nd and 3rd order ambisonics, as FuMa. For 1st order ambisonics, it appears as 4(Ambisonics) (FuMa).
+<br/>However, the default is indicated in the list by displaying Detect [channelconfig], where &ldquo;channelconfig&rdquo; indicates the detected configuration. For 1st order ambisonics, it appears as Detect [4(Ambisonics)(FuMa)].
+<br/>FuMa is not defined for higher-order ambisonics, which are only interpreted as AmbiX (ACN ordering with SN3D normalization).</li>
+<li><strong>Anonymous</strong>: The anonymous Channel Config options simply number the channels in order of appearance in the graph view. An 1st order ambisonics file appears as 4 (Anonymous); and is simply displayed as 1 + 2 + 3 + 4 in the graph view. Likewise, a 5.1 file is listed as 6 (Anonymous); and is simply displayed as 1 + 2 + 3 + 4 + 5 + 6 in the graph view.</li>
+<li><strong>Film</strong>: Apart from ambisonics files, the alternative file orderings in the list are Film. For 5.1, it appears as 5.1(L,C,R,SL,SR,LFE).</li>
+<li><strong>AmbiX</strong>: For ambisonics, the alternative file orderings in the list are AmbiX (ACN ordering with SN3D normalization). For 1st order ambisonics, it appears as 4(Ambisonics)(AmbiX).</li>
+</ul>
+<p>Default value: 0<br/></p>

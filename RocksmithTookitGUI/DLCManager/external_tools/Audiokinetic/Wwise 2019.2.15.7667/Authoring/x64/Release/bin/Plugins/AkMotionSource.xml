@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (C) 2006 Audiokinetic Inc. -->
+<PluginModule>
+	<SourcePlugin Name="Wwise Motion Source" CompanyID="0" PluginID="409" EngineDllName="AkMotion">
+		<PluginInfo CanUnlink="true">
+			<PlatformSupport>
+        <Platform Name="Any"></Platform>
+			</PlatformSupport>
+		</PluginInfo>
+		<Properties>
+			<Property Name="DriverA" DocId="Driver" Type="Real32" SupportRTPCType="Additive" SupportLink="true" DisplayGroup="Drivers">
+				<UserInterface DisplayName="Driver A" Step="0.1" Fine="0.001" Decimals="3"/>
+				<DefaultValue>0.0</DefaultValue>
+				<AudioEnginePropertyID>1</AudioEnginePropertyID>
+				<Restrictions>
+					<ValueRestriction>
+						<Range Type="Real32">
+							<Min>0</Min>
+							<Max>1</Max>
+						</Range>
+					</ValueRestriction>
+				</Restrictions>
+			</Property>
+			<Property Name="DriverB" DocId="Driver" Type="Real32" SupportRTPCType="Additive" SupportLink="true" DisplayGroup="Drivers">
+				<UserInterface DisplayName="Driver B" Step="0.1" Fine="0.001" Decimals="3"/>
+				<DefaultValue>0.0</DefaultValue>
+				<AudioEnginePropertyID>2</AudioEnginePropertyID>
+				<Restrictions>
+					<ValueRestriction>
+						<Range Type="Real32">
+							<Min>0</Min>
+							<Max>1</Max>
+						</Range>
+					</ValueRestriction>
+				</Restrictions>
+			</Property>
+			<Property Name="DriverC" DocId="Driver" Type="Real32" SupportRTPCType="Additive" SupportLink="true" DisplayGroup="Drivers">
+				<UserInterface DisplayName="Driver C" Step="0.1" Fine="0.001" Decimals="3"/>
+				<DefaultValue>0.0</DefaultValue>
+				<AudioEnginePropertyID>3</AudioEnginePropertyID>
+				<Restrictions>
+					<ValueRestriction>
+						<Range Type="Real32">
+							<Min>0</Min>
+							<Max>1</Max>
+						</Range>
+					</ValueRestriction>
+				</Restrictions>
+			</Property>
+			<Property Name="DriverD" DocId="Driver" Type="Real32" SupportRTPCType="Additive" SupportLink="true" DisplayGroup="Drivers">
+				<UserInterface DisplayName="Driver D" Step="0.1" Fine="0.001" Decimals="3"/>
+				<DefaultValue>0.0</DefaultValue>
+				<AudioEnginePropertyID>4</AudioEnginePropertyID>
+				<Restrictions>
+					<ValueRestriction>
+						<Range Type="Real32">
+							<Min>0</Min>
+							<Max>1</Max>
+						</Range>
+					</ValueRestriction>
+				</Restrictions>
+			</Property>
+			<Property Name="DriverE" DocId="Driver" Type="Real32" SupportRTPCType="Additive" SupportLink="true" DisplayGroup="Drivers">
+				<UserInterface DisplayName="Driver E" Step="0.1" Fine="0.001" Decimals="3"/>
+				<DefaultValue>0.0</DefaultValue>
+				<AudioEnginePropertyID>5</AudioEnginePropertyID>
+				<Restrictions>
+					<ValueRestriction>
+						<Range Type="Real32">
+							<Min>0</Min>
+							<Max>1</Max>
+						</Range>
+					</ValueRestriction>
+				</Restrictions>
+			</Property>
+			<Property Name="DriverF" DocId="Driver" Type="Real32" SupportRTPCType="Additive" SupportLink="true" DisplayGroup="Drivers">
+				<UserInterface DisplayName="Driver F" Step="0.1" Fine="0.001" Decimals="3"/>
+				<DefaultValue>0.0</DefaultValue>
+				<AudioEnginePropertyID>6</AudioEnginePropertyID>
+				<Restrictions>
+					<ValueRestriction>
+						<Range Type="Real32">
+							<Min>0</Min>
+							<Max>1</Max>
+						</Range>
+					</ValueRestriction>
+				</Restrictions>
+			</Property>
+			<Property Name="DriverG" DocId="Driver" Type="Real32" SupportRTPCType="Additive" SupportLink="true" DisplayGroup="Drivers">
+				<UserInterface DisplayName="Driver G" Step="0.1" Fine="0.001" Decimals="3"/>
+				<DefaultValue>0.0</DefaultValue>
+				<AudioEnginePropertyID>7</AudioEnginePropertyID>
+				<Restrictions>
+					<ValueRestriction>
+						<Range Type="Real32">
+							<Min>0</Min>
+							<Max>1</Max>
+						</Range>
+					</ValueRestriction>
+				</Restrictions>
+			</Property>
+			<Property Name="DriverH" DocId="Driver" Type="Real32" SupportRTPCType="Additive" SupportLink="true" DisplayGroup="Drivers">
+				<UserInterface DisplayName="Driver H" Step="0.1" Fine="0.001" Decimals="3"/>
+				<DefaultValue>0.0</DefaultValue>
+				<AudioEnginePropertyID>8</AudioEnginePropertyID>
+				<Restrictions>
+					<ValueRestriction>
+						<Range Type="Real32">
+							<Min>0</Min>
+							<Max>1</Max>
+						</Range>
+					</ValueRestriction>
+				</Restrictions>
+			</Property>
+			<Property Name="ChannelConfig" Type="int16" SupportLink="true">
+				<UserInterface DisplayName="Actuator Configuration"/>
+				<AudioEnginePropertyID>0</AudioEnginePropertyID>
+				<DefaultValue>6</DefaultValue>
+				<Restrictions>
+					<ValueRestriction>
+						<Enumeration Type="int16">
+							<Value DisplayName="Android">0</Value>
+							<Value DisplayName="PS4 Move">1</Value>
+							<Value DisplayName="PS4 2 Channel">2</Value>
+							<Value DisplayName="Switch 2 Channel">3</Value>
+							<Value DisplayName="Switch 4 Channel">4</Value>
+							<Value DisplayName="Xbox One 4 Channel">5</Value>
+							<Value DisplayName="1 Channel">6</Value>
+							<Value DisplayName="2 Channel">7</Value>
+							<Value DisplayName="4 Channel">8</Value>
+							<Value DisplayName="Haptics 2 Channel">9</Value>
+						</Enumeration>
+					</ValueRestriction>
+				</Restrictions>
+			</Property>
+			<Property Name="Low1" Type="int16" SupportLink="true" DisplayGroup="Actuators">
+				<UserInterface DisplayName="Low Frequency 1"/>
+				<AudioEnginePropertyID>9</AudioEnginePropertyID>
+				<DefaultValue>0</DefaultValue>
+				<Restrictions>
+					<ValueRestriction>
+						<Enumeration Type="int16">
+							<Value DisplayName="Driver A">0</Value>
+							<Value DisplayName="Driver B">1</Value>
+							<Value DisplayName="Driver C">2</Value>
+							<Value DisplayName="Driver D">3</Value>
+							<Value DisplayName="Driver E">4</Value>
+							<Value DisplayName="Driver F">5</Value>
+							<Value DisplayName="Driver G">6</Value>
+							<Value DisplayName="Driver H">7</Value>
+						</Enumeration>
+					</ValueRestriction>
+				</Restrictions>
+				<Dependencies>
+					<PropertyDependency Name="ChannelConfig" Action="Enable">
+						<Condition>
+							<Enumeration Type="int16">
+								<Value>2</Value>
+								<Value>3</Value>
+								<Value>4</Value>
+								<Value>5</Value>
+							</Enumeration>
+						</Condition>
+					</PropertyDependency>
+				</Dependencies>
+			</Property>
+			<Property Name="High1" Type="int16" SupportLink="true" DisplayGroup="Actuators">
+				<UserInterface DisplayName="High Frequency 1"/>
+				<AudioEnginePropertyID>10</AudioEnginePropertyID>
+				<DefaultValue>0</DefaultValue>
+				<Restrictions>
+					<ValueRestriction>
+						<Enumeration Type="int16">
+							<Value DisplayName="Driver A">0</Value>
+							<Value DisplayName="Driver B">1</Value>
+							<Value DisplayName="Driver C">2</Value>
+							<Value DisplayName="Driver D">3</Value>
+							<Value DisplayName="Driver E">4</Value>
+							<Value DisplayName="Driver F">5</Value>
+							<Value DisplayName="Driver G">6</Value>
+							<Value DisplayName="Driver H">7</Value>
+						</Enumeration>
+					</ValueRestriction>
+				</Restrictions>
+				<Dependencies>
+					<PropertyDependency Name="ChannelConfig" Action="Enable">
+						<Condition>
+							<Enumeration Type="int16">
+								<Value>2</Value>
+								<Value>3</Value>
+								<Value>4</Value>
+								<Value>5</Value>
+							</Enumeration>
+						</Condition>
+					</PropertyDependency>
+				</Dependencies>
+			</Property>
+			<Property Name="Low2" Type="int16" SupportLink="true" DisplayGroup="Actuators">
+				<UserInterface DisplayName="Low Frequency 2"/>
+				<AudioEnginePropertyID>11</AudioEnginePropertyID>
+				<DefaultValue>0</DefaultValue>
+				<Restrictions>
+					<ValueRestriction>
+						<Enumeration Type="int16">
+							<Value DisplayName="Driver A">0</Value>
+							<Value DisplayName="Driver B">1</Value>
+							<Value DisplayName="Driver C">2</Value>
+							<Value DisplayName="Driver D">3</Value>
+							<Value DisplayName="Driver E">4</Value>
+							<Value DisplayName="Driver F">5</Value>
+							<Value DisplayName="Driver G">6</Value>
+							<Value DisplayName="Driver H">7</Value>
+						</Enumeration>
+					</ValueRestriction>
+				</Restrictions>
+				<Dependencies>
+					<PropertyDependency Name="ChannelConfig" Action="Enable">
+						<Condition>
+							<Enumeration Type="int16">
+								<Value>4</Value>
+							</Enumeration>
+						</Condition>
+					</PropertyDependency>
+				</Dependencies>
+			</Property>
+			<Property Name="High2" Type="int16" SupportLink="true" DisplayGroup="Actuators">
+				<UserInterface DisplayName="High Frequency 2"/>
+				<AudioEnginePropertyID>12</AudioEnginePropertyID>
+				<DefaultValue>0</DefaultValue>
+				<Restrictions>
+					<ValueRestriction>
+						<Enumeration Type="int16">
+							<Value DisplayName="Driver A">0</Value>
+							<Value DisplayName="Driver B">1</Value>
+							<Value DisplayName="Driver C">2</Value>
+							<Value DisplayName="Driver D">3</Value>
+							<Value DisplayName="Driver E">4</Value>
+							<Value DisplayName="Driver F">5</Value>
+							<Value DisplayName="Driver G">6</Value>
+							<Value DisplayName="Driver H">7</Value>
+						</Enumeration>
+					</ValueRestriction>
+				</Restrictions>
+				<Dependencies>
+					<PropertyDependency Name="ChannelConfig" Action="Enable">
+						<Condition>
+							<Enumeration Type="int16">
+								<Value>4</Value>
+							</Enumeration>
+						</Condition>
+					</PropertyDependency>
+				</Dependencies>
+			</Property>
+			<Property Name="LeftTrigger" Type="int16" SupportLink="true" DisplayGroup="Actuators">
+				<UserInterface DisplayName="Left Trigger"/>
+				<AudioEnginePropertyID>13</AudioEnginePropertyID>
+				<DefaultValue>0</DefaultValue>
+				<Restrictions>
+					<ValueRestriction>
+						<Enumeration Type="int16">
+							<Value DisplayName="Driver A">0</Value>
+							<Value DisplayName="Driver B">1</Value>
+							<Value DisplayName="Driver C">2</Value>
+							<Value DisplayName="Driver D">3</Value>
+							<Value DisplayName="Driver E">4</Value>
+							<Value DisplayName="Driver F">5</Value>
+							<Value DisplayName="Driver G">6</Value>
+							<Value DisplayName="Driver H">7</Value>
+						</Enumeration>
+					</ValueRestriction>
+				</Restrictions>
+				<Dependencies>
+					<PropertyDependency Name="ChannelConfig" Action="Enable">
+						<Condition>
+							<Enumeration Type="int16">
+								<Value>5</Value>
+							</Enumeration>
+						</Condition>
+					</PropertyDependency>
+				</Dependencies>
+			</Property>
+			<Property Name="RightTrigger" Type="int16" SupportLink="true" DisplayGroup="Actuators">
+				<UserInterface DisplayName="Right Trigger"/>
+				<AudioEnginePropertyID>14</AudioEnginePropertyID>
+				<DefaultValue>0</DefaultValue>
+				<Restrictions>
+					<ValueRestriction>
+						<Enumeration Type="int16">
+							<Value DisplayName="Driver A">0</Value>
+							<Value DisplayName="Driver B">1</Value>
+							<Value DisplayName="Driver C">2</Value>
+							<Value DisplayName="Driver D">3</Value>
+							<Value DisplayName="Driver E">4</Value>
+							<Value DisplayName="Driver F">5</Value>
+							<Value DisplayName="Driver G">6</Value>
+							<Value DisplayName="Driver H">7</Value>
+						</Enumeration>
+					</ValueRestriction>
+				</Restrictions>
+				<Dependencies>
+					<PropertyDependency Name="ChannelConfig" Action="Enable">
+						<Condition>
+							<Enumeration Type="int16">
+								<Value>5</Value>
+							</Enumeration>
+						</Condition>
+					</PropertyDependency>
+				</Dependencies>
+			</Property>
+			<Property Name="Channel1" Type="int16" SupportLink="true" DisplayGroup="Actuators">
+				<UserInterface DisplayName="Channel 1"/>
+				<AudioEnginePropertyID>15</AudioEnginePropertyID>
+				<DefaultValue>0</DefaultValue>
+				<Restrictions>
+					<ValueRestriction>
+						<Enumeration Type="int16">
+							<Value DisplayName="Driver A">0</Value>
+							<Value DisplayName="Driver B">1</Value>
+							<Value DisplayName="Driver C">2</Value>
+							<Value DisplayName="Driver D">3</Value>
+							<Value DisplayName="Driver E">4</Value>
+							<Value DisplayName="Driver F">5</Value>
+							<Value DisplayName="Driver G">6</Value>
+							<Value DisplayName="Driver H">7</Value>
+						</Enumeration>
+					</ValueRestriction>
+				</Restrictions>
+				<Dependencies>
+					<PropertyDependency Name="ChannelConfig" Action="Enable">
+						<Condition>
+							<Enumeration Type="int16">
+								<Value>0</Value>
+								<Value>1</Value>
+								<Value>6</Value>
+								<Value>7</Value>
+								<Value>8</Value>
+								<Value>9</Value>
+							</Enumeration>
+						</Condition>
+					</PropertyDependency>
+				</Dependencies>
+			</Property>
+			<Property Name="Channel2" Type="int16" SupportLink="true" DisplayGroup="Actuators">
+				<UserInterface DisplayName="Channel 2"/>
+				<AudioEnginePropertyID>16</AudioEnginePropertyID>
+				<DefaultValue>0</DefaultValue>
+				<Restrictions>
+					<ValueRestriction>
+						<Enumeration Type="int16">
+							<Value DisplayName="Driver A">0</Value>
+							<Value DisplayName="Driver B">1</Value>
+							<Value DisplayName="Driver C">2</Value>
+							<Value DisplayName="Driver D">3</Value>
+							<Value DisplayName="Driver E">4</Value>
+							<Value DisplayName="Driver F">5</Value>
+							<Value DisplayName="Driver G">6</Value>
+							<Value DisplayName="Driver H">7</Value>
+						</Enumeration>
+					</ValueRestriction>
+				</Restrictions>
+				<Dependencies>
+					<PropertyDependency Name="ChannelConfig" Action="Enable">
+						<Condition>
+							<Enumeration Type="int16">
+								<Value>7</Value>
+								<Value>8</Value>
+								<Value>9</Value>
+							</Enumeration>
+						</Condition>
+					</PropertyDependency>
+				</Dependencies>
+			</Property>
+			<Property Name="Channel3" Type="int16" SupportLink="true" DisplayGroup="Actuators">
+				<UserInterface DisplayName="Channel 3"/>
+				<AudioEnginePropertyID>17</AudioEnginePropertyID>
+				<DefaultValue>0</DefaultValue>
+				<Restrictions>
+					<ValueRestriction>
+						<Enumeration Type="int16">
+							<Value DisplayName="Driver A">0</Value>
+							<Value DisplayName="Driver B">1</Value>
+							<Value DisplayName="Driver C">2</Value>
+							<Value DisplayName="Driver D">3</Value>
+							<Value DisplayName="Driver E">4</Value>
+							<Value DisplayName="Driver F">5</Value>
+							<Value DisplayName="Driver G">6</Value>
+							<Value DisplayName="Driver H">7</Value>
+						</Enumeration>
+					</ValueRestriction>
+				</Restrictions>
+				<Dependencies>
+					<PropertyDependency Name="ChannelConfig" Action="Enable">
+						<Condition>
+							<Enumeration Type="int16">
+								<Value>8</Value>
+							</Enumeration>
+						</Condition>
+					</PropertyDependency>
+				</Dependencies>
+			</Property>
+			<Property Name="Channel4" Type="int16" SupportLink="true" DisplayGroup="Actuators">
+				<UserInterface DisplayName="Channel 4"/>
+				<AudioEnginePropertyID>18</AudioEnginePropertyID>
+				<DefaultValue>0</DefaultValue>
+				<Restrictions>
+					<ValueRestriction>
+						<Enumeration Type="int16">
+							<Value DisplayName="Driver A">0</Value>
+							<Value DisplayName="Driver B">1</Value>
+							<Value DisplayName="Driver C">2</Value>
+							<Value DisplayName="Driver D">3</Value>
+							<Value DisplayName="Driver E">4</Value>
+							<Value DisplayName="Driver F">5</Value>
+							<Value DisplayName="Driver G">6</Value>
+							<Value DisplayName="Driver H">7</Value>
+						</Enumeration>
+					</ValueRestriction>
+				</Restrictions>
+				<Dependencies>
+					<PropertyDependency Name="ChannelConfig" Action="Enable">
+						<Condition>
+							<Enumeration Type="int16">
+								<Value>8</Value>
+							</Enumeration>
+						</Condition>
+					</PropertyDependency>
+				</Dependencies>
+			</Property>
+	</Properties>
+	</SourcePlugin>			
+</PluginModule>

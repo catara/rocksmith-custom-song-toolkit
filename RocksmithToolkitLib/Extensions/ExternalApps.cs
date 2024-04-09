@@ -3,6 +3,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.Text;
 using System.Diagnostics;
+using RocksmithToolkitLib.XmlRepository;
 
 namespace RocksmithToolkitLib.Extensions
 {
@@ -83,7 +84,7 @@ namespace RocksmithToolkitLib.Extensions
         {
             var cmdArgs = String.Empty;
             if (destinationPath == null)
-                   cmdArgs = String.Format(" -overwrite -out png \"{0}\"", sourcePath);
+                cmdArgs = String.Format(" -overwrite -out png \"{0}\"", sourcePath);
             else
                 cmdArgs = String.Format(" -overwrite -out png -o \"{1}\" \"{0}\"", sourcePath, destinationPath);
 
@@ -211,9 +212,16 @@ namespace RocksmithToolkitLib.Extensions
             // -NoWwiseDat ignores cached wem's and will generate each time.
             // -ClearAudioFileCache force re-generate for wem's also deletes old and creates fresh new file.
             // -Save should help with updating project to new schema (may loose quality factor field)
-            var cmdArgs = String.Format("\"{0}\" -GenerateSoundBanks -Platform Windows -Language English(US) -NoWwiseDat -ClearAudioFileCache -Save", templatePath);
-            var output = GeneralExtension.RunExternalExecutable(wwiseCLIPath, true, true, true, cmdArgs);//bcapi 2nd param hidding conversion windows
-
+            var cmdArgs = "";
+            if (!(ConfigRepository.Instance()["dlcm_wwise"].Contains("2022") || ConfigRepository.Instance()["dlcm_wwise"].Contains("2023")))
+                cmdArgs = String.Format("\"{0}\" -GenerateSoundBanks -Platform Windows -Language English(US) -NoWwiseDat -ClearAudioFileCache -Save", templatePath);
+            else
+            { //WwiseConsole.exe generate-soundbank "C:\\GitHub\\x\\Template\\Template.wproj" --platform "Windows" --language "English(US)" --no-wwise-dat --clear-audio-file-cache --save
+                cmdArgs = String.Format("generate-soundbank \"{0}\" --platform \"Windows\" --language \"English(US)\" --no-wwise-dat --clear-audio-file-cache --save", templatePath);
+                wwiseCLIPath = wwiseCLIPath.Replace("WwiseCLI.exe", "WwiseConsole.exe");
+            }
+            var output = "";// GeneralExtension.RunExternalExecutable(wwiseCLIPath, true, true, true, cmdArgs);//bcapi 2nd param hidding conversion windows-Cache -ContinueOnError", te
+            StartProcesss(wwiseCLIPath, cmdArgs);
             if (output.Contains("Error: Project migration needed") && magicDust > 0)
             {
                 Debug.WriteLine("'WwiseCLI.exe' Conversion Failed ...");
@@ -223,6 +231,57 @@ namespace RocksmithToolkitLib.Extensions
             }
         }
 
+        public static void StartProcesss(string procez, string attbute)
+        {
+            var starttmp = DateTime.Now;
+            //starttmp = UpdateLog(starttmp, "Running process: " + procez + attbute, false, c("dlcm_TempPath"), "", "", null, null);
+            try
+            {
+                if (attbute == "" || attbute == null)
+                {
+                    var startInfo = new ProcessStartInfo
+                    {
+                        FileName = procez,
+                        WorkingDirectory = Path.GetDirectoryName(procez)
+                    };
+                    Process DDC = new Process();
+                    //startInfo.Arguments = "";
+                    startInfo.UseShellExecute = true; startInfo.CreateNoWindow = true;
 
+                    if (Directory.Exists(procez) || File.Exists(procez))
+                    {
+                        DDC.StartInfo = startInfo;
+                        DDC.Start(); DDC.WaitForExit(1000 * 60 * 1); //wait 1min"Error ..." + 
+                                                                     // if (DDC.ExitCode > 0) starttmp = UpdateLog(starttmp, DDC.ExitCode.ToString(), false, c("dlcm_TempPath"), "", "", null, null);
+                    }
+                }
+                else
+                {
+                    var startInfo = new ProcessStartInfo
+                    {
+                        FileName = procez,
+                        WorkingDirectory = Path.GetDirectoryName(procez)
+                    };
+                    Process DDC = new Process();
+                    startInfo.Arguments = attbute;
+                    startInfo.UseShellExecute = true; startInfo.CreateNoWindow = true;
+
+                    if (Directory.Exists(procez) || File.Exists(procez))
+                    {
+                        DDC.StartInfo = startInfo;
+                        DDC.Start();
+                        DDC.WaitForExit(1000 * 60 * 2); //wait 1min"Error ..." +
+                        DDC.Kill();
+                        // if (DDC.ExitCode > 0) starttmp = UpdateLog(starttmp, DDC.ExitCode.ToString(), false, c("dlcm_TempPath"), "", "", null, null);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                var tsst = "Erro ..." + ex; //starttmp = UpdateLog(starttmp, tsst, false, c("dlcm_TempPath"), "", "", null, null);
+                //MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //MessageBox.Show("Can not open Main DB connection in MainDB ! " + c("dlcm_DBFolder"));
+            }
+        }
     }
 }

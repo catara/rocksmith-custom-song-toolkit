@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Layout Name="Profiler">
+	<StackPanel Name="StackPanel" Width="1645" Height="746" Orientation="Vertical">
+		<StackPanel Name="StackPanel" Width="1645" Height="743" Orientation="Vertical">
+			<StackPanel Name="StackPanel" Width="1645" Height="518" Orientation="Horizontal">
+				<View Name="Capture Log" Width="666" Height="518"/>
+				<Splitter Name="Splitter" Width="3" Height="518"/>
+				<View Name="Advanced Profiler" Width="976" Height="518"/>
+			</StackPanel>
+			<Splitter Name="Splitter" Width="1645" Height="3"/>
+			<View Name="Performance Monitor" Width="1645" Height="221"/>
+		</StackPanel>
+	</StackPanel>
+	<LastPositions>
+		<ViewPosition Name="Project Explorer" WindowPlacement_Flags="0" WindowPlacement_ShowCmd="Normal" WindowPlacement_MinPos_X="-1" WindowPlacement_MinPos_Y="-1" WindowPlacement_MaxPos_X="-1" WindowPlacement_MaxPos_Y="-1" WindowPlacement_NormalPos_Left="148" WindowPlacement_NormalPos_Top="245" WindowPlacement_NormalPos_Right="640" WindowPlacement_NormalPos_Bottom="837"/>
+	</LastPositions>
+</Layout>

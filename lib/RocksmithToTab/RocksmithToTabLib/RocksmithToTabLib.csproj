@@ -1,0 +1,48 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <OutputType>Library</OutputType>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AssemblyTitle>RocksmithToTabLib</AssemblyTitle>
+    <Product>RocksmithToTabLib</Product>
+    <Copyright>Copyright © Holger Frydrych 2016</Copyright>
+    <AssemblyVersion>1.1.%2a</AssemblyVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="._Converter.cs" />
+    <Compile Remove="._GP5File.cs" />
+    <Compile Remove="._Gpif.cs" />
+    <Compile Remove="._GpxContainer.cs" />
+    <Compile Remove="._GpxExporter.cs" />
+    <Compile Remove="._PSARC.cs" />
+    <Compile Remove="._PSARCBrowser.cs" />
+    <Compile Remove="._RhythmDetector.cs" />
+    <Compile Remove="._Score.cs" />
+    <Compile Remove="._VersionInfo.cs" />
+    <Compile Remove="Properties\._AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="RocksmithToolkitLib">
+      <HintPath>..\..\rocksmith-custom-song-toolkit\RocksmithToolkitLib\bin\Release\net7.0-windows10.0.22621.0\RocksmithToolkitLib.dll</HintPath>
+    </Reference>
+    <Reference Include="X360">
+      <HintPath>..\..\rocksmith-custom-song-toolkit\lib\X360\X360.dll</HintPath>
+    </Reference>
+    <Reference Include="zlib.net">
+      <HintPath>..\..\rocksmith-custom-song-toolkit\lib\ZLib\zlib.net.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>

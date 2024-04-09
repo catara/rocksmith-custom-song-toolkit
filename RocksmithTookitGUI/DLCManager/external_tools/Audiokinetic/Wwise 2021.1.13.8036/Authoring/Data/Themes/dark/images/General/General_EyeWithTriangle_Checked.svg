@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-30,-54)">
+        <g id="General_EyeWithTriangle_Checked" transform="matrix(1,0,0,1,-18,50)">
+            <g id="Transparent-BG" serif:id="Transparent BG" transform="matrix(1,0,0,1,48,4)">
+                <rect x="0" y="0" width="20" height="20" style="fill:white;fill-opacity:0;"/>
+            </g>
+            <g id="Eye" transform="matrix(0.625,0,0,0.625,50,7)">
+                <rect x="0" y="0" width="24" height="24" style="fill:none;"/>
+                <g transform="matrix(1.6,0,0,1.6,-435.2,-11.2)">
+                    <path d="M279.5,10C276.545,10 274.022,11.866 273,14.5C274.022,17.134 276.545,19 279.5,19C282.455,19 284.978,17.134 286,14.5C284.978,11.866 282.455,10 279.5,10ZM279.488,11.514C281.141,11.514 282.482,12.852 282.482,14.5C282.482,16.148 281.141,17.486 279.488,17.486C277.836,17.486 276.495,16.148 276.495,14.5C276.495,12.852 277.836,11.514 279.488,11.514Z"/>
+                </g>
+                <g transform="matrix(1.94588,0,0,1.94588,-329.501,-14.2693)">
+                    <circle cx="175.5" cy="13.5" r="1.5"/>
+                </g>
+                <g transform="matrix(2.76801,1.12995e-16,-1.12995e-16,-1.84534,-488.882,57.9522)">
+                    <path d="M185,19L186,21L184,21L185,19Z"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2006 Audiokinetic Inc. -->
+<PluginModule>
+  <EffectPlugin Name="Wwise Parametric EQ" CompanyID="0" PluginID="105">
+    <PluginInfo MenuPath="50-Wwise">
+      <PlatformSupport>
+        <Platform Name="Any">
+          <CanBeInsertOnBusses>true</CanBeInsertOnBusses>
+          <CanBeInsertOnAudioObjects>true</CanBeInsertOnAudioObjects>
+          <CanBeRendered>true</CanBeRendered>
+        </Platform>
+      </PlatformSupport>
+    </PluginInfo>
+    <Properties>
+      <Property Name="OnOffBand1" DocId="OnOffBand" Type="bool" SupportRTPCType="Exclusive" ForceRTPCCurveSegmentShape="Constant" DisplayName="Band 1 Enable" DisplayGroup="Band 1">
+        <DefaultValue>true</DefaultValue>
+        <AudioEnginePropertyID>4</AudioEnginePropertyID>
+      </Property>
+      <Property Name="FilterTypeBand1" DocId="FilterTypeBand" Type="int32" SupportRTPCType="Exclusive" ForceRTPCCurveSegmentShape="Constant" DisplayName="Band 1 Filter Type" DisplayGroup="Band 1">
+        <DefaultValue>4</DefaultValue>
+        <AudioEnginePropertyID>0</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="int32">
+              <Value DisplayName="Low Pass">0</Value>
+              <Value DisplayName="High Pass">1</Value>
+              <Value DisplayName="Band Pass">2</Value>
+              <Value DisplayName="Notch">3</Value>
+              <Value DisplayName="Low Shelf">4</Value>
+              <Value DisplayName="High Shelf">5</Value>
+              <Value DisplayName="Peaking">6</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="OnOffBand1" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="GainBand1" DocId="GainBand" Type="Real32" SupportRTPCType="Additive" DataMeaning="Decibels" DisplayName="Band 1 Gain" DisplayGroup="Band 1">
+        <UserInterface Step="0.5" Fine="0.1" Decimals="1"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>1</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-24</Min>
+              <Max>24</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="OnOffBand1" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="FilterTypeBand1" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Low Shelf -->
+                <Value>4</Value>
+                <!-- High Shelf -->
+                <Value>5</Value>
+                <!-- Peaking -->
+                <Value>6</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="FrequencyBand1" DocId="FrequencyBand" Type="Real32" SupportRTPCType="Exclusive" DataMeaning="Frequency" DisplayName="Band 1 Frequency" DisplayGroup="Band 1">
+        <UserInterface Decimals="0"/>
+        <DefaultValue>100</DefaultValue>
+        <AudioEnginePropertyID>2</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>20</Min>
+              <Max>20000</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="OnOffBand1" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="QFactorBand1" DocId="QFactorBand" Type="Real32" SupportRTPCType="Exclusive" DisplayName="Band 1 Quality Factor" DisplayGroup="Band 1">
+        <UserInterface Step="0.1" Fine="0.01" Decimals="2"/>
+        <DefaultValue>1</DefaultValue>
+        <AudioEnginePropertyID>3</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0.5</Min>
+              <Max>100</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="OnOffBand1" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="FilterTypeBand1" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Band Pass -->
+                <Value>2</Value>
+                <!-- Notch -->
+                <Value>3</Value>
+                <!-- Peaking -->
+                <Value>6</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="OnOffBand2" DocId="OnOffBand" Type="bool" SupportRTPCType="Exclusive" ForceRTPCCurveSegmentShape="Constant" DisplayName="Band 2 Enable" DisplayGroup="Band 2">
+        <DefaultValue>true</DefaultValue>
+        <AudioEnginePropertyID>9</AudioEnginePropertyID>
+      </Property>
+      <Property Name="FilterTypeBand2" DocId="FilterTypeBand" Type="int32" SupportRTPCType="Exclusive" ForceRTPCCurveSegmentShape="Constant" DisplayName="Band 2 Filter Type" DisplayGroup="Band 2">
+        <DefaultValue>6</DefaultValue>
+        <AudioEnginePropertyID>5</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="int32">
+              <Value DisplayName="Low Pass">0</Value>
+              <Value DisplayName="High Pass">1</Value>
+              <Value DisplayName="Band Pass">2</Value>
+              <Value DisplayName="Notch">3</Value>
+              <Value DisplayName="Low Shelf">4</Value>
+              <Value DisplayName="High Shelf">5</Value>
+              <Value DisplayName="Peaking">6</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="OnOffBand2" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="GainBand2" DocId="GainBand" Type="Real32" SupportRTPCType="Additive" DataMeaning="Decibels" DisplayName="Band 2 Gain" DisplayGroup="Band 2">
+        <UserInterface Step="0.5" Fine="0.1" Decimals="1"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>6</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-24</Min>
+              <Max>24</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="OnOffBand2" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="FilterTypeBand2" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Low Shelf -->
+                <Value>4</Value>
+                <!-- High Shelf -->
+                <Value>5</Value>
+                <!-- Peaking -->
+                <Value>6</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="FrequencyBand2" DocId="FrequencyBand" Type="Real32" SupportRTPCType="Exclusive" DataMeaning="Frequency" DisplayName="Band 2 Frequency" DisplayGroup="Band 2">
+        <UserInterface Decimals="0"/>
+        <DefaultValue>1000</DefaultValue>
+        <AudioEnginePropertyID>7</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>20</Min>
+              <Max>20000</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="OnOffBand2" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="QFactorBand2" DocId="QFactorBand" Type="Real32" SupportRTPCType="Exclusive" DisplayName="Band 2 Quality Factor" DisplayGroup="Band 2">
+        <UserInterface Step="0.1" Fine="0.01" Decimals="2"/>
+        <DefaultValue>1</DefaultValue>
+        <AudioEnginePropertyID>8</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0.5</Min>
+              <Max>100</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="OnOffBand2" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="FilterTypeBand2" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Band Pass -->
+                <Value>2</Value>
+                <!-- Notch -->
+                <Value>3</Value>
+                <!-- Peaking -->
+                <Value>6</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="OnOffBand3" DocId="OnOffBand" Type="bool" SupportRTPCType="Exclusive" ForceRTPCCurveSegmentShape="Constant" DisplayName="Band 3 Enable" DisplayGroup="Band 3">
+        <DefaultValue>true</DefaultValue>
+        <AudioEnginePropertyID>14</AudioEnginePropertyID>
+      </Property>
+      <Property Name="FilterTypeBand3" DocId="FilterTypeBand" Type="int32" SupportRTPCType="Exclusive" ForceRTPCCurveSegmentShape="Constant" DisplayName="Band 3 Filter Type" DisplayGroup="Band 3">
+        <DefaultValue>5</DefaultValue>
+        <AudioEnginePropertyID>10</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="int32">
+              <Value DisplayName="Low Pass">0</Value>
+              <Value DisplayName="High Pass">1</Value>
+              <Value DisplayName="Band Pass">2</Value>
+              <Value DisplayName="Notch">3</Value>
+              <Value DisplayName="Low Shelf">4</Value>
+              <Value DisplayName="High Shelf">5</Value>
+              <Value DisplayName="Peaking">6</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="OnOffBand3" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="GainBand3" DocId="GainBand" Type="Real32" SupportRTPCType="Additive" DataMeaning="Decibels" DisplayName="Band 3 Gain" DisplayGroup="Band 3">
+        <UserInterface Step="0.5" Fine="0.1" Decimals="1"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>11</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-24</Min>
+              <Max>24</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="OnOffBand3" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="FilterTypeBand3" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Low Shelf -->
+                <Value>4</Value>
+                <!-- High Shelf -->
+                <Value>5</Value>
+                <!-- Peaking -->
+                <Value>6</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="FrequencyBand3" DocId="FrequencyBand" Type="Real32" SupportRTPCType="Exclusive" DataMeaning="Frequency" DisplayName="Band 3 Frequency" DisplayGroup="Band 3">
+        <UserInterface Decimals="0"/>
+        <DefaultValue>12000</DefaultValue>
+        <AudioEnginePropertyID>12</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>20</Min>
+              <Max>20000</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="OnOffBand3" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="QFactorBand3" DocId="QFactorBand" Type="Real32" SupportRTPCType="Exclusive" DisplayName="Band 3 Quality Factor" DisplayGroup="Band 3">
+        <UserInterface Step="0.1" Fine="0.01" Decimals="2"/>
+        <DefaultValue>1</DefaultValue>
+        <AudioEnginePropertyID>13</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0.5</Min>
+              <Max>100</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="OnOffBand3" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="FilterTypeBand3" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Band Pass -->
+                <Value>2</Value>
+                <!-- Notch -->
+                <Value>3</Value>
+                <!-- Peaking -->
+                <Value>6</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="OutputLevel" Type="Real32" SupportRTPCType="Additive" DataMeaning="Decibels" DisplayName="Output Gain">
+        <UserInterface Step="0.5" Fine="0.1" Decimals="2"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>15</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-24</Min>
+              <Max>24</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="ProcessLFE" Type="bool" DisplayName="Process LFE">
+        <DefaultValue>true</DefaultValue>
+        <AudioEnginePropertyID>16</AudioEnginePropertyID>
+      </Property>
+    </Properties>
+  </EffectPlugin>
+</PluginModule>

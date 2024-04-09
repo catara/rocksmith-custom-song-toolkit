@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Layout Name="Mixer">
+	<StackPanel Name="StackPanel" Width="1645" Height="746" Orientation="Vertical">
+		<StackPanel Name="StackPanel" Width="1645" Height="743" Orientation="Horizontal">
+			<StackPanel Name="StackPanel" Width="1464" Height="743" Orientation="Horizontal">
+				<StackPanel Name="StackPanel" Width="424" Height="743" Orientation="Vertical">
+					<View Name="Project Explorer" Width="424" Height="553" ViewSyncGroup="1">						<ViewData>
+	<ProjectExplorerView ActiveTab="0"/>
+</ViewData>
+					</View>
+					<Splitter Name="Splitter" Width="424" Height="3"/>
+					<View Name="Event Viewer" Width="424" Height="187" ViewSyncGroup="1">						<ViewData>
+	<EventViewer ActiveTab="0" Filter="2"/>
+</ViewData>
+					</View>
+				</StackPanel>
+				<Splitter Name="Splitter" Width="3" Height="743"/>
+				<StackPanel Name="StackPanel" Width="1036" Height="743" Orientation="Vertical">
+					<View Name="Mixing Desk" Width="1036" Height="412"/>
+					<Splitter Name="Splitter" Width="1036" Height="3"/>
+					<View Name="Soundcaster" Width="1036" Height="328"/>
+				</StackPanel>
+			</StackPanel>
+			<Splitter Name="Splitter" Width="3" Height="743"/>
+			<View Name="Meter" Width="178" Height="743" ViewSyncGroup="1"/>
+		</StackPanel>
+	</StackPanel>
+	<LastPositions>
+		<ViewPosition Name="Property Editor" WindowPlacement_Flags="0" WindowPlacement_ShowCmd="Normal" WindowPlacement_MinPos_X="-1" WindowPlacement_MinPos_Y="-1" WindowPlacement_MaxPos_X="-1" WindowPlacement_MaxPos_Y="-1" WindowPlacement_NormalPos_Left="125" WindowPlacement_NormalPos_Top="175" WindowPlacement_NormalPos_Right="923" WindowPlacement_NormalPos_Bottom="689"/>
+	</LastPositions>
+</Layout>

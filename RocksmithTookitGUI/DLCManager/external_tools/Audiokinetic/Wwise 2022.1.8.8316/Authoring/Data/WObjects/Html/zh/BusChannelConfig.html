@@ -1,0 +1,13 @@
+
+<h2>Bus Configuration</h2>
+<p>总线配置。决定采用哪种配置对总线输出进行格式化，其可能会影响总线的处理状态。您可以利用此设置将混音延迟到总线管线的后端，来节省 CPU 和内存资源或减少必须对总线上插入的效果器进行处理的声道数。</p>
+<p>其中的可用选项包括：</p>
+<ul>
+<li><strong>Same as parent</strong> - 该总线沿用父总线的总线配置，并有可能设为 Not Mixing 状态。藉此，可将总线的属性传给其输入而无需任何处理，从而节省 CPU 和内存资源。不过，若总线包含特定功能（如效果器），则会执行相应处理，也就没法节省资源了。有关更多详细信息，请参阅<a href="HelpDoc=understanding_the_bus_icons">了解总线图标和处理状态</a>。</li>
+<li><strong>Same as main mix</strong> - 该总线沿用总线管线末端 Audio Device 的 Main Mix 的总线配置。此选项允许在运行时由终端灵活地决定总线配置。</li>
+<li><strong>Same as passthrough mix</strong> - 该总线沿用总线管线末端 Audio Device 的 Passthrough Mix 的总线配置。此选项允许在运行时由终端灵活地决定总线配置。若启用了 3D Audio 且终端支持 Passthrough Mix，则采用 2.0 配置对总线输出进行格式化。否则，会跟选中 <strong>Same as main mix</strong> 一样对总线实施处理。</li>
+<li><strong>Audio Objects</strong> - 该总线会生成 Audio Object。这些 Audio Object 由音频缓冲区和 Metadata 构成，在满足所有条件的情况下可传给终端来进行渲染以获得空间化效果。</li>
+</ul>
+<p>所有顶层总线（如 Master Audio Bus）的 Bus Configuration 都将自动设为 <strong>Defined by device</strong>。这是因为这些总线始终沿用关联 Audio Device 的总线配置。</p>
+<p>有关下拉列表中的上述及其他选项的详细信息，请参阅<a href="HelpDoc=understanding_channel_configurations">了解总线配置</a>。</p>
+<p>Default value: Same as parent<br/></p>

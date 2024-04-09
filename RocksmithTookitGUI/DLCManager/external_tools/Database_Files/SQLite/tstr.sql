@@ -1,18 +1,7 @@
-﻿SELECT [ID]
-	,[CDLC_ID]
-	,[Groupz]
-	,[Type]
-	,[Comments]
-	,[Profile_Name]
-	,[Description]
-	,[DisplayName]
-	,[DisplayGroup]
-	,[DisplayPosition]
-	,[Date_Added]
-FROM [Groupsu] where Groups in ('ALL Others',
+﻿update [Groups] SET ID=FLOOR( 1 + RANDom( ) /10000000000000 ) WHERE Comments in ('ALL Others',
 'Songs in Rocksmith Game Lib',
 'Imported Last',
-'0ALL',',
+'0ALL',
 'Show Songs with FilesMissing Issues',
 'Reverse current Filter',
 'No Cover',

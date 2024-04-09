@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-30,-79)">
+        <g id="General_EyeWithDots_Checked" transform="matrix(1,0,0,1,-18,75)">
+            <g id="Transparent-BG" serif:id="Transparent BG" transform="matrix(1,0,0,1,48,4)">
+                <rect x="0" y="0" width="20" height="20" style="fill:white;fill-opacity:0;"/>
+            </g>
+            <g id="Eye" transform="matrix(0.625,0,0,0.625,50,7)">
+                <rect x="0" y="0" width="24" height="24" style="fill:none;"/>
+                <g id="dot" transform="matrix(1.6,0,0,1.6,-2716.8,-217.6)">
+                    <rect x="1709" y="150" width="1" height="1"/>
+                </g>
+                <g id="dot1" serif:id="dot" transform="matrix(1.6,0,0,1.6,-2713.6,-217.6)">
+                    <rect x="1709" y="150" width="1" height="1"/>
+                </g>
+                <g id="dot2" serif:id="dot" transform="matrix(1.6,0,0,1.6,-2710.4,-217.6)">
+                    <rect x="1709" y="150" width="1" height="1"/>
+                </g>
+                <g transform="matrix(1.6,0,0,1.6,-473.6,-11.2)">
+                    <path d="M303.5,10C300.545,10 298.022,11.866 297,14.5C298.022,17.134 300.545,19 303.5,19C306.455,19 308.978,17.134 310,14.5C308.978,11.866 306.455,10 303.5,10ZM303.488,11.514C305.141,11.514 306.482,12.852 306.482,14.5C306.482,16.148 305.141,17.486 303.488,17.486C301.836,17.486 300.495,16.148 300.495,14.5C300.495,12.852 301.836,11.514 303.488,11.514Z"/>
+                </g>
+                <g transform="matrix(1.94588,0,0,1.94588,-329.501,-14.2693)">
+                    <circle cx="175.5" cy="13.5" r="1.5"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

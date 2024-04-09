@@ -1,0 +1,16 @@
+
+<h2>Bind to Built-In Param:</h2>
+<p>Bind this Game Parameter to a built-in value calculated inside the sound engine. Choose one of the following:</p>
+<p><strong>(See more about the following built-in parameters in <a href="HelpDoc=binding_game_parameter_to_built_in_parameter#avaialble_builtin_parameters">Available built-in parameters</a>.)</strong></p>
+<ul>
+<li><strong>Distance</strong>: Distance to game object.</li>
+<li><strong>Azimuth</strong>: Horizontal angle.</li>
+<li><strong>Elevation</strong>: Vertical angle.</li>
+<li><strong>Emitter Cone</strong>: Angle between object&rsquo;s orientation and the listener.</li>
+<li><strong>Obstruction</strong>: As set by the game on the game object.</li>
+<li><strong>Occlusion</strong>: As set by the game on the game object.</li>
+<li><strong>Listener Cone</strong>: Angle between the object and the listener&rsquo;s orientation (front).</li>
+<li><strong>Diffraction</strong>: As set by Wwise Spatial Audio on the game object.</li>
+</ul>
+<p><strong>Note</strong>: Using the built-in parameters to control an RTPC can lead to problems if that RTPC is tied to Initial Delay or Priority. Built-in parameters are computed when a sound plays on a given game object, so they work well for most sound properties. Logical control of playback items like Initial Delay and Priority are not suited while using the built-in parameters to control an RTPC since their value is unknown at the moment the Play Action is posted.</p>
+<p>Default value: None<br/></p>

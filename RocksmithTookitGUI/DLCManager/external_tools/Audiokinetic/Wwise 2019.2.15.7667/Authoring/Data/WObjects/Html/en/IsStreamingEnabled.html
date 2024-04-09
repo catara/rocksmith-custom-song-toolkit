@@ -1,0 +1,7 @@
+
+<h2>Stream</h2>
+<p>Enables controls that allow you to stream the audio played in game directly from game media.</p>
+<p>Streamed media is not included into SoundBanks. It is the Wwise Stream Manager&rsquo;s, and ultimately, the Low-Level I/O submodule&rsquo;s responsibility to open and read them from disk at run-time. Refer to the <a href="https://www.audiokinetic.com/library/edge/?source=SDK&amp;id=streamingdevicemanager.html">Wwise SDK documentation</a> for more details on Wwise I/O.</p>
+<p>Streamed files are described in the file SoundBanksInfo.xml, which is created for each platform when SoundBanks are generated. <span class="condition" name="WwiseLite"> You may use the CopyStreamedFiles or File Packager tools as a post-SoundBank generation step in order to deploy them conveniently. </span> Refer to <a href="HelpDoc=managing_soundbanks">Managing SoundBanks</a> for more details.</p>
+<p><strong>Note</strong>: Within the Project Settings&rsquo; or the SoundBanks Settings&rsquo; SoundBanks tab, the Generate Metadata Files option should always be enabled. Additionally, you must enable the Generate XML Metadata option. With these set, Wwise generates the SoundbanksInfo.xml file whenever you successfully generate SoundBanks.</p>
+<p>Default value: false<br/></p>

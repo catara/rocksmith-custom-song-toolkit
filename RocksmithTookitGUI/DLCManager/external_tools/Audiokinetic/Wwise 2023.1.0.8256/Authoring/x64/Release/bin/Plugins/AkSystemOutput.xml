@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2006 Audiokinetic Inc. -->
+<PluginModule>
+  <MetadataPlugin Name="Wwise System Output Settings" CompanyID="0" PluginID="900">
+    <PluginInfo MenuPath="Metadata">
+      <PlatformSupport>
+        <Platform Name="Any"></Platform>
+      </PlatformSupport>
+    </PluginInfo>
+    <Properties>
+      <Property Name="Mix" Type="int32" DisplayName="Mix Behavior">
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>0</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="int32">
+              <Value DisplayName="Use Default">0</Value>
+              <Value DisplayName="Mix to Main">1</Value>
+              <Value DisplayName="Mix to Passthrough">2</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+    </Properties>
+  </MetadataPlugin>
+</PluginModule>

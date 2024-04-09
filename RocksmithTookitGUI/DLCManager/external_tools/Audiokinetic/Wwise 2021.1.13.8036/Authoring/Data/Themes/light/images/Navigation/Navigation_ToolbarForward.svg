@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.41421;">
+    <g transform="matrix(1,0,0,1,-3,-3)">
+        <g transform="matrix(0.758621,0,0,0.814815,1.51724,1.62963)">
+            <g transform="matrix(-1.31818,1.50298e-16,-1.61431e-16,-1.22727,23.0455,21.3182)">
+                <g id="Navigation_ToolbarForward">
+                    <g id="Arrow_Back">
+                        <g id="Transparent-BG" serif:id="Transparent BG" transform="matrix(1,0,0,1,-517,-144)">
+                            <rect x="517" y="144" width="16" height="16" style="fill:none;"/>
+                        </g>
+                        <g transform="matrix(1,0,0,1,-517,-144)">
+                            <path d="M517.003,152.318L517,151.59L524.706,144.199L527.625,147.118L524.744,150L532,150L532,154L524.725,154L527.647,156.922L524.627,159.942L517.003,152.318Z" style="fill:rgb(193,193,193);"/>
+                        </g>
+                        <g transform="matrix(1,0,0,1,-517,-144)">
+                            <path d="M519.891,150.595L524.482,146.004L525.896,147.418L522.315,151L531,151L531,153L522.296,153L525.896,156.601L524.482,158.015L518.467,152L519.882,150.586L519.891,150.595Z" style="fill:rgb(57,57,57);"/>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

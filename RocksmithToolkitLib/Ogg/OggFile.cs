@@ -6,13 +6,15 @@ using MiscUtil.Conversion;
 using MiscUtil.IO;
 using System.Diagnostics;
 using RocksmithToolkitLib.Extensions;
+using X360.Other;
+using RocksmithToolkitLib.XmlRepository;
 
 namespace RocksmithToolkitLib.Ogg
 {
     public static class OggFile//wwRIFF
     {
         // Add support for newer versions of Wwise here
-        public enum WwiseVersion { None, Wwise2010, Wwise2013, Wwise2014, Wwise2015, Wwise2016, Wwise2017, Wwise2018, Wwise2019 };
+        public enum WwiseVersion { None, Wwise2010, Wwise2013, Wwise2014, Wwise2015, Wwise2016, Wwise2017, Wwise2018, Wwise2019, Wwise2021, Wwise2022, Wwise2023 };
 
         #region RS1
 
@@ -79,7 +81,16 @@ namespace RocksmithToolkitLib.Ogg
                     break;
                 case WwiseVersion.Wwise2019: // bcapi
                     ww2oggProcess.StartInfo.Arguments = String.Format("\"{0}\" -o \"{1}\" --pcb \"{2}\"", file, outputFileName, Path.Combine(ExternalApps.TOOLKIT_ROOT, ExternalApps.APP_CODEBOOKS_603));
-                    break;//
+                    break;
+                case WwiseVersion.Wwise2021: // bcapi
+                    ww2oggProcess.StartInfo.Arguments = String.Format("\"{0}\" -o \"{1}\" --pcb \"{2}\"", file, outputFileName, Path.Combine(ExternalApps.TOOLKIT_ROOT, ExternalApps.APP_CODEBOOKS_603));
+                    break;
+                case WwiseVersion.Wwise2022: // bcapi
+                    ww2oggProcess.StartInfo.Arguments = String.Format("\"{0}\" -o \"{1}\" --pcb \"{2}\"", file, outputFileName, Path.Combine(ExternalApps.TOOLKIT_ROOT, ExternalApps.APP_CODEBOOKS_603));
+                    break;
+                case WwiseVersion.Wwise2023: // bcapi
+                    ww2oggProcess.StartInfo.Arguments = String.Format("\"{0}\" -o \"{1}\" --pcb \"{2}\"", file, outputFileName, Path.Combine(ExternalApps.TOOLKIT_ROOT, ExternalApps.APP_CODEBOOKS_603));
+                    break;
                 default:
                     throw new InvalidOperationException("Wwise version not supported or invalid input file.");
             }
@@ -93,8 +104,17 @@ namespace RocksmithToolkitLib.Ogg
             string ww2oggResult = ww2oggProcess.StandardOutput.ReadToEnd();
 
             if (ww2oggResult.IndexOf("Error ", StringComparison.Ordinal) > -1 || ww2oggResult.IndexOf(" error:", StringComparison.Ordinal) > -1)
-                throw new Exception("ww2ogg process error or CDLC file name contains reserved word 'error'." + Environment.NewLine + ww2oggResult);
+            {
+                //bcapi use another version if decompression fails
+                //var tsst = "Erro decompressing audio..."; var timestamp = UtilitiesFunctions.UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", null, null);
 
+                ww2oggProcess.StartInfo.FileName = Path.Combine(ExternalApps.TOOLKIT_ROOT, "DLCManager\\external_tools\\ww2ogg0.14.exe");
+                ww2oggProcess.Start();
+                ww2oggProcess.WaitForExit();
+                ww2oggResult = ww2oggProcess.StandardOutput.ReadToEnd();
+                if (ww2oggResult.IndexOf("Error ", StringComparison.Ordinal) > -1 || ww2oggResult.IndexOf(" error:", StringComparison.Ordinal) > -1)
+                    throw new Exception("ww2ogg process error or CDLC file name contains reserved word 'error'." + Environment.NewLine + ww2oggResult);
+            }
             // Processing with revorb
             Process revorbProcess = new Process();
             revorbProcess.StartInfo.FileName = Path.Combine(ExternalApps.TOOLKIT_ROOT, ExternalApps.APP_REVORB);
@@ -141,6 +161,7 @@ namespace RocksmithToolkitLib.Ogg
             inputFile.VerifyHeaders();
             var platform = inputFile.GetAudioPlatform();
             var bitConverter = platform.GetBitConverter;
+            Stream g = null;
 
             using (var o = new MemoryStream())
             using (var reader = new EndianBinaryReader(bitConverter, o))
@@ -153,8 +174,9 @@ namespace RocksmithToolkitLib.Ogg
                     writer.Seek(40, SeekOrigin.Begin);
                     writer.Write(3);
                 }
-                return new MemoryStream(o.GetBuffer(), 0, (int)o.Length);
+                g = new MemoryStream(o.GetBuffer(), 0, (int)o.Length);
             }
+            return g;
         }
 
         /// <summary>
@@ -278,7 +300,10 @@ namespace RocksmithToolkitLib.Ogg
                 {
                     // Incomplete/corrupt audio file may cause exception, e.g. 
                     // "End of stream reached with 2 byte left to read"
-                    var errMsg = ex.Message + Environment.NewLine + Environment.NewLine + "USER README:" + Environment.NewLine + "Try generating the RS2012PC CDLC and then use 'Import Package' on generated PC file, then select a console and 'Generate' again.  If this fails then the audio must be remastered for console using the Wwise 2010 GUI :(" + Environment.NewLine;
+                    var errMsg = inputFile + " -" + ex.Message + Environment.NewLine + Environment.NewLine + "USER README:" + Environment.NewLine + "Try generating the RS2012PC CDLC and then use 'Import Package' on generated PC file, then select a console and 'Generate' again. " +
+                        " If this fails then the audio must be remastered for console using the Wwise 2010 GUI :(" + Environment.NewLine + inputFile + "\nor use dlcm_AdditionalManipul115(currently " + ConfigRepository.Instance()["dlcm_AdditionalManipul115"] + ")" +
+                        " if preview is faulty to repack the .ogg into .wem with general_wwisepath set to 2019.2 (currently " + ConfigRepository.Instance()["general_wwisepath"] + ")";
+                    ConfigRepository.Instance()["dlcm_errorsstring"] += errMsg;
                     throw new InvalidDataException(errMsg);
                 }
 
@@ -337,7 +362,7 @@ namespace RocksmithToolkitLib.Ogg
 
             if (audioPath.Substring(audioPath.Length - 4).ToLower() == ".wem" && !File.Exists(wemPreviewPath))
             {
-                Revorb(audioPath, oggPath, WwiseVersion.Wwise2013);
+                Revorb(audioPath, oggPath, WwiseVersion.Wwise2019);
                 ExternalApps.Ogg2Wav(oggPath, wavPath);
                 ExternalApps.Ogg2Preview(oggPath, oggPreviewPath, previewLength, chorusTime);
                 ExternalApps.Ogg2Wav(oggPreviewPath, wavPreviewPath);
@@ -362,8 +387,8 @@ namespace RocksmithToolkitLib.Ogg
             {
                 reader.Seek(4, SeekOrigin.Begin);
                 if (reader.ReadUInt32() != reader.BaseStream.Length - 8)
-                    throw new InvalidDataException("The input OGG file appears to be truncated.")                        ;
-                    
+                    throw new InvalidDataException("The input OGG file appears to be truncated.");
+
 
                 if (Encoding.ASCII.GetString(reader.ReadBytes(4)) != "WAVE")
                     throw new InvalidDataException("Error reading input file - expected WAVE");
@@ -378,20 +403,20 @@ namespace RocksmithToolkitLib.Ogg
                 if (fmtLength == 24)
                 {
                     if (reader.ReadUInt16() != 0xFFFF)
-                             throw new InvalidDataException("Error reading input file - expected Format Tag of 0xFFFF");
+                        throw new InvalidDataException("Error reading input file - expected Format Tag of 0xFFFF");
 
                     reader.BaseStream.Seek(14, SeekOrigin.Current);
 
                     if (reader.ReadUInt16() != 6)
-                            throw new InvalidDataException("Error reading input file - expected cbSize of 6");
+                        throw new InvalidDataException("Error reading input file - expected cbSize of 6");
 
                     reader.BaseStream.Seek(6, SeekOrigin.Current);
 
                     if (Encoding.ASCII.GetString(reader.ReadBytes(4)) != "vorb")
-                            throw new InvalidDataException("Error reading input file - expected vorb");
+                        throw new InvalidDataException("Error reading input file - expected vorb");
 
                     if (reader.ReadUInt32() != 42)
-                           throw new InvalidDataException("Error reading input file - expected vorb length of 42");
+                        throw new InvalidDataException("Error reading input file - expected vorb length of 42");
                 }
             }
         }
@@ -453,7 +478,7 @@ namespace RocksmithToolkitLib.Ogg
                 case ".ogg":
                     return WwiseVersion.Wwise2010;
                 case ".wem":
-                    return WwiseVersion.Wwise2018;//bcapi
+                    return WwiseVersion.Wwise2019;//bcapi
                 default:
                     throw new InvalidOperationException("Audio file not supported.");
             }

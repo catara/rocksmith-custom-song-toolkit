@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Layout Name="Voice Profiler">
+	<StackPanel Name="StackPanel" ID="{A98C9E98-0BC7-4BE5-BF36-889F7EEC1161}" Width="1634" Height="735" Orientation="Vertical">
+		<StackPanel Name="StackPanel" ID="{C9EAAA23-435C-4C79-8E4A-3500EE86CB51}" Width="1634" Height="732" Orientation="Vertical">
+			<StackPanel Name="StackPanel" ID="{816675FB-817D-44DB-9DDD-8FDE18D3E147}" Width="1097" Height="458" Orientation="Vertical">
+				<StackPanel Name="StackPanel" ID="{FEFB1509-F2C9-4E4E-AFAE-A60BAB8636E2}" Width="1097" Height="276" Orientation="Horizontal">
+					<StackPanel Name="StackPanel" ID="{D9F8E5AA-89EC-49FF-A502-32A34A19470C}" Width="750" Height="276" Orientation="Horizontal">
+						<StackPanel Name="StackPanel" ID="{C403CF33-6615-4035-8B92-5BC25474F711}" Width="283" Height="276" Orientation="Vertical">
+							<View Name="Project Explorer" ID="{9F3E2E6B-CC7B-4866-8BB8-9DB8182645C2}" Width="336" Height="302" SelectionChannel="1"/>
+							<Splitter/>
+							<View Name="Transport Control" ID="{951C7338-41C3-484A-9185-64B5B1CEBCB2}" Width="336" Height="55"/>
+						</StackPanel>
+						<Splitter/>
+						<ObjectTabPanel Name="ObjectTabPanel" ID="{0407E542-9E7F-4E7B-B4FD-FC3E64B71319}" Width="412" Height="275" />
+					</StackPanel>
+					<Splitter/>
+					<View Name="Capture Log" ID="{370D00CD-975B-4BCA-81C5-1BB3C3BF9D72}" Width="342" Height="276"/>
+				</StackPanel>
+				<Splitter/>
+				<StackPanel Name="StackPanel" ID="{FF7BFB0E-F5A9-494A-AEB5-A86CF1294E32}" Width="1097" Height="191" Orientation="Horizontal">
+					<View Name="Voice Explorer" ID="{D8C48AE8-2717-43B5-9258-D84F2D548674}" Width="283" Height="191"/>
+					<Splitter/>
+					<View Name="Voice Inspector" ID="{ECD48DA9-375A-40E1-BB4B-6A87815479F7}" Width="808" Height="191"/>
+				</StackPanel>
+			</StackPanel>
+			<Splitter/>
+			<View Name="Voice Monitor" ID="{51678F77-A1F4-4639-989F-54B3926B4F9D}" Width="1097" Height="101"/>
+		</StackPanel>
+	</StackPanel>
+</Layout>

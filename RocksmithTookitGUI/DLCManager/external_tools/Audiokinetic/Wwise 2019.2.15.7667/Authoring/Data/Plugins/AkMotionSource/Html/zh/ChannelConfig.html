@@ -1,0 +1,17 @@
+
+<h2>Actuator Configuration</h2>
+<p>促动器配置。已知设备的一组配置，每项配置分别针对设备可用的促动器之一。有三种匿名配置可供未知设备使用。</p>
+<ul>
+<li><strong>Android</strong>:单个匿名声道。</li>
+<li><strong>PS4 Move</strong>:单个匿名声道。</li>
+<li><strong>PS4 2 Channel</strong>:低频声道和高频声道各一个。</li>
+<li><strong>Switch 2 Channel</strong>:低频声道和高频声道各一个。</li>
+<li><strong>Switch 4 Channel</strong>:低频声道和高频声道各两个。</li>
+<li><strong>Xbox One 4 Channel</strong>:低频声道、高频声道、左侧触发器声道和右侧触发器声道各一个（无法在 Wwise 设计中工具测试）。</li>
+<li><strong>1 Channel</strong>:单个匿名声道。</li>
+<li><strong>2 Channel</strong>:两个匿名声道。</li>
+<li><strong>4 Channel</strong>:四个匿名声道。</li>
+<li><strong>Haptics 2 Channel</strong>:低频声道和高频声道各一个。</li>
+</ul>
+<p><strong>备注</strong>:促动器配置的默认平台名称指示适用于 Wwise 默认 sink 的已知平台。但是，这并不说这些配置仅可用于该平台。有时，甚至可能希望针对特定平台选择不同的配置。例如，有些 Android 平板电脑设有两个促动器，这时最好采用 2 Channel 配置，而非默认 sink 的单个匿名声道 Android 配置。声道数不匹配并不会影响振动；如果促动器的数量较多，会使用相同的 Driver 声道，而如果定义的声道数量较多，则会忽略部分声道。</p>
+<p>Default value: 1 Channel<br/></p>

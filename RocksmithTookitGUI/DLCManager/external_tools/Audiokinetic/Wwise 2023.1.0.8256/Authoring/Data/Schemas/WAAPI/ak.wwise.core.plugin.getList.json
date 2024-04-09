@@ -1,0 +1,12 @@
+{
+    "version": 1,
+    "functions": [
+        {
+            "id": "ak.wwise.core.plugin.getList",
+            "alias": "ak.wwise.core.object.getTypes"
+        }
+    ],
+    "topics": [],
+    "validators": [],
+    "definitions": {}
+}

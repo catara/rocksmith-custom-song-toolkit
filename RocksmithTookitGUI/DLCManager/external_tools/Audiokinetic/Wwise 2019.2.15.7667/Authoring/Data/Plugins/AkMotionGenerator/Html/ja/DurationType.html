@@ -1,0 +1,8 @@
+
+<h2>Duration Type</h2>
+<ul>
+<li><strong>One period</strong>:モーションエフェクトのDurationが1 Periodの長さであることを意味し、この場合、1 PeriodはPeriod×Period multiplierに等しい。例えば、Periodを2、Period multiplierを3に設定したとする。Durationで“One period”を選択すると、モーションエフェクトの長さは、6秒（2x3）となる。“One period” を選択すると、モーションエフェクトはカーブの1サイクルを完了する。</li>
+<li><strong>Fixed duration</strong>:モーションエフェクトのDurationに、固定値を指定する。“Duration”の指定値によって、このモーションエフェクトで繰り返されるカーブサイクルの回数を、自由に設定できる。もしFixed duration値が、Period×Period multiplierの倍数でなければ、最後のカーブサイクルが途中で終わる。</li>
+<li><strong>Envelope</strong>:モーションカーブ用のADSR振幅エンベロープコントロールを有効にする。ADSRプロパティに対して指定された値に応じて、モーションエフェクトは任意の数のカーブサイクルを完了することができる。ADSR エンベロープの全体的な継続時間がペリオドマルチプライヤにより乗算されたペリオドの倍数でない場合、最後のカーブサイクルが不完全になる。</li>
+</ul>
+<p>Default value: One period<br/></p>

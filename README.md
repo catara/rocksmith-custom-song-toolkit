@@ -1,11 +1,10 @@
-﻿		# Date: 27.05.2023
+﻿		# Date: 09.03.2024
 		# Document Name: Rocksmith 2014 RM DLC Management tool README
 						(fork of rocksmith-custom-song-toolkit)
-		# Document purpose: To describe the functionailities and the way to change, the NEW tab that enable MASS Manipulation of Rocksmith DLC Library
-							(DLC folder; including customs(CDLC), DLCs and songs embeded in the ready to ship version of Rocksmith (2014 Remastered version)) 
+		# Document purpose: To describe the project and capture a developmental history
 
-## Rocksmith 2014 RM DLC Library Manager v1 b6 r2 (compiled beta available in \RocksmithToolkitGUI\bin\Debug\)
-*(forever to be unreleased version- for my own sake and not the masses's)*
+## Rocksmith 2014 RM DLC Library Manager v1 b6 r3 (compiled beta available in https://github.com/catara/rocksmith-custom-song-toolkit/tree/Main/RocksmithTookitGUI/bin/Debug_Lite.7z )
+*(forever to be unreleased version- for my own sake)*
 # App Description: MASS Manipulation of Rocksmith 2014 RM DLC Library
 
 #Main Features:
@@ -28,9 +27,9 @@
 - Mass rename songs (Standardization) e.g. Black Keys->The Black Keys and maintain changes in a local DB
 - Manipulates the Retail songs list of Rocksmith (Rocksmith 2014 disc, or Rocksmith 2012 DLC, or Rocksmith 2012 Import disc)
 	NEW ability to insert CDLC in (PC atm; PS3&PS4 later) Retail version core files
-- NEW: when building new DLC save some todo/release notes etc
+- NEW: when building new DLC save some links to source files/todo/release notes etc
 - Export HTML (web server ready) setlist
-- Shift Notes (NEW: Manipulate Arrangements to be distributed along a specific timeline from a GuitarPro file that is not time-synced 4 a 3min long tabbing experience)
+- Shift Notes (NEW: Manipulate Arrangements to be distributed along a specific timeline from a GuitarPro file that is not time-synced)
 
 <img src="/RocksmithTookitGUI/DLCManager/Screenshot1.png" alt="Rocksmith DLC Library Manager Import&Pack"/>
 <img src="/RocksmithTookitGUI/DLCManager/Screenshot2.png" alt="Song Metadata DB Screen"/>
@@ -303,6 +302,7 @@ self packed files import weirdly
 at pack bogdan’s dlc read info from comments
 check last copy why failing
 add script to copy from sqlite to accdb too :)
+
 fix current issue:
 stop all packing after metad
 .one meta
@@ -349,39 +349,37 @@ add timesteamp in log summary of translation
 add timestamps at import
 populate old data to all dlcs
 fix import abort
-fix search 2-3times
-fix standardize cover
+
 check tones and gearlists are complet per song
 
 fix duplicate not working in sqlite
 add further check after checking for installed software :)
 why sqlite startup maindb so slow
-add instrumntal AI split https://github.com/stemrollerapp/stemroller
 
-## WiP:
-(this release)
-1.0 b6 (12.06.2023) (pre2) Prototyping GuitarPro simple time distribution for new songs
-[-] fix improvedimport no eof no gp5
-[-] improved getfirst note, also added get last
-[-] fix move of buttons import selection of param screen
-[-] fix new attribute to always give if songs match standardization rule
-[-] fix some empty/broken audio/album paths
-[--] fix some original album paths & code at path fix (not sure where the code issues is)
-[-] why there are no Packing details in db
-[-] standardise the get records specialyl since SQL-Lite might return an empty record=1 if tableempty
-[-] save setting doesnt seem to work
-[-] 3rd extension was not cleaned (psarc from celand folders
-[-] fixes on cleanups
-[-] further sqlite improve impl strcom,switch,ucase etc.
-	[-] weird pack no
-	[-] why zero packed songs
-	[.] sqlite dlcmnanger 1700 also made theser calls avaiul in sqlite
-[-] where is sample (not the case on single processing as anyway sumamry at end)
-[-] sqlite other windows (not required as now selects etc standardized only in utilities fuction files)
-[-] improved packing no detection at single and harmogenised with mass same function
-[-] harmonised generate param list same function, and added general to all (still to do put it sec :))
-[-] generate packing stats ignores platform case
-[-] workaround sqlite table with id not null contrains not being able to insert in even if not inserting id
+fix standardize cover
+increase song part to add extra lyrics
+impl 121
+packing
+
+
+	fix why no wems C:\t\0\0_data\Pc_CDLC_Danko Jones_2017_Wild Cat_0_You Are My Woman_7549\audio\windows\
+	why at pack we get a new Pack (is that only for import :))?
+	add check if deleating all from import :)
+synbols load at compile ...pointing to dot net code
+	-try again dsiable load and hope horeloading still works
+
+	artist/album should also search in live
+
+	add update date
+change row in standard window is mega slow
+additional custom attributes in standardization fail to be displayed
+cover issues in  standardization
+vs label on instr and tunning issues at duplcaition
+if playlist then add track no as the order from the playlist
+packing grp should be by platform too
+filter by date (aded, packed)
+
+
 	empty table:
 		.schema Tones_GearList
 		drpo table Tones_GearList
@@ -422,103 +420,119 @@ add instrumntal AI split https://github.com/stemrollerapp/stemroller
 		INSERT INTO Groups (ID, CDLC_ID,Groupz, Type, Comments,Profile_Name,Description,DisplayName,DisplayGroup,DisplayPosition,Date_Added)
 		  SELECT ID, CDLC_ID,Groupz, Type, Comments,Profile_Name,Description,DisplayName,DisplayGroup,DisplayPosition,Date_Added
 		  FROM Groupsu;
+	no sections quite a lot..can we add some..? :)
+	
+## WiP:
+(this release)
+1.0 b6 (04.03.2024) (pre3) Prototyping GuitarPro simple time distribution for new songs
+[x] fix improvedimport no eof no gp5
+[x] improved getfirst note, also added get last
+[x] fix move of buttons import selection of param screen
+[x] fix new attribute to always give if songs match standardization rule
+[x] fix some empty/broken audio/album paths
+[x] fix some original album paths & code at path fix (not sure where the code issues is)
+[x] why there are no Packing details in db
+[x] standardise the get records specialyl since SQL-Lite might return an empty record=1 if tableempty
+[x] save setting doesnt seem to work
+[x] 3rd extension was not cleaned (psarc from celand folders
+[x] fixes on cleanups
+[x] further sqlite improve impl strcom,switch,ucase etc.
+	[x] weird pack no
+	[x] why zero packed songs
+	[x] sqlite dlcmnanger 1700 also made theser calls avaiul in sqlite
+[x] where is sample (not the case on single processing as anyway sumamry at end)
+[x] sqlite other windows (not required as now selects etc standardized only in utilities fuction files)
+[x] improved packing no detection at single and harmogenised with mass same function
+[x] harmonised generate param list same function, and added general to all (still to do put it sec :))
+[x] generate packing stats ignores platform case
+[x] workaround sqlite table with id not null contrains not being able to insert in even if not inserting id
+[-] add instrumntal AI split https://github.com/stemrollerapp/stemroller
+[-] fix search 2-3times
+[-] full album not detected
+[-] setting attribute no displayed
+[-] fix acdc
+[-] check full files
+[-] check for file size zero
+[-] if preview missing check add full song as
+[-] add weird char from file name to path an
+[-] add remove doublefiled wems
+[-] check twhat wems i deleted
+[-] check wehat bnk still are after cleanup
+[x] Has_Alternate_Lyrics
+[x] Has_Alternate_Audio
+[x] a440
+[x] ukulele
+[x] Metallcover
+[x] mix
+[x]  make attributes dynamically position  themselves
+[x] when changig metadata give a change to edit
+[x] remaster not detected on album (added)
+[-] dont add packing grp to meta
+[x] fix last meta
+[x] check digitec on torn cover by neck
+[x] strech few maindb
+[x] increse font in error window
+[x] fix pack regress issue
+[x] move call to proced as to show progress
+[x] fixstandardization screen zoom 
+[x] fixstandardization screen load
+[x] open standard doesnt getsu top the artist&album
+[x] pack no doenst increase(failed pack is the same untill increased) (maybe get max and insease then)its ok as isO)
+[x] fix add attribute through right click
+[x] if indiv repack is not in failed dont mark as broken :)
+[x] reinforced packing audio file using logic (mostly cause of ps3 issues) and error reporting out of it
+[x] enhance right clicks on the 3 right click menu grps
+[x] fix duplicate groups
+[x] if you dont add stuff to lyrics display a warning :)(ConfigRepository.Instance()["dlcm_AdditionalManipul73"] == "Yes" && filez.Has_Vocals == "Yes" && c("dlcm_AdditionalManipul102") != "Yes") 
+[x] increase song details to max-1 in lyrics
+[x] add def dlc_id_
+[x] dlcname should be part of getmeta
+[x] (qnap modif file) fix bass dankoC:\t\0\0_data\Pc_CDLC_Danko Jones_2015_Fire Music_0_Gonna Be A Fight Tonight_12128\songs\arr\fakk_djtgbaft_bass.xml
+[x] add title to error window
+[x] 	Failed at packing (1010970) :4 (inprov clean path of umlaut chars)
+[x] fix sections not being gathered since 2021 :( :( :( :( :( 
+[x] add regather attributes (tunning frecv, sections++later)
+[x] fixed no doubt sunda qnap broken bass
+[x] C:\t\0\0_data\Pc_CDLC_Tommy Johansson_2022_I'm Still Standing_0_I'm Still Standing_14244 fixed missin audio and bnk
+[x] C:\t\0\0_data\Pc_CDLC_Rise Against_2001_The Unraveling_0_Faint Resemblance_7583\manifests\songs_dlc_cusrafaintresemblance fixed empty json
+[x] fix dlcm opening
+[-] fix import when w duplic doenst import new
+[] why grp is not correct for smnoko
+[] whatsw eof
 
 ## done:
 (prev release)
-1.0 b6 (10.05.2023) (not yet)Prototyping GuitarPro simple time distri…
-…bution for new songs
-
-[-] startup improvements (chose accd/db daqtabses formats; )
-[-] Open ACCDBx32 check/ACCDBx64 warning/SQLite3
-[-] expand param
-	[x] add path for prj (cancelled already there somehow)
-	[-] add gpx-5 paths (BasedOn_UG)
-	add in search
-	[-] dlcm_RS2014-Mod-Installer,dlcm_RS2014-Mod-Installer_www
-	[-] dlcm_sqliteodbc,dlcm_sqliteodbc_www
-	[-] dlcm_DLCManager_ReleaseNotes,dlcm_DLCManager_ReleaseDetails
-[-] add weekly
-	[x] move to monthly if more than 7/param(cancelled as weekly is dynamic grp now :))
-		ignore at save/create
-		dont save hot
-[-] improve pack additional metadata
-	[x] remove repacked from author
-	[x] add local file tab with logic to look for any already avail file
-	[x] check what is saved in song xml (added in xml at save too else lost :))
-	[x] if press close still save? (cancelled as not sure)
-	[x] update text save in version ino default text or are they config param?
-[-] copy gp5
-[-] fix search
-	[-] if search fails reset back the search terms :)
-[-] add orig titles to info buble
-	[-] search orig terms too
-[-] select misses on when from right click dropdown (&streamlined&algined code)
-[-] instru bubble is not reset and adds text
-[x] before check do backup
-[x] after import do backup
-[-] add 3rd option to reset if no rec found
-[-] refresh or add if belonging to Hot grp
-[-] if in hot do also try
-[-] if in playable remove from try
-[-] implement set different album art, default some if missing, same for audio
-[-] dcompress remove Erro<ERROR>
-[-] improved check for software and backend (links etc.)
-[-] add to checks missing metadata else reread
-	[-]improved dialogs-validation&logging
-[-] deluxe, greatesthits,
-[-] add window at pack or import with imporatant settings
-[-] dlc featu:
-[-] at save add metadata
-[-] at open check if EoF songs saved are on remote too
-[-] 6 strings
-[-] midi
-[-] add TV series theme (impl tv theme and amator cover)
-[-] 7" 12" '7 '12"
-[-] original soutrack, original motion picture score, main title thme
-[-] added logic for intheworkwdetails
-[-] increase Continue packing button
-[-] add in dupi button to home folders (a.ready there updated icon)
-[-] naming change detection should also put it at the end
- 		[-] if (j == 0 && dupli_assesment == "") { dupliSongs[0, i] = "1"; duplit = true; dupliNo++; break; }
-[-] replace q with c(„q) in atrib distrib
-[-] fix accdb copy (improved to copy also to code folders)
-[-] add latzest to sqlite (migrate new fileds)
-[-] update screenshots
-[-] fix load
-[-] add new columns
-	ALTER TABLE Main ADD Album_ArtPathOrig;
-	ALTER TABLE Main ADD Is_Deluxe;
-	ALTER TABLE Main ADD Is_GreatestHits;
-	ALTER TABLE Main ADD Is_Midi;
-	ALTER TABLE Main ADD Is_GameSoundtrack;
-	ALTER TABLE Main ADD Is_TVTheme;
-	ALTER TABLE Main ADD Is_AmateurCover;
-	ALTER TABLE Cache ADD Track_No;
-	ALTER TABLE Standardization ADD CustomToAtribute_1;
-	ALTER TABLE Standardization ADD CustomToAtribute_2;
-	ALTER TABLE Standardization ADD CustomToAtribute_3;
-	ALTER TABLE Standardization ADD CustomToAtribute_4;
-	ALTER TABLE Standardization ADD CustomToAtribute_5;
-[-] migrate db plus improv
-	DELETE FROM Arrangements;
-	DELETE FROM Cache;
-	DELETE FROM Groups WHERE ID not in (SELECT ID FROM Groups WHERE Profile_Name='Default' AND Type='Profile') or ID in (SELECT ID FROM Groups WHERE Type='DLC');
-	DELETE FROM Import;
-	DELETE FROM Import_AuditTrail;
-	DELETE FROM LogImporting;
-	DELETE FROM LogImportingError;
-	DELETE FROM LogPacking;
-	DELETE FROM LogPackingError;
-	DELETE FROM Main;
-	DELETE FROM Pack_AuditTrail;
-	DELETE FROM Tones;
-	DELETE FROM Tones_GearList;
-[-] Migrate instr:
-	DELETE FROM Arrangements;	DELETE FROM Cache;	DELETE FROM Groups;	DELETE FROM Import;	DELETE FROM Import_AuditTrail;	DELETE FROM LogImporting;	DELETE FROM LogImportingError;	DELETE FROM LogPacking;	DELETE FROM LogPackingError;	DELETE FROM Main;	DELETE FROM Pack_AuditTrail;	DELETE FROM Tones;	DELETE FROM Tones_GearList;	DELETE FROM OfficialSongs;	DELETE FROM Standardization;	DELETE FROM WEM2OGGCorrespondence;	DELETE FROM ODLC;	VACUUM;
-[x] improve missing prgrs mss. add dlcbuilder and db
-[x] update enable CDLC to 2022 latest mac and win DLC/libs (check if installed etc.)
-[x] improv startup with empty DBs
-[x] not run so many file checks :) at startup and no profile change
+1.0 b6 (10.07.2023) Finalising GuitarPro simple time distri…
+[x] fix expand move notes (inlc negative move)
+[x] fix custom attributes use for standard in getextrattrib
+[x] fix duplications no running at end
+[x] fix get extra atrib running at end
+[.] fix old is not copied (fed up options , whodid it?)
+[x] fix sqlite delete conv when smallewr letters
+[x] again fixing pack
+	[x] (NOT waas a opck issue) add info for not not imp folders/non songs(dclm file)
+[x] at delete/copy_old dont delete/copy if old not avail
+[-] fixed sqlite select when from is small caps and also standarized at select " to ' and added ;
+[x] fix sql-lite standarization issues when replacing strcomp w iif (util files)
+[]change to wem audiokinetik 2023
+[]remove old cell based ref inmaindb
+[]add to way 1&2:
+	[] dont move 1
+	[] only move if all stay before of eachother
+[] import songs w audio issues (ogg file; also adding additional 2019 wem ref)
+	overcome the audio issues
+	[x] nin
+	hives
+	[x] 8sodagreen
+	Only the Good Die Young
+	Rise-Against_Sooner-or-Later_v1
+	Killers_GLAMOROUS-INDIE-ROCK-N-ROLL
+[-] reimport old missing imports button
+[-] add bonus&parts and full no of tracks to duplicate manag
+	[] is alternate track also any option?
+[.] u2 vulcano
+[] fix button autosize font in mainDB
+check duplicate window issue in displaying/comparing tracks
 
 
 # Version History(release date):
@@ -560,10 +574,10 @@ add instrumntal AI split https://github.com/stemrollerapp/stemroller
 	1.0 b3 (29.05.2021) Add DLCs directyly intro GAmes fiels (songs.psarc and implicitely the hsan into cache.psarc)
 	1.0 b4 (29.07.2021) moved to .NET6 as to allow development in windows for ARM (Apple,etc.)added SQLite capabiltites (removes dependency on ACCESS on Windows for ARM as sometimes not being detected)
 	1.0 b5 (09.10.2022) startup/dependencies improvements, weekly dyanmic last 5 in monthly hot list and sqlite further integration
-	1.0 b6 (12.06.2023) (pre2) Prototyping GuitarPro simple time distribution for new songs
-	1.0 b7 (9.09.2023) Finalising addings songs directly to CACHE (Pc works, targetting Ps3 and Ps4)
-	1.0 b8(xx.11.2023) Released on Customforge and GitHub Release "tab" (2 versions one w all 3rd party software, one without; can be installed/decompressed and quickly used; 1 60sec video describing why you should use this)
-	1.1 (xx.12.2023) Reactivating Spotify checks
+	1.0 b6 (12.02.2024) (pre3) Prototyping GuitarPro to Rocksmith workflow for simple time distribution for new songs
+	1.0 b7 (9.05.2024) Finalising addings songs directly to CACHE (Pc works, targetting Ps3 and Ps4)
+	1.0 b8(xx.11.2024) Released on Customforge and GitHub Release "tab" (2 versions one w all 3rd party software, one without; can be installed/decompressed and quickly used; 1 60sec video describing why you should use this)
+	1.1 (xx.12.2024) Reactivating Spotify checks
 
 # Implementation Tracking for the Main Features:
 		+1. Ability to Generate a Database with all DLC
@@ -636,8 +650,8 @@ wwise twds 2019 upgrades and remplate
 some failsafes for 
 
 ### Dev Tips:
-+ Use MS2019 community or whateva other older version
-+ Start Visual Studio with Admin rightsa
++ Use MS2022 community or whateva other older version
++ Start Visual Studio with Admin rights (no clue but it requires to debug)
 + Toolkit version flag does not sync to&from Github: Run RunMeFirst.bat
 + activate debug: set RocksmithToolkitGUI Folder as Start-up project
 + Complile RocksmithToolkitGUI as AnyCPU (no 32bit)
@@ -742,17 +756,18 @@ of this folder should be directed to the respective developer.
 		http://fishcodelib.com/Database.htm 
 
 		-DevOnly additional software
-			EOF v1.8b (c)2008-2010 T³ Software eof1.8RC11(xx-09-2020) http://ignition.customsforge.com/eof http://customsforge.com/topic/1529-latest-eof-releases-5-19-2016/page-86 https://github.com/raynebc/editor-on-fire -4 transforming lyrics into RS Vocals
-			UltraStar Creator 1.2 https://sourceforge.net/projects/usc/ -4creati ng lyrics files to import in EoF
+			EOF v1.8b (c)2008-2010 T³ Software eof1.8RC12(26-09-2020) http://ignition.customsforge.com/eof http://customsforge.com/topic/1529-latest-eof-releases-5-19-2016/page-86 https://github.com/raynebc/editor-on-fire -4 transforming lyrics into RS Vocals
+			UltraStar Creator 1.2 https://sourceforge.net/projects/usc/ - 4 creating lyrics files to import in EoF
 			TotalCommander v11b1 x64 (doubleckick on zip to install plugin, pack with no compression for cache.ps3) https://gisler.com -4Encripting PS3 Retail Sog PSARCS (0 encription level only avail here)
 			MediaInfo CLI v23 x64 https://mediaarea.net/en/MediaInfo/Download/Windows -4checking wem bitrate
 			WinMerge v2.16.28 x64 http://winmerge.org/?lang=en -used in comparing duplicates (and their respecitve differential track)
-			C3 CON Tools 4.0.1 https://rhythmgamingworld.com/forums/topic/c3-con-tools-v401-8142020-weve-only-just-begun/ -used to decompress songs made for Rockband to quickly copy their vocal track to Rocksmith
-			Rocksmith Mods -for tweaking e.g. remove UI elements to allow streaming of overlay-ing of videos trough OBC https://github.com/Lovrom8/RSMods
+			C3 Tools 4.1 https://rhythmgamingworld.com/forums/topic/c3-con-tools-v401-8142020-weve-only-just-begun/ -used to decompress songs made for Rockband to quickly copy their vocal track to Rocksmith
+			Rocksmith Mods 1.6.0.3 -for tweaking e.g. remove UI elements to allow streaming of overlay-ing of videos trough OBC https://github.com/Lovrom8/RSMods
 			Custom DLC enabler OSX - only way to play songs not sold by Ubioft/Rocksmith-store on Mac https://github.com/aik002/RSBypass
 			Custom DLC enabler PC - only way to play songs not sold by Ubioft/Rocksmith-store on Windows https://customsforge.com/index.php?/topic/901-how-to-use-custom-dlcs-in-rs2014-remastered/
-			SQLite3 driver x64-for reading .db slq-lite-3 (windows 64 ONLY) database through Microsoft Access UI http://www.ch-werner.de/sqliteodbc/
+			SQLite3 driver x64-for reading .db slq-lite-3 (windows 64 ONLY) database by commandLine or ODBC through Microsoft Access UI http://www.ch-werner.de/sqliteodbc/
 			DLC builder 1.62 - usefuly for generating a notes/EoF-file out a psarc https://github.com/iminashi/Rocksmith2014.NET
+			StemRoller 2.0.2 - AI splitting of tracks https://github.com/stemrollerapp
 ## Contact
 
 mailto:bogdan@capi.ro  

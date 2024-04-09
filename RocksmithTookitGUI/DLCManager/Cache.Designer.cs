@@ -149,7 +149,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // chbx_Removed
             // 
-            chbx_Removed.AutoSize = true;
+            chbx_Removed.AutoSize = false;
             chbx_Removed.Location = new System.Drawing.Point(200, 980);
             chbx_Removed.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             chbx_Removed.Name = "chbx_Removed";
@@ -230,7 +230,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // lbl_NoRec
             // 
-            lbl_NoRec.AutoSize = true;
+            lbl_NoRec.AutoSize = false;
             lbl_NoRec.Location = new System.Drawing.Point(192, 893);
             lbl_NoRec.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             lbl_NoRec.Name = "lbl_NoRec";
@@ -262,7 +262,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // label2
             // 
-            label2.AutoSize = true;
+            label2.AutoSize = false;
             label2.Location = new System.Drawing.Point(1236, 880);
             label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label2.Name = "label2";
@@ -284,7 +284,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // chbx_Songs2Cache
             // 
-            chbx_Songs2Cache.AutoSize = true;
+            chbx_Songs2Cache.AutoSize = false;
             chbx_Songs2Cache.Checked = true;
             chbx_Songs2Cache.CheckState = System.Windows.Forms.CheckState.Checked;
             chbx_Songs2Cache.Location = new System.Drawing.Point(2100, 1064);
@@ -297,7 +297,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // chbx_AutoPlay
             // 
-            chbx_AutoPlay.AutoSize = true;
+            chbx_AutoPlay.AutoSize = false;
             chbx_AutoPlay.Enabled = false;
             chbx_AutoPlay.Location = new System.Drawing.Point(1336, 1072);
             chbx_AutoPlay.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -355,7 +355,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // chbx_Autosave
             // 
-            chbx_Autosave.AutoSize = true;
+            chbx_Autosave.AutoSize = false;
             chbx_Autosave.Checked = true;
             chbx_Autosave.CheckState = System.Windows.Forms.CheckState.Checked;
             chbx_Autosave.Location = new System.Drawing.Point(1996, 891);
@@ -465,7 +465,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // chbx_RemoveBassDD
             // 
-            chbx_RemoveBassDD.AutoSize = true;
+            chbx_RemoveBassDD.AutoSize = false;
             chbx_RemoveBassDD.Checked = true;
             chbx_RemoveBassDD.CheckState = System.Windows.Forms.CheckState.Checked;
             chbx_RemoveBassDD.Location = new System.Drawing.Point(2100, 1100);
@@ -559,7 +559,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // chbx_Selected
             // 
-            chbx_Selected.AutoSize = true;
+            chbx_Selected.AutoSize = false;
             chbx_Selected.Location = new System.Drawing.Point(200, 1019);
             chbx_Selected.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             chbx_Selected.Name = "chbx_Selected";
@@ -595,7 +595,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // chbx_RemoveDD
             // 
-            chbx_RemoveDD.AutoSize = true;
+            chbx_RemoveDD.AutoSize = false;
             chbx_RemoveDD.Checked = true;
             chbx_RemoveDD.CheckState = System.Windows.Forms.CheckState.Checked;
             chbx_RemoveDD.Enabled = false;
@@ -806,7 +806,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // label1
             // 
-            label1.AutoSize = true;
+            label1.AutoSize = false;
             label1.Location = new System.Drawing.Point(340, 1068);
             label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label1.Name = "label1";

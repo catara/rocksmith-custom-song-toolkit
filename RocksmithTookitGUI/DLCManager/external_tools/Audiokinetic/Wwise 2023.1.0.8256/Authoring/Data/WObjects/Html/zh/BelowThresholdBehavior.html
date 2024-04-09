@@ -1,0 +1,10 @@
+
+<h2>Virtual voice behavior</h2>
+<p>当对象音量低于音量阈值或播放数量超出限制时，对象的行为。您可以选择以下选项之一：</p>
+<ul>
+<li><strong>Continue to play</strong>，即使无法听到或感受到对象，但仍继续播放对象。</li>
+<li><strong>Kill voice</strong>，停止播放对象。此选项不会施加任何淡出处理。</li>
+<li><strong>Send to virtual voice</strong>，将对象发送到虚声部列表。当某个对象被发送到虚声部列表时，该对象的某些参数将由声音引擎监视，但不会对音频或振动进行任何处理。</li>
+<li><strong>Kill if finite else virtual</strong>，如果对象不是无限循环，则停止播放；如果对象无限循环，则将发送到虚声部列表。对于此选项，<strong>On return to physical voice</strong> 行为将自动设置为 <strong>Play from elapsed time</strong> ，而不考虑其父级设置的行为。</li>
+</ul>
+<p>Default value: Continue to play<br/></p>

@@ -1,0 +1,10 @@
+
+<h2>Use game-defined auxiliary sends</h2>
+<p>このオブジェクトで、ゲームオブジェクト用のGame-defined Auxiliary Sends機能を利用するのかどうかを指定する。Game-defined Auxiliary Sendとは、Auxiliary BusとSendボリュームの組み合わせのこと。</p>
+<p>本オプションを選択すると、以下の機能に関して、オブジェクトが、ゲームから送られる数値によって影響される。</p>
+<ul>
+<li><a href="https://www.audiokinetic.com/library/?source=SDK&amp;id=ak__soundengine__setgameobjectauxsendvalues.html">AK::SoundEngine::SetGameObjectAuxSendValues()</a></li>
+<li><a href="https://www.audiokinetic.com/library/?source=SDK&amp;id=ak__soundengine__setgameobjectoutputbusvolume.html">AK::SoundEngine::SetGameObjectOutputBusVolume()</a></li>
+</ul>
+<p>ゲームでSpatial Audioを初期化してあり、 RoomやPortalのデータをWwiseに送ってあれば、今ゲームオブジェクトのあるRoomに設定したAuxiliary Busへ、そのオブジェクトが送信するべきかどうかを、このプロパティで指定する。</p>
+<p>Default value: false<br/></p>

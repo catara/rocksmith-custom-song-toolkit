@@ -352,7 +352,12 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest.Functions
                     if (SectionUINames.TryGetValue(sep[0], out uiName))
                         sect.UIName = uiName;
                     else
-                        throw new InvalidDataException(String.Format("Unknown section name: {0}", sep[0]));
+                    {
+                        //sect.UIName = "Outro";
+                        //throw new InvalidDataException(String.Format("Unknown section name: {0}", sep[0]));
+                        //}
+                        sect.UIName = "Outro";
+                    }
                 }
                 else
                 {
@@ -534,8 +539,8 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest.Functions
             try
             {
                 foreach (var phrase in song.Phrases)
-                if (max < phrase.MaxDifficulty)
-                    max = phrase.MaxDifficulty;
+                    if (max < phrase.MaxDifficulty)
+                        max = phrase.MaxDifficulty;
             }
             catch
             {

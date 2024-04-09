@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2009 Audiokinetic Inc. -->
+<PluginModule>
+  <EffectPlugin Name="Wwise Harmonizer" CompanyID="0" PluginID="138">
+    <PluginInfo MenuPath="50-Wwise">
+      <PlatformSupport>
+        <Platform Name="Any">
+          <CanBeInsertOnBusses>true</CanBeInsertOnBusses>
+          <CanBeInsertOnAudioObjects>true</CanBeInsertOnAudioObjects>
+          <CanBeRendered>true</CanBeRendered>
+        </Platform>
+      </PlatformSupport>
+    </PluginInfo>
+    <Properties>
+      <Property Name="Input" Type="int32" DisplayName="Input">
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>0</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="int32">
+              <Value DisplayName="As Input">0</Value>
+              <Value DisplayName="Mono-Center">1</Value>
+              <Value DisplayName="Stereo">2</Value>
+              <Value DisplayName="L-R-C">3</Value>
+              <Value DisplayName="L-R-LS-RS">4</Value>
+              <Value DisplayName="L-R-C-LS-RS">5</Value>
+              <Value DisplayName="Left Only">6</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="ProcessLFE" Type="bool" DisplayName="Process LFE">
+        <DefaultValue>false</DefaultValue>
+        <AudioEnginePropertyID>1</AudioEnginePropertyID>
+      </Property>
+      <Property Name="WindowSize" Type="int32" DisplayName="Window Size">
+        <UserInterface Step="256" Fine="256" Decimals="0" AutoUpdate="false"/>
+        <DefaultValue>1024</DefaultValue>
+        <AudioEnginePropertyID>5</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="int32">
+              <Min>256</Min>
+              <Max>4096</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <!-- Voice 1 properties -->
+      <Property Name="Voice1Enable" DocId="VoiceEnable" Type="bool" DisplayName="Voice 1 Enable" DisplayGroup="Voice 1">
+        <DefaultValue>true</DefaultValue>
+        <AudioEnginePropertyID>6</AudioEnginePropertyID>
+      </Property>
+      <Property Name="Voice1Pitch" DocId="VoicePitch" Type="Real32" DisplayName="Voice 1 Pitch" DisplayGroup="Voice 1">
+        <UserInterface Step="100" Fine="1" Decimals="0"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>7</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-2400</Min>
+              <Max>2400</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="Voice1Enable" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="Voice1Gain" DocId="VoiceGain" Type="Real32" SupportRTPCType="Additive" DataMeaning="Decibels" DisplayName="Voice 1 Gain" DisplayGroup="Voice 1">
+        <UserInterface Step="0.5" Fine="0.1" Decimals="2" SliderType="16"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>8</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-96</Min>
+              <Max>24</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="Voice1Enable" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="Voice1FilterType" DocId="VoiceFilterType" Type="int32" SupportRTPCType="Exclusive" ForceRTPCCurveSegmentShape="Constant" DisplayName="Voice 1 Filter Type" DisplayGroup="Voice 1/Filter">
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>9</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="int32">
+              <Value DisplayName="None">0</Value>
+              <Value DisplayName="Low Shelf">1</Value>
+              <Value DisplayName="Peaking">2</Value>
+              <Value DisplayName="High Shelf">3</Value>
+              <Value DisplayName="Low Pass">4</Value>
+              <Value DisplayName="High Pass">5</Value>
+              <Value DisplayName="Band Pass">6</Value>
+              <Value DisplayName="Notch">7</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="Voice1Enable" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="Voice1FilterGain" DocId="VoiceFilterGain" Type="Real32" SupportRTPCType="Additive" DataMeaning="Decibels" DisplayName="Voice 1 Filter Gain" DisplayGroup="Voice 1/Filter">
+        <UserInterface Step="0.5" Fine="0.1" Decimals="1"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>10</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-24</Min>
+              <Max>24</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="Voice1Enable" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="Voice1FilterType" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Low Shelf -->
+                <Value>1</Value>
+                <!-- Peaking -->
+                <Value>2</Value>
+                <!-- High Shelf -->
+                <Value>3</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="Voice1FilterFrequency" DocId="VoiceFilterFrequency" Type="Real32" SupportRTPCType="Exclusive" DataMeaning="Frequency" DisplayName="Voice 1 Filter Frequency" DisplayGroup="Voice 1/Filter">
+        <UserInterface Decimals="0"/>
+        <DefaultValue>1000</DefaultValue>
+        <AudioEnginePropertyID>11</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>20</Min>
+              <Max>20000</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="Voice1Enable" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="Voice1FilterType" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Low Shelf -->
+                <Value>1</Value>
+                <!-- Peaking -->
+                <Value>2</Value>
+                <!-- High Shelf -->
+                <Value>3</Value>
+                <!-- Low Pass -->
+                <Value>4</Value>
+                <!-- High Pass -->
+                <Value>5</Value>
+                <!-- Band Pass -->
+                <Value>6</Value>
+                <!-- Notch -->
+                <Value>7</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="Voice1FilterQFactor" DocId="VoiceFilterQFactor" Type="Real32" SupportRTPCType="Exclusive" DisplayName="Voice 1 Filter Q Factor" DisplayGroup="Voice 1/Filter">
+        <UserInterface Step="0.1" Decimals="2"/>
+        <DefaultValue>1</DefaultValue>
+        <AudioEnginePropertyID>12</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0.1</Min>
+              <Max>20</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="Voice1Enable" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="Voice1FilterType" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Peaking -->
+                <Value>2</Value>
+                <!-- Band Pass -->
+                <Value>6</Value>
+                <!-- Notch -->
+                <Value>7</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <!-- Voice 2 properties -->
+      <Property Name="Voice2Enable" DocId="VoiceEnable" Type="bool" DisplayName="Voice 2 Enable" DisplayGroup="Voice 2">
+        <DefaultValue>false</DefaultValue>
+        <AudioEnginePropertyID>13</AudioEnginePropertyID>
+      </Property>
+      <Property Name="Voice2Pitch" DocId="VoicePitch" Type="Real32" DisplayName="Voice 2 Pitch" DisplayGroup="Voice 2">
+        <UserInterface Step="100" Fine="1" Decimals="0"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>14</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-2400</Min>
+              <Max>2400</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="Voice2Enable" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="Voice2Gain" DocId="VoiceGain" Type="Real32" SupportRTPCType="Additive" DataMeaning="Decibels" DisplayName="Voice 2 Gain" DisplayGroup="Voice 2">
+        <UserInterface Step="0.5" Fine="0.1" Decimals="2" SliderType="16"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>15</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-96</Min>
+              <Max>24</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="Voice2Enable" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="Voice2FilterType" DocId="VoiceFilterType" Type="int32" SupportRTPCType="Exclusive" ForceRTPCCurveSegmentShape="Constant" DisplayName="Voice 2 Filter Type" DisplayGroup="Voice 2/Filter">
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>16</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="int32">
+              <Value DisplayName="None">0</Value>
+              <Value DisplayName="Low Shelf">1</Value>
+              <Value DisplayName="Peaking">2</Value>
+              <Value DisplayName="High Shelf">3</Value>
+              <Value DisplayName="Low Pass">4</Value>
+              <Value DisplayName="High Pass">5</Value>
+              <Value DisplayName="Band Pass">6</Value>
+              <Value DisplayName="Notch">7</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="Voice2Enable" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="Voice2FilterGain" DocId="VoiceFilterGain" Type="Real32" SupportRTPCType="Additive" DataMeaning="Decibels" DisplayName="Voice 2 Filter Gain" DisplayGroup="Voice 2/Filter">
+        <UserInterface Step="0.5" Fine="0.1" Decimals="1"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>17</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-24</Min>
+              <Max>24</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="Voice2Enable" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="Voice2FilterType" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Low Shelf -->
+                <Value>1</Value>
+                <!-- Peaking -->
+                <Value>2</Value>
+                <!-- High Shelf -->
+                <Value>3</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="Voice2FilterFrequency" DocId="VoiceFilterFrequency" Type="Real32" SupportRTPCType="Exclusive" DataMeaning="Frequency" DisplayName="Voice 2 Filter Frequency" DisplayGroup="Voice 2/Filter">
+        <UserInterface Decimals="0"/>
+        <DefaultValue>1000</DefaultValue>
+        <AudioEnginePropertyID>18</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>20</Min>
+              <Max>20000</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="Voice2Enable" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="Voice2FilterType" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Low Shelf -->
+                <Value>1</Value>
+                <!-- Peaking -->
+                <Value>2</Value>
+                <!-- High Shelf -->
+                <Value>3</Value>
+                <!-- Low Pass -->
+                <Value>4</Value>
+                <!-- High Pass -->
+                <Value>5</Value>
+                <!-- Band Pass -->
+                <Value>6</Value>
+                <!-- Notch -->
+                <Value>7</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="Voice2FilterQFactor" DocId="VoiceFilterQFactor" Type="Real32" SupportRTPCType="Exclusive" DisplayName="Voice 2 Filter Q Factor" DisplayGroup="Voice 2/Filter">
+        <UserInterface Step="0.1" Decimals="2"/>
+        <DefaultValue>1</DefaultValue>
+        <AudioEnginePropertyID>19</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0.1</Min>
+              <Max>20</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="Voice2Enable" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="Voice2FilterType" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Peaking -->
+                <Value>2</Value>
+                <!-- Band Pass -->
+                <Value>6</Value>
+                <!-- Notch -->
+                <Value>7</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="SyncDry" Type="bool" DisplayName="Delay Dry">
+        <DefaultValue>true</DefaultValue>
+        <AudioEnginePropertyID>2</AudioEnginePropertyID>
+      </Property>
+      <Property Name="DryLevel" Type="Real32" SupportRTPCType="Additive" DataMeaning="Decibels" DisplayName="Dry Level" DisplayGroup="Output Levels">
+        <UserInterface Step="1" Fine="0.1" Decimals="1"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>3</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-96</Min>
+              <Max>24</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="WetLevel" Type="Real32" SupportRTPCType="Additive" DataMeaning="Decibels" DisplayName="Wet Level" DisplayGroup="Output Levels">
+        <UserInterface Step="1" Fine="0.1" Decimals="1"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>4</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-96</Min>
+              <Max>24</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+    </Properties>
+  </EffectPlugin>
+</PluginModule>

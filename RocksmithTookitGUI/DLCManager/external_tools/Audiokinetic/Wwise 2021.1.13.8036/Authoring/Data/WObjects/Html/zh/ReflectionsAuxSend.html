@@ -1,0 +1,17 @@
+
+<h2>Early Reflections Auxiliary Send</h2>
+<p>早期反射辅助发送。在 Wwise Spatial Audio 中启用反射处理，并决定将此对象发送到哪条 Auxiliary Bus 来进行早期反射处理。 </p>
+<p>早期反射处理用于模拟声波在游戏内几何构造所定义的虚拟表面发生反弹的声学现象。因为最初的几次反射会将大部分空间信息传达给听者，所以最好通过后期混响来单独地处理早期反射，然后使用 Wwise Reflect 插件生成更多细节。 </p>
+<p>为了渲染早期反射，必须将 Auxiliary Bus 指派给早期反射发送，并把 Wwise Reflect 插件指派给 Auxiliary Bus 上的效果器插槽。</p>
+<p>若未指定任何发送，则 Wwise Spatial Audio 将不针对声音计算早期反射路径。 </p>
+<p><strong>Note</strong>：另外，也可通过 Spatial Audio API 来为每个游戏对象指派反射 Auxiliary Bus。若既通过 API 指派了反射总线又在设计工具中将其指派给了声音，则从设计工具获取用于该声音的总线。</p>
+<p><strong>备注</strong>:为了计算反射，Wwise Spatial Audio 库必须初始化，而且游戏必须将上层几何构造发送到 Wwise Spatial Audio。</p>
+<p><strong>添加辅助发送的方法是：</strong></p>
+<ol>
+<li>点击选择器按钮 [&hellip;]。</li>
+<li>在 Master-Mixer Hierarchy 中选择一个 Auxiliary Bus。</li>
+<li>点击 <strong>OK</strong> 。</li>
+<li>为此新增发送总线设置发送音量。</li>
+</ol>
+<p><strong>备注</strong>:可以在 Master-Mixer Hierarchy 中的任意现有总线或现有辅助总线下，创建 Auxiliary Bus 子对象。</p>
+<p><strong>技巧</strong>:您可以将 Project Explorer（工程浏览器）中的辅助总线对象拖放到 User-Defined Auxiliary Send 列表中，来快速添加辅助发送。</p>

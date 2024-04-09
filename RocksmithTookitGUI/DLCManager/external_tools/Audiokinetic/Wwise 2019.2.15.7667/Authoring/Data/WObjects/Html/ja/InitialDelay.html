@@ -1,0 +1,9 @@
+
+<h2>Initial Delay</h2>
+<p>再生前に適用される、最初のディレイの長さ。このディレイは、親と子のInitial Delayに追加される。</p>
+<p><strong>注釈</strong>:このディレイをTrigger rateモードのコンテナに適用すると、子のディレイがコンテナのTriggerレート長さに加算されるので、コンテナの動作が変わる。</p>
+<p><strong>注釈</strong>:Source Editor の Play Cursor の開始位置は、初期遅延があるときは順守されない。詳細は、 <a href="HelpDoc=source_editor#play_cursor">Source Editor ドキュメント</a> を参照。</p>
+<p><strong>注釈</strong>:内蔵パラメータを使用してRTPCを制御すると、そのRTPCが Initial Delay または Priorityに関連付けられている場合、問題が発生する可能性がある。内蔵パラメータは、サウンドが特定のゲームオブジェクトで再生されるときに計算されるため、ほとんどのサウンドプロパティで効果的。Play Actionがポストされた瞬間にその値が不明であるため、RTPCを制御するための組み込みパラメータが使用されているあいだ、Initial DelayやPriorityのような再生項目の論理的な制御は適切ではない。</p>
+<p>単位: s<br/></p>
+<p>Default value: 0<br/>
+Range: 0 to 3600<br/></p>

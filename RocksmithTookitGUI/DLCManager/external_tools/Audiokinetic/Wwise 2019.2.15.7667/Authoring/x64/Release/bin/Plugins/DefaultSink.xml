@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2006 Audiokinetic Inc. -->
+<PluginModule>
+  <SinkPlugin Name="System" CompanyID="0" PluginID="174">
+    <PluginInfo>
+      <PlatformSupport>
+        <Platform Name="Any"/>
+      </PlatformSupport>
+    </PluginInfo>    
+  </SinkPlugin>  
+
+  <SinkPlugin Name="DVR Bypass" CompanyID="0" PluginID="175">
+    <PluginInfo>
+      <PlatformSupport>        
+        <Platform Name="XboxOne"/>
+        <Platform Name="Chinook"/>
+        <Platform Name="PS4"/>
+        <Platform Name="Pellegrino"/>
+      </PlatformSupport>     
+    </PluginInfo>
+    <Properties>
+      <Property Name="DVRRecordable" Type="bool">
+        <UserInterface DisplayName="DVR Recordable"/>
+        <DefaultValue>false</DefaultValue>
+        <AudioEnginePropertyID>0</AudioEnginePropertyID>
+      </Property>
+    </Properties>
+  </SinkPlugin>
+
+  <SinkPlugin Name="Communication" CompanyID="0" PluginID="176">
+    <PluginInfo>
+      <PlatformSupport>
+        <Platform Name="XboxOne"/>
+        <Platform Name="Chinook"/>
+        <Platform Name="PS4"/>
+        <Platform Name="Pellegrino"/>
+        <Platform Name="Windows"/>
+        <Platform Name="Stadia"/>
+      </PlatformSupport>
+    </PluginInfo>    
+  </SinkPlugin>
+  
+  <SinkPlugin Name="Controller Headphones" CompanyID="0" PluginID="177">
+    <PluginInfo>
+      <PlatformSupport>        
+        <Platform Name="XboxOne"/>
+        <Platform Name="Chinook"/>
+        <Platform Name="PS4"/>
+        <Platform Name="Pellegrino"/>
+        <Platform Name="Windows"/>
+      </PlatformSupport>
+    </PluginInfo>    
+  </SinkPlugin>
+
+  <SinkPlugin Name="Controller Speaker" CompanyID="0" PluginID="179">
+    <PluginInfo>
+      <PlatformSupport>        
+        <Platform Name="PS4"/>
+        <Platform Name="Pellegrino"/>
+        <Platform Name="Windows"/>
+      </PlatformSupport>
+    </PluginInfo>    
+  </SinkPlugin>
+
+  <SinkPlugin Name="Auxiliary" CompanyID="0" PluginID="180">
+    <PluginInfo>
+      <PlatformSupport>        
+        <Platform Name="PS4"/>
+        <Platform Name="Pellegrino"/>
+        <Platform Name="Windows"/>
+      </PlatformSupport>
+    </PluginInfo>    
+  </SinkPlugin>
+
+  <SinkPlugin Name="No Output" CompanyID="0" PluginID="181">
+    <PluginInfo CanBeMasterSink="false">
+      <PlatformSupport>
+        <Platform Name="Any"/>
+      </PlatformSupport>
+    </PluginInfo>
+  </SinkPlugin>
+</PluginModule>

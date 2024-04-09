@@ -1,0 +1,26 @@
+{
+  "name": "wwise-skin-default",
+  "version": "1.0.0",
+  "description": "Generates the json containing the colors for Wwise",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc -p ."
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^3.1.0",
+    "jison": "0.4.18",
+    "json-stable-stringify": "^1.0.1",
+    "node-sass": "^4.13.0",
+    "waapi": "^2017.2.0",
+    "waapi-client": "^2017.2.1"
+  },
+  "devDependencies": {
+    "@types/async": "^3.0.3",
+    "@types/json-stable-stringify": "^1.0.32",
+    "@types/node": "^13.1.5",
+    "@types/node-sass": "^4.11.0",
+    "typescript": "^3.7.4"
+  }
+}

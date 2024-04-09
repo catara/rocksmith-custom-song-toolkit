@@ -1079,8 +1079,12 @@ namespace RocksmithToolkitLib.Sng2014HSL
                                 // There may be single notes before the first chord so can't use fp1[id].StartTime == n.Time
                                 if (!chordInHandshape.ContainsKey(id))
                                 {
-                                    n.NoteMask |= CON.NOTE_MASK_STRUM;
-                                    chordInHandshape.Add(id, n.ChordId);
+                                    bool isMuteWithoutChordNotes = (n.NoteMask & CON.NOTE_MASK_FRETHANDMUTE) != 0 && n.ChordNotesId == -1;
+                                    if (!isMuteWithoutChordNotes)
+                                    {
+                                        n.NoteMask |= CON.NOTE_MASK_STRUM;
+                                        chordInHandshape.Add(id, n.ChordId);
+                                    }
                                 }
                                 else if (chordInHandshape[id] != n.ChordId)
                                 {
@@ -1117,8 +1121,12 @@ namespace RocksmithToolkitLib.Sng2014HSL
                             {
                                 if (!chordInArpeggio.ContainsKey(id))
                                 {
-                                    n.NoteMask |= CON.NOTE_MASK_STRUM;
-                                    chordInArpeggio.Add(id, n.ChordId);
+                                    bool isMuteWithoutChordNotes = (n.NoteMask & CON.NOTE_MASK_FRETHANDMUTE) != 0 && n.ChordNotesId == -1;
+                                    if (!isMuteWithoutChordNotes)
+                                    {
+                                        n.NoteMask |= CON.NOTE_MASK_STRUM;
+                                        chordInArpeggio.Add(id, n.ChordId);
+                                    }
                                 }
                                 else if (chordInArpeggio[id] != n.ChordId)
                                 {

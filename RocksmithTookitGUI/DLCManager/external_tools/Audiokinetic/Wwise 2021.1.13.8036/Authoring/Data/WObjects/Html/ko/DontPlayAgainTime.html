@@ -1,0 +1,8 @@
+
+<h2>Don&rsquo;t play this Stinger again for x seconds.</h2>
+<p>Stinger가 다시 사용되기 전에 반드시 경과해야 할 초 단위의 숫자를 말합니다.</p>
+<p>Trigger가 이 Stinger를 명시된 초 길이 이내에 호출할 경우 해당 Trigger는 무시되거나 생략됩니다. Capture Log에 Stinger가 재생될 수 없다는 메세지가 뜨게 됩니다. &ldquo;don&rsquo;t play Stinger again for&rdquo; 시간은 스팅어의 동기화 시점과 상대적이며, 이 시점은 스팅어의 도입부 큐가 일어나는 시점을 말합니다.</p>
+<p>예를 들어 1초 단위의 박자들을 가진 세그먼트가 있는데, 1.5초 길이의 pre-entry를 가진 Stinger를 정의하며 &lsquo;next beat&rsquo; 동기화 규칙을 가지고 있고 또 3초 길이의 &lsquo;don&rsquo;t play Stinger again&rsquo; 속성을 가지고 있다고 해봅시다. 이제 이 세그먼트가 현재 재생되고 있고 Trigger가 포스트될 때 커서가 정확히 박자 경계선을 지나고 있다고 상상해 보세요. 1.5초의 긴 pre-entry를 가지고 있기 때문에 이 스팅어의 도입부 큐는 다음 세그먼트의 박자와 동기화될 수 없습니다. 그렇기 때문에 대신 다음 박자로 동기화됩니다 (즉 2초 안에). 그래서 다음 5초 동안 포스트될 모든 Trigger들은 (동기화 시간의 2초 전 + 3초의 &lsquo;don&rsquo;t play again time&rsquo;) 생략됩니다.</p>
+<p>뿐만 아니라 이 시간 값은 포괄적입니다. 예를 들어 &lsquo;don&rsquo;t play again&rsquo; 시간이 0초일 경우 모든 Trigger들이 싱크 포인트에 도달할 때 까지 포괄적으로 생략됩니다. 그리고 두 개 이상의 Stinger를 정확히 동시에 재생되도록 계획하는 것도 불가능합니다.</p>
+<p>Default value: 0<br/>
+Range: 0 to 3600<br/></p>

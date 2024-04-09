@@ -1,0 +1,9 @@
+
+<h2>Initial Delay</h2>
+<p>Initial delay applied before playing. This delay will be added to parents and children Initial delay.</p>
+<p><strong>Note</strong>: This delay changes the behavior of a container in Trigger rate mode as the delay of its children will be applied additionally to the Trigger rate duration.</p>
+<p><strong>Note</strong>: The Source Editor&rsquo;s Play Cursor start position is not respected when there is an Initial Delay. For more information, refer to the <a href="HelpDoc=source_editor#play_cursor">Source Editor documentation</a>.</p>
+<p><strong>Note</strong>: Using the built-in parameters to control an RTPC can lead to problems if that RTPC is tied to Initial Delay or Priority. Built-in parameters are computed when a sound plays on a given game object, so they work great for most sound properties. Logical control of playback items like Initial Delay and Priority are not suited while using the built-in parameters to control an RTPC since their value is unknown at the moment the Play Action is posted.</p>
+<p>Default value: 0<br/>
+Range: 0 to 3600<br/>
+Units: s <br/></p>

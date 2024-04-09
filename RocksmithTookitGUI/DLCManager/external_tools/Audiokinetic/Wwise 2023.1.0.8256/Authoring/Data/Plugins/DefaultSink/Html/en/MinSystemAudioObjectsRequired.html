@@ -1,0 +1,7 @@
+
+<h2>Minimum System Audio Objects Requirement</h2>
+<p>Defines the minimum number of System Audio Objects that the endpoint must support for the sound engine to produce System Audio Objects.</p>
+<p>You can use this property to ensure a certain level of capacity for the system’s 3D audio. For example, setting this value to 50 will effectively disable the use of System Audio Objects for any platform that does not support at least 50 concurrent Audio Objects. This avoids the situation where attempting to play more objects than the system supports causes some of them to be mixed differently. When this occurs, the audio will sound different on each play.</p>
+<p>Therefore, you should set this value slightly higher than the number of System Audio Objects your game will play at any one time.</p>
+<p>Default value: 32<br/>
+Range: 0 to 65535<br/></p>

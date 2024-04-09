@@ -41,7 +41,8 @@ namespace RocksmithToolkitGUI
 
             InitMainForm();
             if (ConfigRepository.Instance()["dlcm_StartInDLCM"] == "Yes")
-                ShowDLCManager();//bcapi autostart DLCManager
+            ShowDLCManager();//bcapi autostart DLCManager
+
         }
 
         private void InitMainForm()
@@ -237,9 +238,9 @@ namespace RocksmithToolkitGUI
             // Remove all tabs
             tabControl1.TabPages.Clear();
 
-            // Add config
+            //Add DLCManagerTab
             if (!tabControl1.TabPages.Contains(DLCManagerTab))
-                tabControl1.TabPages.Add(DLCManagerTab);
+            tabControl1.TabPages.Add(DLCManagerTab);
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -370,6 +371,16 @@ namespace RocksmithToolkitGUI
         }
 
         private void dlcPackageCreator1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void generalConfig1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dlcPackageCreator1_Load_1(object sender, EventArgs e)
         {
 
         }

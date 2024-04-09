@@ -1,0 +1,16 @@
+
+<h2>Type</h2>
+<p>컨테이너에 든 오브젝트 사이에 적용할 수 있는 전환 효과의 목록은 다음과 같습니다.</p>
+<ul>
+<li><strong>Xfade (amp)</strong> - 두 오브젝트 사이에 일정한 진폭(amplitude)을 사용한 크로스페이드(crossfade, xfade)를 삽입합니다.</li>
+<li><strong>Xfade (power)</strong> - 두 오브젝트 사이에 일정한 음력(power)을 사용한 크로스페이드를 삽입합니다.</li>
+<li><strong>Delay</strong> - 두 오브젝트 사이에 무음(silence)을 삽입합니다.</li>
+<li><strong>Sample accurate</strong> - 오브젝트 간에 레이턴시가 없는 매끄러운 전환을 만들어줍니다.</li>
+<li><strong>Trigger rate</strong> - 컨테이너 내 다음 오브젝트가 재생되는 속도(역주: 타이밍)를 정해줍니다. 이 옵션은 아주 빠른 총격 소리를 모방하는데 유용합니다.</li>
+</ul>
+<p><strong>참고</strong>: Xfade(크로스페이드), Sample accurate, Trigger rate 전환 효과를 사용할 경우 몇 가지 제한 사항이 있습니다. 다음은 주목할 만한 몇 가지 제한 사항입니다.</p>
+<ul>
+<li>Blend와 Switch Container에는 크로스페이드 (Xfade)를 사용할 수 없습니다. Random/Sequence Container의 Xfade는 이 컨테이너의 하위 Blend나 Switch Container가 재생될 경우 실패하게 됩니다.</li>
+<li>그리고 Xfade나 Trigger rate 전환 효과를 사용하는 컨테이너의 Stop Action의 페이드 아웃이 젅달되지 않습니다. 컨테이너에 StopEvent가 호출될 때 페이드 아웃 값이 현재 재생 중인 세그먼트보다 길 경우 세그먼트가 종료되면 사운드가 갑자기 잘리게 됩니다. 이 경우 Set Voice Volume 동작을 사용해서 페이드를 만들고 Stop 동작을 지연하면 이 문제를 해결할 수 있습니다.</li>
+</ul>
+<p>Default value: Xfade (amp)<br/></p>

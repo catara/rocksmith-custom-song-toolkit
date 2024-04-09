@@ -1,0 +1,9 @@
+
+<h2>Preserve System-Eligible Audio Objects</h2>
+<p>Dictates whether the plug-in should let Audio Objects with 3D spatialization through without mixing them into the Main Mix.</p>
+<ul>
+<li><strong>When Audio Device supports it</strong>: The plug-in consults the Audio Device at the end of the bus pipeline to determine whether to mix System-Eligible Audio Objects or let them through. If the Audio Device supports System Audio Objects, they will be preserved, otherwise they will be mixed.</li>
+<li><strong>Always</strong>: System-Eligible Audio Objects are preserved until the System-Eligible Audio Object Limit is reached, regardless of Audio Device capabilities.</li>
+<li><strong>Never</strong>: System-Eligible Audio Objects are always mixed into the Main Mix, regardless of Audio Device capabilities.</li>
+</ul>
+<p>Default value: When Audio Device supports it<br/></p>

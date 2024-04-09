@@ -1,0 +1,17 @@
+
+<h2>Enable Diffraction</h2>
+<p>Enables diffraction and transmission processing in Spatial Audio for the sound.</p>
+<p>Diffraction simulates the acoustic phenomenon of sound bending around obstacles, whereas transmission simulates sound passing through obstacles, in a virtual environment. Obstacles are defined by rooms, portals, and/or geometry, which have been passed from the game to Spatial Audio via the API. A sound bending around an obstacle is subject to diffraction, and a sound passing through an obstacle is subject to transmission loss, both of which effect the resulting volume and filtering of a sound.</p>
+<p>For diffraction and transmission simulation to take place, the game must define level geometry or rooms and portals and send it to Wwise Spatial Audio.</p>
+<p>When diffraction and transmission are enabled for a sound, the following takes place in Wwise Spatial Audio:</p>
+<ul>
+<li>Sound paths between the emitter and the listener are calculated, comprised of a single direct or transmission path, and zero or more diffraction paths.</li>
+<li>A transmission loss coefficient (0%-100%) is calculated for the direct/transmission path. The transmission loss is determined by the rooms and geometry that the sound passes through.</li>
+<li>The transmission loss coefficient (%) is converted to a volume, a low-pass and a high-pass filter value using the <strong>occlusion</strong> curve defined in the Wwise project settings. The sound is attenuated and filtered accordingly.</li>
+<li>A diffraction coefficient (0%-100%) is calculated based on the sum of angles in the diffraction paths. A straight line path would have 0% diffraction, and a path that bends 180 degrees or more is considered 100% diffraction.</li>
+<li>The diffraction coefficient (%) is converted to a volume, a low-pass and a high-pass filter value using the <strong>obstruction</strong> curve defined in the Wwise project settings. The sound is attenuated and filtered accordingly.</li>
+<li>For diffraction paths, the apparent position of the sound relative to the listener is calculated to create &lsquo;virtual&rsquo; positions giving the listener the impression that the sound is propagating around a corner or through a portal.</li>
+</ul>
+<p><strong>Note</strong>: The Game Object 3D Viewer enables the user to see what is going on inside of Wwise Spatial Audio, including level geometry, portals, and the sound&rsquo;s diffraction paths and resultant virtual positions.</p>
+<p><strong>Note</strong>: For diffraction and transmission to take effect, the Wwise Spatial Audio library must be initialized and the game must send level geometry or rooms and portals to Wwise Spatial Audio.</p>
+<p>Default value: false<br/></p>

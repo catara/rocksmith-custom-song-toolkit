@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 12 13" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.41421;">
+    <g transform="matrix(1,0,0,1,-11,-199)">
+        <g transform="matrix(0.176471,0,0,2.06767,1.58824,14.4737)">
+            <g transform="matrix(5.66667,0,0,0.483636,-9517.67,-506.596)">
+                <g id="MixingDesk_Collapse">
+                    <g id="Arrow-Open" serif:id="Arrow Open">
+                        <g>
+                            <g transform="matrix(0.923077,0,0,1.18182,130.846,-222.818)">
+                                <rect x="1688" y="1231" width="13" height="11" style="fill:none;"/>
+                            </g>
+                            <g transform="matrix(-1.23549,0,0,1.57161,4821.09,-272.021)">
+                                <path d="M2527.61,958.417C2527.16,958.118 2526.16,958.261 2526.19,958.851L2526.19,963.834C2526.19,964.281 2526.58,964.58 2527.13,964.636L2533.28,964.636C2534.11,964.633 2534.4,964.314 2534.25,963.743L2527.61,958.417Z" style="fill:rgb(43,43,43);"/>
+                            </g>
+                            <g transform="matrix(1.14286,0,0,1.46939,-242.714,-582.306)">
+                                <path d="M1699,1236.78L1692,1242.22L1699,1242.22L1699,1236.78Z" style="fill:rgb(200,200,200);"/>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

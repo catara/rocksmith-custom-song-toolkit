@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-3,-3)">
+        <g transform="matrix(0.75,0,0,0.75,-596.75,192.5)">
+            <g transform="matrix(1.33333,0,0,1.33333,799.667,-252.667)">
+                <g id="Navigation_ToolbarBack_Active">
+                    <g id="Arrow">
+                        <g id="Transparent-BG" serif:id="Transparent BG" transform="matrix(1,0,0,1,-517,-144)">
+                            <rect x="517" y="144" width="16" height="16" style="fill:none;"/>
+                        </g>
+                        <g id="Forward-Icon" serif:id="Forward Icon" transform="matrix(-1.49581,0,0,3.03508,2857.72,-3800.19)">
+                            <g id="Transparent-27" serif:id="Transparent 27" transform="matrix(2.0056,0,0,0.224674,993.924,867.329)">
+                                <rect x="452" y="1714" width="5" height="22" style="fill:none;"/>
+                            </g>
+                            <g transform="matrix(0.668534,0,0,0.329522,1899.12,1250.77)">
+                                <path d="M8.09,16.59L9.5,18L15.5,12L9.5,6L8.09,7.41L11.67,11L3,11L3,13L11.67,13L8.09,16.59Z" style="fill:rgb(37,37,37);"/>
+                                <path d="M7.383,17.297C6.993,16.907 6.992,16.274 7.382,15.884L9.261,14C9.261,14 3,14 3,14C2.448,14 2,13.552 2,13L2,11C2,10.448 2.448,10 3,10L9.261,10C9.261,10 7.382,8.116 7.382,8.116C6.992,7.726 6.993,7.093 7.383,6.703L8.793,5.293C8.98,5.106 9.235,5 9.5,5C9.765,5 10.02,5.106 10.207,5.293L16.207,11.293C16.598,11.683 16.598,12.317 16.207,12.707L10.207,18.707C10.02,18.894 9.765,19 9.5,19C9.235,19 8.98,18.894 8.793,18.707L7.383,17.297ZM8.09,16.59L9.5,18L15.5,12L9.5,6L8.09,7.41L11.67,11L3,11L3,13L11.67,13L8.09,16.59Z" style="fill:rgb(162,162,162);"/>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

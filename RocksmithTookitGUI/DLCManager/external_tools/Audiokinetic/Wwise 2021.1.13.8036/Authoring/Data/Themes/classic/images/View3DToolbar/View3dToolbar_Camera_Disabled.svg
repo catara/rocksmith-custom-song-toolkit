@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 19 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-7,-4)">
+        <g id="View3dToolbar_Camera_Disabled" transform="matrix(1,0,0,1,5,4)">
+            <g opacity="0.3">
+                <g id="Follow-Object" serif:id="Follow Object" transform="matrix(1,0,0,1,-1694,-134)">
+                    <g id="Transparent-BG" serif:id="Transparent BG" transform="matrix(0.95,0,0,0.95,1696,134)">
+                        <rect x="0" y="0" width="20" height="20" style="fill:white;fill-opacity:0;"/>
+                    </g>
+                    <g transform="matrix(6.12323e-17,-1,0.714286,4.37374e-17,1628.43,1794)">
+                        <path d="M1650.5,107.907L1645.26,116.063L1646,118.4L1655,118.4L1655.74,116.063L1650.5,107.907ZM1650.5,110L1655,117L1646,117L1650.5,110Z" style="fill:rgb(58,58,58);"/>
+                        <path d="M1650.5,110L1655,117L1646,117L1650.5,110Z" style="fill:rgb(189,189,189);"/>
+                    </g>
+                    <g transform="matrix(0.8,0,0,0.875,407.8,47.25)">
+                        <path d="M1625.25,107.36C1625.25,105.979 1624.02,104.857 1622.51,104.857C1622.51,104.857 1615.49,104.857 1615.49,104.857C1613.98,104.857 1612.75,105.979 1612.75,107.36C1612.75,107.36 1612.75,112.64 1612.75,112.64C1612.75,114.021 1613.98,115.143 1615.49,115.143C1615.49,115.143 1622.51,115.143 1622.51,115.143C1624.02,115.143 1625.25,114.021 1625.25,112.64L1625.25,107.36ZM1624,107.36C1624,106.609 1623.33,106 1622.51,106L1615.49,106C1614.67,106 1614,106.609 1614,107.36L1614,112.64C1614,113.391 1614.67,114 1615.49,114L1622.51,114C1623.33,114 1624,113.391 1624,112.64L1624,107.36Z" style="fill:rgb(58,58,58);"/>
+                        <path d="M1624,107.36C1624,106.609 1623.33,106 1622.51,106L1615.49,106C1614.67,106 1614,106.609 1614,107.36L1614,112.64C1614,113.391 1614.67,114 1615.49,114L1622.51,114C1623.33,114 1624,113.391 1624,112.64L1624,107.36Z" style="fill:rgb(189,189,189);"/>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

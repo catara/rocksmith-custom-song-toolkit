@@ -105,6 +105,7 @@ namespace RocksmithToolkitLib.DLCPackage
         /// <param name="pnum">Packages remaining to generate (used to control art cache)</param>
         public static string Generate(string destPath, DLCPackageData info, Platform platform, DLCPackageType dlcType = DLCPackageType.Song, int pnum = -1)
         {
+            var er = "";
             switch (platform.platform)
             {
                 case GamePlatform.XBox360:
@@ -131,7 +132,7 @@ namespace RocksmithToolkitLib.DLCPackage
                         switch (dlcType)
                         {
                             case DLCPackageType.Song:
-                                GenerateRS2014SongPsarc(packPsarcStream, info, platform, pnum);
+                                er = GenerateRS2014SongPsarc(packPsarcStream, info, platform, pnum);
                                 break;
                             case DLCPackageType.Lesson:
                                 throw new NotImplementedException("Lesson package type not implemented yet :(");
@@ -183,7 +184,7 @@ namespace RocksmithToolkitLib.DLCPackage
                         if (!archivePath.EndsWith(".psarc"))
                             archivePath += ".psarc";
 
-                        archivePath = EncryptPS3EdatFiles(archivePath, platform);
+                        archivePath = EncryptPS3EdatFiles(archivePath, platform); //bcapi dont enrcypt if failed at packing
                         break;
                 }
             }
@@ -201,6 +202,7 @@ namespace RocksmithToolkitLib.DLCPackage
             if (pnum <= 1)// doesn't trigger for last one, should be ? == 1 when last package generated.
                 DeleteTmpFiles(TMPFILES_ART);
 
+            if (!File.Exists(archivePath)) archivePath="missing file: "+er;
             return archivePath;
         }
 
@@ -318,27 +320,29 @@ namespace RocksmithToolkitLib.DLCPackage
                     File.Delete(ps3File);
 
             // Move directory if RS1 or file in RS2014 to user selected path
-            if (platform.version == GameVersion.RS2014)
-            {
-                var encryptedFile = String.Format("{0}.edat", FILES_PS3[0]);
-                destPath = String.Format("{0}.edat", srcPath);
+            if (FILES_PS3.Count > 0)
+                if (platform.version == GameVersion.RS2014)
+                {
+                    var encryptedFile = String.Format("{0}.edat", FILES_PS3[0]);
+                    destPath = String.Format("{0}.edat", srcPath);
 
-                if (File.Exists(destPath))
-                    File.Delete(destPath);
+                    if (File.Exists(destPath))
+                        File.Delete(destPath);
 
-                if (File.Exists(encryptedFile))
-                    File.Move(encryptedFile, destPath);
-            }
-            else
-            {
-                if (Directory.Exists(PS3_WORKDIR))
-                    IOExtension.MoveDirectory(PS3_WORKDIR, String.Format("{0}_PS3", srcPath), true);
-            }
+                    if (File.Exists(encryptedFile))
+                        File.Move(encryptedFile, destPath);
+                }
+                else
+                {
+                    if (Directory.Exists(PS3_WORKDIR))
+                        IOExtension.MoveDirectory(PS3_WORKDIR, String.Format("{0}_PS3", srcPath), true);
+                }
 
             if (encryptResult.IndexOf("No JDK or JRE is installed on your machine") > 0)
                 throw new InvalidOperationException("You need install Java SE 7 (x86) or higher on your machine. The Java path should be in PATH Environment Variable:" + Environment.NewLine + Environment.NewLine + encryptResult);
 
-            if (encryptResult.IndexOf(Packer.EDAT_MSG) < 0)
+            if (!File.Exists(destPath)) return destPath;
+            else if (encryptResult.IndexOf(Packer.EDAT_MSG) < 0)
                 throw new InvalidOperationException("Rebuilder error, please check if .edat files are created correctly and see output bellow:" + Environment.NewLine + Environment.NewLine + encryptResult);
 
             return destPath;
@@ -350,9 +354,10 @@ namespace RocksmithToolkitLib.DLCPackage
 
         #region Generate PSARC RS2014
 
-        public static void GenerateRS2014SongPsarc(Stream output, DLCPackageData info, Platform platform, int pnum = -1)
+        public static string GenerateRS2014SongPsarc(Stream output, DLCPackageData info, Platform platform, int pnum = -1)
         {
             // TODO: Benchmark processes and optimize speed
+            var er = "";
             dlcName = info.Name.ToLower();
             packPsarc = new PSARC.PSARC();
 
@@ -662,7 +667,7 @@ namespace RocksmithToolkitLib.DLCPackage
                 //}
                 //string ss = String.Format("Error 2generate PS3 package: {0}{1}. {0}PS3 package require 'JAVA x86' (32 bits) installed on your machine to generate properly.{0}", Environment.NewLine, ex.StackTrace);
                 //MessageBox.Show(ex.Message);
-                var tgst = "Error during rocksmith lib internal packaging..." + ex; UpdateLog(DateTime.Now, tgst, false, ConfigRepository.Instance()["dlcm_TempPath"], null, null, null, null);
+                er = "Erro during rocksmith lib internal packaging..." + ex.Message; UpdateLog(DateTime.Now, er, false, ConfigRepository.Instance()["dlcm_TempPath"], null, null, null, null);
                 //errorsFound.AppendLine(ss);
             }
             finally
@@ -680,6 +685,7 @@ namespace RocksmithToolkitLib.DLCPackage
                     DeleteTmpFiles(TMPFILES_ART);
                 DeleteTmpFiles(TMPFILES_SNG);
             }
+            return er;
         }
 
         public static DateTime UpdateLog(DateTime dt, string txt, bool bbl, string tmpPath, string MultithreadNo, string form, ProgressBar pB_ReadDLCs, RichTextBox rtxt_StatisticsOnReadDLCs)
@@ -699,7 +705,7 @@ namespace RocksmithToolkitLib.DLCPackage
 
             if (form == "MainDB")
                 ismaindb = "maindb";
-            
+
             Random randomp = new Random();// Write the string to a file. packid+
             var packid = 0;
             packid = randomp.Next(0, 100000);

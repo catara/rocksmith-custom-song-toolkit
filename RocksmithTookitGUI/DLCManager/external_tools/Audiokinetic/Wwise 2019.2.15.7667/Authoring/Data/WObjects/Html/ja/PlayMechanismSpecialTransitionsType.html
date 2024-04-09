@@ -1,0 +1,16 @@
+
+<h2>Type</h2>
+<p>コンテナ内のオブジェクト間に適用できるトランジションの種類。</p>
+<ul>
+<li><strong>Xfade (amp)</strong> - 定振幅を用いたクロスフェード（Xfade）が、2つのオブ ジェクト間に追加される。</li>
+<li><strong>Xfade (power)</strong> - 定電力を用いたクロスフェード（Xfade）が、2つのオブ ジェクト間に追加される。</li>
+<li><strong>Delay</strong>: 2つのオブジェクト間にサイレンスが追加される。</li>
+<li><strong>Sample accurate</strong>: オブジェクト間のレイテンシのない、シームレスなトランジションが成立する。</li>
+<li><strong>Trigger rate</strong>: コンテナ内の新しいオブジェクトが再生される確率を指定する。これは、速い銃撃音の表現などに便利である。</li>
+</ul>
+<p><strong>注釈</strong>:トランジションタイプとしてXfade、Sample accurate、またはTrigger rateを選択する場合は、いくつかの制限や制約がある。代表的なものを以下に示す:</p>
+<ul>
+<li>Blend ContainerやSwitch Containerでは、クロスフェード（Xfade）を使えない。Random ContainerやSequence ContainerのXfadeは、子のBlend ContainerやSwitch Containerが再生されると失敗し、</li>
+<li>Stopアクションのフェードアウトは、XfadeやTrigger rateのトランジションを使ったコンテナに対して伝播しない。コンテナに対してStopEventをコールすると、フェードアウト値が再生中の現在のセグメントよりも長い場合は、そのセグメントが終了するとサウンドが急に途切れなっている。対策として、Set Voice Volumeアクションを使ってフェードを作成して、Stopアクションをディレイさせなっている。</li>
+</ul>
+<p>Default value: Xfade (amp)<br/></p>

@@ -1,0 +1,1079 @@
+@function invertLightness($color) {
+    $lightness: lightness($color);
+    $inverseLightness: (1 - ($lightness/100)) * 100;
+    $outColor: change-color($color, $lightness: $inverseLightness);
+    @return $outColor;
+}
+
+@function setAlpha($color, $alpha) {
+    @return rgba(red($color), green($color), blue($color), $alpha);
+}
+
+@function gray($gray) {
+    @return rgb($gray, $gray, $gray);
+}
+
+@function grayWithAlpha($gray, $alpha) {
+    @return rgba($gray, $gray, $gray, $alpha);
+}
+
+//-- Raw Colors independent of usage ------------------------------------------- 
+    $Raw_magenta_bright_pastel:     hsl(300, 100, 75);
+    $Raw_magenta_bright:            hsl(300, 100, 50);
+    $Raw_magenta_mid:               hsl(300, 52, 47);
+    $Raw_red_pastel_light:          rgb(233, 125, 125);
+    $Raw_red_pastel:                hsl(0,    80, 65);
+    $Raw_red_bright_desaturated:    hsl(0,  100, 71);
+    $Raw_red_bright:                hsl(0,   100, 60);
+    $Raw_red_mid:                   hsl(0,   100, 36);
+    $Raw_red_dark:                  hsl(3,  100, 20);
+    $Raw_red_orange_bright:         hsl(12, 100, 43);
+    $Raw_orange_saturated:          hsl(31, 100%, 51%);
+    $Raw_orange_pastel:             hsl(31, 66%, 59%);
+    $Raw_orange_mid:                hsl(31, 97%, 36%);
+    $Raw_orange_bright:             hsl(41, 100, 50);
+    $Raw_yellow_pastel:             hsl(52,   62, 54);
+    $Raw_yellow_pure:               hsl(60, 100%, 50%);
+    $Raw_yellow_bright:             hsl(57, 100%, 49%);
+    $Raw_yellow_mid:                hsl(57,  100, 33);
+    $Raw_yellow_mid_dark:           rgb(107, 102, 0);
+    $Raw_yellow_dark:               hsl(45,   99, 14);
+    $Raw_green_yellow_bright:       hsl(90, 100, 43);
+    $Raw_green_pastel:              hsl(120, 35, 72);
+    $Raw_green_bright:              hsl(120, 100, 50);
+    $Raw_green_mid:                 hsl(120, 61, 48);
+    $Raw_green_mid_dark:            rgb(26, 129, 26);
+    $Raw_green_dark:                hsl(90, 100, 16);
+    $Raw_aqua_bright_desaturated:   hsl(180, 100, 75);
+    $Raw_aqua_bright:               hsl(180, 100, 50);
+    $Raw_aqua_mid:                  rgb(46, 139, 139);
+    $Raw_aqua_dark:                 hsl(180, 100, 19);
+    $Raw_blue_pastel:               hsl(211, 100, 64);
+    $Raw_blue_bright_desaturated:   hsl(215, 100, 68);
+    $Raw_blue_bright:               hsl(196, 98,   50);
+    $Raw_blue_mid:                  rgb(22, 113, 211);
+    $Raw_blue_saturated:            hsl(235, 100%, 50%);
+    $Raw_blue_dark:                 hsl(235, 100, 41);
+
+
+
+
+//-- Colors by Application Usage -----------------------------------
+    //-- Debug -------------------------------------
+        $BitmapTint: setAlpha(rgb(182, 16, 224), 0 / 100);
+
+    //-- Background colors
+
+        $Root_Inset_Color:  black;
+        $Root_Base_Color:   gray(70);
+        $Root_Outset_Color: white;
+        $Root_Structure_Color: black;
+        $Root_Selected_Color: white;
+        $Root_Text_Color: $Root_Outset_Color;
+
+        $Default_BG: $Root_Base_Color;
+        $Tree_BG: mix($Root_Inset_Color, $Root_Base_Color, 39%);
+        $List_BG: mix($Root_Inset_Color, $Root_Base_Color, 17%); //Darker Version - mix($Root_Inset_Color, $Root_Base_Color, 23%); // List is not as strongly indented as the tree so fields can be easily seen on top
+        $Graph_BG: $Tree_BG;
+        $Menu_BG: mix($Root_Inset_Color, $Root_Base_Color, 53%);
+
+        $Disabled_Mix_Percentage: 50%;
+        $Selected_Mix_Percentage: 55%;
+        $Selected_Partial_Mix_Percentage: 15%;
+
+        $Root_Selected_Color: $Root_Selected_Color;
+        $Selected_Border: $Root_Selected_Color;
+        $Selected_BG: mix($Root_Selected_Color, $List_BG, $Selected_Mix_Percentage);
+        $Selected_BG_Unfocused: mix($Selected_BG, $List_BG, 80%);
+        $List_BG_SelectedOverlay: setAlpha($Root_Selected_Color, $Selected_Mix_Percentage/100);
+        $List_BG_SelectedOverlayPartial: setAlpha($Root_Selected_Color, $Selected_Partial_Mix_Percentage/100);
+        
+        // Graph
+        $Graph_BG_Disabled: mix($Graph_BG, $Default_BG, $Disabled_Mix_Percentage);
+        $Graph_BG_Outside: mix($Graph_BG, $Default_BG, 70%);
+        $Graph_BG_Outside_Alternate: mix($Graph_BG, $Default_BG, 60%);
+
+        // Structure Borders
+        $StructureBorder: mix($Root_Structure_Color, $Root_Base_Color, 33%);
+        $StructureBorder_Mid: mix($Root_Structure_Color, $Root_Base_Color, 38%);
+        $StructureBorder_Strong: mix($Root_Structure_Color, $Root_Base_Color, 44%);
+        $StructureBorder_Strongest: mix($Root_Structure_Color, $Root_Base_Color, 78%);
+        $StructureBorder_Internal: mix($Root_Structure_Color, $Root_Base_Color, 17%);
+        $StructureBorder_Internal_Weak: mix($Root_Structure_Color, $Root_Base_Color, 7%);
+
+        $BehindDialogs: $StructureBorder;
+
+    //-- Accent Colors-------------------------------
+
+        //Global Accent Colors
+        $Accent_Default:             $Raw_orange_pastel;
+        $Accent_Default_Saturated:    hsl(36, 100%, 50%);
+        $Accent_Default_Bright:       hsl(31,   100%, 68%);
+        $Accent_Default_Dull:         hsl(31,   35%, 42%);
+
+        $Accent_Mute:     $Raw_blue_pastel;
+        $Accent_Mute_Inherited:  desaturate(darken($Accent_Mute, 20%), 0%); // OldValue
+
+        $Accent_Solo:     $Raw_yellow_pastel;
+        $Accent_Solo_Inherited:  desaturate(darken($Accent_Solo, 20%), 0%); // OldValue
+
+        $Accent_Capture:  $Raw_red_pastel;
+
+        $Accent_ControlSurface: hsl(90, 100, 43);
+
+        $Accent_Search: $Raw_yellow_pure;
+
+        $Accent_Meter_OverRange: hsl(3,   70, 51);; //Red
+        $Accent_Meter_InRange1:  hsl(52,  93, 59); // Yellow
+        $Accent_Meter_InRange0:  hsl(119, 50, 54); // Green
+        $Accent_Meter_UnderRange:hsl(213, 60, 48);; // Blue
+
+        $Graph_HDR_Window: setAlpha($Accent_Meter_UnderRange, 0.2);
+        
+        // Interaction Highlights
+        $DragAndDrop_Drop_Hover: $Accent_Default;
+        $FocusedBorder: adjust-color($Accent_Default, $saturation: -30);
+        $SelectionLassoOverlay: setAlpha($Root_Selected_Color, 0.25);
+
+    //-- Object Colors -------------------------------
+        $ObjectColor_None: gray(100);
+
+        $ObjectColor_1:  hsl(237, 57%,  50%);
+        $ObjectColor_2:  hsl(220, 77%,  45%);
+        $ObjectColor_3:  hsl(180, 86%, 22%);
+        $ObjectColor_4:  hsl(120, 64%,  26%);
+        $ObjectColor_5:  hsl(77,  80%, 25%);
+        $ObjectColor_6:  hsl(56,  75%,  27%);
+        $ObjectColor_7:  hsl(40,  70%,  28%);
+        $ObjectColor_8:  hsl(31,  81%, 26%);
+        $ObjectColor_9:  hsl(11,  44%,  31%);
+        $ObjectColor_10: hsl(360, 58%,  34%);
+        $ObjectColor_11: hsl(300, 53%,  32%);
+        $ObjectColor_12: hsl(280, 56%,  38%);
+        $ObjectColor_13: hsl(257, 52%,  45%);
+
+        // Versions of the same colors tinted with white
+        $ObjectColor_14:  hsl(237, 42%,  59%);
+        $ObjectColor_15:  hsl(220, 46%,  58);
+        $ObjectColor_16:  hsl(180, 34%,  40%);
+        $ObjectColor_17:  hsl(120, 28%,  45%);
+        $ObjectColor_18:  hsl(76,  42%,  42%);
+        $ObjectColor_19:  hsl(56,  61%,  39%);
+        $ObjectColor_20:  hsl(40,  46%,  46%);
+        $ObjectColor_21:  hsl(31,  45%,  47%);
+        $ObjectColor_22:  hsl(11,  35%,  51%);
+        $ObjectColor_23:  hsl(360, 40%,  54%);
+        $ObjectColor_24:  hsl(300, 36%,  49%);
+        $ObjectColor_25:  hsl(280, 44%,  54%);
+        $ObjectColor_26:  hsl(258, 69%,  63%);
+
+    // -- For curves based on object color which are drawn with transparency ------------------
+        $ObjectColorTransparent_None: hsl(0, 0%, 75%);
+        $ObjectColorTransparent_1:  hsl(237, 100%,  66%);
+        $ObjectColorTransparent_2:  hsl(204, 100%,  58%);
+        $ObjectColorTransparent_3:  hsl(180, 100%,  50%);
+        $ObjectColorTransparent_4:  hsl(120, 100%,  50%);
+        $ObjectColorTransparent_5:  hsl(77,  100%,  50%);
+        $ObjectColorTransparent_6:  hsl(56,  100%,  50%);
+        $ObjectColorTransparent_7:  hsl(40,  100%,  50%);
+        $ObjectColorTransparent_8:  hsl(30,  100%,  50%);
+        $ObjectColorTransparent_9:  hsl(20,  100%,  50%);
+        $ObjectColorTransparent_10: hsl(360, 100%,  50%);
+        $ObjectColorTransparent_11: hsl(300, 100%,  50%);
+        $ObjectColorTransparent_12: hsl(280, 100%,  62%);
+        $ObjectColorTransparent_13: hsl(271, 100%,  71%);
+
+        // Versions of the same colors tinted with white
+        $ObjectColorTransparent_14:  hsl(237, 100%,  72%);
+        $ObjectColorTransparent_15:  hsl(220, 97%,   73%);
+        $ObjectColorTransparent_16:  hsl(180, 78%,   73%);
+        $ObjectColorTransparent_17:  hsl(120, 80%,   74%);
+        $ObjectColorTransparent_18:  hsl(76,  80%,   71%);
+        $ObjectColorTransparent_19:  hsl(40,  83%,   66%);
+        $ObjectColorTransparent_20:  hsl(30,  100%,  70%);
+        $ObjectColorTransparent_21:  hsl(40,  83%,   66%);
+        $ObjectColorTransparent_22:  hsl(30,  100%,  70%);
+        $ObjectColorTransparent_23:  hsl(20,  100%,  68%);
+        $ObjectColorTransparent_24:  hsl(300, 100%,  72%);
+        $ObjectColorTransparent_25:  hsl(280, 100%,  76%);
+        $ObjectColorTransparent_26:  hsl(258, 100%,  75%);
+
+    //-- Graph Curves-------------------------------
+        // Curves which appear in graphs
+        // Also good colors for good contrast on top of the graph background
+        $Curve_Red_Lightened:         hsl(0, 100%, 73%);
+        $Curve_Red:                   hsl(0, 100%, 63%);
+        $Curve_Red_Pure:              hsl(0, 100%, 50%);
+        $Curve_Red_Saturated:         hsl(0,   100, 36);
+        $Curve_Red_Darkened:          hsl(0, 44%, 46%);
+        $Curve_Red_Weak:              $Curve_Red_Darkened;
+        $Curve_Red_Strong:            $Curve_Red_Lightened;
+
+        $Curve_RedOrange_Lightened:   hsl(9, 100%, 75%);
+        $Curve_RedOrange:             hsl(9, 100%, 62%);
+        $Curve_RedOrange_Darkened:    hsl(9, 63%, 44%);
+        $Curve_RedOrange_Weak:        $Curve_RedOrange_Darkened;
+        $Curve_RedOrange_Strong:      $Curve_RedOrange_Lightened;
+
+        $Curve_Orange_Lightened:      hsl(27, 100%, 75%);
+        $Curve_Orange:                hsl(27, 100%, 62%);
+        $Curve_Orange_Darkened:       hsl(27, 55%, 42%);
+        $Curve_Orange_Weak:           $Curve_Orange_Darkened;
+        $Curve_Orange_Strong:         $Curve_Orange_Lightened;
+
+        $Curve_Yellow_Lightened:      hsl(54, 100%, 83%);
+        $Curve_Yellow_Saturated:      hsl(54, 100%, 50%);
+        $Curve_Yellow:                hsl(54, 100%, 63%);
+        $Curve_Yellow_Darkened:       hsl(54, 57%, 45%);
+        $Curve_Yellow_Weak:           $Curve_Yellow_Darkened;
+        $Curve_Yellow_Strong:         $Curve_Yellow_Lightened;
+
+        $Curve_YellowGreen_Lightened: hsl(80, 100%, 81%);
+        $Curve_YellowGreen:           hsl(80, 87%, 59%);
+        $Curve_YellowGreen_Darkened:  hsl(80, 59%, 33%);
+        $Curve_YellowGreen_Weak:      $Curve_YellowGreen_Darkened;
+        $Curve_YellowGreen_Strong:    $Curve_YellowGreen_Lightened;
+
+        $Curve_Green_Lightened:       hsl(120, 50%, 72%);
+        $Curve_Green:                 hsl(120, 61%, 48%);
+        $Curve_Green_Saturated:       hsl(120, 61, 48);
+        $Curve_Green_Darkened:        hsl(120, 61%, 34%);
+        $Curve_Green_Weak:            $Curve_Green_Darkened;
+        $Curve_Green_Strong:          $Curve_Green_Lightened;
+
+        $Curve_AquaBlue_Lightened:    hsl(198, 100%, 75%);
+        $Curve_AquaBlue:              hsl(198, 100%, 64%);
+        $Curve_AquaBlue_Darkened:     hsl(198, 100%, 43%);
+        $Curve_AquaBlue_Weak:         $Curve_AquaBlue_Darkened;
+        $Curve_AquaBlue_Strong:       $Curve_AquaBlue_Lightened;
+
+        $Curve_Blue_Saturated:        hsl(202, 100%, 50%);
+        $Curve_Blue_Lightened:        hsl(210, 96%, 68%);
+        $Curve_Blue:                  hsl(210, 100%, 50%);
+        $Curve_Blue_Darkened:         hsl(210, 100%, 38%);
+        $Curve_Blue_Weak:             $Curve_Blue_Darkened;
+        $Curve_Blue_Strong:           $Curve_Blue_Lightened;
+
+        $Curve_RoyalBlue_Lightened:   hsl(236, 100%, 70%);
+        $Curve_RoyalBlue:             hsl(236, 100%, 59%);
+        $Curve_RoyalBlue_Darkened:    hsl(236, 59%, 46%);
+        $Curve_RoyalBlue_Weak:        $Curve_RoyalBlue_Darkened;
+        $Curve_RoyalBlue_Strong:      $Curve_RoyalBlue_Lightened;
+
+        $Curve_Purple_Lightened:      hsl(270, 100%, 72%);
+        $Curve_Purple:                hsl(270, 87%, 59%);
+        $Curve_Purple_Darkened:       hsl(270, 58%, 43%);
+        $Curve_Purple_Weak:           $Curve_Purple_Darkened;
+        $Curve_Purple_Strong:         $Curve_Purple_Lightened;
+
+        $Curve_Pink_Lightened:        hsl(324, 100%, 73%);
+        $Curve_Pink:                  hsl(324, 87%, 59%);
+        $Curve_Pink_Darkened:         hsl(324, 58%, 47%);
+        $Curve_Pink_Weak:             $Curve_Pink_Darkened;
+        $Curve_Pink_Strong:           $Curve_Pink_Lightened;
+
+        $Curve_Brown_Lightened:       hsl(30, 92%, 67%);
+        $Curve_Brown:                 hsl(30, 58%, 50%);
+        $Curve_Brown_Darkened:        hsl(30, 62%, 30%);
+        $Curve_Brown_Weak:            $Curve_Brown_Darkened;
+        $Curve_Brown_Strong:          $Curve_Brown_Lightened;
+
+        $Curve_GrayBrown_Lightened:   hsl(29, 66%, 64%);
+        $Curve_GrayBrown:             hsl(29, 35%, 47%);
+        $Curve_GrayBrown_Darkened:    hsl(29, 37%, 33%);
+        $Curve_GrayBrown_Weak:        $Curve_GrayBrown_Darkened;
+        $Curve_GrayBrown_Strong:      $Curve_GrayBrown_Lightened;
+
+        $Curve_Gray_Lightened:        hsl(0, 1%, 57%);
+        $Curve_Gray:                  hsl(0, 0%, 35%);
+        $Curve_Gray_Darkened:         hsl(0, 0%, 27%);
+        $Curve_Gray_Weak:             $Curve_Gray_Darkened;
+        $Curve_Gray_Strong:           $Curve_Gray_Lightened;
+
+        // Fade Curve used in clips & wave/source editors
+        $Curve_Fade:                  hsl(196, 79%, 63%);
+        $Curve_Crossfade:             $Curve_Orange;
+        $Curve_Volume:                $Curve_Red;
+        $Curve_LowPass:               $Curve_Blue;
+        $Curve_HighPass:              $Curve_AquaBlue;
+
+    //-- Text --------------------------------------------------
+        $Text_Label: mix($Root_Text_Color, $Root_Base_Color, 64%);
+        $Text_Mid: mix($Root_Text_Color, $Root_Base_Color, 70%);
+        $Text_Strong: mix($Root_Text_Color, $Root_Base_Color, 92%);
+        $Text_Strongest: $Root_Text_Color;
+
+        $Text_Selected: $Root_Inset_Color;
+        $Text_SelectedDisabled: mix($Text_Selected, $Selected_BG, $Disabled_Mix_Percentage);
+        $Text_Label_Disabled: mix($Text_Label, $Default_BG, 30%);
+
+        $Text_Green:           $Raw_yellow_bright;
+        $Text_Green_Selected:  $Raw_green_dark;
+
+        $Text_Yellow:          $Raw_yellow_bright;
+        $Text_Yellow_Selected: $Raw_yellow_dark;
+
+        $Text_Red:             $Raw_red_bright_desaturated;
+        $Text_Red_Selected:    $Raw_red_dark;
+
+        $Text_Blue:            $Raw_blue_bright_desaturated;
+        $Text_Blue_Selected:   $Raw_blue_dark;
+
+
+    //-- Dialog (Main Window and Nested/Floating Windows) -------------------------------
+
+        // Background color behind/between all the docked views
+        $Separator: $BehindDialogs; // Expandable Heading Block
+        $Separator_Hovered: mix($Accent_Default, $Separator, 70%); // Expandable Heading Block
+
+        // Dialog Title bars
+        $Dialog_TitleBar_BG: rgba($BehindDialogs, 0.7); // Background for Main title bar, 0.7 is how much it will blend with the project color
+        $Dialog_TitleBar_Text: $Text_Mid;
+        $Dialog_TitleBar_Border_Focused: mix($Root_Selected_Color, $Default_BG, 44%);
+        $Dialog_TitleBar_Border_Unfocused: $StructureBorder_Strong;
+
+        // Title Bar Menus
+        $Dialog_TitleBar_MenuTitle_Hovered: mix($Selected_BG, $Dialog_TitleBar_BG, 15);
+        $Dialog_TitleBar_MenuTitle_Pressed: $Menu_BG;
+
+        // Views inside Wwise which can be nested or floating windows
+        $Dialog_BG_Focused: mix($Root_Selected_Color, $Default_BG, 44%);
+        $Dialog_BG_Unfocused: $Default_BG;
+        $Dialog_Border_Focused: $Dialog_TitleBar_Border_Focused;
+        $Dialog_Border_Unfocused: $Dialog_TitleBar_Border_Unfocused;
+        $Dialog_Floating_Top_Border: $Dialog_Border_Unfocused;
+        $Dialog_Text_Focused: $Text_Selected;
+
+        //-- Menu -------------------------------
+        $Menu_BG_Selected: mix($Selected_BG, $Menu_BG, 30%);
+        $Menu_BG_SelectedDisabled: mix($Menu_BG_Selected, $Menu_BG, $Disabled_Mix_Percentage);
+        $Menu_Text: $Text_Strong;
+        $Menu_Text_Disabled: mix($Menu_Text, $Menu_BG, $Disabled_Mix_Percentage);
+        $Menu_Separator: mix($Menu_Text, $Menu_BG, 15%);
+        
+        // Tabbed View
+        $Tab_BG_Focused: $Default_BG;
+        $Tab_BG_Unfocused: mix($StructureBorder, $Default_BG, 50%);
+        $Tab_BG_Unfocused_Hovered: $Default_BG;
+
+        $Tab_Border_Focused: mix($Dialog_Border_Focused, $Default_BG, 50%);
+        $Tab_Border_Unfocused: $StructureBorder;
+        $Tab_Border_Unfocused_Hovered: $StructureBorder_Strong;
+
+        $Tab_Text_Focused: $Text_Strong;
+        $Tab_Text_Unfocused: mix($Text_Mid, $Tab_BG_Unfocused, 60%);
+        $Tab_Text_UnfocusedHovered: $Text_Mid;
+
+        // Group Box
+        $GroupBox_Border: $StructureBorder_Internal;
+        $GroupBox_Text: $Text_Label;
+
+        $Splitter_Dark: mix($StructureBorder, $StructureBorder_Mid, 50);
+        $Splitter_Light: lighten($Default_BG, 10);
+
+    //-- Tray - Node Box, Track Header etc -------------------------------
+        $Tray_TitleBox_Selected_Mix_Percentage: 40%;
+        $Tray_TitleBox_Selected_Mix_Ratio:  0.4;
+
+        $Tray_TitleBox_BG: $ObjectColor_None;
+        $Tray_TitleBox_BG_Selected: mix($Root_Selected_Color, $Tray_TitleBox_BG, $Tray_TitleBox_Selected_Mix_Percentage);
+        $Tray_TitleBox_BG_SelectedOverlay: setAlpha($Root_Selected_Color, $Tray_TitleBox_Selected_Mix_Ratio); // Incorrectly applied on Track Headers when object color is default
+
+        // Color Overlayed over the object color
+        $Tray_TitleBox_BG_DefaultColorOverlay: setAlpha($Tray_TitleBox_BG, 0.2);
+        
+        $Tray_TitleBox_Text:                  $Text_Strongest;
+        $Tray_TitleBox_Text_Disabled:         mix($Text_Strongest, $Tray_TitleBox_BG, $Disabled_Mix_Percentage);
+        $Tray_TitleBox_Text_Excluded:         $Tray_TitleBox_Text_Disabled;
+        $Tray_TitleBox_Text_ExcludedSelected: $Text_SelectedDisabled;
+
+        $Tray_Border_Floating:   mix($Selected_Border, $Default_BG, 20);
+        $Tray_Border_Selected:   $Selected_Border;
+        $Tray_Border_Hovered:    mix($Tray_Border_Selected, $Tray_Border_Floating, 40%);
+        $Tray_Border_Active:     $Selected_Border;
+
+        // Used in Mixing Desk
+        $Tray_CenterBG_ObjectColorBlendRatio: setAlpha(black, 0.1); // Only Alpha used
+        $Tray_CenterBG_Selected: mix($Selected_BG, $Default_BG, 20);
+
+
+    //-- Tree & List -------------------------------
+        $Tree_Text: $Text_Mid;
+
+        // List/Column Header
+        $List_BG_Selected: mix($Root_Selected_Color, $List_BG, $Selected_Mix_Percentage);
+        $List_BG_RelatedToSelected: mix($Root_Selected_Color, $List_BG, $Selected_Partial_Mix_Percentage);
+        $List_BG_SelectedUnfocused: mix($List_BG_Selected, $List_BG, 75%);
+
+        $List_Header_BG: mix($Root_Outset_Color, $Default_BG, 10%);
+        $List_Header_BG_Disabled: mix($List_Header_BG, $List_BG, 50%);
+        $List_Header_BG_Hovered: mix($Root_Selected_Color, $List_Header_BG, 7%);
+        $List_Header_BG_Pressed: mix($Root_Selected_Color, $List_Header_BG, 10%);
+        $List_Header_Border: $StructureBorder_Internal;
+        $List_Header_ColumnSeparator: mix($StructureBorder_Strongest, $List_Header_Border, 10%);
+
+        $List_Header_Text: $Text_Mid;
+        $List_Header_Text_Disabled: mix($List_Header_Text, $List_Header_BG, 75%);
+        $List_Header_Text_Hovered: $Text_Strongest;
+
+        $List_Text: mix($Text_Strong, $Text_Mid, 35%);
+        $List_Text_Disabled: mix($List_Text, $List_BG, $Disabled_Mix_Percentage);
+
+        // Used for Parent Rows
+        $List_Text_Strong: $Tree_Text;
+        // Used for values of decendents of parent rows which sum up to the parent row's value 
+        $List_Text_Weak: mix($List_Text_Strong, $List_BG, 60%);
+        
+        // Colored text for differentiation, not in Use
+        $List_Text_Alternate1_Strong: hsl(4, 34%, 36%);
+        $List_Text_Alternate1_Weak:mix($List_Text_Alternate1_Strong, $List_BG, 70);
+        $List_Text_Alternate2_Strong: hsl(112, 100%, 20%);
+        $List_Text_Alternate2_Weak: mix($List_Text_Alternate2_Strong, $List_BG, 70);
+
+        // List with alternating row colors 
+
+        // Row 1 - The darker row
+        $List_Row1_BG: darken($List_BG, 2%);
+        $List_Row1_BorderTop: darken($List_Row1_BG, 0.75%);
+        $List_Row1_BorderBottom: $List_Row1_BorderTop;
+        // Row 2 - The lighter row
+        $List_Row2_BG: $List_BG;
+        $List_Row2_BorderTop: lighten($List_Row2_BG, 0.5%);
+        $List_Row2_BorderBottom: $List_Row2_BorderTop;
+
+        // Hierarchy Row
+        $List_RowParent_BG: mix($Tray_TitleBox_BG, $List_BG, 55%);
+        $List_RowParent_BorderTop: lighten($List_RowParent_BG, 5%);
+        $List_RowParent_BorderBottom: darken($List_RowParent_BG, 12%);
+
+        // List Selection Gutter
+        $List_SideSelection_Gutter: $Graph_BG;
+        $List_SideSelection: mix($Root_Selected_Color, $List_SideSelection_Gutter, $Selected_Mix_Percentage);
+        $List_SideSelection_Partial: mix($List_SideSelection, $List_SideSelection_Gutter, $Selected_Partial_Mix_Percentage);
+
+        $FxPlatformRestricted: setAlpha($Accent_Default, 0.3);
+
+        // Used in Sequence Editor and Query editor
+        $TreeLine: mix($Tree_Text, $Tree_BG, $Disabled_Mix_Percentage);
+
+        $CaptureLog_Message_Overlay: setAlpha($List_BG, 0.2);
+        
+        $CaptureLog_TimeBullet_Max: darken($Accent_Default_Saturated, 10);
+        $CaptureLog_TimeBullet_Min: mix($CaptureLog_TimeBullet_Max, $List_BG, 50%);
+
+        $CaptureLog_RelatedBullet: mix($Root_Selected_Color, $List_BG, 80%);
+        $CaptureLog_RelatedBullet_Border: mix($CaptureLog_RelatedBullet, $List_BG, 40%);
+
+    //-- Buttons-------------------------------
+        $Button_BG: lighten($Default_BG, 8%);
+        $Button_BG_Disabled: mix($Button_BG, $Default_BG, 50%);
+        $Button_BG_HoveredOverlay: setAlpha(white, 0.15);
+        $Button_BG_HoveredOpaque: mix(white, $Default_BG, 15%);
+        $Button_BG_Pressed: $StructureBorder_Mid;
+        $Button_BG_Checked: $Accent_Default;
+        $Button_BG_CheckedHovered: lighten($Accent_Default, 10%);
+        $Button_BG_Learn: setAlpha($Accent_ControlSurface, 0.2);
+
+        $Button_OuterBorder: darken($Default_BG, 4%); // Used for Combo and Button
+        $Button_OuterBorderDisabled: mix($Button_OuterBorder, $Default_BG, 50%); // Used for Combo and Button
+
+        // Alpha is used as a lightness adjustement factor, the other components are not used.
+        $Button_InnerBorderLightness: grayWithAlpha(255, 0.07);
+        $Button_DisabledInnerBorderLightness: grayWithAlpha(255, 0.00);
+
+        // Button Text
+        $Button_Text: $Text_Strong;
+        $Button_Text_Pressed: white;
+        $Button_Text_Disabled: mix($Button_Text, $Button_BG_Disabled, 30%);
+        $Button_Text_Hovered: mix($Text_Strongest, $Text_Strong, 30%);
+        $Button_Text_Checked: black;
+        $Button_Text_CheckedPressed: $Button_Text_Pressed;
+        $Button_Text_CheckedDisabled: mix($Button_Text_Checked, $Button_BG_Disabled, $Disabled_Mix_Percentage);
+        $Button_Text_CheckedHovered: $Button_Text_Checked;
+
+        // Colored Buttons
+        $ColoredButton_Blue_BG_Checked:     $Curve_Blue_Saturated;
+        $ColoredButton_Blue_BG:             mix($ColoredButton_Blue_BG_Checked, $Button_BG, 15%); //, 5%);
+
+        $ColoredButton_AquaBlue_BG_Checked: $Curve_AquaBlue_Lightened;
+        $ColoredButton_AquaBlue_BG:         mix($ColoredButton_AquaBlue_BG_Checked, $Button_BG, 20%); //, 5%);
+
+        $ColoredButton_Green_BG_Checked:    $Curve_Green_Saturated;
+        $ColoredButton_Green_BG:            mix($ColoredButton_Green_BG_Checked, $Button_BG, 15%); //, 5%);
+
+        $ColoredButton_YellowGreen_BG_Checked: $Curve_YellowGreen_Strong;
+        $ColoredButton_YellowGreen_BG:      mix($ColoredButton_YellowGreen_BG_Checked, $Button_BG, 15%); //, 5%);
+
+        $ColoredButton_Yellow_BG_Checked:   $Curve_Yellow;
+        $ColoredButton_Yellow_BG:           mix($ColoredButton_Yellow_BG_Checked, $Button_BG, 15%); //, 5%);
+
+        $ColoredButton_Orange_BG_Checked:   hsl(36, 100%, 50%);
+        $ColoredButton_Orange_BG:           mix($ColoredButton_Orange_BG_Checked, $Button_BG, 15%); //, 5%);
+
+        $ColoredButton_Pink_BG_Checked:     $Curve_Pink_Lightened;
+        $ColoredButton_Pink_BG:             desaturate(mix($ColoredButton_Pink_BG_Checked, $Default_BG, 25%), 5%);
+        
+        $ColoredButton_Purple_BG_Checked:   $Curve_Purple_Lightened;
+        $ColoredButton_Purple_BG:           desaturate(mix($ColoredButton_Purple_BG_Checked, $Default_BG, 25%), 5%);
+
+        // Titlebar Buttons
+        $TitleBar_Button_BG_Hovered: mix($Root_Selected_Color, $Dialog_TitleBar_BG, 7%);
+        $TitleBar_CloseButton_BG_Hovered:   hsl(355, 86%, 49%);
+        $TitleBar_CloseButton_BG_Pressed: hsl(355, 100%, 20%);
+
+
+    //-- Controls, Fields -------------------------------
+        $Handle_BG: mix($Root_Outset_Color, $Graph_BG, 65%);
+        $Handle_Border: mix($Root_Inset_Color, $Handle_BG, 65%);
+    
+        // Fields
+        $Field_BG: mix($Root_Inset_Color, $List_BG, 6%); //Darker Version - mix($Graph_BG, $Default_BG, 85%); 
+        $Field_BG_Disabled: mix($Field_BG, $Default_BG, 35%);
+
+        $Field_Border_Outer: mix($StructureBorder_Strongest, $Field_BG, 35%);
+        $Field_Border_Outer_Disabled: mix($Field_Border_Outer, $Default_BG, 35%);
+        
+        $Field_InnerShadow: mix($Field_Border_Outer, $Field_BG, 25%);
+        
+        $Field_Text: $List_Text;  //For Darker Fields mix($Text_Strong, $Text_Mid, 1%); 
+        $Field_Text_Disabled: mix($Field_Text, $Field_BG_Disabled, 30%);
+        $Field_ControlSurfaceLearning: setAlpha($Accent_ControlSurface, 0.2);
+        $Field_Text_Hint: mix($Field_Text, $Field_BG, 30%);
+
+        // Control inside field
+        $Field_InternalControl: mix($Handle_BG, $Field_BG, 80);
+        $Field_InternalControl_Disabled: mix($Field_InternalControl, $Field_BG, $Disabled_Mix_Percentage);
+        $Field_InternalControl_Hovered: mix($Root_Outset_Color, $Field_InternalControl, 60%);
+        $Field_InternalControl_Pressed: mix($Root_Outset_Color, $Field_InternalControl, 100%);
+
+        // Combobox
+        $Combo_BG: $Field_BG;
+        $Combo_BG_Disabled: $Field_BG_Disabled;
+        $Combo_Border_Inner: $Combo_BG;
+        $Combo_Border_Inner_Disabled: $Combo_BG_Disabled;
+        $Combo_Border_Outer: $Field_Border_Outer;
+        $Combo_Border_Outer_Disabled: $Field_Border_Outer_Disabled;
+
+        // Slider
+        $Slider_Handle: $Field_Text;
+        $Slider_Handle_Disabled: mix($Slider_Handle, $Field_BG_Disabled, 20%);
+        $Slider_InternalShadow: $Field_BG; //mix($Default_BG, $Field_BG, 60%);
+        $Slider_ActiveLine: $Accent_Default;
+        $Slider_ActiveLine_Shadow: darken($Slider_ActiveLine, 16);
+        $Slider_ActiveLine_Disabled: mix($Slider_Handle_Disabled, $Field_BG_Disabled, 30%);
+        $Slider_ActiveLineShadow_Disabled: mix($Slider_Handle_Disabled, $Field_BG_Disabled, 10%);
+
+        // Feedback Slider
+        // Used for live profiling feedback in Soundseed Grain, but eventually will be used more places across Wwise
+        $FeedbackSlider_MinMaxValues: mix($Root_Outset_Color, $Field_BG, 30%);
+        $FeedbackSlider_MinMaxRange: mix($Root_Outset_Color, $Field_BG, 18%);
+        $FeedbackSlider_CurrentValue: $Accent_Default_Bright;
+        $FeedbackSlider_BallisticRange: $Accent_Default_Dull;
+
+        $FeedbackSlider_Disabled: mix($Field_Border_Outer_Disabled, $Default_BG, 50);
+        $FeedbackSlider_NoProfiling: mix($Field_Border_Outer_Disabled, $Default_BG, 80);
+
+        // Scroll Bar
+        $Scroll_Track: mix($List_BG, $Default_BG, 30%);
+        $Scroll_DragBar: mix($Root_Selected_Color, $Scroll_Track, 25%);
+        $Scroll_DragBarHover: mix($Root_Selected_Color, $Scroll_DragBar, 20%);
+
+        // Fader
+        $Fader_ActiveLine1:  $Slider_ActiveLine;
+        $Fader_ActiveLine2: darken( $Slider_ActiveLine, 16);
+        $Fader_Disabled: setAlpha($Default_BG, 0.5);
+        $Fader_Range_Ticks: $StructureBorder;
+        $Fader_ZeroMarker_Top: $StructureBorder_Strongest;
+        $Fader_ZeroMarker_Bottom: mix($Root_Selected_Color, $Default_BG, 1%);
+
+        // MiniCone
+        $MiniCone_Circle: mix($Graph_BG, $Root_Outset_Color, 70%);
+        $MiniCone_Cone: setAlpha($Default_BG, 0.60);
+
+        $Notes_Border_Hover: mix($Field_Border_Outer, $StructureBorder_Strongest, 60%);
+
+        //-- Generic Color Chip ---------------
+            $ColorChip_Border: $StructureBorder;
+            $ColorChip_DisabledOverlay: rgba($Default_BG, 0.5);
+
+        //-- Object Color Chip --------------------
+            // Alpha is used to specify how much of the border color is blended with the palette color.
+            $ObjectColorChip_Border: setAlpha($StructureBorder_Strongest, 0.20);
+            $ObjectColorChip_Border_Disabled: setAlpha($Default_BG, 0.25);
+            $ObjectColorChip_DisabledOverlay: setAlpha($Default_BG, 0.25);
+            $ObjectColorChip_Border_Focused: setAlpha($Root_Selected_Color, 0.7);
+            $ObjectColorChip_Border_Selected: setAlpha($Root_Selected_Color, 0.5);
+            $ObjectColorChip_Border_SelectedFocused: setAlpha($Root_Selected_Color, 0.7);
+
+            $ObjectColorChip_IndeterminateBG: mix($Graph_BG, $ObjectColor_None, 35%);
+            $ObjectColorChip_IndeterminateDash: mix($Field_Text, $ObjectColorChip_IndeterminateBG, 60%);
+
+            $ObjectColorChip_NoObject: mix($Root_Selected_Color, $Default_BG, 7%);
+
+
+    //-- Progress Bars & Status -----------------------------
+
+        $SuccessText: $Text_Green;
+        $SuccessTextSelected: $Text_Green_Selected;
+
+        $MessageText: $Text_Mid;
+        $MessageTextSelected: $Text_Selected;
+
+        $WarningText: $Text_Yellow;
+        $WarningTextSelected: $Text_Yellow_Selected;
+
+        $UnconvertedText: $Text_Blue;
+        $UnconvertedTextSelected: $Text_Blue_Selected;
+
+        $ErrorText: $Text_Red;
+        $ErrorTextSelected: $Text_Red_Selected;
+
+        $FatalErrorText: $Text_Strongest;
+        $FatalErrorTextSelected: $Text_Selected;
+
+        $UnknownSeverityText: $Text_Strongest;
+        $UnknownSeverityTextSelected: $Text_Selected;
+
+        // Cell background color for errors and warnings
+        $Cell_Error_BG:  $Raw_red_pastel;
+        $Cell_Warning_BG: $Raw_yellow_pastel;
+
+        $Progress_Filled: $Accent_Default;
+        $Progress_Unfilled: $List_BG; //Same as Graph Background
+        $Progress_UnfilledGradientTop: mix($Root_Structure_Color, $Progress_Unfilled, 20%);
+
+
+    //-- Timeline Ruler & Graph Grid ------------------------------
+        $Ruler_BG: $Graph_BG_Outside;
+        $Ruler_Frame: $StructureBorder; // Time Ruler Border
+        $Ruler_Text: mix($Text_Label, $Ruler_BG, 70);
+        $Ruler_TickSmall: mix($Text_Label, $Ruler_BG, 25);
+        $Ruler_TickMedium: mix($Text_Label, $Ruler_BG, 35);
+        $Ruler_TickLarge: mix($Text_Label, $Ruler_BG, 55);
+        $Ruler_Axis: mix($Text_Label, $Ruler_BG, 30);
+        $Ruler_AxisTextColor: $Text_Mid;
+
+    //-- Graph -------------------------------
+        $Graph_GridAxis: $Ruler_Axis;
+        $Graph_GridLine: mix($Graph_GridAxis, $Graph_BG, 30%);
+
+    //-- Meter ---------------------------------------
+        $Meter_BG: $Graph_BG;
+        $Meter_GridLine: $Graph_GridLine;
+        $Meter_Text: $Ruler_Text;
+
+        $Meter_OverRange:  $Accent_Meter_OverRange;  //Red
+        $Meter_InRange1:   $Accent_Meter_InRange1;   // Yellow
+        $Meter_InRange0:   $Accent_Meter_InRange0;   // Green
+        $Meter_UnderRange: $Accent_Meter_UnderRange; // Blue
+
+        // Colors mixed with background for a transparent effect
+        $Meter_OverRange_MixedWithBG: mix($Meter_OverRange, $Meter_BG, 20); //Red
+        $Meter_InRange1_MixedWithBG:  mix($Meter_InRange1, $Meter_BG, 20); // Yellow
+        $Meter_InRange0_MixedWithBG:  mix($Meter_InRange0, $Meter_BG, 20); // Green
+
+    //-- Node Graph-------------------------------
+        $NodeGraph_BG: $Graph_BG;
+        $NodeGraph_BG_Disabled: $Default_BG;
+        
+        $NodeGraph_Wire: mix($Selected_Border, $Graph_BG, 58);
+        $NodeGraph_Wire_Hovered: mix($Selected_Border, $Graph_BG, 72);
+        $NodeGraph_Wire_Selected: $Selected_Border;
+
+        $NodeGraph_WireFeedback: $Raw_red_bright;
+        $NodeGraph_WireFeedback_Hovered: darken($NodeGraph_WireFeedback, 10);
+        $NodeGraph_WireFeedback_Selected: lighten($NodeGraph_WireFeedback, 20);
+        
+        $NodeGraph_WireMute_Active: saturate(darken($Accent_Mute, 15%), 2%);
+        $NodeGraph_WireMute_Hovered: mix($NodeGraph_WireMute_Active, $NodeGraph_BG, 85%);
+        $NodeGraph_WireMute: mix($NodeGraph_WireMute_Active, $NodeGraph_BG, 60%);
+
+        $NodeGraph_WireSolo_Active: saturate(darken($Accent_Solo, 24%), 25%);
+        $NodeGraph_WireSolo_Hovered: mix($NodeGraph_WireSolo_Active, $NodeGraph_BG, 85%);
+        $NodeGraph_WireSolo: mix($NodeGraph_WireSolo_Active, $NodeGraph_BG, 60%);
+
+        $NodeGraph_DeviceNode: $Tray_TitleBox_BG;
+
+        // Node Box
+        $NodeGraph_NodeBorder: $Tray_Border_Floating;
+        $NodeGraph_NodeBorder_Hovered: $Tray_Border_Hovered;
+        $NodeGraph_NodeBorder_Active: $Tray_Border_Selected;
+        $NodeGraph_NodeBorder_Selected: $Tray_Border_Selected;
+
+        // Game object group box which a number of nodes sit inside
+        $NodeGraph_GroupBox_BG: mix($Tray_TitleBox_BG, $NodeGraph_BG, 30%);
+        $NodeGraph_GroupBox_Border: mix($Tray_TitleBox_BG, $NodeGraph_BG, 80%);
+        $NodeGraph_GroupBox_TitleBox: mix($Tray_TitleBox_BG, $NodeGraph_BG, 100%);
+
+        $NodeGraph_VirtualVoice_BG: $Field_BG;
+        $NodeGraph_EffectsRow_BG: mix($List_BG, $Accent_Default, 60%);
+        $NodeGraph_MixerRow_BG: mix($List_BG, $Accent_Default, 40%);
+
+        $NodeGraph_Node_Numeric_BG: $List_BG;
+        $NodeGraph_Node_Text: $Text_Strong;
+
+        // Cues and Markers
+        $Cursor_Time:  $Raw_yellow_bright;
+        $Cursor_LatestCaptureTime:  $Curve_Red_Saturated;
+        $Cursor_Entry: $Curve_Green;
+        $Cursor_Exit:  $Curve_Red;
+
+
+    //-- Graph (Numeric Graph) -------------------------------
+        //-- Graph Points --
+            $Graph_Point_BG: $Graph_BG_Outside;
+            $Graph_Point_BG_Selected: mix($Root_Selected_Color, $Graph_BG, 80%);
+            $Graph_Point_Border: mix($Root_Outset_Color, $Graph_BG_Outside, 90);
+            $Graph_Point_Border_Selected: $Selected_Border;
+            $Graph_Point_HoverOverlay: setAlpha($Root_Selected_Color, 0.2);
+
+            $Graph_Point_SelectedUnfocused: $Graph_Point_BG_Selected;
+            $Graph_Point_BorderUnfocused: $Graph_Point_Border_Selected;
+
+        $Graph_FadeHandle: $Handle_BG;
+        $Graph_FadeHandle_Border: $Handle_Border;
+        $Graph_FadeHandle_Selected: $Graph_Point_BG_Selected;
+        $Graph_FadeHandle_Disabled: mix($Graph_FadeHandle_Border, $Graph_BG, 40); 
+
+        $Graph_Curve_HoverOverlay: setAlpha($Root_Selected_Color, 0.4);
+
+        //-- ??? Not sure what these are affecting
+        $GraphControl_OuterRadius: mix($Graph_GridAxis, $Graph_BG, 0%);
+        $GraphControl_MidRadius: mix($Graph_GridAxis, $Graph_BG, 30%);
+        $GraphControl_Cone: setAlpha($Curve_AquaBlue, 0.07);
+        $GraphControl_HighlightedSegment: mix($Curve_AquaBlue, $Selected_BG, 70%);
+        $GraphControl_EvaluatedPoint: setAlpha($Accent_Default, 0.25);
+
+        // Graph Cursors
+            // Flags for cursor like game parameter
+            $Graph_CursorBase: mix($Root_Outset_Color, $Graph_BG, 50%);
+            $Graph_CursorBase_Selected: $Selected_Border;
+            $Graph_CursorBase_Shadow: $Graph_BG;
+
+            // Used for Begin and End in Convolution Reverb
+            $Graph_CursorBase_ShadowTransparent: mix($Graph_CursorBase, $Graph_BG, 60%);
+            
+            // Vertical line to right of cursor
+            $Graph_CursorBase_ShadowHover: $Graph_BG;
+
+            $Graph_CursorBase_Flag: $Graph_BG;
+
+            // Color for Game Object Cursor when capturing and 'Show Game Objects' is on in RTPC editor
+            $Graph_CursorBase_Flag_GameObject: mix($Root_Inset_Color, $Graph_CursorBase_Flag, 6%);
+            // When user hovers over game object cursor both original cursor and game object cursor highlight this color
+            $Graph_CursorBase_Flag_Hover: mix($Root_Inset_Color, $Graph_CursorBase_Flag, 80%);
+            $Graph_CursorBase_Flag_Dragged: $Graph_CursorBase_Flag_Hover;
+            // Doesn't seem to be used
+            $Graph_CursorBase_Flag_DraggedHovered: $Graph_CursorBase_Flag_Hover;
+
+            $Graph_CursorBase_Text: mix($Text_Label, $Graph_BG, 95%);
+            $Graph_CursorBase_Text_Dragged: $Text_Strongest;
+
+            // Cursor which trails the one changed by the user, it shows the last sample from the game object
+            $Graph_CursorTrail_Line: mix($Graph_CursorBase, $Graph_BG, 50%);
+            $Graph_CursorTrail_Line_Hovered: $Graph_CursorBase;
+
+            // Not sure if these are used
+            $Graph_CursorTrail_Flag: $Graph_CursorBase_Flag;
+            $Graph_CursorTrail_Flag_Default: $Graph_CursorBase_Flag;
+            $Graph_CursorTrail_Text: $Graph_CursorBase_Text;
+
+            // Custom Cue flag Shadow color
+            $Graph_CursorCustomCue_Line: mix($Root_Outset_Color, $Accent_Default_Dull, 20);
+            $Graph_CursorCustomCue_Flag_BG: mix($Root_Outset_Color, $Default_BG, 60);
+            $Graph_CursorCustomCue_Flag_BG_Disabled: mix($Graph_CursorCustomCue_Flag_BG, $Default_BG, $Disabled_Mix_Percentage);
+            $Graph_CursorCustomCue_Flag_Shadow: mix($StructureBorder_Strong, $Default_BG, 50%);
+            $Graph_CursorCustomCue_Flag_Shadow_Disabled: mix($Graph_CursorCustomCue_Flag_Shadow, $Default_BG, $Disabled_Mix_Percentage);
+
+            // Standard cursor with flag, used for Event Cue
+            $Graph_CursorStandardCue_Border:  mix($StructureBorder, $StructureBorder_Strong, 50);
+            $Graph_CursorStandardCue_Border_Selected: setAlpha($Selected_Border, 0.3);
+            $Graph_CursorStandardCue_Text_Border: setAlpha($Tray_TitleBox_BG, 0); //Used by Wwise but can't see it anywhere
+            $Graph_CursorStandardCue_Border_BrightenFactor: setAlpha(black, 0.06); // Only alpha is used
+            $Graph_CursorStandardCue_Pole_BrightenFactor: setAlpha(black, 0.3); // Only alpha is used
+ 
+    // -- Graph (Voice Monitor)
+        $Graph_CurveBlendSelectedColor: setAlpha($Root_Outset_Color, 0.6);
+        $Graph_CurveTransparencyNormal: rgba(0,0,0,0.65);
+        $Graph_CurveTransparencyMouseOver: rgba(0,0,0,1);
+        $Graph_CurveTransparencySelected: rgba(0,0,0,1);
+        
+    //-- Wave Editors ------------------------------
+        $Graph_Waveform: mix($Root_Outset_Color, $Graph_BG, 35%);
+        $Graph_Waveform_Crossfade_BG: setAlpha($Root_Outset_Color, 0.08);
+
+        $WaveViewerControl_Waveform: gray(10);
+        $WaveViewerControl_NonZeroBackground: setAlpha(black, 0.5);
+        $WaveViewerControl_Transparency: setAlpha(black, 0.3); // Background of Clip (gets overlayed with transparency)
+
+        $Source_Marker_Line_FromFile: setAlpha($Root_Outset_Color, 0.5);
+        $Source_Marker_Line_Manual: setAlpha($Accent_Default_Bright, 0.7);
+        $Source_Marker_Line_FromTransient: setAlpha($Curve_Blue_Saturated, 0.5);
+        $Source_Marker_Text: $StructureBorder_Strong;
+
+        $Source_Trim_Start_End_Line: mix($Root_Outset_Color, $Graph_BG, 27%);
+        $Source_DisabledOverlay: setAlpha($Default_BG, 0.5);
+        
+    // -- Multiband Graphs (e.g. Mastering Suite)
+        
+        // Individual band curve colors
+        $MultibandGraph_Band1CurveBase: $Curve_Blue_Lightened;
+        $MultibandGraph_Band2CurveBase: $Curve_Green;
+        $MultibandGraph_Band3CurveBase: $Curve_Pink;
+        $MultibandGraph_Band4CurveBase: $Curve_Purple_Lightened;
+        $MultibandGraph_Band5CurveBase: $Curve_AquaBlue;
+        $MultibandGraph_Band6CurveBase: $Curve_YellowGreen;
+        $MultibandGraph_Band1CurveHighlight: lighten($Curve_Blue_Lightened, 0.1);
+        $MultibandGraph_Band2CurveHighlight: $Curve_Green_Lightened;
+        $MultibandGraph_Band3CurveHighlight: $Curve_Pink_Lightened;
+        $MultibandGraph_Band4CurveHighlight: lighten($Curve_Purple_Lightened, 0.1);
+        $MultibandGraph_Band5CurveHighlight: $Curve_AquaBlue_Lightened;
+        $MultibandGraph_Band6CurveHighlight: $Curve_YellowGreen_Lightened;
+        
+        // Cumulated curve color
+        $MultibandGraph_MainCurveBase: $Curve_Yellow;
+        $MultibandGraph_MainCurveFill: setAlpha($MultibandGraph_MainCurveBase, 0.1);
+        
+        // State specific colors (mostly for control points)
+        $MultibandGraph_SelectionOutline: $Graph_Point_Border_Selected;
+        $MultibandGraph_SelectionFill: $Graph_Point_BG_Selected;
+
+        // Multiband compressor
+        $MultibandGraph_CrossoverLineBase: mix($Accent_Default_Saturated, $Graph_BG, 50%);
+        $MultibandGraph_CrossoverLineHighlight: mix($MultibandGraph_CrossoverLineBase, $MultibandGraph_SelectionOutline, 50%);
+        $MultibandGraph_TransferCurveOutline: $Accent_Default;
+        $MultibandGraph_TransferCurveFill: setAlpha($MultibandGraph_TransferCurveOutline, 0.1);
+
+
+    //-- Music Editor -------------------------------
+
+        // Music Tracks
+        $Track_BG: $Graph_BG;
+        $Track_Separator: mix($StructureBorder_Strongest, $StructureBorder_Strong, 70%);
+        $Track_GridLine: $Graph_GridLine;
+        $Track_GridLineWeak: $Graph_GridLine;
+
+        $Track_Header_Shadow: mix($StructureBorder, $StructureBorder_Mid, 80);
+
+        // For when nothing has been loaded into the Music Editor yet
+        $EmptyWidget: $Graph_BG;
+
+        // Much of the clip uses the $Tray... colors
+
+        $Clip_BG: setAlpha($Tray_TitleBox_BG, 0.3); // Requires alpha
+        $Clip_BG_SelectedOverlay: setAlpha($Tray_TitleBox_BG_SelectedOverlay, 0.3); // Only alpha is used
+
+        // Alpha is used to specify how much of the border color is blended with the palette color.
+        $Clip_Border: setAlpha($StructureBorder_Mid, 0.8);
+        $Clip_Border_Selected: setAlpha($Tray_Border_Selected, 1.0);
+
+        $Clip_Wave: setAlpha(mix($Root_Outset_Color, $Graph_Waveform, 25%), 0.4);
+        $Clip_LoopLine: $Curve_Blue;
+        $Clip_Midi_Note: setAlpha(mix($Root_Outset_Color, $Graph_BG, 60%), 0.6);
+
+
+        // Sequence Sub Panel
+        $SubTrackHeader_SequenceBG: mix($Curve_Green_Saturated, $Default_BG, 25%); //hsl(129, 19%, 60%);
+        $SubTrackHeader_SequenceBG_Selected: saturate(lighten($SubTrackHeader_SequenceBG, 20%), 20%); //hsl(129, 43%, 77%);
+        // Random Sub Panel
+        $SubTrackHeader_RandomBG: mix($Curve_Blue_Saturated, $Default_BG, 25%); //hsl(214, 31%, 67%);
+        $SubTrackHeader_RandomBG_Selected: saturate(lighten($SubTrackHeader_RandomBG, 15%), 30%); // hsl(214, 49%, 81%);
+        // Switch Sub Panel
+        $SubTrackHeader_SwitchBG: mix($Curve_Yellow, $Default_BG, 25%); //hsl(55, 28%, 54%);
+        $SubTrackHeader_SwitchBG_Selected: saturate(lighten($SubTrackHeader_SwitchBG, 15%), 30%); //hsl(58, 59%, 81%);
+
+
+        //-- Blend Editor -----------------
+            $BlendContainerClipBase: setAlpha($Curve_Yellow, 1.0);
+            $BlendContainerClipBaseFrame: setAlpha($BlendContainerClipBase, 0.4);
+            $BlendContainerClipBaseFrameSelected: mix($Selected_BG, $BlendContainerClipBase, 25%);
+            $BlendContainerClipBaseCenter: setAlpha($BlendContainerClipBase, 0.15);
+            $BlendContainerClipBaseCurve: $BlendContainerClipBase;
+
+            $BlendContainerClipAlternate: $Curve_AquaBlue;
+            $BlendContainerClipAlternateFrame: setAlpha($BlendContainerClipAlternate, 0.4);
+            $BlendContainerClipAlternateFrameSelected: mix($Selected_BG, $BlendContainerClipAlternate, 25%);
+            $BlendContainerClipAlternateCenter: setAlpha($BlendContainerClipAlternate, 0.15);
+            $BlendContainerClipAlternateCurve: $BlendContainerClipAlternate;
+
+
+    //-- Mixing Desk -------------------------------
+        $MixingDesk_BG: $Default_BG; // Anything other than $Default_BG shows errors with hovering over the fader in mixing desk
+        $MixingDesk_Row_BG: mix($List_Header_BG, $MixingDesk_BG, 40);
+        $MixingDesk_Row_Alternate_BG: mix($MixingDesk_Row_BG, $MixingDesk_BG, 30);
+
+
+    //-- Plugins - Soundseed Grain, Wind & Woosh, Convolution Reverb -----------------------------
+        // Top visualization graph
+        $SoundseedGrain_Grain: $Curve_Yellow_Saturated;
+        $SoundseedGrain_PositionCursorLine: $Curve_Green;
+        $SoundseedGrain_PositionCursorFlag: darken($Curve_Green, 0);
+        $SoundseedGrain_PositionCursorFlagBg: $ObjectColor_4;
+        $SoundseedGrain_PositionCursorText: $Tray_TitleBox_Text;
+        $SoundseedGrain_Marker_Line: $Curve_Orange;
+        $SoundseedGrain_Marker_Line_Trim: setAlpha($Root_Structure_Color, 1%);
+
+        // Bottom Grain Envelope Visualizer
+        $SoundseedGrain_MainCurve : setAlpha($Curve_Orange, 1);
+        $SoundseedGrain_MainCurveFill : setAlpha(mix($Curve_Orange_Lightened, $Curve_Orange, 70), 0.26); 
+        $SoundseedGrain_SecondaryCurve : setAlpha(mix($Root_Outset_Color, $Graph_BG, 64%), 0.6);
+        $SoundseedGrain_SecondaryCurvesFill : setAlpha(mix($Root_Outset_Color, $Graph_BG, 50%), 0.2);
+
+        // Curve Handle colors use $Graph_FadeHandle
+
+        // For both SoundSeed Wind and Woosh
+        $SoundSeed_PannerCircle_BG: mix($Root_Outset_Color, $Graph_BG, 30%); // Area around panner dot you move around
+        $SoundSeed_PannerCircle_Radius: setAlpha($Root_Outset_Color, 0.06); //Large circle in background the dot moves around on top
+
+        $ConvolutionReverb_IRRectangle: setAlpha($Graph_BG, 0.5);
+
+    //-- 3D View --------------------------------
+        $View3D_Disabled_Mix_Percentage: 50%;
+
+        // Object Colors used in acoustic textures
+        $View3D_PaletteColorNone: mix($Root_Outset_Color, $Graph_BG, 47%);
+        $View3D_PaletteColorNoTexture: $Curve_AquaBlue;
+        $View3D_PaletteColor1:  saturate(mix($Root_Outset_Color, $ObjectColor_1, 25%), 15%);
+        $View3D_PaletteColor2:  saturate(mix($Root_Outset_Color, $ObjectColor_2, 20%), 15%);
+        $View3D_PaletteColor3:  saturate(mix($Root_Outset_Color, $ObjectColor_3, 15%), 15%);
+        $View3D_PaletteColor4:  saturate(mix($Root_Outset_Color, $ObjectColor_4, 35%), 15%);
+        $View3D_PaletteColor5:  saturate(mix($Root_Outset_Color, $ObjectColor_5, 35%), 15%);
+        $View3D_PaletteColor6:  saturate(mix($Root_Outset_Color, $ObjectColor_6, 35%), 15%);
+        $View3D_PaletteColor7:  saturate(mix($Root_Outset_Color, $ObjectColor_7, 25%), 15%);
+        $View3D_PaletteColor8:  saturate(mix($Root_Outset_Color, $ObjectColor_8, 25%), 15%);
+        $View3D_PaletteColor9:  saturate(mix($Root_Outset_Color, $ObjectColor_9, 25%), 15%);
+        $View3D_PaletteColor10: saturate(mix($Root_Outset_Color, $ObjectColor_10, 25%), 15%);
+        $View3D_PaletteColor11: saturate(mix($Root_Outset_Color, $ObjectColor_11, 28%), 15%);
+        $View3D_PaletteColor12: saturate(mix($Root_Outset_Color, $ObjectColor_12, 30%), 15%);
+        $View3D_PaletteColor13: saturate(mix($Root_Outset_Color, $ObjectColor_13, 25%), 15%);
+
+        $View3D_PaletteColor14:  $ObjectColor_14;
+        $View3D_PaletteColor15:  $ObjectColor_15;
+        $View3D_PaletteColor16:  $ObjectColor_16;
+        $View3D_PaletteColor17:  $ObjectColor_17;
+        $View3D_PaletteColor18:  $ObjectColor_18;
+        $View3D_PaletteColor19:  $ObjectColor_19;
+        $View3D_PaletteColor20:  $ObjectColor_20;
+        $View3D_PaletteColor21:  $ObjectColor_21;
+        $View3D_PaletteColor22:  $ObjectColor_22;
+        $View3D_PaletteColor23:  $ObjectColor_23;
+        $View3D_PaletteColor24:  $ObjectColor_24;
+        $View3D_PaletteColor25:  $ObjectColor_25;
+        $View3D_PaletteColor26:  $ObjectColor_26;
+
+        // 3D view Colors for Geometry and Rays etc
+        $View3D_Dialog_BG: $Graph_BG;
+
+        // 3D Axis and Grid
+        $View3D_Viewport_BG: $Graph_BG;
+        $View3D_Grid: $Graph_GridLine;
+        $View3D_Axis_X: $Raw_red_bright;
+        $View3D_Axis_Y: $Raw_green_bright;
+        $View3D_Axis_Z: $Raw_blue_bright;
+        $View3D_Axis_Front: $View3D_Axis_Z;
+        $View3D_Axis_Top: $View3D_Axis_Y;
+
+        // 3D Lights
+        $View3D_Light_Diffuse0: hsl(0, 0%, 91%);
+        $View3D_Light_Diffuse1: hsl(0, 0%, 58%);
+        $View3D_Light_Diffuse2: hsl(0, 0%, 100%);
+        $View3D_Light_Ambient:  hsl(0, 0%, 100%);
+
+        // Color of listener/emitter objects
+        $Listener_Emitter_Alpha: 0.7;
+        $View3D_ListenerEmitter: setAlpha($Raw_aqua_bright, $Listener_Emitter_Alpha);
+        $View3D_ListenerEmitter_Disabled: setAlpha($View3D_ListenerEmitter, $View3D_Disabled_Mix_Percentage*$Listener_Emitter_Alpha/100);
+
+        $View3D_Text: $Text_Strongest;
+
+        $View3D_Camera_Text: $Text_Red_Selected;
+
+        $View3D_Attenuation_InvertCone: setAlpha($Curve_Red_Saturated, 0.1);
+        $View3D_Attenuation_Cone:       setAlpha($Curve_Red_Saturated, 0.10);
+        $View3D_Attenuation_Radius:     setAlpha(mix(white, $View3D_Viewport_BG, 65%), 0.05);
+
+        $View3D_Object: $Text_Strong;
+        $View3D_Object_Disabled: setAlpha($View3D_Object, $View3D_Disabled_Mix_Percentage/100);
+
+        // Dot on the listener and emitter in the 3d viewer
+        $Ray_Listener_Emitter_Alpha: 0.7;
+        $View3D_Ray_Listener: setAlpha($Raw_aqua_bright, $Ray_Listener_Emitter_Alpha);
+        $View3D_Ray_Emitter: setAlpha($Raw_yellow_bright, $Ray_Listener_Emitter_Alpha);
+        $View3D_Ray_Listener_Disabled: setAlpha($View3D_Ray_Listener, $View3D_Disabled_Mix_Percentage*$Ray_Listener_Emitter_Alpha/100);
+        $View3D_Ray_Emitter_Disabled: setAlpha($View3D_Ray_Emitter, $View3D_Disabled_Mix_Percentage*$Ray_Listener_Emitter_Alpha/100);
+
+        // Geometry diffraction paths
+        $Diffraction_Path_Alpha: 0.85;
+        $View3D_Ray_DiffractionPath:  setAlpha($Raw_magenta_bright_pastel, $Diffraction_Path_Alpha);
+        $View3D_Ray_DiffractionPath_Disabled: setAlpha($View3D_Ray_DiffractionPath, $View3D_Disabled_Mix_Percentage*$Diffraction_Path_Alpha/100);
+
+        // Path color when no path is found, or object is out of range
+        $View3D_Ray_DiffractionPathOutOfRange: setAlpha($Raw_orange_pastel, 0.5); //there is no line of sight between emitter and listener, but no viable path
+
+        // Sound propagation path color
+        $Propagation_Path_Alpha: 0.7;
+        $View3D_Ray_PropagationPath: setAlpha($Raw_green_bright, $Propagation_Path_Alpha);
+        $View3D_Ray_PropagationPath_Disabled: setAlpha($View3D_Ray_PropagationPath, $View3D_Disabled_Mix_Percentage*$Propagation_Path_Alpha/100);
+        $View3D_Ray_PropagationPathShortest: $Raw_green_bright;
+
+        // Reflection colors
+        $Reflection_Ray_Alpha: 0.7;
+        $View3D_Ray_ReflectionOrder1: setAlpha($Raw_yellow_pure, $Reflection_Ray_Alpha);
+        $View3D_Ray_ReflectionOrder2: setAlpha(hsl(39, 100%, 51%), $Reflection_Ray_Alpha);
+        $View3D_Ray_ReflectionOrder3: setAlpha(rgb(255, 113, 47), $Reflection_Ray_Alpha);
+        $View3D_Ray_ReflectionOrder4: setAlpha(rgb(255, 72, 47), $Reflection_Ray_Alpha);
+
+        $View3D_Ray_ReflectionOccluded: setAlpha(white, 1.0); // requires a special build of wwise sound engine to see
+
+        // Portals
+        $Portal_Alpha: 1.0;
+        $View3DPortal_Enabled:  setAlpha($Raw_green_bright, $Portal_Alpha);
+        $View3DPortal_Disabled: setAlpha($View3DPortal_Enabled, $View3D_Disabled_Mix_Percentage*$Portal_Alpha/100);
+
+        // Different edge types on the 3d wireframe
+        $View3D_DiffractionEdge: setAlpha(white, 0.4);
+        $View3D_BoundaryEdge:    setAlpha($Raw_blue_bright, 0.7);
+        $View3D_MalformedEdge:   setAlpha($Raw_red_bright, 0.7);
+
+    // Additional Variables to support inconsistencies in Classic Skin
+        $PropertyHelp_BG: $Tree_BG;
+        $PropertyHelp_Text: $Tree_Text;
+
+        $Main_TitleBar_BG: $Dialog_TitleBar_BG;
+
+        $GroupBox_Border_Shadow: $Default_BG;
+
+        $Caption_BG: $Field_BG;
+        $Caption_Border: $Field_Border_Outer;
+        $Caption_Text: $Field_Text;
+        $Caption_Text_Disabled: $Field_Text_Disabled;
+
+        $RTPC_Graph_BG: $Graph_BG;
+        $RTPC_Graph_BG_Outside: $Graph_BG_Outside;
+        $RTPC_Graph_BG_Empty_Overlay: $Graph_BG;
+        $RTPC_Graph_GridLine: $Graph_GridLine;
+        $RTPC_Graph_GridAxis: $Graph_GridAxis;
+
+        $RTPC_Ruler_BG: $RTPC_Graph_BG;
+        $RTPC_Ruler_TickLarge: $Ruler_TickLarge;
+        $RTPC_Ruler_TickSmall: $Ruler_TickSmall;
+        $RTPC_Ruler_Text: $Ruler_Text;
+        $RTPC_Ruler_AxisTextColor: $Ruler_AxisTextColor;
+
+        $RTPC_Graph_Waveform: $Graph_Waveform;
+        
+        $Dialog_NumberedButton_Text: $Button_Text;
+        $Dialog_NumberedButton_Text_Hovered: $Button_Text_Hovered;
+        $Dialog_NumberedButton_Text_Disabled: $Button_Text_Disabled;
+
+        $MixingDesk_SideHeader_BG: mix($List_Header_BG, $MixingDesk_BG, 80%);
+        $MixingDesk_SideHeader_Child_BG: $List_Header_BG;
+
+        $MusicClip_FadeCurve: $Curve_Fade;
+
+        // This is for the external wave viewer, the colors get loaded at startup and are never reloaded
+        // Since currently the dark skin is the default loaded skin the colors used in the
+        // external  wave viewer will be the colors from the dark skin only
+        $ExternalWaveEditor_DiffNonZero_BG: setAlpha(rgb(188, 130, 36), 0.5);
+        $ExternalWaveEditor_DiffWave_Default:  gray(65);
+        $ExternalWaveEditor_DiffWave:  black;

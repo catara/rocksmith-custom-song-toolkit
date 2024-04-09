@@ -76,6 +76,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Third-party Apps", "Third-p
 		Third-party Apps\CLI_RestorePID.bat = Third-party Apps\CLI_RestorePID.bat
 		Third-party Apps\CLI_Unpacker.bat = Third-party Apps\CLI_Unpacker.bat
 		Third-party Apps\CLI_WritePID.bat = Third-party Apps\CLI_WritePID.bat
+		ThirdPartyApps\Template.wproj = ThirdPartyApps\Template.wproj
 		Third-party Apps\Wwise2010.tar.bz2 = Third-party Apps\Wwise2010.tar.bz2
 		Third-party Apps\Wwise2013.tar.bz2 = Third-party Apps\Wwise2013.tar.bz2
 		Third-party Apps\Wwise2014.tar.bz2 = Third-party Apps\Wwise2014.tar.bz2
@@ -84,6 +85,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Third-party Apps", "Third-p
 		Third-party Apps\Wwise2017.tar.bz2 = Third-party Apps\Wwise2017.tar.bz2
 		Third-party Apps\Wwise2018.tar.bz2 = Third-party Apps\Wwise2018.tar.bz2
 		ThirdPartyApps\Wwise2019.tar.bz2 = ThirdPartyApps\Wwise2019.tar.bz2
+		ThirdPartyApps\Wwise2022.tar.bz2 = ThirdPartyApps\Wwise2022.tar.bz2
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{68A001D7-F5BF-4D2C-9FF9-4C0A62D4118F}"
@@ -360,8 +362,8 @@ Global
 		{D34C5E2C-767D-4475-B918-34F7336B1D41}.Debug Build CLI|Any CPU.Build.0 = Debug|Any CPU
 		{D34C5E2C-767D-4475-B918-34F7336B1D41}.Debug Build CLI|x86.ActiveCfg = Debug|Any CPU
 		{D34C5E2C-767D-4475-B918-34F7336B1D41}.Debug Build CLI|x86.Build.0 = Debug|Any CPU
-		{D34C5E2C-767D-4475-B918-34F7336B1D41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D34C5E2C-767D-4475-B918-34F7336B1D41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D34C5E2C-767D-4475-B918-34F7336B1D41}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{D34C5E2C-767D-4475-B918-34F7336B1D41}.Debug|Any CPU.Build.0 = Release|Any CPU
 		{D34C5E2C-767D-4475-B918-34F7336B1D41}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{D34C5E2C-767D-4475-B918-34F7336B1D41}.Debug|x86.Build.0 = Debug|Any CPU
 		{D34C5E2C-767D-4475-B918-34F7336B1D41}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -376,8 +378,8 @@ Global
 		{A9B8AE19-56EB-4BE9-BA9C-577FAE894D79}.Debug Build CLI|Any CPU.Build.0 = Debug|Any CPU
 		{A9B8AE19-56EB-4BE9-BA9C-577FAE894D79}.Debug Build CLI|x86.ActiveCfg = Debug|Any CPU
 		{A9B8AE19-56EB-4BE9-BA9C-577FAE894D79}.Debug Build CLI|x86.Build.0 = Debug|Any CPU
-		{A9B8AE19-56EB-4BE9-BA9C-577FAE894D79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A9B8AE19-56EB-4BE9-BA9C-577FAE894D79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9B8AE19-56EB-4BE9-BA9C-577FAE894D79}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{A9B8AE19-56EB-4BE9-BA9C-577FAE894D79}.Debug|Any CPU.Build.0 = Release|Any CPU
 		{A9B8AE19-56EB-4BE9-BA9C-577FAE894D79}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{A9B8AE19-56EB-4BE9-BA9C-577FAE894D79}.Debug|x86.Build.0 = Debug|Any CPU
 		{A9B8AE19-56EB-4BE9-BA9C-577FAE894D79}.Release|Any CPU.ActiveCfg = Release|Any CPU

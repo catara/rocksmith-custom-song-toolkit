@@ -1,0 +1,7 @@
+
+<h2>Stream</h2>
+<p>ゲームで再生するオーディオを、ゲームメディアから直接ストリーミングするための機能。</p>
+<p>ストリーミングメディアはSoundBankに含まれない。ランタイムにディスクからそれらを開き、読み込むのは、Wwise Stream Managerの役割であり、そして最終的にはローレベルI/Oサブモジュールの役割である。Wwise I/Oの詳細は、 <a href="https://www.audiokinetic.com/library/edge/?source=SDK&amp;id=streamingdevicemanager.html">Wwise SDKドキュメンテーション</a> を参照。</p>
+<p>ストリーミングファイルを説明するファイルがSoundBanksInfo.xmlであり、SoundBank生成時にプラットフォーム別に作成される。<span class="condition" name="WwiseLite">効率的に実施するために、SoundBank生成後のステップとして、CopyStreamedFilesツールやFile Packagerツールを活用できる。</span> 詳細は <a href="HelpDoc=managing_soundbanks">SoundBankの管理</a> を参照。</p>
+<p><strong>注釈</strong>:Project Settings、またはSoundBanks Settingsで、必ずSoundBanksタブのGenerate Metadata Filesオプションを有効にすること。また、必ずGenerate XML Metadataオプションを有効にすること。これらを設定すれば、SoundBanks生成が成功するたびに、Wwiseが必ずSoundbanksInfo.xmlファイルを生成する。</p>
+<p>Default value: false<br/></p>

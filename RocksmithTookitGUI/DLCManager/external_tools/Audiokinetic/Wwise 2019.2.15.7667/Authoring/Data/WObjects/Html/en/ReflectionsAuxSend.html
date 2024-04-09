@@ -1,0 +1,17 @@
+
+<h2>Early Reflections Auxiliary Send</h2>
+<p>Enables reflection processing in Wwise Spatial Audio and determines the Auxiliary Bus this object is sending to for early reflections processing. </p>
+<p>Early reflections processing simulates the acoustic phenomenon of sound bouncing off of virtual surfaces defined by geometry in the game. Since the first few reflections convey the most spatial information to the listener, it is advantageous to process the early reflections separately (from the late reverb) and with more detail using the Wwise Reflect plug-in. </p>
+<p>To render early reflections, the Wwise Reflect plugin must be assigned to an effect slot on the Auxiliary Bus assigned to an early reflections send.</p>
+<p>If no send is specified, then Wwise Spatial Audio will not compute early reflections paths for the sound. </p>
+<p><strong>Note</strong>:It is also possible to assign a reflections Auxiliary Bus per Game Object via the Spatial Audio API. In the case that a reflections bus is assigned both via the API and to the sound in the authoring tool, the bus used for the sound is taken from the authoring tool.</p>
+<p><strong>Note</strong>: For reflections to be computed, the Wwise Spatial Audio library must be initialized and the game must send level geometry to Wwise Spatial Audio.</p>
+<p><strong>To add an auxiliary send:</strong></p>
+<ol>
+<li>Click the selector [&hellip;] button.</li>
+<li>Select an Auxiliary Bus from the Master-Mixer Hierarchy.</li>
+<li>Click <strong>OK</strong>.</li>
+<li>Set the send volume for this newly added send.</li>
+</ol>
+<p><strong>Note</strong>:Auxiliary Busses can be created anywhere in the Master-Mixer Hierarchy as children of an existing Bus or an existing Auxiliary Bus.</p>
+<p><strong>Tip</strong>: You can drag and drop an Auxiliary Bus object from the Project Explorer to the User-Defined Auxiliary Sends list to quickly add a send.</p>

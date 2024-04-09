@@ -1,0 +1,19 @@
+
+<h2>Channel Configuration Override</h2>
+<p>声道配置。列出音频源可用的声道配置，可选择将其显示在坐标图中。</p>
+<span class="condition" name="WwiseLite"><p>
+<strong>备注</strong>:虽然目前仍可针对音频源使用和编辑各种声道配置，但实际上只有完整版本的 Wwise 可输出这些配置。Wwise LTX 会始终将多声道配置下混为立体声。
+</p></span>
+<p>音频波形始终按照 Wwise 的规定排序显示声道。对于 5.1，对应 L + R + C + SL + SR + LFE（坐标图左侧，从上到下）。对于一阶 Ambisonics，对应 W + Y + Z + X。</p>
+<p>Wwise 按照显示顺序解释所选声道配置并将其输出到坐标图中。音频源声道配置可按以下文件排序模式进行解释：</p>
+<ul>
+<li><strong>SMPTE</strong>:在默认情况下，Wwise 将文件顺序诠释为 SMPTE（Microsoft 标准），除非其包含 Ambisonics 标头。对于 5.1，将显示为 5.1(L,R,C,LFE,SL,SR)。
+<br/>不过，列表中会显示默认设置及 Detect [channelconfig]。其中，channelconfig 表示检测到的配置。对于 5.1，将显示为 Detect [5.1(L,R,C,LFE,SL,SR)]。</li>
+<li><strong>FuMa</strong>:在默认情况下，Wwise 将 Ambisonics Component Ordering 以及一阶、二阶和三阶 Ambisonics 的声道排序解释为 FuMa。对于一阶 Ambisonics，将显示为 4(Ambisonics) (FuMa)。
+<br/>不过，列表中会显示默认设置及 Detect [channelconfig]。其中，channelconfig 表示检测到的配置。对于一阶 Ambisonics，将显示为 Detect [4(Ambisonics)(FuMa)]。
+<br/>FuMa 没有定义高阶 Ambisonics。高阶 Ambisonics 仅解释为 AmbiX (经过 SN3D 归一化的 ACN 排序)。</li>
+<li><strong>Anonymous</strong>:匿名 Channel Config 选项直接按照坐标图中的显示顺序来标记声道编号。一阶 Ambisonics 文件将显示为 4 (Anonymous)；在坐标图中直接显示为 1 + 2 + 3 + 4。同样地，5.1 文件将显示为 6 (Anonymous)；在坐标图中直接显示为 1 + 2 + 3 + 4 + 5 + 6。</li>
+<li><strong>Film</strong>:除 Ambisonics 文件外，列表中的备选文件排序为 Film。对于 5.1，将显示为 5.1(L,C,R,SL,SR,LFE)。</li>
+<li><strong>AmbiX</strong>:对于 Ambisonics，列表中的备选文件排序为 AmbiX（经过 SN3D 归一化的 ACN 排序）。对于一阶 Ambisonics，将显示为 4(Ambisonics)(AmbiX)。</li>
+</ul>
+<p>Default value: 0<br/></p>

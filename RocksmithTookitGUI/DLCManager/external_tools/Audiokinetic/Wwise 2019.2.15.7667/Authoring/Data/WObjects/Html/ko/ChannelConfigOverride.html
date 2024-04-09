@@ -1,0 +1,19 @@
+
+<h2>Channel Configuration Override</h2>
+<p>음원에 적용 가능한 채널 구성의 목록을 나타내며, 채널 구성을 선택하면 그래프에 표시할 수 있습니다.</p>
+<span class="condition" name="WwiseLite"><p>
+<strong>참고</strong>: Wwise의 어떤 버전이든 음원에 다양한 채널 구성을 사용하고 편집할 수 있는 반면, 사실상 Wwise의 전체 버전만 이 채널 구성을 출력해낼 수 있습니다. Wwise LTX는 항상 높은 차순의 구성을 스테레오로 다운믹스하게 됩니다.
+</p></span>
+<p>오디오 파형은 항상 Wwise 표시 순서(display ordering)를 따릅니다. 5.1의 경우, 이 설정은 그래프 보기 좌측의 위에서 아래쪽으로  L + R + C + SL + SR + LFE와 일치합니다. 1차 앰비소닉의 경우 이 설정은 W + Y + Z + X와 일치합니다.</p>
+<p>Wwise는 선택된 채널 구성을 해석한 후 표시 순서에 따라 그래픽 보기에 채널 구성을 출력합니다. 원 채널(source channel) 구성은 다음의 파일 순서 체계에 따라 해석될 수 있습니다:</p>
+<ul>
+<li><strong>SMPTE</strong>: 기본적으로 Wwise는 앰비소닉 헤더가 없는 파일의 순서를 SMPTE (Microsoft 표준)로 해석합니다. 따라서 5.1의 경우 , 5.1(L,R,C,LFE,SL,SR)로 표시됩니다.
+<br/>하지만 기본값은 Detect [channelconfig]로 목록에 표시됩니다. 여기서 &ldquo;channelconfig&rdquo;는 감지된 구성을 말합니다. 따라서 5.1의 경우 Detect [5.1(L,R,C,LFE,SL,SR)]로 표시됩니다.</li>
+<li><strong>FuMa</strong>: 기본적으로 Wwise는 Ambisonics Component Ordering과 1차, 2차, 3차 앰비소닉을 FuMa로 해석합니다. 1차 앰비소닉의 경우 4(Ambisonics) (FuMa)로 나타납니다.
+<br/>하지만 기본값은 Detect [channelconfig]로 목록에 표시됩니다. 여기서 &ldquo;channelconfig&rdquo;는 감지된 구성을 말합니다. 1차 앰비소닉의 경우 Detect [4(Ambisonics)(FuMa)]로 나타납니다.
+<br/>더 높은 차순의 앰비소닉은 FuMa로 정의되지 않으며 AmbiX로만 해석됩니다 (SN3D 노멀라이제이션을 사용하는 ACN 차수법).</li>
+<li><strong>Anonymous</strong>: 익명 Channel Config 옵션은 단순히 그래프에 나타나는 순서대로 채널 번호를 붙입니다. 1차 앰비소닉 파일은 4 (Anonymous)로 나타나며 그래프에서는 1 + 2 + 3 + 4로 표시됩니다. 마찬가지로 5.1 파일은 6 (Anonymous)로 나타나며, 그래프에서는 1 + 2 + 3 + 4 + 5 + 6으로 표시됩니다.</li>
+<li><strong>Film</strong>: 목록에서 앰비소닉 파일을 외의 대안적 파일 차순은 Film입니다. 5.1의 경우 5.1(L,C,R,SL,SR,LFE)로 나타납니다.</li>
+<li><strong>AmbiX</strong>: 앰비소닉의 경우 다른 파일 순서로는 AmbiX (SN3D 노멀라이제이션을 사용하는 ACN 차수법)가 있습니다. 1차 앰비소닉의 경우 4(Ambisonics)(AmbiX)로 나타납니다.</li>
+</ul>
+<p>Default value: 0<br/></p>

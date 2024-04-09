@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2009 Audiokinetic Inc. -->
+<PluginModule>
+  <EffectPlugin Name="Wwise Stereo Delay" CompanyID="0" PluginID="135">
+    <PluginInfo MenuPath="50-Wwise">
+      <PlatformSupport>
+        <Platform Name="Any">
+          <CanBeInsertOnBusses>true</CanBeInsertOnBusses>
+          <CanBeInsertOnAudioObjects>true</CanBeInsertOnAudioObjects>
+          <CanBeRendered>true</CanBeRendered>
+        </Platform>
+      </PlatformSupport>
+    </PluginInfo>
+    <Properties>
+      <!-- Global section -->
+      <Property Name="EnableCrossFeed" Type="bool" SupportRTPCType="Boolean" ForceRTPCCurveSegmentShape="Constant" DisplayName="Enable Crossfeed">
+        <DefaultValue>false</DefaultValue>
+        <AudioEnginePropertyID>0</AudioEnginePropertyID>
+      </Property>
+      <Property Name="EnableFeedback" Type="bool" SupportRTPCType="Boolean" ForceRTPCCurveSegmentShape="Constant" DisplayName="Enable Feedback">
+        <DefaultValue>false</DefaultValue>
+        <AudioEnginePropertyID>1</AudioEnginePropertyID>
+      </Property>
+      <!-- Left controls-->
+      <Property Name="LeftInputType" DocId="InputType" Type="int32" DisplayName="Left Input Type" DisplayGroup="Left">
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>9</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="int32">
+              <Value DisplayName="Left">0</Value>
+              <Value DisplayName="Center">1</Value>
+              <Value DisplayName="Left+Center">2</Value>
+              <Value DisplayName="None">3</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="LeftDelayTime" DocId="DelayTime" Type="Real32" DisplayName="Left Delay Time" DisplayGroup="Left">
+        <UserInterface Step="0.01" Fine="0.001" Decimals="3"/>
+        <DefaultValue>0.1</DefaultValue>
+        <AudioEnginePropertyID>10</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0.03</Min>
+              <Max>2</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="LeftFeedback" DocId="Feedback" Type="Real32" SupportRTPCType="Additive" DataMeaning="Decibels" DisplayName="Left Feedback" DisplayGroup="Left">
+        <UserInterface Step="0.1" Fine="0.01" Decimals="2"/>
+        <DefaultValue>-12</DefaultValue>
+        <AudioEnginePropertyID>11</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-48</Min>
+              <Max>0</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="EnableFeedback" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="LeftCrossfeed" DocId="Crossfeed" Type="Real32" SupportRTPCType="Additive" DataMeaning="Decibels" DisplayName="Left Crossfeed" DisplayGroup="Left">
+        <UserInterface Step="0.1" Fine="0.01" Decimals="2"/>
+        <DefaultValue>-12</DefaultValue>
+        <AudioEnginePropertyID>12</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-48</Min>
+              <Max>0</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="EnableCrossFeed" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <!-- Right controls-->
+      <Property Name="RightInputType" DocId="InputType" Type="int32" DisplayName="Right Input Type" DisplayGroup="Right">
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>13</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="int32">
+              <Value DisplayName="Right">0</Value>
+              <Value DisplayName="Center">1</Value>
+              <Value DisplayName="Right+Center">2</Value>
+              <Value DisplayName="None">3</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="RightDelayTime" DocId="DelayTime" Type="Real32" DisplayName="Right Delay Time" DisplayGroup="Right">
+        <UserInterface Step="0.01" Fine="0.001" Decimals="3"/>
+        <DefaultValue>0.1</DefaultValue>
+        <AudioEnginePropertyID>14</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0.03</Min>
+              <Max>2</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="RightFeedback" DocId="Feedback" Type="Real32" SupportRTPCType="Additive" DataMeaning="Decibels" DisplayName="Right Feedback" DisplayGroup="Right">
+        <UserInterface Step="0.1" Fine="0.01" Decimals="2"/>
+        <DefaultValue>-12</DefaultValue>
+        <AudioEnginePropertyID>15</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-48</Min>
+              <Max>0</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="EnableFeedback" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="RightCrossfeed" DocId="Crossfeed" Type="Real32" SupportRTPCType="Additive" DataMeaning="Decibels" DisplayName="Right Crossfeed" DisplayGroup="Right">
+        <UserInterface Step="0.1" Fine="0.01" Decimals="2"/>
+        <DefaultValue>-12</DefaultValue>
+        <AudioEnginePropertyID>16</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-48</Min>
+              <Max>0</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="EnableCrossFeed" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <!-- Feedback filter -->
+      <Property Name="FilterType" Type="int32" SupportRTPCType="Exclusive" ForceRTPCCurveSegmentShape="Constant" DisplayName="Filter Type" DisplayGroup="Filter">
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>5</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="int32">
+              <Value DisplayName="None">0</Value>
+              <Value DisplayName="Low Shelf">1</Value>
+              <Value DisplayName="Peaking">2</Value>
+              <Value DisplayName="High Shelf">3</Value>
+              <Value DisplayName="Low Pass">4</Value>
+              <Value DisplayName="High Pass">5</Value>
+              <Value DisplayName="Band Pass">6</Value>
+              <Value DisplayName="Notch">7</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="FilterGain" Type="Real32" SupportRTPCType="Additive" DataMeaning="Decibels" DisplayName="Filter Gain" DisplayGroup="Filter">
+        <UserInterface Step="0.5" Fine="0.1" Decimals="1"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>6</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-24</Min>
+              <Max>24</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="FilterType" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Low shelf -->
+                <Value DisplayName="Low Shelf">1</Value>
+                <!-- Peaking -->
+                <Value DisplayName="Peaking">2</Value>
+                <!-- High Shelf -->
+                <Value DisplayName="High Shelf">3</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="FilterFrequency" Type="Real32" SupportRTPCType="Exclusive" DataMeaning="Frequency" DisplayName="Filter Frequency" DisplayGroup="Filter">
+        <UserInterface Decimals="0"/>
+        <DefaultValue>1000</DefaultValue>
+        <AudioEnginePropertyID>7</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>20</Min>
+              <Max>20000</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="FilterType" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Low shelf -->
+                <Value DisplayName="Low Shelf">1</Value>
+                <!-- Peaking -->
+                <Value DisplayName="Peaking">2</Value>
+                <!-- High Shelf -->
+                <Value DisplayName="High Shelf">3</Value>
+                <!-- Low Pass -->
+                <Value DisplayName="Low Pass">4</Value>
+                <!-- High Pass -->
+                <Value DisplayName="High Pass">5</Value>
+                <!-- Band Pass -->
+                <Value DisplayName="Band Pass">6</Value>
+                <!-- Notch -->
+                <Value DisplayName="Notch">7</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="FilterQFactor" Type="Real32" SupportRTPCType="Exclusive" DisplayName="Filter Q Factor" DisplayGroup="Filter">
+        <UserInterface Step="0.1" Decimals="2"/>
+        <DefaultValue>1</DefaultValue>
+        <AudioEnginePropertyID>8</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0.1</Min>
+              <Max>20</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="FilterType" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <!-- Peaking -->
+                <Value DisplayName="Peaking">2</Value>
+                <!-- Band Pass -->
+                <Value DisplayName="Band Pass">6</Value>
+                <!-- Notch -->
+                <Value DisplayName="Notch">7</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <!-- Output section -->
+      <Property Name="DryLevel" Type="Real32" SupportRTPCType="Additive" DataMeaning="Decibels" DisplayName="Dry Level" DisplayGroup="Output">
+        <UserInterface Step="1" Fine="0.1" Decimals="1"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>2</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-96</Min>
+              <Max>24</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="WetLevel" Type="Real32" SupportRTPCType="Additive" DataMeaning="Decibels" DisplayName="Wet Level" DisplayGroup="Output">
+        <UserInterface Step="1" Fine="0.1" Decimals="1"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>3</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-96</Min>
+              <Max>24</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="FrontRearBalance" Type="Real32" SupportRTPCType="Additive" DisplayName="Front/Rear Balance" DisplayGroup="Output">
+        <UserInterface Step="1" Fine="0.1" Decimals="1"/>
+        <DefaultValue>-100</DefaultValue>
+        <AudioEnginePropertyID>4</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-100</Min>
+              <Max>100</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+    </Properties>
+  </EffectPlugin>
+</PluginModule>

@@ -1,0 +1,14 @@
+
+<h2>Input</h2>
+<p>This parameter determines which channels will be processed by the harmonizer.</p>
+<p>Values:</p>
+<ul>
+<li><strong>As Input</strong>: All input channels are processed (default).</li>
+<li><strong>Mono-Center</strong>: Only the center channel is processed. Mono signals are also processed.</li>
+<li><strong>Stereo</strong>: Only the front left and right speakers are processed.</li>
+<li><strong>L-R-C</strong>: All front speakers are processed, including center when present.</li>
+<li><strong>L-R-Ls-Rs</strong>: The front and rear stereo pairs are processed.</li>
+<li><strong>L-R-C-Ls-Rs</strong>: All full band channels are processed.</li>
+<li><strong>Left Only</strong>: Only the left channel is processed by the harmonizer. This mode is useful to reduce CPU usage when the Effect is inserted on busses and it can be assumed that the audio content routed to the Effect is mono sounds that do not use positioning or panning. The result of the harmonized left channel is applied to the wet path of both front left and front right channels. The dry paths preserve the original channel content however.</li>
+</ul>
+<p>Default value: As Input<br/></p>

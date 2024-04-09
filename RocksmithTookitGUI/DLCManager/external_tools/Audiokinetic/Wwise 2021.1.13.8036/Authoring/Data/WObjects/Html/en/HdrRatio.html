@@ -1,0 +1,8 @@
+
+<h2>HDR Ratio</h2>
+<p>This control behaves similarly to the ratio control in an audio compressor. It is a measure of how close the HDR window follows peaks.</p>
+<p>At very large values, the HDR window follows peaks closely, so that two sounds, one peaking at 20 dB and the other peaking at 40 dB above threshold, come out at the same level of 0 dBFS, as long as they are not played at the same time. The difference between the two is that the latter will result in an attenuation of -20 dB to sounds below threshold, while the former will result in an attenuation of -40 dB. At lower ratios, say 4, a sound peaking at +20 dB comes out at +5 dB while a sound peaking at +40 dB comes out at +10 dB. The attenuation that results on sounds below threshold is -15 dB and -30 dB respectively.</p>
+<p>Using lower ratios is therefore useful in order to gain back &ldquo;global&rdquo; dynamic range for sounds above threshold that is otherwise taken away by the HDR system. The drawback is that sounds may peak above threshold, so you need to keep sufficient headroom after the HDR bus in order to avoid clipping.</p>
+<p>Refer to <a href="HelpDoc=working_with_hdr_ratio">Working with the HDR Ratio</a> for more details.</p>
+<p>Default value: 100<br/>
+Range: 1 to 100<br/></p>

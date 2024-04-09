@@ -1,0 +1,14 @@
+
+<h2>Input</h2>
+<p>输入。该参数确定 Harmonizer 将处理哪些声道。</p>
+<p>值：</p>
+<ul>
+<li><strong>As Input</strong>:与输入相同。处理所有输入声道（默认）。</li>
+<li><strong>Mono-Center</strong>:单声道／中置。仅处理中置声道。 还会处理单声道信号。</li>
+<li><strong>Stereo</strong>:立体声。仅处理左前和右前扬声器。</li>
+<li><strong>L-R-C</strong>:左／中／右。处理所有前置扬声器，包括中置（如有的话）。</li>
+<li><strong>L-R-Ls-Rs</strong>:左／右／左环绕／右环绕。处理前置和后置立体声对。</li>
+<li><strong>L-R-C-Ls-Rs</strong>:左／右／中／左环绕／右环绕。处理所有全频带声道。</li>
+<li><strong>Left Only</strong>:和声效果器仅处理左声道。 在总线中插入效果器时，此模式能有效减少 CPU 的使用率，它假定连通到效果器的音频内容是未使用定位或声像摆位的单声道声音。左声道的和声结果会作用于左前声道和右前声道的湿声路径。 但干声路径保留原始声道内容。</li>
+</ul>
+<p>Default value: As Input<br/></p>

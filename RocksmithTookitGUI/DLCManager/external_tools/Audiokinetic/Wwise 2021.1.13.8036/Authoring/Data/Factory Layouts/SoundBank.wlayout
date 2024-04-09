@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Layout Name="SoundBank">
+	<StackPanel Name="StackPanel" Width="1645" Height="746" Orientation="Vertical">
+		<StackPanel Name="StackPanel" Width="1645" Height="743" Orientation="Horizontal">
+			<StackPanel Name="StackPanel" Width="424" Height="743" Orientation="Vertical">
+				<View Name="Project Explorer" Width="424" Height="553" ViewSyncGroup="1">					<ViewData>
+	<ProjectExplorerView ActiveTab="0"/>
+</ViewData>
+				</View>
+				<Splitter Name="Splitter" Width="424" Height="3"/>
+				<View Name="Event Viewer" Width="424" Height="187" ViewSyncGroup="1">					<ViewData>
+	<EventViewer ActiveTab="0" Filter="2"/>
+</ViewData>
+				</View>
+			</StackPanel>
+			<Splitter Name="Splitter" Width="3" Height="743"/>
+			<StackPanel Name="StackPanel" Width="1218" Height="743" Orientation="Vertical">
+				<View Name="SoundBank Manager" Width="1218" Height="361"/>
+				<Splitter Name="Splitter" Width="1218" Height="3"/>
+				<View Name="SoundBank Editor" Width="1218" Height="378"/>
+			</StackPanel>
+		</StackPanel>
+	</StackPanel>
+</Layout>

@@ -1,0 +1,27 @@
+{
+  "name": "wwise-theme-default",
+  "version": "1.0.0",
+  "description": "Generates the json containing the colors for Wwise",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc -p ."
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^3.1.0",
+    "jison": "0.4.18",
+    "json-stable-stringify": "^1.0.1",
+    "klaw": "^3.0.0",
+    "sass": "^1.43.4",
+    "waapi": "^2017.2.0",
+    "waapi-client": "^2017.2.1"
+  },
+  "devDependencies": {
+    "@types/async": "^3.0.3",
+    "@types/json-stable-stringify": "^1.0.32",
+    "@types/klaw": "^3.0.1",
+    "@types/node": "^13.1.5",
+    "typescript": "^3.7.4"
+  }
+}

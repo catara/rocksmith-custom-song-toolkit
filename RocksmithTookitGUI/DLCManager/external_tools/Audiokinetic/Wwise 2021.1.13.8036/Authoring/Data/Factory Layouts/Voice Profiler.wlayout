@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Layout Name="Voice Profiler">
+	<StackPanel Name="StackPanel" Width="1645" Height="746" Orientation="Vertical">
+		<StackPanel Name="StackPanel" Width="1645" Height="743" Orientation="Vertical">
+			<StackPanel Name="StackPanel" Width="1645" Height="604" Orientation="Vertical">
+				<StackPanel Name="StackPanel" Width="1645" Height="375" Orientation="Horizontal">
+					<StackPanel Name="StackPanel" Width="1044" Height="375" Orientation="Horizontal">
+						<StackPanel Name="StackPanel" Width="336" Height="375" Orientation="Vertical">
+							<View Name="Project Explorer" Width="336" Height="300" ViewSyncGroup="1">								<ViewData>
+	<ProjectExplorerView ActiveTab="0"/>
+</ViewData>
+							</View>
+							<Splitter Name="Splitter" Width="336" Height="3"/>
+							<View Name="Transport Control" Width="336" Height="71"/>
+						</StackPanel>
+						<Splitter Name="Splitter" Width="3" Height="375"/>
+						<View Name="Property Editor" Width="703" Height="375"/>
+					</StackPanel>
+					<Splitter Name="Splitter" Width="3" Height="375"/>
+					<View Name="Capture Log" Width="598" Height="375"/>
+				</StackPanel>
+				<Splitter Name="Splitter" Width="1645" Height="3"/>
+				<StackPanel Name="StackPanel" Width="1645" Height="225" Orientation="Horizontal">
+					<View Name="Voice Explorer" Width="336" Height="225"/>
+					<Splitter Name="Splitter" Width="3" Height="225"/>
+					<View Name="Voice Inspector" Width="1305" Height="225"/>
+				</StackPanel>
+			</StackPanel>
+			<Splitter Name="Splitter" Width="1645" Height="3"/>
+			<View Name="Voice Monitor" Width="1645" Height="136"/>
+		</StackPanel>
+	</StackPanel>
+	<LastPositions>
+		<ViewPosition Name="Advanced Profiler" WindowPlacement_Flags="0" WindowPlacement_ShowCmd="Normal" WindowPlacement_MinPos_X="-1" WindowPlacement_MinPos_Y="-1" WindowPlacement_MaxPos_X="-1" WindowPlacement_MaxPos_Y="-1" WindowPlacement_NormalPos_Left="25" WindowPlacement_NormalPos_Top="75" WindowPlacement_NormalPos_Right="740" WindowPlacement_NormalPos_Bottom="802"/>
+	</LastPositions>
+</Layout>

@@ -1,0 +1,13 @@
+
+<h2>Volume Threshold</h2>
+<p>기본 음량 레벨을 말하며, 이 음량 밑으로 떨어질 때 Property Editor의 Advanced Settings 탭에서 정의한 작동 방식이 보이스를 관리하게 됩니다. 예를 들어 음량 한계값 미만의 보이스는 다음의 동작을 실행할 수 있습니다:</p>
+<ul>
+<li>Continue to play</li>
+<li>Be killed</li>
+<li><span class="condition" name="Feature_VirtualVoice">Sent to the virtual voice list(가상 보이스 목록으로 전송)</span>.</li>
+</ul>
+<p>이 값은 Wwise SDK API를 사용해서 덮어 쓸 수 있습니다.</p>
+<p><strong>참고</strong>: 계속 재생을 진행하거나 또는 가상으로 보내지거나의 여부에 상관 없이, 음량 한계값보다 미만인 보이스는 들리지 않습니다.
+<strong>참고</strong>: 기본 슬라이더 범위는 -96부터 0까지입니다. 이 제한 범위를 초과하시기 위해서는 값을 직접 입력하시거나 마우스가 편집 조종에 초점이 맞춰져 있을 때에 마우스 휠을 굴리시면 됩니다.</p>
+<p>Default value: -80<br/>
+Range: -96 to 0<br/></p>

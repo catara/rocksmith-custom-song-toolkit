@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (C) 2006 Audiokinetic Inc. -->
+<PluginModule>
+	<ConversionPlugin Name="AAC" CompanyID="0" PluginID="10">
+		<PluginInfo>
+			<PlatformSupport>
+				<Platform Name="Mac"></Platform>
+				<Platform Name="iOS"></Platform>
+			</PlatformSupport>
+		</PluginInfo>
+		<Properties>
+			<Property Name="EncodingMode" Type="int32">
+				<DefaultValue>0</DefaultValue>
+			</Property>
+			<Property Name="Quality" Type="Real32">
+				<UserInterface AutoUpdate="false"/>
+				<DefaultValue>9</DefaultValue>
+				<Restrictions>
+					<ValueRestriction>
+						<Range Type="int32">
+							<Min>1</Min>
+							<Max>16</Max>
+						</Range>
+					</ValueRestriction>
+				</Restrictions>
+			</Property>
+			<Property Name="EnableHighEfficiency" Type="bool">
+				<DefaultValue>false</DefaultValue>
+			</Property>
+			<Property Name="EncodingOptions" Type="int32">
+				<DefaultValue>3</DefaultValue>
+			</Property>
+		</Properties>
+		<PreConversionRequirements>
+			<Requirement Type="ChannelConfig">
+			</Requirement>
+			<Requirement Type="SampleRate">
+				<Restriction>
+					<Enumeration Type="int32">
+						<Value>48000</Value>
+						<Value>44100</Value>
+						<Value>32000</Value>
+						<Value>24000</Value>
+						<Value>22050</Value>
+						<Value>16000</Value>
+						<Value>12000</Value>
+						<Value>11025</Value>
+						<Value>8000</Value>
+					</Enumeration>
+				</Restriction>
+			</Requirement>
+		</PreConversionRequirements>
+		<UIRestrictions>
+			<Requirement Type="SampleRate">
+				<Restriction>
+					<Enumeration Type="int32">
+						<Value>48000</Value>
+						<Value>44100</Value>
+						<Value>32000</Value>
+						<Value>24000</Value>
+						<Value>22050</Value>
+						<Value>16000</Value>
+						<Value>12000</Value>
+						<Value>11025</Value>
+						<Value>8000</Value>
+					</Enumeration>
+				</Restriction>
+			</Requirement>
+		</UIRestrictions>
+		<ConversionInfo>
+			<CanShowUI>true</CanShowUI>
+			<NeedFixLoopPoints>false</NeedFixLoopPoints>
+		</ConversionInfo>
+	</ConversionPlugin>
+</PluginModule>

@@ -1,0 +1,135 @@
+#TITLE:Stuck in Here
+#ARTIST:Filter
+#GENRE:Rock
+#MP3:Filter - 1995 - Short Bus - 06 - Stuck in Here.mp3
+#COVER:1miorecs.jpg
+#BACKGROUND:1280x1280.jpg
+#VIDEO:2023-04-17_Overwatch_12phzv5_ashes_new_dynamite_is_moist_sound_on.mp4
+#BPM:345.44
+#GAP:2010
+: 0 2 0 Once
+: 12 2 0  again
+: 36 16 0  I'm
+: 59 10 0  stuck
+: 72 4 0  in
+: 83 35 0  here
+- 171
+: 224 54 0 Once
+: 283 14 0  again
+: 303 14 0  I'm
+: 322 9 0  in
+: 337 3 0  low
+: 345 36 0  gear
+- 441
+: 502 24 0 Once
+: 533 24 0  again
+: 563 7 0  I
+: 580 7 0  have
+: 593 3 0  a
+: 603 42 0  fear
+- 710
+: 775 14 0 Once
+: 794 22 0  again
+: 823 13 0  I'm
+: 840 11 0  stuck
+: 854 4 0  in
+: 860 48 0  here
+- 964
+: 1020 17 0 Hey
+: 1050 8 0  just
+: 1064 13 0  close
+: 1081 4 0  the
+: 1090 30 0  door
+- 1133
+: 1146 8 0 Think
+: 1161 12 0  back
+: 1178 8 0  and
+: 1192 9 0  just
+: 1206 47 0  ignore
+- 1265
+: 1278 22 0 Hey
+: 1308 9 0  just
+: 1324 11 0  close
+: 1339 6 0  your
+: 1350 33 0  eyes
+- 1394
+: 1405 9 0 Think
+: 1420 6 0  back
+: 1436 8 0  and
+: 1452 58 0  realize
+- 1512
+: 1514 54 0 Oh
+: 1573 34 0  no,
+: 1620 4 0  I'm
+: 1628 7 0  stuck
+: 1637 1 0  in
+: 1642 4 0  here
+- 1709
+: 1773 59 0 Oh
+: 1836 21 0  no,
+: 1862 4 0  still
+: 1872 11 0  stuck
+: 1888 7 0  in
+: 1899 33 0  here
+- 1995
+: 2059 23 0 What
+: 2087 5 0  makes
+: 2099 5 0  you
+: 2108 9 0  think
+: 2123 6 0  that
+: 2134 4 0  it's
+: 2146 46 0  okay?
+- 2254
+: 2316 4 0 Don't
+: 2330 10 0  start
+: 2346 4 0  it
+: 2356 18 0  off
+: 2380 5 0  don't
+: 2396 48 0  relate
+- 2511
+: 2579 5 0 Take
+: 2599 10 0  the
+: 2614 18 0  job
+: 2638 9 0  but
+: 2653 6 0  not
+: 2667 8 0  the
+: 2679 36 0  pay
+- 2776
+: 2837 12 0 Forget
+: 2856 9 0  the
+: 2871 28 0  hours
+: 2904 4 0  but
+: 2915 6 0  not
+: 2928 4 0  the
+: 2938 31 0  day
+- 3032
+: 3095 24 0 Hey
+: 3126 11 0  just
+: 3143 13 0  close
+: 3160 3 0  your
+: 3167 32 0  eyes
+- 3210
+: 3222 15 0 Think
+: 3241 9 0  back
+: 3255 6 0  and
+: 3268 58 0  realize
+- 3341
+: 3357 21 0 Hey
+: 3386 5 0  just
+: 3400 12 0  close
+: 3417 4 0  the
+: 3426 34 0  door
+- 3470
+: 3481 6 0 Back
+: 3497 4 0  up
+: 3514 7 0  and
+: 3529 3 0  just
+: 3541 39 0  ignore
+- 3585
+: 3590 53 0 Oh
+: 3652 24 0  no,
+: 3698 3 0  i'm
+: 3705 3 0  stuck
+: 3714 7 0  in
+: 3726 34 0  here
+E

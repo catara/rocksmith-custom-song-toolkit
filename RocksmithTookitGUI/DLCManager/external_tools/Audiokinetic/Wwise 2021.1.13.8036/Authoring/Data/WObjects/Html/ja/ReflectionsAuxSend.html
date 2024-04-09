@@ -1,0 +1,17 @@
+
+<h2>Early Reflections Auxiliary Send</h2>
+<p>Wwise Spatial Audioのリフレクション処理を有効にし、このオブジェクトがアーリーリフレクションの処理のために送信する先のAuxiliary Busを設定する。 </p>
+<p>アーリーリフレクション処理でシミュレーションされるのは、ゲームのジオメトリによって定義されたバーチャル面を、音が跳ね返るという音響現象である。最初の何回かのリフレクションで、最も重要な空間情報がリスナーに伝わるので、アーリーリフレクションはWwise Reflectプラグインを使い、別途（レイトリバーブと分けて）、細かく処理したほうが有利である。 </p>
+<p>アーリーリフレクションのレンダリングを行うには、アーリーリフレクションのセンドにアサインしたAuxiliary BusのEffectスロットに、Wwise Reflectプラグインをアサインする必要がある。</p>
+<p>センドを指定しないと、Wwise Spatial Audioはこのサウンドのアーリーリフレクションパスを計算しない。 </p>
+<p><strong>注</strong>: Spatial Audio APIを通して、Game Objectごとにリフレクション用Auxiliary Busをアサインすることもできる。もしリフレクションバスをAPI経由でアサインし、同時にオーサリングツールでサウンドにもアサインされている場合、このサウンドに使うバスはオーサリングツールに従う。</p>
+<p><strong>注釈</strong>:リフレクションを計算するには、Wwise Spatial Audioライブラリを初期化し、レベルジオメトリをゲームからWwise Spatial Audioに送信する必要がある。</p>
+<p><strong>AUXセンドを追加するには：</strong></p>
+<ol>
+<li>セレクタボタン[&hellip;]をクリックする。</li>
+<li>Master-Mixer HierarchyにあるAuxiliary Busを1つを選択する。</li>
+<li><strong>OK</strong>をクリックする。</li>
+<li>追加した新規センドの、センドボリュームを設定する。</li>
+</ol>
+<p><strong>注釈</strong>:Auxiliary Busは、既存のバスや既存のAuxiliary Busの子バスとして、Master-Mixer Hierarchyのどこにでも、作成できる。</p>
+<p><strong>Tip</strong>:Project Explorerに表示されたAuxiliary Busオブジェクトを、User-defined Auxiliary Sendsのリストにドラッグ＆ドロップすることで、簡単にAUXセンドとして追加できる。</p>

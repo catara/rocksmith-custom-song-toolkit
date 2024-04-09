@@ -1,0 +1,17 @@
+
+<h2>Actuator Configuration</h2>
+<p>A set of configurations for known devices, each of which specifies the available actuator(s). Three &ldquo;anonymous&rdquo; configurations are included for unknown device configurations.</p>
+<ul>
+<li><strong>Android</strong>: A single anonymous channel.</li>
+<li><strong>PS4 Move</strong>: A single anonymous channel.</li>
+<li><strong>PS4 2 Channel</strong>: One low and one high frequency channel.</li>
+<li><strong>Switch 2 Channel</strong>: One low and one high frequency channel.</li>
+<li><strong>Switch 4 Channel</strong>: Two low and two high frequency channels.</li>
+<li><strong>Xbox One 4 Channel</strong>: One low and one high frequency channel, as well as one right and one left trigger channel. (Cannot be tested in Wwise authoring.)</li>
+<li><strong>1 Channel</strong>: A single anonymous channel.</li>
+<li><strong>2 Channel</strong>: Two anonymous channels.</li>
+<li><strong>4 Channel</strong>: Four anonymous channels.</li>
+<li><strong>Haptics 2 Channel</strong>: One low and one high frequency channel.</li>
+</ul>
+<p><strong>Note</strong>: The platform names given to the actuator configurations indicate what is known to work for the Wwise default sink. This does not in any way limit these configurations to only the named platform. In fact, you may wish to choose something different for certain platforms. For example, some Android tablets have two actuators and, therefore, could be better served with a 2 Channel configuration instead of our default sink&rsquo;s single anonymous channel Android configuration. Having a mismatch in number of channels will not prevent motion; rather, multiple actuators will use the same Driver channels or, if there are too many channels defined, some will be ignored.</p>
+<p>Default value: 1 Channel<br/></p>

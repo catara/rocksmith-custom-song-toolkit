@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Manifest Name="Reflect" Type="Presets">
+  <Dependencies>
+    <Plugin PluginName="Wwise Reflect" PluginType="3" CompanyID="0" PluginID="171"/>
+  </Dependencies>
+</Manifest>

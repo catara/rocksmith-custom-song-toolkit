@@ -1,0 +1,13 @@
+
+<h2>Bus Configuration</h2>
+<p>버스 출력 구성을 결정합니다. 버스의 처리 상태에 영향을 줄 수 있습니다. 이 설정을 사용하여 버스 파이프라인을 따라 믹싱을 미루거나 버스에 삽입된 Effect가 처리되어야 하는 채널 수를 줄임으로써 CPU와 메모리를 절약할 수 있습니다.</p>
+<p>사용 가능한 옵션은 다음과 같습니다:</p>
+<ul>
+<li><strong>Same as parent</strong> - 버스가 상위 버스의 버스 구성을 이어 받으며 믹싱 되지 않을 가능성이 있습니다. 이렇게 하면 처리 없이 버스의 속성을 입력으로 전달하여 CPU와 메모리를 절약할 수 있습니다. 그러나 버스에 Effect와 같은 특정 기능이 있는 경우 처리가 수행되며 잠재적 절약 효과가 손실됩니다. 더 자세한 내용은 <a href="HelpDoc=understanding_the_bus_icons">버스 아이콘과 처리 상태 이해하기</a> 를 참고해 주세요.</li>
+<li><strong>Same as main mix</strong> - 버스가 버스 파이프라인 끝에 있는 Audio Device의 Main Mix의 버스 구성을 이어받습니다. 이 옵션은 버스 구성이 런타임 때 종단점에 의해 결정된다는 점에서 유연성을 제공합니다.</li>
+<li><strong>Same as passthrough mix</strong> - 버스가 버스 파이프라인 끝에 있는 Audio Device의 Passthrough Mix의 버스 구성을 이어받습니다. 이 옵션은 버스 구성이 런타임 때 종단점에 의해 결정된다는 점에서 유연성을 제공합니다. 3D 오디오가 활성화되어있고 종단점이 Passthrough Mix를 지원하는 경우 버스 출력은 2.0이 됩니다. 그 외에-는 버스가 <strong>Same as main mix</strong> 가 선택된 것처럼 작동합니다.</li>
+<li><strong>Audio Objects</strong> - 버스가 Audio Object를 생성합니다. 이는 Metadata와 함께 제공되는 오디오 버퍼로, 모든 조건이 충족되면 종단점으로 전달되어 공간화된 효과로 렌더링될 수 있습니다.</li>
+</ul>
+<p>Master Audio Bus와 같은 모든 최상위 버스의 Bus Configuration은 <strong>Defined by device</strong> 으로 자동 설정됩니다. 그 이유는 이러한 버스가 연관된 Audio Device의 버스 구성을 항상 이어받기 때문입니다.</p>
+<p>드롭다운 목록의 이러한 옵션과 기타 옵션에 대한 자세한 내용은 <a href="HelpDoc=understanding_channel_configurations">버스 구성 이해하기</a> 를 참조해 주세요.</p>
+<p>Default value: Same as parent<br/></p>

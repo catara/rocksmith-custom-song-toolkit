@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 17 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <g transform="matrix(1,0,0,1,-52,-37)">
+        <g transform="matrix(1,0,0,1,-2,-4)">
+            <g id="PlaylistCursor_Playing" transform="matrix(1,0,0,1,38,0)">
+                <clipPath id="_clip1">
+                    <rect x="16" y="41" width="17" height="17"/>
+                </clipPath>
+                <g clip-path="url(#_clip1)">
+                    <g id="BG" transform="matrix(1.88889,-3.69779e-32,9.5246e-32,1,4.66667,2.84217e-14)">
+                        <rect x="6" y="41" width="9" height="17" style="fill:none;stroke:rgb(34,34,34);stroke-opacity:0.02;stroke-width:0.33px;"/>
+                    </g>
+                    <g transform="matrix(5.522e-17,-0.995245,1,5.55384e-17,-2771,819.353)">
+                        <path d="M780.062,2793L766.991,2793L773.493,2799.8L780.062,2793Z" style="fill:rgb(47,203,255);"/>
+                        <path d="M780.786,2793.69C781.066,2793.4 781.144,2792.98 780.987,2792.61C780.829,2792.24 780.465,2792 780.062,2792L766.991,2792C766.589,2792 766.226,2792.24 766.068,2792.61C765.909,2792.97 765.986,2793.4 766.263,2793.69L772.766,2800.49C772.955,2800.68 773.217,2800.8 773.491,2800.8C773.765,2800.8 774.027,2800.69 774.217,2800.49L780.786,2793.69ZM780.062,2793L766.991,2793L773.493,2799.8L780.062,2793Z" style="fill:rgb(34,34,34);"/>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

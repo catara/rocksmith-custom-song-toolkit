@@ -1,0 +1,17 @@
+
+<h2>Early Reflections Auxiliary Send</h2>
+<p>Wwise Spatial Audio에서 반사의 처리를 활성화하며 초기 반사 처리를 위해 이 오브젝트가 전송할 Auxiliary Bus를 결정합니다. </p>
+<p>초기 반사 처리는 사운드가 게임에서 지오메트리에 의해 정의된 가상 표면에서 반사되는 음향 현상을 시뮬레이션합니다. 처음 몇 가지 반사는 리스너의 공간적 위치를 가장 많이 내포하고 있기 때문에 Wwise Reflect 플러그인을 사용하여 초기 반사를 별도로 (후기 잔향으로부터 별도) 더 자세히 처리하는 것이 좋습니다. </p>
+<p>초기 반사를 렌더링하려면 Wwise Reflect 플러그인이 반드시 초기 반사 전송에 지정된 Auxiliary Bus의 효과 입력란에 할당되어야 합니다.</p>
+<p>센드가 할당되지 않을 경우 Wwise Spatial Audio는 사운드의 초기 반사 경로를 계산할 수 없습니다. </p>
+<p><strong>참고</strong>: Spatial Audio API를 통해 반사 Auxiliary Bus를 Game Object 마다 할당할 수도 있습니다. 초기 반사가 API와 저작 도구에서의 사운드에 의해 모두 할당되었을 경우 버스가 저작 도구에서 사운드에 사용된 버스를 사용합니다.</p>
+<p><strong>참고</strong>: 반사를 계산하려면 Wwise Spatial Audio 라이브러리가 반드시 초기화되어야 하며 게임이 레벨 지오메트리를 반드시 Wwise Spatial Audio에 전송해야 합니다.</p>
+<p><strong>보조 센드를 추가하시려면:</strong></p>
+<ol>
+<li>선택기 [&hellip;] 버튼을 클릭해 주세요.</li>
+<li>Master-Mixer Hierarchy에서 Auxiliary Bus를 선택해 주세요.</li>
+<li><strong>OK</strong>를 클릭합니다.</li>
+<li>이 새로 추가된 전송을 위해 전송 음량을 설정해 주세요.</li>
+</ol>
+<p><strong>참고</strong>:Auxiliary Bus는 기존 Bus나 Auxiliary Bus의 하위 계층으로서 Master-Mixer Hierarchy 안의 어느 곳에나 생성할 수 있습니다.</p>
+<p><strong>작은 정보</strong>: 빠르게 전송을 추가하기 위해서 Auxiliary Bus를 Project Explorer에서 User-Defined Auxiliary Send 목록으로 끌어 놓으실 수 있습니다.</p>

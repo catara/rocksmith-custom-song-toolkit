@@ -61,6 +61,7 @@ namespace RocksmithToolkitLib.Extensions
         {
             using (MemoryStream memoryStream = new MemoryStream())
             {
+#pragma warning disable SYSLIB0011 // Type or member is obsolete//bcapi
                 BinaryFormatter binaryFormatter = new BinaryFormatter();
 #pragma warning disable SYSLIB0011 // Type or member is obsolete//bcapi
                 binaryFormatter.Serialize(memoryStream, value);

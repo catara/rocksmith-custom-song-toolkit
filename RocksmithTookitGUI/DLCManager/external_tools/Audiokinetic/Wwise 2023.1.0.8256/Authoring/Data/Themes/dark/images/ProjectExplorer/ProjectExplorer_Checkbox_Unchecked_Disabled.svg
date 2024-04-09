@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 10 10" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-22,-34)">
+        <g transform="matrix(1,0,0,1,19,18)">
+            <g id="ProjectExplorer_Checkbox_Unchecked_Disabled" transform="matrix(0.769231,0,0,0.769231,-359.308,267.538)">
+                <g opacity="0.3">
+                    <rect id="Checkbox" x="471" y="-327" width="13" height="13" style="fill:none;"/>
+                    <clipPath id="_clip1">
+                        <rect id="Checkbox1" serif:id="Checkbox" x="471" y="-327" width="13" height="13"/>
+                    </clipPath>
+                    <g clip-path="url(#_clip1)">
+                        <g id="Checkbox2" serif:id="Checkbox" transform="matrix(0.1625,0,0,0.764706,393.975,-522)">
+                            <path d="M554,256.7C554,255.762 550.415,255 546,255L482,255C477.585,255 474,255.762 474,256.7L474,270.3C474,271.238 477.585,272 482,272L546,272C550.415,272 554,271.238 554,270.3L554,256.7Z" style="fill:rgb(34,34,34);"/>
+                        </g>
+                        <g id="Checkbox3" serif:id="Checkbox" transform="matrix(0.13,0,0,0.611765,410.68,-481.7)">
+                            <path d="M554,256.7C554,255.762 550.415,255 546,255L482,255C477.585,255 474,255.762 474,256.7L474,270.3C474,271.238 477.585,272 482,272L546,272C550.415,272 554,271.238 554,270.3L554,256.7Z" style="fill:rgb(200,200,200);fill-opacity:0.6;"/>
+                        </g>
+                        <g id="Checkbox4" serif:id="Checkbox" transform="matrix(0.0975,0,0,0.458824,427.385,-441.4)">
+                            <path d="M554,256.7C554,255.762 550.415,255 546,255L482,255C477.585,255 474,255.762 474,256.7L474,270.3C474,271.238 477.585,272 482,272L546,272C550.415,272 554,271.238 554,270.3L554,256.7Z" style="fill:rgb(37,37,37);"/>
+                        </g>
+                        <g id="Checkbox5" serif:id="Checkbox" transform="matrix(0.0975,0,0,0.458824,427.385,-441.4)">
+                            <path d="M554,256.7C554,255.762 550.415,255 546,255L482,255C477.585,255 474,255.762 474,256.7L474,270.3C474,271.238 477.585,272 482,272L546,272C550.415,272 554,271.238 554,270.3L554,256.7Z" style="fill:rgb(34,34,34);"/>
+                        </g>
+                        <g id="Checkbox6" serif:id="Checkbox" transform="matrix(0.065,0,0,0.305882,444.09,-401.1)">
+                            <path d="M554,256.7C554,255.762 550.415,255 546,255L482,255C477.585,255 474,255.762 474,256.7L474,270.3C474,271.238 477.585,272 482,272L546,272C550.415,272 554,271.238 554,270.3L554,256.7Z" style="fill:rgb(34,34,34);"/>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

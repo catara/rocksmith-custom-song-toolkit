@@ -1,0 +1,17 @@
+
+<h2>Playback Speed</h2>
+<p>음악 오브젝트의 컨텐츠가 재생될 속도를 조정합니다:</p>
+<ul>
+<li>값이 1보다 클 경우 보통보다 빠른 속도로 재생됩니다</li>
+<li>값이 1보다 적을 경우 보통보다 느린 속도로 재생됩니다</li>
+<li>값이 1일 경우 보통의 속도로 재생됩니다</li>
+</ul>
+<p>The Playback Speed affects different media types differently:</p>
+<ul>
+<li>WAV: 컨텐츠가 보다 높거나 낮은 음조로 재생됩니다.</li>
+<li>MIDI: 컨텐츠가 보다 빠르거나 느린 템포로 재생됩니다.</li>
+</ul>
+<p><strong>참고</strong>: This value is multiplied by the Playback Speed of the object&rsquo;s ancestors to determine the effective playback speed of the object.</p>
+<p><strong>참고</strong>: During an Interactive Music playback instance, the effective playback speed of the active Segment is applied to all playing Segments of the same playback instance. This is particularly important during the transition between two segments when a crossfade is applied. The fading-in (newly active) Segment&rsquo;s playback speed is applied to the fading-out (previously active) Segment.</p>
+<p>Default value: 1<br/>
+Range: 0.25 to 4<br/></p>

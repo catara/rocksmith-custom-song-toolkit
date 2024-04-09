@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Manifest Name="Mastering Suite" Type="Presets">
+  <Dependencies>
+    <Plugin PluginName="MasteringSuite" PluginType="3" CompanyID="0" PluginID="186"/>
+  </Dependencies>
+</Manifest>

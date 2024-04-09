@@ -1,0 +1,17 @@
+
+<h2>Enable Diffraction</h2>
+<p>启用衍射。针对声音在 Spatial Audio 中启用衍射和透射处理。</p>
+<p>衍射用于模拟声波在障碍物周围发生弯曲的声学现象，透射则用于模拟声波在虚拟环境中穿透障碍物的传播情形。障碍物由通过 API 从游戏传到 Spatial Audio 的 Room、Portal 或几何构造定义。声波在障碍物周围的弯曲取决于衍射设置，声波穿透障碍物的传播情形则取决于透射损失。两者都会影响声音的最终音量和滤波效果。</p>
+<p>为了对衍射和透射进行模拟，游戏必须定义上层几何构造或 Room 和 Portal，并将其发送到 Wwise Spatial Audio。</p>
+<p>在针对声音启用衍射和透射时，Wwise Spatial Audio 中会发生以下情况：</p>
+<ul>
+<li>计算发声体和听者之间的声音路径。该路径由一条直达/透射路径和零条或多条衍射路径构成。</li>
+<li>针对直达/透射路径计算透射损失系数 (0%-100%)。透射损失由声音所穿透的 Room 和几何构造决定。</li>
+<li>按照 Wwise 工程设置中定义的 <strong>occlusion</strong> 曲线将透射损失系数 (%) 换算为音量/低通/高通滤波器值。声音会相应地被衰减和滤波。</li>
+<li>根据衍射路径中的角度之和计算衍射系数 (0%-100%)。直线路径视为 0% 衍射，弯曲角度达到或超过 180 度的路径视为 100% 衍射。</li>
+<li>按照 Wwise 工程设置中定义的 <strong>obstruction</strong> 曲线将衍射系数 (%) 换算为音量/低通/高通滤波器值。声音会相应地被衰减和滤波。</li>
+<li>对于衍射路径，通过计算声音相对于听者的视位置创建虚声源位置，让听者感觉声音就像围绕角落或通过 Portal 传播一样。</li>
+</ul>
+<p><strong>备注</strong>:3D Game Object Viewer 允许用户查看 Wwise Spatial Audio 内发生了什么，包括上层几何构造、Portal 以及声音的衍射路径和生成的虚声源位置。</p>
+<p><strong>备注</strong>:为了使衍射和透射生效，Wwise Spatial Audio 库必须初始化，而且游戏必须将上层几何构造或 Room 和 Portal 发送到 Wwise Spatial Audio。</p>
+<p>Default value: false<br/></p>

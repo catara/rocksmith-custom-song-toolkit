@@ -1,0 +1,17 @@
+
+<h2>Playback Speed</h2>
+<p>ミュージックオブジェクトのコンテンツを再生するスピードを調整する。</p>
+<ul>
+<li>設定値が1であれば、通常再生となる。</li>
+<li>設定値が1未満であれば、より遅い再生となる。</li>
+<li>設定値が1より大きければ、より速い再生となる。</li>
+</ul>
+<p>The Playback Speed affects different media types differently:</p>
+<ul>
+<li>WAV: コンテンツの再生ピッチが高くなる・低くなる。</li>
+<li>MIDI: コンテンツの再生テンポが速くなる・遅くなる。</li>
+</ul>
+<p><strong>注釈</strong>:This value is multiplied by the Playback Speed of the object&rsquo;s ancestors to determine the effective playback speed of the object.</p>
+<p><strong>注釈</strong>:During an Interactive Music playback instance, the effective playback speed of the active Segment is applied to all playing Segments of the same playback instance. This is particularly important during the transition between two segments when a crossfade is applied. The fading-in (newly active) Segment&rsquo;s playback speed is applied to the fading-out (previously active) Segment.</p>
+<p>Default value: 1<br/>
+Range: 0.25 to 4<br/></p>

@@ -1,0 +1,1911 @@
+@mixin defineexports_exports {
+  
+    //-- Debug ------------------------- 
+        // Used for Debugging, use may be depreciated
+        Global_BitmapTintColor: $BitmapTint;
+
+    //-- Global Colors -------------------------------
+        Global_AccentDefault: $Accent_Default;
+
+    //-- Text -------------------------------
+        Global_TextColor: $Text_Label;
+
+        // == Contrast color adjustment settings
+        Global_DarkBlue: $Text_Blue;
+        Global_LightBlue: $Text_Blue_Selected;
+
+        Global_DarkRed: $Text_Red;
+        Global_LightRed: $Text_Red_Selected;
+
+        Global_DarkYellow: $Text_Yellow;
+        Global_LightYellow: $Text_Yellow_Selected;
+
+        ActionList_DragColor: $Accent_Default;
+    
+        PropertyEditor_WarningColor: $WarningText;
+
+    //-- Dialog (Main Window and Nested/Floating Windows) ---------------------
+        // Dialog (Main Window) & View Stuff (Individual dialogs nested or floating)
+        Global_BackgroundColor: $Default_BG;
+        Global_BackgroundSelect: $Selected_BG;
+
+        // Dialog (Main Window)
+        Dialog_BackgroundColor: $Default_BG;
+        Dialog_TextColor: $Text_Label;
+        Dialog_DisabledTextColor: $Text_Label_Disabled;
+        Dialog_OuterSideBackgroundColor: $Default_BG;
+        Dialog_InnerSideBackgroundColor: $Default_BG;
+
+        // This is for Wwise generated floating dialog title bars 
+        // The Non-Active and Active values seem to be reveresed
+        // Alpha is used to specify how much of the background color is blended with the object color (if any).
+        Dialog_TitlebarActiveFillColor: $Main_TitleBar_BG;
+        Dialog_TitlebarNonActiveFillColor: $Main_TitleBar_BG;
+
+        Dialog_TitlebarActiveBorderColor: $Dialog_TitleBar_Border_Focused;
+        Dialog_TitlebarNonActiveBorderColor: $Dialog_TitleBar_Border_Unfocused;
+        Dialog_TitlebarActiveTextColor: $Dialog_TitleBar_Text;
+        Dialog_TitlebarNonActiveTextColor: $Dialog_TitleBar_Text;
+
+        // Alpha is used to specify how much of the background color is blended with the object color (if any).
+        Dialog_TitlebarButtonHoverFillColor: $TitleBar_Button_BG_Hovered;
+        Dialog_TitlebarButtonPressedFillColor: $Button_BG_Pressed; 
+
+        Dialog_TitlebarCloseButtonHoverFillColor: $TitleBar_CloseButton_BG_Hovered;
+        Dialog_TitlebarCloseButtonPressedFillColor : $TitleBar_CloseButton_BG_Pressed;
+        
+        // Alpha is used to specify how much of the background color is blended with the object color (if any).
+        Dialog_TitlebarMenuButtonHoverFillColor: $Dialog_TitleBar_MenuTitle_Hovered;
+        Dialog_TitlebarMenuButtonPressedFillColor:$Dialog_TitleBar_MenuTitle_Pressed;
+
+        Dialog_TitlebarMenuButtonHoverTextColor: $Text_Strongest;
+        Dialog_TitlebarMenuButtonPressedTextColor: $Text_Strongest;
+
+        Dialog_TitlebarButtonTextColor: $Button_Text;  // Not sure what this affects
+
+        // Dragging area outside of complete views in main layout, not normal splitter
+        View_SplitterColor: $Separator;
+        View_SplitterHoverColor: $Separator_Hovered;
+
+        // Views - Nested or floating windows
+        // Color for behind the tabs
+        View_TitleBackgroundColor: $Dialog_TitleBar_BG;
+        
+        View_ActiveBorderColor: $Dialog_Border_Focused;
+        View_ActiveFillColor: $Dialog_BG_Focused;
+        View_ActiveTextColor: $Dialog_Text_Focused;
+        View_ActiveTitleBottomLineColor: $StructureBorder;
+        View_ActiveTabBorderColor: $Dialog_Border_Focused;
+
+        // Floating View top border
+        View_ActiveTitleBorderColor: $Dialog_Floating_Top_Border;
+        View_NonActiveTitleBorderColor: $Dialog_Floating_Top_Border;
+
+        View_NonActiveBorderColor: $Dialog_Border_Unfocused;
+        View_NonActiveFillColor: $Dialog_BG_Unfocused;
+        View_NonActiveTextColor: $Text_Label;
+        View_NonActiveTitleBottomLineColor: $StructureBorder_Internal;
+        View_NonActiveTabBorderColor: $Dialog_Border_Unfocused;
+        
+        View_NeverActiveBorderColor: $Dialog_Border_Unfocused; // Used in Transport View
+        View_NeverActiveFillColor: $Dialog_BG_Unfocused;
+        View_NeverActiveTextColor: $Text_Label;
+        View_NeverActiveTitleBottomLineColor: $StructureBorder_Internal_Weak;
+        View_NeverActiveTabBorderColor: $Dialog_Border_Unfocused;
+        View_NeverActiveTitleBorderColor: $Dialog_Border_Unfocused; // Seems to be unused
+        
+        // Base application stuff like status bar, toolbar, base frame
+        View_FrameColor: $Default_BG; //Dialog Frame
+
+        View_InactiveBackgroundColor: $Dialog_TitleBar_BG; // Paints behind floating window view's title
+
+        View_ControlSurfaceButtonActiveBackgroundColor: $Button_BG; //?
+        View_ControlSurfaceButtonInactiveBackgroundColor:$Button_BG_Disabled; //?
+
+        // View Buttons at top right of each docked view or floating view
+        View_NumberedButtonNormalColor: $Dialog_NumberedButton_Text;
+        View_NumberedButtonHotColor: $Dialog_NumberedButton_Text_Hovered;
+        View_NumberedButtonDisabledColor: $Dialog_NumberedButton_Text_Disabled;
+
+        View_ButtonCheckedBackgroundColor: $Button_BG_Checked;
+        View_ButtonCheckedHotBackgroundColor: $Button_BG_CheckedHovered;
+
+        View_ButtonHotBackgroundColor: $TitleBar_Button_BG_Hovered;
+        View_ButtonPressedBackgroundColor: $Button_BG_Pressed;
+        View_ButtonDangerHotBackgroundColor:$TitleBar_CloseButton_BG_Hovered;
+
+
+        // Tabbed Widget
+        TabControl_BackgroundColor: $Default_BG;
+
+        TabControl_OnNormalBackgroundColor:$Tab_BG_Focused;
+        TabControl_OffNormalBackgroundColor:$Tab_BG_Unfocused;
+        TabControl_OffHotBackgroundColor:$Tab_BG_Unfocused_Hovered;
+
+        TabControl_OnNormalBorderColor:$Tab_Border_Focused;
+        TabControl_OffNormalBorderColor:$Tab_Border_Unfocused;
+        TabControl_OffHotBorderColor:$Tab_Border_Unfocused_Hovered;
+
+        TabControl_OnNormalTextColor:$Tab_Text_Focused;
+        TabControl_OffNormalTextColor:$Tab_Text_Unfocused;
+        TabControl_OffHotTextColor:$Tab_Text_UnfocusedHovered;
+
+        // GroupBox
+        GroupBox_BackgroundColor: $Default_BG;
+        GroupBox_LineColor: $GroupBox_Border;
+        GroupBox_LineShadowColor: $GroupBox_Border_Shadow;
+        GroupBox_TextColor: $GroupBox_Text;
+        GroupBox_DisabledTextColor: $Text_Label_Disabled;
+    
+        // Main background of Property editor surrounding the tabs at sides and bottom
+        PropertySheet_BackgroundColor: $Default_BG;
+
+        Png_BackgroundColor: $Default_BG;
+
+
+    //-- Main Toolbar and Control Surface Line -------------------------------
+
+        ControlContainer_BackgroundColor: $Field_BG; //?
+        ControlContainer_BorderColor: $Field_Border_Outer; //?
+
+        ControlLastCSEventReceived_DeviceTextColor: $Field_Text;
+        ControlLastCSEventReceived_Data1TextColor: $Field_Text;
+        ControlLastCSEventReceived_Data2TextColor: $Field_Text;
+        
+        ControlNavigationManager_BackgroundColor: $Field_BG;
+        ControlNavigationManager_BorderColor: $Field_Border_Outer;
+
+        ControlLastPropertyChanged_TextColor: $Field_Text;
+        ControlLastPropertyChanged_ValueColor: $Field_Text;
+
+        ControlSurface_BackgroundColor: $Default_BG;
+        
+        StatusBar_BackgroundColor: $Default_BG;
+        StatusBar_Highlight: $Button_BG_HoveredOpaque;
+        StatusBar_MarginLine1: $StructureBorder_Mid; // It's unclear what this is
+        StatusBar_MarginLine2: $Tray_TitleBox_BG;
+        StatusBar_TextColor: $Text_Label;
+        StatusBar_WarningTextColor: $WarningText;
+        StatusBar_TextColorDisabled: $Text_Label_Disabled;
+
+        Toolbar_BackgroundColor: $Default_BG;
+
+        Frame_BackgroundColor: $Default_BG;  // This is in use in the C++ even though we don't actually see the color in Wwise
+        LayoutRoot_BackgroundColor: $Separator;
+
+        RemoteConnection_BackgroundOn: $Accent_Default;
+
+
+    //-- Menu -------------------------------
+        Menu_Background: $Menu_BG;
+        Menu_SelectedBackground: $Menu_BG_Selected;
+        Menu_SelectedDisabledBackground: $Menu_BG_SelectedDisabled;
+        Menu_Text: $Menu_Text;
+        Menu_DisabledText: $Menu_Text_Disabled;
+        Menu_Separator: $Menu_Separator;
+        Menu_Arrow: $Menu_Text;
+        Menu_SelectedArrow: $StructureBorder_Strongest;
+        Menu_DisabledArrow: $Menu_Text_Disabled;
+
+        Menu_Checkmark:$Menu_BG;
+        Menu_SelectedCheckmark: $Menu_BG_Selected;
+        Menu_DisabledCheckmark: $Menu_BG_SelectedDisabled;
+
+
+    //-- Tree & List -------------------------------
+        Explorer_BackgroundColor: $Tree_BG;
+        Explorer_NormalText: $Tree_Text;
+
+        // Colors for Tree in Project Explorer
+        MultiSelectionTreeControl_BackgroundColor: $Default_BG;
+        MultiSelectionTreeControl_SelectedBackgroundColor: $Selected_BG;
+        MultiSelectionTreeControl_SelectedUnfocusBackgroundColor: $Selected_BG_Unfocused;
+
+        MultiSelectionTreeControl_TextColor: $Tree_Text;
+        MultiSelectionTreeControl_SelectedTextColor: $Text_Selected;
+        MultiSelectionTreeControl_SelectedUnfocusedTextColor: $Text_Selected;
+        MultiSelectionTreeControl_LogTextColor: $Text_Label;
+
+        ReferenceUICaption_BackgroundColor: $Default_BG;
+
+        WObjectTextUICaption_TextColor: $WarningText;  //? // UIColor::crListWarningText
+
+        TreeCtrl_NormalText: $Tree_Text;
+
+        TreeCtrl_UserDisabledText: $Text_Label_Disabled;
+        TreeCtrl_UserDisabledFocusText: $Text_Label_Disabled;
+        TreeCtrl_UserDisabledSelectedText: $Text_SelectedDisabled;
+        TreeCtrl_UserDisabledFocusSelectedText: $Text_SelectedDisabled;
+
+        TreeCtrl_ExcludedText: $Text_Label_Disabled;
+        TreeCtrl_ExcludedFocusText: $Text_Label_Disabled;
+        TreeCtrl_ExcludedSelectedText: $Text_SelectedDisabled;
+        TreeCtrl_ExcludedFocusSelectedText: $Text_SelectedDisabled;
+
+        TreeCtrl_SourceInvalidText: $Text_Blue;
+        TreeCtrl_SourceInvalidFocusText: $Text_Blue;
+        TreeCtrl_SourceInvalidSelectedText: $Text_Blue_Selected;
+        TreeCtrl_SourceInvalidFocusSelectedText: $Text_Blue_Selected;
+
+        TreeCtrl_MissingSourceText: $Text_Red;
+        TreeCtrl_MissingSourceFocusText: $Text_Red;
+        TreeCtrl_MissingSourceSelectedText: $Text_Red_Selected;
+        TreeCtrl_MissingSourceFocusSelectedText: $Text_Red_Selected;
+        
+        WarningLabel_BackgroundColor: $Default_BG;
+        WarningLabel_TextColor: $WarningText; //?
+
+        ListControl_BackgroundColor: $List_BG;
+        ListControl_BackgroundSelectedColor: $List_BG_Selected;
+        ListControl_SelectionNotFocusedColor: $List_BG_SelectedUnfocused;
+        ListControl_RelatedItemBackgroundColor: $List_BG_RelatedToSelected;
+        ListControl_RelatedItemBorderTop: $List_BG_RelatedBorderTop;
+        ListControl_RelatedItemBorderBottom: $List_BG_RelatedBorderBottom;
+        ListControl_RelatedItemTextColor: $List_Text;
+
+        // Border for list control which shows up in the project launcher list
+        ListControl_BorderColor: $StructureBorder; //?
+        ListControl_DragOverColor: $Accent_Default;
+
+        // Top Border
+        HeaderControl_TopColor1: $List_Header_Border;
+        HeaderControl_TopHoverColor1: $List_Header_Border;
+        HeaderControl_TopActiveColor1: $List_Header_Border;
+
+        // Middle
+        HeaderControl_TopColor2: $List_Header_BG;
+        HeaderControl_TopHoverColor2: $List_Header_BG_Pressed;
+        HeaderControl_TopActiveColor2: $List_Header_BG_Hovered;
+
+        HeaderControl_TopColor3: $List_Header_BG;
+        HeaderControl_TopHoverColor3: $List_Header_BG_Pressed;
+        HeaderControl_TopActiveColor3: $List_Header_BG_Hovered;
+        
+        HeaderControl_MiddleColor: $List_Header_BG;
+        HeaderControl_MiddleHoverColor: $List_Header_BG_Pressed;
+        HeaderControl_MiddleActiveColor: $List_Header_BG_Hovered;
+
+        HeaderControl_BottomColor1: $List_Header_BG;
+        HeaderControl_BottomHoverColor1: $List_Header_BG_Pressed;
+        HeaderControl_BottomActiveColor1: $List_Header_BG_Hovered;
+        
+        HeaderControl_BottomColor2: $List_Header_BG;
+        HeaderControl_BottomHoverColor2: $List_Header_BG_Pressed;
+        HeaderControl_BottomActiveColor2: $List_Header_BG_Hovered;
+
+        //Bottom Border
+        HeaderControl_BottomColor3: $List_Header_Border;
+        HeaderControl_BottomHoverColor3: $List_Header_Border;
+        HeaderControl_BottomActiveColor3: $List_Header_Border;
+
+        //Text
+        HeaderControl_TextColor: $List_Header_Text;
+        HeaderControl_TextHoverColor: $List_Header_Text_Hovered;
+        HeaderControl_TextActiveColor: $List_Header_Text_Hovered;
+        HeaderControl_LineColor: $List_Header_ColumnSeparator;
+        
+        // Cells
+        // Based on UIColor::cr*
+        Cell_NormalTextColor: $List_Text;
+        Cell_NormalSelectedFocusedTextColor: $Text_Selected;
+        Cell_NormalSelectedNotFocusedTextColor: $Text_Selected;
+
+        Cell_RedTextColor: $Text_Red;
+        Cell_RedSelectedFocusedTextColor: $Text_Red_Selected;
+        Cell_RedSelectedNotFocusedTextColor: $Text_Red_Selected;
+
+        Cell_DisabledTextColor: $Text_Label_Disabled;
+        Cell_DisabledSelectedFocusedTextColor: $Text_SelectedDisabled;
+        Cell_DisabledSelectedNotFocusedTextColor: $Text_SelectedDisabled;
+
+        Cell_BlueTextColor: $Text_Blue;
+        Cell_BlueSelectedFocusedTextColor: $Text_Blue_Selected;
+        Cell_BlueSelectedNotFocusedTextColor: $Text_Blue_Selected;
+
+        Cell_WarningTextColor: $WarningText;
+        Cell_WarningSelectedFocusedTextColor: $WarningTextSelected;
+        Cell_WarningSelectedNotFocusedTextColor: $WarningTextSelected;
+
+        Cell_WeakTextColor: $List_Text_Weak;
+
+        // AudioObjectListCtrl
+
+        AudioObjectListCtrl_TreeListTextStrong: $List_Text_Strong;
+        AudioObjectListCtrl_TreeListTextWeak: $List_Text_Weak;
+        AudioObjectListCtrl_ListRow1Background: $List_Row1_BG;
+        AudioObjectListCtrl_ListRow1BorderTop: $List_Row1_BorderTop;
+        AudioObjectListCtrl_ListRow1BorderBottom: $List_Row1_BorderBottom;
+        AudioObjectListCtrl_ListRow2Background: $List_Row2_BG;
+        AudioObjectListCtrl_ListRow2BorderTop: $List_Row2_BorderTop;
+        AudioObjectListCtrl_ListRow2BorderBottom: $List_Row2_BorderBottom;
+        AudioObjectListCtrl_ListRowParentBackground: $List_RowParent_BG;
+        AudioObjectListCtrl_ListRowEffectBackground: $List_RowSubParent_BG;
+        AudioObjectListCtrl_ListRowParentBorderTop: $List_RowParent_BorderTop;
+        AudioObjectListCtrl_ListRowEffectBorderTop: $List_RowSubParent_BorderTop;
+        AudioObjectListCtrl_ListRowParentBorderBottom: $List_RowParent_BorderBottom;
+        AudioObjectListCtrl_ListRowEffectBorderBottom: $List_RowSubParent_BorderBottom;
+        AudioObjectListCtrl_RowBackgroundSelectedOverlay: $List_BG_SelectedOverlay;
+        AudioObjectListCtrl_ListSideSelectionGutter: $List_SideSelection_Gutter;
+
+        // Voice Inspector
+        VoiceInspector_RowBackgroundSelectedOverlay: $List_BG_SelectedOverlay;
+        
+        //List View with Alternating Rows
+        // Row 1 - The darker row
+        VoiceInspector_ListRow1Background: $List_Row1_BG;
+        VoiceInspector_ListRow1BorderTop: $List_Row1_BorderTop;
+        VoiceInspector_ListRow1BorderBottom: $List_Row1_BorderBottom;
+        // Row 2 - The lighter row
+        VoiceInspector_ListRow2Background: $List_Row2_BG;
+        VoiceInspector_ListRow2BorderTop: $List_Row2_BorderTop;
+        VoiceInspector_ListRow2BorderBottom: $List_Row2_BorderBottom;
+        // Hierarchy Row
+        VoiceInspector_ListRowParentBackground: $List_RowParent_BG;
+        VoiceInspector_ListRowParentBorderTop: $List_RowParent_BorderTop;
+        VoiceInspector_ListRowParentBorderBottom: $List_RowParent_BorderBottom;
+        // Selection Gutter
+        VoiceInspector_ListSideSelectionGutter: $List_SideSelection_Gutter;
+        VoiceInspector_ListSideSelection: $List_SideSelection;
+        VoiceInspector_ListSideSelectionPartial: $List_SideSelection_Partial;
+        // Value Text
+        VoiceInspector_TreeListTextStrong: $List_Text_Strong;
+        VoiceInspector_TreeListTextWeak: $List_Text_Weak;
+        VoiceInspector_TreeListSecondaryValueTextStrong: $List_Text_Alternate1_Strong;
+        VoiceInspector_TreeListSecondaryValueTextWeak: $List_Text_Alternate1_Weak;
+        VoiceInspector_TreeListMixedValueTextStrong: $List_Text_Alternate2_Strong;
+        VoiceInspector_TreeListMixedValueTextWeak: $List_Text_Alternate2_Weak;
+
+
+        // Legacy List Views - Content Editor, Source inspector, sequence list
+        // Used in Content editor for old style list for sources
+        ScrollFrame_BackgroundColor:$List_BG;
+        SelectionDialogBar_BackgroundColor: $List_BG;
+        SelectionDialogBar_SelectedBackgroundColor: $List_BG_Selected;
+        SelectionDialogBar_SelectedUnfocusedBackgroundColor: $List_BG_SelectedUnfocused;
+    
+        SelectionDialogBar_BackgroundColorRestricted: mix( $List_BG, $FxPlatformRestricted, 25 );
+        SelectionDialogBar_SelectedBackgroundColorRestricted: mix( $List_BG_Selected, $FxPlatformRestricted, 25 );
+        SelectionDialogBar_SelectedUnfocusedBackgroundColorRestricted: mix( $List_BG_SelectedUnfocused, $FxPlatformRestricted, 25);
+            
+        SelectionDialogBarHorizontal_HoverBackgroundColor: $DragAndDrop_Drop_Hover;
+        SelectionDialogBarVertical_HoverBackgroundColor: $DragAndDrop_Drop_Hover;
+
+        ContentsEditorSeparator_BackgroundColor: $Default_BG;
+        ContentsEditorSeparator_TextColor: $Tray_TitleBox_Text;
+        
+        SourceSeparator_TextColor: $List_Header_Text;
+        SourceSeparator_DisabledTextColor: $List_Header_Text_Disabled;
+
+        SourceInspector_RadioButtonTextColor: $List_Text;
+        SourceInspector_RadioButtonDisabledTextColor: $List_Text_Disabled;
+        SourceInspector_RadioButtonSelectedTextColor: $Text_Selected;
+        SourceInspector_RadioButtonSelectedDisabledTextColor: $Text_SelectedDisabled;
+
+        SequenceListControl_BackgroundColor: $List_BG;
+        SequenceListControl_TextColor: $List_Text;
+        SequenceListControl_VerticalSeparatorColor: $StructureBorder;
+
+        PlaylistTreeControl_BackgroundColor: $List_BG;
+
+
+    //-- Buttons-------------------------------
+    
+        // Buttons
+        Button_BackgroundColor: $Button_BG;
+        Button_BackgroundDisabledColor: $Button_BG_Disabled;
+        Button_BackgroundPressedColor: $Button_BG_Pressed;
+        Button_BackgroundHoverColor: $Button_BG_HoveredOverlay;
+        Button_BackgroundCheckedColor: $Button_BG_Checked;
+        Button_BackgroundLearnColor: $Button_BG_Learn;
+        
+        Button_TextColor: $Button_Text;
+        Button_TextPressedColor: $Button_Text_Pressed;
+        Button_TextDisabledColor: $Button_Text_Disabled;
+        Button_TextCheckedColor: $Button_Text_Checked;
+        Button_TextCheckedPressedColor: $Button_Text_CheckedPressed;
+        Button_TextCheckedDisabledColor: $Button_Text_CheckedDisabled;
+        Button_DialogBackgroundColor: $Default_BG; // TODO: Or maybe just Dialog_BackgroundColor? Makes more sense but doesn't adhere to convention.
+        
+        Button_BorderColor: $Button_OuterBorder;
+        Button_DisabledBorderColor: $Button_OuterBorderDisabled;
+        Button_FocusedBorderColor: $FocusedBorder;
+
+        // Alpha is used as a lightness adjustement factor, the other components are not used.
+        Button_InnerBorderLightness: $Button_InnerBorderLightness;
+        Button_DisabledInnerBorderLightness: $Button_DisabledInnerBorderLightness;
+
+        CustomButton_DefaultTextColor: $Button_Text;
+
+        // Mute Button Text
+        // These are likely unused because we now use icon buttons for Mute & Solo
+        WLMuteButtonBase_TextColor: $Button_Text;
+        WLMuteButtonBase_ResetTextColor: $Raw_blue_dark; //?
+
+        // Accent Color when Checked
+        WLMuteButtonBase_Color: $Accent_Mute;
+
+        // Text Color when something in hierarchy has Solo - Not Used because we now use Icons for these buttons
+        WLMuteButtonBase_HighlightedColor: $Button_Text; //?
+
+        // Base Color when something above it in hierarchy has mute
+        WLMuteButtonBase_CheckedColor: $Accent_Mute_Inherited;
+
+        // Solo Button Text
+        WLSoloButtonBase_TextColor: $Button_Text;
+
+        // Accent Color when Checked
+        WLSoloButtonBase_Color: $Accent_Solo;
+
+        // Text Color when something in hierarchy has Solo
+        WLSoloButtonBase_HighlightedColor: $Button_Text;
+
+        // Base Color when something in hierarchy has solo
+        WLSoloButtonBase_CheckedColor: $Accent_Solo_Inherited;
+
+        // Global Solo/Mute reset buttons on top toolbar
+        WLResetMuteButtonBase_TextColor: $Button_Text;
+        WLResetMuteButtonBase_DisabledTextColor: $Button_Text_Disabled;
+        WLResetMuteButtonBase_Color: $Accent_Mute;
+
+        // Global Solo reset buttons on top toolbar
+        WLResetSoloButtonBase_TextColor: $Button_Text;
+        WLResetSoloButtonBase_DisabledTextColor: $Button_Text_Disabled;
+        WLResetSoloButtonBase_Color: $Accent_Solo;
+
+        CaptureButton_BackgroundOnColor: $Accent_Capture;
+        CaptureButton_BackgroundOffColor: $Button_BG;
+
+        FollowCaptureButton_BackgroundOffColor: $Button_BG;
+        FollowCaptureButton_BackgroundOnColor: $Accent_Default;
+
+        // Mute and Solo Button Text before they are used, after you click them on and off they use a different color
+        WLButtonBase_TextColor: $Button_Text; //?
+
+        WLButtonBase_CheckedColor: $Button_BG_Checked; //?
+
+        // Old Borderless Buttons like Transport Buttons
+        CustomButton_BackgroundColor: $Default_BG;
+
+        WLNotesEdit_FrameMouseOverColor: $Notes_Border_Hover; //?
+
+
+    //-- Controls & Fields ------------------------------
+        // Window Lasso rectangle fill Used in music editor, wave editor etc
+        WindowLessView_LassoColor: $SelectionLassoOverlay;
+
+        //-- Edit
+            Edit_BorderColor: $Field_Border_Outer;
+            Edit_ErrorBorderColor: $Field_Error_Border_Outer;
+            Edit_DisabledBorderColor: $Field_Border_Outer_Disabled;
+            Edit_FocusedBorderColor: $FocusedBorder;
+            Edit_FocusedErrorBorderColor: $FocusedErrorBorder;
+            Edit_BackgroundLearnColor: $Field_ControlSurfaceLearning;
+
+            Edit_InnerShadowColor: $Field_InnerShadow;
+            Edit_DisabledInnerShadowColor: $Field_BG_Disabled;
+
+            Edit_BackgroundColor: $Field_BG;
+            Edit_DisabledBackgroundColor: $Field_BG_Disabled;
+
+            Edit_NormalTextColor: $Field_Text; //?
+            Edit_DisabledTextColor: $Field_Text_Disabled;
+
+            Edit_GhostTextColor: $Field_Text_Hint;
+
+        //-- Caption
+            // Caption is like an edit text field but is not editable and often shows an object inside
+            Caption_TextColor: $Caption_Text;
+            Caption_TextDisabledColor: $Caption_Text_Disabled;
+            Caption_TextErrorColor: $Text_Red;
+            Caption_TextWarningColor: $WarningText;
+            Caption_BorderColor: $Caption_Border;
+            Caption_BackgroundColor: $Caption_BG;
+            Caption_DialogBackgroundColor: $Default_BG;
+
+        //-- Spinner
+            Spinner_TriangleColor: $Field_InternalControl;
+            Spinner_ActiveTriangleColor: $Field_InternalControl_Hovered;
+            Spinner_PressedTriangleColor: $Field_InternalControl_Pressed;
+            Spinner_DisabledTriangleColor: $Field_InternalControl_Disabled;
+
+        //-- ComboBox
+            ComboBox_BackgroundColor : $Combo_BG;
+            ComboBox_DisabledBackgroundColor: $Combo_BG_Disabled;
+
+            ComboBox_BorderColor: $Combo_Border_Outer;
+            ComboBox_DisabledBorderColor: $Combo_Border_Outer_Disabled;
+            ComboBox_FocusedBorderColor: $FocusedBorder;
+            ComboBox_BackgroundLearnColor: $Field_ControlSurfaceLearning;
+
+            ComboBox_InnerBorderColor: $Combo_Border_Inner;
+            ComboBox_DisabledInnerBorderColor: $Combo_Border_Inner_Disabled;
+
+            ComboBox_TextColor: $Button_Text;
+            ComboBox_DisabledTextColor : $Button_Text_Disabled;
+            ComboBox_ErrorTextColor: $Text_Red;
+
+            ComboBox_NormalIconColor: $Field_InternalControl;
+            ComboBox_DisabledIconColor: $Field_InternalControl_Disabled;
+            ComboBox_HotIconColor: $Field_InternalControl_Hovered;
+            ComboBox_PressedIconColor: $Field_InternalControl_Pressed;
+
+            ComboBoxProp_BackgroundColor: $Default_BG;
+
+            ComboListBox_BackgroundSelectedColor: $Accent_Default;
+            ComboListBox_BackgroundColor: $Combo_BG;
+            ComboListBox_TextColor: $Menu_Text;
+            ComboListBox_TextSelectedColor: $Text_Selected;
+
+        //-- Super Range
+            SuperRange_ObjectColorBackgroundBlendRatio: $Tray_CenterBG_ObjectColorBlendRatio;
+            SuperRange_BackgroundColor: $Default_BG;
+            SuperRange_DisabledBackgroundColor: $Field_BG_Disabled;
+            SuperRange_DisabledTextColor: $Field_Text_Disabled;
+            SuperRange_NormalTextColor: $Field_Text;
+
+        //-- Slider
+            Slider_TrayBorderColor: $Field_Border_Outer;
+            Slider_TrayBackgroundColor: $Field_BG;
+            Slider_TrayInnerShadowColor: $Slider_InternalShadow;
+            Slider_DisabledTrayBorderColor: $Field_Border_Outer_Disabled;
+            Slider_DisabledTrayBackgroundColor: $Field_BG_Disabled;
+            Slider_DisabledTrayInnerShadowColor: $Field_BG_Disabled;
+            
+            Slider_ActiveLineColor: $Slider_ActiveLine;
+            Slider_ActiveLineShadowColor: $Slider_ActiveLine_Shadow;
+            Slider_DisabledLineColor: $Slider_ActiveLine_Disabled;
+            Slider_DisabledLineShadowColor: $Slider_ActiveLineShadow_Disabled;
+
+            Slider_HeadColor: $Slider_Handle;
+            Slider_DisabledHeadColor: $Slider_Handle_Disabled;
+            Slider_BackgroundColor: $Default_BG;
+            Slider_ObjectColorBackgroundBlendRatio: $Tray_CenterBG_ObjectColorBlendRatio;
+
+        //-- Feedback Slider
+            //Live feeldback sliders for use in Granular Synth and across Wwise
+            FeedbackSlider_TrayBorderColor: $Field_Border_Outer;
+            FeedbackSlider_TrayBackgroundColor: $Field_BG;
+
+            FeedbackSlider_StaticValueColor: $Field_BG;
+            FeedbackSlider_MinMaxValuesColor: $FeedbackSlider_MinMaxValues;
+            FeedbackSlider_MinMaxRangeColor: $FeedbackSlider_MinMaxRange;
+            FeedbackSlider_CurrentValueColor: $FeedbackSlider_CurrentValue;
+            FeedbackSlider_BallisticRangeColor: $FeedbackSlider_BallisticRange;
+
+            FeedbackSlider_DisabledTrayBorderColor: $FeedbackSlider_Disabled;
+            FeedbackSlider_DisabledTrayBackgroundColor: $FeedbackSlider_Disabled;
+            FeedbackSlider_DisabledStaticValueColor: $FeedbackSlider_Disabled;
+            
+            FeedbackSlider_NoProfilingTrayBorderColor: $FeedbackSlider_NoProfiling;
+            FeedbackSlider_NoProfilingTrayBackgroundColor: $FeedbackSlider_NoProfiling;
+            FeedbackSlider_NoProfilingStaticValueColor: $FeedbackSlider_NoProfiling;
+        
+        // Fader
+            Fader_BackgroundColor: $Default_BG;
+            Fader_ObjectColorBackgroundBlendRatio: $Tray_CenterBG_ObjectColorBlendRatio;
+            Fader_DisabledBackgroundColor: $Field_BG_Disabled;
+            Fader_DisabledTextColor: $Field_Text_Disabled;
+            Fader_NormalTextColor: $Field_Text;
+            Fader_ActiveLine1Color:  $Fader_ActiveLine1;
+            Fader_ActiveLine2Color: $Fader_ActiveLine2;
+            Fader_DisabledColor: $Fader_Disabled;
+            Fader_MarkLineColor: $Fader_Range_Ticks;
+            Fader_MarkColor1: $Fader_ZeroMarker_Top;
+            Fader_MarkColor2: $Fader_ZeroMarker_Bottom;
+
+        // Radio button AND checkbox controls
+            RadioCheckBox_BackgroundColor: $Default_BG;
+            RadioCheckBox_TextColor: $Text_Label;
+            RadioCheckBox_DisabledTextColor: $Text_Label_Disabled;
+            RadioCheckBox_FocusedBorderColor: $FocusedBorder;
+
+        //-- Scroll Bar
+            Scroll_BackgroundColor: $Default_BG;
+            Scroll_TrackColor: $Scroll_Track;
+            Scroll_TrackActiveColor: $Scroll_Track;
+            Scroll_TrackBorderColor: $StructureBorder;
+            Scroll_TrackActiveBorderColor: $StructureBorder;
+
+            //Buttons like the Search Magnifying glass, +, - buttons
+            Scroll_ButtonBackgroundColor: $Button_BG;
+            Scroll_ButtonPressedBackgroundColor: $Button_BG_Pressed;
+            Scroll_ButtonBorderColor: $StructureBorder;
+            Scroll_ButtonPressedBorderColor: $StructureBorder;
+            
+            // Drag bar
+            Scroll_ThumbColor: $Scroll_DragBar;
+            Scroll_ThumbActiveColor: $Scroll_DragBarHover;
+
+        //-- Splitter
+            Splitter_BackgroundColor: $Default_BG;
+
+            //Splitter, Light line is on the left and Dark line is on the right
+            Splitter_LightColor: $Splitter_Light;
+            Splitter_DarkColor: $Splitter_Dark;
+
+        //-- MiniCone
+            // MiniCone is for Attenuation Preview 
+            MiniCone_BackgroundColor: $Default_BG;
+            MiniCone_CircleColor: $MiniCone_Circle;
+            MiniCone_ConeColor: $MiniCone_Cone;
+        
+            MiniConeCursor_EdgeColor: $Selected_Border;
+            MiniConeCursor_EdgeNonFocusedColor: $Accent_Default_Saturated;
+            MiniConeCursor_FillColor: $Graph_BG;
+            
+            MiniConeCursor_TextBackgroundColor: $Graph_Point_BG;
+            MiniConeCursor_TextColor: $Graph_Point_Border;
+
+        //-- Object Color Chip & Color Picker -----------------------
+            // Alpha is used to specify how much of the border color is blended with the palette color.
+            ObjectColorChip_BorderColor: $ObjectColorChip_Border;
+            ObjectColorChip_BorderDisabledColor: $ObjectColorChip_Border_Disabled;
+            ObjectColorChip_DisabledOverlayColor: $ObjectColorChip_DisabledOverlay;
+            ObjectColorChip_BorderFocusedColor:$ObjectColorChip_Border_Focused;
+            ObjectColorChip_BorderSelectedColor: $ObjectColorChip_Border_Selected;
+            ObjectColorChip_BorderSelectedFocusedColor: $ObjectColorChip_Border_SelectedFocused;
+            ObjectColorChip_BorderInheritedColor: $ObjectColorChip_BorderInheritedColor;
+
+            ObjectColorChip_IndeterminateOuterBackgroundColor: $ObjectColorChip_IndeterminateBG;
+            ObjectColorChip_IndeterminateInnerBackgroundColor: $ObjectColorChip_IndeterminateDash;
+
+            ObjectColorChip_NoObject: $ObjectColorChip_NoObject;
+
+            ColorPicker_BackgroundColor: $Menu_BG;
+            ColorPicker_BorderColor: $Dialog_Border_Focused;
+
+        //-- Generic Color Chip used for Status
+            // Used in the Generate Soundbanks log
+            ColorChip_SeverityMessage: $MessageText;
+            ColorChip_SeveritySuccess: $SuccessText;
+            ColorChip_SeverityWarning: $WarningText;
+            ColorChip_SeverityError: $ErrorText;
+            ColorChip_SeverityFatalError: $FatalErrorText;
+            ColorChip_SeverityUnknown: $UnknownSeverityText;
+
+            ColorChip_Border: $ColorChip_Border;
+            ColorChip_DisabledOverlay: $ColorChip_DisabledOverlay;
+
+        
+        // ??? Not sure what these do
+            DialogBar_BackgroundColor: $Default_BG;
+            FormView_BackgroundColor: $Default_BG;
+            Link_BackgroundColor: $Default_BG;
+            State_BackgroundColor: $Default_BG;
+            ImageControl_BackgroundColor: $Default_BG;
+            GenericEditor_TextColor: $Text_Label;
+        // For when an effect is not available on your current platform it is displayed in a highlighted block
+            PlatformRestriction_BackgroundColor: $Default_BG;
+            PlatformRestriction_RestrictedColor: $FxPlatformRestricted;
+
+
+    //-- Progress Bars -------------------------------
+    
+        // Progress Bars
+        ProgressBar_BackgroundColor: $Default_BG;
+        ProgressBar_FillColor: $Accent_Default;
+
+        ProgressBar2_BackgroundColor: $Default_BG;
+        ProgressBar2_FillColor: $Accent_Default;
+
+        // Progress used when importing audio files
+        ProgressControl_BackgroundColor: $Default_BG;
+        ProgressControl_ProgressColor: $Progress_Filled;
+        ProgressControl_GradientTopColor: $Progress_UnfilledGradientTop;
+        ProgressControl_GradientBottomColor: $Progress_Unfilled;
+
+        LightProgressControl_BackgroundColor: $Default_BG;
+        LightProgressControl_FrameColor: $Progress_Unfilled;  //?
+        LightProgressControl_ProgressColor: $Progress_Filled; //?
+
+        UnknownProgressControl_BackgroundColor: $Progress_Unfilled; //?
+        UnknownProgressControl_TextColor: $Text_Label; //?
+
+    
+    //-- Meter -----------------------------------------------
+        Meter_DialogBackgroundColor: $Default_BG;
+        Meter_GridColor: $Meter_GridLine;
+        Meter_BackgroundColor: $Meter_BG;
+        Meter_ObjectColorBlendingRatio: $Tray_CenterBG_ObjectColorBlendRatio;
+        Meter_LabelColor: $Meter_Text;
+        Meter_LabelChannelColor: $Meter_Text;
+        Meter_HeaderTextColor: $Meter_HeaderText;
+        Meter_HeaderHistoryTextColor : $Meter_HistoryHeaderText;
+
+        // This color is used to print the level value at the top of the Meter
+        Ruler_LabelDefaultColor: $Meter_Text;
+
+        // Colors for Meter Level
+        Meter_RedColor: $Meter_OverRange;
+        Meter_YellowColor: $Meter_InRange1;
+        Meter_GreenColor: $Meter_InRange0 ;
+      
+        //Frame of Meter in list
+        LCMeter_FrameColor: $Graph_BG;
+        LCMeter_ChannelColor: $Text_Label;
+
+        // Turn it up to 11!
+        LoudnessMeter_OverRangeColor: $Meter_OverRange;
+        LoudnessMeter_InRange1Color: $Meter_InRange1;
+        LoudnessMeter_InRange0Color: $Meter_InRange0;
+        LoudnessMeter_UnderRangeColor: $Meter_UnderRange;
+
+        LoundnessMeter_BackgroundGroupColor: $Tray_TitleBox_BG;
+        LoundnessMeter_BackgroundColor: $Default_BG;
+        LoundnessMeter_TextColor: $Text_Label;
+        LoundnessMeter_ButtonCheckedColor: $Accent_Capture; //Capture Button
+
+        HdrMeter_MainColor: $Meter_UnderRange;
+
+
+    //-- Timeline Ruler -------------------------------
+        RulerControl_FrameColor:$Ruler_Frame;
+        RulerControl_BackgroundColor:$Ruler_BG;
+        RulerControl_TextColor:$Ruler_Text;
+        RulerControl_TickSmallColor:$Ruler_TickSmall;
+        RulerControl_TickMediumColor:$Ruler_TickMedium;
+        RulerControl_TickLargeColor:$Ruler_TickLarge;
+
+        RulerBase_TextColor: $Ruler_Text;
+        RulerBase_TextLargeColor: $Ruler_Text;
+
+        WaveRulerControl_FrameColor:$Ruler_Frame;
+        WaveRulerControl_BackgroundColor:$Ruler_BG;
+        WaveRulerControl_TextColor:$Ruler_Text;
+        WaveRulerControl_TickSmallColor:$Ruler_TickSmall;
+        WaveRulerControl_TickMediumColor:$Ruler_TickMedium;
+        WaveRulerControl_TickLargeColor:$Ruler_TickLarge;
+
+        WLRulerControl_FrameColor: $Ruler_Frame;
+        WLRulerControl_TextColor: $Ruler_Text;
+        WLRulerControl_BackgroundColor: $Ruler_BG;
+        WLRulerControl_TickSmallColor: $Ruler_TickSmall;
+        WLRulerControl_TickMediumColor: $Ruler_TickMedium;
+        WLRulerControl_TickLargeColor: $Ruler_TickLarge;
+
+        WLWavDbRulerControl_BackgroundColor: $Ruler_BG;
+        WLWavDbRulerControl_TextColor: $Ruler_Text;
+
+        // Positioning Editor
+        PathTimeline_BackgroundColor: $RTPC_Ruler_BG;
+        PathTimeline_TopPartCenterColor: $RTPC_Ruler_BG;
+        PathTimeline_BottomPartColor: $RTPC_Ruler_BG;
+        PathTimeline_TextColor: $RTPC_Ruler_Text;
+        PathTimeline_NormalTickColor: $RTPC_Ruler_TickLarge;
+
+
+    //-- Graphs (numeric) --------------------------------
+        //-- Graph Base Construction -------------------------------
+            //-- Appears in RTPC Editor
+            BaseZoomable_BackgroundColor: $RTPC_Graph_BG_Empty_Overlay;
+
+            // Surrounding area around the graph in the RTPC editor
+            GraphEditor_Background: $RTPC_Graph_BG_Outside; // Area outside the graph
+            GraphEditor_GridBackground: $RTPC_Graph_BG; // Area inside the graph area
+            GraphEditor_Grid: $RTPC_Graph_GridLine;
+            GraphEditor_GridAxis: $RTPC_Graph_GridAxis;
+            GraphEditor_Ticks: $RTPC_Ruler_TickSmall;
+            GraphEditor_Axis: $RTPC_Graph_GridAxis;
+            GraphEditor_RulerValue: $RTPC_Ruler_Text;
+            GraphEditor_RulerLabel: $RTPC_Ruler_AxisTextColor;
+            GraphEditor_InvalidRulerLabel: $RTPC_Ruler_AxisTextColor;
+
+        // Graph Editor Points
+            CurvePoint_FocusedSelected: $Graph_Point_BG_Selected;
+            CurvePoint_FocusedUnselected: $Graph_Point_BG;
+            CurvePoint_FocusedBorder:$Graph_Point_Border_Selected;
+            
+            CurvePoint_UnfocusedSelected: $Graph_Point_BG_Selected;
+            CurvePoint_UnfocusedUnselected: $Graph_Point_BG;
+            CurvePoint_UnfocusedBorder: $Graph_Point_Border_Selected;
+
+            CurveMenu_SegmentHighlightOverlayColor: $Graph_Curve_HoverOverlay;
+
+        //-- Graph Cursors
+            // Flags for cursor like game parameter
+            GraphEditor_CursorNormal: $Graph_CursorBase;
+            GraphEditor_CursorDragged: $Graph_CursorBase_Selected;
+            GraphEditor_CursorShadow: $Graph_CursorBase_Shadow;
+
+            // Used for Begin and End in Convolution Reverb
+            GraphEditor_CursorShadowTransparent: $Graph_CursorBase_ShadowTransparent;
+
+            // Vertical line to right of cursor
+            GraphEditor_CursorShadowHover: $Graph_CursorBase_ShadowHover;
+
+            // Flag handle Fill Color
+            GraphEditor_CursorFlagNormal: $Graph_CursorBase_Flag; 
+
+            // Color for Game Object Cursor when capturing and 'Show Game Objects' is on in RTPC editor
+            GraphEditor_CursorFlagNormalLight: $Graph_CursorBase_Flag_GameObject;
+            // When user hovers over game object cursor both original cursor and game object cursor highlight this color
+            GraphEditor_CursorFlagNormalHover: $Graph_CursorBase_Flag_Hover;
+
+            // Fill color of flag when dragged
+            GraphEditor_CursorFlagDragged: $Graph_CursorBase_Flag_Dragged;
+            GraphEditor_CursorFlagDraggedHover: $Graph_CursorBase_Flag_DraggedHovered;
+            GraphEditor_CursorTextNormal: $Graph_CursorBase_Text; // Outline & Text
+            GraphEditor_CursorTextDragged: $Graph_CursorBase_Text_Dragged;
+
+            GraphEditor_TrailLine: $Graph_CursorTrail_Line;
+            GraphEditor_TrailLineHover: $Graph_CursorTrail_Line_Hovered;
+            GraphEditor_TrailFlagNormal: $Graph_CursorTrail_Flag;
+            GraphEditor_TrailFlagDefault: $Graph_CursorTrail_Flag_Default;
+            GraphEditor_TrailTextNormal: $Graph_CursorTrail_Text;
+
+        //-- ??? Not sure what these are affecting
+            GraphControl_OuterRadiusColor: $GraphControl_OuterRadius;
+            GraphControl_MidRadiusColor: $GraphControl_MidRadius;
+            GraphControl_ConeColor: $GraphControl_Cone;
+            GraphControl_HighlightedSegmentColor: $GraphControl_HighlightedSegment;
+            GraphControl_EvaluatedPointColor: $GraphControl_EvaluatedPoint;
+        
+            // This doesn't seem to appear in the RTPC editor
+            Rtcp_BackgroundColor: $Default_BG;
+
+        // Wave Editors
+            WLWaveViewerControl_BackgroundColorForNonZero: $WaveViewerControl_NonZeroBackground;
+            WLWaveViewerControl_Transparency: $WaveViewerControl_Transparency; // Only alpha is used
+
+            // Colors to draw the clip - These colors only update on restart of Wwise
+            //@at-root
+            WaveViewerControl_WaveformColor: $WaveViewerControl_Waveform; // This is in use in Wwise
+            WaveViewerControl_BackgroundColor: $Default_BG; // Background of Clip (gets overlayed with transparency)
+            WaveViewerControl_BorderColor: $Tray_TitleBox_BG;
+            // Clip Loop dotted line
+            WaveViewerControl_LoopLineColor: $Clip_LoopLine;
+            WaveViewerControl_ErrorTextColor: $ErrorText;
+
+            // Appears in Wwise Recorder
+            WaveControl_DefaultBackgroundColor: $Graph_BG;
+
+            // Audio source and wave stuff like fade & looping
+            GenericWaveControl_WaveformColor: $Graph_Waveform;
+            GenericWaveControl_CrossfadeBackgroundColor: $Graph_Waveform_Crossfade_BG;
+            // Horizontal Grid Line
+            GenericWaveControl_RulerLineColor: $Graph_GridLine;
+            GenericWaveControl_FadeCurveColor: $Curve_Crossfade;
+
+            GenericWaveViewer_WaveformColor: $Graph_Waveform;
+
+            AudioSourceWaveControl_BackgroundColor: $Graph_BG;
+            AudioSourceCursor_LineColor: $Cursor_Time;
+            AudioSourceLoopCursor_StartLineColor: $Cursor_Entry;
+            AudioSourceLoopCursor_StopLineColor: $Cursor_Exit;
+
+            AudioSourceMarkerCursor_LineColorFromFile: $Source_Marker_Line_FromFile;
+            AudioSourceMarkerCursor_LineColorFromTransient: $Source_Marker_Line_FromTransient;
+            AudioSourceMarkerCursor_LineColorManual: $Source_Marker_Line_Manual;
+
+            GranularSynth_MarkerCursorLineColor: $SoundseedGrain_Marker_Line;
+            GranularSynth_MarkerCursorLineTrimColor: $SoundseedGrain_Marker_Line_Trim;
+
+            DialogPropViewBase_BackgroundColor: $Default_BG;
+
+            AudioSourceFade_FadeBoxColor: $Graph_FadeHandle;
+            AudioSourceFade_FadeCurveColor: $Curve_Fade;
+            AudioSourceFade_BoxFrameColor: $Graph_FadeHandle_Border;
+            AudioSourceFade_DisabledWaveBackgroundColor: $Source_DisabledOverlay;
+
+            //Begin & End Markers
+            AudioSourceFade_RegionLineColor: $Source_Trim_Start_End_Line;
+
+            // For External Wave Viewer
+            // Originally from _waveviewer.scss //////////////////////////////////////////////////////////////////////////
+            ViewerTrackHeaderControl_BackgroundColor: $Graph_BG_Outside;                              
+            SegmentEditorHelpControl_BackgroundColor: $Default_BG;
+            SegmentEditorControl_CursorInfoBackgroundColor: $Graph_BG_Outside;
+            GenericWavControl_BackgroundColorDiffNonZero: $ExternalWaveEditor_DiffNonZero_BG;
+            GenericWavControl_WaveColorDiffDefault: $ExternalWaveEditor_DiffWave_Default;
+            GenericWavControl_WaveColorDiff: $ExternalWaveEditor_DiffWave;
+
+        // Blend Editor Blend Container graph items
+            LayersList_BackgroundColor: $List_BG;
+
+            // Points for when Manual curves are used for the fade in-out
+            CrossfadeBox_PointColor: $Graph_Point_BG;
+            CrossfadeBox_SelectedPointColor: $Graph_Point_BG_Selected;
+            CrossfadeBox_UnfocusedPointColor: $Graph_Point_BG;
+            CrossfadeBox_UnfocusedSelectedPointColor: $Graph_Point_BG_Selected;
+            CrossfadeBox_PointEdgeColor: $Graph_Point_Border;
+            CrossfadeBox_UnfocusedPointEdgeColor: $Graph_Point_Border;
+            
+            CrossfadeBox_FrameColor: $BlendContainerClipBaseFrame;
+            CrossfadeBox_FrameColorAlternate: $BlendContainerClipAlternateFrame;
+
+            CrossfadeBox_CenterColor: $BlendContainerClipBaseCenter;
+            CrossfadeBox_CenterColorAlternate: $BlendContainerClipAlternateCenter;
+
+            CrossfadeBox_CurveColor: $BlendContainerClipBaseCurve;
+            CrossfadeBox_CurveColorAlternate: $BlendContainerClipAlternateCurve;
+
+            CrossfadeBox_SelectionFrameColor: $BlendContainerClipBaseFrameSelected;
+            CrossfadeBox_SelectionFrameColorAlternate: $BlendContainerClipAlternateFrameSelected;
+
+            CrossfadeBox_TextColor: $Text_Mid;
+
+        
+        // Position Editor
+            PathControl_FirstPointEdgeColor: $Curve_Green;
+            PathControl_LastPointEdgeColor: $Curve_Red;
+            
+            // Used for Position Editor
+            BaseCurveControl_PointColor: $Graph_Point_BG;
+            BaseCurveControl_SelectedPointColor: $Graph_Point_BG_Selected;
+            BaseCurveControl_UnfocusedPointColor: $Graph_Point_BG;
+            BaseCurveControl_UnfocusedSelectedPointColor: $Graph_Point_BG_Selected;
+
+            BaseCurveControl_PointEdgeColor: $Graph_Point_Border;
+            BaseCurveControl_UnfocusedPointEdgeColor: $Graph_Point_Border;
+
+            BaseCurveControl_SegmentColor: $Curve_AquaBlue;
+            BaseCurveControl_UnfocusedSegmentColor: $Curve_AquaBlue;
+
+            BaseCurveControl_TextColor: $Text_Label;
+    
+        //-- "Position Editor (3D Automation)"
+            //Outer Frame of "Position Editor (3D Automation)"
+            //There is a gradient blend from outside (GraphControl_SurroundColor) to inside (GraphControl_BackgroundColor)
+            GraphControl_SurroundColor: $Default_BG;
+            // Background inside the frame
+            GraphControl_BackgroundColor: $RTPC_Graph_BG;
+            // Border inside frame
+            GraphControl_FrameLineColor: $RTPC_Graph_GridLine;
+            GraphControl_AxisColor: $Graph_GridAxis;
+
+        //-- "Speaker Panner" editor when Speaker Panning = Balance-Fade
+            //There is a gradient blend from outside (PanningEditor_SurroundColor) to inside (PanningEditor_BackgroundColor)
+            PanningEditor_SurroundColor: $Default_BG;
+            PanningEditor_BackgroundColor: $RTPC_Graph_BG;
+            PanningEditor_FrameLineColor: $RTPC_Graph_GridLine;
+            PanningEditor_AxisColor: $Graph_GridAxis;
+            PanningEditor_PointEdgeColor: $Graph_Point_Border;
+            PanningEditor_PointEdgeNonFocusedColor: $Graph_Point_Border;
+            PanningEditor_HighlightOverlayColor: $Graph_Point_HoverOverlay;
+            PanningEditor_PointColor: $Graph_Point_BG;
+            PanningEditor_PointSelectedColor: $Graph_Point_BG_Selected;
+        
+        // Profiling Graphs
+            // Performance Monitor
+            ObservableBandPerformanceGraph_GridColor: $Graph_GridLine;
+            ObservableBandPerformanceGraph_RulerTextColor: $Ruler_Text;
+            ObservableBandPerformanceGraph_RulerLabelColor: $Ruler_Text; //Min Max Values shown on left of graphs
+
+            BandPerformanceGraph_BandNameTextColor: $Tree_Text;
+            BandPerformanceGraph_DisabledBandNameTextColor: $ErrorText;
+            BandPerformanceGraph_BandBackgroundLeft1Color: $Graph_BG_Outside;
+            BandPerformanceGraph_BandBackgroundLeft2Color: $Graph_BG_Outside_Alternate;
+            BandPerformanceGraph_BandBackgroundRightColor: $Graph_BG;
+
+            BasePerformanceGraph_TimeLabelColor: $Ruler_Text;
+            BasePerformanceGraph_RulerBackgroundColor: $Ruler_BG;
+            BasePerformanceGraph_NormalTickColor: $Ruler_TickMedium;
+            BasePerformanceGraph_TimeTickColor: $Ruler_TickLarge;
+            BasePerformanceGraph_GameCursorColor: $Cursor_LatestCaptureTime;
+            BasePerformanceGraph_UserCursorColor: $Cursor_Time;
+
+            GameSyncGraph_Band1Color: $Curve_Green;
+            GameSyncGraph_Band2Color: $Curve_Orange;
+            GameSyncGraph_Band3Color: $Curve_Pink;
+            GameSyncGraph_Band4Color: $Curve_Blue;
+            GameSyncGraph_Band5Color: $Curve_Yellow;
+
+            GameSyncGraph_GridColor: $Graph_GridLine;
+            GameSyncGraph_RulerTextColor: $Ruler_Text;
+            GameSyncGraph_RulerLabelColor: $Ruler_Text;
+
+            VoiceColor_PaletteColor1: $Curve_AquaBlue;
+            VoiceColor_PaletteColor2: $Curve_Red;
+            VoiceColor_PaletteColor3: $Curve_Pink;
+            VoiceColor_PaletteColor4: $Curve_Purple;
+            VoiceColor_PaletteColor5: $Curve_Green;
+            VoiceColor_PaletteColor6: $Curve_RoyalBlue;
+            VoiceColor_PaletteColor7: $Curve_Orange;
+            VoiceColor_PaletteColor8: $Curve_RoyalBlue_Darkened;
+            VoiceColor_PaletteColor9: $Curve_Orange_Darkened;
+
+            VoiceColor_PaletteColorDark1: $Curve_AquaBlue_Weak;
+            VoiceColor_PaletteColorDark2: $Curve_Red_Weak;
+            VoiceColor_PaletteColorDark3: $Curve_YellowGreen_Weak;
+            VoiceColor_PaletteColorDark4: $Curve_RedOrange_Weak;
+            VoiceColor_PaletteColorDark5: $Curve_Green_Weak;
+            VoiceColor_PaletteColorDark6: $Curve_RoyalBlue_Weak;
+            VoiceColor_PaletteColorDark7: $Curve_Orange_Weak;
+            VoiceColor_PaletteColorDark8: $Curve_Yellow_Weak;
+            VoiceColor_PaletteColorDark9: $Curve_GrayBrown_Weak;
+
+            VoiceColor_PaletteColorLight1: $Curve_AquaBlue_Strong;
+            VoiceColor_PaletteColorLight2: $Curve_RedOrange_Strong;
+            VoiceColor_PaletteColorLight3: $Curve_YellowGreen_Strong;
+            VoiceColor_PaletteColorLight4: $Curve_RedOrange_Strong;
+            VoiceColor_PaletteColorLight5: $Curve_Green_Strong;
+            VoiceColor_PaletteColorLight6: $Curve_RoyalBlue_Strong;
+            VoiceColor_PaletteColorLight7: $Curve_Orange_Strong;
+            VoiceColor_PaletteColorLight8: $Curve_Yellow_Strong;
+            VoiceColor_PaletteColorLight9: $Curve_GrayBrown_Strong;
+            
+            VoiceMonitorGraph_RulerBackgroundColor: $Ruler_BG; // Background around Graph Area
+            VoiceMonitorGraph_RulerLabelColor: $Ruler_Text;
+            VoiceMonitorGraph_RulerTextColor: $Ruler_Text; // Weird C++ code, might be useless.
+            VoiceMonitorGraph_GridColor: $Graph_GridLine;
+            VoiceMonitorGraph_BackgroundColor: $Graph_BG;
+            VoiceMonitorGraph_CurveBlendSelectedColor: $Graph_CurveBlendSelectedColor;
+            VoiceMonitorGraph_CurveTransparencyNormal: $Graph_CurveTransparencyNormal;
+            VoiceMonitorGraph_CurveTransparencyMouseOver: $Graph_CurveTransparencyMouseOver;
+            VoiceMonitorGraph_CurveTransparencySelected: $Graph_CurveTransparencySelected;
+
+            VoiceMonitorGraph_HdrWindowColor: $Graph_HDR_Window;
+            
+        // Multiband Graph Curves (e.g. Mastering Suite)
+
+            // Individual band button colors
+            MultibandGraph_Band1ButtonActive: $ColoredButton_Blue_BG_Checked;
+            MultibandGraph_Band2ButtonActive: $ColoredButton_Green_BG_Checked;
+            MultibandGraph_Band3ButtonActive: $ColoredButton_Pink_BG_Checked;
+            MultibandGraph_Band4ButtonActive: $ColoredButton_Purple_BG_Checked;
+            MultibandGraph_Band5ButtonActive: $ColoredButton_AquaBlue_BG_Checked;
+            MultibandGraph_Band6ButtonActive: $ColoredButton_YellowGreen_BG_Checked;
+            MultibandGraph_Band1ButtonInactive: $ColoredButton_Blue_BG;
+            MultibandGraph_Band2ButtonInactive: $ColoredButton_Green_BG;
+            MultibandGraph_Band3ButtonInactive: $ColoredButton_Pink_BG;
+            MultibandGraph_Band4ButtonInactive: $ColoredButton_Purple_BG;
+            MultibandGraph_Band5ButtonInactive: $ColoredButton_AquaBlue_BG;
+            MultibandGraph_Band6ButtonInactive: $ColoredButton_YellowGreen_BG;
+            
+            // Individual band curve colors
+            MultibandGraph_Band1CurveBase: $MultibandGraph_Band1CurveBase;
+            MultibandGraph_Band2CurveBase: $MultibandGraph_Band2CurveBase;
+            MultibandGraph_Band3CurveBase: $MultibandGraph_Band3CurveBase;
+            MultibandGraph_Band4CurveBase: $MultibandGraph_Band4CurveBase;
+            MultibandGraph_Band5CurveBase: $MultibandGraph_Band5CurveBase;
+            MultibandGraph_Band6CurveBase: $MultibandGraph_Band6CurveBase;
+            MultibandGraph_Band1CurveHighlight: $MultibandGraph_Band1CurveHighlight;
+            MultibandGraph_Band2CurveHighlight: $MultibandGraph_Band2CurveHighlight;
+            MultibandGraph_Band3CurveHighlight: $MultibandGraph_Band3CurveHighlight;
+            MultibandGraph_Band4CurveHighlight: $MultibandGraph_Band4CurveHighlight;
+            MultibandGraph_Band5CurveHighlight: $MultibandGraph_Band5CurveHighlight;
+            MultibandGraph_Band6CurveHighlight: $MultibandGraph_Band6CurveHighlight;
+
+            // Cumulated curve color
+            MultibandGraph_MainCurveBase: $MultibandGraph_MainCurveBase;
+            MultibandGraph_MainCurveFill: $MultibandGraph_MainCurveFill;
+            
+            // State specific colors (mostly for control points)
+            MultibandGraph_SelectionOutline: $MultibandGraph_SelectionOutline;
+            MultibandGraph_SelectionFill: $MultibandGraph_SelectionFill;
+            MultibandGraph_DisabledCurve: $Curve_Gray_Weak;
+            MultibandGraph_DisabledControlPoint: $Curve_Gray_Strong;
+
+            // Multiband compressor
+            MultibandGraph_CrossoverLineBase: $MultibandGraph_CrossoverLineBase;
+            MultibandGraph_CrossoverLineHighlight: $MultibandGraph_CrossoverLineHighlight;
+            MultibandGraph_TransferCurveOutline: $MultibandGraph_TransferCurveOutline;
+            MultibandGraph_TransferCurveFill: $MultibandGraph_TransferCurveFill;
+            
+
+    //-- Node Graph -------------------------------
+
+        // Voice Graph and Schematic View Text color for non title bar text in both
+        UINode_DefaultTextColor: $NodeGraph_Node_Text;
+
+        // -------- Schematic View -------------------------------------------------------------------------------
+            // Schematic View Background
+            TreeGraphControl_BackgroundColor: $NodeGraph_BG;
+
+            // Graph Line in schematic view
+            TreeGraphControl_MainPipeline: $NodeGraph_Wire;
+
+            // Schematic View Nodes
+            // Border color around in Schematic View
+            UINode_InnerFrameColor: $StructureBorder_Internal;
+            UINode_OuterFrameColor: $Tray_Border_Floating;
+            UINode_BackgroundColor: $Default_BG;
+            UINode_BackgroundSelectedOverlayColor: $Tray_TitleBox_BG_SelectedOverlay;
+
+            // Selected Border color around outside of node in Schematic View
+            UINode_OuterFrameSelectedColor: $Tray_Border_Selected;
+
+            IconStripGraphNode_BackgroundHighlightedColor: $Tray_Border_Selected;
+            IconStripGraphNode_BackgroundColor: $Default_BG;
+
+            // Property Rows on nodes in schematic view
+            PropertyNode_BackgroundColor: $Default_BG;
+
+            ProjectGraphControl_NormalConnector: $NodeGraph_Wire;
+            ProjectGraphControl_BusConnector: $NodeGraph_Wire;
+            ProjectGraphControl_BusOverrideConnector: $NodeGraph_Wire;
+            ProjectGraphControl_AuxBusConnector: $NodeGraph_Wire;
+
+            ProjectGraphNode_SearchFrameInner:$Tray_Border_Floating;
+            ProjectGraphNode_SearchFrameOuter: $Accent_Search;
+            ProjectGraphNode_FillHighlight: $Tray_TitleBox_BG_Selected;  // Node header, not searched, selected
+            ProjectGraphNode_FillSearchHighlight: $Tray_TitleBox_BG_Selected; // Node header, searched, selected
+            ProjectGraphNode_FillSearch: $Tray_TitleBox_BG; // Node header, searched, not selected
+            ProjectGraphNode_Fill: $Tray_TitleBox_BG; // Node header, not search, not selected
+            ProjectGraphNode_NormalText: $Tray_TitleBox_Text;
+            ProjectGraphNode_HighlightText: $Text_Selected;
+
+            ProjectGraphNode_DisabledText: $Tray_TitleBox_Text_Excluded;
+            ProjectGraphNode_DisabledHighlightText: $Tray_TitleBox_Text_ExcludedSelected;
+
+            SoundGraphNode_ErrorSourceMissingText: $Text_Red;
+            SoundGraphNode_ErrorSourceMissingTextHighlight: $Text_Red_Selected;
+            
+            SoundGraphNode_InvalidAudioFileText: $Text_Blue;
+            SoundGraphNode_InvalidAudioFileTextHighlight: $Text_Blue_Selected;
+
+            SoundGraphNode_ExcludedLanguageText: $Text_Label_Disabled;
+            SoundGraphNode_ExcludedLanguageTextHighlight: $Text_Label_Disabled;
+            
+            DeviceNode_BackgroundColor: $Tray_TitleBox_BG;
+            // -------- End Schematic View ---------------------------------------------------------
+
+
+        // -- Voice Graph ---------------------------------------
+            // Voices Graph Background
+            ColumnGraphControl_BackgroundColor: $NodeGraph_BG;
+
+            // Game Object Grouping Box which displays around multiple items in the voices graph
+            // BG color
+            UINodeGroup_BackgroundColor: $NodeGraph_GroupBox_BG;
+            // Border Color
+            UINodeGroup_FrameColor: $NodeGraph_GroupBox_Border;
+            // Title box fill color
+            GameObjectUINode_BackgroundColor: $NodeGraph_GroupBox_TitleBox;
+
+            // Box Border and wire Hover Highlight
+            ColumnGraphControl_BoxBorderPen: $Tray_Border_Selected;
+            
+            // Border of Node Box
+            ColumnGraphControl_NormalNodeBorderPen: $Tray_Border_Floating;
+            ColumnGraphControl_HoveredNodeBorderPen: $Tray_Border_Hovered;
+            ColumnGraphControl_ActiveNodeBorderPen: $Tray_Border_Active;
+            ColumnGraphControl_SelectedNodeBorderPen: $Tray_Border_Selected;
+
+            // Connection Wire
+            ColumnGraphControl_NormalLinePen: $NodeGraph_Wire;
+            ColumnGraphControl_HoveredLinePen: $NodeGraph_Wire_Hovered;
+            ColumnGraphControl_ActiveLinePen: $NodeGraph_Wire_Selected;
+            
+            // Red Graph lines which are shown when there is latency defined in the sound pipeline, e.g. feedback loop
+            ColumnGraphControl_FeedbackLinePen: $NodeGraph_WireFeedback;
+
+            //Mute wire color
+            ColumnGraphControl_MuteLinePen: $NodeGraph_WireMute;
+
+            //Solo wire color
+            ColumnGraphControl_SoloLinePen: $NodeGraph_WireSolo;
+
+            // Node Graph
+            DialogGraph_ActionVolumeBackgroundColor: $NodeGraph_Node_Numeric_BG;
+            DialogGraph_ActionLowpassBackgroundColor: $NodeGraph_Node_Numeric_BG;
+            DialogGraph_ActionHipassBackgroundColor: $NodeGraph_Node_Numeric_BG;
+            DialogGraph_EffectsBackgroundColor: $NodeGraph_EffectsRow_BG;
+            DialogGraph_MixerBackgroundColor: $NodeGraph_MixerRow_BG;
+
+            DialogGraph_ActionVolumeBackgroundHighlightedColor: $List_BG;
+            DialogGraph_ActionLowpassBackgroundHighlightedColor: $List_BG;
+            DialogGraph_ActionHipassBackgroundHighlightedColor: $List_BG;
+            DialogGraph_EffectsBackgroundHighlightedColor: $NodeGraph_EffectsRow_BG;
+            DialogGraph_MixerBackgroundHighlightedColor: $NodeGraph_MixerRow_BG;
+            
+            // Node title box text
+            TextColorNode_TextColor: $Tray_TitleBox_Text;
+            GraphDeviceNode_BackgroundColor: $Tray_TitleBox_BG;
+            GraphSoundNode_BackgroundColor: $Tray_TitleBox_BG;
+            // Sound Node Text when Virtual
+            GraphSoundNode_VirtualIndicatorTextColor: $Text_Label_Disabled;
+            GraphSoundNode_VirtualTextColor: $Tray_TitleBox_Text;
+            // Virtual Voice BG color
+            GraphSoundNode_VirtualBackgroundColor: $NodeGraph_VirtualVoice_BG;
+            // -------- End Voices Graph ---------------------------------------------
+
+
+        // Mute Solo Row - Not sure if these do anything
+        MuteButtonWindow_BackgroundColor: $Default_BG;
+        MuteSoloNode_BackgroundColor: $Default_BG;
+        MuteSoloNode_BackgroundHighlightedColor: $Default_BG;
+        
+        LCChannelConfigOverride_InvalidValueColor: $ErrorText;
+        LCObjectReference_LinkUnlinkBackgroundColor: $Default_BG;
+
+
+    //-- Curves incl. FX Curves -------------------------------
+
+        // RTPC Curves
+        RTPC_PropertyCategoryRed: $Curve_Red;
+        RTPC_PropertyCategoryRedDark: $Curve_Red_Darkened;
+        RTPC_PropertyCategoryRedDeepDark: $Curve_Red_Lightened;
+
+        RTPC_PropertyCategoryOrange: $Curve_Orange;
+        RTPC_PropertyCategoryOrangeDark: $Curve_Orange_Darkened;
+        RTPC_PropertyCategoryOrangeDeepDark: $Curve_Orange_Lightened;
+
+        RTPC_PropertyCategoryYellow: $Curve_Yellow;
+        RTPC_PropertyCategoryYellowDark: $Curve_Yellow_Darkened;
+        RTPC_PropertyCategoryYellowDeepDark: $Curve_Yellow_Lightened;
+
+        RTPC_PropertyCategoryGreen: $Curve_Green;
+        RTPC_PropertyCategoryGreenDark: $Curve_Green_Darkened;
+        RTPC_PropertyCategoryGreenDeepDark: $Curve_Green_Lightened;
+
+        RTPC_PropertyCategoryBlue: $Curve_Blue;
+        RTPC_PropertyCategoryBlueDark: $Curve_Blue_Darkened;
+        RTPC_PropertyCategoryBlueDeepDark: $Curve_Blue_Lightened;
+
+        RTPC_PropertyCategoryLightBlue: $Curve_AquaBlue;
+        RTPC_PropertyCategoryLightBlueDark: $Curve_AquaBlue_Darkened;
+        RTPC_PropertyCategoryLightBlueDeepDark: $Curve_AquaBlue_Lightened;
+
+        RTPC_PropertyCategoryPurple: $Curve_Purple;
+        RTPC_PropertyCategoryPurpleDark: $Curve_Purple_Darkened;
+        RTPC_PropertyCategoryPurpleDeepDark: $Curve_Purple_Lightened;
+
+        RTPC_PropertyCategoryPink: $Curve_Pink;
+        RTPC_PropertyCategoryPinkDark: $Curve_Pink_Darkened;
+        RTPC_PropertyCategoryPinkDeepDark: $Curve_Pink_Lightened;
+
+        RTPC_PropertyCategoryDefault: $Curve_GrayBrown;
+        RTPC_PropertyCategoryDefaultDark: $Curve_GrayBrown_Darkened;
+        RTPC_PropertyCategoryDefaultDeepDark: $Curve_GrayBrown_Lightened;
+
+        DataCurve_Default: $Curve_GrayBrown;
+
+        // Attenuation curves
+        AttenuationSettingsPage_CurveVolumeDry: $Curve_Volume;
+        AttenuationSettingsPage_CurveVolumeWetGame: $Curve_Brown;
+        AttenuationSettingsPage_CurveVolumeWetUser: $Curve_Brown_Darkened;
+        AttenuationSettingsPage_CurveLowPassFilter: $Curve_LowPass;
+        AttenuationSettingsPage_CurveHighPassFilter: $Curve_HighPass;
+        AttenuationSettingsPage_CurveSpread: $Curve_YellowGreen;
+        AttenuationSettingsPage_CurveFocus: $Curve_YellowGreen_Darkened;
+
+    //-- Plugin Source & FX Curves +  -------------
+        // Convolution Curves
+            ConvolutionReverb_EQCurve: $Curve_AquaBlue;
+            ConvolutionReverb_IRLevel: $Curve_Orange;
+            ConvolutionReverb_IRLowPassFilter: $Curve_LowPass;
+            ConvolutionReverb_IRWaveViewerWaveColor: $RTPC_Graph_Waveform;
+            ConvolutionReverb_IRRectangleColor: $ConvolutionReverb_IRRectangle;
+        
+        // Reflect Curves
+            Reflect_VLDistanceAttenuation: $Curve_Volume;
+            Reflect_ELDistanceAttenuation: $Curve_Pink;
+            Reflect_VLDistanceSpread: $Curve_RoyalBlue;
+            Reflect_VLDistanceLowPassFilter: $Curve_LowPass;
+            Reflect_VLDistanceHighPassFilter: $Curve_HighPass;
+            Reflect_DiffractionAttenuation: $Curve_Yellow;
+            Reflect_DiffractionLowPassFilter: $Curve_Purple;
+            Reflect_DiffractionHighPassFilter: $Curve_Purple_Lightened;
+            Reflect_BackgroundColor: $Default_BG;
+        
+        // Mastering Suite
+            MasteringSuite_ChannelLinkButtonOn: $Accent_Default;
+            MasteringSuite_ChannelLinkButtonOff: $Button_BG;
+            MasteringSuite_ChannelLabelActive: $Accent_Default;
+            MasteringSuite_ChannelLabelInactive: $Ruler_Text;
+
+        // Recorder
+            Recorder_StatusTextColor: $Text_Label;
+            Recorder_StatusTextRecordingColor: $Text_Red;
+            Recorder_StatusTextErrorColor: $Text_Red;
+
+        // Feedback Generator Curves
+            FeedbackGenerator_CurveDefaultSmall: $Curve_AquaBlue_Lightened;
+            FeedbackGenerator_CurveDefaultLarge: $Curve_AquaBlue_Darkened;
+            FeedbackGenerator_CurveDefaultLeftTrigger: $Curve_Blue_Lightened;
+            FeedbackGenerator_CurveDefaultRightTrigger: $Curve_Blue_Darkened;
+            FeedbackGenerator_CurveXboxOneSmall: $Curve_Red;
+            FeedbackGenerator_CurveXboxOneLarge: $Curve_Red_Darkened;
+            FeedbackGenerator_CurveXboxOneLeftTrigger: $Curve_Red_Lightened;
+            FeedbackGenerator_CurveXboxOneRightTrigger: $Curve_Pink_Darkened;
+            FeedbackGenerator_CurvePS4Small: $Curve_Yellow_Lightened;
+            FeedbackGenerator_CurvePS4Large: $Curve_Yellow_Darkened;
+            FeedbackGenerator_CurveSwitchSmall: $Curve_Orange;
+            FeedbackGenerator_CurveSwitchLarge: $Curve_Orange_Darkened;
+
+        // Soundseed Wind Curves
+            SoundSeedWind_AverageVelocity: $Curve_Red;
+            SoundSeedWind_Direction: $Curve_YellowGreen;
+            SoundSeedWind_Variability: $Curve_Brown;
+            SoundSeedWind_Gustiness: $Curve_Blue;
+            SoundSeedWind_FrequencyScale: $Curve_Yellow;
+            SoundSeedWind_QFactorScale: $Curve_Purple;
+            SoundSeedWind_GainOffset: $Curve_AquaBlue;
+
+            SoundSeedWind_Mute: $Accent_Mute;
+            SoundSeedWind_Solo: $Accent_Solo;
+
+            SoundSeedWind_PannerCircleFill: $SoundSeed_PannerCircle_BG; // Area around panner dot you move around
+            SoundSeedWind_PannerCircleRadius: $SoundSeed_PannerCircle_Radius; //Large circle in background the dot moves around on top
+            SoundSeedWind_Text: $Text_Label;
+
+        // Soundseed Whoosh Curves
+            SoundSeedWoosh_Speed: $Curve_Red;
+            SoundSeedWoosh_FrequencyScale: $Curve_Yellow;
+            SoundSeedWoosh_QFactorScale: $Curve_Purple;
+            SoundSeedWoosh_GainOffset:$Curve_AquaBlue;
+
+            SoundSeedWoosh_Mute: $Accent_Mute;
+            SoundSeedWoosh_Solo:$Accent_Solo;
+
+            SoundSeedWoosh_PannerCircleRadius: $SoundSeed_PannerCircle_Radius;
+            SoundSeedWoosh_Text: $Text_Label;
+            SoundSeedWoosh_Path: $Graph_Point_BG_Selected;
+
+        // Granular Synth
+            GranularSynth_GrainColor: $SoundseedGrain_Grain;
+
+            GranularSynth_PropertyCursorLineColor: $SoundseedGrain_PositionCursorLine;
+            GranularSynth_PropertyCursorFlagColor: $SoundseedGrain_PositionCursorFlag;
+            GranularSynth_PropertyCursorFlagBgColor: $SoundseedGrain_PositionCursorFlagBg;
+            GranularSynth_PropertyCursorTextColor: $SoundseedGrain_PositionCursorText;
+
+            GranularSynth_MainCurveStroke : $SoundseedGrain_MainCurve;
+            GranularSynth_MainCurveFill : $SoundseedGrain_MainCurveFill; 
+            GranularSynth_SecondaryCurvesStroke : $SoundseedGrain_SecondaryCurve;
+            GranularSynth_SecondaryCurvesFill : $SoundseedGrain_SecondaryCurvesFill;
+
+            GranularSynth_CurvePointFocusedSelected : $Graph_FadeHandle_Selected;
+            GranularSynth_CurvePointFocusedUnselected : $Graph_FadeHandle;
+            GranularSynth_CurvePointUnfocusedSelected : $Graph_FadeHandle_Selected;
+            GranularSynth_CurvePointUnfocusedUnselected : $Graph_FadeHandle;
+            GranularSynth_CurvePointDisabled : $Graph_FadeHandle_Disabled;
+            GranularSynth_EnvelopeControlIconBorder: $Graph_FadeHandle_Border;        
+
+    //-- Music Editor -------------------------------
+
+        // Area outside of track area in Music Segment Editor
+        WindowLessView_BackgroundColor: $Default_BG;
+
+        // Selected Frame Color
+        SegmentEditor_BackgroundColor: $Track_BG; // Not sure what this does?
+        SegmentEditor_SelectionFrameColor: $Selected_BG; // Not sure what this does
+
+        //-- Cursors & Cues
+            // Time Indicator - Vertical Line
+            PlayCursor_LineColor: $Cursor_Time;
+            MarkerCursor_EntryLineColor: $Cursor_Entry;
+            MarkerCursor_ExitLineColor: $Cursor_Exit;
+            EndCursor_LineColor: $StructureBorder_Mid;
+
+            // Custom Cues Cursor
+            MarkerCursor_LineColor: $Graph_CursorCustomCue_Line;
+            MarkerCursor_CueNameTextColor: $Source_Marker_Text;
+            // Flag Portion of cursor
+            MarkerCursor_CueNameTextBackgroundColor:$Graph_CursorCustomCue_Flag_BG;
+            MarkerCursor_CueNameDisabledTextBackgroundColor: $Graph_CursorCustomCue_Flag_BG_Disabled;
+            //Horizontal Shadow line at the bottom of the flag 
+            MarkerCursor_CueNameShadowColor: $Graph_CursorCustomCue_Flag_Shadow;  // 1 Pixel shadown to bottm and right of flag
+            MarkerCursor_CueNameDisabledShadowColor: $Graph_CursorCustomCue_Flag_Shadow_Disabled;  // Need to control text color and bg
+
+
+
+        //-- Tracks
+            // Headers for each track on left side of segment editor
+            TrackHeaderButton_BackgroundColor: $Button_BG;
+            TrackHeaderButton_NormalText:$Tray_TitleBox_Text; //Text on 'Force Usage' button on sub track
+            // End Headers
+
+            // For Random Playlist Container
+            MusicRandomSequenceContainerEditorControl_TreeLineColor: $TreeLine;
+
+            // Drag & Drop
+            MusicRandomSequenceContainerEditorControl_DragAndDropColor:$DragAndDrop_Drop_Hover; //Not sure exactly where this is used
+            MusicRandomSequenceContainerEditorControl_DropHoverColor:$DragAndDrop_Drop_Hover;
+
+            MusicFadeViewer_ActiveObjectColor: $Graph_BG;
+            MusicFadeViewer_InactiveObjectColor:$Graph_BG_Outside;
+            MusicFadeViewer_FadeColor:$Curve_Volume;
+
+            // Main Canvas background drawing
+            SequenceControl_FrameColor:$Track_Separator; // Lines between tracks
+            SequenceControl_BackgroundColor:$Track_BG; //Track Background color
+            SequenceControl_DropHoverColor: $DragAndDrop_Drop_Hover;
+            SequenceControl_GridTickSmallColor: $Track_GridLineWeak;
+            SequenceControl_GridTickMediumColor:$Track_GridLine;
+            SequenceControl_GridTickLargeColor:$Track_GridLine;
+
+            // Track headers on left of the view
+            TrackHeaderControl_TitleSelectedTextColor:$Text_Selected;
+            TrackHeaderControl_TitleTextColor:$Tray_TitleBox_Text;
+
+            // Header tray - Title block and border around the track area to the left
+            // Alpha is used to specify how much of the background color is blended with the object color (if any).
+            // 0 Means we will see 100% of the object color
+            TrackHeaderControl_TitleBackgroundColor: $Tray_TitleBox_BG_DefaultColorOverlay;
+
+            // Incorrectly applied on Track Headers as opaque color when object color is default
+            TrackHeaderControl_TitleBackgroundSelectedColor: $Tray_TitleBox_BG_SelectedOverlay;
+
+            // Shadow line underneath header tray
+            TrackHeaderControl_ShadowColor: $Track_Header_Shadow;
+
+            TrackHeaderControl_BorderSelectedColor:$Selected_BG;
+
+            // Color inside track header tray with controls on it
+            TrackHeaderControl_BackgroundColor:$Default_BG;
+            // Text for labels inside area with controls
+            TrackHeaderPropertyControl_NormalTextColor: $Text_Label;
+
+            // Sub-Track Headers
+            SequenceHeaderControl_BorderSelectedColor:$Selected_BG; // Selected border around sub track header
+            SequenceHeaderControl_BackgroundColor:$StructureBorder_Mid; // Not sure what this does
+            SequenceHeaderControl_DialogBackgroundColor:$Default_BG; // Background color behind Headers
+            SequenceHeaderControl_ShadowColor: $StructureBorder_Mid; // Shadow around sub track header for random/sequence track 
+
+            SequenceHeaderControl_TrackHeaderBackgroundColor:$Default_BG; // Not sure what this does
+
+            // Sequence Sub Panel
+            SequenceHeaderControl_SequenceBackgroundColor: $SubTrackHeader_SequenceBG;
+            SequenceHeaderControl_SequenceSelectedBackgroundColor: $SubTrackHeader_SequenceBG_Selected;
+            // Random Sub Panel
+            SequenceHeaderControl_RandomBackgroundColor: $SubTrackHeader_RandomBG;
+            SequenceHeaderControl_RandomSelectedBackgroundColor: $SubTrackHeader_RandomBG_Selected;
+            // Switch Sub Panel
+            SequenceHeaderControl_SwitchBackgroundColor: $SubTrackHeader_SwitchBG;
+            SequenceHeaderControl_SwitchSelectedBackgroundColor: $SubTrackHeader_SwitchBG_Selected;
+
+        //-- Clips -------
+            // Regular Frame Color
+            // Alpha is used to specify how much of the border color is blended with the palette color.
+            MusicClipControl_NormalFrameBrushColor: $Clip_Border; //Clip Outer Border
+            MusicClipControl_SelectionFrameBrushColor: $Clip_Border_Selected;
+
+            MusicClipControl_WaveColor: $Clip_Wave;
+
+            // Fade handle after it is moved
+            MusicClipFade_BoxBackgroundColor: $Graph_FadeHandle;
+            MusicClipFade_BoxFrameColor: $Graph_FadeHandle_Border;
+
+            // Fade handle when it hasn't been grabbed yet
+            MusicClipFade_DisabledBoxBackgroundColor: $Graph_FadeHandle;
+            MusicClipFade_DisabledBoxFrameColor: $Graph_FadeHandle_Border;
+
+            // Fade Curve inside clip
+            MusicClipFade_CurveColor: $MusicClip_FadeCurve;
+
+            // Midi Clip Drawing
+            // Alpha is used to specify how much of the border color is blended with the palette color.
+            MusicClipMidi_NormalFrameColor: $Clip_Border;
+            MusicClipMidi_SelectionFrameColor: $Clip_Border_Selected;
+            MusicClipMidi_DottedLineColor: $Clip_LoopLine; //?
+
+            // Background colors for the band at the bottom of the clip which has the text
+            // Alpha is used to specify how much of the border color is blended with the palette color.
+            MusicClipMidi_TextFrameColor: $Tray_TitleBox_BG_DefaultColorOverlay;
+            MusicClipMidi_SelectedTextFrameColor: $Tray_TitleBox_BG_SelectedOverlay;
+
+            MusicClipMidi_NoteColor: $Clip_Midi_Note;
+            MusicClipMidi_NameColor: $Tray_TitleBox_Text;
+
+            MusicClipMidi_BackgroundColor: $Clip_BG;
+            MusicClipMidi_SelectedBackgroundColor: $Clip_BG_SelectedOverlay;
+            MusicClipMidi_Transparency: $Clip_BG; // Only alpha is used
+
+            //-- Not sure what these do
+            MusicEditorFrame_BackgroundColor: $EmptyWidget;
+            MusicEditorFrame_TextColor: $Text_Label;
+
+            // Square trimming manipulators in bottom left and right
+            WLResizableBox_BackgroundColor: $Graph_FadeHandle;
+            WLResizableBox_FrameColor: $Graph_FadeHandle_Border;
+
+            WLObjectBoxControl_TextColor: $Tray_TitleBox_Text;
+            WLObjectBoxControl_SelectedTextColor: $Text_Selected;
+            WLObjectBoxControl_UnloadedTextColor: $WarningText;
+            WLObjectBoxControl_UnloadedSelectedTextColor: $WarningTextSelected;
+
+            // Clip background and border
+            // Alpha is used to specify how much of the border color is blended with the palette color.
+            WLAudioSourceViewerControl_BackgroundColor: $Clip_BG;
+            WLAudioSourceViewerControl_SelectedBackgroundColor: $Clip_BG_SelectedOverlay;
+            WLAudioSourceViewerControl_BorderColor: $Clip_Border;
+            WLAudioSourceViewerControl_SelectedBorderColor: $Clip_Border_Selected;
+
+            // Bottom of Clip fill
+            // Alpha is used to specify how much of the border color is blended with the palette color.
+            WLAudioSourceViewerControl_TextFrameColor: $Tray_TitleBox_BG_DefaultColorOverlay;
+            WLAudioSourceViewerControl_SelectedTextFrameColor: $Tray_TitleBox_BG_SelectedOverlay;
+
+            // Name Text on bottom of clip
+            WLAudioSourceViewerControl_SourceNameColor: $Tray_TitleBox_Text;
+
+            WLAudioSourceViewerControl_SourceNameMissingColor: $ErrorText;            // Cell_Red
+            WLAudioSourceViewerControl_SourceNameMissingSelectedColor: $ErrorTextSelected;
+
+            WLAudioSourceViewerControl_SourceNameInvalidColor: $UnconvertedText;            // Cell_Blue
+            WLAudioSourceViewerControl_SourceNameInvalidSelectedColor: $UnconvertedTextSelected;
+
+            // Not sure what these do
+            WLImageButtonControl_BackgroundColor: $Default_BG;
+            WLImageButtonControl_DownColor: $Button_BG_Pressed;
+            WLImageButtonControl_HotColor: $Button_BG_HoveredOpaque;
+
+            // Alpha is used to specify how much of the border color is blended with the palette color.
+            MusicEventCue_NormalFrameColor: $Graph_CursorStandardCue_Border;
+            MusicEventCue_SelectionFrameColor: $Graph_CursorStandardCue_Border_Selected;
+            MusicEventCue_TextFrameColor: $Graph_CursorStandardCue_Text_Border;
+            //MusicEventCue_SelectedTextFrameColor: $Graph_CursorStandardCue_Text_Border_Selected;
+            MusicEventCue_BrightenFrameFactor: $Graph_CursorStandardCue_Border_BrightenFactor; // Only alpha is used
+            MusicEventCue_BrightenPoleFactor: $Graph_CursorStandardCue_Pole_BrightenFactor; // Only alpha is used
+            //MusicEventCue_Transparency: $Graph_CursorStandardCue_Transparency; // Only alpha is used  //Seems Unused
+
+
+
+
+    //-- Capture Log -----------------------------------------
+        CaptureList_ErrorBackgroundColor:  $Cell_Error_BG;
+        CaptureList_MessageBackgroundColor: $Cell_Warning_BG;
+        CaptureList_MessageInvertTextColor: $Text_Selected;
+        CaptureList_MessageOverlayColor: $CaptureLog_Message_Overlay;
+        CaptureList_BackgroundColor: $List_BG;
+
+        CaptureList_RelatedBulletColor: $CaptureLog_RelatedBullet;    
+        CaptureList_RelatedBulletLineColor: $CaptureLog_RelatedBullet_Border;                  
+
+        CaptureList_TimeBulletLineMinColor: $CaptureLog_TimeBullet_Min;
+        CaptureList_TimeBulletLineMaxColor: $CaptureLog_TimeBullet_Max;
+
+
+    //-- Mixing Desk-------------------------------
+        // Text for side headers list on Mixing Desk also Dialog Event Editor (Multi Switch Editor)
+        WLBoxControl_TextColor: $Tray_TitleBox_Text;
+
+        // Used for columns and column headers in Mixing desk
+        WLBoxControl_ObjectColorBackgroundSelectedOverlay: $Tray_TitleBox_BG_SelectedOverlay;
+        WLBoxControl_ObjectColorBackgroundBlendRatio: $Tray_CenterBG_ObjectColorBlendRatio;
+        
+        // Used in Music Fade Editor
+        WLBoxControl_BackgroundColor: $Tree_BG;
+        WLBoxControl_FrameColor: $StructureBorder;
+
+        // Status blocks at top of window with the headphones, duck and bypass Icons
+        BusBypassMixer_BackgroundInactiveColor: $MixingDesk_BG;
+        BusBypassMixer_BackgroundActiveColor: $MixingDesk_BG;
+
+        BusDuckingMixer_BackgroundInactiveColor: $MixingDesk_BG;
+        BusDuckingMixer_BackgroundActiveColor: $MixingDesk_BG;
+
+        ActivityMixer_BackgroundInactiveColor: $MixingDesk_BG; //Playback Status items (Headphones) when inactive
+        ActivityMixer_BackgroundActiveColor: $MixingDesk_BG; //Playback Status items (Headphones) when active
+
+        ActivityMixer_BorderInactiveColor: $StructureBorder; //? Not sure what this does, likely defunct
+        ActivityMixer_BorderActiveColor: $Raw_green_pastel; //? Not sure what tthis does, likely defunct
+
+        // Title Blocks in center of window
+        BusIsDuckingMixer_BackgroundColor: $MixingDesk_Row_BG;
+        BusIsDuckingMixer_TextColor:$Tray_TitleBox_Text;
+
+        AttenuationMixer_BackgroundColor: $List_Header_BG; // Attenuation Title Blocks
+        AttenuationMixer_TextColor:$Tray_TitleBox_Text; // Attenuation Title Block Text
+        AttenuationMixer_TextDisabledColor: $Tray_TitleBox_Text_Disabled; // Attenuation Title Block Text
+
+        EffectMixer_BackgroundEvenColor: $MixingDesk_Row_BG;
+        EffectMixer_BackgroundOddColor: $MixingDesk_Row_Alternate_BG;
+        EffectMixer_TextColor:$Tray_TitleBox_Text;
+        EffectMixer_TextBypassColor: $Tray_TitleBox_Text_Disabled;
+
+        GameParametersMixer_BackgroundColor: $MixingDesk_Row_BG;
+        GameParametersMixer_TextColor:$Tray_TitleBox_Text;
+
+        AuxBusSendMixer_BackgroundEvenColor: $MixingDesk_Row_BG;
+        AuxBusSendMixer_BackgroundOddColor: $MixingDesk_Row_Alternate_BG;
+
+        OutputBusMixer_BackgroundColor: $List_Header_BG;
+        OutputBusMixer_TextColor:$Tray_TitleBox_Text;
+        OutputBusMixer_TextDisabledColor: $Tray_TitleBox_Text_Disabled;
+
+        StateGroupMixer_BackgroundColor: $List_Header_BG;
+        StateGroupMixer_TextColor:$Tray_TitleBox_Text;
+
+        StateGroupSectionMixer_BackgroundActiveColor: $List_Header_BG;
+        StateGroupSectionMixer_BackgroundInactiveColor: $List_Header_BG_Disabled;
+        StateGroupSectionMixer_TextActiveColor:$Tray_TitleBox_Text;
+        StateGroupSectionMixer_TextInactiveColor: $Tray_TitleBox_Text_Disabled;
+
+        DragDropAdornerMixer_BackgroundColor: $Accent_Default;
+
+        ObjectHeaderMixer_BackgroundColor: $Tray_TitleBox_BG;
+        ObjectHeaderMixer_BackgroundSelectedColor: $Tray_TitleBox_BG_Selected;
+        
+        SectionHeaderMixer_BackgroundColor: $MixingDesk_SideHeader_Child_BG; // Side Header to far left
+        SectionGroupHeaderMixer_BackgroundColor: $MixingDesk_SideHeader_BG; //Child Side Header
+
+        MixingDeskControl_BackgroundColor: $MixingDesk_BG;
+
+
+    //-- Soundcaster -------------------------------
+        GridControl_Background: $NodeGraph_BG;
+        GridControl_DisabledBackground: $NodeGraph_BG_Disabled;
+        GridControl_Dot: $Tray_TitleBox_BG;
+        GridControl_Hover: $Accent_Default;
+        GridControl_TextColor: $Text_Label;
+
+        SoundcasterModule_Border: $Tray_Border_Floating;
+        SoundcasterModule_SelectedBorder: $Selected_BG;
+        SoundcasterModule_CenterBackground: $Default_BG; // Inside area where controls are
+        SoundcasterModule_SelectedCenterBackground: $Tray_CenterBG_Selected;
+        SoundcasterModule_TitleBar: $Tray_TitleBox_BG; // Seems like it affects only the background of the close button
+        SoundcasterModule_TitleBarSelected: $Tray_TitleBox_BG_Selected; // Same
+        
+        SoundcasterModule_Text: $Tray_TitleBox_Text; // Text on the panel
+        SoundcasterModule_SelectedText: $Text_Selected;
+        SoundcasterModule_WarningText: $WarningText;
+        SoundcasterModule_SelectedWarningText: $WarningTextSelected;
+        SoundcasterModule_ErrorText: $ErrorText;
+        SoundcasterModule_SelectedErrorText: $ErrorTextSelected;
+
+        // Alpha is used to specify how much of the background color is blended with the object color (if any).
+        SoundcasterModule_Background: $Tray_TitleBox_BG_DefaultColorOverlay; // Tray Background
+        SoundcasterModule_SelectedBackground: $Tray_TitleBox_BG_SelectedOverlay;// Background around edges of each
+
+
+    //-- Utility Editors (not the most used) ----------------------------------------
+        // Dialog Event Editor AKA MultiSwitchEditor
+        ArgumentControl_Selected: $Tray_TitleBox_BG_Selected;
+        ArgumentControl_Unselected: $Tray_TitleBox_BG;
+
+        ArgumentValueControl_Selected: $List_BG_Selected;
+        ArgumentValueControl_Unselected: $List_BG;
+
+        ArgumentView_FrameBorder: $Tray_TitleBox_BG;
+
+        ArgumentsPane_TextColor: $Text_Label;
+
+        ArgumentsPane_Background: $Tree_BG;
+
+        ArgumentsPane_DisabledBackground: $Tree_BG;
+        ArgumentsPane_DropHover: $DragAndDrop_Drop_Hover;
+
+
+        // Query Editor
+        CriteriaList_TreeLine: $TreeLine;
+
+        QueryExpandBar_Background: $List_Header_BG;
+        QueryExpandBar_TitleText: $List_Header_Text;
+
+        QueryParentDialog_Background: $Default_BG;
+        QueryParentDialog_Text: $Text_Label;
+
+
+        // Property Help
+        PropertyHelp_BackgroundColor: $PropertyHelp_BG;
+        PropertyHelp_BorderColor: $StructureBorder;
+        PropertyHelp_NormalText: $PropertyHelp_Text;
+
+
+    //-- Object Colors -------------------------------
+
+        ObjectColor_SelectionCorner: $Accent_Default_Saturated;
+        ObjectColor_PaletteColorNone: $ObjectColor_None;
+        ObjectColor_PaletteColor0: $ObjectColor_0;
+        ObjectColor_PaletteColor1: $ObjectColor_1;
+        ObjectColor_PaletteColor2: $ObjectColor_2;
+        ObjectColor_PaletteColor3: $ObjectColor_3;
+        ObjectColor_PaletteColor4: $ObjectColor_4;
+        ObjectColor_PaletteColor5: $ObjectColor_5;
+        ObjectColor_PaletteColor6: $ObjectColor_6;
+        ObjectColor_PaletteColor7: $ObjectColor_7;
+        ObjectColor_PaletteColor8: $ObjectColor_8;
+        ObjectColor_PaletteColor9: $ObjectColor_9;
+        ObjectColor_PaletteColor10: $ObjectColor_10;
+        ObjectColor_PaletteColor11: $ObjectColor_11;
+        ObjectColor_PaletteColor12: $ObjectColor_12;
+        ObjectColor_PaletteColor13: $ObjectColor_13;
+        ObjectColor_PaletteColor14: $ObjectColor_14;
+        ObjectColor_PaletteColor15: $ObjectColor_15;
+        ObjectColor_PaletteColor16: $ObjectColor_16;
+        ObjectColor_PaletteColor17: $ObjectColor_17;
+        ObjectColor_PaletteColor18: $ObjectColor_18;
+        ObjectColor_PaletteColor19: $ObjectColor_19;
+        ObjectColor_PaletteColor20: $ObjectColor_20;
+        ObjectColor_PaletteColor21: $ObjectColor_21;
+        ObjectColor_PaletteColor22: $ObjectColor_22;
+        ObjectColor_PaletteColor23: $ObjectColor_23;
+        ObjectColor_PaletteColor24: $ObjectColor_24;
+        ObjectColor_PaletteColor25: $ObjectColor_25;
+        ObjectColor_PaletteColor26: $ObjectColor_26;
+
+    // -- For curves based on object color which are drawn with transparency ------------------
+        ObjectColorTransparent_PaletteColorNone: $ObjectColorTransparent_None;
+        ObjectColorTransparent_PaletteColor0: $ObjectColorTransparent_0;
+        ObjectColorTransparent_PaletteColor1: $ObjectColorTransparent_1;
+        ObjectColorTransparent_PaletteColor2: $ObjectColorTransparent_2;
+        ObjectColorTransparent_PaletteColor3: $ObjectColorTransparent_3;
+        ObjectColorTransparent_PaletteColor4: $ObjectColorTransparent_4;
+        ObjectColorTransparent_PaletteColor5: $ObjectColorTransparent_5;
+        ObjectColorTransparent_PaletteColor6: $ObjectColorTransparent_6;
+        ObjectColorTransparent_PaletteColor7: $ObjectColorTransparent_7;
+        ObjectColorTransparent_PaletteColor8: $ObjectColorTransparent_8;
+        ObjectColorTransparent_PaletteColor9: $ObjectColorTransparent_9;
+        ObjectColorTransparent_PaletteColor10: $ObjectColorTransparent_10;
+        ObjectColorTransparent_PaletteColor11: $ObjectColorTransparent_11;
+        ObjectColorTransparent_PaletteColor12: $ObjectColorTransparent_12;
+        ObjectColorTransparent_PaletteColor13: $ObjectColorTransparent_13;
+        ObjectColorTransparent_PaletteColor14: $ObjectColorTransparent_14;
+        ObjectColorTransparent_PaletteColor15: $ObjectColorTransparent_15;
+        ObjectColorTransparent_PaletteColor16: $ObjectColorTransparent_16;
+        ObjectColorTransparent_PaletteColor17: $ObjectColorTransparent_17;
+        ObjectColorTransparent_PaletteColor18: $ObjectColorTransparent_18;
+        ObjectColorTransparent_PaletteColor19: $ObjectColorTransparent_19;
+        ObjectColorTransparent_PaletteColor20: $ObjectColorTransparent_20;
+        ObjectColorTransparent_PaletteColor21: $ObjectColorTransparent_21;
+        ObjectColorTransparent_PaletteColor22: $ObjectColorTransparent_22;
+        ObjectColorTransparent_PaletteColor23: $ObjectColorTransparent_23;
+        ObjectColorTransparent_PaletteColor24: $ObjectColorTransparent_24;
+        ObjectColorTransparent_PaletteColor25: $ObjectColorTransparent_25;
+        ObjectColorTransparent_PaletteColor26: $ObjectColorTransparent_26;
+
+
+
+    //-- 3D View --------------------------------
+        // 3d Viewport main background
+        Control3d_BackgroundColor: $View3D_Viewport_BG;
+        Control3d_DialogBackgroundColor: $View3D_Dialog_BG; //?
+
+        //3D Lights
+        Control3d_LightDiffuseColor0: $View3D_Light_Diffuse0;
+        Control3d_LightDiffuseColor1: $View3D_Light_Diffuse1;
+        Control3d_LightDiffuseColor2: $View3D_Light_Diffuse2;
+        Control3d_LightAmbientColor:  $View3D_Light_Ambient;
+        
+        // 3D Lights for Audio Object 3D
+        AudioObject3d_LightDiffuseColor0: $AudioObject3D_Light_Diffuse0;
+        AudioObject3d_LightDiffuseColor1: $AudioObject3D_Light_Diffuse1;
+        AudioObject3d_LightDiffuseColor2: $AudioObject3D_Light_Diffuse2;
+        AudioObject3d_LightAmbientColor:  $AudioObject3D_Light_Ambient;
+
+        // color of listener/emitter objects
+        GameObject3d_ListenerEmitter: $View3D_ListenerEmitter;
+        GameObject3d_DisabledListenerEmitter: $View3D_ListenerEmitter_Disabled;
+
+        Text3d_TextColor: $View3D_Text;
+
+        GameObject3D_MissingObjectTextColor: $ErrorText;
+
+        Attenuation3d_InvertConeColor: $View3D_Attenuation_InvertCone;
+        Attenuation3d_ConeColor:       $View3D_Attenuation_Cone;
+        Attenuation3d_RadiusColor:     $View3D_Attenuation_Radius;
+
+        // Emitter panning spread cones
+        GameObject3d_SpreadConeVoice: $View3D_SpreadConeVoice;
+        GameObject3d_SpreadDomeVoice: $View3D_SpreadDomeVoice;
+
+        GameObject3d_SpreadConeDiffractionRay: $View3D_SpreadConeDiffractionRay;
+        GameObject3d_SpreadDomeDiffractionRay: $View3D_SpreadDomeDiffractionRay;
+
+        GameObject3d_SpreadConeTransmissionRay: $View3D_SpreadConeTransmissionRay;
+        GameObject3d_SpreadDomeTransmissionRay: $View3D_SpreadDomeTransmissionRay;
+
+        GameObject3d_SpreadConePortalRay: $View3D_SpreadConePortalRay;
+        GameObject3d_SpreadDomePortalRay: $View3D_SpreadDomePortalRay;
+
+        GameObject3d_SpreadConeRadialEmitter: $View3D_SpreadConeRadialEmitter;
+        GameObject3d_SpreadDomeRadialEmitter: $View3D_SpreadDomeRadialEmitter;
+
+        GameObject3d_SpreadConeAngleToAlpha: $View3D_SpreadConeAngleToAlpha;
+        GameObject3d_SpreadDomeAngleToAlpha: $View3D_SpreadDomeAngleToAlpha;
+
+        GameObject3d_SpreadConeDomeSpatialAudioMinAlpha: $View3D_SpreadConeDomeSpatialAudioMinAlpha;
+
+        GameObject3d_FrontArrowColor: $View3D_Axis_Front;
+        GameObject3d_TopArrowColor: $View3D_Axis_Top;
+
+        Axe3d_XColor: $View3D_Axis_X;
+        Axe3d_YColor: $View3D_Axis_Y;
+        Axe3d_ZColor: $View3D_Axis_Z;
+
+        Grid3d_GridColor: $View3D_Grid;
+        Grid3d_GridColorEmphasis: $View3D_GridEmphasis;
+        Grid3d_XColor: $View3D_Axis_X;
+        Grid3d_YColor: $View3D_Axis_Y;
+        Grid3d_ZColor: $View3D_Axis_Z;
+        Grid3d_TextColor: $View3D_GridText;
+
+        Object3d_Color: $View3D_Object;
+        Object3d_DisabledColor: $View3D_Object_Disabled;
+
+        // dot on the listener and emitter in the 3d viewer
+        SpatialAudio3d_Listener:$View3D_Ray_Listener;
+        SpatialAudio3d_Emitter: $View3D_Ray_Emitter;
+        SpatialAudio3d_EmitterInnerRadius: $View3D_Ray_EmitterInnerSpread;
+        SpatialAudio3d_EmitterOuterRadius: $View3D_Ray_EmitterOuterSpread;
+        SpatialAudio3d_DisabledListener:$View3D_Ray_Listener_Disabled;
+        SpatialAudio3d_DisabledEmitter: $View3D_Ray_Emitter_Disabled;
+
+        // Geometry diffraction paths
+        SpatialAudio3d_DiffractionPath:  $View3D_Ray_DiffractionPath;
+        SpatialAudio3d_DisabledDiffractionPath:  $View3D_Ray_DiffractionPath_Disabled;
+
+        // sound propagation path color
+        SpatialAudio3d_PropagationPath: $View3D_Ray_PropagationPath;
+        SpatialAudio3d_DisabledPropagationPath: $View3D_Ray_PropagationPath_Disabled;
+
+        // Direct/transmission paths
+        SpatialAudio3d_DirectPath: $View3D_Ray_DirectPath;
+        SpatialAudio3d_TransmissionPath: $View3D_Ray_TransmissionPath;
+
+        // reflection colors
+        SpatialAudio3d_Reflection1stOrder: $View3D_Ray_ReflectionOrder1;
+        SpatialAudio3d_Reflection2ndOrder: $View3D_Ray_ReflectionOrder2;
+        SpatialAudio3d_Reflection3rdOrder: $View3D_Ray_ReflectionOrder3;
+        SpatialAudio3d_Reflection4thOrder: $View3D_Ray_ReflectionOrder4;
+
+        SpatialAudio3d_ReflectionOccluded: $View3D_Ray_ReflectionOccluded; // requires a special build of wwise sound engine to see
+
+        // Dark
+        SpatialAudio3d_ReflectionIdentical: $View3D_Ray_ReflectionIdentical;
+        SpatialAudio3d_ReflectionMissing: $View3D_Ray_ReflectionMissing;
+        SpatialAudio3d_ReflectionUnexpected: $View3D_Ray_ReflectionUnexpected;
+        SpatialAudio3d_DiffractionIdentical: $View3D_Ray_DiffractionIdentical;
+        SpatialAudio3d_DiffractionMissing: $View3D_Ray_DiffractionMissing;
+        SpatialAudio3d_DiffractionUnexpected: $View3D_Ray_DiffractionUnexpected;
+
+        // portals
+        SpatialAudioPortal_EnabledColor:  $View3DPortal_Enabled;
+        SpatialAudioPortal_DisabledColor: $View3DPortal_Disabled;
+        
+        // Diffraction edge color (edges must be enabled in the viewer settings)
+        SpatialAudioGeometry_DiffractionEdge: $View3D_DiffractionEdge;
+        SpatialAudioGeometry_BoundaryEdge:    $View3D_BoundaryEdge;
+        SpatialAudioGeometry_MalformedEdge:   $View3D_MalformedEdge;
+        SpatialAudioGeometry_RoomEdge: 		  $View3D_RoomEdge;
+
+        // Currently only used in the spatial audio debug settings. 
+        SpatialAudio3d_SelectedEdge: $Raw_yellow_pure;
+        SpatialAudio3d_VisibleEdge0: $Raw_green_mid;
+        SpatialAudio3d_VisibleEdge1: $Raw_aqua_bright;
+
+        // Acoustic textures
+        AcousticTexture_NoTexture: $View3D_PaletteColorNoTexture; // <- no texture has been assigned to the geometry
+        AcousticTexture_NoTriangles: $View3D_PaletteColorNoTriangles; // <- triangles are disabled for the geometry
+
+        // an acoustic texture has been assigned, but no color is assigned to the texture
+        AcousticTexture_PaletteColorNone: $View3D_PaletteColorNone;
+        AcousticTexture_PaletteColor0:  $View3D_PaletteColor0;
+        AcousticTexture_PaletteColor1:  $View3D_PaletteColor1;
+        AcousticTexture_PaletteColor2:  $View3D_PaletteColor2;
+        AcousticTexture_PaletteColor3:  $View3D_PaletteColor3;
+        AcousticTexture_PaletteColor4:  $View3D_PaletteColor4;
+        AcousticTexture_PaletteColor5:  $View3D_PaletteColor5;
+        AcousticTexture_PaletteColor6:  $View3D_PaletteColor6;
+        AcousticTexture_PaletteColor7:  $View3D_PaletteColor7;
+        AcousticTexture_PaletteColor8:  $View3D_PaletteColor8;
+        AcousticTexture_PaletteColor9:  $View3D_PaletteColor9;
+        AcousticTexture_PaletteColor10: $View3D_PaletteColor10;
+        AcousticTexture_PaletteColor11: $View3D_PaletteColor11;
+        AcousticTexture_PaletteColor12: $View3D_PaletteColor12;
+        AcousticTexture_PaletteColor13: $View3D_PaletteColor13;
+
+        AcousticTexture_PaletteColor14: $View3D_PaletteColor14;
+        AcousticTexture_PaletteColor15: $View3D_PaletteColor15;
+        AcousticTexture_PaletteColor16: $View3D_PaletteColor16;
+        AcousticTexture_PaletteColor17: $View3D_PaletteColor17;
+        AcousticTexture_PaletteColor18: $View3D_PaletteColor18;
+        AcousticTexture_PaletteColor19: $View3D_PaletteColor19;
+        AcousticTexture_PaletteColor20: $View3D_PaletteColor20;
+        AcousticTexture_PaletteColor21: $View3D_PaletteColor21;
+        AcousticTexture_PaletteColor22: $View3D_PaletteColor22;
+        AcousticTexture_PaletteColor23: $View3D_PaletteColor23;
+        AcousticTexture_PaletteColor24: $View3D_PaletteColor24;
+        AcousticTexture_PaletteColor25: $View3D_PaletteColor25;
+        AcousticTexture_PaletteColor26: $View3D_PaletteColor26;
+
+        // Audio Object 3D View
+        AudioObject3D_ObjectLine: $View3D_AudioObject3D_ObjectLine;
+        AudioObject3D_ObjectLineHighlight: $View3D_AudioObject3D_ObjectLineHighlight;
+        AudioObject3D_Head: $View3D_AudioObject3D_Head;
+        AudioObject3D_HeadEars: $View3D_AudioObject3D_HeadEars;
+        AudioObject3D_Sphere: $View3D_AudioObject3D_Sphere;
+        AudioObject3D_SphereIsoline: $View3D_AudioObject3D_SphereIsoline;
+        AudioObject3D_SpreadSelected: $View3D_AudioObject3D_SpreadSelected;
+        AudioObject3D_SpreadUnselected: $View3D_AudioObject3D_SpreadUnselected;
+        AudioObject3D_SpreadSelectedMultiplier: $View3D_AudioObject3D_SpreadSelectedMultiplier;
+        AudioObject3D_SpreadUnselectedMultiplier: $View3D_AudioObject3D_SpreadUnselectedMultiplier;
+		AudioObject3D_LineInSphereMultiplier: $View3D_AudioObject3D_LineInSphereMultiplier;
+		AudioObject3D_UnselectedBlendColor: $View3D_AudioObject3D_UnselectedBlendColor;
+		AudioObject3D_SelectedBlendColor: $View3D_AudioObject3D_SelectedBlendColor;
+		AudioObject3D_UnselectedBlendIconColor: $View3D_AudioObject3D_UnselectedBlendIconColor;
+		AudioObject3D_SelectedBlendIconColor: $View3D_AudioObject3D_SelectedBlendIconColor;
+}

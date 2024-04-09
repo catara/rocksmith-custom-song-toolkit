@@ -1,0 +1,16 @@
+
+<h2>Bind to Built-In Param:</h2>
+<p>サウンドエンジン内で計算されるビルトイン値にGame Parameterをバインドする。次の1つ選択する:</p>
+<p><strong>（以下の組み込みパラメータの詳細は <a href="HelpDoc=binding_game_parameter_to_built_in_parameter#avaialble_builtin_parameters">利用できるビルトインパラメーター</a> を参照。）</strong></p>
+<ul>
+<li><strong>Distance</strong>:ゲームオブジェクトまでの距離。</li>
+<li><strong>Azimuth</strong>:水平方向の角度。</li>
+<li><strong>Elevation</strong>:垂直方向の角度。</li>
+<li><strong>Emitter Cone</strong>:オブジェクト向きとリスナーとの間の角度。</li>
+<li><strong>Obstruction</strong>:ゲームがゲームオブジェクトに設定するオブストラクション。</li>
+<li><strong>Occlusion</strong>:ゲームがゲームオブジェクトに設定するオブストラクション。</li>
+<li><strong>Listener Cone</strong>:オブジェクトとリスナーのオリエンテーション（前）の間の角度。</li>
+<li><strong>Diffraction</strong>:Wwise Spatial Audioがゲームオブジェクトに設定するオブストラクション。</li>
+</ul>
+<p><strong>注釈</strong>:内蔵パラメータを使用してRTPCを制御すると、そのRTPCが Initial Delay または Priorityに関連付けられている場合、問題が発生する可能性がある。内蔵パラメータは、サウンドが特定のゲームオブジェクトで再生されるときに計算されるため、ほとんどのサウンドプロパティで効果的。Play Actionがポストされた瞬間にその値が不明であるため、RTPCを制御するための組み込みパラメータが使用されているあいだ、Initial DelayやPriorityのような再生項目の論理的な制御は適切ではない。</p>
+<p>Default value: None<br/></p>

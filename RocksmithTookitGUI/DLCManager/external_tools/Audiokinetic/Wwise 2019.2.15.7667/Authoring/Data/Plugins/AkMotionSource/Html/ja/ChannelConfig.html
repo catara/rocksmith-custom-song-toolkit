@@ -1,0 +1,17 @@
+
+<h2>Actuator Configuration</h2>
+<p>既知デバイス用のコンフィギュレーションセットで、それぞれ利用可能なアクチュエーターを指定する。3つの匿名コンフィギュレーションが、未知のデバイスのコンフィギュレーション用に含まれる。</p>
+<ul>
+<li><strong>Android</strong>:匿名チャンネル1つ。</li>
+<li><strong>PS4 Move</strong>:匿名チャンネル1つ。</li>
+<li><strong>PS4 2 Channel</strong>:低周波チャンネル1つ、高周波チャンネル1つ。</li>
+<li><strong>Switch 2 Channel</strong>:低周波チャンネル1つ、高周波チャンネル1つ。</li>
+<li><strong>Switch 4 Channel</strong>:低周波チャンネル2つ、高周波チャンネル2つ。</li>
+<li><strong>Xbox One 4 Channel</strong>:低周波チャンネル1つ、高周波チャンネル1つ、右トリガーチャンネル1つ、左トリガーチャンネル1つ（Wwiseオーサリングでのテスト不可。）</li>
+<li><strong>1 Channel</strong>:匿名チャンネル1つ。</li>
+<li><strong>2 Channel</strong>:匿名チャンネル2つ。</li>
+<li><strong>4 Channel</strong>:匿名チャンネル4つ。</li>
+<li><strong>Haptics 2 Channel</strong>:低周波チャンネル1つ、高周波チャンネル1つ。</li>
+</ul>
+<p><strong>注釈</strong>:アクチュエーターコンフィギュレーションに付けられたプラットフォーム名は、Wwiseのデフォルトシンクで何が使えるのかを示す。なお、これらのコンフィギュレーションは、指名されたプラットフォームに限定されない。特定のプラットフォームで、あえて別のものを選択することも考えられる。例えば2つのアクチュエーター付きのAndroidタブレットがあり、その場合はデフォルトシンクの匿名チャンネル1つのAndroidコンフィギュレーションよりも、2チャンネルのコンフィギュレーションの方が適している可能性がある。チャンネル数が一致しないことでモーションが阻止されることはなく、かえって、複数のアクチュエーターが同じDriverチャンネルを使ったり、定義されたチャンネル数があまりにも多い場合は一部を無視したりする。</p>
+<p>Default value: 1 Channel<br/></p>

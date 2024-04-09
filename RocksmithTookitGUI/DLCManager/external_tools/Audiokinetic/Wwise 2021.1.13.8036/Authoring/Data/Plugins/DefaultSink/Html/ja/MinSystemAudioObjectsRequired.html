@@ -1,0 +1,7 @@
+
+<h2>Minimum System Audio Objects Requirement</h2>
+<p>サウンドエンジンがSystem Audio Objectを出すために、エンドポイントで最低でも対応しなければならないSystem Audio Objectの数を、ここで定義する。</p>
+<p>システムの3Dオーディオ用に一定容量を確保できるように、このプロパティを使う。例えば、設定値を50とすれば、同時にサポートできるAudio Object数が50 <strong>以上</strong> でないプラットフォームでは、結果的に、System Audio Objectの使用が無効となる。こうすれば、システムが対応できる数以上のオブジェクトを再生しようとして、一部のオブジェクトが誤ったミキシングで処理されるような状況を防止できる。この状況が発生すると、再生するたびにオーディオの聞こえ方が違ってしまう。</p>
+<p>そこで、この値は、あなたのゲームで同時に再生されるSystem Audio Objectの最大数よりも、やや高めに設定すること。</p>
+<p>Default value: 32<br/>
+Range: 0 to 65535<br/></p>

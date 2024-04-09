@@ -1,0 +1,5 @@
+
+<h2>Distance Smoothing</h2>
+<p>A smoothing filter applied to the reflection ray distance sent to the delay line. More smoothing will cause reflection times to update more slowly, but it also limits the Doppler pitch shift caused by movement. The normalized value is between 0 and 1 and will not be updated if the reflect length/delay is actively changing. This parameter can be controlled by RTPCs and States; but, updating of the RTPC or State during game play is not recommended. Real-time updates are honored but not guaranteed to be handled without artifacts.</p>
+<p>Default value: 0.5<br/>
+Range: 0 to 1<br/></p>

@@ -1,0 +1,2397 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+The content of this file includes portions of the AUDIOKINETIC Wwise Technology
+released in source code form as part of the SDK installer package.
+
+Commercial License Usage
+
+Licensees holding valid commercial licenses to the AUDIOKINETIC Wwise Technology
+may use this file in accordance with the end user license agreement provided
+with the software or, alternatively, in accordance with the terms contained in a
+written agreement between you and Audiokinetic Inc.
+
+Apache License Usage
+
+Alternatively, this file may be used under the Apache License, Version 2.0 (the
+"Apache License"); you may not use this file except in compliance with the
+Apache License. You may obtain a copy of the Apache License at
+http://www.apache.org/licenses/LICENSE-2.0.
+
+Unless required by applicable law or agreed to in writing, software distributed
+under the Apache License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES
+OR CONDITIONS OF ANY KIND, either express or implied. See the Apache License for
+the specific language governing permissions and limitations under the License.
+
+  Copyright (c) 2020 Audiokinetic Inc.
+-->
+<!--
+See https://www.audiokinetic.com/library/edge/?source=SDK&id=plugin__xml.html
+for the documentation about the plugin xml format
+-->
+<PluginModule>
+  <EffectPlugin Name="Mastering Suite" CompanyID="0" PluginID="186">
+    <PluginInfo MenuPath="80-SIE">
+      <PlatformSupport>
+        <Platform Name="Any">
+          <CanBeInsertEndOfPipeline>true</CanBeInsertEndOfPipeline>
+        </Platform>
+      </PlatformSupport>
+    </PluginInfo>
+    <Properties>
+      <!-- SceAudioOut2MasteringParamsV3::moduleBypassFlags -->
+      <Property Name="moduleEnableParamEQ" Type="bool" DisplayName="Param EQ Module Enabled">
+        <DefaultValue>true</DefaultValue>
+        <AudioEnginePropertyID>0</AudioEnginePropertyID>
+      </Property>
+      <Property Name="moduleEnableCompressor" Type="bool" DisplayName="Compressor Module Enabled">
+        <DefaultValue>true</DefaultValue>
+        <AudioEnginePropertyID>1</AudioEnginePropertyID>
+      </Property>
+      <Property Name="moduleEnableMasterVolume" Type="bool" DisplayName="Master Volume Module Enabled">
+        <DefaultValue>true</DefaultValue>
+        <AudioEnginePropertyID>2</AudioEnginePropertyID>
+      </Property>
+      <Property Name="moduleEnableLimiter" Type="bool" DisplayName="Limiter Module Enabled">
+        <DefaultValue>true</DefaultValue>
+        <AudioEnginePropertyID>3</AudioEnginePropertyID>
+      </Property>
+      <!-- SceAudioOut2MasteringParamsV3::paramEqParams -->
+      <Property Name="paramEqNumBands" Type="int32" DisplayName="Param EQ Band Count" DisplayGroup="Param EQ">
+        <DefaultValue>4</DefaultValue>
+        <AudioEnginePropertyID>100</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="int32">
+              <Min>1</Min>
+              <Max>6</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableParamEQ" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="paramBand1Enabled" Type="bool" DisplayName="Param EQ Band 1 Enabled" DisplayGroup="Param EQ">
+        <DefaultValue>true</DefaultValue>
+        <AudioEnginePropertyID>101</AudioEnginePropertyID>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableParamEQ" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="paramEqNumBands" Action="Enable">
+            <Condition>
+              <Range Type="int32">
+                <Min>1</Min>
+                <Max>6</Max>
+              </Range>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="paramBand2Enabled" Type="bool" DisplayName="Param EQ Band 2 Enabled" DisplayGroup="Param EQ">
+        <DefaultValue>true</DefaultValue>
+        <AudioEnginePropertyID>102</AudioEnginePropertyID>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableParamEQ" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="paramEqNumBands" Action="Enable">
+            <Condition>
+              <Range Type="int32">
+                <Min>2</Min>
+                <Max>6</Max>
+              </Range>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="paramBand3Enabled" Type="bool" DisplayName="Param EQ Band 3 Enabled" DisplayGroup="Param EQ">
+        <DefaultValue>true</DefaultValue>
+        <AudioEnginePropertyID>103</AudioEnginePropertyID>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableParamEQ" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="paramEqNumBands" Action="Enable">
+            <Condition>
+              <Range Type="int32">
+                <Min>3</Min>
+                <Max>6</Max>
+              </Range>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="paramBand4Enabled" Type="bool" DisplayName="Param EQ Band 4 Enabled" DisplayGroup="Param EQ">
+        <DefaultValue>true</DefaultValue>
+        <AudioEnginePropertyID>104</AudioEnginePropertyID>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableParamEQ" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="paramEqNumBands" Action="Enable">
+            <Condition>
+              <Range Type="int32">
+                <Min>4</Min>
+                <Max>6</Max>
+              </Range>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="paramBand5Enabled" Type="bool" DisplayName="Param EQ Band 5 Enabled" DisplayGroup="Param EQ">
+        <DefaultValue>false</DefaultValue>
+        <AudioEnginePropertyID>105</AudioEnginePropertyID>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableParamEQ" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="paramEqNumBands" Action="Enable">
+            <Condition>
+              <Range Type="int32">
+                <Min>5</Min>
+                <Max>6</Max>
+              </Range>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="paramBand6Enabled" Type="bool" DisplayName="Param EQ Band 6 Enabled" DisplayGroup="Param EQ">
+        <DefaultValue>false</DefaultValue>
+        <AudioEnginePropertyID>106</AudioEnginePropertyID>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableParamEQ" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="paramEqNumBands" Action="Enable">
+            <Condition>
+              <Range Type="int32">
+                <Min>6</Min>
+                <Max>6</Max>
+              </Range>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="paramBand1FilterMode" Type="int32" DisplayName="Param EQ Filter Mode (Band 1)" DisplayGroup="Param EQ/Band 1">
+        <DefaultValue>5</DefaultValue>
+        <AudioEnginePropertyID>110</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="int32">
+              <Value DisplayName="Low pass resonant">1</Value>
+              <Value DisplayName="High pass resonant">2</Value>
+              <Value DisplayName="Peak">3</Value>
+              <Value DisplayName="High shelf">4</Value>
+              <Value DisplayName="Low shelf">5</Value>
+              <Value DisplayName="Low pass one-pole">6</Value>
+              <Value DisplayName="High pass one-pole">7</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableParamEQ" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="paramBand1Enabled" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="paramBand1Frequency" Type="Real32" DisplayName="Param EQ Frequency (Band 1)" DisplayGroup="Param EQ/Band 1">
+        <UserInterface Step="1" Fine="0.1" Decimals="1" SliderType="4" UIMin="20" UIMax="20000"/>
+        <DefaultValue>100</DefaultValue>
+        <AudioEnginePropertyID>111</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>10</Min>
+              <Max>24000</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableParamEQ" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="paramBand1Enabled" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="paramBand1Gain" Type="Real32" DisplayName="Param EQ Gain (Band 1)" DisplayGroup="Param EQ/Band 1">
+        <UserInterface Step="0.01" Fine="0.005" Decimals="2"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>113</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-20</Min>
+              <Max>20</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableParamEQ" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="paramBand1Enabled" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="paramBand1FilterMode" Action="Enable">
+            <Condition>
+              <Range Type="int32">
+                <Min>3</Min>
+                <Max>5</Max>
+              </Range>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="paramBand1Resonance" Type="Real32" DisplayName="Param EQ Resonance (Band 1)" DisplayGroup="Param EQ/Band 1">
+        <UserInterface Step="0.01" Fine="0.005" Decimals="2"/>
+        <DefaultValue>1</DefaultValue>
+        <AudioEnginePropertyID>112</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0.1</Min>
+              <Max>12</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableParamEQ" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="paramBand1Enabled" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="paramBand1FilterMode" Action="Enable">
+            <Condition>
+              <Range Type="int32">
+                <Min>1</Min>
+                <Max>3</Max>
+              </Range>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="paramBand2FilterMode" Type="int32" DisplayName="Param EQ Filter Mode (Band 2)" DisplayGroup="Param EQ/Band 2">
+        <DefaultValue>3</DefaultValue>
+        <AudioEnginePropertyID>120</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="int32">
+              <Value DisplayName="Low pass resonant">1</Value>
+              <Value DisplayName="High pass resonant">2</Value>
+              <Value DisplayName="Peak">3</Value>
+              <Value DisplayName="High shelf">4</Value>
+              <Value DisplayName="Low shelf">5</Value>
+              <Value DisplayName="Low pass one-pole">6</Value>
+              <Value DisplayName="High pass one-pole">7</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableParamEQ" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="paramBand2Enabled" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="paramBand2Frequency" Type="Real32" DisplayName="Param EQ Frequency (Band 2)" DisplayGroup="Param EQ/Band 2">
+        <UserInterface Step="1" Fine="0.1" Decimals="1" SliderType="4" UIMin="20" UIMax="20000"/>
+        <DefaultValue>200</DefaultValue>
+        <AudioEnginePropertyID>121</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>10</Min>
+              <Max>24000</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableParamEQ" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="paramBand2Enabled" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="paramBand2Gain" Type="Real32" DisplayName="Param EQ Gain (Band 2)" DisplayGroup="Param EQ/Band 2">
+        <UserInterface Step="0.01" Fine="0.005" Decimals="2"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>123</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-20</Min>
+              <Max>20</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableParamEQ" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="paramBand2Enabled" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="paramBand2FilterMode" Action="Enable">
+            <Condition>
+              <Range Type="int32">
+                <Min>3</Min>
+                <Max>5</Max>
+              </Range>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="paramBand2Resonance" Type="Real32" DisplayName="Param EQ Resonance (Band 2)" DisplayGroup="Param EQ/Band 2">
+        <UserInterface Step="0.01" Fine="0.005" Decimals="2"/>
+        <DefaultValue>1</DefaultValue>
+        <AudioEnginePropertyID>122</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0.1</Min>
+              <Max>12</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableParamEQ" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="paramBand2Enabled" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="paramBand2FilterMode" Action="Enable">
+            <Condition>
+              <Range Type="int32">
+                <Min>1</Min>
+                <Max>3</Max>
+              </Range>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="paramBand3FilterMode" Type="int32" DisplayName="Param EQ Filter Mode (Band 3)" DisplayGroup="Param EQ/Band 3">
+        <DefaultValue>3</DefaultValue>
+        <AudioEnginePropertyID>130</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="int32">
+              <Value DisplayName="Low pass resonant">1</Value>
+              <Value DisplayName="High pass resonant">2</Value>
+              <Value DisplayName="Peak">3</Value>
+              <Value DisplayName="High shelf">4</Value>
+              <Value DisplayName="Low shelf">5</Value>
+              <Value DisplayName="Low pass one-pole">6</Value>
+              <Value DisplayName="High pass one-pole">7</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableParamEQ" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="paramBand3Enabled" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="paramBand3Frequency" Type="Real32" DisplayName="Param EQ Frequency (Band 3)" DisplayGroup="Param EQ/Band 3">
+        <UserInterface Step="1" Fine="0.1" Decimals="1" SliderType="4" UIMin="20" UIMax="20000"/>
+        <DefaultValue>500</DefaultValue>
+        <AudioEnginePropertyID>131</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>10</Min>
+              <Max>24000</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableParamEQ" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="paramBand3Enabled" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="paramBand3Gain" Type="Real32" DisplayName="Param EQ Gain (Band 3)" DisplayGroup="Param EQ/Band 3">
+        <UserInterface Step="0.01" Fine="0.005" Decimals="2"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>133</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-20</Min>
+              <Max>20</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableParamEQ" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="paramBand3Enabled" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="paramBand3FilterMode" Action="Enable">
+            <Condition>
+              <Range Type="int32">
+                <Min>3</Min>
+                <Max>5</Max>
+              </Range>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="paramBand3Resonance" Type="Real32" DisplayName="Param EQ Resonance (Band 3)" DisplayGroup="Param EQ/Band 3">
+        <UserInterface Step="0.01" Fine="0.005" Decimals="2"/>
+        <DefaultValue>1</DefaultValue>
+        <AudioEnginePropertyID>132</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0.1</Min>
+              <Max>12</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableParamEQ" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="paramBand3Enabled" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="paramBand3FilterMode" Action="Enable">
+            <Condition>
+              <Range Type="int32">
+                <Min>1</Min>
+                <Max>3</Max>
+              </Range>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="paramBand4FilterMode" Type="int32" DisplayName="Param EQ Filter Mode (Band 4)" DisplayGroup="Param EQ/Band 4">
+        <DefaultValue>4</DefaultValue>
+        <AudioEnginePropertyID>140</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="int32">
+              <Value DisplayName="Low pass resonant">1</Value>
+              <Value DisplayName="High pass resonant">2</Value>
+              <Value DisplayName="Peak">3</Value>
+              <Value DisplayName="High shelf">4</Value>
+              <Value DisplayName="Low shelf">5</Value>
+              <Value DisplayName="Low pass one-pole">6</Value>
+              <Value DisplayName="High pass one-pole">7</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableParamEQ" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="paramBand4Enabled" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="paramBand4Frequency" Type="Real32" DisplayName="Param EQ Frequency (Band 4)" DisplayGroup="Param EQ/Band 4">
+        <UserInterface Step="1" Fine="0.1" Decimals="1" SliderType="4" UIMin="20" UIMax="20000"/>
+        <DefaultValue>1000</DefaultValue>
+        <AudioEnginePropertyID>141</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>10</Min>
+              <Max>24000</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableParamEQ" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="paramBand4Enabled" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="paramBand4Gain" Type="Real32" DisplayName="Param EQ Gain (Band 4)" DisplayGroup="Param EQ/Band 4">
+        <UserInterface Step="0.01" Fine="0.005" Decimals="2"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>143</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-20</Min>
+              <Max>20</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableParamEQ" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="paramBand4Enabled" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="paramBand4FilterMode" Action="Enable">
+            <Condition>
+              <Range Type="int32">
+                <Min>3</Min>
+                <Max>5</Max>
+              </Range>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="paramBand4Resonance" Type="Real32" DisplayName="Param EQ Resonance (Band 4)" DisplayGroup="Param EQ/Band 4">
+        <UserInterface Step="0.01" Fine="0.005" Decimals="2"/>
+        <DefaultValue>1</DefaultValue>
+        <AudioEnginePropertyID>142</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0.1</Min>
+              <Max>12</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableParamEQ" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="paramBand4Enabled" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="paramBand4FilterMode" Action="Enable">
+            <Condition>
+              <Range Type="int32">
+                <Min>1</Min>
+                <Max>3</Max>
+              </Range>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="paramBand5FilterMode" Type="int32" DisplayName="Param EQ Filter Mode (Band 5)" DisplayGroup="Param EQ/Band 5">
+        <DefaultValue>3</DefaultValue>
+        <AudioEnginePropertyID>150</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="int32">
+              <Value DisplayName="Low pass resonant">1</Value>
+              <Value DisplayName="High pass resonant">2</Value>
+              <Value DisplayName="Peak">3</Value>
+              <Value DisplayName="High shelf">4</Value>
+              <Value DisplayName="Low shelf">5</Value>
+              <Value DisplayName="Low pass one-pole">6</Value>
+              <Value DisplayName="High pass one-pole">7</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableParamEQ" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="paramBand5Enabled" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="paramBand5Frequency" Type="Real32" DisplayName="Param EQ Frequency (Band 5)" DisplayGroup="Param EQ/Band 5">
+        <UserInterface Step="1" Fine="0.1" Decimals="1" SliderType="4" UIMin="20" UIMax="20000"/>
+        <DefaultValue>3000</DefaultValue>
+        <AudioEnginePropertyID>151</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>10</Min>
+              <Max>24000</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableParamEQ" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="paramBand5Enabled" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="paramBand5Gain" Type="Real32" DisplayName="Param EQ Gain (Band 5)" DisplayGroup="Param EQ/Band 5">
+        <UserInterface Step="0.01" Fine="0.005" Decimals="2"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>153</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-20</Min>
+              <Max>20</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableParamEQ" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="paramBand5Enabled" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="paramBand5FilterMode" Action="Enable">
+            <Condition>
+              <Range Type="int32">
+                <Min>3</Min>
+                <Max>5</Max>
+              </Range>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="paramBand5Resonance" Type="Real32" DisplayName="Param EQ Resonance (Band 5)" DisplayGroup="Param EQ/Band 5">
+        <UserInterface Step="0.01" Fine="0.005" Decimals="2"/>
+        <DefaultValue>1</DefaultValue>
+        <AudioEnginePropertyID>152</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0.1</Min>
+              <Max>12</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableParamEQ" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="paramBand5Enabled" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="paramBand5FilterMode" Action="Enable">
+            <Condition>
+              <Range Type="int32">
+                <Min>1</Min>
+                <Max>3</Max>
+              </Range>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="paramBand6FilterMode" Type="int32" DisplayName="Param EQ Filter Mode (Band 6)" DisplayGroup="Param EQ/Band 6">
+        <DefaultValue>3</DefaultValue>
+        <AudioEnginePropertyID>160</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="int32">
+              <Value DisplayName="Low pass resonant">1</Value>
+              <Value DisplayName="High pass resonant">2</Value>
+              <Value DisplayName="Peak">3</Value>
+              <Value DisplayName="High shelf">4</Value>
+              <Value DisplayName="Low shelf">5</Value>
+              <Value DisplayName="Low pass one-pole">6</Value>
+              <Value DisplayName="High pass one-pole">7</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableParamEQ" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="paramBand6Enabled" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="paramBand6Frequency" Type="Real32" DisplayName="Param EQ Frequency (Band 6)" DisplayGroup="Param EQ/Band 6">
+        <UserInterface Step="1" Fine="0.1" Decimals="1" SliderType="4" UIMin="20" UIMax="20000"/>
+        <DefaultValue>6000</DefaultValue>
+        <AudioEnginePropertyID>161</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>10</Min>
+              <Max>24000</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableParamEQ" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="paramBand6Enabled" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="paramBand6Gain" Type="Real32" DisplayName="Param EQ Gain (Band 6)" DisplayGroup="Param EQ/Band 6">
+        <UserInterface Step="0.01" Fine="0.005" Decimals="2"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>163</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-20</Min>
+              <Max>20</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableParamEQ" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="paramBand6Enabled" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="paramBand6FilterMode" Action="Enable">
+            <Condition>
+              <Range Type="int32">
+                <Min>3</Min>
+                <Max>5</Max>
+              </Range>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="paramBand6Resonance" Type="Real32" DisplayName="Param EQ Resonance (Band 6)" DisplayGroup="Param EQ/Band 6">
+        <UserInterface Step="0.01" Fine="0.005" Decimals="2"/>
+        <DefaultValue>1</DefaultValue>
+        <AudioEnginePropertyID>162</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0.1</Min>
+              <Max>12</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableParamEQ" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="paramBand6Enabled" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="paramBand6FilterMode" Action="Enable">
+            <Condition>
+              <Range Type="int32">
+                <Min>1</Min>
+                <Max>3</Max>
+              </Range>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <!-- SceAudioOut2MasteringParamsV3::compressorParams -->
+      <Property Name="compressorLinkMode" Type="int32" DisplayName="Compressor Link Mode" DisplayGroup="Compressor">
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>201</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="int32">
+              <Value DisplayName="No link">0</Value>
+              <Value DisplayName="All channels">1</Value>
+              <Value DisplayName="Partial link">2</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableCompressor" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="compressorLinkStrength" Type="Real32" DisplayName="Compressor Link Strength" DisplayGroup="Compressor">
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>202</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0</Min>
+              <Max>100</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableCompressor" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="compressorLinkMode" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <Value>2</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="compressorLinkStereoPairs" Type="bool" DisplayName="Compressor Stereo Link" DisplayGroup="Compressor">
+        <DefaultValue>false</DefaultValue>
+        <AudioEnginePropertyID>203</AudioEnginePropertyID>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableCompressor" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="compressorLinkMode" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <Value>2</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="compressorNumBands" Type="int32" DisplayName="Compressor Band Count" DisplayGroup="Compressor">
+        <DefaultValue>4</DefaultValue>
+        <AudioEnginePropertyID>200</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="int32">
+              <Min>1</Min>
+              <Max>4</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableCompressor" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="compressorBand1Enabled" Type="bool" DisplayName="Compressor Band 1 Enabled" DisplayGroup="Compressor">
+        <DefaultValue>true</DefaultValue>
+        <AudioEnginePropertyID>204</AudioEnginePropertyID>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableCompressor" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="compressorNumBands" Action="Enable">
+            <Condition>
+              <Range Type="int32">
+                <Min>1</Min>
+                <Max>4</Max>
+              </Range>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="compressorBand2Enabled" Type="bool" DisplayName="Compressor Band 2 Enabled" DisplayGroup="Compressor">
+        <DefaultValue>true</DefaultValue>
+        <AudioEnginePropertyID>205</AudioEnginePropertyID>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableCompressor" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="compressorNumBands" Action="Enable">
+            <Condition>
+              <Range Type="int32">
+                <Min>2</Min>
+                <Max>4</Max>
+              </Range>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="compressorBand3Enabled" Type="bool" DisplayName="Compressor Band 3 Enabled" DisplayGroup="Compressor">
+        <DefaultValue>true</DefaultValue>
+        <AudioEnginePropertyID>206</AudioEnginePropertyID>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableCompressor" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="compressorNumBands" Action="Enable">
+            <Condition>
+              <Range Type="int32">
+                <Min>3</Min>
+                <Max>4</Max>
+              </Range>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="compressorBand4Enabled" Type="bool" DisplayName="Compressor Band 4 Enabled" DisplayGroup="Compressor">
+        <DefaultValue>true</DefaultValue>
+        <AudioEnginePropertyID>207</AudioEnginePropertyID>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableCompressor" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="compressorNumBands" Action="Enable">
+            <Condition>
+              <Range Type="int32">
+                <Min>4</Min>
+                <Max>4</Max>
+              </Range>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="compressorCrossoverFrequency1" Type="Real32" DisplayName="Compressor Crossover Frequency 1" DisplayGroup="Compressor">
+        <UserInterface Step="1" Fine="0.1" Decimals="1" SliderType="4" UIMin="20" UIMax="20000"/>
+        <DefaultValue>150</DefaultValue>
+        <AudioEnginePropertyID>208</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>10</Min>
+              <Max>24000</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableCompressor" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="compressorNumBands" Action="Enable">
+            <Condition>
+              <Range Type="int32">
+                <Min>2</Min>
+                <Max>4</Max>
+              </Range>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="compressorCrossoverFrequency2" Type="Real32" DisplayName="Compressor Crossover Frequency 2" DisplayGroup="Compressor">
+        <UserInterface Step="1" Fine="0.1" Decimals="1" SliderType="4" UIMin="20" UIMax="20000"/>
+        <DefaultValue>1000</DefaultValue>
+        <AudioEnginePropertyID>209</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>10</Min>
+              <Max>24000</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableCompressor" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="compressorNumBands" Action="Enable">
+            <Condition>
+              <Range Type="int32">
+                <Min>3</Min>
+                <Max>4</Max>
+              </Range>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="compressorCrossoverFrequency3" Type="Real32" DisplayName="Compressor Crossover Frequency 3" DisplayGroup="Compressor">
+        <UserInterface Step="1" Fine="0.1" Decimals="1" SliderType="4" UIMin="20" UIMax="20000"/>
+        <DefaultValue>6000</DefaultValue>
+        <AudioEnginePropertyID>210</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>10</Min>
+              <Max>24000</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableCompressor" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="compressorNumBands" Action="Enable">
+            <Condition>
+              <Range Type="int32">
+                <Min>4</Min>
+                <Max>4</Max>
+              </Range>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="compressorBand1Threshold" Type="Real32" DisplayName="Compressor Threshold (Band 1)" DisplayGroup="Compressor/Band 1">
+        <UserInterface Step="0.1" Fine="0.01" Decimals="1"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>220</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-60</Min>
+              <Max>0</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableCompressor" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="compressorBand1Enabled" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="compressorBand1Ratio" Type="Real32" DisplayName="Compressor Ratio (Band 1)" DisplayGroup="Compressor/Band 1">
+        <UserInterface Step="0.1" Fine="0.01" Decimals="2"/>
+        <DefaultValue>1</DefaultValue>
+        <AudioEnginePropertyID>221</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>1</Min>
+              <Max>30</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableCompressor" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="compressorBand1Enabled" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="compressorBand1Attack" Type="Real32" DisplayName="Compressor Attack (Band 1)" DisplayGroup="Compressor/Band 1">
+        <UserInterface Step="0.01" Fine="0.001" Decimals="3"/>
+        <DefaultValue>0.01</DefaultValue>
+        <AudioEnginePropertyID>222</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0</Min>
+              <Max>0.5</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableCompressor" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="compressorBand1Enabled" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="compressorBand1Release" Type="Real32" DisplayName="Compressor Release (Band 1)" DisplayGroup="Compressor/Band 1">
+        <UserInterface Step="0.01" Fine="0.001" Decimals="3"/>
+        <DefaultValue>0.1</DefaultValue>
+        <AudioEnginePropertyID>223</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0</Min>
+              <Max>5</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableCompressor" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="compressorBand1Enabled" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="compressorBand1MakeupGain" Type="Real32" DisplayName="Compressor Makeup Gain (Band 1)" DisplayGroup="Compressor/Band 1">
+	  	<UserInterface Step="0.1" Decimals="1"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>224</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-18</Min>
+              <Max>18</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableCompressor" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="compressorBand1Enabled" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="compressorBand1Knee" Type="Real32" DisplayName="Compressor Knee (Band 1)" DisplayGroup="Compressor/Band 1">
+        <UserInterface Step="0.01" Fine="0.005" Decimals="2"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>225</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0</Min>
+              <Max>20</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableCompressor" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="compressorBand1Enabled" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="compressorBand2Threshold" Type="Real32" DisplayName="Compressor Threshold (Band 2)" DisplayGroup="Compressor/Band 2">
+        <UserInterface Step="0.1" Fine="0.01" Decimals="1"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>230</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-60</Min>
+              <Max>0</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableCompressor" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="compressorBand2Enabled" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="compressorBand2Ratio" Type="Real32" DisplayName="Compressor Ratio (Band 2)" DisplayGroup="Compressor/Band 2">
+        <UserInterface Step="0.1" Fine="0.01" Decimals="2"/>
+        <DefaultValue>1</DefaultValue>
+        <AudioEnginePropertyID>231</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>1</Min>
+              <Max>30</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableCompressor" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="compressorBand2Enabled" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="compressorBand2Attack" Type="Real32" DisplayName="Compressor Attack (Band 2)" DisplayGroup="Compressor/Band 2">
+        <UserInterface Step="0.01" Fine="0.001" Decimals="3"/>
+        <DefaultValue>0.01</DefaultValue>
+        <AudioEnginePropertyID>232</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0</Min>
+              <Max>0.5</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableCompressor" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="compressorBand2Enabled" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="compressorBand2Release" Type="Real32" DisplayName="Compressor Release (Band 2)" DisplayGroup="Compressor/Band 2">
+        <UserInterface Step="0.01" Fine="0.001" Decimals="3"/>
+        <DefaultValue>0.1</DefaultValue>
+        <AudioEnginePropertyID>233</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0</Min>
+              <Max>5</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableCompressor" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="compressorBand2Enabled" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="compressorBand2MakeupGain" Type="Real32" DisplayName="Compressor Makeup Gain (Band 2)" DisplayGroup="Compressor/Band 2">
+	  	<UserInterface Step="0.1" Decimals="1"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>234</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-18</Min>
+              <Max>18</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableCompressor" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="compressorBand2Enabled" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="compressorBand2Knee" Type="Real32" DisplayName="Compressor Knee (Band 2)" DisplayGroup="Compressor/Band 2">
+        <UserInterface Step="0.01" Fine="0.005" Decimals="2"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>235</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0</Min>
+              <Max>20</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableCompressor" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="compressorBand2Enabled" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="compressorBand3Threshold" Type="Real32" DisplayName="Compressor Threshold (Band 3)" DisplayGroup="Compressor/Band 3">
+        <UserInterface Step="0.1" Fine="0.01" Decimals="1"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>240</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-60</Min>
+              <Max>0</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableCompressor" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="compressorBand3Enabled" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="compressorBand3Ratio" Type="Real32" DisplayName="Compressor Ratio (Band 3)" DisplayGroup="Compressor/Band 3">
+        <UserInterface Step="0.1" Fine="0.01" Decimals="2"/>
+        <DefaultValue>1</DefaultValue>
+        <AudioEnginePropertyID>241</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>1</Min>
+              <Max>30</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableCompressor" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="compressorBand3Enabled" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="compressorBand3Attack" Type="Real32" DisplayName="Compressor Attack (Band 3)" DisplayGroup="Compressor/Band 3">
+        <UserInterface Step="0.01" Fine="0.001" Decimals="3"/>
+        <DefaultValue>0.01</DefaultValue>
+        <AudioEnginePropertyID>242</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0</Min>
+              <Max>0.5</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableCompressor" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="compressorBand3Enabled" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="compressorBand3Release" Type="Real32" DisplayName="Compressor Release (Band 3)" DisplayGroup="Compressor/Band 3">
+        <UserInterface Step="0.01" Fine="0.001" Decimals="3"/>
+        <DefaultValue>0.1</DefaultValue>
+        <AudioEnginePropertyID>243</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0</Min>
+              <Max>5</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableCompressor" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="compressorBand3Enabled" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="compressorBand3MakeupGain" Type="Real32" DisplayName="Compressor Makeup Gain (Band 3)" DisplayGroup="Compressor/Band 3">
+	  	<UserInterface Step="0.1" Decimals="1"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>244</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-18</Min>
+              <Max>18</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableCompressor" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="compressorBand3Enabled" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="compressorBand3Knee" Type="Real32" DisplayName="Compressor Knee (Band 3)" DisplayGroup="Compressor/Band 3">
+        <UserInterface Step="0.01" Fine="0.005" Decimals="2"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>245</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0</Min>
+              <Max>20</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableCompressor" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="compressorBand3Enabled" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="compressorBand4Threshold" Type="Real32" DisplayName="Compressor Threshold (Band 4)" DisplayGroup="Compressor/Band 4">
+        <UserInterface Step="0.1" Fine="0.01" Decimals="1"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>250</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-60</Min>
+              <Max>0</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableCompressor" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="compressorBand4Enabled" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="compressorBand4Ratio" Type="Real32" DisplayName="Compressor Ratio (Band 4)" DisplayGroup="Compressor/Band 4">
+        <UserInterface Step="0.1" Fine="0.01" Decimals="2"/>
+        <DefaultValue>1</DefaultValue>
+        <AudioEnginePropertyID>251</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>1</Min>
+              <Max>30</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableCompressor" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="compressorBand4Enabled" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="compressorBand4Attack" Type="Real32" DisplayName="Compressor Attack (Band 4)" DisplayGroup="Compressor/Band 4">
+        <UserInterface Step="0.01" Fine="0.001" Decimals="3"/>
+        <DefaultValue>0.01</DefaultValue>
+        <AudioEnginePropertyID>252</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0</Min>
+              <Max>0.5</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableCompressor" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="compressorBand4Enabled" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="compressorBand4Release" Type="Real32" DisplayName="Compressor Release (Band 4)" DisplayGroup="Compressor/Band 4">
+        <UserInterface Step="0.01" Fine="0.001" Decimals="3"/>
+        <DefaultValue>0.1</DefaultValue>
+        <AudioEnginePropertyID>253</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0</Min>
+              <Max>5</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableCompressor" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="compressorBand4Enabled" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="compressorBand4MakeupGain" Type="Real32" DisplayName="Compressor Makeup Gain (Band 4)" DisplayGroup="Compressor/Band 4">
+	  	<UserInterface Step="0.1" Decimals="1"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>254</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-18</Min>
+              <Max>18</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableCompressor" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="compressorBand4Enabled" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="compressorBand4Knee" Type="Real32" DisplayName="Compressor Knee (Band 4)" DisplayGroup="Compressor/Band 4">
+        <UserInterface Step="0.01" Fine="0.005" Decimals="2"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>255</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0</Min>
+              <Max>20</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableCompressor" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="compressorBand4Enabled" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <!-- SceAudioOut2MasteringParamsV3::masterVolumeParams -->
+      <Property Name="masterVolumeChannel1" Type="Real32" DisplayName="Master Volume Channel Left" DisplayGroup="Master Volume">
+	  	<UserInterface Step="0.1" Decimals="1"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>300</AudioEnginePropertyID> <!-- MASTERVOLUMECHANNELLEFT -->
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-100</Min>
+              <Max>12</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableMasterVolume" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="masterVolumeChannel2" Type="Real32" DisplayName="Master Volume Channel Right" DisplayGroup="Master Volume">
+	  	<UserInterface Step="0.1" Decimals="1"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>301</AudioEnginePropertyID> <!-- MASTERVOLUMECHANNELRIGHT -->
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-100</Min>
+              <Max>12</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableMasterVolume" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="masterVolumeChannel3" Type="Real32" DisplayName="Master Volume Channel Center" DisplayGroup="Master Volume">
+	  	<UserInterface Step="0.1" Decimals="1"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>302</AudioEnginePropertyID> <!-- MASTERVOLUMECHANNELCENTER -->
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-100</Min>
+              <Max>12</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableMasterVolume" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="masterVolumeChannel4" Type="Real32" DisplayName="Master Volume Channel Surround Left" DisplayGroup="Master Volume">
+	  	<UserInterface Step="0.1" Decimals="1"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>304</AudioEnginePropertyID> <!-- MASTERVOLUMECHANNELSURROUNDLEFT -->
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-100</Min>
+              <Max>12</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableMasterVolume" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="masterVolumeChannel5" Type="Real32" DisplayName="Master Volume Channel Surround Right" DisplayGroup="Master Volume">
+	  	<UserInterface Step="0.1" Decimals="1"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>305</AudioEnginePropertyID> <!-- MASTERVOLUMECHANNELSURROUNDRIGHT-->
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-100</Min>
+              <Max>12</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableMasterVolume" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="masterVolumeChannel6" Type="Real32" DisplayName="Master Volume Channel Back Left" DisplayGroup="Master Volume">
+	  	<UserInterface Step="0.1" Decimals="1"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>306</AudioEnginePropertyID> <!-- MASTERVOLUMECHANNELBACKLEFT -->
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-100</Min>
+              <Max>12</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableMasterVolume" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="masterVolumeChannel7" Type="Real32" DisplayName="Master Volume Channel Back Right" DisplayGroup="Master Volume">
+	  	<UserInterface Step="0.1" Decimals="1"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>307</AudioEnginePropertyID> <!-- MASTERVOLUMECHANNELBACKRIGHT -->
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-100</Min>
+              <Max>12</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableMasterVolume" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="masterVolumeChannel8" Type="Real32" DisplayName="Master Volume Channel Height Front Left" DisplayGroup="Master Volume">
+	  	<UserInterface Step="0.1" Decimals="1"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>308</AudioEnginePropertyID> <!-- MASTERVOLUMECHANNELHEIGHTFRONTLEFT -->
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-100</Min>
+              <Max>12</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableMasterVolume" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="masterVolumeChannel9" Type="Real32" DisplayName="Master Volume Channel Height Front Right" DisplayGroup="Master Volume">
+	  	<UserInterface Step="0.1" Decimals="1"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>309</AudioEnginePropertyID> <!-- MASTERVOLUMECHANNELHEIGHTFRONTRIGHT -->
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-100</Min>
+              <Max>12</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableMasterVolume" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="masterVolumeChannel10" Type="Real32" DisplayName="Master Volume Channel Height Back Left" DisplayGroup="Master Volume">
+	  	<UserInterface Step="0.1" Decimals="1"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>310</AudioEnginePropertyID> <!-- MASTERVOLUMECHANNELHEIGHTBACKLEFT -->
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-100</Min>
+              <Max>12</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableMasterVolume" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="masterVolumeChannel11" Type="Real32" DisplayName="Master Volume Channel Height Front Right" DisplayGroup="Master Volume">
+	  	<UserInterface Step="0.1" Decimals="1"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>311</AudioEnginePropertyID> <!-- MASTERVOLUMECHANNELHEIGHTBACKRIGHT -->
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-100</Min>
+              <Max>12</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableMasterVolume" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="masterVolumeChannel12" Type="Real32" DisplayName="Master Volume Channel Low Frequency Effects" DisplayGroup="Master Volume">
+	  	<UserInterface Step="0.1" Decimals="1"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>303</AudioEnginePropertyID> <!-- MASTERVOLUMECHANNELLFE -->
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-100</Min>
+              <Max>12</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableMasterVolume" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <!-- SceAudioOut2MasteringParamsV3::limiterParams -->
+      <Property Name="limiterMode" Type="int32" DisplayName="Limiter Mode" DisplayGroup="Limiter">
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>400</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="int32">
+              <Value DisplayName="Soft">0</Value>
+              <Value DisplayName="Hard">1</Value>
+              <Value DisplayName="Advanced">2</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableLimiter" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="limiterThreshold" Type="Real32" DisplayName="Limiter Threshold" DisplayGroup="Limiter">
+	    <UserInterface Step="0.1" Fine="0.01" Decimals="1"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>401</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>-30</Min>
+              <Max>0</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableLimiter" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="limiterAttack" Type="Real32" DisplayName="Limiter Attack" DisplayGroup="Limiter">
+	    <UserInterface Step="0.01" Fine="0.001" Decimals="3"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>402</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0</Min>
+              <Max>2.6</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableLimiter" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="limiterMode" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <Value>0</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="limiterRelease" Type="Real32" DisplayName="Limiter Release" DisplayGroup="Limiter">
+	    <UserInterface Step="0.01" Fine="0.001" Decimals="3"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>403</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0</Min>
+              <Max>5</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableLimiter" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="limiterMode" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <Value>0</Value>
+                <Value>2</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="limiterOutputGain" Type="Real32" DisplayName="Limiter Output Gain" DisplayGroup="Limiter">
+        <UserInterface Decimals="2"/>
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>404</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0</Min>
+              <Max>30</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableLimiter" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+          <PropertyDependency Name="limiterMode" Action="Enable">
+            <Condition>
+              <Enumeration Type="int32">
+                <Value>2</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+      <Property Name="limiterLinkChannels" Type="bool" DisplayName="Limiter Channel Link" DisplayGroup="Limiter">
+        <DefaultValue>false</DefaultValue>
+        <AudioEnginePropertyID>405</AudioEnginePropertyID>
+        <Dependencies>
+          <PropertyDependency Name="moduleEnableLimiter" Action="Enable">
+            <Condition>
+              <Enumeration Type="bool">
+                <Value>true</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>
+        </Dependencies>
+      </Property>
+    </Properties>
+  </EffectPlugin>
+</PluginModule>

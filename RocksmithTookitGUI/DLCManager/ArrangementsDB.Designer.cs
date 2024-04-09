@@ -141,7 +141,7 @@
             // 
             // CheckBox1
             // 
-            this.CheckBox1.AutoSize = true;
+            this.CheckBox1.AutoSize = false;
             this.CheckBox1.Enabled = false;
             this.CheckBox1.Location = new System.Drawing.Point(-306, 186);
             this.CheckBox1.Margin = new System.Windows.Forms.Padding(4);
@@ -284,7 +284,7 @@
             // 
             // chbx_Favorite
             // 
-            this.chbx_Favorite.AutoSize = true;
+            this.chbx_Favorite.AutoSize = false;
             this.chbx_Favorite.Location = new System.Drawing.Point(1982, 6);
             this.chbx_Favorite.Margin = new System.Windows.Forms.Padding(6);
             this.chbx_Favorite.Name = "chbx_Favorite";
@@ -295,7 +295,7 @@
             // 
             // chbx_Primary
             // 
-            this.chbx_Primary.AutoSize = true;
+            this.chbx_Primary.AutoSize = false;
             this.chbx_Primary.Location = new System.Drawing.Point(1982, 42);
             this.chbx_Primary.Margin = new System.Windows.Forms.Padding(6);
             this.chbx_Primary.Name = "chbx_Primary";
@@ -306,7 +306,7 @@
             // 
             // chbx_Default
             // 
-            this.chbx_Default.AutoSize = true;
+            this.chbx_Default.AutoSize = false;
             this.chbx_Default.Location = new System.Drawing.Point(1870, 144);
             this.chbx_Default.Margin = new System.Windows.Forms.Padding(6);
             this.chbx_Default.Name = "chbx_Default";
@@ -327,7 +327,7 @@
             // 
             // label30
             // 
-            this.label30.AutoSize = true;
+            this.label30.AutoSize = false;
             this.label30.Location = new System.Drawing.Point(1018, 260);
             this.label30.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label30.Name = "label30";
@@ -349,7 +349,7 @@
             // 
             // label5
             // 
-            this.label5.AutoSize = true;
+            this.label5.AutoSize = false;
             this.label5.Location = new System.Drawing.Point(14, 78);
             this.label5.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label5.Name = "label5";
@@ -359,7 +359,7 @@
             // 
             // label29
             // 
-            this.label29.AutoSize = true;
+            this.label29.AutoSize = false;
             this.label29.Location = new System.Drawing.Point(810, 226);
             this.label29.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label29.Name = "label29";
@@ -404,7 +404,7 @@
             // 
             // label28
             // 
-            this.label28.AutoSize = true;
+            this.label28.AutoSize = false;
             this.label28.Location = new System.Drawing.Point(360, 258);
             this.label28.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label28.Name = "label28";
@@ -452,7 +452,7 @@
             // 
             // label27
             // 
-            this.label27.AutoSize = true;
+            this.label27.AutoSize = false;
             this.label27.Location = new System.Drawing.Point(360, 210);
             this.label27.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label27.Name = "label27";
@@ -462,7 +462,7 @@
             // 
             // chbx_Broken
             // 
-            this.chbx_Broken.AutoSize = true;
+            this.chbx_Broken.AutoSize = false;
             this.chbx_Broken.Location = new System.Drawing.Point(1870, 46);
             this.chbx_Broken.Margin = new System.Windows.Forms.Padding(6);
             this.chbx_Broken.Name = "chbx_Broken";
@@ -485,7 +485,7 @@
             // 
             // chbx_Bonus
             // 
-            this.chbx_Bonus.AutoSize = true;
+            this.chbx_Bonus.AutoSize = false;
             this.chbx_Bonus.Location = new System.Drawing.Point(1870, 14);
             this.chbx_Bonus.Margin = new System.Windows.Forms.Padding(6);
             this.chbx_Bonus.Name = "chbx_Bonus";
@@ -631,7 +631,7 @@
             // 
             // label12
             // 
-            this.label12.AutoSize = true;
+            this.label12.AutoSize = false;
             this.label12.Location = new System.Drawing.Point(1838, 220);
             this.label12.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label12.Name = "label12";
@@ -676,7 +676,7 @@
             // 
             // label26
             // 
-            this.label26.AutoSize = true;
+            this.label26.AutoSize = false;
             this.label26.Location = new System.Drawing.Point(1500, 132);
             this.label26.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label26.Name = "label26";
@@ -686,7 +686,7 @@
             // 
             // chbx_BassDD
             // 
-            this.chbx_BassDD.AutoSize = true;
+            this.chbx_BassDD.AutoSize = false;
             this.chbx_BassDD.Enabled = false;
             this.chbx_BassDD.Location = new System.Drawing.Point(1870, 78);
             this.chbx_BassDD.Margin = new System.Windows.Forms.Padding(6);
@@ -698,7 +698,7 @@
             // 
             // label25
             // 
-            this.label25.AutoSize = true;
+            this.label25.AutoSize = false;
             this.label25.Location = new System.Drawing.Point(1500, 94);
             this.label25.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label25.Name = "label25";
@@ -720,7 +720,7 @@
             // 
             // label24
             // 
-            this.label24.AutoSize = true;
+            this.label24.AutoSize = false;
             this.label24.Location = new System.Drawing.Point(1500, 54);
             this.label24.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label24.Name = "label24";
@@ -742,7 +742,7 @@
             // 
             // label6
             // 
-            this.label6.AutoSize = true;
+            this.label6.AutoSize = false;
             this.label6.Location = new System.Drawing.Point(1054, 220);
             this.label6.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label6.Name = "label6";
@@ -764,7 +764,7 @@
             // 
             // label23
             // 
-            this.label23.AutoSize = true;
+            this.label23.AutoSize = false;
             this.label23.Location = new System.Drawing.Point(1500, 16);
             this.label23.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label23.Name = "label23";
@@ -812,7 +812,7 @@
             // 
             // label22
             // 
-            this.label22.AutoSize = true;
+            this.label22.AutoSize = false;
             this.label22.Location = new System.Drawing.Point(1006, 130);
             this.label22.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label22.Name = "label22";
@@ -834,7 +834,7 @@
             // 
             // label15
             // 
-            this.label15.AutoSize = true;
+            this.label15.AutoSize = false;
             this.label15.Location = new System.Drawing.Point(1566, 220);
             this.label15.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label15.Name = "label15";
@@ -878,7 +878,7 @@
             // 
             // label21
             // 
-            this.label21.AutoSize = true;
+            this.label21.AutoSize = false;
             this.label21.Location = new System.Drawing.Point(1006, 94);
             this.label21.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label21.Name = "label21";
@@ -898,7 +898,7 @@
             // 
             // label20
             // 
-            this.label20.AutoSize = true;
+            this.label20.AutoSize = false;
             this.label20.Location = new System.Drawing.Point(810, 194);
             this.label20.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label20.Name = "label20";
@@ -918,7 +918,7 @@
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
+            this.label1.AutoSize = false;
             this.label1.Location = new System.Drawing.Point(1320, 220);
             this.label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label1.Name = "label1";
@@ -938,7 +938,7 @@
             // 
             // label19
             // 
-            this.label19.AutoSize = true;
+            this.label19.AutoSize = false;
             this.label19.Location = new System.Drawing.Point(810, 162);
             this.label19.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label19.Name = "label19";
@@ -986,7 +986,7 @@
             // 
             // label18
             // 
-            this.label18.AutoSize = true;
+            this.label18.AutoSize = false;
             this.label18.Location = new System.Drawing.Point(810, 126);
             this.label18.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label18.Name = "label18";
@@ -1009,7 +1009,7 @@
             // 
             // label17
             // 
-            this.label17.AutoSize = true;
+            this.label17.AutoSize = false;
             this.label17.Location = new System.Drawing.Point(810, 88);
             this.label17.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label17.Name = "label17";
@@ -1031,7 +1031,7 @@
             // 
             // label16
             // 
-            this.label16.AutoSize = true;
+            this.label16.AutoSize = false;
             this.label16.Location = new System.Drawing.Point(810, 50);
             this.label16.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label16.Name = "label16";
@@ -1053,7 +1053,7 @@
             // 
             // label14
             // 
-            this.label14.AutoSize = true;
+            this.label14.AutoSize = false;
             this.label14.Location = new System.Drawing.Point(1006, 54);
             this.label14.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label14.Name = "label14";
@@ -1073,7 +1073,7 @@
             // 
             // label13
             // 
-            this.label13.AutoSize = true;
+            this.label13.AutoSize = false;
             this.label13.Location = new System.Drawing.Point(1006, 18);
             this.label13.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label13.Name = "label13";
@@ -1095,7 +1095,7 @@
             // 
             // chbx_HasSection
             // 
-            this.chbx_HasSection.AutoSize = true;
+            this.chbx_HasSection.AutoSize = false;
             this.chbx_HasSection.Enabled = false;
             this.chbx_HasSection.Location = new System.Drawing.Point(1870, 110);
             this.chbx_HasSection.Margin = new System.Windows.Forms.Padding(6);
@@ -1107,7 +1107,7 @@
             // 
             // chbx_AutoSave
             // 
-            this.chbx_AutoSave.AutoSize = true;
+            this.chbx_AutoSave.AutoSize = false;
             this.chbx_AutoSave.Checked = true;
             this.chbx_AutoSave.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chbx_AutoSave.Location = new System.Drawing.Point(2054, 208);
@@ -1171,7 +1171,7 @@
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
+            this.label2.AutoSize = false;
             this.label2.Location = new System.Drawing.Point(280, 58);
             this.label2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label2.Name = "label2";
@@ -1181,7 +1181,7 @@
             // 
             // label11
             // 
-            this.label11.AutoSize = true;
+            this.label11.AutoSize = false;
             this.label11.Location = new System.Drawing.Point(280, 146);
             this.label11.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label11.Name = "label11";
@@ -1191,7 +1191,7 @@
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
+            this.label3.AutoSize = false;
             this.label3.Location = new System.Drawing.Point(280, 104);
             this.label3.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label3.Name = "label3";
@@ -1210,7 +1210,7 @@
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
+            this.label4.AutoSize = false;
             this.label4.Location = new System.Drawing.Point(8, 22);
             this.label4.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label4.Name = "label4";
@@ -1220,7 +1220,7 @@
             // 
             // label9
             // 
-            this.label9.AutoSize = true;
+            this.label9.AutoSize = false;
             this.label9.Location = new System.Drawing.Point(1336, 260);
             this.label9.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label9.Name = "label9";
@@ -1230,7 +1230,7 @@
             // 
             // label7
             // 
-            this.label7.AutoSize = true;
+            this.label7.AutoSize = false;
             this.label7.Location = new System.Drawing.Point(810, 14);
             this.label7.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label7.Name = "label7";
@@ -1240,7 +1240,7 @@
             // 
             // label8
             // 
-            this.label8.AutoSize = true;
+            this.label8.AutoSize = false;
             this.label8.Location = new System.Drawing.Point(280, 18);
             this.label8.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label8.Name = "label8";
@@ -1270,7 +1270,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(192F, 192F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
-            this.AutoSize = true;
+            this.AutoSize = false;
             this.ClientSize = new System.Drawing.Size(2782, 1530);
             this.Controls.Add(this.splitContainer2);
             this.Controls.Add(this.Panel1);

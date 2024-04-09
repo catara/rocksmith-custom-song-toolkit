@@ -1,0 +1,6 @@
+
+<h2>Enable Height Spread</h2>
+<p>启用高度散布。若在 2D 配置下实施声像摆位，则 Height Spread 根据高度角自动计算最小散布值；若在 7.1.4 之类的 3D 配置（半球空间）下实施声像摆位，则直接根据负高度角计算最小散布值。藉此，可帮助实现 3D 声音从听者上方或下方掠过时声像摆位的平滑过渡。</p>
+<p>在默认情况下，始终启用 Height Spread，即便声音没有衰减。只能通过取消选中 Height Spread 来禁用该属性。若想在声音没有衰减的情况下禁用 Height Spread，须专门为此创建 Attenuation ShareSet，并设置恒定不变的 Output Bus Volume。</p>
+<p>有关详细信息，请参阅 <a href="HelpDoc=effect_of_height_spread">Height Spread 的效果</a> 。</p>
+<p>Default value: true<br/></p>

@@ -239,8 +239,8 @@ namespace RocksmithToolkitLib.Extensions
             return; // do nothing instead for now
 
             // opens the double clicked directory or file in windows explorer
-            if (File.Exists(e.Node.Tag.ToString()) || Directory.Exists(e.Node.Tag.ToString()))
-                Process.Start(e.Node.Tag.ToString());
+            //if (File.Exists(e.Node.Tag.ToString()) || Directory.Exists(e.Node.Tag.ToString()))
+            //    Process.Start(e.Node.Tag.ToString());
         }
 
         private void TreeViewBrowser_BeforeCollapse(object sender, TreeViewCancelEventArgs e)

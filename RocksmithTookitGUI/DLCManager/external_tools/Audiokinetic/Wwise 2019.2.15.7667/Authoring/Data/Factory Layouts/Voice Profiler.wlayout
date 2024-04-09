@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Layout Name="Voice Profiler">
+	<StackPanel Name="StackPanel" Width="1920" Height="1002" Orientation="Vertical">
+		<StackPanel Name="StackPanel" Width="1920" Height="998" Orientation="Vertical">
+			<StackPanel Name="StackPanel" Width="1920" Height="495" Orientation="Horizontal">
+				<StackPanel Name="StackPanel" Width="1080" Height="495" Orientation="Horizontal">
+					<StackPanel Name="StackPanel" Width="329" Height="495" Orientation="Vertical">
+						<View Name="Project Explorer" Width="329" Height="416" ViewSyncGroup="1">							<ViewData>
+	<ProjectExplorerView ActiveTab="0"/>
+</ViewData>
+						</View>
+						<Splitter Name="Splitter" Width="329" Height="4"/>
+						<View Name="Transport Control" Width="329" Height="75"/>
+					</StackPanel>
+					<Splitter Name="Splitter" Width="4" Height="495"/>
+					<View Name="Property Editor" Width="747" Height="495"/>
+				</StackPanel>
+				<Splitter Name="Splitter" Width="4" Height="495"/>
+				<View Name="Capture Log" Width="836" Height="495"/>
+			</StackPanel>
+			<Splitter Name="Splitter" Width="1920" Height="4"/>
+			<StackPanel Name="StackPanel" Width="1920" Height="499" Orientation="Vertical">
+				<StackPanel Name="StackPanel" Width="1920" Height="316" Orientation="Horizontal">
+					<View Name="Voice Explorer" Width="489" Height="316"/>
+					<Splitter Name="Splitter" Width="4" Height="316"/>
+					<View Name="Voice Inspector" Width="1427" Height="316"/>
+				</StackPanel>
+				<Splitter Name="Splitter" Width="1920" Height="4"/>
+				<View Name="Voice Monitor" Width="1920" Height="179"/>
+			</StackPanel>
+		</StackPanel>
+	</StackPanel>
+</Layout>

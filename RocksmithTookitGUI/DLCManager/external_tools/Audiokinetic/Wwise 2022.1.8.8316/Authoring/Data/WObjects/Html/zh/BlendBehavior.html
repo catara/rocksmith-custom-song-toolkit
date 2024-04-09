@@ -1,0 +1,5 @@
+
+<h2>Play mode</h2>
+<p><strong>Step</strong>:Blend Container 在 Play 后开始所有子对象的回放。当所有子声部都停止播放时（或收到 Stop 行动），我们就认为 Blend Container 回放停止。</p>
+<p><strong>Continuous</strong>:Blend Container 依据交叉淡变区域主动控制子对象的 Play 和 Stop（在 RTPC 值位于片段区域内时播放子对象，在位于其外时停止）。容器必须采用 Stop Action 才能停止；即便没有播放任何声部，容器也会保持活跃状态并监控 RTPC 变化。</p>
+<p>Default value: Step<br/></p>

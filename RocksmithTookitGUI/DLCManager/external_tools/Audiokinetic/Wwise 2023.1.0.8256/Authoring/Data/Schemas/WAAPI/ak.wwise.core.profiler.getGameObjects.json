@@ -1,0 +1,92 @@
+{
+    "version": 1,
+    "functions": [
+        {
+            "id": "ak.wwise.core.profiler.getGameObjects",
+            "restrict": [
+                "userInterface",
+                "commandLine"
+            ],
+            "seeAlso": [
+                "ak.wwise.core.profiler.getVoices",
+                "ak.wwise.core.profiler.getBusses",
+                "ak.wwise.core.profiler.getAudioObjects"
+            ],
+            "description": "Retrieves the game objects at a specific profiler capture time.",
+            "argsSchema": {
+                "type": "object",
+                "properties": {
+                    "time": {
+                        "$ref": "#/definitions/cursorTime",
+                        "description": "The time in milliseconds to query for game objects."
+                    }
+                },
+                "required": [
+                    "time"
+                ],
+                "additionalProperties": false
+            },
+            "resultSchema": {
+                "type": "object",
+                "properties": {
+                    "return": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "description": "The game object and its registration data.",
+                            "properties": {
+                                "id": {
+                                    "$ref": "#/definitions/uint64",
+                                    "description": "The ID of the game object."
+                                },
+                                "name": {
+                                    "type": "string",
+                                    "description": "The name of the game object."
+                                },
+                                "registrationTime": {
+                                    "$ref": "#/definitions/int32",
+                                    "description": "The time at which the game object was registered."
+                                },
+                                "unregistrationTime": {
+                                    "$ref": "#/definitions/int32",
+                                    "description": "The time at which the game object was unregistered."
+                                }
+                            }
+                        },
+                        "description": "An array of objects containing game object data."
+                    }
+                },
+                "required": [
+                    "return"
+                ],
+                "additionalProperties": false
+            },
+            "optionsSchema": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": false
+            },
+            "examples": [
+                {
+                    "title": "Query game objects registered at or before 1 minute.",
+                    "description": "Gets game objects where the registration time was 60,000 milliseconds or earlier.",
+                    "args": {
+                        "time": 60000
+                    },
+                    "options": {},
+                    "result": {
+                        "return": [
+                            {
+                                "gameObjectID": 18446744073709551614,
+                                "gameObjectName": "Transport/Soundcaster"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ],
+    "topics": [],
+    "validators": [],
+    "definitions": {}
+}

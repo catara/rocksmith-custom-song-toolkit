@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-215,-28)">
+        <g transform="matrix(0.75,0,0,0.75,-596.75,192.5)">
+            <g transform="matrix(1,0,0,1,-1.33333,32)">
+                <g id="Dialog_SelectionChannelBaseNone_Normal">
+                    <g id="Dialog_SyncGroups">
+                        <g id="Transparent-BG" serif:id="Transparent BG" transform="matrix(1.33333,0,0,1.33333,1083.67,-251.333)">
+                            <rect x="0" y="0" width="20" height="20" style="fill:none;"/>
+                        </g>
+                        <g transform="matrix(1.5,0,0,1.5,572,-293.5)">
+                            <path d="M358,31.88C358,30.29 356.71,29 355.12,29L344.88,29C343.29,29 342,30.29 342,31.88L342,42.12C342,43.71 343.29,45 344.88,45L355.12,45C356.71,45 358,43.71 358,42.12L358,31.88Z" style="fill:rgb(104,104,104);"/>
+                        </g>
+                        <g transform="matrix(1.33333,0,0,1.33333,630.333,-287.333)">
+                            <path d="M358,31.88C358,30.29 356.71,29 355.12,29L344.88,29C343.29,29 342,30.29 342,31.88L342,42.12C342,43.71 343.29,45 344.88,45L355.12,45C356.71,45 358,43.71 358,42.12L358,31.88Z" style="fill:rgb(255,179,56);"/>
+                        </g>
+                        <g transform="matrix(1.33333,0,0,1.33333,630.333,-287.333)">
+                            <path d="M358,31.88C358,30.29 356.71,29 355.12,29L344.88,29C343.29,29 342,30.29 342,31.88L342,42.12C342,43.71 343.29,45 344.88,45L355.12,45C356.71,45 358,43.71 358,42.12L358,31.88ZM357,31.88L357,42.12C357,43.158 356.158,44 355.12,44C355.12,44 344.88,44 344.88,44C343.842,44 343,43.158 343,42.12L343,31.88C343,30.842 343.842,30 344.88,30C344.88,30 355.12,30 355.12,30C356.158,30 357,30.842 357,31.88Z" style="fill:rgb(255,179,56);"/>
+                        </g>
+                        <g id="Hover" transform="matrix(1.33333,0,0,1.33333,630.333,-287.333)">
+                            <g transform="matrix(1,-0,-0,1,340,27)">
+                                <use xlink:href="#_Image1" x="2" y="2" width="16px" height="16px"/>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+    <defs>
+        <image id="_Image1" width="16px" height="16px" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAiElEQVQ4je2OsQ3CMBRE777cOi1K4RFQlJpV0tKlYiZPwCJR8AiWItKGEsufhnQUxnVe/94db+MVQxf1fHrBiKKElImwWvjZ0Qxd1L7disQdI4q+3QCNyvf9oqXLv55Irbw/kWr7yxE4AgAgKbNaTpmQsNrqQHhaiJ8dp6XBP09SJqalgX84fgAbKy5KNpAWbgAAAABJRU5ErkJggg=="/>
+    </defs>
+</svg>

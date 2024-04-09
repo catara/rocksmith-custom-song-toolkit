@@ -132,12 +132,12 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest2014.Header
             if (arrangement.Sng2014 == null) //bcapi
                 CapoFret = 0;
             else CapoFret = (arrangement.Sng2014.Metadata.CapoFretId == 0xFF) ? CapoFret = 0 : Convert.ToDecimal(arrangement.Sng2014.Metadata.CapoFretId);
-            DNA_Chords = arrangement.Sng2014.DNACount[(int)DNAId.Chord];
-            DNA_Riffs = arrangement.Sng2014.DNACount[(int)DNAId.Riff];
-            DNA_Solo = arrangement.Sng2014.DNACount[(int)DNAId.Solo];
-            NotesEasy = arrangement.Sng2014.NoteCount[0];
-            NotesMedium = arrangement.Sng2014.NoteCount[1];
-            NotesHard = arrangement.Sng2014.NoteCount[2];
+            DNA_Chords = arrangement.Sng2014 is null ? null:arrangement.Sng2014.DNACount[(int)DNAId.Chord];
+            DNA_Riffs = arrangement.Sng2014 is null ? null : arrangement.Sng2014.DNACount[(int)DNAId.Riff];
+            DNA_Solo = arrangement.Sng2014 is null ? null : arrangement.Sng2014.DNACount[(int)DNAId.Solo];
+            NotesEasy = arrangement.Sng2014 is null ? null : arrangement.Sng2014.NoteCount[0];
+            NotesMedium = arrangement.Sng2014 is null ? null : arrangement.Sng2014.NoteCount[1];
+            NotesHard = arrangement.Sng2014 is null ? null : arrangement.Sng2014.NoteCount[2];
             EasyMastery = Math.Round((double)(NotesEasy / NotesHard), 9);
             MediumMastery = Math.Round((double)(NotesMedium / NotesHard), 9);
             Metronome = arrangement.Metronome == Sng.Metronome.None ? null : (int?)arrangement.Metronome;
@@ -151,13 +151,13 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest2014.Header
 
             ManifestFunctions.GetSongDifficulty(this, song2014);
 
-            SongLength = Math.Round(song2014.SongLength, 3, MidpointRounding.AwayFromZero);
+            SongLength = arrangement.Sng2014 is null ? null : Math.Round(song2014.SongLength, 3, MidpointRounding.AwayFromZero);
             SongName = info.SongInfo.SongDisplayName;
             SongNameSort = info.SongInfo.SongDisplayNameSort;
             SongYear = info.SongInfo.SongYear;
 
             //Detect tuning
-            var tuning = TuningDefinitionRepository.Instance.Detect(song2014.Tuning, platform.version, arrangement.ArrangementType == ArrangementType.Bass);
+            var tuning = TuningDefinitionRepository.Instance.Detect(arrangement.Sng2014 is null ? null : song2014.Tuning, platform.version, arrangement.ArrangementType == ArrangementType.Bass);
             Tuning = tuning.Tuning; //can we just use SongContent.Tuning
 
             // optional properties

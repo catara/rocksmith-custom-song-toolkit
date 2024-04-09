@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 11 11" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-22,-21)">
+        <g transform="matrix(1,0,0,1,19,18)">
+            <g id="ProjectExplorer_Checkbox_Checked_Disabled" transform="matrix(0.846154,0,0,0.846154,-395.538,264.462)">
+                <g opacity="0.3">
+                    <g id="Checkbox-ON" serif:id="Checkbox ON" transform="matrix(1,0,0,1,15,-500)">
+                        <rect x="456" y="191" width="13" height="13" style="fill:none;"/>
+                        <clipPath id="_clip1">
+                            <rect x="456" y="191" width="13" height="13"/>
+                        </clipPath>
+                        <g clip-path="url(#_clip1)">
+                            <g id="Checkbox" transform="matrix(0.1625,0,0,0.764706,378.975,-4)">
+                                <path d="M554,256.7C554,255.762 550.415,255 546,255L482,255C477.585,255 474,255.762 474,256.7L474,270.3C474,271.238 477.585,272 482,272L546,272C550.415,272 554,271.238 554,270.3L554,256.7Z" style="fill:rgb(37,37,37);"/>
+                            </g>
+                            <g id="Checkbox1" serif:id="Checkbox" transform="matrix(0.132955,0,0,0.625668,394.161,32.6364)">
+                                <path d="M554,256.7C554,255.762 550.415,255 546,255L482,255C477.585,255 474,255.762 474,256.7L474,270.3C474,271.238 477.585,272 482,272L546,272C550.415,272 554,271.238 554,270.3L554,256.7Z" style="fill:rgb(200,200,200);fill-opacity:0.7;"/>
+                            </g>
+                            <g transform="matrix(1.27346,0,0,1.24198,314.543,-432.356)">
+                                <path d="M118.862,504.474L115.784,507.92L115.615,508.145L114.089,506.484L113.32,506.484L112.537,507.204L114.845,509.512L115.615,510.687L119.671,505.085L118.862,504.474Z" style="fill:rgb(34,34,34);"/>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

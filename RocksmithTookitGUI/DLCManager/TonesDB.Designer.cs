@@ -146,7 +146,7 @@
             // 
             // label12
             // 
-            this.label12.AutoSize = true;
+            this.label12.AutoSize = false;
             this.label12.Location = new System.Drawing.Point(2, 30);
             this.label12.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label12.Name = "label12";
@@ -156,7 +156,7 @@
             // 
             // label13
             // 
-            this.label13.AutoSize = true;
+            this.label13.AutoSize = false;
             this.label13.Location = new System.Drawing.Point(1, 7);
             this.label13.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label13.Name = "label13";
@@ -177,7 +177,7 @@
             // 
             // label10
             // 
-            this.label10.AutoSize = true;
+            this.label10.AutoSize = false;
             this.label10.Location = new System.Drawing.Point(371, 5);
             this.label10.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label10.Name = "label10";
@@ -187,7 +187,7 @@
             // 
             // label8
             // 
-            this.label8.AutoSize = true;
+            this.label8.AutoSize = false;
             this.label8.Location = new System.Drawing.Point(593, 67);
             this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label8.Name = "label8";
@@ -206,7 +206,7 @@
             // 
             // label7
             // 
-            this.label7.AutoSize = true;
+            this.label7.AutoSize = false;
             this.label7.Location = new System.Drawing.Point(376, 2);
             this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label7.Name = "label7";
@@ -242,7 +242,7 @@
             // 
             // label6
             // 
-            this.label6.AutoSize = true;
+            this.label6.AutoSize = false;
             this.label6.Location = new System.Drawing.Point(593, 6);
             this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label6.Name = "label6";
@@ -252,7 +252,7 @@
             // 
             // label9
             // 
-            this.label9.AutoSize = true;
+            this.label9.AutoSize = false;
             this.label9.Location = new System.Drawing.Point(593, 26);
             this.label9.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label9.Name = "label9";
@@ -262,7 +262,7 @@
             // 
             // label11
             // 
-            this.label11.AutoSize = true;
+            this.label11.AutoSize = false;
             this.label11.Location = new System.Drawing.Point(139, 52);
             this.label11.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label11.Name = "label11";
@@ -281,7 +281,7 @@
             // 
             // label5
             // 
-            this.label5.AutoSize = true;
+            this.label5.AutoSize = false;
             this.label5.Location = new System.Drawing.Point(371, 65);
             this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
@@ -291,7 +291,7 @@
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
+            this.label4.AutoSize = false;
             this.label4.Location = new System.Drawing.Point(593, 45);
             this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
@@ -301,7 +301,7 @@
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
+            this.label2.AutoSize = false;
             this.label2.Location = new System.Drawing.Point(371, 45);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
@@ -311,7 +311,7 @@
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
+            this.label1.AutoSize = false;
             this.label1.Location = new System.Drawing.Point(371, 24);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
@@ -321,7 +321,7 @@
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
+            this.label3.AutoSize = false;
             this.label3.Location = new System.Drawing.Point(254, 25);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
@@ -362,7 +362,7 @@
             // 
             // chbx_AutoSave
             // 
-            this.chbx_AutoSave.AutoSize = true;
+            this.chbx_AutoSave.AutoSize = false;
             this.chbx_AutoSave.Checked = true;
             this.chbx_AutoSave.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chbx_AutoSave.Location = new System.Drawing.Point(822, 64);
@@ -479,7 +479,7 @@
             // 
             // chbx_Custom
             // 
-            this.chbx_Custom.AutoSize = true;
+            this.chbx_Custom.AutoSize = false;
             this.chbx_Custom.Enabled = false;
             this.chbx_Custom.Location = new System.Drawing.Point(438, 85);
             this.chbx_Custom.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
@@ -552,7 +552,7 @@
             // 
             // chbx_Broken
             // 
-            this.chbx_Broken.AutoSize = true;
+            this.chbx_Broken.AutoSize = false;
             this.chbx_Broken.Enabled = false;
             this.chbx_Broken.Location = new System.Drawing.Point(374, 85);
             this.chbx_Broken.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
@@ -565,7 +565,7 @@
             // 
             // CheckBox1
             // 
-            this.CheckBox1.AutoSize = true;
+            this.CheckBox1.AutoSize = false;
             this.CheckBox1.Enabled = false;
             this.CheckBox1.Location = new System.Drawing.Point(-154, 92);
             this.CheckBox1.Margin = new System.Windows.Forms.Padding(2);
@@ -577,7 +577,7 @@
             // 
             // chbx_Favorite
             // 
-            this.chbx_Favorite.AutoSize = true;
+            this.chbx_Favorite.AutoSize = false;
             this.chbx_Favorite.Location = new System.Drawing.Point(503, 85);
             this.chbx_Favorite.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.chbx_Favorite.Name = "chbx_Favorite";
@@ -600,7 +600,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
-            this.AutoSize = true;
+            this.AutoSize = false;
             this.ClientSize = new System.Drawing.Size(1009, 263);
             this.Controls.Add(this.Panel1);
             this.Controls.Add(this.DataGridView1);

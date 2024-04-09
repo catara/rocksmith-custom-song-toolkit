@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2006 Audiokinetic Inc. -->
+<PluginModule>
+  <SinkPlugin Name="Wwise Motion" CompanyID="0" PluginID="507" EngineDllName="AkMotion">
+    <PluginInfo CanUnlink="true" CanBeMasterSink="false">
+      <PlatformSupport>
+        <Platform Name="Windows"/>
+		    <Platform Name="XboxOne"/>
+		    <Platform Name="PS4"/>
+		    <Platform Name="Pellegrino"/>
+		    <Platform Name="Switch"/>
+        <Platform Name="Android"/>
+        <Platform Name="Stadia"/>
+        <Platform Name="Chinook"/>
+      </PlatformSupport>
+    </PluginInfo>    
+  </SinkPlugin>
+</PluginModule>

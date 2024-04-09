@@ -1,0 +1,6 @@
+@import "global";
+@import "../defineexports";
+
+exports {
+    @include defineexports_exports;
+}

@@ -13,7 +13,8 @@ using RocksmithToolkitGUI;
 using RocksmithToolkitGUI.DLCManager;
 using RocksmithToolkitLib.Extensions; //dds
 using System.Diagnostics;
-using Ookii.Dialogs; //cue text
+using Ookii.Dialogs;
+using RocksmithToolkitLib.XmlRepository; //cue text
 
 namespace RocksmithToolkitGUI.DLCManager
 {
@@ -21,132 +22,145 @@ namespace RocksmithToolkitGUI.DLCManager
     {
         public bool IgnoreSong { get; set; }
         public bool StopImport { get; set; }
-        public ErrorWindow(string mss, string link, string Title, bool B1Visi, bool B2Visi, bool B3Visi, string B1Txt, string B2Txt, string B3Txt)//string txt_DBFolder,string txt_TempPath, string txt_RocksmithDLCPath, bool AllowEncript, bool AllowORIGDelete
-        { 
+        public ErrorWindow(string mss, string link, string Title, bool B1Visi, bool B2Visi, bool B3Visi, string B1Txt, string B2Txt, string B3Txt, bool wordwrap)//string txt_DBFolder,string txt_TempPath, string txt_RocksmithDLCPath, bool AllowEncript, bool AllowORIGDelete
+        {
             InitializeComponent();
             lbl_Link.Text = link;
             txt_Description.Text = mss;
             IgnoreSong = false;
             StopImport = false;
-            //ErrorWindow.ActiveForm.Text = Title;
+            this.Text = Title;
             btn_B1.Visible = B1Visi;
             btn_B2.Visible = B2Visi;
             btn_B3.Visible = B3Visi;
             if (B1Txt != "") btn_B1.Text = B1Txt;
             if (B2Txt != "") btn_B2.Text = B2Txt;
             if (B3Txt != "") btn_B3.Text = B3Txt;
+            if (wordwrap)
+            {
+                txt_Description.WordWrap = false;
+                txt_Description.Font = new Font("Courier New", 9);
+                //txt_Description.Font. = "Courier New";
+            }
+            else
+            {
+                txt_Description.WordWrap = true;
+                txt_Description.Font = new Font("Segoe UI", 9);
+            }
             //MessageBox.Show("test0");
             //DB_Path = txt_DBFolder;
             //TempPath = txt_TempPath;
             //RocksmithDLCPath = txt_RocksmithDLCPath;
-        }    
+        }
 
         private void InitializeComponent()
         {
-            this.helpProvider1 = new System.Windows.Forms.HelpProvider();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.txt_Description = new System.Windows.Forms.RichTextBox();
-            this.btn_B1 = new System.Windows.Forms.Button();
-            this.lbl_Link = new System.Windows.Forms.LinkLabel();
-            this.btn_B2 = new System.Windows.Forms.Button();
-            this.btn_B3 = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
-            this.SuspendLayout();
+            helpProvider1 = new HelpProvider();
+            splitContainer1 = new SplitContainer();
+            txt_Description = new RichTextBox();
+            btn_B1 = new Button();
+            lbl_Link = new LinkLabel();
+            btn_B2 = new Button();
+            btn_B3 = new Button();
+            ((ISupportInitialize)splitContainer1).BeginInit();
+            splitContainer1.Panel1.SuspendLayout();
+            splitContainer1.Panel2.SuspendLayout();
+            splitContainer1.SuspendLayout();
+            SuspendLayout();
             // 
             // splitContainer1
             // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer1.Name = "splitContainer1";
-            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            splitContainer1.Dock = DockStyle.Fill;
+            splitContainer1.Location = new Point(0, 0);
+            splitContainer1.Name = "splitContainer1";
+            splitContainer1.Orientation = Orientation.Horizontal;
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.AutoScroll = true;
-            this.splitContainer1.Panel1.Controls.Add(this.txt_Description);
+            splitContainer1.Panel1.AutoScroll = true;
+            splitContainer1.Panel1.Controls.Add(txt_Description);
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.btn_B1);
-            this.splitContainer1.Panel2.Controls.Add(this.lbl_Link);
-            this.splitContainer1.Panel2.Controls.Add(this.btn_B2);
-            this.splitContainer1.Panel2.Controls.Add(this.btn_B3);
-            this.splitContainer1.Size = new System.Drawing.Size(1115, 474);
-            this.splitContainer1.SplitterDistance = 323;
-            this.splitContainer1.TabIndex = 336;
+            splitContainer1.Panel2.Controls.Add(btn_B1);
+            splitContainer1.Panel2.Controls.Add(lbl_Link);
+            splitContainer1.Panel2.Controls.Add(btn_B2);
+            splitContainer1.Panel2.Controls.Add(btn_B3);
+            splitContainer1.Size = new Size(1105, 442);
+            splitContainer1.SplitterDistance = 301;
+            splitContainer1.TabIndex = 336;
             // 
             // txt_Description
             // 
-            this.txt_Description.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txt_Description.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txt_Description.Location = new System.Drawing.Point(0, 0);
-            this.txt_Description.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.txt_Description.Name = "txt_Description";
-            this.txt_Description.Size = new System.Drawing.Size(1115, 323);
-            this.txt_Description.TabIndex = 337;
-            this.txt_Description.Text = "";
+            txt_Description.BorderStyle = BorderStyle.None;
+            txt_Description.Dock = DockStyle.Fill;
+            txt_Description.Font = new Font("Courier New", 9F);
+            txt_Description.Location = new Point(0, 0);
+            txt_Description.Margin = new Padding(4, 5, 4, 5);
+            txt_Description.Name = "txt_Description";
+            txt_Description.ScrollBars = RichTextBoxScrollBars.ForcedBoth;
+            txt_Description.Size = new Size(1105, 301);
+            txt_Description.TabIndex = 337;
+            txt_Description.Text = "";
             // 
             // btn_B1
             // 
-            this.btn_B1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btn_B1.Location = new System.Drawing.Point(0, 57);
-            this.btn_B1.Name = "btn_B1";
-            this.btn_B1.Size = new System.Drawing.Size(1115, 30);
-            this.btn_B1.TabIndex = 8;
-            this.btn_B1.Text = "Ignore Song";
-            this.btn_B1.UseVisualStyleBackColor = true;
-            this.btn_B1.Click += new System.EventHandler(this.btn_StopImport_Click);
+            btn_B1.Dock = DockStyle.Bottom;
+            btn_B1.Location = new Point(0, 47);
+            btn_B1.Name = "btn_B1";
+            btn_B1.Size = new Size(1105, 30);
+            btn_B1.TabIndex = 8;
+            btn_B1.Text = "Ignore Song";
+            btn_B1.UseVisualStyleBackColor = true;
+            btn_B1.Click += btn_StopImport_Click;
             // 
             // lbl_Link
             // 
-            this.lbl_Link.AutoSize = true;
-            this.lbl_Link.Location = new System.Drawing.Point(12, 17);
-            this.lbl_Link.Name = "lbl_Link";
-            this.lbl_Link.Size = new System.Drawing.Size(55, 13);
-            this.lbl_Link.TabIndex = 7;
-            this.lbl_Link.TabStop = true;
-            this.lbl_Link.Text = "linkLabel1";
-            this.lbl_Link.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Lbl_Link_LinkClicked);
+            lbl_Link.AutoSize = true;
+            lbl_Link.Location = new Point(12, 17);
+            lbl_Link.Name = "lbl_Link";
+            lbl_Link.Size = new Size(60, 15);
+            lbl_Link.TabIndex = 7;
+            lbl_Link.TabStop = true;
+            lbl_Link.Text = "linkLabel1";
+            lbl_Link.LinkClicked += Lbl_Link_LinkClicked;
             // 
             // btn_B2
             // 
-            this.btn_B2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btn_B2.Location = new System.Drawing.Point(0, 87);
-            this.btn_B2.Name = "btn_B2";
-            this.btn_B2.Size = new System.Drawing.Size(1115, 30);
-            this.btn_B2.TabIndex = 6;
-            this.btn_B2.Text = "Stop Import";
-            this.btn_B2.UseVisualStyleBackColor = true;
-            this.btn_B2.Visible = false;
-            this.btn_B2.Click += new System.EventHandler(this.btn_Close_Click);
+            btn_B2.Dock = DockStyle.Bottom;
+            btn_B2.Location = new Point(0, 77);
+            btn_B2.Name = "btn_B2";
+            btn_B2.Size = new Size(1105, 30);
+            btn_B2.TabIndex = 6;
+            btn_B2.Text = "Stop Import";
+            btn_B2.UseVisualStyleBackColor = true;
+            btn_B2.Visible = false;
+            btn_B2.Click += btn_Close_Click;
             // 
             // btn_B3
             // 
-            this.btn_B3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btn_B3.Location = new System.Drawing.Point(0, 117);
-            this.btn_B3.Name = "btn_B3";
-            this.btn_B3.Size = new System.Drawing.Size(1115, 30);
-            this.btn_B3.TabIndex = 5;
-            this.btn_B3.Text = "OK";
-            this.btn_B3.UseVisualStyleBackColor = true;
-            this.btn_B3.Click += new System.EventHandler(this.btn_OK_Click);
+            btn_B3.Dock = DockStyle.Bottom;
+            btn_B3.Location = new Point(0, 107);
+            btn_B3.Name = "btn_B3";
+            btn_B3.Size = new Size(1105, 30);
+            btn_B3.TabIndex = 5;
+            btn_B3.Text = "OK";
+            btn_B3.UseVisualStyleBackColor = true;
+            btn_B3.Click += btn_OK_Click;
             // 
             // ErrorWindow
             // 
-            this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(1115, 474);
-            this.Controls.Add(this.splitContainer1);
-            this.Name = "ErrorWindow";
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            this.splitContainer1.Panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
-            this.ResumeLayout(false);
-
+            AutoSize = true;
+            ClientSize = new Size(1105, 442);
+            Controls.Add(splitContainer1);
+            Name = "ErrorWindow";
+            Text = "generic window";
+            splitContainer1.Panel1.ResumeLayout(false);
+            splitContainer1.Panel2.ResumeLayout(false);
+            splitContainer1.Panel2.PerformLayout();
+            ((ISupportInitialize)splitContainer1).EndInit();
+            splitContainer1.ResumeLayout(false);
+            ResumeLayout(false);
         }
 
         private void btn_Close_Click(object sender, EventArgs e)
@@ -157,6 +171,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btn_OK_Click(object sender, EventArgs e)
         {
+            ConfigRepository.Instance()["dlcm_Global2TempVariable"] = txt_Description.Text;
             this.Hide();
         }
 
@@ -168,7 +183,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void lbl_Link_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            
+
         }
 
         private void Lbl_Link_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -177,4 +192,4 @@ namespace RocksmithToolkitGUI.DLCManager
             Process.Start(lbl_Link.Text as string);
         }
     }
-} 
+}

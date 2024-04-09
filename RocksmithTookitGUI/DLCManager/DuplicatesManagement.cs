@@ -23,6 +23,8 @@ using static RocksmithToolkitGUI.DLCManager.GenericFunctions;
 using static RocksmithToolkitGUI.DLCManager.UtilitiesFunctions;
 //using RocksmithToolkitLib.Extensions; //most likely cue text
 using System.Data.SQLite;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Data.OleDb;
 using SQLite;
 using System.Net;
 
@@ -103,6 +105,9 @@ namespace RocksmithToolkitGUI.DLCManager
         public string isGameSoundtrack { get; set; }
         public string isTVTheme { get; set; }
         public string isAmateurCover { get; set; }
+        public string isMetalCover { get; set; }
+        public string isUkulele { get; set; }
+        public string tuningFrecv { get; set; }
         //public bool newold { get; set; }
         //public string clist { get; set; }
         //public DuplicatesManagement(string txt_DBFolder, Files eXisting, DLCPackageData dataNew, string author, string tkversion, string DD, string Bass, string Guitar, string Combo, string Rhythm, string Lead, string tunnings, int i, int norows, string original_FileName, string art_hash, string audio_hash, string audioPreview_hash, List<string> xmlhlist, List<string> jsonhlist)
@@ -124,16 +129,15 @@ namespace RocksmithToolkitGUI.DLCManager
             , string lengty, string allothers, int reff, List<string> cxmlhlist, List<string> snghlist, string filehash
             , string IsInstrumental, string IsSoundtrack, string IsFullAlbum, string IsSingle, string IsEP, string IsUncensored, string IsRemastered, string InTheWorks
             , string IsKaraoke, string IsDemo, string HasFeaturing, string IsRemix, string IsCover, string IsMedley, string IsMultiStrings, string IsDeluxe
-            , string IsGretestHits, string IsMidi, string IsGameSoundtrack, string IsTVTheme, string IsAmateurCover
-            , string HasCapo, SQLite.SQLiteConnection cnnc)//, SQLiteConnection cnnz)//, string yeara, string albumsa)//string Is_MultiTracking, string Multitracking, 
-                                                           //        , string IsKaraoke, string IsDemo, string HasFeaturing, string IsRemix, string IsCover, string IsMedley, string IsMultiStrings, string HasCapo, SQLiteConnection cnnz)//, SQLiteConnection cnnz)//, string yeara, string albumsa)//string Is_MultiTracking, string Multitracking, 
-                                                           //file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead, Vocalss, Tunings, b, norows, original_FileName, art_reff, audio_hash, audioPreview_hash, xmlhlist, jsonhlist, DB_Path, clist, dlist, newold, Is_Original, altver
+            , string IsGretestHits, string IsMidi, string IsGameSoundtrack, string IsTVTheme, string IsAmateurCover, string IsMetalCover, string IsUkulele
+            , string HasCapo, string description, string tuningfrecv, SQLite.SQLiteConnection cnnc)
         {
             //Text = text;
             //MessageBox.Show("test2");
             this.eXisting = filed;
             this.dataNew = datas;
             this.author = author;
+            this.Description = description;
             this.tkversion = tkversion;
             this.dD = dD;
             this.bass = bass;
@@ -193,6 +197,9 @@ namespace RocksmithToolkitGUI.DLCManager
             this.isGameSoundtrack = IsGameSoundtrack;
             this.isTVTheme = IsTVTheme;
             this.isAmateurCover = IsAmateurCover;
+            this.isMetalCover = IsMetalCover;
+            this.isUkulele = IsUkulele;
+            this.tuningFrecv = tuningfrecv;
             //MessageBox.Show(DB_Path);
             //DB_Path = text;
             //MessageBox.Show(DB_Path);
@@ -284,13 +291,13 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void DuplicatesManagement_Load(object sender, EventArgs e)
         {
-            Author = "";
-            Version = "";
-            DLCID = "";
-            Title = "";
-            Comment = "";
-            Description = "";
-            dupliID = "";
+            //Author = "";
+            //Version = "";
+            //DLCID = "";
+            //Title = "";
+            //Comment = "";
+            //Description = "";
+            //dupliID = "";
             if (dataNew.SongInfo.Artist.ToLower() is null) return;
             this.Text += " " + dupli_reason + " ";
 
@@ -423,6 +430,11 @@ namespace RocksmithToolkitGUI.DLCManager
             chbx_EPNew.Checked = isEP == "Yes" ? true : false;
             chbx_EPExisting.Checked = eXisting.Is_EP == "Yes" ? true : false;
 
+            if (isMetalCover != (eXisting.Is_MetalCover == "No" ? "" : eXisting.Is_MetalCover)) lbl_P3.ForeColor = lbl_Reference.ForeColor;
+            else if ((isMetalCover == "" || isMetalCover == "No") && ("" == eXisting.Is_MetalCover || "No" == eXisting.Is_MetalCover)) lbl_P3.Text = "";
+            chbx_MetalNew.Checked = isMetalCover == "Yes" ? true : false;
+            chbx_MetalExisting.Checked = eXisting.Is_MetalCover == "Yes" ? true : false;
+
             //P1
             if (isSingle != (eXisting.Is_Single == "No" ? "" : eXisting.Is_Single)) lbl_P1.ForeColor = lbl_Reference.ForeColor;
             else if ((isSingle == "" || isSingle == "No") && ("" == eXisting.Is_Single || "No" == eXisting.Is_Single)) lbl_P1.Text = "";
@@ -443,6 +455,11 @@ namespace RocksmithToolkitGUI.DLCManager
             else if ((isCover == "" || isCover == "No") && ("" == eXisting.Is_Cover || "No" == eXisting.Is_Cover)) lbl_P1.Text = "";
             chbx_CoverNew.Checked = isCover == "Yes" ? true : false;
             chbx_CoverExisting.Checked = eXisting.Is_Cover == "Yes" ? true : false;
+
+            if (isUkulele != (eXisting.Is_Ukulele == "No" ? "" : eXisting.Is_Ukulele)) lbl_P1.ForeColor = lbl_Reference.ForeColor;
+            else if ((isUkulele == "" || isUkulele == "No") && ("" == eXisting.Is_Ukulele || "No" == eXisting.Is_Ukulele)) lbl_P1.Text = "";
+            chbx_UkuleleNew.Checked = isUkulele == "Yes" ? true : false;
+            chbx_UkuleleExisting.Checked = eXisting.Is_Ukulele == "Yes" ? true : false;
 
             //P2
             if (isAcoustic != (eXisting.Is_Acoustic == "No" ? "" : eXisting.Is_Acoustic)) lbl_P2.ForeColor = lbl_Reference.ForeColor;
@@ -581,12 +598,20 @@ namespace RocksmithToolkitGUI.DLCManager
             if (author != eXisting.Author) { lbl_Author.ForeColor = lbl_FileName.ForeColor; btn_AuthorExisting.Enabled = true; btn_AuthorNew.Enabled = true; }
             else if (author == "" && "" == eXisting.Author) lbl_Author.Text = "";
             txt_AuthorNew.Text = author;// (author == "" ? "missing" : author);
-            txt_AuthorExisting.Text = eXisting.Author;//(eXisting.Author == "" ? "missing" : eXisting.Author);            
+            txt_AuthorExisting.Text = eXisting.Author;//(eXisting.Author == "" ? "missing" : eXisting.Author);
+
+            txt_DescriptionNew.Text = Description;
+            txt_DescriptionExisting.Text = eXisting.Description;
 
             if (tunnings != eXisting.Tunning) lbl_Tuning.ForeColor = lbl_Reference.ForeColor;
             else if (tunnings == "" && "" == eXisting.Tunning) lbl_Tuning.Text = "";
             txt_TuningNew.Text = tunnings;
             txt_TuningExisting.Text = eXisting.Tunning;
+
+            if (tuningFrecv != eXisting.A440TunningFrecv) lbl_Tuning.ForeColor = lbl_Reference.ForeColor;
+            else if (tuningFrecv == "" && "" == eXisting.A440TunningFrecv) lbl_Tuning.Text = "";
+            txt_TuningFrecvNew.Text = tuningFrecv;
+            txt_TuningFrecvExisting.Text = eXisting.A440TunningFrecv;
 
             if ((dataNew.ToolkitInfo.PackageVersion == null ? "1" : dataNew.ToolkitInfo.PackageVersion.ToString()) != eXisting.Version) lbl_Version.ForeColor = lbl_Reference.ForeColor;
             else if (dataNew.ToolkitInfo.PackageVersion == "" && "" == eXisting.Version) lbl_Version.Text = "";
@@ -656,9 +681,13 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_VocalsNew.Text = (vocal == "Yes" ? "Yes" : "No");
             txt_VocalsExisting.Text = (eXisting.Has_Vocals.ToString() == "Yes" ? "Yes" : "No");
 
-            if (((bass == "Yes") ? "B" : "") + ((rhythm == "Yes") ? "R" : "") + ((lead == "Yes") ? "L" : "") + ((combo == "Yes") ? "C" : "") + ((vocal == "Yes") ? "V" : "") != ((eXisting.Has_Bass == "Yes") ? "B" : "") + ((eXisting.Has_Rhythm == "Yes") ? "R" : "") + ((eXisting.Has_Lead == "Yes") ? "L" : "") + ((eXisting.Has_Combo == "Yes") ? "L" : "") + ((eXisting.Has_Vocals == "Yes") ? "V" : "")) lbl_AvailableTracks.ForeColor = lbl_Reference.ForeColor;
-            txt_AvailTracksNew.Text = ((bass == "Yes") ? "B" : "") + ((rhythm == "Yes") ? "R" : "") + ((lead == "Yes") ? "L" : "") + ((combo == "Yes") ? "C" : "") + ((vocal == "Yes") ? "V" : "");
-            txt_AvailTracksExisting.Text = ((eXisting.Has_Bass == "Yes") ? "B" : "") + ((eXisting.Has_Rhythm == "Yes") ? "R" : "") + ((eXisting.Has_Lead == "Yes") ? "L" : "") + ((eXisting.Has_Combo == "Yes") ? "L" : "") + ((eXisting.Has_Vocals == "Yes") ? "V" : "");
+            //dataNew.Arrangements[0].BonusArr
+            //if (((bass == "Yes") ? "B" : "") + ((rhythm == "Yes") ? "R" : "") + ((lead == "Yes") ? "L" : "") + ((combo == "Yes") ? "C" : "") + ((vocal == "Yes") ? "V" : "") != ((eXisting.Has_Bass == "Yes") ? "B" : "") + ((eXisting.Has_Rhythm == "Yes") ? "R" : "") + ((eXisting.Has_Lead == "Yes") ? "L" : "") + ((eXisting.Has_Combo == "Yes") ? "L" : "") + ((eXisting.Has_Vocals == "Yes") ? "V" : "")) lbl_AvailableTracks.ForeColor = lbl_Reference.ForeColor;
+            //txt_AvailTracksNew.Text = ((bass == "Yes") ? "B" : "") + ((rhythm == "Yes") ? "R" : "") + ((lead == "Yes") ? "L" : "") + ((combo == "Yes") ? "C" : "") + ((vocal == "Yes") ? "V" : "") + ((vocal == "Yes") ? "V" : "");
+            //txt_AvailTracksExisting.Text = ((eXisting.Has_Bass == "Yes") ? "B" : "") + ((eXisting.Has_Rhythm == "Yes") ? "R" : "") + ((eXisting.Has_Lead == "Yes") ? "L" : "")
+            //    + ((eXisting.Has_Combo == "Yes") ? "L" : "") + ((eXisting.Has_Vocals == "Yes") ? "V" : "") + ((eXisting.Has_Bonus_Arrangement == "Yes") ? "b" : "");
+            txt_AvailTracksNew.Text = Get_Tracks_WBonusAndParts("0", false, Path.GetDirectoryName(dataNew.AlbumArtPath).Replace("gfxassets\\album_art", ""));
+            txt_AvailTracksExisting.Text = Get_Tracks_WBonusAndParts(eXisting.ID, false, eXisting.Folder_Name);
 
             //Show the alternate/duplicates in the DB
             lbl_diffCount.Text = (i + 1).ToString() + "/" + norows.ToString();
@@ -673,7 +702,8 @@ namespace RocksmithToolkitGUI.DLCManager
             else btn_NotADuplicate.Text = "NOT a Duplicate";
 
 
-            if (lbl_Covers.ForeColor == System.Drawing.Color.Green || lbl_AudioPreview.ForeColor == System.Drawing.Color.Green || lbl_Audio.ForeColor == System.Drawing.Color.Green || lbl_LenghtNew.ForeColor == System.Drawing.Color.Green) lbl_Attention.Visible = true;
+            if (lbl_Covers.ForeColor == System.Drawing.Color.Green || lbl_AudioPreview.ForeColor == System.Drawing.Color.Green
+                || lbl_Audio.ForeColor == System.Drawing.Color.Green || lbl_LenghtExisting.ForeColor == System.Drawing.Color.Green) lbl_Attention.Visible = true;
             else lbl_Attention.Visible = false;
 
             //    btn_NotADuplicate.Visible = true;
@@ -734,12 +764,13 @@ namespace RocksmithToolkitGUI.DLCManager
             //        //MessageBox.Show("0");
             //        daa.Fill(ds, "Arrangements");
             //        daa.Dispose();
-            DataSet ds = new DataSet(); ds = SelectFromDB("Arrangements", "SELECT * FROM Arrangements WHERE CDLC_ID=" + eXisting.ID.ToString() + GetArrOfficSQLTxt(false), "", cnb, cnc);
+            DataSet ds = new DataSet(); var cmd = "SELECT * FROM Arrangements WHERE CDLC_ID=" + eXisting.ID.ToString() + GetArrOfficSQLTxt(false);
+            ds = SelectFromDB("Arrangements", cmd, "", cnb, cnc);
             var noOfRec = 0;
             //MessageBox.Show("0.1");
             noOfRec = GetNoRec(ds, cnb, cnc);//ds.Tables[0].Rows.Count;//ds.Tables[0].Rows[0].ItemArray[0].ToString();
-                                              //rtxt_StatisticsOnReadDLCs.Text = noOfRec + "Assesment Arrangement hash file" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
-                                              //MessageBox.Show("1");
+                                             //rtxt_StatisticsOnReadDLCs.Text = noOfRec + "Assesment Arrangement hash file" + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+                                             //MessageBox.Show("1");
 
             ToolTip toolTip1 = new ToolTip(); //vocals
             ToolTip toolTip2 = new ToolTip(); //lead
@@ -1107,7 +1138,7 @@ namespace RocksmithToolkitGUI.DLCManager
             Version = (txt_VersionNew.Text == "" ? "1" : txt_VersionNew.Text);
             DLCID = txt_DLCIDNew.Text;
             Title = txt_TitleNew.Text;
-            Comment = txt_DescriptionExisting.Text;//not used
+            Comment = txt_DescriptionNew.Text;//not used
             Description = txt_DescriptionNew.Text;
             Is_Alternate = (chbx_IsAlternateNew.Checked ? (txt_IsOriginalNew.Text == "Yes" ? "Yes" : "No") : "No");
             Title_Sort = txt_TitleSortNew.Text;
@@ -1142,6 +1173,15 @@ namespace RocksmithToolkitGUI.DLCManager
             isCover = chbx_CoverNew.Checked ? "Yes" : "No";
             isRemix = chbx_RemixNew.Checked ? "Yes" : "No";
             isMedley = chbx_MedleyNew.Checked ? "Yes" : "No";
+            isMetalCover = chbx_MetalNew.Checked ? "Yes" : "No";
+            isUkulele = chbx_UkuleleNew.Checked ? "Yes" : "No";
+            isTVTheme = chbx_TVThemeNew.Checked ? "Yes" : "No";
+            isAmateurCover = chbx_AmateurCoverNew.Checked ? "Yes" : "No";
+            isMultiStrings = chbx_MultiStringsNew.Checked ? "Yes" : "No";
+            isGameSoundtrack = chbx_GameSoundtrackNew.Checked ? "Yes" : "No";
+            isMidi = chbx_MidiNew.Checked ? "Yes" : "No";
+            isGreatestHits = chbx_GreatestHitsNew.Checked ? "Yes" : "No";
+            isDeluxe = chbx_DeluxeNew.Checked ? "Yes" : "No";
             isMultiStrings = chbx_MultiStringsNew.Checked ? "Yes" : "No";
             inTheWorks = chbx_InTheWorksNew.Checked ? "Yes" : "No";
             yearalbum = txt_YearNew.Text; ;
@@ -1203,6 +1243,8 @@ namespace RocksmithToolkitGUI.DLCManager
             sel += "\", Is_Single = \"" + (chbx_SingleExisting.Checked ? "Yes" : "No");
             sel += "\", Is_Medley = \"" + (chbx_MedleyExisting.Checked ? "Yes" : "No");
             sel += "\", Is_MultiStrings = \"" + (chbx_MultiStringsExisting.Checked ? "Yes" : "No");
+            sel += "\", Is_MetalCover = \"" + (chbx_MetalExisting.Checked ? "Yes" : "No");
+            sel += "\", Is_Ukulele = \"" + (chbx_UkuleleExisting.Checked ? "Yes" : "No");
             sel += "\", AlbumArtPath = \"" + picbx_AlbumArtPathExisting.ImageLocation.Replace(".png", ".dds") + "\", AlbumArt_Hash = \"" + GetHash(picbx_AlbumArtPathExisting.ImageLocation.Replace(".png", ".dds")) + "\",";// + "\"", AlbumArtPath = \"" + (rbtn_CoverNew.Checked ? picbx_AlbumArtPathNew.ImageLocation : picbx_AlbumArtPathExisting.ImageLocation);// + "\", Is_Original = \"" + (chbx_IsOriginal.Checked ? "Yes" : "No");
             sel += " YouTube_Link = \"" + txt_YouTube_LinkExisting.Text + "\", CustomsForge_Link = \"" + txt_CustomsForge_LinkExisting.Text + "\",";
             sel += " CustomsForge_Like = \"" + txt_CustomsForge_LikeExisting.Text + "\", CustomsForge_ReleaseNotes = \"" + txt_CustomsForge_ReleaseNotesExisting.Text + "\"";
@@ -1254,6 +1296,8 @@ namespace RocksmithToolkitGUI.DLCManager
             sel += "\", InTheWorks = \"" + (chbx_InTheWorksNew.Checked ? "Yes" : "No");
             sel += "\", Is_Single = \"" + (chbx_SingleNew.Checked ? "Yes" : "No");
             sel += "\", Is_Medley = \"" + (chbx_MedleyNew.Checked ? "Yes" : "No");
+            sel += "\", Is_MetalCover = \"" + (chbx_MetalNew.Checked ? "Yes" : "No");
+            sel += "\", Is_Ukulele = \"" + (chbx_UkuleleNew.Checked ? "Yes" : "No");
             sel += "\", Is_MultiStrings = \"" + (chbx_MultiStringsNew.Checked ? "Yes" : "No");
             sel += "\", AlbumArtPath = \"" + picbx_AlbumArtPathNew.ImageLocation.Replace(".png", ".dds") + "\", AlbumArt_Hash = \"" + GetHash(picbx_AlbumArtPathNew.ImageLocation.Replace(".png", ".dds")) + "\",";// + "\"", AlbumArtPath = \"" + (rbtn_CoverNew.Checked ? picbx_AlbumArtPathNew.ImageLocation : picbx_AlbumArtPathNew.ImageLocation);// + "\", Is_Original = \"" + (chbx_IsOriginal.Checked ? "Yes" : "No");
             sel += " YouTube_Link = \"" + txt_YouTube_LinkNew.Text + "\", CustomsForge_Link = \"" + txt_CustomsForge_LinkNew.Text + "\",";
@@ -1412,11 +1456,11 @@ namespace RocksmithToolkitGUI.DLCManager
 
             if (txt_LenghtNew.Text == txt_LenghtExisting.Text)
             {
-                lbl_LenghtNew.ForeColor = lbl_diffCount.ForeColor;
+                lbl_LenghtExisting.ForeColor = lbl_diffCount.ForeColor;
             }
             else
             {
-                lbl_LenghtNew.ForeColor = lbl_Reference.ForeColor;
+                lbl_LenghtExisting.ForeColor = lbl_Reference.ForeColor;
             }
 
             ExistChng = true;
@@ -1708,15 +1752,16 @@ namespace RocksmithToolkitGUI.DLCManager
         private void btn_GoToExisting_Click(object sender, EventArgs e)
         {
             string t = eXisting.Folder_Name;
-            try
-            {
-                Process process = Process.Start(@t);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                MessageBox.Show("Can not open New folder in Exporer ! ");
-            }
+            StartProcesss(@t, null);
+            // try
+            // {
+            //Process process = Process.Start(@t);
+            //}
+            //  catch (Exception ex)
+            //{
+            //MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //MessageBox.Show("Can not open New folder in Exporer ! ");
+            //}
         }
 
         private void btn_PlayPreview_Click(object sender, EventArgs e)
@@ -1725,7 +1770,7 @@ namespace RocksmithToolkitGUI.DLCManager
             startInfo.FileName = Path.Combine(AppWD, "oggdec2.exe");
             startInfo.WorkingDirectory = AppWD;// Path.GetDirectoryName();
             var t = eXisting.oggPreviewPath;//"C:\\GitHub\\tmp\\0\\0_dlcpacks\\rs1compatibilitydisc_PS3\\audio\\ps3\\149627248.ogg";//txt_TempPath.Text + "\\0_dlcpacks\\rs1compatibilitydlc.psarc";
-            startInfo.Arguments = String.Format(" -p \"{0}\"",
+            startInfo.Arguments = System.String.Format(" -p \"{0}\"",
                                                 t);
             startInfo.UseShellExecute = true; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
 
@@ -1743,7 +1788,7 @@ namespace RocksmithToolkitGUI.DLCManager
             startInfo.FileName = Path.Combine(AppWD, "oggdec2.exe");
             startInfo.WorkingDirectory = AppWD;// Path.GetDirectoryName();
             var t = eXisting.OggPath;//"C:\\GitHub\\tmp\\0\\0_dlcpacks\\rs1compatibilitydisc_PS3\\audio\\ps3\\149627248.ogg";//txt_TempPath.Text + "\\0_dlcpacks\\rs1compatibilitydlc.psarc";
-            startInfo.Arguments = String.Format(" -p \"{0}\"", t);
+            startInfo.Arguments = System.String.Format(" -p \"{0}\"", t);
             startInfo.UseShellExecute = true; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
 
             //var outputBuilder = new StringBuilder();
@@ -1763,7 +1808,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //var t = eXisting.OggPath;//"C:\\GitHub\\tmp\\0\\0_dlcpacks\\rs1compatibilitydisc_PS3\\audio\\ps3\\149627248.ogg";//txt_TempPath.Text + "\\0_dlcpacks\\rs1compatibilitydlc.psarc";
             var t = dataNew.OggPath.Replace(".wem", "_fixed.ogg"); ;//_fixed"C:\\GitHub\\tmp\\0\\0_dlcpacks\\rs1compatibilitydisc_PS3\\audio\\ps3\\149627248.ogg";//txt_TempPath.Text + "\\0_dlcpacks\\rs1compatibilitydlc.psarc";
             //var tt = t.Replace(".ogg", "_preview.ogg");
-            startInfo.Arguments = String.Format(" -p \"{0}\"", t);
+            startInfo.Arguments = System.String.Format(" -p \"{0}\"", t);
             startInfo.UseShellExecute = true; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
 
             //var outputBuilder = new StringBuilder();
@@ -1783,7 +1828,7 @@ namespace RocksmithToolkitGUI.DLCManager
             var t = dataNew.OggPath.Replace(".wem", ".ogg"); ;//_fixed"C:\\GitHub\\tmp\\0\\0_dlcpacks\\rs1compatibilitydisc_PS3\\audio\\ps3\\149627248.ogg";//txt_TempPath.Text + "\\0_dlcpacks\\rs1compatibilitydlc.psarc";
             var tt = t.Replace(".ogg", "_preview_fixed.ogg");
             //var t = eXisting.oggPreviewPath;//"C:\\GitHub\\tmp\\0\\0_dlcpacks\\rs1compatibilitydisc_PS3\\audio\\ps3\\149627248.ogg";//txt_TempPath.Text + "\\0_dlcpacks\\rs1compatibilitydlc.psarc";
-            startInfo.Arguments = String.Format(" -p \"{0}\"",
+            startInfo.Arguments = System.String.Format(" -p \"{0}\"",
                                                 tt);
             startInfo.UseShellExecute = true; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
 
@@ -1855,12 +1900,12 @@ namespace RocksmithToolkitGUI.DLCManager
             var xx = "";
             if (File.Exists(paath)) xx = paath;
             else xx = Path.Combine(AppWD, "WinMerge\\winmergeu.exe");
-            if (!File.Exists(xx)) { ErrorWindow frm1 = new ErrorWindow("Install WinMerge if you want to use it.", ConfigRepository.Instance()["dlcm_WinMerge_www"], "Missing WinMerge", false, false, true, "", "", ""); frm1.ShowDialog(); return; }
+            if (!File.Exists(xx)) { ErrorWindow frm1 = new ErrorWindow("Install WinMerge if you want to use it.", ConfigRepository.Instance()["dlcm_WinMerge_www"], "Missing WinMerge", false, false, true, "", "", "", false); frm1.ShowDialog(); return; }
 
             var startInfo = new ProcessStartInfo();
             startInfo.FileName = xx;
             startInfo.WorkingDirectory = AppWD.Replace("external_tools", "");// Path.GetDirectoryName();
-            startInfo.Arguments = String.Format(xml_inst);
+            startInfo.Arguments = System.String.Format(xml_inst);
             startInfo.UseShellExecute = false; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
 
             if (File.Exists(xx)) //&& File.Exists(replace(DB_Path))
@@ -2008,7 +2053,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btn_ShowInfoOthers_Click(object sender, EventArgs e)
         {
-            ErrorWindow frm1 = new ErrorWindow(this.allothers, "", "List of all other Duplicates being assesed", false, false, true, "", "", "");
+            ErrorWindow frm1 = new ErrorWindow(this.allothers, "", "List of all other Duplicates being assesed", false, false, true, "", "", "", false);
             frm1.ShowDialog();
         }
 
@@ -2164,8 +2209,18 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btn_OpenNewFolder_Click(object sender, EventArgs e)
         {
-            string filePath = dataNew.AlbumArtPath;
+            string filePath = Path.GetDirectoryName(dataNew.AlbumArtPath).Replace("gfxassets\\album_art", "");
             StartProcesss(filePath, null);
+        }
+
+        private void chbx_CapoExisting_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label20_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

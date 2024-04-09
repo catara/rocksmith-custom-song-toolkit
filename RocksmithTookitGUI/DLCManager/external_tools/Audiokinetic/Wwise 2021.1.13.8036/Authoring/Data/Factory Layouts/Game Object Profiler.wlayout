@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Layout Name="Game Object Profiler">
+	<StackPanel Name="StackPanel" Width="1645" Height="746" Orientation="Vertical">
+		<StackPanel Name="StackPanel" Width="1645" Height="743" Orientation="Vertical">
+			<StackPanel Name="StackPanel" Width="1645" Height="612" Orientation="Vertical">
+				<View Name="Game Object 3D Viewer" Width="1645" Height="457"/>
+				<Splitter Name="Splitter" Width="1645" Height="3"/>
+				<View Name="Voice Monitor" Width="1645" Height="151"/>
+			</StackPanel>
+			<Splitter Name="Splitter" Width="1645" Height="3"/>
+			<View Name="Game Sync Monitor" Width="1645" Height="128"/>
+		</StackPanel>
+	</StackPanel>
+</Layout>

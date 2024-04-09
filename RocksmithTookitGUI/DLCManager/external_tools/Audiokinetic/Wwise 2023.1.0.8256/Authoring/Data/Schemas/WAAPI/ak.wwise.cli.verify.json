@@ -1,0 +1,66 @@
+{
+    "version": 1,
+    "functions": [
+        {
+            "id": "ak.wwise.cli.verify",
+            "restrict": [
+                "commandLine"
+            ],
+            "description": "Loads the project and does nothing else. This is useful to see the log for verification purposes without actually migrating and saving.",
+            "argsSchema": {
+                "type": "object",
+                "properties": {
+                    "project": {
+                        "$ref": "#/definitions/projectCliArg"
+                    },
+                    "verbose": {
+                        "$ref": "#/definitions/verboseCliArg"
+                    },
+                    "quiet": {
+                        "$ref": "#/definitions/quietCliArg"
+                    },
+                    "abort-on-load-issues": {
+                        "$ref": "#/definitions/abortOnLoadIssuesCliArg"
+                    }
+                },
+                "required": [
+                    "project"
+                ],
+                "additionalProperties": false
+            },
+            "resultSchema": {
+                "type": "object",
+                "properties": {
+                    "result": {
+                        "$ref": "#/definitions/processResultCli"
+                    }
+                },
+                "required": [
+                    "result"
+                ],
+                "additionalProperties": false
+            },
+            "optionsSchema": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": false
+            },
+            "examples": [
+                {
+                    "title": "Opening a project",
+                    "description": "Opens a project with verbose logging.",
+                    "args": {
+                        "project": "C:\\MyProject\\MyProject.wproj",
+                        "verbose": true
+                    },
+                    "result": {
+                        "result": 0
+                    }
+                }
+            ]
+        }
+    ],
+    "topics": [],
+    "validators": [],
+    "definitions": {}
+}

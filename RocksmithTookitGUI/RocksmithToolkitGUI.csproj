@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web" Project="Sdk.targets">
   <PropertyGroup>
     <TargetFramework>net8.0-windows10.0.22621.0</TargetFramework>
-    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <OutputType>WinExe</OutputType>
     <StartupObject>RocksmithToolkitGUI.Program</StartupObject>
     <IsWebBootstrapper>false</IsWebBootstrapper>
@@ -59,7 +59,7 @@
   <PropertyGroup>
     <ProjectConfigFileName>App.config</ProjectConfigFileName>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'RocksmithToolkitMac|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'RocksmithToolkitMac|x86'">
     <OutputPath>bin\RocksmithToolkitMac\</OutputPath>
     <Optimize>True</Optimize>
     <DebugType>none</DebugType>
@@ -91,7 +91,7 @@
       <HintPath>..\lib\PSTaskDialog\PSTaskDialog.dll</HintPath>
     </Reference>
     <Reference Include="RocksmithToTabLib">
-      <HintPath>..\RocksmithToolkitCLI\RocksmithToTab\RocksmithToTabLib\bin\Release\RocksmithToTabLib.dll</HintPath>
+      <HintPath>DLCManager\external_tools\RocksmithToTabLib.dll</HintPath>
     </Reference>
     <Reference Include="SharpConfig">
       <HintPath>..\lib\SharpConfig\SharpConfig.dll</HintPath>
@@ -4949,24 +4949,24 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="EntityFramework" Version="6.4.4" />
-    <PackageReference Include="Google.Apis.YouTube.v3" Version="1.66.0.3205" />
-    <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.1" />
-    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="8.0.1" />
+    <PackageReference Include="Google.Apis.YouTube.v3" Version="1.67.0.3358" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.0-preview.3.24172.4" />
+    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="9.0.0-preview.3.24172.4" />
     <PackageReference Include="Microsoft.NETCore.Platforms" Version="8.0.0-preview.7.23375.6" />
     <PackageReference Include="Microsoft.VisualBasic" Version="10.4.0-preview.18571.3" />
     <PackageReference Include="Rocksmith2014.XML" Version="1.1.1" />
     <PackageReference Include="SpotifyApi.NetCore" Version="3.5.0" />
-    <PackageReference Include="SpotifyAPI.Web" Version="7.0.2" />
-    <PackageReference Include="SpotifyAPI.Web.Auth" Version="7.0.2" />
+    <PackageReference Include="SpotifyAPI.Web" Version="7.1.1" />
+    <PackageReference Include="SpotifyAPI.Web.Auth" Version="7.1.1" />
     <PackageReference Include="SQLite" Version="3.13.0" />
-    <PackageReference Include="sqlite-net-pcl" Version="1.9.141-beta" />
-    <PackageReference Include="System.Data.OleDb" Version="8.0.0" />
+    <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
+    <PackageReference Include="System.Data.OleDb" Version="9.0.0-preview.3.24172.9" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
     <PackageReference Include="System.Data.SQLite.Core" Version="1.0.118" />
     <PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
     <PackageReference Include="System.Security.Principal.Windows" Version="5.0.0" />
     <PackageReference Include="Unosquare.Swan.Lite" Version="3.1.0" />
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.0-preview.3.24172.9" />
   </ItemGroup>
   <PropertyGroup Condition="'$(OutDir)'==''">
   <OutDir>bin\$(Configuration)\$(TargetFramework)\</OutDir>
@@ -4987,6 +4987,12 @@
     <Title>Rocksmith2014 DLCManager</Title>
     <BaseOutputPath>C:\GitHub\bin</BaseOutputPath>
     <BaseIntermediateOutputPath>C:\GitHub\obj</BaseIntermediateOutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <Copyright>catara</Copyright>
+    <Description>DLC Manager</Description>
+    <RepositoryUrl>https://github.com/catara/rocksmith-custom-song-toolkit/tree/Main</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/catara/rocksmith-custom-song-toolkit/tree/Main</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <Optimize>False</Optimize>

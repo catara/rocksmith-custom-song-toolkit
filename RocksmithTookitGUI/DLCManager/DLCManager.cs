@@ -322,9 +322,14 @@ namespace RocksmithToolkitGUI.DLCManager
 
             if (ConfigRepository.Instance()["general_wwisepath"] == "" || !Directory.Exists(ConfigRepository.Instance()["general_wwisepath"]))
                 if (Directory.Exists(AppWD + "\\" + c("dlcm_localwwise") + "\\" + c("dlcm_wwise")))
-                    if (Directory.EnumerateFiles(AppWD + "\\" + c("dlcm_localwwise") + "\\" + c("dlcm_wwise"), "WwiseCLI.exe", SearchOption.AllDirectories).Any()
-                         || Directory.EnumerateFiles("C:\\Program Files (x86)\\Audiokinetic\\" + c("dlcm_wwise"), "WwiseConsole.exe", SearchOption.AllDirectories).Any()) ConfigRepository.Instance()["general_wwisepath"] = AppWD + "\\" + c("dlcm_localwwise") + "\\" + c("dlcm_wwise");
-                    else ConfigRepository.Instance()["general_wwisepath"] = "";
+                    try
+                    {
+                        if (Directory.EnumerateFiles(AppWD + "\\" + c("dlcm_localwwise") + "\\" + c("dlcm_wwise"), "WwiseCLI.exe", SearchOption.AllDirectories).Any()
+                         || Directory.EnumerateFiles("C:\\Program Files (x86)\\Audiokinetic\\" + c("dlcm_wwise"), "WwiseConsole.exe", SearchOption.AllDirectories).Any())
+                            ConfigRepository.Instance()["general_wwisepath"] = AppWD + "\\" + c("dlcm_localwwise") + "\\" + c("dlcm_wwise");
+                        else ConfigRepository.Instance()["general_wwisepath"] = "";
+                    }
+                    catch (Exception ex) { ConfigRepository.Instance()["general_wwisepath"] = ""; }
                 else ConfigRepository.Instance()["general_wwisepath"] = "";
             else ConfigRepository.Instance()["general_wwisepath"] = "";
 
@@ -334,45 +339,49 @@ namespace RocksmithToolkitGUI.DLCManager
                 else ConfigRepository.Instance()["general_wwisepath"] = "";
 
             //recursevly check all folders first in local path then in promfilesx86
-            var files = Directory.EnumerateFiles(AppWD + "\\" + c("dlcm_localwwise"), "WwiseC*.exe", SearchOption.AllDirectories);
-            if (ConfigRepository.Instance()["general_wwisepath"] == "" || !Directory.Exists(ConfigRepository.Instance()["general_wwisepath"]))
-                foreach (var fg in files)
-                {
-                    ConfigRepository.Instance()["dlcm_wwise"] = fg.Replace(Path.GetFileName(fg), "").Replace(AppWD + "\\" + c("dlcm_localwwise"), "").Replace("\\Authoring\\x64\\Release\\bin\\", "").Replace("\\", "");// Path.GetFileName(Path.GetDirectoryName(fg));//
+            if (Directory.Exists(AppWD + "\\" + c("dlcm_localwwise")))
+            {
+                var files = Directory.EnumerateFiles(AppWD + "\\" + c("dlcm_localwwise"), "WwiseC*.exe", SearchOption.AllDirectories);
+                if (ConfigRepository.Instance()["general_wwisepath"] == "" || !Directory.Exists(ConfigRepository.Instance()["general_wwisepath"]))
+                    foreach (var fg in files)
+                    {
+                        ConfigRepository.Instance()["dlcm_wwise"] = fg.Replace(Path.GetFileName(fg), "").Replace(AppWD + "\\" + c("dlcm_localwwise"), "").Replace("\\Authoring\\x64\\Release\\bin\\", "").Replace("\\", "");// Path.GetFileName(Path.GetDirectoryName(fg));//
 
-                    if (ConfigRepository.Instance()["general_wwisepath"] == "" || !Directory.Exists(ConfigRepository.Instance()["general_wwisepath"]))
-                        if (Directory.Exists(AppWD + "\\" + c("dlcm_localwwise") + "\\" + c("dlcm_wwise")))
+                        if (ConfigRepository.Instance()["general_wwisepath"] == "" || !Directory.Exists(ConfigRepository.Instance()["general_wwisepath"]))
+                            if (Directory.Exists(AppWD + "\\" + c("dlcm_localwwise") + "\\" + c("dlcm_wwise")))
+                                if (Directory.EnumerateFiles(AppWD + "\\" + c("dlcm_localwwise") + "\\" + c("dlcm_wwise"), "WwiseCLI.exe", SearchOption.AllDirectories).Any()
+                                     || Directory.EnumerateFiles(AppWD + "\\" + c("dlcm_localwwise") + "\\" + c("dlcm_wwise"), "WwiseConsole.exe", SearchOption.AllDirectories).Any()) ConfigRepository.Instance()["general_wwisepath"] = AppWD + "\\" + c("dlcm_localwwise") + "\\" + c("dlcm_wwise");
+                                else ConfigRepository.Instance()["general_wwisepath"] = "";
+                            else ConfigRepository.Instance()["general_wwisepath"] = "";
+                        else ConfigRepository.Instance()["general_wwisepath"] = "";
+
+                        if (AppWD.ToLower().Contains("debug\\rk") && Directory.Exists(AppWD + "\\" + c("dlcm_localwwise") + "\\" + c("dlcm_wwise")))
                             if (Directory.EnumerateFiles(AppWD + "\\" + c("dlcm_localwwise") + "\\" + c("dlcm_wwise"), "WwiseCLI.exe", SearchOption.AllDirectories).Any()
                                  || Directory.EnumerateFiles(AppWD + "\\" + c("dlcm_localwwise") + "\\" + c("dlcm_wwise"), "WwiseConsole.exe", SearchOption.AllDirectories).Any()) ConfigRepository.Instance()["general_wwisepath"] = AppWD + "\\" + c("dlcm_localwwise") + "\\" + c("dlcm_wwise");
                             else ConfigRepository.Instance()["general_wwisepath"] = "";
-                        else ConfigRepository.Instance()["general_wwisepath"] = "";
-                    else ConfigRepository.Instance()["general_wwisepath"] = "";
+                    }
 
-                    if (AppWD.ToLower().Contains("debug\\rk") && Directory.Exists(AppWD + "\\" + c("dlcm_localwwise") + "\\" + c("dlcm_wwise")))
-                        if (Directory.EnumerateFiles(AppWD + "\\" + c("dlcm_localwwise") + "\\" + c("dlcm_wwise"), "WwiseCLI.exe", SearchOption.AllDirectories).Any()
-                             || Directory.EnumerateFiles(AppWD + "\\" + c("dlcm_localwwise") + "\\" + c("dlcm_wwise"), "WwiseConsole.exe", SearchOption.AllDirectories).Any()) ConfigRepository.Instance()["general_wwisepath"] = AppWD + "\\" + c("dlcm_localwwise") + "\\" + c("dlcm_wwise");
-                        else ConfigRepository.Instance()["general_wwisepath"] = "";
-                }
 
-            if (!Directory.Exists(ConfigRepository.Instance()["general_wwisepath"]) && Directory.Exists("C:\\Program Files (x86)\\Audiokinetic\\")) files = Directory.EnumerateFiles("C:\\Program Files (x86)\\Audiokinetic\\", "WwiseC*.exe", SearchOption.AllDirectories);
-            if (ConfigRepository.Instance()["general_wwisepath"] == "" || !Directory.Exists(ConfigRepository.Instance()["general_wwisepath"]))
-                foreach (var fg in files)
-                {
-                    ConfigRepository.Instance()["dlcm_wwise"] = fg.Replace(Path.GetFileName(fg), "").Replace(AppWD + "\\" + c("dlcm_localwwise"), "").Replace("\\Authoring\\x64\\Release\\bin\\", "").Replace("\\", "");// Path.GetFileName(Path.GetDirectoryName(fg));//
+                if (!Directory.Exists(ConfigRepository.Instance()["general_wwisepath"]) && Directory.Exists("C:\\Program Files (x86)\\Audiokinetic\\")) files = Directory.EnumerateFiles("C:\\Program Files (x86)\\Audiokinetic\\", "WwiseC*.exe", SearchOption.AllDirectories);
+                if (ConfigRepository.Instance()["general_wwisepath"] == "" || !Directory.Exists(ConfigRepository.Instance()["general_wwisepath"]))
+                    foreach (var fg in files)
+                    {
+                        ConfigRepository.Instance()["dlcm_wwise"] = fg.Replace(Path.GetFileName(fg), "").Replace(AppWD + "\\" + c("dlcm_localwwise"), "").Replace("\\Authoring\\x64\\Release\\bin\\", "").Replace("\\", "");// Path.GetFileName(Path.GetDirectoryName(fg));//
 
-                    if (ConfigRepository.Instance()["general_wwisepath"] == "" || !Directory.Exists(ConfigRepository.Instance()["general_wwisepath"]))
-                        if (ConfigRepository.Instance()["dlcm_localwwise"] == ""
-                            || (!Directory.Exists(AppWD + "\\" + c("dlcm_localwwise") + "\\" + c("dlcm_wwise")) && Directory.Exists("C:\\Program Files (x86)\\Audiokinetic\\" + c("dlcm_wwise"))))
-                            if (Directory.EnumerateFiles("C:\\Program Files (x86)\\Audiokinetic\\" + c("dlcm_wwise"), "WwiseCLI.exe", SearchOption.AllDirectories).Any()
-                                 || Directory.EnumerateFiles(AppWD + "\\" + c("dlcm_localwwise") + "\\" + c("dlcm_wwise"), "WwiseConsole.exe", SearchOption.AllDirectories).Any()) ConfigRepository.Instance()["general_wwisepath"] = "C:\\Program Files (x86)\\Audiokinetic\\" + c("dlcm_wwise");// 2017.2.0.6500";
+                        if (ConfigRepository.Instance()["general_wwisepath"] == "" || !Directory.Exists(ConfigRepository.Instance()["general_wwisepath"]))
+                            if (ConfigRepository.Instance()["dlcm_localwwise"] == ""
+                                || (!Directory.Exists(AppWD + "\\" + c("dlcm_localwwise") + "\\" + c("dlcm_wwise")) && Directory.Exists("C:\\Program Files (x86)\\Audiokinetic\\" + c("dlcm_wwise"))))
+                                if (Directory.EnumerateFiles("C:\\Program Files (x86)\\Audiokinetic\\" + c("dlcm_wwise"), "WwiseCLI.exe", SearchOption.AllDirectories).Any()
+                                     || Directory.EnumerateFiles(AppWD + "\\" + c("dlcm_localwwise") + "\\" + c("dlcm_wwise"), "WwiseConsole.exe", SearchOption.AllDirectories).Any()) ConfigRepository.Instance()["general_wwisepath"] = "C:\\Program Files (x86)\\Audiokinetic\\" + c("dlcm_wwise");// 2017.2.0.6500";
+                                else ConfigRepository.Instance()["general_wwisepath"] = "";
                             else ConfigRepository.Instance()["general_wwisepath"] = "";
                         else ConfigRepository.Instance()["general_wwisepath"] = "";
-                    else ConfigRepository.Instance()["general_wwisepath"] = "";
-                }
+                    }
+            }
 
             if (ConfigRepository.Instance()["general_wwisepath"] == "") MessageBox.Show("Could not find Audiokinetic Wwise installation." + Environment.NewLine +
-                    "Please confirm that either Wwise v2013.2.x v2014.1.x 2015.1.x or 2016.2.xx or 2017.1.xx or" +
-                    " 2018.1.x or 2019.2.x or 2021.1.13(latest w CLI support) or 2022.1.x or 2023.1.beta series is installed." + Environment.NewLine);
+                        "Please confirm that either Wwise v2013.2.x v2014.1.x 2015.1.x or 2016.2.xx or 2017.1.xx or" +
+                        " 2018.1.x or 2019.2.x or 2021.1.13(latest w CLI support) or 2022.1.x or 2023.1.beta series is installed." + Environment.NewLine);
             else if (oldc != ConfigRepository.Instance()["general_wwisepath"])
             {
                 timestamp = UpdateLog(timestamp, "Wwise changed!\n\nOld: " + oldc + "\nNew: " + ConfigRepository.Instance()["general_wwisepath"] + "\nNew: " + "Delete existing Tempalte folder: " + Directory.Exists(AppWD + "..\\..\\Template")
@@ -1161,7 +1170,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private void btn_Preview_Title_Sort_Click(object sender, EventArgs e)
         {
             SongRecord = UtilitiesFunctions.GetRecord_s("SELECT * FROM Main ", cnb, cnc);
-            lbl_PreviewText.Text = "Sort Title: " + Manipulate_strings(txt_Title_Sort.Text, 0, false, false, false, SongRecord, "[", "]", ConfigRepository.Instance()["dlcm_AdditionalManipul54"].ToLower() == "yes" ? true : false, true, false, cnc);//, ConfigRepository.Instance()["dlcm_AdditionalManipul87"], ConfigRepository.Instance()["dlcm_AdditionalManipul88"]);
+            lbl_PreviewText.Text = "Sort Title: " + Manipulate_strings(txt_Title_Sort.Text, 0, false, false, false, SongRecord, "", "", ConfigRepository.Instance()["dlcm_AdditionalManipul54"].ToLower() == "yes" ? true : false, true, false, cnc);//, ConfigRepository.Instance()["dlcm_AdditionalManipul87"], ConfigRepository.Instance()["dlcm_AdditionalManipul88"]);
         }
 
         private void btn_Preview_Artist_Click(object sender, EventArgs e)
@@ -1173,7 +1182,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private void btn_Preview_Artist_Sort_Click(object sender, EventArgs e)
         {
             SongRecord = UtilitiesFunctions.GetRecord_s("SELECT * FROM Main ", cnb, cnc);
-            lbl_PreviewText.Text = "Sort Artist: " + Manipulate_strings(txt_Artist_Sort.Text, 0, false, false, false, SongRecord, "[", "]", ConfigRepository.Instance()["dlcm_AdditionalManipul54"].ToLower() == "yes" ? true : false, true, false, cnc);//, ConfigRepository.Instance()["dlcm_AdditionalManipul87"], ConfigRepository.Instance()["dlcm_AdditionalManipul88"]);
+            lbl_PreviewText.Text = "Sort Artist: " + Manipulate_strings(txt_Artist_Sort.Text, 0, false, false, false, SongRecord, "", "", ConfigRepository.Instance()["dlcm_AdditionalManipul54"].ToLower() == "yes" ? true : false, true, false, cnc);//, ConfigRepository.Instance()["dlcm_AdditionalManipul87"], ConfigRepository.Instance()["dlcm_AdditionalManipul88"]);
         }
 
         private void btn_Preview_Album_Click(object sender, EventArgs e)
@@ -3660,8 +3669,8 @@ namespace RocksmithToolkitGUI.DLCManager
                                 + " - " + fil.Version + "\n";
                         }
 
-                        timestamp = UpdateLog(timestamp, "dupli_reason(if any): "+dupli_reason, true, Temp_Path_Import, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
-                        if(original_FileName.Contains("Lou-Reed_Perfect-Day_v1_p.psarc"))
+                        timestamp = UpdateLog(timestamp, "dupli_reason(if any): " + dupli_reason, true, Temp_Path_Import, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+                        if (original_FileName.Contains("Lou-Reed_Perfect-Day_v1_p.psarc"))
                             ;
                         dupli_assesment = AssessConflict(file, info, author, tkversion, DD, Bass, Guitar, Combo, Rhythm, Lead,
                            Vocalss, Tunings, b, norows, original_FileName, art_hash, audio_hash, audioPreview_hash,
@@ -3954,7 +3963,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     if (ExistingTrackNo != "" && ExistingTrackNo is not null)
                         trackno = ExistingTrackNo.ToInt32();
                     else
-                        trackno = trackno.ToString() == "" || trackno.ToString() =="0"? txt_TrackNoText.ToInt32() : trackno;/*.Parse(txt_TrackNoText) || trackno is nul*/
+                        trackno = trackno.ToString() == "" || trackno.ToString() == "0" ? txt_TrackNoText.ToInt32() : trackno;/*.Parse(txt_TrackNoText) || trackno is nul*/
                     info.Version = txt_VersionText;
 
                     //cnb = new OleDbConnection("Provider=Microsoft." + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path); //+ ";Persist Security Info=False"
@@ -3970,7 +3979,7 @@ namespace RocksmithToolkitGUI.DLCManager
                       , IsRemastered, InTheWorks, dupli_assesment, j, IsCover, IsDemo, IsRemix, HasFeaturing, IsKaraoke, txt_BasedOnYBText
                       , txt_BasedOnCFText, txt_TabLinksText, txt_toDosText, txt_ToneDetailsText, txt_DescriptionText
                       , txt_PackageDate, txt_UpdateDate, txt_BasedOn_GP, Has_Capo, Has_Showlights, Has_JVocals, IsMedley, IsMultiStrings, IsDeluxe, IsGreatestHits
-                      , IsMidi, IsGameSoundtrack, IsTVTheme, IsAmateurCover, txt_EoFPathText, txt_YBLinkText, txt_SpotifyText, IsMetalCover, IsUkulele, A440TunningFrecv, cnc);
+                      , IsMidi, IsGameSoundtrack, IsTVTheme, IsAmateurCover, txt_EoFPathText, txt_YBLinkText, txt_SpotifyText, IsMetalCover, IsUkulele, A440TunningFrecv, "", "", cnc);
                     //if (connection != null) connection.Close();//some issues with saving and reading such records
                     if (dupli_assesment == "Insert" || dupli_assesment == "Update") //Common set of action for all
                     {
@@ -7792,7 +7801,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private void Btn_Album_Sort_Click(object sender, EventArgs e)
         {
             SongRecord = UtilitiesFunctions.GetRecord_s("SELECT * FROM Main ", cnb, cnc);
-            lbl_PreviewText.Text = "Album_Sort: " + Manipulate_strings(txt_Album_Sort.Text, 0, false, false, false, SongRecord, "[", "]", ConfigRepository.Instance()["dlcm_AdditionalManipul54"].ToLower() == "yes" ? true : false, false, false, cnc);//, ConfigRepository.Instance()["dlcm_AdditionalManipul87"], ConfigRepository.Instance()["dlcm_AdditionalManipul88"]);
+            lbl_PreviewText.Text = "Album_Sort: " + Manipulate_strings(txt_Album_Sort.Text, 0, false, false, false, SongRecord, "", "", ConfigRepository.Instance()["dlcm_AdditionalManipul54"].ToLower() == "yes" ? true : false, false, false, cnc);//, ConfigRepository.Instance()["dlcm_AdditionalManipul87"], ConfigRepository.Instance()["dlcm_AdditionalManipul88"]);
         }
 
         private void Btn_Lyric_Info_Click(object sender, EventArgs e)
@@ -8078,7 +8087,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 //        + ",";
                 //SCmd = SCmd.Replace(c("dlcm_SearchFields"), "ID");
                 //SCmd = SCmd.Replace("ORDER BY " + c("dlcm_OrderOfFields"), "");
-                grp += lbGroups.SelectedItems[i].ToString().Replace("Group ", "") + ";";
+                grp += lbGroups.SelectedItems[i].ToString().Replace("Group ", "") + ",";
             grp = grp.Substring(0, grp.Length - 1);
             //}
             //SCmd = SCmd.Replace(")  ,", ")) OR cstr(ID) IN (");

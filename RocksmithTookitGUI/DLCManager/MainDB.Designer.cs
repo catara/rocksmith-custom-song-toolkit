@@ -228,6 +228,8 @@ namespace RocksmithToolkitGUI.DLCManager
             chbx_AlternateLyricsAvail = new CheckBox();
             btn_JavaSite = new Button();
             btn_AudioConvSite = new Button();
+            chbx_Uploaded_on_CF = new CheckBox();
+            chbx_Found_on_CF = new CheckBox();
             splitContainer2 = new SplitContainer();
             tabControl = new TabControl();
             tabPage1 = new TabPage();
@@ -1720,7 +1722,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             chbx_A_IsLive.Appearance = Appearance.Button;
             chbx_A_IsLive.Font = new System.Drawing.Font("Segoe UI", 7F);
-            chbx_A_IsLive.Location = new System.Drawing.Point(157, 52);
+            chbx_A_IsLive.Location = new System.Drawing.Point(196, 52);
             chbx_A_IsLive.Margin = new Padding(2);
             chbx_A_IsLive.Name = "chbx_A_IsLive";
             chbx_A_IsLive.Size = new System.Drawing.Size(37, 18);
@@ -1729,12 +1731,13 @@ namespace RocksmithToolkitGUI.DLCManager
             toolTip1.SetToolTip(chbx_A_IsLive, "Song version based on a Live version");
             chbx_A_IsLive.UseVisualStyleBackColor = true;
             chbx_A_IsLive.Visible = false;
+            chbx_A_IsLive.Click += chbx_A_IsLive_CheckedChanged;
             // 
             // chbx_A_IsInstrumental
             // 
             chbx_A_IsInstrumental.Appearance = Appearance.Button;
             chbx_A_IsInstrumental.Font = new System.Drawing.Font("Segoe UI", 7F);
-            chbx_A_IsInstrumental.Location = new System.Drawing.Point(4, 55);
+            chbx_A_IsInstrumental.Location = new System.Drawing.Point(198, 52);
             chbx_A_IsInstrumental.Margin = new Padding(2);
             chbx_A_IsInstrumental.Name = "chbx_A_IsInstrumental";
             chbx_A_IsInstrumental.Size = new System.Drawing.Size(76, 18);
@@ -1743,12 +1746,13 @@ namespace RocksmithToolkitGUI.DLCManager
             toolTip1.SetToolTip(chbx_A_IsInstrumental, "with No Lyrics as an instrumental song");
             chbx_A_IsInstrumental.UseVisualStyleBackColor = true;
             chbx_A_IsInstrumental.Visible = false;
+            chbx_A_IsInstrumental.Click += chbx_A_IsInstrumental_CheckedChanged;
             // 
             // chbx_A_IsSoundtrack
             // 
             chbx_A_IsSoundtrack.Appearance = Appearance.Button;
             chbx_A_IsSoundtrack.Font = new System.Drawing.Font("Segoe UI", 7F);
-            chbx_A_IsSoundtrack.Location = new System.Drawing.Point(31, 56);
+            chbx_A_IsSoundtrack.Location = new System.Drawing.Point(215, 52);
             chbx_A_IsSoundtrack.Margin = new Padding(2);
             chbx_A_IsSoundtrack.Name = "chbx_A_IsSoundtrack";
             chbx_A_IsSoundtrack.Size = new System.Drawing.Size(72, 18);
@@ -1757,12 +1761,13 @@ namespace RocksmithToolkitGUI.DLCManager
             toolTip1.SetToolTip(chbx_A_IsSoundtrack, "PArt of a soundtrack (version)");
             chbx_A_IsSoundtrack.UseVisualStyleBackColor = true;
             chbx_A_IsSoundtrack.Visible = false;
+            chbx_A_IsSoundtrack.Click += chbx_A_IsSoundtrack_CheckedChanged;
             // 
             // chbx_A_IsSingle
             // 
             chbx_A_IsSingle.Appearance = Appearance.Button;
             chbx_A_IsSingle.Font = new System.Drawing.Font("Segoe UI", 7F);
-            chbx_A_IsSingle.Location = new System.Drawing.Point(69, 53);
+            chbx_A_IsSingle.Location = new System.Drawing.Point(200, 52);
             chbx_A_IsSingle.Margin = new Padding(2);
             chbx_A_IsSingle.Name = "chbx_A_IsSingle";
             chbx_A_IsSingle.Size = new System.Drawing.Size(41, 18);
@@ -1771,26 +1776,28 @@ namespace RocksmithToolkitGUI.DLCManager
             toolTip1.SetToolTip(chbx_A_IsSingle, "Single version");
             chbx_A_IsSingle.UseVisualStyleBackColor = true;
             chbx_A_IsSingle.Visible = false;
+            chbx_A_IsSingle.Click += chbx_A_IsSingle_CheckedChanged;
             // 
             // chbx_A_IsAcoustic
             // 
             chbx_A_IsAcoustic.Appearance = Appearance.Button;
             chbx_A_IsAcoustic.Font = new System.Drawing.Font("Segoe UI", 7F);
-            chbx_A_IsAcoustic.Location = new System.Drawing.Point(36, 54);
+            chbx_A_IsAcoustic.Location = new System.Drawing.Point(187, 52);
             chbx_A_IsAcoustic.Margin = new Padding(2);
             chbx_A_IsAcoustic.Name = "chbx_A_IsAcoustic";
-            chbx_A_IsAcoustic.Size = new System.Drawing.Size(46, 18);
+            chbx_A_IsAcoustic.Size = new System.Drawing.Size(54, 18);
             chbx_A_IsAcoustic.TabIndex = 433;
             chbx_A_IsAcoustic.Text = "Acoustic";
             toolTip1.SetToolTip(chbx_A_IsAcoustic, "Acoustic version");
             chbx_A_IsAcoustic.UseVisualStyleBackColor = true;
             chbx_A_IsAcoustic.Visible = false;
+            chbx_A_IsAcoustic.Click += chbx_A_IsAcoustic_CheckedChanged;
             // 
             // chbx_A_IsEP
             // 
             chbx_A_IsEP.Appearance = Appearance.Button;
             chbx_A_IsEP.Font = new System.Drawing.Font("Segoe UI", 7F);
-            chbx_A_IsEP.Location = new System.Drawing.Point(239, 54);
+            chbx_A_IsEP.Location = new System.Drawing.Point(226, 54);
             chbx_A_IsEP.Margin = new Padding(2);
             chbx_A_IsEP.Name = "chbx_A_IsEP";
             chbx_A_IsEP.Size = new System.Drawing.Size(31, 18);
@@ -1799,6 +1806,7 @@ namespace RocksmithToolkitGUI.DLCManager
             toolTip1.SetToolTip(chbx_A_IsEP, "Extended Play version");
             chbx_A_IsEP.UseVisualStyleBackColor = true;
             chbx_A_IsEP.Visible = false;
+            chbx_A_IsEP.Click += chbx_A_IsEP_CheckedChanged;
             // 
             // chbx_A_IsInTheWorks
             // 
@@ -1813,13 +1821,13 @@ namespace RocksmithToolkitGUI.DLCManager
             toolTip1.SetToolTip(chbx_A_IsInTheWorks, "In the works");
             chbx_A_IsInTheWorks.UseVisualStyleBackColor = true;
             chbx_A_IsInTheWorks.Visible = false;
-            chbx_A_IsInTheWorks.CheckedChanged += chbx_IntheWorks_CheckedChanged;
+            chbx_A_IsInTheWorks.Click += chbx_IntheWorks_CheckedChanged;
             // 
             // chbx_A_IsUncensored
             // 
             chbx_A_IsUncensored.Appearance = Appearance.Button;
             chbx_A_IsUncensored.Font = new System.Drawing.Font("Segoe UI", 7F);
-            chbx_A_IsUncensored.Location = new System.Drawing.Point(157, 33);
+            chbx_A_IsUncensored.Location = new System.Drawing.Point(204, 52);
             chbx_A_IsUncensored.Margin = new Padding(2);
             chbx_A_IsUncensored.Name = "chbx_A_IsUncensored";
             chbx_A_IsUncensored.Size = new System.Drawing.Size(75, 18);
@@ -1828,6 +1836,7 @@ namespace RocksmithToolkitGUI.DLCManager
             toolTip1.SetToolTip(chbx_A_IsUncensored, "Audio and-or Lyrics have been brought back to their original Matured content");
             chbx_A_IsUncensored.UseVisualStyleBackColor = true;
             chbx_A_IsUncensored.Visible = false;
+            chbx_A_IsUncensored.Click += chbx_A_IsUncensored_CheckedChanged;
             // 
             // chbx_IsImprovedWithDM
             // 
@@ -1859,7 +1868,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             chbx_A_IsFullAlbum.Appearance = Appearance.Button;
             chbx_A_IsFullAlbum.Font = new System.Drawing.Font("Segoe UI", 7F);
-            chbx_A_IsFullAlbum.Location = new System.Drawing.Point(43, 52);
+            chbx_A_IsFullAlbum.Location = new System.Drawing.Point(199, 52);
             chbx_A_IsFullAlbum.Margin = new Padding(2);
             chbx_A_IsFullAlbum.Name = "chbx_A_IsFullAlbum";
             chbx_A_IsFullAlbum.Size = new System.Drawing.Size(67, 18);
@@ -1868,6 +1877,7 @@ namespace RocksmithToolkitGUI.DLCManager
             toolTip1.SetToolTip(chbx_A_IsFullAlbum, "Full Album");
             chbx_A_IsFullAlbum.UseVisualStyleBackColor = true;
             chbx_A_IsFullAlbum.Visible = false;
+            chbx_A_IsFullAlbum.Click += chbx_A_IsFullAlbum_CheckedChanged;
             // 
             // btn_OpenMainDBLog
             // 
@@ -1899,7 +1909,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             chbx_A_IsRemastered.Appearance = Appearance.Button;
             chbx_A_IsRemastered.Font = new System.Drawing.Font("Segoe UI", 7F);
-            chbx_A_IsRemastered.Location = new System.Drawing.Point(110, 52);
+            chbx_A_IsRemastered.Location = new System.Drawing.Point(205, 52);
             chbx_A_IsRemastered.Margin = new Padding(2);
             chbx_A_IsRemastered.Name = "chbx_A_IsRemastered";
             chbx_A_IsRemastered.Size = new System.Drawing.Size(69, 18);
@@ -1908,6 +1918,7 @@ namespace RocksmithToolkitGUI.DLCManager
             toolTip1.SetToolTip(chbx_A_IsRemastered, "Single version");
             chbx_A_IsRemastered.UseVisualStyleBackColor = true;
             chbx_A_IsRemastered.Visible = false;
+            chbx_A_IsRemastered.Click += chbx_A_IsRemastered_CheckedChanged;
             // 
             // chbx_PackBeta
             // 
@@ -1938,7 +1949,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             chbx_A_HasTrackNo.Appearance = Appearance.Button;
             chbx_A_HasTrackNo.Font = new System.Drawing.Font("Segoe UI", 7F);
-            chbx_A_HasTrackNo.Location = new System.Drawing.Point(74, 52);
+            chbx_A_HasTrackNo.Location = new System.Drawing.Point(166, 52);
             chbx_A_HasTrackNo.Margin = new Padding(2);
             chbx_A_HasTrackNo.Name = "chbx_A_HasTrackNo";
             chbx_A_HasTrackNo.Size = new System.Drawing.Size(67, 18);
@@ -1947,6 +1958,7 @@ namespace RocksmithToolkitGUI.DLCManager
             toolTip1.SetToolTip(chbx_A_HasTrackNo, "Has a Track Number");
             chbx_A_HasTrackNo.UseVisualStyleBackColor = true;
             chbx_A_HasTrackNo.Visible = false;
+            chbx_A_HasTrackNo.Click += chbx_A_HasTrackNo_CheckedChanged;
             // 
             // chbx_HasCover
             // 
@@ -1966,7 +1978,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             chbx_A_HasFeaturing.Appearance = Appearance.Button;
             chbx_A_HasFeaturing.Font = new System.Drawing.Font("Segoe UI", 7F);
-            chbx_A_HasFeaturing.Location = new System.Drawing.Point(60, 53);
+            chbx_A_HasFeaturing.Location = new System.Drawing.Point(204, 52);
             chbx_A_HasFeaturing.Margin = new Padding(2);
             chbx_A_HasFeaturing.Name = "chbx_A_HasFeaturing";
             chbx_A_HasFeaturing.Size = new System.Drawing.Size(62, 18);
@@ -1975,12 +1987,13 @@ namespace RocksmithToolkitGUI.DLCManager
             toolTip1.SetToolTip(chbx_A_HasFeaturing, "Has a Featuring Vocal/instrument. More details in Live Details");
             chbx_A_HasFeaturing.UseVisualStyleBackColor = true;
             chbx_A_HasFeaturing.Visible = false;
+            chbx_A_HasFeaturing.Click += chbx_A_HasFeaturing_CheckedChanged;
             // 
             // chbx_A_IsDemo
             // 
             chbx_A_IsDemo.Appearance = Appearance.Button;
             chbx_A_IsDemo.Font = new System.Drawing.Font("Segoe UI", 7F);
-            chbx_A_IsDemo.Location = new System.Drawing.Point(31, 53);
+            chbx_A_IsDemo.Location = new System.Drawing.Point(196, 52);
             chbx_A_IsDemo.Margin = new Padding(2);
             chbx_A_IsDemo.Name = "chbx_A_IsDemo";
             chbx_A_IsDemo.Size = new System.Drawing.Size(51, 18);
@@ -1989,12 +2002,13 @@ namespace RocksmithToolkitGUI.DLCManager
             toolTip1.SetToolTip(chbx_A_IsDemo, "Demo audio/song");
             chbx_A_IsDemo.UseVisualStyleBackColor = true;
             chbx_A_IsDemo.Visible = false;
+            chbx_A_IsDemo.Click += chbx_A_IsDemo_CheckedChanged;
             // 
             // chbx_A_IsRemix
             // 
             chbx_A_IsRemix.Appearance = Appearance.Button;
             chbx_A_IsRemix.Font = new System.Drawing.Font("Segoe UI", 7F);
-            chbx_A_IsRemix.Location = new System.Drawing.Point(158, 54);
+            chbx_A_IsRemix.Location = new System.Drawing.Point(200, 52);
             chbx_A_IsRemix.Margin = new Padding(2);
             chbx_A_IsRemix.Name = "chbx_A_IsRemix";
             chbx_A_IsRemix.Size = new System.Drawing.Size(47, 18);
@@ -2003,6 +2017,7 @@ namespace RocksmithToolkitGUI.DLCManager
             toolTip1.SetToolTip(chbx_A_IsRemix, "Remix Audio/song version");
             chbx_A_IsRemix.UseVisualStyleBackColor = true;
             chbx_A_IsRemix.Visible = false;
+            chbx_A_IsRemix.Click += chbx_A_IsRemix_CheckedChanged;
             // 
             // txt_FTPPath
             // 
@@ -2031,7 +2046,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             chbx_A_IsKaraoke.Appearance = Appearance.Button;
             chbx_A_IsKaraoke.Font = new System.Drawing.Font("Segoe UI", 7F);
-            chbx_A_IsKaraoke.Location = new System.Drawing.Point(72, 52);
+            chbx_A_IsKaraoke.Location = new System.Drawing.Point(237, 55);
             chbx_A_IsKaraoke.Margin = new Padding(2);
             chbx_A_IsKaraoke.Name = "chbx_A_IsKaraoke";
             chbx_A_IsKaraoke.Size = new System.Drawing.Size(57, 18);
@@ -2040,6 +2055,7 @@ namespace RocksmithToolkitGUI.DLCManager
             toolTip1.SetToolTip(chbx_A_IsKaraoke, "Karaoke audio/song");
             chbx_A_IsKaraoke.UseVisualStyleBackColor = true;
             chbx_A_IsKaraoke.Visible = false;
+            chbx_A_IsKaraoke.Click += chbx_A_IsKaraoke_CheckedChanged;
             // 
             // txt_FilesMissingIssues
             // 
@@ -2056,7 +2072,7 @@ namespace RocksmithToolkitGUI.DLCManager
             chbx_A_IsCover.Appearance = Appearance.Button;
             chbx_A_IsCover.AutoCheck = false;
             chbx_A_IsCover.Font = new System.Drawing.Font("Segoe UI", 7F);
-            chbx_A_IsCover.Location = new System.Drawing.Point(42, 50);
+            chbx_A_IsCover.Location = new System.Drawing.Point(199, 52);
             chbx_A_IsCover.Margin = new Padding(2);
             chbx_A_IsCover.Name = "chbx_A_IsCover";
             chbx_A_IsCover.Size = new System.Drawing.Size(61, 18);
@@ -2065,6 +2081,7 @@ namespace RocksmithToolkitGUI.DLCManager
             toolTip1.SetToolTip(chbx_A_IsCover, "Shows if Songs has had a cover when imported");
             chbx_A_IsCover.UseVisualStyleBackColor = true;
             chbx_A_IsCover.Visible = false;
+            chbx_A_IsCover.Click += chbx_A_IsCover_CheckedChanged;
             // 
             // txt_Order
             // 
@@ -2448,7 +2465,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             chbx_A_IsMedley.Appearance = Appearance.Button;
             chbx_A_IsMedley.Font = new System.Drawing.Font("Segoe UI", 7F);
-            chbx_A_IsMedley.Location = new System.Drawing.Point(57, 52);
+            chbx_A_IsMedley.Location = new System.Drawing.Point(204, 45);
             chbx_A_IsMedley.Margin = new Padding(2);
             chbx_A_IsMedley.Name = "chbx_A_IsMedley";
             chbx_A_IsMedley.Size = new System.Drawing.Size(52, 18);
@@ -2457,12 +2474,13 @@ namespace RocksmithToolkitGUI.DLCManager
             toolTip1.SetToolTip(chbx_A_IsMedley, "Is a Medley (combination of multiple songs, mostly as a live quickie) song");
             chbx_A_IsMedley.UseVisualStyleBackColor = true;
             chbx_A_IsMedley.Visible = false;
+            chbx_A_IsMedley.Click += chbx_A_IsMedley_CheckedChanged;
             // 
             // chbx_A_IsMultiStrings
             // 
             chbx_A_IsMultiStrings.Appearance = Appearance.Button;
             chbx_A_IsMultiStrings.Font = new System.Drawing.Font("Segoe UI", 7F);
-            chbx_A_IsMultiStrings.Location = new System.Drawing.Point(0, 54);
+            chbx_A_IsMultiStrings.Location = new System.Drawing.Point(97, 53);
             chbx_A_IsMultiStrings.Margin = new Padding(2);
             chbx_A_IsMultiStrings.Name = "chbx_A_IsMultiStrings";
             chbx_A_IsMultiStrings.Size = new System.Drawing.Size(70, 18);
@@ -2471,6 +2489,7 @@ namespace RocksmithToolkitGUI.DLCManager
             toolTip1.SetToolTip(chbx_A_IsMultiStrings, "On of the Tracks as a requirement for an Isntruments with non standard number of strings");
             chbx_A_IsMultiStrings.UseVisualStyleBackColor = true;
             chbx_A_IsMultiStrings.Visible = false;
+            chbx_A_IsMultiStrings.Click += chbx_A_IsMultiStrings_CheckedChanged;
             // 
             // chbx_Overlap
             // 
@@ -2636,7 +2655,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             chbx_A_IsDeluxe.Appearance = Appearance.Button;
             chbx_A_IsDeluxe.Font = new System.Drawing.Font("Segoe UI", 7F);
-            chbx_A_IsDeluxe.Location = new System.Drawing.Point(58, 52);
+            chbx_A_IsDeluxe.Location = new System.Drawing.Point(199, 52);
             chbx_A_IsDeluxe.Margin = new Padding(2);
             chbx_A_IsDeluxe.Name = "chbx_A_IsDeluxe";
             chbx_A_IsDeluxe.Size = new System.Drawing.Size(48, 18);
@@ -2645,13 +2664,14 @@ namespace RocksmithToolkitGUI.DLCManager
             toolTip1.SetToolTip(chbx_A_IsDeluxe, "Deluxe version");
             chbx_A_IsDeluxe.UseVisualStyleBackColor = true;
             chbx_A_IsDeluxe.Visible = false;
+            chbx_A_IsDeluxe.Click += chbx_A_IsDeluxe_CheckedChanged;
             // 
             // chbx_A_IsGreatestHits
             // 
             chbx_A_IsGreatestHits.Appearance = Appearance.Button;
             chbx_A_IsGreatestHits.AutoCheck = false;
             chbx_A_IsGreatestHits.Font = new System.Drawing.Font("Segoe UI", 7F);
-            chbx_A_IsGreatestHits.Location = new System.Drawing.Point(84, 52);
+            chbx_A_IsGreatestHits.Location = new System.Drawing.Point(188, 52);
             chbx_A_IsGreatestHits.Margin = new Padding(2);
             chbx_A_IsGreatestHits.Name = "chbx_A_IsGreatestHits";
             chbx_A_IsGreatestHits.Size = new System.Drawing.Size(69, 18);
@@ -2660,6 +2680,7 @@ namespace RocksmithToolkitGUI.DLCManager
             toolTip1.SetToolTip(chbx_A_IsGreatestHits, "Greatest Hits Version");
             chbx_A_IsGreatestHits.UseVisualStyleBackColor = true;
             chbx_A_IsGreatestHits.Visible = false;
+            chbx_A_IsGreatestHits.Click += chbx_A_IsGreatestHits_CheckedChanged;
             // 
             // txt_Album_OrigArtPath
             // 
@@ -2681,7 +2702,7 @@ namespace RocksmithToolkitGUI.DLCManager
             chbx_A_IsMidi.Appearance = Appearance.Button;
             chbx_A_IsMidi.AutoCheck = false;
             chbx_A_IsMidi.Font = new System.Drawing.Font("Segoe UI", 7F);
-            chbx_A_IsMidi.Location = new System.Drawing.Point(26, 53);
+            chbx_A_IsMidi.Location = new System.Drawing.Point(256, 53);
             chbx_A_IsMidi.Margin = new Padding(2);
             chbx_A_IsMidi.Name = "chbx_A_IsMidi";
             chbx_A_IsMidi.Size = new System.Drawing.Size(36, 18);
@@ -2690,13 +2711,14 @@ namespace RocksmithToolkitGUI.DLCManager
             toolTip1.SetToolTip(chbx_A_IsMidi, "Midi");
             chbx_A_IsMidi.UseVisualStyleBackColor = true;
             chbx_A_IsMidi.Visible = false;
+            chbx_A_IsMidi.Click += chbx_A_IsMidi_CheckedChanged;
             // 
             // chbx_A_IsGameSoundtrack
             // 
             chbx_A_IsGameSoundtrack.Appearance = Appearance.Button;
             chbx_A_IsGameSoundtrack.AutoCheck = false;
             chbx_A_IsGameSoundtrack.Font = new System.Drawing.Font("Segoe UI", 7F);
-            chbx_A_IsGameSoundtrack.Location = new System.Drawing.Point(2, 50);
+            chbx_A_IsGameSoundtrack.Location = new System.Drawing.Point(171, 53);
             chbx_A_IsGameSoundtrack.Margin = new Padding(2);
             chbx_A_IsGameSoundtrack.Name = "chbx_A_IsGameSoundtrack";
             chbx_A_IsGameSoundtrack.Size = new System.Drawing.Size(108, 18);
@@ -2705,6 +2727,7 @@ namespace RocksmithToolkitGUI.DLCManager
             toolTip1.SetToolTip(chbx_A_IsGameSoundtrack, "Shows if a song is part of a Game Soundtrack");
             chbx_A_IsGameSoundtrack.UseVisualStyleBackColor = true;
             chbx_A_IsGameSoundtrack.Visible = false;
+            chbx_A_IsGameSoundtrack.Click += chbx_A_IsGameSoundtrack_CheckedChanged;
             // 
             // btn_Distribute_Evenly
             // 
@@ -2715,7 +2738,7 @@ namespace RocksmithToolkitGUI.DLCManager
             btn_Distribute_Evenly.Size = new System.Drawing.Size(18, 18);
             btn_Distribute_Evenly.TabIndex = 424;
             btn_Distribute_Evenly.Text = "D";
-            toolTip1.SetToolTip(btn_Distribute_Evenly, "Distribute noest ofthe Track based on real notes stat and end. Reimport after in EoF!");
+            toolTip1.SetToolTip(btn_Distribute_Evenly, "Distribute notes of the XML Track based on real timings, start and end. Reimport after in EoF!");
             btn_Distribute_Evenly.UseVisualStyleBackColor = true;
             btn_Distribute_Evenly.Click += btn_Distribute_Evenly_Click;
             // 
@@ -2723,7 +2746,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             chbx_A_IsTVTheme.Appearance = Appearance.Button;
             chbx_A_IsTVTheme.Font = new System.Drawing.Font("Segoe UI", 7F);
-            chbx_A_IsTVTheme.Location = new System.Drawing.Point(10, 54);
+            chbx_A_IsTVTheme.Location = new System.Drawing.Point(216, 52);
             chbx_A_IsTVTheme.Margin = new Padding(2);
             chbx_A_IsTVTheme.Name = "chbx_A_IsTVTheme";
             chbx_A_IsTVTheme.Size = new System.Drawing.Size(66, 18);
@@ -2732,21 +2755,23 @@ namespace RocksmithToolkitGUI.DLCManager
             toolTip1.SetToolTip(chbx_A_IsTVTheme, "Shows if a song is part of a TV Theme");
             chbx_A_IsTVTheme.UseVisualStyleBackColor = true;
             chbx_A_IsTVTheme.Visible = false;
+            chbx_A_IsTVTheme.Click += chbx_A_IsTVTheme_CheckedChanged;
             // 
             // chbx_A_IsAmateurCover
             // 
             chbx_A_IsAmateurCover.Appearance = Appearance.Button;
             chbx_A_IsAmateurCover.AutoCheck = false;
             chbx_A_IsAmateurCover.Font = new System.Drawing.Font("Segoe UI", 7F);
-            chbx_A_IsAmateurCover.Location = new System.Drawing.Point(62, 54);
+            chbx_A_IsAmateurCover.Location = new System.Drawing.Point(4, 55);
             chbx_A_IsAmateurCover.Margin = new Padding(2);
             chbx_A_IsAmateurCover.Name = "chbx_A_IsAmateurCover";
-            chbx_A_IsAmateurCover.Size = new System.Drawing.Size(74, 18);
+            chbx_A_IsAmateurCover.Size = new System.Drawing.Size(82, 18);
             chbx_A_IsAmateurCover.TabIndex = 454;
             chbx_A_IsAmateurCover.Text = "Amateur Cover";
             toolTip1.SetToolTip(chbx_A_IsAmateurCover, "Shows if a song is interpreted by a non-Official artist (a tabber/youtuber/rocksmither)");
             chbx_A_IsAmateurCover.UseVisualStyleBackColor = true;
             chbx_A_IsAmateurCover.Visible = false;
+            chbx_A_IsAmateurCover.Click += chbx_A_IsAmateurCover_CheckedChanged;
             // 
             // btn_EOF
             // 
@@ -2925,7 +2950,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             chbx_A_IsUkulele.Appearance = Appearance.Button;
             chbx_A_IsUkulele.Font = new System.Drawing.Font("Segoe UI", 7F);
-            chbx_A_IsUkulele.Location = new System.Drawing.Point(62, 52);
+            chbx_A_IsUkulele.Location = new System.Drawing.Point(171, 52);
             chbx_A_IsUkulele.Margin = new Padding(2);
             chbx_A_IsUkulele.Name = "chbx_A_IsUkulele";
             chbx_A_IsUkulele.Size = new System.Drawing.Size(70, 18);
@@ -2934,12 +2959,13 @@ namespace RocksmithToolkitGUI.DLCManager
             toolTip1.SetToolTip(chbx_A_IsUkulele, "In the works");
             chbx_A_IsUkulele.UseVisualStyleBackColor = true;
             chbx_A_IsUkulele.Visible = false;
+            chbx_A_IsUkulele.Click += chbx_A_IsUkulele_CheckedChanged;
             // 
             // chbx_A_IsMetalCover
             // 
             chbx_A_IsMetalCover.Appearance = Appearance.Button;
             chbx_A_IsMetalCover.Font = new System.Drawing.Font("Segoe UI", 7F);
-            chbx_A_IsMetalCover.Location = new System.Drawing.Point(4, 50);
+            chbx_A_IsMetalCover.Location = new System.Drawing.Point(204, 52);
             chbx_A_IsMetalCover.Margin = new Padding(2);
             chbx_A_IsMetalCover.Name = "chbx_A_IsMetalCover";
             chbx_A_IsMetalCover.Size = new System.Drawing.Size(70, 18);
@@ -2948,6 +2974,7 @@ namespace RocksmithToolkitGUI.DLCManager
             toolTip1.SetToolTip(chbx_A_IsMetalCover, "In the works");
             chbx_A_IsMetalCover.UseVisualStyleBackColor = true;
             chbx_A_IsMetalCover.Visible = false;
+            chbx_A_IsMetalCover.Click += chbx_A_IsMetalCover_CheckedChanged;
             // 
             // chbx_AlternateAudioAvail
             // 
@@ -3000,6 +3027,32 @@ namespace RocksmithToolkitGUI.DLCManager
             toolTip1.SetToolTip(btn_AudioConvSite, "Go to Website to downlaod wwise/audiokinetic tools");
             btn_AudioConvSite.UseVisualStyleBackColor = true;
             btn_AudioConvSite.Click += btn_AudioConvSite_Click;
+            // 
+            // chbx_Uploaded_on_CF
+            // 
+            chbx_Uploaded_on_CF.Enabled = false;
+            chbx_Uploaded_on_CF.Font = new System.Drawing.Font("Calibri", 8F);
+            chbx_Uploaded_on_CF.Location = new System.Drawing.Point(500, 241);
+            chbx_Uploaded_on_CF.Margin = new Padding(2);
+            chbx_Uploaded_on_CF.Name = "chbx_Uploaded_on_CF";
+            chbx_Uploaded_on_CF.Size = new System.Drawing.Size(107, 18);
+            chbx_Uploaded_on_CF.TabIndex = 441;
+            chbx_Uploaded_on_CF.Text = "Uploaded on CF";
+            toolTip1.SetToolTip(chbx_Uploaded_on_CF, "Availability of originally Imported file.");
+            chbx_Uploaded_on_CF.UseVisualStyleBackColor = true;
+            // 
+            // chbx_Found_on_CF
+            // 
+            chbx_Found_on_CF.Enabled = false;
+            chbx_Found_on_CF.Font = new System.Drawing.Font("Calibri", 8F);
+            chbx_Found_on_CF.Location = new System.Drawing.Point(500, 258);
+            chbx_Found_on_CF.Margin = new Padding(2);
+            chbx_Found_on_CF.Name = "chbx_Found_on_CF";
+            chbx_Found_on_CF.Size = new System.Drawing.Size(94, 18);
+            chbx_Found_on_CF.TabIndex = 442;
+            chbx_Found_on_CF.Text = "Found on CF";
+            toolTip1.SetToolTip(chbx_Found_on_CF, "Availability of originally Imported file.");
+            chbx_Found_on_CF.UseVisualStyleBackColor = true;
             // 
             // splitContainer2
             // 
@@ -3509,6 +3562,7 @@ namespace RocksmithToolkitGUI.DLCManager
             chbx_Capo.TabIndex = 447;
             chbx_Capo.Text = "Capo";
             chbx_Capo.UseVisualStyleBackColor = true;
+            chbx_Capo.Click += chbx_Capo_CheckedChanged;
             // 
             // chbx_Bass
             // 
@@ -4144,6 +4198,8 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // groupBox7
             // 
+            groupBox7.Controls.Add(chbx_Found_on_CF);
+            groupBox7.Controls.Add(chbx_Uploaded_on_CF);
             groupBox7.Controls.Add(btn_Debug2);
             groupBox7.Controls.Add(label13);
             groupBox7.Controls.Add(lbGroups);
@@ -4196,7 +4252,6 @@ namespace RocksmithToolkitGUI.DLCManager
             groupBox7.Size = new System.Drawing.Size(1428, 300);
             groupBox7.TabIndex = 382;
             groupBox7.TabStop = false;
-            groupBox7.Text = "External Details";
             // 
             // btn_Debug2
             // 
@@ -6150,5 +6205,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private ComboBox chbx_RebuildField;
         private Button btn_AudioConvSite;
         private Button btn_JavaSite;
+        private CheckBox chbx_Found_on_CF;
+        private CheckBox chbx_Uploaded_on_CF;
     }
 }

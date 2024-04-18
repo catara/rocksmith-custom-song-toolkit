@@ -767,11 +767,12 @@ namespace RocksmithToolkitGUI.DLCManager
                         else { chbx_A_IsMidi.Checked = false; chbx_A_IsMidi.Visible = false; }
                         if (SongRecord[0].Is_MetalCover == "Yes") { chbx_A_IsMetalCover.Location = new Point(x, y); x += chbx_A_IsMetalCover.Size.Width; chbx_A_IsMetalCover.Checked = true; chbx_A_IsMetalCover.Visible = true; }
                         else { chbx_A_IsMetalCover.Checked = false; chbx_A_IsMetalCover.Visible = false; }
-                        if (SongRecord[0].Is_GameSoundtrack == "Yes") { chbx_A_IsGameSoundtrack.Location = new Point(x, y); x += chbx_A_IsGameSoundtrack.Size.Width; chbx_A_IsGameSoundtrack.Checked = true; chbx_A_IsGameSoundtrack.Visible = true; }
-                        else { chbx_A_IsGameSoundtrack.Checked = false; chbx_A_IsGameSoundtrack.Visible = false; }
+                        if (SongRecord[0].Is_GameSoundtrack == "Yes"){chbx_A_IsGameSoundtrack.Location = new Point(x, y); x += chbx_A_IsGameSoundtrack.Size.Width; chbx_A_IsGameSoundtrack.Checked = true; chbx_A_IsGameSoundtrack.Visible = true;}
+                        else {chbx_A_IsGameSoundtrack.Checked = false; chbx_A_IsGameSoundtrack.Visible = false;}
                         if (SongRecord[0].Is_Ukulele == "Yes") { chbx_A_IsUkulele.Location = new Point(x, y); x += chbx_A_IsUkulele.Size.Width; chbx_A_IsUkulele.Checked = true; chbx_A_IsUkulele.Visible = true; }
                         else { chbx_A_IsUkulele.Checked = false; chbx_A_IsUkulele.Visible = false; }
-                        if (SongRecord[0].Is_TVTheme == "Yes") { chbx_A_IsTVTheme.Location = new Point(x, y); x += chbx_A_IsTVTheme.Size.Width; chbx_A_IsTVTheme.Checked = true; chbx_A_IsTVTheme.Visible = true; }
+                        if (SongRecord[0].Is_TVTheme == "Yes") {
+                            chbx_A_IsTVTheme.Location = new Point(x, y); x += chbx_A_IsTVTheme.Size.Width; chbx_A_IsTVTheme.Checked = true; chbx_A_IsTVTheme.Visible = true; }
                         else { chbx_A_IsTVTheme.Checked = false; chbx_A_IsTVTheme.Visible = false; }
                         if (SongRecord[0].Is_AmateurCover == "Yes") { chbx_A_IsAmateurCover.Location = new Point(x, y); x += chbx_A_IsAmateurCover.Size.Width; chbx_A_IsAmateurCover.Checked = true; chbx_A_IsAmateurCover.Visible = true; }
                         else { chbx_A_IsAmateurCover.Checked = false; chbx_A_IsAmateurCover.Visible = false; }
@@ -5339,7 +5340,11 @@ namespace RocksmithToolkitGUI.DLCManager
                     if (frm1.isMedley != "") chbx_A_IsMedley.Checked = frm1.isMedley == "Yes" ? true : false;
                     if (frm1.isMultiStrings != "") chbx_A_IsMultiStrings.Checked = frm1.isMultiStrings == "Yes" ? true : false;
                     if (frm1.isMidi != "") chbx_A_IsMidi.Checked = frm1.isMidi == "Yes" ? true : false;
-                    if (frm1.isGameSoundtrack != "") chbx_A_IsMetalCover.Checked = frm1.isGameSoundtrack == "Yes" ? true : false;
+                    if (frm1.isGameSoundtrack != "") chbx_A_IsGameSoundtrack.Checked = frm1.isGameSoundtrack == "Yes" ? true : false;
+                    if (frm1.isTVTheme != "") chbx_A_IsTVTheme.Checked = frm1.isTVTheme == "Yes" ? true : false;
+                    if (frm1.isAmateurCover != "") chbx_A_IsAmateurCover.Checked = frm1.isAmateurCover == "Yes" ? true : false;
+                    //if (frm1.hasCapo != "") chbx_Capo.Checked = frm1.hasCapo == "Yes" ? true : false;
+                    //if (frm1.isKaraoke != "") chbx_A_IsKaraoke.Checked = frm1.isKaraoke == "Yes" ? true : false;
 
                     //if (frm1.YouTube_Link != "") YouTube_Link = frm1.YouTube_Link;
                     //if (frm1.CustomsForge_Link != "") CustomsForge_Link = frm1.CustomsForge_Link;
@@ -7929,10 +7934,6 @@ namespace RocksmithToolkitGUI.DLCManager
 
         }
 
-        private void chbx_IntheWorks_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
 
         private void chbx_Preview_CheckedChanged(object sender, EventArgs e)
         {
@@ -8549,7 +8550,7 @@ namespace RocksmithToolkitGUI.DLCManager
             var grp = "";
             if (lbGroups.SelectedItems.Count < 1) MessageBox.Show("Please select multiple Values using SHIFT/CTRL");
             for (var i = 0; i < lbGroups.SelectedItems.Count; i++)
-                grp += lbGroups.SelectedItems[i].ToString().Replace("Group ", "") + ";";
+                grp += lbGroups.SelectedItems[i].ToString().Replace("Group ", "") + ",";
             grp = grp.Substring(0, grp.Length - 1);
 
             var grpexist = false;
@@ -8664,6 +8665,167 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             var xx = "https://www.audiokinetic.com/download/";
             StartProcesss(@xx, null);
+        }
+
+        //chbx_A_IsMedley = new CheckBox();
+        //chbx_A_IsMultiStrings = new CheckBox();
+        //chbx_A_IsDeluxe = new CheckBox();
+        //chbx_A_IsGreatestHits = new CheckBox();
+        //chbx_A_IsMidi = new CheckBox();
+        //chbx_A_IsGameSoundtrack = new CheckBox();
+        //chbx_A_IsTVTheme = new CheckBox();        
+        //chbx_A_IsUkulele = new CheckBox();
+        //chbx_A_IsMetalCover = new CheckBox();
+        //chbx_A_IsLive = new CheckBox();
+        //chbx_A_IsInstrumental = new CheckBox();
+        //chbx_A_IsSoundtrack = new CheckBox();
+        //chbx_A_IsSingle = new CheckBox();
+        //chbx_A_IsAcoustic = new CheckBox();
+        //chbx_A_IsEP = new CheckBox();
+        //chbx_A_IsInTheWorks = new CheckBox();
+        //chbx_A_IsUncensored = new CheckBox();
+        //chbx_A_IsFullAlbum = new CheckBox();
+        //chbx_A_IsRemastered = new CheckBox();
+        //chbx_A_HasTrackNo = new CheckBox();
+        //chbx_A_HasFeaturing = new CheckBox();
+        //chbx_A_IsDemo = new CheckBox();
+        //chbx_A_IsRemix = new CheckBox();
+        //chbx_A_IsKaraoke = new CheckBox();
+        //chbx_A_IsCover = new CheckBox();
+        //chbx_A_IsAmateurCover = new CheckBox();
+        private void chbx_A_IsAmateurCover_CheckedChanged(object sender, EventArgs e)
+        {
+            chbx_A_IsAmateurCover.Checked = chbx_A_IsAmateurCover.Checked ? false : true;
+        }
+
+        private void chbx_A_IsGameSoundtrack_CheckedChanged(object sender, EventArgs e)
+        {
+            chbx_A_IsGameSoundtrack.Checked = chbx_A_IsGameSoundtrack.Checked ? false : true;
+        }
+
+        private void chbx_A_IsUkulele_CheckedChanged(object sender, EventArgs e)
+        {
+            chbx_A_IsUkulele.Checked = chbx_A_IsUkulele.Checked ? false : true;
+        }
+
+        private void chbx_A_IsGreatestHits_CheckedChanged(object sender, EventArgs e)
+        {
+            chbx_A_IsGreatestHits.Checked = chbx_A_IsGreatestHits.Checked ? false : true;
+        }
+
+        private void chbx_A_IsMetalCover_CheckedChanged(object sender, EventArgs e)
+        {
+            chbx_A_IsMetalCover.Checked = chbx_A_IsMetalCover.Checked ? false : true;
+        }
+
+        private void chbx_A_IsUncensored_CheckedChanged(object sender, EventArgs e)
+        {
+            chbx_A_IsUncensored.Checked = chbx_A_IsUncensored.Checked ? false : true;
+        }
+
+        private void chbx_A_IsTVTheme_CheckedChanged(object sender, EventArgs e)
+        {
+            chbx_A_IsTVTheme.Checked = chbx_A_IsTVTheme.Checked ? false : true;
+        }
+
+        private void chbx_A_IsMidi_CheckedChanged(object sender, EventArgs e)
+        {
+            chbx_A_IsMidi.Checked = chbx_A_IsMidi.Checked ? false : true;
+        }
+
+        private void chbx_A_IsInstrumental_CheckedChanged(object sender, EventArgs e)
+        {
+            chbx_A_IsInstrumental.Checked = chbx_A_IsInstrumental.Checked ? false : true;
+        }
+
+        private void chbx_A_IsMultiStrings_CheckedChanged(object sender, EventArgs e)
+        {
+            chbx_A_IsMultiStrings.Checked = chbx_A_IsMultiStrings.Checked ? false : true;
+        }
+
+        private void chbx_A_IsDemo_CheckedChanged(object sender, EventArgs e)
+        {
+            chbx_A_IsDemo.Checked = chbx_A_IsDemo.Checked ? false : true;
+        }
+
+        private void chbx_A_IsDeluxe_CheckedChanged(object sender, EventArgs e)
+        {
+            chbx_A_IsDeluxe.Checked = chbx_A_IsDeluxe.Checked ? false : true;
+        }
+
+        private void chbx_A_IsCover_CheckedChanged(object sender, EventArgs e)
+        {
+            chbx_A_IsCover.Checked = chbx_A_IsCover.Checked ? false : true;
+        }
+
+        private void chbx_IntheWorks_CheckedChanged(object sender, EventArgs e)
+        {
+            chbx_A_IsInTheWorks.Checked = chbx_A_IsInTheWorks.Checked ? false : true;
+        }
+
+        private void chbx_A_HasFeaturing_CheckedChanged(object sender, EventArgs e)
+        {
+            chbx_A_HasFeaturing.Checked = chbx_A_HasFeaturing.Checked ? false : true;
+        }
+
+        private void chbx_A_IsFullAlbum_CheckedChanged(object sender, EventArgs e)
+        {
+            chbx_A_IsFullAlbum.Checked = chbx_A_IsFullAlbum.Checked ? false : true;
+        }
+
+        private void chbx_A_IsAcoustic_CheckedChanged(object sender, EventArgs e)
+        {
+            chbx_A_IsAcoustic.Checked = chbx_A_IsAcoustic.Checked ? false : true;
+        }
+
+        private void chbx_A_IsSoundtrack_CheckedChanged(object sender, EventArgs e)
+        {
+            chbx_A_IsSoundtrack.Checked = chbx_A_IsSoundtrack.Checked ? false : true;
+        }
+
+        private void chbx_A_IsSingle_CheckedChanged(object sender, EventArgs e)
+        {
+            chbx_A_IsSingle.Checked = chbx_A_IsSingle.Checked ? false : true;
+        }
+
+        private void chbx_A_HasTrackNo_CheckedChanged(object sender, EventArgs e)
+        {
+            chbx_A_HasTrackNo.Checked = chbx_A_HasTrackNo.Checked ? false : true;
+        }
+
+        private void chbx_A_IsRemastered_CheckedChanged(object sender, EventArgs e)
+        {
+            chbx_A_IsRemastered.Checked = chbx_A_IsRemastered.Checked ? false : true;
+        }
+
+        private void chbx_A_IsRemix_CheckedChanged(object sender, EventArgs e)
+        {
+            chbx_A_IsRemix.Checked = chbx_A_IsRemix.Checked ? false : true;
+        }
+
+        private void chbx_A_IsLive_CheckedChanged(object sender, EventArgs e)
+        {
+            chbx_A_IsLive.Checked = chbx_A_IsLive.Checked ? false : true;
+        }
+
+        private void chbx_A_IsMedley_CheckedChanged(object sender, EventArgs e)
+        {
+            chbx_A_IsMedley.Checked = chbx_A_IsMedley.Checked ? false : true;
+        }
+
+        private void chbx_A_IsEP_CheckedChanged(object sender, EventArgs e)
+        {
+            chbx_A_IsEP.Checked = chbx_A_IsEP.Checked ? false : true;
+        }
+
+        private void chbx_A_IsKaraoke_CheckedChanged(object sender, EventArgs e)
+        {
+            chbx_A_IsKaraoke.Checked = chbx_A_IsKaraoke.Checked ? false : true;
+        }
+
+        private void chbx_Capo_CheckedChanged(object sender, EventArgs e)
+        {
+            chbx_Capo.Checked = chbx_Capo.Checked ? false : true;
         }
     }
 }

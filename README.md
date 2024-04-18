@@ -1,9 +1,9 @@
-﻿		# Date: 09.03.2024
+﻿		# Date: 09.05.2024
 		# Document Name: Rocksmith 2014 RM DLC Management tool README
 						(fork of rocksmith-custom-song-toolkit)
 		# Document purpose: To describe the project and capture a developmental history
 
-## Rocksmith 2014 RM DLC Library Manager v1 b6 r3 (compiled beta available in https://github.com/catara/rocksmith-custom-song-toolkit/tree/Main/RocksmithTookitGUI/bin/Debug_Lite.7z )
+## Rocksmith 2014 RM DLC Library Manager v1 b7 r1 (compiled beta available in https://github.com/catara/rocksmith-custom-song-toolkit/tree/Main/RocksmithTookitGUI/bin/Debug_Lite.7z )
 *(forever to be unreleased version- for my own sake)*
 # App Description: MASS Manipulation of Rocksmith 2014 RM DLC Library
 
@@ -424,6 +424,32 @@ filter by date (aded, packed)
 	
 ## WiP:
 (this release)
+1.0 b7 (18.04.2024) (rel1-regression) b6 regression
+[-] upgraded version of rocksmth2 tab2lib, added rocksmithprevlib regression fix from other fork, added assembly
+[-] 2 Main.db new fields found CF upload and existence
+[-] odd:amator,gamecover flgs on (db claned as part of a regression)(regression also on field order)
+[-] some new flags cant be edited (action added to button/fhckboxes)
+[-] dont add [] in filename (not the case)
+[-] where are [] in metadata manually added in the meta field templates (regression)
+[-] regression on grp no of order added to sorted data
+[-] regression on multiselect
+[-] regression tenacious fails cause album has a weid name (hopefulyl fixed behavior when editing meta to be cleansed)
+
+[] develop Export to CF
+[] Improve cross-track alignment for Distribution of Notes Feature
+[] Further stabilise Standardisation screen
+[] Clean Rocksmith (mac) for OBS recording (no showlights, no guitar, ..)
+[] prepare a package for all officails integratio in cache.psarc
+improve import self packed songs
+pack by artist
+prototype mac os MAUI list songs and meta..and pack
+grp try gives eror
+tracks no are -1
+when adding to hot if not playable then make try as well
+nirvana fails
+
+## done:
+(prev release)
 1.0 b6 (04.03.2024) (pre3) Prototyping GuitarPro simple time distribution for new songs
 [x] fix improvedimport no eof no gp5
 [x] improved getfirst note, also added get last
@@ -499,40 +525,6 @@ filter by date (aded, packed)
 [-] fix import when w duplic doenst import new
 [] why grp is not correct for smnoko
 [] whatsw eof
-
-## done:
-(prev release)
-1.0 b6 (10.07.2023) Finalising GuitarPro simple time distri…
-[x] fix expand move notes (inlc negative move)
-[x] fix custom attributes use for standard in getextrattrib
-[x] fix duplications no running at end
-[x] fix get extra atrib running at end
-[.] fix old is not copied (fed up options , whodid it?)
-[x] fix sqlite delete conv when smallewr letters
-[x] again fixing pack
-	[x] (NOT waas a opck issue) add info for not not imp folders/non songs(dclm file)
-[x] at delete/copy_old dont delete/copy if old not avail
-[-] fixed sqlite select when from is small caps and also standarized at select " to ' and added ;
-[x] fix sql-lite standarization issues when replacing strcomp w iif (util files)
-[]change to wem audiokinetik 2023
-[]remove old cell based ref inmaindb
-[]add to way 1&2:
-	[] dont move 1
-	[] only move if all stay before of eachother
-[] import songs w audio issues (ogg file; also adding additional 2019 wem ref)
-	overcome the audio issues
-	[x] nin
-	hives
-	[x] 8sodagreen
-	Only the Good Die Young
-	Rise-Against_Sooner-or-Later_v1
-	Killers_GLAMOROUS-INDIE-ROCK-N-ROLL
-[-] reimport old missing imports button
-[-] add bonus&parts and full no of tracks to duplicate manag
-	[] is alternate track also any option?
-[.] u2 vulcano
-[] fix button autosize font in mainDB
-check duplicate window issue in displaying/comparing tracks
 
 
 # Version History(release date):

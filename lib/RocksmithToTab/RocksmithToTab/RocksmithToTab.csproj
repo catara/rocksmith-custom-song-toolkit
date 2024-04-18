@@ -36,8 +36,15 @@
     <StartupObject>RocksmithToTab.Program</StartupObject>
     <AssemblyTitle>RocksmithToTab</AssemblyTitle>
     <Product>RocksmithToTab</Product>
-    <Copyright>Copyright © Holger Frydrych 2016</Copyright>
-    <AssemblyVersion>1.1.%2a</AssemblyVersion>
+    <Copyright>original Copyright © Holger Frydrych 2016</Copyright>
+    <PackageReleaseNotes>upgraded from .net framework 4.x to .net 8</PackageReleaseNotes>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/fholger/RocksmithToTab</RepositoryUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageProjectUrl>https://github.com/catara/rocksmith-custom-song-toolkit/tree/Main/lib/RocksmithToTab</PackageProjectUrl>
+    <Description>command line for converting Rocksmith packages in GuitarPro format</Description>
+    <Authors>catara, Holger Frydrych</Authors>
+    <Title>RocksmithToTab</Title>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <OutputPath>bin\x86\Debug\</OutputPath>
@@ -81,8 +88,14 @@
     <Compile Remove="Properties\._AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="RocksmithToolkitLib">
-      <HintPath>..\..\rocksmith-custom-song-toolkit\RocksmithToolkitLib\bin\Release\net7.0-windows10.0.22621.0\RocksmithToolkitLib.dll</HintPath>
+      <HintPath>..\..\..\RocksmithTookitGUI\DLCManager\external_tools\RocksmithToolkitLib.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>

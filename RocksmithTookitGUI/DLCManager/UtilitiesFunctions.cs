@@ -552,12 +552,12 @@ namespace RocksmithToolkitGUI.DLCManager
 
         public class MainDBfields
         {
-            public string NoRec { get; set; }   //	1 0
-            public string ID { get; set; }   //	2 1
-            public string Song_Title { get; set; }   //	3 2
-            public string Song_Title_Sort { get; set; }  //	4 3
-            public string Album { get; set; }    //	5 4
-            public string Artist { get; set; }   //	6 5
+            public string NoRec { get; set; }   //	1
+            public string ID { get; set; }   //	2
+            public string Song_Title { get; set; }   //	3
+            public string Song_Title_Sort { get; set; }  //	4
+            public string Album { get; set; }    //	5
+            public string Artist { get; set; }   //	6
             public string Artist_Sort { get; set; }  //	7
             public string Album_Year { get; set; }   //	8
             public string AverageTempo { get; set; }     //	9
@@ -703,13 +703,15 @@ namespace RocksmithToolkitGUI.DLCManager
             public string Is_GreatestHits { get; set; } //149
             public string Is_Midi { get; set; } //150
             public string Is_GameSoundtrack { get; set; }   //151
-            public string Is_AmateurCover { get; set; } //152
-            public string Is_TVTheme { get; set; }  //153
+            public string Is_TVTheme { get; set; }  //152
+            public string Is_AmateurCover { get; set; } //153
             public string Has_Alternate_Audio { get; set; } //154
             public string Has_Alternate_Lyrics { get; set; }  //155
             public string Is_MetalCover { get; set; } //156
             public string Is_Ukulele { get; set; }  //157
             public string A440TunningFrecv { get; set; }  //158
+            public string Found_on_CF { get; set; }  //159
+            public string Uploaded_on_CF { get; set; }  //160
         }	//154
 
 
@@ -1019,24 +1021,39 @@ namespace RocksmithToolkitGUI.DLCManager
                 startInfo.Arguments = string.Format(" /c mklink /D 0_dlcpacks " + c("dlcm_0_dlcpacks") + "\\0_dlcpacks");
                 using (var DDC = new Process()) { DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 3 * 1); if (DDC.ExitCode > 0) { timestamp = UpdateLog(timestamp, "error at creation of " + c("dlcm_0_old") + "\\0_old", true, c("dlcm_TempPath"), "", "", null, null); } }
             }
-            if (!IsSymbolic(c("dlcm_TempPath") + "\\0_old") || !Directory.Exists(c("dlcm_TempPath") + "\\0_old"))/*Directory.Exists(c("dlcm_TempPath") + "\\0_data\\")*/
+            //s.Contains("0_intheworks") || s.Contains("0_export") 
+            if (!IsSymbolic(c("dlcm_TempPath") + "\\0_intheworks") || !Directory.Exists(c("dlcm_TempPath") + "\\0_intheworks"))/*Directory.Exists(c("dlcm_TempPath") + "\\0_data\\")*/
             {
-                if (Directory.Exists(c("dlcm_TempPath") + "\\0_old"))
+                if (Directory.Exists(c("dlcm_TempPath") + "\\0_intheworks"))
                 {
-                    CopyFolder(c("dlcm_TempPath") + "\\0_old", c("dlcm_0_old") + "\\0_old");
-                    DeleteDirectory(c("dlcm_TempPath") + "\\0_old", true);
+                    CopyFolder(c("dlcm_TempPath") + "\\0_intheworks", c("dlcm_0_intheworks") + "\\0_intheworks");
+                    DeleteDirectory(c("dlcm_TempPath") + "\\0_intheworks", true);
                 }
-                startInfo.Arguments = string.Format(" /c mklink /D 0_old " + c("dlcm_0_old") + "\\0_old");
+                startInfo.Arguments = string.Format(" /c mklink /D 0_intheworks " + c("dlcm_0_intheworks") + "\\0_intheworks");
                 using (var DDC = new Process()) { DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 3 * 1); if (DDC.ExitCode > 0) { timestamp = UpdateLog(timestamp, "error at creation of " + c("dlcm_0_old") + "\\0_old", true, c("dlcm_TempPath"), "", "", null, null); } }
             }
-            //startInfo.Arguments = string.Format(" /c mklink /D 0_data \\\\192.168.1.100\\Kits_Software\\t\0\\\0_data"); using (var DDC = new Process()) { DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 3 * 1); }
-            //startInfo.Arguments = string.Format(" /c mklink /D 0_data \\\\192.168.1.100\\Kits_Software\\t\0\\\0_data"); using (var DDC = new Process()) { DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 3 * 1); }
-            if (Directory.Exists(c("dlcm_TempPath") + "\\0_old")) copy = "OLD;";
+            if (!IsSymbolic(c("dlcm_TempPath") + "\\0_export") || !Directory.Exists(c("dlcm_TempPath") + "\\0_export"))/*Directory.Exists(c("dlcm_TempPath") + "\\0_data\\")*/
+                {
+                    if (Directory.Exists(c("dlcm_TempPath") + "\\0_export"))
+                    {
+                        CopyFolder(c("dlcm_TempPath") + "\\0_export", c("dlcm_0_export") + "\\0_export");
+                        DeleteDirectory(c("dlcm_TempPath") + "\\0_export", true);
+                    }
+                    startInfo.Arguments = string.Format(" /c mklink /D 0_export " + c("dlcm_0_export") + "\\0_export");
+                    using (var DDC = new Process()) { DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 3 * 1); if (DDC.ExitCode > 0) { timestamp = UpdateLog(timestamp, "error at creation of " + c("dlcm_0_old") + "\\0_old", true, c("dlcm_TempPath"), "", "", null, null); } }
+                }
+                //startInfo.Arguments = string.Format(" /c mklink /D 0_data \\\\192.168.1.100\\Kits_Software\\t\0\\\0_data"); using (var DDC = new Process()) { DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 3 * 1); }
+                //startInfo.Arguments = string.Format(" /c mklink /D 0_data \\\\192.168.1.100\\Kits_Software\\t\0\\\0_data"); using (var DDC = new Process()) { DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 3 * 1); }
+                if (Directory.Exists(c("dlcm_TempPath") + "\\0_old")) copy = "OLD;";
             if (Directory.Exists(c("dlcm_TempPath") + "\\0_archive")) copy = "ARCHIVE;";
             if (Directory.Exists(c("dlcm_TempPath") + "\\0_duplicate")) copy = "DUPLICATE;";
             if (Directory.Exists(c("dlcm_TempPath") + "\\0_data")) copy = "DATA;";
             if (Directory.Exists(c("dlcm_TempPath") + "\\0_broken")) copy = "BROKEN;";
-            MessageBox.Show("Mklinks folders created:\n" + "\t" + c("dlcm_0_data") + "\\0_data" + "\n\t" + c("dlcm_0_archive") + "\\0_archive" + "\n\t" + c("dlcm_0_broken") + "\\0_broken" + "\n\t" + c("dlcm_0_duplicate") + "\\0_duplicate" + "\n\t" + c("dlcm_0_old") + "\\0_old"
+            if (Directory.Exists(c("dlcm_TempPath") + "\\0_export")) copy = "EXPORT;";
+            if (Directory.Exists(c("dlcm_TempPath") + "\\0_intheworks")) copy = "INTHEWORKS;";
+            MessageBox.Show("Mklinks folders created:\n" + "\t" + c("dlcm_0_data") + "\\0_data" + "\n\t" + c("dlcm_0_archive") + "\\0_archive" + "\n\t" +
+                c("dlcm_0_broken") + "\\0_broken" + "\n\t" + c("dlcm_0_duplicate") + "\\0_duplicate" + "\n\t" + c("dlcm_0_old") + "\\0_old"
+                + "\n\t" + c("dlcm_0_intheworks") + "\\0_intheworks" + "\n\t" + c("dlcm_0_export") + "\\0_export"
                 + (copy == "" ? "\nWith errors on the following" + copy : "")
                         , MESSAGEBOX_CAPTION + ": Creating MKLinks", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -1716,11 +1733,17 @@ namespace RocksmithToolkitGUI.DLCManager
                 query[i].Is_GreatestHits = dataRow.ItemArray[147].ToString();
                 query[i].Is_Midi = dataRow.ItemArray[148].ToString();
                 query[i].Is_GameSoundtrack = dataRow.ItemArray[149].ToString();
-                query[i].Is_AmateurCover = dataRow.ItemArray[150].ToString();
-                query[i].Is_TVTheme = dataRow.ItemArray[151].ToString();
-                //query[i].Has_Alternate_Audio = dataRow.ItemArray[152].ToString();
-                //query[i].Has_Alternate_Lyrics = dataRow.ItemArray[153].ToString();
-                i++;
+                query[i].Is_TVTheme = dataRow.ItemArray[150].ToString();
+                query[i].Is_AmateurCover = dataRow.ItemArray[151].ToString();
+                query[i].Has_Alternate_Audio = dataRow.ItemArray[152].ToString();
+                query[i].Has_Alternate_Lyrics = dataRow.ItemArray[153].ToString();
+                query[i].Is_MetalCover = dataRow.ItemArray[154].ToString();
+                query[i].Is_Ukulele = dataRow.ItemArray[155].ToString();
+                query[i].A440TunningFrecv = dataRow.ItemArray[156].ToString();
+                query[i].Found_on_CF = dataRow.ItemArray[157].ToString();
+                query[i].Uploaded_on_CF = dataRow.ItemArray[158].ToString();//no of order here is minus 2 the definition 
+
+    i++;
                 query[i] = new MainDBfields();
             }
             return query;
@@ -3039,7 +3062,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 if (!DirectoryExists(repackedPCPath) && (repackedPCPath != null)) fldrm += ";" + repackedPCPath;
                 if (!DirectoryExists(repackedMACPath) && (repackedMACPath != null)) fldrm += ";" + repackedMACPath;
                 if (!DirectoryExists(repackedPSPath) && (repackedPSPath != null)) fldrm += ";" + repackedPSPath;
-                if (!DirectoryExists(logPath) && logPath != null && (logPath != "")) fldrm += ";" + logPath;
+               // if (!DirectoryExists(logPath) && logPath != null && (logPath != "")) fldrm += ";" + logPath;
                 if (!DirectoryExists(albumCoversPSPath) && (albumCoversPSPath != null)) fldrm += ";" + albumCoversPSPath;
                 if (!DirectoryExists(ArchivePath) && (ArchivePath != null)) fldrm += ";" + ArchivePath;
                 if (!DirectoryExists(dataPath) && (dataPath != null)) fldrm += ";" + dataPath;
@@ -3943,7 +3966,10 @@ namespace RocksmithToolkitGUI.DLCManager
 
             for (var i = 0; i < SongRecord[0].NoRec.ToInt32(); i++)
             {
+                if (SongRecord[i].Comments.Contains("Do you agree with replacement")) 
+                    SongRecord[i].Comments = "";
                 string[] args = (SongRecord[i].Comments).Split(';');
+                
                 for (var jj = 0; jj < args.Count(); jj++)
                 {
                     if (colsize[jj] < args[jj].Length) colsize[jj] = args[jj].Length + 2;
@@ -4861,7 +4887,8 @@ namespace RocksmithToolkitGUI.DLCManager
                 Random randomp = new Random();
                 var packid = 0;
                 packid = randomp.Next(0, 100000);
-                var fn = (logPath == null || !DirectoryExists(logPath) ? (DirectoryExists(tmpPath + "\\0_log") ? tmpPath + "0_log" : AppWD.Replace("DLCManager\\external_tools", "")) : logPath) + "\\" + MultithreadNo + "current_" + ismaindb + "temp" + ".txt";/*MultithreadNo +c("dlcm_Split4Pack")*/
+                var fn = (logPath == null || !DirectoryExists(logPath) ? (DirectoryExists(tmpPath + "\\0_log") ? tmpPath + "0_log" 
+                    : AppWD.Replace("DLCManager\\external_tools", "")) : logPath) + "\\" + MultithreadNo + "current_" + ismaindb + "temp" + ".txt";/*MultithreadNo +c("dlcm_Split4Pack")*/
                 var zipFile = fn + dtt.ToString().Replace("/", "").Replace(":", "").Substring(0, 8) + ".gz";// "C:\data\myzip.zip";c("dlcm_TempPath") + "\\0_log\\" +
 
                 if (File.Exists(fn))
@@ -5426,7 +5453,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     // string Has_Capo, string Has_Showlights, string Has_JVocals, string IsMedley, string IsMultiStrings, SQLiteConnection cnz)
                     string Has_Capo, string Has_Showlights, string Has_JVocals, string IsMedley, string IsMultiStrings, string IsDeluxe, string IsGreatestHits
             , string IsMidi, string IsGameSoundtrack, string IsTVTheme, string IsAmateurCover, string txt_EoFPathText, string txt_YBLinkText, string txt_SpotifyText
-            , string IsMetalCover, string IsUkulele, string A440TunningFrecv, SQLite.SQLiteConnection cnc)
+            , string IsMetalCover, string IsUkulele, string A440TunningFrecv, string Found_on_CF, string Uploaded_on_CF, SQLite.SQLiteConnection cnc)
         {
             var command = cnb.CreateCommand();
             if (dupli_assesment == "Update")
@@ -5565,8 +5592,10 @@ namespace RocksmithToolkitGUI.DLCManager
                 command.CommandText += "EoFPath= @param128, ";
                 command.CommandText += "Is_MetalCover = @param129, ";
                 command.CommandText += "Is_Ukulele = @param130, ";
-                command.CommandText += "A440TunningFrecv = @param131 ";
-                command.CommandText += " WHERE ID = " + IDD;
+                command.CommandText += "A440TunningFrecv = @param131, ";
+                command.CommandText += "Found_on_CF = @param132, ";
+                command.CommandText += "Uploaded_on_CF = @param133 ";
+                command.CommandText += " WHERE ID = " + IDD; 
 
                 command.Parameters.AddWithValue("@param1", import_path);
                 command.Parameters.AddWithValue("@param2", original_FileName);
@@ -5702,6 +5731,8 @@ namespace RocksmithToolkitGUI.DLCManager
                 command.Parameters.AddWithValue("@param129", IsMetalCover ?? DBNull.Value.ToString());
                 command.Parameters.AddWithValue("@param130", IsUkulele ?? DBNull.Value.ToString());
                 command.Parameters.AddWithValue("@param131", A440TunningFrecv ?? DBNull.Value.ToString());
+                command.Parameters.AddWithValue("@param132", Found_on_CF ?? DBNull.Value.ToString());
+                command.Parameters.AddWithValue("@param133", Uploaded_on_CF ?? DBNull.Value.ToString());
                 command.CommandType = CommandType.Text;
                 UpdateDBbyExecuteNonQuery(command, cnb, cnc);
                 ////EXECUTE SQL/UPDATE
@@ -5875,7 +5906,9 @@ namespace RocksmithToolkitGUI.DLCManager
                 command.CommandText += "EoFPath, ";
                 command.CommandText += "Is_MetalCover, ";
                 command.CommandText += "Is_Ukulele, ";
-                command.CommandText += "A440TunningFrecv ";
+                command.CommandText += "A440TunningFrecv, ";
+                command.CommandText += "Found_on_CF, ";
+                command.CommandText += "Uploaded_on_CF ";
                 command.CommandText += ") VALUES (@param1,@param2,@param3,@param4,@param5,@param6,@param7,@param8,@param9";
                 command.CommandText += ",@param10,@param11,@param12,@param13,@param14,@param15,@param16,@param17,@param18,@param19";
                 command.CommandText += ",@param20,@param21,@param22,@param23,@param24,@param25,@param26,@param27,@param28,@param29";
@@ -5889,7 +5922,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 command.CommandText += ",@param100,@param101,@param102,@param103,@param104,@param105,@param106,@param107,@param108,@param109";
                 command.CommandText += ",@param110,@param111,@param112,@param113,@param114,@param115,@param116,@param117,@param118,@param119";
                 command.CommandText += ",@param120,@param121,@param122,@param123,@param124,@param125,@param126,@param127,@param128";
-                command.CommandText += ",@param129,@param130,@param131" + ")";/*,@param129,@param130*/
+                command.CommandText += ",@param129,@param130,@param131,@param132,@param133" + ")";/*,@param129,@param130*/
 
                 command.Parameters.AddWithValue("@param1", import_path);
                 command.Parameters.AddWithValue("@param2", original_FileName);
@@ -6023,6 +6056,8 @@ namespace RocksmithToolkitGUI.DLCManager
                 command.Parameters.AddWithValue("@param129", IsMetalCover ?? DBNull.Value.ToString());
                 command.Parameters.AddWithValue("@param130", IsUkulele ?? DBNull.Value.ToString());
                 command.Parameters.AddWithValue("@param131", A440TunningFrecv ?? DBNull.Value.ToString());
+                command.Parameters.AddWithValue("@param132", Found_on_CF ?? DBNull.Value.ToString());
+                command.Parameters.AddWithValue("@param133", Uploaded_on_CF ?? DBNull.Value.ToString());
                 //EXECUTE SQL/UPDATE
 
                 //var rt = (import_path) + "\",\"" + (original_FileName) + "\",\"" + (original_FileName) + "\",\"" + (ds.Tables[0].Rows[i].ItemArray[3])

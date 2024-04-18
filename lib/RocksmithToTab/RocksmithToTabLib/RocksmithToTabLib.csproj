@@ -5,15 +5,23 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <AssemblyTitle>RocksmithToTabLib</AssemblyTitle>
     <Product>RocksmithToTabLib</Product>
-    <Copyright>Copyright © Holger Frydrych 2016</Copyright>
-    <AssemblyVersion>1.1.%2a</AssemblyVersion>
+    <Copyright>original Copyright © Holger Frydrych 2016</Copyright>
+    <Version>1.2.0</Version>
+    <Authors>catara, Holger Frydrych</Authors>
+    <Description>library for saving Rocksmith notes in GuitarPro format</Description>
+    <PackageProjectUrl>https://github.com/catara/rocksmith-custom-song-toolkit/tree/Main/lib/RocksmithToTab</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/fholger/RocksmithToTab</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageReleaseNotes>upgraded from .net framework 4.x to .net 8</PackageReleaseNotes>
+    <Title>RocksmithToTabLib</Title>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <OutputPath>bin\x86\Debug\</OutputPath>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <OutputPath>bin\Debug\</OutputPath>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <OutputPath>bin\x86\Release\</OutputPath>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <OutputPath>bin\Release\</OutputPath>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
@@ -35,14 +43,21 @@
     <Compile Remove="Properties\._AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="www.rocksmithtotab.de" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="RocksmithToolkitLib">
-      <HintPath>..\..\rocksmith-custom-song-toolkit\RocksmithToolkitLib\bin\Release\net7.0-windows10.0.22621.0\RocksmithToolkitLib.dll</HintPath>
+      <HintPath>..\..\..\RocksmithTookitGUI\DLCManager\external_tools\RocksmithToolkitLib.dll</HintPath>
     </Reference>
     <Reference Include="X360">
-      <HintPath>..\..\rocksmith-custom-song-toolkit\lib\X360\X360.dll</HintPath>
+      <HintPath>..\..\..\RocksmithTookitGUI\DLCManager\external_tools\X360.dll</HintPath>
     </Reference>
     <Reference Include="zlib.net">
-      <HintPath>..\..\rocksmith-custom-song-toolkit\lib\ZLib\zlib.net.dll</HintPath>
+      <HintPath>..\..\ZLib\zlib.net.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>
